@@ -39,7 +39,8 @@ fun ConversationListScreen(
     val conversations by vm.conversations.collectAsState()
     // null = still loading (waiting for first emission), empty list = loaded but empty
     val loadState = when {
-        conversations.isEmpty() -> LoadState.EMPTY
+        conversations == null -> LoadState.LOADING
+        conversations!!.isEmpty() -> LoadState.EMPTY
         else -> LoadState.CONTENT
     }
 
@@ -78,7 +79,7 @@ fun ConversationListScreen(
                 }
                 LoadState.CONTENT -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(conversations, key = { it.peer.deviceId }) { conv ->
+                        items(conversations!!, key = { it.peer.deviceId }) { conv ->
                             val unread by vm.getUnreadCount(conv.peer.deviceId)
                                 .collectAsState(initial = 0)
                             ConversationRow(

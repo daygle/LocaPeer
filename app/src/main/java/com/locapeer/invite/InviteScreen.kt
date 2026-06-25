@@ -2,6 +2,8 @@ package com.locapeer.invite
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -35,20 +37,41 @@ fun InviteScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
 
-            state.qrBitmap?.let { bmp ->
-                Card(
-                    modifier = Modifier.size(280.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Image(
-                        bitmap = bmp.asImageBitmap(),
-                        contentDescription = "Invite QR code",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                    )
+            when {
+                state.error -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.ErrorOutline,
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Text(
+                            "Could not generate QR code.\nCheck your settings and try again.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
-            } ?: CircularProgressIndicator()
+                state.qrBitmap != null -> {
+                    Card(
+                        modifier = Modifier.size(280.dp),
+                        elevation = CardDefaults.cardElevation(4.dp)
+                    ) {
+                        Image(
+                            bitmap = state.qrBitmap.asImageBitmap(),
+                            contentDescription = "Invite QR code",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp)
+                        )
+                    }
+                }
+                else -> CircularProgressIndicator()
+            }
 
             Text(
                 "Your ID: ${state.publicKeyHex.take(16)}…",

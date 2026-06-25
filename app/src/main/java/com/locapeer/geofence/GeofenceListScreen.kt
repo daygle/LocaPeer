@@ -138,15 +138,41 @@ private fun CreateGeofenceDialog(
     var radius by remember { mutableFloatStateOf(500f) }
     var selectedPeer by remember { mutableStateOf(broadcasters.first()) }
     var triggerOn by remember { mutableStateOf("ENTER") }
+    var submitted by remember { mutableStateOf(false) }
+
+    val nameError = submitted && name.isBlank()
+    val lat = latText.toDoubleOrNull()
+    val lng = lngText.toDoubleOrNull()
+    val latError = submitted && (latText.isBlank() || lat == null || lat !in -90.0..90.0)
+    val lngError = submitted && (lngText.isBlank() || lng == null || lng !in -180.0..180.0)
+    val isValid = name.isNotBlank() && lat != null && lat in -90.0..90.0 && lng != null && lng in -180.0..180.0
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("New Geofence") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
-                OutlinedTextField(value = latText, onValueChange = { latText = it }, label = { Text("Latitude") })
-                OutlinedTextField(value = lngText, onValueChange = { lngText = it }, label = { Text("Longitude") })
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    isError = nameError,
+                    supportingText = if (nameError) { { Text("Name is required") } } else null
+                )
+                OutlinedTextField(
+                    value = latText,
+                    onValueChange = { latText = it },
+                    label = { Text("Latitude") },
+                    isError = latError,
+                    supportingText = if (latError) { { Text("Enter a valid latitude (−90 to 90)") } } else null
+                )
+                OutlinedTextField(
+                    value = lngText,
+                    onValueChange = { lngText = it },
+                    label = { Text("Longitude") },
+                    isError = lngError,
+                    supportingText = if (lngError) { { Text("Enter a valid longitude (−180 to 180)") } } else null
+                )
                 Text("Radius: ${radius.toInt()}m")
                 Slider(
                     value = radius,
@@ -176,9 +202,10 @@ private fun CreateGeofenceDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val lat = latText.toDoubleOrNull() ?: return@TextButton
-                    val lng = lngText.toDoubleOrNull() ?: return@TextButton
-                    onCreate(name, lat, lng, radius.toInt(), selectedPeer.deviceId, triggerOn)
+                    submitted = true
+                    if (isValid) {
+                        onCreate(name, lat!!, lng!!, radius.toInt(), selectedPeer.deviceId, triggerOn)
+                    }
                 }
             ) { Text("Create") }
         },

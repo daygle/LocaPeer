@@ -39,7 +39,7 @@ class MessagingViewModel @Inject constructor(
     private val notificationManager: NotificationManager
 ) : ViewModel() {
 
-    val conversations: StateFlow<List<ConversationSummary>> =
+    val conversations: StateFlow<List<ConversationSummary>?> =
         messageDao.getConversationSummaries()
             .combine(peerDao.getAllPeers()) { msgs, peers ->
                 val peerMap = peers.associateBy { it.deviceId }
@@ -48,7 +48,7 @@ class MessagingViewModel @Inject constructor(
                     ConversationSummary(peer = peer, lastMessage = msg)
                 }
             }
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+            .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     fun getUnreadCount(peerId: String) = messageDao.getUnreadCount(peerId)
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)

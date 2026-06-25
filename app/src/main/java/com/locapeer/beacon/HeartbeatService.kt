@@ -48,6 +48,7 @@ const val NOTIFICATION_ID_HEARTBEAT = 1001
 const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
+private const val ACTION_ACTIVITY_UPDATE = "com.locapeer.ACTIVITY_UPDATE"
 
 @AndroidEntryPoint
 class HeartbeatService : LifecycleService() {
@@ -119,6 +120,25 @@ class HeartbeatService : LifecycleService() {
                 stopSelf()
                 return START_NOT_STICKY
             }
+            ACTION_ACTIVITY_UPDATE -> {
+                ActivityRecognitionResult.extractResult(intent)?.let { result ->
+                    val detected = result.mostProbableActivity
+                    val newState = when (detected.type) {
+                        DetectedActivity.STILL -> MotionState.STATIONARY
+                        DetectedActivity.WALKING, DetectedActivity.ON_FOOT -> MotionState.WALKING
+                        DetectedActivity.RUNNING -> MotionState.RUNNING
+                        DetectedActivity.ON_BICYCLE -> MotionState.CYCLING
+                        DetectedActivity.IN_VEHICLE -> MotionState.DRIVING
+                        else -> MotionState.UNKNOWN
+                    }
+                    if (newState != currentMotionState) {
+                        currentMotionState = newState
+                        intervalManager.updateMotionState(newState)
+                        updateLocationRequest()
+                        reschedulePulse()
+                    }
+                }
+            }
             else -> startForegroundAndBroadcast()
         }
         return START_STICKY
@@ -133,10 +153,14 @@ class HeartbeatService : LifecycleService() {
             startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
         }
 
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 30_000L)
-            .setMinUpdateIntervalMillis(10_000L)
-            .build()
-        fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        updateLocationRequest()
+
+        val activityIntent = PendingIntent.getService(
+            this, 0,
+            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+        activityClient.requestActivityUpdates(30_000L, activityIntent)
 
         lifecycleScope.launch {
             val settings = prefs.settings.first()
@@ -145,6 +169,27 @@ class HeartbeatService : LifecycleService() {
         }
 
         handler.post(heartbeatRunnable)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun updateLocationRequest() {
+        fusedLocation.removeLocationUpdates(locationCallback)
+        val priority = when {
+            isSos -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
+            else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        }
+        val pollIntervalMs = when {
+            isSos -> 10_000L
+            currentMotionState == MotionState.STATIONARY -> 120_000L
+            currentMotionState == MotionState.DRIVING -> 15_000L
+            else -> 30_000L
+        }
+        val locationRequest = LocationRequest.Builder(priority, pollIntervalMs)
+            .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+            .build()
+        fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
     private fun reschedulePulse() {
@@ -237,6 +282,12 @@ class HeartbeatService : LifecycleService() {
     override fun onDestroy() {
         handler.removeCallbacks(heartbeatRunnable)
         fusedLocation.removeLocationUpdates(locationCallback)
+        val activityIntent = PendingIntent.getService(
+            this, 0,
+            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+        activityClient.removeActivityUpdates(activityIntent)
         super.onDestroy()
     }
 }

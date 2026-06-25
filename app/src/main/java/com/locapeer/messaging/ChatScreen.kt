@@ -7,7 +7,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -15,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -105,12 +109,42 @@ private fun MessageBubble(msg: MessageEntity) {
         ) {
             Column {
                 Text(msg.content, style = MaterialTheme.typography.bodyMedium)
-                Text(
-                    formatTime(msg.timestamp),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.align(Alignment.End)
-                )
+                if (msg.isMine) {
+                    Row(
+                        modifier = Modifier.align(Alignment.End),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Text(
+                            formatTime(msg.timestamp),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        val (statusIcon, statusTint) = when (msg.deliveryState) {
+                            DeliveryState.SENDING.name ->
+                                Icons.Default.AccessTime to MaterialTheme.colorScheme.onSurfaceVariant
+                            DeliveryState.SENT.name ->
+                                Icons.Default.Done to MaterialTheme.colorScheme.onSurfaceVariant
+                            DeliveryState.READ.name ->
+                                Icons.Default.DoneAll to MaterialTheme.colorScheme.primary
+                            else ->
+                                Icons.Default.DoneAll to MaterialTheme.colorScheme.onSurfaceVariant
+                        }
+                        Icon(
+                            statusIcon,
+                            contentDescription = null,
+                            modifier = Modifier.size(12.dp),
+                            tint = statusTint
+                        )
+                    }
+                } else {
+                    Text(
+                        formatTime(msg.timestamp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.align(Alignment.End)
+                    )
+                }
             }
         }
     }
