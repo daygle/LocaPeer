@@ -116,6 +116,40 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setRetentionDays(days) }
     }
 
+    fun setMessageRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setMessageRetentionDays(days) }
+    }
+
+    /** Immediately sends a MESSAGE_PURGE_REQUEST Nostr event to all peers. */
+    fun sendMessagePurgeNow() {
+        viewModelScope.launch {
+            val settings = prefs.settings.first()
+            if (settings.messageRetentionDays == 0) return@launch
+            val deleteBeforeMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val payload = Json.encodeToString(
+                PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
+            )
+            val allPeers = peerDao.getAllPeers().first()
+            allPeers.forEach { peer ->
+                val encrypted = crypto.nip04Encrypt(
+                    senderPrivKey = crypto.hexToBytes(privHex),
+                    recipientXOnlyHex = peer.publicKeyHex,
+                    plaintext = payload
+                )
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.MESSAGE_PURGE_REQUEST,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            }
+        }
+    }
+
     /** Immediately sends a PURGE_REQUEST Nostr event to all current subscribers. */
     fun sendPurgeNow() {
         viewModelScope.launch {

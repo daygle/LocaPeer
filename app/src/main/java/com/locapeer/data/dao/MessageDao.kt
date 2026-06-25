@@ -42,4 +42,7 @@ interface MessageDao {
 
     @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0")
     suspend fun getUnreadFromPeer(peerId: String): List<MessageEntity>
+
+    @Query("DELETE FROM messages WHERE senderPublicKeyHex = :senderPubKeyHex AND timestamp < :before")
+    suspend fun deleteOlderThanFromSender(senderPubKeyHex: String, before: Long)
 }

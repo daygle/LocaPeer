@@ -15,6 +15,7 @@ import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.geofence.GeofenceEngine
@@ -48,6 +49,7 @@ class HeartbeatReceiver @Inject constructor(
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val heartbeatDao: HeartbeatDao,
+    private val messageDao: MessageDao,
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
@@ -69,7 +71,8 @@ class HeartbeatReceiver @Inject constructor(
                     kinds = listOf(
                         NostrEventKind.HEARTBEAT,
                         NostrEventKind.SOS_ALERT,
-                        NostrEventKind.PURGE_REQUEST
+                        NostrEventKind.PURGE_REQUEST,
+                        NostrEventKind.MESSAGE_PURGE_REQUEST
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -81,9 +84,23 @@ class HeartbeatReceiver @Inject constructor(
                 when (event.kind) {
                     NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
                     NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
+                    NostrEventKind.MESSAGE_PURGE_REQUEST -> processMsgPurgeRequest(event)
                 }
             }
             .launchIn(scope)
+    }
+
+    private suspend fun processMsgPurgeRequest(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return   // only respect known peers
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's messages
+        messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
+        Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
     }
 
     private suspend fun processPurgeRequest(event: NostrEvent) {

@@ -38,32 +38,63 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        if (settings.retentionDays == 0) return Result.success()  // user chose "forever"
+        if (settings.retentionDays == 0 && settings.messageRetentionDays == 0) return Result.success()
 
-        val deleteBeforeMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
         return try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = Json.encodeToString(
-                PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
-            )
-            val subscribers = peerDao.getSubscribers().first()
-            subscribers.forEach { sub ->
-                val encrypted = crypto.nip04Encrypt(
-                    senderPrivKey = crypto.hexToBytes(privHex),
-                    recipientXOnlyHex = sub.publicKeyHex,
-                    plaintext = payload
+
+            if (settings.retentionDays > 0) {
+                val cutoffMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
+                val locationPayload = Json.encodeToString(
+                    PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
                 )
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.PURGE_REQUEST,
-                    content = encrypted,
-                    tags = listOf(listOf("p", sub.publicKeyHex)),
-                    crypto = crypto
-                )
-                relayClient.publishEvent(event)
+                val subscribers = peerDao.getSubscribers().first()
+                subscribers.forEach { sub ->
+                    val encrypted = crypto.nip04Encrypt(
+                        senderPrivKey = crypto.hexToBytes(privHex),
+                        recipientXOnlyHex = sub.publicKeyHex,
+                        plaintext = locationPayload
+                    )
+                    relayClient.publishEvent(
+                        NostrEvent.build(
+                            privKeyHex = privHex,
+                            pubKeyHex = pubHex,
+                            kind = NostrEventKind.PURGE_REQUEST,
+                            content = encrypted,
+                            tags = listOf(listOf("p", sub.publicKeyHex)),
+                            crypto = crypto
+                        )
+                    )
+                }
+                Log.d(TAG, "Sent location purge to ${subscribers.size} subscribers (before ${cutoffMs}ms)")
             }
-            Log.d(TAG, "Sent purge request to ${subscribers.size} subscribers (before ${deleteBeforeMs}ms)")
+
+            if (settings.messageRetentionDays > 0) {
+                val cutoffMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
+                val msgPayload = Json.encodeToString(
+                    PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
+                )
+                val allPeers = peerDao.getAllPeers().first()
+                allPeers.forEach { peer ->
+                    val encrypted = crypto.nip04Encrypt(
+                        senderPrivKey = crypto.hexToBytes(privHex),
+                        recipientXOnlyHex = peer.publicKeyHex,
+                        plaintext = msgPayload
+                    )
+                    relayClient.publishEvent(
+                        NostrEvent.build(
+                            privKeyHex = privHex,
+                            pubKeyHex = pubHex,
+                            kind = NostrEventKind.MESSAGE_PURGE_REQUEST,
+                            content = encrypted,
+                            tags = listOf(listOf("p", peer.publicKeyHex)),
+                            crypto = crypto
+                        )
+                    )
+                }
+                Log.d(TAG, "Sent message purge to ${allPeers.size} peers (before ${cutoffMs}ms)")
+            }
+
             Result.success()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send purge requests", e)

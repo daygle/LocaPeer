@@ -319,13 +319,14 @@ fun SettingsScreen(
             item {
                 SettingsSection("Privacy") {
                     Text(
-                        "Control how long your location history is kept on others' devices.",
+                        "Control how long your data is kept on others' devices.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+
                     Spacer(Modifier.height(12.dp))
                     Text(
-                        "Remote history retention",
+                        "Remote location history retention",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -340,12 +341,49 @@ fun SettingsScreen(
                             onClick = { vm.sendPurgeNow() },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Delete my history from peers' devices now")
+                            Text("Delete my location history from peers now")
                         }
                         Spacer(Modifier.height(4.dp))
                         Text(
                             "Sends an immediate deletion request to all current subscribers. " +
-                            "Historical data older than ${settings.retentionDays} day(s) will be removed.",
+                            "Location history older than ${settings.retentionDays} day(s) will be removed.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    Spacer(Modifier.height(16.dp))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                    Spacer(Modifier.height(12.dp))
+
+                    Text(
+                        "Remote message retention",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        "Control how long messages you send are stored on recipients' devices.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    RetentionSelector(
+                        selected = settings.messageRetentionDays,
+                        onSelected = { vm.setMessageRetentionDays(it) }
+                    )
+                    if (settings.messageRetentionDays > 0) {
+                        Spacer(Modifier.height(12.dp))
+                        OutlinedButton(
+                            onClick = { vm.sendMessagePurgeNow() },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Delete my messages from peers' devices now")
+                        }
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            "Sends an immediate deletion request to all peers. " +
+                            "Messages older than ${settings.messageRetentionDays} day(s) will be removed.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
