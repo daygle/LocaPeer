@@ -26,7 +26,7 @@ import com.locapeer.data.entity.ProximityAlertEntity
         ProximityAlertEntity::class,
         PeerSharingConfig::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -63,5 +63,14 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
                 scheduleEndMinute INTEGER NOT NULL DEFAULT 1439
             )"""
         )
+    }
+}
+
+val MIGRATION_3_4 = object : Migration(3, 4) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("CREATE INDEX IF NOT EXISTS index_heartbeats_deviceId ON heartbeats (deviceId)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS index_heartbeats_timestamp ON heartbeats (timestamp)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_peerId ON messages (peerId)")
+        db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_timestamp ON messages (timestamp)")
     }
 }

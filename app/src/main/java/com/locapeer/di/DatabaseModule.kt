@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.locapeer.data.AppDatabase
 import com.locapeer.data.MIGRATION_1_2
 import com.locapeer.data.MIGRATION_2_3
+import com.locapeer.data.MIGRATION_3_4
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
@@ -26,7 +27,7 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
             .build()
 
     @Provides fun providePeerDao(db: AppDatabase): PeerDao = db.peerDao()

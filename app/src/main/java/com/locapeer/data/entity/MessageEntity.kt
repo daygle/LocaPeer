@@ -1,12 +1,16 @@
 package com.locapeer.data.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 /** Delivery states for outgoing messages. */
 enum class DeliveryState { SENDING, SENT, DELIVERED, READ }
 
-@Entity(tableName = "messages")
+@Entity(
+    tableName = "messages",
+    indices = [Index("peerId"), Index("timestamp")]
+)
 data class MessageEntity(
     @PrimaryKey val id: String,
     /** deviceId of the other participant */

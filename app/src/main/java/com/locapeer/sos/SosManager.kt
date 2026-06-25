@@ -7,6 +7,9 @@ import com.locapeer.beacon.ACTION_SOS_OFF
 import com.locapeer.beacon.ACTION_SOS_ON
 import com.locapeer.beacon.HeartbeatService
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,11 +17,11 @@ import javax.inject.Singleton
 class SosManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-    private var _isSosActive = false
-    val isSosActive get() = _isSosActive
+    private val _isSosActive = MutableStateFlow(false)
+    val isSosActive: StateFlow<Boolean> = _isSosActive.asStateFlow()
 
     fun activateSos() {
-        _isSosActive = true
+        _isSosActive.value = true
         val intent = Intent(context, HeartbeatService::class.java).apply {
             action = ACTION_SOS_ON
         }
@@ -26,7 +29,7 @@ class SosManager @Inject constructor(
     }
 
     fun deactivateSos() {
-        _isSosActive = false
+        _isSosActive.value = false
         val intent = Intent(context, HeartbeatService::class.java).apply {
             action = ACTION_SOS_OFF
         }

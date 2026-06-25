@@ -8,6 +8,7 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,8 +35,15 @@ data class MapUiState(
 class MapViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
-    private val geofenceDao: GeofenceDao
+    private val geofenceDao: GeofenceDao,
+    private val sosManager: SosManager
 ) : ViewModel() {
+
+    val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
+
+    fun toggleSos() {
+        if (sosManager.isSosActive.value) sosManager.deactivateSos() else sosManager.activateSos()
+    }
 
     val uiState: StateFlow<MapUiState> = combine(
         peerDao.getBroadcasters(),

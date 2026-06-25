@@ -1,9 +1,13 @@
 package com.locapeer.data.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "heartbeats")
+@Entity(
+    tableName = "heartbeats",
+    indices = [Index("deviceId"), Index("timestamp")]
+)
 data class HeartbeatEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val deviceId: String,

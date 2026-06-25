@@ -224,9 +224,10 @@ class HeartbeatService : LifecycleService() {
                 }
 
                 val subscribers = peerDao.getSubscribers().first()
+                val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
                 var sentCount = 0
                 subscribers.forEach { subscriber ->
-                    val cfg = sharingConfigDao.getForPeer(subscriber.deviceId)
+                    val cfg = configMap[subscriber.deviceId]
 
                     // Per-peer disable check (SOS always bypasses)
                     if (!isSos && cfg?.sharingEnabled == false) return@forEach
