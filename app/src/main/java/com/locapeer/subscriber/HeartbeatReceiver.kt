@@ -23,6 +23,10 @@ import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
+import com.locapeer.supervised.SupervisedModeManager
+import com.locapeer.supervised.SupervisionApprovalManager
+import com.locapeer.supervised.UnlockRequestPayload
+import com.locapeer.supervised.UnlockResponsePayload
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
@@ -59,7 +63,9 @@ class HeartbeatReceiver @Inject constructor(
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
     private val proximityEngine: ProximityEngine,
-    private val notificationManager: NotificationManager
+    private val notificationManager: NotificationManager,
+    private val supervisedModeManager: SupervisedModeManager,
+    private val supervisionApprovalManager: SupervisionApprovalManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
@@ -81,7 +87,9 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.MESSAGE_PURGE_REQUEST,
                         NostrEventKind.ENCRYPTED_DM,
                         NostrEventKind.READ_RECEIPT,
-                        NostrEventKind.DELIVERY_ACK
+                        NostrEventKind.DELIVERY_ACK,
+                        NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
+                        NostrEventKind.SUPERVISED_UNLOCK_RESPONSE
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -97,6 +105,8 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.ENCRYPTED_DM -> processDmInBackground(event)
                     NostrEventKind.READ_RECEIPT -> processReadReceiptInBackground(event)
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
+                    NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> processUnlockRequest(event)
+                    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> processUnlockResponse(event)
                 }
             }
             .launchIn(scope)
@@ -236,6 +246,34 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
+    }
+
+    private suspend fun processUnlockRequest(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<UnlockRequestPayload>(plaintext) } catch (e: Exception) { return }
+        supervisionApprovalManager.setPending(
+            SupervisionApprovalManager.PendingRequest(
+                fromPubkey = event.pubkey,
+                deviceName = payload.deviceName,
+                requestId = payload.requestId
+            )
+        )
+    }
+
+    private suspend fun processUnlockResponse(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<UnlockResponsePayload>(plaintext) } catch (e: Exception) { return }
+        supervisedModeManager.handleResponse(payload.requestId, payload.approved)
     }
 
     private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {

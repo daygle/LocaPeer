@@ -18,16 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.sharing.DayPicker
 import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.TimePickerDialog
+import com.locapeer.supervised.SupervisedModeManager
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,9 +44,15 @@ fun SettingsScreen(
     val profileQr by vm.profileQr.collectAsState()
 
     // Supervised mode: gate the whole screen when locked
+    val unlockState by vm.unlockState.collectAsState()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (settings.supervisedModeEnabled && !sessionUnlocked) {
-        SupervisedPinGate(vm = vm, onUnlocked = { sessionUnlocked = true })
+        SupervisedRemoteGate(
+            unlockState = unlockState,
+            onRequestAccess = { vm.requestSettingsUnlock() },
+            onReset = { vm.resetUnlockState() },
+            onUnlocked = { sessionUnlocked = true }
+        )
         return
     }
 
@@ -367,7 +372,7 @@ fun SettingsScreen(
                                     fontWeight = FontWeight.SemiBold
                                 )
                                 Text(
-                                    "Settings are PIN-locked. Only the supervisor can change them.",
+                                    "Settings require supervisor approval to access.",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -387,8 +392,8 @@ fun SettingsScreen(
                         }
                     } else {
                         Text(
-                            "Lock settings behind a PIN so another person manages this device's " +
-                            "sharing behaviour. Messaging and SOS are always accessible.",
+                            "Lock settings so a designated supervisor must approve access remotely. " +
+                            "Messaging and SOS are always accessible.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -639,8 +644,9 @@ fun SettingsScreen(
 
     if (showSupervisedSetup) {
         SupervisedModeSetupDialog(
-            onConfirm = { pin ->
-                vm.enableSupervisedMode(pin)
+            peers = peers,
+            onConfirm = { supervisorPubkey ->
+                vm.enableSupervisedMode(supervisorPubkey)
                 showSupervisedSetup = false
             },
             onDismiss = { showSupervisedSetup = false }
@@ -763,12 +769,16 @@ private fun SelectionContainer(content: @Composable () -> Unit) {
 
 // ──────────────────────────── Supervised Mode UI ────────────────────────────
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SupervisedPinGate(vm: SettingsViewModel, onUnlocked: () -> Unit) {
-    var pin by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    var showForgotDialog by remember { mutableStateOf(false) }
+private fun SupervisedRemoteGate(
+    unlockState: SupervisedModeManager.UnlockState,
+    onRequestAccess: () -> Unit,
+    onReset: () -> Unit,
+    onUnlocked: () -> Unit
+) {
+    LaunchedEffect(unlockState) {
+        if (unlockState is SupervisedModeManager.UnlockState.Approved) onUnlocked()
+    }
 
     Column(
         modifier = Modifier
@@ -784,250 +794,124 @@ private fun SupervisedPinGate(vm: SettingsViewModel, onUnlocked: () -> Unit) {
             tint = MaterialTheme.colorScheme.primary
         )
         Spacer(Modifier.height(16.dp))
-        Text("Device is Supervised", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
+        Text(
+            "Device is Supervised",
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(Modifier.height(6.dp))
         Text(
-            "Enter the supervisor PIN to access settings.",
+            "Supervisor approval is required to access settings.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
         )
         Spacer(Modifier.height(32.dp))
-        PinDots(pin)
-        Spacer(Modifier.height(8.dp))
-        if (errorMessage != null) {
-            Text(errorMessage!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-        } else {
-            Spacer(Modifier.height(20.dp))
-        }
-        Spacer(Modifier.height(16.dp))
-        PinPad(
-            onDigit = { digit ->
-                if (pin.length < 4) {
-                    pin += digit
-                    errorMessage = null
-                    if (pin.length == 4) {
-                        vm.verifySupervisorPin(pin) { correct ->
-                            if (correct) {
-                                onUnlocked()
-                            } else {
-                                errorMessage = "Incorrect PIN — try again"
-                                pin = ""
-                            }
-                        }
-                    }
-                }
-            },
-            onBackspace = { if (pin.isNotEmpty()) pin = pin.dropLast(1) }
-        )
-        Spacer(Modifier.height(24.dp))
-        TextButton(onClick = { showForgotDialog = true }) {
-            Text(
-                "Forgot PIN?",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-    }
 
-    if (showForgotDialog) {
-        AlertDialog(
-            onDismissRequest = { showForgotDialog = false },
-            title = { Text("Forgot Supervisor PIN?") },
-            text = {
-                Text(
-                    "Contact the device's supervisor to get the PIN.\n\n" +
-                    "To fully reset supervised mode, go to Android Settings → Apps → LocaPeer → " +
-                    "Storage → Clear Data. This will erase all app data including your identity keys."
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = { showForgotDialog = false }) { Text("OK") }
+        when (unlockState) {
+            is SupervisedModeManager.UnlockState.Idle -> {
+                Button(onClick = onRequestAccess, modifier = Modifier.fillMaxWidth()) {
+                    Text("Request Access")
+                }
             }
-        )
+            is SupervisedModeManager.UnlockState.Requesting -> {
+                CircularProgressIndicator()
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    "Waiting for supervisor approval…",
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(16.dp))
+                TextButton(onClick = onReset) { Text("Cancel") }
+            }
+            is SupervisedModeManager.UnlockState.Denied -> {
+                Text(
+                    "Access denied by supervisor.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(16.dp))
+                Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) {
+                    Text("Try Again")
+                }
+            }
+            is SupervisedModeManager.UnlockState.TimedOut -> {
+                Text(
+                    "Request timed out. Supervisor did not respond.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(Modifier.height(16.dp))
+                Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) {
+                    Text("Try Again")
+                }
+            }
+            is SupervisedModeManager.UnlockState.Approved -> {
+                CircularProgressIndicator()
+            }
+        }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SupervisedModeSetupDialog(onConfirm: (String) -> Unit, onDismiss: () -> Unit) {
-    var step by remember { mutableIntStateOf(1) }
-    var firstPin by remember { mutableStateOf("") }
-    var pin by remember { mutableStateOf("") }
-    var savedPin by remember { mutableStateOf("") }
-    var errorText by remember { mutableStateOf<String?>(null) }
-    val clipboardManager = LocalClipboardManager.current
+private fun SupervisedModeSetupDialog(
+    peers: List<PeerEntity>,
+    onConfirm: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var selectedPubkey by remember { mutableStateOf("") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = {
-            Text(when (step) {
-                1 -> "Set Supervisor PIN"
-                2 -> "Confirm PIN"
-                else -> "Save Your PIN"
-            })
-        },
+        title = { Text("Enable Supervised Mode") },
         text = {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                if (step == 3) {
+            Column {
+                Text(
+                    "Choose a peer who will act as supervisor. They must approve access to settings from their device.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                if (peers.isEmpty()) {
+                    Spacer(Modifier.height(16.dp))
                     Text(
-                        "Supervised mode is ready. Make sure you save your PIN — there is no way to recover it without clearing all app data.",
+                        "No peers found. Add a peer first by scanning their invite QR code.",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center
+                        color = MaterialTheme.colorScheme.error
                     )
-                    Spacer(Modifier.height(20.dp))
-                    Card(
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer
-                        ),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 16.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                savedPin,
-                                style = MaterialTheme.typography.displaySmall,
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = androidx.compose.ui.unit.TextUnit(12f, androidx.compose.ui.unit.TextUnitType.Sp),
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
-                            )
-                        }
-                    }
-                    Spacer(Modifier.height(8.dp))
-                    OutlinedButton(
-                        onClick = { clipboardManager.setText(AnnotatedString(savedPin)) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Copy PIN to Clipboard")
-                    }
                 } else {
-                    Text(
-                        if (step == 1)
-                            "Choose a 4-digit PIN. Only the supervisor should know this."
-                        else
-                            "Enter the same PIN again to confirm.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(Modifier.height(20.dp))
-                    PinDots(pin)
-                    Spacer(Modifier.height(8.dp))
-                    if (errorText != null) {
-                        Text(errorText!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-                    } else {
-                        Spacer(Modifier.height(20.dp))
-                    }
                     Spacer(Modifier.height(12.dp))
-                    PinPad(
-                        onDigit = { digit ->
-                            if (pin.length < 4) {
-                                pin += digit
-                                errorText = null
-                                if (pin.length == 4) {
-                                    if (step == 1) {
-                                        firstPin = pin
-                                        pin = ""
-                                        step = 2
-                                    } else {
-                                        if (pin == firstPin) {
-                                            savedPin = pin
-                                            step = 3
-                                        } else {
-                                            errorText = "PINs don't match — start over"
-                                            pin = ""
-                                            firstPin = ""
-                                            step = 1
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        onBackspace = { if (pin.isNotEmpty()) pin = pin.dropLast(1) }
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            if (step == 3) {
-                Button(onClick = { onConfirm(savedPin) }) {
-                    Text("I've saved my PIN")
-                }
-            }
-        },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
-    )
-}
-
-@Composable
-private fun PinDots(pin: String, length: Int = 4) {
-    Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-        repeat(length) { i ->
-            Box(
-                modifier = Modifier
-                    .size(18.dp)
-                    .clip(CircleShape)
-                    .background(
-                        if (i < pin.length) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.outlineVariant
-                    )
-            )
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun PinPad(onDigit: (Char) -> Unit, onBackspace: () -> Unit) {
-    val rows = listOf(
-        listOf('1', '2', '3'),
-        listOf('4', '5', '6'),
-        listOf('7', '8', '9'),
-        listOf(null, '0', '\b')
-    )
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        rows.forEach { row ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp, Alignment.CenterHorizontally)
-            ) {
-                row.forEach { key ->
-                    when (key) {
-                        null -> Spacer(Modifier.size(72.dp))
-                        '\b' -> Surface(
-                            onClick = onBackspace,
-                            modifier = Modifier.size(72.dp),
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.surfaceVariant,
-                            tonalElevation = 1.dp
+                    peers.forEach { peer ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Box(contentAlignment = Alignment.Center) {
-                                Text("⌫", fontSize = 22.sp)
-                            }
-                        }
-                        else -> Surface(
-                            onClick = { onDigit(key) },
-                            modifier = Modifier.size(72.dp),
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.secondaryContainer,
-                            tonalElevation = 1.dp
-                        ) {
-                            Box(contentAlignment = Alignment.Center) {
+                            RadioButton(
+                                selected = selectedPubkey == peer.publicKeyHex,
+                                onClick = { selectedPubkey = peer.publicKeyHex }
+                            )
+                            Spacer(Modifier.width(8.dp))
+                            Column {
+                                Text(peer.displayName, style = MaterialTheme.typography.bodyMedium)
                                 Text(
-                                    key.toString(),
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    fontWeight = FontWeight.Medium
+                                    peer.publicKeyHex.take(16) + "…",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                         }
                     }
                 }
             }
-        }
-    }
+        },
+        confirmButton = {
+            Button(
+                onClick = { onConfirm(selectedPubkey) },
+                enabled = selectedPubkey.isNotEmpty()
+            ) { Text("Enable") }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+    )
 }
