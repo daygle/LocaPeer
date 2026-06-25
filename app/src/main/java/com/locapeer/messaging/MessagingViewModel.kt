@@ -23,10 +23,18 @@ import com.locapeer.nostr.NostrFilter
 import com.locapeer.nostr.NostrRelayClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.UUID
 import javax.inject.Inject
+
+@Serializable
+private data class ReadReceiptPayload(val eventIds: List<String>)
 
 @HiltViewModel
 class MessagingViewModel @Inject constructor(
@@ -39,6 +47,8 @@ class MessagingViewModel @Inject constructor(
     private val notificationManager: NotificationManager
 ) : ViewModel() {
 
+    private val json = Json { ignoreUnknownKeys = true }
+
     val conversations: StateFlow<List<ConversationSummary>?> =
         messageDao.getConversationSummaries()
             .combine(peerDao.getAllPeers()) { msgs, peers ->
@@ -50,11 +60,31 @@ class MessagingViewModel @Inject constructor(
             }
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    private val _typingPeers = MutableStateFlow<Map<String, Long>>(emptyMap())
+    /** Maps peerDeviceId (= pubkey) to the millisecond timestamp of the last typing event. */
+    val typingPeers: StateFlow<Map<String, Long>> = _typingPeers
+
+    private val typingClearJobs = mutableMapOf<String, Job>()
+    private var outgoingTypingJob: Job? = null
+
     fun getUnreadCount(peerId: String) = messageDao.getUnreadCount(peerId)
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
     fun markRead(peerId: String) {
-        viewModelScope.launch { messageDao.markAllReadForPeer(peerId) }
+        viewModelScope.launch {
+            val unread = messageDao.getUnreadFromPeer(peerId)
+            messageDao.markAllReadForPeer(peerId)
+            if (unread.isNotEmpty()) sendReadReceipt(peerId, unread.map { it.nostrEventId }.filter { it.isNotEmpty() })
+        }
+    }
+
+    /** Call on every keystroke in the chat input; debounces and sends one typing event per 3 s. */
+    fun onTyping(peerId: String) {
+        outgoingTypingJob?.cancel()
+        outgoingTypingJob = viewModelScope.launch {
+            delay(500)
+            sendTypingEvent(peerId)
+        }
     }
 
     fun sendMessage(peerId: String, content: String) {
@@ -82,7 +112,7 @@ class MessagingViewModel @Inject constructor(
                 content = content,
                 timestamp = System.currentTimeMillis(),
                 isMine = true,
-                deliveryState = DeliveryState.SENT.name,
+                deliveryState = DeliveryState.SENDING.name,
                 nostrEventId = event.id
             )
             messageDao.insert(msg)
@@ -95,14 +125,34 @@ class MessagingViewModel @Inject constructor(
             relayClient.subscribe(
                 "locapeer-dm-$myPubHex",
                 NostrFilter(
-                    kinds = listOf(NostrEventKind.ENCRYPTED_DM),
+                    kinds = listOf(
+                        NostrEventKind.ENCRYPTED_DM,
+                        NostrEventKind.READ_RECEIPT,
+                        NostrEventKind.TYPING
+                    ),
                     pTags = listOf(myPubHex)
                 )
             )
         }
+
         relayClient.events
-            .filter { it.kind == NostrEventKind.ENCRYPTED_DM }
-            .onEach { processIncomingDm(it) }
+            .onEach { event ->
+                when (event.kind) {
+                    NostrEventKind.ENCRYPTED_DM -> processIncomingDm(event)
+                    NostrEventKind.READ_RECEIPT -> processReadReceipt(event)
+                    NostrEventKind.TYPING -> processTypingEvent(event)
+                }
+            }
+            .launchIn(viewModelScope)
+
+        // Relay OK → SENDING → SENT (relay confirmed it received the event)
+        relayClient.okEvents
+            .onEach { confirmedEventId ->
+                messageDao.updateDeliveryStateByNostrEventId(
+                    confirmedEventId,
+                    DeliveryState.SENT.name
+                )
+            }
             .launchIn(viewModelScope)
     }
 
@@ -128,6 +178,67 @@ class MessagingViewModel @Inject constructor(
         )
         messageDao.insert(msg)
         sendMessageNotification(sender, plaintext)
+    }
+
+    private suspend fun processReadReceipt(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return  // only handle receipts from known peers
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+
+        val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
+        receipt.eventIds.forEach { eventId ->
+            messageDao.updateDeliveryStateByNostrEventId(eventId, DeliveryState.READ.name)
+        }
+    }
+
+    private fun processTypingEvent(event: NostrEvent) {
+        val fromPubkey = event.pubkey
+        viewModelScope.launch {
+            peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
+            _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
+            typingClearJobs[fromPubkey]?.cancel()
+            typingClearJobs[fromPubkey] = viewModelScope.launch {
+                delay(5_000)
+                _typingPeers.update { it - fromPubkey }
+            }
+        }
+    }
+
+    private suspend fun sendReadReceipt(peerPubkey: String, eventIds: List<String>) {
+        if (eventIds.isEmpty()) return
+        val peer = peerDao.getPeer(peerPubkey) ?: return
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val privBytes = crypto.hexToBytes(privHex)
+        val payload = json.encodeToString(ReadReceiptPayload(eventIds))
+        val encrypted = crypto.nip04Encrypt(privBytes, peer.publicKeyHex, payload)
+        val event = NostrEvent.build(
+            privKeyHex = privHex,
+            pubKeyHex = pubHex,
+            kind = NostrEventKind.READ_RECEIPT,
+            content = encrypted,
+            tags = listOf(listOf("p", peer.publicKeyHex)),
+            crypto = crypto
+        )
+        relayClient.publishEvent(event)
+    }
+
+    private suspend fun sendTypingEvent(peerPubkey: String) {
+        val peer = peerDao.getPeer(peerPubkey) ?: return
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val privBytes = crypto.hexToBytes(privHex)
+        val encrypted = crypto.nip04Encrypt(privBytes, peer.publicKeyHex, "{\"typing\":true}")
+        val event = NostrEvent.build(
+            privKeyHex = privHex,
+            pubKeyHex = pubHex,
+            kind = NostrEventKind.TYPING,
+            content = encrypted,
+            tags = listOf(listOf("p", peer.publicKeyHex)),
+            crypto = crypto
+        )
+        relayClient.publishEvent(event)
     }
 
     private fun sendMessageNotification(sender: PeerEntity, preview: String) {

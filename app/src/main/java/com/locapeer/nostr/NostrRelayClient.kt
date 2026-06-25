@@ -38,6 +38,10 @@ class NostrRelayClient @Inject constructor() {
     private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
     val events: SharedFlow<NostrEvent> = _events
 
+    private val _okEvents = MutableSharedFlow<String>(extraBufferCapacity = 64)
+    /** Emits Nostr event IDs that the relay accepted (OK true). */
+    val okEvents: SharedFlow<String> = _okEvents
+
     private val pendingMessages = ArrayDeque<String>()
     private val activeSubscriptions = mutableMapOf<String, String>()
 
@@ -132,7 +136,12 @@ class NostrRelayClient @Inject constructor() {
                     }
                     "EOSE" -> Log.d(TAG, "End of stored events for sub: ${arr[1]}")
                     "NOTICE" -> Log.d(TAG, "Relay notice: ${arr[1]}")
-                    "OK" -> Log.d(TAG, "Event accepted: ${arr[1]}")
+                    "OK" -> {
+                        val eventId = arr[1].jsonPrimitive.content
+                        val accepted = arr[2].jsonPrimitive.booleanOrNull ?: false
+                        if (accepted) scope.launch { _okEvents.emit(eventId) }
+                        Log.d(TAG, "Event ${if (accepted) "accepted" else "rejected"}: $eventId")
+                    }
                 }
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to parse relay message", e)

@@ -14,6 +14,8 @@ object NostrEventKind {
     const val ENCRYPTED_DM = 4
     const val HEARTBEAT = 1
     const val SOS_ALERT = 30000
+    const val READ_RECEIPT = 10001   // NIP-04-encrypted ack listing seen event IDs
+    const val TYPING = 10002         // NIP-04-encrypted ephemeral typing signal
 }
 
 @Serializable

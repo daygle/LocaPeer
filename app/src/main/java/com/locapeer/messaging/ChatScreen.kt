@@ -1,5 +1,6 @@
 package com.locapeer.messaging
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +34,8 @@ fun ChatScreen(
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val messages by vm.getMessages(peerId).collectAsState(initial = emptyList())
+    val typingPeers by vm.typingPeers.collectAsState()
+    val isPeerTyping = typingPeers.containsKey(peerId)
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
 
@@ -53,16 +56,33 @@ fun ChatScreen(
             )
         },
         bottomBar = {
-            ChatInputBar(
-                value = inputText,
-                onValueChange = { inputText = it },
-                onSend = {
-                    if (inputText.isNotBlank()) {
-                        vm.sendMessage(peerId, inputText.trim())
-                        inputText = ""
-                    }
+            Column {
+                AnimatedVisibility(
+                    visible = isPeerTyping,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    Text(
+                        "$peerName is typing…",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                    )
                 }
-            )
+                ChatInputBar(
+                    value = inputText,
+                    onValueChange = { newText ->
+                        inputText = newText
+                        if (newText.isNotBlank()) vm.onTyping(peerId)
+                    },
+                    onSend = {
+                        if (inputText.isNotBlank()) {
+                            vm.sendMessage(peerId, inputText.trim())
+                            inputText = ""
+                        }
+                    }
+                )
+            }
         }
     ) { padding ->
         LazyColumn(
@@ -127,7 +147,7 @@ private fun MessageBubble(msg: MessageEntity) {
                                 Icons.Default.Done to MaterialTheme.colorScheme.onSurfaceVariant
                             DeliveryState.READ.name ->
                                 Icons.Default.DoneAll to MaterialTheme.colorScheme.primary
-                            else ->
+                            else -> // DELIVERED
                                 Icons.Default.DoneAll to MaterialTheme.colorScheme.onSurfaceVariant
                         }
                         Icon(
