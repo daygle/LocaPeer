@@ -210,7 +210,7 @@ class HeartbeatService : LifecycleService() {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                // Global schedule gate (skip for SOS — always send those)
+                // Global schedule gate (skip for SOS - always send those)
                 if (!isSos && settings.globalScheduleEnabled) {
                     val active = SharingSchedule.isActive(
                         settings.globalScheduleDays,
@@ -240,7 +240,7 @@ class HeartbeatService : LifecycleService() {
                         if (!active) return@forEach
                     }
 
-                    // Apply precision — default to EXACT when no config exists
+                    // Apply precision - default to EXACT when no config exists
                     val (sendLat, sendLng) = if (
                         cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
                     ) {
