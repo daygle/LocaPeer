@@ -17,6 +17,7 @@ import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.geofence.GeofenceEngine
+import com.locapeer.proximity.ProximityEngine
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
@@ -49,6 +50,7 @@ class HeartbeatReceiver @Inject constructor(
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
+    private val proximityEngine: ProximityEngine,
     private val notificationManager: NotificationManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -110,6 +112,7 @@ class HeartbeatReceiver @Inject constructor(
             }
 
             geofenceEngine.evaluate(entity, prevHeartbeat)
+            proximityEngine.evaluate(entity)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to process heartbeat", e)
         }

@@ -23,6 +23,7 @@ import kotlin.math.roundToInt
 @Composable
 fun SettingsScreen(
     onNavigateToGeofences: () -> Unit,
+    onNavigateToProximityAlerts: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel()
 ) {
     val settings by vm.settings.collectAsState()
@@ -223,9 +224,13 @@ fun SettingsScreen(
             }
 
             item {
-                SettingsSection("Geofences") {
+                SettingsSection("Alerts") {
                     Button(onClick = onNavigateToGeofences, modifier = Modifier.fillMaxWidth()) {
                         Text("Manage Geofences")
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    Button(onClick = onNavigateToProximityAlerts, modifier = Modifier.fillMaxWidth()) {
+                        Text("Proximity Alerts")
                     }
                 }
             }

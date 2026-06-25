@@ -24,6 +24,7 @@ import com.locapeer.invite.ScanScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
+import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.settings.SettingsScreen
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
@@ -124,7 +125,10 @@ fun LocaPeerNavHost(
                 ScanScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(Screen.Settings.route) {
-                SettingsScreen(onNavigateToGeofences = { navController.navigate("geofences") })
+                SettingsScreen(
+                    onNavigateToGeofences = { navController.navigate("geofences") },
+                    onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") }
+                )
             }
             composable(
                 route = "chat/{peerId}/{peerName}",
@@ -151,6 +155,15 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 GeofenceListScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "proximity-alerts",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                ProximityAlertsScreen(onNavigateBack = { navController.popBackStack() })
             }
         }
     }
