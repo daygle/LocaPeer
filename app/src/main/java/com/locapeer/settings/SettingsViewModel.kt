@@ -19,6 +19,7 @@ import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.supervised.SupervisedModeManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -41,8 +42,11 @@ class SettingsViewModel @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val qrGenerator: QrCodeGenerator,
-    private val relayClient: NostrRelayClient
+    private val relayClient: NostrRelayClient,
+    private val supervisedModeManager: SupervisedModeManager
 ) : ViewModel() {
+
+    val unlockState = supervisedModeManager.unlockState
 
     val settings: StateFlow<AppSettings> = prefs.settings
         .stateIn(viewModelScope, SharingStarted.Lazily, AppSettings())
@@ -180,24 +184,22 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun enableSupervisedMode(pin: String) {
+    fun enableSupervisedMode(supervisorPubkey: String) {
         viewModelScope.launch {
-            val hash = crypto.bytesToHex(crypto.sha256(pin.toByteArray(Charsets.UTF_8)))
-            prefs.setSupervisedMode(enabled = true, pinHash = hash)
+            prefs.setSupervisedMode(enabled = true, supervisorPubkey = supervisorPubkey)
         }
     }
 
     fun disableSupervisedMode() {
-        viewModelScope.launch { prefs.clearSupervisedMode() }
-    }
-
-    fun verifySupervisorPin(pin: String, onResult: (Boolean) -> Unit) {
         viewModelScope.launch {
-            val s = prefs.settings.first()
-            val hash = crypto.bytesToHex(crypto.sha256(pin.toByteArray(Charsets.UTF_8)))
-            onResult(hash == s.supervisorPinHash)
+            prefs.clearSupervisedMode()
+            supervisedModeManager.reset()
         }
     }
+
+    fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
+
+    fun resetUnlockState() = supervisedModeManager.reset()
 
     fun setGlobalScheduleEnabled(enabled: Boolean) {
         viewModelScope.launch { prefs.setGlobalScheduleEnabled(enabled) }

@@ -9,7 +9,11 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,6 +23,7 @@ import com.locapeer.messaging.MessagingViewModel
 import com.locapeer.onboarding.OnboardingScreen
 import com.locapeer.onboarding.OnboardingViewModel
 import com.locapeer.settings.AppPreferences
+import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.ui.LocaPeerNavHost
 import com.locapeer.ui.theme.LocaPeerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +35,7 @@ class MainActivity : ComponentActivity() {
 
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var keyManager: KeyManager
+    @Inject lateinit var approvalManager: SupervisionApprovalManager
 
     private val pendingNavTarget = mutableStateOf<NavTarget?>(null)
 
@@ -43,6 +49,22 @@ class MainActivity : ComponentActivity() {
                     .map { it.onboardingComplete }
                     .collectAsState(initial = null)
                 val navTarget by pendingNavTarget
+                val pendingApproval by approvalManager.pending.collectAsState()
+
+                if (pendingApproval != null) {
+                    val req = pendingApproval!!
+                    AlertDialog(
+                        onDismissRequest = {},
+                        title = { Text("Supervision Request") },
+                        text = { Text("\"${req.deviceName}\" is requesting access to their settings. Allow?") },
+                        confirmButton = {
+                            Button(onClick = { approvalManager.respond(true) }) { Text("Approve") }
+                        },
+                        dismissButton = {
+                            OutlinedButton(onClick = { approvalManager.respond(false) }) { Text("Deny") }
+                        }
+                    )
+                }
 
                 Crossfade(
                     targetState = onboardingComplete,

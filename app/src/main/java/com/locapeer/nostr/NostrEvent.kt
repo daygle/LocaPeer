@@ -19,6 +19,8 @@ object NostrEventKind {
     const val PURGE_REQUEST = 10003         // NIP-04-encrypted request to delete old heartbeats
     const val MESSAGE_PURGE_REQUEST = 10004 // NIP-04-encrypted request to delete old messages
     const val DELIVERY_ACK = 10005          // NIP-04-encrypted delivery acknowledgment
+    const val SUPERVISED_UNLOCK_REQUEST = 10006  // NIP-04-encrypted unlock request to supervisor
+    const val SUPERVISED_UNLOCK_RESPONSE = 10007 // NIP-04-encrypted unlock response from supervisor
 }
 
 @Serializable

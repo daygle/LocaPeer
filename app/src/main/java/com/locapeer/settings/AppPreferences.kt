@@ -38,10 +38,10 @@ data class AppSettings(
      * 0 = no automatic deletion (keep forever).
      */
     val messageRetentionDays: Int = 0,
-    /** When true, Settings are locked behind supervisorPinHash. */
+    /** When true, Settings are locked behind remote supervisor approval. */
     val supervisedModeEnabled: Boolean = false,
-    /** SHA-256 hex of the supervisor PIN. Empty when supervised mode is off. */
-    val supervisorPinHash: String = ""
+    /** Public key hex of the supervisor peer. Empty when supervised mode is off. */
+    val supervisorPubkey: String = ""
 )
 
 @Singleton
@@ -63,7 +63,7 @@ class AppPreferences @Inject constructor(
     private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
     private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
-    private val KEY_SUPERVISOR_PIN_HASH = stringPreferencesKey("supervisor_pin_hash")
+    private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
         AppSettings(
@@ -82,7 +82,7 @@ class AppPreferences @Inject constructor(
             retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
             messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
             supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
-            supervisorPinHash = prefs[KEY_SUPERVISOR_PIN_HASH] ?: ""
+            supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: ""
         )
     }
 
@@ -110,17 +110,17 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { it[KEY_MSG_RETENTION_DAYS] = days }
     }
 
-    suspend fun setSupervisedMode(enabled: Boolean, pinHash: String) {
+    suspend fun setSupervisedMode(enabled: Boolean, supervisorPubkey: String) {
         context.settingsStore.edit {
             it[KEY_SUPERVISED_MODE] = enabled
-            it[KEY_SUPERVISOR_PIN_HASH] = pinHash
+            it[KEY_SUPERVISOR_PUBKEY] = supervisorPubkey
         }
     }
 
     suspend fun clearSupervisedMode() {
         context.settingsStore.edit {
             it[KEY_SUPERVISED_MODE] = false
-            it[KEY_SUPERVISOR_PIN_HASH] = ""
+            it[KEY_SUPERVISOR_PUBKEY] = ""
         }
     }
 
