@@ -1,23 +1,23 @@
 # LocaPeer
 
-A peer-to-peer family location tracking Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no central servers — just encrypted location events sent directly between devices over a Nostr relay.
+A peer-to-peer family location tracking Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no central servers - just encrypted location events sent directly between devices over a Nostr relay.
 
 ## Features
 
-- **Real-time location sharing** — Broadcast your location on a schedule or on-demand; subscribers see it live on their map
-- **End-to-end encrypted** — All location data and messages use NIP-04 (AES-256-CBC) encryption; the relay never sees plaintext
-- **SOS alerts** — One-tap emergency broadcast with your current coordinates, delivered as a high-priority notification
-- **Geofencing** — Set circular zones on the map and receive alerts when a tracked person enters or leaves
-- **Proximity alerts** — Get notified when a tracked person comes within a configurable distance of you
-- **Encrypted messaging** — Fully private direct messages between peers, with delivery receipts and read receipts
-- **Location history** — Browse past location data by day in a list or on an interactive OpenStreetMap view
-- **Privacy controls** — Set retention windows; old location data and messages are automatically purged from peers' devices
-- **Supervised mode** — Lock settings behind remote Nostr-based approval, ideal for parental controls
+- **Real-time location sharing** - Broadcast your location on a schedule or on-demand; subscribers see it live on their map
+- **End-to-end encrypted** - All location data and messages use NIP-04 (AES-256-CBC) encryption; the relay never sees plaintext
+- **SOS alerts** - One-tap emergency broadcast with your current coordinates, delivered as a high-priority notification
+- **Geofencing** - Set circular zones on the map and receive alerts when a tracked person enters or leaves
+- **Proximity alerts** - Get notified when a tracked person comes within a configurable distance of you
+- **Encrypted messaging** - Fully private direct messages between peers, with delivery receipts and read receipts
+- **Location history** - Browse past location data by day in a list or on an interactive OpenStreetMap view
+- **Privacy controls** - Set retention windows; old location data and messages are automatically purged from peers' devices
+- **Supervised mode** - Lock settings behind remote Nostr-based approval, ideal for parental controls
 
 ## How it works
 
 ### Identities
-Each device generates a Nostr keypair on first launch. Your public key is your identity — no email, phone number, or account required.
+Each device generates a Nostr keypair on first launch. Your public key is your identity - no email, phone number, or account required.
 
 ### Connecting
 Share your **Invite QR code** (found in Settings → My Profile). When someone scans it, their device saves your public key and starts subscribing to your encrypted location events.
@@ -26,7 +26,7 @@ Share your **Invite QR code** (found in Settings → My Profile). When someone s
 When broadcasting is enabled, the app sends a `HEARTBEAT` event (kind 1) encrypted with each subscriber's public key. Events are published to the configured Nostr relay. Subscribers decrypt and store heartbeats locally in a Room database.
 
 ### Supervised mode
-Enable Supervised Mode to lock the Settings screen. Access requires the designated supervisor to approve a request in real time from their own device — no PIN stored anywhere.
+Enable Supervised Mode to lock the Settings screen. Access requires the designated supervisor to approve a request in real time from their own device - no PIN stored anywhere.
 
 ## Custom Nostr event kinds
 
@@ -58,12 +58,12 @@ Enable Supervised Mode to lock the Settings screen. Access requires the designat
 
 ### Key components
 
-- **`HeartbeatService`** — Foreground service; fires location pings on a motion-adaptive schedule
-- **`HeartbeatReceiver`** — Singleton that subscribes to all incoming Nostr events and routes them to the appropriate handlers
-- **`NostrRelayClient`** — WebSocket client with built-in deduplication; emits a `SharedFlow<NostrEvent>`
-- **`GeofenceEngine`** / **`ProximityEngine`** — Evaluate each incoming heartbeat against saved zones/thresholds and fire local notifications
-- **`SupervisedModeManager`** — Manages the unlock request lifecycle (Idle → Requesting → Approved/Denied/TimedOut) on the managed device
-- **`SupervisionApprovalManager`** — Holds the pending unlock request on the supervisor device until the user responds
+- **`HeartbeatService`** - Foreground service; fires location pings on a motion-adaptive schedule
+- **`HeartbeatReceiver`** - Singleton that subscribes to all incoming Nostr events and routes them to the appropriate handlers
+- **`NostrRelayClient`** - WebSocket client with built-in deduplication; emits a `SharedFlow<NostrEvent>`
+- **`GeofenceEngine`** / **`ProximityEngine`** - Evaluate each incoming heartbeat against saved zones/thresholds and fire local notifications
+- **`SupervisedModeManager`** - Manages the unlock request lifecycle (Idle → Requesting → Approved/Denied/TimedOut) on the managed device
+- **`SupervisionApprovalManager`** - Holds the pending unlock request on the supervisor device until the user responds
 
 ## Building
 
@@ -80,15 +80,15 @@ cd LocaPeer
 
 The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
 
-**Default relay**: `wss://relay.damus.io` — configurable in Settings → Relay.
+**Default relay**: `wss://relay.damus.io` - configurable in Settings → Relay.
 
 ## Privacy
 
 - Your private key never leaves the device
-- Location events are encrypted individually for each subscriber — only the intended recipient can decrypt them
+- Location events are encrypted individually for each subscriber - only the intended recipient can decrypt them
 - The Nostr relay acts as a dumb message bus; it stores ciphertext only
 - Retention settings automatically send purge requests to peers, deleting your data on their devices
-- Supervised mode approval travels over the same encrypted channel — no credentials are stored or transmitted in plaintext
+- Supervised mode approval travels over the same encrypted channel - no credentials are stored or transmitted in plaintext
 
 ## Contributing
 
