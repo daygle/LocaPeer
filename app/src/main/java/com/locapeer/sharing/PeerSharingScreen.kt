@@ -132,7 +132,7 @@ fun PeerSharingScreen(
                     PrecisionOption(
                         icon = Icons.Default.GpsFixed,
                         title = "Exact GPS",
-                        subtitle = "Precise coordinates — within a few metres",
+                        subtitle = "Precise coordinates - within a few metres",
                         selected = precisionMode == PrecisionMode.EXACT.name,
                         enabled = sharingEnabled,
                         onClick = { vm.setPrecisionMode(PrecisionMode.EXACT) }
@@ -141,7 +141,7 @@ fun PeerSharingScreen(
                     PrecisionOption(
                         icon = Icons.Default.LocationCity,
                         title = "Suburb (~1 km)",
-                        subtitle = "Neighbourhood-level only — hides your exact spot",
+                        subtitle = "Neighbourhood-level only - hides your exact spot",
                         selected = precisionMode == PrecisionMode.SUBURB.name,
                         enabled = sharingEnabled,
                         onClick = { vm.setPrecisionMode(PrecisionMode.SUBURB) }
