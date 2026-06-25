@@ -257,7 +257,8 @@ class HeartbeatService : LifecycleService() {
                         accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
                         battery = battery,
                         motionState = currentMotionState.name,
-                        isSos = isSos
+                        isSos = isSos,
+                        retentionDays = settings.retentionDays
                     )
                     val payloadJson = Json.encodeToString(payload)
 

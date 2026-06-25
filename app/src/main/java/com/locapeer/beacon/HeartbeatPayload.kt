@@ -12,5 +12,7 @@ data class HeartbeatPayload(
     val accuracy: Float,
     val battery: Int,
     val motionState: String,
-    val isSos: Boolean = false
+    val isSos: Boolean = false,
+    /** Days to retain this device's heartbeats on the receiver. 0 = no expiry (default). */
+    val retentionDays: Int = 0
 )

@@ -27,7 +27,12 @@ data class AppSettings(
     /** Bitmask: bit 0 = Monday … bit 6 = Sunday. Default = all days (127). */
     val globalScheduleDays: Int = 0b1111111,
     val globalScheduleStartMinute: Int = 0,
-    val globalScheduleEndMinute: Int = 1439
+    val globalScheduleEndMinute: Int = 1439,
+    /**
+     * How many days subscribers should keep this device's location history.
+     * 0 = no automatic deletion (keep forever).
+     */
+    val retentionDays: Int = 30
 )
 
 @Singleton
@@ -46,6 +51,7 @@ class AppPreferences @Inject constructor(
     private val KEY_GLOBAL_SCHEDULE_DAYS = intPreferencesKey("global_schedule_days")
     private val KEY_GLOBAL_SCHEDULE_START = intPreferencesKey("global_schedule_start")
     private val KEY_GLOBAL_SCHEDULE_END = intPreferencesKey("global_schedule_end")
+    private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
         AppSettings(
@@ -60,7 +66,8 @@ class AppPreferences @Inject constructor(
             globalScheduleEnabled = prefs[KEY_GLOBAL_SCHEDULE_ENABLED] ?: false,
             globalScheduleDays = prefs[KEY_GLOBAL_SCHEDULE_DAYS] ?: 0b1111111,
             globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
-            globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439
+            globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
+            retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30
         )
     }
 
@@ -78,6 +85,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setOnboardingComplete(complete: Boolean) {
         context.settingsStore.edit { it[KEY_ONBOARDING_COMPLETE] = complete }
+    }
+
+    suspend fun setRetentionDays(days: Int) {
+        context.settingsStore.edit { it[KEY_RETENTION_DAYS] = days }
     }
 
     suspend fun setGlobalScheduleEnabled(enabled: Boolean) {

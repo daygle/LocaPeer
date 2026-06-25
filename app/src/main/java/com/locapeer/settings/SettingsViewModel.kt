@@ -8,12 +8,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.beacon.HeartbeatService
 import com.locapeer.beacon.ACTION_STOP
+import com.locapeer.beacon.PurgeRequestPayload
+import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
+import com.locapeer.nostr.NostrEvent
+import com.locapeer.nostr.NostrEventKind
+import com.locapeer.nostr.NostrRelayClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -31,10 +36,12 @@ class SettingsViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     val prefs: AppPreferences,
     private val keyManager: KeyManager,
+    private val crypto: CryptoUtils,
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
-    private val qrGenerator: QrCodeGenerator
+    private val qrGenerator: QrCodeGenerator,
+    private val relayClient: NostrRelayClient
 ) : ViewModel() {
 
     val settings: StateFlow<AppSettings> = prefs.settings
@@ -102,6 +109,40 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             val key = keyManager.exportPrivateKeyHex()
             onKey(key)
+        }
+    }
+
+    fun setRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setRetentionDays(days) }
+    }
+
+    /** Immediately sends a PURGE_REQUEST Nostr event to all current subscribers. */
+    fun sendPurgeNow() {
+        viewModelScope.launch {
+            val settings = prefs.settings.first()
+            if (settings.retentionDays == 0) return@launch
+            val deleteBeforeMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val payload = Json.encodeToString(
+                PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
+            )
+            val subscribers = peerDao.getSubscribers().first()
+            subscribers.forEach { sub ->
+                val encrypted = crypto.nip04Encrypt(
+                    senderPrivKey = crypto.hexToBytes(privHex),
+                    recipientXOnlyHex = sub.publicKeyHex,
+                    plaintext = payload
+                )
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.PURGE_REQUEST,
+                    content = encrypted,
+                    tags = listOf(listOf("p", sub.publicKeyHex)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            }
         }
     }
 

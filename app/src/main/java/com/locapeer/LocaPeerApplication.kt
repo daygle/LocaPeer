@@ -5,6 +5,7 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.locapeer.subscriber.HeartbeatReceiver
 import com.locapeer.subscriber.MissedHeartbeatWorker
+import com.locapeer.subscriber.RetentionEnforcementWorker
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -24,5 +25,6 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         heartbeatReceiver.start()
         val workManager = androidx.work.WorkManager.getInstance(this)
         MissedHeartbeatWorker.schedule(workManager)
+        RetentionEnforcementWorker.schedule(workManager)
     }
 }

@@ -317,6 +317,43 @@ fun SettingsScreen(
             }
 
             item {
+                SettingsSection("Privacy") {
+                    Text(
+                        "Control how long your location history is kept on others' devices.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    Text(
+                        "Remote history retention",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    RetentionSelector(
+                        selected = settings.retentionDays,
+                        onSelected = { vm.setRetentionDays(it) }
+                    )
+                    if (settings.retentionDays > 0) {
+                        Spacer(Modifier.height(12.dp))
+                        OutlinedButton(
+                            onClick = { vm.sendPurgeNow() },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Delete my history from peers' devices now")
+                        }
+                        Spacer(Modifier.height(4.dp))
+                        Text(
+                            "Sends an immediate deletion request to all current subscribers. " +
+                            "Historical data older than ${settings.retentionDays} day(s) will be removed.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
+
+            item {
                 SettingsSection("Data") {
                     OutlinedButton(
                         onClick = { showClearLocationConfirm = true },
@@ -457,6 +494,40 @@ fun SettingsScreen(
             onConfirm = { vm.updateGlobalSchedule(endMinute = it); showGlobalScheduleEndPicker = false },
             onDismiss = { showGlobalScheduleEndPicker = false }
         )
+    }
+}
+
+private val RETENTION_OPTIONS = listOf(
+    0 to "Forever",
+    1 to "1 day",
+    3 to "3 days",
+    7 to "7 days",
+    14 to "14 days",
+    30 to "30 days",
+    90 to "90 days"
+)
+
+@Composable
+private fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
+    val rows = RETENTION_OPTIONS.chunked(4)
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        rows.forEach { rowItems ->
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                rowItems.forEach { (days, label) ->
+                    FilterChip(
+                        selected = selected == days,
+                        onClick = { onSelected(days) },
+                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                // Fill remaining slots in last row so weights stay consistent
+                repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
+            }
+        }
     }
 }
 

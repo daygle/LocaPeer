@@ -11,6 +11,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.beacon.HeartbeatPayload
+import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
@@ -65,15 +66,37 @@ class HeartbeatReceiver @Inject constructor(
             relayClient.subscribe(
                 SUB_ID,
                 NostrFilter(
-                    kinds = listOf(NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT),
+                    kinds = listOf(
+                        NostrEventKind.HEARTBEAT,
+                        NostrEventKind.SOS_ALERT,
+                        NostrEventKind.PURGE_REQUEST
+                    ),
                     pTags = listOf(pubHex)
                 )
             )
         }
 
         relayClient.events
-            .onEach { event -> processEvent(event) }
+            .onEach { event ->
+                when (event.kind) {
+                    NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
+                    NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
+                }
+            }
             .launchIn(scope)
+    }
+
+    private suspend fun processPurgeRequest(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return   // only respect known broadcasters
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's data
+        heartbeatDao.deleteOlderThanForDevice(payload.deviceId, payload.deleteOlderThanMs)
+        Log.d(TAG, "Purged ${payload.deviceId} heartbeats before ${payload.deleteOlderThanMs}ms")
     }
 
     private suspend fun processEvent(event: NostrEvent) {
@@ -106,6 +129,12 @@ class HeartbeatReceiver @Inject constructor(
                 isSos = payload.isSos
             )
             heartbeatDao.insert(entity)
+
+            // Enforce broadcaster's own retention preference on every heartbeat
+            if (payload.retentionDays > 0) {
+                val cutoff = System.currentTimeMillis() - payload.retentionDays * 24 * 3600 * 1000L
+                heartbeatDao.deleteOlderThanForDevice(payload.deviceId, cutoff)
+            }
 
             if (payload.isSos) {
                 sendSosNotification(broadcaster.displayName, payload)
