@@ -37,7 +37,11 @@ data class AppSettings(
      * How many days peers should keep messages sent by this device.
      * 0 = no automatic deletion (keep forever).
      */
-    val messageRetentionDays: Int = 0
+    val messageRetentionDays: Int = 0,
+    /** When true, Settings are locked behind supervisorPinHash. */
+    val supervisedModeEnabled: Boolean = false,
+    /** SHA-256 hex of the supervisor PIN. Empty when supervised mode is off. */
+    val supervisorPinHash: String = ""
 )
 
 @Singleton
@@ -58,6 +62,8 @@ class AppPreferences @Inject constructor(
     private val KEY_GLOBAL_SCHEDULE_END = intPreferencesKey("global_schedule_end")
     private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
     private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
+    private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
+    private val KEY_SUPERVISOR_PIN_HASH = stringPreferencesKey("supervisor_pin_hash")
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
         AppSettings(
@@ -74,7 +80,9 @@ class AppPreferences @Inject constructor(
             globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
             globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
             retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
-            messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0
+            messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
+            supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
+            supervisorPinHash = prefs[KEY_SUPERVISOR_PIN_HASH] ?: ""
         )
     }
 
@@ -100,6 +108,20 @@ class AppPreferences @Inject constructor(
 
     suspend fun setMessageRetentionDays(days: Int) {
         context.settingsStore.edit { it[KEY_MSG_RETENTION_DAYS] = days }
+    }
+
+    suspend fun setSupervisedMode(enabled: Boolean, pinHash: String) {
+        context.settingsStore.edit {
+            it[KEY_SUPERVISED_MODE] = enabled
+            it[KEY_SUPERVISOR_PIN_HASH] = pinHash
+        }
+    }
+
+    suspend fun clearSupervisedMode() {
+        context.settingsStore.edit {
+            it[KEY_SUPERVISED_MODE] = false
+            it[KEY_SUPERVISOR_PIN_HASH] = ""
+        }
     }
 
     suspend fun setGlobalScheduleEnabled(enabled: Boolean) {
