@@ -5,7 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.BatteryStd
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Warning
@@ -14,10 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.data.entity.HeartbeatEntity
-import com.locapeer.data.entity.PeerEntity
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -34,11 +40,13 @@ fun HistoryReportScreen(
     val selectedPeerId by vm.selectedPeerId.collectAsState()
     val selectedDayStart by vm.selectedDayStart.collectAsState()
     val heartbeats by vm.heartbeats.collectAsState()
+    val addresses by vm.addresses.collectAsState()
 
     val selectedPeer = broadcasters.find { it.deviceId == selectedPeerId }
 
     var showDatePicker by remember { mutableStateOf(false) }
     var peerDropdownExpanded by remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableIntStateOf(0) }
 
     val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault()) }
     val timeFormat = remember { SimpleDateFormat("HH:mm:ss", Locale.getDefault()) }
@@ -59,114 +67,113 @@ fun HistoryReportScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = 16.dp)
         ) {
-            Spacer(Modifier.height(12.dp))
-
-            // Peer selector
             if (broadcasters.isEmpty()) {
-                Text(
-                    "No tracked people found. Scan an invite QR code to start tracking someone.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                return@Column
-            }
-
-            ExposedDropdownMenuBox(
-                expanded = peerDropdownExpanded,
-                onExpandedChange = { peerDropdownExpanded = it }
-            ) {
-                OutlinedTextField(
-                    value = selectedPeer?.displayName ?: "Select person",
-                    onValueChange = {},
-                    readOnly = true,
-                    label = { Text("Person") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
-                    modifier = Modifier
-                        .menuAnchor()
-                        .fillMaxWidth()
-                )
-                ExposedDropdownMenu(
-                    expanded = peerDropdownExpanded,
-                    onDismissRequest = { peerDropdownExpanded = false }
-                ) {
-                    broadcasters.forEach { peer ->
-                        DropdownMenuItem(
-                            text = { Text(peer.displayName) },
-                            onClick = {
-                                vm.selectPeer(peer.deviceId)
-                                peerDropdownExpanded = false
-                            }
-                        )
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            // Date navigation row
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp, vertical = 4.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { vm.prevDay() }) {
-                        Icon(Icons.Default.ChevronLeft, contentDescription = "Previous day")
-                    }
-                    TextButton(
-                        onClick = { showDatePicker = true },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text(
-                            dateFormat.format(Date(selectedDayStart)),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                    IconButton(
-                        onClick = { vm.nextDay() },
-                        enabled = !vm.isToday()
-                    ) {
-                        Icon(Icons.Default.ChevronRight, contentDescription = "Next day")
-                    }
-                }
-            }
-
-            Spacer(Modifier.height(12.dp))
-
-            if (heartbeats.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            "No location data for this day",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.height(4.dp))
-                        Text(
-                            "${heartbeats.size} pings recorded",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        "No tracked people found.\nScan an invite QR code to start tracking someone.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(32.dp)
+                    )
                 }
             } else {
-                Text(
-                    "${heartbeats.size} ping${if (heartbeats.size == 1) "" else "s"} recorded",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Spacer(Modifier.height(8.dp))
-                LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    items(heartbeats, key = { it.id }) { ping ->
-                        HistoryPingCard(ping = ping, timeFormat = timeFormat)
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                Spacer(Modifier.height(12.dp))
+
+                ExposedDropdownMenuBox(
+                    expanded = peerDropdownExpanded,
+                    onExpandedChange = { peerDropdownExpanded = it }
+                ) {
+                    OutlinedTextField(
+                        value = selectedPeer?.displayName ?: "Select person",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Person") },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
+                        modifier = Modifier
+                            .menuAnchor()
+                            .fillMaxWidth()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = peerDropdownExpanded,
+                        onDismissRequest = { peerDropdownExpanded = false }
+                    ) {
+                        broadcasters.forEach { peer ->
+                            DropdownMenuItem(
+                                text = { Text(peer.displayName) },
+                                onClick = {
+                                    vm.selectPeer(peer.deviceId)
+                                    peerDropdownExpanded = false
+                                }
+                            )
+                        }
                     }
-                    item { Spacer(Modifier.height(16.dp)) }
                 }
+
+                Spacer(Modifier.height(12.dp))
+
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 4.dp, vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(onClick = { vm.prevDay() }) {
+                            Icon(Icons.Default.ChevronLeft, contentDescription = "Previous day")
+                        }
+                        TextButton(
+                            onClick = { showDatePicker = true },
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            Text(
+                                dateFormat.format(Date(selectedDayStart)),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        IconButton(
+                            onClick = { vm.nextDay() },
+                            enabled = !vm.isToday()
+                        ) {
+                            Icon(Icons.Default.ChevronRight, contentDescription = "Next day")
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(8.dp))
             }
+
+            TabRow(selectedTabIndex = selectedTab) {
+                Tab(
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 },
+                    text = { Text("List") }
+                )
+                Tab(
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 },
+                    text = { Text("Map") }
+                )
+            }
+
+            when (selectedTab) {
+                0 -> HistoryListTab(
+                    heartbeats = heartbeats,
+                    addresses = addresses,
+                    timeFormat = timeFormat,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 16.dp)
+                )
+                1 -> HistoryMapTab(
+                    heartbeats = heartbeats,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+            } // end else
         }
     }
 
@@ -183,7 +190,123 @@ fun HistoryReportScreen(
 }
 
 @Composable
-private fun HistoryPingCard(ping: HeartbeatEntity, timeFormat: SimpleDateFormat) {
+private fun HistoryListTab(
+    heartbeats: List<HeartbeatEntity>,
+    addresses: Map<Long, String>,
+    timeFormat: SimpleDateFormat,
+    modifier: Modifier = Modifier
+) {
+    if (heartbeats.isEmpty()) {
+        Box(modifier = modifier, contentAlignment = Alignment.Center) {
+            Text(
+                "No location data for this day",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    } else {
+        Column(modifier = modifier) {
+            Spacer(Modifier.height(8.dp))
+            Text(
+                "${heartbeats.size} ping${if (heartbeats.size == 1) "" else "s"} recorded",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Spacer(Modifier.height(8.dp))
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                items(heartbeats, key = { it.id }) { ping ->
+                    HistoryPingCard(
+                        ping = ping,
+                        address = addresses[ping.id],
+                        timeFormat = timeFormat
+                    )
+                }
+                item { Spacer(Modifier.height(16.dp)) }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HistoryMapTab(
+    heartbeats: List<HeartbeatEntity>,
+    modifier: Modifier = Modifier
+) {
+    if (heartbeats.isEmpty()) {
+        Box(modifier = modifier, contentAlignment = Alignment.Center) {
+            Text(
+                "No location data for this day",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        return
+    }
+
+    AndroidView(
+        factory = { ctx ->
+            Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
+            MapView(ctx).apply {
+                setTileSource(TileSourceFactory.MAPNIK)
+                setBuiltInZoomControls(false)
+                setMultiTouchControls(true)
+                isVerticalMapRepetitionEnabled = false
+            }
+        },
+        update = { mapView ->
+            mapView.overlays.clear()
+
+            if (heartbeats.isNotEmpty()) {
+                val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
+
+                val polyline = Polyline().apply {
+                    setPoints(points)
+                    outlinePaint.color = android.graphics.Color.argb(200, 66, 133, 244)
+                    outlinePaint.strokeWidth = 6f
+                    outlinePaint.isAntiAlias = true
+                }
+                mapView.overlays.add(polyline)
+
+                heartbeats.firstOrNull()?.let { first ->
+                    val marker = Marker(mapView).apply {
+                        position = GeoPoint(first.lat, first.lng)
+                        title = "Start"
+                        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                        infoWindow = null
+                    }
+                    mapView.overlays.add(marker)
+                }
+
+                if (heartbeats.size > 1) {
+                    heartbeats.lastOrNull()?.let { last ->
+                        val marker = Marker(mapView).apply {
+                            position = GeoPoint(last.lat, last.lng)
+                            title = "Latest"
+                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                            infoWindow = null
+                        }
+                        mapView.overlays.add(marker)
+                    }
+                }
+
+                val centerLat = heartbeats.map { it.lat }.average()
+                val centerLng = heartbeats.map { it.lng }.average()
+                mapView.controller.setCenter(GeoPoint(centerLat, centerLng))
+                mapView.controller.setZoom(14.0)
+            }
+
+            mapView.invalidate()
+        },
+        modifier = modifier
+    )
+}
+
+@Composable
+private fun HistoryPingCard(
+    ping: HeartbeatEntity,
+    address: String?,
+    timeFormat: SimpleDateFormat
+) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -198,7 +321,6 @@ private fun HistoryPingCard(ping: HeartbeatEntity, timeFormat: SimpleDateFormat)
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Time column
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.width(64.dp)) {
                 Text(
                     timeFormat.format(Date(ping.timestamp)),
@@ -218,15 +340,29 @@ private fun HistoryPingCard(ping: HeartbeatEntity, timeFormat: SimpleDateFormat)
                 }
             }
 
-            VerticalDivider(modifier = Modifier.height(48.dp))
+            VerticalDivider(modifier = Modifier.height(56.dp))
 
-            // Location + status column
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    "%.5f°, %.5f°".format(ping.lat, ping.lng),
-                    style = MaterialTheme.typography.bodySmall,
-                    fontWeight = FontWeight.Medium
-                )
+                if (!address.isNullOrBlank()) {
+                    Text(
+                        address,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        maxLines = 2
+                    )
+                    Spacer(Modifier.height(2.dp))
+                    Text(
+                        "%.5f°, %.5f°".format(ping.lat, ping.lng),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    Text(
+                        "%.5f°, %.5f°".format(ping.lat, ping.lng),
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
                 Spacer(Modifier.height(4.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
@@ -259,10 +395,7 @@ private fun MotionChip(motionState: String) {
         "DRIVING" -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
-    Surface(
-        color = color,
-        shape = MaterialTheme.shapes.small
-    ) {
+    Surface(color = color, shape = MaterialTheme.shapes.small) {
         Text(
             label,
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),

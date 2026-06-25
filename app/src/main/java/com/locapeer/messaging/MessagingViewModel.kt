@@ -27,14 +27,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.UUID
 import javax.inject.Inject
-
-@Serializable
-private data class ReadReceiptPayload(val eventIds: List<String>)
 
 @HiltViewModel
 class MessagingViewModel @Inject constructor(
@@ -128,7 +124,8 @@ class MessagingViewModel @Inject constructor(
                     kinds = listOf(
                         NostrEventKind.ENCRYPTED_DM,
                         NostrEventKind.READ_RECEIPT,
-                        NostrEventKind.TYPING
+                        NostrEventKind.TYPING,
+                        NostrEventKind.DELIVERY_ACK
                     ),
                     pTags = listOf(myPubHex)
                 )
@@ -141,6 +138,7 @@ class MessagingViewModel @Inject constructor(
                     NostrEventKind.ENCRYPTED_DM -> processIncomingDm(event)
                     NostrEventKind.READ_RECEIPT -> processReadReceipt(event)
                     NostrEventKind.TYPING -> processTypingEvent(event)
+                    NostrEventKind.DELIVERY_ACK -> processDeliveryAck(event)
                 }
             }
             .launchIn(viewModelScope)
@@ -167,7 +165,7 @@ class MessagingViewModel @Inject constructor(
         } catch (e: Exception) { return }
 
         val msg = MessageEntity(
-            id = UUID.randomUUID().toString(),
+            id = event.id,
             peerId = event.pubkey,
             senderPublicKeyHex = event.pubkey,
             content = plaintext,
@@ -205,6 +203,17 @@ class MessagingViewModel @Inject constructor(
                 _typingPeers.update { it - fromPubkey }
             }
         }
+    }
+
+    private suspend fun processDeliveryAck(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
+        messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
     }
 
     private suspend fun sendReadReceipt(peerPubkey: String, eventIds: List<String>) {

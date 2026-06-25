@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -766,6 +768,7 @@ private fun SelectionContainer(content: @Composable () -> Unit) {
 private fun SupervisedPinGate(vm: SettingsViewModel, onUnlocked: () -> Unit) {
     var pin by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    var showForgotDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -795,7 +798,7 @@ private fun SupervisedPinGate(vm: SettingsViewModel, onUnlocked: () -> Unit) {
         if (errorMessage != null) {
             Text(errorMessage!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
         } else {
-            Spacer(Modifier.height(20.dp))  // keep layout stable
+            Spacer(Modifier.height(20.dp))
         }
         Spacer(Modifier.height(16.dp))
         PinPad(
@@ -817,6 +820,31 @@ private fun SupervisedPinGate(vm: SettingsViewModel, onUnlocked: () -> Unit) {
             },
             onBackspace = { if (pin.isNotEmpty()) pin = pin.dropLast(1) }
         )
+        Spacer(Modifier.height(24.dp))
+        TextButton(onClick = { showForgotDialog = true }) {
+            Text(
+                "Forgot PIN?",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+
+    if (showForgotDialog) {
+        AlertDialog(
+            onDismissRequest = { showForgotDialog = false },
+            title = { Text("Forgot Supervisor PIN?") },
+            text = {
+                Text(
+                    "Contact the device's supervisor to get the PIN.\n\n" +
+                    "To fully reset supervised mode, go to Android Settings → Apps → LocaPeer → " +
+                    "Storage → Clear Data. This will erase all app data including your identity keys."
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { showForgotDialog = false }) { Text("OK") }
+            }
+        )
     }
 }
 
@@ -826,59 +854,112 @@ private fun SupervisedModeSetupDialog(onConfirm: (String) -> Unit, onDismiss: ()
     var step by remember { mutableIntStateOf(1) }
     var firstPin by remember { mutableStateOf("") }
     var pin by remember { mutableStateOf("") }
+    var savedPin by remember { mutableStateOf("") }
     var errorText by remember { mutableStateOf<String?>(null) }
+    val clipboardManager = LocalClipboardManager.current
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (step == 1) "Set Supervisor PIN" else "Confirm PIN") },
+        title = {
+            Text(when (step) {
+                1 -> "Set Supervisor PIN"
+                2 -> "Confirm PIN"
+                else -> "Save Your PIN"
+            })
+        },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    if (step == 1)
-                        "Choose a 4-digit PIN. Only the supervisor should know this."
-                    else
-                        "Enter the same PIN again to confirm.",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
-                )
-                Spacer(Modifier.height(20.dp))
-                PinDots(pin)
-                Spacer(Modifier.height(8.dp))
-                if (errorText != null) {
-                    Text(errorText!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
-                } else {
+                if (step == 3) {
+                    Text(
+                        "Supervised mode is ready. Make sure you save your PIN — there is no way to recover it without clearing all app data.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
                     Spacer(Modifier.height(20.dp))
-                }
-                Spacer(Modifier.height(12.dp))
-                PinPad(
-                    onDigit = { digit ->
-                        if (pin.length < 4) {
-                            pin += digit
-                            errorText = null
-                            if (pin.length == 4) {
-                                if (step == 1) {
-                                    firstPin = pin
-                                    pin = ""
-                                    step = 2
-                                } else {
-                                    if (pin == firstPin) {
-                                        onConfirm(pin)
-                                    } else {
-                                        errorText = "PINs don't match — start over"
+                    Card(
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer
+                        ),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                savedPin,
+                                style = MaterialTheme.typography.displaySmall,
+                                fontWeight = FontWeight.Bold,
+                                letterSpacing = androidx.compose.ui.unit.TextUnit(12f, androidx.compose.ui.unit.TextUnitType.Sp),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
+                    OutlinedButton(
+                        onClick = { clipboardManager.setText(AnnotatedString(savedPin)) },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Copy PIN to Clipboard")
+                    }
+                } else {
+                    Text(
+                        if (step == 1)
+                            "Choose a 4-digit PIN. Only the supervisor should know this."
+                        else
+                            "Enter the same PIN again to confirm.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.height(20.dp))
+                    PinDots(pin)
+                    Spacer(Modifier.height(8.dp))
+                    if (errorText != null) {
+                        Text(errorText!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+                    } else {
+                        Spacer(Modifier.height(20.dp))
+                    }
+                    Spacer(Modifier.height(12.dp))
+                    PinPad(
+                        onDigit = { digit ->
+                            if (pin.length < 4) {
+                                pin += digit
+                                errorText = null
+                                if (pin.length == 4) {
+                                    if (step == 1) {
+                                        firstPin = pin
                                         pin = ""
-                                        firstPin = ""
-                                        step = 1
+                                        step = 2
+                                    } else {
+                                        if (pin == firstPin) {
+                                            savedPin = pin
+                                            step = 3
+                                        } else {
+                                            errorText = "PINs don't match — start over"
+                                            pin = ""
+                                            firstPin = ""
+                                            step = 1
+                                        }
                                     }
                                 }
                             }
-                        }
-                    },
-                    onBackspace = { if (pin.isNotEmpty()) pin = pin.dropLast(1) }
-                )
+                        },
+                        onBackspace = { if (pin.isNotEmpty()) pin = pin.dropLast(1) }
+                    )
+                }
             }
         },
-        confirmButton = {},
+        confirmButton = {
+            if (step == 3) {
+                Button(onClick = { onConfirm(savedPin) }) {
+                    Text("I've saved my PIN")
+                }
+            }
+        },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
 }
