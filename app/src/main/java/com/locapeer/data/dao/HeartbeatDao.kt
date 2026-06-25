@@ -1,0 +1,33 @@
+package com.locapeer.data.dao
+
+import androidx.room.*
+import com.locapeer.data.entity.HeartbeatEntity
+import kotlinx.coroutines.flow.Flow
+
+@Dao
+interface HeartbeatDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(heartbeat: HeartbeatEntity)
+
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC")
+    fun getHeartbeatsForDevice(deviceId: String): Flow<List<HeartbeatEntity>>
+
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getLatestHeartbeat(deviceId: String): HeartbeatEntity?
+
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :since ORDER BY timestamp ASC")
+    fun getHeartbeatsSince(deviceId: String, since: Long): Flow<List<HeartbeatEntity>>
+
+    @Query(
+        "SELECT h.* FROM heartbeats h INNER JOIN (" +
+            "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats GROUP BY deviceId" +
+            ") latest ON h.deviceId = latest.deviceId AND h.timestamp = latest.maxTs"
+    )
+    fun getLatestHeartbeatPerDevice(): Flow<List<HeartbeatEntity>>
+
+    @Query("DELETE FROM heartbeats WHERE receivedAt < :before")
+    suspend fun deleteOlderThan(before: Long)
+
+    @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId")
+    suspend fun deleteAllForDevice(deviceId: String)
+}
