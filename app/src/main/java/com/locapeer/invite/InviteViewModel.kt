@@ -16,7 +16,8 @@ import javax.inject.Inject
 
 data class InviteUiState(
     val publicKeyHex: String = "",
-    val qrBitmap: Bitmap? = null
+    val qrBitmap: Bitmap? = null,
+    val error: Boolean = false
 )
 
 @HiltViewModel
@@ -31,17 +32,25 @@ class InviteViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val (_, pubHex) = keyManager.ensureKeypair()
-            val settings = prefs.settings.first()
-            val inviteData = InviteData(
-                publicKeyHex = pubHex,
-                displayName = settings.displayName,
-                relayUrl = settings.relayUrl,
-                deviceId = pubHex
-            )
-            val json = Json.encodeToString(inviteData)
-            val bitmap = qrGenerator.generate(json)
-            _state.value = InviteUiState(publicKeyHex = pubHex, qrBitmap = bitmap)
+            try {
+                val (_, pubHex) = keyManager.ensureKeypair()
+                val settings = prefs.settings.first()
+                val inviteData = InviteData(
+                    publicKeyHex = pubHex,
+                    displayName = settings.displayName,
+                    relayUrl = settings.relayUrl,
+                    deviceId = pubHex
+                )
+                val json = Json.encodeToString(inviteData)
+                val bitmap = qrGenerator.generate(json)
+                if (bitmap != null) {
+                    _state.value = InviteUiState(publicKeyHex = pubHex, qrBitmap = bitmap)
+                } else {
+                    _state.value = InviteUiState(publicKeyHex = pubHex, error = true)
+                }
+            } catch (e: Exception) {
+                _state.value = InviteUiState(error = true)
+            }
         }
     }
 }

@@ -30,4 +30,7 @@ interface HeartbeatDao {
 
     @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId")
     suspend fun deleteAllForDevice(deviceId: String)
+
+    @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId AND timestamp < :before")
+    suspend fun deleteOlderThanForDevice(deviceId: String, before: Long)
 }

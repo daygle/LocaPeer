@@ -5,7 +5,7 @@ APP_HOME=$(cd "$(dirname "$0")" && pwd)
 APP_NAME="Gradle"
 APP_BASE_NAME=$(basename "$0")
 
-DEFAULT_JVM_OPTS='"-Xmx64m" "-Xms64m"'
+DEFAULT_JVM_OPTS='-Xmx2048m -Xms256m'
 
 warn() { echo "$*" >&2; }
 die() { echo; echo "$*"; echo; exit 1; } >&2

@@ -29,7 +29,10 @@ import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
+import com.locapeer.sharing.SharingSchedule
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
@@ -48,6 +51,7 @@ const val NOTIFICATION_ID_HEARTBEAT = 1001
 const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
+private const val ACTION_ACTIVITY_UPDATE = "com.locapeer.ACTIVITY_UPDATE"
 
 @AndroidEntryPoint
 class HeartbeatService : LifecycleService() {
@@ -56,6 +60,7 @@ class HeartbeatService : LifecycleService() {
     @Inject lateinit var crypto: CryptoUtils
     @Inject lateinit var relayClient: NostrRelayClient
     @Inject lateinit var peerDao: PeerDao
+    @Inject lateinit var sharingConfigDao: PeerSharingConfigDao
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var intervalManager: AdaptiveIntervalManager
     @Inject lateinit var notificationManager: NotificationManager
@@ -119,6 +124,25 @@ class HeartbeatService : LifecycleService() {
                 stopSelf()
                 return START_NOT_STICKY
             }
+            ACTION_ACTIVITY_UPDATE -> {
+                ActivityRecognitionResult.extractResult(intent)?.let { result ->
+                    val detected = result.mostProbableActivity
+                    val newState = when (detected.type) {
+                        DetectedActivity.STILL -> MotionState.STATIONARY
+                        DetectedActivity.WALKING, DetectedActivity.ON_FOOT -> MotionState.WALKING
+                        DetectedActivity.RUNNING -> MotionState.RUNNING
+                        DetectedActivity.ON_BICYCLE -> MotionState.CYCLING
+                        DetectedActivity.IN_VEHICLE -> MotionState.DRIVING
+                        else -> MotionState.UNKNOWN
+                    }
+                    if (newState != currentMotionState) {
+                        currentMotionState = newState
+                        intervalManager.updateMotionState(newState)
+                        updateLocationRequest()
+                        reschedulePulse()
+                    }
+                }
+            }
             else -> startForegroundAndBroadcast()
         }
         return START_STICKY
@@ -133,10 +157,14 @@ class HeartbeatService : LifecycleService() {
             startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
         }
 
-        val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 30_000L)
-            .setMinUpdateIntervalMillis(10_000L)
-            .build()
-        fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        updateLocationRequest()
+
+        val activityIntent = PendingIntent.getService(
+            this, 0,
+            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+        activityClient.requestActivityUpdates(30_000L, activityIntent)
 
         lifecycleScope.launch {
             val settings = prefs.settings.first()
@@ -145,6 +173,27 @@ class HeartbeatService : LifecycleService() {
         }
 
         handler.post(heartbeatRunnable)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun updateLocationRequest() {
+        fusedLocation.removeLocationUpdates(locationCallback)
+        val priority = when {
+            isSos -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
+            else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        }
+        val pollIntervalMs = when {
+            isSos -> 10_000L
+            currentMotionState == MotionState.STATIONARY -> 120_000L
+            currentMotionState == MotionState.DRIVING -> 15_000L
+            else -> 30_000L
+        }
+        val locationRequest = LocationRequest.Builder(priority, pollIntervalMs)
+            .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+            .build()
+        fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
     private fun reschedulePulse() {
@@ -161,42 +210,79 @@ class HeartbeatService : LifecycleService() {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                val payload = HeartbeatPayload(
-                    deviceId = pubHex,
-                    displayName = settings.displayName,
-                    timestamp = Instant.now().toString(),
-                    lat = lastLat,
-                    lng = lastLng,
-                    accuracy = lastAccuracy,
-                    battery = battery,
-                    motionState = currentMotionState.name,
-                    isSos = isSos
-                )
-                val payloadJson = Json.encodeToString(payload)
+                // Global schedule gate (skip for SOS — always send those)
+                if (!isSos && settings.globalScheduleEnabled) {
+                    val active = SharingSchedule.isActive(
+                        settings.globalScheduleDays,
+                        settings.globalScheduleStartMinute,
+                        settings.globalScheduleEndMinute
+                    )
+                    if (!active) {
+                        Log.d(TAG, "Heartbeat suppressed: outside global schedule")
+                        return@launch
+                    }
+                }
 
                 val subscribers = peerDao.getSubscribers().first()
+                var sentCount = 0
                 subscribers.forEach { subscriber ->
+                    val cfg = sharingConfigDao.getForPeer(subscriber.deviceId)
+
+                    // Per-peer disable check (SOS always bypasses)
+                    if (!isSos && cfg?.sharingEnabled == false) return@forEach
+
+                    // Per-peer schedule check (SOS always bypasses)
+                    if (!isSos && cfg?.scheduleEnabled == true) {
+                        val active = SharingSchedule.isActive(
+                            cfg.scheduleDays, cfg.scheduleStartMinute, cfg.scheduleEndMinute
+                        )
+                        if (!active) return@forEach
+                    }
+
+                    // Apply precision — default to EXACT when no config exists
+                    val (sendLat, sendLng) = if (
+                        cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
+                    ) {
+                        SharingSchedule.toSuburbPrecision(lastLat, lastLng)
+                    } else {
+                        lastLat to lastLng
+                    }
+
+                    val payload = HeartbeatPayload(
+                        deviceId = pubHex,
+                        displayName = settings.displayName,
+                        timestamp = Instant.now().toString(),
+                        lat = sendLat,
+                        lng = sendLng,
+                        accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
+                        battery = battery,
+                        motionState = currentMotionState.name,
+                        isSos = isSos,
+                        retentionDays = settings.retentionDays
+                    )
+                    val payloadJson = Json.encodeToString(payload)
+
                     val encrypted = crypto.nip04Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
                         recipientXOnlyHex = subscriber.publicKeyHex,
                         plaintext = payloadJson
                     )
                     val kind = if (isSos) NostrEventKind.SOS_ALERT else NostrEventKind.HEARTBEAT
-                    val tags = listOf(
-                        listOf("p", subscriber.publicKeyHex),
-                        listOf("t", "locapeer-heartbeat")
-                    )
                     val event = NostrEvent.build(
                         privKeyHex = privHex,
                         pubKeyHex = pubHex,
                         kind = kind,
                         content = encrypted,
-                        tags = tags,
+                        tags = listOf(
+                            listOf("p", subscriber.publicKeyHex),
+                            listOf("t", "locapeer-heartbeat")
+                        ),
                         crypto = crypto
                     )
                     relayClient.publishEvent(event)
+                    sentCount++
                 }
-                Log.d(TAG, "Heartbeat sent to ${subscribers.size} subscribers")
+                Log.d(TAG, "Heartbeat sent to $sentCount/${subscribers.size} subscribers")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }
@@ -214,7 +300,7 @@ class HeartbeatService : LifecycleService() {
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
         return NotificationCompat.Builder(this, CHANNEL_ID_HEARTBEAT)
-            .setSmallIcon(android.R.drawable.ic_menu_mylocation)
+            .setSmallIcon(R.drawable.ic_notif_location)
             .setContentTitle(getString(R.string.notification_heartbeat_title))
             .setContentText(getString(R.string.notification_heartbeat_text))
             .setContentIntent(pendingIntent)
@@ -237,6 +323,12 @@ class HeartbeatService : LifecycleService() {
     override fun onDestroy() {
         handler.removeCallbacks(heartbeatRunnable)
         fusedLocation.removeLocationUpdates(locationCallback)
+        val activityIntent = PendingIntent.getService(
+            this, 0,
+            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        )
+        activityClient.removeActivityUpdates(activityIntent)
         super.onDestroy()
     }
 }

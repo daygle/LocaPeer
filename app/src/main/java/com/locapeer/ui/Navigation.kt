@@ -1,5 +1,10 @@
 package com.locapeer.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Map
@@ -12,13 +17,16 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import com.locapeer.NavTarget
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.InviteScreen
 import com.locapeer.invite.ScanScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
+import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.settings.SettingsScreen
+import com.locapeer.sharing.PeerSharingScreen
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Map : Screen("map", "Map", Icons.Default.Map)
@@ -36,13 +44,40 @@ private val bottomNavItems = listOf(
     Screen.Settings
 )
 
+private val fadeEnter = fadeIn(tween(220))
+private val fadeExit = fadeOut(tween(180))
+private val slideEnter = slideInHorizontally(tween(280)) { it / 3 } + fadeIn(tween(280))
+private val slideExit = slideOutHorizontally(tween(250)) { -it / 3 } + fadeOut(tween(250))
+private val slidePopEnter = slideInHorizontally(tween(280)) { -it / 3 } + fadeIn(tween(280))
+private val slidePopExit = slideOutHorizontally(tween(250)) { it / 3 } + fadeOut(tween(250))
+
 @Composable
-fun LocaPeerNavHost() {
+fun LocaPeerNavHost(
+    initialNavTarget: NavTarget? = null,
+    onNavTargetConsumed: () -> Unit = {}
+) {
     val navController = rememberNavController()
     val backstackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backstackEntry?.destination?.route
 
     val showBottomBar = bottomNavItems.any { currentRoute == it.route }
+
+    // Deep-link from notification
+    LaunchedEffect(initialNavTarget) {
+        val target = initialNavTarget ?: return@LaunchedEffect
+        when (target.route) {
+            "chat" -> {
+                val peerId = target.peerId ?: return@LaunchedEffect
+                navController.navigate("chat/$peerId/${target.peerName.ifBlank { "Chat" }}")
+            }
+            "map" -> {
+                navController.navigate(Screen.Map.route) {
+                    popUpTo(Screen.Map.route) { inclusive = true }
+                }
+            }
+        }
+        onNavTargetConsumed()
+    }
 
     Scaffold(
         bottomBar = {
@@ -68,21 +103,21 @@ fun LocaPeerNavHost() {
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Map.route
+            startDestination = Screen.Map.route,
+            enterTransition = { fadeEnter },
+            exitTransition = { fadeExit },
+            popEnterTransition = { fadeEnter },
+            popExitTransition = { fadeExit }
         ) {
             composable(Screen.Map.route) {
-                MapScreen(
-                    onNavigateToChat = { peerId ->
-                        navController.navigate("chat/$peerId/Unknown")
-                    }
-                )
+                MapScreen(onNavigateToChat = { peerId ->
+                    navController.navigate("chat/$peerId/Unknown")
+                })
             }
             composable(Screen.Messages.route) {
-                ConversationListScreen(
-                    onOpenChat = { peerId ->
-                        navController.navigate("chat/$peerId/Chat")
-                    }
-                )
+                ConversationListScreen(onOpenChat = { peerId ->
+                    navController.navigate("chat/$peerId/Chat")
+                })
             }
             composable(Screen.Invite.route) {
                 InviteScreen(onNavigateBack = { navController.popBackStack() })
@@ -92,7 +127,11 @@ fun LocaPeerNavHost() {
             }
             composable(Screen.Settings.route) {
                 SettingsScreen(
-                    onNavigateToGeofences = { navController.navigate("geofences") }
+                    onNavigateToGeofences = { navController.navigate("geofences") },
+                    onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") },
+                    onNavigateToPeerSharing = { peerId, peerName ->
+                        navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
+                    }
                 )
             }
             composable(
@@ -100,7 +139,11 @@ fun LocaPeerNavHost() {
                 arguments = listOf(
                     navArgument("peerId") { type = NavType.StringType },
                     navArgument("peerName") { type = NavType.StringType }
-                )
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
             ) { entry ->
                 ChatScreen(
                     peerId = entry.arguments?.getString("peerId") ?: "",
@@ -108,8 +151,40 @@ fun LocaPeerNavHost() {
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            composable("geofences") {
+            composable(
+                "geofences",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
                 GeofenceListScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "proximity-alerts",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                ProximityAlertsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                PeerSharingScreen(
+                    peerId = entry.arguments?.getString("peerId") ?: "",
+                    peerName = entry.arguments?.getString("peerName") ?: "",
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
         }
     }

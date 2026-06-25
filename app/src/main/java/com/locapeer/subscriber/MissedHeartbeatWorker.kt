@@ -11,6 +11,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.locapeer.MainActivity
+import com.locapeer.R
 import com.locapeer.beacon.AdaptiveIntervalManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
@@ -49,7 +50,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                     applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE
                 )
                 val notification = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
-                    .setSmallIcon(android.R.drawable.ic_dialog_info)
+                    .setSmallIcon(R.drawable.ic_notif_alert)
                     .setContentTitle("No update from ${peer.displayName}")
                     .setContentText("Last seen ${minutesAgo}m ago near (${latest.lat}, ${latest.lng})")
                     .setPriority(NotificationCompat.PRIORITY_HIGH)

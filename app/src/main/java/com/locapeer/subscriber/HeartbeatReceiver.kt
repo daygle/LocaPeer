@@ -11,12 +11,15 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.beacon.HeartbeatPayload
+import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.geofence.GeofenceEngine
+import com.locapeer.proximity.ProximityEngine
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
@@ -46,9 +49,11 @@ class HeartbeatReceiver @Inject constructor(
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val heartbeatDao: HeartbeatDao,
+    private val messageDao: MessageDao,
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
+    private val proximityEngine: ProximityEngine,
     private val notificationManager: NotificationManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -63,15 +68,52 @@ class HeartbeatReceiver @Inject constructor(
             relayClient.subscribe(
                 SUB_ID,
                 NostrFilter(
-                    kinds = listOf(NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT),
+                    kinds = listOf(
+                        NostrEventKind.HEARTBEAT,
+                        NostrEventKind.SOS_ALERT,
+                        NostrEventKind.PURGE_REQUEST,
+                        NostrEventKind.MESSAGE_PURGE_REQUEST
+                    ),
                     pTags = listOf(pubHex)
                 )
             )
         }
 
         relayClient.events
-            .onEach { event -> processEvent(event) }
+            .onEach { event ->
+                when (event.kind) {
+                    NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
+                    NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
+                    NostrEventKind.MESSAGE_PURGE_REQUEST -> processMsgPurgeRequest(event)
+                }
+            }
             .launchIn(scope)
+    }
+
+    private suspend fun processMsgPurgeRequest(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return   // only respect known peers
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's messages
+        messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
+        Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
+    }
+
+    private suspend fun processPurgeRequest(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return   // only respect known broadcasters
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
+        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's data
+        heartbeatDao.deleteOlderThanForDevice(payload.deviceId, payload.deleteOlderThanMs)
+        Log.d(TAG, "Purged ${payload.deviceId} heartbeats before ${payload.deleteOlderThanMs}ms")
     }
 
     private suspend fun processEvent(event: NostrEvent) {
@@ -105,11 +147,18 @@ class HeartbeatReceiver @Inject constructor(
             )
             heartbeatDao.insert(entity)
 
+            // Enforce broadcaster's own retention preference on every heartbeat
+            if (payload.retentionDays > 0) {
+                val cutoff = System.currentTimeMillis() - payload.retentionDays * 24 * 3600 * 1000L
+                heartbeatDao.deleteOlderThanForDevice(payload.deviceId, cutoff)
+            }
+
             if (payload.isSos) {
                 sendSosNotification(broadcaster.displayName, payload)
             }
 
             geofenceEngine.evaluate(entity, prevHeartbeat)
+            proximityEngine.evaluate(entity)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to process heartbeat", e)
         }
@@ -119,7 +168,7 @@ class HeartbeatReceiver @Inject constructor(
         val intent = Intent(context, MainActivity::class.java)
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(R.drawable.ic_notif_alert)
             .setContentTitle("SOS from $name!")
             .setContentText("${name} has activated SOS at (${payload.lat}, ${payload.lng})")
             .setPriority(NotificationCompat.PRIORITY_MAX)

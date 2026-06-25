@@ -36,4 +36,13 @@ interface MessageDao {
 
     @Query("SELECT * FROM messages WHERE nostrEventId = :eventId LIMIT 1")
     suspend fun getByNostrEventId(eventId: String): MessageEntity?
+
+    @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
+    suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
+
+    @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0")
+    suspend fun getUnreadFromPeer(peerId: String): List<MessageEntity>
+
+    @Query("DELETE FROM messages WHERE senderPublicKeyHex = :senderPubKeyHex AND timestamp < :before")
+    suspend fun deleteOlderThanFromSender(senderPubKeyHex: String, before: Long)
 }

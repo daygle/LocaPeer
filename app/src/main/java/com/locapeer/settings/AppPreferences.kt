@@ -22,7 +22,22 @@ data class AppSettings(
     val walkingIntervalMinutes: Int = 5,
     val drivingIntervalMinutes: Int = 2,
     val lowBatteryIntervalMinutes: Int = 30,
-    val onboardingComplete: Boolean = false
+    val onboardingComplete: Boolean = false,
+    val globalScheduleEnabled: Boolean = false,
+    /** Bitmask: bit 0 = Monday … bit 6 = Sunday. Default = all days (127). */
+    val globalScheduleDays: Int = 0b1111111,
+    val globalScheduleStartMinute: Int = 0,
+    val globalScheduleEndMinute: Int = 1439,
+    /**
+     * How many days subscribers should keep this device's location history.
+     * 0 = no automatic deletion (keep forever).
+     */
+    val retentionDays: Int = 30,
+    /**
+     * How many days peers should keep messages sent by this device.
+     * 0 = no automatic deletion (keep forever).
+     */
+    val messageRetentionDays: Int = 0
 )
 
 @Singleton
@@ -37,6 +52,12 @@ class AppPreferences @Inject constructor(
     private val KEY_DRIVING_INTERVAL = intPreferencesKey("driving_interval")
     private val KEY_LOW_BATTERY_INTERVAL = intPreferencesKey("low_battery_interval")
     private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
+    private val KEY_GLOBAL_SCHEDULE_ENABLED = booleanPreferencesKey("global_schedule_enabled")
+    private val KEY_GLOBAL_SCHEDULE_DAYS = intPreferencesKey("global_schedule_days")
+    private val KEY_GLOBAL_SCHEDULE_START = intPreferencesKey("global_schedule_start")
+    private val KEY_GLOBAL_SCHEDULE_END = intPreferencesKey("global_schedule_end")
+    private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
+    private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
 
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
         AppSettings(
@@ -47,7 +68,13 @@ class AppPreferences @Inject constructor(
             walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
             drivingIntervalMinutes = prefs[KEY_DRIVING_INTERVAL] ?: 2,
             lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
-            onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false
+            onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
+            globalScheduleEnabled = prefs[KEY_GLOBAL_SCHEDULE_ENABLED] ?: false,
+            globalScheduleDays = prefs[KEY_GLOBAL_SCHEDULE_DAYS] ?: 0b1111111,
+            globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
+            globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
+            retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
+            messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0
         )
     }
 
@@ -65,6 +92,30 @@ class AppPreferences @Inject constructor(
 
     suspend fun setOnboardingComplete(complete: Boolean) {
         context.settingsStore.edit { it[KEY_ONBOARDING_COMPLETE] = complete }
+    }
+
+    suspend fun setRetentionDays(days: Int) {
+        context.settingsStore.edit { it[KEY_RETENTION_DAYS] = days }
+    }
+
+    suspend fun setMessageRetentionDays(days: Int) {
+        context.settingsStore.edit { it[KEY_MSG_RETENTION_DAYS] = days }
+    }
+
+    suspend fun setGlobalScheduleEnabled(enabled: Boolean) {
+        context.settingsStore.edit { it[KEY_GLOBAL_SCHEDULE_ENABLED] = enabled }
+    }
+
+    suspend fun updateGlobalSchedule(
+        days: Int? = null,
+        startMinute: Int? = null,
+        endMinute: Int? = null
+    ) {
+        context.settingsStore.edit { prefs ->
+            days?.let { prefs[KEY_GLOBAL_SCHEDULE_DAYS] = it }
+            startMinute?.let { prefs[KEY_GLOBAL_SCHEDULE_START] = it }
+            endMinute?.let { prefs[KEY_GLOBAL_SCHEDULE_END] = it }
+        }
     }
 
     suspend fun updateIntervals(

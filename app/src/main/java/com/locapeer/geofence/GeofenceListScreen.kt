@@ -1,21 +1,27 @@
 package com.locapeer.geofence
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.gms.location.LocationServices
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,7 +30,7 @@ fun GeofenceListScreen(
     vm: GeofenceViewModel = hiltViewModel()
 ) {
     val geofences by vm.geofences.collectAsState()
-    val broadcasters by vm.broadcasters.collectAsState()
+    val broadcastersWithLocation by vm.broadcastersWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -45,7 +51,9 @@ fun GeofenceListScreen(
             items(geofences, key = { it.id }) { fence ->
                 GeofenceCard(
                     fence = fence,
-                    trackedName = broadcasters.firstOrNull { it.deviceId == fence.trackedDeviceId }?.displayName ?: "Unknown",
+                    trackedName = broadcastersWithLocation
+                        .firstOrNull { it.peer.deviceId == fence.trackedDeviceId }
+                        ?.peer?.displayName ?: "Unknown",
                     onToggle = { vm.setActive(fence.id, it) },
                     onDelete = { vm.delete(fence) }
                 )
@@ -67,9 +75,9 @@ fun GeofenceListScreen(
         }
     }
 
-    if (showCreateDialog && broadcasters.isNotEmpty()) {
+    if (showCreateDialog && broadcastersWithLocation.isNotEmpty()) {
         CreateGeofenceDialog(
-            broadcasters = broadcasters,
+            broadcastersWithLocation = broadcastersWithLocation,
             onDismiss = { showCreateDialog = false },
             onCreate = { name, lat, lng, radius, deviceId, trigger ->
                 vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
@@ -126,44 +134,146 @@ private fun GeofenceCard(
     }
 }
 
+@SuppressLint("MissingPermission")
 @Composable
 private fun CreateGeofenceDialog(
-    broadcasters: List<com.locapeer.data.entity.PeerEntity>,
+    broadcastersWithLocation: List<BroadcasterWithLocation>,
     onDismiss: () -> Unit,
     onCreate: (String, Double, Double, Int, String, String) -> Unit
 ) {
+    val context = LocalContext.current
+    val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
+
     var name by remember { mutableStateOf("") }
     var latText by remember { mutableStateOf("") }
     var lngText by remember { mutableStateOf("") }
     var radius by remember { mutableFloatStateOf(500f) }
-    var selectedPeer by remember { mutableStateOf(broadcasters.first()) }
+    var selectedEntry by remember { mutableStateOf(broadcastersWithLocation.first()) }
     var triggerOn by remember { mutableStateOf("ENTER") }
+    var submitted by remember { mutableStateOf(false) }
+    var loadingMyLocation by remember { mutableStateOf(false) }
+
+    val lat = latText.toDoubleOrNull()
+    val lng = lngText.toDoubleOrNull()
+    val nameError = submitted && name.isBlank()
+    val latError = submitted && (lat == null || lat !in -90.0..90.0)
+    val lngError = submitted && (lng == null || lng !in -180.0..180.0)
+    val isValid = name.isNotBlank() && lat != null && lat in -90.0..90.0 && lng != null && lng in -180.0..180.0
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("New Geofence") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Name") })
-                OutlinedTextField(value = latText, onValueChange = { latText = it }, label = { Text("Latitude") })
-                OutlinedTextField(value = lngText, onValueChange = { lngText = it }, label = { Text("Longitude") })
-                Text("Radius: ${radius.toInt()}m")
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    isError = nameError,
+                    supportingText = if (nameError) { { Text("Name is required") } } else null,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                // Location pre-fill helpers
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedButton(
+                        onClick = {
+                            loadingMyLocation = true
+                            fusedLocation.lastLocation.addOnSuccessListener { loc ->
+                                loadingMyLocation = false
+                                if (loc != null) {
+                                    latText = "%.6f".format(loc.latitude)
+                                    lngText = "%.6f".format(loc.longitude)
+                                }
+                            }.addOnFailureListener { loadingMyLocation = false }
+                        },
+                        modifier = Modifier.weight(1f),
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                    ) {
+                        if (loadingMyLocation) {
+                            CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
+                        } else {
+                            Icon(Icons.Default.MyLocation, null, Modifier.size(14.dp))
+                        }
+                        Spacer(Modifier.width(4.dp))
+                        Text("My location", style = MaterialTheme.typography.labelSmall)
+                    }
+
+                    selectedEntry.lastHeartbeat?.let { hb ->
+                        OutlinedButton(
+                            onClick = {
+                                latText = "%.6f".format(hb.lat)
+                                lngText = "%.6f".format(hb.lng)
+                            },
+                            modifier = Modifier.weight(1f),
+                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+                        ) {
+                            Icon(Icons.Default.PersonPin, null, Modifier.size(14.dp))
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                "${selectedEntry.peer.displayName}'s location",
+                                style = MaterialTheme.typography.labelSmall,
+                                maxLines = 1
+                            )
+                        }
+                    }
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedTextField(
+                        value = latText,
+                        onValueChange = { latText = it },
+                        label = { Text("Latitude") },
+                        isError = latError,
+                        supportingText = if (latError) { { Text("−90 to 90") } } else null,
+                        modifier = Modifier.weight(1f)
+                    )
+                    OutlinedTextField(
+                        value = lngText,
+                        onValueChange = { lngText = it },
+                        label = { Text("Longitude") },
+                        isError = lngError,
+                        supportingText = if (lngError) { { Text("−180 to 180") } } else null,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+
+                Text("Radius: ${radius.roundToInt()}m")
                 Slider(
                     value = radius,
                     onValueChange = { radius = it },
                     valueRange = 100f..50000f,
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 Text("Tracked person", style = MaterialTheme.typography.labelSmall)
-                broadcasters.forEach { peer ->
+                broadcastersWithLocation.forEach { entry ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
-                            selected = selectedPeer.deviceId == peer.deviceId,
-                            onClick = { selectedPeer = peer }
+                            selected = selectedEntry.peer.deviceId == entry.peer.deviceId,
+                            onClick = { selectedEntry = entry }
                         )
-                        Text(peer.displayName)
+                        Column {
+                            Text(entry.peer.displayName)
+                            if (entry.lastHeartbeat != null) {
+                                Text(
+                                    "Last seen: %.4f, %.4f".format(
+                                        entry.lastHeartbeat.lat, entry.lastHeartbeat.lng
+                                    ),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            } else {
+                                Text(
+                                    "No location yet",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
+                        }
                     }
                 }
+
                 Text("Trigger on", style = MaterialTheme.typography.labelSmall)
                 listOf("ENTER", "EXIT", "BOTH").forEach { t ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -176,9 +286,10 @@ private fun CreateGeofenceDialog(
         confirmButton = {
             TextButton(
                 onClick = {
-                    val lat = latText.toDoubleOrNull() ?: return@TextButton
-                    val lng = lngText.toDoubleOrNull() ?: return@TextButton
-                    onCreate(name, lat, lng, radius.toInt(), selectedPeer.deviceId, triggerOn)
+                    submitted = true
+                    if (isValid) {
+                        onCreate(name, lat!!, lng!!, radius.roundToInt(), selectedEntry.peer.deviceId, triggerOn)
+                    }
                 }
             ) { Text("Create") }
         },

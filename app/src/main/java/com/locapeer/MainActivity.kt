@@ -1,12 +1,17 @@
 package com.locapeer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.crypto.KeyManager
@@ -26,33 +31,64 @@ class MainActivity : ComponentActivity() {
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var keyManager: KeyManager
 
+    private val pendingNavTarget = mutableStateOf<NavTarget?>(null)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleIntent(intent)
         enableEdgeToEdge()
         setContent {
             LocaPeerTheme {
                 val onboardingComplete by prefs.settings
                     .map { it.onboardingComplete }
                     .collectAsState(initial = null)
+                val navTarget by pendingNavTarget
 
-                when (onboardingComplete) {
-                    null -> Box(modifier = Modifier.fillMaxSize())
-                    false -> {
-                        OnboardingScreen(
-                            vm = hiltViewModel<OnboardingViewModel>(),
-                            onComplete = { /* recomposition will flip to true */ }
-                        )
-                    }
-                    true -> {
-                        val messagingVm: MessagingViewModel = hiltViewModel()
-                        LaunchedEffect(Unit) {
-                            val pubHex = keyManager.getPublicKeyHexBlocking() ?: return@LaunchedEffect
-                            messagingVm.startListening(pubHex)
+                Crossfade(
+                    targetState = onboardingComplete,
+                    animationSpec = tween(durationMillis = 400),
+                    label = "root_crossfade"
+                ) { state ->
+                    when (state) {
+                        null -> Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
                         }
-                        LocaPeerNavHost()
+                        false -> OnboardingScreen(
+                            vm = hiltViewModel<OnboardingViewModel>(),
+                            onComplete = {}
+                        )
+                        true -> {
+                            val messagingVm: MessagingViewModel = hiltViewModel()
+                            LaunchedEffect(Unit) {
+                                val pubHex = keyManager.getPublicKeyHexBlocking()
+                                    ?: return@LaunchedEffect
+                                messagingVm.startListening(pubHex)
+                            }
+                            LocaPeerNavHost(
+                                initialNavTarget = navTarget,
+                                onNavTargetConsumed = { pendingNavTarget.value = null }
+                            )
+                        }
                     }
                 }
             }
         }
     }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        val navigateTo = intent?.getStringExtra("navigateTo") ?: return
+        val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
+        val peerName = intent.getStringExtra("peerName") ?: ""
+        pendingNavTarget.value = NavTarget(navigateTo, peerId, peerName)
+    }
 }
+
+data class NavTarget(val route: String, val peerId: String?, val peerName: String)
