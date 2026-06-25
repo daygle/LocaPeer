@@ -119,7 +119,7 @@ class HeartbeatReceiver @Inject constructor(
         val intent = Intent(context, MainActivity::class.java)
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
+            .setSmallIcon(R.drawable.ic_notif_alert)
             .setContentTitle("SOS from $name!")
             .setContentText("${name} has activated SOS at (${payload.lat}, ${payload.lng})")
             .setPriority(NotificationCompat.PRIORITY_MAX)

@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.crypto.KeyManager
@@ -35,21 +39,31 @@ class MainActivity : ComponentActivity() {
                     .map { it.onboardingComplete }
                     .collectAsState(initial = null)
 
-                when (onboardingComplete) {
-                    null -> Box(modifier = Modifier.fillMaxSize())
-                    false -> {
-                        OnboardingScreen(
-                            vm = hiltViewModel<OnboardingViewModel>(),
-                            onComplete = { /* recomposition will flip to true */ }
-                        )
-                    }
-                    true -> {
-                        val messagingVm: MessagingViewModel = hiltViewModel()
-                        LaunchedEffect(Unit) {
-                            val pubHex = keyManager.getPublicKeyHexBlocking() ?: return@LaunchedEffect
-                            messagingVm.startListening(pubHex)
+                Crossfade(
+                    targetState = onboardingComplete,
+                    animationSpec = tween(durationMillis = 400),
+                    label = "root_crossfade"
+                ) { state ->
+                    when (state) {
+                        null -> Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator()
                         }
-                        LocaPeerNavHost()
+                        false -> OnboardingScreen(
+                            vm = hiltViewModel<OnboardingViewModel>(),
+                            onComplete = {}
+                        )
+                        true -> {
+                            val messagingVm: MessagingViewModel = hiltViewModel()
+                            LaunchedEffect(Unit) {
+                                val pubHex = keyManager.getPublicKeyHexBlocking()
+                                    ?: return@LaunchedEffect
+                                messagingVm.startListening(pubHex)
+                            }
+                            LocaPeerNavHost()
+                        }
                     }
                 }
             }

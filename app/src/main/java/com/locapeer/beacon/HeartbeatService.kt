@@ -214,7 +214,7 @@ class HeartbeatService : LifecycleService() {
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
         return NotificationCompat.Builder(this, CHANNEL_ID_HEARTBEAT)
-            .setSmallIcon(android.R.drawable.ic_menu_mylocation)
+            .setSmallIcon(R.drawable.ic_notif_location)
             .setContentTitle(getString(R.string.notification_heartbeat_title))
             .setContentText(getString(R.string.notification_heartbeat_text))
             .setContentIntent(pendingIntent)

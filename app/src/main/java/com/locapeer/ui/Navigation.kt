@@ -1,5 +1,10 @@
 package com.locapeer.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Map
@@ -36,6 +41,13 @@ private val bottomNavItems = listOf(
     Screen.Settings
 )
 
+private val fadeEnter = fadeIn(tween(220))
+private val fadeExit = fadeOut(tween(180))
+private val slideEnter = slideInHorizontally(tween(280)) { it / 3 } + fadeIn(tween(280))
+private val slideExit = slideOutHorizontally(tween(250)) { -it / 3 } + fadeOut(tween(250))
+private val slidePopEnter = slideInHorizontally(tween(280)) { -it / 3 } + fadeIn(tween(280))
+private val slidePopExit = slideOutHorizontally(tween(250)) { it / 3 } + fadeOut(tween(250))
+
 @Composable
 fun LocaPeerNavHost() {
     val navController = rememberNavController()
@@ -68,21 +80,21 @@ fun LocaPeerNavHost() {
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Map.route
+            startDestination = Screen.Map.route,
+            enterTransition = { fadeEnter },
+            exitTransition = { fadeExit },
+            popEnterTransition = { fadeEnter },
+            popExitTransition = { fadeExit }
         ) {
             composable(Screen.Map.route) {
-                MapScreen(
-                    onNavigateToChat = { peerId ->
-                        navController.navigate("chat/$peerId/Unknown")
-                    }
-                )
+                MapScreen(onNavigateToChat = { peerId ->
+                    navController.navigate("chat/$peerId/Unknown")
+                })
             }
             composable(Screen.Messages.route) {
-                ConversationListScreen(
-                    onOpenChat = { peerId ->
-                        navController.navigate("chat/$peerId/Chat")
-                    }
-                )
+                ConversationListScreen(onOpenChat = { peerId ->
+                    navController.navigate("chat/$peerId/Chat")
+                })
             }
             composable(Screen.Invite.route) {
                 InviteScreen(onNavigateBack = { navController.popBackStack() })
@@ -91,16 +103,18 @@ fun LocaPeerNavHost() {
                 ScanScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(Screen.Settings.route) {
-                SettingsScreen(
-                    onNavigateToGeofences = { navController.navigate("geofences") }
-                )
+                SettingsScreen(onNavigateToGeofences = { navController.navigate("geofences") })
             }
             composable(
                 route = "chat/{peerId}/{peerName}",
                 arguments = listOf(
                     navArgument("peerId") { type = NavType.StringType },
                     navArgument("peerName") { type = NavType.StringType }
-                )
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
             ) { entry ->
                 ChatScreen(
                     peerId = entry.arguments?.getString("peerId") ?: "",
@@ -108,7 +122,13 @@ fun LocaPeerNavHost() {
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
-            composable("geofences") {
+            composable(
+                "geofences",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
                 GeofenceListScreen(onNavigateBack = { navController.popBackStack() })
             }
         }

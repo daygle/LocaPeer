@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
+import com.locapeer.R
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
@@ -64,7 +65,7 @@ class GeofenceEngine @Inject constructor(
         val intent = Intent(context, MainActivity::class.java)
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, "locapeer_alerts")
-            .setSmallIcon(android.R.drawable.ic_dialog_map)
+            .setSmallIcon(R.drawable.ic_notif_alert)
             .setContentTitle(title)
             .setContentText("Geofence: ${fence.name}")
             .setPriority(NotificationCompat.PRIORITY_HIGH)

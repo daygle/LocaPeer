@@ -136,7 +136,7 @@ class MessagingViewModel @Inject constructor(
         }
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, "locapeer_messages")
-            .setSmallIcon(android.R.drawable.ic_dialog_email)
+            .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle(sender.displayName)
             .setContentText(preview.take(80))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
