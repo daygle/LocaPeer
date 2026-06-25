@@ -25,6 +25,7 @@ import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.proximity.ProximityAlertsScreen
+import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.sharing.PeerSharingScreen
 
@@ -131,7 +132,8 @@ fun LocaPeerNavHost(
                     onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") },
                     onNavigateToPeerSharing = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
-                    }
+                    },
+                    onNavigateToHistoryReport = { navController.navigate("history-report") }
                 )
             }
             composable(
@@ -168,6 +170,15 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 ProximityAlertsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "history-report",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                HistoryReportScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 route = "peer-sharing/{peerId}/{peerName}",

@@ -12,6 +12,9 @@ interface HeartbeatDao {
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC")
     fun getHeartbeatsForDevice(deviceId: String): Flow<List<HeartbeatEntity>>
 
+    @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :dayStart AND timestamp < :dayEnd ORDER BY timestamp ASC")
+    fun getHeartbeatsForDay(deviceId: String, dayStart: Long, dayEnd: Long): Flow<List<HeartbeatEntity>>
+
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
     suspend fun getLatestHeartbeat(deviceId: String): HeartbeatEntity?
 
