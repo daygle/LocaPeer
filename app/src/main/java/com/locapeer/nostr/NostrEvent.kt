@@ -18,6 +18,7 @@ object NostrEventKind {
     const val TYPING = 10002         // NIP-04-encrypted ephemeral typing signal
     const val PURGE_REQUEST = 10003         // NIP-04-encrypted request to delete old heartbeats
     const val MESSAGE_PURGE_REQUEST = 10004 // NIP-04-encrypted request to delete old messages
+    const val DELIVERY_ACK = 10005          // NIP-04-encrypted delivery acknowledgment
 }
 
 @Serializable

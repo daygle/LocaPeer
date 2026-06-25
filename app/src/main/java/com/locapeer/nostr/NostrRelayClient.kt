@@ -45,6 +45,9 @@ class NostrRelayClient @Inject constructor() {
     private val pendingMessages = ArrayDeque<String>()
     private val activeSubscriptions = mutableMapOf<String, String>()
 
+    private val recentEventLock = Any()
+    private val recentEventIds = LinkedHashSet<String>(512)
+
     private val client = OkHttpClient.Builder()
         .pingInterval(30, TimeUnit.SECONDS)
         .connectTimeout(15, TimeUnit.SECONDS)
@@ -132,7 +135,11 @@ class NostrRelayClient @Inject constructor() {
                     "EVENT" -> {
                         val eventJson = arr[2].toString()
                         val event = json.decodeFromString<NostrEvent>(eventJson)
-                        scope.launch { _events.emit(event) }
+                        val isNew = synchronized(recentEventLock) {
+                            if (recentEventIds.size >= 500) recentEventIds.remove(recentEventIds.first())
+                            recentEventIds.add(event.id)
+                        }
+                        if (isNew) scope.launch { _events.emit(event) }
                     }
                     "EOSE" -> Log.d(TAG, "End of stored events for sub: ${arr[1]}")
                     "NOTICE" -> Log.d(TAG, "Relay notice: ${arr[1]}")

@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LifecycleCoroutineScope
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.beacon.HeartbeatPayload
@@ -17,8 +16,12 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.data.entity.MessageEntity
 import com.locapeer.geofence.GeofenceEngine
+import com.locapeer.messaging.DeliveryAckPayload
+import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -33,6 +36,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
 import javax.inject.Inject
@@ -40,6 +44,7 @@ import javax.inject.Singleton
 
 private const val TAG = "HeartbeatReceiver"
 private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
+private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
 private const val SUB_ID = "locapeer-heartbeats"
 
 @Singleton
@@ -61,6 +66,7 @@ class HeartbeatReceiver @Inject constructor(
 
     fun start() {
         createAlertChannel()
+        createMessageChannel()
         scope.launch {
             val settings = prefs.settings.first()
             val (_, pubHex) = keyManager.ensureKeypair()
@@ -72,7 +78,10 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.HEARTBEAT,
                         NostrEventKind.SOS_ALERT,
                         NostrEventKind.PURGE_REQUEST,
-                        NostrEventKind.MESSAGE_PURGE_REQUEST
+                        NostrEventKind.MESSAGE_PURGE_REQUEST,
+                        NostrEventKind.ENCRYPTED_DM,
+                        NostrEventKind.READ_RECEIPT,
+                        NostrEventKind.DELIVERY_ACK
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -85,6 +94,9 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
                     NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
                     NostrEventKind.MESSAGE_PURGE_REQUEST -> processMsgPurgeRequest(event)
+                    NostrEventKind.ENCRYPTED_DM -> processDmInBackground(event)
+                    NostrEventKind.READ_RECEIPT -> processReadReceiptInBackground(event)
+                    NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
                 }
             }
             .launchIn(scope)
@@ -179,6 +191,86 @@ class HeartbeatReceiver @Inject constructor(
         notificationManager.notify(payload.deviceId.hashCode(), notification)
     }
 
+    private suspend fun processDmInBackground(event: NostrEvent) {
+        if (messageDao.getByNostrEventId(event.id) != null) return
+        val sender = peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val msg = MessageEntity(
+            id = event.id,
+            peerId = event.pubkey,
+            senderPublicKeyHex = event.pubkey,
+            content = plaintext,
+            timestamp = event.createdAt * 1000L,
+            isMine = false,
+            deliveryState = DeliveryState.DELIVERED.name,
+            nostrEventId = event.id
+        )
+        messageDao.insert(msg)
+        sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
+        sendDeliveryAck(event.pubkey, event.id)
+    }
+
+    private suspend fun processReadReceiptInBackground(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
+        receipt.eventIds.forEach { eventId ->
+            messageDao.updateDeliveryStateByNostrEventId(eventId, DeliveryState.READ.name)
+        }
+    }
+
+    private suspend fun processDeliveryAckInBackground(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val plaintext = try {
+            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
+        messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
+    }
+
+    private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val privBytes = crypto.hexToBytes(privHex)
+        val payload = json.encodeToString(DeliveryAckPayload(deliveredEventId))
+        val encrypted = crypto.nip04Encrypt(privBytes, toPubkey, payload)
+        val event = NostrEvent.build(
+            privKeyHex = privHex,
+            pubKeyHex = pubHex,
+            kind = NostrEventKind.DELIVERY_ACK,
+            content = encrypted,
+            tags = listOf(listOf("p", toPubkey)),
+            crypto = crypto
+        )
+        relayClient.publishEvent(event)
+    }
+
+    private fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("openChat", peerId)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val pi = PendingIntent.getActivity(context, peerId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_MESSAGES)
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle(senderName)
+            .setContentText(preview.take(80))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(peerId.hashCode() + 10000, notification)
+    }
+
     private fun createAlertChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID_ALERTS,
@@ -187,6 +279,15 @@ class HeartbeatReceiver @Inject constructor(
         ).apply {
             description = context.getString(R.string.channel_desc_alerts)
         }
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun createMessageChannel() {
+        val channel = NotificationChannel(
+            CHANNEL_ID_MESSAGES,
+            context.getString(R.string.channel_name_messages),
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply { description = context.getString(R.string.channel_desc_messages) }
         notificationManager.createNotificationChannel(channel)
     }
 }
