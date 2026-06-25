@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Location pin (white stroke outline) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="4"
+        android:pathData="M54,80 C44,68 34,58 34,46 A20,20,0,1,1,74,46 C74,58 64,68 54,80 Z" />
+
+    <!-- Center location dot (solid white) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,46 A6,6,0,1,0,60,46 A6,6,0,1,0,48,46 Z" />
+
+    <!-- Peer node — upper left -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,26 A4,4,0,1,0,32,26 A4,4,0,1,0,24,26 Z" />
+
+    <!-- Peer node — upper right -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M76,26 A4,4,0,1,0,84,26 A4,4,0,1,0,76,26 Z" />
+
+    <!-- Connection line: left peer to pin -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeAlpha="0.75"
+        android:strokeLineCap="round"
+        android:pathData="M29,28 L38,35" />
+
+    <!-- Connection line: right peer to pin -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeAlpha="0.75"
+        android:strokeLineCap="round"
+        android:pathData="M79,28 L70,35" />
+</vector>
