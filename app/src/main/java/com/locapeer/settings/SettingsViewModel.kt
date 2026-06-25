@@ -105,6 +105,14 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setGlobalScheduleEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setGlobalScheduleEnabled(enabled) }
+    }
+
+    fun updateGlobalSchedule(days: Int? = null, startMinute: Int? = null, endMinute: Int? = null) {
+        viewModelScope.launch { prefs.updateGlobalSchedule(days, startMinute, endMinute) }
+    }
+
     fun updateIntervals(
         stationary: Int? = null,
         walking: Int? = null,

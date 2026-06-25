@@ -26,6 +26,7 @@ import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.settings.SettingsScreen
+import com.locapeer.sharing.PeerSharingScreen
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Map : Screen("map", "Map", Icons.Default.Map)
@@ -127,7 +128,10 @@ fun LocaPeerNavHost(
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onNavigateToGeofences = { navController.navigate("geofences") },
-                    onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") }
+                    onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") },
+                    onNavigateToPeerSharing = { peerId, peerName ->
+                        navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
+                    }
                 )
             }
             composable(
@@ -164,6 +168,23 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 ProximityAlertsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                PeerSharingScreen(
+                    peerId = entry.arguments?.getString("peerId") ?: "",
+                    peerName = entry.arguments?.getString("peerName") ?: "",
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
         }
     }

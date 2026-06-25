@@ -29,7 +29,10 @@ import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
+import com.locapeer.sharing.SharingSchedule
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
@@ -57,6 +60,7 @@ class HeartbeatService : LifecycleService() {
     @Inject lateinit var crypto: CryptoUtils
     @Inject lateinit var relayClient: NostrRelayClient
     @Inject lateinit var peerDao: PeerDao
+    @Inject lateinit var sharingConfigDao: PeerSharingConfigDao
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var intervalManager: AdaptiveIntervalManager
     @Inject lateinit var notificationManager: NotificationManager
@@ -206,42 +210,78 @@ class HeartbeatService : LifecycleService() {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                val payload = HeartbeatPayload(
-                    deviceId = pubHex,
-                    displayName = settings.displayName,
-                    timestamp = Instant.now().toString(),
-                    lat = lastLat,
-                    lng = lastLng,
-                    accuracy = lastAccuracy,
-                    battery = battery,
-                    motionState = currentMotionState.name,
-                    isSos = isSos
-                )
-                val payloadJson = Json.encodeToString(payload)
+                // Global schedule gate (skip for SOS — always send those)
+                if (!isSos && settings.globalScheduleEnabled) {
+                    val active = SharingSchedule.isActive(
+                        settings.globalScheduleDays,
+                        settings.globalScheduleStartMinute,
+                        settings.globalScheduleEndMinute
+                    )
+                    if (!active) {
+                        Log.d(TAG, "Heartbeat suppressed: outside global schedule")
+                        return@launch
+                    }
+                }
 
                 val subscribers = peerDao.getSubscribers().first()
+                var sentCount = 0
                 subscribers.forEach { subscriber ->
+                    val cfg = sharingConfigDao.getForPeer(subscriber.deviceId)
+
+                    // Per-peer disable check (SOS always bypasses)
+                    if (!isSos && cfg?.sharingEnabled == false) return@forEach
+
+                    // Per-peer schedule check (SOS always bypasses)
+                    if (!isSos && cfg?.scheduleEnabled == true) {
+                        val active = SharingSchedule.isActive(
+                            cfg.scheduleDays, cfg.scheduleStartMinute, cfg.scheduleEndMinute
+                        )
+                        if (!active) return@forEach
+                    }
+
+                    // Apply precision — default to EXACT when no config exists
+                    val (sendLat, sendLng) = if (
+                        cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
+                    ) {
+                        SharingSchedule.toSuburbPrecision(lastLat, lastLng)
+                    } else {
+                        lastLat to lastLng
+                    }
+
+                    val payload = HeartbeatPayload(
+                        deviceId = pubHex,
+                        displayName = settings.displayName,
+                        timestamp = Instant.now().toString(),
+                        lat = sendLat,
+                        lng = sendLng,
+                        accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
+                        battery = battery,
+                        motionState = currentMotionState.name,
+                        isSos = isSos
+                    )
+                    val payloadJson = Json.encodeToString(payload)
+
                     val encrypted = crypto.nip04Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
                         recipientXOnlyHex = subscriber.publicKeyHex,
                         plaintext = payloadJson
                     )
                     val kind = if (isSos) NostrEventKind.SOS_ALERT else NostrEventKind.HEARTBEAT
-                    val tags = listOf(
-                        listOf("p", subscriber.publicKeyHex),
-                        listOf("t", "locapeer-heartbeat")
-                    )
                     val event = NostrEvent.build(
                         privKeyHex = privHex,
                         pubKeyHex = pubHex,
                         kind = kind,
                         content = encrypted,
-                        tags = tags,
+                        tags = listOf(
+                            listOf("p", subscriber.publicKeyHex),
+                            listOf("t", "locapeer-heartbeat")
+                        ),
                         crypto = crypto
                     )
                     relayClient.publishEvent(event)
+                    sentCount++
                 }
-                Log.d(TAG, "Heartbeat sent to ${subscribers.size} subscribers")
+                Log.d(TAG, "Heartbeat sent to $sentCount/${subscribers.size} subscribers")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }

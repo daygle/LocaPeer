@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.QrCode
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,6 +18,9 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.locapeer.sharing.DayPicker
+import com.locapeer.sharing.SharingSchedule
+import com.locapeer.sharing.TimePickerDialog
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,6 +28,7 @@ import kotlin.math.roundToInt
 fun SettingsScreen(
     onNavigateToGeofences: () -> Unit,
     onNavigateToProximityAlerts: () -> Unit = {},
+    onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     vm: SettingsViewModel = hiltViewModel()
 ) {
     val settings by vm.settings.collectAsState()
@@ -38,6 +43,8 @@ fun SettingsScreen(
     var showProfileQr by remember { mutableStateOf(false) }
     var showClearLocationConfirm by remember { mutableStateOf(false) }
     var showClearMessageConfirm by remember { mutableStateOf(false) }
+    var showGlobalScheduleStartPicker by remember { mutableStateOf(false) }
+    var showGlobalScheduleEndPicker by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -177,6 +184,71 @@ fun SettingsScreen(
                         steps = 6,
                         onChanged = { vm.updateIntervals(lowBattery = it) }
                     )
+
+                    Spacer(Modifier.height(12.dp))
+                    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+                    Spacer(Modifier.height(12.dp))
+
+                    Text(
+                        "Global Sharing Schedule",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        "Restrict all location sharing to selected times. Per-person schedules can further narrow this.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Only share on a schedule", style = MaterialTheme.typography.bodySmall)
+                        Switch(
+                            checked = settings.globalScheduleEnabled,
+                            onCheckedChange = { vm.setGlobalScheduleEnabled(it) }
+                        )
+                    }
+                    if (settings.globalScheduleEnabled) {
+                        Spacer(Modifier.height(12.dp))
+                        DayPicker(
+                            days = settings.globalScheduleDays,
+                            onDaysChanged = { vm.updateGlobalSchedule(days = it) }
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            OutlinedButton(
+                                onClick = { showGlobalScheduleStartPicker = true },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text("Start", style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(SharingSchedule.formatTime(settings.globalScheduleStartMinute),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        fontWeight = FontWeight.SemiBold)
+                                }
+                            }
+                            OutlinedButton(
+                                onClick = { showGlobalScheduleEndPicker = true },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text("End", style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text(SharingSchedule.formatTime(settings.globalScheduleEndMinute),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        fontWeight = FontWeight.SemiBold)
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -192,8 +264,10 @@ fun SettingsScreen(
                                 headlineContent = { Text(peer.displayName) },
                                 supportingContent = { Text(peer.publicKeyHex.take(16) + "…") },
                                 trailingContent = {
-                                    IconButton(onClick = { vm.removePeer(peer.deviceId) }) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Remove")
+                                    Row {
+                                        IconButton(onClick = { vm.removePeer(peer.deviceId) }) {
+                                            Icon(Icons.Default.Delete, contentDescription = "Remove")
+                                        }
                                     }
                                 }
                             )
@@ -206,8 +280,15 @@ fun SettingsScreen(
                                 headlineContent = { Text(peer.displayName) },
                                 supportingContent = { Text(peer.publicKeyHex.take(16) + "…") },
                                 trailingContent = {
-                                    IconButton(onClick = { vm.removePeer(peer.deviceId) }) {
-                                        Icon(Icons.Default.Delete, contentDescription = "Revoke")
+                                    Row {
+                                        IconButton(onClick = {
+                                            onNavigateToPeerSharing(peer.deviceId, peer.displayName)
+                                        }) {
+                                            Icon(Icons.Default.Settings, contentDescription = "Sharing settings")
+                                        }
+                                        IconButton(onClick = { vm.removePeer(peer.deviceId) }) {
+                                            Icon(Icons.Default.Delete, contentDescription = "Revoke")
+                                        }
                                     }
                                 }
                             )
@@ -358,6 +439,23 @@ fun SettingsScreen(
             dismissButton = {
                 TextButton(onClick = { showClearMessageConfirm = false }) { Text("Cancel") }
             }
+        )
+    }
+
+    if (showGlobalScheduleStartPicker) {
+        TimePickerDialog(
+            initialMinute = settings.globalScheduleStartMinute,
+            title = "Start sharing at",
+            onConfirm = { vm.updateGlobalSchedule(startMinute = it); showGlobalScheduleStartPicker = false },
+            onDismiss = { showGlobalScheduleStartPicker = false }
+        )
+    }
+    if (showGlobalScheduleEndPicker) {
+        TimePickerDialog(
+            initialMinute = settings.globalScheduleEndMinute,
+            title = "Stop sharing at",
+            onConfirm = { vm.updateGlobalSchedule(endMinute = it); showGlobalScheduleEndPicker = false },
+            onDismiss = { showGlobalScheduleEndPicker = false }
         )
     }
 }
