@@ -23,12 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
-import com.locapeer.sos.SosManager
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
@@ -63,9 +65,8 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsState()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
-    var isSosActive by remember { mutableStateOf(false) }
+    val isSosActive by vm.isSosActive.collectAsState()
     val context = LocalContext.current
-    val sosManager = remember { SosManager(context) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         OsmdroidMapView(
@@ -79,10 +80,7 @@ fun MapScreen(
         // SOS FAB — top-right
         SosButton(
             isActive = isSosActive,
-            onClick = {
-                isSosActive = !isSosActive
-                if (isSosActive) sosManager.activateSos() else sosManager.deactivateSos()
-            },
+            onClick = { vm.toggleSos() },
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(16.dp)
@@ -140,6 +138,24 @@ private fun OsmdroidMapView(
     context: android.content.Context,
     modifier: Modifier = Modifier
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    var mapViewRef by remember { mutableStateOf<MapView?>(null) }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
+                Lifecycle.Event.ON_PAUSE -> mapViewRef?.onPause()
+                else -> {}
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+            mapViewRef?.onDetach()
+        }
+    }
+
     AndroidView(
         factory = { ctx ->
             Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
@@ -150,7 +166,7 @@ private fun OsmdroidMapView(
                 controller.setZoom(14.0)
                 controller.setCenter(GeoPoint(51.5, -0.1))
                 isVerticalMapRepetitionEnabled = false
-            }
+            }.also { mapViewRef = it }
         },
         update = { mapView ->
             mapView.overlays.clear()

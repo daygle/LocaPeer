@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 if (pendingApproval != null) {
                     val req = pendingApproval!!
                     AlertDialog(
-                        onDismissRequest = {},
+                        onDismissRequest = { approvalManager.respond(false) },
                         title = { Text("Supervision Request") },
                         text = { Text("\"${req.deviceName}\" is requesting access to their settings. Allow?") },
                         confirmButton = {
