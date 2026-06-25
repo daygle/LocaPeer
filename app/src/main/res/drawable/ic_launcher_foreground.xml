@@ -17,12 +17,12 @@
         android:fillColor="#FFFFFF"
         android:pathData="M48,46 A6,6,0,1,0,60,46 A6,6,0,1,0,48,46 Z" />
 
-    <!-- Peer node — upper left -->
+    <!-- Peer node - upper left -->
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M24,26 A4,4,0,1,0,32,26 A4,4,0,1,0,24,26 Z" />
 
-    <!-- Peer node — upper right -->
+    <!-- Peer node - upper right -->
     <path
         android:fillColor="#FFFFFF"
         android:pathData="M76,26 A4,4,0,1,0,84,26 A4,4,0,1,0,76,26 Z" />
