@@ -11,6 +11,10 @@ import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.math.asin
@@ -18,12 +22,17 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+private const val COOLDOWN_MS = 5 * 60 * 1000L // 5 minutes per fence
+
 @Singleton
 class GeofenceEngine @Inject constructor(
     @ApplicationContext private val context: Context,
     private val geofenceDao: GeofenceDao,
     private val notificationManager: NotificationManager
 ) {
+    // Tracks the last time a notification was sent per fenceId to prevent GPS-jitter spam
+    private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
+
     suspend fun evaluate(current: HeartbeatEntity, previous: HeartbeatEntity?) {
         val fences = geofenceDao.getActiveGeofencesForDevice(current.deviceId)
         fences.forEach { fence ->
@@ -41,9 +50,19 @@ class GeofenceEngine @Inject constructor(
             }
 
             if (shouldNotify) {
-                val title = if (entered) "${current.displayName} has arrived at ${fence.name}"
-                else "${current.displayName} has left ${fence.name}"
-                sendGeofenceNotification(fence, title)
+                val now = System.currentTimeMillis()
+                val last = lastNotifiedAt[fence.id] ?: 0L
+                if (now - last < COOLDOWN_MS) return@forEach
+                lastNotifiedAt[fence.id] = now
+
+                val verb = if (entered) "arrived at" else "left"
+                sendGeofenceNotification(
+                    fence = fence,
+                    personName = current.displayName,
+                    personDeviceId = current.deviceId,
+                    title = "${current.displayName} $verb ${fence.name}",
+                    subtitle = "at ${formatTime(current.timestamp)} · ${fence.radiusMetres}m radius"
+                )
             }
         }
     }
@@ -61,17 +80,47 @@ class GeofenceEngine @Inject constructor(
         return r * 2 * asin(sqrt(a))
     }
 
-    private fun sendGeofenceNotification(fence: GeofenceEntity, title: String) {
-        val intent = Intent(context, MainActivity::class.java)
-        val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+    private fun sendGeofenceNotification(
+        fence: GeofenceEntity,
+        personName: String,
+        personDeviceId: String,
+        title: String,
+        subtitle: String
+    ) {
+        val openMapIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("navigateTo", "map")
+            putExtra("highlightPeer", personDeviceId)
+        }
+        val openMapPi = PendingIntent.getActivity(
+            context, fence.id.hashCode(), openMapIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val chatIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("navigateTo", "chat")
+            putExtra("openChat", personDeviceId)
+            putExtra("peerName", personName)
+        }
+        val chatPi = PendingIntent.getActivity(
+            context, fence.id.hashCode() + 1, chatIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(context, "locapeer_alerts")
             .setSmallIcon(R.drawable.ic_notif_alert)
             .setContentTitle(title)
-            .setContentText("Geofence: ${fence.name}")
+            .setContentText(subtitle)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(subtitle))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pi)
+            .setContentIntent(openMapPi)
+            .addAction(R.drawable.ic_notif_message, "Message $personName", chatPi)
             .setAutoCancel(true)
             .build()
         notificationManager.notify(fence.id.hashCode(), notification)
     }
+
+    private fun formatTime(millis: Long): String =
+        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(millis))
 }

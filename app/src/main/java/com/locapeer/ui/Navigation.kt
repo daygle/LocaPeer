@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import com.locapeer.NavTarget
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.InviteScreen
 import com.locapeer.invite.ScanScreen
@@ -49,12 +50,32 @@ private val slidePopEnter = slideInHorizontally(tween(280)) { -it / 3 } + fadeIn
 private val slidePopExit = slideOutHorizontally(tween(250)) { it / 3 } + fadeOut(tween(250))
 
 @Composable
-fun LocaPeerNavHost() {
+fun LocaPeerNavHost(
+    initialNavTarget: NavTarget? = null,
+    onNavTargetConsumed: () -> Unit = {}
+) {
     val navController = rememberNavController()
     val backstackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backstackEntry?.destination?.route
 
     val showBottomBar = bottomNavItems.any { currentRoute == it.route }
+
+    // Deep-link from notification
+    LaunchedEffect(initialNavTarget) {
+        val target = initialNavTarget ?: return@LaunchedEffect
+        when (target.route) {
+            "chat" -> {
+                val peerId = target.peerId ?: return@LaunchedEffect
+                navController.navigate("chat/$peerId/${target.peerName.ifBlank { "Chat" }}")
+            }
+            "map" -> {
+                navController.navigate(Screen.Map.route) {
+                    popUpTo(Screen.Map.route) { inclusive = true }
+                }
+            }
+        }
+        onNavTargetConsumed()
+    }
 
     Scaffold(
         bottomBar = {
