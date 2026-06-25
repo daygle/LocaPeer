@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.QrCode
@@ -33,6 +34,7 @@ fun SettingsScreen(
     onNavigateToGeofences: () -> Unit,
     onNavigateToProximityAlerts: () -> Unit = {},
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
+    onNavigateToHistoryReport: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel()
 ) {
     val settings by vm.settings.collectAsState()
@@ -271,7 +273,22 @@ fun SettingsScreen(
                     val subscribers = peers.filter { it.role == "SUBSCRIBER" }
 
                     if (broadcasters.isNotEmpty()) {
-                        Text("Tracked people", style = MaterialTheme.typography.labelSmall)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Tracked people", style = MaterialTheme.typography.labelSmall)
+                            TextButton(onClick = onNavigateToHistoryReport) {
+                                Icon(
+                                    Icons.Default.History,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(16.dp)
+                                )
+                                Spacer(Modifier.width(4.dp))
+                                Text("History", style = MaterialTheme.typography.labelSmall)
+                            }
+                        }
                         broadcasters.forEach { peer ->
                             ListItem(
                                 headlineContent = { Text(peer.displayName) },
