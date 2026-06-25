@@ -180,6 +180,25 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun enableSupervisedMode(pin: String) {
+        viewModelScope.launch {
+            val hash = crypto.bytesToHex(crypto.sha256(pin.toByteArray(Charsets.UTF_8)))
+            prefs.setSupervisedMode(enabled = true, pinHash = hash)
+        }
+    }
+
+    fun disableSupervisedMode() {
+        viewModelScope.launch { prefs.clearSupervisedMode() }
+    }
+
+    fun verifySupervisorPin(pin: String, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val s = prefs.settings.first()
+            val hash = crypto.bytesToHex(crypto.sha256(pin.toByteArray(Charsets.UTF_8)))
+            onResult(hash == s.supervisorPinHash)
+        }
+    }
+
     fun setGlobalScheduleEnabled(enabled: Boolean) {
         viewModelScope.launch { prefs.setGlobalScheduleEnabled(enabled) }
     }
