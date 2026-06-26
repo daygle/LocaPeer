@@ -145,7 +145,7 @@ class NostrRelayClient @Inject constructor() {
                     "NOTICE" -> Log.d(TAG, "Relay notice: ${arr[1]}")
                     "OK" -> {
                         val eventId = arr[1].jsonPrimitive.content
-                        val accepted = arr[2].jsonPrimitive.booleanOrNull ?: false
+                        val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
                         if (accepted) scope.launch { _okEvents.emit(eventId) }
                         Log.d(TAG, "Event ${if (accepted) "accepted" else "rejected"}: $eventId")
                     }
