@@ -1,6 +1,6 @@
 # LocaPeer
 
-A peer-to-peer family location tracking Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no central servers - just encrypted location events sent directly between devices over a Nostr relay.
+A peer-to-peer location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no central servers - just encrypted location events sent directly between devices over a Nostr relay.
 
 ## Features
 

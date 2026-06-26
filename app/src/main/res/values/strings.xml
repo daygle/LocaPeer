@@ -2,11 +2,11 @@
 <resources>
     <string name="app_name">LocaPeer</string>
     <string name="channel_name_heartbeat">Location Broadcast</string>
-    <string name="channel_desc_heartbeat">Broadcasts your location to family members</string>
+    <string name="channel_desc_heartbeat">Broadcasts your location to your approved contacts</string>
     <string name="channel_name_alerts">Alerts</string>
     <string name="channel_desc_alerts">Missed heartbeat and geofence alerts</string>
     <string name="channel_name_messages">Messages</string>
     <string name="channel_desc_messages">Incoming peer messages</string>
     <string name="notification_heartbeat_title">LocaPeer is running</string>
-    <string name="notification_heartbeat_text">Sharing your location with family</string>
+    <string name="notification_heartbeat_text">Sharing your location with others</string>
 </resources>

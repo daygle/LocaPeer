@@ -104,7 +104,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(12.dp))
 
     Text(
-        "Private family location sharing.\nNo server. No cloud. Just you.",
+        "Private location sharing with people you care about.\nNo server. No cloud. Just you.",
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -133,7 +133,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(48.dp))
 
     Text(
-        "What should your family call you?",
+        "What should your friends and family call you?",
         style = MaterialTheme.typography.titleMedium,
         modifier = Modifier.fillMaxWidth()
     )
@@ -205,7 +205,7 @@ private fun BackgroundLocationStep(onNext: () -> Unit) {
     StepHeader(
         icon = Icons.Default.LocationOn,
         title = "Background Location",
-        description = "To keep your family updated while the app is closed, please select 'Allow all the time' in the next screen."
+        description = "To keep your contacts updated while the app is closed, please select 'Allow all the time' in the next screen."
     )
 
     Spacer(Modifier.height(48.dp))
