@@ -100,7 +100,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
 
     // secp256k1 crypto (ACINQ KMP)
-    implementation("fr.acinq.secp256k1:secp256k1-kmp-jvm:0.15.0")
+    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.23.0")
 
     // Bouncy Castle for fallback crypto (AES, SHA, ECDH helpers)
     implementation("org.bouncycastle:bcprov-jdk15on:1.70")
