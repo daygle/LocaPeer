@@ -1,20 +1,17 @@
 package com.locapeer.map
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -22,20 +19,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
-import com.locapeer.ui.theme.GeofenceBoth
-import com.locapeer.ui.theme.GeofenceEnter
-import com.locapeer.ui.theme.GeofenceExit
-import com.locapeer.ui.theme.SosRed
-import com.locapeer.ui.theme.SosRedContainer
+import com.locapeer.ui.theme.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.GeoPoint
@@ -65,6 +60,7 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsState()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
+    var showFriendList by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsState()
     val context = LocalContext.current
 
@@ -77,14 +73,50 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // SOS FAB — top-right
-        SosButton(
-            isActive = isSosActive,
-            onClick = { vm.toggleSos() },
+        // Top-right controls: SOS and Friends List
+        Column(
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(16.dp)
-        )
+                .padding(16.dp),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            SosButton(
+                isActive = isSosActive,
+                onClick = { vm.toggleSos() }
+            )
+
+            FloatingActionButton(
+                onClick = { showFriendList = true },
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.shadow(4.dp, CircleShape)
+            ) {
+                Icon(Icons.Default.People, contentDescription = "Friends")
+            }
+        }
+
+        // Friend List Sidebar / Panel
+        AnimatedVisibility(
+            visible = showFriendList,
+            enter = slideInHorizontally(initialOffsetX = { it }),
+            exit = slideOutHorizontally(targetOffsetX = { it }),
+            modifier = Modifier.align(Alignment.TopEnd)
+        ) {
+            FriendListPanel(
+                pins = uiState.pins,
+                onDismiss = { showFriendList = false },
+                onSelectFriend = { pin ->
+                    showFriendList = false
+                    selectedPin = pin
+                    // Logic to center map could go here via VM or callback
+                },
+                onMessageFriend = { peerId ->
+                    showFriendList = false
+                    onNavigateToChat(peerId)
+                }
+            )
+        }
 
         // Animated pin info sheet
         AnimatedVisibility(
@@ -107,6 +139,122 @@ fun MapScreen(
                     onViewHistory = {}
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun FriendListPanel(
+    pins: List<PinData>,
+    onDismiss: () -> Unit,
+    onSelectFriend: (PinData) -> Unit,
+    onMessageFriend: (String) -> Unit
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(300.dp)
+            .shadow(16.dp),
+        color = MaterialTheme.colorScheme.surface,
+        tonalElevation = 4.dp
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    "Family & Friends",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                IconButton(onClick = onDismiss) {
+                    Icon(Icons.Default.Close, contentDescription = "Close")
+                }
+            }
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
+
+            if (pins.isEmpty()) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text("No friends tracked yet", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else {
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(pins) { pin ->
+                        FriendItem(
+                            pin = pin,
+                            onClick = { onSelectFriend(pin) },
+                            onMessage = { onMessageFriend(pin.peer.deviceId) }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FriendItem(
+    pin: PinData,
+    onClick: () -> Unit,
+    onMessage: () -> Unit
+) {
+    val hb = pin.heartbeat
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(if (hb?.isSos == true) SosRedContainer else MaterialTheme.colorScheme.primaryContainer),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                pin.peer.displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = if (hb?.isSos == true) SosRed else MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
+
+        Spacer(Modifier.width(12.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                pin.peer.displayName,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                when {
+                    hb?.isSos == true -> "⚠ SOS ACTIVE"
+                    pin.isOverdue -> "Away"
+                    hb != null -> hb.motionState.lowercase().replaceFirstChar { it.uppercase() }
+                    else -> "No data"
+                },
+                style = MaterialTheme.typography.labelSmall,
+                color = if (hb?.isSos == true) SosRed else MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        IconButton(onClick = onMessage) {
+            Icon(
+                Icons.AutoMirrored.Filled.Chat,
+                contentDescription = "Message",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
         }
     }
 }
@@ -317,7 +465,7 @@ private fun PinInfoSheet(
                     Text("History")
                 }
                 Button(onClick = onMessage, modifier = Modifier.weight(1f)) {
-                    Icon(Icons.Default.Chat, null, Modifier.size(16.dp))
+                    Icon(Icons.AutoMirrored.Filled.Chat, null, Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
                     Text("Message")
                 }
