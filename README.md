@@ -1,6 +1,6 @@
 # LocaPeer
 
-A peer-to-peer location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no central servers - just encrypted location events sent directly between devices over a Nostr relay.
+A location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no proprietary servers. A Nostr relay routes encrypted events between devices, but the relay never sees your data — everything is end-to-end encrypted before it leaves your device. You can use any public relay or self-host your own.
 
 ## Features
 
@@ -86,7 +86,7 @@ The debug APK will be at `app/build/outputs/apk/debug/app-debug.apk`.
 
 - Your private key never leaves the device
 - Location events are encrypted individually for each subscriber - only the intended recipient can decrypt them
-- The Nostr relay acts as a dumb message bus; it stores ciphertext only
+- The Nostr relay is a transport only — it stores ciphertext and cannot read your location, messages, or any other content
 - Retention settings automatically send purge requests to peers, deleting your data on their devices
 - Supervised mode approval travels over the same encrypted channel - no credentials are stored or transmitted in plaintext
 
