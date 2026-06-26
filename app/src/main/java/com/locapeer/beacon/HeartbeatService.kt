@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.ActivityRecognition
 import com.google.android.gms.location.ActivityRecognitionClient
 import com.google.android.gms.location.ActivityRecognitionResult
 import com.google.android.gms.location.DetectedActivity
@@ -97,7 +98,7 @@ class HeartbeatService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         fusedLocation = LocationServices.getFusedLocationProviderClient(this)
-        activityClient = ActivityRecognitionClient(this)
+        activityClient = ActivityRecognition.getClient(this)
         createNotificationChannel()
         lifecycleScope.launch {
             prefs.settings.collect { settings ->
