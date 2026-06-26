@@ -10,9 +10,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+enum class OnboardingStep {
+    IDENTITY,
+    PERMISSIONS,
+    BACKGROUND_LOCATION,
+    BATTERY,
+    DONE
+}
+
 data class OnboardingState(
     val displayName: String = "",
     val publicKeyHex: String = "",
+    val step: OnboardingStep = OnboardingStep.IDENTITY,
     val isLoading: Boolean = true
 )
 
@@ -34,6 +43,18 @@ class OnboardingViewModel @Inject constructor(
 
     fun setDisplayName(name: String) {
         _state.value = _state.value.copy(displayName = name)
+    }
+
+    fun nextStep() {
+        val current = _state.value.step
+        val next = when (current) {
+            OnboardingStep.IDENTITY -> OnboardingStep.PERMISSIONS
+            OnboardingStep.PERMISSIONS -> OnboardingStep.BACKGROUND_LOCATION
+            OnboardingStep.BACKGROUND_LOCATION -> OnboardingStep.BATTERY
+            OnboardingStep.BATTERY -> OnboardingStep.DONE
+            OnboardingStep.DONE -> OnboardingStep.DONE
+        }
+        _state.value = _state.value.copy(step = next)
     }
 
     fun complete(onDone: () -> Unit) {

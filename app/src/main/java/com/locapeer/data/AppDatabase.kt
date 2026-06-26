@@ -2,18 +2,8 @@ package com.locapeer.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.locapeer.data.dao.GeofenceDao
-import com.locapeer.data.dao.HeartbeatDao
-import com.locapeer.data.dao.MessageDao
-import com.locapeer.data.dao.PeerDao
-import com.locapeer.data.dao.PeerSharingConfigDao
-import com.locapeer.data.dao.ProximityAlertDao
-import com.locapeer.data.entity.GeofenceEntity
-import com.locapeer.data.entity.HeartbeatEntity
-import com.locapeer.data.entity.MessageEntity
-import com.locapeer.data.entity.PeerEntity
-import com.locapeer.data.entity.PeerSharingConfig
-import com.locapeer.data.entity.ProximityAlertEntity
+import com.locapeer.data.dao.*
+import com.locapeer.data.entity.*
 
 @Database(
     entities = [
@@ -22,9 +12,10 @@ import com.locapeer.data.entity.ProximityAlertEntity
         MessageEntity::class,
         GeofenceEntity::class,
         ProximityAlertEntity::class,
-        PeerSharingConfig::class
+        PeerSharingConfig::class,
+        PendingMessageEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -34,4 +25,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun geofenceDao(): GeofenceDao
     abstract fun proximityAlertDao(): ProximityAlertDao
     abstract fun peerSharingConfigDao(): PeerSharingConfigDao
+    abstract fun pendingMessageDao(): PendingMessageDao
 }

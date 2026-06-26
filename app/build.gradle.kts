@@ -114,6 +114,9 @@ dependencies {
     // DataStore Preferences
     implementation("androidx.datastore:datastore-preferences:1.1.3")
 
+    // Security Crypto
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+
     // Kotlin Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 

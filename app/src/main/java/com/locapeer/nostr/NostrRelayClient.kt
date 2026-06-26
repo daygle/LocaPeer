@@ -1,6 +1,8 @@
 package com.locapeer.nostr
 
 import android.util.Log
+import com.locapeer.data.dao.PendingMessageDao
+import com.locapeer.data.entity.PendingMessageEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,7 +29,9 @@ import javax.inject.Singleton
 private const val TAG = "NostrRelayClient"
 
 @Singleton
-class NostrRelayClient @Inject constructor() {
+class NostrRelayClient @Inject constructor(
+    private val pendingMessageDao: PendingMessageDao
+) {
 
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -44,7 +48,6 @@ class NostrRelayClient @Inject constructor() {
     val okEvents: SharedFlow<String> = _okEvents
 
     private val msgLock = Any()
-    private val pendingMessages = ArrayDeque<String>()
     private val activeSubscriptions = mutableMapOf<String, String>()
 
     private val recentEventLock = Any()
@@ -112,23 +115,32 @@ class NostrRelayClient @Inject constructor() {
     }
 
     private fun sendOrQueue(msg: String) {
-        synchronized(msgLock) {
-            if (isConnected) {
-                webSocket?.send(msg)
-            } else {
-                pendingMessages.addLast(msg)
-                if (webSocket == null) connect(currentRelayUrl)
+        scope.launch {
+            synchronized(msgLock) {
+                if (isConnected) {
+                    webSocket?.send(msg)
+                } else {
+                    scope.launch {
+                        pendingMessageDao.insert(PendingMessageEntity(content = msg))
+                    }
+                    if (webSocket == null) connect(currentRelayUrl)
+                }
             }
         }
     }
 
     private fun flushPending() {
-        synchronized(msgLock) {
-            while (pendingMessages.isNotEmpty()) {
-                val msg = pendingMessages.removeFirst()
-                webSocket?.send(msg)
+        scope.launch {
+            val pending = pendingMessageDao.getAll()
+            synchronized(msgLock) {
+                pending.forEach { entity ->
+                    val sent = webSocket?.send(entity.content) ?: false
+                    if (sent) {
+                        scope.launch { pendingMessageDao.delete(entity) }
+                    }
+                }
+                activeSubscriptions.values.forEach { webSocket?.send(it) }
             }
-            activeSubscriptions.values.forEach { webSocket?.send(it) }
         }
     }
 
