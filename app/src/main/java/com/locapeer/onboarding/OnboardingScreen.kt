@@ -104,7 +104,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(12.dp))
 
     Text(
-        "Private location sharing with contacts.\nNo server. No cloud. Just you.",
+        "Private location sharing with contacts.\nNo accounts. No proprietary servers.",
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -120,8 +120,8 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.CloudOff,
-        title = "No central server",
-        subtitle = "Data travels peer-to-peer directly"
+        title = "No proprietary servers",
+        subtitle = "Uses an open Nostr relay as a transport — encrypted so the relay never sees your data"
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(

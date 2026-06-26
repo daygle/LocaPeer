@@ -212,11 +212,13 @@ class SettingsViewModel @Inject constructor(
     fun updateIntervals(
         stationary: Int? = null,
         walking: Int? = null,
+        running: Int? = null,
+        cycling: Int? = null,
         driving: Int? = null,
         lowBattery: Int? = null
     ) {
         viewModelScope.launch {
-            prefs.updateIntervals(stationary, walking, driving, lowBattery)
+            prefs.updateIntervals(stationary, walking, running, cycling, driving, lowBattery)
         }
     }
 }

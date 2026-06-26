@@ -186,11 +186,25 @@ fun SettingsScreen(
                         onChanged = { vm.updateIntervals(stationary = it) }
                     )
                     IntervalSlider(
-                        label = "Walking / Running",
+                        label = "Walking",
                         value = settings.walkingIntervalMinutes,
                         range = 1f..15f,
                         steps = 13,
                         onChanged = { vm.updateIntervals(walking = it) }
+                    )
+                    IntervalSlider(
+                        label = "Running",
+                        value = settings.runningIntervalMinutes,
+                        range = 1f..10f,
+                        steps = 8,
+                        onChanged = { vm.updateIntervals(running = it) }
+                    )
+                    IntervalSlider(
+                        label = "Cycling",
+                        value = settings.cyclingIntervalMinutes,
+                        range = 1f..10f,
+                        steps = 8,
+                        onChanged = { vm.updateIntervals(cycling = it) }
                     )
                     IntervalSlider(
                         label = "Driving",
