@@ -57,12 +57,13 @@ fun InviteScreen(
                     }
                 }
                 state.qrBitmap != null -> {
+                    val bitmap = state.qrBitmap
                     Card(
                         modifier = Modifier.size(280.dp),
                         elevation = CardDefaults.cardElevation(4.dp)
                     ) {
                         Image(
-                            bitmap = state.qrBitmap.asImageBitmap(),
+                            bitmap = bitmap.asImageBitmap(),
                             contentDescription = "Invite QR code",
                             modifier = Modifier
                                 .fillMaxSize()
