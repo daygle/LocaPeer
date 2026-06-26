@@ -104,7 +104,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(12.dp))
 
     Text(
-        "Private location sharing with people you care about.\nNo server. No cloud. Just you.",
+        "Private location sharing with contacts.\nNo server. No cloud. Just you.",
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -133,7 +133,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(48.dp))
 
     Text(
-        "What should your friends and family call you?",
+        "What should your contacts call you?",
         style = MaterialTheme.typography.titleMedium,
         modifier = Modifier.fillMaxWidth()
     )
