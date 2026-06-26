@@ -38,7 +38,7 @@ class ProximityEngine @Inject constructor(
         val alert = proximityAlertDao.getForPeer(peerHeartbeat.deviceId) ?: return
         if (!alert.active) return
 
-        val ownLocation = suspendCancellableCoroutine { cont ->
+        val ownLocation = suspendCancellableCoroutine<android.location.Location?> { cont ->
             fusedLocation.lastLocation
                 .addOnSuccessListener { cont.resume(it) }
                 .addOnFailureListener { cont.resume(null) }
