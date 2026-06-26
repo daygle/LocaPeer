@@ -45,9 +45,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LocaPeerTheme {
-                val onboardingComplete by prefs.settings
-                    .map { it.onboardingComplete }
-                    .collectAsState(initial = null)
+                val onboardingComplete by remember {
+                    prefs.settings.map { it.onboardingComplete }
+                }.collectAsState(initial = null)
                 val navTarget by pendingNavTarget
                 val pendingApproval by approvalManager.pending.collectAsState()
 

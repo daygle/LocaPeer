@@ -165,7 +165,11 @@ class HeartbeatService : LifecycleService() {
             Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
-        activityClient.requestActivityUpdates(30_000L, activityIntent)
+        try {
+            activityClient.requestActivityUpdates(30_000L, activityIntent)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Activity recognition permission missing: ${e.message}")
+        }
 
         lifecycleScope.launch {
             val settings = prefs.settings.first()
@@ -330,7 +334,11 @@ class HeartbeatService : LifecycleService() {
             Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
         )
-        activityClient.removeActivityUpdates(activityIntent)
+        try {
+            activityClient.removeActivityUpdates(activityIntent)
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to remove activity updates: ${e.message}")
+        }
         super.onDestroy()
     }
 }
