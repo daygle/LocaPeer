@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.locapeer"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.locapeer"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -86,9 +86,9 @@ dependencies {
     ksp("androidx.hilt:hilt-compiler:1.2.0")
 
     // Room
-    implementation("androidx.room:room-runtime:2.7.0")
-    implementation("androidx.room:room-ktx:2.7.0")
-    ksp("androidx.room:room-compiler:2.7.0")
+    implementation("androidx.room:room-runtime:2.8.4")
+    implementation("androidx.room:room-ktx:2.8.4")
+    ksp("androidx.room:room-compiler:2.8.4")
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.0")
@@ -113,7 +113,7 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.18")
 
     // DataStore Preferences
-    implementation("androidx.datastore:datastore-preferences:1.1.3")
+    implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     // Security Crypto
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
@@ -125,7 +125,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
     // CameraX for QR scanning
-    val cameraVersion = "1.4.1"
+    val cameraVersion = "1.6.1"
     implementation("androidx.camera:camera-camera2:$cameraVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraVersion")
     implementation("androidx.camera:camera-view:$cameraVersion")
