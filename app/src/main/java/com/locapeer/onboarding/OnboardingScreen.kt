@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.FactCheck
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -19,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -52,7 +52,7 @@ fun OnboardingScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 32.dp)
+                .padding(horizontal = 24.dp)
                 .padding(top = 72.dp, bottom = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -78,10 +78,9 @@ fun OnboardingScreen(
 
 @Composable
 private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
-    // Brand hero
     Box(
         modifier = Modifier
-            .size(96.dp)
+            .size(100.dp)
             .clip(CircleShape)
             .background(MaterialTheme.colorScheme.primaryContainer),
         contentAlignment = Alignment.Center
@@ -89,21 +88,20 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
         Icon(
             Icons.Default.MyLocation,
             contentDescription = null,
-            modifier = Modifier.size(52.dp),
+            modifier = Modifier.size(56.dp),
             tint = MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
 
-    Spacer(Modifier.height(24.dp))
+    Spacer(Modifier.height(32.dp))
 
     Text(
         "LocaPeer",
-        style = MaterialTheme.typography.displaySmall,
-        fontWeight = FontWeight.Bold,
-        textAlign = TextAlign.Center
+        style = MaterialTheme.typography.displayMedium,
+        color = MaterialTheme.colorScheme.primary
     )
 
-    Spacer(Modifier.height(8.dp))
+    Spacer(Modifier.height(12.dp))
 
     Text(
         "Private family location sharing.\nNo server. No cloud. Just you.",
@@ -112,41 +110,35 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
 
-    Spacer(Modifier.height(40.dp))
+    Spacer(Modifier.height(48.dp))
 
-    // Feature highlights
     FeatureRow(
         icon = Icons.Default.Lock,
         title = "End-to-end encrypted",
-        subtitle = "Your location is encrypted on-device, just for your family"
+        subtitle = "Your location is encrypted on-device"
     )
-    Spacer(Modifier.height(16.dp))
+    Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.CloudOff,
         title = "No central server",
-        subtitle = "Data travels peer-to-peer — no company ever sees it"
+        subtitle = "Data travels peer-to-peer directly"
     )
-    Spacer(Modifier.height(16.dp))
+    Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.PhoneAndroid,
         title = "Stays on your phone",
-        subtitle = "Location history and messages never leave your device"
+        subtitle = "Your history never leaves your device"
     )
 
     Spacer(Modifier.height(48.dp))
 
-    HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-
-    Spacer(Modifier.height(32.dp))
-
     Text(
         "What should your family call you?",
         style = MaterialTheme.typography.titleMedium,
-        fontWeight = FontWeight.SemiBold,
         modifier = Modifier.fillMaxWidth()
     )
 
-    Spacer(Modifier.height(12.dp))
+    Spacer(Modifier.height(16.dp))
 
     OutlinedTextField(
         value = state.displayName,
@@ -155,21 +147,30 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
         placeholder = { Text("e.g. Mom, Dad, Alice…") },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(16.dp)
     )
 
-    Spacer(Modifier.height(24.dp))
+    Spacer(Modifier.height(32.dp))
 
     Button(
         onClick = { vm.nextStep() },
         enabled = state.displayName.isNotBlank() && !state.isLoading,
         modifier = Modifier
             .fillMaxWidth()
-            .height(52.dp),
-        shape = RoundedCornerShape(12.dp)
+            .height(56.dp),
+        shape = RoundedCornerShape(16.dp)
     ) {
         Text("Get Started", style = MaterialTheme.typography.titleMedium)
     }
+
+    Spacer(Modifier.height(24.dp))
+
+    Text(
+        "Your private key is generated locally and never leaves this device.",
+        style = MaterialTheme.typography.labelSmall,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.outline
+    )
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -178,101 +179,125 @@ private fun PermissionsStep(
     permissionsState: com.google.accompanist.permissions.MultiplePermissionsState,
     onNext: () -> Unit
 ) {
-    Text("Permissions", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-    Spacer(Modifier.height(16.dp))
-    Text(
-        "LocaPeer needs location access to share your position, and camera access to scan invite codes.",
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.onSurfaceVariant
+    StepHeader(
+        icon = Icons.AutoMirrored.Filled.FactCheck,
+        title = "Permissions",
+        description = "LocaPeer needs location access to share your position, and camera access to scan invite codes."
     )
-    Spacer(Modifier.height(32.dp))
+
+    Spacer(Modifier.height(48.dp))
 
     if (permissionsState.allPermissionsGranted) {
-        onNext()
+        LaunchedEffect(Unit) { onNext() }
     } else {
-        Button(onClick = { permissionsState.launchMultiplePermissionRequest() }) {
-            Text("Grant Permissions")
+        Button(
+            onClick = { permissionsState.launchMultiplePermissionRequest() },
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text("Grant Permissions", style = MaterialTheme.typography.titleMedium)
         }
     }
 }
 
 @Composable
 private fun BackgroundLocationStep(onNext: () -> Unit) {
-    Text("Background Location", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-    Spacer(Modifier.height(16.dp))
-    Text(
-        "To keep your family updated while the app is closed, please select 'Allow all the time' in the next screen.",
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.onSurfaceVariant
+    StepHeader(
+        icon = Icons.Default.LocationOn,
+        title = "Background Location",
+        description = "To keep your family updated while the app is closed, please select 'Allow all the time' in the next screen."
     )
-    Spacer(Modifier.height(32.dp))
-    Button(onClick = onNext) {
-        Text("Configure Location")
+
+    Spacer(Modifier.height(48.dp))
+
+    Button(
+        onClick = onNext,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text("Configure Location", style = MaterialTheme.typography.titleMedium)
     }
 }
 
 @Composable
 private fun BatteryStep(onNext: () -> Unit) {
-    Text("Battery Optimization", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
-    Spacer(Modifier.height(16.dp))
-    Text(
-        "Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from battery optimizations.",
-        textAlign = TextAlign.Center,
-        color = MaterialTheme.colorScheme.onSurfaceVariant
+    StepHeader(
+        icon = Icons.Default.BatteryChargingFull,
+        title = "Battery",
+        description = "Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimizations."
     )
-    Spacer(Modifier.height(32.dp))
-    Button(onClick = onNext) {
-        Text("Disable Optimizations")
+
+    Spacer(Modifier.height(48.dp))
+
+    Button(
+        onClick = onNext,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text("Disable Optimizations", style = MaterialTheme.typography.titleMedium)
     }
 }
 
 @Composable
 private fun DoneStep(onComplete: () -> Unit) {
-    Text("All Set!", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
+    StepHeader(
+        icon = Icons.Default.CheckCircle,
+        title = "All Set!",
+        description = "Your private location network is ready."
+    )
+
+    Spacer(Modifier.height(48.dp))
+
+    Button(
+        onClick = onComplete,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text("Start Using LocaPeer", style = MaterialTheme.typography.titleMedium)
+    }
+}
+
+@Composable
+private fun StepHeader(icon: ImageVector, title: String, description: String) {
+    Box(
+        modifier = Modifier
+            .size(80.dp)
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.secondaryContainer),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(icon, null, Modifier.size(40.dp), MaterialTheme.colorScheme.onSecondaryContainer)
+    }
+    Spacer(Modifier.height(24.dp))
+    Text(title, style = MaterialTheme.typography.headlineMedium)
     Spacer(Modifier.height(16.dp))
     Text(
-        "Your private location network is ready.",
+        description,
         textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onSurfaceVariant
     )
-    Spacer(Modifier.height(32.dp))
-    Button(onClick = onComplete) {
-        Text("Start Using LocaPeer")
-    }
 }
 
 @Composable
 private fun FeatureRow(icon: ImageVector, title: String, subtitle: String) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalAlignment = Alignment.Top
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .size(42.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.secondaryContainer),
+                .size(48.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
-            Icon(
-                icon,
-                contentDescription = null,
-                modifier = Modifier.size(22.dp),
-                tint = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+            Icon(icon, null, Modifier.size(24.dp), MaterialTheme.colorScheme.primary)
         }
-        Column(modifier = Modifier.padding(top = 2.dp)) {
-            Text(
-                title,
-                style = MaterialTheme.typography.titleSmall,
-                fontWeight = FontWeight.SemiBold
-            )
-            Text(
-                subtitle,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        Column {
+            Text(title, style = MaterialTheme.typography.titleMedium)
+            Text(subtitle, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

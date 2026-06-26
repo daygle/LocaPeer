@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Map
@@ -13,6 +14,7 @@ import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -95,7 +97,7 @@ fun LocaPeerNavHost(
                                 }
                             },
                             icon = { Icon(screen.icon, contentDescription = screen.label) },
-                            label = { Text(screen.label) }
+                            label = { Text(screen.label, style = MaterialTheme.typography.labelMedium) }
                         )
                     }
                 }
@@ -105,6 +107,7 @@ fun LocaPeerNavHost(
         NavHost(
             navController = navController,
             startDestination = Screen.Map.route,
+            modifier = Modifier.padding(padding),
             enterTransition = { fadeEnter },
             exitTransition = { fadeExit },
             popEnterTransition = { fadeEnter },
