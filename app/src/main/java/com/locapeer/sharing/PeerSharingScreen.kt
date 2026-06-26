@@ -32,6 +32,7 @@ fun PeerSharingScreen(
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
+    val isSosContact = cfg?.isSosContact ?: true
     val scheduleEnabled = cfg?.scheduleEnabled ?: false
     val scheduleDays = cfg?.scheduleDays ?: 0b1111111
     val scheduleStart = cfg?.scheduleStartMinute ?: 0
@@ -220,6 +221,31 @@ fun PeerSharingScreen(
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
+                    }
+                }
+            }
+
+            // SOS Contact
+            item {
+                SharingCard(title = "Emergency Access") {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Designate as SOS contact", style = MaterialTheme.typography.bodyMedium)
+                            Text(
+                                "This person will receive an immediate high-priority alert and your exact coordinates when you activate SOS.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Switch(
+                            checked = isSosContact,
+                            onCheckedChange = { vm.setSosContact(it) }
+                        )
                     }
                 }
             }

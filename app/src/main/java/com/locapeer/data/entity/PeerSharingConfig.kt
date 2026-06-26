@@ -16,5 +16,6 @@ data class PeerSharingConfig(
     /** Minutes from midnight for the start of the sharing window. */
     val scheduleStartMinute: Int = 0,
     /** Minutes from midnight for the end of the sharing window. */
-    val scheduleEndMinute: Int = 1439
+    val scheduleEndMinute: Int = 1439,
+    val isSosContact: Boolean = true
 )

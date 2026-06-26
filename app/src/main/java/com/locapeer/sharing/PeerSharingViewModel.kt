@@ -98,4 +98,11 @@ class PeerSharingViewModel @Inject constructor(
             configDao.upsert(cfg.copy(scheduleEndMinute = minuteOfDay))
         }
     }
+
+    fun setSosContact(enabled: Boolean) {
+        viewModelScope.launch {
+            val cfg = configDao.getForPeer(currentPeerId) ?: defaultConfig()
+            configDao.upsert(cfg.copy(isSosContact = enabled))
+        }
+    }
 }
