@@ -73,27 +73,26 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // Top-right controls: SOS and Friends List
-        Column(
+        // SOS Button — top-left
+        SosButton(
+            isActive = isSosActive,
+            onClick = { vm.toggleSos() },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp)
+        )
+
+        // Friends Button — top-right
+        FloatingActionButton(
+            onClick = { showFriendList = true },
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(16.dp),
-            horizontalAlignment = Alignment.End,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(16.dp)
+                .shadow(4.dp, CircleShape)
         ) {
-            SosButton(
-                isActive = isSosActive,
-                onClick = { vm.toggleSos() }
-            )
-
-            FloatingActionButton(
-                onClick = { showFriendList = true },
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.shadow(4.dp, CircleShape)
-            ) {
-                Icon(Icons.Default.People, contentDescription = "Friends")
-            }
+            Icon(Icons.Default.People, contentDescription = "Friends")
         }
 
         // Friend List Sidebar / Panel
