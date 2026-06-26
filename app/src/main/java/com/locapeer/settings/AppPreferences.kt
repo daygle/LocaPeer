@@ -20,6 +20,8 @@ data class AppSettings(
     val heartbeatEnabled: Boolean = false,
     val stationaryIntervalMinutes: Int = 15,
     val walkingIntervalMinutes: Int = 5,
+    val runningIntervalMinutes: Int = 2,
+    val cyclingIntervalMinutes: Int = 3,
     val drivingIntervalMinutes: Int = 2,
     val lowBatteryIntervalMinutes: Int = 30,
     val onboardingComplete: Boolean = false,
@@ -53,6 +55,8 @@ class AppPreferences @Inject constructor(
     private val KEY_HEARTBEAT_ENABLED = booleanPreferencesKey("heartbeat_enabled")
     private val KEY_STATIONARY_INTERVAL = intPreferencesKey("stationary_interval")
     private val KEY_WALKING_INTERVAL = intPreferencesKey("walking_interval")
+    private val KEY_RUNNING_INTERVAL = intPreferencesKey("running_interval")
+    private val KEY_CYCLING_INTERVAL = intPreferencesKey("cycling_interval")
     private val KEY_DRIVING_INTERVAL = intPreferencesKey("driving_interval")
     private val KEY_LOW_BATTERY_INTERVAL = intPreferencesKey("low_battery_interval")
     private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
@@ -72,6 +76,8 @@ class AppPreferences @Inject constructor(
             heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
             stationaryIntervalMinutes = prefs[KEY_STATIONARY_INTERVAL] ?: 15,
             walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
+            runningIntervalMinutes = prefs[KEY_RUNNING_INTERVAL] ?: 2,
+            cyclingIntervalMinutes = prefs[KEY_CYCLING_INTERVAL] ?: 3,
             drivingIntervalMinutes = prefs[KEY_DRIVING_INTERVAL] ?: 2,
             lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
             onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
@@ -143,12 +149,16 @@ class AppPreferences @Inject constructor(
     suspend fun updateIntervals(
         stationary: Int? = null,
         walking: Int? = null,
+        running: Int? = null,
+        cycling: Int? = null,
         driving: Int? = null,
         lowBattery: Int? = null
     ) {
         context.settingsStore.edit { prefs ->
             stationary?.let { prefs[KEY_STATIONARY_INTERVAL] = it }
             walking?.let { prefs[KEY_WALKING_INTERVAL] = it }
+            running?.let { prefs[KEY_RUNNING_INTERVAL] = it }
+            cycling?.let { prefs[KEY_CYCLING_INTERVAL] = it }
             driving?.let { prefs[KEY_DRIVING_INTERVAL] = it }
             lowBattery?.let { prefs[KEY_LOW_BATTERY_INTERVAL] = it }
         }

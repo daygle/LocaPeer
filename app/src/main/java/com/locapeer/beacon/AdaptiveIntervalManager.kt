@@ -21,8 +21,9 @@ class AdaptiveIntervalManager @Inject constructor() {
         if (currentBattery < 20) return settings.lowBatteryIntervalMinutes * 60_000L
         return when (currentMotionState) {
             MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
-            MotionState.WALKING, MotionState.RUNNING, MotionState.CYCLING ->
-                settings.walkingIntervalMinutes * 60_000L
+            MotionState.WALKING -> settings.walkingIntervalMinutes * 60_000L
+            MotionState.RUNNING -> settings.runningIntervalMinutes * 60_000L
+            MotionState.CYCLING -> settings.cyclingIntervalMinutes * 60_000L
             MotionState.DRIVING -> settings.drivingIntervalMinutes * 60_000L
             MotionState.UNKNOWN -> settings.walkingIntervalMinutes * 60_000L
         }
@@ -33,8 +34,9 @@ class AdaptiveIntervalManager @Inject constructor() {
         val state = MotionState.entries.firstOrNull { it.name == motionState } ?: MotionState.UNKNOWN
         return when (state) {
             MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
-            MotionState.WALKING, MotionState.RUNNING, MotionState.CYCLING ->
-                settings.walkingIntervalMinutes * 60_000L
+            MotionState.WALKING -> settings.walkingIntervalMinutes * 60_000L
+            MotionState.RUNNING -> settings.runningIntervalMinutes * 60_000L
+            MotionState.CYCLING -> settings.cyclingIntervalMinutes * 60_000L
             MotionState.DRIVING -> settings.drivingIntervalMinutes * 60_000L
             MotionState.UNKNOWN -> settings.walkingIntervalMinutes * 60_000L
         }
