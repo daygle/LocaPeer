@@ -207,6 +207,10 @@ class HeartbeatService : LifecycleService() {
     }
 
     private fun broadcastHeartbeat(isSos: Boolean = this.isSos) {
+        if (lastLat == 0.0 && lastLng == 0.0) {
+            Log.d(TAG, "Skipping heartbeat: no location fixed yet")
+            return
+        }
         val battery = getBatteryLevel()
         intervalManager.updateBattery(battery)
 

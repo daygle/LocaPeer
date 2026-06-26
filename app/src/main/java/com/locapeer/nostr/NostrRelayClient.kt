@@ -3,6 +3,7 @@ package com.locapeer.nostr
 import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -42,6 +43,7 @@ class NostrRelayClient @Inject constructor() {
     /** Emits Nostr event IDs that the relay accepted (OK true). */
     val okEvents: SharedFlow<String> = _okEvents
 
+    private val msgLock = Any()
     private val pendingMessages = ArrayDeque<String>()
     private val activeSubscriptions = mutableMapOf<String, String>()
 
@@ -55,15 +57,23 @@ class NostrRelayClient @Inject constructor() {
         .build()
 
     fun connect(relayUrl: String = currentRelayUrl) {
-        if (isConnected && relayUrl == currentRelayUrl) return
-        currentRelayUrl = relayUrl
-        disconnect()
-        val request = Request.Builder().url(relayUrl).build()
-        webSocket = client.newWebSocket(request, NostrWebSocketListener())
-        Log.d(TAG, "Connecting to $relayUrl")
+        synchronized(msgLock) {
+            if (isConnected && relayUrl == currentRelayUrl) return
+            currentRelayUrl = relayUrl
+            disconnectInternal()
+            val request = Request.Builder().url(relayUrl).build()
+            webSocket = client.newWebSocket(request, NostrWebSocketListener())
+            Log.d(TAG, "Connecting to $relayUrl")
+        }
     }
 
     fun disconnect() {
+        synchronized(msgLock) {
+            disconnectInternal()
+        }
+    }
+
+    private fun disconnectInternal() {
         webSocket?.close(1000, "Disconnecting")
         webSocket = null
         isConnected = false
@@ -84,12 +94,16 @@ class NostrRelayClient @Inject constructor() {
             add(JsonPrimitive(subscriptionId))
             add(json.parseToJsonElement(filterJson))
         }.toString()
-        activeSubscriptions[subscriptionId] = msg
+        synchronized(msgLock) {
+            activeSubscriptions[subscriptionId] = msg
+        }
         sendOrQueue(msg)
     }
 
     fun unsubscribe(subscriptionId: String) {
-        activeSubscriptions.remove(subscriptionId)
+        synchronized(msgLock) {
+            activeSubscriptions.remove(subscriptionId)
+        }
         val msg = buildJsonArray {
             add(JsonPrimitive("CLOSE"))
             add(JsonPrimitive(subscriptionId))
@@ -98,26 +112,35 @@ class NostrRelayClient @Inject constructor() {
     }
 
     private fun sendOrQueue(msg: String) {
-        if (isConnected) {
-            webSocket?.send(msg)
-        } else {
-            pendingMessages.addLast(msg)
-            if (webSocket == null) connect()
+        synchronized(msgLock) {
+            if (isConnected) {
+                webSocket?.send(msg)
+            } else {
+                pendingMessages.addLast(msg)
+                if (webSocket == null) connect(currentRelayUrl)
+            }
         }
     }
 
     private fun flushPending() {
-        while (pendingMessages.isNotEmpty()) {
-            val msg = pendingMessages.removeFirst()
-            webSocket?.send(msg)
+        synchronized(msgLock) {
+            while (pendingMessages.isNotEmpty()) {
+                val msg = pendingMessages.removeFirst()
+                webSocket?.send(msg)
+            }
+            activeSubscriptions.values.forEach { webSocket?.send(it) }
         }
-        activeSubscriptions.values.forEach { webSocket?.send(it) }
     }
 
+    private var reconnectJob: Job? = null
+
     private fun scheduleReconnect() {
-        scope.launch {
-            delay(5_000)
-            connect(currentRelayUrl)
+        synchronized(msgLock) {
+            if (reconnectJob?.isActive == true) return
+            reconnectJob = scope.launch {
+                delay(5_000)
+                connect(currentRelayUrl)
+            }
         }
     }
 

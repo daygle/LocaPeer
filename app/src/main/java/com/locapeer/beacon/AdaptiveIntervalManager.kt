@@ -7,9 +7,9 @@ import javax.inject.Singleton
 @Singleton
 class AdaptiveIntervalManager @Inject constructor() {
 
-    private var isSosMode = false
-    private var currentMotionState = MotionState.UNKNOWN
-    private var batteryLevel = 100
+    @Volatile private var isSosMode = false
+    @Volatile private var currentMotionState = MotionState.UNKNOWN
+    @Volatile private var batteryLevel = 100
 
     fun setSosMode(enabled: Boolean) { isSosMode = enabled }
     fun updateMotionState(state: MotionState) { currentMotionState = state }
@@ -17,7 +17,8 @@ class AdaptiveIntervalManager @Inject constructor() {
 
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
-        if (batteryLevel < 20) return settings.lowBatteryIntervalMinutes * 60_000L
+        val currentBattery = batteryLevel
+        if (currentBattery < 20) return settings.lowBatteryIntervalMinutes * 60_000L
         return when (currentMotionState) {
             MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
             MotionState.WALKING, MotionState.RUNNING, MotionState.CYCLING ->

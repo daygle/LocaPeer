@@ -3,6 +3,7 @@ package com.locapeer.invite
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ErrorOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,7 +22,16 @@ fun InviteScreen(
     val state by vm.state.collectAsState()
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Share Your Location") }) }
+        topBar = {
+            TopAppBar(
+                title = { Text("Share Your Location") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        }
     ) { padding ->
         Column(
             modifier = Modifier

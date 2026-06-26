@@ -77,7 +77,7 @@ class GeofenceEngine @Inject constructor(
         val a = sin(dLat / 2).let { it * it } +
                 cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
                 sin(dLon / 2).let { it * it }
-        return r * 2 * asin(sqrt(a))
+        return r * 2 * asin(sqrt(a.coerceIn(0.0, 1.0)))
     }
 
     private fun sendGeofenceNotification(

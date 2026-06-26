@@ -93,8 +93,8 @@ class CryptoUtils @Inject constructor() {
         cipher.init(true, ParametersWithIV(KeyParameter(key), iv))
         val out = ByteArray(cipher.getOutputSize(data.size))
         val len = cipher.processBytes(data, 0, data.size, out, 0)
-        cipher.doFinal(out, len)
-        return out
+        val finalLen = cipher.doFinal(out, len)
+        return out.copyOf(len + finalLen)
     }
 
     private fun aesCbcDecrypt(key: ByteArray, iv: ByteArray, data: ByteArray): ByteArray {
