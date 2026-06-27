@@ -17,6 +17,7 @@ import javax.inject.Inject
 data class InviteUiState(
     val publicKeyHex: String = "",
     val qrBitmap: Bitmap? = null,
+    val inviteLink: String = "",
     val error: Boolean = false
 )
 
@@ -38,13 +39,23 @@ class InviteViewModel @Inject constructor(
                 val inviteData = InviteData(
                     publicKeyHex = pubHex,
                     displayName = settings.displayName,
-                    relayUrl = "wss://relay.daygle.net",
+                    relayUrl = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net",
                     deviceId = pubHex
                 )
                 val json = Json.encodeToString(inviteData)
+                val base64 = android.util.Base64.encodeToString(
+                    json.toByteArray(),
+                    android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
+                )
+                val inviteLink = "locapeer://invite?data=$base64"
+
                 val bitmap = qrGenerator.generate(json)
                 if (bitmap != null) {
-                    _state.value = InviteUiState(publicKeyHex = pubHex, qrBitmap = bitmap)
+                    _state.value = InviteUiState(
+                        publicKeyHex = pubHex,
+                        qrBitmap = bitmap,
+                        inviteLink = inviteLink
+                    )
                 } else {
                     _state.value = InviteUiState(publicKeyHex = pubHex, error = true)
                 }

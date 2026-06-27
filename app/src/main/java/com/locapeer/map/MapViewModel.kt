@@ -84,13 +84,6 @@ class MapViewModel @Inject constructor(
         MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
-    fun getHistoryForToday(deviceId: String) =
-        heartbeatDao.getHeartbeatsSince(
-            deviceId,
-            Instant.now().atZone(ZoneId.systemDefault()).toLocalDate()
-                .atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-        )
-
     fun formatTimestamp(millis: Long): String =
         DateTimeFormatter.ofPattern("HH:mm, dd MMM")
             .withZone(ZoneId.systemDefault())

@@ -89,11 +89,14 @@ fun AboutScreen(
                 )
             }
 
-            Text(
-                "Private location sharing with people you trust. No accounts, no cloud, no tracking by us.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
+                Text(
+                    "Private location sharing with people you trust. No accounts, no cloud, no tracking by us.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
 
             // Relay status card
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {

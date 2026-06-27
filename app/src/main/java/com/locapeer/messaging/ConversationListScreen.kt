@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
+import com.locapeer.ui.components.RelayStatusChip
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -37,6 +38,8 @@ fun ConversationListScreen(
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
+    val relayStatus by vm.relayStatus.collectAsState()
+
     // null = still loading (waiting for first emission), empty list = loaded but empty
     val loadState = when {
         conversations == null -> LoadState.LOADING
@@ -47,7 +50,15 @@ fun ConversationListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Messages", fontWeight = FontWeight.SemiBold) },
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text("Messages", fontWeight = FontWeight.SemiBold)
+                        RelayStatusChip(relayStatus = relayStatus)
+                    }
+                },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )

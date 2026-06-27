@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.BitmapDrawable
+import android.util.LruCache
 import androidx.core.graphics.toColorInt
 
 private val PIN_COLORS = listOf(
@@ -16,8 +17,13 @@ private val PIN_COLORS = listOf(
 
 object MarkerIconFactory {
 
+    private val cache = LruCache<String, BitmapDrawable>(64)
+
     /** Creates a colored circle with initials as an OSMDroid marker icon. */
     fun create(context: Context, displayName: String, isOverdue: Boolean, isSos: Boolean): BitmapDrawable {
+        val key = "$displayName-$isOverdue-$isSos"
+        cache.get(key)?.let { return it }
+
         val sizePx = (context.resources.displayMetrics.density * 48).toInt()
         val bitmap = Bitmap.createBitmap(sizePx + 8, sizePx + 16, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
@@ -73,11 +79,16 @@ object MarkerIconFactory {
         }
         canvas.drawPath(path, tailPaint)
 
-        return BitmapDrawable(context.resources, bitmap)
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        cache.put(key, drawable)
+        return drawable
     }
+
+    private var myLocationCache: BitmapDrawable? = null
 
     /** Creates a blue pulsing-style dot for the user's own location. */
     fun createMyLocationIcon(context: Context): BitmapDrawable {
+        myLocationCache?.let { return it }
         val dp = context.resources.displayMetrics.density
         val sizePx = (dp * 48).toInt()
         val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
@@ -104,6 +115,8 @@ object MarkerIconFactory {
         }
         canvas.drawCircle(cx, cx, dp * 8, borderPaint)
 
-        return BitmapDrawable(context.resources, bitmap)
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        myLocationCache = drawable
+        return drawable
     }
 }

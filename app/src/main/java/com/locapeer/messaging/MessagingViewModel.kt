@@ -1,5 +1,6 @@
 package com.locapeer.messaging
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -8,6 +9,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.location.LocationServices
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
@@ -29,6 +31,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
@@ -44,6 +47,8 @@ class MessagingViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
+
+    val relayStatus = relayClient.relayStatus
 
     val conversations: StateFlow<List<ConversationSummary>?> =
         messageDao.getConversationSummaries()
@@ -62,6 +67,20 @@ class MessagingViewModel @Inject constructor(
 
     private val typingClearJobs = mutableMapOf<String, Job>()
     private var outgoingTypingJob: Job? = null
+    private var myListeningPubkey: String? = null
+
+    @SuppressLint("MissingPermission")
+    fun sendLocation(peerId: String) {
+        LocationServices.getFusedLocationProviderClient(context)
+            .lastLocation
+            .addOnSuccessListener { loc ->
+                loc?.let {
+                    val lat = String.format(Locale.US, "%.5f", it.latitude)
+                    val lng = String.format(Locale.US, "%.5f", it.longitude)
+                    sendMessage(peerId, "My current location: https://www.openstreetmap.org/?mlat=$lat&mlon=$lng#map=16/$lat/$lng")
+                }
+            }
+    }
 
     fun getUnreadCount(peerId: String) = messageDao.getUnreadCount(peerId)
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
@@ -116,6 +135,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun startListening(myPubHex: String) {
+        myListeningPubkey = myPubHex
         createMessageChannel()
         viewModelScope.launch {
             relayClient.subscribe(
@@ -273,6 +293,13 @@ class MessagingViewModel @Inject constructor(
             NotificationManager.IMPORTANCE_HIGH
         ).apply { description = context.getString(R.string.channel_desc_messages) }
         notificationManager.createNotificationChannel(channel)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        myListeningPubkey?.let { pubkey ->
+            relayClient.unsubscribe("locapeer-dm-$pubkey")
+        }
     }
 }
 

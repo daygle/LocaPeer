@@ -102,6 +102,13 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { peerDao.deletePeerById(deviceId) }
     }
 
+    fun updatePeerName(deviceId: String, newName: String) {
+        viewModelScope.launch {
+            val peer = peerDao.getPeer(deviceId) ?: return@launch
+            peerDao.upsertPeer(peer.copy(displayName = newName))
+        }
+    }
+
     fun clearLocationHistory() {
         viewModelScope.launch { heartbeatDao.deleteOlderThan(System.currentTimeMillis()) }
     }
@@ -219,5 +226,13 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             prefs.updateIntervals(stationary, walking, running, cycling, driving, lowBattery)
         }
+    }
+
+    fun addRelay(url: String) {
+        viewModelScope.launch { prefs.addRelay(url) }
+    }
+
+    fun removeRelay(url: String) {
+        viewModelScope.launch { prefs.removeRelay(url) }
     }
 }

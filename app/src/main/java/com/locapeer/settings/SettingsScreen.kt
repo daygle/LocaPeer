@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.NetworkCheck
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -18,6 +21,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -38,7 +42,7 @@ fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToHistoryReport: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
-    vm: SettingsViewModel = hiltViewModel()
+    vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsState()
     val peers by vm.peers.collectAsState()
@@ -46,14 +50,13 @@ fun SettingsScreen(
     val profileQr by vm.profileQr.collectAsState()
 
     val unlockState by vm.unlockState.collectAsState()
-    var sessionUnlocked by remember { mutableStateOf(false) }
+    var sessionUnlocked by remember { mutableStateOf(value = false) }
     if (settings.supervisedModeEnabled && !sessionUnlocked) {
         SupervisedRemoteGate(
             unlockState = unlockState,
             onRequestAccess = { vm.requestSettingsUnlock() },
             onReset = { vm.resetUnlockState() },
-            onUnlocked = { sessionUnlocked = true }
-        )
+        ) { sessionUnlocked = true }
         return
     }
 
@@ -67,6 +70,11 @@ fun SettingsScreen(
     var showGlobalScheduleEndPicker by remember { mutableStateOf(false) }
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
+    var showAddRelayDialog by remember { mutableStateOf(false) }
+    var newRelayUrl by remember { mutableStateOf("wss://") }
+
+    var editingPeer by remember { mutableStateOf<PeerEntity?>(null) }
+    var newPeerName by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -299,11 +307,18 @@ fun SettingsScreen(
                                 supportingContent = { Text(peer.publicKeyHex.take(16) + "…") },
                                 trailingContent = {
                                     Row {
+                                        IconButton(onClick = {
+                                            newPeerName = peer.displayName
+                                            editingPeer = peer
+                                        }) {
+                                            Icon(Icons.Default.Edit, contentDescription = "Rename")
+                                        }
                                         IconButton(onClick = { vm.removePeer(peer.deviceId) }) {
                                             Icon(Icons.Default.Delete, contentDescription = "Remove")
                                         }
                                     }
-                                }
+                                },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                             )
                         }
                     }
@@ -316,6 +331,12 @@ fun SettingsScreen(
                                 trailingContent = {
                                     Row {
                                         IconButton(onClick = {
+                                            newPeerName = peer.displayName
+                                            editingPeer = peer
+                                        }) {
+                                            Icon(Icons.Default.Edit, contentDescription = "Rename")
+                                        }
+                                        IconButton(onClick = {
                                             onNavigateToPeerSharing(peer.deviceId, peer.displayName)
                                         }) {
                                             Icon(Icons.Default.Settings, contentDescription = "Sharing settings")
@@ -324,7 +345,8 @@ fun SettingsScreen(
                                             Icon(Icons.Default.Delete, contentDescription = "Revoke")
                                         }
                                     }
-                                }
+                                },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                             )
                         }
                     }
@@ -422,6 +444,36 @@ fun SettingsScreen(
             }
 
             item {
+                SettingsSection("Relays") {
+                    Text(
+                        "Communication is decentralized via Nostr relays. Adding more relays increases reliability.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    settings.customRelays.forEach { url ->
+                        ListItem(
+                            headlineContent = { Text(url.removePrefix("wss://")) },
+                            trailingContent = {
+                                IconButton(onClick = { vm.removeRelay(url) }) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Remove relay")
+                                }
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
+                    OutlinedButton(
+                        onClick = { showAddRelayDialog = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Icon(Icons.Default.Add, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Add Relay")
+                    }
+                }
+            }
+
+            item {
                 SettingsSection("Privacy") {
                     Text(
                         "Control how long your data is kept on others' devices.",
@@ -501,7 +553,8 @@ fun SettingsScreen(
                     ListItem(
                         headlineContent = { Text("About & Version Info") },
                         supportingContent = { Text("Version, relay status, open source") },
-                        modifier = androidx.compose.ui.Modifier.clickable(onClick = onNavigateToAbout)
+                        modifier = Modifier.clickable(onClick = onNavigateToAbout),
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
             }
@@ -683,6 +736,73 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (showAddRelayDialog) {
+        AlertDialog(
+            onDismissRequest = { showAddRelayDialog = false },
+            title = { Text("Add Relay") },
+            text = {
+                Column {
+                    Text(
+                        "Enter the URL of a Nostr relay (starts with wss://).",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Spacer(Modifier.height(12.dp))
+                    OutlinedTextField(
+                        value = newRelayUrl,
+                        onValueChange = { newRelayUrl = it },
+                        label = { Text("Relay URL") },
+                        modifier = Modifier.fillMaxWidth(),
+                        singleLine = true
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (newRelayUrl.startsWith("wss://")) {
+                            vm.addRelay(newRelayUrl.trim())
+                            newRelayUrl = "wss://"
+                            showAddRelayDialog = false
+                        }
+                    },
+                    enabled = newRelayUrl.length > 6
+                ) { Text("Add") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showAddRelayDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    editingPeer?.let { peer ->
+        AlertDialog(
+            onDismissRequest = { editingPeer = null },
+            title = { Text("Rename Peer") },
+            text = {
+                OutlinedTextField(
+                    value = newPeerName,
+                    onValueChange = { newPeerName = it },
+                    label = { Text("Display Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        vm.updatePeerName(peer.deviceId, newPeerName.trim())
+                        editingPeer = null
+                    },
+                    enabled = newPeerName.isNotBlank()
+                ) { Text("Save") }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingPeer = null }) { Text("Cancel") }
             }
         )
     }

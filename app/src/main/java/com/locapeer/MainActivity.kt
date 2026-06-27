@@ -106,6 +106,16 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleIntent(intent: Intent?) {
+        val action = intent?.action
+        val data = intent?.data
+        if (action == Intent.ACTION_VIEW && data != null && data.scheme == "locapeer") {
+            val inviteData = data.getQueryParameter("data")
+            if (inviteData != null) {
+                pendingNavTarget.value = NavTarget("scan", inviteData, "")
+            }
+            return
+        }
+
         val navigateTo = intent?.getStringExtra("navigateTo") ?: return
         val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
         val peerName = intent.getStringExtra("peerName") ?: ""

@@ -38,7 +38,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object Map : Screen("map", "Map", Icons.Default.Map)
     object Messages : Screen("messages", "Messages", Icons.Default.Message)
     object Invite : Screen("invite", "Share", Icons.Default.QrCode)
-    object Scan : Screen("scan", "Scan", Icons.Default.LocationOn)
+    object Scan : Screen("scan?inviteData={inviteData}", "Scan", Icons.Default.LocationOn)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
 }
 
@@ -80,6 +80,10 @@ fun LocaPeerNavHost(
                 navController.navigate(Screen.Map.route) {
                     popUpTo(Screen.Map.route) { inclusive = true }
                 }
+            }
+            "scan" -> {
+                val data = target.peerId ?: ""
+                navController.navigate("scan?inviteData=$data")
             }
         }
         onNavTargetConsumed()
@@ -129,8 +133,17 @@ fun LocaPeerNavHost(
             composable(Screen.Invite.route) {
                 InviteScreen(onNavigateBack = { navController.popBackStack() })
             }
-            composable(Screen.Scan.route) {
-                ScanScreen(onNavigateBack = { navController.popBackStack() })
+            composable(
+                Screen.Scan.route,
+                arguments = listOf(navArgument("inviteData") {
+                    type = NavType.StringType
+                    nullable = true
+                })
+            ) { entry ->
+                ScanScreen(
+                    inviteData = entry.arguments?.getString("inviteData"),
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
             composable(Screen.Settings.route) {
                 SettingsScreen(

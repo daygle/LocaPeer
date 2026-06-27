@@ -3,6 +3,7 @@ package com.locapeer.nostr
 import android.util.Log
 import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.entity.PendingMessageEntity
+import com.locapeer.settings.AppPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -33,22 +34,26 @@ import javax.inject.Singleton
 
 private const val TAG = "NostrRelayClient"
 
-private val RELAY_URLS = listOf(
-    "wss://relay.daygle.net",
-    "wss://relay.damus.io"
-)
-
 @Singleton
 class NostrRelayClient @Inject constructor(
-    private val pendingMessageDao: PendingMessageDao
+    private val pendingMessageDao: PendingMessageDao,
+    private val prefs: AppPreferences
 ) {
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
+    init {
+        scope.launch {
+            prefs.settings.collect { settings ->
+                setRelays(settings.customRelays)
+            }
+        }
+    }
+
     private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
     val events: SharedFlow<NostrEvent> = _events
 
-    private val _relayStatus = MutableStateFlow<Map<String, Boolean>>(emptyMap())
+    private val _relayStatus = MutableStateFlow(emptyMap<String, Boolean>())
     /** Maps relay URL → connected. Updated on every connect/disconnect event. */
     val relayStatus: StateFlow<Map<String, Boolean>> = _relayStatus.asStateFlow()
 
@@ -68,8 +73,28 @@ class NostrRelayClient @Inject constructor(
         .readTimeout(0, TimeUnit.SECONDS)
         .build()
 
-    private val relays = ConcurrentHashMap<String, RelayConnection>().apply {
-        RELAY_URLS.forEach { put(it, RelayConnection(it)) }
+    private val relays = ConcurrentHashMap<String, RelayConnection>()
+
+    fun setRelays(urls: List<String>) {
+        val currentUrls = relays.keys
+        val newUrls = urls.toSet()
+
+        // Remove relays no longer in the list
+        (currentUrls - newUrls).forEach { url ->
+            relays.remove(url)?.disconnect()
+            _relayStatus.update { it - url }
+        }
+
+        // Add new relays
+        (newUrls - currentUrls).forEach { url ->
+            val conn = RelayConnection(url)
+            relays[url] = conn
+            _relayStatus.update { it + (url to false) }
+            // If any other relay is connected, we should probably connect this one too
+            if (relays.values.any { it.isConnected }) {
+                conn.connect()
+            }
+        }
     }
 
     fun connect() {
@@ -149,7 +174,8 @@ class NostrRelayClient @Inject constructor(
         private var reconnectJob: Job? = null
 
         fun connect() {
-            if (isConnected || webSocket != null) return
+            if (isConnected || (webSocket != null)) return
+            _relayStatus.update { it + (url to false) }
             Log.d(TAG, "Connecting to $url")
             webSocket = client.newWebSocket(Request.Builder().url(url).build(), Listener())
         }
@@ -159,6 +185,7 @@ class NostrRelayClient @Inject constructor(
             webSocket?.close(1000, "Disconnecting")
             webSocket = null
             isConnected = false
+            _relayStatus.update { it + (url to false) }
         }
 
         fun ensureConnecting() {
@@ -171,7 +198,7 @@ class NostrRelayClient @Inject constructor(
         fun scheduleReconnect() {
             if (reconnectJob?.isActive == true) return
             reconnectJob = scope.launch {
-                delay(5_000)
+                delay(5000)
                 webSocket = null
                 isConnected = false
                 connect()

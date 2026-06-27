@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,7 +17,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -31,6 +31,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
+import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.ui.theme.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
@@ -49,7 +50,21 @@ private val CARTO_LIGHT = object : OnlineTileSourceBase(
     ), "© CartoDB © OpenStreetMap contributors"
 ) {
     override fun getTileURLString(pMapTileIndex: Long): String =
-        "${baseUrl}${MapTileIndex.getZoom(pMapTileIndex)}/" +
+        "$baseUrl${MapTileIndex.getZoom(pMapTileIndex)}/" +
+                "${MapTileIndex.getX(pMapTileIndex)}/" +
+                "${MapTileIndex.getY(pMapTileIndex)}$mImageFilenameEnding"
+}
+
+private val CARTO_DARK = object : OnlineTileSourceBase(
+    "CartoDB_DarkMatter", 0, 19, 256, ".png",
+    arrayOf(
+        "https://a.basemaps.cartocdn.com/dark_all/",
+        "https://b.basemaps.cartocdn.com/dark_all/",
+        "https://c.basemaps.cartocdn.com/dark_all/"
+    ), "© CartoDB © OpenStreetMap contributors"
+) {
+    override fun getTileURLString(pMapTileIndex: Long): String =
+        "$baseUrl${MapTileIndex.getZoom(pMapTileIndex)}/" +
                 "${MapTileIndex.getX(pMapTileIndex)}/" +
                 "${MapTileIndex.getY(pMapTileIndex)}$mImageFilenameEnding"
 }
@@ -61,14 +76,13 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsState()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
-    var showFriendList by remember { mutableStateOf(false) }
+    var showFriendList by remember { mutableStateOf(value = false) }
     val isSosActive by vm.isSosActive.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
-    val allConnected = relayStatus.isNotEmpty() && relayStatus.values.all { it }
-    val anyConnected = relayStatus.values.any { it }
     val context = LocalContext.current
-    var centerOnUser by remember { mutableStateOf(false) }
+    var centerOnUser by remember { mutableStateOf(value = false) }
+    val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(Unit) { vm.fetchUserLocation() }
 
@@ -78,6 +92,7 @@ fun MapScreen(
             geofences = uiState.geofences,
             userLocation = userLocation,
             centerOnUser = centerOnUser,
+            isDark = isDark,
             onCenteredOnUser = { centerOnUser = false },
             onPinTapped = { selectedPin = it },
             context = context,
@@ -122,48 +137,19 @@ fun MapScreen(
             Icon(Icons.Default.People, contentDescription = "Friends")
         }
 
-        // Relay status chip — below the Friends button
-        val dotColor = when {
-            relayStatus.isEmpty() -> Color(0xFFFFB300)
-            allConnected -> Color(0xFF4CAF50)
-            anyConnected -> Color(0xFFFFB300)
-            else -> MaterialTheme.colorScheme.error
-        }
-        val dotLabel = when {
-            relayStatus.isEmpty() -> "Connecting…"
-            allConnected -> "Relays connected"
-            anyConnected -> "Partial connection"
-            else -> "Offline"
-        }
-        Surface(
+        // Relay status chip — bottom-left
+        RelayStatusChip(
+            relayStatus = relayStatus,
             modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 80.dp, end = 16.dp)
-                .shadow(2.dp, RoundedCornerShape(16.dp)),
-            shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
-            tonalElevation = 2.dp
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .clip(CircleShape)
-                        .background(dotColor)
-                )
-                Text(dotLabel, style = MaterialTheme.typography.labelSmall)
-            }
-        }
+                .align(Alignment.BottomStart)
+                .padding(start = 16.dp, bottom = 16.dp)
+        )
 
         // Friend List Sidebar / Panel
         AnimatedVisibility(
             visible = showFriendList,
-            enter = slideInHorizontally(initialOffsetX = { it }),
-            exit = slideOutHorizontally(targetOffsetX = { it }),
+            enter = slideInHorizontally { it },
+            exit = slideOutHorizontally { it },
             modifier = Modifier.align(Alignment.TopEnd)
         ) {
             FriendListPanel(
@@ -347,6 +333,7 @@ private fun OsmdroidMapView(
     geofences: List<GeofenceEntity>,
     userLocation: GeoPoint?,
     centerOnUser: Boolean,
+    isDark: Boolean,
     onCenteredOnUser: () -> Unit,
     onPinTapped: (PinData) -> Unit,
     context: android.content.Context,
@@ -373,7 +360,7 @@ private fun OsmdroidMapView(
 
     // Center on user's location once it's available for the first time
     LaunchedEffect(userLocation) {
-        if (userLocation != null && !initialCenterDone) {
+        if ((userLocation != null) && !initialCenterDone) {
             mapViewRef?.controller?.animateTo(userLocation)
             initialCenterDone = true
         }
@@ -391,14 +378,14 @@ private fun OsmdroidMapView(
         factory = { ctx ->
             Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
             MapView(ctx).apply {
-                setTileSource(CARTO_LIGHT)
-                setBuiltInZoomControls(false)
+                setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
                 controller.setZoom(14.0)
                 isVerticalMapRepetitionEnabled = false
             }.also { mapViewRef = it }
         },
         update = { mapView ->
+            mapView.setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
             mapView.overlays.clear()
 
             geofences.forEach { fence ->
@@ -451,7 +438,7 @@ private fun OsmdroidMapView(
                 val myMarker = Marker(mapView).apply {
                     position = loc
                     title = "You"
-                    setIcon(MarkerIconFactory.createMyLocationIcon(context))
+                    icon = MarkerIconFactory.createMyLocationIcon(context)
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                     infoWindow = null
                 }

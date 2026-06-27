@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
+import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -80,7 +81,8 @@ fun ChatScreen(
                             vm.sendMessage(peerId, inputText.trim())
                             inputText = ""
                         }
-                    }
+                    },
+                    onLocationShare = { vm.sendLocation(peerId) }
                 )
             }
         }
@@ -174,7 +176,8 @@ private fun MessageBubble(msg: MessageEntity) {
 private fun ChatInputBar(
     value: String,
     onValueChange: (String) -> Unit,
-    onSend: () -> Unit
+    onSend: () -> Unit,
+    onLocationShare: () -> Unit
 ) {
     Surface(shadowElevation = 4.dp) {
         Row(
@@ -183,6 +186,13 @@ private fun ChatInputBar(
                 .padding(horizontal = 8.dp, vertical = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = onLocationShare) {
+                Icon(
+                    Icons.Default.MyLocation,
+                    contentDescription = "Share Location",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            }
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,

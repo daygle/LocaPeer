@@ -18,11 +18,18 @@ import com.journeyapps.barcodescanner.CompoundBarcodeView
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun ScanScreen(
+    inviteData: String? = null,
     onNavigateBack: () -> Unit,
     vm: ScanViewModel = hiltViewModel()
 ) {
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
     val scanState by vm.scanState.collectAsState()
+
+    LaunchedEffect(inviteData) {
+        if (inviteData != null) {
+            vm.processInviteLink(inviteData)
+        }
+    }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Scan Invite") }) }

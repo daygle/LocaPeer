@@ -54,6 +54,15 @@ class ScanViewModel @Inject constructor(
         }
     }
 
+    fun processInviteLink(base64: String) {
+        try {
+            val json = String(android.util.Base64.decode(base64, android.util.Base64.URL_SAFE))
+            processQrCode(json)
+        } catch (_: Exception) {
+            _scanState.value = ScanState(error = "Invalid invite link")
+        }
+    }
+
     fun reset() {
         processed = false
         _scanState.value = ScanState()
