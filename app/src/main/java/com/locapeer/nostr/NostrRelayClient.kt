@@ -28,26 +28,26 @@ import javax.inject.Singleton
 
 private const val TAG = "NostrRelayClient"
 
+private val RELAY_URLS = listOf(
+    "wss://relay.daygle.net",
+    "wss://relay.damus.io"
+)
+
 @Singleton
 class NostrRelayClient @Inject constructor(
     private val pendingMessageDao: PendingMessageDao
 ) {
-
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    private var webSocket: WebSocket? = null
-    private var currentRelayUrl: String = "wss://relay.damus.io"
-    private var isConnected = false
 
     private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
     val events: SharedFlow<NostrEvent> = _events
 
     private val _okEvents = MutableSharedFlow<String>(extraBufferCapacity = 64)
-    /** Emits Nostr event IDs that the relay accepted (OK true). */
+    /** Emits Nostr event IDs that any relay accepted (OK true). */
     val okEvents: SharedFlow<String> = _okEvents
 
-    private val msgLock = Any()
+    private val subsLock = Any()
     private val activeSubscriptions = mutableMapOf<String, String>()
 
     private val recentEventLock = Any()
@@ -59,27 +59,14 @@ class NostrRelayClient @Inject constructor(
         .readTimeout(0, TimeUnit.SECONDS)
         .build()
 
-    fun connect(relayUrl: String = currentRelayUrl) {
-        synchronized(msgLock) {
-            if (isConnected && relayUrl == currentRelayUrl) return
-            currentRelayUrl = relayUrl
-            disconnectInternal()
-            val request = Request.Builder().url(relayUrl).build()
-            webSocket = client.newWebSocket(request, NostrWebSocketListener())
-            Log.d(TAG, "Connecting to $relayUrl")
-        }
+    private val relays = RELAY_URLS.map { RelayConnection(it) }
+
+    fun connect() {
+        relays.forEach { it.connect() }
     }
 
     fun disconnect() {
-        synchronized(msgLock) {
-            disconnectInternal()
-        }
-    }
-
-    private fun disconnectInternal() {
-        webSocket?.close(1000, "Disconnecting")
-        webSocket = null
-        isConnected = false
+        relays.forEach { it.disconnect() }
     }
 
     fun publishEvent(event: NostrEvent) {
@@ -87,7 +74,7 @@ class NostrRelayClient @Inject constructor(
             add(JsonPrimitive("EVENT"))
             add(json.parseToJsonElement(json.encodeToString(event)))
         }.toString()
-        sendOrQueue(msg)
+        sendToAll(msg)
     }
 
     fun subscribe(subscriptionId: String, filter: NostrFilter) {
@@ -97,109 +84,131 @@ class NostrRelayClient @Inject constructor(
             add(JsonPrimitive(subscriptionId))
             add(json.parseToJsonElement(filterJson))
         }.toString()
-        synchronized(msgLock) {
+        synchronized(subsLock) {
             activeSubscriptions[subscriptionId] = msg
         }
-        sendOrQueue(msg)
+        sendToAll(msg)
     }
 
     fun unsubscribe(subscriptionId: String) {
-        synchronized(msgLock) {
+        synchronized(subsLock) {
             activeSubscriptions.remove(subscriptionId)
         }
         val msg = buildJsonArray {
             add(JsonPrimitive("CLOSE"))
             add(JsonPrimitive(subscriptionId))
         }.toString()
-        sendOrQueue(msg)
+        sendToAll(msg)
     }
 
-    private fun sendOrQueue(msg: String) {
-        scope.launch {
-            synchronized(msgLock) {
-                if (isConnected) {
-                    webSocket?.send(msg)
-                } else {
-                    scope.launch {
-                        pendingMessageDao.insert(PendingMessageEntity(content = msg))
-                    }
-                    if (webSocket == null) connect(currentRelayUrl)
-                }
+    private fun sendToAll(msg: String) {
+        var sentToAny = false
+        relays.forEach { relay ->
+            if (relay.send(msg)) sentToAny = true
+        }
+        if (!sentToAny) {
+            scope.launch {
+                pendingMessageDao.insert(PendingMessageEntity(content = msg))
             }
+            relays.forEach { it.ensureConnecting() }
         }
     }
 
-    private fun flushPending() {
+    private fun flushPendingTo(relay: RelayConnection) {
         scope.launch {
             val pending = pendingMessageDao.getAll()
-            synchronized(msgLock) {
-                pending.forEach { entity ->
-                    val sent = webSocket?.send(entity.content) ?: false
-                    if (sent) {
-                        scope.launch { pendingMessageDao.delete(entity) }
-                    }
+            pending.forEach { entity ->
+                if (relay.send(entity.content)) {
+                    pendingMessageDao.delete(entity)
                 }
-                activeSubscriptions.values.forEach { webSocket?.send(it) }
+            }
+            synchronized(subsLock) {
+                activeSubscriptions.values.forEach { relay.send(it) }
             }
         }
     }
 
-    private var reconnectJob: Job? = null
+    private inner class RelayConnection(val url: String) {
+        @Volatile var webSocket: WebSocket? = null
+        @Volatile var isConnected = false
+        private var reconnectJob: Job? = null
 
-    private fun scheduleReconnect() {
-        synchronized(msgLock) {
+        fun connect() {
+            if (isConnected || webSocket != null) return
+            Log.d(TAG, "Connecting to $url")
+            webSocket = client.newWebSocket(Request.Builder().url(url).build(), Listener())
+        }
+
+        fun disconnect() {
+            reconnectJob?.cancel()
+            webSocket?.close(1000, "Disconnecting")
+            webSocket = null
+            isConnected = false
+        }
+
+        fun ensureConnecting() {
+            if (webSocket == null) connect()
+        }
+
+        fun send(msg: String): Boolean =
+            if (isConnected) webSocket?.send(msg) ?: false else false
+
+        fun scheduleReconnect() {
             if (reconnectJob?.isActive == true) return
             reconnectJob = scope.launch {
                 delay(5_000)
-                connect(currentRelayUrl)
+                webSocket = null
+                isConnected = false
+                connect()
             }
         }
-    }
 
-    private inner class NostrWebSocketListener : WebSocketListener() {
-        override fun onOpen(webSocket: WebSocket, response: Response) {
-            Log.d(TAG, "Connected to relay")
-            isConnected = true
-            flushPending()
-        }
+        private inner class Listener : WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                Log.d(TAG, "Connected to $url")
+                isConnected = true
+                flushPendingTo(this@RelayConnection)
+            }
 
-        override fun onMessage(webSocket: WebSocket, text: String) {
-            try {
-                val arr = json.parseToJsonElement(text).jsonArray
-                when (arr[0].jsonPrimitive.content) {
-                    "EVENT" -> {
-                        val eventJson = arr[2].toString()
-                        val event = json.decodeFromString<NostrEvent>(eventJson)
-                        val isNew = synchronized(recentEventLock) {
-                            if (recentEventIds.size >= 500) recentEventIds.remove(recentEventIds.first())
-                            recentEventIds.add(event.id)
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                try {
+                    val arr = json.parseToJsonElement(text).jsonArray
+                    when (arr[0].jsonPrimitive.content) {
+                        "EVENT" -> {
+                            val event = json.decodeFromString<NostrEvent>(arr[2].toString())
+                            val isNew = synchronized(recentEventLock) {
+                                if (recentEventIds.size >= 500) recentEventIds.remove(recentEventIds.first())
+                                recentEventIds.add(event.id)
+                            }
+                            if (isNew) scope.launch { _events.emit(event) }
                         }
-                        if (isNew) scope.launch { _events.emit(event) }
+                        "EOSE" -> Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
+                        "NOTICE" -> Log.d(TAG, "NOTICE from $url: ${arr[1]}")
+                        "OK" -> {
+                            val eventId = arr[1].jsonPrimitive.content
+                            val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
+                            if (accepted) scope.launch { _okEvents.emit(eventId) }
+                            Log.d(TAG, "OK from $url: ${if (accepted) "accepted" else "rejected"} $eventId")
+                        }
                     }
-                    "EOSE" -> Log.d(TAG, "End of stored events for sub: ${arr[1]}")
-                    "NOTICE" -> Log.d(TAG, "Relay notice: ${arr[1]}")
-                    "OK" -> {
-                        val eventId = arr[1].jsonPrimitive.content
-                        val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
-                        if (accepted) scope.launch { _okEvents.emit(eventId) }
-                        Log.d(TAG, "Event ${if (accepted) "accepted" else "rejected"}: $eventId")
-                    }
+                } catch (e: Exception) {
+                    Log.w(TAG, "Failed to parse message from $url", e)
                 }
-            } catch (e: Exception) {
-                Log.w(TAG, "Failed to parse relay message", e)
             }
-        }
 
-        override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-            Log.w(TAG, "WebSocket failure", t)
-            isConnected = false
-            scheduleReconnect()
-        }
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                Log.w(TAG, "Failure on $url", t)
+                isConnected = false
+                this@RelayConnection.webSocket = null
+                scheduleReconnect()
+            }
 
-        override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-            Log.d(TAG, "WebSocket closed: $code $reason")
-            isConnected = false
-            if (code != 1000) scheduleReconnect()
+            override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
+                Log.d(TAG, "Closed $url: $code $reason")
+                isConnected = false
+                this@RelayConnection.webSocket = null
+                if (code != 1000) scheduleReconnect()
+            }
         }
     }
 }

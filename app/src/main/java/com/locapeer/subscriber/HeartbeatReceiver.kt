@@ -36,7 +36,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -74,9 +73,8 @@ class HeartbeatReceiver @Inject constructor(
         createAlertChannel()
         createMessageChannel()
         scope.launch {
-            val settings = prefs.settings.first()
             val (_, pubHex) = keyManager.ensureKeypair()
-            relayClient.connect(settings.relayUrl)
+            relayClient.connect()
             relayClient.subscribe(
                 SUB_ID,
                 NostrFilter(
@@ -113,49 +111,44 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processMsgPurgeRequest(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return   // only respect known peers
+        peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
-        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's messages
+        if (payload.deviceId != event.pubkey) return
         messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
         Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
     }
 
     private suspend fun processPurgeRequest(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return   // only respect known broadcasters
+        peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
-        if (payload.deviceId != event.pubkey) return   // sanity: can't purge someone else's data
+        if (payload.deviceId != event.pubkey) return
         heartbeatDao.deleteOlderThanForDevice(payload.deviceId, payload.deleteOlderThanMs)
         Log.d(TAG, "Purged ${payload.deviceId} heartbeats before ${payload.deleteOlderThanMs}ms")
     }
 
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
-
         val broadcaster = peerDao.getPeer(event.pubkey) ?: return
-
         if (!NostrEvent.verify(event, crypto)) {
             Log.w(TAG, "Signature verification failed for event ${event.id}")
             return
         }
-
         try {
             val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
             val privBytes = crypto.hexToBytes(privHex)
             val plaintext = crypto.nip04Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
-
             val prevHeartbeat = heartbeatDao.getLatestHeartbeat(payload.deviceId)
-
             val entity = HeartbeatEntity(
                 deviceId = payload.deviceId,
                 displayName = payload.displayName,
@@ -168,17 +161,11 @@ class HeartbeatReceiver @Inject constructor(
                 isSos = payload.isSos
             )
             heartbeatDao.insert(entity)
-
-            // Enforce broadcaster's own retention preference on every heartbeat
             if (payload.retentionDays > 0) {
                 val cutoff = System.currentTimeMillis() - payload.retentionDays * 24 * 3600 * 1000L
                 heartbeatDao.deleteOlderThanForDevice(payload.deviceId, cutoff)
             }
-
-            if (payload.isSos) {
-                sendSosNotification(broadcaster.displayName, payload)
-            }
-
+            if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
             geofenceEngine.evaluate(entity, prevHeartbeat)
             proximityEngine.evaluate(entity)
         } catch (e: Exception) {

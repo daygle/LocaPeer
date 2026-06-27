@@ -43,7 +43,6 @@ fun SettingsScreen(
     val publicKeyHex by vm.publicKeyHex.collectAsState()
     val profileQr by vm.profileQr.collectAsState()
 
-    // Supervised mode: gate the whole screen when locked
     val unlockState by vm.unlockState.collectAsState()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (settings.supervisedModeEnabled && !sessionUnlocked) {
@@ -57,7 +56,6 @@ fun SettingsScreen(
     }
 
     var nameInput by remember(settings.displayName) { mutableStateOf(settings.displayName) }
-    var relayInput by remember(settings.relayUrl) { mutableStateOf(settings.relayUrl) }
     var showKeyDialog by remember { mutableStateOf(false) }
     var exportedKey by remember { mutableStateOf("") }
     var showProfileQr by remember { mutableStateOf(false) }
@@ -79,7 +77,6 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(vertical = 16.dp)
         ) {
-            // Profile card
             item {
                 SettingsSection("My Profile") {
                     Row(
@@ -132,22 +129,6 @@ fun SettingsScreen(
                     Spacer(Modifier.height(4.dp))
                     Button(
                         onClick = { vm.updateDisplayName(nameInput) },
-                        modifier = Modifier.align(Alignment.End)
-                    ) { Text("Save") }
-                }
-            }
-
-            item {
-                SettingsSection("Relay") {
-                    OutlinedTextField(
-                        value = relayInput,
-                        onValueChange = { relayInput = it },
-                        label = { Text("Nostr Relay URL") },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(Modifier.height(4.dp))
-                    Button(
-                        onClick = { vm.updateRelayUrl(relayInput) },
                         modifier = Modifier.align(Alignment.End)
                     ) { Text("Save") }
                 }
@@ -722,7 +703,6 @@ private fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
                         modifier = Modifier.weight(1f)
                     )
                 }
-                // Fill remaining slots in last row so weights stay consistent
                 repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
             }
         }
@@ -781,7 +761,7 @@ private fun SelectionContainer(content: @Composable () -> Unit) {
     androidx.compose.foundation.text.selection.SelectionContainer { content() }
 }
 
-// ──────────────────────────── Supervised Mode UI ────────────────────────────
+// ───────────────────────────────── Supervised Mode UI ─────────────────────────────────
 
 @Composable
 private fun SupervisedRemoteGate(

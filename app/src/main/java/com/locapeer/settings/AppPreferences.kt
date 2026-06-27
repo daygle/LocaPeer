@@ -16,7 +16,6 @@ private val Context.settingsStore by preferencesDataStore(name = "locapeer_setti
 
 data class AppSettings(
     val displayName: String = "",
-    val relayUrl: String = "wss://relay.damus.io",
     val heartbeatEnabled: Boolean = false,
     val stationaryIntervalMinutes: Int = 15,
     val walkingIntervalMinutes: Int = 5,
@@ -30,19 +29,9 @@ data class AppSettings(
     val globalScheduleDays: Int = 0b1111111,
     val globalScheduleStartMinute: Int = 0,
     val globalScheduleEndMinute: Int = 1439,
-    /**
-     * How many days subscribers should keep this device's location history.
-     * 0 = no automatic deletion (keep forever).
-     */
     val retentionDays: Int = 30,
-    /**
-     * How many days peers should keep messages sent by this device.
-     * 0 = no automatic deletion (keep forever).
-     */
     val messageRetentionDays: Int = 0,
-    /** When true, Settings are locked behind remote supervisor approval. */
     val supervisedModeEnabled: Boolean = false,
-    /** Public key hex of the supervisor peer. Empty when supervised mode is off. */
     val supervisorPubkey: String = ""
 )
 
@@ -51,7 +40,6 @@ class AppPreferences @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     private val KEY_DISPLAY_NAME = stringPreferencesKey("display_name")
-    private val KEY_RELAY_URL = stringPreferencesKey("relay_url")
     private val KEY_HEARTBEAT_ENABLED = booleanPreferencesKey("heartbeat_enabled")
     private val KEY_STATIONARY_INTERVAL = intPreferencesKey("stationary_interval")
     private val KEY_WALKING_INTERVAL = intPreferencesKey("walking_interval")
@@ -72,7 +60,6 @@ class AppPreferences @Inject constructor(
     val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
         AppSettings(
             displayName = prefs[KEY_DISPLAY_NAME] ?: "",
-            relayUrl = prefs[KEY_RELAY_URL] ?: "wss://relay.damus.io",
             heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
             stationaryIntervalMinutes = prefs[KEY_STATIONARY_INTERVAL] ?: 15,
             walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
@@ -94,10 +81,6 @@ class AppPreferences @Inject constructor(
 
     suspend fun updateDisplayName(name: String) {
         context.settingsStore.edit { it[KEY_DISPLAY_NAME] = name }
-    }
-
-    suspend fun updateRelayUrl(url: String) {
-        context.settingsStore.edit { it[KEY_RELAY_URL] = url }
     }
 
     suspend fun setHeartbeatEnabled(enabled: Boolean) {
