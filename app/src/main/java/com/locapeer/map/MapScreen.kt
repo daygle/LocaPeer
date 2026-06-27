@@ -62,12 +62,19 @@ fun MapScreen(
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
     var showFriendList by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsState()
+    val userLocation by vm.userLocation.collectAsState()
     val context = LocalContext.current
+    var centerOnUser by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) { vm.fetchUserLocation() }
 
     Box(modifier = Modifier.fillMaxSize()) {
         OsmdroidMapView(
             pins = uiState.pins,
             geofences = uiState.geofences,
+            userLocation = userLocation,
+            centerOnUser = centerOnUser,
+            onCenteredOnUser = { centerOnUser = false },
             onPinTapped = { selectedPin = it },
             context = context,
             modifier = Modifier.fillMaxSize()
@@ -81,6 +88,22 @@ fun MapScreen(
                 .align(Alignment.TopStart)
                 .padding(16.dp)
         )
+
+        // Locate Me Button — bottom-right
+        FloatingActionButton(
+            onClick = {
+                vm.fetchUserLocation()
+                centerOnUser = true
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.primary,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+                .shadow(4.dp, CircleShape)
+        ) {
+            Icon(Icons.Default.MyLocation, contentDescription = "My Location")
+        }
 
         // Friends Button — top-right
         FloatingActionButton(
@@ -281,12 +304,16 @@ private fun SosButton(isActive: Boolean, onClick: () -> Unit, modifier: Modifier
 private fun OsmdroidMapView(
     pins: List<PinData>,
     geofences: List<GeofenceEntity>,
+    userLocation: GeoPoint?,
+    centerOnUser: Boolean,
+    onCenteredOnUser: () -> Unit,
     onPinTapped: (PinData) -> Unit,
     context: android.content.Context,
     modifier: Modifier = Modifier
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
+    var initialCenterDone by remember { mutableStateOf(false) }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -303,6 +330,22 @@ private fun OsmdroidMapView(
         }
     }
 
+    // Center on user's location once it's available for the first time
+    LaunchedEffect(userLocation) {
+        if (userLocation != null && !initialCenterDone) {
+            mapViewRef?.controller?.animateTo(userLocation)
+            initialCenterDone = true
+        }
+    }
+
+    // Re-center when the locate-me button is pressed
+    LaunchedEffect(centerOnUser) {
+        if (centerOnUser && userLocation != null) {
+            mapViewRef?.controller?.animateTo(userLocation)
+            onCenteredOnUser()
+        }
+    }
+
     AndroidView(
         factory = { ctx ->
             Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
@@ -311,7 +354,6 @@ private fun OsmdroidMapView(
                 setBuiltInZoomControls(false)
                 setMultiTouchControls(true)
                 controller.setZoom(14.0)
-                controller.setCenter(GeoPoint(51.5, -0.1))
                 isVerticalMapRepetitionEnabled = false
             }.also { mapViewRef = it }
         },
@@ -363,6 +405,18 @@ private fun OsmdroidMapView(
                 }
                 mapView.overlays.add(marker)
             }
+
+            userLocation?.let { loc ->
+                val myMarker = Marker(mapView).apply {
+                    position = loc
+                    title = "You"
+                    setIcon(MarkerIconFactory.createMyLocationIcon(context))
+                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                    infoWindow = null
+                }
+                mapView.overlays.add(myMarker)
+            }
+
             mapView.invalidate()
         },
         modifier = modifier
