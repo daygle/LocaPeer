@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.RelayStatusChip
@@ -38,13 +40,26 @@ fun ConversationListScreen(
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
+    val peers by vm.peers.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
+    var showContactPicker by remember { mutableStateOf(false) }
 
     // null = still loading (waiting for first emission), empty list = loaded but empty
     val loadState = when {
         conversations == null -> LoadState.LOADING
         conversations!!.isEmpty() -> LoadState.EMPTY
         else -> LoadState.CONTENT
+    }
+
+    if (showContactPicker) {
+        ContactPickerDialog(
+            peers = peers,
+            onSelect = { peerId ->
+                showContactPicker = false
+                onOpenChat(peerId)
+            },
+            onDismiss = { showContactPicker = false }
+        )
     }
 
     Scaffold(
@@ -63,6 +78,11 @@ fun ConversationListScreen(
                     containerColor = MaterialTheme.colorScheme.surface
                 )
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { showContactPicker = true }) {
+                Icon(Icons.Default.Add, contentDescription = "New message")
+            }
         }
     ) { padding ->
         AnimatedContent(
@@ -184,6 +204,55 @@ private fun AvatarCircle(name: String, hasUnread: Boolean) {
             else MaterialTheme.colorScheme.onPrimaryContainer
         )
     }
+}
+
+@Composable
+private fun ContactPickerDialog(
+    peers: List<PeerEntity>,
+    onSelect: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("New message") },
+        text = {
+            if (peers.isEmpty()) {
+                Text(
+                    "No contacts yet. Scan a QR code to add a contact.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            } else {
+                LazyColumn {
+                    items(peers, key = { it.deviceId }) { peer ->
+                        ListItem(
+                            leadingContent = {
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clip(CircleShape)
+                                        .background(MaterialTheme.colorScheme.primaryContainer),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        peer.displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
+                                        style = MaterialTheme.typography.titleSmall,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                            },
+                            headlineContent = { Text(peer.displayName) },
+                            modifier = Modifier.clickable { onSelect(peer.deviceId) }
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        }
+    )
 }
 
 private fun formatTime(millis: Long): String =

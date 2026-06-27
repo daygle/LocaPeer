@@ -50,6 +50,10 @@ class MessagingViewModel @Inject constructor(
 
     val relayStatus = relayClient.relayStatus
 
+    val peers: StateFlow<List<PeerEntity>> =
+        peerDao.getAllPeers()
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
     val conversations: StateFlow<List<ConversationSummary>?> =
         messageDao.getConversationSummaries()
             .combine(peerDao.getAllPeers()) { msgs, peers ->

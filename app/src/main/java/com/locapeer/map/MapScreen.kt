@@ -70,7 +70,7 @@ private val CARTO_DARK = object : OnlineTileSourceBase(
 
 @Composable
 fun MapScreen(
-    onNavigateToChat: (String) -> Unit,
+    onNavigateToChat: (peerId: String, peerName: String) -> Unit,
     vm: MapViewModel = hiltViewModel()
 ) {
     val uiState by vm.uiState.collectAsState()
@@ -159,9 +159,9 @@ fun MapScreen(
                     selectedPin = pin
                     // Logic to center map could go here via VM or callback
                 },
-                onMessageFriend = { peerId ->
+                onMessageFriend = { peerId, peerName ->
                     showFriendList = false
-                    onNavigateToChat(peerId)
+                    onNavigateToChat(peerId, peerName)
                 }
             )
         }
@@ -182,7 +182,7 @@ fun MapScreen(
                     onDismiss = { selectedPin = null },
                     onMessage = {
                         selectedPin = null
-                        onNavigateToChat(pin.peer.deviceId)
+                        onNavigateToChat(pin.peer.deviceId, pin.peer.displayName)
                     },
                     onViewHistory = {}
                 )
@@ -196,7 +196,7 @@ private fun FriendListPanel(
     pins: List<PinData>,
     onDismiss: () -> Unit,
     onSelectFriend: (PinData) -> Unit,
-    onMessageFriend: (String) -> Unit
+    onMessageFriend: (peerId: String, peerName: String) -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -236,7 +236,7 @@ private fun FriendListPanel(
                         FriendItem(
                             pin = pin,
                             onClick = { onSelectFriend(pin) },
-                            onMessage = { onMessageFriend(pin.peer.deviceId) }
+                            onMessage = { onMessageFriend(pin.peer.deviceId, pin.peer.displayName) }
                         )
                     }
                 }

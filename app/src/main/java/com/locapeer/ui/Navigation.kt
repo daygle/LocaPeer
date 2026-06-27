@@ -121,8 +121,8 @@ fun LocaPeerNavHost(
             popExitTransition = { fadeExit }
         ) {
             composable(Screen.Map.route) {
-                MapScreen(onNavigateToChat = { peerId ->
-                    navController.navigate("chat/$peerId/Unknown")
+                MapScreen(onNavigateToChat = { peerId, peerName ->
+                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
                 })
             }
             composable(Screen.Messages.route) {
