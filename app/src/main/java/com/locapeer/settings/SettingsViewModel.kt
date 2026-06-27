@@ -229,4 +229,8 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setStartRoute(route: String) {
+        viewModelScope.launch { prefs.setStartRoute(route) }
+    }
+
 }

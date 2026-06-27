@@ -42,7 +42,9 @@ data class AppSettings(
     val supervisorPubkey: String = "",
     val customRelays: List<String> = HARDCODED_RELAYS,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
-    val navTabIds: List<String> = listOf("map", "messages", "contacts", "invite", "settings")
+    val navTabIds: List<String> = listOf("map", "messages", "contacts", "invite", "settings"),
+    /** Route shown when the app first opens. Must be one of the active navTabIds. */
+    val startRoute: String = "map"
 )
 
 @Singleton
@@ -67,6 +69,7 @@ class AppPreferences @Inject constructor(
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
+    private val KEY_START_ROUTE = stringPreferencesKey("start_route")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -100,7 +103,8 @@ class AppPreferences @Inject constructor(
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
                     ?.takeIf { it.size >= 2 }
-                    ?: listOf("map", "messages", "contacts", "invite", "settings")
+                    ?: listOf("map", "messages", "contacts", "invite", "settings"),
+                startRoute = prefs[KEY_START_ROUTE] ?: "map"
             )
         }
 
@@ -133,6 +137,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setNavTabIds(ids: List<String>) {
         context.settingsStore.edit { it[KEY_NAV_TAB_IDS] = ids.joinToString(",") }
+    }
+
+    suspend fun setStartRoute(route: String) {
+        context.settingsStore.edit { it[KEY_START_ROUTE] = route }
     }
 
     suspend fun clearSupervisedMode() {
