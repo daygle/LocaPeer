@@ -11,6 +11,7 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -44,8 +45,11 @@ class MapViewModel @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val geofenceDao: GeofenceDao,
     private val sosManager: SosManager,
+    private val relayClient: NostrRelayClient,
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
+
+    val relayStatus = relayClient.relayStatus
 
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()

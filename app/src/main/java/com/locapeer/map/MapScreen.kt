@@ -16,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
@@ -63,6 +64,9 @@ fun MapScreen(
     var showFriendList by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
+    val relayStatus by vm.relayStatus.collectAsState()
+    val allConnected = relayStatus.isNotEmpty() && relayStatus.values.all { it }
+    val anyConnected = relayStatus.values.any { it }
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(false) }
 
@@ -116,6 +120,43 @@ fun MapScreen(
                 .shadow(4.dp, CircleShape)
         ) {
             Icon(Icons.Default.People, contentDescription = "Friends")
+        }
+
+        // Relay status chip — below the Friends button
+        val dotColor = when {
+            relayStatus.isEmpty() -> Color(0xFFFFB300)
+            allConnected -> Color(0xFF4CAF50)
+            anyConnected -> Color(0xFFFFB300)
+            else -> MaterialTheme.colorScheme.error
+        }
+        val dotLabel = when {
+            relayStatus.isEmpty() -> "Connecting…"
+            allConnected -> "Relays connected"
+            anyConnected -> "Partial connection"
+            else -> "Offline"
+        }
+        Surface(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(top = 80.dp, end = 16.dp)
+                .shadow(2.dp, RoundedCornerShape(16.dp)),
+            shape = RoundedCornerShape(16.dp),
+            color = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f),
+            tonalElevation = 2.dp
+        ) {
+            Row(
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .clip(CircleShape)
+                        .background(dotColor)
+                )
+                Text(dotLabel, style = MaterialTheme.typography.labelSmall)
+            }
         }
 
         // Friend List Sidebar / Panel
