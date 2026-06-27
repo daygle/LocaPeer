@@ -82,6 +82,8 @@ class MessagingViewModel @Inject constructor(
     private val typingClearJobs = mutableMapOf<String, Job>()
     private var outgoingTypingJob: Job? = null
     private var myListeningPubkey: String? = null
+    private var eventsJob: Job? = null
+    private var okEventsJob: Job? = null
 
     @SuppressLint("MissingPermission")
     fun sendLocation(peerId: String) {
@@ -170,7 +172,8 @@ class MessagingViewModel @Inject constructor(
             )
         }
 
-        relayClient.events
+        eventsJob?.cancel()
+        eventsJob = relayClient.events
             .onEach { event ->
                 when (event.kind) {
                     NostrEventKind.ENCRYPTED_DM -> processIncomingDm(event)
@@ -182,7 +185,8 @@ class MessagingViewModel @Inject constructor(
             .launchIn(viewModelScope)
 
         // Relay OK → SENDING → SENT (relay confirmed it received the event)
-        relayClient.okEvents
+        okEventsJob?.cancel()
+        okEventsJob = relayClient.okEvents
             .onEach { confirmedEventId ->
                 messageDao.updateDeliveryStateByNostrEventId(
                     confirmedEventId,
