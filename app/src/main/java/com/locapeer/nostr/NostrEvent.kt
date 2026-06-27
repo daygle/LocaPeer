@@ -24,6 +24,9 @@ object NostrEventKind {
     const val SUPERVISED_UNLOCK_RESPONSE = 10007 // NIP-04-encrypted unlock response from supervisor
     const val TRACK_REQUEST = 10008  // NIP-44-encrypted mutual tracking invitation
     const val TRACK_ACCEPT = 10009   // NIP-44-encrypted acceptance of a track request
+    const val PEER_REMOVED = 10010   // NIP-44-encrypted peer removal notification
+    const val DELETE_MY_MESSAGES = 10011  // NIP-44-encrypted request to delete all sender's messages
+    const val DELETE_MY_LOCATION = 10012  // NIP-44-encrypted request to delete all sender's heartbeats
 }
 
 @Serializable

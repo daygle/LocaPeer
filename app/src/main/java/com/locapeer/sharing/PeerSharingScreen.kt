@@ -31,6 +31,7 @@ fun PeerSharingScreen(
     val state by vm.uiState.collectAsState()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
+    val messagingEnabled = cfg?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: true
     val scheduleEnabled = cfg?.scheduleEnabled ?: false
@@ -86,9 +87,14 @@ fun PeerSharingScreen(
                         Column {
                             Text(peerName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                             Text(
-                                if (sharingEnabled) "Sharing your location" else "Sharing paused",
+                                when {
+                                    !sharingEnabled && !messagingEnabled -> "Location & messaging off"
+                                    !sharingEnabled -> "Location sharing paused"
+                                    !messagingEnabled -> "Messaging blocked"
+                                    else -> "Sharing your location"
+                                },
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (sharingEnabled) MaterialTheme.colorScheme.primary
+                                color = if (sharingEnabled && messagingEnabled) MaterialTheme.colorScheme.primary
                                         else MaterialTheme.colorScheme.error
                             )
                         }
@@ -116,6 +122,31 @@ fun PeerSharingScreen(
                         Switch(
                             checked = sharingEnabled,
                             onCheckedChange = { vm.setSharingEnabled(it) }
+                        )
+                    }
+                }
+            }
+
+            // Messaging toggle
+            item {
+                SharingCard(title = "Messaging") {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Allow messages from $peerName", style = MaterialTheme.typography.bodyMedium)
+                            Text(
+                                "When off, messages from ${peerName.split(" ").first()} are silently blocked",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Switch(
+                            checked = messagingEnabled,
+                            onCheckedChange = { vm.setMessagingEnabled(it) }
                         )
                     }
                 }

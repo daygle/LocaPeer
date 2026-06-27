@@ -2,6 +2,7 @@ package com.locapeer.sharing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.PeerEntity
@@ -24,7 +25,8 @@ data class PeerSharingUiState(
 @HiltViewModel
 class PeerSharingViewModel @Inject constructor(
     private val peerDao: PeerDao,
-    private val configDao: PeerSharingConfigDao
+    private val configDao: PeerSharingConfigDao,
+    private val messageDao: MessageDao
 ) : ViewModel() {
 
     private var currentPeerId: String = ""
@@ -57,6 +59,18 @@ class PeerSharingViewModel @Inject constructor(
             } else {
                 configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
             }
+        }
+    }
+
+    fun setMessagingEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = configDao.getForPeer(currentPeerId)
+            if (existing != null) {
+                configDao.setMessagingEnabled(currentPeerId, enabled)
+            } else {
+                configDao.upsert(defaultConfig().copy(messagingEnabled = enabled))
+            }
+            if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
         }
     }
 

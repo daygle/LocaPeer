@@ -16,6 +16,7 @@ import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
@@ -40,6 +41,7 @@ class MessagingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
@@ -63,7 +65,15 @@ class MessagingViewModel @Inject constructor(
                     ConversationSummary(peer = peer, lastMessage = msg)
                 }
             }
+            .combine(sharingConfigDao.observeAll()) { summaries, configs ->
+                val cfgMap = configs.associateBy { it.peerDeviceId }
+                summaries.map { s -> s.copy(messagingEnabled = cfgMap[s.peer.deviceId]?.messagingEnabled ?: true) }
+            }
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    /** Observe whether incoming messages from this peer are allowed. */
+    fun getMessagingEnabled(peerId: String): Flow<Boolean> =
+        sharingConfigDao.observeForPeer(peerId).map { it?.messagingEnabled ?: true }
 
     private val _typingPeers = MutableStateFlow<Map<String, Long>>(emptyMap())
     /** Maps peerDeviceId (= pubkey) to the millisecond timestamp of the last typing event. */
@@ -313,5 +323,6 @@ class MessagingViewModel @Inject constructor(
 
 data class ConversationSummary(
     val peer: PeerEntity,
-    val lastMessage: MessageEntity
+    val lastMessage: MessageEntity,
+    val messagingEnabled: Boolean = true
 )

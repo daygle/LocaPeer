@@ -23,6 +23,8 @@ import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
+import com.locapeer.peer.PeerManager
+import com.locapeer.peer.PeerRemovedPayload
 import com.locapeer.invite.ACTION_TRACK_ACCEPT
 import com.locapeer.invite.ACTION_TRACK_DECLINE
 import com.locapeer.invite.EXTRA_SENDER_NAME
@@ -71,7 +73,9 @@ class HeartbeatReceiver @Inject constructor(
     private val proximityEngine: ProximityEngine,
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
-    private val supervisionApprovalManager: SupervisionApprovalManager
+    private val supervisionApprovalManager: SupervisionApprovalManager,
+    private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
+    private val peerManager: PeerManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
@@ -96,7 +100,10 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
                         NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
                         NostrEventKind.TRACK_REQUEST,
-                        NostrEventKind.TRACK_ACCEPT
+                        NostrEventKind.TRACK_ACCEPT,
+                        NostrEventKind.PEER_REMOVED,
+                        NostrEventKind.DELETE_MY_MESSAGES,
+                        NostrEventKind.DELETE_MY_LOCATION
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -116,6 +123,9 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> processUnlockResponse(event)
                     NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
+                    NostrEventKind.PEER_REMOVED -> scope.launch { processPeerRemoved(event) }
+                    NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
+                    NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
                 }
             }
             .launchIn(scope)
@@ -214,6 +224,8 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processDmInBackground(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
+        val cfg = sharingConfigDao.getForPeer(event.pubkey)
+        val isBlocked = cfg?.messagingEnabled == false
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -226,12 +238,15 @@ class HeartbeatReceiver @Inject constructor(
             content = plaintext,
             timestamp = event.createdAt * 1000L,
             isMine = false,
-            deliveryState = DeliveryState.DELIVERED.name,
-            nostrEventId = event.id
+            deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
+            nostrEventId = event.id,
+            isBlocked = isBlocked
         )
         messageDao.insert(msg)
-        sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
-        sendDeliveryAck(event.pubkey, event.id)
+        if (!isBlocked) {
+            sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
+            sendDeliveryAck(event.pubkey, event.id)
+        }
     }
 
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
@@ -317,6 +332,40 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(peerId.hashCode() + 10000, notification)
+    }
+
+    private suspend fun processPeerRemoved(event: NostrEvent) {
+        // Only act if we know this peer — ignore unknown senders
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        try {
+            json.decodeFromString<PeerRemovedPayload>(plaintext)
+        } catch (e: Exception) { return }
+        peerManager.handleRemovalByPeer(event.pubkey)
+    }
+
+    private suspend fun processDeleteMyMessages(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        peerManager.handleDeleteMyMessages(event.pubkey)
+    }
+
+    private suspend fun processDeleteMyLocation(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        peerManager.handleDeleteMyLocation(event.pubkey)
     }
 
     private suspend fun processTrackRequest(event: NostrEvent) {
