@@ -71,6 +71,11 @@ fun SettingsScreen(
     val exportLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
     ) { uri -> uri?.let { vm.exportBackup(it, exportSections) } }
+    val backupResult by vm.backupResult.collectAsState()
+    val pendingRestore by vm.pendingRestore.collectAsState()
+    val importLauncher = rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+    ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -221,153 +226,108 @@ fun SettingsScreen(
 
             item { SectionLabel("Privacy & Data") }
 
+            // Card 1: Data on peers' devices (remote purge)
             item {
                 SettingsCard {
-                    // Remote retention: location
-                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Icon(Icons.Default.LocationOff, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Location history on peers' devices", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                                Text("How long contacts keep your location data", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                        }
-                        Spacer(Modifier.height(10.dp))
-                        RetentionSelector(selected = settings.retentionDays, onSelected = { vm.setRetentionDays(it) })
-                        if (settings.retentionDays > 0) {
-                            Spacer(Modifier.height(8.dp))
-                            OutlinedButton(onClick = { vm.sendPurgeNow() }, modifier = Modifier.fillMaxWidth()) {
-                                Text("Delete from peers' devices now")
-                            }
-                        }
-                    }
-                    HorizontalDivider()
-                    // Remote retention: messages
-                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Messages on peers' devices", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                                Text("How long contacts keep messages you sent", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                        }
-                        Spacer(Modifier.height(10.dp))
-                        RetentionSelector(selected = settings.messageRetentionDays, onSelected = { vm.setMessageRetentionDays(it) })
-                        if (settings.messageRetentionDays > 0) {
-                            Spacer(Modifier.height(8.dp))
-                            OutlinedButton(onClick = { vm.sendMessagePurgeNow() }, modifier = Modifier.fillMaxWidth()) {
-                                Text("Delete from peers' devices now")
-                            }
-                        }
-                    }
-                    HorizontalDivider()
-                    // Local data
-                    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        // Local retention: location
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Icon(Icons.Default.LocationOff, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Location history on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                                Text("How long to keep contacts' location data locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                        }
-                        RetentionSelector(selected = settings.localLocationRetentionDays, onSelected = { vm.setLocalLocationRetentionDays(it) })
-                        HorizontalDivider()
-                        // Local retention: messages
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Messages on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                                Text("How long to keep received messages locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                        }
-                        RetentionSelector(selected = settings.localMessageRetentionDays, onSelected = { vm.setLocalMessageRetentionDays(it) })
-                        HorizontalDivider()
-                        Text("Manual clear", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            OutlinedButton(
-                                onClick = { showClearLocationConfirm = true },
-                                modifier = Modifier.weight(1f),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                            ) { Text("Clear locations", style = MaterialTheme.typography.labelMedium) }
-                            OutlinedButton(
-                                onClick = { showClearMessageConfirm = true },
-                                modifier = Modifier.weight(1f),
-                                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                            ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
-                        }
-                        val backupResult by vm.backupResult.collectAsState()
-                        val pendingRestore by vm.pendingRestore.collectAsState()
+                    RetentionRow(
+                        icon = Icons.Default.LocationOff,
+                        title = "Location on peers' devices",
+                        subtitle = "How long contacts keep your location data",
+                        selected = settings.retentionDays,
+                        onSelected = { vm.setRetentionDays(it) },
+                        purgeLabel = "Delete from peers now",
+                        onPurge = if (settings.retentionDays > 0) ({ vm.sendPurgeNow() }) else null
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    RetentionRow(
+                        icon = Icons.Default.DeleteSweep,
+                        title = "Messages on peers' devices",
+                        subtitle = "How long contacts keep messages you sent",
+                        selected = settings.messageRetentionDays,
+                        onSelected = { vm.setMessageRetentionDays(it) },
+                        purgeLabel = "Delete from peers now",
+                        onPurge = if (settings.messageRetentionDays > 0) ({ vm.sendMessagePurgeNow() }) else null
+                    )
+                }
+            }
 
-                        val importLauncher = rememberLauncherForActivityResult(
-                            androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
-                        ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
-
-                        backupResult?.let { msg ->
-                            Text(
-                                msg,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg.startsWith("Could not"))
-                                    MaterialTheme.colorScheme.error
-                                else MaterialTheme.colorScheme.primary
-                            )
-                            Spacer(Modifier.height(4.dp))
-                        }
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            OutlinedButton(
-                                onClick = { showExportDialog = true; vm.clearBackupResult() },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Icon(Icons.Default.Upload, contentDescription = null, modifier = Modifier.size(16.dp))
-                                Spacer(Modifier.width(6.dp))
-                                Text("Export backup", style = MaterialTheme.typography.labelMedium)
-                            }
-                            OutlinedButton(
-                                onClick = { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
-                                Spacer(Modifier.width(6.dp))
-                                Text("Import backup", style = MaterialTheme.typography.labelMedium)
-                            }
-                        }
+            // Card 2: Data on this device (local retention + manual clear)
+            item {
+                SettingsCard {
+                    RetentionRow(
+                        icon = Icons.Default.LocationOn,
+                        title = "Location on this device",
+                        subtitle = "How long to keep contacts' location data locally",
+                        selected = settings.localLocationRetentionDays,
+                        onSelected = { vm.setLocalLocationRetentionDays(it) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    RetentionRow(
+                        icon = Icons.Default.Message,
+                        title = "Messages on this device",
+                        subtitle = "How long to keep received messages locally",
+                        selected = settings.localMessageRetentionDays,
+                        onSelected = { vm.setLocalMessageRetentionDays(it) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
                         OutlinedButton(
-                            onClick = { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(16.dp))
-                            Spacer(Modifier.width(6.dp))
-                            Text("View private key")
-                        }
-
-                        // Import section picker — shown after loading a backup file
-                        if (pendingRestore != null) {
-                            val restore = pendingRestore!!
-                            var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
-                            AlertDialog(
-                                onDismissRequest = { vm.dismissPendingRestore() },
-                                title = { Text("Select data to restore") },
-                                text = {
-                                    Column {
-                                        BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
-                                        BackupSectionItem("Contacts", BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
-                                        BackupSectionItem("Geofences", BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
-                                        BackupSectionItem("Settings", BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
-                                    }
-                                },
-                                confirmButton = {
-                                    Button(
-                                        onClick = { vm.applyRestore(importSections) },
-                                        enabled = importSections.isNotEmpty()
-                                    ) { Text("Restore") }
-                                },
-                                dismissButton = {
-                                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
-                                }
-                            )
-                        }
+                            onClick = { showClearLocationConfirm = true },
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                        ) { Text("Clear locations", style = MaterialTheme.typography.labelMedium) }
+                        OutlinedButton(
+                            onClick = { showClearMessageConfirm = true },
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                        ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
                     }
+                }
+            }
+
+            // Card 3: Backup & keys
+            item {
+                SettingsCard {
+                    backupResult?.let { msg ->
+                        Text(
+                            msg,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg.startsWith("Could not"))
+                                MaterialTheme.colorScheme.error
+                            else MaterialTheme.colorScheme.primary
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    }
+                    ListItem(
+                        headlineContent = { Text("Export backup") },
+                        supportingContent = { Text("Save key, contacts, geofences & settings") },
+                        leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
+                        modifier = Modifier.clickable { showExportDialog = true; vm.clearBackupResult() },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Import backup") },
+                        supportingContent = { Text("Restore from a previously exported file") },
+                        leadingContent = { Icon(Icons.Default.Download, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
+                        modifier = Modifier.clickable { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("View private key") },
+                        supportingContent = { Text("Show your 64-character hex identity key") },
+                        leadingContent = { Icon(Icons.Default.VpnKey, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
+                        modifier = Modifier.clickable { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 
@@ -529,6 +489,28 @@ fun SettingsScreen(
         )
     }
 
+    pendingRestore?.let { restore ->
+        var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
+        AlertDialog(
+            onDismissRequest = { vm.dismissPendingRestore() },
+            title = { Text("Select data to restore") },
+            text = {
+                Column {
+                    BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem("Contacts", BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem("Geofences", BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem("Settings", BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
+                }
+            },
+            confirmButton = {
+                Button(onClick = { vm.applyRestore(importSections) }, enabled = importSections.isNotEmpty()) { Text("Restore") }
+            },
+            dismissButton = {
+                TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+            }
+        )
+    }
+
     if (showSupervisedSetup) {
         SupervisedModeSetupDialog(
             peers = peers,
@@ -668,6 +650,38 @@ private val RETENTION_OPTIONS = listOf(
     30 to "30 days",
     90 to "90 days"
 )
+
+@Composable
+private fun RetentionRow(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    title: String,
+    subtitle: String,
+    selected: Int,
+    onSelected: (Int) -> Unit,
+    purgeLabel: String? = null,
+    onPurge: (() -> Unit)? = null
+) {
+    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        Spacer(Modifier.height(10.dp))
+        RetentionSelector(selected = selected, onSelected = onSelected)
+        if (onPurge != null && purgeLabel != null) {
+            Spacer(Modifier.height(8.dp))
+            OutlinedButton(onClick = onPurge, modifier = Modifier.fillMaxWidth()) {
+                Text(purgeLabel)
+            }
+        }
+    }
+}
 
 @Composable
 private fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
