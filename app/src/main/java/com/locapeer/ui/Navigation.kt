@@ -81,6 +81,12 @@ fun LocaPeerNavHost(
             listOf(Screen.Map) + ordered else ordered
     }
 
+    val startDestination = remember(settings?.startRoute, bottomNavItems) {
+        val preferred = settings?.startRoute ?: Screen.Map.route
+        // Fall back to Map if the preferred start tab is no longer active
+        if (bottomNavItems.any { it.route == preferred }) preferred else Screen.Map.route
+    }
+
     val showBottomBar = bottomNavItems.any { currentRoute == it.route }
 
     // Deep-link from notification
@@ -113,7 +119,7 @@ fun LocaPeerNavHost(
                             selected = currentRoute == screen.route,
                             onClick = {
                                 navController.navigate(screen.route) {
-                                    popUpTo(Screen.Map.route) { saveState = true }
+                                    popUpTo(startDestination) { saveState = true }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
@@ -128,7 +134,7 @@ fun LocaPeerNavHost(
     ) { padding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Map.route,
+            startDestination = startDestination,
             modifier = Modifier.padding(padding),
             enterTransition = { fadeEnter },
             exitTransition = { fadeExit },

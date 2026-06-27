@@ -67,6 +67,7 @@ fun SettingsScreen(
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var intervalsExpanded by remember { mutableStateOf(false) }
+    var showStartPageDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -363,8 +364,19 @@ fun SettingsScreen(
                         subtitle = "Choose and reorder bottom tabs",
                         onClick = onNavigateToCustomizeNav
                     )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    NavRow(
+                        icon = Icons.Default.Home,
+                        label = "Start Page",
+                        subtitle = settings.navTabIds
+                            .firstOrNull { it == settings.startRoute }
+                            ?.replaceFirstChar { it.uppercaseChar() }
+                            ?: "Map",
+                        onClick = { showStartPageDialog = true }
+                    )
                 }
             }
+
 
             item { SectionLabel("About") }
 
@@ -502,6 +514,51 @@ fun SettingsScreen(
                 TextButton(onClick = { vm.disableSupervisedMode(); showDisableSupervisedConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Disable") }
             },
             dismissButton = { TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") } }
+        )
+    }
+
+    if (showStartPageDialog) {
+        val tabLabels = mapOf(
+            "map" to "Map",
+            "messages" to "Messages",
+            "contacts" to "Contacts",
+            "invite" to "QR",
+            "settings" to "Settings"
+        )
+        AlertDialog(
+            onDismissRequest = { showStartPageDialog = false },
+            title = { Text("Start Page") },
+            text = {
+                Column {
+                    settings.navTabIds.forEach { route ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    vm.setStartRoute(route)
+                                    showStartPageDialog = false
+                                }
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = settings.startRoute == route,
+                                onClick = {
+                                    vm.setStartRoute(route)
+                                    showStartPageDialog = false
+                                }
+                            )
+                            Text(
+                                tabLabels[route] ?: route.replaceFirstChar { it.uppercaseChar() },
+                                modifier = Modifier.padding(start = 8.dp)
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showStartPageDialog = false }) { Text("Cancel") }
+            }
         )
     }
 }
