@@ -26,6 +26,7 @@ class LocaPeerApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        org.osmdroid.config.Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
         try {
             heartbeatReceiver.start()
             

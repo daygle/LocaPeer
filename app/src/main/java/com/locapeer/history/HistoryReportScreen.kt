@@ -21,7 +21,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
-import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -260,13 +259,14 @@ private fun HistoryMapTab(
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+            mapViewRef?.onPause()
             mapViewRef?.onDetach()
+            mapViewRef = null
         }
     }
 
     AndroidView(
         factory = { ctx ->
-            Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
             MapView(ctx).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
                 setBuiltInZoomControls(false)

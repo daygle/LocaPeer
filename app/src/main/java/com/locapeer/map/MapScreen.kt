@@ -33,7 +33,6 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.ui.theme.*
-import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.util.MapTileIndex
@@ -354,7 +353,9 @@ private fun OsmdroidMapView(
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+            mapViewRef?.onPause()
             mapViewRef?.onDetach()
+            mapViewRef = null
         }
     }
 
@@ -376,7 +377,6 @@ private fun OsmdroidMapView(
 
     AndroidView(
         factory = { ctx ->
-            Configuration.getInstance().userAgentValue = "LocaPeer/1.0"
             MapView(ctx).apply {
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
