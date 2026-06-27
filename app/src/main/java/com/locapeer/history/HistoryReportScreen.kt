@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
@@ -95,7 +95,7 @@ fun HistoryReportScreen(
                         label = { Text("Person") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
                         modifier = Modifier
-                            .menuAnchor()
+                            .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
                             .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
@@ -148,7 +148,7 @@ fun HistoryReportScreen(
                 Spacer(Modifier.height(8.dp))
             }
 
-            TabRow(selectedTabIndex = selectedTab) {
+            PrimaryTabRow(selectedTabIndex = selectedTab) {
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },

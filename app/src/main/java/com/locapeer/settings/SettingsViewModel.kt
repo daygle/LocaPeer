@@ -218,7 +218,7 @@ class SettingsViewModel @Inject constructor(
                             startRoute = s.startRoute
                         ) else null
                 )
-                val json = Json { encodeDefaults = true }.encodeToString(backup)
+                val json = jsonExport.encodeToString(backup)
                 context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
                 val parts = sections.map { it.name.lowercase().replaceFirstChar { c -> c.uppercaseChar() } }
                 _backupResult.value = "Backup saved: ${parts.joinToString(", ")}"
@@ -236,7 +236,7 @@ class SettingsViewModel @Inject constructor(
                 val json = context.contentResolver.openInputStream(uri)?.use {
                     it.readBytes().toString(Charsets.UTF_8)
                 } ?: run { _backupResult.value = "Could not read file"; return@launch }
-                val backup = Json { ignoreUnknownKeys = true }.decodeFromString<LocaPeerBackup>(json)
+                val backup = jsonImport.decodeFromString<LocaPeerBackup>(json)
                 val available = buildSet {
                     if (backup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
                     if (!backup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
@@ -413,6 +413,11 @@ class SettingsViewModel @Inject constructor(
 
     fun setLocalMessageRetentionDays(days: Int) {
         viewModelScope.launch { prefs.setLocalMessageRetentionDays(days) }
+    }
+
+    companion object {
+        private val jsonExport = Json { encodeDefaults = true }
+        private val jsonImport = Json { ignoreUnknownKeys = true }
     }
 
 }

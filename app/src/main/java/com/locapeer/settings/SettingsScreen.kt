@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -21,7 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.BackupSection
 import com.locapeer.supervised.SupervisedModeManager
@@ -263,7 +264,7 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
-                        icon = Icons.Default.Message,
+                        icon = Icons.AutoMirrored.Filled.Message,
                         title = "Messages on this device",
                         subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
