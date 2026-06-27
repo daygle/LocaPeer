@@ -179,7 +179,7 @@ class MessagingViewModel @Inject constructor(
         val sender = peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
 
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -201,7 +201,7 @@ class MessagingViewModel @Inject constructor(
     private suspend fun processReadReceipt(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return  // only handle receipts from known peers
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -228,7 +228,7 @@ class MessagingViewModel @Inject constructor(
     private suspend fun processDeliveryAck(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }

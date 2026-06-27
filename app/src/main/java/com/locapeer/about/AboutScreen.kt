@@ -108,7 +108,7 @@ fun AboutScreen(
                     )
                     if (relayStatus.isEmpty()) {
                         Text(
-                            "Connecting…",
+                            "Disconnected",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -131,7 +131,7 @@ fun AboutScreen(
                                         fontWeight = FontWeight.Medium
                                     )
                                     Text(
-                                        if (connected) "Connected" else "Disconnected — retrying…",
+                                        if (connected) "Connected" else "Disconnected",
                                         style = MaterialTheme.typography.labelSmall,
                                         color = if (connected) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
                                     )

@@ -21,7 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun InviteScreen(
     onNavigateBack: () -> Unit,
-    vm: InviteViewModel = hiltViewModel()
+    vm: InviteViewModel = hiltViewModel(),
 ) {
     val state by vm.state.collectAsState()
     val context = LocalContext.current

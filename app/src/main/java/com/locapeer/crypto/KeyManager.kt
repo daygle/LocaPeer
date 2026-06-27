@@ -74,7 +74,7 @@ class KeyManager @Inject constructor(
         }
     }
 
-    suspend fun ensureKeypair(): Pair<String, String> {
+    suspend fun ensureKeypair(): Pair<String, String> = withContext(Dispatchers.IO) {
         val privHex = try {
             encryptedPrefs.getString(KEY_PRIVATE, null)
         } catch (e: Exception) {
@@ -83,9 +83,9 @@ class KeyManager @Inject constructor(
         }
         val pubHex = context.keyStore.data.first()[KEY_PUBLIC_METADATA]
         if (privHex != null && pubHex != null) {
-            return Pair(privHex, pubHex)
+            return@withContext Pair(privHex, pubHex)
         }
-        return generateAndSaveKeypair()
+        generateAndSaveKeypair()
     }
 
     private suspend fun generateAndSaveKeypair(): Pair<String, String> = withContext(Dispatchers.IO) {
@@ -116,11 +116,11 @@ class KeyManager @Inject constructor(
         }
     }
 
-    fun getPrivateKeyHexBlocking(): String? {
-        return try {
+    suspend fun getPrivateKeyHex(): String? = withContext(Dispatchers.IO) {
+        try {
             encryptedPrefs.getString(KEY_PRIVATE, null)
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to read private key blocking", e)
+            Log.e(TAG, "Failed to read private key", e)
             null
         }
     }

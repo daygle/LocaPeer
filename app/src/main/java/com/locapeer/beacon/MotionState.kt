@@ -6,7 +6,8 @@ enum class MotionState(val displayName: String) {
     RUNNING("Running"),
     DRIVING("Driving"),
     CYCLING("Cycling"),
-    UNKNOWN("Unknown");
+    UNKNOWN("Unknown"),
+;
 
     companion object {
         fun fromDetectedActivity(type: Int): MotionState {

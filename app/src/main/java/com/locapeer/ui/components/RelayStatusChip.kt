@@ -30,10 +30,10 @@ fun RelayStatusChip(
         else -> MaterialTheme.colorScheme.error
     }
     val dotLabel = when {
-        relayStatus.isEmpty() -> "Connecting…"
-        allConnected -> "Relays connected"
-        anyConnected -> "Partial connection"
-        else -> "Offline"
+        relayStatus.isEmpty() -> "Disconnected"
+        allConnected -> "Connected"
+        anyConnected -> "Partially Connected"
+        else -> "Disconnected"
     }
 
     Surface(

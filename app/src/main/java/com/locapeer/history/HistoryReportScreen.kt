@@ -313,7 +313,7 @@ private fun HistoryMapTab(
                 val centerLat = heartbeats.map { it.lat }.average()
                 val centerLng = heartbeats.map { it.lng }.average()
                 mapView.controller.setCenter(GeoPoint(centerLat, centerLng))
-                mapView.controller.setZoom(14.0)
+                mapView.controller.setZoom(16.0)
             }
 
             mapView.invalidate()

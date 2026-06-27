@@ -113,7 +113,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processMsgPurgeRequest(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -126,7 +126,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processPurgeRequest(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -144,7 +144,7 @@ class HeartbeatReceiver @Inject constructor(
             return
         }
         try {
-            val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+            val privHex = keyManager.getPrivateKeyHex() ?: return
             val privBytes = crypto.hexToBytes(privHex)
             val plaintext = crypto.nip04Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
@@ -192,7 +192,7 @@ class HeartbeatReceiver @Inject constructor(
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -214,7 +214,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -227,7 +227,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processDeliveryAckInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -238,7 +238,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processUnlockRequest(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
@@ -255,7 +255,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processUnlockResponse(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHexBlocking() ?: return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }

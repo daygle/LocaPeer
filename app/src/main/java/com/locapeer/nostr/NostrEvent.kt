@@ -1,6 +1,7 @@
 package com.locapeer.nostr
 
 import com.locapeer.crypto.CryptoUtils
+import java.nio.charset.StandardCharsets
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -46,7 +47,7 @@ data class NostrEvent(
         ): NostrEvent {
             val createdAt = System.currentTimeMillis() / 1000L
             val serialized = serializeForId(pubKeyHex, createdAt, kind, tags, content)
-            val idBytes = crypto.sha256(serialized.toByteArray(Charsets.UTF_8))
+            val idBytes = crypto.sha256(serialized.toByteArray(StandardCharsets.UTF_8))
             val idHex = crypto.bytesToHex(idBytes)
             val privBytes = crypto.hexToBytes(privKeyHex)
             val sigBytes = crypto.schnorrSign(idBytes, privBytes)
@@ -87,7 +88,7 @@ data class NostrEvent(
 
         fun verify(event: NostrEvent, crypto: CryptoUtils): Boolean {
             val serialized = serializeForId(event.pubkey, event.createdAt, event.kind, event.tags, event.content)
-            val idBytes = crypto.sha256(serialized.toByteArray(Charsets.UTF_8))
+            val idBytes = crypto.sha256(serialized.toByteArray(StandardCharsets.UTF_8))
             val idHex = crypto.bytesToHex(idBytes)
             if (idHex != event.id) return false
             val sigBytes = crypto.hexToBytes(event.sig)

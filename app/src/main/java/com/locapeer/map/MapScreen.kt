@@ -380,7 +380,7 @@ private fun OsmdroidMapView(
             MapView(ctx).apply {
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
-                controller.setZoom(14.0)
+                controller.setZoom(16.0)
                 isVerticalMapRepetitionEnabled = false
             }.also { mapViewRef = it }
         },

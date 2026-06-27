@@ -42,13 +42,13 @@ class NostrRelayClient @Inject constructor(
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    init {
-        scope.launch {
-            prefs.settings.collect { settings ->
-                setRelays(settings.customRelays)
-            }
-        }
-    }
+    private val client = OkHttpClient.Builder()
+        .pingInterval(30, TimeUnit.SECONDS)
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(0, TimeUnit.SECONDS)
+        .build()
+
+    private val relays = ConcurrentHashMap<String, RelayConnection>()
 
     private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
     val events: SharedFlow<NostrEvent> = _events
@@ -67,13 +67,13 @@ class NostrRelayClient @Inject constructor(
     private val recentEventLock = Any()
     private val recentEventIds = LinkedHashSet<String>(512)
 
-    private val client = OkHttpClient.Builder()
-        .pingInterval(30, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(0, TimeUnit.SECONDS)
-        .build()
-
-    private val relays = ConcurrentHashMap<String, RelayConnection>()
+    init {
+        scope.launch {
+            prefs.settings.collect { settings ->
+                setRelays(settings.customRelays)
+            }
+        }
+    }
 
     fun setRelays(urls: List<String>) {
         val currentUrls = relays.keys
@@ -220,7 +220,10 @@ class NostrRelayClient @Inject constructor(
                         "EVENT" -> {
                             val event = json.decodeFromString<NostrEvent>(arr[2].toString())
                             val isNew = synchronized(recentEventLock) {
-                                if (recentEventIds.size >= 500) recentEventIds.remove(recentEventIds.first())
+                                if (recentEventIds.size >= 500) {
+                                    val first = recentEventIds.iterator().next()
+                                    recentEventIds.remove(first)
+                                }
                                 recentEventIds.add(event.id)
                             }
                             if (isNew) scope.launch { _events.emit(event) }

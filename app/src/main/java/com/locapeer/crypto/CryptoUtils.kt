@@ -1,12 +1,13 @@
 package com.locapeer.crypto
 
-import android.util.Base64
+import java.util.Base64
 import fr.acinq.secp256k1.Secp256k1
 import org.bouncycastle.crypto.engines.AESEngine
 import org.bouncycastle.crypto.modes.CBCBlockCipher
 import org.bouncycastle.crypto.paddings.PaddedBufferedBlockCipher
 import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.crypto.params.ParametersWithIV
+import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.SecureRandom
 import javax.inject.Inject
@@ -53,10 +54,10 @@ class CryptoUtils @Inject constructor() {
         val sharedSecret = sharedPoint.copyOf(32)
 
         val iv = ByteArray(16).also { random.nextBytes(it) }
-        val ciphertext = aesCbcEncrypt(sharedSecret, iv, plaintext.toByteArray(Charsets.UTF_8))
+        val ciphertext = aesCbcEncrypt(sharedSecret, iv, plaintext.toByteArray(StandardCharsets.UTF_8))
 
-        val b64Cipher = Base64.encodeToString(ciphertext, Base64.NO_WRAP)
-        val b64Iv = Base64.encodeToString(iv, Base64.NO_WRAP)
+        val b64Cipher = Base64.getEncoder().encodeToString(ciphertext)
+        val b64Iv = Base64.getEncoder().encodeToString(iv)
         return "$b64Cipher?iv=$b64Iv"
     }
 
@@ -64,15 +65,15 @@ class CryptoUtils @Inject constructor() {
     fun nip04Decrypt(recipientPrivKey: ByteArray, senderXOnlyHex: String, payload: String): String {
         val parts = payload.split("?iv=")
         require(parts.size == 2) { "Invalid NIP-04 payload" }
-        val ciphertext = Base64.decode(parts[0], Base64.NO_WRAP)
-        val iv = Base64.decode(parts[1], Base64.NO_WRAP)
+        val ciphertext = Base64.getDecoder().decode(parts[0])
+        val iv = Base64.getDecoder().decode(parts[1])
 
         val senderCompressed = xOnlyHexToCompressed(senderXOnlyHex)
         val sharedPoint = Secp256k1.ecdh(recipientPrivKey, senderCompressed)
         val sharedSecret = sharedPoint.copyOf(32)
 
         val plain = aesCbcDecrypt(sharedSecret, iv, ciphertext)
-        return String(plain, Charsets.UTF_8)
+        return String(plain, StandardCharsets.UTF_8)
     }
 
     fun sha256(data: ByteArray): ByteArray =
