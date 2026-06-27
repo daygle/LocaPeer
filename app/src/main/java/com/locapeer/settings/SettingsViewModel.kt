@@ -43,7 +43,8 @@ class SettingsViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val qrGenerator: QrCodeGenerator,
     private val relayClient: NostrRelayClient,
-    private val supervisedModeManager: SupervisedModeManager
+    private val supervisedModeManager: SupervisedModeManager,
+    private val peerManager: com.locapeer.peer.PeerManager
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -99,7 +100,7 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun removePeer(deviceId: String) {
-        viewModelScope.launch { peerDao.deletePeerById(deviceId) }
+        viewModelScope.launch { peerManager.removePeer(deviceId) }
     }
 
     fun updatePeerName(deviceId: String, newName: String) {

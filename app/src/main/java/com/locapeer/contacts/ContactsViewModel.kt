@@ -8,6 +8,7 @@ import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
+import com.locapeer.peer.PeerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -29,7 +30,8 @@ data class ContactItem(
 class ContactsViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
-    private val sharingConfigDao: PeerSharingConfigDao
+    private val sharingConfigDao: PeerSharingConfigDao,
+    private val peerManager: PeerManager
 ) : ViewModel() {
 
     val contacts = combine(
@@ -45,11 +47,7 @@ class ContactsViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun removePeer(deviceId: String) {
-        viewModelScope.launch {
-            peerDao.deletePeerById(deviceId)
-            heartbeatDao.deleteAllForDevice(deviceId)
-            sharingConfigDao.deleteForPeer(deviceId)
-        }
+        viewModelScope.launch { peerManager.removePeer(deviceId) }
     }
 
     fun renamePeer(peer: PeerEntity, newName: String) {
