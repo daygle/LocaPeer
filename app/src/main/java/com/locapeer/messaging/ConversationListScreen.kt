@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -137,46 +138,48 @@ private fun ConversationRow(
     onClick: () -> Unit
 ) {
     val hasUnread = unreadCount > 0
+    val isBlocked = !summary.messagingEnabled
     ListItem(
         leadingContent = {
-            AvatarCircle(
-                name = summary.peer.displayName,
-                hasUnread = hasUnread
-            )
+            AvatarCircle(name = summary.peer.displayName, hasUnread = hasUnread)
         },
         headlineContent = {
-            Text(
-                summary.peer.displayName,
-                fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.Normal
-            )
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    summary.peer.displayName,
+                    fontWeight = if (hasUnread) FontWeight.Bold else FontWeight.Normal
+                )
+                if (isBlocked) {
+                    Icon(
+                        Icons.Default.Block,
+                        contentDescription = "Messages blocked",
+                        modifier = Modifier.size(14.dp),
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
         },
         supportingContent = {
             Text(
-                summary.lastMessage.content,
+                if (isBlocked) "Messages blocked" else summary.lastMessage.content,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = if (hasUnread) MaterialTheme.colorScheme.onSurface
-                else MaterialTheme.colorScheme.onSurfaceVariant,
-                fontWeight = if (hasUnread) FontWeight.Medium else FontWeight.Normal
+                color = if (isBlocked) MaterialTheme.colorScheme.error
+                        else if (hasUnread) MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurfaceVariant,
+                fontWeight = if (hasUnread) FontWeight.Medium else FontWeight.Normal,
+                style = if (isBlocked) MaterialTheme.typography.bodySmall else MaterialTheme.typography.bodyMedium
             )
         },
         trailingContent = {
-            Column(
-                horizontalAlignment = Alignment.End,
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
+            Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(
                     formatTime(summary.lastMessage.timestamp),
                     style = MaterialTheme.typography.labelSmall,
-                    color = if (hasUnread) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (hasUnread) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 if (hasUnread) {
-                    Badge(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ) {
-                        Text("$unreadCount")
-                    }
+                    Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("$unreadCount") }
                 }
             }
         },

@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MyLocation
@@ -37,6 +38,7 @@ fun ChatScreen(
     val messages by vm.getMessages(peerId).collectAsState(initial = emptyList())
     val typingPeers by vm.typingPeers.collectAsState()
     val isPeerTyping = typingPeers.containsKey(peerId)
+    val messagingEnabled by vm.getMessagingEnabled(peerId).collectAsState(initial = true)
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
 
@@ -69,6 +71,33 @@ fun ChatScreen(
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                     )
+                }
+                AnimatedVisibility(
+                    visible = !messagingEnabled,
+                    enter = fadeIn() + expandVertically(),
+                    exit = fadeOut() + shrinkVertically()
+                ) {
+                    Surface(color = MaterialTheme.colorScheme.errorContainer) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.Block,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onErrorContainer,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                "You have blocked messages from $peerName. Go to Contacts to unblock.",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onErrorContainer
+                            )
+                        }
+                    }
                 }
                 ChatInputBar(
                     value = inputText,
