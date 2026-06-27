@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.LocaPeer" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.LocaPeer" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Optional: customize your theme here -->
+        <item name="colorPrimary">@android:color/holo_blue_dark</item>
+    </style>
 </resources>

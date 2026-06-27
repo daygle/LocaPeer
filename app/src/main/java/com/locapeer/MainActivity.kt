@@ -43,11 +43,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         handleIntent(intent)
         enableEdgeToEdge()
+        
         setContent {
             LocaPeerTheme {
-                val onboardingComplete by remember {
+                val onboardingComplete by remember(prefs) {
                     prefs.settings.map { it.onboardingComplete }
                 }.collectAsState(initial = null)
+                
                 val navTarget by pendingNavTarget
                 val pendingApproval by approvalManager.pending.collectAsState()
 
@@ -85,7 +87,7 @@ class MainActivity : ComponentActivity() {
                         true -> {
                             val messagingVm: MessagingViewModel = hiltViewModel()
                             LaunchedEffect(Unit) {
-                                val pubHex = keyManager.getPublicKeyHexBlocking()
+                                val pubHex = keyManager.getPublicKeyHex()
                                     ?: return@LaunchedEffect
                                 messagingVm.startListening(pubHex)
                             }

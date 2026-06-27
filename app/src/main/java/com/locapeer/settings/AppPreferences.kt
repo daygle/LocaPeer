@@ -1,18 +1,23 @@
 package com.locapeer.settings
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 private val Context.settingsStore by preferencesDataStore(name = "locapeer_settings")
+private const val TAG = "AppPreferences"
 
 data class AppSettings(
     val displayName: String = "",
@@ -59,31 +64,40 @@ class AppPreferences @Inject constructor(
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
 
-    val settings: Flow<AppSettings> = context.settingsStore.data.map { prefs ->
-        val relayString = prefs[KEY_CUSTOM_RELAYS] ?: "wss://relay.daygle.net,wss://relay.damus.io"
-        val relays = relayString.split(",").filter { it.isNotBlank() }
+    val settings: Flow<AppSettings> = context.settingsStore.data
+        .catch { exception ->
+            if (exception is IOException) {
+                Log.e(TAG, "Error reading settings DataStore", exception)
+                emit(emptyPreferences())
+            } else {
+                throw exception
+            }
+        }
+        .map { prefs ->
+            val relayString = prefs[KEY_CUSTOM_RELAYS] ?: "wss://relay.daygle.net,wss://relay.damus.io"
+            val relays = relayString.split(",").filter { it.isNotBlank() }
 
-        AppSettings(
-            displayName = prefs[KEY_DISPLAY_NAME] ?: "",
-            heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
-            stationaryIntervalMinutes = prefs[KEY_STATIONARY_INTERVAL] ?: 15,
-            walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
-            runningIntervalMinutes = prefs[KEY_RUNNING_INTERVAL] ?: 2,
-            cyclingIntervalMinutes = prefs[KEY_CYCLING_INTERVAL] ?: 3,
-            drivingIntervalMinutes = prefs[KEY_DRIVING_INTERVAL] ?: 2,
-            lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
-            onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
-            globalScheduleEnabled = prefs[KEY_GLOBAL_SCHEDULE_ENABLED] ?: false,
-            globalScheduleDays = prefs[KEY_GLOBAL_SCHEDULE_DAYS] ?: 0b1111111,
-            globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
-            globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
-            retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
-            messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
-            supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
-            supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
-            customRelays = relays
-        )
-    }
+            AppSettings(
+                displayName = prefs[KEY_DISPLAY_NAME] ?: "",
+                heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
+                stationaryIntervalMinutes = prefs[KEY_STATIONARY_INTERVAL] ?: 15,
+                walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
+                runningIntervalMinutes = prefs[KEY_RUNNING_INTERVAL] ?: 2,
+                cyclingIntervalMinutes = prefs[KEY_CYCLING_INTERVAL] ?: 3,
+                drivingIntervalMinutes = prefs[KEY_DRIVING_INTERVAL] ?: 2,
+                lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
+                onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
+                globalScheduleEnabled = prefs[KEY_GLOBAL_SCHEDULE_ENABLED] ?: false,
+                globalScheduleDays = prefs[KEY_GLOBAL_SCHEDULE_DAYS] ?: 0b1111111,
+                globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
+                globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
+                retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
+                messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
+                supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
+                supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
+                customRelays = relays
+            )
+        }
 
     suspend fun updateDisplayName(name: String) {
         context.settingsStore.edit { it[KEY_DISPLAY_NAME] = name }
