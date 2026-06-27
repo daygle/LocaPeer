@@ -21,6 +21,4 @@ interface GeofenceDao {
     @Query("UPDATE geofences SET active = :active WHERE id = :id")
     suspend fun setActive(id: String, active: Boolean)
 
-    @Query("SELECT * FROM geofences WHERE id = :id LIMIT 1")
-    suspend fun getById(id: String): GeofenceEntity?
 }
