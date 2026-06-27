@@ -95,7 +95,7 @@ fun HistoryReportScreen(
                         label = { Text("Person") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
                         modifier = Modifier
-                            .menuAnchor(MenuAnchorType.PrimaryNotEditable, true)
+                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
                             .fillMaxWidth()
                     )
                     ExposedDropdownMenu(
@@ -267,6 +267,7 @@ private fun HistoryMapTab(
 
     AndroidView(
         factory = { ctx ->
+            @Suppress("DEPRECATION")
             MapView(ctx).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
                 setBuiltInZoomControls(false)
