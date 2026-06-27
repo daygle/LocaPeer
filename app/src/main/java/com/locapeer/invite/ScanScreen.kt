@@ -5,8 +5,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -80,6 +83,25 @@ fun ScanScreen(
                     }
                 }
                 else -> {
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    var barcodeViewRef: CompoundBarcodeView? = null
+
+                    DisposableEffect(lifecycleOwner) {
+                        val observer = LifecycleEventObserver { _, event ->
+                            when (event) {
+                                Lifecycle.Event.ON_RESUME -> barcodeViewRef?.resume()
+                                Lifecycle.Event.ON_PAUSE -> barcodeViewRef?.pause()
+                                else -> Unit
+                            }
+                        }
+                        lifecycleOwner.lifecycle.addObserver(observer)
+                        onDispose {
+                            lifecycleOwner.lifecycle.removeObserver(observer)
+                            barcodeViewRef?.pause()
+                            barcodeViewRef = null
+                        }
+                    }
+
                     AndroidView(
                         factory = { ctx ->
                             CompoundBarcodeView(ctx).apply {
@@ -88,6 +110,7 @@ fun ScanScreen(
                                         vm.processQrCode(result.text)
                                     }
                                 })
+                                barcodeViewRef = this
                                 resume()
                             }
                         },

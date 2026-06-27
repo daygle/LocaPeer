@@ -12,6 +12,9 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
@@ -218,6 +221,25 @@ private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
                 }
             }
             else -> {
+                val lifecycleOwner = LocalLifecycleOwner.current
+                var barcodeViewRef: CompoundBarcodeView? = null
+
+                DisposableEffect(lifecycleOwner) {
+                    val observer = LifecycleEventObserver { _, event ->
+                        when (event) {
+                            Lifecycle.Event.ON_RESUME -> barcodeViewRef?.resume()
+                            Lifecycle.Event.ON_PAUSE -> barcodeViewRef?.pause()
+                            else -> Unit
+                        }
+                    }
+                    lifecycleOwner.lifecycle.addObserver(observer)
+                    onDispose {
+                        lifecycleOwner.lifecycle.removeObserver(observer)
+                        barcodeViewRef?.pause()
+                        barcodeViewRef = null
+                    }
+                }
+
                 AndroidView(
                     factory = { ctx ->
                         CompoundBarcodeView(ctx).apply {
@@ -226,6 +248,7 @@ private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
                                     vm.processQrCode(result.text)
                                 }
                             })
+                            barcodeViewRef = this
                             resume()
                         }
                     },
