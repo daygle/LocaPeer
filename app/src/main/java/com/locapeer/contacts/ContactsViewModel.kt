@@ -3,6 +3,7 @@ package com.locapeer.contacts
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.data.dao.HeartbeatDao
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.HeartbeatEntity
@@ -31,6 +32,7 @@ class ContactsViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val sharingConfigDao: PeerSharingConfigDao,
+    private val messageDao: MessageDao,
     private val peerManager: PeerManager
 ) : ViewModel() {
 
@@ -75,6 +77,7 @@ class ContactsViewModel @Inject constructor(
             } else {
                 sharingConfigDao.upsert(PeerSharingConfig(peerDeviceId = deviceId, messagingEnabled = enabled))
             }
+            if (enabled) messageDao.unblockMessagesFromPeer(deviceId)
         }
     }
 

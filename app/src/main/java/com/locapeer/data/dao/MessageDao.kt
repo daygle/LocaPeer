@@ -12,17 +12,17 @@ interface MessageDao {
     @Update
     suspend fun update(message: MessageEntity)
 
-    @Query("SELECT * FROM messages WHERE peerId = :peerId ORDER BY timestamp ASC")
+    @Query("SELECT * FROM messages WHERE peerId = :peerId AND isBlocked = 0 ORDER BY timestamp ASC")
     fun getMessagesForPeer(peerId: String): Flow<List<MessageEntity>>
 
     @Query(
-        "SELECT * FROM messages m1 WHERE timestamp = (" +
-            "SELECT MAX(timestamp) FROM messages m2 WHERE m2.peerId = m1.peerId" +
+        "SELECT * FROM messages m1 WHERE isBlocked = 0 AND timestamp = (" +
+            "SELECT MAX(timestamp) FROM messages m2 WHERE m2.peerId = m1.peerId AND m2.isBlocked = 0" +
             ") GROUP BY peerId ORDER BY timestamp DESC"
     )
     fun getConversationSummaries(): Flow<List<MessageEntity>>
 
-    @Query("SELECT COUNT(*) FROM messages WHERE peerId = :peerId AND isRead = 0 AND isMine = 0")
+    @Query("SELECT COUNT(*) FROM messages WHERE peerId = :peerId AND isRead = 0 AND isMine = 0 AND isBlocked = 0")
     fun getUnreadCount(peerId: String): Flow<Int>
 
     @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0")
@@ -40,8 +40,11 @@ interface MessageDao {
     @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
     suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
 
-    @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0")
+    @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0 AND isBlocked = 0")
     suspend fun getUnreadFromPeer(peerId: String): List<MessageEntity>
+
+    @Query("UPDATE messages SET isBlocked = 0 WHERE peerId = :peerId AND isBlocked = 1")
+    suspend fun unblockMessagesFromPeer(peerId: String)
 
     @Query("DELETE FROM messages WHERE senderPublicKeyHex = :senderPubKeyHex AND timestamp < :before")
     suspend fun deleteOlderThanFromSender(senderPubKeyHex: String, before: Long)

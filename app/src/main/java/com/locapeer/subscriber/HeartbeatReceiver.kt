@@ -221,7 +221,7 @@ class HeartbeatReceiver @Inject constructor(
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
         val cfg = sharingConfigDao.getForPeer(event.pubkey)
-        if (cfg?.messagingEnabled == false) return  // user has blocked messages from this contact
+        val isBlocked = cfg?.messagingEnabled == false
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -234,12 +234,15 @@ class HeartbeatReceiver @Inject constructor(
             content = plaintext,
             timestamp = event.createdAt * 1000L,
             isMine = false,
-            deliveryState = DeliveryState.DELIVERED.name,
-            nostrEventId = event.id
+            deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
+            nostrEventId = event.id,
+            isBlocked = isBlocked
         )
         messageDao.insert(msg)
-        sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
-        sendDeliveryAck(event.pubkey, event.id)
+        if (!isBlocked) {
+            sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
+            sendDeliveryAck(event.pubkey, event.id)
+        }
     }
 
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
