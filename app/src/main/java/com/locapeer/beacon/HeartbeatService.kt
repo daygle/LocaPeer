@@ -268,7 +268,7 @@ class HeartbeatService : LifecycleService() {
                     )
                     val payloadJson = Json.encodeToString(payload)
 
-                    val encrypted = crypto.nip04Encrypt(
+                    val encrypted = crypto.nip44Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
                         recipientXOnlyHex = subscriber.publicKeyHex,
                         plaintext = payloadJson

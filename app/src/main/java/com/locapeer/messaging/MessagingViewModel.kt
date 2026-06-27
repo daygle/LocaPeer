@@ -108,7 +108,7 @@ class MessagingViewModel @Inject constructor(
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val privBytes = crypto.hexToBytes(privHex)
 
-            val encrypted = crypto.nip04Encrypt(privBytes, peer.publicKeyHex, content)
+            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, content)
             val tags = listOf(listOf("p", peer.publicKeyHex))
             val event = NostrEvent.build(
                 privKeyHex = privHex,
@@ -181,7 +181,7 @@ class MessagingViewModel @Inject constructor(
 
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
 
         val msg = MessageEntity(
@@ -203,7 +203,7 @@ class MessagingViewModel @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
 
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
@@ -230,7 +230,7 @@ class MessagingViewModel @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
@@ -242,7 +242,7 @@ class MessagingViewModel @Inject constructor(
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
         val payload = json.encodeToString(ReadReceiptPayload(eventIds))
-        val encrypted = crypto.nip04Encrypt(privBytes, peer.publicKeyHex, payload)
+        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
         val event = NostrEvent.build(
             privKeyHex = privHex,
             pubKeyHex = pubHex,
@@ -258,7 +258,7 @@ class MessagingViewModel @Inject constructor(
         val peer = peerDao.getPeer(peerPubkey) ?: return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
-        val encrypted = crypto.nip04Encrypt(privBytes, peer.publicKeyHex, "{\"typing\":true}")
+        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, "{\"typing\":true}")
         val event = NostrEvent.build(
             privKeyHex = privHex,
             pubKeyHex = pubHex,

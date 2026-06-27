@@ -115,7 +115,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
@@ -128,7 +128,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
@@ -146,7 +146,7 @@ class HeartbeatReceiver @Inject constructor(
         try {
             val privHex = keyManager.getPrivateKeyHex() ?: return
             val privBytes = crypto.hexToBytes(privHex)
-            val plaintext = crypto.nip04Decrypt(privBytes, event.pubkey, event.content)
+            val plaintext = crypto.nip44Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
             val prevHeartbeat = heartbeatDao.getLatestHeartbeat(payload.deviceId)
             val entity = HeartbeatEntity(
@@ -194,7 +194,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val msg = MessageEntity(
             id = event.id,
@@ -216,7 +216,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
         receipt.eventIds.forEach { eventId ->
@@ -229,7 +229,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
@@ -240,7 +240,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<UnlockRequestPayload>(plaintext) } catch (e: Exception) { return }
         supervisionApprovalManager.setPending(
@@ -257,7 +257,7 @@ class HeartbeatReceiver @Inject constructor(
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
-            crypto.nip04Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<UnlockResponsePayload>(plaintext) } catch (e: Exception) { return }
         supervisedModeManager.handleResponse(payload.requestId, payload.approved)
@@ -267,7 +267,7 @@ class HeartbeatReceiver @Inject constructor(
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
         val payload = json.encodeToString(DeliveryAckPayload(deliveredEventId))
-        val encrypted = crypto.nip04Encrypt(privBytes, toPubkey, payload)
+        val encrypted = crypto.nip44Encrypt(privBytes, toPubkey, payload)
         val event = NostrEvent.build(
             privKeyHex = privHex,
             pubKeyHex = pubHex,
