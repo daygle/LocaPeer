@@ -1,7 +1,10 @@
 package com.locapeer.map
 
+import android.annotation.SuppressLint
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.location.LocationServices
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
@@ -10,11 +13,15 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import org.osmdroid.util.GeoPoint
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -36,10 +43,23 @@ class MapViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val geofenceDao: GeofenceDao,
-    private val sosManager: SosManager
+    private val sosManager: SosManager,
+    @ApplicationContext private val appContext: Context
 ) : ViewModel() {
 
+    private val _userLocation = MutableStateFlow<GeoPoint?>(null)
+    val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
+
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
+
+    @SuppressLint("MissingPermission")
+    fun fetchUserLocation() {
+        LocationServices.getFusedLocationProviderClient(appContext)
+            .lastLocation
+            .addOnSuccessListener { loc ->
+                loc?.let { _userLocation.value = GeoPoint(it.latitude, it.longitude) }
+            }
+    }
 
     fun toggleSos() {
         if (sosManager.isSosActive.value) sosManager.deactivateSos() else sosManager.activateSos()

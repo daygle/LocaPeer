@@ -75,4 +75,35 @@ object MarkerIconFactory {
 
         return BitmapDrawable(context.resources, bitmap)
     }
+
+    /** Creates a blue pulsing-style dot for the user's own location. */
+    fun createMyLocationIcon(context: Context): BitmapDrawable {
+        val dp = context.resources.displayMetrics.density
+        val sizePx = (dp * 48).toInt()
+        val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val cx = sizePx / 2f
+
+        // Outer pulse ring
+        val pulsePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0x334285F4.toInt()
+        }
+        canvas.drawCircle(cx, cx, cx - 2, pulsePaint)
+
+        // Inner blue dot
+        val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0xFF4285F4.toInt()
+        }
+        canvas.drawCircle(cx, cx, dp * 8, dotPaint)
+
+        // White border on dot
+        val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0xFFFFFFFF.toInt()
+            style = Paint.Style.STROKE
+            strokeWidth = dp * 2f
+        }
+        canvas.drawCircle(cx, cx, dp * 8, borderPaint)
+
+        return BitmapDrawable(context.resources, bitmap)
+    }
 }
