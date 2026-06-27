@@ -303,17 +303,6 @@ fun DayPicker(days: Int, onDaysChanged: (Int) -> Unit) {
     }
 }
 
-@Composable
-private fun TimeButton(label: String, time: String, modifier: Modifier, onClick: () -> Unit) {
-    OutlinedButton(onClick = onClick, modifier = modifier) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(label, style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(time, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-        }
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TimePickerDialog(

@@ -234,7 +234,7 @@ private fun FriendListPanel(
                 }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(pins) { pin ->
+                    items(pins, key = { it.peer.deviceId }) { pin ->
                         FriendItem(
                             pin = pin,
                             onClick = { onSelectFriend(pin) },

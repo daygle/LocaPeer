@@ -120,7 +120,7 @@ private fun MyQrTab(vm: InviteViewModel, context: android.content.Context) {
                 }
             }
             state.qrBitmap != null -> {
-                val bitmap = state.qrBitmap!!
+                val bitmap = state.qrBitmap
                 Card(
                     modifier = Modifier.size(280.dp),
                     elevation = CardDefaults.cardElevation(4.dp)

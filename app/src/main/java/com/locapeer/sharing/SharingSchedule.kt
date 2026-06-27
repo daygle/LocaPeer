@@ -21,7 +21,7 @@ object SharingSchedule {
             Calendar.FRIDAY    -> 4
             Calendar.SATURDAY  -> 5
             Calendar.SUNDAY    -> 6
-            else               -> return true
+            else               -> 0
         }
         if (days and (1 shl dayIndex) == 0) return false
         val current = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)

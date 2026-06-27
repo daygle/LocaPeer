@@ -133,7 +133,7 @@ class SettingsViewModel @Inject constructor(
                 InviteData(
                     publicKeyHex = pubHex,
                     displayName = s.displayName,
-                    relayUrl = "wss://relay.daygle.net",
+                    relayUrl = s.customRelays.firstOrNull() ?: "wss://relay.daygle.net",
                     deviceId = pubHex
                 )
             )
