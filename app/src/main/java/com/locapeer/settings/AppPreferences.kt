@@ -8,10 +8,14 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.locapeer.sharing.ScheduleRule
+import com.locapeer.sharing.toScheduleRules
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,11 +35,8 @@ data class AppSettings(
     val drivingIntervalMinutes: Int = 2,
     val lowBatteryIntervalMinutes: Int = 30,
     val onboardingComplete: Boolean = false,
-    val globalScheduleEnabled: Boolean = false,
-    /** Bitmask: bit 0 = Monday … bit 6 = Sunday. Default = all days (127). */
-    val globalScheduleDays: Int = 0b1111111,
-    val globalScheduleStartMinute: Int = 0,
-    val globalScheduleEndMinute: Int = 1439,
+    /** Empty list = always on. Active when any rule matches the current time. */
+    val globalScheduleRules: List<ScheduleRule> = emptyList(),
     val retentionDays: Int = 30,
     val messageRetentionDays: Int = 0,
     /** How long to keep received location data on this device (0 = forever). */
@@ -64,10 +65,7 @@ class AppPreferences @Inject constructor(
     private val KEY_DRIVING_INTERVAL = intPreferencesKey("driving_interval")
     private val KEY_LOW_BATTERY_INTERVAL = intPreferencesKey("low_battery_interval")
     private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
-    private val KEY_GLOBAL_SCHEDULE_ENABLED = booleanPreferencesKey("global_schedule_enabled")
-    private val KEY_GLOBAL_SCHEDULE_DAYS = intPreferencesKey("global_schedule_days")
-    private val KEY_GLOBAL_SCHEDULE_START = intPreferencesKey("global_schedule_start")
-    private val KEY_GLOBAL_SCHEDULE_END = intPreferencesKey("global_schedule_end")
+    private val KEY_GLOBAL_SCHEDULE_RULES = stringPreferencesKey("global_schedule_rules")
     private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
     private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
@@ -97,10 +95,7 @@ class AppPreferences @Inject constructor(
                 drivingIntervalMinutes = prefs[KEY_DRIVING_INTERVAL] ?: 2,
                 lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
                 onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
-                globalScheduleEnabled = prefs[KEY_GLOBAL_SCHEDULE_ENABLED] ?: false,
-                globalScheduleDays = prefs[KEY_GLOBAL_SCHEDULE_DAYS] ?: 0b1111111,
-                globalScheduleStartMinute = prefs[KEY_GLOBAL_SCHEDULE_START] ?: 0,
-                globalScheduleEndMinute = prefs[KEY_GLOBAL_SCHEDULE_END] ?: 1439,
+                globalScheduleRules = prefs[KEY_GLOBAL_SCHEDULE_RULES]?.toScheduleRules() ?: emptyList(),
                 retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
                 messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
@@ -166,20 +161,8 @@ class AppPreferences @Inject constructor(
         }
     }
 
-    suspend fun setGlobalScheduleEnabled(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_GLOBAL_SCHEDULE_ENABLED] = enabled }
-    }
-
-    suspend fun updateGlobalSchedule(
-        days: Int? = null,
-        startMinute: Int? = null,
-        endMinute: Int? = null
-    ) {
-        context.settingsStore.edit { prefs ->
-            days?.let { prefs[KEY_GLOBAL_SCHEDULE_DAYS] = it }
-            startMinute?.let { prefs[KEY_GLOBAL_SCHEDULE_START] = it }
-            endMinute?.let { prefs[KEY_GLOBAL_SCHEDULE_END] = it }
-        }
+    suspend fun setGlobalScheduleRules(rules: List<ScheduleRule>) {
+        context.settingsStore.edit { it[KEY_GLOBAL_SCHEDULE_RULES] = Json.encodeToString(rules) }
     }
 
     suspend fun updateIntervals(

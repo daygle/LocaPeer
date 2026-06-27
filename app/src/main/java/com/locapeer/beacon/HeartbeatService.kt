@@ -33,6 +33,7 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
+import com.locapeer.data.entity.scheduleRules
 import com.locapeer.sharing.SharingSchedule
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
@@ -219,16 +220,9 @@ class HeartbeatService : LifecycleService() {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                if (!isSos && settings.globalScheduleEnabled) {
-                    val active = SharingSchedule.isActive(
-                        settings.globalScheduleDays,
-                        settings.globalScheduleStartMinute,
-                        settings.globalScheduleEndMinute
-                    )
-                    if (!active) {
-                        Log.d(TAG, "Heartbeat suppressed: outside global schedule")
-                        return@launch
-                    }
+                if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules)) {
+                    Log.d(TAG, "Heartbeat suppressed: outside global schedule")
+                    return@launch
                 }
 
                 val subscribers = peerDao.getSubscribers().first()
@@ -239,12 +233,7 @@ class HeartbeatService : LifecycleService() {
 
                     if (isSos && cfg?.isSosContact == false) return@forEach
                     if (!isSos && cfg?.sharingEnabled == false) return@forEach
-                    if (!isSos && cfg?.scheduleEnabled == true) {
-                        val active = SharingSchedule.isActive(
-                            cfg.scheduleDays, cfg.scheduleStartMinute, cfg.scheduleEndMinute
-                        )
-                        if (!active) return@forEach
-                    }
+                    if (!isSos && !SharingSchedule.isActive(cfg?.scheduleRules() ?: emptyList())) return@forEach
 
                     val (sendLat, sendLng) = if (
                         cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
