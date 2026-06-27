@@ -366,7 +366,6 @@ private fun OsmdroidMapView(
             lifecycleOwner.lifecycle.removeObserver(observer)
             mapViewRef?.apply {
                 onPause()
-                tileProvider.detach()
                 onDetach()
             }
             mapViewRef = null
