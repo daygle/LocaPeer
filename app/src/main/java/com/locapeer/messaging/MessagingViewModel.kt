@@ -75,6 +75,11 @@ class MessagingViewModel @Inject constructor(
     fun getMessagingEnabled(peerId: String): Flow<Boolean> =
         sharingConfigDao.observeForPeer(peerId).map { it?.messagingEnabled ?: true }
 
+    val unreadCounts: StateFlow<Map<String, Int>> =
+        messageDao.getUnreadCountsPerPeer()
+            .map { rows -> rows.associate { it.peerId to it.cnt } }
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
+
     private val _typingPeers = MutableStateFlow<Map<String, Long>>(emptyMap())
     /** Maps peerDeviceId (= pubkey) to the millisecond timestamp of the last typing event. */
     val typingPeers: StateFlow<Map<String, Long>> = _typingPeers
