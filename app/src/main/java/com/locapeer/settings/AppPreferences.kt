@@ -38,6 +38,10 @@ data class AppSettings(
     val globalScheduleEndMinute: Int = 1439,
     val retentionDays: Int = 30,
     val messageRetentionDays: Int = 0,
+    /** How long to keep received location data on this device (0 = forever). */
+    val localLocationRetentionDays: Int = 90,
+    /** How long to keep messages on this device (0 = forever). */
+    val localMessageRetentionDays: Int = 90,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
     val customRelays: List<String> = HARDCODED_RELAYS,
@@ -70,6 +74,8 @@ class AppPreferences @Inject constructor(
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
+    private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
+    private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -104,7 +110,9 @@ class AppPreferences @Inject constructor(
                     ?.filter { it.isNotBlank() }
                     ?.takeIf { it.size >= 2 }
                     ?: listOf("map", "messages", "contacts", "invite", "settings"),
-                startRoute = prefs[KEY_START_ROUTE] ?: "map"
+                startRoute = prefs[KEY_START_ROUTE] ?: "map",
+                localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
+                localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90
             )
         }
 
@@ -141,6 +149,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setStartRoute(route: String) {
         context.settingsStore.edit { it[KEY_START_ROUTE] = route }
+    }
+
+    suspend fun setLocalLocationRetentionDays(days: Int) {
+        context.settingsStore.edit { it[KEY_LOCAL_LOCATION_RETENTION] = days }
+    }
+
+    suspend fun setLocalMessageRetentionDays(days: Int) {
+        context.settingsStore.edit { it[KEY_LOCAL_MESSAGE_RETENTION] = days }
     }
 
     suspend fun clearSupervisedMode() {

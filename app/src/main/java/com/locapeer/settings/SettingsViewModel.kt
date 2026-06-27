@@ -3,7 +3,9 @@ package com.locapeer.settings
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.beacon.HeartbeatService
@@ -11,9 +13,12 @@ import com.locapeer.beacon.ACTION_STOP
 import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.entity.GeofenceEntity
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrEvent
@@ -28,9 +33,65 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
+
+private const val TAG = "SettingsViewModel"
+
+enum class BackupSection { PRIVATE_KEY, CONTACTS, GEOFENCES, SETTINGS }
+
+@Serializable
+data class LocaPeerBackup(
+    val version: Int = 2,
+    val privateKeyHex: String? = null,
+    val contacts: List<ContactBackup>? = null,
+    val geofences: List<GeofenceBackup>? = null,
+    val settings: SettingsBackup? = null
+)
+
+@Serializable
+data class ContactBackup(
+    val deviceId: String,
+    val displayName: String,
+    val publicKeyHex: String,
+    val relayUrl: String,
+    val role: String
+)
+
+@Serializable
+data class GeofenceBackup(
+    val id: String,
+    val name: String,
+    val lat: Double,
+    val lng: Double,
+    val radiusMetres: Int,
+    val trackedDeviceId: String,
+    val triggerOn: String,
+    val active: Boolean
+)
+
+@Serializable
+data class SettingsBackup(
+    val displayName: String,
+    val stationaryIntervalMinutes: Int,
+    val walkingIntervalMinutes: Int,
+    val runningIntervalMinutes: Int,
+    val cyclingIntervalMinutes: Int,
+    val drivingIntervalMinutes: Int,
+    val lowBatteryIntervalMinutes: Int,
+    val retentionDays: Int,
+    val messageRetentionDays: Int,
+    val navTabIds: List<String>,
+    val startRoute: String
+)
+
+/** Parsed backup file ready for selective restore. */
+data class PendingRestore(
+    val backup: LocaPeerBackup,
+    val availableSections: Set<BackupSection>
+)
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -39,6 +100,7 @@ class SettingsViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val peerDao: PeerDao,
+    private val geofenceDao: GeofenceDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val qrGenerator: QrCodeGenerator,
@@ -124,6 +186,121 @@ class SettingsViewModel @Inject constructor(
             onKey(key)
         }
     }
+
+    fun exportBackup(uri: Uri, sections: Set<BackupSection>) {
+        viewModelScope.launch {
+            try {
+                val s = settings.value
+                val backup = LocaPeerBackup(
+                    privateKeyHex = if (BackupSection.PRIVATE_KEY in sections)
+                        keyManager.exportPrivateKeyHex() else null,
+                    contacts = if (BackupSection.CONTACTS in sections)
+                        peerDao.getAllPeers().first().map { p ->
+                            ContactBackup(p.deviceId, p.displayName, p.publicKeyHex, p.relayUrl, p.role)
+                        } else null,
+                    geofences = if (BackupSection.GEOFENCES in sections)
+                        geofenceDao.getAllGeofences().first().map { g ->
+                            GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres, g.trackedDeviceId, g.triggerOn, g.active)
+                        } else null,
+                    settings = if (BackupSection.SETTINGS in sections)
+                        SettingsBackup(
+                            displayName = s.displayName,
+                            stationaryIntervalMinutes = s.stationaryIntervalMinutes,
+                            walkingIntervalMinutes = s.walkingIntervalMinutes,
+                            runningIntervalMinutes = s.runningIntervalMinutes,
+                            cyclingIntervalMinutes = s.cyclingIntervalMinutes,
+                            drivingIntervalMinutes = s.drivingIntervalMinutes,
+                            lowBatteryIntervalMinutes = s.lowBatteryIntervalMinutes,
+                            retentionDays = s.retentionDays,
+                            messageRetentionDays = s.messageRetentionDays,
+                            navTabIds = s.navTabIds,
+                            startRoute = s.startRoute
+                        ) else null
+                )
+                val json = Json { encodeDefaults = true }.encodeToString(backup)
+                context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
+                val parts = sections.map { it.name.lowercase().replaceFirstChar { c -> c.uppercaseChar() } }
+                _backupResult.value = "Backup saved: ${parts.joinToString(", ")}"
+            } catch (e: Exception) {
+                Log.e(TAG, "Backup export failed", e)
+                _backupResult.value = "Backup failed: ${e.message}"
+            }
+        }
+    }
+
+    /** Parse backup file and return a PendingRestore so the UI can show a section picker. */
+    fun loadBackupForRestore(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                val json = context.contentResolver.openInputStream(uri)?.use {
+                    it.readBytes().toString(Charsets.UTF_8)
+                } ?: run { _backupResult.value = "Could not read file"; return@launch }
+                val backup = Json { ignoreUnknownKeys = true }.decodeFromString<LocaPeerBackup>(json)
+                val available = buildSet {
+                    if (backup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
+                    if (!backup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
+                    if (!backup.geofences.isNullOrEmpty()) add(BackupSection.GEOFENCES)
+                    if (backup.settings != null) add(BackupSection.SETTINGS)
+                }
+                _pendingRestore.value = PendingRestore(backup, available)
+            } catch (e: Exception) {
+                Log.e(TAG, "Backup load failed", e)
+                _backupResult.value = "Could not read backup: ${e.message}"
+            }
+        }
+    }
+
+    fun applyRestore(sections: Set<BackupSection>) {
+        val pending = _pendingRestore.value ?: return
+        viewModelScope.launch {
+            try {
+                val backup = pending.backup
+                val restored = mutableListOf<String>()
+                if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
+                    keyManager.importPrivateKey(backup.privateKeyHex)
+                    restored += "identity"
+                }
+                if (BackupSection.CONTACTS in sections && backup.contacts != null) {
+                    backup.contacts.forEach { c ->
+                        peerDao.upsertPeer(PeerEntity(c.deviceId, c.displayName, c.publicKeyHex, c.relayUrl, c.role))
+                    }
+                    restored += "${backup.contacts.size} contacts"
+                }
+                if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
+                    backup.geofences.forEach { g ->
+                        geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres, g.trackedDeviceId, g.triggerOn, g.active))
+                    }
+                    restored += "${backup.geofences.size} geofences"
+                }
+                if (BackupSection.SETTINGS in sections && backup.settings != null) {
+                    val s = backup.settings
+                    prefs.updateDisplayName(s.displayName)
+                    prefs.updateIntervals(s.stationaryIntervalMinutes, s.walkingIntervalMinutes,
+                        s.runningIntervalMinutes, s.cyclingIntervalMinutes, s.drivingIntervalMinutes, s.lowBatteryIntervalMinutes)
+                    prefs.setRetentionDays(s.retentionDays)
+                    prefs.setMessageRetentionDays(s.messageRetentionDays)
+                    prefs.setNavTabIds(s.navTabIds)
+                    prefs.setStartRoute(s.startRoute)
+                    restored += "settings"
+                }
+                _backupResult.value = "Restored: ${restored.joinToString(", ")}"
+            } catch (e: Exception) {
+                Log.e(TAG, "Restore failed", e)
+                _backupResult.value = "Restore failed: ${e.message}"
+            } finally {
+                _pendingRestore.value = null
+            }
+        }
+    }
+
+    fun dismissPendingRestore() { _pendingRestore.value = null }
+    fun clearBackupResult() { _backupResult.value = null }
+
+    private val _backupResult = MutableStateFlow<String?>(null)
+    val backupResult: StateFlow<String?> = _backupResult
+
+    private val _pendingRestore = MutableStateFlow<PendingRestore?>(null)
+    val pendingRestore: StateFlow<PendingRestore?> = _pendingRestore
 
     fun setRetentionDays(days: Int) {
         viewModelScope.launch { prefs.setRetentionDays(days) }
@@ -231,6 +408,14 @@ class SettingsViewModel @Inject constructor(
 
     fun setStartRoute(route: String) {
         viewModelScope.launch { prefs.setStartRoute(route) }
+    }
+
+    fun setLocalLocationRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setLocalLocationRetentionDays(days) }
+    }
+
+    fun setLocalMessageRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setLocalMessageRetentionDays(days) }
     }
 
 }

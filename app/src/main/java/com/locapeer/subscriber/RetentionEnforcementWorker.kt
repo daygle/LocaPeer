@@ -42,18 +42,29 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        if (settings.retentionDays == 0 && settings.messageRetentionDays == 0) return Result.success()
+        val hasWork = settings.retentionDays > 0 || settings.messageRetentionDays > 0
+            || settings.localLocationRetentionDays > 0 || settings.localMessageRetentionDays > 0
+        if (!hasWork) return Result.success()
 
         return try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
 
+            if (settings.localLocationRetentionDays > 0) {
+                val cutoffMs = System.currentTimeMillis() - settings.localLocationRetentionDays * 24 * 3600 * 1000L
+                heartbeatDao.deleteOlderThan(cutoffMs)
+                Log.d(TAG, "Purged local location data older than ${settings.localLocationRetentionDays} days")
+            }
+
+            if (settings.localMessageRetentionDays > 0) {
+                val cutoffMs = System.currentTimeMillis() - settings.localMessageRetentionDays * 24 * 3600 * 1000L
+                messageDao.deleteOlderThan(cutoffMs)
+                Log.d(TAG, "Purged local messages older than ${settings.localMessageRetentionDays} days")
+            }
+
             if (settings.retentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
-                
-                // 1. Purge local data (others' heartbeats that we are tracking)
-                heartbeatDao.deleteOlderThan(cutoffMs)
-                
-                // 2. Notify others to purge our data
+
+                // Notify others to purge our location data from their devices
                 val locationPayload = Json.encodeToString(
                     PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
                 )
@@ -80,11 +91,8 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
             if (settings.messageRetentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
-                
-                // 1. Purge local messages
-                messageDao.deleteOlderThan(cutoffMs)
-                
-                // 2. Notify others to purge our messages
+
+                // Notify others to purge our messages from their devices
                 val msgPayload = Json.encodeToString(
                     PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
                 )

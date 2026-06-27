@@ -1,5 +1,6 @@
 package com.locapeer.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.BackupSection
 import com.locapeer.sharing.DayPicker
 import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.TimePickerDialog
@@ -68,6 +70,11 @@ fun SettingsScreen(
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
+    var showExportDialog by remember { mutableStateOf(false) }
+    var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
+    val exportLauncher = rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
+    ) { uri -> uri?.let { vm.exportBackup(it, exportSections) } }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -297,7 +304,27 @@ fun SettingsScreen(
                     HorizontalDivider()
                     // Local data
                     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("Local data", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        // Local retention: location
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Icon(Icons.Default.LocationOff, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Location history on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                                Text("How long to keep contacts' location data locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                        RetentionSelector(selected = settings.localLocationRetentionDays, onSelected = { vm.setLocalLocationRetentionDays(it) })
+                        HorizontalDivider()
+                        // Local retention: messages
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Messages on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                                Text("How long to keep received messages locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                        RetentionSelector(selected = settings.localMessageRetentionDays, onSelected = { vm.setLocalMessageRetentionDays(it) })
+                        HorizontalDivider()
+                        Text("Manual clear", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedButton(
                                 onClick = { showClearLocationConfirm = true },
@@ -310,13 +337,76 @@ fun SettingsScreen(
                                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                             ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
                         }
+                        val backupResult by vm.backupResult.collectAsState()
+                        val pendingRestore by vm.pendingRestore.collectAsState()
+
+                        val importLauncher = rememberLauncherForActivityResult(
+                            androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+                        ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
+
+                        backupResult?.let { msg ->
+                            Text(
+                                msg,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg.startsWith("Could not"))
+                                    MaterialTheme.colorScheme.error
+                                else MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(Modifier.height(4.dp))
+                        }
+
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            OutlinedButton(
+                                onClick = { showExportDialog = true; vm.clearBackupResult() },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Upload, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Export backup", style = MaterialTheme.typography.labelMedium)
+                            }
+                            OutlinedButton(
+                                onClick = { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Import backup", style = MaterialTheme.typography.labelMedium)
+                            }
+                        }
                         OutlinedButton(
                             onClick = { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("Export / Backup Keypair")
+                            Text("View private key")
+                        }
+
+                        // Import section picker — shown after loading a backup file
+                        if (pendingRestore != null) {
+                            val restore = pendingRestore!!
+                            var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
+                            AlertDialog(
+                                onDismissRequest = { vm.dismissPendingRestore() },
+                                title = { Text("Select data to restore") },
+                                text = {
+                                    Column {
+                                        BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Contacts", BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Geofences", BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Settings", BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
+                                    }
+                                },
+                                confirmButton = {
+                                    Button(
+                                        onClick = { vm.applyRestore(importSections) },
+                                        enabled = importSections.isNotEmpty()
+                                    ) { Text("Restore") }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+                                }
+                            )
                         }
                     }
                 }
@@ -514,6 +604,33 @@ fun SettingsScreen(
                 TextButton(onClick = { vm.disableSupervisedMode(); showDisableSupervisedConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Disable") }
             },
             dismissButton = { TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") } }
+        )
+    }
+
+    if (showExportDialog) {
+        AlertDialog(
+            onDismissRequest = { showExportDialog = false },
+            title = { Text("Select data to export") },
+            text = {
+                Column {
+                    BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Contacts", BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Geofences", BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Settings", BackupSection.SETTINGS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showExportDialog = false
+                        exportLauncher.launch("locapeer-backup.json")
+                    },
+                    enabled = exportSections.isNotEmpty()
+                ) { Text("Choose file location") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExportDialog = false }) { Text("Cancel") }
+            }
         )
     }
 
@@ -742,4 +859,47 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
+}
+
+@Composable
+private fun BackupSectionItem(
+    label: String,
+    section: BackupSection,
+    selected: Set<BackupSection>,
+    available: Set<BackupSection>,
+    onToggle: (Set<BackupSection>) -> Unit
+) {
+    val enabled = section in available
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = enabled) {
+                onToggle(if (section in selected) selected - section else selected + section)
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = section in selected,
+            onCheckedChange = { checked ->
+                onToggle(if (checked) selected + section else selected - section)
+            },
+            enabled = enabled
+        )
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (enabled) MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+            )
+            if (!enabled) {
+                Text(
+                    "Not in this backup",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
 }
