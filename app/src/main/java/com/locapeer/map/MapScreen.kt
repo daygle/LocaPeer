@@ -162,7 +162,8 @@ fun MapScreen(
                 onMessageFriend = { peerId, peerName ->
                     showFriendList = false
                     onNavigateToChat(peerId, peerName)
-                }
+                },
+                formatTimestamp = vm::formatTimestamp
             )
         }
 
@@ -196,7 +197,8 @@ private fun FriendListPanel(
     pins: List<PinData>,
     onDismiss: () -> Unit,
     onSelectFriend: (PinData) -> Unit,
-    onMessageFriend: (peerId: String, peerName: String) -> Unit
+    onMessageFriend: (peerId: String, peerName: String) -> Unit,
+    formatTimestamp: (Long) -> String = { "" }
 ) {
     Surface(
         modifier = Modifier
@@ -236,7 +238,8 @@ private fun FriendListPanel(
                         FriendItem(
                             pin = pin,
                             onClick = { onSelectFriend(pin) },
-                            onMessage = { onMessageFriend(pin.peer.deviceId, pin.peer.displayName) }
+                            onMessage = { onMessageFriend(pin.peer.deviceId, pin.peer.displayName) },
+                            formatTimestamp = formatTimestamp
                         )
                     }
                 }
@@ -249,7 +252,8 @@ private fun FriendListPanel(
 private fun FriendItem(
     pin: PinData,
     onClick: () -> Unit,
-    onMessage: () -> Unit
+    onMessage: () -> Unit,
+    formatTimestamp: (Long) -> String = { "" }
 ) {
     val hb = pin.heartbeat
     Row(
@@ -289,11 +293,18 @@ private fun FriendItem(
                     hb?.isSos == true -> "⚠ SOS ACTIVE"
                     pin.isOverdue -> "Away"
                     hb != null -> hb.motionState.lowercase().replaceFirstChar { it.uppercase() }
-                    else -> "No data"
+                    else -> "No location yet"
                 },
                 style = MaterialTheme.typography.labelSmall,
                 color = if (hb?.isSos == true) SosRed else MaterialTheme.colorScheme.onSurfaceVariant
             )
+            if (hb != null) {
+                Text(
+                    "Last seen: ${formatTimestamp(hb.timestamp)}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
 
         IconButton(onClick = onMessage) {

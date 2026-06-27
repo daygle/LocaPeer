@@ -138,7 +138,16 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
-        val broadcaster = peerDao.getPeer(event.pubkey) ?: return
+        // Look up by deviceId first; fall back to publicKeyHex for peers stored before the
+        // key-length fix (old peers had 128-char deviceId but correct 64-char publicKeyHex).
+        val broadcaster = peerDao.getPeer(event.pubkey)
+            ?: peerDao.getPeerByPublicKey(event.pubkey)
+                ?.also { peer ->
+                    // Migrate: re-save the peer with the canonical 64-char deviceId
+                    peerDao.upsertPeer(peer.copy(deviceId = event.pubkey))
+                    peerDao.deletePeerById(peer.deviceId)
+                }
+            ?: return
         if (!NostrEvent.verify(event, crypto)) {
             Log.w(TAG, "Signature verification failed for event ${event.id}")
             return
@@ -148,9 +157,12 @@ class HeartbeatReceiver @Inject constructor(
             val privBytes = crypto.hexToBytes(privHex)
             val plaintext = crypto.nip44Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
-            val prevHeartbeat = heartbeatDao.getLatestHeartbeat(payload.deviceId)
+            // Use event.pubkey (canonical 64-char Nostr pubkey) so the heartbeat always
+            // matches the peer row regardless of what the payload.deviceId contains.
+            val canonicalDeviceId = event.pubkey
+            val prevHeartbeat = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
             val entity = HeartbeatEntity(
-                deviceId = payload.deviceId,
+                deviceId = canonicalDeviceId,
                 displayName = payload.displayName,
                 timestamp = Instant.parse(payload.timestamp).toEpochMilli(),
                 lat = payload.lat,
@@ -163,7 +175,7 @@ class HeartbeatReceiver @Inject constructor(
             heartbeatDao.insert(entity)
             if (payload.retentionDays > 0) {
                 val cutoff = System.currentTimeMillis() - payload.retentionDays * 24 * 3600 * 1000L
-                heartbeatDao.deleteOlderThanForDevice(payload.deviceId, cutoff)
+                heartbeatDao.deleteOlderThanForDevice(canonicalDeviceId, cutoff)
             }
             if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
             geofenceEngine.evaluate(entity, prevHeartbeat)
