@@ -23,6 +23,13 @@ import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
+import com.locapeer.invite.ACTION_TRACK_ACCEPT
+import com.locapeer.invite.ACTION_TRACK_DECLINE
+import com.locapeer.invite.EXTRA_SENDER_NAME
+import com.locapeer.invite.EXTRA_SENDER_PUBKEY
+import com.locapeer.invite.EXTRA_SENDER_RELAY
+import com.locapeer.invite.TrackRequestPayload
+import com.locapeer.invite.TrackRequestReceiver
 import com.locapeer.supervised.SupervisedModeManager
 import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.supervised.UnlockRequestPayload
@@ -87,7 +94,9 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.READ_RECEIPT,
                         NostrEventKind.DELIVERY_ACK,
                         NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
-                        NostrEventKind.SUPERVISED_UNLOCK_RESPONSE
+                        NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
+                        NostrEventKind.TRACK_REQUEST,
+                        NostrEventKind.TRACK_ACCEPT
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -105,6 +114,8 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
                     NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> processUnlockRequest(event)
                     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> processUnlockResponse(event)
+                    NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
+                    NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
                 }
             }
             .launchIn(scope)
@@ -306,6 +317,66 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(peerId.hashCode() + 10000, notification)
+    }
+
+    private suspend fun processTrackRequest(event: NostrEvent) {
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
+
+        // Don't prompt if we're already tracking this person
+        if (peerDao.getPeer(event.pubkey) != null) return
+
+        val notifId = event.pubkey.hashCode() + 20000
+        val acceptIntent = Intent(context, TrackRequestReceiver::class.java).apply {
+            action = ACTION_TRACK_ACCEPT
+            putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
+            putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
+            putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+        }
+        val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
+            action = ACTION_TRACK_DECLINE
+            putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
+            putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
+            putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+        }
+        val acceptPi = PendingIntent.getBroadcast(context, notifId, acceptIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle("Track request from ${payload.senderDisplayName}")
+            .setContentText("${payload.senderDisplayName} wants to share their location with you.")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+            .addAction(0, "Accept", acceptPi)
+            .addAction(0, "Decline", declinePi)
+            .build()
+        notificationManager.notify(notifId, notification)
+    }
+
+    private suspend fun processTrackAccept(event: NostrEvent) {
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
+
+        // Add the acceptor as a BROADCASTER so we can see their location
+        val peer = com.locapeer.data.entity.PeerEntity(
+            deviceId = payload.acceptorPublicKeyHex,
+            displayName = payload.acceptorDisplayName,
+            publicKeyHex = payload.acceptorPublicKeyHex,
+            relayUrl = payload.acceptorRelayUrl,
+            role = "BROADCASTER"
+        )
+        peerDao.upsertPeer(peer)
+        relayClient.connect(payload.acceptorRelayUrl)
+        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request")
     }
 
     private fun createAlertChannel() {

@@ -16,3 +16,21 @@ data class InviteResponse(
     val subscriberDisplayName: String,
     val subscriberDeviceId: String
 )
+
+/** Sent by the scanner to the scannee asking to track them back. */
+@Serializable
+data class TrackRequestPayload(
+    val senderPublicKeyHex: String,
+    val senderDisplayName: String,
+    val senderDeviceId: String,
+    val senderRelayUrl: String
+)
+
+/** Sent back when the recipient accepts a track request. */
+@Serializable
+data class TrackAcceptPayload(
+    val acceptorPublicKeyHex: String,
+    val acceptorDisplayName: String,
+    val acceptorDeviceId: String,
+    val acceptorRelayUrl: String
+)
