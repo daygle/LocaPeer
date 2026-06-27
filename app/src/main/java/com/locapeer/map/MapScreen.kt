@@ -217,7 +217,7 @@ private fun FriendListPanel(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Family & Friends",
+                    "Contacts",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
