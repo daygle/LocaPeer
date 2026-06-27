@@ -157,7 +157,7 @@ fun SettingsScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    // Update intervals — expandable
+                    // Update intervals - expandable
                     ListItem(
                         headlineContent = { Text("Update intervals") },
                         supportingContent = { Text("Stationary: ${settings.stationaryIntervalMinutes}min · Walking: ${settings.walkingIntervalMinutes}min") },

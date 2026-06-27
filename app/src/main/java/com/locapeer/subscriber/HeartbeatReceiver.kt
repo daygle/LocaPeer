@@ -340,7 +340,7 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processPeerRemoved(event: NostrEvent) {
-        // Only act if we know this peer — ignore unknown senders
+        // Only act if we know this peer - ignore unknown senders
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return

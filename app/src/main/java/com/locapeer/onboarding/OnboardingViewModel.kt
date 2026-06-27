@@ -61,7 +61,7 @@ class OnboardingViewModel @Inject constructor(
     fun importPrivateKey(privHex: String) {
         val cleaned = privHex.trim().lowercase()
         if (!cleaned.matches(Regex("^[0-9a-f]{64}$"))) {
-            _state.value = _state.value.copy(importError = "Invalid key — must be 64 hex characters.")
+            _state.value = _state.value.copy(importError = "Invalid key - must be 64 hex characters.")
             return
         }
         _state.value = _state.value.copy(isLoading = true, importError = null)
