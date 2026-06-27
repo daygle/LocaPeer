@@ -172,6 +172,7 @@ class NostrRelayClient @Inject constructor(
         @Volatile var webSocket: WebSocket? = null
         @Volatile var isConnected = false
         private var reconnectJob: Job? = null
+        private var reconnectAttempts = 0
 
         fun connect() {
             if (isConnected || (webSocket != null)) return
@@ -182,6 +183,7 @@ class NostrRelayClient @Inject constructor(
 
         fun disconnect() {
             reconnectJob?.cancel()
+            reconnectAttempts = 0
             webSocket?.close(1000, "Disconnecting")
             webSocket = null
             isConnected = false
@@ -198,7 +200,13 @@ class NostrRelayClient @Inject constructor(
         fun scheduleReconnect() {
             if (reconnectJob?.isActive == true) return
             reconnectJob = scope.launch {
-                delay(5000)
+                // Exponential backoff: 5s, 10s, 20s, 40s … capped at 5 minutes, +±20% jitter
+                val baseDelay = minOf(5_000L * (1L shl reconnectAttempts.coerceAtMost(6)), 300_000L)
+                val jitter = (baseDelay * 0.2 * (Math.random() * 2 - 1)).toLong()
+                val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
+                Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${reconnectAttempts + 1})")
+                delay(waitMs)
+                reconnectAttempts++
                 webSocket = null
                 isConnected = false
                 connect()
@@ -209,6 +217,7 @@ class NostrRelayClient @Inject constructor(
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected to $url")
                 isConnected = true
+                reconnectAttempts = 0
                 _relayStatus.update { it + (url to true) }
                 flushPendingTo(this@RelayConnection)
             }
