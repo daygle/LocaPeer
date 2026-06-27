@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.BackupSection
 import com.locapeer.sharing.DayPicker
 import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.TimePickerDialog
@@ -69,6 +70,11 @@ fun SettingsScreen(
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
+    var showExportDialog by remember { mutableStateOf(false) }
+    var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
+    val exportLauncher = rememberLauncherForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
+    ) { uri -> uri?.let { vm.exportBackup(it, exportSections) } }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("Settings") }) }
@@ -312,18 +318,17 @@ fun SettingsScreen(
                             ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
                         }
                         val backupResult by vm.backupResult.collectAsState()
-                        val exportLauncher = rememberLauncherForActivityResult(
-                            androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
-                        ) { uri -> uri?.let { vm.exportBackup(it) } }
+                        val pendingRestore by vm.pendingRestore.collectAsState()
+
                         val importLauncher = rememberLauncherForActivityResult(
                             androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
-                        ) { uri -> uri?.let { vm.importBackup(it) } }
+                        ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
 
                         backupResult?.let { msg ->
                             Text(
                                 msg,
                                 style = MaterialTheme.typography.labelSmall,
-                                color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg == "Could not read file")
+                                color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg.startsWith("Could not"))
                                     MaterialTheme.colorScheme.error
                                 else MaterialTheme.colorScheme.primary
                             )
@@ -332,7 +337,7 @@ fun SettingsScreen(
 
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedButton(
-                                onClick = { exportLauncher.launch("locapeer-backup.json"); vm.clearBackupResult() },
+                                onClick = { showExportDialog = true; vm.clearBackupResult() },
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Icon(Icons.Default.Upload, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -340,7 +345,7 @@ fun SettingsScreen(
                                 Text("Export backup", style = MaterialTheme.typography.labelMedium)
                             }
                             OutlinedButton(
-                                onClick = { importLauncher.launch(arrayOf("application/json")); vm.clearBackupResult() },
+                                onClick = { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -355,6 +360,33 @@ fun SettingsScreen(
                             Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
                             Text("View private key")
+                        }
+
+                        // Import section picker — shown after loading a backup file
+                        if (pendingRestore != null) {
+                            val restore = pendingRestore!!
+                            var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
+                            AlertDialog(
+                                onDismissRequest = { vm.dismissPendingRestore() },
+                                title = { Text("Select data to restore") },
+                                text = {
+                                    Column {
+                                        BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Contacts", BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Geofences", BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
+                                        BackupSectionItem("Settings", BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
+                                    }
+                                },
+                                confirmButton = {
+                                    Button(
+                                        onClick = { vm.applyRestore(importSections) },
+                                        enabled = importSections.isNotEmpty()
+                                    ) { Text("Restore") }
+                                },
+                                dismissButton = {
+                                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+                                }
+                            )
                         }
                     }
                 }
@@ -552,6 +584,33 @@ fun SettingsScreen(
                 TextButton(onClick = { vm.disableSupervisedMode(); showDisableSupervisedConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Disable") }
             },
             dismissButton = { TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") } }
+        )
+    }
+
+    if (showExportDialog) {
+        AlertDialog(
+            onDismissRequest = { showExportDialog = false },
+            title = { Text("Select data to export") },
+            text = {
+                Column {
+                    BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Contacts", BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Geofences", BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem("Settings", BackupSection.SETTINGS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showExportDialog = false
+                        exportLauncher.launch("locapeer-backup.json")
+                    },
+                    enabled = exportSections.isNotEmpty()
+                ) { Text("Choose file location") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showExportDialog = false }) { Text("Cancel") }
+            }
         )
     }
 
@@ -780,4 +839,47 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
+}
+
+@Composable
+private fun BackupSectionItem(
+    label: String,
+    section: BackupSection,
+    selected: Set<BackupSection>,
+    available: Set<BackupSection>,
+    onToggle: (Set<BackupSection>) -> Unit
+) {
+    val enabled = section in available
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = enabled) {
+                onToggle(if (section in selected) selected - section else selected + section)
+            }
+            .padding(vertical = 4.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Checkbox(
+            checked = section in selected,
+            onCheckedChange = { checked ->
+                onToggle(if (checked) selected + section else selected - section)
+            },
+            enabled = enabled
+        )
+        Column(modifier = Modifier.padding(start = 8.dp)) {
+            Text(
+                label,
+                style = MaterialTheme.typography.bodyMedium,
+                color = if (enabled) MaterialTheme.colorScheme.onSurface
+                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+            )
+            if (!enabled) {
+                Text(
+                    "Not in this backup",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
 }
