@@ -17,5 +17,7 @@ data class PeerSharingConfig(
     val scheduleStartMinute: Int = 0,
     /** Minutes from midnight for the end of the sharing window. */
     val scheduleEndMinute: Int = 1439,
-    val isSosContact: Boolean = true
+    val isSosContact: Boolean = true,
+    /** When false, incoming messages from this peer are silently dropped. */
+    val messagingEnabled: Boolean = true
 )

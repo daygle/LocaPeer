@@ -71,7 +71,8 @@ class HeartbeatReceiver @Inject constructor(
     private val proximityEngine: ProximityEngine,
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
-    private val supervisionApprovalManager: SupervisionApprovalManager
+    private val supervisionApprovalManager: SupervisionApprovalManager,
+    private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
@@ -214,6 +215,8 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processDmInBackground(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
+        val cfg = sharingConfigDao.getForPeer(event.pubkey)
+        if (cfg?.messagingEnabled == false) return  // user has blocked messages from this contact
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {

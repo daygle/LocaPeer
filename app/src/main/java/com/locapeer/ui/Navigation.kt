@@ -134,9 +134,14 @@ fun LocaPeerNavHost(
                 })
             }
             composable(Screen.Contacts.route) {
-                ContactsScreen(onNavigateToChat = { peerId, peerName ->
-                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
-                })
+                ContactsScreen(
+                    onNavigateToChat = { peerId, peerName ->
+                        navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
+                    },
+                    onNavigateToSharingSettings = { peerId, peerName ->
+                        navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Contact" }}")
+                    }
+                )
             }
             composable(Screen.Invite.route) {
                 InviteScreen(onNavigateBack = { navController.popBackStack() })

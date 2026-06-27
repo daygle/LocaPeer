@@ -60,6 +60,17 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
+    fun setMessagingEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = configDao.getForPeer(currentPeerId)
+            if (existing != null) {
+                configDao.setMessagingEnabled(currentPeerId, enabled)
+            } else {
+                configDao.upsert(defaultConfig().copy(messagingEnabled = enabled))
+            }
+        }
+    }
+
     fun setPrecisionMode(mode: PrecisionMode) {
         viewModelScope.launch {
             val existing = configDao.getForPeer(currentPeerId)

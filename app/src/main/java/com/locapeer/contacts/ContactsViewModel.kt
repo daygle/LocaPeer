@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PeerSharingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -19,21 +21,25 @@ import javax.inject.Inject
 
 data class ContactItem(
     val peer: PeerEntity,
-    val lastHeartbeat: HeartbeatEntity?
+    val lastHeartbeat: HeartbeatEntity?,
+    val config: PeerSharingConfig?
 )
 
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
     private val peerDao: PeerDao,
-    private val heartbeatDao: HeartbeatDao
+    private val heartbeatDao: HeartbeatDao,
+    private val sharingConfigDao: PeerSharingConfigDao
 ) : ViewModel() {
 
     val contacts = combine(
         peerDao.getAllPeers(),
-        heartbeatDao.getLatestHeartbeatPerDevice()
-    ) { peers, heartbeats ->
+        heartbeatDao.getLatestHeartbeatPerDevice(),
+        sharingConfigDao.observeAll()
+    ) { peers, heartbeats, configs ->
         val hbMap = heartbeats.associateBy { it.deviceId }
-        peers.map { peer -> ContactItem(peer, hbMap[peer.deviceId]) }
+        val cfgMap = configs.associateBy { it.peerDeviceId }
+        peers.map { peer -> ContactItem(peer, hbMap[peer.deviceId], cfgMap[peer.deviceId]) }
             .sortedWith(compareByDescending<ContactItem> { it.lastHeartbeat?.timestamp ?: 0L }
                 .thenBy { it.peer.displayName })
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
@@ -42,12 +48,35 @@ class ContactsViewModel @Inject constructor(
         viewModelScope.launch {
             peerDao.deletePeerById(deviceId)
             heartbeatDao.deleteAllForDevice(deviceId)
+            sharingConfigDao.deleteForPeer(deviceId)
         }
     }
 
     fun renamePeer(peer: PeerEntity, newName: String) {
         viewModelScope.launch {
             peerDao.upsertPeer(peer.copy(displayName = newName.trim()))
+        }
+    }
+
+    fun setLocationSharing(deviceId: String, enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = sharingConfigDao.getForPeer(deviceId)
+            if (existing != null) {
+                sharingConfigDao.setSharingEnabled(deviceId, enabled)
+            } else {
+                sharingConfigDao.upsert(PeerSharingConfig(peerDeviceId = deviceId, sharingEnabled = enabled))
+            }
+        }
+    }
+
+    fun setMessaging(deviceId: String, enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = sharingConfigDao.getForPeer(deviceId)
+            if (existing != null) {
+                sharingConfigDao.setMessagingEnabled(deviceId, enabled)
+            } else {
+                sharingConfigDao.upsert(PeerSharingConfig(peerDeviceId = deviceId, messagingEnabled = enabled))
+            }
         }
     }
 
