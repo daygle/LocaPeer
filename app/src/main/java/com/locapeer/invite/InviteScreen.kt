@@ -47,7 +47,7 @@ fun InviteScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Share") },
+                title = { Text("QR") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
