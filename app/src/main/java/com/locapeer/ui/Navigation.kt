@@ -7,7 +7,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.People
@@ -26,26 +25,28 @@ import com.locapeer.about.AboutScreen
 import com.locapeer.about.AboutViewModel
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.InviteScreen
-import com.locapeer.invite.ScanScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.history.HistoryReportScreen
+import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.sharing.PeerSharingScreen
+import javax.inject.Inject
+import javax.inject.Singleton
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    object Map : Screen("map", "Map", Icons.Default.Map)
+    object Map      : Screen("map",      "Map",      Icons.Default.Map)
     object Messages : Screen("messages", "Messages", Icons.Default.Message)
     object Contacts : Screen("contacts", "Contacts", Icons.Default.People)
-    object Invite : Screen("invite", "Share", Icons.Default.QrCode)
-    object Scan : Screen("scan?inviteData={inviteData}", "Scan", Icons.Default.LocationOn)
+    object Invite   : Screen("invite",   "Share",    Icons.Default.QrCode)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
 }
 
-private val bottomNavItems = listOf(
+/** All tabs that can appear in the bottom nav, in their canonical order. */
+val ALL_NAV_SCREENS: List<Screen> = listOf(
     Screen.Map,
     Screen.Messages,
     Screen.Contacts,
@@ -63,11 +64,22 @@ private val slidePopExit = slideOutHorizontally(tween(250)) { it / 3 } + fadeOut
 @Composable
 fun LocaPeerNavHost(
     initialNavTarget: NavTarget? = null,
-    onNavTargetConsumed: () -> Unit = {}
+    onNavTargetConsumed: () -> Unit = {},
+    prefs: AppPreferences
 ) {
+    val settings by prefs.settings.collectAsState(initial = null)
     val navController = rememberNavController()
     val backstackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backstackEntry?.destination?.route
+
+    val bottomNavItems = remember(settings?.navTabIds) {
+        val ids = settings?.navTabIds ?: listOf("map", "messages", "contacts", "invite", "settings")
+        val screenByRoute = ALL_NAV_SCREENS.associateBy { it.route }
+        // Always ensure Map is present
+        val ordered = ids.mapNotNull { screenByRoute[it] }
+        if (ordered.none { it.route == Screen.Map.route })
+            listOf(Screen.Map) + ordered else ordered
+    }
 
     val showBottomBar = bottomNavItems.any { currentRoute == it.route }
 
@@ -86,7 +98,7 @@ fun LocaPeerNavHost(
             }
             "scan" -> {
                 val data = target.peerId ?: ""
-                navController.navigate("scan?inviteData=$data")
+                navController.navigate("${Screen.Invite.route}?inviteData=$data")
             }
         }
         onNavTargetConsumed()
@@ -143,19 +155,17 @@ fun LocaPeerNavHost(
                     }
                 )
             }
-            composable(Screen.Invite.route) {
-                InviteScreen(onNavigateBack = { navController.popBackStack() })
-            }
             composable(
-                Screen.Scan.route,
+                route = "${Screen.Invite.route}?inviteData={inviteData}",
                 arguments = listOf(navArgument("inviteData") {
                     type = NavType.StringType
                     nullable = true
+                    defaultValue = null
                 })
             ) { entry ->
-                ScanScreen(
-                    inviteData = entry.arguments?.getString("inviteData"),
-                    onNavigateBack = { navController.popBackStack() }
+                InviteScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    inviteData = entry.arguments?.getString("inviteData")
                 )
             }
             composable(Screen.Settings.route) {
@@ -166,7 +176,8 @@ fun LocaPeerNavHost(
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
                     },
                     onNavigateToHistoryReport = { navController.navigate("history-report") },
-                    onNavigateToAbout = { navController.navigate("about") }
+                    onNavigateToAbout = { navController.navigate("about") },
+                    onNavigateToCustomizeNav = { navController.navigate("customize-nav") }
                 )
             }
             composable(
@@ -240,6 +251,18 @@ fun LocaPeerNavHost(
                 PeerSharingScreen(
                     peerId = entry.arguments?.getString("peerId") ?: "",
                     peerName = entry.arguments?.getString("peerName") ?: "",
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                "customize-nav",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                CustomizeNavScreen(
+                    prefs = prefs,
                     onNavigateBack = { navController.popBackStack() }
                 )
             }

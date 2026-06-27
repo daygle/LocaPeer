@@ -95,7 +95,8 @@ class MainActivity : ComponentActivity() {
                             }
                             LocaPeerNavHost(
                                 initialNavTarget = navTarget,
-                                onNavTargetConsumed = { pendingNavTarget.value = null }
+                                onNavTargetConsumed = { pendingNavTarget.value = null },
+                                prefs = prefs
                             )
                         }
                     }
