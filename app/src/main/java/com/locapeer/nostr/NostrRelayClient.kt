@@ -225,8 +225,10 @@ class NostrRelayClient @Inject constructor(
             override fun onMessage(webSocket: WebSocket, text: String) {
                 try {
                     val arr = json.parseToJsonElement(text).jsonArray
+                    if (arr.isEmpty()) return
                     when (arr[0].jsonPrimitive.content) {
                         "EVENT" -> {
+                            if (arr.size < 3) return
                             val event = json.decodeFromString<NostrEvent>(arr[2].toString())
                             val isNew = synchronized(recentEventLock) {
                                 if (recentEventIds.size >= 500) {
@@ -237,9 +239,10 @@ class NostrRelayClient @Inject constructor(
                             }
                             if (isNew) scope.launch { _events.emit(event) }
                         }
-                        "EOSE" -> Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
-                        "NOTICE" -> Log.d(TAG, "NOTICE from $url: ${arr[1]}")
+                        "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
+                        "NOTICE" -> if (arr.size >= 2) Log.d(TAG, "NOTICE from $url: ${arr[1]}")
                         "OK" -> {
+                            if (arr.size < 3) return
                             val eventId = arr[1].jsonPrimitive.content
                             val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
                             if (accepted) scope.launch { _okEvents.emit(eventId) }
