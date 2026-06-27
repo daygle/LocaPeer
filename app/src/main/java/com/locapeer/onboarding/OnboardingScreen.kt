@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.FactCheck
@@ -20,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -78,6 +81,53 @@ fun OnboardingScreen(
 
 @Composable
 private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
+    var showImportDialog by remember { mutableStateOf(false) }
+    var importInput by remember { mutableStateOf("") }
+
+    // Close the dialog once import succeeds (key updated, no error, not loading)
+    LaunchedEffect(state.publicKeyHex, state.importError, state.isLoading) {
+        if (showImportDialog && !state.isLoading && state.importError == null && state.publicKeyHex.isNotEmpty()) {
+            showImportDialog = false
+        }
+    }
+
+    if (showImportDialog) {
+        AlertDialog(
+            onDismissRequest = { showImportDialog = false; vm.clearImportError() },
+            icon = { Icon(Icons.Default.VpnKey, contentDescription = null) },
+            title = { Text("Restore from Backup") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Text(
+                        "Paste your 64-character hex private key to restore your identity and contacts.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    OutlinedTextField(
+                        value = importInput,
+                        onValueChange = { importInput = it; vm.clearImportError() },
+                        label = { Text("Private key (hex)") },
+                        singleLine = true,
+                        textStyle = LocalTextStyle.current.copy(fontFamily = FontFamily.Monospace),
+                        isError = state.importError != null,
+                        supportingText = state.importError?.let { { Text(it, color = MaterialTheme.colorScheme.error) } },
+                        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = { vm.importPrivateKey(importInput) },
+                    enabled = importInput.isNotBlank() && !state.isLoading
+                ) { Text("Restore") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showImportDialog = false; vm.clearImportError() }) { Text("Cancel") }
+            }
+        )
+    }
+
     Box(
         modifier = Modifier
             .size(100.dp)
@@ -163,7 +213,18 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
         Text("Get Started", style = MaterialTheme.typography.titleMedium)
     }
 
-    Spacer(Modifier.height(24.dp))
+    Spacer(Modifier.height(12.dp))
+
+    TextButton(
+        onClick = { showImportDialog = true },
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(18.dp))
+        Spacer(Modifier.width(8.dp))
+        Text("Restore from backup")
+    }
+
+    Spacer(Modifier.height(16.dp))
 
     Text(
         "Your private key is generated locally and never leaves this device.",

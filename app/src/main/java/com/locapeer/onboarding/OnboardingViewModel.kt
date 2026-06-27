@@ -22,7 +22,8 @@ data class OnboardingState(
     val displayName: String = "",
     val publicKeyHex: String = "",
     val step: OnboardingStep = OnboardingStep.IDENTITY,
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val importError: String? = null
 )
 
 @HiltViewModel
@@ -55,6 +56,31 @@ class OnboardingViewModel @Inject constructor(
             OnboardingStep.DONE -> OnboardingStep.DONE
         }
         _state.value = _state.value.copy(step = next)
+    }
+
+    fun importPrivateKey(privHex: String) {
+        val cleaned = privHex.trim().lowercase()
+        if (cleaned.length != 64 || !cleaned.all { it in '0'..'9' || it in 'a'..'f' }) {
+            _state.value = _state.value.copy(importError = "Invalid key — must be 64 hex characters.")
+            return
+        }
+        _state.value = _state.value.copy(isLoading = true, importError = null)
+        viewModelScope.launch {
+            try {
+                keyManager.importPrivateKey(cleaned)
+                val pubHex = keyManager.getPublicKeyHex() ?: ""
+                _state.value = _state.value.copy(publicKeyHex = pubHex, isLoading = false)
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    importError = "Failed to import key: ${e.message}"
+                )
+            }
+        }
+    }
+
+    fun clearImportError() {
+        _state.value = _state.value.copy(importError = null)
     }
 
     fun complete(onDone: () -> Unit) {
