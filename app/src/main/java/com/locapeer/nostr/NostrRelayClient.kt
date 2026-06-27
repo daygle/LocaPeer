@@ -22,6 +22,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,14 +60,20 @@ class NostrRelayClient @Inject constructor(
         .readTimeout(0, TimeUnit.SECONDS)
         .build()
 
-    private val relays = RELAY_URLS.map { RelayConnection(it) }
+    private val relays = ConcurrentHashMap<String, RelayConnection>().apply {
+        RELAY_URLS.forEach { put(it, RelayConnection(it)) }
+    }
 
     fun connect() {
-        relays.forEach { it.connect() }
+        relays.values.forEach { it.connect() }
+    }
+
+    fun connect(url: String) {
+        relays.getOrPut(url) { RelayConnection(url) }.connect()
     }
 
     fun disconnect() {
-        relays.forEach { it.disconnect() }
+        relays.values.forEach { it.disconnect() }
     }
 
     fun publishEvent(event: NostrEvent) {
@@ -103,14 +110,14 @@ class NostrRelayClient @Inject constructor(
 
     private fun sendToAll(msg: String) {
         var sentToAny = false
-        relays.forEach { relay ->
+        relays.values.forEach { relay ->
             if (relay.send(msg)) sentToAny = true
         }
         if (!sentToAny) {
             scope.launch {
                 pendingMessageDao.insert(PendingMessageEntity(content = msg))
             }
-            relays.forEach { it.ensureConnecting() }
+            relays.values.forEach { it.ensureConnecting() }
         }
     }
 
