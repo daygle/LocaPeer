@@ -19,7 +19,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.NavTarget
+import com.locapeer.about.AboutScreen
+import com.locapeer.about.AboutViewModel
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.InviteScreen
 import com.locapeer.invite.ScanScreen
@@ -136,7 +139,8 @@ fun LocaPeerNavHost(
                     onNavigateToPeerSharing = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
                     },
-                    onNavigateToHistoryReport = { navController.navigate("history-report") }
+                    onNavigateToHistoryReport = { navController.navigate("history-report") },
+                    onNavigateToAbout = { navController.navigate("about") }
                 )
             }
             composable(
@@ -182,6 +186,19 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 HistoryReportScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "about",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                val aboutVm: AboutViewModel = hiltViewModel()
+                AboutScreen(
+                    relayClient = aboutVm.relayClient,
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
             composable(
                 route = "peer-sharing/{peerId}/{peerName}",

@@ -9,7 +9,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -43,6 +47,10 @@ class NostrRelayClient @Inject constructor(
 
     private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
     val events: SharedFlow<NostrEvent> = _events
+
+    private val _relayStatus = MutableStateFlow<Map<String, Boolean>>(emptyMap())
+    /** Maps relay URL → connected. Updated on every connect/disconnect event. */
+    val relayStatus: StateFlow<Map<String, Boolean>> = _relayStatus.asStateFlow()
 
     private val _okEvents = MutableSharedFlow<String>(extraBufferCapacity = 64)
     /** Emits Nostr event IDs that any relay accepted (OK true). */
@@ -174,6 +182,7 @@ class NostrRelayClient @Inject constructor(
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected to $url")
                 isConnected = true
+                _relayStatus.update { it + (url to true) }
                 flushPendingTo(this@RelayConnection)
             }
 
@@ -207,6 +216,7 @@ class NostrRelayClient @Inject constructor(
                 Log.w(TAG, "Failure on $url", t)
                 isConnected = false
                 this@RelayConnection.webSocket = null
+                _relayStatus.update { it + (url to false) }
                 scheduleReconnect()
             }
 
@@ -214,6 +224,7 @@ class NostrRelayClient @Inject constructor(
                 Log.d(TAG, "Closed $url: $code $reason")
                 isConnected = false
                 this@RelayConnection.webSocket = null
+                _relayStatus.update { it + (url to false) }
                 if (code != 1000) scheduleReconnect()
             }
         }

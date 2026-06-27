@@ -75,15 +75,26 @@ fun GeofenceListScreen(
         }
     }
 
-    if (showCreateDialog && broadcastersWithLocation.isNotEmpty()) {
-        CreateGeofenceDialog(
-            broadcastersWithLocation = broadcastersWithLocation,
-            onDismiss = { showCreateDialog = false },
-            onCreate = { name, lat, lng, radius, deviceId, trigger ->
-                vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
-                showCreateDialog = false
-            }
-        )
+    if (showCreateDialog) {
+        if (broadcastersWithLocation.isEmpty()) {
+            AlertDialog(
+                onDismissRequest = { showCreateDialog = false },
+                title = { Text("No contacts yet") },
+                text = { Text("You need at least one tracked contact before creating a geofence. Scan an invite QR code to add someone.") },
+                confirmButton = {
+                    TextButton(onClick = { showCreateDialog = false }) { Text("OK") }
+                }
+            )
+        } else {
+            CreateGeofenceDialog(
+                broadcastersWithLocation = broadcastersWithLocation,
+                onDismiss = { showCreateDialog = false },
+                onCreate = { name, lat, lng, radius, deviceId, trigger ->
+                    vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
+                    showCreateDialog = false
+                }
+            )
+        }
     }
 }
 
