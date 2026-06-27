@@ -98,7 +98,7 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // SOS Button — top-left
+        // SOS Button - top-left
         SosButton(
             isActive = isSosActive,
             onClick = { vm.toggleSos() },
@@ -107,7 +107,7 @@ fun MapScreen(
                 .padding(16.dp)
         )
 
-        // Locate Me Button — bottom-right
+        // Locate Me Button - bottom-right
         FloatingActionButton(
             onClick = {
                 vm.fetchUserLocation()
@@ -123,7 +123,7 @@ fun MapScreen(
             Icon(Icons.Default.MyLocation, contentDescription = "My Location")
         }
 
-        // Friends Button — top-right
+        // Friends Button - top-right
         FloatingActionButton(
             onClick = { showFriendList = true },
             containerColor = MaterialTheme.colorScheme.surface,
@@ -136,7 +136,7 @@ fun MapScreen(
             Icon(Icons.Default.People, contentDescription = "Friends")
         }
 
-        // Relay status chip — bottom-left
+        // Relay status chip - bottom-left
         RelayStatusChip(
             relayStatus = relayStatus,
             modifier = Modifier
@@ -518,7 +518,7 @@ private fun PinInfoSheet(
                                 color = SosRed
                             )
                             pin.isOverdue -> Text(
-                                "Overdue — no recent update",
+                                "Overdue - no recent update",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.error
                             )

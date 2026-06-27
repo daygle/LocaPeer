@@ -22,6 +22,6 @@ data class MessageEntity(
     val deliveryState: String = DeliveryState.SENT.name,
     val isRead: Boolean = false,
     val nostrEventId: String = "",
-    /** True when stored during a messaging block — hidden from UI until unblocked. */
+    /** True when stored during a messaging block - hidden from UI until unblocked. */
     val isBlocked: Boolean = false
 )

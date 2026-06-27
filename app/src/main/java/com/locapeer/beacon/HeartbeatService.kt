@@ -174,7 +174,11 @@ class HeartbeatService : LifecycleService() {
         }
 
         lifecycleScope.launch {
-            currentSettings = prefs.settings.first()
+            try {
+                currentSettings = prefs.settings.first()
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to load settings; using defaults", e)
+            }
             relayClient.connect()
         }
 

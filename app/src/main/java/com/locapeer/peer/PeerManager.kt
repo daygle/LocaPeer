@@ -52,7 +52,7 @@ class PeerManager @Inject constructor(
         sendDeleteMyMessages(deviceId)
         sendDeleteMyLocation(deviceId)
         notifyPeerRemoved(deviceId)
-        // Also clean up locally — peer agreed to mutual tracking, so remove them here too
+        // Also clean up locally - peer agreed to mutual tracking, so remove them here too
         peerDao.deletePeerById(deviceId)
         heartbeatDao.deleteAllForDevice(deviceId)
         messageDao.deleteAllForPeer(deviceId)
@@ -69,7 +69,7 @@ class PeerManager @Inject constructor(
         sendDataEvent(deviceId, NostrEventKind.DELETE_MY_LOCATION)
     }
 
-    /** Called when we receive a PEER_REMOVED event — remove the sender silently. */
+    /** Called when we receive a PEER_REMOVED event - remove the sender silently. */
     suspend fun handleRemovalByPeer(senderDeviceId: String) {
         peerDao.deletePeerById(senderDeviceId)
         heartbeatDao.deleteAllForDevice(senderDeviceId)
@@ -77,13 +77,13 @@ class PeerManager @Inject constructor(
         Log.i(TAG, "Removed peer $senderDeviceId after they removed us")
     }
 
-    /** Called when we receive DELETE_MY_MESSAGES — wipe all messages sent by that pubkey. */
+    /** Called when we receive DELETE_MY_MESSAGES - wipe all messages sent by that pubkey. */
     suspend fun handleDeleteMyMessages(senderPubKeyHex: String) {
         messageDao.deleteAllFromSender(senderPubKeyHex)
         Log.i(TAG, "Deleted all messages from $senderPubKeyHex at their request")
     }
 
-    /** Called when we receive DELETE_MY_LOCATION — wipe all heartbeats from that device. */
+    /** Called when we receive DELETE_MY_LOCATION - wipe all heartbeats from that device. */
     suspend fun handleDeleteMyLocation(senderDeviceId: String) {
         heartbeatDao.deleteAllForDevice(senderDeviceId)
         Log.i(TAG, "Deleted all location data from $senderDeviceId at their request")

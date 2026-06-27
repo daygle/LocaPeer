@@ -43,6 +43,7 @@ fun ConversationListScreen(
     val conversations by vm.conversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
+    val unreadCounts by vm.unreadCounts.collectAsState()
     var showContactPicker by remember { mutableStateOf(false) }
 
     // null = still loading (waiting for first emission), empty list = loaded but empty
@@ -112,11 +113,9 @@ fun ConversationListScreen(
                 LoadState.CONTENT -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(conversations!!, key = { it.peer.deviceId }) { conv ->
-                            val unread by vm.getUnreadCount(conv.peer.deviceId)
-                                .collectAsState(initial = 0)
                             ConversationRow(
                                 summary = conv,
-                                unreadCount = unread,
+                                unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
                                 onClick = { onOpenChat(conv.peer.deviceId) }
                             )
                             HorizontalDivider(

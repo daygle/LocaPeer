@@ -1,8 +1,11 @@
 package com.locapeer.beacon
 
+import android.util.Log
 import com.locapeer.settings.AppSettings
 import javax.inject.Inject
 import javax.inject.Singleton
+
+private const val TAG = "AdaptiveIntervalManager"
 
 @Singleton
 class AdaptiveIntervalManager @Inject constructor() {
@@ -31,7 +34,8 @@ class AdaptiveIntervalManager @Inject constructor() {
 
     /** Returns the expected interval in milliseconds for a given motion state (used for overdue checks). */
     fun getExpectedIntervalMillis(motionState: String, settings: AppSettings): Long {
-        val state = MotionState.entries.firstOrNull { it.name == motionState } ?: MotionState.UNKNOWN
+        val state = MotionState.entries.firstOrNull { it.name == motionState }
+            ?: MotionState.UNKNOWN.also { Log.w(TAG, "Unknown motion state '$motionState', defaulting to UNKNOWN") }
         return when (state) {
             MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
             MotionState.WALKING -> settings.walkingIntervalMinutes * 60_000L

@@ -171,7 +171,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     FeatureRow(
         icon = Icons.Default.CloudOff,
         title = "No proprietary servers",
-        subtitle = "Uses an open Nostr relay as a transport — encrypted so the relay never sees your data"
+        subtitle = "Uses an open Nostr relay as a transport - encrypted so the relay never sees your data"
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
