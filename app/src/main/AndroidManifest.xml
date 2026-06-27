@@ -93,6 +93,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Notification action receiver for mutual tracking requests -->
+        <receiver
+            android:name=".invite.TrackRequestReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.locapeer.TRACK_ACCEPT" />
+                <action android:name="com.locapeer.TRACK_DECLINE" />
+            </intent-filter>
+        </receiver>
+
         <!-- OSMDroid tile cache path (optional) -->
         <meta-data
             android:name="osmdroid.cachepath"

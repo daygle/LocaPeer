@@ -29,8 +29,10 @@ class CryptoUtils @Inject constructor() {
 
     /** Returns the 32-byte x-only public key (Nostr/BIP-340 format). */
     fun getXOnlyPublicKey(privKey: ByteArray): ByteArray {
-        val compressed = Secp256k1.pubkeyCreate(privKey)
-        return compressed.drop(1).toByteArray()
+        val pub = Secp256k1.pubkeyCreate(privKey)
+        // pubkeyCreate returns 65-byte uncompressed (0x04 || x(32) || y(32))
+        // or 33-byte compressed (0x02/03 || x(32)). Either way bytes [1..32] = x.
+        return pub.copyOfRange(1, 33)
     }
 
     /** Parses a 64-char hex public key into 33-byte compressed form (prepend 0x02). */

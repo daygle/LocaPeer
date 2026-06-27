@@ -82,9 +82,12 @@ class KeyManager @Inject constructor(
             null
         }
         val pubHex = context.keyStore.data.first()[KEY_PUBLIC_METADATA]
-        if (privHex != null && pubHex != null) {
+        // Both must exist and be exactly 64 hex chars (32 bytes). If the pubkey was
+        // previously stored as 128 chars due to a getXOnlyPublicKey bug, regenerate.
+        if (privHex != null && pubHex != null && privHex.length == 64 && pubHex.length == 64) {
             return@withContext Pair(privHex, pubHex)
         }
+        Log.w(TAG, "Key missing or wrong length (privLen=${privHex?.length}, pubLen=${pubHex?.length}), regenerating")
         generateAndSaveKeypair()
     }
 

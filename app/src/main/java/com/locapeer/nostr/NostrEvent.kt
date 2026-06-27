@@ -22,6 +22,8 @@ object NostrEventKind {
     const val DELIVERY_ACK = 10005          // NIP-04-encrypted delivery acknowledgment
     const val SUPERVISED_UNLOCK_REQUEST = 10006  // NIP-04-encrypted unlock request to supervisor
     const val SUPERVISED_UNLOCK_RESPONSE = 10007 // NIP-04-encrypted unlock response from supervisor
+    const val TRACK_REQUEST = 10008  // NIP-44-encrypted mutual tracking invitation
+    const val TRACK_ACCEPT = 10009   // NIP-44-encrypted acceptance of a track request
 }
 
 @Serializable

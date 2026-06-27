@@ -108,33 +108,37 @@ class MessagingViewModel @Inject constructor(
 
     fun sendMessage(peerId: String, content: String) {
         viewModelScope.launch {
-            val peer = peerDao.getPeer(peerId) ?: return@launch
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val privBytes = crypto.hexToBytes(privHex)
+            try {
+                val peer = peerDao.getPeer(peerId) ?: return@launch
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val privBytes = crypto.hexToBytes(privHex)
 
-            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, content)
-            val tags = listOf(listOf("p", peer.publicKeyHex))
-            val event = NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.ENCRYPTED_DM,
-                content = encrypted,
-                tags = tags,
-                crypto = crypto
-            )
-            relayClient.publishEvent(event)
+                val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, content)
+                val tags = listOf(listOf("p", peer.publicKeyHex))
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.ENCRYPTED_DM,
+                    content = encrypted,
+                    tags = tags,
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
 
-            val msg = MessageEntity(
-                id = UUID.randomUUID().toString(),
-                peerId = peerId,
-                senderPublicKeyHex = pubHex,
-                content = content,
-                timestamp = System.currentTimeMillis(),
-                isMine = true,
-                deliveryState = DeliveryState.SENDING.name,
-                nostrEventId = event.id
-            )
-            messageDao.insert(msg)
+                val msg = MessageEntity(
+                    id = UUID.randomUUID().toString(),
+                    peerId = peerId,
+                    senderPublicKeyHex = pubHex,
+                    content = content,
+                    timestamp = System.currentTimeMillis(),
+                    isMine = true,
+                    deliveryState = DeliveryState.SENDING.name,
+                    nostrEventId = event.id
+                )
+                messageDao.insert(msg)
+            } catch (e: Exception) {
+                android.util.Log.e("MessagingViewModel", "sendMessage failed", e)
+            }
         }
     }
 
