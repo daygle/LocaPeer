@@ -410,4 +410,12 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setStartRoute(route) }
     }
 
+    fun setLocalLocationRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setLocalLocationRetentionDays(days) }
+    }
+
+    fun setLocalMessageRetentionDays(days: Int) {
+        viewModelScope.launch { prefs.setLocalMessageRetentionDays(days) }
+    }
+
 }

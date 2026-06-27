@@ -304,7 +304,27 @@ fun SettingsScreen(
                     HorizontalDivider()
                     // Local data
                     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("Local data", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        // Local retention: location
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Icon(Icons.Default.LocationOff, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Location history on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                                Text("How long to keep contacts' location data locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                        RetentionSelector(selected = settings.localLocationRetentionDays, onSelected = { vm.setLocalLocationRetentionDays(it) })
+                        HorizontalDivider()
+                        // Local retention: messages
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            Icon(Icons.Default.DeleteSweep, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Messages on this device", style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
+                                Text("How long to keep received messages locally", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                        }
+                        RetentionSelector(selected = settings.localMessageRetentionDays, onSelected = { vm.setLocalMessageRetentionDays(it) })
+                        HorizontalDivider()
+                        Text("Manual clear", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             OutlinedButton(
                                 onClick = { showClearLocationConfirm = true },
