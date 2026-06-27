@@ -28,8 +28,8 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         super.onCreate()
         org.osmdroid.config.Configuration.getInstance().apply {
             userAgentValue = packageName
-            osmdroidBasePath = getExternalFilesDir(null) ?: filesDir
-            osmdroidTileCache = java.io.File(osmdroidBasePath, "tiles").also { it.mkdirs() }
+            osmdroidBasePath = filesDir
+            osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles").also { it.mkdirs() }
         }
         try {
             heartbeatReceiver.start()
