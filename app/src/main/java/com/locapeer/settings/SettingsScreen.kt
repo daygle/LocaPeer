@@ -1,5 +1,6 @@
 package com.locapeer.settings
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -310,13 +311,50 @@ fun SettingsScreen(
                                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
                             ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
                         }
+                        val backupResult by vm.backupResult.collectAsState()
+                        val exportLauncher = rememberLauncherForActivityResult(
+                            androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
+                        ) { uri -> uri?.let { vm.exportBackup(it) } }
+                        val importLauncher = rememberLauncherForActivityResult(
+                            androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
+                        ) { uri -> uri?.let { vm.importBackup(it) } }
+
+                        backupResult?.let { msg ->
+                            Text(
+                                msg,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg == "Could not read file")
+                                    MaterialTheme.colorScheme.error
+                                else MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(Modifier.height(4.dp))
+                        }
+
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            OutlinedButton(
+                                onClick = { exportLauncher.launch("locapeer-backup.json"); vm.clearBackupResult() },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Upload, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Export backup", style = MaterialTheme.typography.labelMedium)
+                            }
+                            OutlinedButton(
+                                onClick = { importLauncher.launch(arrayOf("application/json")); vm.clearBackupResult() },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Icon(Icons.Default.Download, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Import backup", style = MaterialTheme.typography.labelMedium)
+                            }
+                        }
                         OutlinedButton(
                             onClick = { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("Export / Backup Keypair")
+                            Text("View private key")
                         }
                     }
                 }

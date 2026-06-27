@@ -3,7 +3,9 @@ package com.locapeer.settings
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.beacon.HeartbeatService
@@ -14,6 +16,7 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrEvent
@@ -28,9 +31,28 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
+
+private const val TAG = "SettingsViewModel"
+
+@Serializable
+data class LocaPeerBackup(
+    val version: Int = 1,
+    val privateKeyHex: String,
+    val contacts: List<ContactBackup>
+)
+
+@Serializable
+data class ContactBackup(
+    val deviceId: String,
+    val displayName: String,
+    val publicKeyHex: String,
+    val relayUrl: String,
+    val role: String
+)
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
@@ -124,6 +146,53 @@ class SettingsViewModel @Inject constructor(
             onKey(key)
         }
     }
+
+    fun exportBackup(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                val privKey = keyManager.exportPrivateKeyHex()
+                val contacts = peerDao.getAllPeers().first().map { p ->
+                    ContactBackup(p.deviceId, p.displayName, p.publicKeyHex, p.relayUrl, p.role)
+                }
+                val backup = LocaPeerBackup(privateKeyHex = privKey, contacts = contacts)
+                val json = Json.encodeToString(backup)
+                context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
+                _backupResult.value = "Backup saved successfully (${contacts.size} contacts)"
+            } catch (e: Exception) {
+                Log.e(TAG, "Backup export failed", e)
+                _backupResult.value = "Backup failed: ${e.message}"
+            }
+        }
+    }
+
+    fun importBackup(uri: Uri) {
+        viewModelScope.launch {
+            try {
+                val json = context.contentResolver.openInputStream(uri)?.use {
+                    it.readBytes().toString(Charsets.UTF_8)
+                } ?: run {
+                    _backupResult.value = "Could not read file"
+                    return@launch
+                }
+                val backup = Json.decodeFromString<LocaPeerBackup>(json)
+                keyManager.importPrivateKey(backup.privateKeyHex)
+                backup.contacts.forEach { c ->
+                    peerDao.upsertPeer(
+                        PeerEntity(c.deviceId, c.displayName, c.publicKeyHex, c.relayUrl, c.role)
+                    )
+                }
+                _backupResult.value = "Restored ${backup.contacts.size} contacts"
+            } catch (e: Exception) {
+                Log.e(TAG, "Backup import failed", e)
+                _backupResult.value = "Restore failed: ${e.message}"
+            }
+        }
+    }
+
+    fun clearBackupResult() { _backupResult.value = null }
+
+    private val _backupResult = MutableStateFlow<String?>(null)
+    val backupResult: StateFlow<String?> = _backupResult
 
     fun setRetentionDays(days: Int) {
         viewModelScope.launch { prefs.setRetentionDays(days) }
