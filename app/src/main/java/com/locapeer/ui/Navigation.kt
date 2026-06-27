@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -32,11 +33,13 @@ import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.SettingsScreen
+import com.locapeer.contacts.ContactsScreen
 import com.locapeer.sharing.PeerSharingScreen
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Map : Screen("map", "Map", Icons.Default.Map)
     object Messages : Screen("messages", "Messages", Icons.Default.Message)
+    object Contacts : Screen("contacts", "Contacts", Icons.Default.People)
     object Invite : Screen("invite", "Share", Icons.Default.QrCode)
     object Scan : Screen("scan?inviteData={inviteData}", "Scan", Icons.Default.LocationOn)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
@@ -45,8 +48,8 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
 private val bottomNavItems = listOf(
     Screen.Map,
     Screen.Messages,
+    Screen.Contacts,
     Screen.Invite,
-    Screen.Scan,
     Screen.Settings
 )
 
@@ -128,6 +131,11 @@ fun LocaPeerNavHost(
             composable(Screen.Messages.route) {
                 ConversationListScreen(onOpenChat = { peerId ->
                     navController.navigate("chat/$peerId/Chat")
+                })
+            }
+            composable(Screen.Contacts.route) {
+                ContactsScreen(onNavigateToChat = { peerId, peerName ->
+                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
                 })
             }
             composable(Screen.Invite.route) {
