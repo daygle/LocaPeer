@@ -18,7 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.crypto.KeyManager
 import com.locapeer.messaging.MessagingViewModel
 import com.locapeer.onboarding.OnboardingScreen

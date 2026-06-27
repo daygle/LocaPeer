@@ -3,6 +3,8 @@ package com.locapeer.sharing
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+private val scheduleJson = Json { ignoreUnknownKeys = true }
+
 @Serializable
 data class ScheduleRule(
     val id: String,
@@ -15,5 +17,5 @@ data class ScheduleRule(
 fun newScheduleRule() = ScheduleRule(id = java.util.UUID.randomUUID().toString())
 
 fun String.toScheduleRules(): List<ScheduleRule> =
-    try { Json { ignoreUnknownKeys = true }.decodeFromString(this) }
+    try { scheduleJson.decodeFromString(this) }
     catch (_: Exception) { emptyList() }

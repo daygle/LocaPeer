@@ -8,7 +8,7 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Message
+import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.People
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.NavTarget
 import com.locapeer.about.AboutScreen
 import com.locapeer.about.AboutViewModel
@@ -40,7 +40,7 @@ import javax.inject.Singleton
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
     object Map      : Screen("map",      "Map",      Icons.Default.Map)
-    object Messages : Screen("messages", "Messages", Icons.Default.Message)
+    object Messages : Screen("messages", "Messages", Icons.AutoMirrored.Filled.Message)
     object Contacts : Screen("contacts", "Contacts", Icons.Default.People)
     object Invite   : Screen("invite",   "QR",       Icons.Default.QrCode)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
