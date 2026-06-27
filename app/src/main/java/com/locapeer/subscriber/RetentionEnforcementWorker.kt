@@ -11,6 +11,8 @@ import androidx.work.WorkerParameters
 import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.HeartbeatDao
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -31,6 +33,8 @@ class RetentionEnforcementWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val prefs: AppPreferences,
     private val peerDao: PeerDao,
+    private val heartbeatDao: HeartbeatDao,
+    private val messageDao: MessageDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient
@@ -45,12 +49,17 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
             if (settings.retentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
+                
+                // 1. Purge local data (others' heartbeats that we are tracking)
+                heartbeatDao.deleteOlderThan(cutoffMs)
+                
+                // 2. Notify others to purge our data
                 val locationPayload = Json.encodeToString(
                     PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
                 )
                 val subscribers = peerDao.getSubscribers().first()
                 subscribers.forEach { sub ->
-                    val encrypted = crypto.nip04Encrypt(
+                    val encrypted = crypto.nip44Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
                         recipientXOnlyHex = sub.publicKeyHex,
                         plaintext = locationPayload
@@ -66,17 +75,22 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                         )
                     )
                 }
-                Log.d(TAG, "Sent location purge to ${subscribers.size} subscribers (before ${cutoffMs}ms)")
+                Log.d(TAG, "Sent location purge to ${subscribers.size} subscribers")
             }
 
             if (settings.messageRetentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
+                
+                // 1. Purge local messages
+                messageDao.deleteOlderThan(cutoffMs)
+                
+                // 2. Notify others to purge our messages
                 val msgPayload = Json.encodeToString(
                     PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
                 )
                 val allPeers = peerDao.getAllPeers().first()
                 allPeers.forEach { peer ->
-                    val encrypted = crypto.nip04Encrypt(
+                    val encrypted = crypto.nip44Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
                         recipientXOnlyHex = peer.publicKeyHex,
                         plaintext = msgPayload
@@ -92,7 +106,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                         )
                     )
                 }
-                Log.d(TAG, "Sent message purge to ${allPeers.size} peers (before ${cutoffMs}ms)")
+                Log.d(TAG, "Sent message purge to ${allPeers.size} peers")
             }
 
             Result.success()

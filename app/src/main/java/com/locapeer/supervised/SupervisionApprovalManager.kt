@@ -42,7 +42,7 @@ class SupervisionApprovalManager @Inject constructor(
             val payload = json.encodeToString(
                 UnlockResponsePayload(requestId = request.requestId, approved = approved)
             )
-            val encrypted = crypto.nip04Encrypt(crypto.hexToBytes(privHex), request.fromPubkey, payload)
+            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), request.fromPubkey, payload)
             val event = NostrEvent.build(
                 privKeyHex = privHex,
                 pubKeyHex = pubHex,

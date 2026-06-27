@@ -67,7 +67,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
         private const val WORK_NAME = "missed_heartbeat_check"
 
         fun schedule(workManager: WorkManager) {
-            val request = PeriodicWorkRequestBuilder<MissedHeartbeatWorker>(5, TimeUnit.MINUTES)
+            val request = PeriodicWorkRequestBuilder<MissedHeartbeatWorker>(15, TimeUnit.MINUTES)
                 .build()
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,

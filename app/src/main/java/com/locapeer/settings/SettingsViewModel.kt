@@ -143,7 +143,7 @@ class SettingsViewModel @Inject constructor(
             )
             val allPeers = peerDao.getAllPeers().first()
             allPeers.forEach { peer ->
-                val encrypted = crypto.nip04Encrypt(
+                val encrypted = crypto.nip44Encrypt(
                     senderPrivKey = crypto.hexToBytes(privHex),
                     recipientXOnlyHex = peer.publicKeyHex,
                     plaintext = payload
@@ -172,7 +172,7 @@ class SettingsViewModel @Inject constructor(
             )
             val subscribers = peerDao.getSubscribers().first()
             subscribers.forEach { sub ->
-                val encrypted = crypto.nip04Encrypt(
+                val encrypted = crypto.nip44Encrypt(
                     senderPrivKey = crypto.hexToBytes(privHex),
                     recipientXOnlyHex = sub.publicKeyHex,
                     plaintext = payload

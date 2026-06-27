@@ -57,7 +57,7 @@ class SupervisedModeManager @Inject constructor(
                     deviceName = settings.displayName.ifBlank { pubHex.take(8) }
                 )
             )
-            val encrypted = crypto.nip04Encrypt(crypto.hexToBytes(privHex), supervisorPubkey, payload)
+            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), supervisorPubkey, payload)
             val event = NostrEvent.build(
                 privKeyHex = privHex,
                 pubKeyHex = pubHex,

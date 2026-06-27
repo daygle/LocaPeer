@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.Base64
 import javax.inject.Inject
 
 data class InviteUiState(
@@ -43,10 +44,7 @@ class InviteViewModel @Inject constructor(
                     deviceId = pubHex
                 )
                 val json = Json.encodeToString(inviteData)
-                val base64 = android.util.Base64.encodeToString(
-                    json.toByteArray(),
-                    android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP
-                )
+                val base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(json.toByteArray())
                 val inviteLink = "locapeer://invite?data=$base64"
 
                 val bitmap = qrGenerator.generate(json)
