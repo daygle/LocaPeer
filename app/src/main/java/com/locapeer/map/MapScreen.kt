@@ -364,8 +364,14 @@ private fun OsmdroidMapView(
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            mapViewRef?.onPause()
-            mapViewRef?.onDetach()
+            mapViewRef?.apply {
+                // Pause first to stop queuing new tile requests, then detach.
+                // This minimises the window where tile threads try to write after
+                // the writer is nulled, eliminating the 'mWriter being null' log spam.
+                onPause()
+                tileProvider.clearTileCache()
+                onDetach()
+            }
             mapViewRef = null
         }
     }
