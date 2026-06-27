@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.GpsFixed
 import androidx.compose.material.icons.filled.LocationCity
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.data.entity.PrecisionMode
+import com.locapeer.data.entity.scheduleRules
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,6 +27,7 @@ fun PeerSharingScreen(
     peerId: String,
     peerName: String,
     onNavigateBack: () -> Unit,
+    onNavigateToSchedule: () -> Unit = {},
     vm: PeerSharingViewModel = hiltViewModel()
 ) {
     LaunchedEffect(peerId) { vm.init(peerId) }
@@ -34,13 +38,7 @@ fun PeerSharingScreen(
     val messagingEnabled = cfg?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: true
-    val scheduleEnabled = cfg?.scheduleEnabled ?: false
-    val scheduleDays = cfg?.scheduleDays ?: 0b1111111
-    val scheduleStart = cfg?.scheduleStartMinute ?: 0
-    val scheduleEnd = cfg?.scheduleEndMinute ?: 1439
-
-    var showStartPicker by remember { mutableStateOf(false) }
-    var showEndPicker by remember { mutableStateOf(false) }
+    val scheduleRules = cfg?.scheduleRules() ?: emptyList()
 
     Scaffold(
         topBar = {
@@ -48,7 +46,7 @@ fun PeerSharingScreen(
                 title = { Text("Sharing with $peerName") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -186,71 +184,20 @@ fun PeerSharingScreen(
                 SharingCard(title = "Sharing Schedule") {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Text("Enable schedule", style = MaterialTheme.typography.bodyMedium)
+                            Text("Schedule rules", style = MaterialTheme.typography.bodyMedium)
                             Text(
-                                "Only share during selected times",
+                                if (scheduleRules.isEmpty()) "Always share with $peerName"
+                                else "${scheduleRules.size} rule${if (scheduleRules.size == 1) "" else "s"} active",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
-                        Switch(
-                            checked = scheduleEnabled,
-                            onCheckedChange = { vm.setScheduleEnabled(it) },
-                            enabled = sharingEnabled
-                        )
-                    }
-
-                    if (scheduleEnabled && sharingEnabled) {
-                        Spacer(Modifier.height(16.dp))
-                        HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
-                        Spacer(Modifier.height(16.dp))
-
-                        Text(
-                            "Active days",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        DayPicker(
-                            days = scheduleDays,
-                            onDaysChanged = { vm.setScheduleDays(it) }
-                        )
-
-                        Spacer(Modifier.height(16.dp))
-                        Text(
-                            "Time window",
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            TimeButton(
-                                label = "Start",
-                                time = SharingSchedule.formatTime(scheduleStart),
-                                modifier = Modifier.weight(1f),
-                                onClick = { showStartPicker = true }
-                            )
-                            TimeButton(
-                                label = "End",
-                                time = SharingSchedule.formatTime(scheduleEnd),
-                                modifier = Modifier.weight(1f),
-                                onClick = { showEndPicker = true }
-                            )
-                        }
-                        if (scheduleStart > scheduleEnd) {
-                            Spacer(Modifier.height(4.dp))
-                            Text(
-                                "Overnight window: ${SharingSchedule.formatTime(scheduleStart)} – ${SharingSchedule.formatTime(scheduleEnd)} (+1 day)",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.primary
-                            )
+                        IconButton(onClick = onNavigateToSchedule, enabled = sharingEnabled) {
+                            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Edit schedule")
                         }
                     }
                 }
@@ -283,22 +230,6 @@ fun PeerSharingScreen(
         }
     }
 
-    if (showStartPicker) {
-        TimePickerDialog(
-            initialMinute = scheduleStart,
-            title = "Start sharing at",
-            onConfirm = { vm.setScheduleStart(it); showStartPicker = false },
-            onDismiss = { showStartPicker = false }
-        )
-    }
-    if (showEndPicker) {
-        TimePickerDialog(
-            initialMinute = scheduleEnd,
-            title = "Stop sharing at",
-            onConfirm = { vm.setScheduleEnd(it); showEndPicker = false },
-            onDismiss = { showEndPicker = false }
-        )
-    }
 }
 
 @Composable

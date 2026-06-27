@@ -24,9 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.BackupSection
-import com.locapeer.sharing.DayPicker
-import com.locapeer.sharing.SharingSchedule
-import com.locapeer.sharing.TimePickerDialog
 import com.locapeer.supervised.SupervisedModeManager
 import kotlin.math.roundToInt
 
@@ -39,6 +36,7 @@ fun SettingsScreen(
     onNavigateToHistoryReport: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCustomizeNav: () -> Unit = {},
+    onNavigateToGlobalSchedule: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsState()
@@ -64,8 +62,6 @@ fun SettingsScreen(
     var showProfileQr by remember { mutableStateOf(false) }
     var showClearLocationConfirm by remember { mutableStateOf(false) }
     var showClearMessageConfirm by remember { mutableStateOf(false) }
-    var showGlobalScheduleStartPicker by remember { mutableStateOf(false) }
-    var showGlobalScheduleEndPicker by remember { mutableStateOf(false) }
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var intervalsExpanded by remember { mutableStateOf(false) }
@@ -186,50 +182,13 @@ fun SettingsScreen(
                         }
                     }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    // Global schedule
-                    ListItem(
-                        headlineContent = { Text("Sharing schedule") },
-                        supportingContent = {
-                            Text(if (settings.globalScheduleEnabled)
-                                "${SharingSchedule.formatTime(settings.globalScheduleStartMinute)} – ${SharingSchedule.formatTime(settings.globalScheduleEndMinute)}"
-                            else "Always on")
-                        },
-                        leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.globalScheduleEnabled,
-                                onCheckedChange = { vm.setGlobalScheduleEnabled(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    NavRow(
+                        icon = Icons.Default.Schedule,
+                        label = "Sharing schedule",
+                        subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
+                                   else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
+                        onClick = onNavigateToGlobalSchedule
                     )
-                    if (settings.globalScheduleEnabled) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 56.dp, end = 16.dp, bottom = 12.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            DayPicker(
-                                days = settings.globalScheduleDays,
-                                onDaysChanged = { vm.updateGlobalSchedule(days = it) }
-                            )
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                OutlinedButton(onClick = { showGlobalScheduleStartPicker = true }, modifier = Modifier.weight(1f)) {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        Text("Start", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                        Text(SharingSchedule.formatTime(settings.globalScheduleStartMinute), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                                    }
-                                }
-                                OutlinedButton(onClick = { showGlobalScheduleEndPicker = true }, modifier = Modifier.weight(1f)) {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                        Text("End", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                                        Text(SharingSchedule.formatTime(settings.globalScheduleEndMinute), style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.SemiBold)
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             }
 
@@ -567,23 +526,6 @@ fun SettingsScreen(
                 TextButton(onClick = { vm.clearMessageHistory(); showClearMessageConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Delete") }
             },
             dismissButton = { TextButton(onClick = { showClearMessageConfirm = false }) { Text("Cancel") } }
-        )
-    }
-
-    if (showGlobalScheduleStartPicker) {
-        TimePickerDialog(
-            initialMinute = settings.globalScheduleStartMinute,
-            title = "Start sharing at",
-            onConfirm = { vm.updateGlobalSchedule(startMinute = it); showGlobalScheduleStartPicker = false },
-            onDismiss = { showGlobalScheduleStartPicker = false }
-        )
-    }
-    if (showGlobalScheduleEndPicker) {
-        TimePickerDialog(
-            initialMinute = settings.globalScheduleEndMinute,
-            title = "Stop sharing at",
-            onConfirm = { vm.updateGlobalSchedule(endMinute = it); showGlobalScheduleEndPicker = false },
-            onDismiss = { showGlobalScheduleEndPicker = false }
         )
     }
 

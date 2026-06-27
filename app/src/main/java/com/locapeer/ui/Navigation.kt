@@ -34,6 +34,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.sharing.PeerSharingScreen
+import com.locapeer.sharing.ScheduleScreen
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -183,7 +184,8 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToHistoryReport = { navController.navigate("history-report") },
                     onNavigateToAbout = { navController.navigate("about") },
-                    onNavigateToCustomizeNav = { navController.navigate("customize-nav") }
+                    onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
+                    onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") }
                 )
             }
             composable(
@@ -254,11 +256,30 @@ fun LocaPeerNavHost(
                 popEnterTransition = { slidePopEnter },
                 popExitTransition = { slidePopExit }
             ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
                 PeerSharingScreen(
-                    peerId = entry.arguments?.getString("peerId") ?: "",
-                    peerName = entry.arguments?.getString("peerName") ?: "",
-                    onNavigateBack = { navController.popBackStack() }
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToSchedule = {
+                        navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=$peerName")
+                    }
                 )
+            }
+            composable(
+                route = "schedule?scope={scope}&peerId={peerId}&peerName={peerName}",
+                arguments = listOf(
+                    navArgument("scope") { type = NavType.StringType; defaultValue = "global" },
+                    navArgument("peerId") { type = NavType.StringType; defaultValue = "" },
+                    navArgument("peerName") { type = NavType.StringType; defaultValue = "" }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                ScheduleScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 "customize-nav",

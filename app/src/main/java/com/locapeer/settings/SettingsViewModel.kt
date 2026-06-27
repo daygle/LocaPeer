@@ -24,6 +24,7 @@ import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -385,12 +386,8 @@ class SettingsViewModel @Inject constructor(
 
     fun resetUnlockState() = supervisedModeManager.reset()
 
-    fun setGlobalScheduleEnabled(enabled: Boolean) {
-        viewModelScope.launch { prefs.setGlobalScheduleEnabled(enabled) }
-    }
-
-    fun updateGlobalSchedule(days: Int? = null, startMinute: Int? = null, endMinute: Int? = null) {
-        viewModelScope.launch { prefs.updateGlobalSchedule(days, startMinute, endMinute) }
+    fun setGlobalScheduleRules(rules: List<ScheduleRule>) {
+        viewModelScope.launch { prefs.setGlobalScheduleRules(rules) }
     }
 
     fun updateIntervals(

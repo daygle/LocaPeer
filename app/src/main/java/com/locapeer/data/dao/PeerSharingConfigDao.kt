@@ -25,11 +25,14 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET precisionMode = :mode WHERE peerDeviceId = :peerDeviceId")
     suspend fun setPrecisionMode(peerDeviceId: String, mode: String)
 
+    @Query("UPDATE peer_sharing_config SET scheduleRulesJson = :rulesJson WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setScheduleRules(peerDeviceId: String, rulesJson: String)
+
     @Query("SELECT * FROM peer_sharing_config")
     suspend fun getAll(): List<PeerSharingConfig>
 
     @Query("SELECT * FROM peer_sharing_config")
-    fun observeAll(): kotlinx.coroutines.flow.Flow<List<PeerSharingConfig>>
+    fun observeAll(): Flow<List<PeerSharingConfig>>
 
     @Query("DELETE FROM peer_sharing_config WHERE peerDeviceId = :peerDeviceId")
     suspend fun deleteForPeer(peerDeviceId: String)
