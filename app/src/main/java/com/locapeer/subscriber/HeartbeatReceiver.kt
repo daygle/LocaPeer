@@ -48,7 +48,7 @@ import javax.inject.Singleton
 private const val TAG = "HeartbeatReceiver"
 private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
 private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
-private const val SUB_ID = "locapeer-heartbeats"
+private const val SUB_ID = "lp-hb"
 
 @Singleton
 class HeartbeatReceiver @Inject constructor(

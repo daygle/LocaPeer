@@ -139,7 +139,7 @@ class MessagingViewModel @Inject constructor(
         createMessageChannel()
         viewModelScope.launch {
             relayClient.subscribe(
-                "locapeer-dm-$myPubHex",
+                "lp-dm-$myPubHex",
                 NostrFilter(
                     kinds = listOf(
                         NostrEventKind.ENCRYPTED_DM,
@@ -298,7 +298,7 @@ class MessagingViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         myListeningPubkey?.let { pubkey ->
-            relayClient.unsubscribe("locapeer-dm-$pubkey")
+            relayClient.unsubscribe("lp-dm-$pubkey")
         }
     }
 }
