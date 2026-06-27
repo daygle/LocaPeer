@@ -24,7 +24,7 @@ Each device generates a unique Nostr keypair on first launch. Your public key is
 Share your **Invite QR code** or **Invite Link** (found in Settings → My Profile). When someone scans it, their device saves your public key and starts subscribing to your encrypted location events.
 
 ### Location Events
-When broadcasting is enabled, the app sends a `HEARTBEAT` event (kind 1) encrypted specifically for each subscriber. Heartbeat frequency is **motion-adaptive** — the app updates more frequently when you are moving (driving/walking) and slows down when stationary to save battery.
+When broadcasting is enabled, the app sends a `HEARTBEAT` event (kind 1) encrypted specifically for each subscriber. Heartbeat frequency is **motion-adaptive** - the app updates more frequently when you are moving (driving/walking) and slows down when stationary to save battery.
 
 ### Supervised Mode
 Enable Supervised Mode to lock the Settings screen. Access requires the designated supervisor to approve a request in real time from their own device - no static PIN or password to be compromised.
