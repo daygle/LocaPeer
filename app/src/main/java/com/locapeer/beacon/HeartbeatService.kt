@@ -128,7 +128,7 @@ class HeartbeatService : LifecycleService() {
             }
             ACTION_ACTIVITY_UPDATE -> {
                 if (ActivityRecognitionResult.hasResult(intent)) {
-                    val result = ActivityRecognitionResult.extractResult(intent) ?: return
+                    val result = ActivityRecognitionResult.extractResult(intent) ?: return START_NOT_STICKY
                     val detected = result.mostProbableActivity
                     val newState = when (detected.type) {
                         DetectedActivity.STILL -> MotionState.STATIONARY
