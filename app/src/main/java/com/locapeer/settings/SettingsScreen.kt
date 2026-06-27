@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
-import androidx.compose.material.icons.filled.NetworkCheck
 import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
@@ -70,9 +68,6 @@ fun SettingsScreen(
     var showGlobalScheduleEndPicker by remember { mutableStateOf(false) }
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
-    var showAddRelayDialog by remember { mutableStateOf(false) }
-    var newRelayUrl by remember { mutableStateOf("wss://") }
-
     var editingPeer by remember { mutableStateOf<PeerEntity?>(null) }
     var newPeerName by remember { mutableStateOf("") }
 
@@ -444,36 +439,6 @@ fun SettingsScreen(
             }
 
             item {
-                SettingsSection("Relays") {
-                    Text(
-                        "Communication is decentralized via Nostr relays. Adding more relays increases reliability.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(Modifier.height(8.dp))
-                    settings.customRelays.forEach { url ->
-                        ListItem(
-                            headlineContent = { Text(url.removePrefix("wss://")) },
-                            trailingContent = {
-                                IconButton(onClick = { vm.removeRelay(url) }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Remove relay")
-                                }
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    }
-                    OutlinedButton(
-                        onClick = { showAddRelayDialog = true },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Icon(Icons.Default.Add, contentDescription = null)
-                        Spacer(Modifier.width(8.dp))
-                        Text("Add Relay")
-                    }
-                }
-            }
-
-            item {
                 SettingsSection("Privacy") {
                     Text(
                         "Control how long your data is kept on others' devices.",
@@ -736,45 +701,6 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") }
-            }
-        )
-    }
-
-    if (showAddRelayDialog) {
-        AlertDialog(
-            onDismissRequest = { showAddRelayDialog = false },
-            title = { Text("Add Relay") },
-            text = {
-                Column {
-                    Text(
-                        "Enter the URL of a Nostr relay (starts with wss://).",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    Spacer(Modifier.height(12.dp))
-                    OutlinedTextField(
-                        value = newRelayUrl,
-                        onValueChange = { newRelayUrl = it },
-                        label = { Text("Relay URL") },
-                        modifier = Modifier.fillMaxWidth(),
-                        singleLine = true
-                    )
-                }
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        if (newRelayUrl.startsWith("wss://")) {
-                            vm.addRelay(newRelayUrl.trim())
-                            newRelayUrl = "wss://"
-                            showAddRelayDialog = false
-                        }
-                    },
-                    enabled = newRelayUrl.length > 6
-                ) { Text("Add") }
-            },
-            dismissButton = {
-                TextButton(onClick = { showAddRelayDialog = false }) { Text("Cancel") }
             }
         )
     }

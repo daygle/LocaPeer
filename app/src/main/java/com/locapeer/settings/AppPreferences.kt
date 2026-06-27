@@ -19,6 +19,8 @@ import javax.inject.Singleton
 private val Context.settingsStore by preferencesDataStore(name = "locapeer_settings")
 private const val TAG = "AppPreferences"
 
+val HARDCODED_RELAYS = listOf("wss://relay.daygle.net", "wss://relay.damus.io")
+
 data class AppSettings(
     val displayName: String = "",
     val heartbeatEnabled: Boolean = false,
@@ -38,7 +40,7 @@ data class AppSettings(
     val messageRetentionDays: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
-    val customRelays: List<String> = listOf("wss://relay.daygle.net", "wss://relay.damus.io")
+    val customRelays: List<String> = HARDCODED_RELAYS
 )
 
 @Singleton
@@ -62,7 +64,6 @@ class AppPreferences @Inject constructor(
     private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
-    private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -74,9 +75,6 @@ class AppPreferences @Inject constructor(
             }
         }
         .map { prefs ->
-            val relayString = prefs[KEY_CUSTOM_RELAYS] ?: "wss://relay.daygle.net,wss://relay.damus.io"
-            val relays = relayString.split(",").filter { it.isNotBlank() }
-
             AppSettings(
                 displayName = prefs[KEY_DISPLAY_NAME] ?: "",
                 heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
@@ -94,8 +92,7 @@ class AppPreferences @Inject constructor(
                 retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
                 messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
-                supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
-                customRelays = relays
+                supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: ""
             )
         }
 
@@ -164,26 +161,6 @@ class AppPreferences @Inject constructor(
             cycling?.let { prefs[KEY_CYCLING_INTERVAL] = it }
             driving?.let { prefs[KEY_DRIVING_INTERVAL] = it }
             lowBattery?.let { prefs[KEY_LOW_BATTERY_INTERVAL] = it }
-        }
-    }
-
-    suspend fun addRelay(url: String) {
-        context.settingsStore.edit { prefs ->
-            val current = prefs[KEY_CUSTOM_RELAYS] ?: "wss://relay.daygle.net,wss://relay.damus.io"
-            val list = current.split(",").toMutableList()
-            if (!list.contains(url)) {
-                list.add(url)
-                prefs[KEY_CUSTOM_RELAYS] = list.filter { it.isNotBlank() }.joinToString(",")
-            }
-        }
-    }
-
-    suspend fun removeRelay(url: String) {
-        context.settingsStore.edit { prefs ->
-            val current = prefs[KEY_CUSTOM_RELAYS] ?: "wss://relay.daygle.net,wss://relay.damus.io"
-            val list = current.split(",").toMutableList()
-            list.remove(url)
-            prefs[KEY_CUSTOM_RELAYS] = list.filter { it.isNotBlank() }.joinToString(",")
         }
     }
 }

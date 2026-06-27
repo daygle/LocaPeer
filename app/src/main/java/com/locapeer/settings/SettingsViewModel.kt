@@ -228,11 +228,4 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun addRelay(url: String) {
-        viewModelScope.launch { prefs.addRelay(url) }
-    }
-
-    fun removeRelay(url: String) {
-        viewModelScope.launch { prefs.removeRelay(url) }
-    }
 }
