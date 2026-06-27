@@ -66,7 +66,12 @@ class SettingsViewModel @Inject constructor(
             _publicKeyHex.value = pubHex
             val s = prefs.settings.first()
             val json = Json.encodeToString(
-                InviteData(publicKeyHex = pubHex, displayName = s.displayName, relayUrl = s.relayUrl, deviceId = pubHex)
+                InviteData(
+                    publicKeyHex = pubHex,
+                    displayName = s.displayName,
+                    relayUrl = "wss://relay.daygle.net",
+                    deviceId = pubHex
+                )
             )
             _profileQr.value = qrGenerator.generate(json)
         }
@@ -74,10 +79,6 @@ class SettingsViewModel @Inject constructor(
 
     fun updateDisplayName(name: String) {
         viewModelScope.launch { prefs.updateDisplayName(name) }
-    }
-
-    fun updateRelayUrl(url: String) {
-        viewModelScope.launch { prefs.updateRelayUrl(url) }
     }
 
     fun setHeartbeatEnabled(enabled: Boolean) {
@@ -124,7 +125,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setMessageRetentionDays(days) }
     }
 
-    /** Immediately sends a MESSAGE_PURGE_REQUEST Nostr event to all peers. */
     fun sendMessagePurgeNow() {
         viewModelScope.launch {
             val settings = prefs.settings.first()
@@ -154,7 +154,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    /** Immediately sends a PURGE_REQUEST Nostr event to all current subscribers. */
     fun sendPurgeNow() {
         viewModelScope.launch {
             val settings = prefs.settings.first()

@@ -38,7 +38,7 @@ class InviteViewModel @Inject constructor(
                 val inviteData = InviteData(
                     publicKeyHex = pubHex,
                     displayName = settings.displayName,
-                    relayUrl = settings.relayUrl,
+                    relayUrl = "wss://relay.daygle.net",
                     deviceId = pubHex
                 )
                 val json = Json.encodeToString(inviteData)

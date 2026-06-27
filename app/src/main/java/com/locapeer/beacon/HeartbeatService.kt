@@ -172,9 +172,8 @@ class HeartbeatService : LifecycleService() {
         }
 
         lifecycleScope.launch {
-            val settings = prefs.settings.first()
-            currentSettings = settings
-            relayClient.connect(settings.relayUrl)
+            currentSettings = prefs.settings.first()
+            relayClient.connect()
         }
 
         handler.post(heartbeatRunnable)
@@ -219,7 +218,6 @@ class HeartbeatService : LifecycleService() {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
-                // Global schedule gate (skip for SOS - always send those)
                 if (!isSos && settings.globalScheduleEnabled) {
                     val active = SharingSchedule.isActive(
                         settings.globalScheduleDays,
@@ -238,13 +236,8 @@ class HeartbeatService : LifecycleService() {
                 subscribers.forEach { subscriber ->
                     val cfg = configMap[subscriber.deviceId]
 
-                    // SOS routing: skip if not designated as SOS contact
                     if (isSos && cfg?.isSosContact == false) return@forEach
-
-                    // Per-peer disable check (SOS always bypasses general disable if they are an SOS contact)
                     if (!isSos && cfg?.sharingEnabled == false) return@forEach
-
-                    // Per-peer schedule check (SOS always bypasses)
                     if (!isSos && cfg?.scheduleEnabled == true) {
                         val active = SharingSchedule.isActive(
                             cfg.scheduleDays, cfg.scheduleStartMinute, cfg.scheduleEndMinute
@@ -252,7 +245,6 @@ class HeartbeatService : LifecycleService() {
                         if (!active) return@forEach
                     }
 
-                    // Apply precision - default to EXACT when no config exists
                     val (sendLat, sendLng) = if (
                         cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
                     ) {
