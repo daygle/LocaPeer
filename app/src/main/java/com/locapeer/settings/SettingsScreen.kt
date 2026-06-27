@@ -40,6 +40,7 @@ fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToHistoryReport: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
+    onNavigateToCustomizeNav: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsState()
@@ -510,6 +511,18 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+                }
+            }
+
+            item {
+                SettingsSection("Appearance") {
+                    ListItem(
+                        headlineContent = { Text("Customize Navigation") },
+                        supportingContent = { Text("Choose and reorder bottom tabs") },
+                        leadingContent = { Icon(Icons.Default.Settings, contentDescription = null) },
+                        modifier = Modifier.clickable(onClick = onNavigateToCustomizeNav),
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 

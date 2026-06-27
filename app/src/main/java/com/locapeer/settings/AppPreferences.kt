@@ -40,7 +40,9 @@ data class AppSettings(
     val messageRetentionDays: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
-    val customRelays: List<String> = HARDCODED_RELAYS
+    val customRelays: List<String> = HARDCODED_RELAYS,
+    /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
+    val navTabIds: List<String> = listOf("map", "messages", "contacts", "invite", "settings")
 )
 
 @Singleton
@@ -64,6 +66,7 @@ class AppPreferences @Inject constructor(
     private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
+    private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -92,7 +95,12 @@ class AppPreferences @Inject constructor(
                 retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
                 messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
-                supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: ""
+                supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
+                navTabIds = prefs[KEY_NAV_TAB_IDS]
+                    ?.split(",")
+                    ?.filter { it.isNotBlank() }
+                    ?.takeIf { it.size >= 2 }
+                    ?: listOf("map", "messages", "contacts", "invite", "settings")
             )
         }
 
@@ -121,6 +129,10 @@ class AppPreferences @Inject constructor(
             it[KEY_SUPERVISED_MODE] = enabled
             it[KEY_SUPERVISOR_PUBKEY] = supervisorPubkey
         }
+    }
+
+    suspend fun setNavTabIds(ids: List<String>) {
+        context.settingsStore.edit { it[KEY_NAV_TAB_IDS] = ids.joinToString(",") }
     }
 
     suspend fun clearSupervisedMode() {
