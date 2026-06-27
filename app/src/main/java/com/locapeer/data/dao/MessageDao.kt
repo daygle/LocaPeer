@@ -48,4 +48,7 @@ interface MessageDao {
 
     @Query("DELETE FROM messages WHERE senderPublicKeyHex = :senderPubKeyHex AND timestamp < :before")
     suspend fun deleteOlderThanFromSender(senderPubKeyHex: String, before: Long)
+
+    @Query("DELETE FROM messages WHERE senderPublicKeyHex = :senderPubKeyHex")
+    suspend fun deleteAllFromSender(senderPubKeyHex: String)
 }

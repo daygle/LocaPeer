@@ -52,6 +52,19 @@ class ContactsViewModel @Inject constructor(
         viewModelScope.launch { peerManager.removePeer(deviceId) }
     }
 
+    /** Send DELETE_MY_MESSAGES + DELETE_MY_LOCATION + PEER_REMOVED to the contact, then wipe locally. */
+    fun removeSelfFromPeer(deviceId: String) {
+        viewModelScope.launch { peerManager.removeSelfFromPeer(deviceId) }
+    }
+
+    fun deleteMyMessagesFromPeer(deviceId: String) {
+        viewModelScope.launch { peerManager.sendDeleteMyMessages(deviceId) }
+    }
+
+    fun deleteMyLocationFromPeer(deviceId: String) {
+        viewModelScope.launch { peerManager.sendDeleteMyLocation(deviceId) }
+    }
+
     fun renamePeer(peer: PeerEntity, newName: String) {
         viewModelScope.launch {
             peerDao.upsertPeer(peer.copy(displayName = newName.trim()))

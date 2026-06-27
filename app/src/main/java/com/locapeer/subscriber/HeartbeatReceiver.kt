@@ -101,7 +101,9 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
                         NostrEventKind.TRACK_REQUEST,
                         NostrEventKind.TRACK_ACCEPT,
-                        NostrEventKind.PEER_REMOVED
+                        NostrEventKind.PEER_REMOVED,
+                        NostrEventKind.DELETE_MY_MESSAGES,
+                        NostrEventKind.DELETE_MY_LOCATION
                     ),
                     pTags = listOf(pubHex)
                 )
@@ -122,6 +124,8 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
                     NostrEventKind.PEER_REMOVED -> scope.launch { processPeerRemoved(event) }
+                    NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
+                    NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
                 }
             }
             .launchIn(scope)
@@ -342,6 +346,26 @@ class HeartbeatReceiver @Inject constructor(
             json.decodeFromString<PeerRemovedPayload>(plaintext)
         } catch (e: Exception) { return }
         peerManager.handleRemovalByPeer(event.pubkey)
+    }
+
+    private suspend fun processDeleteMyMessages(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        peerManager.handleDeleteMyMessages(event.pubkey)
+    }
+
+    private suspend fun processDeleteMyLocation(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        peerManager.handleDeleteMyLocation(event.pubkey)
     }
 
     private suspend fun processTrackRequest(event: NostrEvent) {
