@@ -32,9 +32,7 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    onNavigateToGeofences: () -> Unit,
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
-    onNavigateToHistoryReport: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCustomizeNav: () -> Unit = {},
     onNavigateToGlobalSchedule: () -> Unit = {},
@@ -198,26 +196,6 @@ fun SettingsScreen(
                 }
             }
 
-            item { SectionLabel("Alerts") }
-
-            item {
-                SettingsCard {
-                    NavRow(
-                        icon = Icons.Default.Fence,
-                        label = "Geofences",
-                        subtitle = "Notify when contacts enter/leave areas",
-                        onClick = onNavigateToGeofences
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.History,
-                        label = "Location History",
-                        subtitle = "View and export movement history",
-                        onClick = onNavigateToHistoryReport
-                    )
-                }
-            }
-
             item { SectionLabel("Privacy & Data") }
 
             // Data on this device (local retention + manual clear)
@@ -254,12 +232,12 @@ fun SettingsScreen(
                             onClick = { showClearLocationConfirm = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                        ) { Text("Clear locations", style = MaterialTheme.typography.labelMedium) }
+                        ) { Text("Clear Locations", style = MaterialTheme.typography.labelMedium) }
                         OutlinedButton(
                             onClick = { showClearMessageConfirm = true },
                             modifier = Modifier.weight(1f),
                             colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                        ) { Text("Clear messages", style = MaterialTheme.typography.labelMedium) }
+                        ) { Text("Clear Messages", style = MaterialTheme.typography.labelMedium) }
                     }
                 }
             }
@@ -315,7 +293,7 @@ fun SettingsScreen(
                 SettingsCard {
                     if (settings.supervisedModeEnabled) {
                         ListItem(
-                            headlineContent = { Text("Supervision active") },
+                            headlineContent = { Text("Supervision Active") },
                             supportingContent = { Text("Settings require supervisor approval") },
                             leadingContent = { Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)

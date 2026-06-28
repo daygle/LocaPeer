@@ -30,6 +30,8 @@ fun PeerSharingScreen(
     peerName: String,
     onNavigateBack: () -> Unit,
     onNavigateToSchedule: () -> Unit = {},
+    onNavigateToGeofences: (String) -> Unit = {},
+    onNavigateToHistory: (String) -> Unit = {},
     vm: PeerSharingViewModel = hiltViewModel()
 ) {
     LaunchedEffect(peerId) { vm.init(peerId) }
@@ -148,7 +150,7 @@ fun PeerSharingScreen(
                 }
             }
 
-            item { SectionLabel("Alerts & Proximity") }
+            item { SectionLabel("Alerts & Activity") }
             item {
                 SettingsCard {
                     ListItem(
@@ -177,7 +179,7 @@ fun PeerSharingScreen(
                         val radius = proximityAlert?.radiusMetres ?: 500
                         Column(modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 12.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("Alert radius", style = MaterialTheme.typography.bodySmall)
+                                Text("Alert Radius", style = MaterialTheme.typography.bodySmall)
                                 Text("${radius}m", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             }
                             Slider(
@@ -188,6 +190,24 @@ fun PeerSharingScreen(
                             )
                         }
                     }
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Geofences") },
+                        supportingContent = { Text("Notify when $peerName enters or leaves areas") },
+                        leadingContent = { Icon(Icons.Default.Fence, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
+                        modifier = Modifier.clickable { onNavigateToGeofences(peerId) },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Location History") },
+                        supportingContent = { Text("View movement history for $peerName") },
+                        leadingContent = { Icon(Icons.Default.History, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
+                        modifier = Modifier.clickable { onNavigateToHistory(peerId) },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 

@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
@@ -27,6 +28,7 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GeofenceListScreen(
+    peerId: String? = null,
     onNavigateBack: () -> Unit,
     vm: GeofenceViewModel = hiltViewModel()
 ) {
@@ -34,10 +36,21 @@ fun GeofenceListScreen(
     val broadcastersWithLocation by vm.broadcastersWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }
 
+    val filteredGeofences = remember(geofences, peerId) {
+        if (peerId == null) geofences else geofences.filter { it.trackedDeviceId == peerId }
+    }
+
+    val title = if (peerId != null) {
+        val name = broadcastersWithLocation.find { it.peer.deviceId == peerId }?.peer?.displayName
+        if (name != null) "Geofences for $name" else "Geofences"
+    } else {
+        "Geofences"
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Geofences") },
+                title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -47,7 +60,7 @@ fun GeofenceListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add geofence")
+                Icon(Icons.Default.Add, contentDescription = "Add Geofence")
             }
         }
     ) { padding ->
@@ -56,7 +69,7 @@ fun GeofenceListScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            items(geofences, key = { it.id }) { fence ->
+            items(filteredGeofences, key = { it.id }) { fence ->
                 GeofenceCard(
                     fence = fence,
                     trackedName = broadcastersWithLocation
@@ -66,16 +79,18 @@ fun GeofenceListScreen(
                     onDelete = { vm.delete(fence) }
                 )
             }
-            if (geofences.isEmpty()) {
+            if (filteredGeofences.isEmpty()) {
                 item {
                     Box(
                         modifier = Modifier.fillParentMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            "No geofences yet.\nTap + to create one.",
+                            if (peerId != null) "No geofences for this contact.\nTap + to create one."
+                            else "No geofences yet.\nTap + to create one.",
                             style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
@@ -84,18 +99,24 @@ fun GeofenceListScreen(
     }
 
     if (showCreateDialog) {
-        if (broadcastersWithLocation.isEmpty()) {
+        val availableBroadcasters = if (peerId != null) {
+            broadcastersWithLocation.filter { it.peer.deviceId == peerId }
+        } else {
+            broadcastersWithLocation
+        }
+
+        if (availableBroadcasters.isEmpty()) {
             AlertDialog(
                 onDismissRequest = { showCreateDialog = false },
-                title = { Text("No contacts yet") },
-                text = { Text("You need at least one tracked contact before creating a geofence. Scan an invite QR code to add someone.") },
+                title = { Text("No Contacts Found") },
+                text = { Text(if (peerId != null) "This contact hasn't shared their location yet." else "You need at least one tracked contact before creating a geofence.") },
                 confirmButton = {
                     TextButton(onClick = { showCreateDialog = false }) { Text("OK") }
                 }
             )
         } else {
             CreateGeofenceDialog(
-                broadcastersWithLocation = broadcastersWithLocation,
+                broadcastersWithLocation = availableBroadcasters,
                 onDismiss = { showCreateDialog = false },
                 onCreate = { name, lat, lng, radius, deviceId, trigger ->
                     vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
@@ -137,7 +158,7 @@ private fun GeofenceCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    "${fence.radiusMetres}m • ${fence.triggerOn}",
+                    "${fence.radiusMetres}m • ${fence.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
                     style = MaterialTheme.typography.bodySmall,
                     color = triggerColor
                 )

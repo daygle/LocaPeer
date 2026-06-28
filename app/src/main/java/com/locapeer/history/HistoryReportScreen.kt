@@ -35,9 +35,14 @@ import java.util.TimeZone
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryReportScreen(
+    peerId: String? = null,
     onNavigateBack: () -> Unit,
     vm: HistoryReportViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(peerId) {
+        if (peerId != null) vm.selectPeer(peerId)
+    }
+
     val broadcasters by vm.broadcasters.collectAsState()
     val selectedPeerId by vm.selectedPeerId.collectAsState()
     val selectedDayStart by vm.selectedDayStart.collectAsState()
@@ -56,7 +61,7 @@ fun HistoryReportScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Location History") },
+                title = { Text(if (selectedPeer != null) "History: ${selectedPeer.displayName}" else "Location History") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -84,37 +89,38 @@ fun HistoryReportScreen(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Spacer(Modifier.height(12.dp))
 
-                ExposedDropdownMenuBox(
-                    expanded = peerDropdownExpanded,
-                    onExpandedChange = { peerDropdownExpanded = it }
-                ) {
-                    OutlinedTextField(
-                        value = selectedPeer?.displayName ?: "Select person",
-                        onValueChange = {},
-                        readOnly = true,
-                        label = { Text("Person") },
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
-                        modifier = Modifier
-                            .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
-                            .fillMaxWidth()
-                    )
-                    ExposedDropdownMenu(
+                if (peerId == null) {
+                    ExposedDropdownMenuBox(
                         expanded = peerDropdownExpanded,
-                        onDismissRequest = { peerDropdownExpanded = false }
+                        onExpandedChange = { peerDropdownExpanded = it }
                     ) {
-                        broadcasters.forEach { peer ->
-                            DropdownMenuItem(
-                                text = { Text(peer.displayName) },
-                                onClick = {
-                                    vm.selectPeer(peer.deviceId)
-                                    peerDropdownExpanded = false
-                                }
-                            )
+                        OutlinedTextField(
+                            value = selectedPeer?.displayName ?: "Select Person",
+                            onValueChange = {},
+                            readOnly = true,
+                            label = { Text("Person") },
+                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
+                            modifier = Modifier
+                                .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
+                                .fillMaxWidth()
+                        )
+                        ExposedDropdownMenu(
+                            expanded = peerDropdownExpanded,
+                            onDismissRequest = { peerDropdownExpanded = false }
+                        ) {
+                            broadcasters.forEach { peer ->
+                                DropdownMenuItem(
+                                    text = { Text(peer.displayName) },
+                                    onClick = {
+                                        vm.selectPeer(peer.deviceId)
+                                        peerDropdownExpanded = false
+                                    }
+                                )
+                            }
                         }
                     }
+                    Spacer(Modifier.height(12.dp))
                 }
-
-                Spacer(Modifier.height(12.dp))
 
                 Card(modifier = Modifier.fillMaxWidth()) {
                     Row(
@@ -124,7 +130,7 @@ fun HistoryReportScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         IconButton(onClick = { vm.prevDay() }) {
-                            Icon(Icons.Default.ChevronLeft, contentDescription = "Previous day")
+                            Icon(Icons.Default.ChevronLeft, contentDescription = "Previous Day")
                         }
                         TextButton(
                             onClick = { showDatePicker = true },
@@ -140,7 +146,7 @@ fun HistoryReportScreen(
                             onClick = { vm.nextDay() },
                             enabled = !vm.isToday()
                         ) {
-                            Icon(Icons.Default.ChevronRight, contentDescription = "Next day")
+                            Icon(Icons.Default.ChevronRight, contentDescription = "Next Day")
                         }
                     }
                 }

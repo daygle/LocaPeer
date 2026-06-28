@@ -183,11 +183,9 @@ fun LocaPeerNavHost(
             }
             composable(Screen.Settings.route) {
                 SettingsScreen(
-                    onNavigateToGeofences = { navController.navigate("geofences") },
                     onNavigateToPeerSharing = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
                     },
-                    onNavigateToHistoryReport = { navController.navigate("history-report") },
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") }
@@ -218,22 +216,30 @@ fun LocaPeerNavHost(
                 )
             }
             composable(
-                "geofences",
+                "geofences?peerId={peerId}",
+                arguments = listOf(navArgument("peerId") { type = NavType.StringType; nullable = true; defaultValue = null }),
                 enterTransition = { slideEnter },
                 exitTransition = { slideExit },
                 popEnterTransition = { slidePopEnter },
                 popExitTransition = { slidePopExit }
-            ) {
-                GeofenceListScreen(onNavigateBack = { navController.popBackStack() })
+            ) { entry ->
+                GeofenceListScreen(
+                    peerId = entry.arguments?.getString("peerId"),
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
             composable(
-                "history-report",
+                "history-report?peerId={peerId}",
+                arguments = listOf(navArgument("peerId") { type = NavType.StringType; nullable = true; defaultValue = null }),
                 enterTransition = { slideEnter },
                 exitTransition = { slideExit },
                 popEnterTransition = { slidePopEnter },
                 popExitTransition = { slidePopExit }
-            ) {
-                HistoryReportScreen(onNavigateBack = { navController.popBackStack() })
+            ) { entry ->
+                HistoryReportScreen(
+                    peerId = entry.arguments?.getString("peerId"),
+                    onNavigateBack = { navController.popBackStack() }
+                )
             }
             composable(
                 "about",
@@ -267,6 +273,12 @@ fun LocaPeerNavHost(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToSchedule = {
                         navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=$peerName")
+                    },
+                    onNavigateToGeofences = { id ->
+                        navController.navigate("geofences?peerId=$id")
+                    },
+                    onNavigateToHistory = { id ->
+                        navController.navigate("history-report?peerId=$id")
                     }
                 )
             }
