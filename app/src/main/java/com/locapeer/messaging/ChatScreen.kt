@@ -27,6 +27,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -35,7 +38,6 @@ import com.locapeer.data.entity.MessageEntity
 import android.content.Intent
 import android.net.Uri
 import android.util.Patterns
-import androidx.compose.foundation.text.ClickableText
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -298,24 +300,8 @@ private fun LinkifiedText(
             while (matcher.find()) {
                 append(text.substring(lastIndex, matcher.start()))
                 val url = text.substring(matcher.start(), matcher.end())
-                pushStringAnnotation(tag = "URL", annotation = url)
-                withStyle(style = SpanStyle(color = Color(0xFF0000EE), textDecoration = TextDecoration.Underline)) {
-                    append(url)
-                }
-                pop()
-                lastIndex = matcher.end()
-            }
-            append(text.substring(lastIndex))
-        }
-    }
-
-    ClickableText(
-        text = annotatedString,
-        style = style,
-        onClick = { offset ->
-            annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset)
-                .firstOrNull()?.let { annotation ->
-                    val url = annotation.item
+                
+                val linkInteractionListener = { _: LinkAnnotation ->
                     val uri = Uri.parse(url)
                     val mlat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
                     val mlon = uri.getQueryParameter("mlon")?.toDoubleOrNull()
@@ -331,7 +317,30 @@ private fun LinkifiedText(
                         }
                     }
                 }
+
+                val link = LinkAnnotation.Clickable(
+                    tag = "URL",
+                    styles = TextLinkStyles(
+                        style = SpanStyle(
+                            color = Color(0xFF0000EE),
+                            textDecoration = TextDecoration.Underline
+                        )
+                    ),
+                    linkInteractionListener = linkInteractionListener
+                )
+
+                withLink(link) {
+                    append(url)
+                }
+                lastIndex = matcher.end()
+            }
+            append(text.substring(lastIndex))
         }
+    }
+
+    Text(
+        text = annotatedString,
+        style = style
     )
 }
 
