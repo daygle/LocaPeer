@@ -16,7 +16,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
@@ -41,6 +44,7 @@ class KeyManager @Inject constructor(
     private val KEY_PRIVATE_ENCRYPTED = stringPreferencesKey("private_key_encrypted")
     private val KEY_PUBLIC_METADATA = stringPreferencesKey("public_key_hex")
 
+    private val mutex = Mutex()
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private val _publicKeyFlow = MutableStateFlow<String?>(null)
@@ -94,48 +98,55 @@ class KeyManager @Inject constructor(
     // Reads the key, deletes the old file, and returns the plaintext hex (or null if absent).
     @Suppress("DEPRECATION")
     private fun migrateLegacyKey(): String? = try {
-        val masterKey = androidx.security.crypto.MasterKey.Builder(context)
-            .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM)
-            .build()
-        val prefs = androidx.security.crypto.EncryptedSharedPreferences.create(
-            context,
-            "locapeer_secure_keys",
-            masterKey,
-            androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        prefs.getString("private_key_hex", null)?.also {
-            context.deleteSharedPreferences("locapeer_secure_keys")
-            Log.i(TAG, "Migrated private key from legacy EncryptedSharedPreferences")
+        val prefsFile = File(context.filesDir.parent, "shared_prefs/locapeer_secure_keys.xml")
+        if (!prefsFile.exists()) {
+            null
+        } else {
+            val masterKey = androidx.security.crypto.MasterKey.Builder(context)
+                .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM)
+                .build()
+            val prefs = androidx.security.crypto.EncryptedSharedPreferences.create(
+                context,
+                "locapeer_secure_keys",
+                masterKey,
+                androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+            prefs.getString("private_key_hex", null)?.also {
+                context.deleteSharedPreferences("locapeer_secure_keys")
+                Log.i(TAG, "Migrated private key from legacy EncryptedSharedPreferences")
+            }
         }
     } catch (e: Exception) {
-        Log.d(TAG, "No legacy key to migrate: ${e.message}")
+        Log.d(TAG, "No legacy key to migrate or error during migration: ${e.message}")
         null
     }
 
-    suspend fun ensureKeypair(): Pair<String, String> = withContext(Dispatchers.IO) {
-        val prefs = context.keyStore.data.first()
-        val encryptedPriv = prefs[KEY_PRIVATE_ENCRYPTED]
-        val pubHex = prefs[KEY_PUBLIC_METADATA]
+    suspend fun ensureKeypair(): Pair<String, String> = mutex.withLock {
+        withContext(Dispatchers.IO) {
+            val prefs = context.keyStore.data.first()
+            val encryptedPriv = prefs[KEY_PRIVATE_ENCRYPTED]
+            val pubHex = prefs[KEY_PUBLIC_METADATA]
 
-        if (encryptedPriv != null && pubHex != null) {
-            try {
-                val privHex = decrypt(encryptedPriv)
-                if (privHex.length == 64 && pubHex.length == 64) return@withContext privHex to pubHex
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to decrypt stored key, will regenerate", e)
+            if (encryptedPriv != null && pubHex != null) {
+                try {
+                    val privHex = decrypt(encryptedPriv)
+                    if (privHex.length == 64 && pubHex.length == 64) return@withContext privHex to pubHex
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to decrypt stored key, will regenerate", e)
+                }
             }
-        }
 
-        // Try one-time migration from the old EncryptedSharedPreferences store.
-        migrateLegacyKey()?.takeIf { it.length == 64 }?.let { legacyPrivHex ->
-            val pubFromLegacy = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(legacyPrivHex)))
-            saveKeypair(legacyPrivHex, pubFromLegacy)
-            return@withContext legacyPrivHex to pubFromLegacy
-        }
+            // Try one-time migration from the old EncryptedSharedPreferences store.
+            migrateLegacyKey()?.takeIf { it.length == 64 }?.let { legacyPrivHex ->
+                val pubFromLegacy = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(legacyPrivHex)))
+                saveKeypair(legacyPrivHex, pubFromLegacy)
+                return@withContext legacyPrivHex to pubFromLegacy
+            }
 
-        Log.w(TAG, "No valid keypair found — generating new one")
-        generateAndSaveKeypair()
+            Log.w(TAG, "No valid keypair found — generating new one")
+            generateAndSaveKeypair()
+        }
     }
 
     private suspend fun saveKeypair(privHex: String, pubHex: String) {
@@ -168,8 +179,10 @@ class KeyManager @Inject constructor(
 
     suspend fun exportPrivateKeyHex(): String = ensureKeypair().first
 
-    suspend fun importPrivateKey(privHex: String) = withContext(Dispatchers.IO) {
-        val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(privHex)))
-        saveKeypair(privHex, pubHex)
+    suspend fun importPrivateKey(privHex: String) = mutex.withLock {
+        withContext(Dispatchers.IO) {
+            val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(privHex)))
+            saveKeypair(privHex, pubHex)
+        }
     }
 }
