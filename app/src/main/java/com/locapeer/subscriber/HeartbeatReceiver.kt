@@ -428,7 +428,7 @@ class HeartbeatReceiver @Inject constructor(
             val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
             val payload = TrackAcceptPayload(
                 acceptorPublicKeyHex = pubHex,
-                acceptorDisplayName = settings.displayName.ifBlank<String> { "Someone" },
+                acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
                 acceptorDeviceId = pubHex,
                 acceptorRelayUrl = myRelay
             )
