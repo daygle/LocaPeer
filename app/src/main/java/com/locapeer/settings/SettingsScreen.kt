@@ -289,7 +289,9 @@ fun SettingsScreen(
                 }
             }
 
-            // Card 3: Backup & keys
+            item { SectionLabel("Keys & Backup") }
+
+            // Card: Backup & keys
             item {
                 SettingsCard {
                     backupResult?.let { msg ->
