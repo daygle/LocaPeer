@@ -28,6 +28,7 @@ const val ACTION_TRACK_DECLINE = "com.locapeer.TRACK_DECLINE"
 const val EXTRA_SENDER_PUBKEY = "sender_pubkey"
 const val EXTRA_SENDER_NAME = "sender_name"
 const val EXTRA_SENDER_RELAY = "sender_relay"
+const val EXTRA_IS_ROLE_CHANGE = "is_role_change"
 
 @AndroidEntryPoint
 class TrackRequestReceiver : BroadcastReceiver() {

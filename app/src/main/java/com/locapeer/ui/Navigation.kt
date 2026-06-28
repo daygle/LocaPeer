@@ -113,7 +113,7 @@ fun LocaPeerNavHost(
                 val pubkey = target.peerId ?: return@LaunchedEffect
                 val name = Uri.encode(target.peerName.ifBlank { "Unknown" })
                 val relay = Uri.encode(target.extra ?: "")
-                navController.navigate("share-request?pubkey=$pubkey&name=$name&relay=$relay")
+                navController.navigate("share-request?pubkey=$pubkey&name=$name&relay=$relay&isRoleChange=${target.isRoleChange}")
             }
         }
         onNavTargetConsumed()
@@ -317,11 +317,12 @@ fun LocaPeerNavHost(
                 )
             }
             composable(
-                route = "share-request?pubkey={pubkey}&name={name}&relay={relay}",
+                route = "share-request?pubkey={pubkey}&name={name}&relay={relay}&isRoleChange={isRoleChange}",
                 arguments = listOf(
                     navArgument("pubkey") { type = NavType.StringType },
                     navArgument("name") { type = NavType.StringType; defaultValue = "" },
-                    navArgument("relay") { type = NavType.StringType; defaultValue = "" }
+                    navArgument("relay") { type = NavType.StringType; defaultValue = "" },
+                    navArgument("isRoleChange") { type = NavType.BoolType; defaultValue = false }
                 ),
                 enterTransition = { slideEnter },
                 exitTransition = { slideExit },
@@ -332,6 +333,7 @@ fun LocaPeerNavHost(
                     senderPubkey = entry.arguments?.getString("pubkey") ?: "",
                     senderName = entry.arguments?.getString("name") ?: "Unknown",
                     senderRelay = entry.arguments?.getString("relay") ?: "",
+                    isRoleChange = entry.arguments?.getBoolean("isRoleChange") ?: false,
                     onDone = { navController.popBackStack() }
                 )
             }

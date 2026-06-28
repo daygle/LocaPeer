@@ -52,12 +52,12 @@ class IncomingShareRequestViewModel @Inject constructor(
                 )
             )
             relayClient.connect(senderRelay)
-            sendTrackAccept(senderPubkey, senderRelay)
+            sendTrackAccept(senderPubkey, senderRelay, role)
             _state.value = IncomingRequestState.Done
         }
     }
 
-    private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String) {
+    private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, role: String) {
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val settings = prefs.settings.first()
         val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
@@ -65,7 +65,8 @@ class IncomingShareRequestViewModel @Inject constructor(
             acceptorPublicKeyHex = pubHex,
             acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
             acceptorDeviceId = pubHex,
-            acceptorRelayUrl = myRelay
+            acceptorRelayUrl = myRelay,
+            acceptedRole = role
         )
         val encrypted = crypto.nip44Encrypt(
             crypto.hexToBytes(privHex),

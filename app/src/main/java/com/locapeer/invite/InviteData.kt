@@ -23,7 +23,8 @@ data class TrackRequestPayload(
     val senderPublicKeyHex: String,
     val senderDisplayName: String,
     val senderDeviceId: String,
-    val senderRelayUrl: String
+    val senderRelayUrl: String,
+    val isRoleChange: Boolean = false
 )
 
 /** Sent back when the recipient accepts a track request. */
@@ -32,5 +33,6 @@ data class TrackAcceptPayload(
     val acceptorPublicKeyHex: String,
     val acceptorDisplayName: String,
     val acceptorDeviceId: String,
-    val acceptorRelayUrl: String
+    val acceptorRelayUrl: String,
+    val acceptedRole: String? = null
 )

@@ -13,9 +13,11 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.data.entity.ProximityAlertEntity
+import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,9 +46,11 @@ class PeerSharingViewModel @Inject constructor(
     private val proximityAlertDao: ProximityAlertDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val relayClient: NostrRelayClient
+    private val relayClient: NostrRelayClient,
+    private val prefs: AppPreferences
 ) : ViewModel() {
 
+    private val json = Json { ignoreUnknownKeys = true }
     private var currentPeerId: String = ""
 
     private val _uiState = MutableStateFlow(PeerSharingUiState())
@@ -54,6 +58,10 @@ class PeerSharingViewModel @Inject constructor(
 
     private val _lastPurgeResult = MutableStateFlow<String?>(null)
     val lastPurgeResult: StateFlow<String?> = _lastPurgeResult.asStateFlow()
+
+    private val _roleChangeResult = MutableStateFlow<String?>(null)
+    val roleChangeResult: StateFlow<String?> = _roleChangeResult.asStateFlow()
+    fun clearRoleChangeResult() { _roleChangeResult.value = null }
 
     fun clearPurgeResult() { _lastPurgeResult.value = null }
 
@@ -151,6 +159,38 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setRetentionDaysMessages(currentPeerId, days)
             else configDao.upsert(defaultConfig().copy(retentionDaysMessages = days))
+        }
+    }
+
+    fun sendRoleChangeRequest() {
+        viewModelScope.launch {
+            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val settings = prefs.settings.first()
+            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val payload = TrackRequestPayload(
+                senderPublicKeyHex = pubHex,
+                senderDisplayName = settings.displayName.ifBlank { "Someone" },
+                senderDeviceId = pubHex,
+                senderRelayUrl = myRelay,
+                isRoleChange = true
+            )
+            val encrypted = crypto.nip44Encrypt(
+                crypto.hexToBytes(privHex),
+                peer.publicKeyHex,
+                json.encodeToString(payload)
+            )
+            relayClient.publishEvent(
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.TRACK_REQUEST,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+            )
+            _roleChangeResult.value = "Role change request sent to ${peer.displayName}"
         }
     }
 

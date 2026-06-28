@@ -23,6 +23,7 @@ fun IncomingShareRequestScreen(
     senderPubkey: String,
     senderName: String,
     senderRelay: String,
+    isRoleChange: Boolean = false,
     onDone: () -> Unit,
     vm: IncomingShareRequestViewModel = hiltViewModel()
 ) {
@@ -34,8 +35,14 @@ fun IncomingShareRequestScreen(
 
     var selectedRole by remember { mutableStateOf<String?>(null) }
 
+    val title = if (isRoleChange) "Update Location Sharing" else "Location Sharing Request"
+    val subtitle = if (isRoleChange)
+        "$senderName wants to update how you share locations."
+    else
+        "$senderName wants to share locations with you."
+
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Location Sharing Request") }) }
+        topBar = { TopAppBar(title = { Text(title) }) }
     ) { padding ->
         Column(
             modifier = Modifier
@@ -44,10 +51,7 @@ fun IncomingShareRequestScreen(
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Text(
-                "$senderName wants to share locations with you.",
-                style = MaterialTheme.typography.bodyLarge
-            )
+            Text(subtitle, style = MaterialTheme.typography.bodyLarge)
             Text(
                 "Choose how you'd like to connect:",
                 style = MaterialTheme.typography.bodyMedium,

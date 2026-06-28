@@ -385,14 +385,16 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
 
         val existing = peerDao.getPeer(event.pubkey)
-        if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) return
 
-        if (existing != null && existing.role == PeerEntity.ROLE_RECEIVE) {
-            // We were tracking them, and now they want to track us -> SEND_RECEIVE
-            peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_SEND_RECEIVE))
-            sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
-            Log.i(TAG, "Promoted ${existing.displayName} to MUTUAL role")
-            return
+        if (!payload.isRoleChange) {
+            // For new requests only: skip if already sharing; auto-promote RECEIVE → SEND_RECEIVE
+            if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) return
+            if (existing != null && existing.role == PeerEntity.ROLE_RECEIVE) {
+                peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_SEND_RECEIVE))
+                sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
+                Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
+                return
+            }
         }
 
         val notifId = event.pubkey.hashCode() + 20000
@@ -402,6 +404,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             action = ACTION_TRACK_DECLINE
@@ -412,10 +415,15 @@ class HeartbeatReceiver @Inject constructor(
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val notifTitle = if (payload.isRoleChange) "Sharing update from ${payload.senderDisplayName}"
+                         else "Location sharing request from ${payload.senderDisplayName}"
+        val notifBody = if (payload.isRoleChange) "${payload.senderDisplayName} wants to update how you share locations."
+                        else "${payload.senderDisplayName} wants to share locations with you."
+
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Location sharing request from ${payload.senderDisplayName}")
-            .setContentText("${payload.senderDisplayName} wants to share locations with you.")
+            .setContentTitle(notifTitle)
+            .setContentText(notifBody)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(reviewPi)
@@ -463,13 +471,18 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
 
-        // Scanning always sets MUTUAL, so existing will already be MUTUAL here; preserve it.
-        // Fallback to BROADCASTER only if the contact was somehow added without scanning.
-        val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
-        val newRole = if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) {
-            PeerEntity.ROLE_SEND_RECEIVE
-        } else {
-            PeerEntity.ROLE_RECEIVE
+        // Derive our role as the logical reciprocal of what the acceptor chose.
+        // e.g. if they accepted as RECEIVE (they receive from us), we are SEND (we send to them).
+        val newRole = when (payload.acceptedRole) {
+            PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
+            PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
+            PeerEntity.ROLE_SEND_RECEIVE -> PeerEntity.ROLE_SEND_RECEIVE
+            else -> {
+                // Backward compat: old clients don't send acceptedRole
+                val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
+                if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE)
+                    PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
+            }
         }
 
         val peer = PeerEntity(
