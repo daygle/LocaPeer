@@ -42,14 +42,16 @@ class IncomingShareRequestViewModel @Inject constructor(
     fun accept(senderPubkey: String, senderName: String, senderRelay: String, locationRole: String, messagingEnabled: Boolean) {
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
+            val existing = peerDao.getPeer(senderPubkey)
             peerDao.upsertPeer(
                 PeerEntity(
                     deviceId = senderPubkey,
-                    displayName = senderName,
+                    displayName = existing?.displayName ?: senderName,
                     publicKeyHex = senderPubkey,
                     relayUrl = senderRelay,
                     locationRole = locationRole,
-                    messagingEnabled = messagingEnabled
+                    messagingEnabled = messagingEnabled,
+                    addedAt = existing?.addedAt ?: System.currentTimeMillis()
                 )
             )
             relayClient.connect(senderRelay)
