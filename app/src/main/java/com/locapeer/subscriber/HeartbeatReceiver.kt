@@ -27,6 +27,7 @@ import com.locapeer.proximity.ProximityEngine
 import com.locapeer.peer.PeerManager
 import com.locapeer.peer.PeerRemovedPayload
 import com.locapeer.invite.ACTION_TRACK_DECLINE
+import com.locapeer.invite.EXTRA_IS_ROLE_CHANGE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
