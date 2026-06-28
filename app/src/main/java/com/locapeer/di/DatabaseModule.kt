@@ -2,6 +2,8 @@ package com.locapeer.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
@@ -21,10 +23,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    /**
+     * v6 → v7: add per-peer retention columns to peer_sharing_config.
+     * Default values mirror the previously-global defaults so existing rows
+     * get sane values without an extra DataStore read at startup.
+     */
+    private val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE peer_sharing_config ADD COLUMN retentionDaysLocation INTEGER NOT NULL DEFAULT 30"
+            )
+            db.execSQL(
+                "ALTER TABLE peer_sharing_config ADD COLUMN retentionDaysMessages INTEGER NOT NULL DEFAULT 0"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
+            .addMigrations(MIGRATION_6_7)
             .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
 

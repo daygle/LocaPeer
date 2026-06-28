@@ -37,8 +37,6 @@ data class AppSettings(
     val onboardingComplete: Boolean = false,
     /** Empty list = always on. Active when any rule matches the current time. */
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
-    val retentionDays: Int = 30,
-    val messageRetentionDays: Int = 0,
     /** How long to keep received location data on this device (0 = forever). */
     val localLocationRetentionDays: Int = 90,
     /** How long to keep messages on this device (0 = forever). */
@@ -66,8 +64,6 @@ class AppPreferences @Inject constructor(
     private val KEY_LOW_BATTERY_INTERVAL = intPreferencesKey("low_battery_interval")
     private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
     private val KEY_GLOBAL_SCHEDULE_RULES = stringPreferencesKey("global_schedule_rules")
-    private val KEY_RETENTION_DAYS = intPreferencesKey("retention_days")
-    private val KEY_MSG_RETENTION_DAYS = intPreferencesKey("msg_retention_days")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
@@ -96,8 +92,6 @@ class AppPreferences @Inject constructor(
                 lowBatteryIntervalMinutes = prefs[KEY_LOW_BATTERY_INTERVAL] ?: 30,
                 onboardingComplete = prefs[KEY_ONBOARDING_COMPLETE] ?: false,
                 globalScheduleRules = prefs[KEY_GLOBAL_SCHEDULE_RULES]?.toScheduleRules() ?: emptyList(),
-                retentionDays = prefs[KEY_RETENTION_DAYS] ?: 30,
-                messageRetentionDays = prefs[KEY_MSG_RETENTION_DAYS] ?: 0,
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
                 supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
                 navTabIds = prefs[KEY_NAV_TAB_IDS]
@@ -121,14 +115,6 @@ class AppPreferences @Inject constructor(
 
     suspend fun setOnboardingComplete(complete: Boolean) {
         context.settingsStore.edit { it[KEY_ONBOARDING_COMPLETE] = complete }
-    }
-
-    suspend fun setRetentionDays(days: Int) {
-        context.settingsStore.edit { it[KEY_RETENTION_DAYS] = days }
-    }
-
-    suspend fun setMessageRetentionDays(days: Int) {
-        context.settingsStore.edit { it[KEY_MSG_RETENTION_DAYS] = days }
     }
 
     suspend fun setSupervisedMode(enabled: Boolean, supervisorPubkey: String) {

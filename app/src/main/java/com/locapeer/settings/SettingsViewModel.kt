@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.beacon.HeartbeatService
 import com.locapeer.beacon.ACTION_STOP
-import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.GeofenceDao
@@ -21,8 +20,6 @@ import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
-import com.locapeer.nostr.NostrEvent
-import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
@@ -82,8 +79,6 @@ data class SettingsBackup(
     val cyclingIntervalMinutes: Int,
     val drivingIntervalMinutes: Int,
     val lowBatteryIntervalMinutes: Int,
-    val retentionDays: Int,
-    val messageRetentionDays: Int,
     val navTabIds: List<String>,
     val startRoute: String
 )
@@ -212,8 +207,6 @@ class SettingsViewModel @Inject constructor(
                             cyclingIntervalMinutes = s.cyclingIntervalMinutes,
                             drivingIntervalMinutes = s.drivingIntervalMinutes,
                             lowBatteryIntervalMinutes = s.lowBatteryIntervalMinutes,
-                            retentionDays = s.retentionDays,
-                            messageRetentionDays = s.messageRetentionDays,
                             navTabIds = s.navTabIds,
                             startRoute = s.startRoute
                         ) else null
@@ -278,8 +271,6 @@ class SettingsViewModel @Inject constructor(
                     prefs.updateDisplayName(s.displayName)
                     prefs.updateIntervals(s.stationaryIntervalMinutes, s.walkingIntervalMinutes,
                         s.runningIntervalMinutes, s.cyclingIntervalMinutes, s.drivingIntervalMinutes, s.lowBatteryIntervalMinutes)
-                    prefs.setRetentionDays(s.retentionDays)
-                    prefs.setMessageRetentionDays(s.messageRetentionDays)
                     prefs.setNavTabIds(s.navTabIds)
                     prefs.setStartRoute(s.startRoute)
                     restored += "settings"
@@ -302,72 +293,6 @@ class SettingsViewModel @Inject constructor(
 
     private val _pendingRestore = MutableStateFlow<PendingRestore?>(null)
     val pendingRestore: StateFlow<PendingRestore?> = _pendingRestore
-
-    fun setRetentionDays(days: Int) {
-        viewModelScope.launch { prefs.setRetentionDays(days) }
-    }
-
-    fun setMessageRetentionDays(days: Int) {
-        viewModelScope.launch { prefs.setMessageRetentionDays(days) }
-    }
-
-    fun sendMessagePurgeNow() {
-        viewModelScope.launch {
-            val settings = prefs.settings.first()
-            if (settings.messageRetentionDays == 0) return@launch
-            val deleteBeforeMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = Json.encodeToString(
-                PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
-            )
-            val allPeers = peerDao.getAllPeers().first()
-            allPeers.forEach { peer ->
-                val encrypted = crypto.nip44Encrypt(
-                    senderPrivKey = crypto.hexToBytes(privHex),
-                    recipientXOnlyHex = peer.publicKeyHex,
-                    plaintext = payload
-                )
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.MESSAGE_PURGE_REQUEST,
-                    content = encrypted,
-                    tags = listOf(listOf("p", peer.publicKeyHex)),
-                    crypto = crypto
-                )
-                relayClient.publishEvent(event)
-            }
-        }
-    }
-
-    fun sendPurgeNow() {
-        viewModelScope.launch {
-            val settings = prefs.settings.first()
-            if (settings.retentionDays == 0) return@launch
-            val deleteBeforeMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = Json.encodeToString(
-                PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
-            )
-            val subscribers = peerDao.getSubscribers().first()
-            subscribers.forEach { sub ->
-                val encrypted = crypto.nip44Encrypt(
-                    senderPrivKey = crypto.hexToBytes(privHex),
-                    recipientXOnlyHex = sub.publicKeyHex,
-                    plaintext = payload
-                )
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.PURGE_REQUEST,
-                    content = encrypted,
-                    tags = listOf(listOf("p", sub.publicKeyHex)),
-                    crypto = crypto
-                )
-                relayClient.publishEvent(event)
-            }
-        }
-    }
 
     fun enableSupervisedMode(supervisorPubkey: String) {
         viewModelScope.launch {

@@ -28,6 +28,12 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET scheduleRulesJson = :rulesJson WHERE peerDeviceId = :peerDeviceId")
     suspend fun setScheduleRules(peerDeviceId: String, rulesJson: String)
 
+    @Query("UPDATE peer_sharing_config SET retentionDaysLocation = :days WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setRetentionDaysLocation(peerDeviceId: String, days: Int)
+
+    @Query("UPDATE peer_sharing_config SET retentionDaysMessages = :days WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setRetentionDaysMessages(peerDeviceId: String, days: Int)
+
     @Query("SELECT * FROM peer_sharing_config")
     suspend fun getAll(): List<PeerSharingConfig>
 

@@ -219,32 +219,8 @@ fun SettingsScreen(
 
             item { SectionLabel("Privacy & Data") }
 
-            // Card 1: Data on peers' devices (remote purge)
-            item {
-                SettingsCard {
-                    RetentionRow(
-                        icon = Icons.Default.LocationOff,
-                        title = "Location on peers' devices",
-                        subtitle = "How long contacts keep your location data",
-                        selected = settings.retentionDays,
-                        onSelected = { vm.setRetentionDays(it) },
-                        purgeLabel = "Delete from peers now",
-                        onPurge = if (settings.retentionDays > 0) ({ vm.sendPurgeNow() }) else null
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    RetentionRow(
-                        icon = Icons.Default.DeleteSweep,
-                        title = "Messages on peers' devices",
-                        subtitle = "How long contacts keep messages you sent",
-                        selected = settings.messageRetentionDays,
-                        onSelected = { vm.setMessageRetentionDays(it) },
-                        purgeLabel = "Delete from peers now",
-                        onPurge = if (settings.messageRetentionDays > 0) ({ vm.sendMessagePurgeNow() }) else null
-                    )
-                }
-            }
-
-            // Card 2: Data on this device (local retention + manual clear)
+            // Data on this device (local retention + manual clear)
+            // Per-contact retention on peers' devices now lives on the Sharing screen.
             item {
                 SettingsCard {
                     RetentionRow(
@@ -253,6 +229,12 @@ fun SettingsScreen(
                         subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) }
+                    )
+                    Text(
+                        "Per-contact retention on each peer's device is configured on the contact's Sharing page.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
