@@ -141,12 +141,16 @@ fun ChatScreen(
 @Composable
 private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
     val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            if (value == SwipeToDismissBoxValue.EndToStart) { onDelete(); true } else false
-        },
         positionalThreshold = { it * 0.4f }
     )
     var showDeleteDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(dismissState.currentValue) {
+        if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onDelete()
+            dismissState.snapTo(SwipeToDismissBoxValue.Settled)
+        }
+    }
 
     if (showDeleteDialog) {
         AlertDialog(
