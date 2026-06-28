@@ -62,6 +62,9 @@ class TrackRequestReceiver : BroadcastReceiver() {
                     }
                     ACTION_TRACK_DECLINE -> {
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(context, "Declined tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             } catch (e: Exception) {
