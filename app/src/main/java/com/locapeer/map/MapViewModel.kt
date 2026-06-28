@@ -2,6 +2,9 @@ package com.locapeer.map
 
 import android.annotation.SuppressLint
 import android.content.Context
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
@@ -20,6 +23,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
@@ -27,6 +31,8 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+
+private val Context.mapPrefs by preferencesDataStore(name = "map_prefs")
 
 data class PinData(
     val peer: PeerEntity,
@@ -54,7 +60,32 @@ class MapViewModel @Inject constructor(
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
 
+    private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
+    val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
+
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
+
+    init {
+        viewModelScope.launch {
+            val prefs = appContext.mapPrefs.data.first()
+            val lat = prefs[KEY_LAT]
+            val lng = prefs[KEY_LNG]
+            val zoom = prefs[KEY_ZOOM]
+            if (lat != null && lng != null && zoom != null) {
+                _lastMapCenter.value = Triple(lat, lng, zoom)
+            }
+        }
+    }
+
+    fun saveMapPosition(lat: Double, lng: Double, zoom: Double) {
+        viewModelScope.launch {
+            appContext.mapPrefs.edit { prefs ->
+                prefs[KEY_LAT] = lat
+                prefs[KEY_LNG] = lng
+                prefs[KEY_ZOOM] = zoom
+            }
+        }
+    }
 
     @SuppressLint("MissingPermission")
     fun fetchUserLocation() {
@@ -83,6 +114,12 @@ class MapViewModel @Inject constructor(
         }
         MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
+
+    companion object {
+        private val KEY_LAT = doublePreferencesKey("map_last_lat")
+        private val KEY_LNG = doublePreferencesKey("map_last_lng")
+        private val KEY_ZOOM = doublePreferencesKey("map_last_zoom")
+    }
 
     fun formatTimestamp(millis: Long): String =
         DateTimeFormatter.ofPattern("HH:mm, dd MMM")
