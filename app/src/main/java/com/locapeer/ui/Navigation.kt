@@ -142,7 +142,13 @@ fun LocaPeerNavHost(
             popEnterTransition = { fadeEnter },
             popExitTransition = { fadeExit }
         ) {
-            composable(Screen.Map.route) {
+            composable(
+                route = "${Screen.Map.route}?lat={lat}&lng={lng}",
+                arguments = listOf(
+                    navArgument("lat") { type = NavType.StringType; nullable = true; defaultValue = null },
+                    navArgument("lng") { type = NavType.StringType; nullable = true; defaultValue = null }
+                )
+            ) {
                 MapScreen(onNavigateToChat = { peerId, peerName ->
                     navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
                 })
@@ -178,7 +184,6 @@ fun LocaPeerNavHost(
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onNavigateToGeofences = { navController.navigate("geofences") },
-                    onNavigateToProximityAlerts = { navController.navigate("proximity-alerts") },
                     onNavigateToPeerSharing = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
                     },
@@ -202,7 +207,14 @@ fun LocaPeerNavHost(
                 ChatScreen(
                     peerId = entry.arguments?.getString("peerId") ?: "",
                     peerName = entry.arguments?.getString("peerName") ?: "",
-                    onNavigateBack = { navController.popBackStack() }
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToMap = { lat, lng ->
+                        navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
+                            popUpTo(startDestination) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
                 )
             }
             composable(
@@ -213,15 +225,6 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 GeofenceListScreen(onNavigateBack = { navController.popBackStack() })
-            }
-            composable(
-                "proximity-alerts",
-                enterTransition = { slideEnter },
-                exitTransition = { slideExit },
-                popEnterTransition = { slidePopEnter },
-                popExitTransition = { slidePopExit }
-            ) {
-                ProximityAlertsScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 "history-report",

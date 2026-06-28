@@ -19,6 +19,7 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.MessageEntity
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
@@ -384,12 +385,13 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
 
         val existing = peerDao.getPeer(event.pubkey)
-        if (existing?.role == "SUBSCRIBER") return  // already correctly paired
-        if (existing != null) {
-            // Wrong role (BROADCASTER) – silently fix without re-prompting the user
-            peerDao.upsertPeer(existing.copy(role = "SUBSCRIBER"))
+        if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) return
+        
+        if (existing != null && existing.role == PeerEntity.ROLE_BROADCASTER) {
+            // We were tracking them, and now they want to track us -> MUTUAL
+            peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_MUTUAL))
             sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
-            Log.i(TAG, "Auto-corrected role for ${existing.displayName} to SUBSCRIBER")
+            Log.i(TAG, "Promoted ${existing.displayName} to MUTUAL role")
             return
         }
 
@@ -459,17 +461,25 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
 
-        // Add the acceptor as a BROADCASTER so we can see their location
-        val peer = com.locapeer.data.entity.PeerEntity(
+        // If we already have them as a SUBSCRIBER, promote to MUTUAL since we now track them too.
+        // If we didn't have them or they were a BROADCASTER, this sets/re-sets them as BROADCASTER.
+        val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
+        val newRole = if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) {
+            PeerEntity.ROLE_MUTUAL
+        } else {
+            PeerEntity.ROLE_BROADCASTER
+        }
+
+        val peer = PeerEntity(
             deviceId = payload.acceptorPublicKeyHex,
             displayName = payload.acceptorDisplayName,
             publicKeyHex = payload.acceptorPublicKeyHex,
             relayUrl = payload.acceptorRelayUrl,
-            role = "BROADCASTER"
+            role = newRole
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request")
+        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (Role: $newRole)")
     }
 
     private fun createAlertChannel() {

@@ -21,10 +21,20 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
+import android.content.Intent
+import android.net.Uri
+import android.util.Patterns
+import androidx.compose.foundation.text.ClickableText
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,6 +45,7 @@ fun ChatScreen(
     peerId: String,
     peerName: String,
     onNavigateBack: () -> Unit,
+    onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val messages by vm.getMessages(peerId).collectAsState(initial = emptyList())
@@ -130,7 +141,8 @@ fun ChatScreen(
             items(messages, key = { it.id }) { msg ->
                 SwipeToDeleteMessage(
                     msg = msg,
-                    onDelete = { vm.deleteMessage(msg) }
+                    onDelete = { vm.deleteMessage(msg) },
+                    onNavigateToMap = onNavigateToMap
                 )
             }
         }
@@ -139,7 +151,7 @@ fun ChatScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
+private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit, onNavigateToMap: (Double, Double) -> Unit) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
     )
@@ -171,13 +183,14 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
         state = dismissState,
         enableDismissFromStartToEnd = false,
         backgroundContent = {
+            val alignment = Alignment.CenterEnd
             val color = MaterialTheme.colorScheme.errorContainer
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(color, RoundedCornerShape(12.dp))
-                    .padding(end = 20.dp),
-                contentAlignment = Alignment.CenterEnd
+                    .padding(horizontal = 20.dp),
+                contentAlignment = alignment
             ) {
                 Icon(
                     Icons.Default.Delete,
@@ -187,13 +200,15 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
             }
         }
     ) {
-        MessageBubble(msg, onLongClick = { showDeleteDialog = true })
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
+            MessageBubble(msg, onLongClick = { showDeleteDialog = true }, onNavigateToMap = onNavigateToMap)
+        }
     }
 }
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}) {
+private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNavigateToMap: (Double, Double) -> Unit = { _, _ -> }) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
     val bubbleColor = if (msg.isMine)
         MaterialTheme.colorScheme.primaryContainer
@@ -220,7 +235,13 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}) {
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
             Column {
-                Text(msg.content, style = MaterialTheme.typography.bodyMedium)
+                LinkifiedText(
+                    text = msg.content,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        color = if (msg.isMine) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+                    ),
+                    onNavigateToMap = onNavigateToMap
+                )
                 if (msg.isMine) {
                     Row(
                         modifier = Modifier.align(Alignment.End),
@@ -260,6 +281,57 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}) {
             }
         }
     }
+}
+
+@Composable
+private fun LinkifiedText(
+    text: String,
+    style: androidx.compose.ui.text.TextStyle,
+    onNavigateToMap: (Double, Double) -> Unit
+) {
+    val context = LocalContext.current
+    val annotatedString = remember(text, style.color) {
+        buildAnnotatedString {
+            val matcher = Patterns.WEB_URL.matcher(text)
+            var lastIndex = 0
+            while (matcher.find()) {
+                append(text.substring(lastIndex, matcher.start()))
+                val url = text.substring(matcher.start(), matcher.end())
+                pushStringAnnotation(tag = "URL", annotation = url)
+                withStyle(style = SpanStyle(color = Color(0xFF0000EE), textDecoration = TextDecoration.Underline)) {
+                    append(url)
+                }
+                pop()
+                lastIndex = matcher.end()
+            }
+            append(text.substring(lastIndex))
+        }
+    }
+
+    ClickableText(
+        text = annotatedString,
+        style = style,
+        onClick = { offset ->
+            annotatedString.getStringAnnotations(tag = "URL", start = offset, end = offset)
+                .firstOrNull()?.let { annotation ->
+                    val url = annotation.item
+                    val uri = Uri.parse(url)
+                    val mlat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
+                    val mlon = uri.getQueryParameter("mlon")?.toDoubleOrNull()
+                    
+                    if (mlat != null && mlon != null) {
+                        onNavigateToMap(mlat, mlon)
+                    } else {
+                        try {
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            context.startActivity(intent)
+                        } catch (e: Exception) {
+                            // ignore
+                        }
+                    }
+                }
+        }
+    )
 }
 
 @Composable

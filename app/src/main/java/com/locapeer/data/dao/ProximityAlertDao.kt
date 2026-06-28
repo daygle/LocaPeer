@@ -18,6 +18,9 @@ interface ProximityAlertDao {
     @Query("SELECT * FROM proximity_alerts WHERE peerDeviceId = :peerDeviceId LIMIT 1")
     suspend fun getForPeer(peerDeviceId: String): ProximityAlertEntity?
 
+    @Query("SELECT * FROM proximity_alerts WHERE peerDeviceId = :peerDeviceId LIMIT 1")
+    fun observeForPeer(peerDeviceId: String): Flow<ProximityAlertEntity?>
+
     @Query("UPDATE proximity_alerts SET active = :active WHERE peerDeviceId = :peerDeviceId")
     suspend fun setActive(peerDeviceId: String, active: Boolean)
 

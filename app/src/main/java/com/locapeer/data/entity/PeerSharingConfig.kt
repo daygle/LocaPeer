@@ -14,7 +14,7 @@ data class PeerSharingConfig(
     val precisionMode: String = PrecisionMode.EXACT.name,
     /** JSON-encoded List<ScheduleRule>. Empty array = always share. */
     val scheduleRulesJson: String = "[]",
-    val isSosContact: Boolean = true,
+    val isSosContact: Boolean = false,
     val messagingEnabled: Boolean = true
 )
 

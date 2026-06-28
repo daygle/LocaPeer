@@ -1,12 +1,14 @@
 package com.locapeer.contacts
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -17,9 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.data.entity.PeerEntity
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactsScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
@@ -33,7 +37,6 @@ fun ContactsScreen(
 
     Scaffold(
         topBar = {
-            @OptIn(ExperimentalMaterial3Api::class)
             TopAppBar(title = { Text("Contacts") })
         }
     ) { padding ->
@@ -49,7 +52,7 @@ fun ContactsScreen(
                 }
             }
         } else {
-            LazyColumn(modifier = Modifier.fillMaxSize().padding(padding), contentPadding = PaddingValues(vertical = 8.dp)) {
+            LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
                 items(contacts, key = { it.peer.deviceId }) { item ->
                     ContactRow(
                         item = item,
@@ -60,11 +63,12 @@ fun ContactsScreen(
                         onRemoveSelf = { confirmAction = item to DataAction.REMOVE_SELF },
                         onDeleteMyMessages = { confirmAction = item to DataAction.DELETE_MESSAGES },
                         onDeleteMyLocation = { confirmAction = item to DataAction.DELETE_LOCATION },
-                        onToggleLocationSharing = { vm.setLocationSharing(item.peer.deviceId, it) },
-                        onToggleMessaging = { vm.setMessaging(item.peer.deviceId, it) },
                         onSharingSettings = { onNavigateToSharingSettings(item.peer.deviceId, item.peer.displayName) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 72.dp))
+                    HorizontalDivider(
+                        modifier = Modifier.padding(start = 72.dp),
+                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                    )
                 }
             }
         }
@@ -139,18 +143,16 @@ private fun ContactRow(
     onRemoveSelf: () -> Unit,
     onDeleteMyMessages: () -> Unit,
     onDeleteMyLocation: () -> Unit,
-    onToggleLocationSharing: (Boolean) -> Unit,
-    onToggleMessaging: (Boolean) -> Unit,
     onSharingSettings: () -> Unit
 ) {
     val hb = item.lastHeartbeat
-    val isBroadcaster = item.peer.role == "BROADCASTER"
-    val locationSharingOn = item.config?.sharingEnabled ?: true
-    val messagingOn = item.config?.messagingEnabled ?: true
+    val role = item.peer.role
+    val isBroadcaster = role == PeerEntity.ROLE_BROADCASTER || role == PeerEntity.ROLE_MUTUAL
     var showOverflow by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+    ListItem(
+        modifier = Modifier.clickable { onSharingSettings() },
+        leadingContent = {
             Box(
                 modifier = Modifier.size(48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
                 contentAlignment = Alignment.Center
@@ -162,129 +164,90 @@ private fun ContactRow(
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
-
-            Spacer(Modifier.width(14.dp))
-
-            Column(modifier = Modifier.weight(1f)) {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        },
+        headlineContent = {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    item.peer.displayName,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Surface(
+                    shape = MaterialTheme.shapes.extraSmall,
+                    color = when (role) {
+                        PeerEntity.ROLE_BROADCASTER -> MaterialTheme.colorScheme.secondaryContainer
+                        PeerEntity.ROLE_MUTUAL -> MaterialTheme.colorScheme.primaryContainer
+                        else -> MaterialTheme.colorScheme.tertiaryContainer
+                    }
+                ) {
                     Text(
-                        item.peer.displayName,
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f, fill = false)
+                        when (role) {
+                            PeerEntity.ROLE_BROADCASTER -> "tracking"
+                            PeerEntity.ROLE_MUTUAL -> "mutual"
+                            else -> "subscriber"
+                        },
+                        style = MaterialTheme.typography.labelSmall,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                        color = when (role) {
+                            PeerEntity.ROLE_BROADCASTER -> MaterialTheme.colorScheme.onSecondaryContainer
+                            PeerEntity.ROLE_MUTUAL -> MaterialTheme.colorScheme.onPrimaryContainer
+                            else -> MaterialTheme.colorScheme.onTertiaryContainer
+                        }
                     )
-                    Surface(
-                        shape = MaterialTheme.shapes.extraSmall,
-                        color = if (isBroadcaster) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.tertiaryContainer,
-                        tonalElevation = 0.dp
-                    ) {
-                        Text(
-                            if (isBroadcaster) "tracking" else "subscriber",
-                            style = MaterialTheme.typography.labelSmall,
-                            modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                            color = if (isBroadcaster) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onTertiaryContainer
+                }
+            }
+        },
+        supportingContent = {
+            Text(
+                if (hb != null) "Last seen: ${formatLastSeen(hb.timestamp)}" else "No location data yet",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        trailingContent = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (isBroadcaster) {
+                    IconButton(onClick = onMessage) {
+                        Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = "Message", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+                    }
+                }
+                Box {
+                    IconButton(onClick = { showOverflow = true }) {
+                        Icon(Icons.Default.MoreVert, contentDescription = "More options", modifier = Modifier.size(22.dp))
+                    }
+                    DropdownMenu(expanded = showOverflow, onDismissRequest = { showOverflow = false }) {
+                        DropdownMenuItem(
+                            text = { Text("Rename contact") },
+                            leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
+                            onClick = { showOverflow = false; onRename() }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Delete my messages from their device") },
+                            leadingIcon = { Icon(Icons.Default.DeleteSweep, null, Modifier.size(18.dp)) },
+                            onClick = { showOverflow = false; onDeleteMyMessages() }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Delete my location from their device") },
+                            leadingIcon = { Icon(Icons.Default.LocationOff, null, Modifier.size(18.dp)) },
+                            onClick = { showOverflow = false; onDeleteMyLocation() }
+                        )
+                        HorizontalDivider()
+                        DropdownMenuItem(
+                            text = { Text("Remove myself from their contacts", color = MaterialTheme.colorScheme.error) },
+                            leadingIcon = { Icon(Icons.Default.PersonRemove, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
+                            onClick = { showOverflow = false; onRemoveSelf() }
+                        )
+                        DropdownMenuItem(
+                            text = { Text("Remove contact", color = MaterialTheme.colorScheme.error) },
+                            leadingIcon = { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
+                        onClick = { showOverflow = false; onDeleteContact() }
                         )
                     }
                 }
-                Text(
-                    if (hb != null) "Last seen: ${formatLastSeen(hb.timestamp)}" else "No location data yet",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    maxLines = 1
-                )
-            }
-
-            if (isBroadcaster) {
-                IconButton(onClick = onMessage) {
-                    Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = "Message", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
-                }
-            }
-            IconButton(onClick = onRename) {
-                Icon(Icons.Default.Edit, contentDescription = "Rename", modifier = Modifier.size(20.dp))
-            }
-
-            Box {
-                IconButton(onClick = { showOverflow = true }) {
-                    Icon(Icons.Default.MoreVert, contentDescription = "More options", modifier = Modifier.size(20.dp))
-                }
-                DropdownMenu(expanded = showOverflow, onDismissRequest = { showOverflow = false }) {
-                    DropdownMenuItem(
-                        text = { Text("Delete my messages from their device") },
-                        leadingIcon = { Icon(Icons.Default.DeleteSweep, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                        onClick = { showOverflow = false; onDeleteMyMessages() }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Delete my location from their device") },
-                        leadingIcon = { Icon(Icons.Default.LocationOff, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                        onClick = { showOverflow = false; onDeleteMyLocation() }
-                    )
-                    HorizontalDivider()
-                    DropdownMenuItem(
-                        text = { Text("Remove myself from their contacts", color = MaterialTheme.colorScheme.error) },
-                        leadingIcon = { Icon(Icons.Default.PersonRemove, contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
-                        onClick = { showOverflow = false; onRemoveSelf() }
-                    )
-                    HorizontalDivider()
-                    DropdownMenuItem(
-                        text = { Text("Remove contact", color = MaterialTheme.colorScheme.error) },
-                        leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
-                        onClick = { showOverflow = false; onDeleteContact() }
-                    )
-                }
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
-
-        Spacer(Modifier.height(8.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(start = 62.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            PermissionChip(
-                icon = Icons.Default.LocationOn,
-                label = if (locationSharingOn) "Location on" else "Location off",
-                active = locationSharingOn,
-                onClick = { onToggleLocationSharing(!locationSharingOn) }
-            )
-            PermissionChip(
-                icon = Icons.AutoMirrored.Filled.Chat,
-                label = if (messagingOn) "Messages on" else "Messages off",
-                active = messagingOn,
-                onClick = { onToggleMessaging(!messagingOn) }
-            )
-            if (isBroadcaster) {
-                IconButton(onClick = onSharingSettings, modifier = Modifier.size(32.dp)) {
-                    Icon(Icons.Default.Tune, contentDescription = "Sharing settings", modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun PermissionChip(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String,
-    active: Boolean,
-    onClick: () -> Unit
-) {
-    val containerColor = if (active) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer
-    val contentColor = if (active) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onErrorContainer
-
-    Surface(
-        onClick = onClick,
-        shape = MaterialTheme.shapes.small,
-        color = containerColor,
-        tonalElevation = 0.dp
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Icon(icon, contentDescription = null, modifier = Modifier.size(14.dp), tint = contentColor)
-            Text(label, style = MaterialTheme.typography.labelSmall, color = contentColor)
-        }
-    }
+    )
 }

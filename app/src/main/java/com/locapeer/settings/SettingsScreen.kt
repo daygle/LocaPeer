@@ -32,7 +32,6 @@ import kotlin.math.roundToInt
 @Composable
 fun SettingsScreen(
     onNavigateToGeofences: () -> Unit,
-    onNavigateToProximityAlerts: () -> Unit = {},
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToHistoryReport: () -> Unit = {},
     onNavigateToAbout: () -> Unit = {},
@@ -207,13 +206,6 @@ fun SettingsScreen(
                         label = "Geofences",
                         subtitle = "Notify when contacts enter/leave areas",
                         onClick = onNavigateToGeofences
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.NearMe,
-                        label = "Proximity Alerts",
-                        subtitle = "Notify when contacts are nearby",
-                        onClick = onNavigateToProximityAlerts
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(

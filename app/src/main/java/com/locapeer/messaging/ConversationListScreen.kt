@@ -116,31 +116,11 @@ fun ConversationListScreen(
                 LoadState.CONTENT -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(conversations!!, key = { it.peer.deviceId }) { conv ->
-                            var showDeleteDialog by remember { mutableStateOf(false) }
-
-                            if (showDeleteDialog) {
-                                AlertDialog(
-                                    onDismissRequest = { showDeleteDialog = false },
-                                    icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-                                    title = { Text("Delete conversation?") },
-                                    text = { Text("All messages with ${conv.peer.displayName} will be removed from your device.") },
-                                    confirmButton = {
-                                        TextButton(onClick = {
-                                            showDeleteDialog = false
-                                            vm.deleteConversation(conv.peer.deviceId)
-                                        }) { Text("Delete") }
-                                    },
-                                    dismissButton = {
-                                        TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
-                                    }
-                                )
-                            }
-
-                            ConversationRow(
-                                summary = conv,
+                            SwipeToDeleteConversation(
+                                conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
                                 onClick = { onOpenChat(conv.peer.deviceId) },
-                                onLongClick = { showDeleteDialog = true }
+                                onDelete = { vm.deleteConversation(conv.peer.deviceId) }
                             )
                             HorizontalDivider(
                                 modifier = Modifier.padding(start = 72.dp),
@@ -150,6 +130,73 @@ fun ConversationListScreen(
                     }
                 }
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SwipeToDeleteConversation(
+    conv: ConversationSummary,
+    unreadCount: Int,
+    onClick: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val dismissState = rememberSwipeToDismissBoxState(
+        positionalThreshold = { it * 0.4f }
+    )
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(dismissState.currentValue) {
+        if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+            onDelete()
+            dismissState.snapTo(SwipeToDismissBoxValue.Settled)
+        }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+            title = { Text("Delete conversation?") },
+            text = { Text("All messages with ${conv.peer.displayName} will be removed from your device.") },
+            confirmButton = {
+                TextButton(onClick = { showDeleteDialog = false; onDelete() }) { Text("Delete") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    SwipeToDismissBox(
+        state = dismissState,
+        enableDismissFromStartToEnd = false,
+        backgroundContent = {
+            val alignment = Alignment.CenterEnd
+            val color = MaterialTheme.colorScheme.errorContainer
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = alignment
+            ) {
+                Icon(
+                    Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+        }
+    ) {
+        Surface(color = MaterialTheme.colorScheme.surface) {
+            ConversationRow(
+                summary = conv,
+                unreadCount = unreadCount,
+                onClick = onClick,
+                onLongClick = { showDeleteDialog = true }
+            )
         }
     }
 }

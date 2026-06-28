@@ -9,7 +9,18 @@ data class PeerEntity(
     val displayName: String,
     val publicKeyHex: String,
     val relayUrl: String,
-    /** BROADCASTER = this device tracks them; SUBSCRIBER = they track us */
+    /**
+     * Role of the peer relative to this device.
+     * BROADCASTER = we track them.
+     * SUBSCRIBER = they track us.
+     * MUTUAL = we track each other.
+     */
     val role: String,
     val addedAt: Long = System.currentTimeMillis()
-)
+) {
+    companion object {
+        const val ROLE_BROADCASTER = "BROADCASTER"
+        const val ROLE_SUBSCRIBER = "SUBSCRIBER"
+        const val ROLE_MUTUAL = "MUTUAL"
+    }
+}

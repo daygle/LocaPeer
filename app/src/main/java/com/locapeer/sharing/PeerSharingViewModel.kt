@@ -5,16 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.dao.ProximityAlertDao
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.data.entity.PrecisionMode
+import com.locapeer.data.entity.ProximityAlertEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -23,30 +25,37 @@ import javax.inject.Inject
 
 data class PeerSharingUiState(
     val peer: PeerEntity? = null,
-    val config: PeerSharingConfig? = null
+    val config: PeerSharingConfig? = null,
+    val proximityAlert: ProximityAlertEntity? = null
 )
 
 @HiltViewModel
 class PeerSharingViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val configDao: PeerSharingConfigDao,
-    private val messageDao: MessageDao
+    private val messageDao: MessageDao,
+    private val proximityAlertDao: ProximityAlertDao
 ) : ViewModel() {
 
     private var currentPeerId: String = ""
 
-    var uiState: StateFlow<PeerSharingUiState> = MutableStateFlow(PeerSharingUiState()).asStateFlow()
-        private set
+    private val _uiState = MutableStateFlow(PeerSharingUiState())
+    val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
 
     fun init(peerId: String) {
         if (currentPeerId == peerId) return
         currentPeerId = peerId
-        uiState = combine(
-            flow { emit(peerDao.getPeer(peerId)) },
-            configDao.observeForPeer(peerId)
-        ) { peer, config ->
-            PeerSharingUiState(peer = peer, config = config)
-        }.stateIn(viewModelScope, SharingStarted.Lazily, PeerSharingUiState())
+        viewModelScope.launch {
+            val peerFlow = flowOf(peerDao.getPeer(peerId))
+            val configFlow = configDao.observeForPeer(peerId)
+            val alertFlow = proximityAlertDao.observeForPeer(peerId)
+
+            combine(peerFlow, configFlow, alertFlow) { peer, config, alert ->
+                PeerSharingUiState(peer, config, alert)
+            }.collect {
+                _uiState.value = it
+            }
+        }
     }
 
     private fun defaultConfig() = PeerSharingConfig(peerDeviceId = currentPeerId)
@@ -89,6 +98,28 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             val cfg = configDao.getForPeer(currentPeerId) ?: defaultConfig()
             configDao.upsert(cfg.copy(isSosContact = enabled))
+        }
+    }
+
+    fun setProximityAlertEnabled(enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = proximityAlertDao.getForPeer(currentPeerId)
+            if (existing != null) {
+                proximityAlertDao.setActive(currentPeerId, enabled)
+            } else if (enabled) {
+                proximityAlertDao.upsert(ProximityAlertEntity(peerDeviceId = currentPeerId, active = true))
+            }
+        }
+    }
+
+    fun setProximityAlertRadius(radius: Int) {
+        viewModelScope.launch {
+            val existing = proximityAlertDao.getForPeer(currentPeerId)
+            if (existing != null) {
+                proximityAlertDao.setRadius(currentPeerId, radius)
+            } else {
+                proximityAlertDao.upsert(ProximityAlertEntity(peerDeviceId = currentPeerId, radiusMetres = radius))
+            }
         }
     }
 }

@@ -59,17 +59,24 @@ class TrackRequestReceiver : BroadcastReceiver() {
     }
 
     private suspend fun acceptTrackRequest(senderPubkey: String, senderName: String, senderRelay: String) {
+        val existing = peerDao.getPeer(senderPubkey)
+        val newRole = if (existing?.role == PeerEntity.ROLE_BROADCASTER || existing?.role == PeerEntity.ROLE_MUTUAL) {
+            PeerEntity.ROLE_MUTUAL
+        } else {
+            PeerEntity.ROLE_SUBSCRIBER
+        }
+
         val peer = PeerEntity(
             deviceId = senderPubkey,
             displayName = senderName,
             publicKeyHex = senderPubkey,
             relayUrl = senderRelay,
-            role = "SUBSCRIBER"
+            role = newRole
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(senderRelay)
         sendTrackAccept(senderPubkey, senderRelay)
-        Log.i("TrackRequestReceiver", "Accepted track request from $senderName")
+        Log.i("TrackRequestReceiver", "Accepted track request from $senderName (Role: $newRole)")
     }
 
     private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String) {

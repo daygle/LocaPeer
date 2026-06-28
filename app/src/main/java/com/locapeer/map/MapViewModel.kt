@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
@@ -52,7 +53,8 @@ class MapViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val sosManager: SosManager,
     private val relayClient: NostrRelayClient,
-    @ApplicationContext private val appContext: Context
+    @ApplicationContext private val appContext: Context,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val relayStatus = relayClient.relayStatus
@@ -63,18 +65,39 @@ class MapViewModel @Inject constructor(
     private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
     val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
 
+    private val _centerOnArgs = MutableStateFlow<GeoPoint?>(null)
+    val centerOnArgs: StateFlow<GeoPoint?> = _centerOnArgs.asStateFlow()
+
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
 
     init {
+        val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
+        val argLng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
+
+        if (argLat != null && argLng != null) {
+            _centerOnArgs.value = GeoPoint(argLat, argLng)
+        }
+
         viewModelScope.launch {
             val prefs = appContext.mapPrefs.data.first()
             val lat = prefs[KEY_LAT]
             val lng = prefs[KEY_LNG]
             val zoom = prefs[KEY_ZOOM]
             if (lat != null && lng != null && zoom != null) {
-                _lastMapCenter.value = Triple(lat, lng, zoom)
+                // If we have center args, we'll use those instead of saved center for the initial view
+                if (_centerOnArgs.value == null) {
+                    _lastMapCenter.value = Triple(lat, lng, zoom)
+                } else {
+                    _lastMapCenter.value = Triple(argLat!!, argLng!!, 16.0)
+                }
+            } else if (argLat != null && argLng != null) {
+                _lastMapCenter.value = Triple(argLat, argLng, 16.0)
             }
         }
+    }
+
+    fun consumeCenterArgs() {
+        _centerOnArgs.value = null
     }
 
     fun saveMapPosition(lat: Double, lng: Double, zoom: Double) {

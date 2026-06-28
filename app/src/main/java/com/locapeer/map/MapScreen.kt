@@ -87,6 +87,7 @@ fun MapScreen(
     val userLocation by vm.userLocation.collectAsState()
     val lastMapCenter by vm.lastMapCenter.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
+    val centerOnArgs by vm.centerOnArgs.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -94,6 +95,13 @@ fun MapScreen(
     val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(Unit) { vm.fetchUserLocation() }
+
+    LaunchedEffect(centerOnArgs) {
+        centerOnArgs?.let {
+            centerOnPin = it
+            vm.consumeCenterArgs()
+        }
+    }
 
     LaunchedEffect(selectedPin) {
         selectedPinAddress = null
