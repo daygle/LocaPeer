@@ -25,7 +25,7 @@ class ProximityViewModel @Inject constructor(
 ) : ViewModel() {
 
     val peerStates = combine(
-        peerDao.getBroadcasters(),
+        peerDao.getReceiveContacts(),
         proximityAlertDao.getAll()
     ) { peers, alerts ->
         val alertMap = alerts.associateBy { it.peerDeviceId }

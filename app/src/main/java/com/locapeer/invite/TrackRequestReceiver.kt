@@ -57,13 +57,13 @@ class TrackRequestReceiver : BroadcastReceiver() {
                         Log.d("TrackRequestReceiver", "Accepting track request from $senderName")
                         acceptTrackRequest(senderPubkey, senderName, senderRelay)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Accepted tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Now sharing location with $senderName", Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_TRACK_DECLINE -> {
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Declined tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Declined location sharing from $senderName", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -77,7 +77,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
 
     private suspend fun acceptTrackRequest(senderPubkey: String, senderName: String, senderRelay: String) {
         val existing = peerDao.getPeer(senderPubkey)
-        val newRole = PeerEntity.ROLE_MUTUAL
+        val newRole = PeerEntity.ROLE_SEND_RECEIVE
 
         val peer = PeerEntity(
             deviceId = senderPubkey,

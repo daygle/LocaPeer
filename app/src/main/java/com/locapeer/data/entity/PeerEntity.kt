@@ -11,16 +11,16 @@ data class PeerEntity(
     val relayUrl: String,
     /**
      * Role of the peer relative to this device.
-     * BROADCASTER = we track them.
-     * SUBSCRIBER = they track us.
-     * MUTUAL = we track each other.
+     * RECEIVE = we track them.
+     * SEND = they track us.
+     * SEND_RECEIVE = we track each other.
      */
     val role: String,
     val addedAt: Long = System.currentTimeMillis()
 ) {
     companion object {
-        const val ROLE_BROADCASTER = "BROADCASTER"
-        const val ROLE_SUBSCRIBER = "SUBSCRIBER"
-        const val ROLE_MUTUAL = "MUTUAL"
+        const val ROLE_RECEIVE = "RECEIVE"
+        const val ROLE_SEND = "SEND"
+        const val ROLE_SEND_RECEIVE = "SEND_RECEIVE"
     }
 }

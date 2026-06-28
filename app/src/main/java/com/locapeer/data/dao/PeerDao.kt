@@ -9,11 +9,11 @@ interface PeerDao {
     @Query("SELECT * FROM peers ORDER BY displayName ASC")
     fun getAllPeers(): Flow<List<PeerEntity>>
 
-    @Query("SELECT * FROM peers WHERE role = 'BROADCASTER' OR role = 'MUTUAL' ORDER BY displayName ASC")
-    fun getBroadcasters(): Flow<List<PeerEntity>>
+    @Query("SELECT * FROM peers WHERE role = 'RECEIVE' OR role = 'SEND_RECEIVE' ORDER BY displayName ASC")
+    fun getReceiveContacts(): Flow<List<PeerEntity>>
 
-    @Query("SELECT * FROM peers WHERE role = 'SUBSCRIBER' OR role = 'MUTUAL' ORDER BY displayName ASC")
-    fun getSubscribers(): Flow<List<PeerEntity>>
+    @Query("SELECT * FROM peers WHERE role = 'SEND' OR role = 'SEND_RECEIVE' ORDER BY displayName ASC")
+    fun getSendContacts(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     suspend fun getPeer(deviceId: String): PeerEntity?

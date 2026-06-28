@@ -147,7 +147,7 @@ private fun ContactRow(
 ) {
     val hb = item.lastHeartbeat
     val role = item.peer.role
-    val isBroadcaster = role == PeerEntity.ROLE_BROADCASTER || role == PeerEntity.ROLE_MUTUAL
+    val isBroadcaster = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
     var showOverflow by remember { mutableStateOf(false) }
 
     ListItem(
@@ -177,22 +177,22 @@ private fun ContactRow(
                 Surface(
                     shape = MaterialTheme.shapes.extraSmall,
                     color = when (role) {
-                        PeerEntity.ROLE_BROADCASTER -> MaterialTheme.colorScheme.secondaryContainer
-                        PeerEntity.ROLE_MUTUAL -> MaterialTheme.colorScheme.primaryContainer
+                        PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.secondaryContainer
+                        PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.primaryContainer
                         else -> MaterialTheme.colorScheme.tertiaryContainer
                     }
                 ) {
                     Text(
                         when (role) {
-                            PeerEntity.ROLE_BROADCASTER -> "Receive Location"
-                            PeerEntity.ROLE_MUTUAL -> "Send/Receive Location"
+                            PeerEntity.ROLE_RECEIVE -> "Receive Location"
+                            PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
                             else -> "Send Location"
                         },
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
                         color = when (role) {
-                            PeerEntity.ROLE_BROADCASTER -> MaterialTheme.colorScheme.onSecondaryContainer
-                            PeerEntity.ROLE_MUTUAL -> MaterialTheme.colorScheme.onPrimaryContainer
+                            PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.onSecondaryContainer
+                            PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.onPrimaryContainer
                             else -> MaterialTheme.colorScheme.onTertiaryContainer
                         }
                     )

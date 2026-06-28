@@ -39,11 +39,23 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v7 → v8: rename role string values in the peers table.
+     * BROADCASTER → RECEIVE, SUBSCRIBER → SEND, MUTUAL → SEND_RECEIVE.
+     */
+    private val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("UPDATE peers SET role = 'RECEIVE' WHERE role = 'BROADCASTER'")
+            db.execSQL("UPDATE peers SET role = 'SEND' WHERE role = 'SUBSCRIBER'")
+            db.execSQL("UPDATE peers SET role = 'SEND_RECEIVE' WHERE role = 'MUTUAL'")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
-            .addMigrations(MIGRATION_6_7)
+            .addMigrations(MIGRATION_6_7, MIGRATION_7_8)
             .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
 

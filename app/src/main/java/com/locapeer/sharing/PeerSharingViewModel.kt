@@ -169,7 +169,7 @@ class PeerSharingViewModel @Inject constructor(
                 return@launch
             }
             // Only subscribers / mutual peers actually keep our heartbeats
-            if (peer.role != PeerEntity.ROLE_SUBSCRIBER && peer.role != PeerEntity.ROLE_MUTUAL) {
+            if (peer.role != PeerEntity.ROLE_SEND && peer.role != PeerEntity.ROLE_SEND_RECEIVE) {
                 _lastPurgeResult.value = "${peer.displayName} doesn't store your location"
                 return@launch
             }

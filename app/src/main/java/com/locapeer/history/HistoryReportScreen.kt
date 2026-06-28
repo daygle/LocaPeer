@@ -43,7 +43,7 @@ fun HistoryReportScreen(
         if (peerId != null) vm.selectPeer(peerId)
     }
 
-    val broadcasters by vm.broadcasters.collectAsState()
+    val broadcasters by vm.receiveContacts.collectAsState()
     val selectedPeerId by vm.selectedPeerId.collectAsState()
     val selectedDayStart by vm.selectedDayStart.collectAsState()
     val heartbeats by vm.heartbeats.collectAsState()

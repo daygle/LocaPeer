@@ -33,7 +33,7 @@ fun GeofenceListScreen(
     vm: GeofenceViewModel = hiltViewModel()
 ) {
     val geofences by vm.geofences.collectAsState()
-    val broadcastersWithLocation by vm.broadcastersWithLocation.collectAsState()
+    val broadcastersWithLocation by vm.receiveContactsWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }
 
     val filteredGeofences = remember(geofences, peerId) {

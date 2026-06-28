@@ -385,11 +385,11 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
 
         val existing = peerDao.getPeer(event.pubkey)
-        if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) return
-        
-        if (existing != null && existing.role == PeerEntity.ROLE_BROADCASTER) {
-            // We were tracking them, and now they want to track us -> MUTUAL
-            peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_MUTUAL))
+        if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) return
+
+        if (existing != null && existing.role == PeerEntity.ROLE_RECEIVE) {
+            // We were tracking them, and now they want to track us -> SEND_RECEIVE
+            peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_SEND_RECEIVE))
             sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
             Log.i(TAG, "Promoted ${existing.displayName} to MUTUAL role")
             return
@@ -413,8 +413,8 @@ class HeartbeatReceiver @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Track request from ${payload.senderDisplayName}")
-            .setContentText("${payload.senderDisplayName} wants to share their location with you.")
+            .setContentTitle("Location sharing request from ${payload.senderDisplayName}")
+            .setContentText("${payload.senderDisplayName} wants to share locations with you.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .addAction(0, "Accept", acceptPi)
@@ -464,10 +464,10 @@ class HeartbeatReceiver @Inject constructor(
         // Scanning always sets MUTUAL, so existing will already be MUTUAL here; preserve it.
         // Fallback to BROADCASTER only if the contact was somehow added without scanning.
         val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
-        val newRole = if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) {
-            PeerEntity.ROLE_MUTUAL
+        val newRole = if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) {
+            PeerEntity.ROLE_SEND_RECEIVE
         } else {
-            PeerEntity.ROLE_BROADCASTER
+            PeerEntity.ROLE_RECEIVE
         }
 
         val peer = PeerEntity(
