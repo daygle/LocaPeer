@@ -40,7 +40,10 @@ fun PeerSharingScreen(
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
+    val retentionDaysLocation = cfg?.retentionDaysLocation ?: 30
+    val retentionDaysMessages = cfg?.retentionDaysMessages ?: 0
     val proximityAlert = state.proximityAlert
+    val purgeResult by vm.lastPurgeResult.collectAsState()
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
 
@@ -157,7 +160,7 @@ fun PeerSharingScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    
+
                     val alertActive = proximityAlert?.active ?: false
                     ListItem(
                         headlineContent = { Text("Proximity alert") },
@@ -168,7 +171,7 @@ fun PeerSharingScreen(
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
-                    
+
                     if (alertActive) {
                         val radius = proximityAlert?.radiusMetres ?: 500
                         Column(modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 12.dp)) {
@@ -184,6 +187,46 @@ fun PeerSharingScreen(
                             )
                         }
                     }
+                }
+            }
+
+            item { SectionLabel("Retention on ${peerName}'s device") }
+            item {
+                SettingsCard {
+                    purgeResult?.let { msg ->
+                        Text(
+                            msg,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (msg.contains("not", ignoreCase = true) ||
+                                msg.contains("Forever", ignoreCase = true) ||
+                                msg.contains("not found", ignoreCase = true))
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                            else MaterialTheme.colorScheme.primary
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    }
+                    RetentionRow(
+                        icon = Icons.Default.LocationOff,
+                        title = "Location data",
+                        subtitle = "How long $peerName keeps your location data on their device",
+                        selected = retentionDaysLocation,
+                        onSelected = { vm.setRetentionDaysLocation(it) },
+                        purgeLabel = "Ask $peerName to purge now",
+                        onPurge = if (retentionDaysLocation > 0) ({ vm.sendLocationPurgeNow() }) else null
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    RetentionRow(
+                        icon = Icons.Default.DeleteSweep,
+                        title = "Messages",
+                        subtitle = if (retentionDaysMessages == 0)
+                            "Forever — change below to enable a limit"
+                        else "How long $peerName keeps messages you sent",
+                        selected = retentionDaysMessages,
+                        onSelected = { vm.setRetentionDaysMessages(it) },
+                        purgeLabel = "Ask $peerName to purge now",
+                        onPurge = if (retentionDaysMessages > 0) ({ vm.sendMessagePurgeNow() }) else null
+                    )
                 }
             }
         }

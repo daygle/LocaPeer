@@ -14,6 +14,8 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
@@ -32,6 +34,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val prefs: AppPreferences,
+    private val configDao: PeerSharingConfigDao,
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
@@ -42,13 +45,19 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        val hasWork = settings.retentionDays > 0 || settings.messageRetentionDays > 0
-            || settings.localLocationRetentionDays > 0 || settings.localMessageRetentionDays > 0
-        if (!hasWork) return Result.success()
+        val configs = configDao.getAll().first()
+        val peerMap = peerDao.getAllPeers().first().associateBy { it.deviceId }
+
+        val hasLocalWork = settings.localLocationRetentionDays > 0 || settings.localMessageRetentionDays > 0
+        val hasRemoteWork = configs.any {
+            it.retentionDaysLocation > 0 || it.retentionDaysMessages > 0
+        }
+        if (!hasLocalWork && !hasRemoteWork) return Result.success()
 
         return try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
 
+            // Local retention (always global, applies to data we've received)
             if (settings.localLocationRetentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.localLocationRetentionDays * 24 * 3600 * 1000L
                 heartbeatDao.deleteOlderThan(cutoffMs)
@@ -61,67 +70,77 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                 Log.d(TAG, "Purged local messages older than ${settings.localMessageRetentionDays} days")
             }
 
-            if (settings.retentionDays > 0) {
-                val cutoffMs = System.currentTimeMillis() - settings.retentionDays * 24 * 3600 * 1000L
+            // Per-peer remote purges
+            var locationPurgeCount = 0
+            var messagePurgeCount = 0
 
-                // Notify others to purge our location data from their devices
-                val locationPayload = Json.encodeToString(
-                    PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
-                )
-                val subscribers = peerDao.getSubscribers().first()
-                subscribers.forEach { sub ->
-                    val encrypted = crypto.nip44Encrypt(
-                        senderPrivKey = crypto.hexToBytes(privHex),
-                        recipientXOnlyHex = sub.publicKeyHex,
-                        plaintext = locationPayload
+            configs.forEach { cfg ->
+                val peer = peerMap[cfg.peerDeviceId] ?: return@forEach
+
+                // Location purge: only meaningful for subscribers/mutual peers who actually keep our heartbeats
+                if (cfg.retentionDaysLocation > 0 &&
+                    (peer.role == PeerEntity.ROLE_SUBSCRIBER || peer.role == PeerEntity.ROLE_MUTUAL)
+                ) {
+                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysLocation * 24 * 3600 * 1000L
+                    publishPurge(
+                        recipientPubKeyHex = peer.publicKeyHex,
+                        deleteOlderThanMs = cutoffMs,
+                        kind = NostrEventKind.PURGE_REQUEST,
+                        privHex = privHex,
+                        pubHex = pubHex
                     )
-                    relayClient.publishEvent(
-                        NostrEvent.build(
-                            privKeyHex = privHex,
-                            pubKeyHex = pubHex,
-                            kind = NostrEventKind.PURGE_REQUEST,
-                            content = encrypted,
-                            tags = listOf(listOf("p", sub.publicKeyHex)),
-                            crypto = crypto
-                        )
-                    )
+                    locationPurgeCount++
                 }
-                Log.d(TAG, "Sent location purge to ${subscribers.size} subscribers")
+
+                // Message purge: any peer we have chatted with could be holding messages
+                if (cfg.retentionDaysMessages > 0) {
+                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysMessages * 24 * 3600 * 1000L
+                    publishPurge(
+                        recipientPubKeyHex = peer.publicKeyHex,
+                        deleteOlderThanMs = cutoffMs,
+                        kind = NostrEventKind.MESSAGE_PURGE_REQUEST,
+                        privHex = privHex,
+                        pubHex = pubHex
+                    )
+                    messagePurgeCount++
+                }
             }
 
-            if (settings.messageRetentionDays > 0) {
-                val cutoffMs = System.currentTimeMillis() - settings.messageRetentionDays * 24 * 3600 * 1000L
-
-                // Notify others to purge our messages from their devices
-                val msgPayload = Json.encodeToString(
-                    PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = cutoffMs)
-                )
-                val allPeers = peerDao.getAllPeers().first()
-                allPeers.forEach { peer ->
-                    val encrypted = crypto.nip44Encrypt(
-                        senderPrivKey = crypto.hexToBytes(privHex),
-                        recipientXOnlyHex = peer.publicKeyHex,
-                        plaintext = msgPayload
-                    )
-                    relayClient.publishEvent(
-                        NostrEvent.build(
-                            privKeyHex = privHex,
-                            pubKeyHex = pubHex,
-                            kind = NostrEventKind.MESSAGE_PURGE_REQUEST,
-                            content = encrypted,
-                            tags = listOf(listOf("p", peer.publicKeyHex)),
-                            crypto = crypto
-                        )
-                    )
-                }
-                Log.d(TAG, "Sent message purge to ${allPeers.size} peers")
-            }
+            if (locationPurgeCount > 0) Log.d(TAG, "Sent location purge to $locationPurgeCount peers")
+            if (messagePurgeCount > 0) Log.d(TAG, "Sent message purge to $messagePurgeCount peers")
 
             Result.success()
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send purge requests", e)
             Result.retry()
         }
+    }
+
+    private suspend fun publishPurge(
+        recipientPubKeyHex: String,
+        deleteOlderThanMs: Long,
+        kind: Int,
+        privHex: String,
+        pubHex: String
+    ) {
+        val payload = Json.encodeToString(
+            PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteOlderThanMs)
+        )
+        val encrypted = crypto.nip44Encrypt(
+            senderPrivKey = crypto.hexToBytes(privHex),
+            recipientXOnlyHex = recipientPubKeyHex,
+            plaintext = payload
+        )
+        relayClient.publishEvent(
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = kind,
+                content = encrypted,
+                tags = listOf(listOf("p", recipientPubKeyHex)),
+                crypto = crypto
+            )
+        )
     }
 
     companion object {

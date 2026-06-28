@@ -15,7 +15,11 @@ data class PeerSharingConfig(
     /** JSON-encoded List<ScheduleRule>. Empty array = always share. */
     val scheduleRulesJson: String = "[]",
     val isSosContact: Boolean = false,
-    val messagingEnabled: Boolean = true
+    val messagingEnabled: Boolean = true,
+    /** How long this contact keeps my location data on their device. 0 = forever. */
+    val retentionDaysLocation: Int = 30,
+    /** How long this contact keeps my messages on their device. 0 = forever. */
+    val retentionDaysMessages: Int = 0
 )
 
 fun PeerSharingConfig.scheduleRules(): List<ScheduleRule> = scheduleRulesJson.toScheduleRules()
