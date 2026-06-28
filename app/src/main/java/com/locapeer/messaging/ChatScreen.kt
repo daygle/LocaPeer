@@ -2,6 +2,7 @@ package com.locapeer.messaging
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -145,6 +146,23 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
         },
         positionalThreshold = { it * 0.4f }
     )
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+            title = { Text("Delete message?") },
+            text = { Text("This message will be removed from your device only.") },
+            confirmButton = {
+                TextButton(onClick = { showDeleteDialog = false; onDelete() }) { Text("Delete") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
     SwipeToDismissBox(
         state = dismissState,
         enableDismissFromStartToEnd = false,
@@ -165,12 +183,13 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit) {
             }
         }
     ) {
-        MessageBubble(msg)
+        MessageBubble(msg, onLongClick = { showDeleteDialog = true })
     }
 }
 
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-private fun MessageBubble(msg: MessageEntity) {
+private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
     val bubbleColor = if (msg.isMine)
         MaterialTheme.colorScheme.primaryContainer
@@ -184,6 +203,7 @@ private fun MessageBubble(msg: MessageEntity) {
         Box(
             modifier = Modifier
                 .widthIn(max = 280.dp)
+                .combinedClickable(onClick = {}, onLongClick = onLongClick)
                 .background(
                     bubbleColor,
                     RoundedCornerShape(
