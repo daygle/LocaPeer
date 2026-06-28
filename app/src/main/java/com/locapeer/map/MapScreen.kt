@@ -22,12 +22,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
@@ -78,6 +78,7 @@ fun MapScreen(
     var showFriendList by remember { mutableStateOf(value = false) }
     val isSosActive by vm.isSosActive.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
+    val lastMapCenter by vm.lastMapCenter.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
@@ -90,10 +91,12 @@ fun MapScreen(
             pins = uiState.pins,
             geofences = uiState.geofences,
             userLocation = userLocation,
+            lastMapCenter = lastMapCenter,
             centerOnUser = centerOnUser,
             isDark = isDark,
             onCenteredOnUser = { centerOnUser = false },
             onPinTapped = { selectedPin = it },
+            onSaveMapPosition = vm::saveMapPosition,
             context = context,
             modifier = Modifier.fillMaxSize()
         )
@@ -342,10 +345,12 @@ private fun OsmdroidMapView(
     pins: List<PinData>,
     geofences: List<GeofenceEntity>,
     userLocation: GeoPoint?,
+    lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     isDark: Boolean,
     onCenteredOnUser: () -> Unit,
     onPinTapped: (PinData) -> Unit,
+    onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
     modifier: Modifier = Modifier
 ) {
@@ -357,7 +362,13 @@ private fun OsmdroidMapView(
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
-                Lifecycle.Event.ON_PAUSE -> mapViewRef?.onPause()
+                Lifecycle.Event.ON_PAUSE -> {
+                    mapViewRef?.let { mv ->
+                        val c = mv.mapCenter
+                        onSaveMapPosition(c.latitude, c.longitude, mv.zoomLevelDouble)
+                        mv.onPause()
+                    }
+                }
                 else -> {}
             }
         }
@@ -365,6 +376,8 @@ private fun OsmdroidMapView(
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
             mapViewRef?.apply {
+                val c = mapCenter
+                onSaveMapPosition(c.latitude, c.longitude, zoomLevelDouble)
                 onPause()
                 onDetach()
             }
@@ -372,9 +385,9 @@ private fun OsmdroidMapView(
         }
     }
 
-    // Center on user's location once it's available for the first time
+    // On first GPS fix: only animate to user if we had no saved position to restore
     LaunchedEffect(userLocation) {
-        if ((userLocation != null) && !initialCenterDone) {
+        if (userLocation != null && !initialCenterDone) {
             mapViewRef?.controller?.animateTo(userLocation)
             initialCenterDone = true
         }
@@ -393,8 +406,15 @@ private fun OsmdroidMapView(
             MapView(ctx).apply {
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
-                controller.setZoom(16.0)
                 isVerticalMapRepetitionEnabled = false
+                if (lastMapCenter != null) {
+                    val (lat, lng, zoom) = lastMapCenter
+                    controller.setZoom(zoom)
+                    controller.setCenter(GeoPoint(lat, lng))
+                    initialCenterDone = true
+                } else {
+                    controller.setZoom(16.0)
+                }
             }.also { mapViewRef = it }
         },
         update = { mapView ->
