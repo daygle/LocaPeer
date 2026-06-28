@@ -5,8 +5,9 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -113,10 +115,31 @@ fun ConversationListScreen(
                 LoadState.CONTENT -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(conversations!!, key = { it.peer.deviceId }) { conv ->
+                            var showDeleteDialog by remember { mutableStateOf(false) }
+
+                            if (showDeleteDialog) {
+                                AlertDialog(
+                                    onDismissRequest = { showDeleteDialog = false },
+                                    icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                                    title = { Text("Delete conversation?") },
+                                    text = { Text("All messages with ${conv.peer.displayName} will be removed from your device.") },
+                                    confirmButton = {
+                                        TextButton(onClick = {
+                                            showDeleteDialog = false
+                                            vm.deleteConversation(conv.peer.deviceId)
+                                        }) { Text("Delete") }
+                                    },
+                                    dismissButton = {
+                                        TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+                                    }
+                                )
+                            }
+
                             ConversationRow(
                                 summary = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
-                                onClick = { onOpenChat(conv.peer.deviceId) }
+                                onClick = { onOpenChat(conv.peer.deviceId) },
+                                onLongClick = { showDeleteDialog = true }
                             )
                             HorizontalDivider(
                                 modifier = Modifier.padding(start = 72.dp),
@@ -130,11 +153,13 @@ fun ConversationListScreen(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun ConversationRow(
     summary: ConversationSummary,
     unreadCount: Int,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onLongClick: () -> Unit = {}
 ) {
     val hasUnread = unreadCount > 0
     val isBlocked = !summary.messagingEnabled
@@ -182,7 +207,7 @@ private fun ConversationRow(
                 }
             }
         },
-        modifier = Modifier.clickable(onClick = onClick)
+        modifier = Modifier.combinedClickable(onClick = onClick, onLongClick = onLongClick)
     )
 }
 

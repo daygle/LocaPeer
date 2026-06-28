@@ -106,6 +106,14 @@ class MessagingViewModel @Inject constructor(
     fun getUnreadCount(peerId: String) = messageDao.getUnreadCount(peerId)
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
+    fun deleteMessage(msg: MessageEntity) {
+        viewModelScope.launch { messageDao.delete(msg) }
+    }
+
+    fun deleteConversation(peerId: String) {
+        viewModelScope.launch { messageDao.deleteAllForPeer(peerId) }
+    }
+
     fun markRead(peerId: String) {
         viewModelScope.launch {
             val unread = messageDao.getUnreadFromPeer(peerId)

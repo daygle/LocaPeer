@@ -9,8 +9,10 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.data.entity.PrecisionMode
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
@@ -33,7 +35,7 @@ class PeerSharingViewModel @Inject constructor(
 
     private var currentPeerId: String = ""
 
-    lateinit var uiState: StateFlow<PeerSharingUiState>
+    var uiState: StateFlow<PeerSharingUiState> = MutableStateFlow(PeerSharingUiState()).asStateFlow()
         private set
 
     fun init(peerId: String) {
