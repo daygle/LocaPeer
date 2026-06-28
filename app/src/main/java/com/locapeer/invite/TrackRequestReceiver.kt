@@ -77,11 +77,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
 
     private suspend fun acceptTrackRequest(senderPubkey: String, senderName: String, senderRelay: String) {
         val existing = peerDao.getPeer(senderPubkey)
-        val newRole = if (existing?.role == PeerEntity.ROLE_BROADCASTER || existing?.role == PeerEntity.ROLE_MUTUAL) {
-            PeerEntity.ROLE_MUTUAL
-        } else {
-            PeerEntity.ROLE_SUBSCRIBER
-        }
+        val newRole = PeerEntity.ROLE_MUTUAL
 
         val peer = PeerEntity(
             deviceId = senderPubkey,

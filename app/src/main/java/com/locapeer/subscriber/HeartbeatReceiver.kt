@@ -461,8 +461,8 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
 
-        // If we already have them as a SUBSCRIBER, promote to MUTUAL since we now track them too.
-        // If we didn't have them or they were a BROADCASTER, this sets/re-sets them as BROADCASTER.
+        // Scanning always sets MUTUAL, so existing will already be MUTUAL here; preserve it.
+        // Fallback to BROADCASTER only if the contact was somehow added without scanning.
         val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
         val newRole = if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) {
             PeerEntity.ROLE_MUTUAL
