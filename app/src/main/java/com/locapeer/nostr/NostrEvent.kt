@@ -26,6 +26,7 @@ object NostrEventKind {
     const val SUPERVISED_UNLOCK_RESPONSE = 1050
     const val DELETE_MY_MESSAGES = 1051
     const val DELETE_MY_LOCATION = 1052
+    const val TYPING = 1053
 }
 
 @Serializable
