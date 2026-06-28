@@ -215,7 +215,7 @@ private fun CreateGeofenceDialog(
                             Icon(Icons.Default.MyLocation, null, Modifier.size(14.dp))
                         }
                         Spacer(Modifier.width(4.dp))
-                        Text("My location", style = MaterialTheme.typography.labelSmall)
+                        Text("My Location", style = MaterialTheme.typography.labelSmall)
                     }
 
                     selectedEntry.lastHeartbeat?.let { hb ->
@@ -230,7 +230,7 @@ private fun CreateGeofenceDialog(
                             Icon(Icons.Default.PersonPin, null, Modifier.size(14.dp))
                             Spacer(Modifier.width(4.dp))
                             Text(
-                                "${selectedEntry.peer.displayName}'s location",
+                                "${selectedEntry.peer.displayName}'s Location",
                                 style = MaterialTheme.typography.labelSmall,
                                 maxLines = 1
                             )
@@ -265,7 +265,7 @@ private fun CreateGeofenceDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
 
-                Text("Tracked person", style = MaterialTheme.typography.labelSmall)
+                Text("Tracked Person", style = MaterialTheme.typography.labelSmall)
                 broadcastersWithLocation.forEach { entry ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
@@ -293,7 +293,7 @@ private fun CreateGeofenceDialog(
                     }
                 }
 
-                Text("Trigger on", style = MaterialTheme.typography.labelSmall)
+                Text("Trigger On", style = MaterialTheme.typography.labelSmall)
                 listOf("ENTER", "EXIT", "BOTH").forEach { t ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(selected = triggerOn == t, onClick = { triggerOn = t })

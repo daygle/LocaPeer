@@ -146,7 +146,7 @@ private fun RuleCard(
     val daysSummary = SharingSchedule.formatDays(rule.days)
     val overnight = rule.startMinute > rule.endMinute
     val timeSummary = if (rule.startMinute == 0 && rule.endMinute == 1439) "All day"
-                      else "${SharingSchedule.formatTime(rule.startMinute)} – ${SharingSchedule.formatTime(rule.endMinute)}" +
+                      else "${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}" +
                            if (overnight) " (+1 day)" else ""
 
     Card(
@@ -204,13 +204,13 @@ private fun RuleEditDialog(
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                     modifier = Modifier.fillMaxWidth()
                 )
-                Text("Active days", style = MaterialTheme.typography.labelMedium,
+                Text("Active Days", style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary)
                 DayPicker(
                     days = rule.days,
                     onDaysChanged = { onRuleChanged(rule.copy(days = it)) }
                 )
-                Text("Time window", style = MaterialTheme.typography.labelMedium,
+                Text("Time Window", style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary)
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     OutlinedButton(
@@ -258,7 +258,7 @@ private fun RuleEditDialog(
     if (showStartPicker) {
         TimePickerDialog(
             initialMinute = rule.startMinute,
-            title = "Start time",
+            title = "Start Time",
             onConfirm = { onRuleChanged(rule.copy(startMinute = it)); showStartPicker = false },
             onDismiss = { showStartPicker = false }
         )
@@ -266,7 +266,7 @@ private fun RuleEditDialog(
     if (showEndPicker) {
         TimePickerDialog(
             initialMinute = rule.endMinute,
-            title = "End time",
+            title = "End Time",
             onConfirm = { onRuleChanged(rule.copy(endMinute = it)); showEndPicker = false },
             onDismiss = { showEndPicker = false }
         )

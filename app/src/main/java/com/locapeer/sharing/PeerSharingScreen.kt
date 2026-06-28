@@ -101,7 +101,7 @@ fun PeerSharingScreen(
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Share with $peerName") },
+                        headlineContent = { Text("Share With $peerName") },
                         supportingContent = { Text("Let this contact track your location") },
                         leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (sharingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
@@ -120,7 +120,7 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Sharing schedule") },
+                        headlineContent = { Text("Sharing Schedule") },
                         supportingContent = {
                             Text(if (scheduleRules.isEmpty()) "Always share"
                                  else "${scheduleRules.size} rule${if (scheduleRules.size == 1) "" else "s"} active")
@@ -137,7 +137,7 @@ fun PeerSharingScreen(
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Allow messages") },
+                        headlineContent = { Text("Allow Messages") },
                         supportingContent = { Text("Receive chat messages from this contact") },
                         leadingContent = { Icon(Icons.Default.Chat, contentDescription = null, tint = if (messagingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
@@ -164,7 +164,7 @@ fun PeerSharingScreen(
 
                     val alertActive = proximityAlert?.active ?: false
                     ListItem(
-                        headlineContent = { Text("Proximity alert") },
+                        headlineContent = { Text("Proximity Alert") },
                         supportingContent = { Text("Notify me when $peerName is nearby") },
                         leadingContent = { Icon(Icons.Default.NearMe, contentDescription = null, tint = if (alertActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
@@ -191,7 +191,7 @@ fun PeerSharingScreen(
                 }
             }
 
-            item { SectionLabel("Retention on ${peerName}'s device") }
+            item { SectionLabel("Retention On ${peerName}'s Device") }
             item {
                 SettingsCard {
                     purgeResult?.let { msg ->
@@ -209,11 +209,11 @@ fun PeerSharingScreen(
                     }
                     RetentionRow(
                         icon = Icons.Default.LocationOff,
-                        title = "Location data",
+                        title = "Location Data",
                         subtitle = "How long $peerName keeps your location data on their device",
                         selected = retentionDaysLocation,
                         onSelected = { vm.setRetentionDaysLocation(it) },
-                        purgeLabel = "Ask $peerName to purge now",
+                        purgeLabel = "Ask $peerName to Purge Now",
                         onPurge = if (retentionDaysLocation > 0) ({ vm.sendLocationPurgeNow() }) else null
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -221,11 +221,11 @@ fun PeerSharingScreen(
                         icon = Icons.Default.DeleteSweep,
                         title = "Messages",
                         subtitle = if (retentionDaysMessages == 0)
-                            "Forever — change below to enable a limit"
+                            "Forever - change below to enable a limit"
                         else "How long $peerName keeps messages you sent",
                         selected = retentionDaysMessages,
                         onSelected = { vm.setRetentionDaysMessages(it) },
-                        purgeLabel = "Ask $peerName to purge now",
+                        purgeLabel = "Ask $peerName to Purge Now",
                         onPurge = if (retentionDaysMessages > 0) ({ vm.sendMessagePurgeNow() }) else null
                     )
                 }

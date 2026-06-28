@@ -146,7 +146,7 @@ fun SettingsScreen(
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Share my location") },
+                        headlineContent = { Text("Share My Location") },
                         supportingContent = { Text(if (settings.heartbeatEnabled) "Broadcasting to your contacts" else "Not broadcasting") },
                         leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (settings.heartbeatEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
@@ -160,7 +160,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     // Update intervals - expandable
                     ListItem(
-                        headlineContent = { Text("Update intervals") },
+                        headlineContent = { Text("Update Intervals") },
                         supportingContent = { Text("Stationary: ${settings.stationaryIntervalMinutes}min · Walking: ${settings.walkingIntervalMinutes}min") },
                         leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
                         trailingContent = {
@@ -190,7 +190,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.Schedule,
-                        label = "Sharing schedule",
+                        label = "Sharing Schedule",
                         subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
                                    else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
                         onClick = onNavigateToGlobalSchedule
@@ -226,7 +226,7 @@ fun SettingsScreen(
                 SettingsCard {
                     RetentionRow(
                         icon = Icons.Default.LocationOn,
-                        title = "Location on this device",
+                        title = "Location On This Device",
                         subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) }
@@ -240,7 +240,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
                         icon = Icons.AutoMirrored.Filled.Message,
-                        title = "Messages on this device",
+                        title = "Messages On This Device",
                         subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
                         onSelected = { vm.setLocalMessageRetentionDays(it) }
@@ -281,7 +281,7 @@ fun SettingsScreen(
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     }
                     ListItem(
-                        headlineContent = { Text("Export backup") },
+                        headlineContent = { Text("Export Backup") },
                         supportingContent = { Text("Save key, contacts, geofences & settings") },
                         leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
@@ -290,7 +290,7 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Import backup") },
+                        headlineContent = { Text("Import Backup") },
                         supportingContent = { Text("Restore from a previously exported file") },
                         leadingContent = { Icon(Icons.Default.Download, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
@@ -299,7 +299,7 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("View private key") },
+                        headlineContent = { Text("View Private Key") },
                         supportingContent = { Text("Show your 64-character hex identity key") },
                         leadingContent = { Icon(Icons.Default.VpnKey, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
