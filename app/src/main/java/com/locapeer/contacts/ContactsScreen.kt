@@ -184,9 +184,9 @@ private fun ContactRow(
                 ) {
                     Text(
                         when (role) {
-                            PeerEntity.ROLE_BROADCASTER -> "Tracking"
-                            PeerEntity.ROLE_MUTUAL -> "Mutual"
-                            else -> "Subscriber"
+                            PeerEntity.ROLE_BROADCASTER -> "Receive Location"
+                            PeerEntity.ROLE_MUTUAL -> "Send/Receive Location"
+                            else -> "Send Location"
                         },
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),

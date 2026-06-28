@@ -153,7 +153,7 @@ private fun GeofenceCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(fence.name, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Tracking: $trackedName",
+                    "Receiving location from: $trackedName",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
