@@ -14,6 +14,9 @@ interface MessageDao {
     @Update
     suspend fun update(message: MessageEntity)
 
+    @Delete
+    suspend fun delete(message: MessageEntity)
+
     @Query("SELECT * FROM messages WHERE peerId = :peerId AND isBlocked = 0 ORDER BY timestamp ASC")
     fun getMessagesForPeer(peerId: String): Flow<List<MessageEntity>>
 
