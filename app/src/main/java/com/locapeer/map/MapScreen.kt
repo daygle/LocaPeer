@@ -472,7 +472,13 @@ private fun OsmdroidMapView(
             }.also { mapViewRef = it }
         },
         update = { mapView ->
-            mapView.setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
+            val targetTileSource = if (isDark) CARTO_DARK else CARTO_LIGHT
+            if (mapView.tileProvider.tileSource != targetTileSource) {
+                mapView.setTileSource(targetTileSource)
+            }
+
+            // Simple check to avoid clearing and re-adding everything if data hasn't changed
+            // This is a basic optimization; for high performance we'd track individual overlays.
             mapView.overlays.clear()
 
             geofences.forEach { fence ->

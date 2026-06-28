@@ -29,7 +29,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         org.osmdroid.config.Configuration.getInstance().apply {
             userAgentValue = packageName
             osmdroidBasePath = filesDir
-            osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles").also { it.mkdirs() }
+            osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
+            // Load configuration from shared preferences (recommended by OSMDroid)
+            load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
         }
         try {
             heartbeatReceiver.start()
