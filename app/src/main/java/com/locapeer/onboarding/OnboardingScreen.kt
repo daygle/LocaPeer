@@ -164,19 +164,19 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
 
     FeatureRow(
         icon = Icons.Default.Lock,
-        title = "End-to-end encrypted",
+        title = "End-to-End Encrypted",
         subtitle = "Your location is encrypted on-device"
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.CloudOff,
-        title = "No proprietary servers",
+        title = "No Proprietary Servers",
         subtitle = "Uses an open Nostr relay as a transport - encrypted so the relay never sees your data"
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.PhoneAndroid,
-        title = "Stays on your phone",
+        title = "Stays on Your Phone",
         subtitle = "Your history never leaves your device"
     )
 
@@ -193,7 +193,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     OutlinedTextField(
         value = state.displayName,
         onValueChange = vm::setDisplayName,
-        label = { Text("Display name") },
+        label = { Text("Display Name") },
         placeholder = { Text("e.g. Mom, Dad, Alice…") },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
@@ -221,7 +221,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     ) {
         Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
-        Text("Restore from backup")
+        Text("Restore From Backup")
     }
 
     Spacer(Modifier.height(16.dp))

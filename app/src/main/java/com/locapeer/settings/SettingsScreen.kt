@@ -449,7 +449,7 @@ fun SettingsScreen(
         var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
         AlertDialog(
             onDismissRequest = { vm.dismissPendingRestore() },
-            title = { Text("Select data to restore") },
+            title = { Text("Select Data to Restore") },
             text = {
                 Column {
                     BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
@@ -490,7 +490,7 @@ fun SettingsScreen(
     if (showExportDialog) {
         AlertDialog(
             onDismissRequest = { showExportDialog = false },
-            title = { Text("Select data to export") },
+            title = { Text("Select Data to Export") },
             text = {
                 Column {
                     BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
