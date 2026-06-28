@@ -88,7 +88,7 @@ fun LocaPeerNavHost(
         if (bottomNavItems.any { it.route == preferred }) preferred else Screen.Map.route
     }
 
-    val showBottomBar = bottomNavItems.any { currentRoute == it.route }
+    val showBottomBar = bottomNavItems.any { currentRoute?.substringBefore('?') == it.route }
 
     // Deep-link from notification
     LaunchedEffect(initialNavTarget) {
@@ -117,7 +117,7 @@ fun LocaPeerNavHost(
                 NavigationBar {
                     bottomNavItems.forEach { screen ->
                         NavigationBarItem(
-                            selected = currentRoute == screen.route,
+                            selected = currentRoute?.substringBefore('?') == screen.route,
                             onClick = {
                                 navController.navigate(screen.route) {
                                     popUpTo(startDestination) { saveState = true }
