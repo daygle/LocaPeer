@@ -56,9 +56,7 @@ data class ContactBackup(
     val publicKeyHex: String,
     val relayUrl: String,
     val locationRole: String = "SEND_RECEIVE",
-    val messagingEnabled: Boolean = true,
-    /** Legacy field from backup format v2 — used as fallback when locationRole is absent. */
-    val role: String = ""
+    val messagingEnabled: Boolean = true
 )
 
 @Serializable
@@ -264,7 +262,7 @@ class SettingsViewModel @Inject constructor(
                             displayName = c.displayName,
                             publicKeyHex = c.publicKeyHex,
                             relayUrl = c.relayUrl,
-                            locationRole = c.locationRole.ifEmpty { c.role }.ifEmpty { "SEND_RECEIVE" },
+                            locationRole = c.locationRole,
                             messagingEnabled = c.messagingEnabled
                         ))
                     }

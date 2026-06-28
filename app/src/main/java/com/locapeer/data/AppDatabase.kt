@@ -15,7 +15,7 @@ import com.locapeer.data.entity.*
         PeerSharingConfig::class,
         PendingMessageEntity::class
     ],
-    version = 9,
+    version = 1,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
