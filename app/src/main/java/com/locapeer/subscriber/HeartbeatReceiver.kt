@@ -381,8 +381,15 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
 
-        // Don't prompt if we're already tracking this person
-        if (peerDao.getPeer(event.pubkey) != null) return
+        val existing = peerDao.getPeer(event.pubkey)
+        if (existing?.role == "SUBSCRIBER") return  // already correctly paired
+        if (existing != null) {
+            // Wrong role (BROADCASTER) – silently fix without re-prompting the user
+            peerDao.upsertPeer(existing.copy(role = "SUBSCRIBER"))
+            sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
+            Log.i(TAG, "Auto-corrected role for ${existing.displayName} to SUBSCRIBER")
+            return
+        }
 
         val notifId = event.pubkey.hashCode() + 20000
         val acceptIntent = Intent(context, TrackRequestReceiver::class.java).apply {
@@ -410,6 +417,36 @@ class HeartbeatReceiver @Inject constructor(
             .addAction(0, "Decline", declinePi)
             .build()
         notificationManager.notify(notifId, notification)
+    }
+
+    private suspend fun sendTrackAcceptResponse(recipientPubkey: String, recipientRelay: String, recipientName: String) {
+        try {
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val settings = prefs.settings.first()
+            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val payload = com.locapeer.invite.TrackAcceptPayload(
+                acceptorPublicKeyHex = pubHex,
+                acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
+                acceptorDeviceId = pubHex,
+                acceptorRelayUrl = myRelay
+            )
+            val encrypted = crypto.nip44Encrypt(
+                crypto.hexToBytes(privHex),
+                recipientPubkey,
+                json.encodeToString(payload)
+            )
+            val event = NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.TRACK_ACCEPT,
+                content = encrypted,
+                tags = listOf(listOf("p", recipientPubkey)),
+                crypto = crypto
+            )
+            relayClient.publishEvent(event)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to send track accept response", e)
+        }
     }
 
     private suspend fun processTrackAccept(event: NostrEvent) {
