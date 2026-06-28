@@ -2,6 +2,7 @@ package com.locapeer.nostr
 
 import android.util.Log
 import com.locapeer.data.dao.PendingMessageDao
+import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +15,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -37,10 +41,19 @@ private const val TAG = "NostrRelayClient"
 @Singleton
 class NostrRelayClient @Inject constructor(
     private val pendingMessageDao: PendingMessageDao,
+    private val peerDao: PeerDao,
     private val prefs: AppPreferences
 ) {
-    private val json by lazy { Json { ignoreUnknownKeys = true } }
+    private val json by lazy { 
+        Json { 
+            ignoreUnknownKeys = true
+            encodeDefaults = false
+            explicitNulls = false
+        }
+    }
     private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
+
+    private var isGloballyConnected = false
 
     private val client by lazy {
         OkHttpClient.Builder()
@@ -71,13 +84,18 @@ class NostrRelayClient @Inject constructor(
 
     init {
         scope.launch {
-            prefs.settings.collect { settings ->
-                setRelays(settings.customRelays)
+            combine(
+                prefs.settings.map { it.customRelays }.distinctUntilChanged(),
+                peerDao.getAllPeers().map { peers -> peers.map { it.relayUrl } }.distinctUntilChanged()
+            ) { custom, peerRelays ->
+                (custom + peerRelays).filter { it.isNotBlank() }.toSet()
+            }.collect { allUrls ->
+                updateRelays(allUrls.toList())
             }
         }
     }
 
-    fun setRelays(urls: List<String>) {
+    private fun updateRelays(urls: List<String>) {
         val currentUrls = relays.keys
         val newUrls = urls.toSet()
 
@@ -92,22 +110,31 @@ class NostrRelayClient @Inject constructor(
             val conn = RelayConnection(url)
             relays[url] = conn
             _relayStatus.update { it + (url to false) }
-            // If any other relay is connected, we should probably connect this one too
-            if (relays.values.any { it.isConnected }) {
+            // If we are currently in "connected" mode, connect this new relay immediately
+            if (isGloballyConnected) {
                 conn.connect()
             }
         }
     }
 
     fun connect() {
+        isGloballyConnected = true
         relays.values.forEach { it.connect() }
     }
 
     fun connect(url: String) {
-        relays.getOrPut(url) { RelayConnection(url) }.connect()
+        if (url.isBlank()) return
+        val conn = relays.getOrPut(url) {
+            _relayStatus.update { it + (url to false) }
+            RelayConnection(url)
+        }
+        if (isGloballyConnected) {
+            conn.connect()
+        }
     }
 
     fun disconnect() {
+        isGloballyConnected = false
         relays.values.forEach { it.disconnect() }
     }
 

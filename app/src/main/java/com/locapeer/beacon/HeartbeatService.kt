@@ -106,6 +106,11 @@ class HeartbeatService : LifecycleService() {
                 currentSettings = settings
             }
         }
+        lifecycleScope.launch {
+            peerDao.getSendContacts().collect {
+                reschedulePulse()
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
