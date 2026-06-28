@@ -39,33 +39,35 @@ class NostrRelayClient @Inject constructor(
     private val pendingMessageDao: PendingMessageDao,
     private val prefs: AppPreferences
 ) {
-    private val json = Json { ignoreUnknownKeys = true }
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val json by lazy { Json { ignoreUnknownKeys = true } }
+    private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
 
-    private val client = OkHttpClient.Builder()
-        .pingInterval(30, TimeUnit.SECONDS)
-        .connectTimeout(15, TimeUnit.SECONDS)
-        .readTimeout(0, TimeUnit.SECONDS)
-        .build()
+    private val client by lazy {
+        OkHttpClient.Builder()
+            .pingInterval(30, TimeUnit.SECONDS)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(0, TimeUnit.SECONDS)
+            .build()
+    }
 
-    private val relays = ConcurrentHashMap<String, RelayConnection>()
+    private val relays by lazy { ConcurrentHashMap<String, RelayConnection>() }
 
-    private val _events = MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256)
-    val events: SharedFlow<NostrEvent> = _events
+    private val _events by lazy { MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256) }
+    val events: SharedFlow<NostrEvent> by lazy { _events }
 
-    private val _relayStatus = MutableStateFlow(emptyMap<String, Boolean>())
+    private val _relayStatus by lazy { MutableStateFlow(emptyMap<String, Boolean>()) }
     /** Maps relay URL → connected. Updated on every connect/disconnect event. */
-    val relayStatus: StateFlow<Map<String, Boolean>> = _relayStatus.asStateFlow()
+    val relayStatus: StateFlow<Map<String, Boolean>> by lazy { _relayStatus.asStateFlow() }
 
-    private val _okEvents = MutableSharedFlow<String>(extraBufferCapacity = 64)
+    private val _okEvents by lazy { MutableSharedFlow<String>(extraBufferCapacity = 64) }
     /** Emits Nostr event IDs that any relay accepted (OK true). */
-    val okEvents: SharedFlow<String> = _okEvents
+    val okEvents: SharedFlow<String> by lazy { _okEvents }
 
-    private val subsLock = Any()
-    private val activeSubscriptions = mutableMapOf<String, String>()
+    private val subsLock by lazy { Any() }
+    private val activeSubscriptions by lazy { mutableMapOf<String, String>() }
 
-    private val recentEventLock = Any()
-    private val recentEventIds = LinkedHashSet<String>(512)
+    private val recentEventLock by lazy { Any() }
+    private val recentEventIds by lazy { LinkedHashSet<String>(512) }
 
     init {
         scope.launch {

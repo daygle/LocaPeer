@@ -26,6 +26,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.BackupSection
 import com.locapeer.supervised.SupervisedModeManager
+import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -616,68 +617,6 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
         modifier = Modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
-}
-
-private val RETENTION_OPTIONS = listOf(
-    0 to "Forever",
-    1 to "1 day",
-    3 to "3 days",
-    7 to "7 days",
-    14 to "14 days",
-    30 to "30 days",
-    90 to "90 days"
-)
-
-@Composable
-private fun RetentionRow(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    title: String,
-    subtitle: String,
-    selected: Int,
-    onSelected: (Int) -> Unit,
-    purgeLabel: String? = null,
-    onPurge: (() -> Unit)? = null
-) {
-    Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            Column(modifier = Modifier.weight(1f)) {
-                Text(title, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium)
-                Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        }
-        Spacer(Modifier.height(10.dp))
-        RetentionSelector(selected = selected, onSelected = onSelected)
-        if (onPurge != null && purgeLabel != null) {
-            Spacer(Modifier.height(8.dp))
-            OutlinedButton(onClick = onPurge, modifier = Modifier.fillMaxWidth()) {
-                Text(purgeLabel)
-            }
-        }
-    }
-}
-
-@Composable
-private fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
-    val rows = RETENTION_OPTIONS.chunked(4)
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        rows.forEach { rowItems ->
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                rowItems.forEach { (days, label) ->
-                    FilterChip(
-                        selected = selected == days,
-                        onClick = { onSelected(days) },
-                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
-            }
-        }
-    }
 }
 
 @Composable

@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.data.entity.scheduleRules
+import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)

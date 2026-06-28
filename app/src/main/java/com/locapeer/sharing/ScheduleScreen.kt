@@ -3,6 +3,7 @@ package com.locapeer.sharing
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.ui.components.TimePickerDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -268,5 +270,38 @@ private fun RuleEditDialog(
             onConfirm = { onRuleChanged(rule.copy(endMinute = it)); showEndPicker = false },
             onDismiss = { showEndPicker = false }
         )
+    }
+}
+
+@Composable
+private fun DayPicker(days: Int, onDaysChanged: (Int) -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        SharingSchedule.DAY_LABELS.forEachIndexed { index, label ->
+            val isSelected = (days shr index) and 1 == 1
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = label.first().toString(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                FilterChip(
+                    selected = isSelected,
+                    onClick = {
+                        val newDays = if (isSelected) days and (1 shl index).inv()
+                                      else days or (1 shl index)
+                        onDaysChanged(newDays)
+                    },
+                    label = { },
+                    modifier = Modifier.size(40.dp),
+                    shape = CircleShape
+                )
+            }
+        }
     }
 }

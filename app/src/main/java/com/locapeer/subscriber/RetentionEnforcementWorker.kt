@@ -45,7 +45,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        val configs = configDao.getAll().first()
+        val configs = configDao.getAll()
         val peerMap = peerDao.getAllPeers().first().associateBy { it.deviceId }
 
         val hasLocalWork = settings.localLocationRetentionDays > 0 || settings.localMessageRetentionDays > 0
