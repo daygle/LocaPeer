@@ -474,14 +474,8 @@ class HeartbeatReceiver @Inject constructor(
         val newLocationRole = when (payload.acceptedRole) {
             PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
             PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
-            PeerEntity.ROLE_SEND_RECEIVE -> PeerEntity.ROLE_SEND_RECEIVE
             PeerEntity.ROLE_NONE -> PeerEntity.ROLE_NONE
-            else -> {
-                // Backward compat: old clients don't send acceptedRole
-                val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
-                if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
-                    PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
-            }
+            else -> PeerEntity.ROLE_SEND_RECEIVE
         }
 
         val existingPeer = peerDao.getPeer(payload.acceptorPublicKeyHex)
