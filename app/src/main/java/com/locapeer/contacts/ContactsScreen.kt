@@ -91,22 +91,22 @@ fun ContactsScreen(
     confirmAction?.let { (contact, action) ->
         val (title, body, confirmLabel) = when (action) {
             DataAction.REMOVE_CONTACT -> Triple(
-                "Remove contact",
+                "Remove Contact",
                 "Remove ${contact.peer.displayName} from your contacts? Their location history will also be deleted locally.",
                 "Remove"
             )
             DataAction.REMOVE_SELF -> Triple(
-                "Remove yourself",
+                "Remove Myself",
                 "This will ask ${contact.peer.displayName}'s device to delete all your messages and location data, then remove you from their contacts. You will also lose access to their location.",
-                "Remove myself"
+                "Remove"
             )
             DataAction.DELETE_MESSAGES -> Triple(
-                "Delete my messages",
+                "Delete My Messages",
                 "Ask ${contact.peer.displayName}'s device to delete all messages you sent them. This cannot be undone.",
                 "Delete"
             )
             DataAction.DELETE_LOCATION -> Triple(
-                "Delete my location data",
+                "Delete My Location",
                 "Ask ${contact.peer.displayName}'s device to delete all location data you have shared with them. This cannot be undone.",
                 "Delete"
             )
@@ -184,9 +184,9 @@ private fun ContactRow(
                 ) {
                     Text(
                         when (role) {
-                            PeerEntity.ROLE_BROADCASTER -> "tracking"
-                            PeerEntity.ROLE_MUTUAL -> "mutual"
-                            else -> "subscriber"
+                            PeerEntity.ROLE_BROADCASTER -> "Tracking"
+                            PeerEntity.ROLE_MUTUAL -> "Mutual"
+                            else -> "Subscriber"
                         },
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
@@ -219,30 +219,30 @@ private fun ContactRow(
                     }
                     DropdownMenu(expanded = showOverflow, onDismissRequest = { showOverflow = false }) {
                         DropdownMenuItem(
-                            text = { Text("Rename contact") },
+                            text = { Text("Rename Contact") },
                             leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onRename() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Delete my messages from their device") },
+                            text = { Text("Delete My Messages") },
                             leadingIcon = { Icon(Icons.Default.DeleteSweep, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyMessages() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Delete my location from their device") },
+                            text = { Text("Delete My Location") },
                             leadingIcon = { Icon(Icons.Default.LocationOff, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyLocation() }
                         )
                         HorizontalDivider()
                         DropdownMenuItem(
-                            text = { Text("Remove myself from their contacts", color = MaterialTheme.colorScheme.error) },
+                            text = { Text("Remove Myself", color = MaterialTheme.colorScheme.error) },
                             leadingIcon = { Icon(Icons.Default.PersonRemove, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onRemoveSelf() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Remove contact", color = MaterialTheme.colorScheme.error) },
+                            text = { Text("Remove Contact", color = MaterialTheme.colorScheme.error) },
                             leadingIcon = { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
-                        onClick = { showOverflow = false; onDeleteContact() }
+                            onClick = { showOverflow = false; onDeleteContact() }
                         )
                     }
                 }
