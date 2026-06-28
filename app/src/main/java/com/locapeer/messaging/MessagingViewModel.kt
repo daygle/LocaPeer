@@ -110,6 +110,10 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { messageDao.delete(msg) }
     }
 
+    fun deleteConversation(peerId: String) {
+        viewModelScope.launch { messageDao.deleteAllForPeer(peerId) }
+    }
+
     fun markRead(peerId: String) {
         viewModelScope.launch {
             val unread = messageDao.getUnreadFromPeer(peerId)
