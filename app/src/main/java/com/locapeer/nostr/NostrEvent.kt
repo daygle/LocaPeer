@@ -13,20 +13,19 @@ import kotlinx.serialization.json.buildJsonArray
 
 object NostrEventKind {
     const val ENCRYPTED_DM = 4
-    const val HEARTBEAT = 1
-    const val SOS_ALERT = 30000
-    const val READ_RECEIPT = 10001   // NIP-04-encrypted ack listing seen event IDs
-    const val TYPING = 10002         // NIP-04-encrypted ephemeral typing signal
-    const val PURGE_REQUEST = 10003         // NIP-04-encrypted request to delete old heartbeats
-    const val MESSAGE_PURGE_REQUEST = 10004 // NIP-04-encrypted request to delete old messages
-    const val DELIVERY_ACK = 10005          // NIP-04-encrypted delivery acknowledgment
-    const val SUPERVISED_UNLOCK_REQUEST = 10006  // NIP-04-encrypted unlock request to supervisor
-    const val SUPERVISED_UNLOCK_RESPONSE = 10007 // NIP-04-encrypted unlock response from supervisor
-    const val TRACK_REQUEST = 10008  // NIP-44-encrypted mutual tracking invitation
-    const val TRACK_ACCEPT = 10009   // NIP-44-encrypted acceptance of a track request
-    const val PEER_REMOVED = 10010   // NIP-44-encrypted peer removal notification
-    const val DELETE_MY_MESSAGES = 10011  // NIP-44-encrypted request to delete all sender's messages
-    const val DELETE_MY_LOCATION = 10012  // NIP-44-encrypted request to delete all sender's heartbeats
+    const val HEARTBEAT = 1040
+    const val SOS_ALERT = 1041
+    const val TRACK_REQUEST = 1042
+    const val TRACK_ACCEPT = 1043
+    const val PEER_REMOVED = 1044
+    const val PURGE_REQUEST = 1045
+    const val MESSAGE_PURGE_REQUEST = 1046
+    const val DELIVERY_ACK = 1047
+    const val READ_RECEIPT = 1048
+    const val SUPERVISED_UNLOCK_REQUEST = 1049
+    const val SUPERVISED_UNLOCK_RESPONSE = 1050
+    const val DELETE_MY_MESSAGES = 1051
+    const val DELETE_MY_LOCATION = 1052
 }
 
 @Serializable

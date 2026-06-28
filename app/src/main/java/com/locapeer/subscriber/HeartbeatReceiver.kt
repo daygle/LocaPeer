@@ -375,12 +375,25 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processTrackRequest(event: NostrEvent) {
-        if (!NostrEvent.verify(event, crypto)) return
+        if (!NostrEvent.verify(event, crypto)) {
+            Log.w(TAG, "Track request signature verification failed")
+            return
+        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-        } catch (e: Exception) { return }
-        val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decrypt track request from ${event.pubkey}", e)
+            return
+        }
+        val payload = try {
+            json.decodeFromString<TrackRequestPayload>(plaintext)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decode track request payload", e)
+            return
+        }
+
+        Log.i(TAG, "Received track request from ${payload.senderDisplayName} (${event.pubkey})")
 
         val existing = peerDao.getPeer(event.pubkey)
 
@@ -465,14 +478,25 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processTrackAccept(event: NostrEvent) {
-        if (!NostrEvent.verify(event, crypto)) return
+        if (!NostrEvent.verify(event, crypto)) {
+            Log.w(TAG, "Track accept signature verification failed")
+            return
+        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-        } catch (e: Exception) { return }
-        val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decrypt track accept from ${event.pubkey}", e)
+            return
+        }
+        val payload = try {
+            json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decode track accept payload", e)
+            return
+        }
 
-        // Derive our location role as the logical reciprocal of what the acceptor chose.
+        Log.i(TAG, "Received track acceptance from ${payload.acceptorDisplayName} (${event.pubkey})")
         // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
         val newLocationRole = when (payload.acceptedRole) {
             PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND

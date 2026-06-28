@@ -47,7 +47,7 @@ class NostrRelayClient @Inject constructor(
     private val json by lazy { 
         Json { 
             ignoreUnknownKeys = true
-            encodeDefaults = false
+            encodeDefaults = true
             explicitNulls = false
         }
     }
@@ -275,8 +275,13 @@ class NostrRelayClient @Inject constructor(
                             if (arr.size < 3) return
                             val eventId = arr[1].jsonPrimitive.content
                             val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
-                            if (accepted) scope.launch { _okEvents.emit(eventId) }
-                            Log.d(TAG, "OK from $url: ${if (accepted) "accepted" else "rejected"} $eventId")
+                            val message = if (arr.size > 3) arr[3].jsonPrimitive.content else ""
+                            if (accepted) {
+                                scope.launch { _okEvents.emit(eventId) }
+                                Log.i(TAG, "OK from $url: accepted $eventId")
+                            } else {
+                                Log.w(TAG, "OK from $url: rejected $eventId - $message")
+                            }
                         }
                     }
                 } catch (e: Exception) {

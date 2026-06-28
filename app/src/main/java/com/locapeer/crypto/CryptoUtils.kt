@@ -65,8 +65,9 @@ class CryptoUtils @Inject constructor() {
     /** NIP-44 v2: Encrypts plaintext for a recipient. */
     fun nip44Encrypt(senderPrivKey: ByteArray, recipientXOnlyHex: String, plaintext: String): String {
         val recipientCompressed = xOnlyHexToCompressed(recipientXOnlyHex)
-        val sharedPoint = Secp256k1.ecdh(senderPrivKey, recipientCompressed)
-        val conversationKey = sharedPoint.copyOf(32)
+        // conversation_key = SHA-256(secp256k1_ecdh(priv_key, pub_key))
+        // Secp256k1.ecdh in kmp wrapper already returns the SHA-256 of the point.
+        val conversationKey = Secp256k1.ecdh(senderPrivKey, recipientCompressed)
 
         val nonce = ByteArray(32).also { random.nextBytes(it) }
         val (chachaKey, chachaNonce, hmacKey) = deriveNip44Keys(conversationKey, nonce)
@@ -95,7 +96,11 @@ class CryptoUtils @Inject constructor() {
 
     /** NIP-44 v2: Decrypts a base64 payload. */
     fun nip44Decrypt(recipientPrivKey: ByteArray, senderXOnlyHex: String, payloadB64: String): String {
-        val payload = Base64.getDecoder().decode(payloadB64)
+        val payload = try {
+            Base64.getDecoder().decode(payloadB64)
+        } catch (e: Exception) {
+            throw SecurityException("Invalid base64 payload")
+        }
         require(payload.size >= 1 + 32 + 32) { "Invalid NIP-44 payload size" }
         require(payload[0] == 0x02.toByte()) { "Unsupported NIP-44 version" }
 
@@ -104,8 +109,7 @@ class CryptoUtils @Inject constructor() {
         val ciphertext = payload.copyOfRange(33, payload.size - 32)
 
         val senderCompressed = xOnlyHexToCompressed(senderXOnlyHex)
-        val sharedPoint = Secp256k1.ecdh(recipientPrivKey, senderCompressed)
-        val conversationKey = sharedPoint.copyOf(32)
+        val conversationKey = Secp256k1.ecdh(recipientPrivKey, senderCompressed)
 
         val (chachaKey, chachaNonce, hmacKey) = deriveNip44Keys(conversationKey, nonce)
 
@@ -126,9 +130,10 @@ class CryptoUtils @Inject constructor() {
     }
 
     private fun deriveNip44Keys(conversationKey: ByteArray, nonce: ByteArray): Triple<ByteArray, ByteArray, ByteArray> {
-        val salt = "nip44-v2".toByteArray(StandardCharsets.UTF_8)
+        val info = "nip44-v2".toByteArray(StandardCharsets.UTF_8)
         val hkdf = HKDFBytesGenerator(SHA256Digest())
-        hkdf.init(HKDFParameters(conversationKey, salt, nonce))
+        // HKDF-SHA256(ikm=conversation_key, salt=nonce, info="nip44-v2")
+        hkdf.init(HKDFParameters(conversationKey, nonce, info))
         val okm = ByteArray(76)
         hkdf.generateBytes(okm, 0, 76)
 
