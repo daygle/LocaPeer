@@ -82,6 +82,7 @@ fun MapScreen(
     val relayStatus by vm.relayStatus.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
+    var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
     val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(Unit) { vm.fetchUserLocation() }
@@ -93,8 +94,10 @@ fun MapScreen(
             userLocation = userLocation,
             lastMapCenter = lastMapCenter,
             centerOnUser = centerOnUser,
+            centerOnPin = centerOnPin,
             isDark = isDark,
             onCenteredOnUser = { centerOnUser = false },
+            onCenteredOnPin = { centerOnPin = null },
             onPinTapped = { selectedPin = it },
             onSaveMapPosition = vm::saveMapPosition,
             context = context,
@@ -160,11 +163,16 @@ fun MapScreen(
                 onSelectFriend = { pin ->
                     showFriendList = false
                     selectedPin = pin
-                    // Logic to center map could go here via VM or callback
                 },
                 onMessageFriend = { peerId, peerName ->
                     showFriendList = false
                     onNavigateToChat(peerId, peerName)
+                },
+                onLocateFriend = { pin ->
+                    pin.heartbeat?.let { hb ->
+                        centerOnPin = GeoPoint(hb.lat, hb.lng)
+                        showFriendList = false
+                    }
                 },
                 formatTimestamp = vm::formatTimestamp
             )
@@ -201,6 +209,7 @@ private fun FriendListPanel(
     onDismiss: () -> Unit,
     onSelectFriend: (PinData) -> Unit,
     onMessageFriend: (peerId: String, peerName: String) -> Unit,
+    onLocateFriend: (PinData) -> Unit,
     formatTimestamp: (Long) -> String = { "" }
 ) {
     Surface(
@@ -242,6 +251,7 @@ private fun FriendListPanel(
                             pin = pin,
                             onClick = { onSelectFriend(pin) },
                             onMessage = { onMessageFriend(pin.peer.deviceId, pin.peer.displayName) },
+                            onLocate = { onLocateFriend(pin) },
                             formatTimestamp = formatTimestamp
                         )
                     }
@@ -256,6 +266,7 @@ private fun FriendItem(
     pin: PinData,
     onClick: () -> Unit,
     onMessage: () -> Unit,
+    onLocate: () -> Unit,
     formatTimestamp: (Long) -> String = { "" }
 ) {
     val hb = pin.heartbeat
@@ -318,6 +329,16 @@ private fun FriendItem(
                 modifier = Modifier.size(20.dp)
             )
         }
+        if (pin.heartbeat != null) {
+            IconButton(onClick = onLocate) {
+                Icon(
+                    Icons.Default.PinDrop,
+                    contentDescription = "Go to location",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+        }
     }
 }
 
@@ -347,8 +368,10 @@ private fun OsmdroidMapView(
     userLocation: GeoPoint?,
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
+    centerOnPin: GeoPoint?,
     isDark: Boolean,
     onCenteredOnUser: () -> Unit,
+    onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
@@ -398,6 +421,14 @@ private fun OsmdroidMapView(
         if (centerOnUser && userLocation != null) {
             mapViewRef?.controller?.animateTo(userLocation)
             onCenteredOnUser()
+        }
+    }
+
+    // Jump to a contact's pin when selected from the friend list
+    LaunchedEffect(centerOnPin) {
+        if (centerOnPin != null) {
+            mapViewRef?.controller?.animateTo(centerOnPin)
+            onCenteredOnPin()
         }
     }
 

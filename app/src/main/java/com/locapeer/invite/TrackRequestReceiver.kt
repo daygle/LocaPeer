@@ -64,7 +64,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
             displayName = senderName,
             publicKeyHex = senderPubkey,
             relayUrl = senderRelay,
-            role = "BROADCASTER"
+            role = "SUBSCRIBER"
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(senderRelay)
