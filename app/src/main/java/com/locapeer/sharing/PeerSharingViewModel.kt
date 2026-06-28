@@ -90,7 +90,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setMessagingEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            peerDao.setMessagingEnabled(currentPeerId, enabled)
+            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
+            peerDao.upsertPeer(peer.copy(messagingEnabled = enabled))
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
         }
     }

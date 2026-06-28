@@ -26,7 +26,6 @@ import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
 import com.locapeer.peer.PeerManager
 import com.locapeer.peer.PeerRemovedPayload
-import com.locapeer.invite.ACTION_TRACK_ACCEPT
 import com.locapeer.invite.ACTION_TRACK_DECLINE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
@@ -396,6 +395,8 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         val notifId = event.pubkey.hashCode() + 20000
+        // Suppress relay retransmissions — skip if a notification for this sender is already showing
+        if (notificationManager.activeNotifications.any { it.id == notifId }) return
         val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("navigateTo", "share-request")
@@ -440,7 +441,8 @@ class HeartbeatReceiver @Inject constructor(
                 acceptorPublicKeyHex = pubHex,
                 acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
                 acceptorDeviceId = pubHex,
-                acceptorRelayUrl = myRelay
+                acceptorRelayUrl = myRelay,
+                acceptedRole = PeerEntity.ROLE_SEND_RECEIVE
             )
             val encrypted = crypto.nip44Encrypt(
                 crypto.hexToBytes(privHex),
@@ -481,11 +483,12 @@ class HeartbeatReceiver @Inject constructor(
         val existingPeer = peerDao.getPeer(payload.acceptorPublicKeyHex)
         val peer = PeerEntity(
             deviceId = payload.acceptorPublicKeyHex,
-            displayName = payload.acceptorDisplayName,
+            displayName = existingPeer?.displayName ?: payload.acceptorDisplayName,
             publicKeyHex = payload.acceptorPublicKeyHex,
             relayUrl = payload.acceptorRelayUrl,
             locationRole = newLocationRole,
-            messagingEnabled = existingPeer?.messagingEnabled ?: true
+            messagingEnabled = existingPeer?.messagingEnabled ?: true,
+            addedAt = existingPeer?.addedAt ?: System.currentTimeMillis()
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)

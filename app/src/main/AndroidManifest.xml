@@ -99,7 +99,6 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.locapeer.TRACK_ACCEPT" />
                 <action android:name="com.locapeer.TRACK_DECLINE" />
             </intent-filter>
         </receiver>

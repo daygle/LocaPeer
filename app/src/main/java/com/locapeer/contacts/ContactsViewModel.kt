@@ -82,18 +82,6 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    fun setMessaging(deviceId: String, enabled: Boolean) {
-        viewModelScope.launch {
-            val existing = sharingConfigDao.getForPeer(deviceId)
-            if (existing != null) {
-                sharingConfigDao.setMessagingEnabled(deviceId, enabled)
-            } else {
-                sharingConfigDao.upsert(PeerSharingConfig(peerDeviceId = deviceId, messagingEnabled = enabled))
-            }
-            if (enabled) messageDao.unblockMessagesFromPeer(deviceId)
-        }
-    }
-
     fun formatLastSeen(timestamp: Long): String {
         val now = System.currentTimeMillis()
         val diffMs = now - timestamp

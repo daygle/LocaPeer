@@ -24,9 +24,6 @@ interface PeerDao {
     @Query("UPDATE peers SET locationRole = :role WHERE deviceId = :deviceId")
     suspend fun setLocationRole(deviceId: String, role: String)
 
-    @Query("UPDATE peers SET messagingEnabled = :enabled WHERE deviceId = :deviceId")
-    suspend fun setMessagingEnabled(deviceId: String, enabled: Boolean)
-
     @Query("SELECT * FROM peers WHERE publicKeyHex = :publicKeyHex LIMIT 1")
     suspend fun getPeerByPublicKey(publicKeyHex: String): PeerEntity?
 

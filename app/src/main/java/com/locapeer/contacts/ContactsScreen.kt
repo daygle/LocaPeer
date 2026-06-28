@@ -147,7 +147,6 @@ private fun ContactRow(
 ) {
     val hb = item.lastHeartbeat
     val role = item.peer.locationRole
-    val isBroadcaster = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
     val canMessage = item.peer.messagingEnabled
     var showOverflow by remember { mutableStateOf(false) }
 

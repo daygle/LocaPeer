@@ -210,7 +210,7 @@ private fun ConversationRow(
     onLongClick: () -> Unit = {}
 ) {
     val hasUnread = unreadCount > 0
-    val isBlocked = !summary.messagingEnabled
+    val isBlocked = !summary.peer.messagingEnabled
     ListItem(
         leadingContent = {
             AvatarCircle(name = summary.peer.displayName, hasUnread = hasUnread)
