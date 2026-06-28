@@ -16,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import android.net.Uri
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
@@ -24,6 +25,7 @@ import com.locapeer.NavTarget
 import com.locapeer.about.AboutScreen
 import com.locapeer.about.AboutViewModel
 import com.locapeer.geofence.GeofenceListScreen
+import com.locapeer.invite.IncomingShareRequestScreen
 import com.locapeer.invite.InviteScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
@@ -106,6 +108,12 @@ fun LocaPeerNavHost(
             "scan" -> {
                 val data = target.peerId ?: ""
                 navController.navigate("${Screen.Invite.route}?inviteData=$data")
+            }
+            "share-request" -> {
+                val pubkey = target.peerId ?: return@LaunchedEffect
+                val name = Uri.encode(target.peerName.ifBlank { "Unknown" })
+                val relay = Uri.encode(target.extra ?: "")
+                navController.navigate("share-request?pubkey=$pubkey&name=$name&relay=$relay")
             }
         }
         onNavTargetConsumed()
@@ -306,6 +314,25 @@ fun LocaPeerNavHost(
                 CustomizeNavScreen(
                     prefs = prefs,
                     onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = "share-request?pubkey={pubkey}&name={name}&relay={relay}",
+                arguments = listOf(
+                    navArgument("pubkey") { type = NavType.StringType },
+                    navArgument("name") { type = NavType.StringType; defaultValue = "" },
+                    navArgument("relay") { type = NavType.StringType; defaultValue = "" }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                IncomingShareRequestScreen(
+                    senderPubkey = entry.arguments?.getString("pubkey") ?: "",
+                    senderName = entry.arguments?.getString("name") ?: "Unknown",
+                    senderRelay = entry.arguments?.getString("relay") ?: "",
+                    onDone = { navController.popBackStack() }
                 )
             }
         }

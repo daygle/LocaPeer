@@ -396,8 +396,9 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         val notifId = event.pubkey.hashCode() + 20000
-        val acceptIntent = Intent(context, TrackRequestReceiver::class.java).apply {
-            action = ACTION_TRACK_ACCEPT
+        val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("navigateTo", "share-request")
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
@@ -408,7 +409,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
         }
-        val acceptPi = PendingIntent.getBroadcast(context, notifId, acceptIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
@@ -417,7 +418,8 @@ class HeartbeatReceiver @Inject constructor(
             .setContentText("${payload.senderDisplayName} wants to share locations with you.")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-            .addAction(0, "Accept", acceptPi)
+            .setContentIntent(reviewPi)
+            .addAction(0, "Review", reviewPi)
             .addAction(0, "Decline", declinePi)
             .build()
         notificationManager.notify(notifId, notification)

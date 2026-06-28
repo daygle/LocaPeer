@@ -20,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.crypto.KeyManager
+import com.locapeer.invite.EXTRA_SENDER_NAME
+import com.locapeer.invite.EXTRA_SENDER_PUBKEY
+import com.locapeer.invite.EXTRA_SENDER_RELAY
 import com.locapeer.messaging.MessagingViewModel
 import com.locapeer.onboarding.OnboardingScreen
 import com.locapeer.onboarding.OnboardingViewModel
@@ -122,10 +125,18 @@ class MainActivity : ComponentActivity() {
         }
 
         val navigateTo = intent?.getStringExtra("navigateTo") ?: return
+        if (navigateTo == "share-request") {
+            val pubkey = intent.getStringExtra(EXTRA_SENDER_PUBKEY) ?: return
+            val name = intent.getStringExtra(EXTRA_SENDER_NAME) ?: ""
+            val relay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: ""
+            pendingNavTarget.value = NavTarget("share-request", pubkey, name, relay)
+            return
+        }
+
         val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
         val peerName = intent.getStringExtra("peerName") ?: ""
         pendingNavTarget.value = NavTarget(navigateTo, peerId, peerName)
     }
 }
 
-data class NavTarget(val route: String, val peerId: String?, val peerName: String)
+data class NavTarget(val route: String, val peerId: String?, val peerName: String, val extra: String? = null)
