@@ -79,7 +79,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
                 // Location purge: only meaningful for subscribers/mutual peers who actually keep our heartbeats
                 if (cfg.retentionDaysLocation > 0 &&
-                    (peer.role == PeerEntity.ROLE_SEND || peer.role == PeerEntity.ROLE_SEND_RECEIVE)
+                    (peer.locationRole == PeerEntity.ROLE_SEND || peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
                 ) {
                     val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysLocation * 24 * 3600 * 1000L
                     publishPurge(

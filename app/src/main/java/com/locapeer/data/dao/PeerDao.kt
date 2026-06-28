@@ -9,14 +9,23 @@ interface PeerDao {
     @Query("SELECT * FROM peers ORDER BY displayName ASC")
     fun getAllPeers(): Flow<List<PeerEntity>>
 
-    @Query("SELECT * FROM peers WHERE role = 'RECEIVE' OR role = 'SEND_RECEIVE' ORDER BY displayName ASC")
+    @Query("SELECT * FROM peers WHERE locationRole = 'RECEIVE' OR locationRole = 'SEND_RECEIVE' ORDER BY displayName ASC")
     fun getReceiveContacts(): Flow<List<PeerEntity>>
 
-    @Query("SELECT * FROM peers WHERE role = 'SEND' OR role = 'SEND_RECEIVE' ORDER BY displayName ASC")
+    @Query("SELECT * FROM peers WHERE locationRole = 'SEND' OR locationRole = 'SEND_RECEIVE' ORDER BY displayName ASC")
     fun getSendContacts(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     suspend fun getPeer(deviceId: String): PeerEntity?
+
+    @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
+    fun observePeer(deviceId: String): Flow<PeerEntity?>
+
+    @Query("UPDATE peers SET locationRole = :role WHERE deviceId = :deviceId")
+    suspend fun setLocationRole(deviceId: String, role: String)
+
+    @Query("UPDATE peers SET messagingEnabled = :enabled WHERE deviceId = :deviceId")
+    suspend fun setMessagingEnabled(deviceId: String, enabled: Boolean)
 
     @Query("SELECT * FROM peers WHERE publicKeyHex = :publicKeyHex LIMIT 1")
     suspend fun getPeerByPublicKey(publicKeyHex: String): PeerEntity?

@@ -4,6 +4,8 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.LocationDisabled
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.LocationOff
 import androidx.compose.material.icons.filled.SyncAlt
@@ -34,6 +36,7 @@ fun IncomingShareRequestScreen(
     }
 
     var selectedRole by remember { mutableStateOf<String?>(null) }
+    var messagingEnabled by remember { mutableStateOf(true) }
 
     val title = if (isRoleChange) "Update Location Sharing" else "Location Sharing Request"
     val subtitle = if (isRoleChange)
@@ -52,13 +55,12 @@ fun IncomingShareRequestScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(subtitle, style = MaterialTheme.typography.bodyLarge)
-            Text(
-                "Choose how you'd like to connect:",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
 
-            Spacer(Modifier.height(4.dp))
+            Text(
+                "Location sharing",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
 
             RoleCard(
                 title = "Send/Receive Location",
@@ -81,13 +83,54 @@ fun IncomingShareRequestScreen(
                 selected = selectedRole == PeerEntity.ROLE_RECEIVE,
                 onClick = { selectedRole = PeerEntity.ROLE_RECEIVE }
             )
+            RoleCard(
+                title = "No Location Sharing",
+                description = "Add as a messaging-only contact — no location either way",
+                icon = Icons.Default.LocationDisabled,
+                selected = selectedRole == PeerEntity.ROLE_NONE,
+                onClick = { selectedRole = PeerEntity.ROLE_NONE }
+            )
+
+            HorizontalDivider()
+
+            Text(
+                "Messaging",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Card(
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                ListItem(
+                    headlineContent = { Text("Allow Messages") },
+                    supportingContent = { Text("Receive chat messages from $senderName") },
+                    leadingContent = {
+                        Icon(
+                            Icons.Default.Chat,
+                            contentDescription = null,
+                            tint = if (messagingEnabled) MaterialTheme.colorScheme.primary
+                                   else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    trailingContent = {
+                        Switch(
+                            checked = messagingEnabled,
+                            onCheckedChange = { messagingEnabled = it }
+                        )
+                    },
+                    colors = ListItemDefaults.colors(containerColor = androidx.compose.ui.graphics.Color.Transparent)
+                )
+            }
 
             Spacer(Modifier.weight(1f))
 
             Button(
                 onClick = {
                     val role = selectedRole ?: return@Button
-                    vm.accept(senderPubkey, senderName, senderRelay, role)
+                    vm.accept(senderPubkey, senderName, senderRelay, role, messagingEnabled)
                 },
                 enabled = selectedRole != null && state !is IncomingRequestState.Loading,
                 modifier = Modifier.fillMaxWidth()

@@ -40,7 +40,7 @@ fun PeerSharingScreen(
     val state by vm.uiState.collectAsState()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
-    val messagingEnabled = cfg?.messagingEnabled ?: true
+    val messagingEnabled = state.peer?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
@@ -49,7 +49,7 @@ fun PeerSharingScreen(
     val proximityAlert = state.proximityAlert
     val purgeResult by vm.lastPurgeResult.collectAsState()
     val roleChangeResult by vm.roleChangeResult.collectAsState()
-    val role = state.peer?.role
+    val role = state.peer?.locationRole
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
 
@@ -109,6 +109,7 @@ fun PeerSharingScreen(
                         PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
                         PeerEntity.ROLE_SEND -> "Send Location"
                         PeerEntity.ROLE_RECEIVE -> "Receive Location"
+                        PeerEntity.ROLE_NONE -> "No Location Sharing"
                         else -> "Unknown"
                     }
                     ListItem(

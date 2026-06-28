@@ -20,13 +20,10 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -69,7 +66,7 @@ class PeerSharingViewModel @Inject constructor(
         if (currentPeerId == peerId) return
         currentPeerId = peerId
         viewModelScope.launch {
-            val peerFlow = flowOf(peerDao.getPeer(peerId))
+            val peerFlow = peerDao.observePeer(peerId)
             val configFlow = configDao.observeForPeer(peerId)
             val alertFlow = proximityAlertDao.observeForPeer(peerId)
 
@@ -93,9 +90,7 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setMessagingEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            val existing = configDao.getForPeer(currentPeerId)
-            if (existing != null) configDao.setMessagingEnabled(currentPeerId, enabled)
-            else configDao.upsert(defaultConfig().copy(messagingEnabled = enabled))
+            peerDao.setMessagingEnabled(currentPeerId, enabled)
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
         }
     }
@@ -209,7 +204,7 @@ class PeerSharingViewModel @Inject constructor(
                 return@launch
             }
             // Only subscribers / mutual peers actually keep our heartbeats
-            if (peer.role != PeerEntity.ROLE_SEND && peer.role != PeerEntity.ROLE_SEND_RECEIVE) {
+            if (peer.locationRole != PeerEntity.ROLE_SEND && peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
                 _lastPurgeResult.value = "${peer.displayName} doesn't store your location"
                 return@launch
             }

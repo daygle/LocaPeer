@@ -39,7 +39,7 @@ class IncomingShareRequestViewModel @Inject constructor(
     private val _state = MutableStateFlow<IncomingRequestState>(IncomingRequestState.Idle)
     val state: StateFlow<IncomingRequestState> = _state
 
-    fun accept(senderPubkey: String, senderName: String, senderRelay: String, role: String) {
+    fun accept(senderPubkey: String, senderName: String, senderRelay: String, locationRole: String, messagingEnabled: Boolean) {
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
             peerDao.upsertPeer(
@@ -48,16 +48,17 @@ class IncomingShareRequestViewModel @Inject constructor(
                     displayName = senderName,
                     publicKeyHex = senderPubkey,
                     relayUrl = senderRelay,
-                    role = role
+                    locationRole = locationRole,
+                    messagingEnabled = messagingEnabled
                 )
             )
             relayClient.connect(senderRelay)
-            sendTrackAccept(senderPubkey, senderRelay, role)
+            sendTrackAccept(senderPubkey, senderRelay, locationRole)
             _state.value = IncomingRequestState.Done
         }
     }
 
-    private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, role: String) {
+    private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, locationRole: String) {
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val settings = prefs.settings.first()
         val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
@@ -66,7 +67,7 @@ class IncomingShareRequestViewModel @Inject constructor(
             acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
             acceptorDeviceId = pubHex,
             acceptorRelayUrl = myRelay,
-            acceptedRole = role
+            acceptedRole = locationRole
         )
         val encrypted = crypto.nip44Encrypt(
             crypto.hexToBytes(privHex),

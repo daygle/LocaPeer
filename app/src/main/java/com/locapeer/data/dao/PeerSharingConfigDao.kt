@@ -19,9 +19,6 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET sharingEnabled = :enabled WHERE peerDeviceId = :peerDeviceId")
     suspend fun setSharingEnabled(peerDeviceId: String, enabled: Boolean)
 
-    @Query("UPDATE peer_sharing_config SET messagingEnabled = :enabled WHERE peerDeviceId = :peerDeviceId")
-    suspend fun setMessagingEnabled(peerDeviceId: String, enabled: Boolean)
-
     @Query("UPDATE peer_sharing_config SET precisionMode = :mode WHERE peerDeviceId = :peerDeviceId")
     suspend fun setPrecisionMode(peerDeviceId: String, mode: String)
 

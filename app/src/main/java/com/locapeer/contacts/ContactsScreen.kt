@@ -146,8 +146,9 @@ private fun ContactRow(
     onSharingSettings: () -> Unit
 ) {
     val hb = item.lastHeartbeat
-    val role = item.peer.role
+    val role = item.peer.locationRole
     val isBroadcaster = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
+    val canMessage = item.peer.messagingEnabled
     var showOverflow by remember { mutableStateOf(false) }
 
     ListItem(
@@ -179,6 +180,7 @@ private fun ContactRow(
                     color = when (role) {
                         PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.secondaryContainer
                         PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.primaryContainer
+                        PeerEntity.ROLE_NONE -> MaterialTheme.colorScheme.surfaceVariant
                         else -> MaterialTheme.colorScheme.tertiaryContainer
                     }
                 ) {
@@ -186,6 +188,7 @@ private fun ContactRow(
                         when (role) {
                             PeerEntity.ROLE_RECEIVE -> "Receive Location"
                             PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
+                            PeerEntity.ROLE_NONE -> "No Location"
                             else -> "Send Location"
                         },
                         style = MaterialTheme.typography.labelSmall,
@@ -193,6 +196,7 @@ private fun ContactRow(
                         color = when (role) {
                             PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.onSecondaryContainer
                             PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.onPrimaryContainer
+                            PeerEntity.ROLE_NONE -> MaterialTheme.colorScheme.onSurfaceVariant
                             else -> MaterialTheme.colorScheme.onTertiaryContainer
                         }
                     )
@@ -208,7 +212,7 @@ private fun ContactRow(
         },
         trailingContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                if (isBroadcaster) {
+                if (canMessage) {
                     IconButton(onClick = onMessage) {
                         Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = "Message", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                     }

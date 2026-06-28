@@ -78,7 +78,6 @@ class HeartbeatReceiver @Inject constructor(
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
-    private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val peerManager: PeerManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -232,8 +231,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processDmInBackground(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
-        val cfg = sharingConfigDao.getForPeer(event.pubkey)
-        val isBlocked = cfg?.messagingEnabled == false
+        val isBlocked = !sender.messagingEnabled
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -388,9 +386,9 @@ class HeartbeatReceiver @Inject constructor(
 
         if (!payload.isRoleChange) {
             // For new requests only: skip if already sharing; auto-promote RECEIVE → SEND_RECEIVE
-            if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE) return
-            if (existing != null && existing.role == PeerEntity.ROLE_RECEIVE) {
-                peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_SEND_RECEIVE))
+            if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE) return
+            if (existing != null && existing.locationRole == PeerEntity.ROLE_RECEIVE) {
+                peerDao.upsertPeer(existing.copy(locationRole = PeerEntity.ROLE_SEND_RECEIVE))
                 sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
                 Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
                 return
@@ -471,31 +469,34 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
 
-        // Derive our role as the logical reciprocal of what the acceptor chose.
-        // e.g. if they accepted as RECEIVE (they receive from us), we are SEND (we send to them).
-        val newRole = when (payload.acceptedRole) {
+        // Derive our location role as the logical reciprocal of what the acceptor chose.
+        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
+        val newLocationRole = when (payload.acceptedRole) {
             PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
             PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
             PeerEntity.ROLE_SEND_RECEIVE -> PeerEntity.ROLE_SEND_RECEIVE
+            PeerEntity.ROLE_NONE -> PeerEntity.ROLE_NONE
             else -> {
                 // Backward compat: old clients don't send acceptedRole
                 val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
-                if (existing?.role == PeerEntity.ROLE_SEND || existing?.role == PeerEntity.ROLE_SEND_RECEIVE)
+                if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
                     PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
             }
         }
 
+        val existingPeer = peerDao.getPeer(payload.acceptorPublicKeyHex)
         val peer = PeerEntity(
             deviceId = payload.acceptorPublicKeyHex,
             displayName = payload.acceptorDisplayName,
             publicKeyHex = payload.acceptorPublicKeyHex,
             relayUrl = payload.acceptorRelayUrl,
-            role = newRole
+            locationRole = newLocationRole,
+            messagingEnabled = existingPeer?.messagingEnabled ?: true
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
         sendAcceptanceNotification(payload.acceptorDisplayName)
-        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (Role: $newRole)")
+        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
     private fun sendAcceptanceNotification(name: String) {

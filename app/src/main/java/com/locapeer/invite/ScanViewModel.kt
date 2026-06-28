@@ -55,7 +55,8 @@ class ScanViewModel @Inject constructor(
                     displayName = invite.displayName,
                     publicKeyHex = invite.publicKeyHex,
                     relayUrl = invite.relayUrl,
-                    role = newRole
+                    locationRole = newRole,
+                    messagingEnabled = true
                 )
                 peerDao.upsertPeer(peer)
                 relayClient.connect(invite.relayUrl)
