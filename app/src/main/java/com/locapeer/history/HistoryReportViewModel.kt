@@ -41,7 +41,7 @@ class HistoryReportViewModel @Inject constructor(
 
     private val geocoder = Geocoder(context, Locale.getDefault())
 
-    val broadcasters: StateFlow<List<PeerEntity>> = peerDao.getBroadcasters()
+    val receiveContacts: StateFlow<List<PeerEntity>> = peerDao.getReceiveContacts()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _selectedPeerId = MutableStateFlow<String?>(null)
@@ -63,7 +63,7 @@ class HistoryReportViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            broadcasters.collect { list ->
+            receiveContacts.collect { list ->
                 if (_selectedPeerId.value == null && list.isNotEmpty()) {
                     _selectedPeerId.value = list.first().deviceId
                 }

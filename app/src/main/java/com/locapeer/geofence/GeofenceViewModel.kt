@@ -31,11 +31,11 @@ class GeofenceViewModel @Inject constructor(
     val geofences = geofenceDao.getAllGeofences()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val broadcasters = peerDao.getBroadcasters()
+    val receiveContacts = peerDao.getReceiveContacts()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    val broadcastersWithLocation = combine(
-        peerDao.getBroadcasters(),
+    val receiveContactsWithLocation = combine(
+        peerDao.getReceiveContacts(),
         heartbeatDao.getLatestHeartbeatPerDevice()
     ) { peers, heartbeats ->
         val hbMap = heartbeats.associateBy { it.deviceId }

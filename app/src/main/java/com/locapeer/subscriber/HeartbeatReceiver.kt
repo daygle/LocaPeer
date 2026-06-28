@@ -78,7 +78,6 @@ class HeartbeatReceiver @Inject constructor(
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
-    private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val peerManager: PeerManager
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -232,8 +231,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processDmInBackground(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
-        val cfg = sharingConfigDao.getForPeer(event.pubkey)
-        val isBlocked = cfg?.messagingEnabled == false
+        val isBlocked = !sender.messagingEnabled
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -385,22 +383,26 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<TrackRequestPayload>(plaintext) } catch (e: Exception) { return }
 
         val existing = peerDao.getPeer(event.pubkey)
-        if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) return
-        
-        if (existing != null && existing.role == PeerEntity.ROLE_BROADCASTER) {
-            // We were tracking them, and now they want to track us -> MUTUAL
-            peerDao.upsertPeer(existing.copy(role = PeerEntity.ROLE_MUTUAL))
-            sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
-            Log.i(TAG, "Promoted ${existing.displayName} to MUTUAL role")
-            return
+
+        if (!payload.isRoleChange) {
+            // For new requests only: skip if already sharing; auto-promote RECEIVE → SEND_RECEIVE
+            if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE) return
+            if (existing != null && existing.locationRole == PeerEntity.ROLE_RECEIVE) {
+                peerDao.upsertPeer(existing.copy(locationRole = PeerEntity.ROLE_SEND_RECEIVE))
+                sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
+                Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
+                return
+            }
         }
 
         val notifId = event.pubkey.hashCode() + 20000
-        val acceptIntent = Intent(context, TrackRequestReceiver::class.java).apply {
-            action = ACTION_TRACK_ACCEPT
+        val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            putExtra("navigateTo", "share-request")
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             action = ACTION_TRACK_DECLINE
@@ -408,16 +410,22 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
         }
-        val acceptPi = PendingIntent.getBroadcast(context, notifId, acceptIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notifTitle = if (payload.isRoleChange) "Sharing update from ${payload.senderDisplayName}"
+                         else "Location sharing request from ${payload.senderDisplayName}"
+        val notifBody = if (payload.isRoleChange) "${payload.senderDisplayName} wants to update how you share locations."
+                        else "${payload.senderDisplayName} wants to share locations with you."
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Track request from ${payload.senderDisplayName}")
-            .setContentText("${payload.senderDisplayName} wants to share their location with you.")
+            .setContentTitle(notifTitle)
+            .setContentText(notifBody)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
-            .addAction(0, "Accept", acceptPi)
+            .setContentIntent(reviewPi)
+            .addAction(0, "Review", reviewPi)
             .addAction(0, "Decline", declinePi)
             .build()
         notificationManager.notify(notifId, notification)
@@ -461,26 +469,34 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<com.locapeer.invite.TrackAcceptPayload>(plaintext) } catch (e: Exception) { return }
 
-        // If we already have them as a SUBSCRIBER, promote to MUTUAL since we now track them too.
-        // If we didn't have them or they were a BROADCASTER, this sets/re-sets them as BROADCASTER.
-        val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
-        val newRole = if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) {
-            PeerEntity.ROLE_MUTUAL
-        } else {
-            PeerEntity.ROLE_BROADCASTER
+        // Derive our location role as the logical reciprocal of what the acceptor chose.
+        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
+        val newLocationRole = when (payload.acceptedRole) {
+            PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
+            PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
+            PeerEntity.ROLE_SEND_RECEIVE -> PeerEntity.ROLE_SEND_RECEIVE
+            PeerEntity.ROLE_NONE -> PeerEntity.ROLE_NONE
+            else -> {
+                // Backward compat: old clients don't send acceptedRole
+                val existing = peerDao.getPeer(payload.acceptorPublicKeyHex)
+                if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
+                    PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
+            }
         }
 
+        val existingPeer = peerDao.getPeer(payload.acceptorPublicKeyHex)
         val peer = PeerEntity(
             deviceId = payload.acceptorPublicKeyHex,
             displayName = payload.acceptorDisplayName,
             publicKeyHex = payload.acceptorPublicKeyHex,
             relayUrl = payload.acceptorRelayUrl,
-            role = newRole
+            locationRole = newLocationRole,
+            messagingEnabled = existingPeer?.messagingEnabled ?: true
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
         sendAcceptanceNotification(payload.acceptorDisplayName)
-        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (Role: $newRole)")
+        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
     private fun sendAcceptanceNotification(name: String) {

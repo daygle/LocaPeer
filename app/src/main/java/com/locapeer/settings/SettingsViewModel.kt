@@ -55,7 +55,10 @@ data class ContactBackup(
     val displayName: String,
     val publicKeyHex: String,
     val relayUrl: String,
-    val role: String
+    val locationRole: String = "SEND_RECEIVE",
+    val messagingEnabled: Boolean = true,
+    /** Legacy field from backup format v2 — used as fallback when locationRole is absent. */
+    val role: String = ""
 )
 
 @Serializable
@@ -192,7 +195,7 @@ class SettingsViewModel @Inject constructor(
                         keyManager.exportPrivateKeyHex() else null,
                     contacts = if (BackupSection.CONTACTS in sections)
                         peerDao.getAllPeers().first().map { p ->
-                            ContactBackup(p.deviceId, p.displayName, p.publicKeyHex, p.relayUrl, p.role)
+                            ContactBackup(p.deviceId, p.displayName, p.publicKeyHex, p.relayUrl, p.locationRole, p.messagingEnabled)
                         } else null,
                     geofences = if (BackupSection.GEOFENCES in sections)
                         geofenceDao.getAllGeofences().first().map { g ->
@@ -256,7 +259,14 @@ class SettingsViewModel @Inject constructor(
                 }
                 if (BackupSection.CONTACTS in sections && backup.contacts != null) {
                     backup.contacts.forEach { c ->
-                        peerDao.upsertPeer(PeerEntity(c.deviceId, c.displayName, c.publicKeyHex, c.relayUrl, c.role))
+                        peerDao.upsertPeer(PeerEntity(
+                            deviceId = c.deviceId,
+                            displayName = c.displayName,
+                            publicKeyHex = c.publicKeyHex,
+                            relayUrl = c.relayUrl,
+                            locationRole = c.locationRole.ifEmpty { c.role }.ifEmpty { "SEND_RECEIVE" },
+                            messagingEnabled = c.messagingEnabled
+                        ))
                     }
                     restored += "${backup.contacts.size} contacts"
                 }

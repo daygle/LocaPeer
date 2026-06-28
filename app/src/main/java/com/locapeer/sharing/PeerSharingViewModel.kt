@@ -13,18 +13,17 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.data.entity.ProximityAlertEntity
+import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -44,9 +43,11 @@ class PeerSharingViewModel @Inject constructor(
     private val proximityAlertDao: ProximityAlertDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val relayClient: NostrRelayClient
+    private val relayClient: NostrRelayClient,
+    private val prefs: AppPreferences
 ) : ViewModel() {
 
+    private val json = Json { ignoreUnknownKeys = true }
     private var currentPeerId: String = ""
 
     private val _uiState = MutableStateFlow(PeerSharingUiState())
@@ -55,13 +56,17 @@ class PeerSharingViewModel @Inject constructor(
     private val _lastPurgeResult = MutableStateFlow<String?>(null)
     val lastPurgeResult: StateFlow<String?> = _lastPurgeResult.asStateFlow()
 
+    private val _roleChangeResult = MutableStateFlow<String?>(null)
+    val roleChangeResult: StateFlow<String?> = _roleChangeResult.asStateFlow()
+    fun clearRoleChangeResult() { _roleChangeResult.value = null }
+
     fun clearPurgeResult() { _lastPurgeResult.value = null }
 
     fun init(peerId: String) {
         if (currentPeerId == peerId) return
         currentPeerId = peerId
         viewModelScope.launch {
-            val peerFlow = flowOf(peerDao.getPeer(peerId))
+            val peerFlow = peerDao.observePeer(peerId)
             val configFlow = configDao.observeForPeer(peerId)
             val alertFlow = proximityAlertDao.observeForPeer(peerId)
 
@@ -85,9 +90,7 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setMessagingEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            val existing = configDao.getForPeer(currentPeerId)
-            if (existing != null) configDao.setMessagingEnabled(currentPeerId, enabled)
-            else configDao.upsert(defaultConfig().copy(messagingEnabled = enabled))
+            peerDao.setMessagingEnabled(currentPeerId, enabled)
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
         }
     }
@@ -154,6 +157,38 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
+    fun sendRoleChangeRequest() {
+        viewModelScope.launch {
+            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val settings = prefs.settings.first()
+            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val payload = TrackRequestPayload(
+                senderPublicKeyHex = pubHex,
+                senderDisplayName = settings.displayName.ifBlank { "Someone" },
+                senderDeviceId = pubHex,
+                senderRelayUrl = myRelay,
+                isRoleChange = true
+            )
+            val encrypted = crypto.nip44Encrypt(
+                crypto.hexToBytes(privHex),
+                peer.publicKeyHex,
+                json.encodeToString(payload)
+            )
+            relayClient.publishEvent(
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.TRACK_REQUEST,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+            )
+            _roleChangeResult.value = "Role change request sent to ${peer.displayName}"
+        }
+    }
+
     /** Manually ask this peer to delete all location data older than their configured retention. */
     fun sendLocationPurgeNow() {
         viewModelScope.launch {
@@ -169,7 +204,7 @@ class PeerSharingViewModel @Inject constructor(
                 return@launch
             }
             // Only subscribers / mutual peers actually keep our heartbeats
-            if (peer.role != PeerEntity.ROLE_SUBSCRIBER && peer.role != PeerEntity.ROLE_MUTUAL) {
+            if (peer.locationRole != PeerEntity.ROLE_SEND && peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
                 _lastPurgeResult.value = "${peer.displayName} doesn't store your location"
                 return@launch
             }

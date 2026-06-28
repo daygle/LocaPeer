@@ -229,10 +229,10 @@ class HeartbeatService : LifecycleService() {
                     return@launch
                 }
 
-                val subscribers = peerDao.getSubscribers().first()
+                val sendContacts = peerDao.getSendContacts().first()
                 val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
                 var sentCount = 0
-                subscribers.forEach { subscriber ->
+                sendContacts.forEach { subscriber ->
                     val cfg = configMap[subscriber.deviceId]
 
                     if (isSos && cfg?.isSosContact == false) return@forEach
@@ -281,7 +281,7 @@ class HeartbeatService : LifecycleService() {
                     relayClient.publishEvent(event)
                     sentCount++
                 }
-                Log.d(TAG, "Heartbeat sent to $sentCount/${subscribers.size} subscribers")
+                Log.d(TAG, "Heartbeat sent to $sentCount/${sendContacts.size} sendContacts")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }

@@ -33,7 +33,7 @@ fun GeofenceListScreen(
     vm: GeofenceViewModel = hiltViewModel()
 ) {
     val geofences by vm.geofences.collectAsState()
-    val broadcastersWithLocation by vm.broadcastersWithLocation.collectAsState()
+    val broadcastersWithLocation by vm.receiveContactsWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }
 
     val filteredGeofences = remember(geofences, peerId) {
@@ -153,7 +153,7 @@ private fun GeofenceCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(fence.name, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Tracking: $trackedName",
+                    "Receiving location from: $trackedName",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

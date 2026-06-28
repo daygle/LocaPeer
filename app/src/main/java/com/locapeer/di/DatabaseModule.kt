@@ -39,11 +39,36 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v7 → v8: rename role string values in the peers table.
+     * BROADCASTER → RECEIVE, SUBSCRIBER → SEND, MUTUAL → SEND_RECEIVE.
+     */
+    private val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("UPDATE peers SET role = 'RECEIVE' WHERE role = 'BROADCASTER'")
+            db.execSQL("UPDATE peers SET role = 'SEND' WHERE role = 'SUBSCRIBER'")
+            db.execSQL("UPDATE peers SET role = 'SEND_RECEIVE' WHERE role = 'MUTUAL'")
+        }
+    }
+
+    /**
+     * v8 → v9: split peer role into locationRole + messagingEnabled on PeerEntity.
+     * SQLite doesn't support DROP COLUMN (pre-3.35), so the old `role` column is left
+     * in place — Room ignores columns that don't exist in the entity definition.
+     */
+    private val MIGRATION_8_9 = object : Migration(8, 9) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE peers ADD COLUMN locationRole TEXT NOT NULL DEFAULT 'SEND_RECEIVE'")
+            db.execSQL("UPDATE peers SET locationRole = role")
+            db.execSQL("ALTER TABLE peers ADD COLUMN messagingEnabled INTEGER NOT NULL DEFAULT 1")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
-            .addMigrations(MIGRATION_6_7)
+            .addMigrations(MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
             .fallbackToDestructiveMigration(dropAllTables = true)
             .build()
 

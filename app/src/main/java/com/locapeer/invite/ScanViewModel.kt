@@ -48,18 +48,15 @@ class ScanViewModel @Inject constructor(
             try {
                 val invite = json.decodeFromString<InviteData>(raw)
                 val existing = peerDao.getPeer(invite.deviceId)
-                val newRole = if (existing?.role == PeerEntity.ROLE_SUBSCRIBER || existing?.role == PeerEntity.ROLE_MUTUAL) {
-                    PeerEntity.ROLE_MUTUAL
-                } else {
-                    PeerEntity.ROLE_BROADCASTER
-                }
+                val newRole = PeerEntity.ROLE_SEND_RECEIVE
 
                 val peer = PeerEntity(
                     deviceId = invite.deviceId,
                     displayName = invite.displayName,
                     publicKeyHex = invite.publicKeyHex,
                     relayUrl = invite.relayUrl,
-                    role = newRole
+                    locationRole = newRole,
+                    messagingEnabled = true
                 )
                 peerDao.upsertPeer(peer)
                 relayClient.connect(invite.relayUrl)

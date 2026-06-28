@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.ui.components.RetentionRow
@@ -39,7 +40,7 @@ fun PeerSharingScreen(
     val state by vm.uiState.collectAsState()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
-    val messagingEnabled = cfg?.messagingEnabled ?: true
+    val messagingEnabled = state.peer?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
@@ -47,6 +48,8 @@ fun PeerSharingScreen(
     val retentionDaysMessages = cfg?.retentionDaysMessages ?: 0
     val proximityAlert = state.proximityAlert
     val purgeResult by vm.lastPurgeResult.collectAsState()
+    val roleChangeResult by vm.roleChangeResult.collectAsState()
+    val role = state.peer?.locationRole
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
 
@@ -95,6 +98,37 @@ fun PeerSharingScreen(
                         peerName,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+
+            item { SectionLabel("Sharing Role") }
+            item {
+                SettingsCard {
+                    val roleLabel = when (role) {
+                        PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
+                        PeerEntity.ROLE_SEND -> "Send Location"
+                        PeerEntity.ROLE_RECEIVE -> "Receive Location"
+                        PeerEntity.ROLE_NONE -> "No Location Sharing"
+                        else -> "Unknown"
+                    }
+                    ListItem(
+                        headlineContent = { Text(roleLabel) },
+                        supportingContent = { Text(roleChangeResult ?: "Tap below to request a change") },
+                        leadingContent = { Icon(Icons.Default.SyncAlt, contentDescription = null) },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Request Role Change") },
+                        supportingContent = { Text("Ask $peerName to review and update how you share") },
+                        leadingContent = { Icon(Icons.Default.Edit, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
+                        modifier = Modifier.clickable {
+                            vm.clearRoleChangeResult()
+                            vm.sendRoleChangeRequest()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
             }

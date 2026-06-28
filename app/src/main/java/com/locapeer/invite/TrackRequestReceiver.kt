@@ -28,6 +28,7 @@ const val ACTION_TRACK_DECLINE = "com.locapeer.TRACK_DECLINE"
 const val EXTRA_SENDER_PUBKEY = "sender_pubkey"
 const val EXTRA_SENDER_NAME = "sender_name"
 const val EXTRA_SENDER_RELAY = "sender_relay"
+const val EXTRA_IS_ROLE_CHANGE = "is_role_change"
 
 @AndroidEntryPoint
 class TrackRequestReceiver : BroadcastReceiver() {
@@ -57,13 +58,13 @@ class TrackRequestReceiver : BroadcastReceiver() {
                         Log.d("TrackRequestReceiver", "Accepting track request from $senderName")
                         acceptTrackRequest(senderPubkey, senderName, senderRelay)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Accepted tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Now sharing location with $senderName", Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_TRACK_DECLINE -> {
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Declined tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Declined location sharing from $senderName", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -77,18 +78,15 @@ class TrackRequestReceiver : BroadcastReceiver() {
 
     private suspend fun acceptTrackRequest(senderPubkey: String, senderName: String, senderRelay: String) {
         val existing = peerDao.getPeer(senderPubkey)
-        val newRole = if (existing?.role == PeerEntity.ROLE_BROADCASTER || existing?.role == PeerEntity.ROLE_MUTUAL) {
-            PeerEntity.ROLE_MUTUAL
-        } else {
-            PeerEntity.ROLE_SUBSCRIBER
-        }
+        val newRole = PeerEntity.ROLE_SEND_RECEIVE
 
         val peer = PeerEntity(
             deviceId = senderPubkey,
             displayName = senderName,
             publicKeyHex = senderPubkey,
             relayUrl = senderRelay,
-            role = newRole
+            locationRole = newRole,
+            messagingEnabled = true
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(senderRelay)

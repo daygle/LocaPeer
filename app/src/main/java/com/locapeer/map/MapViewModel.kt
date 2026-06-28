@@ -124,7 +124,7 @@ class MapViewModel @Inject constructor(
     }
 
     val uiState: StateFlow<MapUiState> = combine(
-        peerDao.getBroadcasters(),
+        peerDao.getReceiveContacts(),
         heartbeatDao.getLatestHeartbeatPerDevice(),
         geofenceDao.getAllGeofences()
     ) { peers, heartbeats, fences ->

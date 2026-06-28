@@ -33,13 +33,13 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
-        val broadcasters = peerDao.getBroadcasters().first()
+        val receiveContacts = peerDao.getReceiveContacts().first()
         val now = System.currentTimeMillis()
 
         val notificationManager = applicationContext
             .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
-        broadcasters.forEach { peer ->
+        receiveContacts.forEach { peer ->
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
             val expected = intervalManager.getExpectedIntervalMillis(latest.motionState, settings)
             val elapsed = now - latest.timestamp
