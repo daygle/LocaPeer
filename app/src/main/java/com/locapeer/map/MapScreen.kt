@@ -21,8 +21,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import android.location.Geocoder
+import android.os.Build
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import java.util.Locale
+import kotlin.coroutines.resume
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -83,9 +90,16 @@ fun MapScreen(
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
+    var selectedPinAddress by remember { mutableStateOf<String?>(null) }
     val isDark = isSystemInDarkTheme()
 
     LaunchedEffect(Unit) { vm.fetchUserLocation() }
+
+    LaunchedEffect(selectedPin) {
+        selectedPinAddress = null
+        val hb = selectedPin?.heartbeat ?: return@LaunchedEffect
+        selectedPinAddress = geocodeLocation(context, hb.lat, hb.lng)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         OsmdroidMapView(
@@ -190,6 +204,7 @@ fun MapScreen(
             selectedPin?.let { pin ->
                 PinInfoSheet(
                     pin = pin,
+                    address = selectedPinAddress,
                     formatTimestamp = vm::formatTimestamp,
                     onDismiss = { selectedPin = null },
                     onMessage = {
@@ -518,6 +533,7 @@ private fun OsmdroidMapView(
 @Composable
 private fun PinInfoSheet(
     pin: PinData,
+    address: String?,
     formatTimestamp: (Long) -> String,
     onDismiss: () -> Unit,
     onMessage: () -> Unit,
@@ -595,6 +611,27 @@ private fun PinInfoSheet(
                     StatChip("Motion",
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
                 }
+
+                if (address != null) {
+                    Spacer(Modifier.height(10.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.LocationOn,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(14.dp)
+                        )
+                        Text(
+                            address,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 2
+                        )
+                    }
+                }
             } else {
                 Spacer(Modifier.height(8.dp))
                 Text("No location data yet",
@@ -630,3 +667,26 @@ private fun StatChip(label: String, value: String) {
             color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
+
+@Suppress("DEPRECATION")
+private suspend fun geocodeLocation(context: android.content.Context, lat: Double, lng: Double): String? =
+    withContext(Dispatchers.IO) {
+        if (!Geocoder.isPresent()) return@withContext null
+        try {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val addr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                suspendCancellableCoroutine { cont ->
+                    geocoder.getFromLocation(lat, lng, 1) { addresses ->
+                        cont.resume(addresses.firstOrNull())
+                    }
+                }
+            } else {
+                geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()
+            }
+            addr?.let {
+                listOfNotNull(it.thoroughfare, it.locality, it.adminArea)
+                    .joinToString(", ")
+                    .ifBlank { it.getAddressLine(0) }
+            }
+        } catch (e: Exception) { null }
+    }
