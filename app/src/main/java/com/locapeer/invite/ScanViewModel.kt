@@ -104,8 +104,14 @@ class ScanViewModel @Inject constructor(
         }
     }
 
-    fun processInviteLink(base64: String) {
+    fun processInviteLink(input: String) {
         try {
+            val base64 = if (input.startsWith("locapeer://")) {
+                val uri = android.net.Uri.parse(input)
+                uri.getQueryParameter("data") ?: throw Exception("Invalid URL")
+            } else {
+                input
+            }
             val raw = String(android.util.Base64.decode(base64, android.util.Base64.URL_SAFE))
             processQrCode(raw)
         } catch (_: Exception) {

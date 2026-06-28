@@ -176,12 +176,45 @@ private fun MyQrTab(vm: InviteViewModel, context: android.content.Context) {
 private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
     val scanState by vm.scanState.collectAsState()
+    var showPasteDialog by remember { mutableStateOf(false) }
+
+    if (showPasteDialog) {
+        var text by remember { mutableStateOf("") }
+        AlertDialog(
+            onDismissRequest = { showPasteDialog = false },
+            title = { Text("Paste Invite Link") },
+            text = {
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    placeholder = { Text("locapeer://invite?data=...") },
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 4
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showPasteDialog = false
+                        vm.processInviteLink(text.trim())
+                    },
+                    enabled = text.isNotBlank()
+                ) {
+                    Text("Add")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showPasteDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
 
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         when {
+            // ... (rest of the when block)
             !cameraPermission.status.isGranted -> {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -254,6 +287,25 @@ private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
                     },
                     modifier = Modifier.fillMaxSize()
                 )
+
+                // Overlay the "Paste Link" button
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(bottom = 32.dp),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    ElevatedButton(
+                        onClick = { showPasteDialog = true },
+                        colors = ButtonDefaults.elevatedButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f)
+                        )
+                    ) {
+                        Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Paste Invite Link")
+                    }
+                }
             }
         }
     }
