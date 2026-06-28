@@ -144,15 +144,16 @@ class NostrRelayClient @Inject constructor(
     }
 
     private fun sendToAll(msg: String) {
-        var sentToAny = false
-        relays.values.forEach { relay ->
-            if (relay.send(msg)) sentToAny = true
-        }
-        if (!sentToAny) {
+        val disconnected = relays.values.filter { !it.isConnected }
+        val connected = relays.values.filter { it.isConnected }
+        
+        connected.forEach { it.send(msg) }
+        
+        if (disconnected.isNotEmpty()) {
             scope.launch {
                 pendingMessageDao.insert(PendingMessageEntity(content = msg))
             }
-            relays.values.forEach { it.ensureConnecting() }
+            disconnected.forEach { it.ensureConnecting() }
         }
     }
 

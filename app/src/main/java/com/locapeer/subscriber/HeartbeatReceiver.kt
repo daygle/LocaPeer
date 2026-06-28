@@ -479,7 +479,24 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
+        sendAcceptanceNotification(payload.acceptorDisplayName)
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (Role: $newRole)")
+    }
+
+    private fun sendAcceptanceNotification(name: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("navigateTo", "contacts")
+        }
+        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle("Request Accepted")
+            .setContentText("$name is now sharing their location with you.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(name.hashCode() + 30000, notification)
     }
 
     private fun createAlertChannel() {

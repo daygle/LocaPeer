@@ -156,7 +156,7 @@ private fun MyQrTab(vm: InviteViewModel, context: android.content.Context) {
                 onClick = {
                     val intent = Intent(Intent.ACTION_SEND).apply {
                         type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, "Connect with me on LocaPeer: ${state.inviteLink}")
+                        putExtra(Intent.EXTRA_TEXT, state.inviteLink)
                     }
                     context.startActivity(Intent.createChooser(intent, "Share Invite"))
                 },

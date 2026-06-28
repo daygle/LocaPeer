@@ -1,9 +1,11 @@
 package com.locapeer.invite
 
+import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
@@ -43,12 +45,24 @@ class TrackRequestReceiver : BroadcastReceiver() {
         val senderName = intent.getStringExtra(EXTRA_SENDER_NAME) ?: return
         val senderRelay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: return
 
+        // Dismiss the notification
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(senderPubkey.hashCode() + 20000)
+
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 when (intent.action) {
-                    ACTION_TRACK_ACCEPT -> acceptTrackRequest(senderPubkey, senderName, senderRelay)
-                    ACTION_TRACK_DECLINE -> Unit // nothing to do
+                    ACTION_TRACK_ACCEPT -> {
+                        Log.d("TrackRequestReceiver", "Accepting track request from $senderName")
+                        acceptTrackRequest(senderPubkey, senderName, senderRelay)
+                        launch(Dispatchers.Main) {
+                            Toast.makeText(context, "Accepted tracking request from $senderName", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    ACTION_TRACK_DECLINE -> {
+                        Log.d("TrackRequestReceiver", "Declined track request from $senderName")
+                    }
                 }
             } catch (e: Exception) {
                 Log.e("TrackRequestReceiver", "Error handling track action", e)
