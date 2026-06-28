@@ -1,12 +1,13 @@
 package com.locapeer.crypto
 
 import android.content.Context
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.util.Base64
 import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,52 +15,33 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.security.KeyStore
+import javax.crypto.Cipher
+import javax.crypto.KeyGenerator
+import javax.crypto.SecretKey
+import javax.crypto.spec.GCMParameterSpec
 import javax.inject.Inject
 import javax.inject.Singleton
 
 private val Context.keyStore by preferencesDataStore(name = "locapeer_keys")
 private const val TAG = "KeyManager"
+private const val KEYSTORE_ALIAS = "locapeer_private_key"
+private const val ANDROID_KEYSTORE = "AndroidKeyStore"
+private const val AES_GCM = "AES/GCM/NoPadding"
+private const val GCM_TAG_BITS = 128
+private const val IV_LENGTH = 12
 
 @Singleton
 class KeyManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val crypto: CryptoUtils
 ) {
-    private val KEY_PRIVATE = "private_key_hex"
+    private val KEY_PRIVATE_ENCRYPTED = stringPreferencesKey("private_key_encrypted")
     private val KEY_PUBLIC_METADATA = stringPreferencesKey("public_key_hex")
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
-    private val masterKey by lazy {
-        MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-    }
-
-    private val encryptedPrefs by lazy {
-        try {
-            EncryptedSharedPreferences.create(
-                context,
-                "locapeer_secure_keys",
-                masterKey,
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            )
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to create EncryptedSharedPreferences", e)
-            context.deleteSharedPreferences("locapeer_secure_keys")
-            EncryptedSharedPreferences.create(
-                context,
-                "locapeer_secure_keys",
-                masterKey,
-                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            )
-        }
-    }
 
     private val _publicKeyFlow = MutableStateFlow<String?>(null)
     val publicKeyHexFlow: Flow<String?> = _publicKeyFlow
@@ -74,76 +56,120 @@ class KeyManager @Inject constructor(
         }
     }
 
+    private fun getOrCreateKeystoreKey(): SecretKey {
+        val ks = KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }
+        (ks.getKey(KEYSTORE_ALIAS, null) as? SecretKey)?.let { return it }
+        val keyGen = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
+        keyGen.init(
+            KeyGenParameterSpec.Builder(
+                KEYSTORE_ALIAS,
+                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+            )
+                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                .setKeySize(256)
+                .build()
+        )
+        return keyGen.generateKey()
+    }
+
+    private fun encrypt(plaintext: String): String {
+        val cipher = Cipher.getInstance(AES_GCM)
+        cipher.init(Cipher.ENCRYPT_MODE, getOrCreateKeystoreKey())
+        val iv = cipher.iv
+        val ciphertext = cipher.doFinal(plaintext.toByteArray(Charsets.UTF_8))
+        return Base64.encodeToString(iv + ciphertext, Base64.NO_WRAP)
+    }
+
+    private fun decrypt(encoded: String): String {
+        val combined = Base64.decode(encoded, Base64.NO_WRAP)
+        val iv = combined.copyOfRange(0, IV_LENGTH)
+        val ciphertext = combined.copyOfRange(IV_LENGTH, combined.size)
+        val cipher = Cipher.getInstance(AES_GCM)
+        cipher.init(Cipher.DECRYPT_MODE, getOrCreateKeystoreKey(), GCMParameterSpec(GCM_TAG_BITS, iv))
+        return cipher.doFinal(ciphertext).toString(Charsets.UTF_8)
+    }
+
+    // One-time migration from legacy EncryptedSharedPreferences.
+    // Reads the key, deletes the old file, and returns the plaintext hex (or null if absent).
+    @Suppress("DEPRECATION")
+    private fun migrateLegacyKey(): String? = try {
+        val masterKey = androidx.security.crypto.MasterKey.Builder(context)
+            .setKeyScheme(androidx.security.crypto.MasterKey.KeyScheme.AES256_GCM)
+            .build()
+        val prefs = androidx.security.crypto.EncryptedSharedPreferences.create(
+            context,
+            "locapeer_secure_keys",
+            masterKey,
+            androidx.security.crypto.EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            androidx.security.crypto.EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+        prefs.getString("private_key_hex", null)?.also {
+            context.deleteSharedPreferences("locapeer_secure_keys")
+            Log.i(TAG, "Migrated private key from legacy EncryptedSharedPreferences")
+        }
+    } catch (e: Exception) {
+        Log.d(TAG, "No legacy key to migrate: ${e.message}")
+        null
+    }
+
     suspend fun ensureKeypair(): Pair<String, String> = withContext(Dispatchers.IO) {
-        val privHex = try {
-            encryptedPrefs.getString(KEY_PRIVATE, null)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to read private key", e)
-            null
+        val prefs = context.keyStore.data.first()
+        val encryptedPriv = prefs[KEY_PRIVATE_ENCRYPTED]
+        val pubHex = prefs[KEY_PUBLIC_METADATA]
+
+        if (encryptedPriv != null && pubHex != null) {
+            try {
+                val privHex = decrypt(encryptedPriv)
+                if (privHex.length == 64 && pubHex.length == 64) return@withContext privHex to pubHex
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to decrypt stored key, will regenerate", e)
+            }
         }
-        val pubHex = context.keyStore.data.first()[KEY_PUBLIC_METADATA]
-        // Both must exist and be exactly 64 hex chars (32 bytes). If the pubkey was
-        // previously stored as 128 chars due to a getXOnlyPublicKey bug, regenerate.
-        if (privHex != null && pubHex != null && privHex.length == 64 && pubHex.length == 64) {
-            return@withContext Pair(privHex, pubHex)
+
+        // Try one-time migration from the old EncryptedSharedPreferences store.
+        migrateLegacyKey()?.takeIf { it.length == 64 }?.let { legacyPrivHex ->
+            val pubFromLegacy = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(legacyPrivHex)))
+            saveKeypair(legacyPrivHex, pubFromLegacy)
+            return@withContext legacyPrivHex to pubFromLegacy
         }
-        Log.w(TAG, "Key missing or wrong length (privLen=${privHex?.length}, pubLen=${pubHex?.length}), regenerating")
+
+        Log.w(TAG, "No valid keypair found — generating new one")
         generateAndSaveKeypair()
+    }
+
+    private suspend fun saveKeypair(privHex: String, pubHex: String) {
+        context.keyStore.edit { prefs ->
+            prefs[KEY_PRIVATE_ENCRYPTED] = encrypt(privHex)
+            prefs[KEY_PUBLIC_METADATA] = pubHex
+        }
+        _publicKeyFlow.value = pubHex
     }
 
     private suspend fun generateAndSaveKeypair(): Pair<String, String> = withContext(Dispatchers.IO) {
         val privBytes = crypto.generatePrivateKey()
-        val xOnlyBytes = crypto.getXOnlyPublicKey(privBytes)
         val privHex = crypto.bytesToHex(privBytes)
-        val pubHex = crypto.bytesToHex(xOnlyBytes)
-
-        try {
-            encryptedPrefs.edit().putString(KEY_PRIVATE, privHex).apply()
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to save private key", e)
-        }
-
-        context.keyStore.edit { prefs ->
-            prefs[KEY_PUBLIC_METADATA] = pubHex
-        }
-        _publicKeyFlow.value = pubHex
+        val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(privBytes))
+        saveKeypair(privHex, pubHex)
         privHex to pubHex
     }
 
     suspend fun getPublicKeyHex(): String? = withContext(Dispatchers.IO) {
-        try {
-            context.keyStore.data.first()[KEY_PUBLIC_METADATA]
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to get public key", e)
-            null
-        }
+        try { context.keyStore.data.first()[KEY_PUBLIC_METADATA] }
+        catch (e: Exception) { Log.e(TAG, "Failed to get public key", e); null }
     }
 
     suspend fun getPrivateKeyHex(): String? = withContext(Dispatchers.IO) {
         try {
-            encryptedPrefs.getString(KEY_PRIVATE, null)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to read private key", e)
-            null
-        }
+            val enc = context.keyStore.data.first()[KEY_PRIVATE_ENCRYPTED] ?: return@withContext null
+            decrypt(enc)
+        } catch (e: Exception) { Log.e(TAG, "Failed to read private key", e); null }
     }
 
     suspend fun exportPrivateKeyHex(): String = ensureKeypair().first
 
     suspend fun importPrivateKey(privHex: String) = withContext(Dispatchers.IO) {
-        val privBytes = crypto.hexToBytes(privHex)
-        val xOnlyBytes = crypto.getXOnlyPublicKey(privBytes)
-        val pubHex = crypto.bytesToHex(xOnlyBytes)
-
-        try {
-            encryptedPrefs.edit().putString(KEY_PRIVATE, privHex).apply()
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to import private key", e)
-        }
-
-        context.keyStore.edit { prefs ->
-            prefs[KEY_PUBLIC_METADATA] = pubHex
-        }
-        _publicKeyFlow.value = pubHex
+        val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(privHex)))
+        saveKeypair(privHex, pubHex)
     }
 }
