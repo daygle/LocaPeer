@@ -30,6 +30,7 @@ import com.locapeer.invite.ACTION_TRACK_DECLINE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
+import com.locapeer.invite.TrackAcceptPayload
 import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.invite.TrackRequestReceiver
 import com.locapeer.supervised.SupervisedModeManager
@@ -46,6 +47,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -424,16 +426,16 @@ class HeartbeatReceiver @Inject constructor(
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val settings = prefs.settings.first()
             val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
-            val payload = com.locapeer.invite.TrackAcceptPayload(
+            val payload = TrackAcceptPayload(
                 acceptorPublicKeyHex = pubHex,
-                acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
+                acceptorDisplayName = settings.displayName.ifBlank<String> { "Someone" },
                 acceptorDeviceId = pubHex,
                 acceptorRelayUrl = myRelay
             )
             val encrypted = crypto.nip44Encrypt(
                 crypto.hexToBytes(privHex),
                 recipientPubkey,
-                json.encodeToString(payload)
+                json.encodeToString<TrackAcceptPayload>(payload)
             )
             val event = NostrEvent.build(
                 privKeyHex = privHex,
