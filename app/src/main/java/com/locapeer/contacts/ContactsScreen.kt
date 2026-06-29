@@ -49,7 +49,7 @@ fun ContactsScreen(
                         }
                     ) {
                         IconButton(onClick = onNavigateToPendingRequests) {
-                            Icon(Icons.Default.PersonAdd, contentDescription = "Pending Requests")
+                            Icon(Icons.Default.Inbox, contentDescription = "Pending Requests")
                         }
                     }
                 }

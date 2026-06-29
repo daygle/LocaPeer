@@ -116,7 +116,7 @@ fun PeerSharingScreen(
                     val isSend = role == PeerEntity.ROLE_SEND || role == PeerEntity.ROLE_SEND_RECEIVE
                     val isReceive = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
-                        headlineContent = { Text("Share my location with $peerName") },
+                        headlineContent = { Text("Share Location with $peerName") },
                         supportingContent = { Text(if (isSend) "They can see your location" else "Not sharing your location") },
                         leadingContent = {
                             Icon(
@@ -132,14 +132,14 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("See ${peerName}'s location") },
+                        headlineContent = { Text("See ${peerName}'s Location") },
                         supportingContent = {
                             Text(if (isReceive) "You can see their location"
                                  else "You don't have access — request it below")
                         },
                         leadingContent = {
                             Icon(
-                                Icons.Default.LocationOff,
+                                Icons.Default.Visibility,
                                 contentDescription = null,
                                 tint = if (isReceive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                             )
