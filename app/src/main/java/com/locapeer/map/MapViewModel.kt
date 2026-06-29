@@ -16,9 +16,11 @@ import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
 import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -50,11 +52,16 @@ class MapViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val sosManager: SosManager,
     private val relayClient: NostrRelayClient,
+    private val appPreferences: AppPreferences,
     @ApplicationContext private val appContext: Context,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val relayStatus = relayClient.relayStatus
+
+    val myDisplayName: StateFlow<String> = appPreferences.settings
+        .map { it.displayName.ifBlank { "Me" } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
 
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
