@@ -52,8 +52,16 @@ fun PeerSharingScreen(
     val role = state.peer?.locationRole
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(roleChangeResult) {
+        val msg = roleChangeResult ?: return@LaunchedEffect
+        snackbarHostState.showSnackbar(msg)
+        vm.clearRoleChangeResult()
+    }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
                 title = { Text("Contact Settings") },
@@ -114,7 +122,7 @@ fun PeerSharingScreen(
                     }
                     ListItem(
                         headlineContent = { Text(roleLabel) },
-                        supportingContent = { Text(roleChangeResult ?: "Tap below to request a change") },
+                        supportingContent = { Text("Current sharing role with $peerName") },
                         leadingContent = { Icon(Icons.Default.SyncAlt, contentDescription = null) },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -124,10 +132,7 @@ fun PeerSharingScreen(
                         supportingContent = { Text("Ask $peerName to review and update how you share") },
                         leadingContent = { Icon(Icons.Default.Edit, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
-                        modifier = Modifier.clickable {
-                            vm.clearRoleChangeResult()
-                            vm.sendRoleChangeRequest()
-                        },
+                        modifier = Modifier.clickable { vm.sendRoleChangeRequest() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
