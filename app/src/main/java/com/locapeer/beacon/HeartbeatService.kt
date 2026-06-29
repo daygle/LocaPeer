@@ -78,6 +78,8 @@ class HeartbeatService : LifecycleService() {
     private var isSos = false
     private var currentMotionState = MotionState.UNKNOWN
 
+    private var isStarted = false
+
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             result.lastLocation?.let { loc ->
@@ -108,13 +110,17 @@ class HeartbeatService : LifecycleService() {
         }
         lifecycleScope.launch {
             peerDao.getPeersReceivingMyLocation().collect {
-                reschedulePulse()
+                if (isStarted) reschedulePulse()
             }
         }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
+        
+        // Ensure service is in foreground immediately to prevent "Unable to start service" crashes on Android 8.0+
+        startForegroundAndBroadcast()
+
         when (intent?.action) {
             ACTION_SOS_ON -> {
                 isSos = true
@@ -133,7 +139,7 @@ class HeartbeatService : LifecycleService() {
             }
             ACTION_ACTIVITY_UPDATE -> {
                 if (ActivityRecognitionResult.hasResult(intent)) {
-                    val result = ActivityRecognitionResult.extractResult(intent) ?: return START_NOT_STICKY
+                    val result = ActivityRecognitionResult.extractResult(intent) ?: return START_STICKY
                     val detected = result.mostProbableActivity
                     val newState = when (detected.type) {
                         DetectedActivity.STILL -> MotionState.STATIONARY
@@ -151,7 +157,6 @@ class HeartbeatService : LifecycleService() {
                     }
                 }
             }
-            else -> startForegroundAndBroadcast()
         }
         return START_STICKY
     }
@@ -164,6 +169,9 @@ class HeartbeatService : LifecycleService() {
         } else {
             startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
         }
+
+        if (isStarted) return
+        isStarted = true
 
         updateLocationRequest()
 
