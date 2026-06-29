@@ -47,7 +47,9 @@ data class AppSettings(
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = listOf("map", "messages", "contacts", "invite", "settings"),
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
-    val startRoute: String = "map"
+    val startRoute: String = "map",
+    /** Hex colour string for the user's own map pin (e.g. "#1565C0"). Empty = auto from name. */
+    val pinColor: String = ""
 )
 
 @Singleton
@@ -70,6 +72,7 @@ class AppPreferences @Inject constructor(
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
+    private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -101,7 +104,8 @@ class AppPreferences @Inject constructor(
                     ?: listOf("map", "messages", "contacts", "invite", "settings"),
                 startRoute = prefs[KEY_START_ROUTE] ?: "map",
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
-                localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90
+                localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
+                pinColor = prefs[KEY_PIN_COLOR] ?: ""
             )
         }
 
@@ -138,6 +142,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setLocalMessageRetentionDays(days: Int) {
         context.settingsStore.edit { it[KEY_LOCAL_MESSAGE_RETENTION] = days }
+    }
+
+    suspend fun setPinColor(hex: String) {
+        context.settingsStore.edit { it[KEY_PIN_COLOR] = hex }
     }
 
     suspend fun clearSupervisedMode() {

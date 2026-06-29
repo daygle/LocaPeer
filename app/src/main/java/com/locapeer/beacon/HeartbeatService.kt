@@ -262,7 +262,8 @@ class HeartbeatService : LifecycleService() {
                         battery = battery,
                         motionState = currentMotionState.name,
                         isSos = isSos,
-                        retentionDays = cfg?.retentionDaysLocation ?: 30
+                        retentionDays = cfg?.retentionDaysLocation ?: 30,
+                        pinColor = settings.pinColor
                     )
                     val payloadJson = Json.encodeToString(payload)
 

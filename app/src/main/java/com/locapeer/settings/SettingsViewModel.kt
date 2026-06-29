@@ -141,6 +141,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.updateDisplayName(name) }
     }
 
+    fun setPinColor(hex: String) {
+        viewModelScope.launch { prefs.setPinColor(hex) }
+    }
+
     fun setHeartbeatEnabled(enabled: Boolean) {
         viewModelScope.launch {
             prefs.setHeartbeatEnabled(enabled)

@@ -95,18 +95,21 @@ fun SettingsScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                    val avatarColor = if (settings.pinColor.isNotEmpty())
+                        Color(android.graphics.Color.parseColor(settings.pinColor))
+                    else MaterialTheme.colorScheme.primaryContainer
                     Box(
                         modifier = Modifier
                             .size(72.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primaryContainer),
+                            .background(avatarColor),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             settings.displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = Color.White
                         )
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -135,6 +138,10 @@ fun SettingsScreen(
                             Text("My QR")
                         }
                     }
+                    PinColorPicker(
+                        selectedColor = settings.pinColor,
+                        onColorSelected = vm::setPinColor
+                    )
                 }
             }
 
@@ -749,6 +756,42 @@ private fun BackupSectionItem(
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+        }
+    }
+}
+
+private val PIN_COLOR_OPTIONS = listOf(
+    "#1565C0", "#00897B", "#E53935", "#7B1FA2",
+    "#F57F17", "#00838F", "#2E7D32", "#C62828",
+    "#AD1457", "#4527A0", "#00695C", "#FF6F00"
+)
+
+@Composable
+private fun PinColorPicker(selectedColor: String, onColorSelected: (String) -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("Map Pin Colour", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            PIN_COLOR_OPTIONS.forEach { hex ->
+                val color = Color(android.graphics.Color.parseColor(hex))
+                val isSelected = hex == selectedColor
+                Box(
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(color)
+                        .clickable { onColorSelected(hex) },
+                    contentAlignment = Alignment.Center
+                ) {
+                    if (isSelected) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                }
             }
         }
     }
