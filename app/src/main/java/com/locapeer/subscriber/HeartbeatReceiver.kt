@@ -551,11 +551,13 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        sendAcceptanceNotification(payload.acceptorDisplayName)
+        sendAcceptanceNotification(payload.acceptorPublicKeyHex, payload.acceptorDisplayName)
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
     private suspend fun processTrackDecline(event: NostrEvent) {
+        // Only act if we actually sent a request to this peer (peer exists optimistically)
+        peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) {
             Log.w(TAG, "Track decline signature verification failed")
             return
@@ -580,14 +582,15 @@ class HeartbeatReceiver @Inject constructor(
         if (!payload.isRoleChange) {
             peerManager.handleRemovalByPeer(event.pubkey)
         }
-        sendDeclineNotification(payload.declinerDisplayName)
+        sendDeclineNotification(event.pubkey, payload.declinerDisplayName)
     }
 
-    private fun sendAcceptanceNotification(name: String) {
+    private fun sendAcceptanceNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "contacts")
         }
-        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notifId = pubkey.hashCode() + 30000
+        val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle("Contact Connected")
@@ -596,14 +599,15 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(name.hashCode() + 30000, notification)
+        notificationManager.notify(notifId, notification)
     }
 
-    private fun sendDeclineNotification(name: String) {
+    private fun sendDeclineNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "contacts")
         }
-        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notifId = pubkey.hashCode() + 40000
+        val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle("Request Declined")
@@ -612,7 +616,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(name.hashCode() + 40000, notification)
+        notificationManager.notify(notifId, notification)
     }
 
     private fun createAlertChannel() {
