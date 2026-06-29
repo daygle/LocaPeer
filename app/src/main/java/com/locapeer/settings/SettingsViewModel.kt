@@ -211,6 +211,28 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setMapFitContactsOnOpen(enabled) }
     }
 
+    fun setMapStartingPoint(mode: String) {
+        viewModelScope.launch { prefs.setMapStartingPoint(mode) }
+    }
+
+    @android.annotation.SuppressLint("MissingPermission")
+    fun captureCurrentLocationAsFixed(onResult: (success: Boolean) -> Unit) {
+        com.google.android.gms.location.LocationServices
+            .getFusedLocationProviderClient(context)
+            .lastLocation
+            .addOnSuccessListener { loc ->
+                if (loc != null) {
+                    viewModelScope.launch {
+                        prefs.setMapFixedLocation(loc.latitude, loc.longitude)
+                        onResult(true)
+                    }
+                } else {
+                    onResult(false)
+                }
+            }
+            .addOnFailureListener { onResult(false) }
+    }
+
     fun clearLocationHistory() {
         viewModelScope.launch { heartbeatDao.deleteOlderThan(System.currentTimeMillis()) }
     }

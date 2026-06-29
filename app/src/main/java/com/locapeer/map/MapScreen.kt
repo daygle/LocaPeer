@@ -93,6 +93,9 @@ fun MapScreen(
     val myPinColor by vm.myPinColor.collectAsState()
     val mapStartZoom by vm.mapStartZoom.collectAsState()
     val mapFitContactsOnOpen by vm.mapFitContactsOnOpen.collectAsState()
+    val mapStartingPoint by vm.mapStartingPoint.collectAsState()
+    val mapFixedLat by vm.mapFixedLat.collectAsState()
+    val mapFixedLng by vm.mapFixedLng.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -126,6 +129,9 @@ fun MapScreen(
             isDark = isDark,
             mapStartZoom = mapStartZoom,
             fitContactsOnOpen = mapFitContactsOnOpen,
+            mapStartingPoint = mapStartingPoint,
+            mapFixedLat = mapFixedLat,
+            mapFixedLng = mapFixedLng,
             onCenteredOnUser = { centerOnUser = false },
             onCenteredOnPin = { centerOnPin = null },
             onPinTapped = { selectedPin = it },
@@ -479,6 +485,9 @@ private fun OsmdroidMapView(
     isDark: Boolean,
     mapStartZoom: Double = 16.0,
     fitContactsOnOpen: Boolean = false,
+    mapStartingPoint: String = "RESTORE_LAST",
+    mapFixedLat: Double = 0.0,
+    mapFixedLng: Double = 0.0,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
@@ -569,13 +578,29 @@ private fun OsmdroidMapView(
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
-                if (lastMapCenter != null && !fitContactsOnOpen) {
-                    val (lat, lng, zoom) = lastMapCenter
-                    controller.setZoom(zoom)
-                    controller.setCenter(GeoPoint(lat, lng))
-                    initialCenterDone = true
-                } else {
-                    controller.setZoom(mapStartZoom)
+                when {
+                    fitContactsOnOpen -> {
+                        controller.setZoom(mapStartZoom)
+                    }
+                    mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
+                        controller.setZoom(mapStartZoom)
+                        controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
+                        initialCenterDone = true
+                    }
+                    mapStartingPoint == "OWN_PIN" -> {
+                        controller.setZoom(mapStartZoom)
+                        // centre will animate to GPS when userLocation arrives (initialCenterDone stays false)
+                    }
+                    lastMapCenter != null -> {
+                        // RESTORE_LAST: use saved position
+                        val (lat, lng, zoom) = lastMapCenter
+                        controller.setZoom(zoom)
+                        controller.setCenter(GeoPoint(lat, lng))
+                        initialCenterDone = true
+                    }
+                    else -> {
+                        controller.setZoom(mapStartZoom)
+                    }
                 }
             }.also { mapViewRef = it }
         },

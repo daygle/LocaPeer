@@ -66,6 +66,8 @@ fun SettingsScreen(
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
+    var showMapStartingPointDialog by remember { mutableStateOf(false) }
+    var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
     val exportLauncher = rememberLauncherForActivityResult(
@@ -256,6 +258,56 @@ fun SettingsScreen(
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    val startingPointLabel = when (settings.mapStartingPoint) {
+                        "OWN_PIN" -> "My location"
+                        "FIXED_LOCATION" -> "Fixed location"
+                        else -> "Remember last position"
+                    }
+                    ListItem(
+                        headlineContent = { Text("Starting Point") },
+                        supportingContent = { Text(startingPointLabel) },
+                        leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showMapStartingPointDialog = true; fixedLocationCaptureMessage = "" },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    if (settings.mapStartingPoint == "FIXED_LOCATION") {
+                        val hasFixed = settings.mapFixedLat != 0.0 || settings.mapFixedLng != 0.0
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 56.dp, end = 16.dp, bottom = 12.dp),
+                            verticalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Text(
+                                if (hasFixed) "%.5f, %.5f".format(settings.mapFixedLat, settings.mapFixedLng)
+                                else "No location set",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (fixedLocationCaptureMessage.isNotEmpty()) {
+                                Text(
+                                    fixedLocationCaptureMessage,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            OutlinedButton(
+                                onClick = {
+                                    fixedLocationCaptureMessage = ""
+                                    vm.captureCurrentLocationAsFixed { success ->
+                                        fixedLocationCaptureMessage = if (success) "Location saved" else "Location not available"
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Default.MyLocation, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text("Use My Current Location")
+                            }
+                        }
+                    }
                 }
             }
 
@@ -618,6 +670,46 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showStartPageDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (showMapStartingPointDialog) {
+        val options = listOf(
+            "RESTORE_LAST" to "Remember last position",
+            "OWN_PIN"      to "My location",
+            "FIXED_LOCATION" to "Fixed location"
+        )
+        AlertDialog(
+            onDismissRequest = { showMapStartingPointDialog = false },
+            title = { Text("Map Starting Point") },
+            text = {
+                Column {
+                    options.forEach { (mode, label) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    vm.setMapStartingPoint(mode)
+                                    showMapStartingPointDialog = false
+                                }
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = settings.mapStartingPoint == mode,
+                                onClick = {
+                                    vm.setMapStartingPoint(mode)
+                                    showMapStartingPointDialog = false
+                                }
+                            )
+                            Text(label, modifier = Modifier.padding(start = 8.dp))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showMapStartingPointDialog = false }) { Text("Cancel") }
             }
         )
     }
