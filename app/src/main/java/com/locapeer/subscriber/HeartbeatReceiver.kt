@@ -116,7 +116,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_MESSAGES,
                         NostrEventKind.DELETE_MY_LOCATION
                     ),
-                    pTags = listOf(pubHex)
+                    pTags = listOf(pubHex),
+                    since = Instant.now().epochSecond
                 )
             )
         }
