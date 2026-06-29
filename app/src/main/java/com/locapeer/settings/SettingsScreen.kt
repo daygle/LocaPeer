@@ -769,27 +769,31 @@ private val PIN_COLOR_OPTIONS = listOf(
 
 @Composable
 private fun PinColorPicker(selectedColor: String, onColorSelected: (String) -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Map Pin Colour", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            PIN_COLOR_OPTIONS.forEach { hex ->
-                val color = Color(android.graphics.Color.parseColor(hex))
-                val isSelected = hex == selectedColor
-                Box(
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .background(color)
-                        .clickable { onColorSelected(hex) },
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (isSelected) {
-                        Icon(
-                            Icons.Default.Check,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier.size(16.dp)
-                        )
+        
+        // Chunk options into 2 rows of 6
+        PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                rowColors.forEach { hex ->
+                    val color = Color(android.graphics.Color.parseColor(hex))
+                    val isSelected = hex == selectedColor
+                    Box(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(color)
+                            .clickable { onColorSelected(hex) },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (isSelected) {
+                            Icon(
+                                Icons.Default.Check,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(16.dp)
+                            )
+                        }
                     }
                 }
             }
