@@ -64,11 +64,7 @@ class CryptoUtils @Inject constructor() {
 
     /** NIP-44 v2: Encrypts plaintext for a recipient. */
     fun nip44Encrypt(senderPrivKey: ByteArray, recipientXOnlyHex: String, plaintext: String): String {
-        val recipientCompressed = xOnlyHexToCompressed(recipientXOnlyHex)
-        // conversation_key = SHA-256(secp256k1_ecdh(priv_key, pub_key))
-        // Secp256k1.ecdh in kmp wrapper already returns the SHA-256 of the point.
-        val conversationKey = Secp256k1.ecdh(senderPrivKey, recipientCompressed)
-
+        val conversationKey = getConversationKey(senderPrivKey, recipientXOnlyHex)
         val nonce = ByteArray(32).also { random.nextBytes(it) }
         val (chachaKey, chachaNonce, hmacKey) = deriveNip44Keys(conversationKey, nonce)
 
@@ -80,6 +76,7 @@ class CryptoUtils @Inject constructor() {
 
         val hmac = HMac(SHA256Digest())
         hmac.init(KeyParameter(hmacKey))
+        hmac.update(nonce, 0, nonce.size)
         hmac.update(ciphertext, 0, ciphertext.size)
         val mac = ByteArray(32)
         hmac.doFinal(mac, 0)
@@ -108,14 +105,13 @@ class CryptoUtils @Inject constructor() {
         val mac = payload.copyOfRange(payload.size - 32, payload.size)
         val ciphertext = payload.copyOfRange(33, payload.size - 32)
 
-        val senderCompressed = xOnlyHexToCompressed(senderXOnlyHex)
-        val conversationKey = Secp256k1.ecdh(recipientPrivKey, senderCompressed)
-
+        val conversationKey = getConversationKey(recipientPrivKey, senderXOnlyHex)
         val (chachaKey, chachaNonce, hmacKey) = deriveNip44Keys(conversationKey, nonce)
 
-        // Verify MAC
+        // Verify MAC: HMAC-SHA256(hmac_key, nonce + ciphertext)
         val hmac = HMac(SHA256Digest())
         hmac.init(KeyParameter(hmacKey))
+        hmac.update(nonce, 0, nonce.size)
         hmac.update(ciphertext, 0, ciphertext.size)
         val computedMac = ByteArray(32)
         hmac.doFinal(computedMac, 0)
@@ -129,11 +125,28 @@ class CryptoUtils @Inject constructor() {
         return nip44Unpad(padded)
     }
 
+    private fun getConversationKey(privKey: ByteArray, pubKeyHex: String): ByteArray {
+        val recipientCompressed = xOnlyHexToCompressed(pubKeyHex)
+        // sharedPoint = privKey * pubKey
+        // We use pubKeyTweakMul(pubKey, privKey) to get the shared point P = privKey * PubKey.
+        val sharedPoint = Secp256k1.pubKeyTweakMul(recipientCompressed, privKey)
+        // x-coordinate is bytes 1..32 (both for compressed and uncompressed results)
+        val sharedX = sharedPoint.copyOfRange(1, 33)
+
+        // conversation_key = HKDF-Extract(salt="nip44-v2", IKM=shared_x)
+        // HKDF-Extract(salt, IKM) is HMAC-SHA256(salt, IKM)
+        val hmac = HMac(SHA256Digest())
+        hmac.init(KeyParameter("nip44-v2".toByteArray(StandardCharsets.UTF_8)))
+        hmac.update(sharedX, 0, sharedX.size)
+        val conversationKey = ByteArray(32)
+        hmac.doFinal(conversationKey, 0)
+        return conversationKey
+    }
+
     private fun deriveNip44Keys(conversationKey: ByteArray, nonce: ByteArray): Triple<ByteArray, ByteArray, ByteArray> {
-        val info = "nip44-v2".toByteArray(StandardCharsets.UTF_8)
         val hkdf = HKDFBytesGenerator(SHA256Digest())
-        // HKDF-SHA256(ikm=conversation_key, salt=nonce, info="nip44-v2")
-        hkdf.init(HKDFParameters(conversationKey, nonce, info))
+        // HKDF-Expand(PRK=conversation_key, info=nonce, L=76)
+        hkdf.init(HKDFParameters.skipExtractParameters(conversationKey, nonce))
         val okm = ByteArray(76)
         hkdf.generateBytes(okm, 0, 76)
 
