@@ -103,14 +103,6 @@ data class NostrEvent(
     }
 }
 
-/** Nostr wire protocol message wrappers. */
-@Serializable
-sealed class NostrMessage
-
-data class EventMessage(val event: NostrEvent) : NostrMessage()
-data class ReqMessage(val subscriptionId: String, val filters: List<NostrFilter>) : NostrMessage()
-data class CloseMessage(val subscriptionId: String) : NostrMessage()
-
 @Serializable
 data class NostrFilter(
     val authors: List<String>? = null,

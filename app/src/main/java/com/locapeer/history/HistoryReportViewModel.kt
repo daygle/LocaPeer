@@ -51,11 +51,11 @@ class HistoryReportViewModel @Inject constructor(
     val selectedDayStart: StateFlow<Long> = _selectedDayStart
 
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
-        combine(_selectedPeerId, _selectedDayStart) { peerId, dayStart -> peerId to dayStart }
-            .flatMapLatest { (peerId, dayStart) ->
-                if (peerId == null) flowOf(emptyList())
-                else heartbeatDao.getHeartbeatsForDay(peerId, dayStart, dayStart + DAY_MS)
-            }
+        combine(_selectedPeerId, _selectedDayStart) { peerId, dayStart ->
+            if (peerId == null) flowOf(emptyList())
+            else heartbeatDao.getHeartbeatsForDay(peerId, dayStart, dayStart + DAY_MS)
+        }
+            .flatMapLatest { it }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _addresses = MutableStateFlow<Map<Long, String>>(emptyMap())

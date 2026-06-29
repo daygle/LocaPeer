@@ -49,7 +49,9 @@ data class AppSettings(
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
     val startRoute: String = "map",
     /** Hex colour string for the user's own map pin (e.g. "#1565C0"). Empty = auto from name. */
-    val pinColor: String = ""
+    val pinColor: String = "",
+    /** Persisted SOS state so it survives process death while HeartbeatService is sticky. */
+    val sosActive: Boolean = false
 )
 
 @Singleton
@@ -73,6 +75,7 @@ class AppPreferences @Inject constructor(
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
+    private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -105,7 +108,8 @@ class AppPreferences @Inject constructor(
                 startRoute = prefs[KEY_START_ROUTE] ?: "map",
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
-                pinColor = prefs[KEY_PIN_COLOR] ?: ""
+                pinColor = prefs[KEY_PIN_COLOR] ?: "",
+                sosActive = prefs[KEY_SOS_ACTIVE] ?: false
             )
         }
 
@@ -146,6 +150,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setPinColor(hex: String) {
         context.settingsStore.edit { it[KEY_PIN_COLOR] = hex }
+    }
+
+    suspend fun setSosActive(active: Boolean) {
+        context.settingsStore.edit { it[KEY_SOS_ACTIVE] = active }
     }
 
     suspend fun clearSupervisedMode() {

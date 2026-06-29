@@ -37,6 +37,8 @@ class GeofenceEngine @Inject constructor(
         val fences = geofenceDao.getActiveGeofencesForDevice(current.deviceId)
         fences.forEach { fence ->
             val inNow = isInside(current.lat, current.lng, fence)
+            // First heartbeat for this device: treat previous position as same as current so
+            // neither entered nor exited fires — we don't know where they came from.
             val inPrev = previous?.let { isInside(it.lat, it.lng, fence) } ?: inNow
 
             val entered = !inPrev && inNow

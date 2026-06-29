@@ -185,9 +185,8 @@ class HeartbeatService : LifecycleService() {
                 Log.e(TAG, "Failed to load settings; using defaults", e)
             }
             relayClient.connect()
+            handler.post(heartbeatRunnable)
         }
-
-        handler.post(heartbeatRunnable)
     }
 
     @SuppressLint("MissingPermission")

@@ -19,15 +19,20 @@ class BootReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
+        val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
-            val settings = prefs.settings.first()
-            if (settings.heartbeatEnabled) {
-                val serviceIntent = Intent(context, HeartbeatService::class.java)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(serviceIntent)
-                } else {
-                    context.startService(serviceIntent)
+            try {
+                val settings = prefs.settings.first()
+                if (settings.heartbeatEnabled) {
+                    val serviceIntent = Intent(context, HeartbeatService::class.java)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        context.startForegroundService(serviceIntent)
+                    } else {
+                        context.startService(serviceIntent)
+                    }
                 }
+            } finally {
+                pending.finish()
             }
         }
     }
