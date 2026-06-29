@@ -191,6 +191,13 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToHistory = { peerId ->
                         navController.navigate("history-report?peerId=$peerId")
+                    },
+                    onNavigateToInvite = {
+                        navController.navigate(Screen.Invite.route) {
+                            popUpTo(startDestination) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 )
             }
