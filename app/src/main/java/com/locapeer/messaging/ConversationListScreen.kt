@@ -30,7 +30,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
-import com.locapeer.ui.components.RelayStatusChip
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -45,7 +44,6 @@ fun ConversationListScreen(
 ) {
     val conversations by vm.conversations.collectAsState()
     val peers by vm.peers.collectAsState()
-    val relayStatus by vm.relayStatus.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
     var showContactPicker by remember { mutableStateOf(false) }
 
@@ -70,15 +68,7 @@ fun ConversationListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Text("Messages", fontWeight = FontWeight.SemiBold)
-                        RelayStatusChip(relayStatus = relayStatus)
-                    }
-                },
+                title = { Text("Messages", fontWeight = FontWeight.SemiBold) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surface
                 )
