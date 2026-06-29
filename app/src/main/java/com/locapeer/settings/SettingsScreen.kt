@@ -852,9 +852,9 @@ private fun BackupSectionItem(
 }
 
 private val PIN_COLOR_OPTIONS = listOf(
-    "#1565C0", "#00897B", "#E53935", "#7B1FA2",
-    "#F57F17", "#00838F", "#2E7D32", "#C62828",
-    "#AD1457", "#4527A0", "#00695C", "#FF6F00"
+    "#E53935", "#F57C00", "#F9A825", "#388E3C",
+    "#00897B", "#0097A7", "#1976D2", "#303F9F",
+    "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
 
 @Composable
