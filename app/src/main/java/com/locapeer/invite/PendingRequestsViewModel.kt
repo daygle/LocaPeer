@@ -7,29 +7,25 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-sealed class IncomingRequestState {
-    object Idle : IncomingRequestState()
-    object Loading : IncomingRequestState()
-    object Done : IncomingRequestState()
-}
-
 @HiltViewModel
-class IncomingShareRequestViewModel @Inject constructor(
-    private val peerDao: PeerDao,
+class PendingRequestsViewModel @Inject constructor(
     private val pendingRequestDao: PendingRequestDao,
+    private val peerDao: PeerDao,
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val crypto: CryptoUtils,
@@ -38,28 +34,32 @@ class IncomingShareRequestViewModel @Inject constructor(
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    private val _state = MutableStateFlow<IncomingRequestState>(IncomingRequestState.Idle)
-    val state: StateFlow<IncomingRequestState> = _state
+    val requests: StateFlow<List<PendingRequestEntity>> = pendingRequestDao.observeAll()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
-    fun accept(senderPubkey: String, senderName: String, senderRelay: String, locationRole: String, messagingEnabled: Boolean) {
+    fun accept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
         viewModelScope.launch {
-            _state.value = IncomingRequestState.Loading
-            val existing = peerDao.getPeer(senderPubkey)
+            val existing = peerDao.getPeer(request.senderPubkey)
             peerDao.upsertPeer(
                 PeerEntity(
-                    deviceId = senderPubkey,
-                    displayName = existing?.displayName ?: senderName,
-                    publicKeyHex = senderPubkey,
-                    relayUrl = senderRelay,
+                    deviceId = request.senderPubkey,
+                    displayName = existing?.displayName ?: request.senderName,
+                    publicKeyHex = request.senderPubkey,
+                    relayUrl = request.senderRelayUrl,
                     locationRole = locationRole,
                     messagingEnabled = messagingEnabled,
                     addedAt = existing?.addedAt ?: System.currentTimeMillis()
                 )
             )
-            relayClient.connect(senderRelay)
-            sendTrackAccept(senderPubkey, senderRelay, locationRole)
-            pendingRequestDao.deleteByPubkey(senderPubkey)
-            _state.value = IncomingRequestState.Done
+            relayClient.connect(request.senderRelayUrl)
+            sendTrackAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
+            pendingRequestDao.deleteByPubkey(request.senderPubkey)
+        }
+    }
+
+    fun decline(request: PendingRequestEntity) {
+        viewModelScope.launch {
+            pendingRequestDao.deleteByPubkey(request.senderPubkey)
         }
     }
 

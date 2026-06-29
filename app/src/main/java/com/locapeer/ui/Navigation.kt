@@ -27,6 +27,7 @@ import com.locapeer.about.AboutViewModel
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.IncomingShareRequestScreen
 import com.locapeer.invite.InviteScreen
+import com.locapeer.invite.PendingRequestsScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
@@ -181,6 +182,9 @@ fun LocaPeerNavHost(
                             launchSingleTop = true
                             restoreState = true
                         }
+                    },
+                    onNavigateToPendingRequests = {
+                        navController.navigate("pending-requests")
                     }
                 )
             }
@@ -322,6 +326,23 @@ fun LocaPeerNavHost(
                 CustomizeNavScreen(
                     prefs = prefs,
                     onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                "pending-requests",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                PendingRequestsScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenRequest = { pubkey, name, relay, isRoleChange, requestedRole ->
+                        val encodedName = android.net.Uri.encode(name)
+                        val encodedRelay = android.net.Uri.encode(relay)
+                        val encodedRole = android.net.Uri.encode(requestedRole ?: "")
+                        navController.navigate("share-request?pubkey=$pubkey&name=$encodedName&relay=$encodedRelay&isRoleChange=$isRoleChange&requestedRole=$encodedRole")
+                    }
                 )
             }
             composable(

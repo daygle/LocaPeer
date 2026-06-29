@@ -29,16 +29,31 @@ fun ContactsScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
+    onNavigateToPendingRequests: () -> Unit = {},
     vm: ContactsViewModel = hiltViewModel()
 ) {
     val contacts by vm.contacts.collectAsState()
+    val pendingCount by vm.pendingRequestCount.collectAsState()
     var confirmAction by remember { mutableStateOf<Pair<ContactItem, DataAction>?>(null) }
     var editingContact by remember { mutableStateOf<ContactItem?>(null) }
     var nameInput by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Contacts") })
+            TopAppBar(
+                title = { Text("Contacts") },
+                actions = {
+                    BadgedBox(
+                        badge = {
+                            if (pendingCount > 0) Badge { Text("$pendingCount") }
+                        }
+                    ) {
+                        IconButton(onClick = onNavigateToPendingRequests) {
+                            Icon(Icons.Default.PersonAdd, contentDescription = "Pending Requests")
+                        }
+                    }
+                }
+            )
         }
     ) { padding ->
         if (contacts.isEmpty()) {

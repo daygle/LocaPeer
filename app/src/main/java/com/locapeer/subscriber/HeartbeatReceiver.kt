@@ -16,10 +16,12 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
@@ -73,6 +75,7 @@ class HeartbeatReceiver @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val pendingRequestDao: PendingRequestDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
     private val proximityEngine: ProximityEngine,
@@ -410,8 +413,18 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         val notifId = event.pubkey.hashCode() + 20000
-        // Suppress relay retransmissions — skip if a notification for this sender is already showing
-        if (notificationManager.activeNotifications.any { it.id == notifId }) return
+        // Suppress relay retransmissions for new requests only — role changes are always shown
+        if (!payload.isRoleChange && notificationManager.activeNotifications.any { it.id == notifId }) return
+
+        pendingRequestDao.upsert(
+            PendingRequestEntity(
+                senderPubkey = payload.senderPublicKeyHex,
+                senderName = payload.senderDisplayName,
+                senderRelayUrl = payload.senderRelayUrl,
+                isRoleChange = payload.isRoleChange,
+                requestedRole = payload.requestedRole
+            )
+        )
         val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("navigateTo", "share-request")
