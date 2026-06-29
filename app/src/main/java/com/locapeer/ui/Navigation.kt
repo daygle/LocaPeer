@@ -44,7 +44,7 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object Map      : Screen("map",      "Map",      Icons.Default.Map)
     object Messages : Screen("messages", "Messages", Icons.AutoMirrored.Filled.Message)
     object Contacts : Screen("contacts", "Contacts", Icons.Default.People)
-    object Invite   : Screen("invite",   "QR",       Icons.Default.QrCode)
+    object Invite   : Screen("invite",   "QR / Invite", Icons.Default.QrCode)
     object Settings : Screen("settings", "Settings", Icons.Default.Settings)
 }
 

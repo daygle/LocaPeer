@@ -12,13 +12,16 @@ import com.google.android.gms.location.LocationServices
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
 import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,9 +31,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.osmdroid.util.GeoPoint
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 private val Context.mapPrefs by preferencesDataStore(name = "map_prefs")
@@ -51,13 +51,19 @@ class MapViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val geofenceDao: GeofenceDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
     private val relayClient: NostrRelayClient,
+    private val appPreferences: AppPreferences,
     @ApplicationContext private val appContext: Context,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val relayStatus = relayClient.relayStatus
+
+    val myDisplayName: StateFlow<String> = appPreferences.settings
+        .map { it.displayName.ifBlank { "Me" } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
 
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
@@ -69,6 +75,10 @@ class MapViewModel @Inject constructor(
     val centerOnArgs: StateFlow<GeoPoint?> = _centerOnArgs.asStateFlow()
 
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
+
+    val hasSosContacts: StateFlow<Boolean> = sharingConfigDao.observeAll()
+        .map { configs -> configs.any { it.isSosContact } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     init {
         val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
@@ -144,8 +154,21 @@ class MapViewModel @Inject constructor(
         private val KEY_ZOOM = doublePreferencesKey("map_last_zoom")
     }
 
-    fun formatTimestamp(millis: Long): String =
-        DateTimeFormatter.ofPattern("HH:mm, dd MMM")
-            .withZone(ZoneId.systemDefault())
-            .format(Instant.ofEpochMilli(millis))
+    fun formatTimestamp(millis: Long): String {
+        val diffMs = System.currentTimeMillis() - millis
+        return when {
+            diffMs < 60_000 -> "Just now"
+            diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
+            diffMs < 86_400_000 -> java.text.SimpleDateFormat("h:mm a", java.util.Locale.getDefault()).format(java.util.Date(millis))
+            else -> {
+                val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
+                val today = java.util.Calendar.getInstance()
+                val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
+                    java.text.SimpleDateFormat("d MMM, h:mm a", java.util.Locale.getDefault())
+                else
+                    java.text.SimpleDateFormat("d MMM yyyy", java.util.Locale.getDefault())
+                fmt.format(java.util.Date(millis))
+            }
+        }
+    }
 }

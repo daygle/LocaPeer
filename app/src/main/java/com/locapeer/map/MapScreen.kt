@@ -84,10 +84,12 @@ fun MapScreen(
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
     var showFriendList by remember { mutableStateOf(value = false) }
     val isSosActive by vm.isSosActive.collectAsState()
+    val hasSosContacts by vm.hasSosContacts.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
     val lastMapCenter by vm.lastMapCenter.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
     val centerOnArgs by vm.centerOnArgs.collectAsState()
+    val myDisplayName by vm.myDisplayName.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -126,14 +128,16 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // SOS Button - top-left
-        SosButton(
-            isActive = isSosActive,
-            onClick = { vm.toggleSos() },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp)
-        )
+        // SOS Button - top-left (only shown when at least one SOS contact is configured)
+        if (hasSosContacts) {
+            SosButton(
+                isActive = isSosActive,
+                onClick = { vm.toggleSos() },
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(16.dp)
+            )
+        }
 
         // Locate Me Button - bottom-right
         FloatingActionButton(
@@ -181,7 +185,14 @@ fun MapScreen(
         ) {
             FriendListPanel(
                 pins = uiState.pins,
+                myDisplayName = myDisplayName,
+                userLocation = userLocation,
                 onDismiss = { showFriendList = false },
+                onLocateMe = {
+                    vm.fetchUserLocation()
+                    centerOnUser = true
+                    showFriendList = false
+                },
                 onSelectFriend = { pin ->
                     showFriendList = false
                     selectedPin = pin
@@ -229,7 +240,10 @@ fun MapScreen(
 @Composable
 private fun FriendListPanel(
     pins: List<PinData>,
+    myDisplayName: String,
+    userLocation: GeoPoint?,
     onDismiss: () -> Unit,
+    onLocateMe: () -> Unit,
     onSelectFriend: (PinData) -> Unit,
     onMessageFriend: (peerId: String, peerName: String) -> Unit,
     onLocateFriend: (PinData) -> Unit,
@@ -263,6 +277,11 @@ private fun FriendListPanel(
 
             HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
 
+            // "Me" row always at the top
+            MeItem(displayName = myDisplayName, hasLocation = userLocation != null, onLocate = onLocateMe)
+
+            HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+
             if (pins.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text("No friends tracked yet", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -279,6 +298,64 @@ private fun FriendListPanel(
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MeItem(
+    displayName: String,
+    hasLocation: Boolean,
+    onLocate: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = hasLocation, onClick = onLocate)
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.secondaryContainer),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "M",
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSecondaryContainer
+            )
+        }
+
+        Spacer(Modifier.width(12.dp))
+
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                displayName,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                "You",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        if (hasLocation) {
+            IconButton(onClick = onLocate) {
+                Icon(
+                    Icons.Default.PinDrop,
+                    contentDescription = "Go to my location",
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(20.dp)
+                )
             }
         }
     }

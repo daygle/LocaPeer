@@ -1,32 +1,40 @@
 package com.locapeer.invite
 
 import android.content.Intent
+import androidx.compose.animation.*
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ErrorOutline
-import androidx.compose.material.icons.filled.QrCodeScanner
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
+
+private enum class InviteTab { QR_CODE, SCAN_QR, INVITE_LINK }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -36,10 +44,9 @@ fun InviteScreen(
     inviteVm: InviteViewModel = hiltViewModel(),
     scanVm: ScanViewModel = hiltViewModel()
 ) {
-    var selectedTab by remember { mutableIntStateOf(if (inviteData != null) 1 else 0) }
+    var selectedTab by remember { mutableStateOf(if (inviteData != null) InviteTab.SCAN_QR else InviteTab.QR_CODE) }
     val context = LocalContext.current
 
-    // Pre-process a deep-linked invite on the scan tab
     LaunchedEffect(inviteData) {
         if (inviteData != null) scanVm.processInviteLink(inviteData)
     }
@@ -47,12 +54,15 @@ fun InviteScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("QR") },
+                title = { Text("QR / Invite", fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface
+                )
             )
         }
     ) { padding ->
@@ -61,50 +71,280 @@ fun InviteScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            PrimaryTabRow(selectedTabIndex = selectedTab) {
-                Tab(
-                    selected = selectedTab == 0,
-                    onClick = { selectedTab = 0 },
-                    text = { Text("My QR Code") }
-                )
-                Tab(
-                    selected = selectedTab == 1,
-                    onClick = { selectedTab = 1 },
-                    icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
-                    text = { Text("Scan QR") }
-                )
+            // Tab row
+            val tabs = InviteTab.entries
+            PrimaryTabRow(selectedTabIndex = tabs.indexOf(selectedTab)) {
+                tabs.forEach { tab ->
+                    Tab(
+                        selected = selectedTab == tab,
+                        onClick = { selectedTab = tab },
+                        text = {
+                            Text(
+                                when (tab) {
+                                    InviteTab.QR_CODE -> "QR Code"
+                                    InviteTab.SCAN_QR -> "Scan QR"
+                                    InviteTab.INVITE_LINK -> "Invite Link"
+                                }
+                            )
+                        },
+                        icon = {
+                            Icon(
+                                when (tab) {
+                                    InviteTab.QR_CODE -> Icons.Default.QrCode2
+                                    InviteTab.SCAN_QR -> Icons.Default.QrCodeScanner
+                                    InviteTab.INVITE_LINK -> Icons.Default.Link
+                                },
+                                contentDescription = null
+                            )
+                        }
+                    )
+                }
             }
 
-            when (selectedTab) {
-                0 -> MyQrTab(inviteVm, context)
-                1 -> ScanTab(scanVm, onNavigateBack)
+            AnimatedContent(
+                targetState = selectedTab,
+                transitionSpec = { fadeIn() togetherWith fadeOut() },
+                modifier = Modifier.fillMaxSize()
+            ) { tab ->
+                when (tab) {
+                    InviteTab.QR_CODE -> QrCodeTab(inviteVm)
+                    InviteTab.SCAN_QR -> ScanQrTab(scanVm, onNavigateBack)
+                    InviteTab.INVITE_LINK -> InviteLinkTab(inviteVm, context)
+                }
             }
         }
     }
 }
 
+// ── Tab 1 : QR Code ──────────────────────────────────────────────────────────
+
 @Composable
-private fun MyQrTab(vm: InviteViewModel, context: android.content.Context) {
+private fun QrCodeTab(vm: InviteViewModel) {
     val state by vm.state.collectAsState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Text(
-            "Show this QR code to someone who wants to track your location.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        // Header
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(56.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.primaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Default.QrCode2,
+                    contentDescription = null,
+                    modifier = Modifier.size(28.dp),
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+            Text(
+                "Your QR Code",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                "Let someone scan this to follow your location",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                textAlign = TextAlign.Center
+            )
+        }
 
+        // QR card
+        Card(
+            modifier = Modifier
+                .size(280.dp),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                when {
+                    state.error -> Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.ErrorOutline,
+                            contentDescription = null,
+                            modifier = Modifier.size(48.dp),
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                        Text(
+                            "Could not generate QR code",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                    state.qrBitmap != null -> Image(
+                        bitmap = state.qrBitmap!!.asImageBitmap(),
+                        contentDescription = "Your QR code",
+                        modifier = Modifier.fillMaxSize()
+                    )
+                    else -> CircularProgressIndicator()
+                }
+            }
+        }
+
+        // Public key chip
+        if (state.publicKeyHex.isNotEmpty()) {
+            Surface(
+                shape = RoundedCornerShape(50),
+                color = MaterialTheme.colorScheme.surfaceVariant
+            ) {
+                Text(
+                    "ID: ${state.publicKeyHex.take(16)}…",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                )
+            }
+        }
+
+        // Info card
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+        ) {
+            Row(
+                modifier = Modifier.padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+                Icon(
+                    Icons.Default.Lock,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp).padding(top = 2.dp),
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+                Text(
+                    "Your location will be encrypted specifically for the scanner's device.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSecondaryContainer
+                )
+            }
+        }
+    }
+}
+
+// ── Tab 2 : Scan QR ──────────────────────────────────────────────────────────
+
+@OptIn(ExperimentalPermissionsApi::class)
+@Composable
+private fun ScanQrTab(vm: ScanViewModel, onDone: () -> Unit) {
+    val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
+    val scanState by vm.scanState.collectAsState()
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         when {
-            state.error -> {
+            !cameraPermission.status.isGranted -> {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    modifier = Modifier.padding(32.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.CameraAlt,
+                            contentDescription = null,
+                            modifier = Modifier.size(36.dp),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                    Text(
+                        "Camera Access Required",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        "To scan a contact's QR code, please grant camera permission.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                    Button(
+                        onClick = { cameraPermission.launchPermissionRequest() },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Icon(Icons.Default.CameraAlt, contentDescription = null)
+                        Spacer(Modifier.width(8.dp))
+                        Text("Grant Permission")
+                    }
+                }
+            }
+
+            scanState.success -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(32.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(36.dp),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                    Text(
+                        "Contact Added!",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        "${scanState.addedName} has been added. You will now receive their location updates.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                    Button(
+                        onClick = { vm.reset(); onDone() },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Text("Done")
+                    }
+                }
+            }
+
+            scanState.error != null -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(32.dp)
                 ) {
                     Icon(
                         Icons.Default.ErrorOutline,
@@ -113,146 +353,26 @@ private fun MyQrTab(vm: InviteViewModel, context: android.content.Context) {
                         tint = MaterialTheme.colorScheme.error
                     )
                     Text(
-                        "Could not generate QR code.\nCheck your settings and try again.",
+                        "Scan Failed",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        scanState.error ?: "Unknown error",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
                     )
-                }
-            }
-            state.qrBitmap != null -> {
-                val bitmap = state.qrBitmap!!
-                Card(
-                    modifier = Modifier.size(280.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = "Invite QR code",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(8.dp)
-                    )
-                }
-            }
-            else -> CircularProgressIndicator()
-        }
-
-        Text(
-            "Your ID: ${state.publicKeyHex.take(16)}…",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.outline
-        )
-
-        Text(
-            "The scanner will automatically be added as a subscriber. Your location will be encrypted specifically for their device.",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-
-        Spacer(Modifier.weight(1f))
-
-        if (state.inviteLink.isNotEmpty()) {
-            Button(
-                onClick = {
-                    val intent = Intent(Intent.ACTION_SEND).apply {
-                        type = "text/plain"
-                        putExtra(Intent.EXTRA_TEXT, state.inviteLink)
-                    }
-                    context.startActivity(Intent.createChooser(intent, "Share Invite"))
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Icon(Icons.Default.Share, contentDescription = null)
-                Spacer(Modifier.width(8.dp))
-                Text("Share Invite Link")
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
-    val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
-    val scanState by vm.scanState.collectAsState()
-    var showPasteDialog by remember { mutableStateOf(false) }
-
-    if (showPasteDialog) {
-        var text by remember { mutableStateOf("") }
-        AlertDialog(
-            onDismissRequest = { showPasteDialog = false },
-            title = { Text("Paste Invite Link") },
-            text = {
-                OutlinedTextField(
-                    value = text,
-                    onValueChange = { text = it },
-                    placeholder = { Text("locapeer://invite?data=...") },
-                    modifier = Modifier.fillMaxWidth(),
-                    maxLines = 4
-                )
-            },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        showPasteDialog = false
-                        vm.processInviteLink(text.trim())
-                    },
-                    enabled = text.isNotBlank()
-                ) {
-                    Text("Add")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showPasteDialog = false }) { Text("Cancel") }
-            }
-        )
-    }
-
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        when {
-            // ... (rest of the when block)
-            !cameraPermission.status.isGranted -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(24.dp)
-                ) {
-                    Text("Camera permission is needed to scan QR codes.")
-                    Button(onClick = { cameraPermission.launchPermissionRequest() }) {
-                        Text("Grant Permission")
+                    Button(
+                        onClick = { vm.reset() },
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(16.dp)
+                    ) {
+                        Text("Try Again")
                     }
                 }
             }
-            scanState.success -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(16.dp),
-                    modifier = Modifier.padding(24.dp)
-                ) {
-                    Text(
-                        "Added ${scanState.addedName}!",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    Text(
-                        "You will now receive location updates from them.",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                    Button(onClick = { vm.reset(); onDone() }) { Text("Done") }
-                }
-            }
-            scanState.error != null -> {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(24.dp)
-                ) {
-                    Text("Scan failed: ${scanState.error}")
-                    Button(onClick = { vm.reset() }) { Text("Try Again") }
-                }
-            }
+
             else -> {
                 val lifecycleOwner = LocalLifecycleOwner.current
                 var barcodeViewRef: CompoundBarcodeView? = null
@@ -288,24 +408,225 @@ private fun ScanTab(vm: ScanViewModel, onDone: () -> Unit) {
                     modifier = Modifier.fillMaxSize()
                 )
 
-                // Overlay the "Paste Link" button
+                // Hint overlay
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(bottom = 32.dp),
+                        .padding(bottom = 40.dp),
                     contentAlignment = Alignment.BottomCenter
                 ) {
-                    ElevatedButton(
-                        onClick = { showPasteDialog = true },
-                        colors = ButtonDefaults.elevatedButtonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.9f)
-                        )
+                    Surface(
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f),
+                        tonalElevation = 4.dp
                     ) {
-                        Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(8.dp))
-                        Text("Paste Invite Link")
+                        Text(
+                            "Point your camera at a LocaPeer QR code",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
+                            textAlign = TextAlign.Center
+                        )
                     }
                 }
+            }
+        }
+    }
+}
+
+// ── Tab 3 : Invite Link ───────────────────────────────────────────────────────
+
+@Composable
+private fun InviteLinkTab(vm: InviteViewModel, context: android.content.Context) {
+    val state by vm.state.collectAsState()
+    var pasteText by remember { mutableStateOf("") }
+    val scanVm: ScanViewModel = hiltViewModel()
+    val scanState by scanVm.scanState.collectAsState()
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 24.dp, vertical = 32.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
+    ) {
+        // Header
+        Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Text(
+                "Invite Link",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                "Share a link or paste one to connect with a contact.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        HorizontalDivider()
+
+        // Share section
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Share,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+                Text(
+                    "Share Invite Link",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            Text(
+                "Send your invite link to someone so they can add you as a contact.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+            Button(
+                onClick = {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        type = "text/plain"
+                        putExtra(Intent.EXTRA_TEXT, state.inviteLink)
+                    }
+                    context.startActivity(Intent.createChooser(intent, "Share Invite Link"))
+                },
+                enabled = state.inviteLink.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Icon(Icons.Default.Share, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text("Share Invite Link")
+            }
+        }
+
+        HorizontalDivider()
+
+        // Paste section
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.ContentPaste,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                        tint = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                }
+                Text(
+                    "Paste Invite Link",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold
+                )
+            }
+            Text(
+                "Received a link from a contact? Paste it below to add them.",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            AnimatedVisibility(visible = scanState.success) {
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                        Text(
+                            "${scanState.addedName} added successfully!",
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+            }
+
+            AnimatedVisibility(visible = scanState.error != null) {
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.ErrorOutline,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                        Text(
+                            scanState.error ?: "Invalid link",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
+                }
+            }
+
+            OutlinedTextField(
+                value = pasteText,
+                onValueChange = { pasteText = it; if (scanState.success || scanState.error != null) scanVm.reset() },
+                placeholder = { Text("locapeer://invite?data=…") },
+                modifier = Modifier.fillMaxWidth(),
+                minLines = 3,
+                maxLines = 5,
+                shape = RoundedCornerShape(16.dp),
+                trailingIcon = {
+                    if (pasteText.isNotBlank()) {
+                        IconButton(onClick = { pasteText = ""; scanVm.reset() }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Clear")
+                        }
+                    }
+                }
+            )
+
+            Button(
+                onClick = {
+                    scanVm.reset()
+                    scanVm.processInviteLink(pasteText.trim())
+                },
+                enabled = pasteText.isNotBlank(),
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Icon(Icons.Default.PersonAdd, contentDescription = null)
+                Spacer(Modifier.width(8.dp))
+                Text("Add Contact")
             }
         }
     }
