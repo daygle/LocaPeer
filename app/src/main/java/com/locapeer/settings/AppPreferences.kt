@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.locapeer.sharing.ScheduleRule
@@ -13,6 +14,7 @@ import com.locapeer.sharing.toScheduleRules
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -76,6 +78,7 @@ class AppPreferences @Inject constructor(
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
+    private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -154,6 +157,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setSosActive(active: Boolean) {
         context.settingsStore.edit { it[KEY_SOS_ACTIVE] = active }
+    }
+
+    /** Returns the epoch second of the last successful control-event catch-up subscription start. */
+    suspend fun getLastControlSubEpoch(): Long =
+        context.settingsStore.data.first()[KEY_LAST_CONTROL_SUB_EPOCH] ?: 0L
+
+    suspend fun setLastControlSubEpoch(epoch: Long) {
+        context.settingsStore.edit { it[KEY_LAST_CONTROL_SUB_EPOCH] = epoch }
     }
 
     suspend fun clearSupervisedMode() {

@@ -320,12 +320,12 @@ private fun ScanQrTab(vm: ScanViewModel, onDone: () -> Unit) {
                         )
                     }
                     Text(
-                        "Contact Added!",
+                        "Request Sent!",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        "${scanState.addedName} has been added. You will now receive their location updates.",
+                        "A request has been sent to ${scanState.addedName}. You'll be connected once they accept.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         textAlign = TextAlign.Center
@@ -565,7 +565,7 @@ private fun InviteLinkTab(vm: InviteViewModel, context: android.content.Context)
                             tint = MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Text(
-                            "${scanState.addedName} added successfully!",
+                            "Request sent to ${scanState.addedName}!",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer

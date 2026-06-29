@@ -59,8 +59,36 @@ class PendingRequestsViewModel @Inject constructor(
 
     fun decline(request: PendingRequestEntity) {
         viewModelScope.launch {
+            relayClient.connect(request.senderRelayUrl)
+            sendTrackDecline(request.senderPubkey, request.isRoleChange)
             pendingRequestDao.deleteByPubkey(request.senderPubkey)
         }
+    }
+
+    private suspend fun sendTrackDecline(recipientPubkey: String, isRoleChange: Boolean) {
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val settings = prefs.settings.first()
+        val payload = TrackDeclinePayload(
+            declinerPublicKeyHex = pubHex,
+            declinerDisplayName = settings.displayName.ifBlank { "Someone" },
+            declinerDeviceId = pubHex,
+            isRoleChange = isRoleChange
+        )
+        val encrypted = crypto.nip44Encrypt(
+            crypto.hexToBytes(privHex),
+            recipientPubkey,
+            json.encodeToString(payload)
+        )
+        relayClient.publishEvent(
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.TRACK_DECLINE,
+                content = encrypted,
+                tags = listOf(listOf("p", recipientPubkey)),
+                crypto = crypto
+            )
+        )
     }
 
     private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, locationRole: String) {

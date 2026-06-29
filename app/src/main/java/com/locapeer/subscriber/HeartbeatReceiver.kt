@@ -66,6 +66,17 @@ private const val TAG = "HeartbeatReceiver"
 private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
 private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
 private const val SUB_ID = "lp-hb"
+private const val SUB_ID_CONTROL = "lp-ctrl"
+private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
+
+private val CONTROL_KINDS = listOf(
+    NostrEventKind.TRACK_REQUEST,
+    NostrEventKind.TRACK_ACCEPT,
+    NostrEventKind.TRACK_DECLINE,
+    NostrEventKind.PEER_REMOVED,
+    NostrEventKind.DELETE_MY_MESSAGES,
+    NostrEventKind.DELETE_MY_LOCATION
+)
 
 @Singleton
 class HeartbeatReceiver @Inject constructor(
@@ -98,6 +109,9 @@ class HeartbeatReceiver @Inject constructor(
         scope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             relayClient.connect()
+            val nowEpoch = Instant.now().epochSecond
+
+            // Real-time subscription: all event types from this moment forward
             relayClient.subscribe(
                 SUB_ID,
                 NostrFilter(
@@ -119,9 +133,27 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_LOCATION
                     ),
                     pTags = listOf(pubHex),
-                    since = Instant.now().epochSecond
+                    since = nowEpoch
                 )
             )
+
+            // Catch-up subscription: contact management events only, from last known sync point.
+            // Ensures PEER_REMOVED / TRACK_DECLINE / DELETE events sent while offline are replayed.
+            // MAX_CATCHUP_SECONDS caps history so we don't request ancient events.
+            val lastControlEpoch = prefs.getLastControlSubEpoch()
+            val catchUpSince = maxOf(lastControlEpoch - 5, nowEpoch - MAX_CATCHUP_SECONDS)
+            relayClient.subscribe(
+                SUB_ID_CONTROL,
+                NostrFilter(
+                    kinds = CONTROL_KINDS,
+                    pTags = listOf(pubHex),
+                    since = catchUpSince
+                )
+            )
+
+            // Advance the baseline so the next session only re-fetches events from now onward
+            prefs.setLastControlSubEpoch(nowEpoch)
+            Log.d(TAG, "Control catch-up since epoch $catchUpSince (last sync: $lastControlEpoch)")
         }
 
         relayClient.events
@@ -444,6 +476,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
         }
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -550,11 +583,16 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        sendAcceptanceNotification(payload.acceptorDisplayName)
+        // Only notify if this is a new connection or a role change — not on catch-up re-delivery
+        if (existingPeer?.locationRole != newLocationRole) {
+            sendAcceptanceNotification(payload.acceptorPublicKeyHex, payload.acceptorDisplayName)
+        }
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
     private suspend fun processTrackDecline(event: NostrEvent) {
+        // Only act if we actually sent a request to this peer (peer exists optimistically)
+        peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) {
             Log.w(TAG, "Track decline signature verification failed")
             return
@@ -574,14 +612,20 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         Log.i(TAG, "Received track decline from ${payload.declinerDisplayName} (${event.pubkey})")
-        sendDeclineNotification(payload.declinerDisplayName)
+        // For new-request declines, remove the optimistically-added peer entry.
+        // Role-change declines should leave the existing contact relationship intact.
+        if (!payload.isRoleChange) {
+            peerManager.handleRemovalByPeer(event.pubkey)
+        }
+        sendDeclineNotification(event.pubkey, payload.declinerDisplayName)
     }
 
-    private fun sendAcceptanceNotification(name: String) {
+    private fun sendAcceptanceNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "contacts")
         }
-        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notifId = pubkey.hashCode() + 30000
+        val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle("Contact Connected")
@@ -590,14 +634,15 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(name.hashCode() + 30000, notification)
+        notificationManager.notify(notifId, notification)
     }
 
-    private fun sendDeclineNotification(name: String) {
+    private fun sendDeclineNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "contacts")
         }
-        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notifId = pubkey.hashCode() + 40000
+        val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle("Request Declined")
@@ -606,7 +651,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(name.hashCode() + 40000, notification)
+        notificationManager.notify(notifId, notification)
     }
 
     private fun createAlertChannel() {

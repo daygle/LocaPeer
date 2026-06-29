@@ -63,11 +63,11 @@ fun ScanScreen(
                         modifier = Modifier.padding(24.dp)
                     ) {
                         Text(
-                            "Added ${scanState.addedName}!",
+                            "Request Sent!",
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            "You will now receive location updates from them.",
+                            "A request has been sent to ${scanState.addedName}. You'll be connected once they accept.",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Button(onClick = onNavigateBack) { Text("Done") }
