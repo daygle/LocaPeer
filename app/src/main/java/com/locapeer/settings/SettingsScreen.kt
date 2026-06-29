@@ -152,7 +152,7 @@ fun SettingsScreen(
                 SettingsCard {
                     ListItem(
                         headlineContent = { Text("Share My Location") },
-                        supportingContent = { Text(if (settings.heartbeatEnabled) "Broadcasting To Your Contacts" else "Not Broadcasting") },
+                        supportingContent = { Text(if (settings.heartbeatEnabled) "Broadcasting to your contacts" else "Not broadcasting") },
                         leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (settings.heartbeatEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(
@@ -196,8 +196,8 @@ fun SettingsScreen(
                     NavRow(
                         icon = Icons.Default.Schedule,
                         label = "Sharing Schedule",
-                        subtitle = if (settings.globalScheduleRules.isEmpty()) "Always On"
-                                   else "${settings.globalScheduleRules.size} Rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
+                        subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
+                                   else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
                         onClick = onNavigateToGlobalSchedule
                     )
                 }
@@ -212,7 +212,7 @@ fun SettingsScreen(
                     RetentionRow(
                         icon = Icons.Default.LocationOn,
                         title = "Location On This Device",
-                        subtitle = "How Long To Keep Contacts' Location Data Locally",
+                        subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) }
                     )
@@ -226,7 +226,7 @@ fun SettingsScreen(
                     RetentionRow(
                         icon = Icons.AutoMirrored.Filled.Message,
                         title = "Messages On This Device",
-                        subtitle = "How Long To Keep Received Messages Locally",
+                        subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
                         onSelected = { vm.setLocalMessageRetentionDays(it) }
                     )
@@ -267,7 +267,7 @@ fun SettingsScreen(
                     }
                     ListItem(
                         headlineContent = { Text("Export Backup") },
-                        supportingContent = { Text("Save Key, Contacts, Geofences & Settings") },
+                        supportingContent = { Text("Save key, contacts, geofences & settings") },
                         leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { showExportDialog = true; vm.clearBackupResult() },
@@ -276,7 +276,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         headlineContent = { Text("Import Backup") },
-                        supportingContent = { Text("Restore From A Previously Exported File") },
+                        supportingContent = { Text("Restore from a previously exported file") },
                         leadingContent = { Icon(Icons.Default.Download, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
@@ -285,7 +285,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         headlineContent = { Text("View Private Key") },
-                        supportingContent = { Text("Show Your 64-Character Hex Identity Key") },
+                        supportingContent = { Text("Show your 64-character hex identity key") },
                         leadingContent = { Icon(Icons.Default.VpnKey, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },

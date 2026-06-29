@@ -27,7 +27,7 @@ val HARDCODED_RELAYS = listOf("wss://relay.daygle.net", "wss://relay.damus.io")
 
 data class AppSettings(
     val displayName: String = "",
-    val heartbeatEnabled: Boolean = false,
+    val heartbeatEnabled: Boolean = true,
     val stationaryIntervalMinutes: Int = 15,
     val walkingIntervalMinutes: Int = 5,
     val runningIntervalMinutes: Int = 2,
@@ -89,7 +89,7 @@ class AppPreferences @Inject constructor(
         .map { prefs ->
             AppSettings(
                 displayName = prefs[KEY_DISPLAY_NAME] ?: "",
-                heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: false,
+                heartbeatEnabled = prefs[KEY_HEARTBEAT_ENABLED] ?: true,
                 stationaryIntervalMinutes = prefs[KEY_STATIONARY_INTERVAL] ?: 15,
                 walkingIntervalMinutes = prefs[KEY_WALKING_INTERVAL] ?: 5,
                 runningIntervalMinutes = prefs[KEY_RUNNING_INTERVAL] ?: 2,

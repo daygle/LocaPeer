@@ -63,6 +63,40 @@ class IncomingShareRequestViewModel @Inject constructor(
         }
     }
 
+    fun decline(senderPubkey: String, senderRelay: String) {
+        viewModelScope.launch {
+            _state.value = IncomingRequestState.Loading
+            relayClient.connect(senderRelay)
+            sendTrackDecline(senderPubkey)
+            _state.value = IncomingRequestState.Done
+        }
+    }
+
+    private suspend fun sendTrackDecline(recipientPubkey: String) {
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val settings = prefs.settings.first()
+        val payload = TrackDeclinePayload(
+            declinerPublicKeyHex = pubHex,
+            declinerDisplayName = settings.displayName.ifBlank { "Someone" },
+            declinerDeviceId = pubHex
+        )
+        val encrypted = crypto.nip44Encrypt(
+            crypto.hexToBytes(privHex),
+            recipientPubkey,
+            json.encodeToString(payload)
+        )
+        relayClient.publishEvent(
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.TRACK_DECLINE,
+                content = encrypted,
+                tags = listOf(listOf("p", recipientPubkey)),
+                crypto = crypto
+            )
+        )
+    }
+
     private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, locationRole: String) {
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val settings = prefs.settings.first()

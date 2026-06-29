@@ -35,6 +35,7 @@ import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
 import com.locapeer.invite.TrackAcceptPayload
+import com.locapeer.invite.TrackDeclinePayload
 import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.invite.TrackRequestReceiver
 import com.locapeer.supervised.SupervisedModeManager
@@ -112,6 +113,7 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
                         NostrEventKind.TRACK_REQUEST,
                         NostrEventKind.TRACK_ACCEPT,
+                        NostrEventKind.TRACK_DECLINE,
                         NostrEventKind.PEER_REMOVED,
                         NostrEventKind.DELETE_MY_MESSAGES,
                         NostrEventKind.DELETE_MY_LOCATION
@@ -135,6 +137,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> processUnlockResponse(event)
                     NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
+                    NostrEventKind.TRACK_DECLINE -> scope.launch { processTrackDecline(event) }
                     NostrEventKind.PEER_REMOVED -> scope.launch { processPeerRemoved(event) }
                     NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
                     NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
@@ -551,6 +554,29 @@ class HeartbeatReceiver @Inject constructor(
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
+    private suspend fun processTrackDecline(event: NostrEvent) {
+        if (!NostrEvent.verify(event, crypto)) {
+            Log.w(TAG, "Track decline signature verification failed")
+            return
+        }
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decrypt track decline from ${event.pubkey}", e)
+            return
+        }
+        val payload = try {
+            json.decodeFromString<com.locapeer.invite.TrackDeclinePayload>(plaintext)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to decode track decline payload", e)
+            return
+        }
+
+        Log.i(TAG, "Received track decline from ${payload.declinerDisplayName} (${event.pubkey})")
+        sendDeclineNotification(payload.declinerDisplayName)
+    }
+
     private fun sendAcceptanceNotification(name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "contacts")
@@ -565,6 +591,22 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(name.hashCode() + 30000, notification)
+    }
+
+    private fun sendDeclineNotification(name: String) {
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("navigateTo", "contacts")
+        }
+        val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle("Request Declined")
+            .setContentText("$name has declined your location sharing request.")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(name.hashCode() + 40000, notification)
     }
 
     private fun createAlertChannel() {

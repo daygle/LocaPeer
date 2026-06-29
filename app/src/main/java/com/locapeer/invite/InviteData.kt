@@ -35,5 +35,6 @@ data class TrackAcceptPayload(
 @Serializable
 data class TrackDeclinePayload(
     val declinerPublicKeyHex: String,
+    val declinerDisplayName: String,
     val declinerDeviceId: String
 )

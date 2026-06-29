@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -200,7 +201,7 @@ fun PeerSharingScreen(
                     ListItem(
                         headlineContent = { Text("Allow Messages") },
                         supportingContent = { Text("Receive chat messages from this contact") },
-                        leadingContent = { Icon(Icons.Default.Chat, contentDescription = null, tint = if (messagingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
+                        leadingContent = { Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = null, tint = if (messagingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = messagingEnabled, onCheckedChange = { vm.setMessagingEnabled(it) })
                         },

@@ -27,6 +27,7 @@ object NostrEventKind {
     const val DELETE_MY_MESSAGES = 1051
     const val DELETE_MY_LOCATION = 1052
     const val TYPING = 1053
+    const val TRACK_DECLINE = 1054
 }
 
 @Serializable
