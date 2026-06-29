@@ -17,6 +17,7 @@ import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +45,8 @@ class PeerSharingViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val peerManager: PeerManager
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -161,6 +163,8 @@ class PeerSharingViewModel @Inject constructor(
     fun setSendRole(enabled: Boolean) {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
+            val wasSharing = peer.locationRole == PeerEntity.ROLE_SEND ||
+                             peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE
             val newRole = when (peer.locationRole) {
                 PeerEntity.ROLE_NONE -> if (enabled) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
                 PeerEntity.ROLE_SEND -> if (enabled) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
@@ -169,6 +173,12 @@ class PeerSharingViewModel @Inject constructor(
                 else -> peer.locationRole
             }
             peerDao.upsertPeer(peer.copy(locationRole = newRole))
+            val nowSharing = newRole == PeerEntity.ROLE_SEND || newRole == PeerEntity.ROLE_SEND_RECEIVE
+            // Immediately ask the peer to clear our stored location data when we revoke access,
+            // so they don't continue to see a stale pin until heartbeat timeout.
+            if (wasSharing && !nowSharing) {
+                peerManager.sendDeleteMyLocation(currentPeerId)
+            }
         }
     }
 

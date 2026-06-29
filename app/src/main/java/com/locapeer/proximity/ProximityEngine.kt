@@ -92,7 +92,7 @@ class ProximityEngine @Inject constructor(
             .addAction(R.drawable.ic_notif_message, "Message $personName", chatPi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(personDeviceId.hashCode() + 30000, notification)
+        notificationManager.notify(personDeviceId.hashCode() + 50000, notification)
     }
 
     private fun haversineMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

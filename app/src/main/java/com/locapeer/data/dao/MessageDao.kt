@@ -33,7 +33,7 @@ interface MessageDao {
     @Query("SELECT peerId, COUNT(*) as cnt FROM messages WHERE isRead = 0 AND isMine = 0 AND isBlocked = 0 GROUP BY peerId")
     fun getUnreadCountsPerPeer(): Flow<List<UnreadCountRow>>
 
-    @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0")
+    @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0 AND isBlocked = 0")
     suspend fun markAllReadForPeer(peerId: String)
 
     @Query("DELETE FROM messages WHERE timestamp < :before")

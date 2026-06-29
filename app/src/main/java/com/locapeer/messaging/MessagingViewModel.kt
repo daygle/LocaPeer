@@ -206,6 +206,7 @@ class MessagingViewModel @Inject constructor(
     private suspend fun processIncomingDm(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
+        val isBlocked = !sender.messagingEnabled
         if (!NostrEvent.verify(event, crypto)) return
 
         val privHex = keyManager.getPrivateKeyHex() ?: return
@@ -220,11 +221,32 @@ class MessagingViewModel @Inject constructor(
             content = plaintext,
             timestamp = event.createdAt * 1000L,
             isMine = false,
-            deliveryState = DeliveryState.DELIVERED.name,
-            nostrEventId = event.id
+            deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
+            nostrEventId = event.id,
+            isBlocked = isBlocked
         )
         messageDao.insert(msg)
-        sendMessageNotification(sender, plaintext)
+        if (!isBlocked) {
+            sendMessageNotification(sender, plaintext)
+            sendDeliveryAck(event.pubkey, event.id)
+        }
+    }
+
+    private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {
+        val peer = peerDao.getPeer(toPubkey) ?: return
+        val (privHex, pubHex) = keyManager.ensureKeypair()
+        val privBytes = crypto.hexToBytes(privHex)
+        val payload = json.encodeToString(DeliveryAckPayload(deliveredEventId))
+        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
+        val event = NostrEvent.build(
+            privKeyHex = privHex,
+            pubKeyHex = pubHex,
+            kind = NostrEventKind.DELIVERY_ACK,
+            content = encrypted,
+            tags = listOf(listOf("p", peer.publicKeyHex)),
+            crypto = crypto
+        )
+        relayClient.publishEvent(event)
     }
 
     private suspend fun processReadReceipt(event: NostrEvent) {
@@ -244,7 +266,8 @@ class MessagingViewModel @Inject constructor(
     private fun processTypingEvent(event: NostrEvent) {
         val fromPubkey = event.pubkey
         viewModelScope.launch {
-            peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
+            val sender = peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
+            if (!sender.messagingEnabled) return@launch  // suppress typing from disabled contacts
             _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
             typingClearJobs[fromPubkey]?.cancel()
             typingClearJobs[fromPubkey] = viewModelScope.launch {
