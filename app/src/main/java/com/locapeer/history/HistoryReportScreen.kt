@@ -37,7 +37,7 @@ import java.util.TimeZone
 @Composable
 fun HistoryReportScreen(
     peerId: String? = null,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: (() -> Unit)? = null,
     vm: HistoryReportViewModel = hiltViewModel()
 ) {
     LaunchedEffect(peerId) {
@@ -72,8 +72,10 @@ fun HistoryReportScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    if (onNavigateBack != null) {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
                     }
                 }
             )

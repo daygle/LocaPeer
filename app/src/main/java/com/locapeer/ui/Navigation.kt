@@ -7,6 +7,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.People
@@ -42,11 +43,12 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    object Map      : Screen("map",      "Map",      Icons.Default.Map)
-    object Messages : Screen("messages", "Messages", Icons.AutoMirrored.Filled.Message)
-    object Contacts : Screen("contacts", "Contacts", Icons.Default.People)
-    object Invite   : Screen("invite",   "QR / Invite", Icons.Default.QrCode)
-    object Settings : Screen("settings", "Settings", Icons.Default.Settings)
+    object Map      : Screen("map",          "Map",      Icons.Default.Map)
+    object Messages : Screen("messages",     "Messages", Icons.AutoMirrored.Filled.Message)
+    object Contacts : Screen("contacts",     "Contacts", Icons.Default.People)
+    object Invite   : Screen("invite",       "QR / Invite", Icons.Default.QrCode)
+    object Settings : Screen("settings",     "Settings", Icons.Default.Settings)
+    object History  : Screen("history-tab",  "History",  Icons.Default.History)
 }
 
 /** All tabs that can appear in the bottom nav, in their canonical order. */
@@ -55,7 +57,8 @@ val ALL_NAV_SCREENS: List<Screen> = listOf(
     Screen.Messages,
     Screen.Contacts,
     Screen.Invite,
-    Screen.Settings
+    Screen.Settings,
+    Screen.History
 )
 
 private val fadeEnter = fadeIn(tween(220))
@@ -266,6 +269,9 @@ fun LocaPeerNavHost(
                     peerId = entry.arguments?.getString("peerId"),
                     onNavigateBack = { navController.popBackStack() }
                 )
+            }
+            composable(Screen.History.route) {
+                HistoryReportScreen(onNavigateBack = null)
             }
             composable(
                 "about",
