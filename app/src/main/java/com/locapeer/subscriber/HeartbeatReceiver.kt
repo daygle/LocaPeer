@@ -216,6 +216,14 @@ class HeartbeatReceiver @Inject constructor(
                     peerDao.deletePeerById(peer.deviceId)
                 }
             ?: return
+        // Drop normal heartbeats from peers we are not configured to receive from.
+        // SOS alerts bypass role checks — emergencies override access control.
+        if (event.kind == NostrEventKind.HEARTBEAT &&
+            broadcaster.locationRole != PeerEntity.ROLE_RECEIVE &&
+            broadcaster.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
+            Log.d(TAG, "Ignoring heartbeat from ${event.pubkey}: role is ${broadcaster.locationRole}")
+            return
+        }
         if (!NostrEvent.verify(event, crypto)) {
             Log.w(TAG, "Signature verification failed for event ${event.id}")
             return
