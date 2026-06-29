@@ -456,6 +456,7 @@ class HeartbeatService : LifecycleService() {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
             .build()
     }
 
@@ -466,6 +467,7 @@ class HeartbeatService : LifecycleService() {
             NotificationManager.IMPORTANCE_LOW
         ).apply {
             description = getString(R.string.channel_desc_heartbeat)
+            setShowBadge(false)
         }
         notificationManager.createNotificationChannel(channel)
     }
