@@ -184,12 +184,12 @@ fun HistoryReportScreen(
                     addresses = addresses,
                     timeFormat = timeFormat,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .weight(1f)
                         .padding(horizontal = 16.dp)
                 )
                 1 -> HistoryMapTab(
                     heartbeats = heartbeats,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.weight(1f)
                 )
             }
             } // end else
@@ -290,6 +290,17 @@ private fun HistoryMapTab(
                 setBuiltInZoomControls(false)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
+                setOnTouchListener { v, event ->
+                    when (event.action) {
+                        android.view.MotionEvent.ACTION_DOWN,
+                        android.view.MotionEvent.ACTION_MOVE ->
+                            v.parent?.requestDisallowInterceptTouchEvent(true)
+                        android.view.MotionEvent.ACTION_UP,
+                        android.view.MotionEvent.ACTION_CANCEL ->
+                            v.parent?.requestDisallowInterceptTouchEvent(false)
+                    }
+                    false
+                }
             }.also { mapViewRef = it }
         },
         update = { mapView ->
