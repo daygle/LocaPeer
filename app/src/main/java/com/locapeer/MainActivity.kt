@@ -122,6 +122,8 @@ class MainActivity : ComponentActivity() {
             if (inviteData != null) {
                 pendingNavTarget.value = NavTarget("scan", inviteData, "")
             }
+            // Clear the deep-link so it isn't replayed on process-death recreation
+            setIntent(Intent(intent).apply { this.data = null; this.action = null })
             return
         }
 
@@ -132,12 +134,13 @@ class MainActivity : ComponentActivity() {
             val relay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: ""
             val isRoleChange = intent.getBooleanExtra(EXTRA_IS_ROLE_CHANGE, false)
             pendingNavTarget.value = NavTarget("share-request", pubkey, name, relay, isRoleChange)
-            return
+        } else {
+            val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
+            val peerName = intent.getStringExtra("peerName") ?: ""
+            pendingNavTarget.value = NavTarget(navigateTo, peerId, peerName)
         }
-
-        val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
-        val peerName = intent.getStringExtra("peerName") ?: ""
-        pendingNavTarget.value = NavTarget(navigateTo, peerId, peerName)
+        // Strip consumed extras so process-death recreation doesn't replay the notification intent
+        setIntent(Intent(intent).apply { removeExtra("navigateTo") })
     }
 }
 
