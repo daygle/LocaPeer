@@ -249,7 +249,9 @@ class HeartbeatReceiver @Inject constructor(
                 battery = payload.battery,
                 motionState = payload.motionState,
                 isSos = payload.isSos,
-                pinColor = payload.pinColor
+                pinColor = payload.pinColor,
+                speed = payload.speed,
+                bearing = payload.bearing
             )
             heartbeatDao.insert(entity)
             if (payload.retentionDays > 0) {
