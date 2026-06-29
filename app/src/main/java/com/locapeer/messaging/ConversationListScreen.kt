@@ -232,8 +232,13 @@ private fun ConversationRow(
             }
         },
         supportingContent = {
+            val preview = when {
+                isBlocked -> "Messages blocked"
+                summary.lastMessage.isMine -> "You: ${summary.lastMessage.content}"
+                else -> summary.lastMessage.content
+            }
             Text(
-                if (isBlocked) "Messages blocked" else summary.lastMessage.content,
+                preview,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 color = if (isBlocked) MaterialTheme.colorScheme.error
