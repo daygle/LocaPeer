@@ -36,6 +36,7 @@ fun SettingsScreen(
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCustomizeNav: () -> Unit = {},
     onNavigateToGlobalSchedule: () -> Unit = {},
+    onNavigateToMyHistory: (pubkeyHex: String) -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsState()
@@ -199,6 +200,13 @@ fun SettingsScreen(
                         subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
                                    else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
                         onClick = onNavigateToGlobalSchedule
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    NavRow(
+                        icon = Icons.Default.History,
+                        label = "My Location History",
+                        subtitle = "Browse your own location timeline",
+                        onClick = { onNavigateToMyHistory(publicKeyHex) }
                     )
                 }
             }

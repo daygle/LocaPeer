@@ -32,8 +32,10 @@ import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.data.entity.scheduleRules
@@ -67,6 +69,7 @@ class HeartbeatService : LifecycleService() {
     @Inject lateinit var relayClient: NostrRelayClient
     @Inject lateinit var peerDao: PeerDao
     @Inject lateinit var sharingConfigDao: PeerSharingConfigDao
+    @Inject lateinit var heartbeatDao: HeartbeatDao
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var intervalManager: AdaptiveIntervalManager
     @Inject lateinit var notificationManager: NotificationManager
@@ -316,6 +319,28 @@ class HeartbeatService : LifecycleService() {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
+
+                val nowMs = System.currentTimeMillis()
+                heartbeatDao.insert(
+                    HeartbeatEntity(
+                        deviceId = pubHex,
+                        displayName = settings.displayName,
+                        timestamp = nowMs,
+                        lat = lastLat,
+                        lng = lastLng,
+                        accuracy = lastAccuracy,
+                        battery = battery,
+                        motionState = currentMotionState.name,
+                        isSos = isSos,
+                        receivedAt = nowMs,
+                        pinColor = settings.pinColor
+                    )
+                )
+                val retentionDays = settings.localLocationRetentionDays
+                if (retentionDays > 0) {
+                    val cutoff = nowMs - retentionDays * 24 * 60 * 60 * 1000L
+                    heartbeatDao.deleteOlderThanForDevice(pubHex, cutoff)
+                }
 
                 if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules)) {
                     Log.d(TAG, "Heartbeat suppressed: outside global schedule")

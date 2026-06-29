@@ -62,7 +62,15 @@ fun HistoryReportScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (selectedPeer != null) "History: ${selectedPeer.displayName}" else "Location History") },
+                title = {
+                    Text(
+                        when {
+                            selectedPeer != null -> "History: ${selectedPeer.displayName}"
+                            peerId != null -> "My Location History"
+                            else -> "Location History"
+                        }
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
@@ -76,7 +84,7 @@ fun HistoryReportScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            if (broadcasters.isEmpty()) {
+            if (broadcasters.isEmpty() && peerId == null) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
                         "No tracked people found.\nScan an invite QR code to start tracking someone.",
