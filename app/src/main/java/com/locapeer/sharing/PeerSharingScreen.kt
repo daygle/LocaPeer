@@ -40,6 +40,7 @@ fun PeerSharingScreen(
     val state by vm.uiState.collectAsState()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
+    val isPaused = !sharingEnabled
     val messagingEnabled = state.peer?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
@@ -163,9 +164,9 @@ fun PeerSharingScreen(
                     ListItem(
                         headlineContent = { Text("Pause Sharing") },
                         supportingContent = { Text("Temporarily stop sending your location to $peerName") },
-                        leadingContent = { Icon(Icons.Default.PauseCircle, contentDescription = null, tint = if (!sharingEnabled) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
+                        leadingContent = { Icon(Icons.Default.PauseCircle, contentDescription = null, tint = if (isPaused) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
-                            Switch(checked = !sharingEnabled, onCheckedChange = { vm.setSharingEnabled(!it) })
+                            Switch(checked = isPaused, onCheckedChange = { vm.setSharingEnabled(!it) })
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )

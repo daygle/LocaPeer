@@ -158,14 +158,14 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
-    fun setSendRole(send: Boolean) {
+    fun setSendRole(enabled: Boolean) {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             val newRole = when (peer.locationRole) {
-                PeerEntity.ROLE_NONE -> if (send) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
-                PeerEntity.ROLE_SEND -> if (send) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
-                PeerEntity.ROLE_RECEIVE -> if (send) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
-                PeerEntity.ROLE_SEND_RECEIVE -> if (send) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
+                PeerEntity.ROLE_NONE -> if (enabled) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
+                PeerEntity.ROLE_SEND -> if (enabled) PeerEntity.ROLE_SEND else PeerEntity.ROLE_NONE
+                PeerEntity.ROLE_RECEIVE -> if (enabled) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
+                PeerEntity.ROLE_SEND_RECEIVE -> if (enabled) PeerEntity.ROLE_SEND_RECEIVE else PeerEntity.ROLE_RECEIVE
                 else -> peer.locationRole
             }
             peerDao.upsertPeer(peer.copy(locationRole = newRole))

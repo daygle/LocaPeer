@@ -13,7 +13,7 @@ interface PeerDao {
     fun getReceiveContacts(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE locationRole = 'SEND' OR locationRole = 'SEND_RECEIVE' ORDER BY displayName ASC")
-    fun getSendContacts(): Flow<List<PeerEntity>>
+    fun getPeersReceivingMyLocation(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     suspend fun getPeer(deviceId: String): PeerEntity?
