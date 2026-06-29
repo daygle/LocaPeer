@@ -75,7 +75,9 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_DECLINE,
     NostrEventKind.PEER_REMOVED,
     NostrEventKind.DELETE_MY_MESSAGES,
-    NostrEventKind.DELETE_MY_LOCATION
+    NostrEventKind.DELETE_MY_LOCATION,
+    NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
+    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE
 )
 
 @Singleton
@@ -165,8 +167,8 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.ENCRYPTED_DM -> processDmInBackground(event)
                     NostrEventKind.READ_RECEIPT -> processReadReceiptInBackground(event)
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
-                    NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> processUnlockRequest(event)
-                    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> processUnlockResponse(event)
+                    NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> scope.launch { processUnlockRequest(event) }
+                    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> scope.launch { processUnlockResponse(event) }
                     NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
                     NostrEventKind.TRACK_DECLINE -> scope.launch { processTrackDecline(event) }
@@ -329,6 +331,9 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processUnlockRequest(event: NostrEvent) {
+        // Ignore requests older than 5 minutes to avoid annoying the supervisor with stale popups
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
