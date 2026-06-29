@@ -289,7 +289,8 @@ private fun ContactPickerDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New message") },
+        containerColor = MaterialTheme.colorScheme.surface,
+        title = { Text("New Message") },
         text = {
             if (peers.isEmpty()) {
                 Text(
