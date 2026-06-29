@@ -176,6 +176,7 @@ class PeerSharingViewModel @Inject constructor(
                 peer.publicKeyHex,
                 json.encodeToString(payload)
             )
+            relayClient.connect(peer.relayUrl)
             relayClient.publishEvent(
                 NostrEvent.build(
                     privKeyHex = privHex,
