@@ -30,3 +30,10 @@ data class TrackAcceptPayload(
     val acceptorRelayUrl: String,
     val acceptedRole: String? = null
 )
+
+/** Sent back when the recipient declines a track request. */
+@Serializable
+data class TrackDeclinePayload(
+    val declinerPublicKeyHex: String,
+    val declinerDeviceId: String
+)
