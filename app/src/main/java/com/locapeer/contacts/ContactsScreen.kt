@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
@@ -28,6 +29,7 @@ private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, R
 fun ContactsScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
+    onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
     vm: ContactsViewModel = hiltViewModel()
 ) {
     val contacts by vm.contacts.collectAsState()
@@ -58,6 +60,7 @@ fun ContactsScreen(
                         item = item,
                         formatLastSeen = vm::formatLastSeen,
                         onMessage = { onNavigateToChat(item.peer.deviceId, item.peer.displayName) },
+                        onShowOnMap = { hb -> onNavigateToMap(hb.lat, hb.lng) },
                         onRename = { nameInput = item.peer.displayName; editingContact = item },
                         onDeleteContact = { confirmAction = item to DataAction.REMOVE_CONTACT },
                         onRemoveSelf = { confirmAction = item to DataAction.REMOVE_SELF },
@@ -138,6 +141,7 @@ private fun ContactRow(
     item: ContactItem,
     formatLastSeen: (Long) -> String,
     onMessage: () -> Unit,
+    onShowOnMap: (HeartbeatEntity) -> Unit,
     onRename: () -> Unit,
     onDeleteContact: () -> Unit,
     onRemoveSelf: () -> Unit,
@@ -214,6 +218,11 @@ private fun ContactRow(
                 if (canMessage) {
                     IconButton(onClick = onMessage) {
                         Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = "Message", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+                    }
+                }
+                if (hb != null) {
+                    IconButton(onClick = { onShowOnMap(hb) }) {
+                        Icon(Icons.Default.LocationOn, contentDescription = "Show on map", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                     }
                 }
                 Box {
