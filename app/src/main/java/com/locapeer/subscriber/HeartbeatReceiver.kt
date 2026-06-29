@@ -28,6 +28,7 @@ import com.locapeer.peer.PeerManager
 import com.locapeer.peer.PeerRemovedPayload
 import com.locapeer.invite.ACTION_TRACK_DECLINE
 import com.locapeer.invite.EXTRA_IS_ROLE_CHANGE
+import com.locapeer.invite.EXTRA_REQUESTED_ROLE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
@@ -418,6 +419,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
             putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
+            if (payload.requestedRole != null) putExtra(EXTRA_REQUESTED_ROLE, payload.requestedRole)
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             action = ACTION_TRACK_DECLINE
@@ -430,8 +432,21 @@ class HeartbeatReceiver @Inject constructor(
 
         val notifTitle = if (payload.isRoleChange) "Sharing update from ${payload.senderDisplayName}"
                          else "Location sharing request from ${payload.senderDisplayName}"
-        val notifBody = if (payload.isRoleChange) "${payload.senderDisplayName} wants to update how you share locations."
-                        else "${payload.senderDisplayName} wants to share locations with you."
+        val requestedRoleLabel = when (payload.requestedRole) {
+            PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
+            PeerEntity.ROLE_SEND -> "Send Location"
+            PeerEntity.ROLE_RECEIVE -> "Receive Location"
+            PeerEntity.ROLE_NONE -> "No Location Sharing"
+            else -> null
+        }
+        val notifBody = when {
+            payload.isRoleChange && requestedRoleLabel != null ->
+                "${payload.senderDisplayName} is requesting: $requestedRoleLabel"
+            payload.isRoleChange ->
+                "${payload.senderDisplayName} wants to update how you share locations."
+            else ->
+                "${payload.senderDisplayName} wants to share locations with you."
+        }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)

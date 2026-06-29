@@ -24,7 +24,8 @@ data class TrackRequestPayload(
     val senderDisplayName: String,
     val senderDeviceId: String,
     val senderRelayUrl: String,
-    val isRoleChange: Boolean = false
+    val isRoleChange: Boolean = false,
+    val requestedRole: String? = null
 )
 
 /** Sent back when the recipient accepts a track request. */

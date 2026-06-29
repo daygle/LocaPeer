@@ -26,6 +26,7 @@ fun IncomingShareRequestScreen(
     senderName: String,
     senderRelay: String,
     isRoleChange: Boolean = false,
+    requestedRole: String? = null,
     onDone: () -> Unit,
     vm: IncomingShareRequestViewModel = hiltViewModel()
 ) {
@@ -35,14 +36,25 @@ fun IncomingShareRequestScreen(
         if (state is IncomingRequestState.Done) onDone()
     }
 
-    var selectedRole by remember { mutableStateOf<String?>(null) }
+    var selectedRole by remember { mutableStateOf<String?>(requestedRole) }
     var messagingEnabled by remember { mutableStateOf(true) }
 
     val title = if (isRoleChange) "Update Location Sharing" else "Location Sharing Request"
-    val subtitle = if (isRoleChange)
-        "$senderName wants to update how you share locations."
-    else
-        "$senderName wants to share locations with you."
+    val requestedRoleLabel = when (requestedRole) {
+        PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
+        PeerEntity.ROLE_SEND -> "Send Location"
+        PeerEntity.ROLE_RECEIVE -> "Receive Location"
+        PeerEntity.ROLE_NONE -> "No Location Sharing"
+        else -> null
+    }
+    val subtitle = when {
+        isRoleChange && requestedRoleLabel != null ->
+            "$senderName is requesting: $requestedRoleLabel. Review and confirm below."
+        isRoleChange ->
+            "$senderName wants to update how you share locations."
+        else ->
+            "$senderName wants to share locations with you."
+    }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text(title) }) }

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.crypto.KeyManager
 import com.locapeer.invite.EXTRA_IS_ROLE_CHANGE
+import com.locapeer.invite.EXTRA_REQUESTED_ROLE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
@@ -133,7 +134,8 @@ class MainActivity : ComponentActivity() {
             val name = intent.getStringExtra(EXTRA_SENDER_NAME) ?: ""
             val relay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: ""
             val isRoleChange = intent.getBooleanExtra(EXTRA_IS_ROLE_CHANGE, false)
-            pendingNavTarget.value = NavTarget("share-request", pubkey, name, relay, isRoleChange)
+            val requestedRole = intent.getStringExtra(EXTRA_REQUESTED_ROLE)
+            pendingNavTarget.value = NavTarget("share-request", pubkey, name, relay, isRoleChange, requestedRole)
         } else {
             val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
             val peerName = intent.getStringExtra("peerName") ?: ""
@@ -144,4 +146,4 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-data class NavTarget(val route: String, val peerId: String?, val peerName: String, val extra: String? = null, val isRoleChange: Boolean = false)
+data class NavTarget(val route: String, val peerId: String?, val peerName: String, val extra: String? = null, val isRoleChange: Boolean = false, val requestedRole: String? = null)
