@@ -297,7 +297,10 @@ private fun HistoryMapTab(
 
             if (heartbeats.isNotEmpty()) {
                 val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
-                val sample = heartbeats.first()
+                // Use the most recent heartbeat for colour so the current pin colour
+                // setting is reflected even if earlier heartbeats were recorded before
+                // the user chose a colour.
+                val sample = heartbeats.last()
                 val pinColor = sample.pinColor
                 val lineColor = if (pinColor.isNotEmpty())
                     android.graphics.Color.parseColor(pinColor).let {
@@ -319,7 +322,7 @@ private fun HistoryMapTab(
                         displayName = first.displayName,
                         isOverdue = false,
                         isSos = false,
-                        pinColor = first.pinColor
+                        pinColor = pinColor
                     )
                     val marker = Marker(mapView).apply {
                         position = GeoPoint(first.lat, first.lng)
