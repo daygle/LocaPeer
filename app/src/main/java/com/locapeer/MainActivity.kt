@@ -1,6 +1,9 @@
 package com.locapeer
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -18,7 +21,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.beacon.HeartbeatService
 import com.locapeer.crypto.KeyManager
 import com.locapeer.invite.EXTRA_IS_ROLE_CHANGE
 import com.locapeer.invite.EXTRA_REQUESTED_ROLE
@@ -33,6 +38,7 @@ import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.ui.LocaPeerNavHost
 import com.locapeer.ui.theme.LocaPeerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -97,6 +103,26 @@ class MainActivity : ComponentActivity() {
                                 val pubHex = keyManager.getPublicKeyHex()
                                     ?: return@LaunchedEffect
                                 messagingVm.startListening(pubHex)
+                            }
+                            // Auto-start HeartbeatService on app open if enabled and permitted.
+                            // The service handles being started when already running (isStarted guard).
+                            // This ensures the service runs even if the device hasn't been rebooted
+                            // since install (BootReceiver only covers post-boot starts).
+                            LaunchedEffect(Unit) {
+                                val settings = prefs.settings.first()
+                                if (!settings.heartbeatEnabled) return@LaunchedEffect
+                                val hasLocation = ContextCompat.checkSelfPermission(
+                                    this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
+                                ) == PackageManager.PERMISSION_GRANTED ||
+                                ContextCompat.checkSelfPermission(
+                                    this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION
+                                ) == PackageManager.PERMISSION_GRANTED
+                                if (!hasLocation) return@LaunchedEffect
+                                val intent = Intent(this@MainActivity, HeartbeatService::class.java)
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                    startForegroundService(intent)
+                                else
+                                    startService(intent)
                             }
                             LocaPeerNavHost(
                                 initialNavTarget = navTarget,
