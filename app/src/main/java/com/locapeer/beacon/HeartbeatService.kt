@@ -1,11 +1,13 @@
 package com.locapeer.beacon
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
 import android.os.BatteryManager
 import android.os.Build
@@ -13,6 +15,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.ActivityRecognition
@@ -42,7 +45,6 @@ import com.locapeer.settings.AppSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.time.Instant
 import javax.inject.Inject
@@ -93,7 +95,7 @@ class HeartbeatService : LifecycleService() {
     private val heartbeatRunnable = object : Runnable {
         override fun run() {
             broadcastHeartbeat()
-            val interval = intervalManager.getIntervalMillis(currentSettings)
+            val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
             handler.postDelayed(this, interval)
         }
     }
@@ -116,11 +118,12 @@ class HeartbeatService : LifecycleService() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        super.onStartCommand(intent, flags, startId)
-        
         // Ensure service is in foreground immediately to prevent "Unable to start service" crashes on Android 8.0+
+        // We call this BEFORE super.onStartCommand to be as fast as possible.
         startForegroundAndBroadcast()
 
+        super.onStartCommand(intent, flags, startId)
+        
         when (intent?.action) {
             ACTION_SOS_ON -> {
                 isSos = true
@@ -163,17 +166,39 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun startForegroundAndBroadcast() {
-        val notification = buildNotification()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            startForeground(NOTIFICATION_ID_HEARTBEAT, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
-        } else {
-            startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
+        try {
+            val notification = buildNotification()
+            val hasLocationPerm = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // On Android 14+, starting with TYPE_LOCATION requires the permission to be granted AT THE TIME of the call.
+                // If not granted, we start without the type and try to update it later when permissions are granted.
+                if (hasLocationPerm) {
+                    startForeground(NOTIFICATION_ID_HEARTBEAT, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
+                } else {
+                    Log.w(TAG, "Starting foreground service WITHOUT location type due to missing permissions")
+                    startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
+                }
+            } else {
+                startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to start foreground service", e)
+            // If we can't start foreground, we might as well stop to avoid "Unable to start service" crash
+            stopSelf()
+            return
         }
 
         if (isStarted) return
         isStarted = true
 
-        updateLocationRequest()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            updateLocationRequest()
+        } else {
+            Log.e(TAG, "Cannot start location updates: permission missing")
+        }
 
         val activityIntent = PendingIntent.getService(
             this, 0,
@@ -199,23 +224,29 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun updateLocationRequest() {
-        fusedLocation.removeLocationUpdates(locationCallback)
-        val priority = when {
-            isSos -> Priority.PRIORITY_HIGH_ACCURACY
-            currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
-            currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
-            else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        try {
+            fusedLocation.removeLocationUpdates(locationCallback)
+            val priority = when {
+                isSos -> Priority.PRIORITY_HIGH_ACCURACY
+                currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+                currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
+                else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
+            }
+            val pollIntervalMs = when {
+                isSos -> 10_000L
+                currentMotionState == MotionState.STATIONARY -> 120_000L
+                currentMotionState == MotionState.DRIVING -> 15_000L
+                else -> 30_000L
+            }
+            val locationRequest = LocationRequest.Builder(priority, pollIntervalMs)
+                .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+                .build()
+            fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+        } catch (e: SecurityException) {
+            Log.e(TAG, "Failed to request location updates: missing permission", e)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to update location request", e)
         }
-        val pollIntervalMs = when {
-            isSos -> 10_000L
-            currentMotionState == MotionState.STATIONARY -> 120_000L
-            currentMotionState == MotionState.DRIVING -> 15_000L
-            else -> 30_000L
-        }
-        val locationRequest = LocationRequest.Builder(priority, pollIntervalMs)
-            .setMinUpdateIntervalMillis(pollIntervalMs / 2)
-            .build()
-        fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
     }
 
     private fun reschedulePulse() {
@@ -334,16 +365,22 @@ class HeartbeatService : LifecycleService() {
 
     override fun onDestroy() {
         handler.removeCallbacks(heartbeatRunnable)
-        fusedLocation.removeLocationUpdates(locationCallback)
-        val activityIntent = PendingIntent.getService(
-            this, 0,
-            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-        )
         try {
-            activityClient.removeActivityUpdates(activityIntent)
+            if (::fusedLocation.isInitialized) {
+                fusedLocation.removeLocationUpdates(locationCallback)
+            }
+            val activityIntent = PendingIntent.getService(
+                this, 0,
+                Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+            if (::activityClient.isInitialized) {
+                activityClient.removeActivityUpdates(activityIntent)
+            }
         } catch (e: SecurityException) {
-            Log.e(TAG, "Failed to remove activity updates: ${e.message}")
+            Log.e(TAG, "Failed to remove updates: ${e.message}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Error during onDestroy", e)
         }
         super.onDestroy()
     }

@@ -165,8 +165,10 @@ class CryptoUtils @Inject constructor() {
     }
 
     private fun nip44Unpad(padded: ByteArray): String {
+        if (padded.size < 2) throw SecurityException("Invalid padded data")
         val buffer = ByteBuffer.wrap(padded)
         val len = buffer.short.toInt() and 0xFFFF
+        if (len > padded.size - 2) throw SecurityException("Invalid padding length")
         val data = ByteArray(len)
         buffer[data]
         return String(data, StandardCharsets.UTF_8)

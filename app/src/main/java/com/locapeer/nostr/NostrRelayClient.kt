@@ -210,8 +210,15 @@ class NostrRelayClient @Inject constructor(
         fun connect() {
             if (isConnected || (webSocket != null)) return
             _relayStatus.update { it + (url to false) }
-            Log.d(TAG, "Connecting to $url")
-            webSocket = client.newWebSocket(Request.Builder().url(url).build(), Listener())
+            try {
+                Log.d(TAG, "Connecting to $url")
+                webSocket = client.newWebSocket(Request.Builder().url(url).build(), Listener())
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to connect to $url: ${e.message}")
+                isConnected = false
+                webSocket = null
+                scheduleReconnect()
+            }
         }
 
         fun disconnect() {

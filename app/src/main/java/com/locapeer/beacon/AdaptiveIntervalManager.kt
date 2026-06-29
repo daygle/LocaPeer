@@ -21,8 +21,8 @@ class AdaptiveIntervalManager @Inject constructor() {
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
         val currentBattery = batteryLevel
-        if (currentBattery < 20) return settings.lowBatteryIntervalMinutes * 60_000L
-        return when (currentMotionState) {
+        if (currentBattery < 20) return (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
+        val interval = when (currentMotionState) {
             MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
             MotionState.WALKING -> settings.walkingIntervalMinutes * 60_000L
             MotionState.RUNNING -> settings.runningIntervalMinutes * 60_000L
@@ -30,6 +30,7 @@ class AdaptiveIntervalManager @Inject constructor() {
             MotionState.DRIVING -> settings.drivingIntervalMinutes * 60_000L
             MotionState.UNKNOWN -> settings.walkingIntervalMinutes * 60_000L
         }
+        return interval.coerceAtLeast(15_000L) // Minimum 15 seconds to avoid battery drain and relay spam
     }
 
     /** Returns the expected interval in milliseconds for a given motion state (used for overdue checks). */
