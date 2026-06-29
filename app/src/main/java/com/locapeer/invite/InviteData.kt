@@ -36,5 +36,6 @@ data class TrackAcceptPayload(
 data class TrackDeclinePayload(
     val declinerPublicKeyHex: String,
     val declinerDisplayName: String,
-    val declinerDeviceId: String
+    val declinerDeviceId: String,
+    val isRoleChange: Boolean = false
 )

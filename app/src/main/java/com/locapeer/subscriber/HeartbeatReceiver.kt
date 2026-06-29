@@ -444,6 +444,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
         }
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -574,6 +575,11 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         Log.i(TAG, "Received track decline from ${payload.declinerDisplayName} (${event.pubkey})")
+        // For new-request declines, remove the optimistically-added peer entry.
+        // Role-change declines should leave the existing contact relationship intact.
+        if (!payload.isRoleChange) {
+            peerManager.handleRemovalByPeer(event.pubkey)
+        }
         sendDeclineNotification(payload.declinerDisplayName)
     }
 

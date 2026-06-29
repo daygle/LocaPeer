@@ -165,7 +165,8 @@ fun IncomingShareRequestScreen(
             }
 
             OutlinedButton(
-                onClick = onDone,
+                onClick = { vm.decline(senderPubkey, senderRelay, isRoleChange) },
+                enabled = state !is IncomingRequestState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Decline")
