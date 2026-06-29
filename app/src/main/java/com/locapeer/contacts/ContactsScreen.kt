@@ -113,17 +113,17 @@ fun ContactsScreen(
                 "Remove"
             )
             DataAction.REMOVE_SELF -> Triple(
-                "Leave Their Contacts",
+                "Leave Contact List",
                 "This will remove you from ${contact.peer.displayName}'s contacts and delete all your messages and location data from their device. You will also lose access to their location.",
                 "Leave"
             )
             DataAction.DELETE_MESSAGES -> Triple(
-                "Delete Messages I Sent",
+                "Delete My Messages",
                 "This will delete all messages you sent from ${contact.peer.displayName}'s device. This cannot be undone.",
                 "Delete"
             )
             DataAction.DELETE_LOCATION -> Triple(
-                "Delete Location I Shared",
+                "Delete Shared Locations",
                 "This will delete all location data you have shared from ${contact.peer.displayName}'s device. This cannot be undone.",
                 "Delete"
             )
@@ -229,17 +229,17 @@ private fun ContactRow(
                             )
                         }
                         DropdownMenuItem(
-                            text = { Text("Delete Messages I Sent") },
+                            text = { Text("Delete My Messages") },
                             leadingIcon = { Icon(Icons.Default.DeleteSweep, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyMessages() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Delete Location I Shared") },
+                            text = { Text("Delete Shared Locations") },
                             leadingIcon = { Icon(Icons.Default.LocationOff, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyLocation() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Leave Their Contacts", color = MaterialTheme.colorScheme.error) },
+                            text = { Text("Leave Contact List", color = MaterialTheme.colorScheme.error) },
                             leadingIcon = { Icon(Icons.Default.PersonRemove, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onRemoveSelf() }
                         )
