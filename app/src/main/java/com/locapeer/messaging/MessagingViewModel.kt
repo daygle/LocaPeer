@@ -25,10 +25,12 @@ import com.locapeer.nostr.NostrFilter
 import com.locapeer.nostr.NostrRelayClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.Locale
@@ -132,16 +134,18 @@ class MessagingViewModel @Inject constructor(
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val privBytes = crypto.hexToBytes(privHex)
 
-                val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, content)
-                val tags = listOf(listOf("p", peer.publicKeyHex))
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.ENCRYPTED_DM,
-                    content = encrypted,
-                    tags = tags,
-                    crypto = crypto
-                )
+                val event = withContext(Dispatchers.Default) {
+                    val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, content)
+                    val tags = listOf(listOf("p", peer.publicKeyHex))
+                    NostrEvent.build(
+                        privKeyHex = privHex,
+                        pubKeyHex = pubHex,
+                        kind = NostrEventKind.ENCRYPTED_DM,
+                        content = encrypted,
+                        tags = tags,
+                        crypto = crypto
+                    )
+                }
                 relayClient.publishEvent(event)
 
                 val msg = MessageEntity(
@@ -207,12 +211,17 @@ class MessagingViewModel @Inject constructor(
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
         val isBlocked = !sender.messagingEnabled
-        if (!NostrEvent.verify(event, crypto)) return
 
-        val privHex = keyManager.getPrivateKeyHex() ?: return
-        val plaintext = try {
-            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-        } catch (e: Exception) { return }
+        val plaintext = withContext(Dispatchers.Default) {
+            if (!NostrEvent.verify(event, crypto)) return@withContext null
+
+            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
+            try {
+                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            } catch (e: Exception) {
+                null
+            }
+        } ?: return
 
         val msg = MessageEntity(
             id = event.id,
@@ -237,25 +246,33 @@ class MessagingViewModel @Inject constructor(
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
         val payload = json.encodeToString(DeliveryAckPayload(deliveredEventId))
-        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
-        val event = NostrEvent.build(
-            privKeyHex = privHex,
-            pubKeyHex = pubHex,
-            kind = NostrEventKind.DELIVERY_ACK,
-            content = encrypted,
-            tags = listOf(listOf("p", peer.publicKeyHex)),
-            crypto = crypto
-        )
+
+        val event = withContext(Dispatchers.Default) {
+            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.DELIVERY_ACK,
+                content = encrypted,
+                tags = listOf(listOf("p", peer.publicKeyHex)),
+                crypto = crypto
+            )
+        }
         relayClient.publishEvent(event)
     }
 
     private suspend fun processReadReceipt(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return  // only handle receipts from known peers
-        if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHex() ?: return
-        val plaintext = try {
-            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-        } catch (e: Exception) { return }
+
+        val plaintext = withContext(Dispatchers.Default) {
+            if (!NostrEvent.verify(event, crypto)) return@withContext null
+            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
+            try {
+                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            } catch (e: Exception) {
+                null
+            }
+        } ?: return
 
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
         receipt.eventIds.forEach { eventId ->
@@ -279,11 +296,16 @@ class MessagingViewModel @Inject constructor(
 
     private suspend fun processDeliveryAck(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
-        val privHex = keyManager.getPrivateKeyHex() ?: return
-        val plaintext = try {
-            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-        } catch (e: Exception) { return }
+        
+        val plaintext = withContext(Dispatchers.Default) {
+            if (!NostrEvent.verify(event, crypto)) return@withContext null
+            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
+            try {
+                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+            } catch (e: Exception) {
+                null
+            }
+        } ?: return
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
         messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
     }
@@ -294,15 +316,18 @@ class MessagingViewModel @Inject constructor(
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
         val payload = json.encodeToString(ReadReceiptPayload(eventIds))
-        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
-        val event = NostrEvent.build(
-            privKeyHex = privHex,
-            pubKeyHex = pubHex,
-            kind = NostrEventKind.READ_RECEIPT,
-            content = encrypted,
-            tags = listOf(listOf("p", peer.publicKeyHex)),
-            crypto = crypto
-        )
+
+        val event = withContext(Dispatchers.Default) {
+            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.READ_RECEIPT,
+                content = encrypted,
+                tags = listOf(listOf("p", peer.publicKeyHex)),
+                crypto = crypto
+            )
+        }
         relayClient.publishEvent(event)
     }
 
@@ -310,15 +335,18 @@ class MessagingViewModel @Inject constructor(
         val peer = peerDao.getPeer(peerPubkey) ?: return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
-        val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, "{\"typing\":true}")
-        val event = NostrEvent.build(
-            privKeyHex = privHex,
-            pubKeyHex = pubHex,
-            kind = NostrEventKind.TYPING,
-            content = encrypted,
-            tags = listOf(listOf("p", peer.publicKeyHex)),
-            crypto = crypto
-        )
+
+        val event = withContext(Dispatchers.Default) {
+            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, "{\"typing\":true}")
+            NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = NostrEventKind.TYPING,
+                content = encrypted,
+                tags = listOf(listOf("p", peer.publicKeyHex)),
+                crypto = crypto
+            )
+        }
         relayClient.publishEvent(event)
     }
 

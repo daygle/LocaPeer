@@ -43,8 +43,10 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import java.time.Instant
 import javax.inject.Inject
@@ -230,6 +232,11 @@ class HeartbeatService : LifecycleService() {
             Log.e(TAG, "Failed to request activity updates", e)
             if (isDeadObject(e)) {
                 activityClient = ActivityRecognition.getClient(this)
+                try {
+                    activityClient.requestActivityUpdates(30_000L, activityIntent)
+                } catch (e2: Exception) {
+                    Log.e(TAG, "Activity update retry failed", e2)
+                }
             }
         }
 
@@ -270,6 +277,15 @@ class HeartbeatService : LifecycleService() {
             Log.e(TAG, "Failed to update location request", e)
             if (isDeadObject(e)) {
                 fusedLocation = LocationServices.getFusedLocationProviderClient(this)
+                try {
+                    // Re-calculate priority/interval since they are local variables in the try block
+                    val priority = if (isSos) Priority.PRIORITY_HIGH_ACCURACY else Priority.PRIORITY_BALANCED_POWER_ACCURACY
+                    val pollIntervalMs = if (isSos) 10_000L else 30_000L
+                    val retryRequest = LocationRequest.Builder(priority, pollIntervalMs).build()
+                    fusedLocation.requestLocationUpdates(retryRequest, locationCallback, Looper.getMainLooper())
+                } catch (e2: Exception) {
+                    Log.e(TAG, "Location update retry failed", e2)
+                }
             }
         }
     }
@@ -309,55 +325,60 @@ class HeartbeatService : LifecycleService() {
                 val locationRecipients = peerDao.getPeersReceivingMyLocation().first()
                 val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
                 var sentCount = 0
-                locationRecipients.forEach { recipient ->
-                    val cfg = configMap[recipient.deviceId]
 
-                    if (isSos && cfg?.isSosContact == false) return@forEach
-                    if (!isSos && cfg?.sharingEnabled == false) return@forEach
-                    if (!isSos && !SharingSchedule.isActive(cfg?.scheduleRules() ?: emptyList())) return@forEach
+                // Move heavy crypto (NIP-44 encryption + Schnorr signing) to Default dispatcher
+                // to avoid skipping frames on the main thread.
+                withContext(Dispatchers.Default) {
+                    locationRecipients.forEach { recipient ->
+                        val cfg = configMap[recipient.deviceId]
 
-                    val (sendLat, sendLng) = if (
-                        cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
-                    ) {
-                        SharingSchedule.toSuburbPrecision(lastLat, lastLng)
-                    } else {
-                        lastLat to lastLng
+                        if (isSos && cfg?.isSosContact == false) return@forEach
+                        if (!isSos && cfg?.sharingEnabled == false) return@forEach
+                        if (!isSos && !SharingSchedule.isActive(cfg?.scheduleRules() ?: emptyList())) return@forEach
+
+                        val (sendLat, sendLng) = if (
+                            cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
+                        ) {
+                            SharingSchedule.toSuburbPrecision(lastLat, lastLng)
+                        } else {
+                            lastLat to lastLng
+                        }
+
+                        val payload = HeartbeatPayload(
+                            deviceId = pubHex,
+                            displayName = settings.displayName,
+                            timestamp = Instant.now().toString(),
+                            lat = sendLat,
+                            lng = sendLng,
+                            accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
+                            battery = battery,
+                            motionState = currentMotionState.name,
+                            isSos = isSos,
+                            retentionDays = cfg?.retentionDaysLocation ?: 30,
+                            pinColor = settings.pinColor
+                        )
+                        val payloadJson = Json.encodeToString(payload)
+
+                        val encrypted = crypto.nip44Encrypt(
+                            senderPrivKey = crypto.hexToBytes(privHex),
+                            recipientXOnlyHex = recipient.publicKeyHex,
+                            plaintext = payloadJson
+                        )
+                        val kind = if (isSos) NostrEventKind.SOS_ALERT else NostrEventKind.HEARTBEAT
+                        val event = NostrEvent.build(
+                            privKeyHex = privHex,
+                            pubKeyHex = pubHex,
+                            kind = kind,
+                            content = encrypted,
+                            tags = listOf(
+                                listOf("p", recipient.publicKeyHex),
+                                listOf("t", "locapeer-heartbeat")
+                            ),
+                            crypto = crypto
+                        )
+                        relayClient.publishEvent(event)
+                        sentCount++
                     }
-
-                    val payload = HeartbeatPayload(
-                        deviceId = pubHex,
-                        displayName = settings.displayName,
-                        timestamp = Instant.now().toString(),
-                        lat = sendLat,
-                        lng = sendLng,
-                        accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
-                        battery = battery,
-                        motionState = currentMotionState.name,
-                        isSos = isSos,
-                        retentionDays = cfg?.retentionDaysLocation ?: 30,
-                        pinColor = settings.pinColor
-                    )
-                    val payloadJson = Json.encodeToString(payload)
-
-                    val encrypted = crypto.nip44Encrypt(
-                        senderPrivKey = crypto.hexToBytes(privHex),
-                        recipientXOnlyHex = recipient.publicKeyHex,
-                        plaintext = payloadJson
-                    )
-                    val kind = if (isSos) NostrEventKind.SOS_ALERT else NostrEventKind.HEARTBEAT
-                    val event = NostrEvent.build(
-                        privKeyHex = privHex,
-                        pubKeyHex = pubHex,
-                        kind = kind,
-                        content = encrypted,
-                        tags = listOf(
-                            listOf("p", recipient.publicKeyHex),
-                            listOf("t", "locapeer-heartbeat")
-                        ),
-                        crypto = crypto
-                    )
-                    relayClient.publishEvent(event)
-                    sentCount++
                 }
                 Log.d(TAG, "Heartbeat sent to $sentCount/${locationRecipients.size} recipients")
             } catch (e: Exception) {
