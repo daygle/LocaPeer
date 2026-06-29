@@ -168,24 +168,41 @@ class HeartbeatService : LifecycleService() {
     private fun startForegroundAndBroadcast() {
         try {
             val notification = buildNotification()
-            val hasLocationPerm = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                                 ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            val hasFineLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            val hasCoarseLocation = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            val hasLocationPerm = hasFineLocation || hasCoarseLocation
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                // On Android 14+, starting with TYPE_LOCATION requires the permission to be granted AT THE TIME of the call.
-                // If not granted, we start without the type and try to update it later when permissions are granted.
-                if (hasLocationPerm) {
+            when {
+                Build.VERSION.SDK_INT >= 34 -> { // UPSIDE_DOWN_CAKE (Android 14)
+                    if (hasLocationPerm) {
+                        // On Android 14+, FOREGROUND_SERVICE_LOCATION must be in manifest (checked at runtime too)
+                        val hasFgsLocationPerm = ContextCompat.checkSelfPermission(this, Manifest.permission.FOREGROUND_SERVICE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                        if (hasFgsLocationPerm) {
+                            startForeground(NOTIFICATION_ID_HEARTBEAT, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
+                        } else {
+                            Log.e(TAG, "Missing FOREGROUND_SERVICE_LOCATION permission in manifest")
+                            stopSelf()
+                            return
+                        }
+                    } else {
+                        Log.e(TAG, "Cannot start location FGS: runtime location permission missing")
+                        stopSelf()
+                        return
+                    }
+                }
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
                     startForeground(NOTIFICATION_ID_HEARTBEAT, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
-                } else {
-                    Log.w(TAG, "Starting foreground service WITHOUT location type due to missing permissions")
+                }
+                else -> {
                     startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
                 }
-            } else {
-                startForeground(NOTIFICATION_ID_HEARTBEAT, notification)
             }
+        } catch (e: SecurityException) {
+            Log.e(TAG, "SecurityException: failed to start foreground service: ${e.message}")
+            stopSelf()
+            return
         } catch (e: Exception) {
             Log.e(TAG, "Failed to start foreground service", e)
-            // If we can't start foreground, we might as well stop to avoid "Unable to start service" crash
             stopSelf()
             return
         }

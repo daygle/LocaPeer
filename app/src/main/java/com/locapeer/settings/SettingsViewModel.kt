@@ -147,6 +147,15 @@ class SettingsViewModel @Inject constructor(
 
     fun setHeartbeatEnabled(enabled: Boolean) {
         viewModelScope.launch {
+            if (enabled) {
+                val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+                                 context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
+                if (!hasLocation) {
+                    Log.e(TAG, "Cannot enable heartbeat: location permission not granted")
+                    return@launch
+                }
+            }
+
             prefs.setHeartbeatEnabled(enabled)
             if (enabled) {
                 val intent = Intent(context, HeartbeatService::class.java)

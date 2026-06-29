@@ -36,6 +36,12 @@ class SosManager @Inject constructor(
     }
 
     fun activateSos() {
+        val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+                         context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        if (!hasLocation) {
+            // Can't start service without location permission
+            return
+        }
         _isSosActive.value = true
         scope.launch { prefs.setSosActive(true) }
         startService(Intent(context, HeartbeatService::class.java).apply { action = ACTION_SOS_ON })
