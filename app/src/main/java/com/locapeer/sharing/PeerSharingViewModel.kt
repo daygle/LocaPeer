@@ -158,7 +158,7 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
-    fun sendRoleChangeRequest() {
+    fun sendRoleChangeRequest(requestedRole: String? = null) {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             val (privHex, pubHex) = keyManager.ensureKeypair()
@@ -169,7 +169,8 @@ class PeerSharingViewModel @Inject constructor(
                 senderDisplayName = settings.displayName.ifBlank { "Someone" },
                 senderDeviceId = pubHex,
                 senderRelayUrl = myRelay,
-                isRoleChange = true
+                isRoleChange = true,
+                requestedRole = requestedRole
             )
             val encrypted = crypto.nip44Encrypt(
                 crypto.hexToBytes(privHex),

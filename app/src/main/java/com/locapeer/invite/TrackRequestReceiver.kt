@@ -15,6 +15,7 @@ const val EXTRA_SENDER_PUBKEY = "sender_pubkey"
 const val EXTRA_SENDER_NAME = "sender_name"
 const val EXTRA_SENDER_RELAY = "sender_relay"
 const val EXTRA_IS_ROLE_CHANGE = "is_role_change"
+const val EXTRA_REQUESTED_ROLE = "requested_role"
 
 class TrackRequestReceiver : BroadcastReceiver() {
 
