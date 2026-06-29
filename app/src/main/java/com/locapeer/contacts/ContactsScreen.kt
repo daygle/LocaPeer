@@ -30,6 +30,7 @@ fun ContactsScreen(
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
     onNavigateToPendingRequests: () -> Unit = {},
+    onNavigateToHistory: (peerId: String) -> Unit = {},
     vm: ContactsViewModel = hiltViewModel()
 ) {
     val contacts by vm.contacts.collectAsState()
@@ -75,6 +76,7 @@ fun ContactsScreen(
                         formatLastSeen = vm::formatLastSeen,
                         onMessage = { onNavigateToChat(item.peer.deviceId, item.peer.displayName) },
                         onShowOnMap = { hb -> onNavigateToMap(hb.lat, hb.lng) },
+                        onShowHistory = { onNavigateToHistory(item.peer.deviceId) },
                         onRename = { nameInput = item.peer.displayName; editingContact = item },
                         onDeleteContact = { confirmAction = item to DataAction.REMOVE_CONTACT },
                         onRemoveSelf = { confirmAction = item to DataAction.REMOVE_SELF },
@@ -156,6 +158,7 @@ private fun ContactRow(
     formatLastSeen: (Long) -> String,
     onMessage: () -> Unit,
     onShowOnMap: (HeartbeatEntity) -> Unit,
+    onShowHistory: () -> Unit,
     onRename: () -> Unit,
     onDeleteContact: () -> Unit,
     onRemoveSelf: () -> Unit,
@@ -209,6 +212,9 @@ private fun ContactRow(
                     IconButton(onClick = { onShowOnMap(hb) }) {
                         Icon(Icons.Default.LocationOn, contentDescription = "Show on map", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                     }
+                }
+                IconButton(onClick = onShowHistory) {
+                    Icon(Icons.Default.History, contentDescription = "Location history", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                 }
                 Box {
                     IconButton(onClick = { showOverflow = true }) {
