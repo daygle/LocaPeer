@@ -48,7 +48,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
 import kotlinx.serialization.json.Json
 import java.time.Instant
 import javax.inject.Inject
@@ -250,6 +252,9 @@ class HeartbeatService : LifecycleService() {
                 Log.e(TAG, "Failed to load settings; using defaults", e)
             }
             relayClient.connect()
+            // Pre-seed location from the OS cache so the very first heartbeat isn't dropped
+            // by the lastLat/lastLng == 0.0 guard before the location callback has a chance to fire.
+            seedLocationFromLastKnown()
             handler.post(heartbeatRunnable)
         }
     }
@@ -409,6 +414,27 @@ class HeartbeatService : LifecycleService() {
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun seedLocationFromLastKnown() {
+        if (lastLat != 0.0 || lastLng != 0.0) return
+        try {
+            suspendCancellableCoroutine { cont ->
+                fusedLocation.lastLocation.addOnCompleteListener { task ->
+                    val loc = task.result
+                    if (loc != null) {
+                        lastLat = loc.latitude
+                        lastLng = loc.longitude
+                        lastAccuracy = loc.accuracy
+                        Log.d(TAG, "Pre-seeded location from lastLocation cache: $lastLat, $lastLng")
+                    }
+                    if (cont.isActive) cont.resume(Unit)
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "Could not pre-seed location: ${e.message}")
         }
     }
 

@@ -208,7 +208,7 @@ fun SettingsScreen(
                         icon = Icons.Default.History,
                         label = "My Location History",
                         subtitle = "Browse your own location timeline",
-                        onClick = { onNavigateToMyHistory(publicKeyHex) }
+                        onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
                 }
             }
