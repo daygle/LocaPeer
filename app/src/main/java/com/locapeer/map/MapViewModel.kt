@@ -73,10 +73,6 @@ class MapViewModel @Inject constructor(
         .map { it.mapStartZoom }
         .stateIn(viewModelScope, SharingStarted.Lazily, 16.0)
 
-    val mapFitContactsOnOpen: StateFlow<Boolean> = appPreferences.settings
-        .map { it.mapFitContactsOnOpen }
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
-
     val mapStartingPoint: StateFlow<String> = appPreferences.settings
         .map { it.mapStartingPoint }
         .stateIn(viewModelScope, SharingStarted.Lazily, "RESTORE_LAST")

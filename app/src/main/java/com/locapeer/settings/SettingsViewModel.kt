@@ -207,10 +207,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setMapStartZoom(zoom) }
     }
 
-    fun setMapFitContactsOnOpen(enabled: Boolean) {
-        viewModelScope.launch { prefs.setMapFitContactsOnOpen(enabled) }
-    }
-
     fun setMapStartingPoint(mode: String) {
         viewModelScope.launch { prefs.setMapStartingPoint(mode) }
     }

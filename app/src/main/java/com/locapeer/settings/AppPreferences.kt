@@ -55,13 +55,11 @@ data class AppSettings(
     val pinColor: String = "",
     /** Persisted SOS state so it survives process death while HeartbeatService is sticky. */
     val sosActive: Boolean = false,
-    /** Default zoom level (3–18) applied when opening the map with no saved position. */
+    /** Default zoom level (3–18) applied for all starting-point modes except Remember last position. */
     val mapStartZoom: Double = 16.0,
-    /** When true, the map zooms to fit all contacts on first open instead of restoring the last position. */
-    val mapFitContactsOnOpen: Boolean = false,
     /**
-     * How the map should centre on open.
-     * "RESTORE_LAST" = remember last position (default), "OWN_PIN" = user's GPS, "FIXED_LOCATION" = saved lat/lng.
+     * How the map centres on open.
+     * "RESTORE_LAST" (default), "OWN_PIN", "FIT_ALL", "FIXED_LOCATION".
      */
     val mapStartingPoint: String = "RESTORE_LAST",
     val mapFixedLat: Double = 0.0,
@@ -93,7 +91,6 @@ class AppPreferences @Inject constructor(
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
     private val KEY_MAP_START_ZOOM = doublePreferencesKey("map_start_zoom")
-    private val KEY_MAP_FIT_CONTACTS_ON_OPEN = booleanPreferencesKey("map_fit_contacts_on_open")
     private val KEY_MAP_STARTING_POINT = stringPreferencesKey("map_starting_point")
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
     private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
@@ -133,7 +130,6 @@ class AppPreferences @Inject constructor(
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
                 customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
                 mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
-                mapFitContactsOnOpen = prefs[KEY_MAP_FIT_CONTACTS_ON_OPEN] ?: false,
                 mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "RESTORE_LAST",
                 mapFixedLat = prefs[KEY_MAP_FIXED_LAT] ?: 0.0,
                 mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0
@@ -189,10 +185,6 @@ class AppPreferences @Inject constructor(
 
     suspend fun setMapStartZoom(zoom: Double) {
         context.settingsStore.edit { it[KEY_MAP_START_ZOOM] = zoom }
-    }
-
-    suspend fun setMapFitContactsOnOpen(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_MAP_FIT_CONTACTS_ON_OPEN] = enabled }
     }
 
     suspend fun setMapStartingPoint(mode: String) {

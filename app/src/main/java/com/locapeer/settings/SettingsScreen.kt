@@ -233,7 +233,7 @@ fun SettingsScreen(
                             )
                         }
                         Text(
-                            "Applied when opening the map with no saved position",
+                            "Used for My location, Show all contacts and Fixed location modes",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -246,21 +246,9 @@ fun SettingsScreen(
                         )
                     }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text("Show All Contacts on Open") },
-                        supportingContent = { Text("Zoom to fit all contacts when the map opens") },
-                        leadingContent = { Icon(Icons.Default.FitScreen, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.mapFitContactsOnOpen,
-                                onCheckedChange = { vm.setMapFitContactsOnOpen(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     val startingPointLabel = when (settings.mapStartingPoint) {
                         "OWN_PIN" -> "My location"
+                        "FIT_ALL" -> "Show all contacts"
                         "FIXED_LOCATION" -> "Fixed location"
                         else -> "Remember last position"
                     }
@@ -676,8 +664,9 @@ fun SettingsScreen(
 
     if (showMapStartingPointDialog) {
         val options = listOf(
-            "RESTORE_LAST" to "Remember last position",
-            "OWN_PIN"      to "My location",
+            "RESTORE_LAST"   to "Remember last position",
+            "OWN_PIN"        to "My location",
+            "FIT_ALL"        to "Show all contacts",
             "FIXED_LOCATION" to "Fixed location"
         )
         AlertDialog(

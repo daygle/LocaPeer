@@ -92,7 +92,6 @@ fun MapScreen(
     val myDisplayName by vm.myDisplayName.collectAsState()
     val myPinColor by vm.myPinColor.collectAsState()
     val mapStartZoom by vm.mapStartZoom.collectAsState()
-    val mapFitContactsOnOpen by vm.mapFitContactsOnOpen.collectAsState()
     val mapStartingPoint by vm.mapStartingPoint.collectAsState()
     val mapFixedLat by vm.mapFixedLat.collectAsState()
     val mapFixedLng by vm.mapFixedLng.collectAsState()
@@ -128,7 +127,6 @@ fun MapScreen(
             centerOnPin = centerOnPin,
             isDark = isDark,
             mapStartZoom = mapStartZoom,
-            fitContactsOnOpen = mapFitContactsOnOpen,
             mapStartingPoint = mapStartingPoint,
             mapFixedLat = mapFixedLat,
             mapFixedLng = mapFixedLng,
@@ -484,7 +482,6 @@ private fun OsmdroidMapView(
     centerOnPin: GeoPoint?,
     isDark: Boolean,
     mapStartZoom: Double = 16.0,
-    fitContactsOnOpen: Boolean = false,
     mapStartingPoint: String = "RESTORE_LAST",
     mapFixedLat: Double = 0.0,
     mapFixedLng: Double = 0.0,
@@ -499,6 +496,7 @@ private fun OsmdroidMapView(
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
     var initialCenterDone by remember { mutableStateOf(false) }
     var fitAllDone by remember { mutableStateOf(false) }
+    val isFitAll = mapStartingPoint == "FIT_ALL"
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -551,10 +549,10 @@ private fun OsmdroidMapView(
         }
     }
 
-    // Fit all contacts into view on first open when the setting is enabled
-    LaunchedEffect(pins, fitContactsOnOpen, mapViewRef) {
+    // Fit all contacts into view on first open when FIT_ALL mode is selected
+    LaunchedEffect(pins, isFitAll, mapViewRef) {
         val mv = mapViewRef ?: return@LaunchedEffect
-        if (!fitContactsOnOpen || fitAllDone) return@LaunchedEffect
+        if (!isFitAll || fitAllDone) return@LaunchedEffect
         val points = pins.mapNotNull { it.heartbeat?.let { hb -> GeoPoint(hb.lat, hb.lng) } }
         if (points.isEmpty()) return@LaunchedEffect
         fitAllDone = true
@@ -579,7 +577,7 @@ private fun OsmdroidMapView(
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
                 when {
-                    fitContactsOnOpen -> {
+                    isFitAll -> {
                         controller.setZoom(mapStartZoom)
                     }
                     mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
