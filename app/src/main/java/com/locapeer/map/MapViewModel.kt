@@ -69,6 +69,14 @@ class MapViewModel @Inject constructor(
         .map { it.pinColor }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
+    val mapStartZoom: StateFlow<Double> = appPreferences.settings
+        .map { it.mapStartZoom }
+        .stateIn(viewModelScope, SharingStarted.Lazily, 16.0)
+
+    val mapFitContactsOnOpen: StateFlow<Boolean> = appPreferences.settings
+        .map { it.mapFitContactsOnOpen }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
 

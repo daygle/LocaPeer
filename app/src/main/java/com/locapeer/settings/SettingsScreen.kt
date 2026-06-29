@@ -211,6 +211,54 @@ fun SettingsScreen(
                 }
             }
 
+            item { SectionLabel("Map") }
+
+            item {
+                SettingsCard {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 56.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
+                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                    ) {
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
+                            Text(
+                                settings.mapStartZoom.toInt().toString(),
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        Text(
+                            "Applied when opening the map with no saved position",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Slider(
+                            value = settings.mapStartZoom.toFloat(),
+                            onValueChange = { vm.setMapStartZoom(it.toDouble()) },
+                            valueRange = 3f..18f,
+                            steps = 14,
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Show All Contacts on Open") },
+                        supportingContent = { Text("Zoom to fit all contacts when the map opens") },
+                        leadingContent = { Icon(Icons.Default.FitScreen, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.mapFitContactsOnOpen,
+                                onCheckedChange = { vm.setMapFitContactsOnOpen(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+
             item { SectionLabel("Privacy & Data") }
 
             // Data on this device (local retention + manual clear)

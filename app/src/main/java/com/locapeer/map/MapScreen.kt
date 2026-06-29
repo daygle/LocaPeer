@@ -91,6 +91,8 @@ fun MapScreen(
     val centerOnArgs by vm.centerOnArgs.collectAsState()
     val myDisplayName by vm.myDisplayName.collectAsState()
     val myPinColor by vm.myPinColor.collectAsState()
+    val mapStartZoom by vm.mapStartZoom.collectAsState()
+    val mapFitContactsOnOpen by vm.mapFitContactsOnOpen.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -122,6 +124,8 @@ fun MapScreen(
             centerOnUser = centerOnUser,
             centerOnPin = centerOnPin,
             isDark = isDark,
+            mapStartZoom = mapStartZoom,
+            fitContactsOnOpen = mapFitContactsOnOpen,
             onCenteredOnUser = { centerOnUser = false },
             onCenteredOnPin = { centerOnPin = null },
             onPinTapped = { selectedPin = it },
@@ -473,6 +477,8 @@ private fun OsmdroidMapView(
     centerOnUser: Boolean,
     centerOnPin: GeoPoint?,
     isDark: Boolean,
+    mapStartZoom: Double = 16.0,
+    fitContactsOnOpen: Boolean = false,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
@@ -483,6 +489,7 @@ private fun OsmdroidMapView(
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
     var initialCenterDone by remember { mutableStateOf(false) }
+    var fitAllDone by remember { mutableStateOf(false) }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -535,19 +542,40 @@ private fun OsmdroidMapView(
         }
     }
 
+    // Fit all contacts into view on first open when the setting is enabled
+    LaunchedEffect(pins, fitContactsOnOpen, mapViewRef) {
+        val mv = mapViewRef ?: return@LaunchedEffect
+        if (!fitContactsOnOpen || fitAllDone) return@LaunchedEffect
+        val points = pins.mapNotNull { it.heartbeat?.let { hb -> GeoPoint(hb.lat, hb.lng) } }
+        if (points.isEmpty()) return@LaunchedEffect
+        fitAllDone = true
+        initialCenterDone = true
+        if (points.size == 1) {
+            mv.controller.animateTo(points.first())
+        } else {
+            val box = org.osmdroid.util.BoundingBox(
+                points.maxOf { it.latitude },
+                points.maxOf { it.longitude },
+                points.minOf { it.latitude },
+                points.minOf { it.longitude }
+            )
+            mv.post { mv.zoomToBoundingBox(box, true, 150) }
+        }
+    }
+
     AndroidView(
         factory = { ctx ->
             MapView(ctx).apply {
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
-                if (lastMapCenter != null) {
+                if (lastMapCenter != null && !fitContactsOnOpen) {
                     val (lat, lng, zoom) = lastMapCenter
                     controller.setZoom(zoom)
                     controller.setCenter(GeoPoint(lat, lng))
                     initialCenterDone = true
                 } else {
-                    controller.setZoom(16.0)
+                    controller.setZoom(mapStartZoom)
                 }
             }.also { mapViewRef = it }
         },

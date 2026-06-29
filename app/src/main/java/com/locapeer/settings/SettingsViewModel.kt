@@ -203,6 +203,14 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setMapStartZoom(zoom: Double) {
+        viewModelScope.launch { prefs.setMapStartZoom(zoom) }
+    }
+
+    fun setMapFitContactsOnOpen(enabled: Boolean) {
+        viewModelScope.launch { prefs.setMapFitContactsOnOpen(enabled) }
+    }
+
     fun clearLocationHistory() {
         viewModelScope.launch { heartbeatDao.deleteOlderThan(System.currentTimeMillis()) }
     }
