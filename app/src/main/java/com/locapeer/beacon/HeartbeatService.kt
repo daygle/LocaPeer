@@ -226,6 +226,11 @@ class HeartbeatService : LifecycleService() {
             activityClient.requestActivityUpdates(30_000L, activityIntent)
         } catch (e: SecurityException) {
             Log.e(TAG, "Activity recognition permission missing: ${e.message}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to request activity updates", e)
+            if (isDeadObject(e)) {
+                activityClient = ActivityRecognition.getClient(this)
+            }
         }
 
         lifecycleScope.launch {
@@ -263,7 +268,19 @@ class HeartbeatService : LifecycleService() {
             Log.e(TAG, "Failed to request location updates: missing permission", e)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update location request", e)
+            if (isDeadObject(e)) {
+                fusedLocation = LocationServices.getFusedLocationProviderClient(this)
+            }
         }
+    }
+
+    private fun isDeadObject(e: Exception): Boolean {
+        var cause: Throwable? = e
+        while (cause != null) {
+            if (cause is android.os.DeadObjectException) return true
+            cause = cause.cause
+        }
+        return false
     }
 
     private fun reschedulePulse() {

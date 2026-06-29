@@ -30,7 +30,7 @@ class ProximityEngine @Inject constructor(
     private val proximityAlertDao: ProximityAlertDao,
     private val notificationManager: NotificationManager
 ) {
-    private val fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+    private var fusedLocation = LocationServices.getFusedLocationProviderClient(context)
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
 
     @SuppressLint("MissingPermission")
@@ -38,11 +38,23 @@ class ProximityEngine @Inject constructor(
         val alert = proximityAlertDao.getForPeer(peerHeartbeat.deviceId) ?: return
         if (!alert.active) return
 
-        val ownLocation = suspendCancellableCoroutine<android.location.Location?> { cont ->
-            fusedLocation.lastLocation
-                .addOnSuccessListener { cont.resume(it) }
-                .addOnFailureListener { cont.resume(null) }
-                .addOnCanceledListener { cont.resume(null) }
+        val ownLocation = try {
+            suspendCancellableCoroutine<android.location.Location?> { cont ->
+                fusedLocation.lastLocation
+                    .addOnSuccessListener { cont.resume(it) }
+                    .addOnFailureListener { 
+                        if (isDeadObject(it)) {
+                            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+                        }
+                        cont.resume(null) 
+                    }
+                    .addOnCanceledListener { cont.resume(null) }
+            }
+        } catch (e: Exception) {
+            if (isDeadObject(e)) {
+                fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+            }
+            null
         } ?: return
 
         val distanceMetres = haversineMetres(
@@ -103,5 +115,14 @@ class ProximityEngine @Inject constructor(
                 cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
                 sin(dLon / 2).let { it * it }
         return r * 2 * asin(sqrt(a.coerceIn(0.0, 1.0)))
+    }
+
+    private fun isDeadObject(e: Throwable): Boolean {
+        var cause: Throwable? = e
+        while (cause != null) {
+            if (cause is android.os.DeadObjectException) return true
+            cause = cause.cause
+        }
+        return false
     }
 }
