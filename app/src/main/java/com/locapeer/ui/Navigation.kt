@@ -173,6 +173,13 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToSharingSettings = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Contact" }}")
+                    },
+                    onNavigateToMap = { lat, lng ->
+                        navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
+                            popUpTo(startDestination) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 )
             }
