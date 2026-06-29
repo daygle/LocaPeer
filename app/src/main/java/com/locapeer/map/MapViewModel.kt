@@ -12,6 +12,7 @@ import com.google.android.gms.location.LocationServices
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
@@ -50,6 +51,7 @@ class MapViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val geofenceDao: GeofenceDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
@@ -73,6 +75,10 @@ class MapViewModel @Inject constructor(
     val centerOnArgs: StateFlow<GeoPoint?> = _centerOnArgs.asStateFlow()
 
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
+
+    val hasSosContacts: StateFlow<Boolean> = sharingConfigDao.observeAll()
+        .map { configs -> configs.any { it.isSosContact } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     init {
         val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()

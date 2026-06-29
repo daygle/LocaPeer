@@ -84,6 +84,7 @@ fun MapScreen(
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
     var showFriendList by remember { mutableStateOf(value = false) }
     val isSosActive by vm.isSosActive.collectAsState()
+    val hasSosContacts by vm.hasSosContacts.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
     val lastMapCenter by vm.lastMapCenter.collectAsState()
     val relayStatus by vm.relayStatus.collectAsState()
@@ -127,14 +128,16 @@ fun MapScreen(
             modifier = Modifier.fillMaxSize()
         )
 
-        // SOS Button - top-left
-        SosButton(
-            isActive = isSosActive,
-            onClick = { vm.toggleSos() },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp)
-        )
+        // SOS Button - top-left (only shown when at least one SOS contact is configured)
+        if (hasSosContacts) {
+            SosButton(
+                isActive = isSosActive,
+                onClick = { vm.toggleSos() },
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(16.dp)
+            )
+        }
 
         // Locate Me Button - bottom-right
         FloatingActionButton(
