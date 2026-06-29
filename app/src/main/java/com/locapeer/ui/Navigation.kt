@@ -211,7 +211,10 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
-                    onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") }
+                    onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
+                    onNavigateToMyHistory = { pubkeyHex ->
+                        navController.navigate("history-report?peerId=$pubkeyHex")
+                    }
                 )
             }
             composable(
