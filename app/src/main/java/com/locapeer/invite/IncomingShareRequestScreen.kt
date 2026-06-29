@@ -46,10 +46,10 @@ fun IncomingShareRequestScreen(
         else -> PeerEntity.ROLE_NONE
     }
 
-    val title = if (isRoleChange) "Update Location Sharing" else "Location Sharing Request"
+    val title = if (isRoleChange) "Update Sharing Settings" else "New Contact Request"
     val subtitle = when {
-        isRoleChange -> "$senderName wants to update how you share locations. Choose what works for you."
-        else -> "$senderName wants to share locations with you. Choose what works for you."
+        isRoleChange -> "$senderName wants to update how you share. Review the settings below."
+        else -> "$senderName added you as a contact! You can now choose what to share back."
     }
 
     Scaffold(
@@ -160,7 +160,7 @@ fun IncomingShareRequestScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text("Confirm")
+                    Text(if (isRoleChange) "Save Changes" else "Add Contact")
                 }
             }
 

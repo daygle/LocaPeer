@@ -449,7 +449,7 @@ class HeartbeatReceiver @Inject constructor(
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notifTitle = if (payload.isRoleChange) "Sharing update from ${payload.senderDisplayName}"
-                         else "Location sharing request from ${payload.senderDisplayName}"
+                         else "New Contact: ${payload.senderDisplayName}"
         val requestedRoleLabel = when (payload.requestedRole) {
             PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
             PeerEntity.ROLE_SEND -> "Send Location"
@@ -463,7 +463,7 @@ class HeartbeatReceiver @Inject constructor(
             payload.isRoleChange ->
                 "${payload.senderDisplayName} wants to update how you share locations."
             else ->
-                "${payload.senderDisplayName} wants to share locations with you."
+                "${payload.senderDisplayName} added you as a contact and wants to connect."
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
@@ -584,8 +584,8 @@ class HeartbeatReceiver @Inject constructor(
         val pi = PendingIntent.getActivity(context, name.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Request Accepted")
-            .setContentText("$name is now sharing their location with you.")
+            .setContentTitle("Contact Connected")
+            .setContentText("$name is now connected with you.")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pi)
             .setAutoCancel(true)

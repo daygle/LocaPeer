@@ -49,7 +49,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
                         pendingRequestDao.deleteByPubkey(senderPubkey)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Declined location sharing from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Declined contact request from $senderName", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
