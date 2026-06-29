@@ -10,13 +10,6 @@ data class InviteData(
     val deviceId: String
 )
 
-@Serializable
-data class InviteResponse(
-    val subscriberPublicKeyHex: String,
-    val subscriberDisplayName: String,
-    val subscriberDeviceId: String
-)
-
 /** Sent by the scanner to the scannee asking to track them back. */
 @Serializable
 data class TrackRequestPayload(

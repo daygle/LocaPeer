@@ -90,6 +90,7 @@ fun MapScreen(
     val relayStatus by vm.relayStatus.collectAsState()
     val centerOnArgs by vm.centerOnArgs.collectAsState()
     val myDisplayName by vm.myDisplayName.collectAsState()
+    val myPinColor by vm.myPinColor.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -116,6 +117,7 @@ fun MapScreen(
             pins = uiState.pins,
             geofences = uiState.geofences,
             userLocation = userLocation,
+            myPinColor = myPinColor,
             lastMapCenter = lastMapCenter,
             centerOnUser = centerOnUser,
             centerOnPin = centerOnPin,
@@ -466,6 +468,7 @@ private fun OsmdroidMapView(
     pins: List<PinData>,
     geofences: List<GeofenceEntity>,
     userLocation: GeoPoint?,
+    myPinColor: String = "",
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     centerOnPin: GeoPoint?,
@@ -588,7 +591,8 @@ private fun OsmdroidMapView(
                     context = context,
                     displayName = pinData.peer.displayName,
                     isOverdue = pinData.isOverdue,
-                    isSos = hb.isSos
+                    isSos = hb.isSos,
+                    pinColor = hb.pinColor
                 )
                 val marker = Marker(mapView).apply {
                     position = GeoPoint(hb.lat, hb.lng)
@@ -608,7 +612,7 @@ private fun OsmdroidMapView(
                 val myMarker = Marker(mapView).apply {
                     position = loc
                     title = "You"
-                    icon = MarkerIconFactory.createMyLocationIcon(context)
+                    icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor)
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                     infoWindow = null
                 }

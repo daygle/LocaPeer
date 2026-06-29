@@ -22,7 +22,7 @@ interface HeartbeatDao {
     )
     fun getLatestHeartbeatPerDevice(): Flow<List<HeartbeatEntity>>
 
-    @Query("DELETE FROM heartbeats WHERE receivedAt < :before")
+    @Query("DELETE FROM heartbeats WHERE timestamp < :before")
     suspend fun deleteOlderThan(before: Long)
 
     @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId")

@@ -19,5 +19,7 @@ data class HeartbeatEntity(
     val battery: Int,
     val motionState: String,
     val isSos: Boolean = false,
-    val receivedAt: Long = System.currentTimeMillis()
+    val receivedAt: Long = System.currentTimeMillis(),
+    /** Hex colour string the sender chose for their map pin. Empty = use auto colour. */
+    val pinColor: String = ""
 )

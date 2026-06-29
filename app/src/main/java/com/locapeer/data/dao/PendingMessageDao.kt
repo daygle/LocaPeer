@@ -13,7 +13,4 @@ interface PendingMessageDao {
 
     @Delete
     suspend fun delete(msg: PendingMessageEntity)
-
-    @Query("DELETE FROM pending_messages WHERE id = :id")
-    suspend fun deleteById(id: Long)
 }

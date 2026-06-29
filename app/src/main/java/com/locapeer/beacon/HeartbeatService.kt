@@ -107,7 +107,7 @@ class HeartbeatService : LifecycleService() {
             }
         }
         lifecycleScope.launch {
-            peerDao.getSendContacts().collect {
+            peerDao.getPeersReceivingMyLocation().collect {
                 reschedulePulse()
             }
         }
@@ -185,9 +185,8 @@ class HeartbeatService : LifecycleService() {
                 Log.e(TAG, "Failed to load settings; using defaults", e)
             }
             relayClient.connect()
+            handler.post(heartbeatRunnable)
         }
-
-        handler.post(heartbeatRunnable)
     }
 
     @SuppressLint("MissingPermission")
@@ -234,11 +233,11 @@ class HeartbeatService : LifecycleService() {
                     return@launch
                 }
 
-                val sendContacts = peerDao.getSendContacts().first()
+                val locationRecipients = peerDao.getPeersReceivingMyLocation().first()
                 val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
                 var sentCount = 0
-                sendContacts.forEach { subscriber ->
-                    val cfg = configMap[subscriber.deviceId]
+                locationRecipients.forEach { recipient ->
+                    val cfg = configMap[recipient.deviceId]
 
                     if (isSos && cfg?.isSosContact == false) return@forEach
                     if (!isSos && cfg?.sharingEnabled == false) return@forEach
@@ -262,13 +261,14 @@ class HeartbeatService : LifecycleService() {
                         battery = battery,
                         motionState = currentMotionState.name,
                         isSos = isSos,
-                        retentionDays = cfg?.retentionDaysLocation ?: 30
+                        retentionDays = cfg?.retentionDaysLocation ?: 30,
+                        pinColor = settings.pinColor
                     )
                     val payloadJson = Json.encodeToString(payload)
 
                     val encrypted = crypto.nip44Encrypt(
                         senderPrivKey = crypto.hexToBytes(privHex),
-                        recipientXOnlyHex = subscriber.publicKeyHex,
+                        recipientXOnlyHex = recipient.publicKeyHex,
                         plaintext = payloadJson
                     )
                     val kind = if (isSos) NostrEventKind.SOS_ALERT else NostrEventKind.HEARTBEAT
@@ -278,7 +278,7 @@ class HeartbeatService : LifecycleService() {
                         kind = kind,
                         content = encrypted,
                         tags = listOf(
-                            listOf("p", subscriber.publicKeyHex),
+                            listOf("p", recipient.publicKeyHex),
                             listOf("t", "locapeer-heartbeat")
                         ),
                         crypto = crypto
@@ -286,7 +286,7 @@ class HeartbeatService : LifecycleService() {
                     relayClient.publishEvent(event)
                     sentCount++
                 }
-                Log.d(TAG, "Heartbeat sent to $sentCount/${sendContacts.size} sendContacts")
+                Log.d(TAG, "Heartbeat sent to $sentCount/${locationRecipients.size} recipients")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }

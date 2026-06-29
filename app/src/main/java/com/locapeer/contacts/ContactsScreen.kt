@@ -30,6 +30,7 @@ fun ContactsScreen(
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
     onNavigateToPendingRequests: () -> Unit = {},
+    onNavigateToHistory: (peerId: String) -> Unit = {},
     vm: ContactsViewModel = hiltViewModel()
 ) {
     val contacts by vm.contacts.collectAsState()
@@ -75,6 +76,7 @@ fun ContactsScreen(
                         formatLastSeen = vm::formatLastSeen,
                         onMessage = { onNavigateToChat(item.peer.deviceId, item.peer.displayName) },
                         onShowOnMap = { hb -> onNavigateToMap(hb.lat, hb.lng) },
+                        onShowHistory = { onNavigateToHistory(item.peer.deviceId) },
                         onRename = { nameInput = item.peer.displayName; editingContact = item },
                         onDeleteContact = { confirmAction = item to DataAction.REMOVE_CONTACT },
                         onRemoveSelf = { confirmAction = item to DataAction.REMOVE_SELF },
@@ -113,18 +115,18 @@ fun ContactsScreen(
                 "Remove"
             )
             DataAction.REMOVE_SELF -> Triple(
-                "Remove Myself",
-                "This will ask ${contact.peer.displayName}'s device to delete all your messages and location data, then remove you from their contacts. You will also lose access to their location.",
-                "Remove"
+                "Leave Contact List",
+                "This will remove you from ${contact.peer.displayName}'s contacts and delete all your messages and location data from their device. You will also lose access to their location.",
+                "Leave"
             )
             DataAction.DELETE_MESSAGES -> Triple(
                 "Delete My Messages",
-                "Ask ${contact.peer.displayName}'s device to delete all messages you sent them. This cannot be undone.",
+                "This will delete all messages you sent from ${contact.peer.displayName}'s device. This cannot be undone.",
                 "Delete"
             )
             DataAction.DELETE_LOCATION -> Triple(
-                "Delete My Location",
-                "Ask ${contact.peer.displayName}'s device to delete all location data you have shared with them. This cannot be undone.",
+                "Delete Shared Locations",
+                "This will delete all location data you have shared from ${contact.peer.displayName}'s device. This cannot be undone.",
                 "Delete"
             )
         }
@@ -138,8 +140,8 @@ fun ContactsScreen(
                         when (action) {
                             DataAction.REMOVE_CONTACT -> vm.removePeer(contact.peer.deviceId)
                             DataAction.REMOVE_SELF -> vm.removeSelfFromPeer(contact.peer.deviceId)
-                            DataAction.DELETE_MESSAGES -> vm.deleteMyMessagesFromPeer(contact.peer.deviceId)
-                            DataAction.DELETE_LOCATION -> vm.deleteMyLocationFromPeer(contact.peer.deviceId)
+                            DataAction.DELETE_MESSAGES -> vm.askPeerToDeleteMyMessages(contact.peer.deviceId)
+                            DataAction.DELETE_LOCATION -> vm.askPeerToDeleteMyLocation(contact.peer.deviceId)
                         }
                         confirmAction = null
                     }
@@ -156,6 +158,7 @@ private fun ContactRow(
     formatLastSeen: (Long) -> String,
     onMessage: () -> Unit,
     onShowOnMap: (HeartbeatEntity) -> Unit,
+    onShowHistory: () -> Unit,
     onRename: () -> Unit,
     onDeleteContact: () -> Unit,
     onRemoveSelf: () -> Unit,
@@ -210,6 +213,9 @@ private fun ContactRow(
                         Icon(Icons.Default.LocationOn, contentDescription = "Show on map", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
                     }
                 }
+                IconButton(onClick = onShowHistory) {
+                    Icon(Icons.Default.History, contentDescription = "Location history", tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(22.dp))
+                }
                 Box {
                     IconButton(onClick = { showOverflow = true }) {
                         Icon(Icons.Default.MoreVert, contentDescription = "More options", modifier = Modifier.size(22.dp))
@@ -220,22 +226,30 @@ private fun ContactRow(
                             leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onRename() }
                         )
+                        HorizontalDivider()
+                        Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
+                            Text(
+                                "On Contact's Device",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                         DropdownMenuItem(
                             text = { Text("Delete My Messages") },
                             leadingIcon = { Icon(Icons.Default.DeleteSweep, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyMessages() }
                         )
                         DropdownMenuItem(
-                            text = { Text("Delete My Location") },
+                            text = { Text("Delete Shared Locations") },
                             leadingIcon = { Icon(Icons.Default.LocationOff, null, Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onDeleteMyLocation() }
                         )
-                        HorizontalDivider()
                         DropdownMenuItem(
-                            text = { Text("Remove Myself", color = MaterialTheme.colorScheme.error) },
+                            text = { Text("Leave Contact List", color = MaterialTheme.colorScheme.error) },
                             leadingIcon = { Icon(Icons.Default.PersonRemove, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },
                             onClick = { showOverflow = false; onRemoveSelf() }
                         )
+                        HorizontalDivider()
                         DropdownMenuItem(
                             text = { Text("Remove Contact", color = MaterialTheme.colorScheme.error) },
                             leadingIcon = { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp)) },

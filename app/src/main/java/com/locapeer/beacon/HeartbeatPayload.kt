@@ -14,5 +14,7 @@ data class HeartbeatPayload(
     val motionState: String,
     val isSos: Boolean = false,
     /** Days to retain this device's heartbeats on the receiver. 0 = no expiry (default). */
-    val retentionDays: Int = 0
+    val retentionDays: Int = 0,
+    /** Hex colour string chosen by the sender for their map pin (e.g. "#1565C0"). Empty = auto. */
+    val pinColor: String = ""
 )

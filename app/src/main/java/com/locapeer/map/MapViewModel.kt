@@ -65,6 +65,10 @@ class MapViewModel @Inject constructor(
         .map { it.displayName.ifBlank { "Me" } }
         .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
 
+    val myPinColor: StateFlow<String> = appPreferences.settings
+        .map { it.pinColor }
+        .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
 

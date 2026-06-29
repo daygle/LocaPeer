@@ -185,6 +185,9 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToPendingRequests = {
                         navController.navigate("pending-requests")
+                    },
+                    onNavigateToHistory = { peerId ->
+                        navController.navigate("history-report?peerId=$peerId")
                     }
                 )
             }

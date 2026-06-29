@@ -47,7 +47,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 val minutesAgo = elapsed / 60_000
                 val intent = Intent(applicationContext, MainActivity::class.java)
                 val pi = PendingIntent.getActivity(
-                    applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE
+                    applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
                 )
                 val notification = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
                     .setSmallIcon(R.drawable.ic_notif_alert)

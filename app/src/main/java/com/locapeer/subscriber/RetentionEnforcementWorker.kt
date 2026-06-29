@@ -71,13 +71,10 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             }
 
             // Per-peer remote purges
-            var locationPurgeCount = 0
-            var messagePurgeCount = 0
-
             configs.forEach { cfg ->
                 val peer = peerMap[cfg.peerDeviceId] ?: return@forEach
 
-                // Location purge: only meaningful for subscribers/mutual peers who actually keep our heartbeats
+                // Location purge: only meaningful for peers who actually keep our heartbeats
                 if (cfg.retentionDaysLocation > 0 &&
                     (peer.locationRole == PeerEntity.ROLE_SEND || peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
                 ) {
@@ -89,7 +86,6 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                         privHex = privHex,
                         pubHex = pubHex
                     )
-                    locationPurgeCount++
                 }
 
                 // Message purge: any peer we have chatted with could be holding messages
@@ -102,12 +98,9 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                         privHex = privHex,
                         pubHex = pubHex
                     )
-                    messagePurgeCount++
                 }
             }
-
-            if (locationPurgeCount > 0) Log.d(TAG, "Sent location purge to $locationPurgeCount peers")
-            if (messagePurgeCount > 0) Log.d(TAG, "Sent message purge to $messagePurgeCount peers")
+            Log.d(TAG, "Remote purge requests sent to ${configs.size} peers")
 
             Result.success()
         } catch (e: Exception) {

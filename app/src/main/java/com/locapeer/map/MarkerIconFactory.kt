@@ -20,8 +20,8 @@ object MarkerIconFactory {
     private val cache = LruCache<String, BitmapDrawable>(64)
 
     /** Creates a colored circle with initials as an OSMDroid marker icon. */
-    fun create(context: Context, displayName: String, isOverdue: Boolean, isSos: Boolean): BitmapDrawable {
-        val key = "$displayName-$isOverdue-$isSos"
+    fun create(context: Context, displayName: String, isOverdue: Boolean, isSos: Boolean, pinColor: String = ""): BitmapDrawable {
+        val key = "$displayName-$isOverdue-$isSos-$pinColor"
         cache.get(key)?.let { return it }
 
         val sizePx = (context.resources.displayMetrics.density * 48).toInt()
@@ -31,10 +31,11 @@ object MarkerIconFactory {
         val cx = (sizePx + 8) / 2f
         val radius = sizePx / 2f - 2
 
-        // Pick color deterministically from name, override for SOS/overdue
+        // SOS/overdue override first; then user's chosen colour; then deterministic fallback
         val fillColor = when {
             isSos -> "#D32F2F".toColorInt()
             isOverdue -> "#9E9E9E".toColorInt()
+            pinColor.isNotEmpty() -> pinColor.toColorInt()
             else -> PIN_COLORS[Math.abs(displayName.hashCode()) % PIN_COLORS.size].toColorInt()
         }
 
@@ -84,39 +85,35 @@ object MarkerIconFactory {
         return drawable
     }
 
-    private var myLocationCache: BitmapDrawable? = null
+    private var myLocationCache: Pair<String, BitmapDrawable>? = null
 
-    /** Creates a blue pulsing-style dot for the user's own location. */
-    fun createMyLocationIcon(context: Context): BitmapDrawable {
-        myLocationCache?.let { return it }
+    /** Creates a pulsing dot for the user's own location, using their chosen pin colour. */
+    fun createMyLocationIcon(context: Context, pinColor: String = ""): BitmapDrawable {
+        myLocationCache?.takeIf { it.first == pinColor }?.let { return it.second }
         val dp = context.resources.displayMetrics.density
         val sizePx = (dp * 48).toInt()
         val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         val cx = sizePx / 2f
 
+        val dotArgb = if (pinColor.isNotEmpty()) pinColor.toColorInt() else 0xFF4285F4.toInt()
+        val pulseArgb = (dotArgb and 0x00FFFFFF) or 0x33000000
+
         // Outer pulse ring
-        val pulsePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0x334285F4.toInt()
-        }
-        canvas.drawCircle(cx, cx, cx - 2, pulsePaint)
+        canvas.drawCircle(cx, cx, cx - 2, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = pulseArgb })
 
-        // Inner blue dot
-        val dotPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFF4285F4.toInt()
-        }
-        canvas.drawCircle(cx, cx, dp * 8, dotPaint)
+        // Inner dot
+        canvas.drawCircle(cx, cx, dp * 8, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = dotArgb })
 
-        // White border on dot
-        val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        // White border
+        canvas.drawCircle(cx, cx, dp * 8, Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = 0xFFFFFFFF.toInt()
             style = Paint.Style.STROKE
             strokeWidth = dp * 2f
-        }
-        canvas.drawCircle(cx, cx, dp * 8, borderPaint)
+        })
 
         val drawable = BitmapDrawable(context.resources, bitmap)
-        myLocationCache = drawable
+        myLocationCache = pinColor to drawable
         return drawable
     }
 }

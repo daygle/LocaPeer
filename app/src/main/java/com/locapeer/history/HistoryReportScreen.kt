@@ -21,6 +21,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.map.MarkerIconFactory
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -286,19 +287,34 @@ private fun HistoryMapTab(
 
             if (heartbeats.isNotEmpty()) {
                 val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
+                val sample = heartbeats.first()
+                val pinColor = sample.pinColor
+                val lineColor = if (pinColor.isNotEmpty())
+                    android.graphics.Color.parseColor(pinColor).let {
+                        android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
+                    }
+                else android.graphics.Color.argb(200, 66, 133, 244)
 
                 val polyline = Polyline().apply {
                     setPoints(points)
-                    outlinePaint.color = android.graphics.Color.argb(200, 66, 133, 244)
+                    outlinePaint.color = lineColor
                     outlinePaint.strokeWidth = 6f
                     outlinePaint.isAntiAlias = true
                 }
                 mapView.overlays.add(polyline)
 
                 heartbeats.firstOrNull()?.let { first ->
+                    val icon = MarkerIconFactory.create(
+                        context = mapView.context,
+                        displayName = first.displayName,
+                        isOverdue = false,
+                        isSos = false,
+                        pinColor = first.pinColor
+                    )
                     val marker = Marker(mapView).apply {
                         position = GeoPoint(first.lat, first.lng)
                         title = "Start"
+                        setIcon(icon)
                         setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                         infoWindow = null
                     }
@@ -307,9 +323,17 @@ private fun HistoryMapTab(
 
                 if (heartbeats.size > 1) {
                     heartbeats.lastOrNull()?.let { last ->
+                        val icon = MarkerIconFactory.create(
+                            context = mapView.context,
+                            displayName = last.displayName,
+                            isOverdue = false,
+                            isSos = false,
+                            pinColor = last.pinColor
+                        )
                         val marker = Marker(mapView).apply {
                             position = GeoPoint(last.lat, last.lng)
                             title = "Latest"
+                            setIcon(icon)
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             infoWindow = null
                         }

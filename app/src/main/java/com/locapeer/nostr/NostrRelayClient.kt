@@ -173,12 +173,15 @@ class NostrRelayClient @Inject constructor(
     private fun sendToAll(msg: String) {
         val disconnected = relays.values.filter { !it.isConnected }
         val connected = relays.values.filter { it.isConnected }
-        
+
         connected.forEach { it.send(msg) }
-        
+
         if (disconnected.isNotEmpty()) {
-            scope.launch {
-                pendingMessageDao.insert(PendingMessageEntity(content = msg))
+            // Only persist EVENT messages — REQ/CLOSE are replayed via activeSubscriptions on reconnect
+            if (msg.startsWith("[\"EVENT\"")) {
+                scope.launch {
+                    pendingMessageDao.insert(PendingMessageEntity(content = msg))
+                }
             }
             disconnected.forEach { it.ensureConnecting() }
         }

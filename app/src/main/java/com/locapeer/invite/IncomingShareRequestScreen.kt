@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.LocationOff
+import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -97,7 +97,7 @@ fun IncomingShareRequestScreen(
                     supportingContent = { Text("You will be able to see where they are") },
                     leadingContent = {
                         Icon(
-                            Icons.Default.LocationOff,
+                            Icons.Default.Visibility,
                             contentDescription = null,
                             tint = if (seeTheirLocation) MaterialTheme.colorScheme.primary
                                    else MaterialTheme.colorScheme.onSurfaceVariant

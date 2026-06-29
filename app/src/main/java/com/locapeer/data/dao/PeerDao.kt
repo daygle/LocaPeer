@@ -13,7 +13,7 @@ interface PeerDao {
     fun getReceiveContacts(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE locationRole = 'SEND' OR locationRole = 'SEND_RECEIVE' ORDER BY displayName ASC")
-    fun getSendContacts(): Flow<List<PeerEntity>>
+    fun getPeersReceivingMyLocation(): Flow<List<PeerEntity>>
 
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     suspend fun getPeer(deviceId: String): PeerEntity?
@@ -21,17 +21,11 @@ interface PeerDao {
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     fun observePeer(deviceId: String): Flow<PeerEntity?>
 
-    @Query("UPDATE peers SET locationRole = :role WHERE deviceId = :deviceId")
-    suspend fun setLocationRole(deviceId: String, role: String)
-
     @Query("SELECT * FROM peers WHERE publicKeyHex = :publicKeyHex LIMIT 1")
     suspend fun getPeerByPublicKey(publicKeyHex: String): PeerEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertPeer(peer: PeerEntity)
-
-    @Delete
-    suspend fun deletePeer(peer: PeerEntity)
 
     @Query("DELETE FROM peers WHERE deviceId = :deviceId")
     suspend fun deletePeerById(deviceId: String)
