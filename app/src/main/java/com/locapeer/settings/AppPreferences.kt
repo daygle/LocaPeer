@@ -3,6 +3,7 @@ package com.locapeer.settings
 import android.content.Context
 import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -53,7 +54,16 @@ data class AppSettings(
     /** Hex colour string for the user's own map pin (e.g. "#1565C0"). Empty = auto from name. */
     val pinColor: String = "",
     /** Persisted SOS state so it survives process death while HeartbeatService is sticky. */
-    val sosActive: Boolean = false
+    val sosActive: Boolean = false,
+    /** Default zoom level (3–18) applied for all starting-point modes except Remember last position. */
+    val mapStartZoom: Double = 16.0,
+    /**
+     * How the map centres on open.
+     * "RESTORE_LAST" (default), "OWN_PIN", "FIT_ALL", "FIXED_LOCATION".
+     */
+    val mapStartingPoint: String = "RESTORE_LAST",
+    val mapFixedLat: Double = 0.0,
+    val mapFixedLng: Double = 0.0
 )
 
 @Singleton
@@ -80,6 +90,10 @@ class AppPreferences @Inject constructor(
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
+    private val KEY_MAP_START_ZOOM = doublePreferencesKey("map_start_zoom")
+    private val KEY_MAP_STARTING_POINT = stringPreferencesKey("map_starting_point")
+    private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
+    private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -114,7 +128,11 @@ class AppPreferences @Inject constructor(
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
                 pinColor = prefs[KEY_PIN_COLOR] ?: "",
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
-                customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS
+                customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
+                mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
+                mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "RESTORE_LAST",
+                mapFixedLat = prefs[KEY_MAP_FIXED_LAT] ?: 0.0,
+                mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0
             )
         }
 
@@ -163,6 +181,21 @@ class AppPreferences @Inject constructor(
 
     suspend fun setSosActive(active: Boolean) {
         context.settingsStore.edit { it[KEY_SOS_ACTIVE] = active }
+    }
+
+    suspend fun setMapStartZoom(zoom: Double) {
+        context.settingsStore.edit { it[KEY_MAP_START_ZOOM] = zoom }
+    }
+
+    suspend fun setMapStartingPoint(mode: String) {
+        context.settingsStore.edit { it[KEY_MAP_STARTING_POINT] = mode }
+    }
+
+    suspend fun setMapFixedLocation(lat: Double, lng: Double) {
+        context.settingsStore.edit {
+            it[KEY_MAP_FIXED_LAT] = lat
+            it[KEY_MAP_FIXED_LNG] = lng
+        }
     }
 
     /** Returns the epoch second of the last successful control-event catch-up subscription start. */

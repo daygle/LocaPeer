@@ -69,6 +69,22 @@ class MapViewModel @Inject constructor(
         .map { it.pinColor }
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
+    val mapStartZoom: StateFlow<Double> = appPreferences.settings
+        .map { it.mapStartZoom }
+        .stateIn(viewModelScope, SharingStarted.Lazily, 16.0)
+
+    val mapStartingPoint: StateFlow<String> = appPreferences.settings
+        .map { it.mapStartingPoint }
+        .stateIn(viewModelScope, SharingStarted.Lazily, "RESTORE_LAST")
+
+    val mapFixedLat: StateFlow<Double> = appPreferences.settings
+        .map { it.mapFixedLat }
+        .stateIn(viewModelScope, SharingStarted.Lazily, 0.0)
+
+    val mapFixedLng: StateFlow<Double> = appPreferences.settings
+        .map { it.mapFixedLng }
+        .stateIn(viewModelScope, SharingStarted.Lazily, 0.0)
+
     private val _userLocation = MutableStateFlow<GeoPoint?>(null)
     val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
 

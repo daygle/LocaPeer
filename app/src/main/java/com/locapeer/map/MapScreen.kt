@@ -91,6 +91,10 @@ fun MapScreen(
     val centerOnArgs by vm.centerOnArgs.collectAsState()
     val myDisplayName by vm.myDisplayName.collectAsState()
     val myPinColor by vm.myPinColor.collectAsState()
+    val mapStartZoom by vm.mapStartZoom.collectAsState()
+    val mapStartingPoint by vm.mapStartingPoint.collectAsState()
+    val mapFixedLat by vm.mapFixedLat.collectAsState()
+    val mapFixedLng by vm.mapFixedLng.collectAsState()
     val context = LocalContext.current
     var centerOnUser by remember { mutableStateOf(value = false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -122,6 +126,10 @@ fun MapScreen(
             centerOnUser = centerOnUser,
             centerOnPin = centerOnPin,
             isDark = isDark,
+            mapStartZoom = mapStartZoom,
+            mapStartingPoint = mapStartingPoint,
+            mapFixedLat = mapFixedLat,
+            mapFixedLng = mapFixedLng,
             onCenteredOnUser = { centerOnUser = false },
             onCenteredOnPin = { centerOnPin = null },
             onPinTapped = { selectedPin = it },
@@ -473,6 +481,10 @@ private fun OsmdroidMapView(
     centerOnUser: Boolean,
     centerOnPin: GeoPoint?,
     isDark: Boolean,
+    mapStartZoom: Double = 16.0,
+    mapStartingPoint: String = "RESTORE_LAST",
+    mapFixedLat: Double = 0.0,
+    mapFixedLng: Double = 0.0,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
@@ -483,6 +495,8 @@ private fun OsmdroidMapView(
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
     var initialCenterDone by remember { mutableStateOf(false) }
+    var fitAllDone by remember { mutableStateOf(false) }
+    val isFitAll = mapStartingPoint == "FIT_ALL"
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -535,19 +549,56 @@ private fun OsmdroidMapView(
         }
     }
 
+    // Fit all contacts into view on first open when FIT_ALL mode is selected
+    LaunchedEffect(pins, isFitAll, mapViewRef) {
+        val mv = mapViewRef ?: return@LaunchedEffect
+        if (!isFitAll || fitAllDone) return@LaunchedEffect
+        val points = pins.mapNotNull { it.heartbeat?.let { hb -> GeoPoint(hb.lat, hb.lng) } }
+        if (points.isEmpty()) return@LaunchedEffect
+        fitAllDone = true
+        initialCenterDone = true
+        if (points.size == 1) {
+            mv.controller.animateTo(points.first())
+        } else {
+            val box = org.osmdroid.util.BoundingBox(
+                points.maxOf { it.latitude },
+                points.maxOf { it.longitude },
+                points.minOf { it.latitude },
+                points.minOf { it.longitude }
+            )
+            mv.post { mv.zoomToBoundingBox(box, true, 150) }
+        }
+    }
+
     AndroidView(
         factory = { ctx ->
             MapView(ctx).apply {
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
-                if (lastMapCenter != null) {
-                    val (lat, lng, zoom) = lastMapCenter
-                    controller.setZoom(zoom)
-                    controller.setCenter(GeoPoint(lat, lng))
-                    initialCenterDone = true
-                } else {
-                    controller.setZoom(16.0)
+                when {
+                    isFitAll -> {
+                        controller.setZoom(mapStartZoom)
+                    }
+                    mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
+                        controller.setZoom(mapStartZoom)
+                        controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
+                        initialCenterDone = true
+                    }
+                    mapStartingPoint == "OWN_PIN" -> {
+                        controller.setZoom(mapStartZoom)
+                        // centre will animate to GPS when userLocation arrives (initialCenterDone stays false)
+                    }
+                    lastMapCenter != null -> {
+                        // RESTORE_LAST: use saved position
+                        val (lat, lng, zoom) = lastMapCenter
+                        controller.setZoom(zoom)
+                        controller.setCenter(GeoPoint(lat, lng))
+                        initialCenterDone = true
+                    }
+                    else -> {
+                        controller.setZoom(mapStartZoom)
+                    }
                 }
             }.also { mapViewRef = it }
         },
