@@ -1,7 +1,6 @@
 package com.locapeer.sharing
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -54,7 +52,6 @@ fun PeerSharingScreen(
     val role = state.peer?.locationRole
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
-    var showRoleRequestDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(roleChangeResult) {
@@ -113,43 +110,62 @@ fun PeerSharingScreen(
                 }
             }
 
-            item { SectionLabel("Sharing Role") }
+            item { SectionLabel("Location Sharing") }
             item {
                 SettingsCard {
-                    val roleLabel = when (role) {
-                        PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
-                        PeerEntity.ROLE_SEND -> "Send Location"
-                        PeerEntity.ROLE_RECEIVE -> "Receive Location"
-                        PeerEntity.ROLE_NONE -> "No Location Sharing"
-                        else -> "Unknown"
-                    }
+                    val isSend = role == PeerEntity.ROLE_SEND || role == PeerEntity.ROLE_SEND_RECEIVE
+                    val isReceive = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
-                        headlineContent = { Text(roleLabel) },
-                        supportingContent = { Text("Current sharing role with $peerName") },
-                        leadingContent = { Icon(Icons.Default.SyncAlt, contentDescription = null) },
+                        headlineContent = { Text("Share my location with $peerName") },
+                        supportingContent = { Text(if (isSend) "They can see your location" else "Not sharing your location") },
+                        leadingContent = {
+                            Icon(
+                                Icons.Default.LocationOn,
+                                contentDescription = null,
+                                tint = if (isSend) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingContent = {
+                            Switch(checked = isSend, onCheckedChange = { vm.setSendRole(it) })
+                        },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Request Role Change") },
-                        supportingContent = { Text("Ask $peerName to review and update how you share") },
-                        leadingContent = { Icon(Icons.Default.Edit, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
-                        modifier = Modifier.clickable { showRoleRequestDialog = true },
+                        headlineContent = { Text("See ${peerName}'s location") },
+                        supportingContent = {
+                            Text(if (isReceive) "You can see their location"
+                                 else "You don't have access — request it below")
+                        },
+                        leadingContent = {
+                            Icon(
+                                Icons.Default.LocationOff,
+                                contentDescription = null,
+                                tint = if (isReceive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingContent = {
+                            if (!isReceive) {
+                                OutlinedButton(
+                                    onClick = { vm.requestLocationAccess() },
+                                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                                ) { Text("Request", style = MaterialTheme.typography.labelMedium) }
+                            }
+                        },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
             }
 
-            item { SectionLabel("Location Sharing") }
+            item { SectionLabel("Sharing Controls") }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Share With $peerName") },
-                        supportingContent = { Text("Let this contact track your location") },
-                        leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (sharingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
+                        headlineContent = { Text("Pause Sharing") },
+                        supportingContent = { Text("Temporarily stop sending your location to $peerName") },
+                        leadingContent = { Icon(Icons.Default.PauseCircle, contentDescription = null, tint = if (!sharingEnabled) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
-                            Switch(checked = sharingEnabled, onCheckedChange = { vm.setSharingEnabled(it) })
+                            Switch(checked = !sharingEnabled, onCheckedChange = { vm.setSharingEnabled(!it) })
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -295,17 +311,6 @@ fun PeerSharingScreen(
         }
     }
 
-    if (showRoleRequestDialog) {
-        RoleRequestDialog(
-            peerName = peerName,
-            onConfirm = { selectedRole ->
-                showRoleRequestDialog = false
-                vm.sendRoleChangeRequest(selectedRole)
-            },
-            onDismiss = { showRoleRequestDialog = false }
-        )
-    }
-
     if (showPrecisionDialog) {
         AlertDialog(
             onDismissRequest = { showPrecisionDialog = false },
@@ -339,112 +344,6 @@ fun PeerSharingScreen(
             confirmButton = {},
             dismissButton = { TextButton(onClick = { showPrecisionDialog = false }) { Text("Cancel") } }
         )
-    }
-}
-
-@Composable
-private fun RoleRequestDialog(
-    peerName: String,
-    onConfirm: (String) -> Unit,
-    onDismiss: () -> Unit
-) {
-    var selectedRole by remember { mutableStateOf<String?>(null) }
-
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Request Role Change") },
-        text = {
-            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(
-                    "Select the access you'd like $peerName to approve:",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                RoleOption(
-                    icon = Icons.Default.SyncAlt,
-                    title = "Send/Receive Location",
-                    description = "Share locations with each other",
-                    selected = selectedRole == PeerEntity.ROLE_SEND_RECEIVE,
-                    onClick = { selectedRole = PeerEntity.ROLE_SEND_RECEIVE }
-                )
-                RoleOption(
-                    icon = Icons.Default.LocationOn,
-                    title = "Send Location",
-                    description = "Share your location, don't see theirs",
-                    selected = selectedRole == PeerEntity.ROLE_SEND,
-                    onClick = { selectedRole = PeerEntity.ROLE_SEND }
-                )
-                RoleOption(
-                    icon = Icons.Default.LocationOff,
-                    title = "Receive Location",
-                    description = "See their location without sharing yours",
-                    selected = selectedRole == PeerEntity.ROLE_RECEIVE,
-                    onClick = { selectedRole = PeerEntity.ROLE_RECEIVE }
-                )
-                RoleOption(
-                    icon = Icons.Default.LocationDisabled,
-                    title = "No Location Sharing",
-                    description = "Messaging only, no location either way",
-                    selected = selectedRole == PeerEntity.ROLE_NONE,
-                    onClick = { selectedRole = PeerEntity.ROLE_NONE }
-                )
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = { selectedRole?.let { onConfirm(it) } },
-                enabled = selectedRole != null
-            ) { Text("Send Request") }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
-        }
-    )
-}
-
-@Composable
-private fun RoleOption(
-    icon: ImageVector,
-    title: String,
-    description: String,
-    selected: Boolean,
-    onClick: () -> Unit
-) {
-    val borderColor = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
-    val containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface
-    Surface(
-        modifier = Modifier
-            .fillMaxWidth()
-            .border(width = if (selected) 2.dp else 1.dp, color = borderColor, shape = MaterialTheme.shapes.small)
-            .clickable(onClick = onClick),
-        shape = MaterialTheme.shapes.small,
-        color = containerColor
-    ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            Icon(
-                icon,
-                contentDescription = null,
-                modifier = Modifier.size(22.dp),
-                tint = if (selected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Column {
-                Text(
-                    title,
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    description,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = if (selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
     }
 }
 

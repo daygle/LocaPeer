@@ -6,6 +6,7 @@ import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
@@ -14,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -33,8 +35,12 @@ class ContactsViewModel @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val messageDao: MessageDao,
-    private val peerManager: PeerManager
+    private val peerManager: PeerManager,
+    private val pendingRequestDao: PendingRequestDao
 ) : ViewModel() {
+
+    val pendingRequestCount = pendingRequestDao.observeCount()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     val contacts = combine(
         peerDao.getAllPeers(),

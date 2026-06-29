@@ -6,6 +6,11 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.locapeer.data.dao.PendingRequestDao
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +22,12 @@ const val EXTRA_SENDER_RELAY = "sender_relay"
 const val EXTRA_IS_ROLE_CHANGE = "is_role_change"
 const val EXTRA_REQUESTED_ROLE = "requested_role"
 
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface TrackRequestReceiverEntryPoint {
+    fun pendingRequestDao(): PendingRequestDao
+}
+
 class TrackRequestReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -26,12 +37,17 @@ class TrackRequestReceiver : BroadcastReceiver() {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(senderPubkey.hashCode() + 20000)
 
+        val pendingRequestDao = EntryPointAccessors
+            .fromApplication(context.applicationContext, TrackRequestReceiverEntryPoint::class.java)
+            .pendingRequestDao()
+
         val pendingResult = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 when (intent.action) {
                     ACTION_TRACK_DECLINE -> {
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
+                        pendingRequestDao.deleteByPubkey(senderPubkey)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, "Declined location sharing from $senderName", Toast.LENGTH_SHORT).show()
                         }

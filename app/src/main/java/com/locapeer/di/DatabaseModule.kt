@@ -9,6 +9,7 @@ import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.dao.PendingMessageDao
+import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.dao.ProximityAlertDao
 import dagger.Module
 import dagger.Provides
@@ -35,4 +36,5 @@ object DatabaseModule {
     @Provides fun provideProximityAlertDao(db: AppDatabase): ProximityAlertDao = db.proximityAlertDao()
     @Provides fun providePeerSharingConfigDao(db: AppDatabase): PeerSharingConfigDao = db.peerSharingConfigDao()
     @Provides fun providePendingMessageDao(db: AppDatabase): PendingMessageDao = db.pendingMessageDao()
+    @Provides fun providePendingRequestDao(db: AppDatabase): PendingRequestDao = db.pendingRequestDao()
 }
