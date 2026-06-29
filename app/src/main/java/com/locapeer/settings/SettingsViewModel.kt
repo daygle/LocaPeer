@@ -18,6 +18,7 @@ import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrRelayClient
@@ -56,7 +57,19 @@ data class ContactBackup(
     val publicKeyHex: String,
     val relayUrl: String,
     val locationRole: String = "SEND_RECEIVE",
-    val messagingEnabled: Boolean = true
+    val messagingEnabled: Boolean = true,
+    val addedAt: Long? = null,
+    val sharingConfig: SharingConfigBackup? = null
+)
+
+@Serializable
+data class SharingConfigBackup(
+    val sharingEnabled: Boolean,
+    val precisionMode: String,
+    val scheduleRulesJson: String,
+    val isSosContact: Boolean,
+    val retentionDaysLocation: Int,
+    val retentionDaysMessages: Int
 )
 
 @Serializable
@@ -81,7 +94,14 @@ data class SettingsBackup(
     val drivingIntervalMinutes: Int,
     val lowBatteryIntervalMinutes: Int,
     val navTabIds: List<String>,
-    val startRoute: String
+    val startRoute: String,
+    val pinColor: String = "",
+    val localLocationRetentionDays: Int = 90,
+    val localMessageRetentionDays: Int = 90,
+    val heartbeatEnabled: Boolean = true,
+    val onboardingComplete: Boolean = true,
+    val globalScheduleRules: List<ScheduleRule> = emptyList(),
+    val customRelays: List<String> = emptyList()
 )
 
 /** Parsed backup file ready for selective restore. */
@@ -100,6 +120,7 @@ class SettingsViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
     private val relayClient: NostrRelayClient,
     private val supervisedModeManager: SupervisedModeManager,
@@ -204,10 +225,27 @@ class SettingsViewModel @Inject constructor(
                 val backup = LocaPeerBackup(
                     privateKeyHex = if (BackupSection.PRIVATE_KEY in sections)
                         keyManager.exportPrivateKeyHex() else null,
-                    contacts = if (BackupSection.CONTACTS in sections)
+                    contacts = if (BackupSection.CONTACTS in sections) {
+                        val sharingConfigs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
                         peerDao.getAllPeers().first().map { p ->
-                            ContactBackup(p.deviceId, p.displayName, p.publicKeyHex, p.relayUrl, p.locationRole, p.messagingEnabled)
-                        } else null,
+                            val cfg = sharingConfigs[p.deviceId]
+                            ContactBackup(
+                                deviceId = p.deviceId,
+                                displayName = p.displayName,
+                                publicKeyHex = p.publicKeyHex,
+                                relayUrl = p.relayUrl,
+                                locationRole = p.locationRole,
+                                messagingEnabled = p.messagingEnabled,
+                                addedAt = p.addedAt,
+                                sharingConfig = cfg?.let {
+                                    SharingConfigBackup(
+                                        it.sharingEnabled, it.precisionMode, it.scheduleRulesJson,
+                                        it.isSosContact, it.retentionDaysLocation, it.retentionDaysMessages
+                                    )
+                                }
+                            )
+                        }
+                    } else null,
                     geofences = if (BackupSection.GEOFENCES in sections)
                         geofenceDao.getAllGeofences().first().map { g ->
                             GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres, g.trackedDeviceId, g.triggerOn, g.active)
@@ -222,7 +260,14 @@ class SettingsViewModel @Inject constructor(
                             drivingIntervalMinutes = s.drivingIntervalMinutes,
                             lowBatteryIntervalMinutes = s.lowBatteryIntervalMinutes,
                             navTabIds = s.navTabIds,
-                            startRoute = s.startRoute
+                            startRoute = s.startRoute,
+                            pinColor = s.pinColor,
+                            localLocationRetentionDays = s.localLocationRetentionDays,
+                            localMessageRetentionDays = s.localMessageRetentionDays,
+                            heartbeatEnabled = s.heartbeatEnabled,
+                            onboardingComplete = s.onboardingComplete,
+                            globalScheduleRules = s.globalScheduleRules,
+                            customRelays = s.customRelays
                         ) else null
                 )
                 val json = jsonExport.encodeToString(backup)
@@ -276,8 +321,20 @@ class SettingsViewModel @Inject constructor(
                             publicKeyHex = c.publicKeyHex,
                             relayUrl = c.relayUrl,
                             locationRole = c.locationRole,
-                            messagingEnabled = c.messagingEnabled
+                            messagingEnabled = c.messagingEnabled,
+                            addedAt = c.addedAt ?: System.currentTimeMillis()
                         ))
+                        c.sharingConfig?.let { sc ->
+                            sharingConfigDao.upsert(PeerSharingConfig(
+                                peerDeviceId = c.deviceId,
+                                sharingEnabled = sc.sharingEnabled,
+                                precisionMode = sc.precisionMode,
+                                scheduleRulesJson = sc.scheduleRulesJson,
+                                isSosContact = sc.isSosContact,
+                                retentionDaysLocation = sc.retentionDaysLocation,
+                                retentionDaysMessages = sc.retentionDaysMessages
+                            ))
+                        }
                     }
                     restored += "${backup.contacts.size} contacts"
                 }
@@ -294,6 +351,13 @@ class SettingsViewModel @Inject constructor(
                         s.runningIntervalMinutes, s.cyclingIntervalMinutes, s.drivingIntervalMinutes, s.lowBatteryIntervalMinutes)
                     prefs.setNavTabIds(s.navTabIds)
                     prefs.setStartRoute(s.startRoute)
+                    prefs.setPinColor(s.pinColor)
+                    prefs.setLocalLocationRetentionDays(s.localLocationRetentionDays)
+                    prefs.setLocalMessageRetentionDays(s.localMessageRetentionDays)
+                    setHeartbeatEnabled(s.heartbeatEnabled)
+                    prefs.setOnboardingComplete(s.onboardingComplete)
+                    prefs.setGlobalScheduleRules(s.globalScheduleRules)
+                    prefs.setCustomRelays(s.customRelays)
                     restored += "settings"
                 }
                 _backupResult.value = "Restored: ${restored.joinToString(", ")}"

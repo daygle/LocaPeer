@@ -78,6 +78,7 @@ class AppPreferences @Inject constructor(
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
+    private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
@@ -112,7 +113,8 @@ class AppPreferences @Inject constructor(
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
                 pinColor = prefs[KEY_PIN_COLOR] ?: "",
-                sosActive = prefs[KEY_SOS_ACTIVE] ?: false
+                sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
+                customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS
             )
         }
 
@@ -153,6 +155,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setPinColor(hex: String) {
         context.settingsStore.edit { it[KEY_PIN_COLOR] = hex }
+    }
+
+    suspend fun setCustomRelays(relays: List<String>) {
+        context.settingsStore.edit { it[KEY_CUSTOM_RELAYS] = relays.joinToString(",") }
     }
 
     suspend fun setSosActive(active: Boolean) {
