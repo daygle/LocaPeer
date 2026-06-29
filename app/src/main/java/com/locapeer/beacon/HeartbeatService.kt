@@ -80,12 +80,12 @@ class HeartbeatService : LifecycleService() {
     private lateinit var activityClient: ActivityRecognitionClient
     private val handler = Handler(Looper.getMainLooper())
 
-    private var lastLat = 0.0
-    private var lastLng = 0.0
-    private var lastAccuracy = 0f
+    @Volatile private var lastLat = 0.0
+    @Volatile private var lastLng = 0.0
+    @Volatile private var lastAccuracy = 0f
     private var currentSettings = AppSettings()
-    private var isSos = false
-    private var currentMotionState = MotionState.UNKNOWN
+    @Volatile private var isSos = false
+    @Volatile private var currentMotionState = MotionState.UNKNOWN
 
     private var isStarted = false
 
@@ -255,7 +255,7 @@ class HeartbeatService : LifecycleService() {
             // Pre-seed location from the OS cache so the very first heartbeat isn't dropped
             // by the lastLat/lastLng == 0.0 guard before the location callback has a chance to fire.
             seedLocationFromLastKnown()
-            handler.post(heartbeatRunnable)
+            reschedulePulse()
         }
     }
 
@@ -362,7 +362,7 @@ class HeartbeatService : LifecycleService() {
                     locationRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (isSos && cfg?.isSosContact == false) return@forEach
+                        if (isSos && cfg?.isSosContact != true) return@forEach
                         if (!isSos && cfg?.sharingEnabled == false) return@forEach
                         if (!isSos && !SharingSchedule.isActive(cfg?.scheduleRules() ?: emptyList())) return@forEach
 
@@ -440,7 +440,8 @@ class HeartbeatService : LifecycleService() {
 
     private fun getBatteryLevel(): Int {
         val batteryManager = getSystemService(BATTERY_SERVICE) as BatteryManager
-        return batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        val level = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY)
+        return if (level < 0) 100 else level
     }
 
     private fun buildNotification(): Notification {
