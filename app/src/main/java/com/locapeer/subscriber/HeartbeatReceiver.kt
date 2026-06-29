@@ -66,6 +66,17 @@ private const val TAG = "HeartbeatReceiver"
 private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
 private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
 private const val SUB_ID = "lp-hb"
+private const val SUB_ID_CONTROL = "lp-ctrl"
+private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
+
+private val CONTROL_KINDS = listOf(
+    NostrEventKind.TRACK_REQUEST,
+    NostrEventKind.TRACK_ACCEPT,
+    NostrEventKind.TRACK_DECLINE,
+    NostrEventKind.PEER_REMOVED,
+    NostrEventKind.DELETE_MY_MESSAGES,
+    NostrEventKind.DELETE_MY_LOCATION
+)
 
 @Singleton
 class HeartbeatReceiver @Inject constructor(
@@ -98,6 +109,9 @@ class HeartbeatReceiver @Inject constructor(
         scope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             relayClient.connect()
+            val nowEpoch = Instant.now().epochSecond
+
+            // Real-time subscription: all event types from this moment forward
             relayClient.subscribe(
                 SUB_ID,
                 NostrFilter(
@@ -119,9 +133,27 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_LOCATION
                     ),
                     pTags = listOf(pubHex),
-                    since = Instant.now().epochSecond
+                    since = nowEpoch
                 )
             )
+
+            // Catch-up subscription: contact management events only, from last known sync point.
+            // Ensures PEER_REMOVED / TRACK_DECLINE / DELETE events sent while offline are replayed.
+            // MAX_CATCHUP_SECONDS caps history so we don't request ancient events.
+            val lastControlEpoch = prefs.getLastControlSubEpoch()
+            val catchUpSince = maxOf(lastControlEpoch - 5, nowEpoch - MAX_CATCHUP_SECONDS)
+            relayClient.subscribe(
+                SUB_ID_CONTROL,
+                NostrFilter(
+                    kinds = CONTROL_KINDS,
+                    pTags = listOf(pubHex),
+                    since = catchUpSince
+                )
+            )
+
+            // Advance the baseline so the next session only re-fetches events from now onward
+            prefs.setLastControlSubEpoch(nowEpoch)
+            Log.d(TAG, "Control catch-up since epoch $catchUpSince (last sync: $lastControlEpoch)")
         }
 
         relayClient.events
@@ -551,7 +583,10 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        sendAcceptanceNotification(payload.acceptorPublicKeyHex, payload.acceptorDisplayName)
+        // Only notify if this is a new connection or a role change — not on catch-up re-delivery
+        if (existingPeer?.locationRole != newLocationRole) {
+            sendAcceptanceNotification(payload.acceptorPublicKeyHex, payload.acceptorDisplayName)
+        }
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
 
