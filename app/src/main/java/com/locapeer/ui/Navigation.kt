@@ -162,8 +162,8 @@ fun LocaPeerNavHost(
                 })
             }
             composable(Screen.Messages.route) {
-                ConversationListScreen(onOpenChat = { peerId ->
-                    navController.navigate("chat/$peerId/Chat")
+                ConversationListScreen(onOpenChat = { peerId, peerName ->
+                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
                 })
             }
             composable(Screen.Contacts.route) {

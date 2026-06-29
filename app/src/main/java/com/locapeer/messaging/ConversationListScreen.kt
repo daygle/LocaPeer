@@ -40,7 +40,7 @@ private enum class LoadState { LOADING, EMPTY, CONTENT }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConversationListScreen(
-    onOpenChat: (String) -> Unit,
+    onOpenChat: (peerId: String, peerName: String) -> Unit,
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
@@ -59,9 +59,9 @@ fun ConversationListScreen(
     if (showContactPicker) {
         ContactPickerDialog(
             peers = peers,
-            onSelect = { peerId ->
+            onSelect = { peerId, peerName ->
                 showContactPicker = false
-                onOpenChat(peerId)
+                onOpenChat(peerId, peerName)
             },
             onDismiss = { showContactPicker = false }
         )
@@ -119,7 +119,7 @@ fun ConversationListScreen(
                             SwipeToDeleteConversation(
                                 conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
-                                onClick = { onOpenChat(conv.peer.deviceId) },
+                                onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
                                 onDelete = { vm.deleteConversation(conv.peer.deviceId) }
                             )
                             HorizontalDivider(
@@ -289,7 +289,7 @@ private fun AvatarCircle(name: String, hasUnread: Boolean) {
 @Composable
 private fun ContactPickerDialog(
     peers: List<PeerEntity>,
-    onSelect: (String) -> Unit,
+    onSelect: (peerId: String, peerName: String) -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
@@ -324,7 +324,7 @@ private fun ContactPickerDialog(
                                 }
                             },
                             headlineContent = { Text(peer.displayName) },
-                            modifier = Modifier.clickable { onSelect(peer.deviceId) }
+                            modifier = Modifier.clickable { onSelect(peer.deviceId, peer.displayName) }
                         )
                     }
                 }
