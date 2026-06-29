@@ -20,7 +20,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.HeartbeatEntity
-import com.locapeer.data.entity.PeerEntity
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
 
@@ -150,7 +149,6 @@ private fun ContactRow(
     onSharingSettings: () -> Unit
 ) {
     val hb = item.lastHeartbeat
-    val role = item.peer.locationRole
     val canMessage = item.peer.messagingEnabled
     var showOverflow by remember { mutableStateOf(false) }
 
@@ -170,41 +168,13 @@ private fun ContactRow(
             }
         },
         headlineContent = {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(
-                    item.peer.displayName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Surface(
-                    shape = MaterialTheme.shapes.extraSmall,
-                    color = when (role) {
-                        PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.secondaryContainer
-                        PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.primaryContainer
-                        PeerEntity.ROLE_NONE -> MaterialTheme.colorScheme.surfaceVariant
-                        else -> MaterialTheme.colorScheme.tertiaryContainer
-                    }
-                ) {
-                    Text(
-                        when (role) {
-                            PeerEntity.ROLE_RECEIVE -> "Receive Location"
-                            PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
-                            PeerEntity.ROLE_NONE -> "No Location"
-                            else -> "Send Location"
-                        },
-                        style = MaterialTheme.typography.labelSmall,
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
-                        color = when (role) {
-                            PeerEntity.ROLE_RECEIVE -> MaterialTheme.colorScheme.onSecondaryContainer
-                            PeerEntity.ROLE_SEND_RECEIVE -> MaterialTheme.colorScheme.onPrimaryContainer
-                            PeerEntity.ROLE_NONE -> MaterialTheme.colorScheme.onSurfaceVariant
-                            else -> MaterialTheme.colorScheme.onTertiaryContainer
-                        }
-                    )
-                }
-            }
+            Text(
+                item.peer.displayName,
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.SemiBold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
         },
         supportingContent = {
             Text(
