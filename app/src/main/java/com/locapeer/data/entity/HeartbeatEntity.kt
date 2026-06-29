@@ -21,5 +21,9 @@ data class HeartbeatEntity(
     val isSos: Boolean = false,
     val receivedAt: Long = System.currentTimeMillis(),
     /** Hex colour string the sender chose for their map pin. Empty = use auto colour. */
-    val pinColor: String = ""
+    val pinColor: String = "",
+    /** Speed in m/s from GPS. 0 when stationary or unavailable. */
+    val speed: Float = 0f,
+    /** Bearing in degrees (0–360) from GPS. 0 when stationary or unavailable. */
+    val bearing: Float = 0f
 )

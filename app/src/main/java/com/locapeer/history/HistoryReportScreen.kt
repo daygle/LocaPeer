@@ -37,7 +37,7 @@ import java.util.TimeZone
 @Composable
 fun HistoryReportScreen(
     peerId: String? = null,
-    onNavigateBack: () -> Unit,
+    onNavigateBack: (() -> Unit)? = null,
     vm: HistoryReportViewModel = hiltViewModel()
 ) {
     LaunchedEffect(peerId) {
@@ -72,8 +72,10 @@ fun HistoryReportScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    if (onNavigateBack != null) {
+                        IconButton(onClick = onNavigateBack) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        }
                     }
                 }
             )
@@ -295,7 +297,10 @@ private fun HistoryMapTab(
 
             if (heartbeats.isNotEmpty()) {
                 val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
-                val sample = heartbeats.first()
+                // Use the most recent heartbeat for colour so the current pin colour
+                // setting is reflected even if earlier heartbeats were recorded before
+                // the user chose a colour.
+                val sample = heartbeats.last()
                 val pinColor = sample.pinColor
                 val lineColor = if (pinColor.isNotEmpty())
                     android.graphics.Color.parseColor(pinColor).let {
@@ -317,7 +322,7 @@ private fun HistoryMapTab(
                         displayName = first.displayName,
                         isOverdue = false,
                         isSos = false,
-                        pinColor = first.pinColor
+                        pinColor = pinColor
                     )
                     val marker = Marker(mapView).apply {
                         position = GeoPoint(first.lat, first.lng)
@@ -435,6 +440,14 @@ private fun HistoryPingCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
+                        val kmh = (ping.speed * 3.6f).toInt()
+                        Text(
+                            "$kmh km/h · ${bearingToCardinal(ping.bearing)}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
                 Spacer(Modifier.height(4.dp))
                 MotionChip(ping.motionState)
@@ -510,6 +523,11 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
         set(utc.get(Calendar.YEAR), utc.get(Calendar.MONTH), utc.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
         set(Calendar.MILLISECOND, 0)
     }.timeInMillis
+}
+
+private fun bearingToCardinal(bearing: Float): String {
+    val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+    return dirs[((bearing + 22.5f) / 45f).toInt() % 8]
 }
 
 private fun initialUtcTodayMs(): Long {

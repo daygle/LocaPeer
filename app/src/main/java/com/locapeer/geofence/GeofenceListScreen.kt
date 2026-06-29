@@ -19,6 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
+import com.locapeer.supervised.SupervisionGate
+import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
@@ -32,6 +34,20 @@ fun GeofenceListScreen(
     onNavigateBack: () -> Unit,
     vm: GeofenceViewModel = hiltViewModel()
 ) {
+    val gateVm: SupervisionGateViewModel = hiltViewModel()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
+    val gateUnlockState by gateVm.unlockState.collectAsState()
+    var sessionUnlocked by remember { mutableStateOf(false) }
+    if (supervisedModeEnabled && !sessionUnlocked) {
+        SupervisionGate(
+            unlockState = gateUnlockState,
+            onRequestAccess = gateVm::requestAccess,
+            onReset = gateVm::reset,
+            onNavigateBack = onNavigateBack
+        ) { sessionUnlocked = true }
+        return
+    }
+
     val geofences by vm.geofences.collectAsState()
     val broadcastersWithLocation by vm.receiveContactsWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }

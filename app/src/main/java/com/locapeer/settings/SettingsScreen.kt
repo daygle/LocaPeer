@@ -26,6 +26,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.BackupSection
 import com.locapeer.supervised.SupervisedModeManager
+import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
@@ -47,7 +48,7 @@ fun SettingsScreen(
     val unlockState by vm.unlockState.collectAsState()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (settings.supervisedModeEnabled && !sessionUnlocked) {
-        SupervisedRemoteGate(
+        SupervisionGate(
             unlockState = unlockState,
             onRequestAccess = { vm.requestSettingsUnlock() },
             onReset = { vm.resetUnlockState() },
@@ -767,54 +768,6 @@ private fun SelectionContainer(content: @Composable () -> Unit) {
 
 // ─── Supervised Mode UI ───────────────────────────────────────────────────────
 
-@Composable
-private fun SupervisedRemoteGate(
-    unlockState: SupervisedModeManager.UnlockState,
-    onRequestAccess: () -> Unit,
-    onReset: () -> Unit,
-    onUnlocked: () -> Unit
-) {
-    LaunchedEffect(unlockState) {
-        if (unlockState is SupervisedModeManager.UnlockState.Approved) onUnlocked()
-    }
-
-    Column(
-        modifier = Modifier.fillMaxSize().padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Icon(Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(56.dp), tint = MaterialTheme.colorScheme.primary)
-        Spacer(Modifier.height(16.dp))
-        Text("Device is Supervised", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.SemiBold)
-        Spacer(Modifier.height(6.dp))
-        Text("Supervisor approval is required to access settings.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-        Spacer(Modifier.height(32.dp))
-
-        when (unlockState) {
-            is SupervisedModeManager.UnlockState.Idle -> {
-                Button(onClick = onRequestAccess, modifier = Modifier.fillMaxWidth()) { Text("Request Access") }
-            }
-            is SupervisedModeManager.UnlockState.Requesting -> {
-                CircularProgressIndicator()
-                Spacer(Modifier.height(16.dp))
-                Text("Waiting for supervisor approval…", style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(16.dp))
-                TextButton(onClick = onReset) { Text("Cancel") }
-            }
-            is SupervisedModeManager.UnlockState.Denied -> {
-                Text("Access denied by supervisor.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text("Try Again") }
-            }
-            is SupervisedModeManager.UnlockState.TimedOut -> {
-                Text("Request timed out. Supervisor did not respond.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center)
-                Spacer(Modifier.height(16.dp))
-                Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text("Try Again") }
-            }
-            is SupervisedModeManager.UnlockState.Approved -> CircularProgressIndicator()
-        }
-    }
-}
 
 @Composable
 private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (String) -> Unit, onDismiss: () -> Unit) {

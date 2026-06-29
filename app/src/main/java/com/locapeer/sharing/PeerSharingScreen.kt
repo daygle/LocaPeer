@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
+import com.locapeer.supervised.SupervisionGate
+import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
@@ -36,6 +38,20 @@ fun PeerSharingScreen(
     onNavigateToHistory: (String) -> Unit = {},
     vm: PeerSharingViewModel = hiltViewModel()
 ) {
+    val gateVm: SupervisionGateViewModel = hiltViewModel()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
+    val gateUnlockState by gateVm.unlockState.collectAsState()
+    var sessionUnlocked by remember { mutableStateOf(false) }
+    if (supervisedModeEnabled && !sessionUnlocked) {
+        SupervisionGate(
+            unlockState = gateUnlockState,
+            onRequestAccess = gateVm::requestAccess,
+            onReset = gateVm::reset,
+            onNavigateBack = onNavigateBack
+        ) { sessionUnlocked = true }
+        return
+    }
+
     LaunchedEffect(peerId) { vm.init(peerId) }
 
     val state by vm.uiState.collectAsState()

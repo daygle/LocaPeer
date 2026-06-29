@@ -83,6 +83,8 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastLat = 0.0
     @Volatile private var lastLng = 0.0
     @Volatile private var lastAccuracy = 0f
+    @Volatile private var lastSpeed = 0f
+    @Volatile private var lastBearing = 0f
     private var currentSettings = AppSettings()
     @Volatile private var isSos = false
     @Volatile private var currentMotionState = MotionState.UNKNOWN
@@ -95,6 +97,8 @@ class HeartbeatService : LifecycleService() {
                 lastLat = loc.latitude
                 lastLng = loc.longitude
                 lastAccuracy = loc.accuracy
+                lastSpeed = if (loc.hasSpeed()) loc.speed else 0f
+                lastBearing = if (loc.hasBearing()) loc.bearing else 0f
             }
         }
     }
@@ -385,7 +389,9 @@ class HeartbeatService : LifecycleService() {
                             motionState = currentMotionState.name,
                             isSos = isSos,
                             retentionDays = cfg?.retentionDaysLocation ?: 30,
-                            pinColor = settings.pinColor
+                            pinColor = settings.pinColor,
+                            speed = lastSpeed,
+                            bearing = lastBearing
                         )
                         val payloadJson = Json.encodeToString(payload)
 
@@ -456,6 +462,7 @@ class HeartbeatService : LifecycleService() {
             .setContentIntent(pendingIntent)
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
             .build()
     }
 
@@ -466,6 +473,7 @@ class HeartbeatService : LifecycleService() {
             NotificationManager.IMPORTANCE_LOW
         ).apply {
             description = getString(R.string.channel_desc_heartbeat)
+            setShowBadge(false)
         }
         notificationManager.createNotificationChannel(channel)
     }

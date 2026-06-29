@@ -31,6 +31,7 @@ fun ContactsScreen(
     onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
     onNavigateToPendingRequests: () -> Unit = {},
     onNavigateToHistory: (peerId: String) -> Unit = {},
+    onNavigateToInvite: () -> Unit = {},
     vm: ContactsViewModel = hiltViewModel()
 ) {
     val contacts by vm.contacts.collectAsState()
@@ -44,6 +45,9 @@ fun ContactsScreen(
             TopAppBar(
                 title = { Text("Contacts") },
                 actions = {
+                    IconButton(onClick = onNavigateToInvite) {
+                        Icon(Icons.Default.QrCode, contentDescription = "QR / Invite")
+                    }
                     BadgedBox(
                         badge = {
                             if (pendingCount > 0) Badge { Text("$pendingCount") }
@@ -66,6 +70,12 @@ fun ContactsScreen(
                     Icon(Icons.Default.People, contentDescription = null, modifier = Modifier.size(48.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text("No contacts yet", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text("Scan a QR code to add someone", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Spacer(Modifier.height(8.dp))
+                    FilledTonalButton(onClick = onNavigateToInvite) {
+                        Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Scan QR Code")
+                    }
                 }
             }
         } else {

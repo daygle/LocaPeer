@@ -16,5 +16,9 @@ data class HeartbeatPayload(
     /** Days to retain this device's heartbeats on the receiver. 0 = no expiry (default). */
     val retentionDays: Int = 0,
     /** Hex colour string chosen by the sender for their map pin (e.g. "#1565C0"). Empty = auto. */
-    val pinColor: String = ""
+    val pinColor: String = "",
+    /** Speed in m/s from GPS. 0 when stationary or unavailable. */
+    val speed: Float = 0f,
+    /** Bearing in degrees (0–360) from GPS. 0 when stationary or unavailable. */
+    val bearing: Float = 0f
 )

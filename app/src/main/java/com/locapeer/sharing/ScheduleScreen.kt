@@ -19,6 +19,8 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.supervised.SupervisionGate
+import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.ui.components.TimePickerDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,6 +29,20 @@ fun ScheduleScreen(
     onNavigateBack: () -> Unit,
     vm: ScheduleViewModel = hiltViewModel()
 ) {
+    val gateVm: SupervisionGateViewModel = hiltViewModel()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
+    val gateUnlockState by gateVm.unlockState.collectAsState()
+    var sessionUnlocked by remember { mutableStateOf(false) }
+    if (supervisedModeEnabled && !sessionUnlocked) {
+        SupervisionGate(
+            unlockState = gateUnlockState,
+            onRequestAccess = gateVm::requestAccess,
+            onReset = gateVm::reset,
+            onNavigateBack = onNavigateBack
+        ) { sessionUnlocked = true }
+        return
+    }
+
     val rules by vm.rules.collectAsState()
     val title = if (vm.scope == "global") "Sharing Schedule"
                 else "Schedule for ${vm.peerName}"
