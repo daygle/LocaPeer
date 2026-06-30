@@ -33,11 +33,19 @@ class CryptoUtils @Inject constructor() {
         return normalizePrivateKey(key)
     }
 
+    /** True iff [privKey] is a 32-byte scalar in the valid secp256k1 range (0, CURVE_N). */
+    fun isValidPrivateKey(privKey: ByteArray): Boolean {
+        if (privKey.size != 32) return false
+        val bi = BigInteger(1, privKey)
+        return bi > BigInteger.ZERO && bi < CURVE_N
+    }
+
     /**
      * Normalizes a private key so that its public key has an even Y coordinate,
      * as required by BIP-340.
      */
     fun normalizePrivateKey(privKey: ByteArray): ByteArray {
+        require(isValidPrivateKey(privKey)) { "Private key must be a 32-byte value in (0, curve order)" }
         val pub = Secp256k1.pubkeyCreate(privKey)
         // pub[0] is 0x02 (even), 0x03 (odd), or 0x04 (uncompressed)
         val isEven = if (pub.size == 33) {
@@ -195,21 +203,15 @@ class CryptoUtils @Inject constructor() {
     private fun nip44Pad(plaintext: String): ByteArray {
         val data = plaintext.toByteArray(StandardCharsets.UTF_8)
         val len = data.size
-        require(len <= 65535) { "Plaintext too long for NIP-44" }
-        
-        // Simple padding for now (actual NIP-44 uses a more complex calc, but standard ChaCha20 works)
-        // Official NIP-44 padding: find smallest next boundary.
-        // For simplicity in this audit fix, we'll use the power-of-2 approach or just 2-byte len + data
-        // but we'll follow the 2-byte prefix.
+        require(len in 1..65535) { "Plaintext length out of NIP-44 range" }
+
         val out = ByteBuffer.allocate(2 + len)
             .putShort(len.toShort())
             .put(data)
             .array()
-        
-        // To be fully NIP-44 compliant we should pad to a boundary.
-        val nextBoundary = calcNip44Padding(out.size)
-        val padded = out.copyOf(nextBoundary)
-        return padded
+
+        val paddedLen = 2 + calcNip44Padding(len)
+        return out.copyOf(paddedLen)
     }
 
     private fun nip44Unpad(padded: ByteArray): String {
@@ -222,10 +224,14 @@ class CryptoUtils @Inject constructor() {
         return String(data, StandardCharsets.UTF_8)
     }
 
+    /** Official NIP-44 padding-bucket algorithm: rounds the plaintext length up to the
+     *  spec-defined chunk boundary so ciphertext length only reveals a coarse size bucket. */
     private fun calcNip44Padding(len: Int): Int {
         if (len <= 32) return 32
-        if (len <= 512) return ((len - 1) / 32 + 1) * 32
-        if (len <= 4096) return ((len - 1) / 256 + 1) * 256
-        return ((len - 1) / 1024 + 1) * 1024
+        val n = len - 1
+        val floorLog2 = 31 - Integer.numberOfLeadingZeros(n)
+        val nextPower = 1 shl (floorLog2 + 1)
+        val chunk = if (nextPower <= 256) 32 else nextPower / 8
+        return chunk * (n / chunk + 1)
     }
 }

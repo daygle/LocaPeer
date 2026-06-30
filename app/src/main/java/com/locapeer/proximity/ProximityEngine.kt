@@ -23,6 +23,9 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 private const val COOLDOWN_MS = 10 * 60 * 1000L // 10 minutes per peer
+// Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
+// collide and silently overwrite each other's notification.
+private const val NOTIF_ID_PROXIMITY = 50000
 
 @Singleton
 class ProximityEngine @Inject constructor(
@@ -104,7 +107,7 @@ class ProximityEngine @Inject constructor(
             .addAction(R.drawable.ic_notif_message, "Message $personName", chatPi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(personDeviceId.hashCode() + 50000, notification)
+        notificationManager.notify(personDeviceId, NOTIF_ID_PROXIMITY, notification)
     }
 
     private fun haversineMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {

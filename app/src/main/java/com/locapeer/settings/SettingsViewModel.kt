@@ -217,6 +217,13 @@ class SettingsViewModel @Inject constructor(
 
     @android.annotation.SuppressLint("MissingPermission")
     fun captureCurrentLocationAsFixed(onResult: (success: Boolean) -> Unit) {
+        val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+                         context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        if (!hasLocation) {
+            onResult(false)
+            return
+        }
+
         com.google.android.gms.location.LocationServices
             .getFusedLocationProviderClient(context)
             .lastLocation

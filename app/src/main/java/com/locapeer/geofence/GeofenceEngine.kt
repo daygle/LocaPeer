@@ -23,6 +23,9 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 private const val COOLDOWN_MS = 5 * 60 * 1000L // 5 minutes per fence
+// Paired with a per fence+person tag (notify(tag, id, ...)) since two peers/fences' hashCodes
+// can collide and silently overwrite each other's notification.
+private const val NOTIF_ID_GEOFENCE = 60000
 
 @Singleton
 class GeofenceEngine @Inject constructor(
@@ -52,10 +55,11 @@ class GeofenceEngine @Inject constructor(
             }
 
             if (shouldNotify) {
+                val cooldownKey = "${fence.id}:${if (entered) "enter" else "exit"}"
                 val now = System.currentTimeMillis()
-                val last = lastNotifiedAt[fence.id] ?: 0L
+                val last = lastNotifiedAt[cooldownKey] ?: 0L
                 if (now - last < COOLDOWN_MS) return@forEach
-                lastNotifiedAt[fence.id] = now
+                lastNotifiedAt[cooldownKey] = now
 
                 val verb = if (entered) "arrived at" else "left"
                 sendGeofenceNotification(
@@ -120,7 +124,7 @@ class GeofenceEngine @Inject constructor(
             .addAction(R.drawable.ic_notif_message, "Message $personName", chatPi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(fence.id.hashCode(), notification)
+        notificationManager.notify("${fence.id}:$personDeviceId", NOTIF_ID_GEOFENCE, notification)
     }
 
     private fun formatTime(millis: Long): String =

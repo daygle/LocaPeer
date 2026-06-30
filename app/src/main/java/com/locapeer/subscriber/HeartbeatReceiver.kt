@@ -69,6 +69,15 @@ private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
 private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
 
+// Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
+// peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
+// overwrite each other's notification.
+private const val NOTIF_ID_SOS = 1
+private const val NOTIF_ID_MESSAGE = 10000
+const val NOTIF_ID_TRACK_REQUEST = 20000
+private const val NOTIF_ID_ACCEPT = 30000
+private const val NOTIF_ID_DECLINE = 40000
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -276,7 +285,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(payload.deviceId.hashCode(), notification)
+        notificationManager.notify(payload.deviceId, NOTIF_ID_SOS, notification)
     }
 
     private suspend fun processDmInBackground(event: NostrEvent) {
@@ -299,8 +308,11 @@ class HeartbeatReceiver @Inject constructor(
             nostrEventId = event.id,
             isBlocked = isBlocked
         )
-        // Auto-unarchive peer on receive
-        peerDao.unarchive(event.pubkey)
+        // Auto-unarchive on receive, but don't let a late-arriving/queued message that predates
+        // an explicit archive action silently undo it.
+        if (!sender.isArchived || msg.timestamp > sender.archivedAt) {
+            peerDao.unarchive(event.pubkey)
+        }
         messageDao.insert(msg)
         if (!isBlocked) {
             sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
@@ -353,7 +365,8 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processUnlockResponse(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -395,7 +408,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(peerId.hashCode() + 10000, notification)
+        notificationManager.notify(peerId, NOTIF_ID_MESSAGE, notification)
     }
 
     private suspend fun processPeerRemoved(event: NostrEvent) {
@@ -468,7 +481,9 @@ class HeartbeatReceiver @Inject constructor(
 
         val notifId = event.pubkey.hashCode() + 20000
         // Suppress relay retransmissions for new requests only — role changes are always shown
-        if (!payload.isRoleChange && notificationManager.activeNotifications.any { it.id == notifId }) return
+        if (!payload.isRoleChange &&
+            notificationManager.activeNotifications.any { it.id == NOTIF_ID_TRACK_REQUEST && it.tag == event.pubkey }
+        ) return
 
         pendingRequestDao.upsert(
             PendingRequestEntity(
@@ -526,7 +541,7 @@ class HeartbeatReceiver @Inject constructor(
             .addAction(0, "Review", reviewPi)
             .addAction(0, "Decline", declinePi)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(event.pubkey, NOTIF_ID_TRACK_REQUEST, notification)
     }
 
     private suspend fun sendTrackAcceptResponse(recipientPubkey: String, recipientRelay: String, recipientName: String) {
@@ -652,7 +667,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(pubkey, NOTIF_ID_ACCEPT, notification)
     }
 
     private fun sendDeclineNotification(pubkey: String, name: String) {
@@ -669,7 +684,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(pubkey, NOTIF_ID_DECLINE, notification)
     }
 
     private fun createAlertChannel() {

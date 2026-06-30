@@ -21,9 +21,10 @@ interface MessageDao {
     fun getMessagesForPeer(peerId: String): Flow<List<MessageEntity>>
 
     @Query(
-        "SELECT * FROM messages m1 WHERE isBlocked = 0 AND timestamp = (" +
-            "SELECT MAX(timestamp) FROM messages m2 WHERE m2.peerId = m1.peerId AND m2.isBlocked = 0" +
-            ") GROUP BY peerId ORDER BY timestamp DESC"
+        "SELECT * FROM messages m1 WHERE isBlocked = 0 AND id = (" +
+            "SELECT m2.id FROM messages m2 WHERE m2.peerId = m1.peerId AND m2.isBlocked = 0 " +
+            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1" +
+            ") ORDER BY timestamp DESC"
     )
     fun getConversationSummaries(): Flow<List<MessageEntity>>
 

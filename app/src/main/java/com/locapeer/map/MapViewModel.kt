@@ -1,7 +1,10 @@
 package com.locapeer.map
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
+import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -140,8 +143,15 @@ class MapViewModel @Inject constructor(
         }
     }
 
+    private fun hasLocationPermission(): Boolean =
+        ContextCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED ||
+        ContextCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+
     @SuppressLint("MissingPermission")
     fun fetchUserLocation() {
+        if (!hasLocationPermission()) return
         LocationServices.getFusedLocationProviderClient(appContext)
             .lastLocation
             .addOnSuccessListener { loc ->

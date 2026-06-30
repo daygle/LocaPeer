@@ -122,7 +122,7 @@ class AppPreferences @Inject constructor(
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
                     ?.takeIf { it.size >= 2 }
-                    ?: listOf("map", "messages", "contacts", "invite", "settings"),
+                    ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings"),
                 startRoute = prefs[KEY_START_ROUTE] ?: "map",
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,

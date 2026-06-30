@@ -27,8 +27,12 @@ interface PeerDao {
     @Query("DELETE FROM peers WHERE deviceId = :deviceId")
     suspend fun deletePeerById(deviceId: String)
 
-    @Query("UPDATE peers SET isArchived = :archived WHERE deviceId = :peerId OR publicKeyHex = :peerId")
-    suspend fun setArchived(peerId: String, archived: Boolean)
+    @Query(
+        "UPDATE peers SET isArchived = :archived, " +
+            "archivedAt = CASE WHEN :archived = 1 THEN :now ELSE archivedAt END " +
+            "WHERE deviceId = :peerId OR publicKeyHex = :peerId"
+    )
+    suspend fun setArchived(peerId: String, archived: Boolean, now: Long)
 
     @Query("UPDATE peers SET isArchived = 0 WHERE deviceId = :peerId OR publicKeyHex = :peerId")
     suspend fun unarchive(peerId: String)
