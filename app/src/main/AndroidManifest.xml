@@ -103,6 +103,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Notification action receiver for supervised mode registration -->
+        <receiver
+            android:name=".supervised.SupervisedRegisterReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.locapeer.SUPERVISED_REGISTER_ACCEPT" />
+                <action android:name="com.locapeer.SUPERVISED_REGISTER_DECLINE" />
+            </intent-filter>
+        </receiver>
+
         <!-- OSMDroid tile cache path (optional) -->
         <meta-data
             android:name="osmdroid.cachepath"

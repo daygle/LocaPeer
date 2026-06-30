@@ -419,6 +419,7 @@ class SettingsViewModel @Inject constructor(
     fun enableSupervisedMode(supervisorPubkey: String) {
         viewModelScope.launch {
             prefs.setSupervisedMode(enabled = true, supervisorPubkey = supervisorPubkey)
+            supervisedModeManager.sendRegisterRequest(supervisorPubkey)
         }
     }
 
