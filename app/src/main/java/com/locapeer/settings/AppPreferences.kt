@@ -48,7 +48,7 @@ data class AppSettings(
     val supervisorPubkey: String = "",
     val customRelays: List<String> = HARDCODED_RELAYS,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
-    val navTabIds: List<String> = listOf("map", "messages", "contacts", "invite", "settings"),
+    val navTabIds: List<String> = listOf("map", "messages", "history-tab", "contacts", "invite", "settings"),
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
     val startRoute: String = "map",
     /** Hex colour string for the user's own map pin (e.g. "#1565C0"). Empty = auto from name. */
