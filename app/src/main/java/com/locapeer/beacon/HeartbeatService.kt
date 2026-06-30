@@ -138,13 +138,13 @@ class HeartbeatService : LifecycleService() {
         when (intent?.action) {
             ACTION_SOS_ON -> {
                 isSos = true
-                intervalManager.setSosMode(true)
+                intervalManager.setSosMode(enabled = true)
                 broadcastHeartbeat(isSos = true)
                 reschedulePulse()
             }
             ACTION_SOS_OFF -> {
                 isSos = false
-                intervalManager.setSosMode(false)
+                intervalManager.setSosMode(enabled = false)
                 reschedulePulse()
             }
             ACTION_STOP -> {
@@ -231,7 +231,7 @@ class HeartbeatService : LifecycleService() {
         val activityIntent = PendingIntent.getService(
             this, 0,
             Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
         )
         try {
             activityClient.requestActivityUpdates(30_000L, activityIntent)
@@ -427,7 +427,7 @@ class HeartbeatService : LifecycleService() {
     private suspend fun seedLocationFromLastKnown() {
         if (lastLat != 0.0 || lastLng != 0.0) return
         try {
-            suspendCancellableCoroutine { cont ->
+            suspendCancellableCoroutine<Unit> { cont ->
                 fusedLocation.lastLocation.addOnCompleteListener { task ->
                     val loc = task.result
                     if (loc != null) {
