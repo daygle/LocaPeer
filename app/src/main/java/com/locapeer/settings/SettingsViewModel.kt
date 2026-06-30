@@ -211,6 +211,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setMapStartingPoint(mode) }
     }
 
+    fun setMapFixedLocation(lat: Double, lng: Double) {
+        viewModelScope.launch { prefs.setMapFixedLocation(lat, lng) }
+    }
+
     @android.annotation.SuppressLint("MissingPermission")
     fun captureCurrentLocationAsFixed(onResult: (success: Boolean) -> Unit) {
         com.google.android.gms.location.LocationServices

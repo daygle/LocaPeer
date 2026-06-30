@@ -15,14 +15,17 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.ChatBubbleOutline
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -43,14 +46,18 @@ fun ConversationListScreen(
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
+    val archivedConversations by vm.archivedConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
     var showContactPicker by remember { mutableStateOf(false) }
+    var selectedTab by remember { mutableIntStateOf(0) }
+
+    val activeList = if (selectedTab == 0) conversations else archivedConversations
 
     // null = still loading (waiting for first emission), empty list = loaded but empty
     val loadState = when {
-        conversations == null -> LoadState.LOADING
-        conversations!!.isEmpty() -> LoadState.EMPTY
+        activeList == null -> LoadState.LOADING
+        activeList!!.isEmpty() -> LoadState.EMPTY
         else -> LoadState.CONTENT
     }
 
@@ -67,12 +74,26 @@ fun ConversationListScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Messages", fontWeight = FontWeight.SemiBold) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface
+            Column {
+                TopAppBar(
+                    title = { Text("Messages", fontWeight = FontWeight.SemiBold) },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
                 )
-            )
+                SecondaryTabRow(selectedTabIndex = selectedTab) {
+                    Tab(
+                        selected = selectedTab == 0,
+                        onClick = { selectedTab = 0 },
+                        text = { Text("Chats") }
+                    )
+                    Tab(
+                        selected = selectedTab == 1,
+                        onClick = { selectedTab = 1 },
+                        text = { Text("Archived") }
+                    )
+                }
+            }
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showContactPicker = true }) {
@@ -98,19 +119,20 @@ fun ConversationListScreen(
                 }
                 LoadState.EMPTY -> {
                     EmptyState(
-                        icon = Icons.Default.ChatBubbleOutline,
-                        title = "No messages yet",
-                        subtitle = "Open the map and tap a person\nto start a conversation"
+                        icon = if (selectedTab == 0) Icons.Default.ChatBubbleOutline else Icons.Default.Archive,
+                        title = if (selectedTab == 0) "No messages yet" else "No archived chats",
+                        subtitle = if (selectedTab == 0) "Open the map and tap a person\nto start a conversation" else "Archive chats to keep your inbox clean"
                     )
                 }
                 LoadState.CONTENT -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(conversations!!, key = { it.peer.deviceId }) { conv ->
-                            SwipeToDeleteConversation(
+                        items(activeList!!, key = { it.peer.deviceId }) { conv ->
+                            SwipeActionsConversation(
                                 conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
                                 onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
-                                onDelete = { vm.deleteConversation(conv.peer.deviceId) }
+                                onDelete = { vm.deleteConversation(conv.peer.deviceId) },
+                                onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
                             )
                             HorizontalDivider(
                                 modifier = Modifier.padding(start = 72.dp),
@@ -126,11 +148,12 @@ fun ConversationListScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SwipeToDeleteConversation(
+private fun SwipeActionsConversation(
     conv: ConversationSummary,
     unreadCount: Int,
     onClick: () -> Unit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onArchive: () -> Unit
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -138,9 +161,16 @@ private fun SwipeToDeleteConversation(
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(dismissState.currentValue) {
-        if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
-            onDelete()
-            dismissState.snapTo(SwipeToDismissBoxValue.Settled)
+        when (dismissState.currentValue) {
+            SwipeToDismissBoxValue.EndToStart -> {
+                showDeleteDialog = true
+                dismissState.snapTo(SwipeToDismissBoxValue.Settled)
+            }
+            SwipeToDismissBoxValue.StartToEnd -> {
+                onArchive()
+                dismissState.snapTo(SwipeToDismissBoxValue.Settled)
+            }
+            else -> {}
         }
     }
 
@@ -161,10 +191,25 @@ private fun SwipeToDeleteConversation(
 
     SwipeToDismissBox(
         state = dismissState,
-        enableDismissFromStartToEnd = false,
+        enableDismissFromStartToEnd = true,
         backgroundContent = {
-            val alignment = Alignment.CenterEnd
-            val color = MaterialTheme.colorScheme.errorContainer
+            val direction = dismissState.dismissDirection
+            val color = when (direction) {
+                SwipeToDismissBoxValue.EndToStart -> MaterialTheme.colorScheme.errorContainer
+                SwipeToDismissBoxValue.StartToEnd -> MaterialTheme.colorScheme.secondaryContainer
+                else -> Color.Transparent
+            }
+            val alignment = when (direction) {
+                SwipeToDismissBoxValue.EndToStart -> Alignment.CenterEnd
+                SwipeToDismissBoxValue.StartToEnd -> Alignment.CenterStart
+                else -> Alignment.Center
+            }
+            val icon = when (direction) {
+                SwipeToDismissBoxValue.EndToStart -> Icons.Default.Delete
+                SwipeToDismissBoxValue.StartToEnd -> if (conv.peer.isArchived) Icons.Default.Unarchive else Icons.Default.Archive
+                else -> Icons.Default.Delete
+            }
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -173,9 +218,11 @@ private fun SwipeToDeleteConversation(
                 contentAlignment = alignment
             ) {
                 Icon(
-                    Icons.Default.Delete,
-                    contentDescription = "Delete",
-                    tint = MaterialTheme.colorScheme.onErrorContainer
+                    icon,
+                    contentDescription = null,
+                    tint = if (direction == SwipeToDismissBoxValue.EndToStart) 
+                        MaterialTheme.colorScheme.onErrorContainer 
+                    else MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
         }

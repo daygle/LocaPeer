@@ -2,6 +2,7 @@ package com.locapeer.messaging
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -168,7 +169,8 @@ fun ChatScreen(
             items(messages, key = { it.id }) { msg ->
                 SwipeToDeleteMessage(
                     msg = msg,
-                    onDelete = { vm.deleteMessage(msg) },
+                    onDeleteLocal = { vm.deleteMessage(msg) },
+                    onDeleteRemote = { vm.deleteMessageFromRemote(msg) },
                     onNavigateToMap = onNavigateToMap
                 )
             }
@@ -178,7 +180,12 @@ fun ChatScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit, onNavigateToMap: (Double, Double) -> Unit) {
+private fun SwipeToDeleteMessage(
+    msg: MessageEntity,
+    onDeleteLocal: () -> Unit,
+    onDeleteRemote: () -> Unit,
+    onNavigateToMap: (Double, Double) -> Unit
+) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
     )
@@ -186,7 +193,7 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit, onNav
 
     LaunchedEffect(dismissState.currentValue) {
         if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
-            onDelete()
+            showDeleteDialog = true
             dismissState.snapTo(SwipeToDismissBoxValue.Settled)
         }
     }
@@ -196,10 +203,44 @@ private fun SwipeToDeleteMessage(msg: MessageEntity, onDelete: () -> Unit, onNav
             onDismissRequest = { showDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
             title = { Text("Delete message?") },
-            text = { Text("This message will be removed from your device only.") },
-            confirmButton = {
-                TextButton(onClick = { showDeleteDialog = false; onDelete() }) { Text("Delete") }
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("How do you want to delete this message?")
+                    
+                    ListItem(
+                        headlineContent = { Text("Delete locally") },
+                        supportingContent = { Text("Removed from your device only.") },
+                        modifier = Modifier.clickable { 
+                            onDeleteLocal()
+                            showDeleteDialog = false
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    
+                    if (msg.isMine) {
+                        ListItem(
+                            headlineContent = { Text("Delete from contact") },
+                            supportingContent = { Text("Sends a request to remove it from their device.") },
+                            modifier = Modifier.clickable { 
+                                onDeleteRemote()
+                                showDeleteDialog = false
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                        ListItem(
+                            headlineContent = { Text("Delete from both") },
+                            supportingContent = { Text("Removes it locally and requests remote deletion.") },
+                            modifier = Modifier.clickable { 
+                                onDeleteLocal()
+                                onDeleteRemote()
+                                showDeleteDialog = false
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
+                }
             },
+            confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
             }

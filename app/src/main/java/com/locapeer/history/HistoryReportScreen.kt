@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -24,6 +25,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
+import com.locapeer.ui.components.TimePickerDialog
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -49,12 +51,16 @@ fun HistoryReportScreen(
     val broadcasters by vm.receiveContacts.collectAsState()
     val selectedPeerId by vm.selectedPeerId.collectAsState()
     val selectedDayStart by vm.selectedDayStart.collectAsState()
+    val startTimeOffset by vm.startTimeOffset.collectAsState()
+    val endTimeOffset by vm.endTimeOffset.collectAsState()
     val heartbeats by vm.heartbeats.collectAsState()
     val addresses by vm.addresses.collectAsState()
 
     val selectedPeer = broadcasters.find { it.deviceId == selectedPeerId }
 
     var showDatePicker by remember { mutableStateOf(false) }
+    var showStartTimePicker by remember { mutableStateOf(false) }
+    var showEndTimePicker by remember { mutableStateOf(false) }
     var peerDropdownExpanded by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
 
@@ -136,30 +142,82 @@ fun HistoryReportScreen(
                 }
 
                 Card(modifier = Modifier.fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 4.dp, vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(onClick = { vm.prevDay() }) {
-                            Icon(Icons.Default.ChevronLeft, contentDescription = "Previous Day")
-                        }
-                        TextButton(
-                            onClick = { showDatePicker = true },
-                            modifier = Modifier.weight(1f)
+                    Column {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 4.dp, vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                dateFormat.format(Date(selectedDayStart)),
-                                style = MaterialTheme.typography.titleSmall,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            IconButton(onClick = { vm.prevDay() }) {
+                                Icon(Icons.Default.ChevronLeft, contentDescription = "Previous Day")
+                            }
+                            TextButton(
+                                onClick = { showDatePicker = true },
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                Text(
+                                    dateFormat.format(Date(selectedDayStart)),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                            IconButton(
+                                onClick = { vm.nextDay() },
+                                enabled = !vm.isToday()
+                            ) {
+                                Icon(Icons.Default.ChevronRight, contentDescription = "Next Day")
+                            }
                         }
-                        IconButton(
-                            onClick = { vm.nextDay() },
-                            enabled = !vm.isToday()
+
+                        HorizontalDivider(
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            thickness = 0.5.dp,
+                            color = MaterialTheme.colorScheme.outlineVariant
+                        )
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Icon(Icons.Default.ChevronRight, contentDescription = "Next Day")
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    "From:",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(onClick = { showStartTimePicker = true }) {
+                                    val hour = (startTimeOffset / 3_600_000).toInt()
+                                    val minute = ((startTimeOffset % 3_600_000) / 60_000).toInt()
+                                    Text(String.format("%02d:%02d", hour, minute))
+                                }
+                            }
+
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text(
+                                    "To:",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                TextButton(onClick = { showEndTimePicker = true }) {
+                                    val hour = (endTimeOffset / 3_600_000).toInt()
+                                    val minute = ((endTimeOffset % 3_600_000) / 60_000).toInt()
+                                    Text(String.format("%02d:%02d", hour, minute))
+                                }
+                            }
+
+                            if (startTimeOffset > 0 || endTimeOffset < 24 * 60 * 60 * 1000L - 1000) {
+                                IconButton(onClick = { vm.resetTimeRange() }) {
+                                    Icon(
+                                        Icons.Default.Close,
+                                        contentDescription = "Reset Time",
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -207,6 +265,32 @@ fun HistoryReportScreen(
                 showDatePicker = false
             },
             onDismiss = { showDatePicker = false }
+        )
+    }
+
+    if (showStartTimePicker) {
+        val currentMinutes = (startTimeOffset / 60_000).toInt()
+        TimePickerDialog(
+            initialMinute = currentMinutes,
+            title = "Start Time",
+            onConfirm = { minutes ->
+                vm.setTimeRange(minutes * 60_000L, endTimeOffset)
+                showStartTimePicker = false
+            },
+            onDismiss = { showStartTimePicker = false }
+        )
+    }
+
+    if (showEndTimePicker) {
+        val currentMinutes = (endTimeOffset / 60_000).toInt()
+        TimePickerDialog(
+            initialMinute = currentMinutes,
+            title = "End Time",
+            onConfirm = { minutes ->
+                vm.setTimeRange(startTimeOffset, minutes * 60_000L)
+                showEndTimePicker = false
+            },
+            onDismiss = { showEndTimePicker = false }
         )
     }
 }
@@ -288,7 +372,7 @@ private fun HistoryMapTab(
         }
     }
 
-    Box(modifier = modifier) {
+    Box(modifier = modifier.clipToBounds()) {
         AndroidView(
             factory = { ctx ->
                 @Suppress("DEPRECATION")

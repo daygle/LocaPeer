@@ -29,4 +29,7 @@ interface PeerDao {
 
     @Query("DELETE FROM peers WHERE deviceId = :deviceId")
     suspend fun deletePeerById(deviceId: String)
+
+    @Query("UPDATE peers SET isArchived = :archived WHERE deviceId = :peerId")
+    suspend fun setArchived(peerId: String, archived: Boolean)
 }

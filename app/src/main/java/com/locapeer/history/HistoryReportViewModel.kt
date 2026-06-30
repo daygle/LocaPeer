@@ -50,10 +50,16 @@ class HistoryReportViewModel @Inject constructor(
     private val _selectedDayStart = MutableStateFlow(todayStartMs())
     val selectedDayStart: StateFlow<Long> = _selectedDayStart
 
+    private val _startTimeOffset = MutableStateFlow(0L) // ms from day start
+    val startTimeOffset: StateFlow<Long> = _startTimeOffset
+
+    private val _endTimeOffset = MutableStateFlow(DAY_MS - 1) // ms from day start
+    val endTimeOffset: StateFlow<Long> = _endTimeOffset
+
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
-        combine(_selectedPeerId, _selectedDayStart) { peerId, dayStart ->
+        combine(_selectedPeerId, _selectedDayStart, _startTimeOffset, _endTimeOffset) { peerId, dayStart, startOff, endOff ->
             if (peerId == null) flowOf(emptyList())
-            else heartbeatDao.getHeartbeatsForDay(peerId, dayStart, dayStart + DAY_MS)
+            else heartbeatDao.getHeartbeatsForDay(peerId, dayStart + startOff, dayStart + endOff)
         }
             .flatMapLatest { it }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
@@ -90,17 +96,31 @@ class HistoryReportViewModel @Inject constructor(
     fun selectDay(dayStartMs: Long) {
         _selectedDayStart.value = dayStartMs
         _addresses.value = emptyMap()
+        resetTimeRange()
+    }
+
+    fun setTimeRange(startMs: Long, endMs: Long) {
+        _startTimeOffset.value = startMs
+        _endTimeOffset.value = endMs
+        _addresses.value = emptyMap()
+    }
+
+    fun resetTimeRange() {
+        _startTimeOffset.value = 0L
+        _endTimeOffset.value = DAY_MS - 1
     }
 
     fun prevDay() {
         _selectedDayStart.update { it - DAY_MS }
         _addresses.value = emptyMap()
+        resetTimeRange()
     }
 
     fun nextDay() {
         val today = todayStartMs()
         _selectedDayStart.update { ms -> minOf(ms + DAY_MS, today) }
         _addresses.value = emptyMap()
+        resetTimeRange()
     }
 
     fun isToday(): Boolean = _selectedDayStart.value == todayStartMs()

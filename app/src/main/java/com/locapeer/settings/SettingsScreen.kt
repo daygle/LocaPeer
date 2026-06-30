@@ -24,9 +24,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
-import com.locapeer.settings.BackupSection
-import com.locapeer.supervised.SupervisedModeManager
 import com.locapeer.supervised.SupervisionGate
+import com.locapeer.ui.components.MapLocationPicker
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
@@ -68,6 +67,7 @@ fun SettingsScreen(
     var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
     var showMapStartingPointDialog by remember { mutableStateOf(false) }
+    var showFixedLocationPicker by remember { mutableStateOf(false) }
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
@@ -218,40 +218,55 @@ fun SettingsScreen(
 
             item {
                 SettingsCard {
-                    Column(
+                    Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 56.dp, end = 16.dp, top = 12.dp, bottom = 4.dp),
-                        verticalArrangement = Arrangement.spacedBy(2.dp)
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.Top
                     ) {
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                            Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
+                        Icon(
+                            Icons.Default.ZoomIn,
+                            contentDescription = null,
+                            modifier = Modifier.padding(top = 2.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(16.dp))
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    settings.mapStartZoom.toInt().toString(),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
                             Text(
-                                settings.mapStartZoom.toInt().toString(),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.SemiBold,
-                                color = MaterialTheme.colorScheme.primary
+                                "Used for Current Location, All Contacts and Fixed Location modes",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Slider(
+                                value = settings.mapStartZoom.toFloat(),
+                                onValueChange = { vm.setMapStartZoom(it.toDouble()) },
+                                valueRange = 3f..18f,
+                                steps = 14,
+                                modifier = Modifier.fillMaxWidth()
                             )
                         }
-                        Text(
-                            "Used for My location, Show all contacts and Fixed location modes",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Slider(
-                            value = settings.mapStartZoom.toFloat(),
-                            onValueChange = { vm.setMapStartZoom(it.toDouble()) },
-                            valueRange = 3f..18f,
-                            steps = 14,
-                            modifier = Modifier.fillMaxWidth()
-                        )
                     }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     val startingPointLabel = when (settings.mapStartingPoint) {
-                        "OWN_PIN" -> "My location"
-                        "FIT_ALL" -> "Show all contacts"
-                        "FIXED_LOCATION" -> "Fixed location"
-                        else -> "Remember last position"
+                        "OWN_PIN" -> "Current Location"
+                        "FIT_ALL" -> "All Contacts"
+                        "FIXED_LOCATION" -> "Fixed Location"
+                        else -> "Last Position"
                     }
                     ListItem(
                         headlineContent = { Text("Starting Point") },
@@ -275,25 +290,15 @@ fun SettingsScreen(
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                            if (fixedLocationCaptureMessage.isNotEmpty()) {
-                                Text(
-                                    fixedLocationCaptureMessage,
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
                             OutlinedButton(
                                 onClick = {
-                                    fixedLocationCaptureMessage = ""
-                                    vm.captureCurrentLocationAsFixed { success ->
-                                        fixedLocationCaptureMessage = if (success) "Location saved" else "Location not available"
-                                    }
+                                    showFixedLocationPicker = true
                                 },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                Icon(Icons.Default.MyLocation, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Icon(Icons.Default.Map, contentDescription = null, modifier = Modifier.size(16.dp))
                                 Spacer(Modifier.width(6.dp))
-                                Text("Use My Current Location")
+                                Text("Pick Location on Map")
                             }
                         }
                     }
@@ -303,7 +308,6 @@ fun SettingsScreen(
             item { SectionLabel("Privacy & Data") }
 
             // Data on this device (local retention + manual clear)
-            // Per-contact retention on peers' devices now lives on the Sharing screen.
             item {
                 SettingsCard {
                     RetentionRow(
@@ -348,7 +352,6 @@ fun SettingsScreen(
 
             item { SectionLabel("Keys & Backup") }
 
-            // Card: Backup & keys
             item {
                 SettingsCard {
                     backupResult?.let { msg ->
@@ -665,10 +668,10 @@ fun SettingsScreen(
 
     if (showMapStartingPointDialog) {
         val options = listOf(
-            "RESTORE_LAST"   to "Remember last position",
-            "OWN_PIN"        to "My location",
-            "FIT_ALL"        to "Show all contacts",
-            "FIXED_LOCATION" to "Fixed location"
+            "RESTORE_LAST"   to "Last Position",
+            "OWN_PIN"        to "Current Location",
+            "FIT_ALL"        to "All Contacts",
+            "FIXED_LOCATION" to "Fixed Location"
         )
         AlertDialog(
             onDismissRequest = { showMapStartingPointDialog = false },
@@ -701,6 +704,18 @@ fun SettingsScreen(
             confirmButton = {
                 TextButton(onClick = { showMapStartingPointDialog = false }) { Text("Cancel") }
             }
+        )
+    }
+
+    if (showFixedLocationPicker) {
+        MapLocationPicker(
+            initialLat = settings.mapFixedLat,
+            initialLng = settings.mapFixedLng,
+            onLocationSelected = { lat, lng ->
+                vm.setMapFixedLocation(lat, lng)
+                showFixedLocationPicker = false
+            },
+            onDismiss = { showFixedLocationPicker = false }
         )
     }
 }

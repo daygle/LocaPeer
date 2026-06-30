@@ -36,6 +36,9 @@ interface MessageDao {
     @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0 AND isBlocked = 0")
     suspend fun markAllReadForPeer(peerId: String)
 
+    @Query("DELETE FROM messages WHERE id = :messageId")
+    suspend fun deleteById(messageId: String)
+
     @Query("DELETE FROM messages WHERE timestamp < :before")
     suspend fun deleteOlderThan(before: Long)
 

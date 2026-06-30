@@ -62,10 +62,23 @@ class MessagingViewModel @Inject constructor(
                 val peerMap = peers.associateBy { it.deviceId }
                 msgs.mapNotNull { msg ->
                     val peer = peerMap[msg.peerId] ?: return@mapNotNull null
+                    if (peer.isArchived) return@mapNotNull null
                     ConversationSummary(peer = peer, lastMessage = msg)
                 }
             }
             .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    val archivedConversations: StateFlow<List<ConversationSummary>> =
+        messageDao.getConversationSummaries()
+            .combine(peerDao.getAllPeers()) { msgs, peers ->
+                val peerMap = peers.associateBy { it.deviceId }
+                msgs.mapNotNull { msg ->
+                    val peer = peerMap[msg.peerId] ?: return@mapNotNull null
+                    if (!peer.isArchived) return@mapNotNull null
+                    ConversationSummary(peer = peer, lastMessage = msg)
+                }
+            }
+            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     /** Observe whether incoming messages from this peer are allowed. */
     fun getMessagingEnabled(peerId: String): Flow<Boolean> =
@@ -106,8 +119,34 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { messageDao.delete(msg) }
     }
 
+    fun deleteMessageFromRemote(msg: MessageEntity) {
+        viewModelScope.launch {
+            try {
+                if (msg.nostrEventId.isEmpty()) return@launch
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                
+                // NIP-09 Event Deletion
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.EVENT_DELETION,
+                    content = "Deleting message",
+                    tags = listOf(listOf("e", msg.nostrEventId)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            } catch (e: Exception) {
+                android.util.Log.e("MessagingViewModel", "deleteMessageFromRemote failed", e)
+            }
+        }
+    }
+
     fun deleteConversation(peerId: String) {
         viewModelScope.launch { messageDao.deleteAllForPeer(peerId) }
+    }
+
+    fun archiveConversation(peerId: String, archived: Boolean) {
+        viewModelScope.launch { peerDao.setArchived(peerId, archived) }
     }
 
     fun markRead(peerId: String) {
@@ -176,7 +215,8 @@ class MessagingViewModel @Inject constructor(
                         NostrEventKind.ENCRYPTED_DM,
                         NostrEventKind.READ_RECEIPT,
                         NostrEventKind.TYPING,
-                        NostrEventKind.DELIVERY_ACK
+                        NostrEventKind.DELIVERY_ACK,
+                        NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(myPubHex)
                 )
@@ -191,6 +231,7 @@ class MessagingViewModel @Inject constructor(
                     NostrEventKind.READ_RECEIPT -> processReadReceipt(event)
                     NostrEventKind.TYPING -> processTypingEvent(event)
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAck(event)
+                    NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
             }
             .launchIn(viewModelScope)
@@ -310,6 +351,19 @@ class MessagingViewModel @Inject constructor(
         messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
     }
 
+    private fun processDeletionEvent(event: NostrEvent) {
+        viewModelScope.launch {
+            if (!NostrEvent.verify(event, crypto)) return@launch
+            val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
+            targetEventIds.forEach { eventId ->
+                val msg = messageDao.getByNostrEventId(eventId)
+                if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
+                    messageDao.delete(msg)
+                }
+            }
+        }
+    }
+
     private suspend fun sendReadReceipt(peerPubkey: String, eventIds: List<String>) {
         if (eventIds.isEmpty()) return
         val peer = peerDao.getPeer(peerPubkey) ?: return
@@ -352,9 +406,12 @@ class MessagingViewModel @Inject constructor(
 
     private fun sendMessageNotification(sender: PeerEntity, preview: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("navigateTo", "chat")
             putExtra("openChat", sender.deviceId)
+            putExtra("peerName", sender.displayName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
-        val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        val pi = PendingIntent.getActivity(context, sender.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, "locapeer_messages")
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle(sender.displayName)

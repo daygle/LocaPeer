@@ -19,6 +19,7 @@ data class PeerEntity(
     val locationRole: String,
     /** Whether this device wants to receive messages from this peer. */
     val messagingEnabled: Boolean = true,
+    val isArchived: Boolean = false,
     val addedAt: Long = System.currentTimeMillis()
 ) {
     companion object {

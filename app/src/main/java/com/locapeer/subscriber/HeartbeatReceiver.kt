@@ -381,7 +381,9 @@ class HeartbeatReceiver @Inject constructor(
 
     private fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("navigateTo", "chat")
             putExtra("openChat", peerId)
+            putExtra("peerName", senderName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         val pi = PendingIntent.getActivity(context, peerId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
