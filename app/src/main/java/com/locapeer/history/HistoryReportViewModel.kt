@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
@@ -36,13 +37,17 @@ import kotlin.coroutines.resume
 class HistoryReportViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val heartbeatDao: HeartbeatDao,
-    private val peerDao: PeerDao
+    private val peerDao: PeerDao,
+    private val keyManager: KeyManager
 ) : ViewModel() {
 
     private val geocoder = Geocoder(context, Locale.getDefault())
 
     val receiveContacts: StateFlow<List<PeerEntity>> = peerDao.getReceiveContacts()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    private val _selfPubkeyHex = MutableStateFlow<String?>(null)
+    val selfPubkeyHex: StateFlow<String?> = _selfPubkeyHex
 
     private val _selectedPeerId = MutableStateFlow<String?>(null)
     val selectedPeerId: StateFlow<String?> = _selectedPeerId
@@ -68,6 +73,10 @@ class HistoryReportViewModel @Inject constructor(
     val addresses: StateFlow<Map<Long, String>> = _addresses
 
     init {
+        viewModelScope.launch {
+            val (_, pubHex) = keyManager.ensureKeypair()
+            _selfPubkeyHex.value = pubHex
+        }
         viewModelScope.launch {
             receiveContacts.collect { list ->
                 if (_selectedPeerId.value == null && list.isNotEmpty()) {

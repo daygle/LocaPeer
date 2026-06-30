@@ -278,7 +278,7 @@ fun LocaPeerNavHost(
                 )
             }
             composable(Screen.History.route) {
-                HistoryReportScreen(onNavigateBack = null)
+                HistoryReportScreen(isOwnHistoryMode = true, onNavigateBack = null)
             }
             composable(
                 "about",
