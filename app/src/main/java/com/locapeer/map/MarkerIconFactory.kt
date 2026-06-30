@@ -11,8 +11,9 @@ import android.util.LruCache
 import androidx.core.graphics.toColorInt
 
 private val PIN_COLORS = listOf(
-    "#1565C0", "#00897B", "#E53935", "#7B1FA2",
-    "#F57F17", "#00838F", "#2E7D32", "#C62828"
+    "#E53935", "#F57C00", "#F9A825", "#388E3C",
+    "#00897B", "#0097A7", "#1976D2", "#303F9F",
+    "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
 
 object MarkerIconFactory {
@@ -79,6 +80,35 @@ object MarkerIconFactory {
             close()
         }
         canvas.drawPath(path, tailPaint)
+
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        cache.put(key, drawable)
+        return drawable
+    }
+
+    /** Small filled circle for intermediate waypoint markers on the history map. */
+    fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false): BitmapDrawable {
+        val key = "dot-$pinColor-$isSos"
+        cache.get(key)?.let { return it }
+
+        val dp = context.resources.displayMetrics.density
+        val sizePx = (dp * 14).toInt()
+        val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val cx = sizePx / 2f
+
+        val fillColor = when {
+            isSos -> "#D32F2F".toColorInt()
+            pinColor.isNotEmpty() -> pinColor.toColorInt()
+            else -> "#1976D2".toColorInt()
+        }
+
+        canvas.drawCircle(cx, cx, cx - dp, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = fillColor })
+        canvas.drawCircle(cx, cx, cx - dp, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0xFFFFFFFF.toInt()
+            style = Paint.Style.STROKE
+            strokeWidth = dp * 1.5f
+        })
 
         val drawable = BitmapDrawable(context.resources, bitmap)
         cache.put(key, drawable)

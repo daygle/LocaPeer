@@ -5,8 +5,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.BatteryStd
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -189,6 +191,7 @@ fun HistoryReportScreen(
                 )
                 1 -> HistoryMapTab(
                     heartbeats = heartbeats,
+                    addresses = addresses,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -249,6 +252,7 @@ private fun HistoryListTab(
 @Composable
 private fun HistoryMapTab(
     heartbeats: List<HeartbeatEntity>,
+    addresses: Map<Long, String>,
     modifier: Modifier = Modifier
 ) {
     if (heartbeats.isEmpty()) {
@@ -264,6 +268,8 @@ private fun HistoryMapTab(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
+    var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
+    val timestampFormat = remember { SimpleDateFormat("d MMM yyyy · HH:mm:ss", Locale.getDefault()) }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -282,99 +288,155 @@ private fun HistoryMapTab(
         }
     }
 
-    AndroidView(
-        factory = { ctx ->
-            @Suppress("DEPRECATION")
-            MapView(ctx).apply {
-                setTileSource(TileSourceFactory.MAPNIK)
-                setBuiltInZoomControls(false)
-                setMultiTouchControls(true)
-                isVerticalMapRepetitionEnabled = false
-                setOnTouchListener { v, event ->
-                    when (event.action) {
-                        android.view.MotionEvent.ACTION_DOWN,
-                        android.view.MotionEvent.ACTION_MOVE ->
-                            v.parent?.requestDisallowInterceptTouchEvent(true)
-                        android.view.MotionEvent.ACTION_UP,
-                        android.view.MotionEvent.ACTION_CANCEL ->
-                            v.parent?.requestDisallowInterceptTouchEvent(false)
+    Box(modifier = modifier) {
+        AndroidView(
+            factory = { ctx ->
+                @Suppress("DEPRECATION")
+                MapView(ctx).apply {
+                    setTileSource(TileSourceFactory.MAPNIK)
+                    setBuiltInZoomControls(false)
+                    setMultiTouchControls(true)
+                    isVerticalMapRepetitionEnabled = false
+                    setOnTouchListener { v, event ->
+                        when (event.action) {
+                            android.view.MotionEvent.ACTION_DOWN,
+                            android.view.MotionEvent.ACTION_MOVE ->
+                                v.parent?.requestDisallowInterceptTouchEvent(true)
+                            android.view.MotionEvent.ACTION_UP,
+                            android.view.MotionEvent.ACTION_CANCEL ->
+                                v.parent?.requestDisallowInterceptTouchEvent(false)
+                        }
+                        false
                     }
-                    false
-                }
-            }.also { mapViewRef = it }
-        },
-        update = { mapView ->
-            mapView.overlays.clear()
+                }.also { mapViewRef = it }
+            },
+            update = { mapView ->
+                mapView.overlays.clear()
 
-            if (heartbeats.isNotEmpty()) {
-                val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
-                // Use the most recent heartbeat for colour so the current pin colour
-                // setting is reflected even if earlier heartbeats were recorded before
-                // the user chose a colour.
-                val sample = heartbeats.last()
-                val pinColor = sample.pinColor
-                val lineColor = if (pinColor.isNotEmpty())
+                val pinColor = heartbeats.last().pinColor
+                val lineArgb = if (pinColor.isNotEmpty())
                     android.graphics.Color.parseColor(pinColor).let {
                         android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
                     }
                 else android.graphics.Color.argb(200, 66, 133, 244)
 
                 val polyline = Polyline().apply {
-                    setPoints(points)
-                    outlinePaint.color = lineColor
+                    setPoints(heartbeats.map { GeoPoint(it.lat, it.lng) })
+                    outlinePaint.color = lineArgb
                     outlinePaint.strokeWidth = 6f
                     outlinePaint.isAntiAlias = true
                 }
                 mapView.overlays.add(polyline)
 
-                heartbeats.firstOrNull()?.let { first ->
-                    val icon = MarkerIconFactory.create(
-                        context = mapView.context,
-                        displayName = first.displayName,
-                        isOverdue = false,
-                        isSos = false,
-                        pinColor = pinColor
-                    )
+                heartbeats.forEachIndexed { index, ping ->
+                    val isEndpoint = index == 0 || index == heartbeats.lastIndex
                     val marker = Marker(mapView).apply {
-                        position = GeoPoint(first.lat, first.lng)
-                        title = "Start"
-                        setIcon(icon)
-                        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                        position = GeoPoint(ping.lat, ping.lng)
                         infoWindow = null
-                    }
-                    mapView.overlays.add(marker)
-                }
-
-                if (heartbeats.size > 1) {
-                    heartbeats.lastOrNull()?.let { last ->
-                        val icon = MarkerIconFactory.create(
-                            context = mapView.context,
-                            displayName = last.displayName,
-                            isOverdue = false,
-                            isSos = false,
-                            pinColor = last.pinColor
-                        )
-                        val marker = Marker(mapView).apply {
-                            position = GeoPoint(last.lat, last.lng)
-                            title = "Latest"
+                        if (isEndpoint) {
+                            val icon = MarkerIconFactory.create(
+                                context = mapView.context,
+                                displayName = ping.displayName,
+                                isOverdue = false,
+                                isSos = ping.isSos,
+                                pinColor = ping.pinColor
+                            )
                             setIcon(icon)
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            infoWindow = null
+                        } else {
+                            val icon = MarkerIconFactory.createDotIcon(
+                                context = mapView.context,
+                                pinColor = ping.pinColor,
+                                isSos = ping.isSos
+                            )
+                            setIcon(icon)
+                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                         }
-                        mapView.overlays.add(marker)
+                        setOnMarkerClickListener { _, _ ->
+                            selectedPing = ping
+                            true
+                        }
                     }
+                    mapView.overlays.add(marker)
                 }
 
                 val centerLat = heartbeats.map { it.lat }.average()
                 val centerLng = heartbeats.map { it.lng }.average()
                 mapView.controller.setCenter(GeoPoint(centerLat, centerLng))
                 mapView.controller.setZoom(16.0)
-            }
+                mapView.invalidate()
+            },
+            modifier = Modifier.fillMaxSize()
+        )
 
-            mapView.invalidate()
-        },
-        modifier = modifier
-    )
+        selectedPing?.let { ping ->
+            Card(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (ping.isSos)
+                        MaterialTheme.colorScheme.errorContainer
+                    else
+                        MaterialTheme.colorScheme.surface
+                )
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            if (ping.isSos) {
+                                Icon(Icons.Default.Warning, contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.error,
+                                    modifier = Modifier.size(16.dp))
+                            }
+                            Text(
+                                timestampFormat.format(Date(ping.timestamp)),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        IconButton(onClick = { selectedPing = null }, modifier = Modifier.size(24.dp)) {
+                            Icon(Icons.Default.Close, contentDescription = "Dismiss", modifier = Modifier.size(16.dp))
+                        }
+                    }
+
+                    addresses[ping.id]?.let { addr ->
+                        Spacer(Modifier.height(4.dp))
+                        Text(addr, style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+
+                    Spacer(Modifier.height(6.dp))
+                    Text(
+                        "%.5f°, %.5f°".format(ping.lat, ping.lng),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+
+                    Spacer(Modifier.height(6.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("±${ping.accuracy.toInt()} m accuracy",
+                            style = MaterialTheme.typography.labelSmall)
+                        Text("🔋 ${ping.battery}%",
+                            style = MaterialTheme.typography.labelSmall)
+                        if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
+                            Text("${(ping.speed * 3.6f).toInt()} km/h · ${bearingToCardinal(ping.bearing)}",
+                                style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+
+                    Spacer(Modifier.height(4.dp))
+                    MotionChip(ping.motionState)
+                }
+            }
+        }
+    }
 }
 
 @Composable
