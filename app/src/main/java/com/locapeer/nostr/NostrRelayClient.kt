@@ -80,8 +80,22 @@ class NostrRelayClient @Inject constructor(
 
     private val recentEventLock by lazy { Any() }
     private val recentEventIds by lazy { LinkedHashSet<String>(2048) }
+    private val eventsSinceLastSave = java.util.concurrent.atomic.AtomicInteger(0)
 
     init {
+        scope.launch {
+            val persisted = prefs.getRecentEventIds()
+            if (persisted.isNotEmpty()) {
+                synchronized(recentEventLock) {
+                    persisted.forEach { id ->
+                        if (recentEventIds.size >= 2000) {
+                            recentEventIds.remove(recentEventIds.iterator().next())
+                        }
+                        recentEventIds.add(id)
+                    }
+                }
+            }
+        }
         scope.launch {
             combine(
                 prefs.settings.map { it.customRelays }.distinctUntilChanged(),
@@ -291,7 +305,14 @@ class NostrRelayClient @Inject constructor(
                                 }
                                 recentEventIds.add(event.id)
                             }
-                            if (isNew) scope.launch { _events.emit(event) }
+                            if (isNew) {
+                                if (eventsSinceLastSave.incrementAndGet() >= 100) {
+                                    eventsSinceLastSave.set(0)
+                                    val snapshot = synchronized(recentEventLock) { recentEventIds.toSet() }
+                                    scope.launch { prefs.saveRecentEventIds(snapshot) }
+                                }
+                                scope.launch { _events.emit(event) }
+                            }
                         }
                         "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
                         "NOTICE" -> if (arr.size >= 2) Log.d(TAG, "NOTICE from $url: ${arr[1]}")

@@ -94,6 +94,7 @@ class AppPreferences @Inject constructor(
     private val KEY_MAP_STARTING_POINT = stringPreferencesKey("map_starting_point")
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
     private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
+    private val KEY_RECENT_EVENT_IDS = stringPreferencesKey("recent_event_ids")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -215,6 +216,16 @@ class AppPreferences @Inject constructor(
 
     suspend fun setGlobalScheduleRules(rules: List<ScheduleRule>) {
         context.settingsStore.edit { it[KEY_GLOBAL_SCHEDULE_RULES] = Json.encodeToString(rules) }
+    }
+
+    suspend fun getRecentEventIds(): Set<String> {
+        val raw = context.settingsStore.data.first()[KEY_RECENT_EVENT_IDS] ?: return emptySet()
+        return raw.split(",").filter { it.isNotBlank() }.toSet()
+    }
+
+    suspend fun saveRecentEventIds(ids: Set<String>) {
+        val trimmed = ids.toList().takeLast(1000)
+        context.settingsStore.edit { it[KEY_RECENT_EVENT_IDS] = trimmed.joinToString(",") }
     }
 
     suspend fun updateIntervals(

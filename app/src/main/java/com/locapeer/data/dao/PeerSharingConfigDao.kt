@@ -31,6 +31,9 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET retentionDaysMessages = :days WHERE peerDeviceId = :peerDeviceId")
     suspend fun setRetentionDaysMessages(peerDeviceId: String, days: Int)
 
+    @Query("UPDATE peer_sharing_config SET isMySupervised = :supervised WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setIsMySupervised(peerDeviceId: String, supervised: Boolean)
+
     @Query("SELECT * FROM peer_sharing_config")
     suspend fun getAll(): List<PeerSharingConfig>
 

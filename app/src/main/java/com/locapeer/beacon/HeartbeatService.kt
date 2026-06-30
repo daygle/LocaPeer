@@ -374,7 +374,7 @@ class HeartbeatService : LifecycleService() {
                     locationRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (isSos && cfg != null && !cfg.isSosContact) return@forEach
+                        if (isSos && cfg?.isSosContact != true) return@forEach
                         if (!isSos && cfg != null && !cfg.sharingEnabled) return@forEach
                         if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules())) return@forEach
 

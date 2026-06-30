@@ -16,6 +16,7 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.HeartbeatEntity
@@ -98,6 +99,7 @@ class HeartbeatReceiver @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val pendingRequestDao: PendingRequestDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
@@ -349,6 +351,10 @@ class HeartbeatReceiver @Inject constructor(
         if (event.createdAt < Instant.now().epochSecond - 300) return
 
         peerDao.getPeer(event.pubkey) ?: return
+        // Only show the approval dialog if this contact is explicitly marked as a supervised device;
+        // any known contact can send a SUPERVISED_UNLOCK_REQUEST, so the isMySupervised flag prevents
+        // social-engineering attacks from regular contacts.
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -365,6 +371,7 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processUnlockResponse(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - 300) return
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
         if (!NostrEvent.verify(event, crypto)) return
