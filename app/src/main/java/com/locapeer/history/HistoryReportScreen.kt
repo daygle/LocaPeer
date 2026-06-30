@@ -41,11 +41,18 @@ import java.util.TimeZone
 @Composable
 fun HistoryReportScreen(
     peerId: String? = null,
+    isOwnHistoryMode: Boolean = false,
     onNavigateBack: (() -> Unit)? = null,
     vm: HistoryReportViewModel = hiltViewModel()
 ) {
+    val selfPubkeyHex by vm.selfPubkeyHex.collectAsState()
+
     LaunchedEffect(peerId) {
         if (peerId != null) vm.selectPeer(peerId)
+    }
+
+    LaunchedEffect(isOwnHistoryMode, selfPubkeyHex) {
+        if (isOwnHistoryMode && selfPubkeyHex != null) vm.selectPeer(selfPubkeyHex!!)
     }
 
     val broadcasters by vm.receiveContacts.collectAsState()
@@ -73,6 +80,7 @@ fun HistoryReportScreen(
                 title = {
                     Text(
                         when {
+                            isOwnHistoryMode -> "My Location History"
                             selectedPeer != null -> "History: ${selectedPeer.displayName}"
                             peerId != null -> "My Location History"
                             else -> "Location History"
@@ -94,7 +102,7 @@ fun HistoryReportScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            if (broadcasters.isEmpty() && peerId == null) {
+            if (broadcasters.isEmpty() && peerId == null && !isOwnHistoryMode) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
                         "No tracked people found.\nScan an invite QR code to start tracking someone.",
@@ -108,7 +116,7 @@ fun HistoryReportScreen(
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Spacer(Modifier.height(12.dp))
 
-                if (peerId == null) {
+                if (peerId == null && !isOwnHistoryMode) {
                     ExposedDropdownMenuBox(
                         expanded = peerDropdownExpanded,
                         onExpandedChange = { peerDropdownExpanded = it }
