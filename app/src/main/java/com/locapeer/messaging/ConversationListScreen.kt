@@ -131,7 +131,8 @@ fun ConversationListScreen(
                                 conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
                                 onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
-                                onDelete = { vm.deleteConversation(conv.peer.deviceId) },
+                                onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
+                                onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
                                 onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
                             )
                             HorizontalDivider(
@@ -152,7 +153,8 @@ private fun SwipeActionsConversation(
     conv: ConversationSummary,
     unreadCount: Int,
     onClick: () -> Unit,
-    onDelete: () -> Unit,
+    onDeleteLocal: () -> Unit,
+    onDeleteRemote: () -> Unit,
     onArchive: () -> Unit
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
@@ -179,10 +181,33 @@ private fun SwipeActionsConversation(
             onDismissRequest = { showDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
             title = { Text("Delete conversation?") },
-            text = { Text("All messages with ${conv.peer.displayName} will be removed from your device.") },
-            confirmButton = {
-                TextButton(onClick = { showDeleteDialog = false; onDelete() }) { Text("Delete") }
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("How do you want to delete this conversation with ${conv.peer.displayName}?")
+
+                    ListItem(
+                        headlineContent = { Text("Delete locally") },
+                        supportingContent = { Text("Removed from your device only.") },
+                        modifier = Modifier.clickable {
+                            onDeleteLocal()
+                            showDeleteDialog = false
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+
+                    ListItem(
+                        headlineContent = { Text("Delete from both") },
+                        supportingContent = { Text("Removes it locally and requests the peer to delete messages you sent.") },
+                        modifier = Modifier.clickable {
+                            onDeleteLocal()
+                            onDeleteRemote()
+                            showDeleteDialog = false
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
             },
+            confirmButton = {},
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
             }

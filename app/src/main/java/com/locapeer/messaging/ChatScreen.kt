@@ -14,11 +14,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -58,13 +62,55 @@ fun ChatScreen(
     val messages by vm.getMessages(peerId).collectAsState(initial = emptyList())
     val typingPeers by vm.typingPeers.collectAsState()
     val isPeerTyping = typingPeers.containsKey(peerId)
-    val messagingEnabled by vm.getMessagingEnabled(peerId).collectAsState(initial = true)
+    val peer by vm.observePeer(peerId).collectAsState(initial = null)
+    val messagingEnabled = peer?.messagingEnabled ?: true
+    val isArchived = peer?.isArchived ?: false
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
+    var showOptionsMenu by remember { mutableStateOf(false) }
+    var showClearChatDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(peerId) { vm.markRead(peerId) }
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
+    }
+
+    if (showClearChatDialog) {
+        AlertDialog(
+            onDismissRequest = { showClearChatDialog = false },
+            icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null) },
+            title = { Text("Clear chat history?") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("How do you want to clear this conversation with $peerName?")
+
+                    ListItem(
+                        headlineContent = { Text("Clear locally") },
+                        supportingContent = { Text("Removed from your device only.") },
+                        modifier = Modifier.clickable {
+                            vm.deleteConversation(peerId)
+                            showClearChatDialog = false
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+
+                    ListItem(
+                        headlineContent = { Text("Clear from both") },
+                        supportingContent = { Text("Removes it locally and requests $peerName to delete messages you sent.") },
+                        modifier = Modifier.clickable {
+                            vm.deleteConversation(peerId)
+                            vm.deleteConversationFromRemote(peerId)
+                            showClearChatDialog = false
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showClearChatDialog = false }) { Text("Cancel") }
+            }
+        )
     }
 
     Scaffold(
@@ -95,6 +141,35 @@ fun ChatScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = {
+                    Box {
+                        IconButton(onClick = { showOptionsMenu = true }) {
+                            Icon(Icons.Default.MoreVert, contentDescription = "Options")
+                        }
+                        DropdownMenu(
+                            expanded = showOptionsMenu,
+                            onDismissRequest = { showOptionsMenu = false }
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text(if (isArchived) "Unarchive" else "Archive") },
+                                leadingIcon = { Icon(if (isArchived) Icons.Default.Unarchive else Icons.Default.Archive, null) },
+                                onClick = {
+                                    showOptionsMenu = false
+                                    vm.archiveConversation(peerId, !isArchived)
+                                }
+                            )
+                            HorizontalDivider()
+                            DropdownMenuItem(
+                                text = { Text("Clear Chat History", color = MaterialTheme.colorScheme.error) },
+                                leadingIcon = { Icon(Icons.Default.DeleteSweep, null, tint = MaterialTheme.colorScheme.error) },
+                                onClick = {
+                                    showOptionsMenu = false
+                                    showClearChatDialog = true
+                                }
+                            )
+                        }
                     }
                 }
             )

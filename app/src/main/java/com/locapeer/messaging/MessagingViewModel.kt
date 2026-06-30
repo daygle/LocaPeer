@@ -84,6 +84,8 @@ class MessagingViewModel @Inject constructor(
     fun getMessagingEnabled(peerId: String): Flow<Boolean> =
         peerDao.observePeer(peerId).map { it?.messagingEnabled ?: true }
 
+    fun observePeer(peerId: String): Flow<PeerEntity?> = peerDao.observePeer(peerId)
+
     val unreadCounts: StateFlow<Map<String, Int>> =
         messageDao.getUnreadCountsPerPeer()
             .map { rows -> rows.associate { it.peerId to it.cnt } }
@@ -145,6 +147,32 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { messageDao.deleteAllForPeer(peerId) }
     }
 
+    fun deleteConversationFromRemote(peerId: String) {
+        viewModelScope.launch {
+            try {
+                val peer = peerDao.getPeer(peerId) ?: return@launch
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val payload = mapOf("senderPubKeyHex" to pubHex)
+                val encrypted = crypto.nip44Encrypt(
+                    crypto.hexToBytes(privHex),
+                    peer.publicKeyHex,
+                    json.encodeToString(payload)
+                )
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.DELETE_MY_MESSAGES,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            } catch (e: Exception) {
+                android.util.Log.e("MessagingViewModel", "deleteConversationFromRemote failed", e)
+            }
+        }
+    }
+
     fun archiveConversation(peerId: String, archived: Boolean) {
         viewModelScope.launch { peerDao.setArchived(peerId, archived) }
     }
@@ -186,6 +214,9 @@ class MessagingViewModel @Inject constructor(
                     )
                 }
                 relayClient.publishEvent(event)
+                
+                // Auto-unarchive peer on send
+                peerDao.unarchive(peerId)
 
                 val msg = MessageEntity(
                     id = UUID.randomUUID().toString(),
@@ -275,6 +306,8 @@ class MessagingViewModel @Inject constructor(
             nostrEventId = event.id,
             isBlocked = isBlocked
         )
+        // Auto-unarchive on receive
+        peerDao.unarchive(event.pubkey)
         messageDao.insert(msg)
         if (!isBlocked) {
             sendMessageNotification(sender, plaintext)

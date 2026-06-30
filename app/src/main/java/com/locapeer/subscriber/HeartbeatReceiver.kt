@@ -209,6 +209,13 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
         val broadcaster = peerDao.getPeer(event.pubkey) ?: return
+        
+        // Ensure peer is unarchived if they send an SOS or update their heartbeat
+        // so they are visible in the contacts/messaging UI during active tracking
+        if (event.kind == NostrEventKind.SOS_ALERT) {
+            peerDao.unarchive(event.pubkey)
+        }
+
         // Drop normal heartbeats from peers we are not configured to receive from.
         // SOS alerts bypass role checks — emergencies override access control.
         if (event.kind == NostrEventKind.HEARTBEAT &&
@@ -292,6 +299,8 @@ class HeartbeatReceiver @Inject constructor(
             nostrEventId = event.id,
             isBlocked = isBlocked
         )
+        // Auto-unarchive peer on receive
+        peerDao.unarchive(event.pubkey)
         messageDao.insert(msg)
         if (!isBlocked) {
             sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
@@ -587,6 +596,7 @@ class HeartbeatReceiver @Inject constructor(
             relayUrl = payload.acceptorRelayUrl,
             locationRole = newLocationRole,
             messagingEnabled = existingPeer?.messagingEnabled ?: true,
+            isArchived = existingPeer?.isArchived ?: false,
             addedAt = existingPeer?.addedAt ?: System.currentTimeMillis()
         )
         peerDao.upsertPeer(peer)
