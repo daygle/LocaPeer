@@ -80,7 +80,7 @@ fun LocaPeerNavHost(
     val currentRoute = backstackEntry?.destination?.route
 
     val bottomNavItems = remember(settings?.navTabIds) {
-        val ids = settings?.navTabIds ?: listOf("map", "messages", "contacts", "invite", "settings")
+        val ids = settings?.navTabIds ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings")
         val screenByRoute = ALL_NAV_SCREENS.associateBy { it.route }
         // Always ensure Map is present
         val ordered = ids.mapNotNull { screenByRoute[it] }

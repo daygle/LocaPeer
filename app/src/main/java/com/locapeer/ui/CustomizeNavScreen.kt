@@ -26,7 +26,7 @@ fun CustomizeNavScreen(
     val scope = rememberCoroutineScope()
 
     // Build ordered list with visible flag. Map is always visible and pinned first.
-    val currentIds = settings?.navTabIds ?: listOf("map", "messages", "contacts", "invite", "settings")
+    val currentIds = settings?.navTabIds ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings")
     val screenByRoute = ALL_NAV_SCREENS.associateBy { it.route }
 
     // State: ordered list of (Screen, visible)
