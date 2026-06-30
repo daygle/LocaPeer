@@ -96,7 +96,7 @@ class MessagingViewModel @Inject constructor(
     val typingPeers: StateFlow<Map<String, Long>> = _typingPeers
 
     private val typingClearJobs = mutableMapOf<String, Job>()
-    private var outgoingTypingJob: Job? = null
+    private var lastTypingSentAt = 0L
     private var myListeningPubkey: String? = null
     private var eventsJob: Job? = null
     private var okEventsJob: Job? = null
@@ -185,12 +185,12 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
-    /** Call on every keystroke in the chat input; debounces and sends one typing event per 3 s. */
+    /** Call on every keystroke in the chat input; throttles and sends one typing event per 3 s. */
     fun onTyping(peerId: String) {
-        outgoingTypingJob?.cancel()
-        outgoingTypingJob = viewModelScope.launch {
-            delay(500)
-            sendTypingEvent(peerId)
+        val now = System.currentTimeMillis()
+        if (now - lastTypingSentAt > 3000L) {
+            lastTypingSentAt = now
+            viewModelScope.launch { sendTypingEvent(peerId) }
         }
     }
 
@@ -236,6 +236,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun startListening(myPubHex: String) {
+        if (myListeningPubkey == myPubHex && eventsJob?.isActive == true) return
         myListeningPubkey = myPubHex
         createMessageChannel()
         viewModelScope.launch {
@@ -453,7 +454,7 @@ class MessagingViewModel @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(sender.deviceId.hashCode() + 10000, notification)
+        notificationManager.notify(sender.deviceId, 10000, notification)
     }
 
     private fun createMessageChannel() {

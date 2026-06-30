@@ -233,20 +233,28 @@ class HeartbeatService : LifecycleService() {
             Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
         )
-        try {
-            activityClient.requestActivityUpdates(30_000L, activityIntent)
-        } catch (e: SecurityException) {
-            Log.e(TAG, "Activity recognition permission missing: ${e.message}")
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to request activity updates", e)
-            if (isDeadObject(e)) {
-                activityClient = ActivityRecognition.getClient(this)
-                try {
-                    activityClient.requestActivityUpdates(30_000L, activityIntent)
-                } catch (e2: Exception) {
-                    Log.e(TAG, "Activity update retry failed", e2)
+        val hasActivityPerm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
+        } else true
+
+        if (hasActivityPerm) {
+            try {
+                activityClient.requestActivityUpdates(30_000L, activityIntent)
+            } catch (e: SecurityException) {
+                Log.e(TAG, "Activity recognition permission missing: ${e.message}")
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to request activity updates", e)
+                if (isDeadObject(e)) {
+                    activityClient = ActivityRecognition.getClient(this)
+                    try {
+                        activityClient.requestActivityUpdates(30_000L, activityIntent)
+                    } catch (e2: Exception) {
+                        Log.e(TAG, "Activity update retry failed", e2)
+                    }
                 }
             }
+        } else {
+            Log.w(TAG, "Skipping activity updates: permission missing")
         }
 
         lifecycleScope.launch {
@@ -366,9 +374,9 @@ class HeartbeatService : LifecycleService() {
                     locationRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (isSos && cfg?.isSosContact != true) return@forEach
-                        if (!isSos && cfg?.sharingEnabled == false) return@forEach
-                        if (!isSos && !SharingSchedule.isActive(cfg?.scheduleRules() ?: emptyList())) return@forEach
+                        if (isSos && cfg != null && !cfg.isSosContact) return@forEach
+                        if (!isSos && cfg != null && !cfg.sharingEnabled) return@forEach
+                        if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules())) return@forEach
 
                         val (sendLat, sendLng) = if (
                             cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos

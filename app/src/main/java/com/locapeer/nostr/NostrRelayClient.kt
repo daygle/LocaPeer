@@ -20,11 +20,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
-import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -42,7 +41,7 @@ private const val TAG = "NostrRelayClient"
 class NostrRelayClient @Inject constructor(
     private val pendingMessageDao: PendingMessageDao,
     private val peerDao: PeerDao,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
 ) {
     private val json by lazy { 
         Json { 
@@ -80,7 +79,7 @@ class NostrRelayClient @Inject constructor(
     private val activeSubscriptions by lazy { mutableMapOf<String, String>() }
 
     private val recentEventLock by lazy { Any() }
-    private val recentEventIds by lazy { LinkedHashSet<String>(512) }
+    private val recentEventIds by lazy { LinkedHashSet<String>(2048) }
 
     init {
         scope.launch {
@@ -103,6 +102,9 @@ class NostrRelayClient @Inject constructor(
         (currentUrls - newUrls).forEach { url ->
             relays.remove(url)?.disconnect()
             _relayStatus.update { it - url }
+            scope.launch {
+                pendingMessageDao.deleteForRelay(url)
+            }
         }
 
         // Add new relays
@@ -174,13 +176,24 @@ class NostrRelayClient @Inject constructor(
         val disconnected = relays.values.filter { !it.isConnected }
         val connected = relays.values.filter { it.isConnected }
 
-        connected.forEach { it.send(msg) }
+        connected.forEach { relay ->
+            val success = relay.send(msg)
+            if (!success && msg.startsWith("[\"EVENT\"")) {
+                // If a "connected" relay fails to send, treat it as disconnected
+                scope.launch {
+                    pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
+                }
+                relay.scheduleReconnect()
+            }
+        }
 
         if (disconnected.isNotEmpty()) {
             // Only persist EVENT messages — REQ/CLOSE are replayed via activeSubscriptions on reconnect
             if (msg.startsWith("[\"EVENT\"")) {
                 scope.launch {
-                    pendingMessageDao.insert(PendingMessageEntity(content = msg))
+                    disconnected.forEach { relay ->
+                        pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
+                    }
                 }
             }
             disconnected.forEach { it.ensureConnecting() }
@@ -189,7 +202,7 @@ class NostrRelayClient @Inject constructor(
 
     private fun flushPendingTo(relay: RelayConnection) {
         scope.launch {
-            val pending = pendingMessageDao.getAll()
+            val pending = pendingMessageDao.getForRelay(relay.url)
             pending.forEach { entity ->
                 if (relay.send(entity.content)) {
                     pendingMessageDao.delete(entity)
@@ -208,7 +221,7 @@ class NostrRelayClient @Inject constructor(
         private var reconnectAttempts = 0
 
         fun connect() {
-            if (isConnected || (webSocket != null)) return
+            if (isConnected || (webSocket != null) || (reconnectJob?.isActive == true)) return
             _relayStatus.update { it + (url to false) }
             try {
                 Log.d(TAG, "Connecting to $url")
@@ -242,10 +255,11 @@ class NostrRelayClient @Inject constructor(
             reconnectJob = scope.launch {
                 // Exponential backoff: 5s, 10s, 20s, 40s … capped at 5 minutes, +±20% jitter
                 val baseDelay = minOf(5_000L * (1L shl reconnectAttempts.coerceAtMost(6)), 300_000L)
-                val jitter = (baseDelay * 0.2 * (Math.random() * 2 - 1)).toLong()
+                val jitter = ((baseDelay * 0.2) * (Math.random() * 2 - 1)).toLong()
                 val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
                 Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${reconnectAttempts + 1})")
                 delay(waitMs)
+                if (!isGloballyConnected) return@launch
                 reconnectAttempts++
                 webSocket = null
                 isConnected = false
@@ -264,14 +278,14 @@ class NostrRelayClient @Inject constructor(
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 try {
-                    val arr = json.parseToJsonElement(text).jsonArray
+                    val arr = json.parseToJsonElement(text) as? JsonArray ?: return
                     if (arr.isEmpty()) return
                     when (arr[0].jsonPrimitive.content) {
                         "EVENT" -> {
                             if (arr.size < 3) return
                             val event = json.decodeFromString<NostrEvent>(arr[2].toString())
                             val isNew = synchronized(recentEventLock) {
-                                if (recentEventIds.size >= 500) {
+                                if (recentEventIds.size >= 2000) {
                                     val first = recentEventIds.iterator().next()
                                     recentEventIds.remove(first)
                                 }

@@ -145,8 +145,10 @@ class KeyManager @Inject constructor(
 
     suspend fun importPrivateKey(privHex: String) = mutex.withLock {
         withContext(Dispatchers.IO) {
-            val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(crypto.hexToBytes(privHex)))
-            saveKeypair(privHex, pubHex)
+            val normalizedPriv = crypto.normalizePrivateKey(crypto.hexToBytes(privHex))
+            val normalizedHex = crypto.bytesToHex(normalizedPriv)
+            val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(normalizedPriv))
+            saveKeypair(normalizedHex, pubHex)
         }
     }
 }

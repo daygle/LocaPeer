@@ -9,6 +9,7 @@ import org.bouncycastle.crypto.macs.HMac
 import org.bouncycastle.crypto.params.HKDFParameters
 import org.bouncycastle.crypto.params.KeyParameter
 import org.bouncycastle.crypto.params.ParametersWithIV
+import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -20,11 +21,45 @@ import javax.inject.Singleton
 class CryptoUtils @Inject constructor() {
 
     private val random = SecureRandom()
+    private val CURVE_N = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
 
     fun generatePrivateKey(): ByteArray {
         val key = ByteArray(32)
-        random.nextBytes(key)
-        return key
+        while (true) {
+            random.nextBytes(key)
+            val bi = BigInteger(1, key)
+            if (bi > BigInteger.ZERO && bi < CURVE_N) break
+        }
+        return normalizePrivateKey(key)
+    }
+
+    /**
+     * Normalizes a private key so that its public key has an even Y coordinate,
+     * as required by BIP-340.
+     */
+    fun normalizePrivateKey(privKey: ByteArray): ByteArray {
+        val pub = Secp256k1.pubkeyCreate(privKey)
+        // pub[0] is 0x02 (even), 0x03 (odd), or 0x04 (uncompressed)
+        val isEven = if (pub.size == 33) {
+            pub[0] == 0x02.toByte()
+        } else {
+            pub[64] % 2 == 0
+        }
+        
+        return if (isEven) {
+            privKey
+        } else {
+            val bi = BigInteger(1, privKey)
+            val normalized = CURVE_N.subtract(bi)
+            val bytes = normalized.toByteArray()
+            if (bytes.size > 32) {
+                bytes.copyOfRange(bytes.size - 32, bytes.size)
+            } else if (bytes.size < 32) {
+                ByteArray(32 - bytes.size) + bytes
+            } else {
+                bytes
+            }
+        }
     }
 
     /** Returns the 32-byte x-only public key (Nostr/BIP-340 format). */
@@ -58,7 +93,7 @@ class CryptoUtils @Inject constructor() {
     fun hexToBytes(hex: String): ByteArray {
         require((hex.length % 2) == 0) { "Hex string must have even length" }
         return ByteArray(hex.length / 2) { i ->
-            hex.substring(i * 2, i * 2 + 2).toInt(16).toByte()
+            hex.substring(i * 2, (i * 2) + 2).toInt(16).toByte()
         }
     }
 
@@ -95,7 +130,7 @@ class CryptoUtils @Inject constructor() {
     fun nip44Decrypt(recipientPrivKey: ByteArray, senderXOnlyHex: String, payloadB64: String): String {
         val payload = try {
             Base64.getDecoder().decode(payloadB64)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw SecurityException("Invalid base64 payload")
         }
         require(payload.size >= 1 + 32 + 32) { "Invalid NIP-44 payload size" }

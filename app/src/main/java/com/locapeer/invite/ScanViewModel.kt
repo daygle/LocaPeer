@@ -1,6 +1,7 @@
 package com.locapeer.invite
 
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.CryptoUtils
@@ -23,7 +24,7 @@ import javax.inject.Inject
 data class ScanState(
     val success: Boolean = false,
     val addedName: String = "",
-    val error: String? = null
+    val error: String? = null,
 )
 
 @HiltViewModel
@@ -65,6 +66,10 @@ class ScanViewModel @Inject constructor(
             } catch (e: Exception) {
                 _scanState.value = ScanState(error = e.message ?: "Unknown error")
                 processed = false
+            } finally {
+                // Note: we don't reset processed = false on success to prevent 
+                // re-processing the same QR while the screen is still visible.
+                // The 'reset()' function handles clearing it for the next scan.
             }
         }
     }
@@ -104,7 +109,7 @@ class ScanViewModel @Inject constructor(
     fun processInviteLink(input: String) {
         try {
             val base64 = if (input.startsWith("locapeer://")) {
-                val uri = android.net.Uri.parse(input)
+                val uri = input.toUri()
                 uri.getQueryParameter("data") ?: throw Exception("Invalid URL")
             } else {
                 input

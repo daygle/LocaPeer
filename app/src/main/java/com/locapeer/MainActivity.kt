@@ -3,7 +3,6 @@ package com.locapeer
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
@@ -69,15 +68,15 @@ class MainActivity : ComponentActivity() {
                 if (pendingApproval != null) {
                     val req = pendingApproval!!
                     AlertDialog(
-                        onDismissRequest = { approvalManager.respond(false) },
+                        onDismissRequest = { approvalManager.respond(approved = false) },
                         title = { Text("Supervision Request") },
                         text = { Text("\"${req.deviceName}\" is requesting access to their settings. Allow?") },
                         confirmButton = {
-                            Button(onClick = { approvalManager.respond(true) }) { Text("Approve") }
+                            Button(onClick = { approvalManager.respond(approved = true) }) { Text("Approve") }
                         },
                         dismissButton = {
-                            OutlinedButton(onClick = { approvalManager.respond(false) }) { Text("Deny") }
-                        }
+                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) { Text("Deny") }
+                        },
                     )
                 }
 
@@ -111,18 +110,15 @@ class MainActivity : ComponentActivity() {
                             LaunchedEffect(Unit) {
                                 val settings = prefs.settings.first()
                                 if (!settings.heartbeatEnabled) return@LaunchedEffect
-                                val hasLocation = ContextCompat.checkSelfPermission(
+                                val hasLocation = (ContextCompat.checkSelfPermission(
                                     this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
-                                ) == PackageManager.PERMISSION_GRANTED ||
-                                ContextCompat.checkSelfPermission(
+                                ) == PackageManager.PERMISSION_GRANTED) ||
+                                (ContextCompat.checkSelfPermission(
                                     this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION
-                                ) == PackageManager.PERMISSION_GRANTED
+                                ) == PackageManager.PERMISSION_GRANTED)
                                 if (!hasLocation) return@LaunchedEffect
                                 val intent = Intent(this@MainActivity, HeartbeatService::class.java)
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                                    startForegroundService(intent)
-                                else
-                                    startService(intent)
+                                startForegroundService(intent)
                             }
                             LocaPeerNavHost(
                                 initialNavTarget = navTarget,
