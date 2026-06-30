@@ -18,7 +18,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 ## How it works
 
 ### Identities
-Each device generates a unique Nostr keypair on first launch. Your public key is your identity - no email, phone number, or account required. Private keys are stored in the **Android Keystore** via `EncryptedSharedPreferences`.
+Each device generates a unique Nostr keypair on first launch. Your public key is your identity - no email, phone number, or account required. Private keys are stored in the **Android Keystore** and persisted via **Jetpack DataStore**.
 
 ### Connecting
 Share your **Invite QR code** or **Invite Link** (found in Settings → My Profile). When someone scans it, their device saves your public key and starts subscribing to your encrypted location events.
@@ -51,7 +51,7 @@ Enable Supervised Mode to lock the Settings screen. Access requires the designat
 | **UI** | Jetpack Compose + Material 3 |
 | **Dependency Injection** | Hilt |
 | **Storage** | Room (SQLite) + DataStore (Settings) |
-| **Secure Storage** | EncryptedSharedPreferences (Hardware-backed Keystore) |
+| **Secure Storage** | Android Keystore + DataStore (Manual AES/GCM) |
 | **Networking** | WebSockets via OkHttp |
 | **Cryptography** | `secp256k1-kmp` (BIP-340) + Bouncy Castle (NIP-44 v2) |
 | **Maps** | OSMDroid (OpenStreetMap) |

@@ -208,16 +208,7 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
-        // Look up by deviceId first; fall back to publicKeyHex for peers stored before the
-        // key-length fix (old peers had 128-char deviceId but correct 64-char publicKeyHex).
-        val broadcaster = peerDao.getPeer(event.pubkey)
-            ?: peerDao.getPeerByPublicKey(event.pubkey)
-                ?.also { peer ->
-                    // Migrate: re-save the peer with the canonical 64-char deviceId
-                    peerDao.upsertPeer(peer.copy(deviceId = event.pubkey))
-                    peerDao.deletePeerById(peer.deviceId)
-                }
-            ?: return
+        val broadcaster = peerDao.getPeer(event.pubkey) ?: return
         // Drop normal heartbeats from peers we are not configured to receive from.
         // SOS alerts bypass role checks — emergencies override access control.
         if (event.kind == NostrEventKind.HEARTBEAT &&

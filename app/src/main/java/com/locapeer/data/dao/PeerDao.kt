@@ -21,9 +21,6 @@ interface PeerDao {
     @Query("SELECT * FROM peers WHERE deviceId = :deviceId LIMIT 1")
     fun observePeer(deviceId: String): Flow<PeerEntity?>
 
-    @Query("SELECT * FROM peers WHERE publicKeyHex = :publicKeyHex LIMIT 1")
-    suspend fun getPeerByPublicKey(publicKeyHex: String): PeerEntity?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertPeer(peer: PeerEntity)
 
