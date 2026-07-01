@@ -20,6 +20,7 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -51,6 +52,7 @@ class PeerSharingViewModel @Inject constructor(
 
     private val json = Json { ignoreUnknownKeys = true }
     private var currentPeerId: String = ""
+    private var collectJob: Job? = null
 
     private val _uiState = MutableStateFlow(PeerSharingUiState())
     val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
@@ -67,7 +69,8 @@ class PeerSharingViewModel @Inject constructor(
     fun init(peerId: String) {
         if (currentPeerId == peerId) return
         currentPeerId = peerId
-        viewModelScope.launch {
+        collectJob?.cancel()
+        collectJob = viewModelScope.launch {
             val peerFlow = peerDao.observePeer(peerId)
             val configFlow = configDao.observeForPeer(peerId)
             val alertFlow = proximityAlertDao.observeForPeer(peerId)

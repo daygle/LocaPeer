@@ -7,6 +7,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ fun MapLocationPicker(
     onLocationSelected: (Double, Double) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var selectedPoint = remember { GeoPoint(initialLat, initialLng) }
+    val selectedPoint = remember { mutableStateOf(GeoPoint(initialLat, initialLng)) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -57,7 +58,7 @@ fun MapLocationPicker(
 
                             val eventsOverlay = MapEventsOverlay(object : MapEventsReceiver {
                                 override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                                    selectedPoint = p
+                                    selectedPoint.value = p
                                     marker.position = p
                                     invalidate()
                                     return true
@@ -72,7 +73,7 @@ fun MapLocationPicker(
             }
         },
         confirmButton = {
-            TextButton(onClick = { onLocationSelected(selectedPoint.latitude, selectedPoint.longitude) }) {
+            TextButton(onClick = { onLocationSelected(selectedPoint.value.latitude, selectedPoint.value.longitude) }) {
                 Text("Select")
             }
         },

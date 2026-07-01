@@ -109,7 +109,7 @@ fun InviteScreen(
                 when (tab) {
                     InviteTab.QR_CODE -> QrCodeTab(inviteVm)
                     InviteTab.SCAN_QR -> ScanQrTab(scanVm, onNavigateBack)
-                    InviteTab.INVITE_LINK -> InviteLinkTab(inviteVm, context)
+                    InviteTab.INVITE_LINK -> InviteLinkTab(inviteVm, scanVm, context)
                 }
             }
         }
@@ -437,10 +437,9 @@ private fun ScanQrTab(vm: ScanViewModel, onDone: () -> Unit) {
 // ── Tab 3 : Invite Link ───────────────────────────────────────────────────────
 
 @Composable
-private fun InviteLinkTab(vm: InviteViewModel, context: android.content.Context) {
+private fun InviteLinkTab(vm: InviteViewModel, scanVm: ScanViewModel, context: android.content.Context) {
     val state by vm.state.collectAsState()
     var pasteText by remember { mutableStateOf("") }
-    val scanVm: ScanViewModel = hiltViewModel()
     val scanState by scanVm.scanState.collectAsState()
 
     Column(

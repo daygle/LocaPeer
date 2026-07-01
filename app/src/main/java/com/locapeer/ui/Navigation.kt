@@ -102,7 +102,7 @@ fun LocaPeerNavHost(
         when (target.route) {
             "chat" -> {
                 val peerId = target.peerId ?: return@LaunchedEffect
-                navController.navigate("chat/$peerId/${target.peerName.ifBlank { "Chat" }}")
+                navController.navigate("chat/$peerId/${Uri.encode(target.peerName.ifBlank { "Chat" })}")
             }
             "map" -> {
                 navController.navigate(Screen.Map.route) {

@@ -125,8 +125,9 @@ fun ConversationListScreen(
                     )
                 }
                 LoadState.CONTENT -> {
+                    val safeList = activeList ?: emptyList()
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(activeList!!, key = { it.peer.deviceId }) { conv ->
+                        items(safeList, key = { it.peer.deviceId }) { conv ->
                             SwipeActionsConversation(
                                 conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
