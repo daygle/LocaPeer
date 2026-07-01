@@ -185,6 +185,10 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
+    fun markReadMultiple(peerIds: List<String>) {
+        peerIds.forEach { markRead(it) }
+    }
+
     /** Call on every keystroke in the chat input; throttles and sends one typing event per 3 s. */
     fun onTyping(peerId: String) {
         val now = System.currentTimeMillis()

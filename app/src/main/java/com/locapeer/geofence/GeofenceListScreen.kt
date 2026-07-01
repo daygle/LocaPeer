@@ -204,7 +204,12 @@ private fun CreateGeofenceDialog(
     var latText by remember { mutableStateOf("") }
     var lngText by remember { mutableStateOf("") }
     var radius by remember { mutableFloatStateOf(500f) }
-    var selectedEntry by remember { mutableStateOf(broadcastersWithLocation.first()) }
+    var selectedDeviceId by remember { mutableStateOf(broadcastersWithLocation.first().peer.deviceId) }
+    val selectedEntry = broadcastersWithLocation.firstOrNull { it.peer.deviceId == selectedDeviceId }
+        ?: broadcastersWithLocation.first()
+    SideEffect {
+        if (selectedEntry.peer.deviceId != selectedDeviceId) selectedDeviceId = selectedEntry.peer.deviceId
+    }
     var triggerOn by remember { mutableStateOf("ENTER") }
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
@@ -306,8 +311,8 @@ private fun CreateGeofenceDialog(
                 broadcastersWithLocation.forEach { entry ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RadioButton(
-                            selected = selectedEntry.peer.deviceId == entry.peer.deviceId,
-                            onClick = { selectedEntry = entry }
+                            selected = selectedDeviceId == entry.peer.deviceId,
+                            onClick = { selectedDeviceId = entry.peer.deviceId }
                         )
                         Column {
                             Text(entry.peer.displayName)
