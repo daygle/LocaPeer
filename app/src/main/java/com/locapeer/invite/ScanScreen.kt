@@ -84,21 +84,21 @@ fun ScanScreen(
                 }
                 else -> {
                     val lifecycleOwner = LocalLifecycleOwner.current
-                    var barcodeViewRef: CompoundBarcodeView? = null
+                    val barcodeViewRef = remember { mutableStateOf<CompoundBarcodeView?>(null) }
 
                     DisposableEffect(lifecycleOwner) {
                         val observer = LifecycleEventObserver { _, event ->
                             when (event) {
-                                Lifecycle.Event.ON_RESUME -> barcodeViewRef?.resume()
-                                Lifecycle.Event.ON_PAUSE -> barcodeViewRef?.pause()
+                                Lifecycle.Event.ON_RESUME -> barcodeViewRef.value?.resume()
+                                Lifecycle.Event.ON_PAUSE -> barcodeViewRef.value?.pause()
                                 else -> Unit
                             }
                         }
                         lifecycleOwner.lifecycle.addObserver(observer)
                         onDispose {
                             lifecycleOwner.lifecycle.removeObserver(observer)
-                            barcodeViewRef?.pause()
-                            barcodeViewRef = null
+                            barcodeViewRef.value?.pause()
+                            barcodeViewRef.value = null
                         }
                     }
 
@@ -110,7 +110,7 @@ fun ScanScreen(
                                         vm.processQrCode(result.text)
                                     }
                                 })
-                                barcodeViewRef = this
+                                barcodeViewRef.value = this
                                 resume()
                             }
                         },

@@ -6,6 +6,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +23,12 @@ fun SupervisionGate(
     onNavigateBack: (() -> Unit)? = null,
     onUnlocked: () -> Unit
 ) {
+    // Reset singleton unlock state when this screen leaves composition so a subsequent
+    // supervised screen cannot inherit the Approved state and bypass the gate.
+    DisposableEffect(Unit) {
+        onDispose { onReset() }
+    }
+
     LaunchedEffect(unlockState) {
         if (unlockState is SupervisedModeManager.UnlockState.Approved) onUnlocked()
     }
