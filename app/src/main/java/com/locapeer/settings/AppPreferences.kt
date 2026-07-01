@@ -26,7 +26,13 @@ import javax.inject.Singleton
 private val Context.settingsStore by preferencesDataStore(name = "locapeer_settings")
 private const val TAG = "AppPreferences"
 
-val HARDCODED_RELAYS = listOf("wss://relay.daygle.net", "wss://relay.damus.io")
+val HARDCODED_RELAYS = listOf(
+    "wss://relay.daygle.net",
+    "wss://nos.lol",
+    "wss://relay.damus.io",
+    "wss://relay.snort.social",
+    "wss://relay.nostr.band"
+)
 
 data class AppSettings(
     val displayName: String = "",

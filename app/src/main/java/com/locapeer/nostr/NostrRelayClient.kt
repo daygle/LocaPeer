@@ -235,7 +235,7 @@ class NostrRelayClient @Inject constructor(
         private var reconnectAttempts = 0
 
         fun connect() {
-            if (isConnected || (webSocket != null) || (reconnectJob?.isActive == true)) return
+            if (isConnected || (webSocket != null)) return
             _relayStatus.update { it + (url to false) }
             try {
                 Log.d(TAG, "Connecting to $url")
@@ -335,7 +335,12 @@ class NostrRelayClient @Inject constructor(
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
-                Log.w(TAG, "Failure on $url", t)
+                val code = response?.code
+                if (code == 503 || t.message?.contains("503") == true) {
+                    Log.w(TAG, "Relay $url is temporarily unavailable (503 Service Unavailable)")
+                } else {
+                    Log.w(TAG, "Failure on $url", t)
+                }
                 isConnected = false
                 this@RelayConnection.webSocket = null
                 _relayStatus.update { it + (url to false) }
