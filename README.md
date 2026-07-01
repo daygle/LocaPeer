@@ -4,66 +4,106 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 
 ## Features
 
-- **Real-time Location Sharing** - Broadcast your location on a schedule or on-demand; subscribers see it live on their map.
-- **Modern End-to-End Encryption** - All location data and messages use the **NIP-44 v2** (ChaCha20-HMAC-SHA256) standard. The relay only sees encrypted noise.
-- **SOS Alerts** - One-tap emergency broadcast with your current coordinates, delivered as a high-priority notification to your trusted peers.
-- **Geofencing** - Set circular zones on the map and receive alerts when a tracked person enters or leaves.
-- **Proximity Alerts** - Get notified when a tracked person comes within a configurable distance of you.
-- **Encrypted Messaging** - Fully private direct messages between peers, featuring delivery receipts, read receipts, and typing indicators.
-- **Location History** - Browse past location data by day in a list or on an interactive OpenStreetMap view.
-- **Privacy Controls** - Set retention windows; old location data and messages are automatically purged from peers' devices via remote purge requests.
-- **Supervised Mode** - Lock settings behind remote Nostr-based approval, ideal for parental controls or managed devices.
-- **Screenshot Protection** - Sensitive data (like private IDs and maps) is shielded from screenshots and screen recordings.
+- **Real-time Location Sharing** — Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
+- **Motion-Adaptive Heartbeats** — Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) and drops during low battery, saving power without sacrificing accuracy.
+- **Modern End-to-End Encryption** — All location data, messages, and control events use **NIP-44 v2** (ChaCha20-HMAC-SHA256). Relays store only ciphertext and cannot read anything.
+- **Per-Contact Privacy Controls** — Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
+- **Sharing Schedules** — Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
+- **Role-Based Sharing** — Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
+- **SOS Alerts** — One-tap emergency broadcast delivers your current coordinates as a high-priority notification exclusively to contacts you have designated as SOS contacts.
+- **Geofencing** — Set circular zones on the map and receive enter, exit, or both alerts when a tracked contact crosses the boundary. Notification actions let you message or open the map directly.
+- **Proximity Alerts** — Get notified when a contact comes within a configurable radius of your current position.
+- **Encrypted Messaging** — Fully private direct messages with delivery receipts, read receipts, and real-time typing indicators.
+- **Location History** — Browse a contact's (or your own) past location data day-by-day in a list or on an interactive OpenStreetMap view with a direction/bearing summary.
+- **Supervised Mode** — Lock Settings behind remote Nostr-based approval. Supervised devices register with a supervisor via a two-sided consent handshake; unlock requests are approved or denied in real time with no static PIN to compromise.
+- **Backup & Restore** — Export and selectively restore your identity, contacts, geofences, and settings to a local JSON file.
+- **Screenshot Protection** — `FLAG_SECURE` prevents UI capture of sensitive screens (maps, private key, profile QR).
 
-## How it works
+## How It Works
 
 ### Identities
-Each device generates a unique Nostr keypair on first launch. Your public key is your identity - no email, phone number, or account required. Private keys are stored in the **Android Keystore** and persisted via **Jetpack DataStore**.
+Each device generates a unique Nostr keypair on first launch. Your public key is your identity — no email, phone number, or account required. The private key is stored in the **Android Keystore** and persisted via **Jetpack DataStore**.
 
 ### Connecting
-Share your **Invite QR code** or **Invite Link** (found in Settings → My Profile). When someone scans it, their device saves your public key and starts subscribing to your encrypted location events.
+Share your **Invite QR code** or **Invite Link** (`locapeer://invite?data=<base64>`) found in Settings → My Profile. When a contact scans it, both devices exchange `TRACK_REQUEST` / `TRACK_ACCEPT` events to negotiate initial roles and begin subscribing to each other's encrypted location events.
 
 ### Location Events
-When broadcasting is enabled, the app sends a `HEARTBEAT` event (kind 1) encrypted specifically for each subscriber. Heartbeat frequency is **motion-adaptive** - the app updates more frequently when you are moving (driving/walking) and slows down when stationary to save battery.
+When sharing is enabled, the app publishes a `HEARTBEAT` event encrypted individually for each subscriber. Heartbeat frequency is motion-adaptive:
+
+| Motion State | Default Interval |
+|---|---|
+| Driving / Running | 2 min |
+| Cycling | 3 min |
+| Walking | 5 min |
+| Stationary | 15 min |
+| Low Battery (<20%) | 30 min |
+| SOS active | 15 sec |
+
+Motion state is detected via Android Activity Recognition and displayed alongside each location ping.
+
+### Precision Modes
+Each contact relationship can be set to one of two precision levels:
+
+| Mode | Behaviour |
+|---|---|
+| `EXACT` | Full GPS coordinates transmitted |
+| `SUBURB` | Coordinates rounded to ~0.01°, obscuring exact position within an ~1.1 km radius |
+
+### Sharing Schedules
+Schedule rules specify which days of the week (Monday–Sunday bitmask) and which minutes of the day (`startMinute`–`endMinute`) sharing is active. Multiple rules are combined with OR logic. An empty rule set means always on. SOS alerts bypass schedules entirely. Rules can be set globally or overridden per contact.
 
 ### Supervised Mode
-Enable Supervised Mode to lock the Settings screen. Access requires the designated supervisor to approve a request in real time from their own device - no static PIN or password to be compromised.
+1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions.
+2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active.
+3. **Unlock**: When the user needs settings access, a `SUPERVISED_UNLOCK_REQUEST` is sent. The supervisor approves or denies via a real-time notification; the result is reflected on the supervised device within 60 seconds (timeout).
 
 ## Nostr Event Kinds
 
-| Kind  | Name | Standard/Purpose |
-|-------|------|---------|
-| 1 | `HEARTBEAT` | Encrypted location ping (Custom) |
-| 4 | `ENCRYPTED_DM` | NIP-44 Encrypted direct message |
-| 10001 | `READ_RECEIPT` | NIP-44 Encrypted read acknowledgement |
-| 10002 | `TYPING` | NIP-44 Encrypted ephemeral typing signal |
-| 10003 | `PURGE_REQUEST` | NIP-44 Encrypted request to delete old heartbeats |
-| 10004 | `MESSAGE_PURGE_REQUEST` | NIP-44 Encrypted request to delete old messages |
-| 10005 | `DELIVERY_ACK` | NIP-44 Encrypted delivery confirmation |
-| 10006 | `SUPERVISED_UNLOCK_REQUEST` | Managed device requests settings access |
-| 10007 | `SUPERVISED_UNLOCK_RESPONSE` | Supervisor approves or denies access |
-| 30000 | `SOS_ALERT` | High-priority SOS with location (Custom) |
+| Kind | Name | Purpose |
+|---|---|---|
+| 4 | `ENCRYPTED_DM` | NIP-44 encrypted direct message |
+| 1040 | `HEARTBEAT` | Encrypted location ping with motion state |
+| 1041 | `SOS_ALERT` | High-priority emergency broadcast with coordinates |
+| 1042 | `TRACK_REQUEST` | Initiate or change a peer tracking relationship |
+| 1043 | `TRACK_ACCEPT` | Accept a tracking request |
+| 1044 | `PEER_REMOVED` | Notify peer of contact removal |
+| 1045 | `PURGE_REQUEST` | Request deletion of old location data on peer device |
+| 1046 | `MESSAGE_PURGE_REQUEST` | Request deletion of old messages on peer device |
+| 1047 | `DELIVERY_ACK` | Confirm a single message was delivered |
+| 1048 | `READ_RECEIPT` | Confirm one or more messages were read |
+| 1049 | `SUPERVISED_UNLOCK_REQUEST` | Supervised device requests settings access |
+| 1050 | `SUPERVISED_UNLOCK_RESPONSE` | Supervisor approves or denies access |
+| 1051 | `DELETE_MY_MESSAGES` | Request peer delete all messages from this sender |
+| 1052 | `DELETE_MY_LOCATION` | Request peer delete all location data from this sender |
+| 1053 | `TYPING` | Real-time ephemeral typing indicator |
+| 1054 | `TRACK_DECLINE` | Decline a tracking request |
+| 1055 | `SUPERVISED_REGISTER` | Supervised device initiates supervisor registration |
+| 1056 | `SUPERVISED_REGISTER_ACCEPT` | Supervisor accepts device registration |
+| 1057 | `SUPERVISED_REGISTER_DECLINE` | Supervisor declines device registration |
+
+All events are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them.
 
 ## Technical Architecture
 
 | Layer | Technology |
-|-------|-----------|
+|---|---|
 | **UI** | Jetpack Compose + Material 3 |
 | **Dependency Injection** | Hilt |
-| **Storage** | Room (SQLite) + DataStore (Settings) |
-| **Secure Storage** | Android Keystore + DataStore (Manual AES/GCM) |
+| **Storage** | Room (SQLite) + DataStore (Settings & Preferences) |
+| **Secure Storage** | Android Keystore + DataStore (AES/GCM) |
 | **Networking** | WebSockets via OkHttp |
-| **Cryptography** | `secp256k1-kmp` (BIP-340) + Bouncy Castle (NIP-44 v2) |
+| **Cryptography** | `secp256k1-kmp` (BIP-340 Schnorr) + Bouncy Castle (NIP-44 v2 ChaCha20-HMAC-SHA256) |
 | **Maps** | OSMDroid (OpenStreetMap) |
-| **Location** | Android FusedLocationProvider |
-| **Activity Sensing** | Android Activity Recognition (Motion-adaptive pulsing) |
+| **Location** | Android FusedLocationProviderClient |
+| **Activity Sensing** | Android Activity Recognition API |
+| **QR Codes** | ZXing (generation) + ML Kit Vision (scanning) |
 
 ## Building
 
 **Requirements**
 - Android Studio Hedgehog or later
 - JDK 17+
-- Android SDK 34 (Target) / SDK 26 (Minimum)
+- Android SDK 34 (target) / SDK 26 (minimum)
 
 ```bash
 git clone https://github.com/daygle/LocaPeer.git
@@ -71,17 +111,18 @@ cd LocaPeer
 ./gradlew assembleDebug
 ```
 
-**Default Relays**: `wss://relay.daygle.net`, `wss://relay.damus.io`.
+**Default relays**: `wss://relay.daygle.net`, `wss://relay.damus.io`
+
+Custom relays can be added in Settings → Relays.
 
 ## Privacy & Security
 
-- **Zero Trust Architecture**: The Nostr relay is a dumb transport only; it stores ciphertext and cannot read any of your data.
-- **Per-Peer Encryption**: Location events are encrypted individually for each subscriber using unique derived keys.
-- **Hardware Protection**: Private keys never leave the device and are protected by hardware-level security (TEE/SE) where supported.
-- **App Hardening**:
-    - `FLAG_SECURE` prevents UI capturing and recording.
-    - Exported components are restricted by system permissions (e.g., `RECEIVE_BOOT_COMPLETED`).
-    - NIP-44 v2 provides state-of-the-art authentication and encryption (ChaCha20 + HMAC-SHA256).
+- **Zero Trust Relay**: The Nostr relay is a dumb transport; it stores ciphertext and cannot read any of your data.
+- **Per-Peer Encryption**: Each heartbeat is encrypted individually for its recipient using keys derived for that conversation.
+- **Hardware-Backed Keys**: Private keys never leave the device and are protected by the TEE/SE via Android Keystore where supported.
+- **Schnorr Signatures**: Every event is signed with BIP-340 Schnorr; recipients verify the signature before processing.
+- **Replay Protection**: Control events are checked for freshness (300-second window for unlock events, 24-hour window for registration); a 30-day catch-up window for offline delivery replays only recent history.
+- **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings on sensitive screens.
 
 ## License
 
