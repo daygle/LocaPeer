@@ -171,13 +171,13 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     FeatureRow(
         icon = Icons.Default.CloudOff,
         title = "No Proprietary Servers",
-        subtitle = "Uses an open Nostr relay as a transport - encrypted so the relay never sees your data"
+        subtitle = "Uses open Nostr relays as a secure transport - your data stays encrypted and private"
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.PhoneAndroid,
         title = "Stays on Your Phone",
-        subtitle = "Your history never leaves your device"
+        subtitle = "Your full location history stays on your device. Only your current position is shared with selected contacts"
     )
 
     Spacer(Modifier.height(48.dp))
@@ -243,7 +243,7 @@ private fun PermissionsStep(
     StepHeader(
         icon = Icons.AutoMirrored.Filled.FactCheck,
         title = "Permissions",
-        description = "LocaPeer needs location access to share your position, and camera access to scan invite codes."
+        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status."
     )
 
     Spacer(Modifier.height(48.dp))
