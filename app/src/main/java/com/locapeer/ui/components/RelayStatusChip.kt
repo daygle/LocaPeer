@@ -20,19 +20,14 @@ fun RelayStatusChip(
     relayStatus: Map<String, Boolean>,
     modifier: Modifier = Modifier
 ) {
-    val allConnected = relayStatus.isNotEmpty() && relayStatus.values.all { it }
     val anyConnected = relayStatus.values.any { it }
 
     val dotColor = when {
-        relayStatus.isEmpty() -> Color(0xFFFFB300)
-        allConnected -> Color(0xFF4CAF50)
-        anyConnected -> Color(0xFFFFB300)
+        anyConnected -> Color(0xFF4CAF50)
         else -> MaterialTheme.colorScheme.error
     }
     val dotLabel = when {
-        relayStatus.isEmpty() -> "Disconnected"
-        allConnected -> "Connected"
-        anyConnected -> "Partially Connected"
+        anyConnected -> "Connected"
         else -> "Disconnected"
     }
 
