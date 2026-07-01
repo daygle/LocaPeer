@@ -339,19 +339,19 @@ class NostrRelayClient @Inject constructor(
                 val code = response?.code
                 when {
                     code == 502 || t.message?.contains("502") == true -> {
-                        Log.w(TAG, "Relay $url: Bad Gateway (502)")
+                        Log.d(TAG, "Relay $url is temporarily offline (502 Bad Gateway)")
                     }
                     code == 503 || t.message?.contains("503") == true -> {
-                        Log.w(TAG, "Relay $url: Service Unavailable (503)")
+                        Log.d(TAG, "Relay $url is currently busy (503 Service Unavailable)")
                     }
                     code == 504 || t.message?.contains("504") == true -> {
-                        Log.w(TAG, "Relay $url: Gateway Timeout (504)")
+                        Log.d(TAG, "Relay $url timed out (504 Gateway Timeout)")
                     }
                     t is java.net.SocketTimeoutException -> {
-                        Log.w(TAG, "Relay $url: Connection timed out (${t.message})")
+                        Log.d(TAG, "Relay $url connection attempt timed out")
                     }
                     else -> {
-                        Log.w(TAG, "Failure on $url", t)
+                        Log.w(TAG, "Relay $url connection issue: ${t.message ?: "Unknown error"}")
                     }
                 }
                 isConnected = false
