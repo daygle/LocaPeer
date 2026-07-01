@@ -1,9 +1,12 @@
 package com.locapeer.messaging
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -18,7 +21,14 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.ChatBubbleOutline
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DoneAll
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -38,6 +48,7 @@ import java.util.Date
 import java.util.Locale
 
 private enum class LoadState { LOADING, EMPTY, CONTENT }
+private enum class SortOrder { DATE, NAME, UNREAD }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,17 +60,48 @@ fun ConversationListScreen(
     val archivedConversations by vm.archivedConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
+
     var showContactPicker by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
+    var showSearch by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
+    var sortOrder by remember { mutableStateOf(SortOrder.DATE) }
+    var selectedIds by remember { mutableStateOf<Set<String>>(emptySet()) }
+    var showSortMenu by remember { mutableStateOf(false) }
+
+    LaunchedEffect(selectedTab) { selectedIds = emptySet() }
 
     val activeList = if (selectedTab == 0) conversations else archivedConversations
 
-    // null = still loading (waiting for first emission), empty list = loaded but empty
+    val allCurrentIds = remember(activeList) {
+        (activeList ?: emptyList()).map { it.peer.deviceId }.toSet()
+    }
+
+    val displayList = remember(activeList, searchQuery, sortOrder, unreadCounts) {
+        val base = activeList ?: return@remember null
+        val filtered = if (searchQuery.isBlank()) base
+        else base.filter {
+            it.peer.displayName.contains(searchQuery, ignoreCase = true) ||
+            it.lastMessage.content.contains(searchQuery, ignoreCase = true)
+        }
+        when (sortOrder) {
+            SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage.timestamp }
+            SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase() }
+            SortOrder.UNREAD -> filtered.sortedWith(
+                compareByDescending<ConversationSummary> { (unreadCounts[it.peer.deviceId] ?: 0) > 0 }
+                    .thenByDescending { it.lastMessage.timestamp }
+            )
+        }
+    }
+
     val loadState = when {
-        activeList == null -> LoadState.LOADING
-        activeList!!.isEmpty() -> LoadState.EMPTY
+        displayList == null -> LoadState.LOADING
+        displayList.isEmpty() -> LoadState.EMPTY
         else -> LoadState.CONTENT
     }
+
+    val isSelectionMode = selectedIds.isNotEmpty()
+    val allSelected = allCurrentIds.isNotEmpty() && selectedIds.containsAll(allCurrentIds)
 
     if (showContactPicker) {
         ContactPickerDialog(
@@ -76,11 +118,94 @@ fun ConversationListScreen(
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text("Messages", fontWeight = FontWeight.SemiBold) },
+                    title = {
+                        if (isSelectionMode) {
+                            Text("${selectedIds.size} selected", fontWeight = FontWeight.SemiBold)
+                        } else {
+                            Text("Messages", fontWeight = FontWeight.SemiBold)
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.surface
-                    )
+                    ),
+                    actions = {
+                        IconButton(onClick = {
+                            showSearch = !showSearch
+                            if (!showSearch) searchQuery = ""
+                        }) {
+                            Icon(
+                                Icons.Default.Search,
+                                contentDescription = "Search",
+                                tint = if (showSearch) MaterialTheme.colorScheme.primary
+                                       else LocalContentColor.current
+                            )
+                        }
+                        Box {
+                            IconButton(onClick = { showSortMenu = true }) {
+                                Icon(Icons.Default.Sort, contentDescription = "Sort")
+                            }
+                            DropdownMenu(
+                                expanded = showSortMenu,
+                                onDismissRequest = { showSortMenu = false }
+                            ) {
+                                DropdownMenuItem(
+                                    text = { Text("Date") },
+                                    onClick = { sortOrder = SortOrder.DATE; showSortMenu = false },
+                                    leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Name") },
+                                    onClick = { sortOrder = SortOrder.NAME; showSortMenu = false },
+                                    leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text("Unread first") },
+                                    onClick = { sortOrder = SortOrder.UNREAD; showSortMenu = false },
+                                    leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
+                                )
+                            }
+                        }
+                        IconButton(onClick = {
+                            selectedIds = if (allSelected) emptySet() else allCurrentIds
+                        }) {
+                            Icon(
+                                if (allSelected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
+                                contentDescription = "Select All"
+                            )
+                        }
+                        IconButton(onClick = {
+                            val toMark = if (selectedIds.isEmpty()) allCurrentIds.toList()
+                                         else selectedIds.toList()
+                            vm.markReadMultiple(toMark)
+                            selectedIds = emptySet()
+                        }) {
+                            Icon(Icons.Default.DoneAll, contentDescription = "Mark Read")
+                        }
+                    }
                 )
+                AnimatedVisibility(
+                    visible = showSearch,
+                    enter = expandVertically() + fadeIn(),
+                    exit = shrinkVertically() + fadeOut()
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = { searchQuery = it },
+                        placeholder = { Text("Search conversations…") },
+                        singleLine = true,
+                        leadingIcon = { Icon(Icons.Default.Search, null) },
+                        trailingIcon = {
+                            if (searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { searchQuery = "" }) {
+                                    Icon(Icons.Default.Close, null)
+                                }
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                    )
+                }
                 SecondaryTabRow(selectedTabIndex = selectedTab) {
                     Tab(
                         selected = selectedTab == 0,
@@ -96,8 +221,10 @@ fun ConversationListScreen(
             }
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showContactPicker = true }) {
-                Icon(Icons.Default.Add, contentDescription = "New message")
+            if (!isSelectionMode) {
+                FloatingActionButton(onClick = { showContactPicker = true }) {
+                    Icon(Icons.Default.Add, contentDescription = "New message")
+                }
             }
         }
     ) { padding ->
@@ -118,20 +245,39 @@ fun ConversationListScreen(
                     }
                 }
                 LoadState.EMPTY -> {
+                    val emptyTitle = when {
+                        searchQuery.isNotBlank() -> "No results for \"$searchQuery\""
+                        selectedTab == 1 -> "No archived chats"
+                        else -> "No messages yet"
+                    }
+                    val emptySubtitle = when {
+                        searchQuery.isNotBlank() -> "Try a different search term"
+                        selectedTab == 1 -> "Archive chats to keep your inbox clean"
+                        else -> "Open the map and tap a person\nto start a conversation"
+                    }
                     EmptyState(
                         icon = if (selectedTab == 0) Icons.Default.ChatBubbleOutline else Icons.Default.Archive,
-                        title = if (selectedTab == 0) "No messages yet" else "No archived chats",
-                        subtitle = if (selectedTab == 0) "Open the map and tap a person\nto start a conversation" else "Archive chats to keep your inbox clean"
+                        title = emptyTitle,
+                        subtitle = emptySubtitle
                     )
                 }
                 LoadState.CONTENT -> {
-                    val safeList = activeList ?: emptyList()
+                    val safeList = displayList ?: emptyList()
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(safeList, key = { it.peer.deviceId }) { conv ->
+                            val isSelected = conv.peer.deviceId in selectedIds
                             SwipeActionsConversation(
                                 conv = conv,
                                 unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
+                                isSelected = isSelected,
+                                isSelectionMode = isSelectionMode,
                                 onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
+                                onToggleSelect = {
+                                    selectedIds = if (isSelected)
+                                        selectedIds - conv.peer.deviceId
+                                    else
+                                        selectedIds + conv.peer.deviceId
+                                },
                                 onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
                                 onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
                                 onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
@@ -153,11 +299,31 @@ fun ConversationListScreen(
 private fun SwipeActionsConversation(
     conv: ConversationSummary,
     unreadCount: Int,
+    isSelected: Boolean = false,
+    isSelectionMode: Boolean = false,
     onClick: () -> Unit,
+    onToggleSelect: () -> Unit = {},
     onDeleteLocal: () -> Unit,
     onDeleteRemote: () -> Unit,
     onArchive: () -> Unit
 ) {
+    if (isSelectionMode) {
+        Surface(
+            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                    else MaterialTheme.colorScheme.surface,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            ConversationRow(
+                summary = conv,
+                unreadCount = unreadCount,
+                isSelected = isSelected,
+                onClick = onToggleSelect,
+                onLongClick = onToggleSelect
+            )
+        }
+        return
+    }
+
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
     )
@@ -185,25 +351,16 @@ private fun SwipeActionsConversation(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("How do you want to delete this conversation with ${conv.peer.displayName}?")
-
                     ListItem(
                         headlineContent = { Text("Delete locally") },
                         supportingContent = { Text("Removed from your device only.") },
-                        modifier = Modifier.clickable {
-                            onDeleteLocal()
-                            showDeleteDialog = false
-                        },
+                        modifier = Modifier.clickable { onDeleteLocal(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
-
                     ListItem(
                         headlineContent = { Text("Delete from both") },
                         supportingContent = { Text("Removes it locally and requests the peer to delete messages you sent.") },
-                        modifier = Modifier.clickable {
-                            onDeleteLocal()
-                            onDeleteRemote()
-                            showDeleteDialog = false
-                        },
+                        modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
@@ -235,7 +392,6 @@ private fun SwipeActionsConversation(
                 SwipeToDismissBoxValue.StartToEnd -> if (conv.peer.isArchived) Icons.Default.Unarchive else Icons.Default.Archive
                 else -> Icons.Default.Delete
             }
-
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -246,8 +402,8 @@ private fun SwipeActionsConversation(
                 Icon(
                     icon,
                     contentDescription = null,
-                    tint = if (direction == SwipeToDismissBoxValue.EndToStart) 
-                        MaterialTheme.colorScheme.onErrorContainer 
+                    tint = if (direction == SwipeToDismissBoxValue.EndToStart)
+                        MaterialTheme.colorScheme.onErrorContainer
                     else MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
@@ -269,6 +425,7 @@ private fun SwipeActionsConversation(
 private fun ConversationRow(
     summary: ConversationSummary,
     unreadCount: Int,
+    isSelected: Boolean = false,
     onClick: () -> Unit,
     onLongClick: () -> Unit = {}
 ) {
@@ -276,7 +433,25 @@ private fun ConversationRow(
     val isBlocked = !summary.peer.messagingEnabled
     ListItem(
         leadingContent = {
-            AvatarCircle(name = summary.peer.displayName, hasUnread = hasUnread)
+            Box(modifier = Modifier.size(48.dp)) {
+                AvatarCircle(name = summary.peer.displayName, hasUnread = hasUnread && !isSelected)
+                if (isSelected) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+            }
         },
         headlineContent = {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
