@@ -207,6 +207,9 @@ private fun CreateGeofenceDialog(
     var selectedDeviceId by remember { mutableStateOf(broadcastersWithLocation.first().peer.deviceId) }
     val selectedEntry = broadcastersWithLocation.firstOrNull { it.peer.deviceId == selectedDeviceId }
         ?: broadcastersWithLocation.first()
+    SideEffect {
+        if (selectedEntry.peer.deviceId != selectedDeviceId) selectedDeviceId = selectedEntry.peer.deviceId
+    }
     var triggerOn by remember { mutableStateOf("ENTER") }
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
