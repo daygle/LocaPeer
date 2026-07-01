@@ -1,12 +1,12 @@
 # LocaPeer
 
-A private, peer-to-peer location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no proprietary servers, and no tracking. A Nostr relay routes encrypted events between devices, but the relay never sees your data — everything is end-to-end encrypted before it leaves your device.
+A private, peer-to-peer location sharing Android app built on the [Nostr](https://nostr.com) protocol. No accounts, no proprietary servers, and no tracking. A Nostr relay routes events between devices, but all location data, messages, and control payloads are end-to-end encrypted before they leave your device — the relay sees only opaque ciphertext for application events.
 
 ## Features
 
 - **Real-time Location Sharing** — Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
 - **Motion-Adaptive Heartbeats** — Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) and drops during low battery, saving power without sacrificing accuracy.
-- **Modern End-to-End Encryption** — All location data, messages, and control events use **NIP-44 v2** (ChaCha20-HMAC-SHA256). Relays store only ciphertext and cannot read anything.
+- **Modern End-to-End Encryption** — All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** — Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
 - **Sharing Schedules** — Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
 - **Role-Based Sharing** — Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
@@ -62,6 +62,7 @@ Schedule rules specify which days of the week (Monday–Sunday bitmask) and whic
 | Kind | Name | Purpose |
 |---|---|---|
 | 4 | `ENCRYPTED_DM` | NIP-44 encrypted direct message |
+| 5 | `EVENT_DELETION` | NIP-09 plaintext deletion request for a published event |
 | 1040 | `HEARTBEAT` | Encrypted location ping with motion state |
 | 1041 | `SOS_ALERT` | High-priority emergency broadcast with coordinates |
 | 1042 | `TRACK_REQUEST` | Initiate or change a peer tracking relationship |
@@ -81,7 +82,7 @@ Schedule rules specify which days of the week (Monday–Sunday bitmask) and whic
 | 1056 | `SUPERVISED_REGISTER_ACCEPT` | Supervisor accepts device registration |
 | 1057 | `SUPERVISED_REGISTER_DECLINE` | Supervisor declines device registration |
 
-All events are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them.
+Custom application events (kinds 1040–1057) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
 
 ## Technical Architecture
 
@@ -117,7 +118,7 @@ Custom relays can be added in Settings → Relays.
 
 ## Privacy & Security
 
-- **Zero Trust Relay**: The Nostr relay is a dumb transport; it stores ciphertext and cannot read any of your data.
+- **Zero Trust Relay**: The Nostr relay is a dumb transport; all application event payloads are NIP-44 encrypted before leaving the device. The relay can see NIP-09 deletion requests (kind 5, plaintext by standard) and event metadata (kind, timestamp, pubkey), but cannot read your location data or message content.
 - **Per-Peer Encryption**: Each heartbeat is encrypted individually for its recipient using keys derived for that conversation.
 - **Hardware-Backed Keys**: Private keys never leave the device and are protected by the TEE/SE via Android Keystore where supported.
 - **Schnorr Signatures**: Every event is signed with BIP-340 Schnorr; recipients verify the signature before processing.
