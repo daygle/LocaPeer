@@ -174,7 +174,7 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun archiveConversation(peerId: String, archived: Boolean) {
-        viewModelScope.launch { peerDao.setArchived(peerId, archived) }
+        viewModelScope.launch { peerDao.setArchived(peerId, archived, System.currentTimeMillis()) }
     }
 
     fun markRead(peerId: String) {
@@ -307,8 +307,11 @@ class MessagingViewModel @Inject constructor(
             nostrEventId = event.id,
             isBlocked = isBlocked
         )
-        // Auto-unarchive on receive
-        peerDao.unarchive(event.pubkey)
+        // Auto-unarchive on receive, but don't let a late-arriving/queued message that predates
+        // an explicit archive action silently undo it.
+        if (!sender.isArchived || msg.timestamp > sender.archivedAt) {
+            peerDao.unarchive(event.pubkey)
+        }
         messageDao.insert(msg)
         if (!isBlocked) {
             sendMessageNotification(sender, plaintext)

@@ -625,6 +625,7 @@ fun SettingsScreen(
         val tabLabels = mapOf(
             "map" to "Map",
             "messages" to "Messages",
+            "history-tab" to "History",
             "contacts" to "Contacts",
             "invite" to "QR",
             "settings" to "Settings"

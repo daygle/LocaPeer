@@ -21,6 +21,10 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.first
 import java.util.concurrent.TimeUnit
 
+// Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
+// collide and silently overwrite each other's notification.
+private const val NOTIF_ID_MISSED_HEARTBEAT = 5000
+
 @HiltWorker
 class MissedHeartbeatWorker @AssistedInject constructor(
     @Assisted context: Context,
@@ -57,7 +61,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                     .setContentIntent(pi)
                     .setAutoCancel(true)
                     .build()
-                notificationManager.notify(peer.deviceId.hashCode() + 5000, notification)
+                notificationManager.notify(peer.deviceId, NOTIF_ID_MISSED_HEARTBEAT, notification)
             }
         }
         return Result.success()

@@ -23,6 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -85,7 +86,7 @@ class HistoryReportViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            heartbeats.collect { pings ->
+            heartbeats.collectLatest { pings ->
                 val cached = _addresses.value
                 val pending = pings.filter { it.id !in cached }
                 pending.forEachIndexed { index, ping ->

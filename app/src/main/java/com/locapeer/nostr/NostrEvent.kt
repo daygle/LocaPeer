@@ -29,6 +29,9 @@ object NostrEventKind {
     const val DELETE_MY_LOCATION = 1052
     const val TYPING = 1053
     const val TRACK_DECLINE = 1054
+    const val SUPERVISED_REGISTER = 1055
+    const val SUPERVISED_REGISTER_ACCEPT = 1056
+    const val SUPERVISED_REGISTER_DECLINE = 1057
 }
 
 @Serializable

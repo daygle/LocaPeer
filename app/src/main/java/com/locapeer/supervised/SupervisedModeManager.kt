@@ -90,4 +90,29 @@ class SupervisedModeManager @Inject constructor(
         timeoutJob?.cancel()
         _unlockState.value = UnlockState.Idle
     }
+
+    fun sendRegisterRequest(supervisorPubkey: String) {
+        scope.launch {
+            val settings = prefs.settings.first()
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val payload = json.encodeToString(
+                SupervisedRegisterPayload(
+                    devicePubkeyHex = pubHex,
+                    deviceName = settings.displayName.ifBlank { pubHex.take(8) },
+                    deviceRelayUrl = myRelay
+                )
+            )
+            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), supervisorPubkey, payload)
+            val event = com.locapeer.nostr.NostrEvent.build(
+                privKeyHex = privHex,
+                pubKeyHex = pubHex,
+                kind = com.locapeer.nostr.NostrEventKind.SUPERVISED_REGISTER,
+                content = encrypted,
+                tags = listOf(listOf("p", supervisorPubkey)),
+                crypto = crypto
+            )
+            relayClient.publishEvent(event)
+        }
+    }
 }

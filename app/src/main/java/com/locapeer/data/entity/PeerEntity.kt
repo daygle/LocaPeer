@@ -20,6 +20,10 @@ data class PeerEntity(
     /** Whether this device wants to receive messages from this peer. */
     val messagingEnabled: Boolean = true,
     val isArchived: Boolean = false,
+    /** Wall-clock time of the most recent explicit archive action, used to decide whether a
+     *  late-arriving message (by its own signed timestamp) predates the archive and should
+     *  not silently re-surface the conversation. */
+    val archivedAt: Long = 0,
     val addedAt: Long = System.currentTimeMillis()
 ) {
     companion object {

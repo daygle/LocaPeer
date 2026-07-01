@@ -25,8 +25,8 @@ object SharingSchedule {
         }
         if (days and (1 shl dayIndex) == 0) return false
         val current = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
-        return if (startMinute <= endMinute) current in startMinute..endMinute
-        else current >= startMinute || current <= endMinute
+        return if (startMinute <= endMinute) current in startMinute until endMinute
+        else current >= startMinute || current < endMinute
     }
 
     fun formatTime(minuteOfDay: Int): String =

@@ -52,7 +52,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
         val isRoleChange = intent.getBooleanExtra(EXTRA_IS_ROLE_CHANGE, false)
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(senderPubkey.hashCode() + 20000)
+        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
 
         val ep = EntryPointAccessors
             .fromApplication(context.applicationContext, TrackRequestReceiverEntryPoint::class.java)

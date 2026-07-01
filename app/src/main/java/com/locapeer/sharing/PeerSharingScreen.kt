@@ -61,6 +61,7 @@ fun PeerSharingScreen(
     val messagingEnabled = state.peer?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
+    val isMySupervised = cfg?.isMySupervised ?: false
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
     val retentionDaysLocation = cfg?.retentionDaysLocation ?: 30
     val retentionDaysMessages = cfg?.retentionDaysMessages ?: 0
@@ -235,6 +236,22 @@ fun PeerSharingScreen(
                         leadingContent = { Icon(Icons.Default.Warning, contentDescription = null, tint = if (isSosContact) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = isSosContact, onCheckedChange = { vm.setSosContact(it) })
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Supervise This Device") },
+                        supportingContent = { Text(if (isMySupervised) "You receive and approve unlock requests from $peerName" else "Allow $peerName to send you supervised-mode unlock requests") },
+                        leadingContent = {
+                            Icon(
+                                Icons.Default.Security,
+                                contentDescription = null,
+                                tint = if (isMySupervised) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingContent = {
+                            Switch(checked = isMySupervised, onCheckedChange = { vm.setIsMySupervised(it) })
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )

@@ -692,7 +692,8 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
 
 private fun bearingToCardinal(bearing: Float): String {
     val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
-    return dirs[((bearing + 22.5f) / 45f).toInt() % 8]
+    val normalized = ((bearing % 360f) + 360f) % 360f
+    return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
 }
 
 private fun initialUtcTodayMs(): Long {

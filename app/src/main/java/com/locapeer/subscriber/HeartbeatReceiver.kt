@@ -16,6 +16,7 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.HeartbeatEntity
@@ -38,8 +39,16 @@ import com.locapeer.invite.TrackAcceptPayload
 import com.locapeer.invite.TrackDeclinePayload
 import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.invite.TrackRequestReceiver
+import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_ACCEPT
+import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_DECLINE
+import com.locapeer.supervised.EXTRA_REQUESTER_NAME
+import com.locapeer.supervised.EXTRA_REQUESTER_PUBKEY
+import com.locapeer.supervised.EXTRA_REQUESTER_RELAY
 import com.locapeer.supervised.SupervisedModeManager
+import com.locapeer.supervised.SupervisedRegisterReceiver
 import com.locapeer.supervised.SupervisionApprovalManager
+import com.locapeer.supervised.SupervisedRegisterPayload
+import com.locapeer.supervised.SupervisedRegisterResponsePayload
 import com.locapeer.supervised.UnlockRequestPayload
 import com.locapeer.supervised.UnlockResponsePayload
 import com.locapeer.nostr.NostrEvent
@@ -69,6 +78,16 @@ private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
 private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
 
+// Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
+// peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
+// overwrite each other's notification.
+private const val NOTIF_ID_SOS = 1
+private const val NOTIF_ID_MESSAGE = 10000
+const val NOTIF_ID_TRACK_REQUEST = 20000
+private const val NOTIF_ID_ACCEPT = 30000
+private const val NOTIF_ID_DECLINE = 40000
+const val NOTIF_ID_SUPERVISED_REGISTER = 70000
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -77,7 +96,10 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.DELETE_MY_MESSAGES,
     NostrEventKind.DELETE_MY_LOCATION,
     NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
-    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE
+    NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
+    NostrEventKind.SUPERVISED_REGISTER,
+    NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
+    NostrEventKind.SUPERVISED_REGISTER_DECLINE
 )
 
 @Singleton
@@ -89,6 +111,7 @@ class HeartbeatReceiver @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val pendingRequestDao: PendingRequestDao,
     private val prefs: AppPreferences,
     private val geofenceEngine: GeofenceEngine,
@@ -127,6 +150,9 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELIVERY_ACK,
                         NostrEventKind.SUPERVISED_UNLOCK_REQUEST,
                         NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
+                        NostrEventKind.SUPERVISED_REGISTER,
+                        NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
+                        NostrEventKind.SUPERVISED_REGISTER_DECLINE,
                         NostrEventKind.TRACK_REQUEST,
                         NostrEventKind.TRACK_ACCEPT,
                         NostrEventKind.TRACK_DECLINE,
@@ -169,6 +195,9 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAckInBackground(event)
                     NostrEventKind.SUPERVISED_UNLOCK_REQUEST -> scope.launch { processUnlockRequest(event) }
                     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE -> scope.launch { processUnlockResponse(event) }
+                    NostrEventKind.SUPERVISED_REGISTER -> scope.launch { processRegisterRequest(event) }
+                    NostrEventKind.SUPERVISED_REGISTER_ACCEPT -> scope.launch { processRegisterResponse(event, accepted = true) }
+                    NostrEventKind.SUPERVISED_REGISTER_DECLINE -> scope.launch { processRegisterResponse(event, accepted = false) }
                     NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
                     NostrEventKind.TRACK_DECLINE -> scope.launch { processTrackDecline(event) }
@@ -276,7 +305,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(payload.deviceId.hashCode(), notification)
+        notificationManager.notify(payload.deviceId, NOTIF_ID_SOS, notification)
     }
 
     private suspend fun processDmInBackground(event: NostrEvent) {
@@ -299,8 +328,11 @@ class HeartbeatReceiver @Inject constructor(
             nostrEventId = event.id,
             isBlocked = isBlocked
         )
-        // Auto-unarchive peer on receive
-        peerDao.unarchive(event.pubkey)
+        // Auto-unarchive on receive, but don't let a late-arriving/queued message that predates
+        // an explicit archive action silently undo it.
+        if (!sender.isArchived || msg.timestamp > sender.archivedAt) {
+            peerDao.unarchive(event.pubkey)
+        }
         messageDao.insert(msg)
         if (!isBlocked) {
             sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
@@ -337,6 +369,10 @@ class HeartbeatReceiver @Inject constructor(
         if (event.createdAt < Instant.now().epochSecond - 300) return
 
         peerDao.getPeer(event.pubkey) ?: return
+        // Only show the approval dialog if this contact is explicitly marked as a supervised device;
+        // any known contact can send a SUPERVISED_UNLOCK_REQUEST, so the isMySupervised flag prevents
+        // social-engineering attacks from regular contacts.
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -353,7 +389,9 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processUnlockResponse(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
         if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -361,6 +399,117 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<UnlockResponsePayload>(plaintext) } catch (e: Exception) { return }
         supervisedModeManager.handleResponse(payload.requestId, payload.approved)
+    }
+
+    private suspend fun processRegisterRequest(event: NostrEvent) {
+        // Ignore requests older than 24 hours — supervisor must be reachable within a day
+        if (event.createdAt < Instant.now().epochSecond - 86400) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        // Don't re-notify if the supervisor already accepted this device
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised == true) return
+        // Suppress relay retransmissions if the notification is still active
+        if (notificationManager.activeNotifications.any {
+                it.id == NOTIF_ID_SUPERVISED_REGISTER && it.tag == event.pubkey }) return
+
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedRegisterPayload>(plaintext)
+        } catch (e: Exception) { return }
+
+        val notifId = event.pubkey.hashCode() + 70000
+        val acceptIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
+            action = ACTION_SUPERVISED_REGISTER_ACCEPT
+            putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
+            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
+            putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
+        }
+        val declineIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
+            action = ACTION_SUPERVISED_REGISTER_DECLINE
+            putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
+            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
+            putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
+        }
+        val acceptPi = PendingIntent.getBroadcast(
+            context, notifId, acceptIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val declinePi = PendingIntent.getBroadcast(
+            context, notifId + 1, declineIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("navigateTo", "contacts")
+        }
+        val openAppPi = PendingIntent.getActivity(
+            context, notifId + 2, openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_alert)
+            .setContentTitle("${payload.deviceName} wants you to be their supervisor")
+            .setContentText("Accept to allow unlock approval requests from this device")
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText("Accept to allow ${payload.deviceName} to send you unlock approval requests when supervised mode is active."))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(openAppPi)
+            .addAction(0, "Accept", acceptPi)
+            .addAction(0, "Decline", declinePi)
+            .setAutoCancel(false)
+            .build()
+        notificationManager.notify(event.pubkey, NOTIF_ID_SUPERVISED_REGISTER, notification)
+    }
+
+    private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
+        if (event.createdAt < Instant.now().epochSecond - 86400) return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedRegisterResponsePayload>(plaintext)
+        } catch (e: Exception) { return }
+        val (_, pubHex) = keyManager.ensureKeypair()
+        if (payload.devicePubkeyHex != pubHex) return
+
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("navigateTo", "settings")
+        }
+        val pi = PendingIntent.getActivity(
+            context, "supervised_register_response".hashCode(), openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        if (accepted) {
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle("Supervised mode active")
+                .setContentText("Your supervisor confirmed — supervised mode is now set up")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build()
+            notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
+        } else {
+            prefs.clearSupervisedMode()
+            supervisedModeManager.reset()
+            val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle("Supervised mode declined")
+                .setContentText("Your supervisor declined the request — supervised mode has been disabled")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build()
+            notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
+        }
     }
 
     private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {
@@ -395,7 +544,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(peerId.hashCode() + 10000, notification)
+        notificationManager.notify(peerId, NOTIF_ID_MESSAGE, notification)
     }
 
     private suspend fun processPeerRemoved(event: NostrEvent) {
@@ -468,7 +617,9 @@ class HeartbeatReceiver @Inject constructor(
 
         val notifId = event.pubkey.hashCode() + 20000
         // Suppress relay retransmissions for new requests only — role changes are always shown
-        if (!payload.isRoleChange && notificationManager.activeNotifications.any { it.id == notifId }) return
+        if (!payload.isRoleChange &&
+            notificationManager.activeNotifications.any { it.id == NOTIF_ID_TRACK_REQUEST && it.tag == event.pubkey }
+        ) return
 
         pendingRequestDao.upsert(
             PendingRequestEntity(
@@ -526,7 +677,7 @@ class HeartbeatReceiver @Inject constructor(
             .addAction(0, "Review", reviewPi)
             .addAction(0, "Decline", declinePi)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(event.pubkey, NOTIF_ID_TRACK_REQUEST, notification)
     }
 
     private suspend fun sendTrackAcceptResponse(recipientPubkey: String, recipientRelay: String, recipientName: String) {
@@ -652,7 +803,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(pubkey, NOTIF_ID_ACCEPT, notification)
     }
 
     private fun sendDeclineNotification(pubkey: String, name: String) {
@@ -669,7 +820,7 @@ class HeartbeatReceiver @Inject constructor(
             .setContentIntent(pi)
             .setAutoCancel(true)
             .build()
-        notificationManager.notify(notifId, notification)
+        notificationManager.notify(pubkey, NOTIF_ID_DECLINE, notification)
     }
 
     private fun createAlertChannel() {

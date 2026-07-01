@@ -122,6 +122,14 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
+    fun setIsMySupervised(enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = configDao.getForPeer(currentPeerId)
+            if (existing != null) configDao.setIsMySupervised(currentPeerId, enabled)
+            else configDao.upsert(defaultConfig().copy(isMySupervised = enabled))
+        }
+    }
+
     fun setProximityAlertEnabled(enabled: Boolean) {
         viewModelScope.launch {
             val existing = proximityAlertDao.getForPeer(currentPeerId)
