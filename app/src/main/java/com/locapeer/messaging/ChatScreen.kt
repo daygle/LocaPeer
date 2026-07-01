@@ -59,10 +59,12 @@ fun ChatScreen(
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     vm: MessagingViewModel = hiltViewModel()
 ) {
-    val messages by vm.getMessages(peerId).collectAsState(initial = emptyList())
+    val messagesFlow = remember(peerId) { vm.getMessages(peerId) }
+    val messages by messagesFlow.collectAsState(initial = emptyList())
     val typingPeers by vm.typingPeers.collectAsState()
     val isPeerTyping = typingPeers.containsKey(peerId)
-    val peer by vm.observePeer(peerId).collectAsState(initial = null)
+    val peerFlow = remember(peerId) { vm.observePeer(peerId) }
+    val peer by peerFlow.collectAsState(initial = null)
     val messagingEnabled = peer?.messagingEnabled ?: true
     val isArchived = peer?.isArchived ?: false
     var inputText by remember { mutableStateOf("") }

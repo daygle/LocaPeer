@@ -404,6 +404,7 @@ private fun HistoryMapTab(
             },
             update = { mapView ->
                 mapView.overlays.clear()
+                if (heartbeats.isEmpty()) return@AndroidView
 
                 val pinColor = heartbeats.last().pinColor
                 val lineArgb = if (pinColor.isNotEmpty())

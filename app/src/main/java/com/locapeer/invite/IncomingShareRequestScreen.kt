@@ -30,14 +30,14 @@ fun IncomingShareRequestScreen(
     }
 
     // Pre-populate toggles from the suggested role (if any)
-    var shareMyLocation by remember {
+    var shareMyLocation by remember(requestedRole) {
         mutableStateOf(requestedRole == PeerEntity.ROLE_SEND || requestedRole == PeerEntity.ROLE_SEND_RECEIVE)
     }
-    var seeTheirLocation by remember {
+    var seeTheirLocation by remember(requestedRole) {
         mutableStateOf(requestedRole == PeerEntity.ROLE_RECEIVE || requestedRole == PeerEntity.ROLE_SEND_RECEIVE
             || requestedRole == null)  // default to true for new requests
     }
-    var messagingEnabled by remember { mutableStateOf(true) }
+    var messagingEnabled by remember(requestedRole) { mutableStateOf(true) }
 
     val derivedRole = when {
         shareMyLocation && seeTheirLocation -> PeerEntity.ROLE_SEND_RECEIVE
