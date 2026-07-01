@@ -11,6 +11,7 @@ import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -40,7 +41,8 @@ class HistoryReportViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val heartbeatDao: HeartbeatDao,
     private val peerDao: PeerDao,
-    private val keyManager: KeyManager
+    private val keyManager: KeyManager,
+    private val prefs: AppPreferences
 ) : ViewModel() {
 
     private val geocoder = Geocoder(context, Locale.getDefault())
@@ -50,6 +52,10 @@ class HistoryReportViewModel @Inject constructor(
 
     private val _selfPubkeyHex = MutableStateFlow<String?>(null)
     val selfPubkeyHex: StateFlow<String?> = _selfPubkeyHex
+
+    val selfDisplayName: StateFlow<String> = prefs.settings
+        .map { it.displayName.ifBlank { "Me" } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
 
     private val _selectedPeerId = MutableStateFlow<String?>(null)
     val selectedPeerId: StateFlow<String?> = _selectedPeerId

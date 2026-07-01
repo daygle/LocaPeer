@@ -62,6 +62,7 @@ fun HistoryReportScreen(
     val endTimeOffset by vm.endTimeOffset.collectAsState()
     val heartbeats by vm.heartbeats.collectAsState()
     val addresses by vm.addresses.collectAsState()
+    val selfDisplayName by vm.selfDisplayName.collectAsState()
 
     val selectedPeer = broadcasters.find { it.deviceId == selectedPeerId }
 
@@ -111,7 +112,7 @@ fun HistoryReportScreen(
                     ) {
                         OutlinedTextField(
                             value = when {
-                                selectedPeerId == selfPubkeyHex -> "Me"
+                                selectedPeerId == selfPubkeyHex -> selfDisplayName
                                 selectedPeer != null -> selectedPeer.displayName
                                 else -> "Select Person"
                             },
@@ -129,7 +130,7 @@ fun HistoryReportScreen(
                         ) {
                             selfPubkeyHex?.let { meId ->
                                 DropdownMenuItem(
-                                    text = { Text("Me") },
+                                    text = { Text(selfDisplayName) },
                                     onClick = {
                                         vm.selectPeer(meId)
                                         peerDropdownExpanded = false
