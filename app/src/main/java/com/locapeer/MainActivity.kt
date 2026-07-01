@@ -37,8 +37,11 @@ import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.ui.LocaPeerNavHost
 import com.locapeer.ui.theme.LocaPeerTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -99,15 +102,15 @@ class MainActivity : ComponentActivity() {
                         true -> {
                             val messagingVm: MessagingViewModel = hiltViewModel()
                             LaunchedEffect(Unit) {
-                                val pubHex = keyManager.getPublicKeyHex()
-                                    ?: return@LaunchedEffect
+                                delay(500) // Yield to allow initial composition to finish
+                                val pubHex = withContext(Dispatchers.Default) {
+                                    keyManager.getPublicKeyHex()
+                                } ?: return@LaunchedEffect
                                 messagingVm.startListening(pubHex)
                             }
                             // Auto-start HeartbeatService on app open if enabled and permitted.
-                            // The service handles being started when already running (isStarted guard).
-                            // This ensures the service runs even if the device hasn't been rebooted
-                            // since install (BootReceiver only covers post-boot starts).
                             LaunchedEffect(Unit) {
+                                delay(1000) // Stagger service start to reduce CPU spike
                                 val settings = prefs.settings.first()
                                 if (!settings.heartbeatEnabled) return@LaunchedEffect
                                 val hasLocation = (ContextCompat.checkSelfPermission(

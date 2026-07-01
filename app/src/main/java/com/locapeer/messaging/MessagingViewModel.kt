@@ -445,7 +445,17 @@ class MessagingViewModel @Inject constructor(
         relayClient.publishEvent(event)
     }
 
+    private val lastNotificationTimes = mutableMapOf<String, Long>()
+    private val GROUP_KEY_MESSAGES = "com.locapeer.MESSAGES"
+
     private fun sendMessageNotification(sender: PeerEntity, preview: String) {
+        val now = System.currentTimeMillis()
+        val lastTime = lastNotificationTimes[sender.deviceId] ?: 0L
+        
+        // Simple throttle: don't notify more than once every 2 seconds for the same peer
+        if (now - lastTime < 2000) return
+        lastNotificationTimes[sender.deviceId] = now
+
         val intent = Intent(context, MainActivity::class.java).apply {
             putExtra("navigateTo", "chat")
             putExtra("openChat", sender.deviceId)
@@ -453,6 +463,7 @@ class MessagingViewModel @Inject constructor(
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         val pi = PendingIntent.getActivity(context, sender.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        
         val notification = NotificationCompat.Builder(context, "locapeer_messages")
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle(sender.displayName)
@@ -460,8 +471,20 @@ class MessagingViewModel @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)
+            .setGroup(GROUP_KEY_MESSAGES)
             .build()
+
+        val summary = NotificationCompat.Builder(context, "locapeer_messages")
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle("LocaPeer Messages")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setGroup(GROUP_KEY_MESSAGES)
+            .setGroupSummary(true)
+            .setAutoCancel(true)
+            .build()
+
         notificationManager.notify(sender.deviceId, 10000, notification)
+        notificationManager.notify(999, summary)
     }
 
     private fun createMessageChannel() {
