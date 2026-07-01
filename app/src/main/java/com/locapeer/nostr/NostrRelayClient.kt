@@ -56,10 +56,10 @@ class NostrRelayClient @Inject constructor(
 
     private val client by lazy {
         OkHttpClient.Builder()
-            .pingInterval(30, TimeUnit.SECONDS)
-            .connectTimeout(30, TimeUnit.SECONDS)
+            .pingInterval(60, TimeUnit.SECONDS)
+            .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
             .build()
     }
 
@@ -337,10 +337,22 @@ class NostrRelayClient @Inject constructor(
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 val code = response?.code
-                if (code == 503 || t.message?.contains("503") == true) {
-                    Log.w(TAG, "Relay $url is temporarily unavailable (503 Service Unavailable)")
-                } else {
-                    Log.w(TAG, "Failure on $url", t)
+                when {
+                    code == 502 || t.message?.contains("502") == true -> {
+                        Log.w(TAG, "Relay $url: Bad Gateway (502)")
+                    }
+                    code == 503 || t.message?.contains("503") == true -> {
+                        Log.w(TAG, "Relay $url: Service Unavailable (503)")
+                    }
+                    code == 504 || t.message?.contains("504") == true -> {
+                        Log.w(TAG, "Relay $url: Gateway Timeout (504)")
+                    }
+                    t is java.net.SocketTimeoutException -> {
+                        Log.w(TAG, "Relay $url: Connection timed out (${t.message})")
+                    }
+                    else -> {
+                        Log.w(TAG, "Failure on $url", t)
+                    }
                 }
                 isConnected = false
                 this@RelayConnection.webSocket = null
