@@ -57,8 +57,9 @@ class NostrRelayClient @Inject constructor(
     private val client by lazy {
         OkHttpClient.Builder()
             .pingInterval(30, TimeUnit.SECONDS)
-            .connectTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
             .build()
     }
 
