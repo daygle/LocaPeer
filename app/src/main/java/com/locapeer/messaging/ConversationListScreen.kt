@@ -68,6 +68,7 @@ fun ConversationListScreen(
     var sortOrder by remember { mutableStateOf(SortOrder.DATE) }
     var selectedIds by remember { mutableStateOf<Set<String>>(emptySet()) }
     var showSortMenu by remember { mutableStateOf(false) }
+    var showBulkDeleteDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(selectedTab) { selectedIds = emptySet() }
 
@@ -102,6 +103,7 @@ fun ConversationListScreen(
 
     val isSelectionMode = selectedIds.isNotEmpty()
     val allSelected = allCurrentIds.isNotEmpty() && selectedIds.containsAll(allCurrentIds)
+    val archivingToArchive = selectedTab == 0
 
     if (showContactPicker) {
         ContactPickerDialog(
@@ -114,10 +116,57 @@ fun ConversationListScreen(
         )
     }
 
+    if (showBulkDeleteDialog) {
+        val count = selectedIds.size
+        AlertDialog(
+            onDismissRequest = { showBulkDeleteDialog = false },
+            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+            title = { Text("Delete $count ${if (count == 1) "conversation" else "conversations"}?") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    ListItem(
+                        headlineContent = { Text("Delete locally") },
+                        supportingContent = { Text("Removed from your device only.") },
+                        modifier = Modifier.clickable {
+                            selectedIds.forEach { vm.deleteConversation(it) }
+                            showBulkDeleteDialog = false
+                            selectedIds = emptySet()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    ListItem(
+                        headlineContent = { Text("Delete from both") },
+                        supportingContent = { Text("Also requests each contact to delete your messages.") },
+                        modifier = Modifier.clickable {
+                            selectedIds.forEach {
+                                vm.deleteConversation(it)
+                                vm.deleteConversationFromRemote(it)
+                            }
+                            showBulkDeleteDialog = false
+                            selectedIds = emptySet()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showBulkDeleteDialog = false }) { Text("Cancel") }
+            }
+        )
+    }
+
     Scaffold(
         topBar = {
             Column {
                 TopAppBar(
+                    navigationIcon = {
+                        if (isSelectionMode) {
+                            IconButton(onClick = { selectedIds = emptySet() }) {
+                                Icon(Icons.Default.Close, contentDescription = "Exit selection")
+                            }
+                        }
+                    },
                     title = {
                         if (isSelectionMode) {
                             Text("${selectedIds.size} selected", fontWeight = FontWeight.SemiBold)
@@ -129,62 +178,64 @@ fun ConversationListScreen(
                         containerColor = MaterialTheme.colorScheme.surface
                     ),
                     actions = {
-                        IconButton(onClick = {
-                            showSearch = !showSearch
-                            if (!showSearch) searchQuery = ""
-                        }) {
-                            Icon(
-                                Icons.Default.Search,
-                                contentDescription = "Search",
-                                tint = if (showSearch) MaterialTheme.colorScheme.primary
-                                       else LocalContentColor.current
-                            )
-                        }
-                        Box {
-                            IconButton(onClick = { showSortMenu = true }) {
-                                Icon(Icons.Default.Sort, contentDescription = "Sort")
-                            }
-                            DropdownMenu(
-                                expanded = showSortMenu,
-                                onDismissRequest = { showSortMenu = false }
-                            ) {
-                                DropdownMenuItem(
-                                    text = { Text("Date") },
-                                    onClick = { sortOrder = SortOrder.DATE; showSortMenu = false },
-                                    leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text("Name") },
-                                    onClick = { sortOrder = SortOrder.NAME; showSortMenu = false },
-                                    leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
-                                )
-                                DropdownMenuItem(
-                                    text = { Text("Unread first") },
-                                    onClick = { sortOrder = SortOrder.UNREAD; showSortMenu = false },
-                                    leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
+                        if (isSelectionMode) {
+                            IconButton(onClick = {
+                                selectedIds = if (allSelected) emptySet() else allCurrentIds
+                            }) {
+                                Icon(
+                                    if (allSelected) Icons.Default.CheckBox
+                                    else Icons.Default.CheckBoxOutlineBlank,
+                                    contentDescription = "Select All"
                                 )
                             }
-                        }
-                        IconButton(onClick = {
-                            selectedIds = if (allSelected) emptySet() else allCurrentIds
-                        }) {
-                            Icon(
-                                if (allSelected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-                                contentDescription = "Select All"
-                            )
-                        }
-                        IconButton(onClick = {
-                            val toMark = if (selectedIds.isEmpty()) allCurrentIds.toList()
-                                         else selectedIds.toList()
-                            vm.markReadMultiple(toMark)
-                            selectedIds = emptySet()
-                        }) {
-                            Icon(Icons.Default.DoneAll, contentDescription = "Mark Read")
+                        } else {
+                            IconButton(onClick = {
+                                showSearch = !showSearch
+                                if (!showSearch) searchQuery = ""
+                            }) {
+                                Icon(
+                                    Icons.Default.Search,
+                                    contentDescription = "Search",
+                                    tint = if (showSearch) MaterialTheme.colorScheme.primary
+                                           else LocalContentColor.current
+                                )
+                            }
+                            Box {
+                                IconButton(onClick = { showSortMenu = true }) {
+                                    Icon(Icons.Default.Sort, contentDescription = "Sort")
+                                }
+                                DropdownMenu(
+                                    expanded = showSortMenu,
+                                    onDismissRequest = { showSortMenu = false }
+                                ) {
+                                    DropdownMenuItem(
+                                        text = { Text("Date") },
+                                        onClick = { sortOrder = SortOrder.DATE; showSortMenu = false },
+                                        leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text("Name") },
+                                        onClick = { sortOrder = SortOrder.NAME; showSortMenu = false },
+                                        leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text("Unread first") },
+                                        onClick = { sortOrder = SortOrder.UNREAD; showSortMenu = false },
+                                        leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
+                                    )
+                                }
+                            }
+                            IconButton(onClick = { selectedIds = allCurrentIds }) {
+                                Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = "Select All")
+                            }
+                            IconButton(onClick = { vm.markReadMultiple(allCurrentIds.toList()) }) {
+                                Icon(Icons.Default.DoneAll, contentDescription = "Mark All Read")
+                            }
                         }
                     }
                 )
                 AnimatedVisibility(
-                    visible = showSearch,
+                    visible = showSearch && !isSelectionMode,
                     enter = expandVertically() + fadeIn(),
                     exit = shrinkVertically() + fadeOut()
                 ) {
@@ -217,6 +268,44 @@ fun ConversationListScreen(
                         onClick = { selectedTab = 1 },
                         text = { Text("Archived") }
                     )
+                }
+            }
+        },
+        bottomBar = {
+            if (isSelectionMode) {
+                BottomAppBar(containerColor = MaterialTheme.colorScheme.surfaceContainer) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        BulkActionButton(
+                            icon = { Icon(Icons.Default.DoneAll, contentDescription = null) },
+                            label = "Mark Read",
+                            onClick = {
+                                vm.markReadMultiple(selectedIds.toList())
+                                selectedIds = emptySet()
+                            }
+                        )
+                        BulkActionButton(
+                            icon = {
+                                Icon(
+                                    if (archivingToArchive) Icons.Default.Archive else Icons.Default.Unarchive,
+                                    contentDescription = null
+                                )
+                            },
+                            label = if (archivingToArchive) "Archive" else "Unarchive",
+                            onClick = {
+                                selectedIds.forEach { vm.archiveConversation(it, archivingToArchive) }
+                                selectedIds = emptySet()
+                            }
+                        )
+                        BulkActionButton(
+                            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+                            label = "Delete",
+                            onClick = { showBulkDeleteDialog = true }
+                        )
+                    }
                 }
             }
         },
@@ -278,6 +367,9 @@ fun ConversationListScreen(
                                     else
                                         selectedIds + conv.peer.deviceId
                                 },
+                                onEnterSelectionMode = {
+                                    selectedIds = setOf(conv.peer.deviceId)
+                                },
                                 onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
                                 onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
                                 onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
@@ -294,6 +386,21 @@ fun ConversationListScreen(
     }
 }
 
+@Composable
+private fun BulkActionButton(
+    icon: @Composable () -> Unit,
+    label: String,
+    onClick: () -> Unit
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(2.dp)
+    ) {
+        IconButton(onClick = onClick) { icon() }
+        Text(label, style = MaterialTheme.typography.labelSmall)
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun SwipeActionsConversation(
@@ -303,6 +410,7 @@ private fun SwipeActionsConversation(
     isSelectionMode: Boolean = false,
     onClick: () -> Unit,
     onToggleSelect: () -> Unit = {},
+    onEnterSelectionMode: () -> Unit = {},
     onDeleteLocal: () -> Unit,
     onDeleteRemote: () -> Unit,
     onArchive: () -> Unit
@@ -389,7 +497,8 @@ private fun SwipeActionsConversation(
             }
             val icon = when (direction) {
                 SwipeToDismissBoxValue.EndToStart -> Icons.Default.Delete
-                SwipeToDismissBoxValue.StartToEnd -> if (conv.peer.isArchived) Icons.Default.Unarchive else Icons.Default.Archive
+                SwipeToDismissBoxValue.StartToEnd ->
+                    if (conv.peer.isArchived) Icons.Default.Unarchive else Icons.Default.Archive
                 else -> Icons.Default.Delete
             }
             Box(
@@ -414,7 +523,7 @@ private fun SwipeActionsConversation(
                 summary = conv,
                 unreadCount = unreadCount,
                 onClick = onClick,
-                onLongClick = { showDeleteDialog = true }
+                onLongClick = onEnterSelectionMode
             )
         }
     }
