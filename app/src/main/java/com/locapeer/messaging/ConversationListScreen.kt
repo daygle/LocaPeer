@@ -219,7 +219,7 @@ fun ConversationListScreen(
                                         leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Unread first") },
+                                        text = { Text("Unread") },
                                         onClick = { sortOrder = SortOrder.UNREAD; showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
                                     )
@@ -227,9 +227,6 @@ fun ConversationListScreen(
                             }
                             IconButton(onClick = { selectedIds = allCurrentIds }) {
                                 Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = "Select All")
-                            }
-                            IconButton(onClick = { vm.markReadMultiple(allCurrentIds.toList()) }) {
-                                Icon(Icons.Default.DoneAll, contentDescription = "Mark All Read")
                             }
                         }
                     }
