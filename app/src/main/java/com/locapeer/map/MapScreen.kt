@@ -494,7 +494,12 @@ private fun OsmdroidMapView(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
-    var initialCenterDone by remember { mutableStateOf(false) }
+    var initialCenterDone by remember(mapStartingPoint, mapFixedLat, mapFixedLng, lastMapCenter) {
+        mutableStateOf(
+            (mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0) ||
+            (mapStartingPoint != "OWN_PIN" && mapStartingPoint != "FIT_ALL" && lastMapCenter != null)
+        )
+    }
     var fitAllDone by remember { mutableStateOf(false) }
     val isFitAll = mapStartingPoint == "FIT_ALL"
 
@@ -533,8 +538,8 @@ private fun OsmdroidMapView(
         }
     }
 
-    // Re-center when the locate-me button is pressed
-    LaunchedEffect(centerOnUser) {
+    // Re-center when the locate-me button is pressed, or when location first arrives after button tap
+    LaunchedEffect(centerOnUser, userLocation) {
         if (centerOnUser && userLocation != null) {
             mapViewRef?.controller?.animateTo(userLocation)
             onCenteredOnUser()
@@ -583,18 +588,14 @@ private fun OsmdroidMapView(
                     mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
                         controller.setZoom(mapStartZoom)
                         controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
-                        initialCenterDone = true
                     }
                     mapStartingPoint == "OWN_PIN" -> {
                         controller.setZoom(mapStartZoom)
-                        // centre will animate to GPS when userLocation arrives (initialCenterDone stays false)
                     }
                     lastMapCenter != null -> {
-                        // RESTORE_LAST: use saved position
                         val (lat, lng, zoom) = lastMapCenter
                         controller.setZoom(zoom)
                         controller.setCenter(GeoPoint(lat, lng))
-                        initialCenterDone = true
                     }
                     else -> {
                         controller.setZoom(mapStartZoom)
