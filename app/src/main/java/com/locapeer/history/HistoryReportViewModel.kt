@@ -78,12 +78,9 @@ class HistoryReportViewModel @Inject constructor(
         viewModelScope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             _selfPubkeyHex.value = pubHex
-        }
-        viewModelScope.launch {
-            receiveContacts.collect { list ->
-                if (_selectedPeerId.value == null && list.isNotEmpty()) {
-                    _selectedPeerId.value = list.first().deviceId
-                }
+            // Default to "Me" if no peer selected yet
+            if (_selectedPeerId.value == null) {
+                _selectedPeerId.value = pubHex
             }
         }
         viewModelScope.launch {

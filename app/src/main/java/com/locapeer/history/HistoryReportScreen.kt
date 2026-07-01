@@ -80,9 +80,8 @@ fun HistoryReportScreen(
                 title = {
                     Text(
                         when {
-                            isOwnHistoryMode -> "My Location History"
+                            selectedPeerId == selfPubkeyHex -> "My Location History"
                             selectedPeer != null -> "History: ${selectedPeer.displayName}"
-                            peerId != null -> "My Location History"
                             else -> "Location History"
                         }
                     )
@@ -102,27 +101,20 @@ fun HistoryReportScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            if (broadcasters.isEmpty() && peerId == null && !isOwnHistoryMode) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(
-                        "No tracked people found.\nScan an invite QR code to start tracking someone.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(32.dp)
-                    )
-                }
-            } else {
             Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Spacer(Modifier.height(12.dp))
 
-                if (peerId == null && !isOwnHistoryMode) {
+                if (broadcasters.isNotEmpty() || selfPubkeyHex != null) {
                     ExposedDropdownMenuBox(
                         expanded = peerDropdownExpanded,
                         onExpandedChange = { peerDropdownExpanded = it }
                     ) {
                         OutlinedTextField(
-                            value = selectedPeer?.displayName ?: "Select Person",
+                            value = when {
+                                selectedPeerId == selfPubkeyHex -> "Me"
+                                selectedPeer != null -> selectedPeer.displayName
+                                else -> "Select Person"
+                            },
                             onValueChange = {},
                             readOnly = true,
                             label = { Text("Person") },
@@ -135,6 +127,15 @@ fun HistoryReportScreen(
                             expanded = peerDropdownExpanded,
                             onDismissRequest = { peerDropdownExpanded = false }
                         ) {
+                            selfPubkeyHex?.let { meId ->
+                                DropdownMenuItem(
+                                    text = { Text("Me") },
+                                    onClick = {
+                                        vm.selectPeer(meId)
+                                        peerDropdownExpanded = false
+                                    }
+                                )
+                            }
                             broadcasters.forEach { peer ->
                                 DropdownMenuItem(
                                     text = { Text(peer.displayName) },
@@ -261,7 +262,6 @@ fun HistoryReportScreen(
                     modifier = Modifier.weight(1f)
                 )
             }
-            } // end else
         }
     }
 
