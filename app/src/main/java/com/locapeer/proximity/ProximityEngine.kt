@@ -70,8 +70,8 @@ class ProximityEngine @Inject constructor(
         if (System.currentTimeMillis() - ownLocation.time > MAX_OWN_FIX_AGE_MS) return
         // When the combined uncertainty exceeds the radius, "within radius" can't
         // be decided — this also keeps suburb-precision peers from false-alerting.
-        val uncertainty = ownLocation.accuracy.toDouble() + peerHeartbeat.accuracy
-        if (uncertainty > alert.radiusMetres) return
+        val uncertainty = ownLocation.accuracy.toDouble() + peerHeartbeat.accuracy.toDouble()
+        if (uncertainty > alert.radiusMetres.toDouble()) return
 
         val distanceMetres = GeoMath.haversineMetres(
             ownLocation.latitude, ownLocation.longitude,

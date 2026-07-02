@@ -13,7 +13,7 @@ class GeoMathTest {
     }
 
     @Test
-    fun `known city pair distance is right to within a kilometre`() {
+    fun `known city pair distance is right to within five kilometres`() {
         // Sydney Opera House to Melbourne CBD ≈ 713 km great-circle.
         val d = GeoMath.haversineMetres(-33.8568, 151.2153, -37.8136, 144.9631)
         assertEquals(713_000.0, d, 5_000.0)

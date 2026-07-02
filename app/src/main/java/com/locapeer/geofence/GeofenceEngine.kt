@@ -44,14 +44,14 @@ class GeofenceEngine @Inject constructor(
         fences.forEach { fence ->
             // A fix coarser than the fence itself can't tell inside from outside —
             // this also keeps suburb-precision peers from tripping street-sized fences.
-            if (current.accuracy > fence.radiusMetres) return@forEach
+            if (current.accuracy > fence.radiusMetres.toFloat()) return@forEach
 
             val key = "${fence.id}:${current.deviceId}"
             val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
             val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val wasInside = insideState[key]
-                ?: previous?.takeIf { it.accuracy <= fence.radiusMetres }
-                    ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres }
+                ?: previous?.takeIf { it.accuracy <= fence.radiusMetres.toFloat() }
+                    ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres.toDouble() }
             val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
             insideState[key] = inNow
             // First reliable observation for this fence+person: seed only — we don't
@@ -69,7 +69,7 @@ class GeofenceEngine @Inject constructor(
             }
 
             if (shouldNotify) {
-                val cooldownKey = "${fence.id}:${if (entered) "enter" else "exit"}"
+                val cooldownKey = "${fence.id}:${current.deviceId}:${if (entered) "enter" else "exit"}"
                 val now = System.currentTimeMillis()
                 val last = lastNotifiedAt[cooldownKey] ?: 0L
                 if (now - last < COOLDOWN_MS) return@forEach
