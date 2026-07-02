@@ -24,6 +24,8 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.encodeToJsonElement
 import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -52,7 +54,7 @@ class NostrRelayClient @Inject constructor(
     }
     private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
 
-    private var isGloballyConnected = false
+    @Volatile private var isGloballyConnected = false
 
     private val client by lazy {
         OkHttpClient.Builder()
@@ -89,10 +91,16 @@ class NostrRelayClient @Inject constructor(
             if (persisted.isNotEmpty()) {
                 synchronized(recentEventLock) {
                     persisted.forEach { id ->
-                        if (recentEventIds.size >= 2000) {
-                            recentEventIds.remove(recentEventIds.iterator().next())
+                        if (!recentEventIds.contains(id)) {
+                            if (recentEventIds.size >= 2000) {
+                                val it = recentEventIds.iterator()
+                                if (it.hasNext()) {
+                                    it.next()
+                                    it.remove()
+                                }
+                            }
+                            recentEventIds.add(id)
                         }
-                        recentEventIds.add(id)
                     }
                 }
             }
@@ -158,22 +166,21 @@ class NostrRelayClient @Inject constructor(
     fun publishEvent(event: NostrEvent) {
         val msg = buildJsonArray {
             add(JsonPrimitive("EVENT"))
-            add(json.parseToJsonElement(json.encodeToString(event)))
+            add(json.encodeToJsonElement(event))
         }.toString()
-        sendToAll(msg)
+        sendToAll(msg, isEvent = true)
     }
 
     fun subscribe(subscriptionId: String, filter: NostrFilter) {
-        val filterJson = json.encodeToString(filter)
         val msg = buildJsonArray {
             add(JsonPrimitive("REQ"))
             add(JsonPrimitive(subscriptionId))
-            add(json.parseToJsonElement(filterJson))
+            add(json.encodeToJsonElement(filter))
         }.toString()
         synchronized(subsLock) {
             activeSubscriptions[subscriptionId] = msg
         }
-        sendToAll(msg)
+        sendToAll(msg, isEvent = false)
     }
 
     fun unsubscribe(subscriptionId: String) {
@@ -184,34 +191,35 @@ class NostrRelayClient @Inject constructor(
             add(JsonPrimitive("CLOSE"))
             add(JsonPrimitive(subscriptionId))
         }.toString()
-        sendToAll(msg)
+        sendToAll(msg, isEvent = false)
     }
 
-    private fun sendToAll(msg: String) {
-        val disconnected = relays.values.filter { !it.isConnected }
-        val connected = relays.values.filter { it.isConnected }
+    private fun sendToAll(msg: String, isEvent: Boolean) {
+        val disconnectedRelays = mutableListOf<RelayConnection>()
 
-        connected.forEach { relay ->
-            val success = relay.send(msg)
-            if (!success && msg.startsWith("[\"EVENT\"")) {
-                // If a "connected" relay fails to send, treat it as disconnected
-                scope.launch {
-                    pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
+        relays.values.forEach { relay ->
+            if (relay.isConnected) {
+                val success = relay.send(msg)
+                if (!success && isEvent) {
+                    scope.launch {
+                        pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
+                    }
+                    relay.scheduleReconnect()
                 }
-                relay.scheduleReconnect()
+            } else {
+                if (isEvent) {
+                    disconnectedRelays.add(relay)
+                }
+                relay.ensureConnecting()
             }
         }
 
-        if (disconnected.isNotEmpty()) {
-            // Only persist EVENT messages — REQ/CLOSE are replayed via activeSubscriptions on reconnect
-            if (msg.startsWith("[\"EVENT\"")) {
-                scope.launch {
-                    disconnected.forEach { relay ->
-                        pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
-                    }
+        if (isEvent && disconnectedRelays.isNotEmpty()) {
+            scope.launch {
+                disconnectedRelays.forEach { relay ->
+                    pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
                 }
             }
-            disconnected.forEach { it.ensureConnecting() }
         }
     }
 
@@ -275,9 +283,9 @@ class NostrRelayClient @Inject constructor(
                 Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${reconnectAttempts + 1})")
                 delay(waitMs)
                 if (!isGloballyConnected) return@launch
+                // Don't overwrite if another connection attempt started in the meantime
+                if (isConnected || webSocket != null) return@launch
                 reconnectAttempts++
-                webSocket = null
-                isConnected = false
                 connect()
             }
         }
@@ -295,16 +303,25 @@ class NostrRelayClient @Inject constructor(
                 try {
                     val arr = json.parseToJsonElement(text) as? JsonArray ?: return
                     if (arr.isEmpty()) return
-                    when (arr[0].jsonPrimitive.content) {
+                    val type = (arr[0] as? JsonPrimitive)?.content ?: return
+                    when (type) {
                         "EVENT" -> {
                             if (arr.size < 3) return
-                            val event = json.decodeFromString<NostrEvent>(arr[2].toString())
+                            val event = json.decodeFromJsonElement<NostrEvent>(arr[2])
                             val isNew = synchronized(recentEventLock) {
-                                if (recentEventIds.size >= 2000) {
-                                    val first = recentEventIds.iterator().next()
-                                    recentEventIds.remove(first)
+                                if (recentEventIds.contains(event.id)) {
+                                    false
+                                } else {
+                                    if (recentEventIds.size >= 2000) {
+                                        val it = recentEventIds.iterator()
+                                        if (it.hasNext()) {
+                                            it.next()
+                                            it.remove()
+                                        }
+                                    }
+                                    recentEventIds.add(event.id)
+                                    true
                                 }
-                                recentEventIds.add(event.id)
                             }
                             if (isNew) {
                                 if (eventsSinceLastSave.incrementAndGet() >= 100) {
@@ -316,12 +333,12 @@ class NostrRelayClient @Inject constructor(
                             }
                         }
                         "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
-                        "NOTICE" -> if (arr.size >= 2) Log.d(TAG, "NOTICE from $url: ${arr[1]}")
+                        "NOTICE" -> if (arr.size >= 2) Log.d(TAG, "NOTICE from $url: ${(arr[1] as? JsonPrimitive)?.content ?: arr[1]}")
                         "OK" -> {
                             if (arr.size < 3) return
-                            val eventId = arr[1].jsonPrimitive.content
-                            val accepted = arr[2].jsonPrimitive.content.toBooleanStrictOrNull() ?: false
-                            val message = if (arr.size > 3) arr[3].jsonPrimitive.content else ""
+                            val eventId = (arr[1] as? JsonPrimitive)?.content ?: return
+                            val accepted = (arr[2] as? JsonPrimitive)?.content?.toBooleanStrictOrNull() ?: false
+                            val message = if (arr.size > 3) (arr[3] as? JsonPrimitive)?.content ?: "" else ""
                             if (accepted) {
                                 scope.launch { _okEvents.emit(eventId) }
                                 Log.i(TAG, "OK from $url: accepted $eventId")
