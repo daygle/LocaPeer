@@ -243,7 +243,9 @@ class PeerSharingViewModel @Inject constructor(
             }
             val days = cfg.retentionDaysLocation
             if (days == 0) {
-                _lastPurgeResult.value = "Retention is Forever"
+                // Full wipe
+                peerManager.sendDeleteMyLocation(currentPeerId)
+                _lastPurgeResult.value = "Remote delete command for ALL locations sent to ${peer.displayName}"
                 return@launch
             }
             // Only subscribers / mutual peers actually keep our heartbeats
@@ -268,7 +270,9 @@ class PeerSharingViewModel @Inject constructor(
             }
             val days = cfg.retentionDaysMessages
             if (days == 0) {
-                _lastPurgeResult.value = "Retention is Forever"
+                // Full wipe
+                peerManager.sendDeleteMyMessages(currentPeerId)
+                _lastPurgeResult.value = "Remote delete command for ALL messages sent to ${peer.displayName}"
                 return@launch
             }
             publishPurgeToPeer(peer, days, NostrEventKind.MESSAGE_PURGE_REQUEST) { kindLabel ->

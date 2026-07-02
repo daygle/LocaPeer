@@ -366,8 +366,8 @@ fun ContactsScreen(
                         when (action) {
                             DataAction.REMOVE_CONTACT -> vm.removePeer(contact.peer.deviceId)
                             DataAction.REMOVE_SELF -> vm.removeSelfFromPeer(contact.peer.deviceId)
-                            DataAction.DELETE_MESSAGES -> vm.askPeerToDeleteMyMessages(contact.peer.deviceId)
-                            DataAction.DELETE_LOCATION -> vm.askPeerToDeleteMyLocation(contact.peer.deviceId)
+                            DataAction.DELETE_MESSAGES -> vm.purgeMyMessagesOnPeer(contact.peer.deviceId)
+                            DataAction.DELETE_LOCATION -> vm.purgeMyLocationOnPeer(contact.peer.deviceId)
                         }
                         confirmAction = null
                     }
