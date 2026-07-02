@@ -1,5 +1,6 @@
 package com.locapeer.invite
 
+import android.app.NotificationManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.CryptoUtils
@@ -29,7 +30,8 @@ class PendingRequestsViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val crypto: CryptoUtils,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val notificationManager: NotificationManager
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -38,6 +40,7 @@ class PendingRequestsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
     fun accept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
+        notificationManager.cancel(request.senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             val existing = peerDao.getPeer(request.senderPubkey)
             peerDao.upsertPeer(
@@ -58,6 +61,7 @@ class PendingRequestsViewModel @Inject constructor(
     }
 
     fun decline(request: PendingRequestEntity) {
+        notificationManager.cancel(request.senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             relayClient.connect(request.senderRelayUrl)
             sendTrackDecline(request.senderPubkey, request.isRoleChange)

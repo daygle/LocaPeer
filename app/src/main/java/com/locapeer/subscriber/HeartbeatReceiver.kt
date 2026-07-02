@@ -503,6 +503,8 @@ class HeartbeatReceiver @Inject constructor(
         val openAppIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("navigateTo", "contacts")
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, event.pubkey)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_SUPERVISED_REGISTER)
         }
         val openAppPi = PendingIntent.getActivity(
             context, notifId + 2, openAppIntent,
@@ -697,6 +699,8 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
             putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
             if (payload.requestedRole != null) putExtra(EXTRA_REQUESTED_ROLE, payload.requestedRole)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, event.pubkey)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_TRACK_REQUEST)
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             action = ACTION_TRACK_DECLINE

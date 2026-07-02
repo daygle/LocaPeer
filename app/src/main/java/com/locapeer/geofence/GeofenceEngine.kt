@@ -108,6 +108,8 @@ class GeofenceEngine @Inject constructor(
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
             putExtra("peerName", personName)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, "${fence.id}:$personDeviceId")
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_GEOFENCE)
         }
         val chatPi = PendingIntent.getActivity(
             context, fence.id.hashCode() + 1, chatIntent,

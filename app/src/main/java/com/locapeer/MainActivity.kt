@@ -44,6 +44,15 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * Extras for intents launched from notification action buttons. Android never
+ * auto-cancels a notification when an action is tapped (setAutoCancel only covers
+ * body taps), so intents that open the app carry the tag/id of the notification
+ * they came from and MainActivity dismisses it on arrival.
+ */
+const val EXTRA_CANCEL_NOTIF_TAG = "cancelNotifTag"
+const val EXTRA_CANCEL_NOTIF_ID = "cancelNotifId"
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
@@ -141,6 +150,14 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun handleIntent(intent: Intent?) {
+        intent?.getStringExtra(EXTRA_CANCEL_NOTIF_TAG)?.let { tag ->
+            val id = intent.getIntExtra(EXTRA_CANCEL_NOTIF_ID, -1)
+            if (id >= 0) {
+                val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
+                nm.cancel(tag, id)
+            }
+            intent.removeExtra(EXTRA_CANCEL_NOTIF_TAG)
+        }
         val action = intent?.action
         val data = intent?.data
         if (action == Intent.ACTION_VIEW && data != null && data.scheme == "locapeer") {

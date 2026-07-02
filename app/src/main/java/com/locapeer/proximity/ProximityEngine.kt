@@ -82,6 +82,8 @@ class ProximityEngine @Inject constructor(
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
             putExtra("peerName", personName)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, personDeviceId)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_PROXIMITY)
         }
         val chatPi = PendingIntent.getActivity(
             context, personDeviceId.hashCode() + 20000, chatIntent,

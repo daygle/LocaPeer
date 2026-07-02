@@ -1,5 +1,6 @@
 package com.locapeer.invite
 
+import android.app.NotificationManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.CryptoUtils
@@ -33,7 +34,8 @@ class IncomingShareRequestViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val crypto: CryptoUtils,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val notificationManager: NotificationManager
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -42,6 +44,7 @@ class IncomingShareRequestViewModel @Inject constructor(
     val state: StateFlow<IncomingRequestState> = _state
 
     fun accept(senderPubkey: String, senderName: String, senderRelay: String, locationRole: String, messagingEnabled: Boolean) {
+        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
             val existing = peerDao.getPeer(senderPubkey)
@@ -64,6 +67,7 @@ class IncomingShareRequestViewModel @Inject constructor(
     }
 
     fun decline(senderPubkey: String, senderRelay: String, isRoleChange: Boolean = false) {
+        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
             relayClient.connect(senderRelay)
