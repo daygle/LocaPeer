@@ -10,6 +10,7 @@ import com.locapeer.R
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -17,12 +18,10 @@ import java.util.Locale
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.math.asin
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 private const val COOLDOWN_MS = 5 * 60 * 1000L // 5 minutes per fence
+// Minimum hysteresis buffer past the fence radius before an exit counts.
+private const val MIN_EXIT_BUFFER_M = 50.0
 // Paired with a per fence+person tag (notify(tag, id, ...)) since two peers/fences' hashCodes
 // can collide and silently overwrite each other's notification.
 private const val NOTIF_ID_GEOFENCE = 60000
@@ -35,17 +34,32 @@ class GeofenceEngine @Inject constructor(
 ) {
     // Tracks the last time a notification was sent per fenceId to prevent GPS-jitter spam
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
+    // Inside/outside membership per fence+person, with hysteresis. In-memory: after a
+    // process restart it re-seeds from the previous stored heartbeat, missing at most
+    // one transition rather than inventing one.
+    private val insideState = ConcurrentHashMap<String, Boolean>()
 
     suspend fun evaluate(current: HeartbeatEntity, previous: HeartbeatEntity?) {
         val fences = geofenceDao.getActiveGeofencesForDevice(current.deviceId)
         fences.forEach { fence ->
-            val inNow = isInside(current.lat, current.lng, fence)
-            // First heartbeat for this device: treat previous position as same as current so
-            // neither entered nor exited fires — we don't know where they came from.
-            val inPrev = previous?.let { isInside(it.lat, it.lng, fence) } ?: inNow
+            // A fix coarser than the fence itself can't tell inside from outside —
+            // this also keeps suburb-precision peers from tripping street-sized fences.
+            if (current.accuracy > fence.radiusMetres.toFloat()) return@forEach
 
-            val entered = !inPrev && inNow
-            val exited = inPrev && !inNow
+            val key = "${fence.id}:${current.deviceId}"
+            val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
+            val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
+            val wasInside = insideState[key]
+                ?: previous?.takeIf { it.accuracy <= fence.radiusMetres.toFloat() }
+                    ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres.toDouble() }
+            val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
+            insideState[key] = inNow
+            // First reliable observation for this fence+person: seed only — we don't
+            // know where they came from, so neither entered nor exited can fire.
+            if (wasInside == null) return@forEach
+
+            val entered = !wasInside && inNow
+            val exited = wasInside && !inNow
 
             val shouldNotify = when (fence.triggerOn) {
                 "ENTER" -> entered
@@ -55,7 +69,7 @@ class GeofenceEngine @Inject constructor(
             }
 
             if (shouldNotify) {
-                val cooldownKey = "${fence.id}:${if (entered) "enter" else "exit"}"
+                val cooldownKey = "${fence.id}:${current.deviceId}:${if (entered) "enter" else "exit"}"
                 val now = System.currentTimeMillis()
                 val last = lastNotifiedAt[cooldownKey] ?: 0L
                 if (now - last < COOLDOWN_MS) return@forEach
@@ -73,19 +87,6 @@ class GeofenceEngine @Inject constructor(
         }
     }
 
-    private fun isInside(lat: Double, lng: Double, fence: GeofenceEntity): Boolean =
-        haversineMetres(lat, lng, fence.lat, fence.lng) <= fence.radiusMetres
-
-    private fun haversineMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val r = 6_371_000.0
-        val dLat = Math.toRadians(lat2 - lat1)
-        val dLon = Math.toRadians(lon2 - lon1)
-        val a = sin(dLat / 2).let { it * it } +
-                cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
-                sin(dLon / 2).let { it * it }
-        return r * 2 * asin(sqrt(a.coerceIn(0.0, 1.0)))
-    }
-
     private fun sendGeofenceNotification(
         fence: GeofenceEntity,
         personName: String,
@@ -98,8 +99,10 @@ class GeofenceEngine @Inject constructor(
             putExtra("navigateTo", "map")
             putExtra("highlightPeer", personDeviceId)
         }
+        // Request codes include the person so two people triggering the same fence
+        // don't overwrite each other's PendingIntent extras.
         val openMapPi = PendingIntent.getActivity(
-            context, fence.id.hashCode(), openMapIntent,
+            context, "${fence.id}:$personDeviceId:map".hashCode(), openMapIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -112,7 +115,7 @@ class GeofenceEngine @Inject constructor(
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_GEOFENCE)
         }
         val chatPi = PendingIntent.getActivity(
-            context, fence.id.hashCode() + 1, chatIntent,
+            context, "${fence.id}:$personDeviceId:chat".hashCode(), chatIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
