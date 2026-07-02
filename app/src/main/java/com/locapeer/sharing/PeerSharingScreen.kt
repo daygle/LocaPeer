@@ -304,7 +304,7 @@ fun PeerSharingScreen(
                 }
             }
 
-            item { SectionLabel("Retention On ${peerName}'s Device") }
+            item { SectionLabel("Retention (${peerName}'s Device)") }
             item {
                 SettingsCard {
                     purgeResult?.let { msg ->
