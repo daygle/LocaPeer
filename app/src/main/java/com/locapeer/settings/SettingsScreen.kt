@@ -316,7 +316,7 @@ fun SettingsScreen(
                         subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) },
-                        purgeLabel = "Clear Locations",
+                        purgeLabel = "Clear All Location Data",
                         onPurge = { showClearLocationConfirm = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -326,7 +326,7 @@ fun SettingsScreen(
                         subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
                         onSelected = { vm.setLocalMessageRetentionDays(it) },
-                        purgeLabel = "Clear Messages",
+                        purgeLabel = "Clear All Messages",
                         onPurge = { showClearMessageConfirm = true }
                     )
                 }
