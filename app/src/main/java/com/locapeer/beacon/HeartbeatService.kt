@@ -13,6 +13,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -42,6 +43,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -87,6 +89,8 @@ class HeartbeatService : LifecycleService() {
     private var prevFixLat = 0.0
     private var prevFixLng = 0.0
     private var prevFixElapsedNs = 0L
+    private var prevFixAccuracy = 0f
+    @Volatile private var lastPulseElapsedMs = 0L
 
     private var isStarted = false
 
@@ -115,12 +119,16 @@ class HeartbeatService : LifecycleService() {
                 android.location.Location.distanceBetween(
                     prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist
                 )
-                dist[0] / dtSec
+                // Network/wifi fixes can jump tens of metres while the device is
+                // still; displacement inside the fixes' combined accuracy radius
+                // is indistinguishable from noise, so treat it as no movement.
+                if (dist[0] <= prevFixAccuracy + loc.accuracy) 0f else dist[0] / dtSec
             } else null
         } else null
         prevFixLat = loc.latitude
         prevFixLng = loc.longitude
         prevFixElapsedNs = loc.elapsedRealtimeNanos
+        prevFixAccuracy = loc.accuracy
         return if (loc.hasSpeed()) loc.speed else derived
     }
 
@@ -156,7 +164,9 @@ class HeartbeatService : LifecycleService() {
 
     private val heartbeatRunnable = object : Runnable {
         override fun run() {
-            broadcastHeartbeat()
+            if (broadcastHeartbeat()) {
+                lastPulseElapsedMs = SystemClock.elapsedRealtime()
+            }
             val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
             handler.postDelayed(this, interval)
         }
@@ -172,7 +182,9 @@ class HeartbeatService : LifecycleService() {
             }
         }
         lifecycleScope.launch {
-            peerDao.getPeersReceivingMyLocation().collect {
+            // Room re-emits on every peers-table write; only reschedule when the
+            // recipient list itself changed.
+            peerDao.getPeersReceivingMyLocation().distinctUntilChanged().collect {
                 if (isStarted) reschedulePulse()
             }
         }
@@ -189,8 +201,7 @@ class HeartbeatService : LifecycleService() {
             ACTION_SOS_ON -> {
                 isSos = true
                 intervalManager.setSosMode(enabled = true)
-                broadcastHeartbeat(isSos = true)
-                reschedulePulse()
+                pulseNow()
             }
             ACTION_SOS_OFF -> {
                 isSos = false
@@ -320,15 +331,34 @@ class HeartbeatService : LifecycleService() {
         return false
     }
 
-    private fun reschedulePulse() {
+    /** Fire a heartbeat now and restart the pulse schedule from this moment. */
+    private fun pulseNow() {
         handler.removeCallbacks(heartbeatRunnable)
         handler.post(heartbeatRunnable)
     }
 
-    private fun broadcastHeartbeat(isSos: Boolean = this.isSos) {
+    /**
+     * Recompute the pulse schedule against the current interval without sending an
+     * early heartbeat: the next one fires once the interval has elapsed since the
+     * last pulse. Firing immediately here caused extra history entries whenever the
+     * motion state flapped or the peer list re-emitted while stationary.
+     */
+    private fun reschedulePulse() {
+        handler.removeCallbacks(heartbeatRunnable)
+        if (lastPulseElapsedMs == 0L) {
+            handler.post(heartbeatRunnable)
+            return
+        }
+        val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
+        val elapsed = SystemClock.elapsedRealtime() - lastPulseElapsedMs
+        handler.postDelayed(heartbeatRunnable, (interval - elapsed).coerceAtLeast(0L))
+    }
+
+    /** Returns false when no heartbeat was recorded because no location fix exists yet. */
+    private fun broadcastHeartbeat(isSos: Boolean = this.isSos): Boolean {
         if (lastLat == 0.0 && lastLng == 0.0) {
             Log.d(TAG, "Skipping heartbeat: no location fixed yet")
-            return
+            return false
         }
         val battery = getBatteryLevel()
         intervalManager.updateBattery(battery)
@@ -430,6 +460,7 @@ class HeartbeatService : LifecycleService() {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }
         }
+        return true
     }
 
     @SuppressLint("MissingPermission")
