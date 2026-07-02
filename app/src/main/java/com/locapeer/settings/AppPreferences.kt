@@ -64,9 +64,9 @@ data class AppSettings(
     val mapStartZoom: Double = 16.0,
     /**
      * How the map centres on open.
-     * "RESTORE_LAST" (default), "OWN_PIN", "FIT_ALL", "FIXED_LOCATION".
+     * "OWN_PIN" (default), "RESTORE_LAST", "FIT_ALL", "FIXED_LOCATION".
      */
-    val mapStartingPoint: String = "RESTORE_LAST",
+    val mapStartingPoint: String = "OWN_PIN",
     val mapFixedLat: Double = 0.0,
     val mapFixedLng: Double = 0.0
 )
@@ -137,7 +137,7 @@ class AppPreferences @Inject constructor(
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
                 customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
                 mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
-                mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "RESTORE_LAST",
+                mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "OWN_PIN",
                 mapFixedLat = prefs[KEY_MAP_FIXED_LAT] ?: 0.0,
                 mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0
             )

@@ -305,48 +305,30 @@ fun SettingsScreen(
                 }
             }
 
-            item { SectionLabel("Privacy & Data") }
+            item { SectionLabel("Retention (This Device)") }
 
             // Data on this device (local retention + manual clear)
             item {
                 SettingsCard {
                     RetentionRow(
                         icon = Icons.Default.LocationOn,
-                        title = "Location On This Device",
+                        title = "Location Data",
                         subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
-                        onSelected = { vm.setLocalLocationRetentionDays(it) }
-                    )
-                    Text(
-                        "Per-contact retention on each peer's device is configured on the contact's Sharing page.",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                        onSelected = { vm.setLocalLocationRetentionDays(it) },
+                        purgeLabel = "Clear All Location Data",
+                        onPurge = { showClearLocationConfirm = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
                         icon = Icons.AutoMirrored.Filled.Message,
-                        title = "Messages On This Device",
+                        title = "Messages",
                         subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
-                        onSelected = { vm.setLocalMessageRetentionDays(it) }
+                        onSelected = { vm.setLocalMessageRetentionDays(it) },
+                        purgeLabel = "Clear All Messages",
+                        onPurge = { showClearMessageConfirm = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        OutlinedButton(
-                            onClick = { showClearLocationConfirm = true },
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                        ) { Text("Clear Locations", style = MaterialTheme.typography.labelMedium) }
-                        OutlinedButton(
-                            onClick = { showClearMessageConfirm = true },
-                            modifier = Modifier.weight(1f),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                        ) { Text("Clear Messages", style = MaterialTheme.typography.labelMedium) }
-                    }
                 }
             }
 

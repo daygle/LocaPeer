@@ -162,22 +162,27 @@ fun LocaPeerNavHost(
                     navArgument("lng") { type = NavType.StringType; nullable = true; defaultValue = null }
                 )
             ) {
-                MapScreen(onNavigateToChat = { peerId, peerName ->
-                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
-                })
+                MapScreen(
+                    onNavigateToChat = { peerId, peerName ->
+                        navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
+                    },
+                    onNavigateToHistory = { peerId ->
+                        navController.navigate("history-report?peerId=$peerId")
+                    }
+                )
             }
             composable(Screen.Messages.route) {
                 ConversationListScreen(onOpenChat = { peerId, peerName ->
-                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
+                    navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
                 })
             }
             composable(Screen.Contacts.route) {
                 ContactsScreen(
                     onNavigateToChat = { peerId, peerName ->
-                        navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
+                        navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
                     },
                     onNavigateToSharingSettings = { peerId, peerName ->
-                        navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Contact" }}")
+                        navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Contact" })}")
                     },
                     onNavigateToMap = { lat, lng ->
                         navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
@@ -217,7 +222,7 @@ fun LocaPeerNavHost(
             composable(Screen.Settings.route) {
                 SettingsScreen(
                     onNavigateToPeerSharing = { peerId, peerName ->
-                        navController.navigate("peer-sharing/$peerId/${peerName.ifBlank { "Person" }}")
+                        navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Person" })}")
                     },
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
@@ -311,7 +316,7 @@ fun LocaPeerNavHost(
                     peerName = peerName,
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToSchedule = {
-                        navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=$peerName")
+                        navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=${Uri.encode(peerName)}")
                     },
                     onNavigateToGeofences = { id ->
                         navController.navigate("geofences?peerId=$id")

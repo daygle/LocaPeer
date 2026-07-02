@@ -304,7 +304,7 @@ fun PeerSharingScreen(
                 }
             }
 
-            item { SectionLabel("Retention On ${peerName}'s Device") }
+            item { SectionLabel("Retention (${peerName}'s Device)") }
             item {
                 SettingsCard {
                     purgeResult?.let { msg ->
@@ -326,7 +326,7 @@ fun PeerSharingScreen(
                         subtitle = "How long $peerName keeps your location data on their device",
                         selected = retentionDaysLocation,
                         onSelected = { vm.setRetentionDaysLocation(it) },
-                        purgeLabel = if (retentionDaysLocation == 0) "Remote Delete All My Locations" else "Purge from $peerName Now",
+                        purgeLabel = if (retentionDaysLocation == 0) "Purge All Location Data from Contact" else "Purge from $peerName Now",
                         onPurge = { vm.sendLocationPurgeNow() }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -338,7 +338,7 @@ fun PeerSharingScreen(
                         else "How long $peerName keeps messages you sent",
                         selected = retentionDaysMessages,
                         onSelected = { vm.setRetentionDaysMessages(it) },
-                        purgeLabel = if (retentionDaysMessages == 0) "Remote Delete All My Messages" else "Purge from $peerName Now",
+                        purgeLabel = if (retentionDaysMessages == 0) "Purge All Messages from Contact" else "Purge from $peerName Now",
                         onPurge = { vm.sendMessagePurgeNow() }
                     )
                 }

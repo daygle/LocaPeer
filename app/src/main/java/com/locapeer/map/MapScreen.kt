@@ -78,6 +78,7 @@ private val CARTO_DARK = object : OnlineTileSourceBase(
 @Composable
 fun MapScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
+    onNavigateToHistory: (peerId: String) -> Unit = {},
     vm: MapViewModel = hiltViewModel()
 ) {
     val uiState by vm.uiState.collectAsState()
@@ -240,7 +241,10 @@ fun MapScreen(
                         selectedPin = null
                         onNavigateToChat(pin.peer.deviceId, pin.peer.displayName)
                     },
-                    onViewHistory = {}
+                    onViewHistory = {
+                        selectedPin = null
+                        onNavigateToHistory(pin.peer.deviceId)
+                    }
                 )
             }
         }
@@ -482,7 +486,7 @@ private fun OsmdroidMapView(
     centerOnPin: GeoPoint?,
     isDark: Boolean,
     mapStartZoom: Double = 16.0,
-    mapStartingPoint: String = "RESTORE_LAST",
+    mapStartingPoint: String = "OWN_PIN",
     mapFixedLat: Double = 0.0,
     mapFixedLng: Double = 0.0,
     onCenteredOnUser: () -> Unit,
@@ -677,6 +681,12 @@ private fun OsmdroidMapView(
     )
 }
 
+private fun bearingToCardinal(bearing: Float): String {
+    val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+    val normalized = ((bearing % 360f) + 360f) % 360f
+    return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
+}
+
 @Composable
 private fun PinInfoSheet(
     pin: PinData,
@@ -757,6 +767,10 @@ private fun PinInfoSheet(
                     StatChip("Battery", "${hb.battery}%")
                     StatChip("Motion",
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
+                    if (hb.motionState.uppercase() != "STATIONARY" && hb.speed > 0f) {
+                        StatChip("Speed",
+                            "${(hb.speed * 3.6f).toInt()} km/h ${bearingToCardinal(hb.bearing)}")
+                    }
                 }
 
                 if (address != null) {
