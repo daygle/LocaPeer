@@ -105,11 +105,11 @@ class LocationFilterTest {
     fun `accuracy uncertainty is subtracted before the speed check`() {
         val f = LocationFilter()
         assertTrue(f.accept(baseLat, baseLng, 90f, ns(0)))
-        // 3.2km apart but 90m + 100m of combined slop over 30s: implied speed
-        // just above the cap only if slop were ignored... here it stays under.
-        val distM = 3000.0
-        val implied = (distM - 90 - 100) / 30.0
-        assertTrue(implied < LocationFilter.MAX_PLAUSIBLE_SPEED_MPS)
+        // 3.15km in 30s reads over the cap raw (105 m/s) but under it once the
+        // fixes' combined 190m of accuracy slop is subtracted (~99 m/s).
+        val distM = 3150.0
+        assertTrue(distM / 30.0 > LocationFilter.MAX_PLAUSIBLE_SPEED_MPS)
+        assertTrue((distM - 90.0 - 100.0) / 30.0 < LocationFilter.MAX_PLAUSIBLE_SPEED_MPS)
         assertTrue(f.accept(baseLat + latOffsetForMetres(distM), baseLng, 100f, ns(30)))
     }
 

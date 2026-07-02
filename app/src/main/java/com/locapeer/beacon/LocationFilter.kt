@@ -21,7 +21,8 @@ import kotlin.math.max
  * 2. Jump rejection — a fix implying faster-than-plausible travel from the
  *    last accepted position is a glitch... unless the *next* fix agrees with
  *    it, in which case the device really moved (or the anchor was the outlier)
- *    and the jump is accepted retroactively.
+ *    and that corroborating fix is accepted. The first rejected point stays
+ *    dropped; only the position from the corroborating fix onward is reported.
  *
  * Escape hatch for both: once nothing has been accepted for [STALE_ACCEPT_MS],
  * the next fix is taken at face value. A wrong recent point is worth
@@ -77,13 +78,16 @@ class LocationFilter {
             return true
         }
 
-        val dtSec = (elapsedRealtimeNs - acceptedElapsedNs) / 1_000_000_000f
-        if (dtSec * 1000f >= STALE_ACCEPT_MS) {
+        // Staleness and ordering are judged in integer nanoseconds; float
+        // conversion happens only once a speed actually needs computing.
+        val dtNs = elapsedRealtimeNs - acceptedElapsedNs
+        if (dtNs >= STALE_ACCEPT_MS * 1_000_000L) {
             recordAccepted(lat, lng, accuracyM, elapsedRealtimeNs)
             return true
         }
         // Out-of-order or duplicate timestamp: no time base for a speed check.
-        if (dtSec <= 0f) return false
+        if (dtNs <= 0L) return false
+        val dtSec = dtNs / 1_000_000_000f
 
         if (accuracyM > max(ACCURACY_GATE_FLOOR_M, ACCURACY_GATE_FACTOR * acceptedAccM)) {
             // Not a jump candidate: a coarse fix "far away" is expected noise,
@@ -100,10 +104,12 @@ class LocationFilter {
 
         // Implausible jump. Does it corroborate the previous rejected jump?
         if (hasRejectedJump) {
-            val dtRejSec = (elapsedRealtimeNs - rejectedElapsedNs) / 1_000_000_000f
-            if (dtRejSec > 0f &&
-                impliedSpeedMps(rejectedLat, rejectedLng, rejectedAccM, lat, lng, accuracyM, dtRejSec)
-                <= MAX_PLAUSIBLE_SPEED_MPS
+            val dtRejNs = elapsedRealtimeNs - rejectedElapsedNs
+            if (dtRejNs > 0L &&
+                impliedSpeedMps(
+                    rejectedLat, rejectedLng, rejectedAccM, lat, lng, accuracyM,
+                    dtRejNs / 1_000_000_000f
+                ) <= MAX_PLAUSIBLE_SPEED_MPS
             ) {
                 recordAccepted(lat, lng, accuracyM, elapsedRealtimeNs)
                 return true
