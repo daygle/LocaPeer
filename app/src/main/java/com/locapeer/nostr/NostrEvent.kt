@@ -12,7 +12,7 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 
 object NostrEventKind {
-    const val ENCRYPTED_DM = 4
+    const val ENCRYPTED_DM = 44
     const val EVENT_DELETION = 5
     const val HEARTBEAT = 1040
     const val SOS_ALERT = 1041

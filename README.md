@@ -6,7 +6,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
 - **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) and drops during low battery, saving power without sacrificing accuracy.
-- **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256). Relays store only opaque ciphertext for application events and cannot read your location or message content.
+- **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** - Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
 - **Role-Based Sharing** - Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
@@ -61,7 +61,7 @@ Schedule rules specify which days of the week (Monday–Sunday bitmask) and whic
 
 | Kind | Name | Purpose |
 |---|---|---|
-| 4 | `ENCRYPTED_DM` | NIP-44 encrypted direct message |
+| 44 | `ENCRYPTED_DM` | NIP-44 encrypted direct message |
 | 5 | `EVENT_DELETION` | NIP-09 plaintext deletion request for a published event |
 | 1040 | `HEARTBEAT` | Encrypted location ping with motion state |
 | 1041 | `SOS_ALERT` | High-priority emergency broadcast with coordinates |

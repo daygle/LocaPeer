@@ -203,22 +203,39 @@ class CryptoUtils @Inject constructor() {
     private fun nip44Pad(plaintext: String): ByteArray {
         val data = plaintext.toByteArray(StandardCharsets.UTF_8)
         val len = data.size
-        require(len in 1..65535) { "Plaintext length out of NIP-44 range" }
+        // NIP-44 v2 supports up to u32 max length
+        require(len > 0) { "Plaintext cannot be empty" }
 
-        val out = ByteBuffer.allocate(2 + len)
-            .putShort(len.toShort())
-            .put(data)
-            .array()
-
-        val paddedLen = 2 + calcNip44Padding(len)
-        return out.copyOf(paddedLen)
+        val isExtended = len >= 65535
+        val headerSize = if (isExtended) 6 else 2
+        val out = ByteBuffer.allocate(headerSize + len)
+        
+        if (isExtended) {
+            out.putShort(0)
+            out.putInt(len)
+        } else {
+            out.putShort(len.toShort())
+        }
+        out.put(data)
+        
+        val paddedLen = headerSize + calcNip44Padding(len)
+        return out.array().copyOf(paddedLen)
     }
 
     private fun nip44Unpad(padded: ByteArray): String {
         if (padded.size < 2) throw SecurityException("Invalid padded data")
         val buffer = ByteBuffer.wrap(padded)
-        val len = buffer.short.toInt() and 0xFFFF
-        if (len > padded.size - 2) throw SecurityException("Invalid padding length")
+        val firstShort = buffer.short.toInt() and 0xFFFF
+        
+        val (len, headerSize) = if (firstShort == 0) {
+            if (padded.size < 6) throw SecurityException("Invalid extended padded data")
+            val extendedLen = buffer.int.toLong() and 0xFFFFFFFFL
+            extendedLen.toInt() to 6
+        } else {
+            firstShort to 2
+        }
+
+        if (len > padded.size - headerSize) throw SecurityException("Invalid padding length")
         val data = ByteArray(len)
         buffer[data]
         return String(data, StandardCharsets.UTF_8)
