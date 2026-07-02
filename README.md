@@ -112,7 +112,7 @@ cd LocaPeer
 ./gradlew assembleDebug
 ```
 
-**Default relays**: `wss://relay.daygle.net`, `wss://relay.damus.io`
+**Default relays**: `wss://relay.daygle.net`, `wss://nos.lol`, `wss://relay.damus.io`, `wss://relay.snort.social`
 
 Custom relays can be added in Settings → Relays.
 
