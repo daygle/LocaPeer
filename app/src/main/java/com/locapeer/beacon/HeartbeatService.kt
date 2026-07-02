@@ -2,6 +2,7 @@ package com.locapeer.beacon
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -59,9 +60,21 @@ const val NOTIFICATION_ID_HEARTBEAT = 1001
 const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
+const val ACTION_PULSE_CHECK = "com.locapeer.PULSE_CHECK"
+
+/** Slack added to the doze-backstop alarm so the handler normally fires first. */
+private const val PULSE_BACKSTOP_SLACK_MS = 90_000L
+/** Ignore cached last-known locations older than this when pre-seeding at startup. */
+private const val MAX_SEED_AGE_MS = 10 * 60_000L
 
 @AndroidEntryPoint
 class HeartbeatService : LifecycleService() {
+
+    companion object {
+        /** Process-local liveness flag so the watchdog worker can detect a dead service. */
+        @Volatile var isRunning = false
+            private set
+    }
 
     @Inject lateinit var keyManager: KeyManager
     @Inject lateinit var crypto: CryptoUtils
@@ -93,6 +106,11 @@ class HeartbeatService : LifecycleService() {
     private var prevFixLng = 0.0
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
+    private var wasLowBattery = false
+    private var stationaryAnchorSet = false
+    private var stationaryAnchorLat = 0.0
+    private var stationaryAnchorLng = 0.0
+    private var stationaryAnchorAcc = 0f
     @Volatile private var lastPulseElapsedMs = 0L
 
     private var isStarted = false
@@ -106,7 +124,8 @@ class HeartbeatService : LifecycleService() {
                 lastBearing = if (loc.hasBearing()) loc.bearing else 0f
                 val speed = estimateSpeed(loc)
                 lastSpeed = speed ?: 0f
-                speed?.let { onMotionSample(classifyMotion(it)) }
+                speed?.let { onMotionSample(MotionMath.classify(it)) }
+                if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // If no heartbeat has gone out yet (empty lastLocation cache at start,
                 // so the initial pulse was skipped), send one now that a fix exists.
                 if (isStarted && lastPulseElapsedMs == 0L) pulseNow()
@@ -125,10 +144,7 @@ class HeartbeatService : LifecycleService() {
                 android.location.Location.distanceBetween(
                     prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist
                 )
-                // Network/wifi fixes can jump tens of metres while the device is
-                // still; displacement inside the fixes' combined accuracy radius
-                // is indistinguishable from noise, so treat it as no movement.
-                if (dist[0] <= prevFixAccuracy + loc.accuracy) 0f else dist[0] / dtSec
+                MotionMath.derivedSpeedMps(dist[0], dtSec, prevFixAccuracy + loc.accuracy)
             } else null
         } else null
         prevFixLat = loc.latitude
@@ -138,16 +154,9 @@ class HeartbeatService : LifecycleService() {
         return if (loc.hasSpeed()) loc.speed else derived
     }
 
-    private fun classifyMotion(speedMps: Float): MotionState = when {
-        speedMps < 0.5f -> MotionState.STATIONARY
-        speedMps < 2.2f -> MotionState.WALKING
-        speedMps < 3.6f -> MotionState.RUNNING
-        speedMps < 8.0f -> MotionState.CYCLING
-        else -> MotionState.DRIVING
-    }
-
-    // Require two consecutive fixes to agree before switching state, so a single
-    // noisy GPS speed sample doesn't churn the location request and pulse schedule.
+    // Require consecutive fixes to agree before switching state (see
+    // MotionMath.samplesRequiredToSwitch), so a single noisy GPS speed sample
+    // doesn't churn the location request and pulse schedule.
     private fun onMotionSample(newState: MotionState) {
         if (newState == currentMotionState) {
             candidateMotionCount = 0
@@ -159,10 +168,53 @@ class HeartbeatService : LifecycleService() {
             candidateMotionState = newState
             candidateMotionCount = 1
         }
-        if (candidateMotionCount >= 2 || currentMotionState == MotionState.UNKNOWN) {
+        val required = MotionMath.samplesRequiredToSwitch(newState)
+        if (candidateMotionCount >= required || currentMotionState == MotionState.UNKNOWN) {
             currentMotionState = newState
             candidateMotionCount = 0
+            if (newState == MotionState.STATIONARY) {
+                stationaryAnchorSet = true
+                stationaryAnchorLat = lastLat
+                stationaryAnchorLng = lastLng
+                stationaryAnchorAcc = lastAccuracy
+            }
             intervalManager.updateMotionState(newState)
+            updateLocationRequest()
+            reschedulePulse()
+        }
+    }
+
+    /**
+     * Escape hatch for the STATIONARY state. The low-power fixes used while
+     * stationary can be so coarse (cell-tower fixes are off by hundreds of metres
+     * to kilometres) that the distance travelled between fixes never exceeds their
+     * accuracy radius, so speed-based detection reads 0 and the device stays
+     * STATIONARY for an entire drive — and never upgrades to GPS to find out.
+     * Instead compare against where the device *became* stationary: total
+     * displacement grows without bound while driving, so once it clears the
+     * combined uncertainty the device has provably moved. Exit provisionally to
+     * WALKING; the upgraded location request then classifies properly within a
+     * couple of fixes.
+     */
+    private fun checkStationaryExit(loc: android.location.Location) {
+        if (!stationaryAnchorSet) return
+        val dist = FloatArray(1)
+        android.location.Location.distanceBetween(
+            stationaryAnchorLat, stationaryAnchorLng, loc.latitude, loc.longitude, dist
+        )
+        // Tighten the anchor when a strictly better fix confirms the same place,
+        // so a coarse initial anchor doesn't leave the exit threshold needlessly wide.
+        if (MotionMath.shouldTightenAnchor(dist[0], stationaryAnchorAcc, loc.accuracy)) {
+            stationaryAnchorLat = loc.latitude
+            stationaryAnchorLng = loc.longitude
+            stationaryAnchorAcc = loc.accuracy
+            return
+        }
+        if (MotionMath.shouldExitStationary(dist[0], stationaryAnchorAcc, loc.accuracy)) {
+            stationaryAnchorSet = false
+            currentMotionState = MotionState.WALKING
+            candidateMotionCount = 0
+            intervalManager.updateMotionState(MotionState.WALKING)
             updateLocationRequest()
             reschedulePulse()
         }
@@ -175,11 +227,42 @@ class HeartbeatService : LifecycleService() {
             }
             val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
             handler.postDelayed(this, interval)
+            armDozeBackstop(interval)
         }
     }
 
+    /**
+     * Doze defers both handler callbacks and low-power location fixes, so a phone
+     * left untouched can stretch pins far past the stationary interval (and trip
+     * peers' missed-heartbeat alerts). This alarm punches through idle and re-runs
+     * the pulse check; it is a backstop, not the scheduler — the slack means the
+     * handler wins whenever the device is awake, making the check a no-op. It also
+     * revives the service if it died: alarm delivery grants the temporary allowlist
+     * that permits the foreground-service start.
+     */
+    private fun armDozeBackstop(delayMs: Long) {
+        try {
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + delayMs + PULSE_BACKSTOP_SLACK_MS,
+                pulseCheckIntent()
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to arm doze backstop alarm", e)
+        }
+    }
+
+    private fun pulseCheckIntent(): PendingIntent =
+        PendingIntent.getForegroundService(
+            this, 0,
+            Intent(this, HeartbeatService::class.java).setAction(ACTION_PULSE_CHECK),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
     override fun onCreate() {
         super.onCreate()
+        isRunning = true
         fusedLocation = LocationServices.getFusedLocationProviderClient(this)
         createNotificationChannel()
         lifecycleScope.launch {
@@ -230,6 +313,9 @@ class HeartbeatService : LifecycleService() {
                 stopSelf()
                 return START_NOT_STICKY
             }
+            // Doze backstop fired: catch up if the handler was frozen past the
+            // interval, otherwise this just re-arms the schedule.
+            ACTION_PULSE_CHECK -> reschedulePulse()
         }
         return START_STICKY
     }
@@ -309,16 +395,20 @@ class HeartbeatService : LifecycleService() {
     }
 
     private fun buildLocationRequest(): LocationRequest {
+        // Below 20% battery the heartbeat cadence already stretches to the
+        // low-battery interval; keeping full-rate GPS running would defeat it.
+        val lowBattery = !isSos && intervalManager.isLowBattery()
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
+            lowBattery -> Priority.PRIORITY_LOW_POWER
             currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
             currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
         }
         val pollIntervalMs = when {
             isSos -> 10_000L
+            lowBattery -> 120_000L
             currentMotionState == MotionState.STATIONARY -> 120_000L
-            currentMotionState == MotionState.DRIVING -> 15_000L
             else -> 30_000L
         }
         return LocationRequest.Builder(priority, pollIntervalMs)
@@ -375,7 +465,9 @@ class HeartbeatService : LifecycleService() {
         }
         val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
         val elapsed = SystemClock.elapsedRealtime() - lastPulseElapsedMs
-        handler.postDelayed(heartbeatRunnable, (interval - elapsed).coerceAtLeast(0L))
+        val delay = (interval - elapsed).coerceAtLeast(0L)
+        handler.postDelayed(heartbeatRunnable, delay)
+        armDozeBackstop(delay)
     }
 
     /** Returns false when no heartbeat was recorded because no location fix exists yet. */
@@ -386,6 +478,13 @@ class HeartbeatService : LifecycleService() {
         }
         val battery = getBatteryLevel()
         intervalManager.updateBattery(battery)
+        // Battery is sampled once per heartbeat; when it crosses the low-battery
+        // threshold the location request must be rebuilt to match the new profile.
+        val lowNow = intervalManager.isLowBattery()
+        if (lowNow != wasLowBattery) {
+            wasLowBattery = lowNow
+            updateLocationRequest()
+        }
 
         lifecycleScope.launch {
             try {
@@ -393,6 +492,7 @@ class HeartbeatService : LifecycleService() {
                 val settings = prefs.settings.first()
 
                 val nowMs = System.currentTimeMillis()
+                val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
                 heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
@@ -405,7 +505,8 @@ class HeartbeatService : LifecycleService() {
                         motionState = currentMotionState.name,
                         isSos = isSos,
                         receivedAt = nowMs,
-                        pinColor = settings.pinColor
+                        pinColor = settings.pinColor,
+                        expectedIntervalSeconds = expectedIntervalSec
                     )
                 )
                 val retentionDays = settings.localLocationRetentionDays
@@ -454,7 +555,8 @@ class HeartbeatService : LifecycleService() {
                             retentionDays = cfg?.retentionDaysLocation ?: 30,
                             pinColor = settings.pinColor,
                             speed = lastSpeed,
-                            bearing = lastBearing
+                            bearing = lastBearing,
+                            expectedIntervalSeconds = expectedIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)
 
@@ -497,7 +599,9 @@ class HeartbeatService : LifecycleService() {
                         // task.result throws on a failed Task; a crash here would also
                         // leave the continuation suspended and the pulse never scheduled.
                         val loc = if (task.isSuccessful) task.result else null
-                        if (loc != null) {
+                        // An old cached position would be broadcast stamped with the
+                        // current time; better to wait for the first real fix instead.
+                        if (loc != null && System.currentTimeMillis() - loc.time <= MAX_SEED_AGE_MS) {
                             lastLat = loc.latitude
                             lastLng = loc.longitude
                             lastAccuracy = loc.accuracy
@@ -550,7 +654,13 @@ class HeartbeatService : LifecycleService() {
     }
 
     override fun onDestroy() {
+        isRunning = false
         handler.removeCallbacks(heartbeatRunnable)
+        try {
+            (getSystemService(ALARM_SERVICE) as AlarmManager).cancel(pulseCheckIntent())
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to cancel doze backstop alarm", e)
+        }
         try {
             if (::fusedLocation.isInitialized) {
                 fusedLocation.removeLocationUpdates(locationCallback)

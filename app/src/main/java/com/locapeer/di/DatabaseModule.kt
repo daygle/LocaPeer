@@ -26,7 +26,10 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
+            // Pre-release: schema is baselined at version 1 with destructive
+            // rebuilds in both directions instead of handwritten migrations.
             .fallbackToDestructiveMigration(true)
+            .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 
     @Provides fun providePeerDao(db: AppDatabase): PeerDao = db.peerDao()

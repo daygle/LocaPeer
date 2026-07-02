@@ -50,6 +50,11 @@ android {
         compose = true
     }
 
+    testOptions {
+        // Let JVM unit tests touch stubbed android.* APIs (e.g. Log) without crashing
+        unitTests.isReturnDefaultValues = true
+    }
+
     packaging {
         jniLibs {
             useLegacyPackaging = false
@@ -136,4 +141,7 @@ dependencies {
 
     // Accompanist permissions
     implementation("com.google.accompanist:accompanist-permissions:0.37.3")
+
+    // Unit tests
+    testImplementation("junit:junit:4.13.2")
 }

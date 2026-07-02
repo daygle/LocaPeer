@@ -1,9 +1,15 @@
 package com.locapeer.subscriber
 
+import android.Manifest
+import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.SystemClock
+import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -13,6 +19,7 @@ import androidx.work.WorkerParameters
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.beacon.AdaptiveIntervalManager
+import com.locapeer.beacon.HeartbeatService
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.settings.AppPreferences
@@ -37,6 +44,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val settings = prefs.settings.first()
+        ensureHeartbeatServiceRunning(settings.heartbeatEnabled)
         val receiveContacts = peerDao.getReceiveContacts().first()
         val now = System.currentTimeMillis()
 
@@ -45,14 +53,16 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
         receiveContacts.forEach { peer ->
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
-            // During an active SOS the sender beats every 15s, but expect 60s (alerting
-            // after 2 min of silence via the ×2 threshold below): tight enough to alert on
-            // the next worker run, without tripping on relay jitter or a few dropped beats.
-            val expected = if (latest.isSos) {
-                60_000L
-            } else {
-                intervalManager.getExpectedIntervalMillis(latest.motionState, settings, latest.battery)
-            }
+            // Prefer the interval the sender reported in the ping itself; fall back to
+            // guessing from our own settings for pings from older app versions. The 60s
+            // floor keeps SOS-rate (15s) senders from alerting on mere relay jitter —
+            // combined with the ×2 threshold below that means 2 min of silence.
+            val expected = latest.expectedIntervalSeconds?.times(1000L)?.coerceAtLeast(60_000L)
+                ?: if (latest.isSos) {
+                    60_000L
+                } else {
+                    intervalManager.getExpectedIntervalMillis(latest.motionState, settings, latest.battery)
+                }
             val elapsed = now - latest.timestamp
             if (elapsed > expected * 2) {
                 val minutesAgo = elapsed / 60_000
@@ -72,6 +82,39 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             }
         }
         return Result.success()
+    }
+
+    /**
+     * Watchdog: the heartbeat service is sticky and restarted on boot, but an OEM
+     * task killer can take it down without either hook firing — tracking would then
+     * silently stop until the app is next opened. This worker already runs every
+     * 15 minutes, so re-assert the service here. Started via an alarm PendingIntent
+     * because a background worker may not launch a foreground service directly on
+     * Android 12+, while alarm delivery grants the temporary allowlist that can.
+     */
+    private fun ensureHeartbeatServiceRunning(heartbeatEnabled: Boolean) {
+        if (!heartbeatEnabled || HeartbeatService.isRunning) return
+        val ctx = applicationContext
+        val hasLocation =
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (!hasLocation) return
+        try {
+            val pi = PendingIntent.getForegroundService(
+                ctx, 0,
+                Intent(ctx, HeartbeatService::class.java),
+                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            val alarmManager = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + 1000L,
+                pi
+            )
+            Log.i("MissedHeartbeatWorker", "Heartbeat service not running; scheduled restart")
+        } catch (e: Exception) {
+            Log.e("MissedHeartbeatWorker", "Failed to schedule heartbeat service restart", e)
+        }
     }
 
     companion object {

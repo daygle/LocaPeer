@@ -17,6 +17,7 @@ class AdaptiveIntervalManager @Inject constructor() {
     fun setSosMode(enabled: Boolean) { isSosMode = enabled }
     fun updateMotionState(state: MotionState) { currentMotionState = state }
     fun updateBattery(level: Int) { batteryLevel = level }
+    fun isLowBattery(): Boolean = batteryLevel < 20
 
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
