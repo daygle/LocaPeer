@@ -305,14 +305,14 @@ fun SettingsScreen(
                 }
             }
 
-            item { SectionLabel("Privacy & Data") }
+            item { SectionLabel("Retention (This Device)") }
 
             // Data on this device (local retention + manual clear)
             item {
                 SettingsCard {
                     RetentionRow(
                         icon = Icons.Default.LocationOn,
-                        title = "Location On This Device",
+                        title = "Location Data",
                         subtitle = "How long to keep contacts' location data locally",
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) },
@@ -322,7 +322,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
                         icon = Icons.AutoMirrored.Filled.Message,
-                        title = "Messages On This Device",
+                        title = "Messages",
                         subtitle = "How long to keep received messages locally",
                         selected = settings.localMessageRetentionDays,
                         onSelected = { vm.setLocalMessageRetentionDays(it) },
