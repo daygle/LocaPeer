@@ -10,6 +10,7 @@ import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.data.dao.ProximityAlertDao
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -17,12 +18,12 @@ import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
-import kotlin.math.asin
-import kotlin.math.cos
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 private const val COOLDOWN_MS = 10 * 60 * 1000L // 10 minutes per peer
+// Our own cached position older than this can't prove the peer is near *us* now.
+private const val MAX_OWN_FIX_AGE_MS = 10 * 60 * 1000L
+// Minimum hysteresis buffer past the alert radius before the peer counts as gone.
+private const val MIN_EXIT_BUFFER_M = 100.0
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
 private const val NOTIF_ID_PROXIMITY = 50000
@@ -35,6 +36,10 @@ class ProximityEngine @Inject constructor(
 ) {
     private var fusedLocation = LocationServices.getFusedLocationProviderClient(context)
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
+    // Whether each peer is currently within their alert radius, with hysteresis.
+    // Alerts fire on the outside→inside transition only, so a peer who *stays*
+    // nearby doesn't re-alert every cooldown period; leaving re-arms the alert.
+    private val wasNearby = ConcurrentHashMap<String, Boolean>()
 
     @SuppressLint("MissingPermission")
     suspend fun evaluate(peerHeartbeat: HeartbeatEntity) {
@@ -45,11 +50,11 @@ class ProximityEngine @Inject constructor(
             suspendCancellableCoroutine<android.location.Location?> { cont ->
                 fusedLocation.lastLocation
                     .addOnSuccessListener { cont.resume(it) }
-                    .addOnFailureListener { 
+                    .addOnFailureListener {
                         if (isDeadObject(it)) {
                             fusedLocation = LocationServices.getFusedLocationProviderClient(context)
                         }
-                        cont.resume(null) 
+                        cont.resume(null)
                     }
                     .addOnCanceledListener { cont.resume(null) }
             }
@@ -60,16 +65,35 @@ class ProximityEngine @Inject constructor(
             null
         } ?: return
 
-        val distanceMetres = haversineMetres(
+        // A stale own position only proves where we *were*; skip rather than
+        // raise a "nearby" alert against it.
+        if (System.currentTimeMillis() - ownLocation.time > MAX_OWN_FIX_AGE_MS) return
+        // When the combined uncertainty exceeds the radius, "within radius" can't
+        // be decided — this also keeps suburb-precision peers from false-alerting.
+        val uncertainty = ownLocation.accuracy.toDouble() + peerHeartbeat.accuracy
+        if (uncertainty > alert.radiusMetres) return
+
+        val distanceMetres = GeoMath.haversineMetres(
             ownLocation.latitude, ownLocation.longitude,
             peerHeartbeat.lat, peerHeartbeat.lng
         )
 
-        if (distanceMetres <= alert.radiusMetres) {
+        val peerId = peerHeartbeat.deviceId
+        val wasInside = wasNearby[peerId]
+        val buffer = maxOf(MIN_EXIT_BUFFER_M, uncertainty)
+        val inside = GeoMath.isInsideWithHysteresis(
+            distanceMetres, alert.radiusMetres.toDouble(), buffer, wasInside == true
+        )
+        wasNearby[peerId] = inside
+        // First observation since process start: seed only. A peer who was already
+        // nearby shouldn't re-alert on every app restart; arrivals fire next beat.
+        if (wasInside == null) return
+
+        if (inside && !wasInside) {
             val now = System.currentTimeMillis()
-            if (now - (lastNotifiedAt[peerHeartbeat.deviceId] ?: 0L) < COOLDOWN_MS) return
-            lastNotifiedAt[peerHeartbeat.deviceId] = now
-            sendNotification(peerHeartbeat.displayName, peerHeartbeat.deviceId, distanceMetres.toInt())
+            if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return
+            lastNotifiedAt[peerId] = now
+            sendNotification(peerHeartbeat.displayName, peerId, distanceMetres.toInt())
         }
     }
 
@@ -110,16 +134,6 @@ class ProximityEngine @Inject constructor(
             .setAutoCancel(true)
             .build()
         notificationManager.notify(personDeviceId, NOTIF_ID_PROXIMITY, notification)
-    }
-
-    private fun haversineMetres(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val r = 6_371_000.0
-        val dLat = Math.toRadians(lat2 - lat1)
-        val dLon = Math.toRadians(lon2 - lon1)
-        val a = sin(dLat / 2).let { it * it } +
-                cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
-                sin(dLon / 2).let { it * it }
-        return r * 2 * asin(sqrt(a.coerceIn(0.0, 1.0)))
     }
 
     private fun isDeadObject(e: Throwable): Boolean {
