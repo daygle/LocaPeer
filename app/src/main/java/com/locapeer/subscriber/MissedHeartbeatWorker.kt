@@ -45,8 +45,9 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
         receiveContacts.forEach { peer ->
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
-            // During an active SOS the sender beats every 15s, so silence beyond a couple
-            // of minutes is alarming regardless of their last motion state.
+            // During an active SOS the sender beats every 15s, but expect 60s (alerting
+            // after 2 min of silence via the ×2 threshold below): tight enough to alert on
+            // the next worker run, without tripping on relay jitter or a few dropped beats.
             val expected = if (latest.isSos) {
                 60_000L
             } else {
