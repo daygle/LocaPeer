@@ -78,7 +78,7 @@ class MapViewModel @Inject constructor(
 
     val mapStartingPoint: StateFlow<String> = appPreferences.settings
         .map { it.mapStartingPoint }
-        .stateIn(viewModelScope, SharingStarted.Lazily, "RESTORE_LAST")
+        .stateIn(viewModelScope, SharingStarted.Lazily, "OWN_PIN")
 
     val mapFixedLat: StateFlow<Double> = appPreferences.settings
         .map { it.mapFixedLat }

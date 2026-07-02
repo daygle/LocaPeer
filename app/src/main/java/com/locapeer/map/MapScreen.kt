@@ -486,7 +486,7 @@ private fun OsmdroidMapView(
     centerOnPin: GeoPoint?,
     isDark: Boolean,
     mapStartZoom: Double = 16.0,
-    mapStartingPoint: String = "RESTORE_LAST",
+    mapStartingPoint: String = "OWN_PIN",
     mapFixedLat: Double = 0.0,
     mapFixedLng: Double = 0.0,
     onCenteredOnUser: () -> Unit,
