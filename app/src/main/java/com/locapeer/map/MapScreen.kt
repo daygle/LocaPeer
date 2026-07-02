@@ -681,6 +681,12 @@ private fun OsmdroidMapView(
     )
 }
 
+private fun bearingToCardinal(bearing: Float): String {
+    val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+    val normalized = ((bearing % 360f) + 360f) % 360f
+    return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
+}
+
 @Composable
 private fun PinInfoSheet(
     pin: PinData,
@@ -761,6 +767,10 @@ private fun PinInfoSheet(
                     StatChip("Battery", "${hb.battery}%")
                     StatChip("Motion",
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
+                    if (hb.motionState.uppercase() != "STATIONARY" && hb.speed > 0f) {
+                        StatChip("Speed",
+                            "${(hb.speed * 3.6f).toInt()} km/h ${bearingToCardinal(hb.bearing)}")
+                    }
                 }
 
                 if (address != null) {
