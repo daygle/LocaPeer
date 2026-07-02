@@ -93,6 +93,7 @@ class HeartbeatService : LifecycleService() {
     private var prevFixLng = 0.0
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
+    private var stationaryAnchorSet = false
     private var stationaryAnchorLat = 0.0
     private var stationaryAnchorLng = 0.0
     private var stationaryAnchorAcc = 0f
@@ -170,6 +171,7 @@ class HeartbeatService : LifecycleService() {
             currentMotionState = newState
             candidateMotionCount = 0
             if (newState == MotionState.STATIONARY) {
+                stationaryAnchorSet = true
                 stationaryAnchorLat = lastLat
                 stationaryAnchorLng = lastLng
                 stationaryAnchorAcc = lastAccuracy
@@ -193,7 +195,7 @@ class HeartbeatService : LifecycleService() {
      * couple of fixes.
      */
     private fun checkStationaryExit(loc: android.location.Location) {
-        if (stationaryAnchorLat == 0.0 && stationaryAnchorLng == 0.0) return
+        if (!stationaryAnchorSet) return
         val dist = FloatArray(1)
         android.location.Location.distanceBetween(
             stationaryAnchorLat, stationaryAnchorLng, loc.latitude, loc.longitude, dist
@@ -208,9 +210,7 @@ class HeartbeatService : LifecycleService() {
             return
         }
         if (dist[0] > stationaryAnchorAcc + loc.accuracy + 150f) {
-            stationaryAnchorLat = 0.0
-            stationaryAnchorLng = 0.0
-            stationaryAnchorAcc = 0f
+            stationaryAnchorSet = false
             currentMotionState = MotionState.WALKING
             candidateMotionCount = 0
             intervalManager.updateMotionState(MotionState.WALKING)
