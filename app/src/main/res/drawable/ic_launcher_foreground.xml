@@ -5,6 +5,13 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
+    <!-- Scaled to keep the pin inside the 66dp adaptive-icon safe zone -->
+    <group
+        android:scaleX="0.94"
+        android:scaleY="0.94"
+        android:pivotX="54"
+        android:pivotY="54">
+
     <!-- Primary Location Pin Shape -->
     <path
         android:fillColor="#FFFFFF"
@@ -37,4 +44,6 @@
         android:strokeWidth="2"
         android:strokeLineCap="round"
         android:pathData="M44,40 L50,45 M64,40 L58,45 M54,58 L54,54" />
+
+    </group>
 </vector>
