@@ -93,6 +93,7 @@ class HeartbeatService : LifecycleService() {
     private var prevFixLng = 0.0
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
+    private var wasLowBattery = false
     private var stationaryAnchorSet = false
     private var stationaryAnchorLat = 0.0
     private var stationaryAnchorLng = 0.0
@@ -154,8 +155,11 @@ class HeartbeatService : LifecycleService() {
         else -> MotionState.DRIVING
     }
 
-    // Require two consecutive fixes to agree before switching state, so a single
-    // noisy GPS speed sample doesn't churn the location request and pulse schedule.
+    // Require consecutive fixes to agree before switching state, so a single noisy
+    // GPS speed sample doesn't churn the location request and pulse schedule.
+    // Asymmetric on purpose: quick to detect motion (2 samples), slow to settle
+    // (4 samples) — a couple of zero-speed fixes at a red light must not drop a
+    // drive into STATIONARY and its low-power polling.
     private fun onMotionSample(newState: MotionState) {
         if (newState == currentMotionState) {
             candidateMotionCount = 0
@@ -167,7 +171,8 @@ class HeartbeatService : LifecycleService() {
             candidateMotionState = newState
             candidateMotionCount = 1
         }
-        if (candidateMotionCount >= 2 || currentMotionState == MotionState.UNKNOWN) {
+        val required = if (newState == MotionState.STATIONARY) 4 else 2
+        if (candidateMotionCount >= required || currentMotionState == MotionState.UNKNOWN) {
             currentMotionState = newState
             candidateMotionCount = 0
             if (newState == MotionState.STATIONARY) {
@@ -360,16 +365,20 @@ class HeartbeatService : LifecycleService() {
     }
 
     private fun buildLocationRequest(): LocationRequest {
+        // Below 20% battery the heartbeat cadence already stretches to the
+        // low-battery interval; keeping full-rate GPS running would defeat it.
+        val lowBattery = !isSos && intervalManager.isLowBattery()
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
+            lowBattery -> Priority.PRIORITY_LOW_POWER
             currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
             currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
         }
         val pollIntervalMs = when {
             isSos -> 10_000L
+            lowBattery -> 120_000L
             currentMotionState == MotionState.STATIONARY -> 120_000L
-            currentMotionState == MotionState.DRIVING -> 15_000L
             else -> 30_000L
         }
         return LocationRequest.Builder(priority, pollIntervalMs)
@@ -437,6 +446,13 @@ class HeartbeatService : LifecycleService() {
         }
         val battery = getBatteryLevel()
         intervalManager.updateBattery(battery)
+        // Battery is sampled once per heartbeat; when it crosses the low-battery
+        // threshold the location request must be rebuilt to match the new profile.
+        val lowNow = intervalManager.isLowBattery()
+        if (lowNow != wasLowBattery) {
+            wasLowBattery = lowNow
+            updateLocationRequest()
+        }
 
         lifecycleScope.launch {
             try {
