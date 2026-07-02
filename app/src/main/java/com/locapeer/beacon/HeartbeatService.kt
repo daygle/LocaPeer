@@ -18,10 +18,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
-import com.google.android.gms.location.ActivityRecognition
-import com.google.android.gms.location.ActivityRecognitionClient
-import com.google.android.gms.location.ActivityRecognitionResult
-import com.google.android.gms.location.DetectedActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -61,7 +57,6 @@ const val NOTIFICATION_ID_HEARTBEAT = 1001
 const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
-private const val ACTION_ACTIVITY_UPDATE = "com.locapeer.ACTIVITY_UPDATE"
 
 @AndroidEntryPoint
 class HeartbeatService : LifecycleService() {
@@ -77,7 +72,6 @@ class HeartbeatService : LifecycleService() {
     @Inject lateinit var notificationManager: NotificationManager
 
     private lateinit var fusedLocation: FusedLocationProviderClient
-    private lateinit var activityClient: ActivityRecognitionClient
     private val handler = Handler(Looper.getMainLooper())
 
     @Volatile private var lastLat = 0.0
@@ -88,6 +82,11 @@ class HeartbeatService : LifecycleService() {
     private var currentSettings = AppSettings()
     @Volatile private var isSos = false
     @Volatile private var currentMotionState = MotionState.UNKNOWN
+    private var candidateMotionState = MotionState.UNKNOWN
+    private var candidateMotionCount = 0
+    private var prevFixLat = 0.0
+    private var prevFixLng = 0.0
+    private var prevFixElapsedNs = 0L
 
     private var isStarted = false
 
@@ -97,9 +96,61 @@ class HeartbeatService : LifecycleService() {
                 lastLat = loc.latitude
                 lastLng = loc.longitude
                 lastAccuracy = loc.accuracy
-                lastSpeed = if (loc.hasSpeed()) loc.speed else 0f
                 lastBearing = if (loc.hasBearing()) loc.bearing else 0f
+                val speed = estimateSpeed(loc)
+                lastSpeed = speed ?: 0f
+                speed?.let { onMotionSample(classifyMotion(it)) }
             }
+        }
+    }
+
+    // Low-power (network) fixes often carry no speed, so fall back to
+    // displacement over time; without this a stationary device that starts
+    // driving could never leave the STATIONARY state.
+    private fun estimateSpeed(loc: android.location.Location): Float? {
+        val derived = if (prevFixElapsedNs > 0L) {
+            val dtSec = (loc.elapsedRealtimeNanos - prevFixElapsedNs) / 1_000_000_000f
+            if (dtSec in 1f..600f) {
+                val dist = FloatArray(1)
+                android.location.Location.distanceBetween(
+                    prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist
+                )
+                dist[0] / dtSec
+            } else null
+        } else null
+        prevFixLat = loc.latitude
+        prevFixLng = loc.longitude
+        prevFixElapsedNs = loc.elapsedRealtimeNanos
+        return if (loc.hasSpeed()) loc.speed else derived
+    }
+
+    private fun classifyMotion(speedMps: Float): MotionState = when {
+        speedMps < 0.5f -> MotionState.STATIONARY
+        speedMps < 2.2f -> MotionState.WALKING
+        speedMps < 3.6f -> MotionState.RUNNING
+        speedMps < 8.0f -> MotionState.CYCLING
+        else -> MotionState.DRIVING
+    }
+
+    // Require two consecutive fixes to agree before switching state, so a single
+    // noisy GPS speed sample doesn't churn the location request and pulse schedule.
+    private fun onMotionSample(newState: MotionState) {
+        if (newState == currentMotionState) {
+            candidateMotionCount = 0
+            return
+        }
+        if (newState == candidateMotionState) {
+            candidateMotionCount++
+        } else {
+            candidateMotionState = newState
+            candidateMotionCount = 1
+        }
+        if (candidateMotionCount >= 2 || currentMotionState == MotionState.UNKNOWN) {
+            currentMotionState = newState
+            candidateMotionCount = 0
+            intervalManager.updateMotionState(newState)
+            updateLocationRequest()
+            reschedulePulse()
         }
     }
 
@@ -114,7 +165,6 @@ class HeartbeatService : LifecycleService() {
     override fun onCreate() {
         super.onCreate()
         fusedLocation = LocationServices.getFusedLocationProviderClient(this)
-        activityClient = ActivityRecognition.getClient(this)
         createNotificationChannel()
         lifecycleScope.launch {
             prefs.settings.collect { settings ->
@@ -150,26 +200,6 @@ class HeartbeatService : LifecycleService() {
             ACTION_STOP -> {
                 stopSelf()
                 return START_NOT_STICKY
-            }
-            ACTION_ACTIVITY_UPDATE -> {
-                if (ActivityRecognitionResult.hasResult(intent)) {
-                    val result = ActivityRecognitionResult.extractResult(intent) ?: return START_STICKY
-                    val detected = result.mostProbableActivity
-                    val newState = when (detected.type) {
-                        DetectedActivity.STILL -> MotionState.STATIONARY
-                        DetectedActivity.WALKING, DetectedActivity.ON_FOOT -> MotionState.WALKING
-                        DetectedActivity.RUNNING -> MotionState.RUNNING
-                        DetectedActivity.ON_BICYCLE -> MotionState.CYCLING
-                        DetectedActivity.IN_VEHICLE -> MotionState.DRIVING
-                        else -> MotionState.UNKNOWN
-                    }
-                    if (newState != currentMotionState) {
-                        currentMotionState = newState
-                        intervalManager.updateMotionState(newState)
-                        updateLocationRequest()
-                        reschedulePulse()
-                    }
-                }
             }
         }
         return START_STICKY
@@ -226,35 +256,6 @@ class HeartbeatService : LifecycleService() {
             updateLocationRequest()
         } else {
             Log.e(TAG, "Cannot start location updates: permission missing")
-        }
-
-        val activityIntent = PendingIntent.getService(
-            this, 0,
-            Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE,
-        )
-        val hasActivityPerm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
-        } else true
-
-        if (hasActivityPerm) {
-            try {
-                activityClient.requestActivityUpdates(30_000L, activityIntent)
-            } catch (e: SecurityException) {
-                Log.e(TAG, "Activity recognition permission missing: ${e.message}")
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to request activity updates", e)
-                if (isDeadObject(e)) {
-                    activityClient = ActivityRecognition.getClient(this)
-                    try {
-                        activityClient.requestActivityUpdates(30_000L, activityIntent)
-                    } catch (e2: Exception) {
-                        Log.e(TAG, "Activity update retry failed", e2)
-                    }
-                }
-            }
-        } else {
-            Log.w(TAG, "Skipping activity updates: permission missing")
         }
 
         lifecycleScope.launch {
@@ -491,14 +492,6 @@ class HeartbeatService : LifecycleService() {
         try {
             if (::fusedLocation.isInitialized) {
                 fusedLocation.removeLocationUpdates(locationCallback)
-            }
-            val activityIntent = PendingIntent.getService(
-                this, 0,
-                Intent(this, HeartbeatService::class.java).apply { action = ACTION_ACTIVITY_UPDATE },
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
-            )
-            if (::activityClient.isInitialized) {
-                activityClient.removeActivityUpdates(activityIntent)
             }
         } catch (e: SecurityException) {
             Log.e(TAG, "Failed to remove updates: ${e.message}")
