@@ -2,6 +2,8 @@ package com.locapeer.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
@@ -22,10 +24,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    /** Adds heartbeats.expectedIntervalSeconds so history survives the upgrade. */
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE heartbeats ADD COLUMN expectedIntervalSeconds INTEGER")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
+            .addMigrations(MIGRATION_3_4)
             .fallbackToDestructiveMigration(true)
             .build()
 

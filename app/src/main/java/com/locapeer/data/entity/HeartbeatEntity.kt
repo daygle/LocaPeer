@@ -25,5 +25,7 @@ data class HeartbeatEntity(
     /** Speed in m/s from GPS. 0 when stationary or unavailable. */
     val speed: Float = 0f,
     /** Bearing in degrees (0–360) from GPS. 0 when stationary or unavailable. */
-    val bearing: Float = 0f
+    val bearing: Float = 0f,
+    /** Sender's heartbeat interval in seconds when this ping was sent. Null for legacy rows. */
+    val expectedIntervalSeconds: Long? = null
 )

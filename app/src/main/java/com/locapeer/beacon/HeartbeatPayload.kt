@@ -20,5 +20,11 @@ data class HeartbeatPayload(
     /** Speed in m/s from GPS. 0 when stationary or unavailable. */
     val speed: Float = 0f,
     /** Bearing in degrees (0–360) from GPS. 0 when stationary or unavailable. */
-    val bearing: Float = 0f
+    val bearing: Float = 0f,
+    /**
+     * The sender's current heartbeat interval in seconds (SOS/battery/motion aware),
+     * so receivers know exactly when the next beat is due instead of guessing from
+     * their own settings. Null from older app versions.
+     */
+    val expectedIntervalSeconds: Long? = null
 )
