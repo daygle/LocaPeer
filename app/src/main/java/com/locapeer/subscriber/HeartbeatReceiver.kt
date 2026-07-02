@@ -76,7 +76,17 @@ private const val CHANNEL_ID_ALERTS = "locapeer_alerts"
 private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
 private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
+private const val SUB_ID_HB_CATCHUP = "lp-hb-catchup"
 private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
+// Heartbeats are far more numerous than control events, so cap their replay window
+// tighter; relays also cap response sizes, which the limit below reflects.
+private const val MAX_HB_CATCHUP_SECONDS = 7L * 24 * 3600  // 7 days
+private const val HB_CATCHUP_LIMIT = 1000
+// Side effects (SOS alarm, geofence/proximity alerts) only fire for heartbeats this
+// recent; older ones are history backfill and must not raise stale alerts.
+private const val FRESH_HEARTBEAT_MS = 10 * 60_000L
+// Throttle for persisting the heartbeat sync baseline as live events arrive.
+private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -123,6 +133,9 @@ class HeartbeatReceiver @Inject constructor(
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
+
+    /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
+    @Volatile private var lastPersistedHbEpoch = 0L
 
     fun stop() {
         scope.cancel()
@@ -182,6 +195,23 @@ class HeartbeatReceiver @Inject constructor(
             // Advance the baseline so the next session only re-fetches events from now onward
             prefs.setLastControlSubEpoch(nowEpoch)
             Log.d(TAG, "Control catch-up since epoch $catchUpSince (last sync: $lastControlEpoch)")
+
+            // Heartbeat catch-up: replay location/SOS events sent while this device was
+            // offline, so contacts' location history has no gaps. Without this, only
+            // heartbeats that arrive while the app is running are ever stored.
+            val lastHbEpoch = prefs.getLastHeartbeatSubEpoch()
+            val hbSince = maxOf(lastHbEpoch - 5, nowEpoch - MAX_HB_CATCHUP_SECONDS)
+            relayClient.subscribe(
+                SUB_ID_HB_CATCHUP,
+                NostrFilter(
+                    kinds = listOf(NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT),
+                    pTags = listOf(pubHex),
+                    since = hbSince,
+                    limit = HB_CATCHUP_LIMIT
+                )
+            )
+            lastPersistedHbEpoch = maxOf(lastHbEpoch, hbSince)
+            Log.d(TAG, "Heartbeat catch-up since epoch $hbSince (last sync: $lastHbEpoch)")
         }
 
         relayClient.events
@@ -265,11 +295,18 @@ class HeartbeatReceiver @Inject constructor(
             // Use event.pubkey (canonical 64-char Nostr pubkey) so the heartbeat always
             // matches the peer row regardless of what the payload.deviceId contains.
             val canonicalDeviceId = event.pubkey
+            val timestampMs = Instant.parse(payload.timestamp).toEpochMilli()
+            // Catch-up subscriptions can replay events already stored (relay overlap,
+            // dedupe-cache eviction across restarts) — never insert the same ping twice.
+            if (heartbeatDao.countByDeviceAndTimestamp(canonicalDeviceId, timestampMs) > 0) {
+                advanceHeartbeatBaseline(event.createdAt)
+                return
+            }
             val prevHeartbeat = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
             val entity = HeartbeatEntity(
                 deviceId = canonicalDeviceId,
                 displayName = payload.displayName,
-                timestamp = Instant.parse(payload.timestamp).toEpochMilli(),
+                timestamp = timestampMs,
                 lat = payload.lat,
                 lng = payload.lng,
                 accuracy = payload.accuracy,
@@ -285,11 +322,33 @@ class HeartbeatReceiver @Inject constructor(
                 val cutoff = System.currentTimeMillis() - payload.retentionDays * 24 * 3600 * 1000L
                 heartbeatDao.deleteOlderThanForDevice(canonicalDeviceId, cutoff)
             }
-            if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
-            geofenceEngine.evaluate(entity, prevHeartbeat)
-            proximityEngine.evaluate(entity)
+            // Replayed (old) heartbeats are history backfill: recording them is correct,
+            // but alerting on them is not — the situation they describe is long over.
+            val isFresh = System.currentTimeMillis() - timestampMs < FRESH_HEARTBEAT_MS
+            if (isFresh) {
+                if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
+                geofenceEngine.evaluate(entity, prevHeartbeat)
+                proximityEngine.evaluate(entity)
+            }
+            advanceHeartbeatBaseline(event.createdAt)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to process heartbeat", e)
+        }
+    }
+
+    /**
+     * Persist the heartbeat sync baseline (throttled) so the next session's catch-up
+     * starts near where this one left off instead of replaying the whole window.
+     * Only near-live events advance it: relays replay stored events newest-first, so
+     * taking the baseline from a replayed event could skip older ones still streaming
+     * in if the app dies mid-replay. Re-replaying is safe — inserts are deduped.
+     */
+    private suspend fun advanceHeartbeatBaseline(eventEpoch: Long) {
+        val nowEpoch = System.currentTimeMillis() / 1000
+        if (nowEpoch - eventEpoch > 3600) return
+        if (eventEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
+            lastPersistedHbEpoch = eventEpoch
+            prefs.setLastHeartbeatSubEpoch(eventEpoch)
         }
     }
 

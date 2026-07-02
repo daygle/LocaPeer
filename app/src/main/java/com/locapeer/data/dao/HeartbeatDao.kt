@@ -15,6 +15,9 @@ interface HeartbeatDao {
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId ORDER BY timestamp DESC LIMIT 1")
     suspend fun getLatestHeartbeat(deviceId: String): HeartbeatEntity?
 
+    @Query("SELECT COUNT(*) FROM heartbeats WHERE deviceId = :deviceId AND timestamp = :timestamp")
+    suspend fun countByDeviceAndTimestamp(deviceId: String, timestamp: Long): Int
+
     @Query(
         "SELECT h.* FROM heartbeats h INNER JOIN (" +
             "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats GROUP BY deviceId" +

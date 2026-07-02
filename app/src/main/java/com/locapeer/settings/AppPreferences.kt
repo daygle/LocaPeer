@@ -95,6 +95,7 @@ class AppPreferences @Inject constructor(
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
+    private val KEY_LAST_HEARTBEAT_SUB_EPOCH = longPreferencesKey("last_heartbeat_sub_epoch")
     private val KEY_MAP_START_ZOOM = doublePreferencesKey("map_start_zoom")
     private val KEY_MAP_STARTING_POINT = stringPreferencesKey("map_starting_point")
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
@@ -210,6 +211,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setLastControlSubEpoch(epoch: Long) {
         context.settingsStore.edit { it[KEY_LAST_CONTROL_SUB_EPOCH] = epoch }
+    }
+
+    /** Returns the epoch second up to which peer heartbeats have been synced from relays. */
+    suspend fun getLastHeartbeatSubEpoch(): Long =
+        context.settingsStore.data.first()[KEY_LAST_HEARTBEAT_SUB_EPOCH] ?: 0L
+
+    suspend fun setLastHeartbeatSubEpoch(epoch: Long) {
+        context.settingsStore.edit { it[KEY_LAST_HEARTBEAT_SUB_EPOCH] = epoch }
     }
 
     suspend fun clearSupervisedMode() {
