@@ -93,6 +93,9 @@ class HeartbeatService : LifecycleService() {
     private var prevFixLng = 0.0
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
+    private var stationaryAnchorLat = 0.0
+    private var stationaryAnchorLng = 0.0
+    private var stationaryAnchorAcc = 0f
     @Volatile private var lastPulseElapsedMs = 0L
 
     private var isStarted = false
@@ -107,6 +110,7 @@ class HeartbeatService : LifecycleService() {
                 val speed = estimateSpeed(loc)
                 lastSpeed = speed ?: 0f
                 speed?.let { onMotionSample(classifyMotion(it)) }
+                if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // If no heartbeat has gone out yet (empty lastLocation cache at start,
                 // so the initial pulse was skipped), send one now that a fix exists.
                 if (isStarted && lastPulseElapsedMs == 0L) pulseNow()
@@ -126,9 +130,12 @@ class HeartbeatService : LifecycleService() {
                     prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist
                 )
                 // Network/wifi fixes can jump tens of metres while the device is
-                // still; displacement inside the fixes' combined accuracy radius
-                // is indistinguishable from noise, so treat it as no movement.
-                if (dist[0] <= prevFixAccuracy + loc.accuracy) 0f else dist[0] / dtSec
+                // still; displacement inside the fixes' combined accuracy radius is
+                // indistinguishable from noise. Subtract the uncertainty rather than
+                // discarding the sample: noise still reads as zero, but large real
+                // movement between coarse fixes (e.g. driving on cell-tower fixes
+                // with ~1km accuracy) still registers as motion.
+                ((dist[0] - (prevFixAccuracy + loc.accuracy)).coerceAtLeast(0f)) / dtSec
             } else null
         } else null
         prevFixLat = loc.latitude
@@ -162,7 +169,51 @@ class HeartbeatService : LifecycleService() {
         if (candidateMotionCount >= 2 || currentMotionState == MotionState.UNKNOWN) {
             currentMotionState = newState
             candidateMotionCount = 0
+            if (newState == MotionState.STATIONARY) {
+                stationaryAnchorLat = lastLat
+                stationaryAnchorLng = lastLng
+                stationaryAnchorAcc = lastAccuracy
+            }
             intervalManager.updateMotionState(newState)
+            updateLocationRequest()
+            reschedulePulse()
+        }
+    }
+
+    /**
+     * Escape hatch for the STATIONARY state. The low-power fixes used while
+     * stationary can be so coarse (cell-tower fixes are off by hundreds of metres
+     * to kilometres) that the distance travelled between fixes never exceeds their
+     * accuracy radius, so speed-based detection reads 0 and the device stays
+     * STATIONARY for an entire drive — and never upgrades to GPS to find out.
+     * Instead compare against where the device *became* stationary: total
+     * displacement grows without bound while driving, so once it clears the
+     * combined uncertainty the device has provably moved. Exit provisionally to
+     * WALKING; the upgraded location request then classifies properly within a
+     * couple of fixes.
+     */
+    private fun checkStationaryExit(loc: android.location.Location) {
+        if (stationaryAnchorLat == 0.0 && stationaryAnchorLng == 0.0) return
+        val dist = FloatArray(1)
+        android.location.Location.distanceBetween(
+            stationaryAnchorLat, stationaryAnchorLng, loc.latitude, loc.longitude, dist
+        )
+        // Tighten the anchor when a strictly better fix confirms the same place
+        // (new accuracy circle contained in the old one), so a coarse initial
+        // anchor doesn't leave the exit threshold needlessly wide.
+        if (loc.accuracy < stationaryAnchorAcc && dist[0] + loc.accuracy <= stationaryAnchorAcc) {
+            stationaryAnchorLat = loc.latitude
+            stationaryAnchorLng = loc.longitude
+            stationaryAnchorAcc = loc.accuracy
+            return
+        }
+        if (dist[0] > stationaryAnchorAcc + loc.accuracy + 150f) {
+            stationaryAnchorLat = 0.0
+            stationaryAnchorLng = 0.0
+            stationaryAnchorAcc = 0f
+            currentMotionState = MotionState.WALKING
+            candidateMotionCount = 0
+            intervalManager.updateMotionState(MotionState.WALKING)
             updateLocationRequest()
             reschedulePulse()
         }
