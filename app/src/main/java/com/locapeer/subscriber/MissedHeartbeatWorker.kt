@@ -45,7 +45,13 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
         receiveContacts.forEach { peer ->
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
-            val expected = intervalManager.getExpectedIntervalMillis(latest.motionState, settings)
+            // During an active SOS the sender beats every 15s, so silence beyond a couple
+            // of minutes is alarming regardless of their last motion state.
+            val expected = if (latest.isSos) {
+                60_000L
+            } else {
+                intervalManager.getExpectedIntervalMillis(latest.motionState, settings, latest.battery)
+            }
             val elapsed = now - latest.timestamp
             if (elapsed > expected * 2) {
                 val minutesAgo = elapsed / 60_000
