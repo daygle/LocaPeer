@@ -83,6 +83,9 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastBearing = 0f
     private var currentSettings = AppSettings()
     @Volatile private var isSos = false
+    /** True once an explicit SOS on/off command arrived; blocks the persisted-state
+     *  restore, which could otherwise read a stale flag mid-write and undo the command. */
+    @Volatile private var sosCommandReceived = false
     @Volatile private var currentMotionState = MotionState.UNKNOWN
     private var candidateMotionState = MotionState.UNKNOWN
     private var candidateMotionCount = 0
@@ -104,6 +107,9 @@ class HeartbeatService : LifecycleService() {
                 val speed = estimateSpeed(loc)
                 lastSpeed = speed ?: 0f
                 speed?.let { onMotionSample(classifyMotion(it)) }
+                // If no heartbeat has gone out yet (empty lastLocation cache at start,
+                // so the initial pulse was skipped), send one now that a fix exists.
+                if (isStarted && lastPulseElapsedMs == 0L) pulseNow()
             }
         }
     }
@@ -178,7 +184,15 @@ class HeartbeatService : LifecycleService() {
         createNotificationChannel()
         lifecycleScope.launch {
             prefs.settings.collect { settings ->
+                val previous = currentSettings
                 currentSettings = settings
+                // Re-anchor the pending pulse when an interval setting changes so the
+                // new cadence applies now rather than after the next heartbeat.
+                if (isStarted &&
+                    intervalManager.getIntervalMillis(settings) != intervalManager.getIntervalMillis(previous)
+                ) {
+                    reschedulePulse()
+                }
             }
         }
         lifecycleScope.launch {
@@ -199,13 +213,17 @@ class HeartbeatService : LifecycleService() {
         
         when (intent?.action) {
             ACTION_SOS_ON -> {
+                sosCommandReceived = true
                 isSos = true
                 intervalManager.setSosMode(enabled = true)
+                updateLocationRequest()
                 pulseNow()
             }
             ACTION_SOS_OFF -> {
+                sosCommandReceived = true
                 isSos = false
                 intervalManager.setSosMode(enabled = false)
+                updateLocationRequest()
                 reschedulePulse()
             }
             ACTION_STOP -> {
@@ -275,6 +293,13 @@ class HeartbeatService : LifecycleService() {
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to load settings; using defaults", e)
             }
+            // The service is sticky and restarts with a null intent after process
+            // death, so an active SOS must be restored from the persisted flag.
+            if (currentSettings.sosActive && !isSos && !sosCommandReceived) {
+                isSos = true
+                intervalManager.setSosMode(enabled = true)
+                updateLocationRequest()
+            }
             relayClient.connect()
             // Pre-seed location from the OS cache so the very first heartbeat isn't dropped
             // by the lastLat/lastLng == 0.0 guard before the location callback has a chance to fire.
@@ -283,26 +308,29 @@ class HeartbeatService : LifecycleService() {
         }
     }
 
+    private fun buildLocationRequest(): LocationRequest {
+        val priority = when {
+            isSos -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+            currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
+            else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        }
+        val pollIntervalMs = when {
+            isSos -> 10_000L
+            currentMotionState == MotionState.STATIONARY -> 120_000L
+            currentMotionState == MotionState.DRIVING -> 15_000L
+            else -> 30_000L
+        }
+        return LocationRequest.Builder(priority, pollIntervalMs)
+            .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+            .build()
+    }
+
     @SuppressLint("MissingPermission")
     private fun updateLocationRequest() {
         try {
             fusedLocation.removeLocationUpdates(locationCallback)
-            val priority = when {
-                isSos -> Priority.PRIORITY_HIGH_ACCURACY
-                currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
-                currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
-                else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
-            }
-            val pollIntervalMs = when {
-                isSos -> 10_000L
-                currentMotionState == MotionState.STATIONARY -> 120_000L
-                currentMotionState == MotionState.DRIVING -> 15_000L
-                else -> 30_000L
-            }
-            val locationRequest = LocationRequest.Builder(priority, pollIntervalMs)
-                .setMinUpdateIntervalMillis(pollIntervalMs / 2)
-                .build()
-            fusedLocation.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper())
+            fusedLocation.requestLocationUpdates(buildLocationRequest(), locationCallback, Looper.getMainLooper())
         } catch (e: SecurityException) {
             Log.e(TAG, "Failed to request location updates: missing permission", e)
         } catch (e: Exception) {
@@ -310,11 +338,7 @@ class HeartbeatService : LifecycleService() {
             if (isDeadObject(e)) {
                 fusedLocation = LocationServices.getFusedLocationProviderClient(this)
                 try {
-                    // Re-calculate priority/interval since they are local variables in the try block
-                    val priority = if (isSos) Priority.PRIORITY_HIGH_ACCURACY else Priority.PRIORITY_BALANCED_POWER_ACCURACY
-                    val pollIntervalMs = if (isSos) 10_000L else 30_000L
-                    val retryRequest = LocationRequest.Builder(priority, pollIntervalMs).build()
-                    fusedLocation.requestLocationUpdates(retryRequest, locationCallback, Looper.getMainLooper())
+                    fusedLocation.requestLocationUpdates(buildLocationRequest(), locationCallback, Looper.getMainLooper())
                 } catch (e2: Exception) {
                     Log.e(TAG, "Location update retry failed", e2)
                 }
@@ -469,14 +493,21 @@ class HeartbeatService : LifecycleService() {
         try {
             suspendCancellableCoroutine<Unit> { cont ->
                 fusedLocation.lastLocation.addOnCompleteListener { task ->
-                    val loc = task.result
-                    if (loc != null) {
-                        lastLat = loc.latitude
-                        lastLng = loc.longitude
-                        lastAccuracy = loc.accuracy
-                        Log.d(TAG, "Pre-seeded location from lastLocation cache: $lastLat, $lastLng")
+                    try {
+                        // task.result throws on a failed Task; a crash here would also
+                        // leave the continuation suspended and the pulse never scheduled.
+                        val loc = if (task.isSuccessful) task.result else null
+                        if (loc != null) {
+                            lastLat = loc.latitude
+                            lastLng = loc.longitude
+                            lastAccuracy = loc.accuracy
+                            Log.d(TAG, "Pre-seeded location from lastLocation cache: $lastLat, $lastLng")
+                        }
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Could not pre-seed location: ${e.message}")
+                    } finally {
+                        if (cont.isActive) cont.resume(Unit)
                     }
-                    if (cont.isActive) cont.resume(Unit)
                 }
             }
         } catch (e: Exception) {
