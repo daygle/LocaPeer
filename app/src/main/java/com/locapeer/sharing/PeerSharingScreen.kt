@@ -326,7 +326,7 @@ fun PeerSharingScreen(
                         subtitle = "How long $peerName keeps your location data on their device",
                         selected = retentionDaysLocation,
                         onSelected = { vm.setRetentionDaysLocation(it) },
-                        purgeLabel = "Ask $peerName to Purge Now",
+                        purgeLabel = "Purge from $peerName Now",
                         onPurge = if (retentionDaysLocation > 0) ({ vm.sendLocationPurgeNow() }) else null
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -338,7 +338,7 @@ fun PeerSharingScreen(
                         else "How long $peerName keeps messages you sent",
                         selected = retentionDaysMessages,
                         onSelected = { vm.setRetentionDaysMessages(it) },
-                        purgeLabel = "Ask $peerName to Purge Now",
+                        purgeLabel = "Purge from $peerName Now",
                         onPurge = if (retentionDaysMessages > 0) ({ vm.sendMessagePurgeNow() }) else null
                     )
                 }

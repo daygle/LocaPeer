@@ -63,11 +63,11 @@ class ContactsViewModel @Inject constructor(
         viewModelScope.launch { peerManager.removeSelfFromPeer(deviceId) }
     }
 
-    fun askPeerToDeleteMyMessages(deviceId: String) {
+    fun purgeMyMessagesOnPeer(deviceId: String) {
         viewModelScope.launch { peerManager.sendDeleteMyMessages(deviceId) }
     }
 
-    fun askPeerToDeleteMyLocation(deviceId: String) {
+    fun purgeMyLocationOnPeer(deviceId: String) {
         viewModelScope.launch { peerManager.sendDeleteMyLocation(deviceId) }
     }
 

@@ -185,7 +185,7 @@ class PeerSharingViewModel @Inject constructor(
             }
             peerDao.upsertPeer(peer.copy(locationRole = newRole))
             val nowSharing = newRole == PeerEntity.ROLE_SEND || newRole == PeerEntity.ROLE_SEND_RECEIVE
-            // Immediately ask the peer to clear our stored location data when we revoke access,
+            // Immediately command the peer to clear our stored location data when we revoke access,
             // so they don't continue to see a stale pin until heartbeat timeout.
             if (wasSharing && !nowSharing) {
                 peerManager.sendDeleteMyLocation(currentPeerId)
@@ -232,7 +232,7 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
-    /** Manually ask this peer to delete all location data older than their configured retention. */
+    /** Manually command this peer to delete all location data older than their configured retention. */
     fun sendLocationPurgeNow() {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
@@ -252,12 +252,12 @@ class PeerSharingViewModel @Inject constructor(
                 return@launch
             }
             publishPurgeToPeer(peer, days, NostrEventKind.PURGE_REQUEST) { kindLabel ->
-                _lastPurgeResult.value = "Sent $kindLabel purge to ${peer.displayName}"
+                _lastPurgeResult.value = "Remote $kindLabel purge sent to ${peer.displayName}"
             }
         }
     }
 
-    /** Manually ask this peer to delete all messages older than their configured retention. */
+    /** Manually command this peer to delete all messages older than their configured retention. */
     fun sendMessagePurgeNow() {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
@@ -272,7 +272,7 @@ class PeerSharingViewModel @Inject constructor(
                 return@launch
             }
             publishPurgeToPeer(peer, days, NostrEventKind.MESSAGE_PURGE_REQUEST) { kindLabel ->
-                _lastPurgeResult.value = "Sent $kindLabel purge to ${peer.displayName}"
+                _lastPurgeResult.value = "Remote $kindLabel purge sent to ${peer.displayName}"
             }
         }
     }

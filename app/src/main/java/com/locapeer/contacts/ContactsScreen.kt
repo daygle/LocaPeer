@@ -278,12 +278,12 @@ fun ContactsScreen(
             )
             BulkAction.DELETE_MESSAGES -> Triple(
                 "Delete My Messages",
-                "Ask ${if (plural) "$count contacts" else "this contact"} to delete all messages you sent? This cannot be undone.",
+                "Remote delete all messages you sent from ${if (plural) "$count contacts'" else "this contact's"} device? This cannot be undone.",
                 "Delete"
             )
             BulkAction.DELETE_LOCATION -> Triple(
                 "Delete Shared Locations",
-                "Ask ${if (plural) "$count contacts" else "this contact"} to delete all location data you shared? This cannot be undone.",
+                "Remote delete all location history you shared from ${if (plural) "$count contacts'" else "this contact's"} device? This cannot be undone.",
                 "Delete"
             )
         }
@@ -297,8 +297,8 @@ fun ContactsScreen(
                         val ids = selectedIds.toList()
                         when (action) {
                             BulkAction.REMOVE -> ids.forEach { vm.removePeer(it) }
-                            BulkAction.DELETE_MESSAGES -> ids.forEach { vm.askPeerToDeleteMyMessages(it) }
-                            BulkAction.DELETE_LOCATION -> ids.forEach { vm.askPeerToDeleteMyLocation(it) }
+                            BulkAction.DELETE_MESSAGES -> ids.forEach { vm.purgeMyMessagesOnPeer(it) }
+                            BulkAction.DELETE_LOCATION -> ids.forEach { vm.purgeMyLocationOnPeer(it) }
                         }
                         selectedIds = emptySet()
                         pendingBulkAction = null

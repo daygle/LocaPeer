@@ -59,12 +59,12 @@ class PeerManager @Inject constructor(
         sharingConfigDao.deleteForPeer(deviceId)
     }
 
-    /** Ask a specific peer to delete all messages we sent them. */
+    /** Purge all messages we sent to a specific peer on their device. */
     suspend fun sendDeleteMyMessages(deviceId: String) {
         sendDataEvent(deviceId, NostrEventKind.DELETE_MY_MESSAGES)
     }
 
-    /** Ask a specific peer to delete all location data we sent them. */
+    /** Purge all location data we sent to a specific peer on their device. */
     suspend fun sendDeleteMyLocation(deviceId: String) {
         sendDataEvent(deviceId, NostrEventKind.DELETE_MY_LOCATION)
     }
