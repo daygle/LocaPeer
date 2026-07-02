@@ -86,7 +86,7 @@ class HeartbeatService : LifecycleService() {
     private var candidateMotionCount = 0
     private var prevFixLat = 0.0
     private var prevFixLng = 0.0
-    private var prevFixTimeMs = 0L
+    private var prevFixElapsedNs = 0L
 
     private var isStarted = false
 
@@ -96,9 +96,10 @@ class HeartbeatService : LifecycleService() {
                 lastLat = loc.latitude
                 lastLng = loc.longitude
                 lastAccuracy = loc.accuracy
-                lastSpeed = if (loc.hasSpeed()) loc.speed else 0f
                 lastBearing = if (loc.hasBearing()) loc.bearing else 0f
-                estimateSpeed(loc)?.let { onMotionSample(classifyMotion(it)) }
+                val speed = estimateSpeed(loc)
+                lastSpeed = speed ?: 0f
+                speed?.let { onMotionSample(classifyMotion(it)) }
             }
         }
     }
@@ -107,8 +108,8 @@ class HeartbeatService : LifecycleService() {
     // displacement over time; without this a stationary device that starts
     // driving could never leave the STATIONARY state.
     private fun estimateSpeed(loc: android.location.Location): Float? {
-        val derived = if (prevFixTimeMs > 0L) {
-            val dtSec = (loc.time - prevFixTimeMs) / 1000f
+        val derived = if (prevFixElapsedNs > 0L) {
+            val dtSec = (loc.elapsedRealtimeNanos - prevFixElapsedNs) / 1_000_000_000f
             if (dtSec in 1f..600f) {
                 val dist = FloatArray(1)
                 android.location.Location.distanceBetween(
@@ -119,7 +120,7 @@ class HeartbeatService : LifecycleService() {
         } else null
         prevFixLat = loc.latitude
         prevFixLng = loc.longitude
-        prevFixTimeMs = loc.time
+        prevFixElapsedNs = loc.elapsedRealtimeNanos
         return if (loc.hasSpeed()) loc.speed else derived
     }
 
