@@ -162,9 +162,14 @@ fun LocaPeerNavHost(
                     navArgument("lng") { type = NavType.StringType; nullable = true; defaultValue = null }
                 )
             ) {
-                MapScreen(onNavigateToChat = { peerId, peerName ->
-                    navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
-                })
+                MapScreen(
+                    onNavigateToChat = { peerId, peerName ->
+                        navController.navigate("chat/$peerId/${peerName.ifBlank { "Chat" }}")
+                    },
+                    onNavigateToHistory = { peerId ->
+                        navController.navigate("history-report?peerId=$peerId")
+                    }
+                )
             }
             composable(Screen.Messages.route) {
                 ConversationListScreen(onOpenChat = { peerId, peerName ->

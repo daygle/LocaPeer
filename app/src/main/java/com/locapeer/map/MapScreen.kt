@@ -78,6 +78,7 @@ private val CARTO_DARK = object : OnlineTileSourceBase(
 @Composable
 fun MapScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
+    onNavigateToHistory: (peerId: String) -> Unit = {},
     vm: MapViewModel = hiltViewModel()
 ) {
     val uiState by vm.uiState.collectAsState()
@@ -240,7 +241,10 @@ fun MapScreen(
                         selectedPin = null
                         onNavigateToChat(pin.peer.deviceId, pin.peer.displayName)
                     },
-                    onViewHistory = {}
+                    onViewHistory = {
+                        selectedPin = null
+                        onNavigateToHistory(pin.peer.deviceId)
+                    }
                 )
             }
         }
