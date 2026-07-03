@@ -98,6 +98,7 @@ data class SettingsBackup(
     val pinColor: String = "",
     val localLocationRetentionDays: Int = 90,
     val localMessageRetentionDays: Int = 90,
+    val historyMinDistanceMeters: Int = 0,
     val heartbeatEnabled: Boolean = true,
     val onboardingComplete: Boolean = true,
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
@@ -301,6 +302,7 @@ class SettingsViewModel @Inject constructor(
                             pinColor = s.pinColor,
                             localLocationRetentionDays = s.localLocationRetentionDays,
                             localMessageRetentionDays = s.localMessageRetentionDays,
+                            historyMinDistanceMeters = s.historyMinDistanceMeters,
                             heartbeatEnabled = s.heartbeatEnabled,
                             onboardingComplete = s.onboardingComplete,
                             globalScheduleRules = s.globalScheduleRules,
@@ -391,6 +393,7 @@ class SettingsViewModel @Inject constructor(
                     prefs.setPinColor(s.pinColor)
                     prefs.setLocalLocationRetentionDays(s.localLocationRetentionDays)
                     prefs.setLocalMessageRetentionDays(s.localMessageRetentionDays)
+                    prefs.setHistoryMinDistanceMeters(s.historyMinDistanceMeters)
                     setHeartbeatEnabled(s.heartbeatEnabled)
                     prefs.setOnboardingComplete(s.onboardingComplete)
                     prefs.setGlobalScheduleRules(s.globalScheduleRules)
@@ -461,6 +464,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setLocalMessageRetentionDays(days: Int) {
         viewModelScope.launch { prefs.setLocalMessageRetentionDays(days) }
+    }
+
+    fun setHistoryMinDistanceMeters(meters: Int) {
+        viewModelScope.launch { prefs.setHistoryMinDistanceMeters(meters) }
     }
 
     companion object {

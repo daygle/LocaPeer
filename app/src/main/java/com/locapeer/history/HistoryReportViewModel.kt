@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -75,6 +76,9 @@ class HistoryReportViewModel @Inject constructor(
             else heartbeatDao.getHeartbeatsForDay(peerId, dayStart + startOff, dayStart + endOff)
         }
             .flatMapLatest { it }
+            .combine(
+                prefs.settings.map { it.historyMinDistanceMeters }.distinctUntilChanged()
+            ) { pings, minDistanceM -> HistoryThinning.thin(pings, minDistanceM) }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _addresses = MutableStateFlow<Map<Long, String>>(emptyMap())

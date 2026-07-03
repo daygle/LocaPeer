@@ -49,6 +49,11 @@ data class AppSettings(
     val localLocationRetentionDays: Int = 90,
     /** How long to keep messages on this device (0 = forever). */
     val localMessageRetentionDays: Int = 90,
+    /**
+     * Hide history points closer than this to the previously shown one (metres).
+     * Display-time filter only — every ping is still stored. 0 = show all.
+     */
+    val historyMinDistanceMeters: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
     val customRelays: List<String> = HARDCODED_RELAYS,
@@ -91,6 +96,7 @@ class AppPreferences @Inject constructor(
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
+    private val KEY_HISTORY_MIN_DISTANCE = intPreferencesKey("history_min_distance_m")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
@@ -133,6 +139,7 @@ class AppPreferences @Inject constructor(
                 startRoute = prefs[KEY_START_ROUTE] ?: "map",
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
+                historyMinDistanceMeters = prefs[KEY_HISTORY_MIN_DISTANCE] ?: 0,
                 pinColor = prefs[KEY_PIN_COLOR] ?: "",
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
                 customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
@@ -176,6 +183,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setLocalMessageRetentionDays(days: Int) {
         context.settingsStore.edit { it[KEY_LOCAL_MESSAGE_RETENTION] = days }
+    }
+
+    suspend fun setHistoryMinDistanceMeters(meters: Int) {
+        context.settingsStore.edit { it[KEY_HISTORY_MIN_DISTANCE] = meters }
     }
 
     suspend fun setPinColor(hex: String) {
