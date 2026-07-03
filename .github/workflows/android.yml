@@ -1,0 +1,79 @@
+name: Android CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and run unit tests
+        run: ./gradlew assembleDebug test
+
+      # Room exports a JSON snapshot per schema version (app/schemas). Hand the
+      # generated files to the commit-schemas job rather than pushing from here,
+      # so the build job never needs a write token.
+      - name: Upload Room schema snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: room-schemas
+          path: app/schemas/
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+  # Schema snapshots must live in the repo, but local builds aren't always
+  # possible, so commit any new snapshot back to the PR branch. Same-repo PRs
+  # only: fork PRs get a read-only token and their head branch doesn't exist
+  # in this repo.
+  commit-schemas:
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Download Room schema snapshots
+        uses: actions/download-artifact@v4
+        with:
+          name: room-schemas
+          path: app/schemas
+
+      - name: Commit schema snapshots if changed
+        run: |
+          if [[ -n "$(git status --porcelain app/schemas)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add app/schemas
+            git commit -m "Add generated Room schema snapshots"
+            git push origin "HEAD:${{ github.head_ref }}"
+          fi
