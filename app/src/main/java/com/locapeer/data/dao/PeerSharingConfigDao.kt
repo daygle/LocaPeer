@@ -34,6 +34,9 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET isMySupervised = :supervised WHERE peerDeviceId = :peerDeviceId")
     suspend fun setIsMySupervised(peerDeviceId: String, supervised: Boolean)
 
+    @Query("UPDATE peer_sharing_config SET notifyOnMissedHeartbeat = :enabled WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setNotifyOnMissedHeartbeat(peerDeviceId: String, enabled: Boolean)
+
     @Query("SELECT * FROM peer_sharing_config")
     suspend fun getAll(): List<PeerSharingConfig>
 

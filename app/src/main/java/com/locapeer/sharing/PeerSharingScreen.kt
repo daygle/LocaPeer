@@ -62,6 +62,7 @@ fun PeerSharingScreen(
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
     val isMySupervised = cfg?.isMySupervised ?: false
+    val notifyOnMissedHeartbeat = cfg?.notifyOnMissedHeartbeat ?: false
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
     val retentionDaysLocation = cfg?.retentionDaysLocation ?: 30
     val retentionDaysMessages = cfg?.retentionDaysMessages ?: 0
@@ -252,6 +253,22 @@ fun PeerSharingScreen(
                         },
                         trailingContent = {
                             Switch(checked = isMySupervised, onCheckedChange = { vm.setIsMySupervised(it) })
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Missed Location Alert") },
+                        supportingContent = { Text("Notify me if $peerName stops reporting their location") },
+                        leadingContent = {
+                            Icon(
+                                Icons.Default.NotificationsActive,
+                                contentDescription = null,
+                                tint = if (notifyOnMissedHeartbeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingContent = {
+                            Switch(checked = notifyOnMissedHeartbeat, onCheckedChange = { vm.setNotifyOnMissedHeartbeat(it) })
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
