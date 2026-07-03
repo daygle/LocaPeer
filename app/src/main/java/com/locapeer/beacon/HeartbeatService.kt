@@ -88,6 +88,7 @@ class HeartbeatService : LifecycleService() {
 
     private lateinit var fusedLocation: FusedLocationProviderClient
     private val handler = Handler(Looper.getMainLooper())
+    private val locationFilter = LocationFilter()
 
     @Volatile private var lastLat = 0.0
     @Volatile private var lastLng = 0.0
@@ -118,6 +119,13 @@ class HeartbeatService : LifecycleService() {
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             result.lastLocation?.let { loc ->
+                // Outlier fixes are dropped wholesale — before motion
+                // classification too, since a glitch fix also poisons the
+                // displacement-derived speed of the fix after it.
+                if (!locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
+                    Log.d(TAG, "Dropped implausible fix: acc=${loc.accuracy}m")
+                    return
+                }
                 lastLat = loc.latitude
                 lastLng = loc.longitude
                 lastAccuracy = loc.accuracy
@@ -605,6 +613,9 @@ class HeartbeatService : LifecycleService() {
                             lastLat = loc.latitude
                             lastLng = loc.longitude
                             lastAccuracy = loc.accuracy
+                            // Seed the outlier filter too, so the first live fix
+                            // is sanity-checked against this cached position.
+                            locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)
                             Log.d(TAG, "Pre-seeded location from lastLocation cache: $lastLat, $lastLng")
                         }
                     } catch (e: Exception) {

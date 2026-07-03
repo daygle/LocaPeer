@@ -211,6 +211,54 @@ fun SettingsScreen(
                         subtitle = "Browse your own location timeline",
                         onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Icon(
+                            Icons.Default.Straighten,
+                            contentDescription = null,
+                            modifier = Modifier.padding(top = 2.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(16.dp))
+                        Column(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(2.dp)
+                        ) {
+                            var minDistValue by remember(settings.historyMinDistanceMeters) {
+                                mutableFloatStateOf(settings.historyMinDistanceMeters.toFloat())
+                            }
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("Minimum Distance Between Points", style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    if (minDistValue.roundToInt() == 0) "Off" else "${minDistValue.roundToInt()}m",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Text(
+                                "Hide history points closer than this to the previous one. Every ping is still stored.",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Slider(
+                                value = minDistValue,
+                                onValueChange = { minDistValue = it },
+                                onValueChangeFinished = { vm.setHistoryMinDistanceMeters(minDistValue.roundToInt()) },
+                                valueRange = 0f..500f,
+                                steps = 19,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
                 }
             }
 
