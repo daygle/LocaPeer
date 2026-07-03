@@ -1,11 +1,8 @@
 package com.locapeer.beacon
 
-import android.util.Log
 import com.locapeer.settings.AppSettings
 import javax.inject.Inject
 import javax.inject.Singleton
-
-private const val TAG = "AdaptiveIntervalManager"
 
 @Singleton
 class AdaptiveIntervalManager @Inject constructor() {
@@ -25,23 +22,6 @@ class AdaptiveIntervalManager @Inject constructor() {
         if (currentBattery < 20) return (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
         return motionIntervalMillis(currentMotionState, settings)
             .coerceAtLeast(15_000L) // Minimum 15 seconds to avoid battery drain and relay spam
-    }
-
-    /**
-     * Returns the expected interval in milliseconds for a given motion state (used for
-     * overdue checks). When the sender's last reported battery is below 20% they beat
-     * at their low-battery interval instead, so expect at least that (using our own
-     * low-battery setting as the best available estimate of theirs).
-     */
-    fun getExpectedIntervalMillis(motionState: String, settings: AppSettings, batteryLevel: Int = 100): Long {
-        val state = MotionState.entries.firstOrNull { it.name == motionState }
-            ?: MotionState.UNKNOWN.also { Log.w(TAG, "Unknown motion state '$motionState', defaulting to UNKNOWN") }
-        val interval = motionIntervalMillis(state, settings)
-        return if (batteryLevel < 20) {
-            maxOf(interval, settings.lowBatteryIntervalMinutes * 60_000L)
-        } else {
-            interval
-        }
     }
 
     private fun motionIntervalMillis(state: MotionState, settings: AppSettings): Long = when (state) {
