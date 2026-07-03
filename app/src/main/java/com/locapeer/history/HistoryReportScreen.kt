@@ -27,6 +27,7 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.TimePickerDialog
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
@@ -455,9 +456,18 @@ private fun HistoryMapTab(
                     mapView.overlays.add(marker)
                 }
 
-                val lastPing = heartbeats.last()
-                mapView.controller.setCenter(GeoPoint(lastPing.lat, lastPing.lng))
-                mapView.controller.setZoom(16.0)
+                val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
+                val bounds = BoundingBox.fromGeoPoints(points)
+                if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpan < 1e-4)) {
+                    mapView.controller.setZoom(16.0)
+                    mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
+                } else if (mapView.width > 0) {
+                    mapView.zoomToBoundingBox(bounds, false, 64)
+                } else {
+                    mapView.addOnFirstLayoutListener { _, _, _, _, _ ->
+                        mapView.zoomToBoundingBox(bounds, false, 64)
+                    }
+                }
                 mapView.invalidate()
             },
             modifier = Modifier.fillMaxSize()
