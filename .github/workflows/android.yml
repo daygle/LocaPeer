@@ -1,0 +1,52 @@
+name: Android CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Check out the PR branch itself (not the detached merge ref) so the
+          # schema-snapshot step below can commit back to it.
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build and run unit tests
+        run: ./gradlew assembleDebug test
+
+      # Room exports a JSON snapshot per schema version (app/schemas). Those
+      # files must live in the repo, but local builds aren't always possible,
+      # so commit any new snapshot back to the PR branch from CI.
+      - name: Commit generated Room schema snapshots
+        if: github.event_name == 'pull_request'
+        run: |
+          if [[ -n "$(git status --porcelain app/schemas)" ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add app/schemas
+            git commit -m "Add generated Room schema snapshots"
+            git push
+          fi
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
