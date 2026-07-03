@@ -40,11 +40,12 @@ object DatabaseModule {
             // The app is live with testers, so every schema change from here on
             // must bump the version and ship a Migration — in-place edits to an
             // existing version leave installed devices with a mismatched schema
-            // that crashes Room's validation on launch. The destructive fallbacks
-            // remain only as a last resort for version jumps with no migration
-            // path (they wipe local data).
+            // that crashes Room's validation on launch. There is deliberately no
+            // destructive upgrade fallback: a missing migration must crash in
+            // testing, not silently wipe user data. Downgrades (installing an
+            // older build over a newer database) have no migration path, so that
+            // direction still rebuilds destructively rather than crash-looping.
             .addMigrations(MIGRATION_1_2)
-            .fallbackToDestructiveMigration(true)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 
