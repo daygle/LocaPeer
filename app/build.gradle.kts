@@ -67,6 +67,12 @@ android {
     }
 }
 
+ksp {
+    // Room writes a JSON snapshot of each schema version here on build.
+    // Commit them: migrations are written and tested against these files.
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     // Compose BOM
     val composeBom = platform("androidx.compose:compose-bom:2026.06.00")

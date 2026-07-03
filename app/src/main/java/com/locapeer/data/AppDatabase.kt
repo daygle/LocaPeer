@@ -17,7 +17,7 @@ import com.locapeer.data.entity.*
         PendingRequestEntity::class
     ],
     version = 2,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
