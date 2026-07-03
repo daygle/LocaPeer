@@ -328,8 +328,9 @@ private fun HistoryListTab(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(8.dp))
+            val newestFirst = remember(heartbeats) { heartbeats.asReversed() }
             LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(heartbeats, key = { it.id }) { ping ->
+                items(newestFirst, key = { it.id }) { ping ->
                     HistoryPingCard(
                         ping = ping,
                         address = addresses[ping.id],
@@ -454,9 +455,8 @@ private fun HistoryMapTab(
                     mapView.overlays.add(marker)
                 }
 
-                val centerLat = heartbeats.map { it.lat }.average()
-                val centerLng = heartbeats.map { it.lng }.average()
-                mapView.controller.setCenter(GeoPoint(centerLat, centerLng))
+                val lastPing = heartbeats.last()
+                mapView.controller.setCenter(GeoPoint(lastPing.lat, lastPing.lng))
                 mapView.controller.setZoom(16.0)
                 mapView.invalidate()
             },
