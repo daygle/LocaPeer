@@ -2,6 +2,8 @@ package com.locapeer.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
@@ -22,16 +24,28 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
+    /** v2: per-contact opt-in for missed-location alerts. */
+    private val MIGRATION_1_2 = object : Migration(1, 2) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE peer_sharing_config ADD COLUMN notifyOnMissedHeartbeat INTEGER NOT NULL DEFAULT 0"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
-            // Pre-release: the schema is the version-1 baseline with destructive
-            // rebuilds in both directions instead of handwritten migrations.
-            // Schema edits are applied in place at version 1, so devices that
-            // installed an older schema must clear app data or reinstall — Room
-            // only auto-rebuilds when the version number changes.
-            .fallbackToDestructiveMigration(true)
+            // The app is live with testers, so every schema change from here on
+            // must bump the version and ship a Migration — in-place edits to an
+            // existing version leave installed devices with a mismatched schema
+            // that crashes Room's validation on launch. There is deliberately no
+            // destructive upgrade fallback: a missing migration must crash in
+            // testing, not silently wipe user data. Downgrades (installing an
+            // older build over a newer database) have no migration path, so that
+            // direction still rebuilds destructively rather than crash-looping.
+            .addMigrations(MIGRATION_1_2)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 

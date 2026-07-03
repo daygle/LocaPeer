@@ -21,6 +21,7 @@ import com.locapeer.R
 import com.locapeer.beacon.HeartbeatService
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.settings.AppPreferences
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -37,6 +38,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
     @Assisted params: WorkerParameters,
     private val heartbeatDao: HeartbeatDao,
     private val peerDao: PeerDao,
+    private val sharingConfigDao: PeerSharingConfigDao,
     private val prefs: AppPreferences,
 ) : CoroutineWorker(context, params) {
 
@@ -49,7 +51,12 @@ class MissedHeartbeatWorker @AssistedInject constructor(
         val notificationManager = applicationContext
             .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
+        val alertConfigs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
+
         receiveContacts.forEach { peer ->
+            // Missed-heartbeat alerts are per-contact opt-in ("Missed Location Alert"
+            // in Contact Settings); most contacts going quiet is not noteworthy.
+            if (alertConfigs[peer.deviceId]?.notifyOnMissedHeartbeat != true) return@forEach
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
             // The sender reports its own interval in every ping. The 60s floor keeps
             // SOS-rate (15s) senders from alerting on mere relay jitter — combined

@@ -133,6 +133,14 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
+    fun setNotifyOnMissedHeartbeat(enabled: Boolean) {
+        viewModelScope.launch {
+            val existing = configDao.getForPeer(currentPeerId)
+            if (existing != null) configDao.setNotifyOnMissedHeartbeat(currentPeerId, enabled)
+            else configDao.upsert(defaultConfig().copy(notifyOnMissedHeartbeat = enabled))
+        }
+    }
+
     fun setProximityAlertEnabled(enabled: Boolean) {
         viewModelScope.launch {
             val existing = proximityAlertDao.getForPeer(currentPeerId)
