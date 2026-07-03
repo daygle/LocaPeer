@@ -66,11 +66,16 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                     ACTION_SUPERVISED_REGISTER_ACCEPT -> {
                         Log.d("SupervisedRegisterReceiver", "Accepted supervised registration from $requesterName")
                         val cfg = ep.sharingConfigDao().getForPeer(requesterPubkey)
-                            ?: com.locapeer.data.entity.PeerSharingConfig(peerDeviceId = requesterPubkey)
-                        // Supervised devices default to alerting when they stop reporting.
-                        ep.sharingConfigDao().upsert(
-                            cfg.copy(isMySupervised = true, notifyOnMissedHeartbeat = true)
-                        )
+                        if (cfg != null) {
+                            ep.sharingConfigDao().setIsMySupervised(requesterPubkey, true)
+                        } else {
+                            ep.sharingConfigDao().upsert(
+                                com.locapeer.data.entity.PeerSharingConfig(
+                                    peerDeviceId = requesterPubkey,
+                                    isMySupervised = true
+                                )
+                            )
+                        }
                         sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, "Now supervising ${requesterName}'s device", Toast.LENGTH_SHORT).show()

@@ -127,15 +127,9 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setIsMySupervised(enabled: Boolean) {
         viewModelScope.launch {
-            val base = configDao.getForPeer(currentPeerId) ?: defaultConfig()
-            // Supervising a device implies caring when it goes quiet, so turn the
-            // missed-location alert on with it (the user can switch it back off).
-            configDao.upsert(
-                base.copy(
-                    isMySupervised = enabled,
-                    notifyOnMissedHeartbeat = base.notifyOnMissedHeartbeat || enabled
-                )
-            )
+            val existing = configDao.getForPeer(currentPeerId)
+            if (existing != null) configDao.setIsMySupervised(currentPeerId, enabled)
+            else configDao.upsert(defaultConfig().copy(isMySupervised = enabled))
         }
     }
 
