@@ -24,7 +24,7 @@ data class HeartbeatPayload(
     /**
      * The sender's current heartbeat interval in seconds (SOS/battery/motion aware),
      * so receivers know exactly when the next beat is due instead of guessing from
-     * their own settings. Null from older app versions.
+     * their own settings.
      */
-    val expectedIntervalSeconds: Long? = null
+    val expectedIntervalSeconds: Long
 )

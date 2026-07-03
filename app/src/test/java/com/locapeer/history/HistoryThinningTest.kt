@@ -18,7 +18,8 @@ class HistoryThinningTest {
         accuracy = 10f,
         battery = 100,
         motionState = "STATIONARY",
-        isSos = isSos
+        isSos = isSos,
+        expectedIntervalSeconds = 900
     )
 
     private fun ids(points: List<HeartbeatEntity>) = points.map { it.id }

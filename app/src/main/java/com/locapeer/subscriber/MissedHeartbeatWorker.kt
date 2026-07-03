@@ -18,7 +18,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.locapeer.MainActivity
 import com.locapeer.R
-import com.locapeer.beacon.AdaptiveIntervalManager
 import com.locapeer.beacon.HeartbeatService
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
@@ -39,7 +38,6 @@ class MissedHeartbeatWorker @AssistedInject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
-    private val intervalManager: AdaptiveIntervalManager,
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -53,16 +51,10 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
         receiveContacts.forEach { peer ->
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
-            // Prefer the interval the sender reported in the ping itself; fall back to
-            // guessing from our own settings for pings from older app versions. The 60s
-            // floor keeps SOS-rate (15s) senders from alerting on mere relay jitter —
-            // combined with the ×2 threshold below that means 2 min of silence.
-            val expected = latest.expectedIntervalSeconds?.times(1000L)?.coerceAtLeast(60_000L)
-                ?: if (latest.isSos) {
-                    60_000L
-                } else {
-                    intervalManager.getExpectedIntervalMillis(latest.motionState, settings, latest.battery)
-                }
+            // The sender reports its own interval in every ping. The 60s floor keeps
+            // SOS-rate (15s) senders from alerting on mere relay jitter — combined
+            // with the ×2 threshold below that means 2 min of silence.
+            val expected = (latest.expectedIntervalSeconds * 1000L).coerceAtLeast(60_000L)
             val elapsed = now - latest.timestamp
             if (elapsed > expected * 2) {
                 val minutesAgo = elapsed / 60_000

@@ -26,8 +26,11 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
-            // Pre-release: schema is baselined at version 1 with destructive
+            // Pre-release: the schema is the version-1 baseline with destructive
             // rebuilds in both directions instead of handwritten migrations.
+            // Schema edits are applied in place at version 1, so devices that
+            // installed an older schema must clear app data or reinstall — Room
+            // only auto-rebuilds when the version number changes.
             .fallbackToDestructiveMigration(true)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
