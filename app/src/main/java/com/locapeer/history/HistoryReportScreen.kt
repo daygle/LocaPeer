@@ -328,7 +328,7 @@ private fun HistoryListTab(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(Modifier.height(8.dp))
-            val newestFirst = remember(heartbeats) { heartbeats.asReversed() }
+            val newestFirst = heartbeats.asReversed()
             LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(newestFirst, key = { it.id }) { ping ->
                     HistoryPingCard(
