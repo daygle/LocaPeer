@@ -257,18 +257,30 @@ fun PeerSharingScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    // The worker only watches contacts we receive location from, so the
+                    // switch would be a silent no-op for SEND/NONE roles — disable it there.
+                    val receivesLocation = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
                         headlineContent = { Text("Missed Location Alert") },
-                        supportingContent = { Text("Notify me if $peerName stops reporting their location") },
+                        supportingContent = {
+                            Text(
+                                if (receivesLocation) "Notify me if $peerName stops reporting their location"
+                                else "Unavailable — you don't receive ${peerName}'s location"
+                            )
+                        },
                         leadingContent = {
                             Icon(
                                 Icons.Default.NotificationsActive,
                                 contentDescription = null,
-                                tint = if (notifyOnMissedHeartbeat) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                                tint = if (notifyOnMissedHeartbeat && receivesLocation) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         },
                         trailingContent = {
-                            Switch(checked = notifyOnMissedHeartbeat, onCheckedChange = { vm.setNotifyOnMissedHeartbeat(it) })
+                            Switch(
+                                checked = notifyOnMissedHeartbeat,
+                                onCheckedChange = { vm.setNotifyOnMissedHeartbeat(it) },
+                                enabled = receivesLocation
+                            )
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
