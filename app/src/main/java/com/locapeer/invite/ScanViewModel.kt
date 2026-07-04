@@ -25,6 +25,8 @@ data class ScanState(
     val success: Boolean = false,
     val addedName: String = "",
     val error: String? = null,
+    /** Name of a parsed-but-not-yet-confirmed invite awaiting explicit user approval. */
+    val pendingName: String? = null,
 )
 
 @HiltViewModel
@@ -42,14 +44,51 @@ class ScanViewModel @Inject constructor(
     private var processed = false
     private val json = Json { ignoreUnknownKeys = true }
 
+    /** Parsed invite held between scan/deep-link and the user's explicit confirmation. */
+    private var pendingInvite: InviteData? = null
+
+    /**
+     * Parse and validate an invite, then stage it for explicit confirmation instead of
+     * adding the contact immediately. Establishing two-way location sharing must be a
+     * deliberate user action — a scanned QR or, more importantly, a `locapeer://` deep
+     * link that a webpage or message could trigger, must not silently add a contact.
+     */
     fun processQrCode(raw: String) {
         if (processed) return
         processed = true
+        try {
+            val invite = json.decodeFromString<InviteData>(raw)
+            if (!isValidPubKeyHex(invite.publicKeyHex) || !isValidPubKeyHex(invite.deviceId)) {
+                _scanState.value = ScanState(error = "Invalid invite: bad public key")
+                processed = false
+                return
+            }
+            // A device is identified by its Nostr key: deviceId and publicKeyHex must be the
+            // same key. Rejecting a mismatch prevents a crafted invite from upserting an
+            // existing peer row (keyed by deviceId) while pointing publicKeyHex at an
+            // attacker-controlled key — which would hijack whose key we encrypt to/verify from.
+            if (!invite.publicKeyHex.equals(invite.deviceId, ignoreCase = true)) {
+                _scanState.value = ScanState(error = "Invalid invite: key mismatch")
+                processed = false
+                return
+            }
+            // Nostr serializes pubkeys as lowercase hex; normalize so the stored peer row
+            // matches later events (and dedupes against an existing lowercase row).
+            val canonicalKey = invite.publicKeyHex.lowercase()
+            pendingInvite = invite.copy(publicKeyHex = canonicalKey, deviceId = canonicalKey)
+            _scanState.value = ScanState(pendingName = invite.displayName.ifBlank { "this contact" })
+        } catch (e: Exception) {
+            _scanState.value = ScanState(error = e.message ?: "Unknown error")
+            processed = false
+        }
+    }
+
+    /** Commit the staged invite: add the contact and send the track request. */
+    fun confirmAdd() {
+        val invite = pendingInvite ?: return
         viewModelScope.launch {
             try {
-                val invite = json.decodeFromString<InviteData>(raw)
                 val existing = peerDao.getPeer(invite.deviceId)
-
                 val peer = PeerEntity(
                     deviceId = invite.deviceId,
                     displayName = existing?.displayName ?: invite.displayName,
@@ -62,17 +101,17 @@ class ScanViewModel @Inject constructor(
                 peerDao.upsertPeer(peer)
                 relayClient.connect(invite.relayUrl)
                 sendTrackRequest(invite)
+                pendingInvite = null
                 _scanState.value = ScanState(success = true, addedName = invite.displayName)
             } catch (e: Exception) {
                 _scanState.value = ScanState(error = e.message ?: "Unknown error")
                 processed = false
-            } finally {
-                // Note: we don't reset processed = false on success to prevent 
-                // re-processing the same QR while the screen is still visible.
-                // The 'reset()' function handles clearing it for the next scan.
             }
         }
     }
+
+    private fun isValidPubKeyHex(hex: String): Boolean =
+        hex.length == 64 && hex.all { it in '0'..'9' || it in 'a'..'f' || it in 'A'..'F' }
 
     private suspend fun sendTrackRequest(target: InviteData) {
         try {
@@ -123,6 +162,7 @@ class ScanViewModel @Inject constructor(
 
     fun reset() {
         processed = false
+        pendingInvite = null
         _scanState.value = ScanState()
     }
 }

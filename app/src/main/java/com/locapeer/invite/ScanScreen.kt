@@ -56,6 +56,26 @@ fun ScanScreen(
                         }
                     }
                 }
+                scanState.pendingName != null -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier.padding(24.dp)
+                    ) {
+                        Text(
+                            "Add contact?",
+                            style = MaterialTheme.typography.titleLarge
+                        )
+                        Text(
+                            "This will connect you with ${scanState.pendingName} and start sharing your location with each other.",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            OutlinedButton(onClick = { vm.reset() }) { Text("Cancel") }
+                            Button(onClick = { vm.confirmAdd() }) { Text("Add & Share") }
+                        }
+                    }
+                }
                 scanState.success -> {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,

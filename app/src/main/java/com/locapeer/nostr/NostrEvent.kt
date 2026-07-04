@@ -97,13 +97,20 @@ data class NostrEvent(
         }
 
         fun verify(event: NostrEvent, crypto: CryptoUtils): Boolean {
-            val serialized = serializeForId(event.pubkey, event.createdAt, event.kind, event.tags, event.content)
-            val idBytes = crypto.sha256(serialized.toByteArray(StandardCharsets.UTF_8))
-            val idHex = crypto.bytesToHex(idBytes)
-            if (idHex != event.id) return false
-            val sigBytes = crypto.hexToBytes(event.sig)
-            val pubBytes = crypto.hexToBytes(event.pubkey)
-            return crypto.schnorrVerify(sigBytes, idBytes, pubBytes)
+            // Never throw: this runs directly in the relay event-processing pipeline, so a
+            // malformed field (non-hex sig/pubkey, odd-length hex) must be rejected as an
+            // invalid event rather than propagating and cancelling the event collector.
+            return try {
+                val serialized = serializeForId(event.pubkey, event.createdAt, event.kind, event.tags, event.content)
+                val idBytes = crypto.sha256(serialized.toByteArray(StandardCharsets.UTF_8))
+                val idHex = crypto.bytesToHex(idBytes)
+                if (idHex != event.id) return false
+                val sigBytes = crypto.hexToBytes(event.sig)
+                val pubBytes = crypto.hexToBytes(event.pubkey)
+                crypto.schnorrVerify(sigBytes, idBytes, pubBytes)
+            } catch (e: Exception) {
+                false
+            }
         }
     }
 }
