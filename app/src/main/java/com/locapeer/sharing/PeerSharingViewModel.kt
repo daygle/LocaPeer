@@ -2,7 +2,6 @@ package com.locapeer.sharing
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.MessageDao
@@ -254,54 +253,17 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
-    /** Manually command this peer to delete all messages older than their configured retention. */
+    /** Manually command this peer to delete ALL of our messages from their device,
+     *  regardless of their configured retention limit. */
     fun sendMessagePurgeNow() {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
-            val cfg = configDao.getForPeer(currentPeerId) ?: defaultConfig()
             if (peer == null) {
                 _lastPurgeResult.value = "Peer not found"
                 return@launch
             }
-            val days = cfg.retentionDaysMessages
-            if (days == 0) {
-                // Full wipe
-                peerManager.sendDeleteMyMessages(currentPeerId)
-                _lastPurgeResult.value = "Remote delete command for ALL messages sent to ${peer.displayName}"
-                return@launch
-            }
-            publishPurgeToPeer(peer, days, NostrEventKind.MESSAGE_PURGE_REQUEST) { kindLabel ->
-                _lastPurgeResult.value = "Remote $kindLabel purge sent to ${peer.displayName}"
-            }
+            peerManager.sendDeleteMyMessages(currentPeerId)
+            _lastPurgeResult.value = "Remote delete command for ALL messages sent to ${peer.displayName}"
         }
-    }
-
-    private suspend fun publishPurgeToPeer(
-        peer: PeerEntity,
-        days: Int,
-        kind: Int,
-        onSent: (String) -> Unit
-    ) {
-        val deleteBeforeMs = System.currentTimeMillis() - days * 24 * 3600 * 1000L
-        val (privHex, pubHex) = keyManager.ensureKeypair()
-        val payload = Json.encodeToString(
-            PurgeRequestPayload(deviceId = pubHex, deleteOlderThanMs = deleteBeforeMs)
-        )
-        val encrypted = crypto.nip44Encrypt(
-            senderPrivKey = crypto.hexToBytes(privHex),
-            recipientXOnlyHex = peer.publicKeyHex,
-            plaintext = payload
-        )
-        val event = NostrEvent.build(
-            privKeyHex = privHex,
-            pubKeyHex = pubHex,
-            kind = kind,
-            content = encrypted,
-            tags = listOf(listOf("p", peer.publicKeyHex)),
-            crypto = crypto
-        )
-        relayClient.publishEvent(event)
-        val kindLabel = if (kind == NostrEventKind.PURGE_REQUEST) "location" else "message"
-        onSent(kindLabel)
     }
 }

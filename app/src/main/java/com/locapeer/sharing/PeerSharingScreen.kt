@@ -367,7 +367,7 @@ fun PeerSharingScreen(
                         else "How long $peerName keeps messages you sent",
                         selected = retentionDaysMessages,
                         onSelected = { vm.setRetentionDaysMessages(it) },
-                        purgeLabel = if (retentionDaysMessages == 0) "Purge All Messages from Contact" else "Purge from $peerName Now",
+                        purgeLabel = "Purge All Messages from Contact",
                         onPurge = { vm.sendMessagePurgeNow() }
                     )
                 }
