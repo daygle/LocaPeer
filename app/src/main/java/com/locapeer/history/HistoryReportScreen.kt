@@ -425,11 +425,11 @@ private fun HistoryMapTab(
                 mapView.overlays.add(polyline)
 
                 heartbeats.forEachIndexed { index, ping ->
-                    val isEndpoint = index == 0 || index == heartbeats.lastIndex
+                    val isLatest = index == heartbeats.lastIndex
                     val marker = Marker(mapView).apply {
                         position = GeoPoint(ping.lat, ping.lng)
                         infoWindow = null
-                        if (isEndpoint) {
+                        if (isLatest) {
                             val icon = MarkerIconFactory.create(
                                 context = mapView.context,
                                 displayName = ping.displayName,
