@@ -458,7 +458,7 @@ private fun HistoryMapTab(
 
                 val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
                 val bounds = BoundingBox.fromGeoPoints(points)
-                if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpan < 1e-4)) {
+                if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpanWithDateLine < 1e-4)) {
                     mapView.controller.setZoom(16.0)
                     mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
                 } else if (mapView.width > 0) {

@@ -25,8 +25,8 @@ import javax.inject.Inject
 fun AboutScreen(
     relayClient: NostrRelayClient,
     onNavigateBack: () -> Unit,
-    versionName: String = "1.0",
-    versionCode: Int = 1
+    versionName: String = "1.1.1",
+    versionCode: Int = 5
 ) {
     val relayStatus by relayClient.relayStatus.collectAsState()
 
