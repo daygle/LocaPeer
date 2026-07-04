@@ -373,6 +373,56 @@ private fun ScanQrTab(vm: ScanViewModel, onDone: () -> Unit) {
                 }
             }
 
+            scanState.pendingName != null -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(24.dp),
+                    modifier = Modifier.padding(32.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.secondaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            Icons.Default.PersonAdd,
+                            contentDescription = null,
+                            modifier = Modifier.size(36.dp),
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                    }
+                    Text(
+                        "Add ${scanState.pendingName}?",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        "This will connect you with this contact and start sharing your location securely with each other.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textAlign = TextAlign.Center
+                    )
+                    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Button(
+                            onClick = { vm.confirmAdd() },
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Text("Add & Share")
+                        }
+                        TextButton(
+                            onClick = { vm.reset() },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Cancel")
+                        }
+                    }
+                }
+            }
+
             else -> {
                 val lifecycleOwner = LocalLifecycleOwner.current
                 val barcodeViewRef = remember { mutableStateOf<CompoundBarcodeView?>(null) }
@@ -597,9 +647,67 @@ private fun InviteLinkTab(vm: InviteViewModel, scanVm: ScanViewModel, context: a
                 }
             }
 
+            AnimatedVisibility(visible = scanState.pendingName != null) {
+                Card(
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                Icons.Default.PersonAdd,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
+                            Text(
+                                "Add ${scanState.pendingName}?",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onSecondaryContainer
+                            )
+                        }
+                        Text(
+                            "This link is for ${scanState.pendingName}. Would you like to add them and share location?",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSecondaryContainer
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            OutlinedButton(
+                                onClick = { scanVm.reset() },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text("Cancel")
+                            }
+                            Button(
+                                onClick = { scanVm.confirmAdd() },
+                                modifier = Modifier.weight(1f),
+                                shape = RoundedCornerShape(12.dp)
+                            ) {
+                                Text("Add")
+                            }
+                        }
+                    }
+                }
+            }
+
             OutlinedTextField(
                 value = pasteText,
-                onValueChange = { pasteText = it; if (scanState.success || scanState.error != null) scanVm.reset() },
+                onValueChange = { 
+                    pasteText = it
+                    if (scanState.success || scanState.error != null || scanState.pendingName != null) {
+                        scanVm.reset()
+                    }
+                },
                 placeholder = { Text("locapeer://invite?data=…") },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 3,
