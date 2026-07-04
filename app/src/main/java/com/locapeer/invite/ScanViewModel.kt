@@ -63,7 +63,19 @@ class ScanViewModel @Inject constructor(
                 processed = false
                 return
             }
-            pendingInvite = invite
+            // A device is identified by its Nostr key: deviceId and publicKeyHex must be the
+            // same key. Rejecting a mismatch prevents a crafted invite from upserting an
+            // existing peer row (keyed by deviceId) while pointing publicKeyHex at an
+            // attacker-controlled key — which would hijack whose key we encrypt to/verify from.
+            if (!invite.publicKeyHex.equals(invite.deviceId, ignoreCase = true)) {
+                _scanState.value = ScanState(error = "Invalid invite: key mismatch")
+                processed = false
+                return
+            }
+            // Nostr serializes pubkeys as lowercase hex; normalize so the stored peer row
+            // matches later events (and dedupes against an existing lowercase row).
+            val canonicalKey = invite.publicKeyHex.lowercase()
+            pendingInvite = invite.copy(publicKeyHex = canonicalKey, deviceId = canonicalKey)
             _scanState.value = ScanState(pendingName = invite.displayName.ifBlank { "this contact" })
         } catch (e: Exception) {
             _scanState.value = ScanState(error = e.message ?: "Unknown error")

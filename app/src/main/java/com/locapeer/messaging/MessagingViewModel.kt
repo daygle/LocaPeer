@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -262,6 +263,9 @@ class MessagingViewModel @Inject constructor(
         eventsJob?.cancel()
         eventsJob = relayClient.events
             .onEach { event ->
+              // Isolate each dispatch so a single malformed/hostile event can't cancel the
+              // collector and stop all future message processing.
+              try {
                 when (event.kind) {
                     NostrEventKind.ENCRYPTED_DM -> processIncomingDm(event)
                     NostrEventKind.READ_RECEIPT -> processReadReceipt(event)
@@ -269,6 +273,9 @@ class MessagingViewModel @Inject constructor(
                     NostrEventKind.DELIVERY_ACK -> processDeliveryAck(event)
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
+              } catch (e: Exception) {
+                Log.w("MessagingViewModel", "Failed to handle event ${event.id} (kind ${event.kind})", e)
+              }
             }
             .launchIn(viewModelScope)
 

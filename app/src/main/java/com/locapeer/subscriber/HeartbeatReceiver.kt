@@ -216,6 +216,9 @@ class HeartbeatReceiver @Inject constructor(
 
         relayClient.events
             .onEach { event ->
+              // A single malformed/hostile event must never cancel the collector and stop
+              // all future event processing — isolate every dispatch.
+              try {
                 when (event.kind) {
                     NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
                     NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
@@ -235,6 +238,9 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
                     NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
                 }
+              } catch (e: Exception) {
+                Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
+              }
             }
             .launchIn(scope)
     }
@@ -837,11 +843,14 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        // Only notify if this is a new connection or a role change — not on catch-up re-delivery
+        // Only notify if this is a new connection or a role change — not on catch-up re-delivery.
+        // Show the locally-stored contact name, not the payload's (remote-controlled) name, so a
+        // peer can't spoof the name rendered in the system notification.
+        val notifyName = existingPeer.displayName.ifBlank { payload.acceptorDisplayName }
         if (existingPeer.locationRole != newLocationRole) {
-            sendAcceptanceNotification(event.pubkey, payload.acceptorDisplayName)
+            sendAcceptanceNotification(event.pubkey, notifyName)
         }
-        Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
+        Log.i(TAG, "$notifyName accepted your track request (LocationRole: $newLocationRole)")
     }
 
     private suspend fun processTrackDecline(event: NostrEvent) {
