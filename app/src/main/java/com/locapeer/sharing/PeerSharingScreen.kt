@@ -355,7 +355,7 @@ fun PeerSharingScreen(
                         subtitle = "How long $peerName keeps your location data on their device",
                         selected = retentionDaysLocation,
                         onSelected = { vm.setRetentionDaysLocation(it) },
-                        purgeLabel = if (retentionDaysLocation == 0) "Purge All Location Data from Contact" else "Purge from $peerName Now",
+                        purgeLabel = "Purge All Location Data from Contact",
                         onPurge = { vm.sendLocationPurgeNow() }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
