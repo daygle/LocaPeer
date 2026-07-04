@@ -268,7 +268,14 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
         val broadcaster = peerDao.getPeer(event.pubkey) ?: return
-        
+
+        // Verify the signature before any state mutation (e.g. unarchiving) so a forged
+        // event carrying a known contact's pubkey cannot trigger side effects.
+        if (!NostrEvent.verify(event, crypto)) {
+            Log.w(TAG, "Signature verification failed for event ${event.id}")
+            return
+        }
+
         // Ensure peer is unarchived if they send an SOS or update their heartbeat
         // so they are visible in the contacts/messaging UI during active tracking
         if (event.kind == NostrEventKind.SOS_ALERT) {
@@ -281,10 +288,6 @@ class HeartbeatReceiver @Inject constructor(
             broadcaster.locationRole != PeerEntity.ROLE_RECEIVE &&
             broadcaster.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
             Log.d(TAG, "Ignoring heartbeat from ${event.pubkey}: role is ${broadcaster.locationRole}")
-            return
-        }
-        if (!NostrEvent.verify(event, crypto)) {
-            Log.w(TAG, "Signature verification failed for event ${event.id}")
             return
         }
         try {
@@ -794,6 +797,24 @@ class HeartbeatReceiver @Inject constructor(
             return
         }
 
+        // Bind the payload's claimed identity to the signing key. The accept only ever
+        // touches the signer's peer row, so a payload advertising a different pubkey is
+        // either malformed or an attempt to redirect the relationship — reject it.
+        if (payload.acceptorPublicKeyHex != event.pubkey) {
+            Log.w(TAG, "Track accept identity mismatch: payload=${payload.acceptorPublicKeyHex} signer=${event.pubkey}")
+            return
+        }
+
+        // A TRACK_ACCEPT is only meaningful as a reply to a request we sent, and every
+        // outgoing request is preceded by a local peer row (scanning adds the peer
+        // optimistically; role-change requests operate on an existing contact). With no
+        // local record we never asked this key — ignoring the accept prevents a stranger
+        // from unilaterally self-adding as a location recipient.
+        val existingPeer = peerDao.getPeer(event.pubkey) ?: run {
+            Log.w(TAG, "Ignoring unsolicited track accept from ${event.pubkey}")
+            return
+        }
+
         Log.i(TAG, "Received track acceptance from ${payload.acceptorDisplayName} (${event.pubkey})")
         // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
         val newLocationRole = when (payload.acceptedRole) {
@@ -803,22 +824,22 @@ class HeartbeatReceiver @Inject constructor(
             else -> PeerEntity.ROLE_SEND_RECEIVE
         }
 
-        val existingPeer = peerDao.getPeer(payload.acceptorPublicKeyHex)
         val peer = PeerEntity(
-            deviceId = payload.acceptorPublicKeyHex,
-            displayName = existingPeer?.displayName ?: payload.acceptorDisplayName,
-            publicKeyHex = payload.acceptorPublicKeyHex,
+            deviceId = existingPeer.deviceId,
+            displayName = existingPeer.displayName,
+            publicKeyHex = existingPeer.publicKeyHex,
             relayUrl = payload.acceptorRelayUrl,
             locationRole = newLocationRole,
-            messagingEnabled = existingPeer?.messagingEnabled ?: true,
-            isArchived = existingPeer?.isArchived ?: false,
-            addedAt = existingPeer?.addedAt ?: System.currentTimeMillis()
+            messagingEnabled = existingPeer.messagingEnabled,
+            isArchived = existingPeer.isArchived,
+            archivedAt = existingPeer.archivedAt,
+            addedAt = existingPeer.addedAt
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
         // Only notify if this is a new connection or a role change — not on catch-up re-delivery
-        if (existingPeer?.locationRole != newLocationRole) {
-            sendAcceptanceNotification(payload.acceptorPublicKeyHex, payload.acceptorDisplayName)
+        if (existingPeer.locationRole != newLocationRole) {
+            sendAcceptanceNotification(event.pubkey, payload.acceptorDisplayName)
         }
         Log.i(TAG, "${payload.acceptorDisplayName} accepted your track request (LocationRole: $newLocationRole)")
     }
