@@ -240,30 +240,17 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
-    /** Manually command this peer to delete all location data older than their configured retention. */
+    /** Manually command this peer to delete ALL of our location data from their device,
+     *  regardless of their configured retention limit. */
     fun sendLocationPurgeNow() {
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
-            val cfg = configDao.getForPeer(currentPeerId) ?: defaultConfig()
             if (peer == null) {
                 _lastPurgeResult.value = "Peer not found"
                 return@launch
             }
-            val days = cfg.retentionDaysLocation
-            if (days == 0) {
-                // Full wipe
-                peerManager.sendDeleteMyLocation(currentPeerId)
-                _lastPurgeResult.value = "Remote delete command for ALL locations sent to ${peer.displayName}"
-                return@launch
-            }
-            // Only subscribers / mutual peers actually keep our heartbeats
-            if (peer.locationRole != PeerEntity.ROLE_SEND && peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
-                _lastPurgeResult.value = "${peer.displayName} doesn't store your location"
-                return@launch
-            }
-            publishPurgeToPeer(peer, days, NostrEventKind.PURGE_REQUEST) { kindLabel ->
-                _lastPurgeResult.value = "Remote $kindLabel purge sent to ${peer.displayName}"
-            }
+            peerManager.sendDeleteMyLocation(currentPeerId)
+            _lastPurgeResult.value = "Remote delete command for ALL locations sent to ${peer.displayName}"
         }
     }
 
