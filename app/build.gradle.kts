@@ -119,8 +119,11 @@ dependencies {
     // secp256k1 crypto (ACINQ KMP)
     implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.23.0")
 
-    // Bouncy Castle for fallback crypto (AES, SHA, ECDH helpers)
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+    // Bouncy Castle for fallback crypto (AES, SHA, ECDH helpers).
+    // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
+    // published CVEs. Only the low-level crypto.* primitives (SHA-256, ChaCha20, HKDF,
+    // HMAC) are used here, and their API is stable across these versions.
+    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
 
     // QR Code
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
