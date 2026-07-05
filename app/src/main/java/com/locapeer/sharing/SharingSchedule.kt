@@ -30,20 +30,19 @@ object SharingSchedule {
         else current >= startMinute || current < endMinute
     }
 
-    /** Formats a minute-of-day schedule boundary, honouring the user's 12/24-hour setting. */
+    /**
+     * Formats a minute-of-day schedule boundary via the app's central time formatter, so the
+     * labels honour the user's 12/24-hour setting and match the locale-aware AM/PM strings used
+     * everywhere else.
+     */
     fun formatTime(minuteOfDay: Int): String {
-        val hour = minuteOfDay / 60
-        val minute = minuteOfDay % 60
-        if (DisplayFormat.use24HourTime) {
-            return "%02d:%02d".format(hour, minute)
-        }
-        val period = if (hour < 12) "AM" else "PM"
-        val hour12 = when {
-            hour == 0 -> 12
-            hour > 12 -> hour - 12
-            else -> hour
-        }
-        return "%d:%02d %s".format(hour12, minute, period)
+        val time = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, minuteOfDay / 60)
+            set(Calendar.MINUTE, minuteOfDay % 60)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time
+        return DisplayFormat.timeFormat().format(time)
     }
 
     fun formatDays(days: Int): String = when (days) {
