@@ -2,12 +2,13 @@ package com.locapeer.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 
 val RETENTION_OPTIONS = listOf(
     0 to "Forever",
@@ -53,20 +54,39 @@ fun RetentionRow(
 
 @Composable
 fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
-    val rows = RETENTION_OPTIONS.chunked(4)
-    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        rows.forEach { rowItems ->
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                rowItems.forEach { (days, label) ->
-                    FilterChip(
-                        selected = selected == days,
-                        onClick = { onSelected(days) },
-                        label = { Text(label, style = MaterialTheme.typography.labelSmall) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-                repeat(4 - rowItems.size) { Spacer(Modifier.weight(1f)) }
-            }
+    val initialIndex = RETENTION_OPTIONS.indexOfFirst { it.first == selected }.coerceAtLeast(0)
+    var sliderValue by remember(selected) { mutableFloatStateOf(initialIndex.toFloat()) }
+    val currentIndex = sliderValue.roundToInt().coerceIn(0, RETENTION_OPTIONS.size - 1)
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Keep for: ${RETENTION_OPTIONS[currentIndex].second}",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            )
+        }
+        Slider(
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            onValueChangeFinished = {
+                val finalIndex = sliderValue.roundToInt().coerceIn(0, RETENTION_OPTIONS.size - 1)
+                onSelected(RETENTION_OPTIONS[finalIndex].first)
+            },
+            valueRange = 0f..(RETENTION_OPTIONS.size - 1).toFloat(),
+            steps = RETENTION_OPTIONS.size - 2,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("Forever", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text("90 days", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }

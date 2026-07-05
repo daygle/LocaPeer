@@ -67,6 +67,10 @@ fun SettingsScreen(
     var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
     var showMapStartingPointDialog by remember { mutableStateOf(false) }
+    var showSpeedUnitDialog by remember { mutableStateOf(false) }
+    var showElevationUnitDialog by remember { mutableStateOf(false) }
+    var showDistanceUnitDialog by remember { mutableStateOf(false) }
+    var showTimeFormatDialog by remember { mutableStateOf(false) }
     var showFixedLocationPicker by remember { mutableStateOf(false) }
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
@@ -270,60 +274,44 @@ fun SettingsScreen(
                     ListItem(
                         headlineContent = { Text("Speed Units") },
                         supportingContent = {
-                            Text(if (settings.useImperialSpeed) "Miles per hour (mph)" else "Kilometres per hour (km/h)")
+                            Text(if (settings.useImperialSpeed) "Imperial (mph)" else "Metric (km/h)")
                         },
                         leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.useImperialSpeed,
-                                onCheckedChange = { vm.setUseImperialSpeed(it) }
-                            )
-                        },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showSpeedUnitDialog = true },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         headlineContent = { Text("Elevation Units") },
                         supportingContent = {
-                            Text(if (settings.useImperialElevation) "Feet (ft)" else "Metres (m)")
+                            Text(if (settings.useImperialElevation) "Imperial (feet)" else "Metric (metres)")
                         },
                         leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.useImperialElevation,
-                                onCheckedChange = { vm.setUseImperialElevation(it) }
-                            )
-                        },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showElevationUnitDialog = true },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         headlineContent = { Text("Distance Units") },
                         supportingContent = {
-                            Text(if (settings.useImperialDistance) "Feet / miles" else "Metres / kilometres")
+                            Text(if (settings.useImperialDistance) "Imperial (feet/miles)" else "Metric (metres/km)")
                         },
                         leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.useImperialDistance,
-                                onCheckedChange = { vm.setUseImperialDistance(it) }
-                            )
-                        },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showDistanceUnitDialog = true },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("24-Hour Time") },
+                        headlineContent = { Text("Time Format") },
                         supportingContent = {
-                            Text(if (settings.use24HourTime) "13:30" else "1:30 PM")
+                            Text(if (settings.use24HourTime) "24-Hour (13:30)" else "12-Hour (1:30 PM)")
                         },
                         leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.use24HourTime,
-                                onCheckedChange = { vm.setUse24HourTime(it) }
-                            )
-                        },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showTimeFormatDialog = true },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
@@ -826,6 +814,46 @@ fun SettingsScreen(
         )
     }
 
+    if (showSpeedUnitDialog) {
+        UnitSelectionDialog(
+            title = "Speed Units",
+            options = listOf(false to "Metric (km/h)", true to "Imperial (mph)"),
+            current = settings.useImperialSpeed,
+            onSelected = { vm.setUseImperialSpeed(it); showSpeedUnitDialog = false },
+            onDismiss = { showSpeedUnitDialog = false }
+        )
+    }
+
+    if (showElevationUnitDialog) {
+        UnitSelectionDialog(
+            title = "Elevation Units",
+            options = listOf(false to "Metric (metres)", true to "Imperial (feet)"),
+            current = settings.useImperialElevation,
+            onSelected = { vm.setUseImperialElevation(it); showElevationUnitDialog = false },
+            onDismiss = { showElevationUnitDialog = false }
+        )
+    }
+
+    if (showDistanceUnitDialog) {
+        UnitSelectionDialog(
+            title = "Distance Units",
+            options = listOf(false to "Metric (m/km)", true to "Imperial (ft/mi)"),
+            current = settings.useImperialDistance,
+            onSelected = { vm.setUseImperialDistance(it); showDistanceUnitDialog = false },
+            onDismiss = { showDistanceUnitDialog = false }
+        )
+    }
+
+    if (showTimeFormatDialog) {
+        UnitSelectionDialog(
+            title = "Time Format",
+            options = listOf(false to "12-Hour (1:30 PM)", true to "24-Hour (13:30)"),
+            current = settings.use24HourTime,
+            onSelected = { vm.setUse24HourTime(it); showTimeFormatDialog = false },
+            onDismiss = { showTimeFormatDialog = false }
+        )
+    }
+
     if (showFixedLocationPicker) {
         MapLocationPicker(
             initialLat = settings.mapFixedLat,
@@ -939,6 +967,37 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
             Button(onClick = { onConfirm(selectedPubkey) }, enabled = selectedPubkey.isNotEmpty()) { Text("Enable") }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+    )
+}
+
+@Composable
+private fun UnitSelectionDialog(
+    title: String,
+    options: List<Pair<Boolean, String>>,
+    current: Boolean,
+    onSelected: (Boolean) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(title) },
+        text = {
+            Column {
+                options.forEach { (value, label) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onSelected(value) }
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = current == value, onClick = { onSelected(value) })
+                        Text(label, modifier = Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
 }
 
