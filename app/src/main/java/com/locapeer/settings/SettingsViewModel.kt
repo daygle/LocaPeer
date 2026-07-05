@@ -170,7 +170,10 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun updateDisplayName(name: String) {
-        viewModelScope.launch { prefs.updateDisplayName(name) }
+        viewModelScope.launch {
+            prefs.updateDisplayName(name)
+            refreshProfile()
+        }
     }
 
     fun setPinColor(hex: String) {
