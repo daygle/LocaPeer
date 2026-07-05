@@ -26,6 +26,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.TimePickerDialog
+import com.locapeer.util.DisplayFormat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
@@ -74,7 +75,7 @@ fun HistoryReportScreen(
     var selectedTab by remember { mutableIntStateOf(0) }
 
     val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault()) }
-    val timeFormat = remember { SimpleDateFormat("HH:mm:ss", Locale.getDefault()) }
+    val timeFormat = remember(DisplayFormat.use24HourTime) { DisplayFormat.timeFormat(withSeconds = true) }
 
     Scaffold(
         topBar = {
@@ -364,7 +365,9 @@ private fun HistoryMapTab(
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
     var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
-    val timestampFormat = remember { SimpleDateFormat("d MMM yyyy · HH:mm:ss", Locale.getDefault()) }
+    val timestampFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
+    }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -699,14 +702,14 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
 
 /**
  * Human-readable speed for a ping. Always returns a value so location history rows and
- * the pin popup have a speed field even when the person is still (shown as "0 km/h")
- * rather than the field vanishing entirely.
+ * the pin popup have a speed field even when the person is still (shown as "0 km/h" /
+ * "0 mph") rather than the field vanishing entirely. Units follow the user's setting.
  */
 private fun speedLabel(motionState: String, speed: Float, bearing: Float): String {
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
-        "${(speed * 3.6f).toInt()} km/h · ${bearingToCardinal(bearing)}"
+        "${DisplayFormat.speedValue(speed)} · ${bearingToCardinal(bearing)}"
     } else {
-        "0 km/h"
+        DisplayFormat.speedValue(0f)
     }
 }
 

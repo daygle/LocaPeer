@@ -189,12 +189,12 @@ class MapViewModel @Inject constructor(
         return when {
             diffMs < 60_000 -> "Just now"
             diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
-            diffMs < 86_400_000 -> java.text.SimpleDateFormat("h:mm a", java.util.Locale.getDefault()).format(java.util.Date(millis))
+            diffMs < 86_400_000 -> java.text.SimpleDateFormat(com.locapeer.util.DisplayFormat.timePattern(), java.util.Locale.getDefault()).format(java.util.Date(millis))
             else -> {
                 val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
                 val today = java.util.Calendar.getInstance()
                 val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
-                    java.text.SimpleDateFormat("d MMM, h:mm a", java.util.Locale.getDefault())
+                    java.text.SimpleDateFormat("d MMM, ${com.locapeer.util.DisplayFormat.timePattern()}", java.util.Locale.getDefault())
                 else
                     java.text.SimpleDateFormat("d MMM yyyy", java.util.Locale.getDefault())
                 fmt.format(java.util.Date(millis))

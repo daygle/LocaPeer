@@ -33,6 +33,19 @@ val HARDCODED_RELAYS = listOf(
     "wss://relay.snort.social"
 )
 
+/**
+ * Regions that display road speed in mph. Used to pick a sensible default speed unit before
+ * the user has explicitly chosen one. Android exposes no system-wide unit preference, so this
+ * is a best-effort guess from the device locale that the user can override in Settings.
+ */
+private val IMPERIAL_SPEED_REGIONS = setOf(
+    "US", "GB", "MM", "LR", "AG", "BS", "BZ", "DM", "GD", "GU",
+    "KN", "LC", "MH", "FM", "MP", "PW", "PR", "VC", "VG", "VI", "WS"
+)
+
+private fun localeDefaultImperial(): Boolean =
+    java.util.Locale.getDefault().country.uppercase(java.util.Locale.ROOT) in IMPERIAL_SPEED_REGIONS
+
 data class AppSettings(
     val displayName: String = "",
     val heartbeatEnabled: Boolean = true,
@@ -73,7 +86,11 @@ data class AppSettings(
      */
     val mapStartingPoint: String = "OWN_PIN",
     val mapFixedLat: Double = 0.0,
-    val mapFixedLng: Double = 0.0
+    val mapFixedLng: Double = 0.0,
+    /** Show speeds in mph instead of km/h. Defaults from the device locale. */
+    val useImperialSpeed: Boolean = false,
+    /** Use a 24-hour clock for displayed times. Defaults from the device's clock setting. */
+    val use24HourTime: Boolean = true
 )
 
 @Singleton
@@ -107,6 +124,8 @@ class AppPreferences @Inject constructor(
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
     private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
     private val KEY_RECENT_EVENT_IDS = stringPreferencesKey("recent_event_ids")
+    private val KEY_USE_IMPERIAL_SPEED = booleanPreferencesKey("use_imperial_speed")
+    private val KEY_USE_24_HOUR_TIME = booleanPreferencesKey("use_24_hour_time")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -146,7 +165,10 @@ class AppPreferences @Inject constructor(
                 mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
                 mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "OWN_PIN",
                 mapFixedLat = prefs[KEY_MAP_FIXED_LAT] ?: 0.0,
-                mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0
+                mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0,
+                useImperialSpeed = prefs[KEY_USE_IMPERIAL_SPEED] ?: localeDefaultImperial(),
+                use24HourTime = prefs[KEY_USE_24_HOUR_TIME]
+                    ?: android.text.format.DateFormat.is24HourFormat(context)
             )
         }
 
@@ -207,6 +229,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setMapStartingPoint(mode: String) {
         context.settingsStore.edit { it[KEY_MAP_STARTING_POINT] = mode }
+    }
+
+    suspend fun setUseImperialSpeed(imperial: Boolean) {
+        context.settingsStore.edit { it[KEY_USE_IMPERIAL_SPEED] = imperial }
+    }
+
+    suspend fun setUse24HourTime(use24Hour: Boolean) {
+        context.settingsStore.edit { it[KEY_USE_24_HOUR_TIME] = use24Hour }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {

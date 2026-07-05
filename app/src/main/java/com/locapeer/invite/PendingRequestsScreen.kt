@@ -102,7 +102,7 @@ private fun PendingRequestRow(
     onDecline: () -> Unit
 ) {
     val timeLabel = remember(request.receivedAt) {
-        SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()).format(Date(request.receivedAt))
+        SimpleDateFormat("MMM d, ${com.locapeer.util.DisplayFormat.timePattern()}", Locale.getDefault()).format(Date(request.receivedAt))
     }
     val requestedRoleLabel = when (request.requestedRole) {
         "SEND_RECEIVE" -> "Send/Receive"

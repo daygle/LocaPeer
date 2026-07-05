@@ -106,7 +106,9 @@ data class SettingsBackup(
     val heartbeatEnabled: Boolean = true,
     val onboardingComplete: Boolean = true,
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
-    val customRelays: List<String> = emptyList()
+    val customRelays: List<String> = emptyList(),
+    val useImperialSpeed: Boolean = false,
+    val use24HourTime: Boolean = true
 )
 
 /** Parsed backup file ready for selective restore. */
@@ -327,7 +329,9 @@ class SettingsViewModel @Inject constructor(
                             heartbeatEnabled = s.heartbeatEnabled,
                             onboardingComplete = s.onboardingComplete,
                             globalScheduleRules = s.globalScheduleRules,
-                            customRelays = s.customRelays
+                            customRelays = s.customRelays,
+                            useImperialSpeed = s.useImperialSpeed,
+                            use24HourTime = s.use24HourTime
                         ) else null
                 )
                 val json = jsonExport.encodeToString(backup)
@@ -423,6 +427,8 @@ class SettingsViewModel @Inject constructor(
                     prefs.setOnboardingComplete(s.onboardingComplete)
                     prefs.setGlobalScheduleRules(s.globalScheduleRules)
                     prefs.setCustomRelays(s.customRelays)
+                    prefs.setUseImperialSpeed(s.useImperialSpeed)
+                    prefs.setUse24HourTime(s.use24HourTime)
                     restored += "settings"
                 }
                 // Identity and/or display name may have changed; refresh the shown pubkey and QR.
@@ -497,6 +503,14 @@ class SettingsViewModel @Inject constructor(
 
     fun setHistoryMinDistanceMeters(meters: Int) {
         viewModelScope.launch { prefs.setHistoryMinDistanceMeters(meters) }
+    }
+
+    fun setUseImperialSpeed(imperial: Boolean) {
+        viewModelScope.launch { prefs.setUseImperialSpeed(imperial) }
+    }
+
+    fun setUse24HourTime(use24Hour: Boolean) {
+        viewModelScope.launch { prefs.setUse24HourTime(use24Hour) }
     }
 
     companion object {
