@@ -37,7 +37,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.ui.theme.*
@@ -101,6 +100,7 @@ fun MapScreen(
     val mapStartingPoint by vm.mapStartingPoint.collectAsState()
     val mapFixedLat by vm.mapFixedLat.collectAsState()
     val mapFixedLng by vm.mapFixedLng.collectAsState()
+    val showGeofences by vm.showGeofences.collectAsState()
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -125,7 +125,7 @@ fun MapScreen(
     Box(modifier = Modifier.fillMaxSize()) {
         OsmdroidMapView(
             pins = uiState.pins,
-            geofences = uiState.geofences,
+            geofences = if (showGeofences) uiState.geofences else emptyList(),
             userLocation = userLocation,
             myPinColor = myPinColor,
             isSosActive = isSosActive,
@@ -171,6 +171,16 @@ fun MapScreen(
                 modifier = Modifier.shadow(4.dp, CircleShape)
             ) {
                 Icon(if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode, contentDescription = "Map Style")
+            }
+
+            // Geofence Visibility Toggle
+            FloatingActionButton(
+                onClick = { vm.toggleGeofences() },
+                containerColor = if (showGeofences) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+                contentColor = if (showGeofences) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.shadow(4.dp, CircleShape)
+            ) {
+                Icon(Icons.Default.Fence, contentDescription = if (showGeofences) "Hide geofences" else "Show geofences")
             }
 
             // Follow Mode / Locate Me
@@ -493,7 +503,7 @@ private fun SosButton(isActive: Boolean, onClick: () -> Unit, modifier: Modifier
 @Composable
 private fun OsmdroidMapView(
     pins: List<PinData>,
-    geofences: List<GeofenceEntity>,
+    geofences: List<GeofenceOnMap>,
     userLocation: GeoPoint?,
     myPinColor: String = "",
     isSosActive: Boolean = false,
@@ -638,7 +648,8 @@ private fun OsmdroidMapView(
             // Remove previous markers/geofences but keep the permanent overlays (compass/scale)
             mapView.overlays.removeAll { it is Marker || it is Polygon }
 
-            geofences.forEach { fence ->
+            geofences.forEach { geofenceOnMap ->
+                val fence = geofenceOnMap.fence
                 val strokeColor = when (fence.triggerOn) {
                     "ENTER" -> GeofenceEnter
                     "EXIT" -> GeofenceExit
@@ -660,6 +671,22 @@ private fun OsmdroidMapView(
                     title = fence.name
                 }
                 mapView.overlays.add(circle)
+
+                // Label at the centre showing the fence name and which contact it tracks.
+                val label = Marker(mapView).apply {
+                    position = GeoPoint(fence.lat, fence.lng)
+                    icon = MarkerIconFactory.createGeofenceLabel(
+                        context = context,
+                        title = fence.name,
+                        subtitle = geofenceOnMap.trackedName,
+                        color = strokeArgb
+                    )
+                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                    infoWindow = null
+                    isDraggable = false
+                    setOnMarkerClickListener { _, _ -> false }
+                }
+                mapView.overlays.add(label)
             }
 
             pins.forEach { pinData ->

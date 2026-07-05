@@ -47,9 +47,15 @@ data class PinData(
     val isOverdue: Boolean
 )
 
+data class GeofenceOnMap(
+    val fence: GeofenceEntity,
+    /** Display name of the contact this geofence tracks. */
+    val trackedName: String
+)
+
 data class MapUiState(
     val pins: List<PinData> = emptyList(),
-    val geofences: List<GeofenceEntity> = emptyList()
+    val geofences: List<GeofenceOnMap> = emptyList()
 )
 
 @HiltViewModel
@@ -91,6 +97,16 @@ class MapViewModel @Inject constructor(
     val mapFixedLng: StateFlow<Double> = appPreferences.settings
         .map { it.mapFixedLng }
         .stateIn(viewModelScope, SharingStarted.Lazily, 0.0)
+
+    val showGeofences: StateFlow<Boolean> = appPreferences.settings
+        .map { it.showGeofencesOnMap }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    fun toggleGeofences() {
+        viewModelScope.launch {
+            appPreferences.setShowGeofencesOnMap(!showGeofences.value)
+        }
+    }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     val userLocation: StateFlow<GeoPoint?> = flow {
@@ -183,7 +199,11 @@ class MapViewModel @Inject constructor(
             val overdue = hb != null && (now - hb.timestamp) > 30 * 60 * 1000L
             PinData(peer, hb, overdue)
         }
-        MapUiState(pins = pins, geofences = fences)
+        val nameByDevice = peers.associate { it.deviceId to it.displayName }
+        val fencesOnMap = fences.map {
+            GeofenceOnMap(it, nameByDevice[it.trackedDeviceId] ?: "Unknown")
+        }
+        MapUiState(pins = pins, geofences = fencesOnMap)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     companion object {

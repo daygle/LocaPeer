@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.PersonPin
@@ -53,6 +54,7 @@ fun GeofenceListScreen(
     val geofences by vm.geofences.collectAsState()
     val broadcastersWithLocation by vm.receiveContactsWithLocation.collectAsState()
     var showCreateDialog by remember { mutableStateOf(false) }
+    var editingFence by remember { mutableStateOf<GeofenceEntity?>(null) }
 
     val filteredGeofences = remember(geofences, peerId) {
         if (peerId == null) geofences else geofences.filter { it.trackedDeviceId == peerId }
@@ -94,6 +96,7 @@ fun GeofenceListScreen(
                         .firstOrNull { it.peer.deviceId == fence.trackedDeviceId }
                         ?.peer?.displayName ?: "Unknown",
                     onToggle = { vm.setActive(fence.id, it) },
+                    onEdit = { editingFence = fence },
                     onDelete = { vm.delete(fence) }
                 )
             }
@@ -110,29 +113,45 @@ fun GeofenceListScreen(
         }
     }
 
-    if (showCreateDialog) {
+    if (showCreateDialog || editingFence != null) {
         val availableBroadcasters = if (peerId != null) {
             broadcastersWithLocation.filter { it.peer.deviceId == peerId }
         } else {
             broadcastersWithLocation
         }
+        val dismiss = { showCreateDialog = false; editingFence = null }
 
         if (availableBroadcasters.isEmpty()) {
             AlertDialog(
-                onDismissRequest = { showCreateDialog = false },
+                onDismissRequest = dismiss,
                 title = { Text("No Contacts Found") },
                 text = { Text(if (peerId != null) "This contact hasn't shared their location yet." else "You need at least one tracked contact before creating a geofence.") },
                 confirmButton = {
-                    TextButton(onClick = { showCreateDialog = false }) { Text("OK") }
+                    TextButton(onClick = dismiss) { Text("OK") }
                 }
             )
         } else {
-            CreateGeofenceDialog(
+            GeofenceDialog(
+                existing = editingFence,
                 broadcastersWithLocation = availableBroadcasters,
-                onDismiss = { showCreateDialog = false },
-                onCreate = { name, lat, lng, radius, deviceId, trigger ->
-                    vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
-                    showCreateDialog = false
+                onDismiss = dismiss,
+                onSave = { name, lat, lng, radius, deviceId, trigger ->
+                    val current = editingFence
+                    if (current != null) {
+                        vm.updateGeofence(
+                            current.copy(
+                                name = name,
+                                lat = lat,
+                                lng = lng,
+                                radiusMetres = radius,
+                                trackedDeviceId = deviceId,
+                                triggerOn = trigger
+                            )
+                        )
+                    } else {
+                        vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
+                    }
+                    dismiss()
                 }
             )
         }
@@ -144,6 +163,7 @@ private fun GeofenceCard(
     fence: GeofenceEntity,
     trackedName: String,
     onToggle: (Boolean) -> Unit,
+    onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
     val triggerColor = when (fence.triggerOn) {
@@ -179,6 +199,9 @@ private fun GeofenceCard(
                 checked = fence.active,
                 onCheckedChange = onToggle
             )
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit")
+            }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete")
             }
@@ -188,25 +211,28 @@ private fun GeofenceCard(
 
 @SuppressLint("MissingPermission")
 @Composable
-private fun CreateGeofenceDialog(
+private fun GeofenceDialog(
+    existing: GeofenceEntity?,
     broadcastersWithLocation: List<BroadcasterWithLocation>,
     onDismiss: () -> Unit,
-    onCreate: (String, Double, Double, Int, String, String) -> Unit
+    onSave: (String, Double, Double, Int, String, String) -> Unit
 ) {
     val context = LocalContext.current
     val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
 
-    var name by remember { mutableStateOf("") }
-    var latText by remember { mutableStateOf("") }
-    var lngText by remember { mutableStateOf("") }
-    var radius by remember { mutableFloatStateOf(500f) }
-    var selectedDeviceId by remember { mutableStateOf(broadcastersWithLocation.first().peer.deviceId) }
+    var name by remember { mutableStateOf(existing?.name ?: "") }
+    var latText by remember { mutableStateOf(existing?.lat?.let { "%.6f".format(it) } ?: "") }
+    var lngText by remember { mutableStateOf(existing?.lng?.let { "%.6f".format(it) } ?: "") }
+    var radius by remember { mutableFloatStateOf(existing?.radiusMetres?.toFloat() ?: 500f) }
+    var selectedDeviceId by remember {
+        mutableStateOf(existing?.trackedDeviceId ?: broadcastersWithLocation.first().peer.deviceId)
+    }
     val selectedEntry = broadcastersWithLocation.firstOrNull { it.peer.deviceId == selectedDeviceId }
         ?: broadcastersWithLocation.first()
     SideEffect {
         if (selectedEntry.peer.deviceId != selectedDeviceId) selectedDeviceId = selectedEntry.peer.deviceId
     }
-    var triggerOn by remember { mutableStateOf("ENTER") }
+    var triggerOn by remember { mutableStateOf(existing?.triggerOn ?: "ENTER") }
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
 
@@ -219,7 +245,7 @@ private fun CreateGeofenceDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Geofence") },
+        title = { Text(if (existing != null) "Edit Geofence" else "New Geofence") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(
@@ -345,10 +371,10 @@ private fun CreateGeofenceDialog(
                 onClick = {
                     submitted = true
                     if (isValid) {
-                        onCreate(name, lat!!, lng!!, radius.roundToInt(), selectedEntry.peer.deviceId, triggerOn)
+                        onSave(name, lat!!, lng!!, radius.roundToInt(), selectedEntry.peer.deviceId, triggerOn)
                     }
                 }
-            ) { Text("Create") }
+            ) { Text(if (existing != null) "Save" else "Create") }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
