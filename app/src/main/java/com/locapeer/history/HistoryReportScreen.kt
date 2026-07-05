@@ -529,10 +529,8 @@ private fun HistoryMapTab(
                             style = MaterialTheme.typography.labelSmall)
                         Text("🔋 ${ping.battery}%",
                             style = MaterialTheme.typography.labelSmall)
-                        if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
-                            Text("${(ping.speed * 3.6f).toInt()} km/h · ${bearingToCardinal(ping.bearing)}",
-                                style = MaterialTheme.typography.labelSmall)
-                        }
+                        Text(speedLabel(ping.motionState, ping.speed, ping.bearing),
+                            style = MaterialTheme.typography.labelSmall)
                     }
 
                     Spacer(Modifier.height(4.dp))
@@ -617,14 +615,11 @@ private fun HistoryPingCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
-                        val kmh = (ping.speed * 3.6f).toInt()
-                        Text(
-                            "$kmh km/h · ${bearingToCardinal(ping.bearing)}",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        speedLabel(ping.motionState, ping.speed, ping.bearing),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
                 Spacer(Modifier.height(4.dp))
                 MotionChip(ping.motionState)
@@ -700,6 +695,19 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
         set(utc.get(Calendar.YEAR), utc.get(Calendar.MONTH), utc.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
         set(Calendar.MILLISECOND, 0)
     }.timeInMillis
+}
+
+/**
+ * Human-readable speed for a ping. Always returns a value so location history rows and
+ * the pin popup have a speed field even when the person is still (shown as "0 km/h")
+ * rather than the field vanishing entirely.
+ */
+private fun speedLabel(motionState: String, speed: Float, bearing: Float): String {
+    return if (motionState.uppercase() != "STATIONARY" && speed > 0f) {
+        "${(speed * 3.6f).toInt()} km/h · ${bearingToCardinal(bearing)}"
+    } else {
+        "0 km/h"
+    }
 }
 
 private fun bearingToCardinal(bearing: Float): String {
