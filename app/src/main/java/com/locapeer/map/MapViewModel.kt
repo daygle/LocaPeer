@@ -11,7 +11,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.location.LocationServices
+import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
@@ -24,6 +24,9 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -56,6 +59,7 @@ class MapViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
+    private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
     @ApplicationContext private val appContext: Context,
@@ -88,8 +92,15 @@ class MapViewModel @Inject constructor(
         .map { it.mapFixedLng }
         .stateIn(viewModelScope, SharingStarted.Lazily, 0.0)
 
-    private val _userLocation = MutableStateFlow<GeoPoint?>(null)
-    val userLocation: StateFlow<GeoPoint?> = _userLocation.asStateFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val userLocation: StateFlow<GeoPoint?> = flow {
+        val (_, pubHex) = keyManager.ensureKeypair()
+        emit(pubHex)
+    }.flatMapLatest { myPubkey ->
+        heartbeatDao.getLatestHeartbeatPerDevice().map { heartbeats ->
+            heartbeats.find { it.deviceId == myPubkey }?.let { GeoPoint(it.lat, it.lng) }
+        }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
     val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
@@ -151,12 +162,8 @@ class MapViewModel @Inject constructor(
 
     @SuppressLint("MissingPermission")
     fun fetchUserLocation() {
-        if (!hasLocationPermission()) return
-        LocationServices.getFusedLocationProviderClient(appContext)
-            .lastLocation
-            .addOnSuccessListener { loc ->
-                loc?.let { _userLocation.value = GeoPoint(it.latitude, it.longitude) }
-            }
+        // HeartbeatService is already updating DB; this just triggers a refresh if needed
+        // but since userLocation now observes the DB, it will update automatically.
     }
 
     fun toggleSos() {
@@ -170,7 +177,8 @@ class MapViewModel @Inject constructor(
     ) { peers, heartbeats, fences ->
         val heartbeatMap = heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
-        val pins = peers.map { peer ->
+        val myPubkey = try { keyManager.ensureKeypair().second } catch (_: Exception) { "" }
+        val pins = peers.filter { it.deviceId != myPubkey }.map { peer ->
             val hb = heartbeatMap[peer.deviceId]
             val overdue = hb != null && (now - hb.timestamp) > 30 * 60 * 1000L
             PinData(peer, hb, overdue)

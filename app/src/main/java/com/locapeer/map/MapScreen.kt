@@ -42,11 +42,15 @@ import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.ui.theme.*
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.util.MapTileIndex
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.ScaleBarOverlay
+import org.osmdroid.views.overlay.compass.CompassOverlay
+import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
 
 private val CARTO_LIGHT = object : OnlineTileSourceBase(
     "CartoDB_Positron", 0, 19, 256, ".png",
@@ -98,12 +102,12 @@ fun MapScreen(
     val mapFixedLat by vm.mapFixedLat.collectAsState()
     val mapFixedLng by vm.mapFixedLng.collectAsState()
     val context = LocalContext.current
-    var centerOnUser by remember { mutableStateOf(value = false) }
+    var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
     var selectedPinAddress by remember { mutableStateOf<String?>(null) }
-    val isDark = isSystemInDarkTheme()
-
-    LaunchedEffect(Unit) { vm.fetchUserLocation() }
+    val systemDark = isSystemInDarkTheme()
+    var mapStyle by remember { mutableStateOf(if (systemDark) "DARK" else "LIGHT") }
+    val isDark = mapStyle == "DARK"
 
     LaunchedEffect(centerOnArgs) {
         centerOnArgs?.let {
@@ -126,16 +130,16 @@ fun MapScreen(
             myPinColor = myPinColor,
             isSosActive = isSosActive,
             lastMapCenter = lastMapCenter,
-            centerOnUser = centerOnUser,
+            centerOnUser = isFollowingUser,
             centerOnPin = centerOnPin,
             isDark = isDark,
             mapStartZoom = mapStartZoom,
             mapStartingPoint = mapStartingPoint,
             mapFixedLat = mapFixedLat,
             mapFixedLng = mapFixedLng,
-            onCenteredOnUser = { centerOnUser = false },
-            onCenteredOnPin = { centerOnPin = null },
-            onPinTapped = { selectedPin = it },
+            onCenteredOnUser = { }, // No-op for continuous follow
+            onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
+            onPinTapped = { selectedPin = it; isFollowingUser = false },
             onSaveMapPosition = vm::saveMapPosition,
             context = context,
             modifier = Modifier.fillMaxSize()
@@ -152,33 +156,42 @@ fun MapScreen(
             )
         }
 
-        // Locate Me Button - bottom-right
-        FloatingActionButton(
-            onClick = {
-                vm.fetchUserLocation()
-                centerOnUser = true
-            },
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
+        // Control Column - bottom-right
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
-                .shadow(4.dp, CircleShape)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Icon(Icons.Default.MyLocation, contentDescription = "My Location")
-        }
+            // Map Style Toggle
+            FloatingActionButton(
+                onClick = { mapStyle = if (isDark) "LIGHT" else "DARK" },
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.shadow(4.dp, CircleShape)
+            ) {
+                Icon(if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode, contentDescription = "Map Style")
+            }
 
-        // Friends Button - top-right
-        FloatingActionButton(
-            onClick = { showFriendList = true },
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp)
-                .shadow(4.dp, CircleShape)
-        ) {
-            Icon(Icons.Default.People, contentDescription = "Friends")
+            // Follow Mode / Locate Me
+            FloatingActionButton(
+                onClick = { isFollowingUser = !isFollowingUser },
+                containerColor = if (isFollowingUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
+                contentColor = if (isFollowingUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.shadow(4.dp, CircleShape)
+            ) {
+                Icon(if (isFollowingUser) Icons.Default.MyLocation else Icons.Default.LocationSearching, contentDescription = "Follow Me")
+            }
+
+            // Friends List Toggle
+            FloatingActionButton(
+                onClick = { showFriendList = true },
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.shadow(4.dp, CircleShape)
+            ) {
+                Icon(Icons.Default.People, contentDescription = "Friends")
+            }
         }
 
         // Relay status chip - bottom-left
@@ -192,8 +205,8 @@ fun MapScreen(
         // Friend List Sidebar / Panel
         AnimatedVisibility(
             visible = showFriendList,
-            enter = slideInHorizontally { it },
-            exit = slideOutHorizontally { it },
+            enter = slideInHorizontally(initialOffsetX = { it }),
+            exit = slideOutHorizontally(targetOffsetX = { it }),
             modifier = Modifier.align(Alignment.TopEnd)
         ) {
             FriendListPanel(
@@ -202,8 +215,7 @@ fun MapScreen(
                 userLocation = userLocation,
                 onDismiss = { showFriendList = false },
                 onLocateMe = {
-                    vm.fetchUserLocation()
-                    centerOnUser = true
+                    isFollowingUser = true
                     showFriendList = false
                 },
                 onSelectFriend = { pin ->
@@ -217,6 +229,7 @@ fun MapScreen(
                 onLocateFriend = { pin ->
                     pin.heartbeat?.let { hb ->
                         centerOnPin = GeoPoint(hb.lat, hb.lng)
+                        isFollowingUser = false
                         showFriendList = false
                     }
                 },
@@ -537,23 +550,23 @@ private fun OsmdroidMapView(
         }
     }
 
-    // On first GPS fix: only animate to user if we had no saved position to restore
-    LaunchedEffect(userLocation) {
-        if (userLocation != null && !initialCenterDone) {
-            mapViewRef?.controller?.animateTo(userLocation)
-            initialCenterDone = true
-        }
-    }
-
-    // Re-center when the locate-me button is pressed, or when location first arrives after button tap
-    LaunchedEffect(centerOnUser, userLocation) {
+    // Follow User Logic
+    LaunchedEffect(userLocation, centerOnUser) {
         if (centerOnUser && userLocation != null) {
             mapViewRef?.controller?.animateTo(userLocation)
             onCenteredOnUser()
         }
     }
 
-    // Jump to a contact's pin when selected from the friend list
+    // Initial positioning
+    LaunchedEffect(userLocation) {
+        if (userLocation != null && !initialCenterDone) {
+            mapViewRef?.controller?.setCenter(userLocation)
+            initialCenterDone = true
+        }
+    }
+
+    // Jump to a contact's pin
     LaunchedEffect(centerOnPin) {
         if (centerOnPin != null) {
             mapViewRef?.controller?.animateTo(centerOnPin)
@@ -561,7 +574,7 @@ private fun OsmdroidMapView(
         }
     }
 
-    // Fit all contacts into view on first open when FIT_ALL mode is selected
+    // Fit all contacts into view
     LaunchedEffect(pins, isFitAll, mapViewRef) {
         val mv = mapViewRef ?: return@LaunchedEffect
         if (!isFitAll || fitAllDone) return@LaunchedEffect
@@ -588,25 +601,31 @@ private fun OsmdroidMapView(
                 setTileSource(if (isDark) CARTO_DARK else CARTO_LIGHT)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
+                
+                // Scale Bar
+                val scaleBar = ScaleBarOverlay(this)
+                scaleBar.setCentred(true)
+                scaleBar.setScaleBarOffset(20, 20)
+                overlays.add(scaleBar)
+
+                // Compass
+                val compass = CompassOverlay(ctx, InternalCompassOrientationProvider(ctx), this)
+                compass.enableCompass()
+                overlays.add(compass)
+
                 when {
-                    isFitAll -> {
-                        controller.setZoom(mapStartZoom)
-                    }
+                    isFitAll -> controller.setZoom(mapStartZoom)
                     mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
                         controller.setZoom(mapStartZoom)
                         controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
                     }
-                    mapStartingPoint == "OWN_PIN" -> {
-                        controller.setZoom(mapStartZoom)
-                    }
+                    mapStartingPoint == "OWN_PIN" -> controller.setZoom(mapStartZoom)
                     lastMapCenter != null -> {
                         val (lat, lng, zoom) = lastMapCenter
                         controller.setZoom(zoom)
                         controller.setCenter(GeoPoint(lat, lng))
                     }
-                    else -> {
-                        controller.setZoom(mapStartZoom)
-                    }
+                    else -> controller.setZoom(mapStartZoom)
                 }
             }.also { mapViewRef = it }
         },
@@ -616,9 +635,8 @@ private fun OsmdroidMapView(
                 mapView.setTileSource(targetTileSource)
             }
 
-            // Simple check to avoid clearing and re-adding everything if data hasn't changed
-            // This is a basic optimization; for high performance we'd track individual overlays.
-            mapView.overlays.clear()
+            // Remove previous markers/geofences but keep the permanent overlays (compass/scale)
+            mapView.overlays.removeAll { it is Marker || it is Polygon }
 
             geofences.forEach { fence ->
                 val strokeColor = when (fence.triggerOn) {

@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.*
@@ -22,6 +23,7 @@ import com.google.android.gms.location.LocationServices
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.entity.GeofenceEntity
+import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
@@ -97,18 +99,12 @@ fun GeofenceListScreen(
             }
             if (filteredGeofences.isEmpty()) {
                 item {
-                    Box(
-                        modifier = Modifier.fillParentMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            if (peerId != null) "No geofences for this contact.\nTap + to create one."
-                            else "No geofences yet.\nTap + to create one.",
-                            style = MaterialTheme.typography.bodyLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textAlign = TextAlign.Center
-                        )
-                    }
+                    EmptyState(
+                        icon = Icons.Default.Fence,
+                        title = if (peerId != null) "No geofences for contact" else "No geofences",
+                        subtitle = "Tap the + button to create a new arrival or departure alert.",
+                        modifier = Modifier.fillParentMaxSize()
+                    )
                 }
             }
         }

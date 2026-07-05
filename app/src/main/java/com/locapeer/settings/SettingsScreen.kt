@@ -6,7 +6,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Message
@@ -64,9 +66,9 @@ fun SettingsScreen(
     var showClearMessageConfirm by remember { mutableStateOf(false) }
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
-    var intervalsExpanded by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
     var showMapStartingPointDialog by remember { mutableStateOf(false) }
+    var showIntervalsDialog by remember { mutableStateOf(false) }
     var showSpeedUnitDialog by remember { mutableStateOf(false) }
     var showElevationUnitDialog by remember { mutableStateOf(false) }
     var showDistanceUnitDialog by remember { mutableStateOf(false) }
@@ -94,7 +96,7 @@ fun SettingsScreen(
             contentPadding = PaddingValues(bottom = 24.dp)
         ) {
 
-            // ── Profile ──────────────────────────────────────────────────────
+            // ── 1. Profile ───────────────────────────────────────────────────
             item {
                 Column(
                     modifier = Modifier
@@ -146,16 +148,11 @@ fun SettingsScreen(
                             Text("My QR")
                         }
                     }
-                    PinColorPicker(
-                        selectedColor = settings.pinColor,
-                        onColorSelected = vm::setPinColor
-                    )
                 }
             }
 
-            item { SectionLabel("Location Sharing") }
-
-            // Share my location toggle
+            // ── 2. Location & Privacy ──────────────────────────────────────
+            item { SectionLabel("Location & Privacy") }
             item {
                 SettingsCard {
                     ListItem(
@@ -171,42 +168,27 @@ fun SettingsScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    // Update intervals - expandable
-                    ListItem(
-                        headlineContent = { Text("Update Intervals") },
-                        supportingContent = { Text("Stationary: ${settings.stationaryIntervalMinutes}min · Walking: ${settings.walkingIntervalMinutes}min") },
-                        leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
-                        trailingContent = {
-                            Icon(
-                                if (intervalsExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                                contentDescription = null
-                            )
-                        },
-                        modifier = Modifier.clickable { intervalsExpanded = !intervalsExpanded },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                    if (intervalsExpanded) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 56.dp, end = 16.dp, bottom = 12.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            IntervalSlider("Stationary", settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
-                            IntervalSlider("Walking",    settings.walkingIntervalMinutes,    1f..15f, 13) { vm.updateIntervals(walking = it) }
-                            IntervalSlider("Running",    settings.runningIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(running = it) }
-                            IntervalSlider("Cycling",    settings.cyclingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(cycling = it) }
-                            IntervalSlider("Driving",    settings.drivingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(driving = it) }
-                            IntervalSlider("Low Battery (< 20%)", settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
-                        }
-                    }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.Schedule,
                         label = "Sharing Schedule",
                         subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
-                                   else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
+                        else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
                         onClick = onNavigateToGlobalSchedule
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Notify When Tracked") },
+                        supportingContent = {
+                            Text("Get a notification when a contact's proximity or geofence alert for you is triggered.")
+                        },
+                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.notifyOnTrackingAlerts,
+                                onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
@@ -215,156 +197,45 @@ fun SettingsScreen(
                         subtitle = "Browse your own location timeline",
                         onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Icon(
-                            Icons.Default.Straighten,
-                            contentDescription = null,
-                            modifier = Modifier.padding(top = 2.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                }
+            }
+
+            // ── 3. Security ──────────────────────────────────────────────────
+            item { SectionLabel("Security") }
+            item {
+                SettingsCard {
+                    if (settings.supervisedModeEnabled) {
+                        ListItem(
+                            headlineContent = { Text("Supervision Active") },
+                            supportingContent = { Text("Settings require supervisor approval") },
+                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
-                        Spacer(Modifier.width(16.dp))
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            var minDistValue by remember(settings.historyMinDistanceMeters) {
-                                mutableFloatStateOf(settings.historyMinDistanceMeters.toFloat())
-                            }
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text("Minimum Distance Between Points", style = MaterialTheme.typography.bodyMedium)
-                                Text(
-                                    if (minDistValue.roundToInt() == 0) "Off"
-                                    else com.locapeer.util.DisplayFormat.distanceValue(minDistValue.roundToInt().toDouble()),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                            Text(
-                                "Hide history points closer than this to the previous one. Every ping is still stored.",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Slider(
-                                value = minDistValue,
-                                onValueChange = { minDistValue = it },
-                                onValueChangeFinished = { vm.setHistoryMinDistanceMeters(minDistValue.roundToInt()) },
-                                valueRange = 0f..500f,
-                                steps = 19,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
+                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                        ListItem(
+                            headlineContent = { Text("Disable Supervised Mode", color = MaterialTheme.colorScheme.error) },
+                            leadingContent = { Icon(Icons.Default.LockOpen, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                            modifier = Modifier.clickable { showDisableSupervisedConfirm = true },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    } else {
+                        ListItem(
+                            headlineContent = { Text("Supervised Mode") },
+                            supportingContent = { Text("Require supervisor approval to access settings") },
+                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null) },
+                            trailingContent = {
+                                Switch(checked = false, onCheckedChange = { if (it) showSupervisedSetup = true })
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
                     }
                 }
             }
 
-            item { SectionLabel("Units & Display") }
-
-            item {
-                SettingsCard {
-                    ListItem(
-                        headlineContent = { Text("Speed Units") },
-                        supportingContent = {
-                            Text(if (settings.useImperialSpeed) "Imperial (mph)" else "Metric (km/h)")
-                        },
-                        leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showSpeedUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text("Elevation Units") },
-                        supportingContent = {
-                            Text(if (settings.useImperialElevation) "Imperial (feet)" else "Metric (metres)")
-                        },
-                        leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showElevationUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text("Distance Units") },
-                        supportingContent = {
-                            Text(if (settings.useImperialDistance) "Imperial (feet/miles)" else "Metric (metres/km)")
-                        },
-                        leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showDistanceUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text("Time Format") },
-                        supportingContent = {
-                            Text(if (settings.use24HourTime) "24-Hour (13:30)" else "12-Hour (1:30 PM)")
-                        },
-                        leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showTimeFormatDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                }
-            }
-
+            // ── 4. Map ───────────────────────────────────────────────────────
             item { SectionLabel("Map") }
-
             item {
                 SettingsCard {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Icon(
-                            Icons.Default.ZoomIn,
-                            contentDescription = null,
-                            modifier = Modifier.padding(top = 2.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(16.dp))
-                        Column(
-                            modifier = Modifier.weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(2.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
-                                Text(
-                                    settings.mapStartZoom.toInt().toString(),
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                            Text(
-                                "Used for Current Location, All Contacts and Fixed Location modes",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Slider(
-                                value = settings.mapStartZoom.toFloat(),
-                                onValueChange = { vm.setMapStartZoom(it.toDouble()) },
-                                valueRange = 3f..18f,
-                                steps = 14,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     val startingPointLabel = when (settings.mapStartingPoint) {
                         "OWN_PIN" -> "Current Location"
                         "FIT_ALL" -> "All Contacts"
@@ -394,9 +265,7 @@ fun SettingsScreen(
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             OutlinedButton(
-                                onClick = {
-                                    showFixedLocationPicker = true
-                                },
+                                onClick = { showFixedLocationPicker = true },
                                 modifier = Modifier.fillMaxWidth()
                             ) {
                                 Icon(Icons.Default.Map, contentDescription = null, modifier = Modifier.size(16.dp))
@@ -405,12 +274,169 @@ fun SettingsScreen(
                             }
                         }
                     }
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Icon(
+                            Icons.Default.ZoomIn,
+                            contentDescription = null,
+                            modifier = Modifier.padding(top = 2.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
+                                Text(settings.mapStartZoom.toInt().toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
+                            }
+                            Slider(
+                                value = settings.mapStartZoom.toFloat(),
+                                onValueChange = { vm.setMapStartZoom(it.toDouble()) },
+                                valueRange = 3f..18f,
+                                steps = 14,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        leadingContent = { Icon(Icons.Default.Palette, contentDescription = null) },
+                        headlineContent = { Text("Map Pin Colour") },
+                        supportingContent = {
+                            Column(
+                                modifier = Modifier.padding(top = 8.dp),
+                                verticalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
+                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                        rowColors.forEach { hex ->
+                                            val color = Color(android.graphics.Color.parseColor(hex))
+                                            val isSelected = hex == settings.pinColor
+                                            Box(
+                                                modifier = Modifier
+                                                    .size(28.dp)
+                                                    .clip(CircleShape)
+                                                    .background(color)
+                                                    .clickable { vm.setPinColor(hex) },
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                if (isSelected) {
+                                                    Icon(
+                                                        Icons.Default.Check,
+                                                        contentDescription = null,
+                                                        tint = Color.White,
+                                                        modifier = Modifier.size(16.dp)
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 
-            item { SectionLabel("Retention (This Device)") }
+            // ── 5. Performance ───────────────────────────────────────────────
+            item { SectionLabel("Battery & Performance") }
+            item {
+                SettingsCard {
+                    NavRow(
+                        icon = Icons.Default.Timer,
+                        label = "Update Cadence",
+                        subtitle = "Adjust how often your location is broadcasted",
+                        onClick = { showIntervalsDialog = true }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalAlignment = Alignment.Top
+                    ) {
+                        Icon(
+                            Icons.Default.Straighten,
+                            contentDescription = null,
+                            modifier = Modifier.padding(top = 2.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Spacer(Modifier.width(16.dp))
+                        Column(modifier = Modifier.weight(1f)) {
+                            var minDistValue by remember(settings.historyMinDistanceMeters) {
+                                mutableFloatStateOf(settings.historyMinDistanceMeters.toFloat())
+                            }
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text("Minimum Distance Filtering", style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    if (minDistValue.roundToInt() == 0) "Off"
+                                    else com.locapeer.util.DisplayFormat.distanceValue(minDistValue.roundToInt().toDouble()),
+                                    style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            Text("Only record points that are at least this far from the previous one.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Slider(
+                                value = minDistValue,
+                                onValueChange = { minDistValue = it },
+                                onValueChangeFinished = { vm.setHistoryMinDistanceMeters(minDistValue.roundToInt()) },
+                                valueRange = 0f..500f,
+                                steps = 19,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                        }
+                    }
+                }
+            }
 
-            // Data on this device (local retention + manual clear)
+            // ── 6. Units & Display ───────────────────────────────────────────
+            item { SectionLabel("Units & Display") }
+            item {
+                SettingsCard {
+                    ListItem(
+                        headlineContent = { Text("Speed Units") },
+                        supportingContent = { Text(if (settings.useImperialSpeed) "Imperial (mph)" else "Metric (km/h)") },
+                        leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showSpeedUnitDialog = true },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Elevation Units") },
+                        supportingContent = { Text(if (settings.useImperialElevation) "Imperial (feet)" else "Metric (metres)") },
+                        leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showElevationUnitDialog = true },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Distance Units") },
+                        supportingContent = { Text(if (settings.useImperialDistance) "Imperial (ft/mi)" else "Metric (m/km)") },
+                        leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showDistanceUnitDialog = true },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Time Format") },
+                        supportingContent = { Text(if (settings.use24HourTime) "24-Hour (13:30)" else "12-Hour (1:30 PM)") },
+                        leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
+                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                        modifier = Modifier.clickable { showTimeFormatDialog = true },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+
+            // ── 7. Retention ─────────────────────────────────────────────────
+            item { SectionLabel("Retention (This Device)") }
             item {
                 SettingsCard {
                     RetentionRow(
@@ -435,8 +461,31 @@ fun SettingsScreen(
                 }
             }
 
-            item { SectionLabel("Keys & Backup") }
+            // ── 8. Appearance ────────────────────────────────────────────────
+            item { SectionLabel("Appearance") }
+            item {
+                SettingsCard {
+                    NavRow(
+                        icon = Icons.Default.GridView,
+                        label = "Customize Navigation",
+                        subtitle = "Choose and reorder bottom tabs",
+                        onClick = onNavigateToCustomizeNav
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    NavRow(
+                        icon = Icons.Default.Home,
+                        label = "Start Page",
+                        subtitle = settings.navTabIds
+                            .firstOrNull { it == settings.startRoute }
+                            ?.replaceFirstChar { it.uppercaseChar() }
+                            ?: "Map",
+                        onClick = { showStartPageDialog = true }
+                    )
+                }
+            }
 
+            // ── 9. Keys & Backup ──────────────────────────────────────────────
+            item { SectionLabel("Backup & Keys") }
             item {
                 SettingsCard {
                     backupResult?.let { msg ->
@@ -479,85 +528,8 @@ fun SettingsScreen(
                 }
             }
 
-            item { SectionLabel("Security") }
-
-            item {
-                SettingsCard {
-                    if (settings.supervisedModeEnabled) {
-                        ListItem(
-                            headlineContent = { Text("Supervision Active") },
-                            supportingContent = { Text("Settings require supervisor approval") },
-                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        ListItem(
-                            headlineContent = { Text("Disable Supervised Mode", color = MaterialTheme.colorScheme.error) },
-                            leadingContent = { Icon(Icons.Default.LockOpen, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                            modifier = Modifier.clickable { showDisableSupervisedConfirm = true },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    } else {
-                        ListItem(
-                            headlineContent = { Text("Supervised Mode") },
-                            supportingContent = { Text("Require supervisor approval to access settings") },
-                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null) },
-                            trailingContent = {
-                                Switch(checked = false, onCheckedChange = { if (it) showSupervisedSetup = true })
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                    }
-                }
-            }
-
-            item { SectionLabel("Privacy") }
-
-            item {
-                SettingsCard {
-                    ListItem(
-                        headlineContent = { Text("Notify me when I'm tracked") },
-                        supportingContent = {
-                            Text("Get a notification when a contact's proximity or geofence alert for you is triggered.")
-                        },
-                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.notifyOnTrackingAlerts,
-                                onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                }
-            }
-
-            item { SectionLabel("Appearance") }
-
-            item {
-                SettingsCard {
-                    NavRow(
-                        icon = Icons.Default.GridView,
-                        label = "Customize Navigation",
-                        subtitle = "Choose and reorder bottom tabs",
-                        onClick = onNavigateToCustomizeNav
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    NavRow(
-                        icon = Icons.Default.Home,
-                        label = "Start Page",
-                        subtitle = settings.navTabIds
-                            .firstOrNull { it == settings.startRoute }
-                            ?.replaceFirstChar { it.uppercaseChar() }
-                            ?: "Map",
-                        onClick = { showStartPageDialog = true }
-                    )
-                }
-            }
-
-
+            // ── 10. About ────────────────────────────────────────────────────
             item { SectionLabel("About") }
-
             item {
                 SettingsCard {
                     NavRow(
@@ -814,6 +786,32 @@ fun SettingsScreen(
         )
     }
 
+    if (showIntervalsDialog) {
+        AlertDialog(
+            onDismissRequest = { showIntervalsDialog = false },
+            title = { Text("Update Cadence") },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text("Control how often your location is updated based on your activity. Frequent updates use more battery.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+                    IntervalSlider("Stationary", settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
+                    IntervalSlider("Walking",    settings.walkingIntervalMinutes,    1f..15f, 13) { vm.updateIntervals(walking = it) }
+                    IntervalSlider("Running",    settings.runningIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(running = it) }
+                    IntervalSlider("Cycling",    settings.cyclingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(cycling = it) }
+                    IntervalSlider("Driving",    settings.drivingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(driving = it) }
+                    IntervalSlider("Low Battery (< 20%)", settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text("Done") } }
+        )
+    }
+
     if (showSpeedUnitDialog) {
         UnitSelectionDialog(
             title = "Speed Units",
@@ -928,6 +926,37 @@ private fun SelectionContainer(content: @Composable () -> Unit) {
     androidx.compose.foundation.text.selection.SelectionContainer { content() }
 }
 
+@Composable
+private fun UnitSelectionDialog(
+    title: String,
+    options: List<Pair<Boolean, String>>,
+    current: Boolean,
+    onSelected: (Boolean) -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(title) },
+        text = {
+            Column {
+                options.forEach { (value, label) ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onSelected(value) }
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(selected = current == value, onClick = { onSelected(value) })
+                        Text(label, modifier = Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodyLarge)
+                    }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+    )
+}
+
 // ─── Supervised Mode UI ───────────────────────────────────────────────────────
 
 
@@ -971,37 +1000,6 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
 }
 
 @Composable
-private fun UnitSelectionDialog(
-    title: String,
-    options: List<Pair<Boolean, String>>,
-    current: Boolean,
-    onSelected: (Boolean) -> Unit,
-    onDismiss: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(title) },
-        text = {
-            Column {
-                options.forEach { (value, label) ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onSelected(value) }
-                            .padding(vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(selected = current == value, onClick = { onSelected(value) })
-                        Text(label, modifier = Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodyLarge)
-                    }
-                }
-            }
-        },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
-    )
-}
-
-@Composable
 private fun BackupSectionItem(
     label: String,
     section: BackupSection,
@@ -1031,7 +1029,7 @@ private fun BackupSectionItem(
                 label,
                 style = MaterialTheme.typography.bodyMedium,
                 color = if (enabled) MaterialTheme.colorScheme.onSurface
-                        else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
+                else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
             )
             if (!enabled) {
                 Text(
@@ -1049,37 +1047,3 @@ private val PIN_COLOR_OPTIONS = listOf(
     "#00897B", "#0097A7", "#1976D2", "#303F9F",
     "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
-
-@Composable
-private fun PinColorPicker(selectedColor: String, onColorSelected: (String) -> Unit) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Map Pin Colour", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
-        
-        // Chunk options into 2 rows of 6
-        PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                rowColors.forEach { hex ->
-                    val color = Color(android.graphics.Color.parseColor(hex))
-                    val isSelected = hex == selectedColor
-                    Box(
-                        modifier = Modifier
-                            .size(28.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .clickable { onColorSelected(hex) },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        if (isSelected) {
-                            Icon(
-                                Icons.Default.Check,
-                                contentDescription = null,
-                                tint = Color.White,
-                                modifier = Modifier.size(16.dp)
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}

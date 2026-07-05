@@ -5,10 +5,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.BatteryStd
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,6 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
+import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
 import com.locapeer.util.DisplayFormat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -72,7 +75,7 @@ fun HistoryReportScreen(
     var showStartTimePicker by remember { mutableStateOf(false) }
     var showEndTimePicker by remember { mutableStateOf(false) }
     var peerDropdownExpanded by remember { mutableStateOf(false) }
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(0) } // 0: Map, 1: List
 
     val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault()) }
     val timeFormat = remember(DisplayFormat.use24HourTime) { DisplayFormat.timeFormat(withSeconds = true) }
@@ -191,38 +194,33 @@ fun HistoryReportScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 8.dp),
+                                .padding(horizontal = 16.dp, vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(Icons.Default.AccessTime, null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Spacer(Modifier.width(8.dp))
                                 Text(
-                                    "From:",
+                                    "Time Filter:",
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 TextButton(onClick = { showStartTimePicker = true }) {
                                     val hour = (startTimeOffset / 3_600_000).toInt()
                                     val minute = ((startTimeOffset % 3_600_000) / 60_000).toInt()
-                                    Text(String.format("%02d:%02d", hour, minute))
+                                    Text(String.format("%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
                                 }
-                            }
-
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(
-                                    "To:",
-                                    style = MaterialTheme.typography.labelMedium,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                                Text("—", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 TextButton(onClick = { showEndTimePicker = true }) {
                                     val hour = (endTimeOffset / 3_600_000).toInt()
                                     val minute = ((endTimeOffset % 3_600_000) / 60_000).toInt()
-                                    Text(String.format("%02d:%02d", hour, minute))
+                                    Text(String.format("%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
                                 }
                             }
 
                             if (startTimeOffset > 0 || endTimeOffset < 24 * 60 * 60 * 1000L - 1000) {
-                                IconButton(onClick = { vm.resetTimeRange() }) {
+                                IconButton(onClick = { vm.resetTimeRange() }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Default.Close,
                                         contentDescription = "Reset Time",
@@ -241,28 +239,28 @@ fun HistoryReportScreen(
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    text = { Text("List") }
+                    text = { Text("Map") }
                 )
                 Tab(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    text = { Text("Map") }
+                    text = { Text("List") }
                 )
             }
 
             when (selectedTab) {
-                0 -> HistoryListTab(
+                0 -> HistoryMapTab(
+                    heartbeats = heartbeats,
+                    addresses = addresses,
+                    modifier = Modifier.weight(1f)
+                )
+                1 -> HistoryListTab(
                     heartbeats = heartbeats,
                     addresses = addresses,
                     timeFormat = timeFormat,
                     modifier = Modifier
                         .weight(1f)
                         .padding(horizontal = 16.dp)
-                )
-                1 -> HistoryMapTab(
-                    heartbeats = heartbeats,
-                    addresses = addresses,
-                    modifier = Modifier.weight(1f)
                 )
             }
         }
@@ -314,13 +312,12 @@ private fun HistoryListTab(
     modifier: Modifier = Modifier
 ) {
     if (heartbeats.isEmpty()) {
-        Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            Text(
-                "No location data for this day",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        EmptyState(
+            icon = Icons.Default.History,
+            title = "No location data",
+            subtitle = "There are no recorded pings for this day or time range.",
+            modifier = modifier
+        )
     } else {
         Column(modifier = modifier) {
             Spacer(Modifier.height(8.dp))
@@ -352,13 +349,12 @@ private fun HistoryMapTab(
     modifier: Modifier = Modifier
 ) {
     if (heartbeats.isEmpty()) {
-        Box(modifier = modifier, contentAlignment = Alignment.Center) {
-            Text(
-                "No location data for this day",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        EmptyState(
+            icon = Icons.Default.History,
+            title = "No location data",
+            subtitle = "There are no recorded pings for this day or time range.",
+            modifier = modifier
+        )
         return
     }
 

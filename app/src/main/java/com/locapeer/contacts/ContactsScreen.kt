@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.ui.components.EmptyState
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
 private enum class SortOrder { LAST_SEEN, NAME }
@@ -198,36 +199,15 @@ fun ContactsScreen(
             }
 
             if (contacts.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+                EmptyState(
+                    icon = Icons.Default.People,
+                    title = "No contacts yet",
+                    subtitle = "Scan a QR code to connect with someone and start sharing locations.",
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.People,
-                            contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Text(
-                            "No contacts yet",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Text(
-                            "Scan a QR code to add someone",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.height(8.dp))
-                        FilledTonalButton(onClick = onNavigateToInvite) {
-                            Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(8.dp))
-                            Text("Scan QR Code")
-                        }
+                    FilledTonalButton(onClick = onNavigateToInvite) {
+                        Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text("Scan QR Code")
                     }
                 }
             } else {
@@ -480,14 +460,6 @@ private fun ContactRow(
                             )
                         }
                     }
-                    IconButton(onClick = onShowHistory) {
-                        Icon(
-                            Icons.Default.History,
-                            contentDescription = "Location history",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(22.dp)
-                        )
-                    }
                     Box {
                         IconButton(onClick = { showOverflow = true }) {
                             Icon(Icons.Default.MoreVert, contentDescription = "More options", modifier = Modifier.size(22.dp))
@@ -496,6 +468,16 @@ private fun ContactRow(
                             expanded = showOverflow,
                             onDismissRequest = { showOverflow = false }
                         ) {
+                            DropdownMenuItem(
+                                text = { Text("View Sharing Settings") },
+                                leadingIcon = { Icon(Icons.Default.Settings, null, Modifier.size(18.dp)) },
+                                onClick = { showOverflow = false; onSharingSettings() }
+                            )
+                            DropdownMenuItem(
+                                text = { Text("View Location History") },
+                                leadingIcon = { Icon(Icons.Default.History, null, Modifier.size(18.dp)) },
+                                onClick = { showOverflow = false; onShowHistory() }
+                            )
                             DropdownMenuItem(
                                 text = { Text("Rename Contact") },
                                 leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
