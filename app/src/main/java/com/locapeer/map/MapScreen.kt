@@ -772,6 +772,9 @@ private fun PinInfoSheet(
                         StatChip("Speed",
                             "${DisplayFormat.speedValue(hb.speed)} ${bearingToCardinal(hb.bearing)}")
                     }
+                    if (hb.altitude != 0.0) {
+                        StatChip("Elevation", DisplayFormat.elevationValue(hb.altitude))
+                    }
                 }
 
                 if (address != null) {

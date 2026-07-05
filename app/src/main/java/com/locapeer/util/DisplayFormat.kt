@@ -20,6 +20,7 @@ import java.util.Locale
 object DisplayFormat {
     @Volatile var useImperialSpeed: Boolean = false
     @Volatile var use24HourTime: Boolean = true
+    @Volatile var useImperialElevation: Boolean = false
 
     /** Seed the clock default from the device before the settings flow first emits. */
     fun initClockDefault(context: Context) {
@@ -42,5 +43,12 @@ object DisplayFormat {
         val converted = if (useImperialSpeed) speedMps * 2.236936f else speedMps * 3.6f
         val unit = if (useImperialSpeed) "mph" else "km/h"
         return "${converted.toInt()} $unit"
+    }
+
+    /** Elevation value converted from metres to the user's unit, e.g. "412 m" or "1352 ft". */
+    fun elevationValue(altitudeMeters: Double): String {
+        val converted = if (useImperialElevation) altitudeMeters * 3.28084 else altitudeMeters
+        val unit = if (useImperialElevation) "ft" else "m"
+        return "${Math.round(converted)} $unit"
     }
 }

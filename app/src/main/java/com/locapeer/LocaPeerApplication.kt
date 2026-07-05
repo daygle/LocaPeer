@@ -43,6 +43,7 @@ class LocaPeerApplication : Application(), Configuration.Provider {
             .onEach {
                 DisplayFormat.useImperialSpeed = it.useImperialSpeed
                 DisplayFormat.use24HourTime = it.use24HourTime
+                DisplayFormat.useImperialElevation = it.useImperialElevation
             }
             .launchIn(appScope)
         org.osmdroid.config.Configuration.getInstance().apply {

@@ -21,6 +21,8 @@ data class HeartbeatPayload(
     val speed: Float = 0f,
     /** Bearing in degrees (0–360) from GPS. 0 when stationary or unavailable. */
     val bearing: Float = 0f,
+    /** Altitude in metres from GPS. 0 when unavailable. */
+    val altitude: Double = 0.0,
     /**
      * The sender's current heartbeat interval in seconds (SOS/battery/motion aware),
      * so receivers know exactly when the next beat is due instead of guessing from

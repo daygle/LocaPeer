@@ -90,7 +90,9 @@ data class AppSettings(
     /** Show speeds in mph instead of km/h. Defaults from the device locale. */
     val useImperialSpeed: Boolean = false,
     /** Use a 24-hour clock for displayed times. Defaults from the device's clock setting. */
-    val use24HourTime: Boolean = true
+    val use24HourTime: Boolean = true,
+    /** Show elevation in feet instead of metres. Defaults from the device locale. */
+    val useImperialElevation: Boolean = false
 )
 
 @Singleton
@@ -126,6 +128,7 @@ class AppPreferences @Inject constructor(
     private val KEY_RECENT_EVENT_IDS = stringPreferencesKey("recent_event_ids")
     private val KEY_USE_IMPERIAL_SPEED = booleanPreferencesKey("use_imperial_speed")
     private val KEY_USE_24_HOUR_TIME = booleanPreferencesKey("use_24_hour_time")
+    private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -168,7 +171,8 @@ class AppPreferences @Inject constructor(
                 mapFixedLng = prefs[KEY_MAP_FIXED_LNG] ?: 0.0,
                 useImperialSpeed = prefs[KEY_USE_IMPERIAL_SPEED] ?: localeDefaultImperial(),
                 use24HourTime = prefs[KEY_USE_24_HOUR_TIME]
-                    ?: android.text.format.DateFormat.is24HourFormat(context)
+                    ?: android.text.format.DateFormat.is24HourFormat(context),
+                useImperialElevation = prefs[KEY_USE_IMPERIAL_ELEVATION] ?: localeDefaultImperial()
             )
         }
 
@@ -237,6 +241,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setUse24HourTime(use24Hour: Boolean) {
         context.settingsStore.edit { it[KEY_USE_24_HOUR_TIME] = use24Hour }
+    }
+
+    suspend fun setUseImperialElevation(imperial: Boolean) {
+        context.settingsStore.edit { it[KEY_USE_IMPERIAL_ELEVATION] = imperial }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {

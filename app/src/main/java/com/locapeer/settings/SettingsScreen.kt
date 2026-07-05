@@ -282,6 +282,21 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
+                        headlineContent = { Text("Elevation Units") },
+                        supportingContent = {
+                            Text(if (settings.useImperialElevation) "Feet (ft)" else "Metres (m)")
+                        },
+                        leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.useImperialElevation,
+                                onCheckedChange = { vm.setUseImperialElevation(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
                         headlineContent = { Text("24-Hour Time") },
                         supportingContent = {
                             Text(if (settings.use24HourTime) "13:30" else "1:30 PM")

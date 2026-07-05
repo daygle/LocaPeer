@@ -325,6 +325,7 @@ class HeartbeatReceiver @Inject constructor(
                 pinColor = payload.pinColor,
                 speed = payload.speed,
                 bearing = payload.bearing,
+                altitude = payload.altitude,
                 expectedIntervalSeconds = payload.expectedIntervalSeconds
             )
             heartbeatDao.insert(entity)

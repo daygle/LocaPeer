@@ -534,6 +534,10 @@ private fun HistoryMapTab(
                             style = MaterialTheme.typography.labelSmall)
                         Text(speedLabel(ping.motionState, ping.speed, ping.bearing),
                             style = MaterialTheme.typography.labelSmall)
+                        if (ping.altitude != 0.0) {
+                            Text("⛰ ${DisplayFormat.elevationValue(ping.altitude)}",
+                                style = MaterialTheme.typography.labelSmall)
+                        }
                     }
 
                     Spacer(Modifier.height(4.dp))
@@ -623,6 +627,13 @@ private fun HistoryPingCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
+                    if (ping.altitude != 0.0) {
+                        Text(
+                            "⛰ ${DisplayFormat.elevationValue(ping.altitude)}",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
                 Spacer(Modifier.height(4.dp))
                 MotionChip(ping.motionState)

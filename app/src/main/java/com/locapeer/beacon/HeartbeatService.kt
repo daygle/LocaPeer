@@ -95,6 +95,7 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastAccuracy = 0f
     @Volatile private var lastSpeed = 0f
     @Volatile private var lastBearing = 0f
+    @Volatile private var lastAltitude = 0.0
     private var currentSettings = AppSettings()
     @Volatile private var isSos = false
     /** True once an explicit SOS on/off command arrived; blocks the persisted-state
@@ -130,6 +131,9 @@ class HeartbeatService : LifecycleService() {
                 lastLng = loc.longitude
                 lastAccuracy = loc.accuracy
                 lastBearing = if (loc.hasBearing()) loc.bearing else 0f
+                // GPS altitude is often missing (indoors, cold fix); keep the last known
+                // reading rather than flicker to a misleading 0 m / sea level.
+                if (loc.hasAltitude()) lastAltitude = loc.altitude
                 val speed = estimateSpeed(loc)
                 lastSpeed = speed ?: 0f
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
@@ -514,6 +518,9 @@ class HeartbeatService : LifecycleService() {
                         isSos = isSos,
                         receivedAt = nowMs,
                         pinColor = settings.pinColor,
+                        speed = lastSpeed,
+                        bearing = lastBearing,
+                        altitude = lastAltitude,
                         expectedIntervalSeconds = expectedIntervalSec
                     )
                 )
@@ -564,6 +571,7 @@ class HeartbeatService : LifecycleService() {
                             pinColor = settings.pinColor,
                             speed = lastSpeed,
                             bearing = lastBearing,
+                            altitude = lastAltitude,
                             expectedIntervalSeconds = expectedIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)

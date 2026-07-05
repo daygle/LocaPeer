@@ -108,7 +108,8 @@ data class SettingsBackup(
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
     val customRelays: List<String> = emptyList(),
     val useImperialSpeed: Boolean = false,
-    val use24HourTime: Boolean = true
+    val use24HourTime: Boolean = true,
+    val useImperialElevation: Boolean = false
 )
 
 /** Parsed backup file ready for selective restore. */
@@ -331,7 +332,8 @@ class SettingsViewModel @Inject constructor(
                             globalScheduleRules = s.globalScheduleRules,
                             customRelays = s.customRelays,
                             useImperialSpeed = s.useImperialSpeed,
-                            use24HourTime = s.use24HourTime
+                            use24HourTime = s.use24HourTime,
+                            useImperialElevation = s.useImperialElevation
                         ) else null
                 )
                 val json = jsonExport.encodeToString(backup)
@@ -429,6 +431,7 @@ class SettingsViewModel @Inject constructor(
                     prefs.setCustomRelays(s.customRelays)
                     prefs.setUseImperialSpeed(s.useImperialSpeed)
                     prefs.setUse24HourTime(s.use24HourTime)
+                    prefs.setUseImperialElevation(s.useImperialElevation)
                     restored += "settings"
                 }
                 // Identity and/or display name may have changed; refresh the shown pubkey and QR.
@@ -511,6 +514,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setUse24HourTime(use24Hour: Boolean) {
         viewModelScope.launch { prefs.setUse24HourTime(use24Hour) }
+    }
+
+    fun setUseImperialElevation(imperial: Boolean) {
+        viewModelScope.launch { prefs.setUseImperialElevation(imperial) }
     }
 
     companion object {
