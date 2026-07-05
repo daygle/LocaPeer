@@ -49,8 +49,8 @@ data class PinData(
 
 data class GeofenceOnMap(
     val fence: GeofenceEntity,
-    /** Display name of the contact this geofence tracks. */
-    val trackedName: String
+    /** Names of the contacts this shared geofence is assigned to (or "Unassigned"). */
+    val assignedLabel: String
 )
 
 data class MapUiState(
@@ -63,6 +63,7 @@ class MapViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val geofenceDao: GeofenceDao,
+    private val geofenceAssignmentDao: com.locapeer.data.dao.GeofenceAssignmentDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
     private val keyManager: KeyManager,
@@ -189,8 +190,9 @@ class MapViewModel @Inject constructor(
     val uiState: StateFlow<MapUiState> = combine(
         peerDao.getReceiveContacts(),
         heartbeatDao.getLatestHeartbeatPerDevice(),
-        geofenceDao.getAllGeofences()
-    ) { peers, heartbeats, fences ->
+        geofenceDao.getAllGeofences(),
+        geofenceAssignmentDao.observeAll()
+    ) { peers, heartbeats, fences, assignments ->
         val heartbeatMap = heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
         val myPubkey = try { keyManager.ensureKeypair().second } catch (_: Exception) { "" }
@@ -200,8 +202,12 @@ class MapViewModel @Inject constructor(
             PinData(peer, hb, overdue)
         }
         val nameByDevice = peers.associate { it.deviceId to it.displayName }
-        val fencesOnMap = fences.map {
-            GeofenceOnMap(it, nameByDevice[it.trackedDeviceId] ?: "Unknown")
+        val assignmentsByFence = assignments.groupBy { it.geofenceId }
+        val fencesOnMap = fences.map { fence ->
+            val names = assignmentsByFence[fence.id].orEmpty()
+                .map { nameByDevice[it.trackedDeviceId] ?: "Unknown" }
+                .distinct()
+            GeofenceOnMap(fence, if (names.isEmpty()) "Unassigned" else names.joinToString(", "))
         }
         MapUiState(pins = pins, geofences = fencesOnMap)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())

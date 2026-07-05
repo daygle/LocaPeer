@@ -15,14 +15,12 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.PersonPin
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
@@ -31,6 +29,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
+import com.locapeer.data.dao.AssignmentWithArea
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.GeofenceBoth
@@ -46,7 +45,6 @@ import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GeofenceListScreen(
     peerId: String? = null,
@@ -67,21 +65,134 @@ fun GeofenceListScreen(
         return
     }
 
-    val geofences by vm.geofences.collectAsState()
-    val broadcastersWithLocation by vm.receiveContactsWithLocation.collectAsState()
-    var showCreateDialog by remember { mutableStateOf(false) }
-    var editingFence by remember { mutableStateOf<GeofenceEntity?>(null) }
-
-    val filteredGeofences = remember(geofences, peerId) {
-        if (peerId == null) geofences else geofences.filter { it.trackedDeviceId == peerId }
-    }
-
-    val title = if (peerId != null) {
-        val name = broadcastersWithLocation.find { it.peer.deviceId == peerId }?.peer?.displayName
-        if (name != null) "Geofences for $name" else "Geofences"
+    if (peerId == null) {
+        GlobalGeofencesScreen(vm = vm, onNavigateBack = onNavigateBack)
     } else {
-        "Geofences"
+        ContactGeofencesScreen(peerId = peerId, vm = vm, onNavigateBack = onNavigateBack)
     }
+}
+
+/** Manage the shared geofence areas (location + radius). Contacts are assigned separately. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun GlobalGeofencesScreen(
+    vm: GeofenceViewModel,
+    onNavigateBack: () -> Unit
+) {
+    val areas by vm.geofences.collectAsState()
+    val assignments by vm.allAssignments.collectAsState()
+    val broadcasters by vm.receiveContactsWithLocation.collectAsState()
+
+    var showCreateDialog by remember { mutableStateOf(false) }
+    var editingArea by remember { mutableStateOf<GeofenceEntity?>(null) }
+    var pendingDelete by remember { mutableStateOf<GeofenceEntity?>(null) }
+
+    val nameByDevice = broadcasters.associate { it.peer.deviceId to it.peer.displayName }
+    val assignmentsByFence = assignments.groupBy { it.geofenceId }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Geofences") },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { showCreateDialog = true }) {
+                Icon(Icons.Default.Add, contentDescription = "Add geofence area")
+            }
+        }
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            items(areas, key = { it.id }) { area ->
+                val names = assignmentsByFence[area.id].orEmpty()
+                    .map { nameByDevice[it.trackedDeviceId] ?: "Unknown" }
+                    .distinct()
+                GeofenceAreaCard(
+                    area = area,
+                    assignedNames = names,
+                    onEdit = { editingArea = area },
+                    onDelete = { pendingDelete = area }
+                )
+            }
+            if (areas.isEmpty()) {
+                item {
+                    EmptyState(
+                        icon = Icons.Default.Fence,
+                        title = "No geofences",
+                        subtitle = "Tap + to create a geofence area, then assign contacts to it from their sharing settings.",
+                        modifier = Modifier.fillParentMaxSize()
+                    )
+                }
+            }
+        }
+    }
+
+    if (showCreateDialog || editingArea != null) {
+        GeofenceAreaDialog(
+            existing = editingArea,
+            onDismiss = { showCreateDialog = false; editingArea = null },
+            onSave = { name, lat, lng, radius ->
+                val current = editingArea
+                if (current != null) {
+                    vm.updateArea(current.copy(name = name, lat = lat, lng = lng, radiusMetres = radius))
+                } else {
+                    vm.createArea(name, lat, lng, radius)
+                }
+                showCreateDialog = false
+                editingArea = null
+            }
+        )
+    }
+
+    pendingDelete?.let { area ->
+        val count = assignmentsByFence[area.id].orEmpty().size
+        AlertDialog(
+            onDismissRequest = { pendingDelete = null },
+            title = { Text("Delete geofence?") },
+            text = {
+                Text(
+                    if (count > 0)
+                        "\"${area.name}\" is assigned to $count contact${if (count == 1) "" else "s"}. Deleting it removes those assignments too."
+                    else
+                        "Delete \"${area.name}\"?"
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = { vm.deleteArea(area); pendingDelete = null }) { Text("Delete") }
+            },
+            dismissButton = { TextButton(onClick = { pendingDelete = null }) { Text("Cancel") } }
+        )
+    }
+}
+
+/** Assign shared geofence areas to a single contact, each with its own enter/exit trigger. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ContactGeofencesScreen(
+    peerId: String,
+    vm: GeofenceViewModel,
+    onNavigateBack: () -> Unit
+) {
+    val areas by vm.geofences.collectAsState()
+    val broadcasters by vm.receiveContactsWithLocation.collectAsState()
+    val assignments by remember(peerId) { vm.assignmentsForContact(peerId) }
+        .collectAsState(initial = emptyList())
+
+    val contactName = broadcasters.find { it.peer.deviceId == peerId }?.peer?.displayName
+    val title = if (contactName != null) "Geofences for $contactName" else "Geofences"
+
+    var showAssignDialog by remember { mutableStateOf(false) }
+    var editingAssignment by remember { mutableStateOf<AssignmentWithArea?>(null) }
+    var showNoAreas by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -95,8 +206,8 @@ fun GeofenceListScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add Geofence")
+            FloatingActionButton(onClick = { if (areas.isEmpty()) showNoAreas = true else showAssignDialog = true }) {
+                Icon(Icons.Default.Add, contentDescription = "Assign geofence")
             }
         }
     ) { padding ->
@@ -105,23 +216,20 @@ fun GeofenceListScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            items(filteredGeofences, key = { it.id }) { fence ->
-                GeofenceCard(
-                    fence = fence,
-                    trackedName = broadcastersWithLocation
-                        .firstOrNull { it.peer.deviceId == fence.trackedDeviceId }
-                        ?.peer?.displayName ?: "Unknown",
-                    onToggle = { vm.setActive(fence.id, it) },
-                    onEdit = { editingFence = fence },
-                    onDelete = { vm.delete(fence) }
+            items(assignments, key = { it.assignmentId }) { assignment ->
+                AssignmentCard(
+                    assignment = assignment,
+                    onToggle = { vm.setAssignmentActive(assignment.assignmentId, it) },
+                    onEdit = { editingAssignment = assignment },
+                    onDelete = { vm.removeAssignment(assignment.assignmentId) }
                 )
             }
-            if (filteredGeofences.isEmpty()) {
+            if (assignments.isEmpty()) {
                 item {
                     EmptyState(
                         icon = Icons.Default.Fence,
-                        title = if (peerId != null) "No geofences for contact" else "No geofences",
-                        subtitle = "Tap the + button to create a new arrival or departure alert.",
+                        title = "No geofences for contact",
+                        subtitle = "Tap + to assign a geofence area and choose whether to alert on arrival, departure, or both.",
                         modifier = Modifier.fillParentMaxSize()
                     )
                 }
@@ -129,60 +237,84 @@ fun GeofenceListScreen(
         }
     }
 
-    if (showCreateDialog || editingFence != null) {
-        val availableBroadcasters = if (peerId != null) {
-            broadcastersWithLocation.filter { it.peer.deviceId == peerId }
-        } else {
-            broadcastersWithLocation
-        }
-        val dismiss = { showCreateDialog = false; editingFence = null }
+    if (showAssignDialog || editingAssignment != null) {
+        AssignmentDialog(
+            existing = editingAssignment,
+            areas = areas,
+            onDismiss = { showAssignDialog = false; editingAssignment = null },
+            onSave = { geofenceId, trigger ->
+                val current = editingAssignment
+                if (current != null) {
+                    vm.updateAssignment(current, peerId, geofenceId, trigger)
+                } else {
+                    vm.addAssignment(geofenceId, peerId, trigger)
+                }
+                showAssignDialog = false
+                editingAssignment = null
+            }
+        )
+    }
 
-        if (availableBroadcasters.isEmpty()) {
-            AlertDialog(
-                onDismissRequest = dismiss,
-                title = { Text("No Contacts Found") },
-                text = { Text(if (peerId != null) "This contact hasn't shared their location yet." else "You need at least one tracked contact before creating a geofence.") },
-                confirmButton = {
-                    TextButton(onClick = dismiss) { Text("OK") }
-                }
-            )
-        } else {
-            GeofenceDialog(
-                existing = editingFence,
-                broadcastersWithLocation = availableBroadcasters,
-                onDismiss = dismiss,
-                onSave = { name, lat, lng, radius, deviceId, trigger ->
-                    val current = editingFence
-                    if (current != null) {
-                        vm.updateGeofence(
-                            current.copy(
-                                name = name,
-                                lat = lat,
-                                lng = lng,
-                                radiusMetres = radius,
-                                trackedDeviceId = deviceId,
-                                triggerOn = trigger
-                            )
-                        )
-                    } else {
-                        vm.createGeofence(name, lat, lng, radius, deviceId, trigger)
-                    }
-                    dismiss()
-                }
-            )
+    if (showNoAreas) {
+        AlertDialog(
+            onDismissRequest = { showNoAreas = false },
+            title = { Text("No geofences yet") },
+            text = { Text("Create a geofence area first from the Geofences screen, then assign it here.") },
+            confirmButton = { TextButton(onClick = { showNoAreas = false }) { Text("OK") } }
+        )
+    }
+}
+
+@Composable
+private fun GeofenceAreaCard(
+    area: GeofenceEntity,
+    assignedNames: List<String>,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(area.name, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    "${com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())} radius",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Text(
+                    if (assignedNames.isEmpty()) "No contacts assigned"
+                    else "Assigned to: ${assignedNames.joinToString(", ")}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit")
+            }
+            IconButton(onClick = onDelete) {
+                Icon(Icons.Default.Delete, contentDescription = "Delete")
+            }
         }
     }
 }
 
 @Composable
-private fun GeofenceCard(
-    fence: GeofenceEntity,
-    trackedName: String,
+private fun AssignmentCard(
+    assignment: AssignmentWithArea,
     onToggle: (Boolean) -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val triggerColor = when (fence.triggerOn) {
+    val triggerColor = when (assignment.triggerOn) {
         "ENTER" -> GeofenceEnter
         "EXIT" -> GeofenceExit
         else -> GeofenceBoth
@@ -199,27 +331,22 @@ private fun GeofenceCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(fence.name, style = MaterialTheme.typography.titleMedium)
+                Text(assignment.name, style = MaterialTheme.typography.titleMedium)
                 Text(
-                    "Receiving location from: $trackedName",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    "${com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble())} • ${fence.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
+                    "${com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble())} • ${assignment.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
                     style = MaterialTheme.typography.bodySmall,
                     color = triggerColor
                 )
             }
             Switch(
-                checked = fence.active,
+                checked = assignment.active,
                 onCheckedChange = onToggle
             )
             IconButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                Icon(Icons.Default.Delete, contentDescription = "Remove")
             }
         }
     }
@@ -232,13 +359,16 @@ private fun GeofenceCard(
  */
 private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.US, value)
 
+/**
+ * Full-screen editor for a shared geofence *area* (name + centre + radius). No contact or
+ * trigger here — those live on the per-contact assignment.
+ */
 @SuppressLint("MissingPermission")
 @Composable
-private fun GeofenceDialog(
+private fun GeofenceAreaDialog(
     existing: GeofenceEntity?,
-    broadcastersWithLocation: List<BroadcasterWithLocation>,
     onDismiss: () -> Unit,
-    onSave: (String, Double, Double, Int, String, String) -> Unit
+    onSave: (String, Double, Double, Int) -> Unit
 ) {
     val context = LocalContext.current
     val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
@@ -247,15 +377,6 @@ private fun GeofenceDialog(
     var latText by remember { mutableStateOf(existing?.lat?.let { formatCoord(it) } ?: "") }
     var lngText by remember { mutableStateOf(existing?.lng?.let { formatCoord(it) } ?: "") }
     var radiusText by remember { mutableStateOf((existing?.radiusMetres ?: 500).toString()) }
-    var selectedDeviceId by remember {
-        mutableStateOf(existing?.trackedDeviceId ?: broadcastersWithLocation.first().peer.deviceId)
-    }
-    val selectedEntry = broadcastersWithLocation.firstOrNull { it.peer.deviceId == selectedDeviceId }
-        ?: broadcastersWithLocation.first()
-    SideEffect {
-        if (selectedEntry.peer.deviceId != selectedDeviceId) selectedDeviceId = selectedEntry.peer.deviceId
-    }
-    var triggerOn by remember { mutableStateOf(existing?.triggerOn ?: "ENTER") }
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
     var recenterTo by remember { mutableStateOf<GeoPoint?>(null) }
@@ -273,15 +394,7 @@ private fun GeofenceDialog(
         lng != null && lng in -180.0..180.0 &&
         radiusValue != null && radiusValue in MIN_RADIUS_M..MAX_RADIUS_M
 
-    // Where the map camera starts: the existing fence, else the tracked contact's last position.
-    val initialCamera = remember {
-        when {
-            existing != null -> GeoPoint(existing.lat, existing.lng)
-            selectedEntry.lastHeartbeat != null ->
-                GeoPoint(selectedEntry.lastHeartbeat.lat, selectedEntry.lastHeartbeat.lng)
-            else -> null
-        }
-    }
+    val initialCamera = remember { existing?.let { GeoPoint(it.lat, it.lng) } }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -308,9 +421,7 @@ private fun GeofenceDialog(
                     TextButton(
                         onClick = {
                             submitted = true
-                            if (isValid) {
-                                onSave(name, lat!!, lng!!, radiusValue!!, selectedEntry.peer.deviceId, triggerOn)
-                            }
+                            if (isValid) onSave(name, lat!!, lng!!, radiusValue!!)
                         }
                     ) { Text(if (existing != null) "Save" else "Create") }
                 }
@@ -325,7 +436,6 @@ private fun GeofenceDialog(
                         lat = lat,
                         lng = lng,
                         radiusMetres = radiusForMap,
-                        triggerOn = triggerOn,
                         initialCamera = initialCamera,
                         recenterTo = recenterTo,
                         onRecentered = { recenterTo = null },
@@ -376,51 +486,27 @@ private fun GeofenceDialog(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    // Quick location helpers (also recentre the map)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(
-                            onClick = {
-                                loadingMyLocation = true
-                                fusedLocation.lastLocation.addOnSuccessListener { loc ->
-                                    loadingMyLocation = false
-                                    if (loc != null) {
-                                        latText = formatCoord(loc.latitude)
-                                        lngText = formatCoord(loc.longitude)
-                                        recenterTo = GeoPoint(loc.latitude, loc.longitude)
-                                    }
-                                }.addOnFailureListener { loadingMyLocation = false }
-                            },
-                            modifier = Modifier.weight(1f),
-                            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                        ) {
-                            if (loadingMyLocation) {
-                                CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
-                            } else {
-                                Icon(Icons.Default.MyLocation, null, Modifier.size(14.dp))
-                            }
-                            Spacer(Modifier.width(4.dp))
-                            Text("My Location", style = MaterialTheme.typography.labelSmall)
+                    OutlinedButton(
+                        onClick = {
+                            loadingMyLocation = true
+                            fusedLocation.lastLocation.addOnSuccessListener { loc ->
+                                loadingMyLocation = false
+                                if (loc != null) {
+                                    latText = formatCoord(loc.latitude)
+                                    lngText = formatCoord(loc.longitude)
+                                    recenterTo = GeoPoint(loc.latitude, loc.longitude)
+                                }
+                            }.addOnFailureListener { loadingMyLocation = false }
+                        },
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                    ) {
+                        if (loadingMyLocation) {
+                            CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
+                        } else {
+                            Icon(Icons.Default.MyLocation, null, Modifier.size(14.dp))
                         }
-
-                        selectedEntry.lastHeartbeat?.let { hb ->
-                            OutlinedButton(
-                                onClick = {
-                                    latText = formatCoord(hb.lat)
-                                    lngText = formatCoord(hb.lng)
-                                    recenterTo = GeoPoint(hb.lat, hb.lng)
-                                },
-                                modifier = Modifier.weight(1f),
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
-                            ) {
-                                Icon(Icons.Default.PersonPin, null, Modifier.size(14.dp))
-                                Spacer(Modifier.width(4.dp))
-                                Text(
-                                    "${selectedEntry.peer.displayName}'s Location",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    maxLines = 1
-                                )
-                            }
-                        }
+                        Spacer(Modifier.width(4.dp))
+                        Text("Use my location", style = MaterialTheme.typography.labelSmall)
                     }
 
                     // Manual coordinate entry (kept in sync with the map)
@@ -464,46 +550,68 @@ private fun GeofenceDialog(
                         valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
                         modifier = Modifier.fillMaxWidth()
                     )
-
-                    Text("Tracked Person", style = MaterialTheme.typography.labelSmall)
-                    broadcastersWithLocation.forEach { entry ->
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(
-                                selected = selectedDeviceId == entry.peer.deviceId,
-                                onClick = { selectedDeviceId = entry.peer.deviceId }
-                            )
-                            Column {
-                                Text(entry.peer.displayName)
-                                if (entry.lastHeartbeat != null) {
-                                    Text(
-                                        "Last seen: %.4f, %.4f".format(
-                                            entry.lastHeartbeat.lat, entry.lastHeartbeat.lng
-                                        ),
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                } else {
-                                    Text(
-                                        "No location yet",
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    Text("Trigger On", style = MaterialTheme.typography.labelSmall)
-                    listOf("ENTER", "EXIT", "BOTH").forEach { t ->
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            RadioButton(selected = triggerOn == t, onClick = { triggerOn = t })
-                            Text(t.lowercase().replaceFirstChar { it.uppercase() })
-                        }
-                    }
                 }
             }
         }
     }
+}
+
+/** Assign a shared geofence area to the current contact and pick its enter/exit trigger. */
+@Composable
+private fun AssignmentDialog(
+    existing: AssignmentWithArea?,
+    areas: List<GeofenceEntity>,
+    onDismiss: () -> Unit,
+    onSave: (geofenceId: String, triggerOn: String) -> Unit
+) {
+    var selectedGeofenceId by remember {
+        mutableStateOf(existing?.geofenceId ?: areas.firstOrNull()?.id ?: "")
+    }
+    var triggerOn by remember { mutableStateOf(existing?.triggerOn ?: "ENTER") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(if (existing != null) "Edit Assignment" else "Assign Geofence") },
+        text = {
+            Column(
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text("Geofence Area", style = MaterialTheme.typography.labelSmall)
+                areas.forEach { area ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = selectedGeofenceId == area.id,
+                            onClick = { selectedGeofenceId = area.id }
+                        )
+                        Column {
+                            Text(area.name)
+                            Text(
+                                com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(8.dp))
+                Text("Trigger On", style = MaterialTheme.typography.labelSmall)
+                listOf("ENTER", "EXIT", "BOTH").forEach { t ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(selected = triggerOn == t, onClick = { triggerOn = t })
+                        Text(t.lowercase().replaceFirstChar { it.uppercase() })
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { if (selectedGeofenceId.isNotEmpty()) onSave(selectedGeofenceId, triggerOn) }) {
+                Text(if (existing != null) "Save" else "Assign")
+            }
+        },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+    )
 }
 
 private const val MIN_RADIUS_M = 50
@@ -521,7 +629,6 @@ private fun GeofencePickerMap(
     lat: Double?,
     lng: Double?,
     radiusMetres: Int,
-    triggerOn: String,
     initialCamera: GeoPoint?,
     recenterTo: GeoPoint?,
     onRecentered: () -> Unit,
@@ -600,11 +707,7 @@ private fun GeofencePickerMap(
             mv.overlays.removeAll { it is Marker || it is Polygon }
             if (lat != null && lng != null) {
                 val center = GeoPoint(lat, lng)
-                val strokeColor = when (triggerOn) {
-                    "ENTER" -> GeofenceEnter
-                    "EXIT" -> GeofenceExit
-                    else -> GeofenceBoth
-                }
+                val strokeColor = GeofenceBoth
                 val fillArgb = android.graphics.Color.argb(40,
                     (strokeColor.red * 255).toInt(),
                     (strokeColor.green * 255).toInt(),

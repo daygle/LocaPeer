@@ -650,11 +650,8 @@ private fun OsmdroidMapView(
 
             geofences.forEach { geofenceOnMap ->
                 val fence = geofenceOnMap.fence
-                val strokeColor = when (fence.triggerOn) {
-                    "ENTER" -> GeofenceEnter
-                    "EXIT" -> GeofenceExit
-                    else -> GeofenceBoth
-                }
+                // Areas are shared across contacts/triggers now, so use one accent colour.
+                val strokeColor = GeofenceBoth
                 val fillArgb = android.graphics.Color.argb(30,
                     (strokeColor.red * 255).toInt(),
                     (strokeColor.green * 255).toInt(),
@@ -672,13 +669,13 @@ private fun OsmdroidMapView(
                 }
                 mapView.overlays.add(circle)
 
-                // Label at the centre showing the fence name and which contact it tracks.
+                // Label at the centre showing the fence name and the contacts it's assigned to.
                 val label = Marker(mapView).apply {
                     position = GeoPoint(fence.lat, fence.lng)
                     icon = MarkerIconFactory.createGeofenceLabel(
                         context = context,
                         title = fence.name,
-                        subtitle = geofenceOnMap.trackedName,
+                        subtitle = geofenceOnMap.assignedLabel,
                         color = strokeArgb
                     )
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)

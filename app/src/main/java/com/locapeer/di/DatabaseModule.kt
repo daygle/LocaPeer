@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
+import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
@@ -42,6 +43,63 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v4: geofences become shareable areas. The per-contact tracking (device + trigger +
+     * active) moves into a new geofence_assignments table so one area can watch many
+     * contacts. Each existing geofence is split into an area row plus a single assignment
+     * that preserves its previous behaviour.
+     */
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS geofence_assignments (
+                    id TEXT NOT NULL PRIMARY KEY,
+                    geofenceId TEXT NOT NULL,
+                    trackedDeviceId TEXT NOT NULL,
+                    triggerOn TEXT NOT NULL,
+                    active INTEGER NOT NULL,
+                    createdAt INTEGER NOT NULL
+                )
+                """.trimIndent()
+            )
+            db.execSQL(
+                "CREATE UNIQUE INDEX IF NOT EXISTS index_geofence_assignments_geofenceId_trackedDeviceId " +
+                    "ON geofence_assignments (geofenceId, trackedDeviceId)"
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS index_geofence_assignments_trackedDeviceId " +
+                    "ON geofence_assignments (trackedDeviceId)"
+            )
+            // One assignment per existing geofence, referencing the (soon-to-be-trimmed) area.
+            db.execSQL(
+                """
+                INSERT INTO geofence_assignments (id, geofenceId, trackedDeviceId, triggerOn, active, createdAt)
+                SELECT id || ':a', id, trackedDeviceId, triggerOn, active, createdAt FROM geofences
+                """.trimIndent()
+            )
+            // Rebuild geofences without the moved columns.
+            db.execSQL(
+                """
+                CREATE TABLE geofences_new (
+                    id TEXT NOT NULL PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    lat REAL NOT NULL,
+                    lng REAL NOT NULL,
+                    radiusMetres INTEGER NOT NULL,
+                    createdAt INTEGER NOT NULL
+                )
+                """.trimIndent()
+            )
+            db.execSQL(
+                "INSERT INTO geofences_new (id, name, lat, lng, radiusMetres, createdAt) " +
+                    "SELECT id, name, lat, lng, radiusMetres, createdAt FROM geofences"
+            )
+            db.execSQL("DROP TABLE geofences")
+            db.execSQL("ALTER TABLE geofences_new RENAME TO geofences")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
@@ -54,7 +112,7 @@ object DatabaseModule {
             // testing, not silently wipe user data. Downgrades (installing an
             // older build over a newer database) have no migration path, so that
             // direction still rebuilds destructively rather than crash-looping.
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 
@@ -62,6 +120,7 @@ object DatabaseModule {
     @Provides fun provideHeartbeatDao(db: AppDatabase): HeartbeatDao = db.heartbeatDao()
     @Provides fun provideMessageDao(db: AppDatabase): MessageDao = db.messageDao()
     @Provides fun provideGeofenceDao(db: AppDatabase): GeofenceDao = db.geofenceDao()
+    @Provides fun provideGeofenceAssignmentDao(db: AppDatabase): GeofenceAssignmentDao = db.geofenceAssignmentDao()
     @Provides fun provideProximityAlertDao(db: AppDatabase): ProximityAlertDao = db.proximityAlertDao()
     @Provides fun providePeerSharingConfigDao(db: AppDatabase): PeerSharingConfigDao = db.peerSharingConfigDao()
     @Provides fun providePendingMessageDao(db: AppDatabase): PendingMessageDao = db.pendingMessageDao()
