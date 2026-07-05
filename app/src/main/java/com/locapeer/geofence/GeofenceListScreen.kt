@@ -2,10 +2,13 @@ package com.locapeer.geofence
 
 import android.annotation.SuppressLint
 import android.view.ScaleGestureDetector
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -14,19 +17,26 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.google.android.gms.location.LocationServices
+import com.locapeer.R
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.dao.AssignmentWithArea
@@ -275,7 +285,8 @@ private fun GeofenceAreaCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(horizontal = 16.dp, vertical = 6.dp),
+        onClick = onEdit
     ) {
         Row(
             modifier = Modifier
@@ -283,25 +294,43 @@ private fun GeofenceAreaCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            Surface(
+                color = MaterialTheme.colorScheme.primaryContainer,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Icon(
+                        Icons.Default.Fence,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+            Spacer(Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text(area.name, style = MaterialTheme.typography.titleMedium)
+                Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Text(
                     "${com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())} radius",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                Text(
-                    if (assignedNames.isEmpty()) "No contacts assigned"
-                    else "Assigned to: ${assignedNames.joinToString(", ")}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+                if (assignedNames.isNotEmpty()) {
+                    Text(
+                        "Contacts: ${assignedNames.joinToString(", ")}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Text(
+                        "No contacts assigned",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.outline
+                    )
+                }
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete")
+                Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -322,31 +351,47 @@ private fun AssignmentCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(horizontal = 16.dp, vertical = 6.dp)
     ) {
         Row(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(12.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(assignment.name, style = MaterialTheme.typography.titleMedium)
-                Text(
-                    "${com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble())} • ${assignment.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = triggerColor
-                )
+                Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Surface(
+                        color = triggerColor.copy(alpha = 0.2f),
+                        shape = MaterialTheme.shapes.extraSmall,
+                        modifier = Modifier.padding(vertical = 2.dp)
+                    ) {
+                        Text(
+                            assignment.triggerOn,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = triggerColor,
+                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
+                        )
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Text(
+                        com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
             Switch(
                 checked = assignment.active,
-                onCheckedChange = onToggle
+                onCheckedChange = onToggle,
+                modifier = Modifier.scale(0.8f)
             )
             IconButton(onClick = onEdit) {
                 Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove")
+                Icon(Icons.Default.Delete, contentDescription = "Remove", tint = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -360,9 +405,9 @@ private fun AssignmentCard(
 private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.US, value)
 
 /**
- * Full-screen editor for a shared geofence *area* (name + centre + radius). No contact or
- * trigger here — those live on the per-contact assignment.
+ * Full-screen editor for a shared geofence *area* (name + centre + radius).
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("MissingPermission")
 @Composable
 private fun GeofenceAreaDialog(
@@ -400,37 +445,40 @@ private fun GeofenceAreaDialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
     ) {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                // Header with Cancel / title / Save
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp, vertical = 8.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = "Cancel")
-                    }
-                    Text(
-                        if (existing != null) "Edit Geofence" else "New Geofence",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.SemiBold,
-                        modifier = Modifier.weight(1f)
-                    )
-                    TextButton(
-                        onClick = {
-                            submitted = true
-                            if (isValid) onSave(name, lat!!, lng!!, radiusValue!!)
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(if (existing != null) "Edit Geofence" else "New Geofence") },
+                    navigationIcon = {
+                        IconButton(onClick = onDismiss) {
+                            Icon(Icons.Default.Close, contentDescription = "Cancel")
                         }
-                    ) { Text(if (existing != null) "Save" else "Create") }
-                }
-
-                // Interactive map picker: tap to place, pinch to resize, drag to move
+                    },
+                    actions = {
+                        Button(
+                            onClick = {
+                                submitted = true
+                                if (isValid) onSave(name, lat!!, lng!!, radiusValue!!)
+                            },
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Text(if (existing != null) "Save" else "Create")
+                        }
+                    }
+                )
+            }
+        ) { padding ->
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                // Interactive map picker
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(300.dp)
+                        .height(320.dp)
+                        .clipToBounds()
                 ) {
                     GeofencePickerMap(
                         lat = lat,
@@ -444,49 +492,12 @@ private fun GeofenceAreaDialog(
                             lngText = formatCoord(ln)
                         },
                         onRadiusChange = { radiusText = it.toString() },
-                        modifier = Modifier.fillMaxSize()
-                    )
-
-                    val hint = if (lat == null || lng == null) {
-                        "Tap the map to place the geofence"
-                    } else {
-                        "Pinch to resize • drag or tap to move"
-                    }
-                    val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
-                    Surface(
-                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.85f),
-                        shape = MaterialTheme.shapes.small,
                         modifier = Modifier
-                            .align(hintAlign)
-                            .padding(8.dp)
-                    ) {
-                        Text(
-                            hint,
-                            style = MaterialTheme.typography.labelMedium,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
-                    }
-                }
-
-                // Scrollable controls
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    OutlinedTextField(
-                        value = name,
-                        onValueChange = { name = it },
-                        label = { Text("Name") },
-                        isError = nameError,
-                        supportingText = if (nameError) { { Text("Name is required") } } else null,
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                            .fillMaxSize()
+                            .clipToBounds()
                     )
 
-                    OutlinedButton(
+                    SmallFloatingActionButton(
                         onClick = {
                             loadingMyLocation = true
                             fusedLocation.lastLocation.addOnSuccessListener { loc ->
@@ -498,58 +509,120 @@ private fun GeofenceAreaDialog(
                                 }
                             }.addOnFailureListener { loadingMyLocation = false }
                         },
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp),
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
                     ) {
                         if (loadingMyLocation) {
-                            CircularProgressIndicator(modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
+                            CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                         } else {
-                            Icon(Icons.Default.MyLocation, null, Modifier.size(14.dp))
+                            Icon(Icons.Default.MyLocation, "My location")
                         }
-                        Spacer(Modifier.width(4.dp))
-                        Text("Use my location", style = MaterialTheme.typography.labelSmall)
                     }
 
-                    // Manual coordinate entry (kept in sync with the map)
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedTextField(
-                            value = latText,
-                            onValueChange = { latText = it },
-                            label = { Text("Latitude") },
-                            isError = latError,
-                            supportingText = if (latError) { { Text("−90 to 90") } } else null,
-                            singleLine = true,
-                            modifier = Modifier.weight(1f)
+                    val hint = if (lat == null || lng == null) {
+                        "Tap the map to place"
+                    } else {
+                        "Pinch to resize • Drag to move"
+                    }
+                    val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
+                    Surface(
+                        color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f),
+                        shape = MaterialTheme.shapes.medium,
+                        modifier = Modifier
+                            .align(hintAlign)
+                            .padding(8.dp)
+                    ) {
+                        Text(
+                            hint,
+                            style = MaterialTheme.typography.labelSmall,
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                         )
+                    }
+                }
+
+                // Configuration form
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                        .padding(20.dp),
+                    verticalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("Basic Info", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                         OutlinedTextField(
-                            value = lngText,
-                            onValueChange = { lngText = it },
-                            label = { Text("Longitude") },
-                            isError = lngError,
-                            supportingText = if (lngError) { { Text("−180 to 180") } } else null,
+                            value = name,
+                            onValueChange = { name = it },
+                            label = { Text("Name") },
+                            placeholder = { Text("e.g. Home, Work") },
+                            isError = nameError,
+                            supportingText = if (nameError) { { Text("Name is required") } } else null,
                             singleLine = true,
-                            modifier = Modifier.weight(1f)
+                            leadingIcon = { Icon(Icons.Default.Fence, null) },
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
 
-                    // Radius: manual entry + slider (pinch on the map also adjusts this)
-                    OutlinedTextField(
-                        value = radiusText,
-                        onValueChange = { new -> radiusText = new.filter { it.isDigit() } },
-                        label = { Text("Radius (metres)") },
-                        isError = radiusError,
-                        supportingText = {
-                            if (radiusError) Text("$MIN_RADIUS_M to $MAX_RADIUS_M m")
-                            else Text(com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()))
-                        },
-                        singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Slider(
-                        value = radiusForMap.toFloat(),
-                        onValueChange = { radiusText = it.roundToInt().toString() },
-                        valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
-                        modifier = Modifier.fillMaxWidth()
-                    )
+                    HorizontalDivider(thickness = 0.5.dp)
+
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("Coordinates", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            OutlinedTextField(
+                                value = latText,
+                                onValueChange = { latText = it },
+                                label = { Text("Latitude") },
+                                isError = latError,
+                                supportingText = if (latError) { { Text("−90 to 90") } } else null,
+                                singleLine = true,
+                                modifier = Modifier.weight(1f),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                            )
+                            OutlinedTextField(
+                                value = lngText,
+                                onValueChange = { lngText = it },
+                                label = { Text("Longitude") },
+                                isError = lngError,
+                                supportingText = if (lngError) { { Text("−180 to 180") } } else null,
+                                singleLine = true,
+                                modifier = Modifier.weight(1f),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+                            )
+                        }
+                    }
+
+                    HorizontalDivider(thickness = 0.5.dp)
+
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("Radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                            Text(
+                                com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                        Slider(
+                            value = radiusForMap.toFloat(),
+                            onValueChange = { radiusText = it.roundToInt().toString() },
+                            valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        if (radiusError) {
+                            Text(
+                                "$MIN_RADIUS_M to $MAX_RADIUS_M m",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -574,39 +647,62 @@ private fun AssignmentDialog(
         title = { Text(if (existing != null) "Edit Assignment" else "Assign Geofence") },
         text = {
             Column(
-                modifier = Modifier.verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .selectableGroup(),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text("Geofence Area", style = MaterialTheme.typography.labelSmall)
+                Text("Select Geofence Area", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                 areas.forEach { area ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(
-                            selected = selectedGeofenceId == area.id,
-                            onClick = { selectedGeofenceId = area.id }
-                        )
-                        Column {
-                            Text(area.name)
-                            Text(
-                                com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                    Surface(
+                        onClick = { selectedGeofenceId = area.id },
+                        shape = MaterialTheme.shapes.medium,
+                        color = if (selectedGeofenceId == area.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
+                        border = if (selectedGeofenceId == area.id) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = selectedGeofenceId == area.id,
+                                onClick = null // Handled by Surface onClick
                             )
+                            Spacer(Modifier.width(12.dp))
+                            Column {
+                                Text(area.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                     }
                 }
 
-                Spacer(Modifier.height(8.dp))
-                Text("Trigger On", style = MaterialTheme.typography.labelSmall)
-                listOf("ENTER", "EXIT", "BOTH").forEach { t ->
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = triggerOn == t, onClick = { triggerOn = t })
-                        Text(t.lowercase().replaceFirstChar { it.uppercase() })
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+
+                Text("Trigger Notification On", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    listOf("ENTER", "EXIT", "BOTH").forEach { t ->
+                        FilterChip(
+                            selected = triggerOn == t,
+                            onClick = { triggerOn = t },
+                            label = { Text(t.lowercase().replaceFirstChar { it.uppercase() }) },
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                 }
             }
         },
         confirmButton = {
-            TextButton(onClick = { if (selectedGeofenceId.isNotEmpty()) onSave(selectedGeofenceId, triggerOn) }) {
+            Button(onClick = { if (selectedGeofenceId.isNotEmpty()) onSave(selectedGeofenceId, triggerOn) }) {
                 Text(if (existing != null) "Save" else "Assign")
             }
         },
@@ -663,6 +759,7 @@ private fun GeofencePickerMap(
         factory = { ctx ->
             MapView(ctx).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
+                clipToOutline = true
                 // Pinch is repurposed for resizing, so disable pinch-zoom and expose zoom buttons.
                 setMultiTouchControls(false)
                 zoomController.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
@@ -727,6 +824,16 @@ private fun GeofencePickerMap(
                 val marker = Marker(mv).apply {
                     position = center
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+
+                    // Modern themed pin
+                    val icon = ContextCompat.getDrawable(mv.context, R.drawable.ic_notif_location)?.apply {
+                        val wrapped = DrawableCompat.wrap(this).mutate()
+                        DrawableCompat.setTint(wrapped, strokeArgb)
+                    }
+                    if (icon != null) {
+                        this.icon = icon
+                    }
+
                     infoWindow = null
                     isDraggable = true
                     setOnMarkerDragListener(object : Marker.OnMarkerDragListener {
