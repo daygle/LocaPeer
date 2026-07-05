@@ -21,6 +21,7 @@ object DisplayFormat {
     @Volatile var useImperialSpeed: Boolean = false
     @Volatile var use24HourTime: Boolean = true
     @Volatile var useImperialElevation: Boolean = false
+    @Volatile var useImperialDistance: Boolean = false
 
     /** Seed the clock default from the device before the settings flow first emits. */
     fun initClockDefault(context: Context) {
@@ -50,5 +51,20 @@ object DisplayFormat {
         val converted = if (useImperialElevation) altitudeMeters * 3.28084 else altitudeMeters
         val unit = if (useImperialElevation) "ft" else "m"
         return "${Math.round(converted)} $unit"
+    }
+
+    /**
+     * Linear distance (accuracy, geofence/proximity radius, thinning threshold) converted from
+     * metres to the user's unit. Small values stay in feet/metres for precision and roll up to
+     * miles/kilometres once large: e.g. "42 m"/"138 ft", "1.2 km"/"1.2 mi".
+     */
+    fun distanceValue(meters: Double): String {
+        if (useImperialDistance) {
+            val feet = meters * 3.28084
+            return if (feet < 5280) "${Math.round(feet)} ft"
+                   else "${"%.1f".format(feet / 5280.0)} mi"
+        }
+        return if (meters < 1000) "${Math.round(meters)} m"
+               else "${"%.1f".format(meters / 1000.0)} km"
     }
 }

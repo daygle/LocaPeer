@@ -81,7 +81,7 @@ class GeofenceEngine @Inject constructor(
                     personName = current.displayName,
                     personDeviceId = current.deviceId,
                     title = "${current.displayName} $verb ${fence.name}",
-                    subtitle = "at ${formatTime(current.timestamp)} · ${fence.radiusMetres}m radius"
+                    subtitle = "at ${formatTime(current.timestamp)} · ${com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble())} radius"
                 )
             }
         }

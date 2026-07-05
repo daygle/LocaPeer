@@ -1,5 +1,6 @@
 package com.locapeer.sharing
 
+import com.locapeer.util.DisplayFormat
 import java.util.Calendar
 
 object SharingSchedule {
@@ -29,8 +30,20 @@ object SharingSchedule {
         else current >= startMinute || current < endMinute
     }
 
-    fun formatTime(minuteOfDay: Int): String =
-        "%02d:%02d".format(minuteOfDay / 60, minuteOfDay % 60)
+    /**
+     * Formats a minute-of-day schedule boundary via the app's central time formatter, so the
+     * labels honour the user's 12/24-hour setting and match the locale-aware AM/PM strings used
+     * everywhere else.
+     */
+    fun formatTime(minuteOfDay: Int): String {
+        val time = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, minuteOfDay / 60)
+            set(Calendar.MINUTE, minuteOfDay % 60)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }.time
+        return DisplayFormat.timeFormat().format(time)
+    }
 
     fun formatDays(days: Int): String = when (days) {
         0b1111111 -> "Every day"
