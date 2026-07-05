@@ -684,7 +684,9 @@ private fun OsmdroidMapView(
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                     infoWindow = null
                     isDraggable = false
-                    setOnMarkerClickListener { _, _ -> false }
+                    // Decorative label: consume clicks so osmdroid doesn't recenter or
+                    // try to open a (null) info window.
+                    setOnMarkerClickListener { _, _ -> true }
                 }
                 mapView.overlays.add(label)
             }

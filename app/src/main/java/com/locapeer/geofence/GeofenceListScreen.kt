@@ -209,6 +209,13 @@ private fun GeofenceCard(
     }
 }
 
+/**
+ * Formats a coordinate with a fixed locale. These strings are parsed back with
+ * toDoubleOrNull(), which only accepts '.' — a locale-dependent ',' separator would
+ * make the field unparseable and block saving.
+ */
+private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.US, value)
+
 @SuppressLint("MissingPermission")
 @Composable
 private fun GeofenceDialog(
@@ -221,8 +228,8 @@ private fun GeofenceDialog(
     val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
 
     var name by remember { mutableStateOf(existing?.name ?: "") }
-    var latText by remember { mutableStateOf(existing?.lat?.let { "%.6f".format(it) } ?: "") }
-    var lngText by remember { mutableStateOf(existing?.lng?.let { "%.6f".format(it) } ?: "") }
+    var latText by remember { mutableStateOf(existing?.lat?.let { formatCoord(it) } ?: "") }
+    var lngText by remember { mutableStateOf(existing?.lng?.let { formatCoord(it) } ?: "") }
     var radius by remember { mutableFloatStateOf(existing?.radiusMetres?.toFloat() ?: 500f) }
     var selectedDeviceId by remember {
         mutableStateOf(existing?.trackedDeviceId ?: broadcastersWithLocation.first().peer.deviceId)
@@ -265,8 +272,8 @@ private fun GeofenceDialog(
                             fusedLocation.lastLocation.addOnSuccessListener { loc ->
                                 loadingMyLocation = false
                                 if (loc != null) {
-                                    latText = "%.6f".format(loc.latitude)
-                                    lngText = "%.6f".format(loc.longitude)
+                                    latText = formatCoord(loc.latitude)
+                                    lngText = formatCoord(loc.longitude)
                                 }
                             }.addOnFailureListener { loadingMyLocation = false }
                         },
@@ -285,8 +292,8 @@ private fun GeofenceDialog(
                     selectedEntry.lastHeartbeat?.let { hb ->
                         OutlinedButton(
                             onClick = {
-                                latText = "%.6f".format(hb.lat)
-                                lngText = "%.6f".format(hb.lng)
+                                latText = formatCoord(hb.lat)
+                                lngText = formatCoord(hb.lng)
                             },
                             modifier = Modifier.weight(1f),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp)
