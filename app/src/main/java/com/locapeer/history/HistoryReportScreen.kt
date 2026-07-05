@@ -703,7 +703,7 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
  * rather than the field vanishing entirely.
  */
 private fun speedLabel(motionState: String, speed: Float, bearing: Float): String {
-    return if (motionState.uppercase() != "STATIONARY" && speed > 0f) {
+    return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
         "${(speed * 3.6f).toInt()} km/h · ${bearingToCardinal(bearing)}"
     } else {
         "0 km/h"
