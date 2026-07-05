@@ -15,10 +15,6 @@ interface GeofenceDao {
     @Query("SELECT * FROM geofences ORDER BY name ASC")
     fun getAllGeofences(): Flow<List<GeofenceEntity>>
 
-    @Query("SELECT * FROM geofences WHERE trackedDeviceId = :deviceId AND active = 1")
-    suspend fun getActiveGeofencesForDevice(deviceId: String): List<GeofenceEntity>
-
-    @Query("UPDATE geofences SET active = :active WHERE id = :id")
-    suspend fun setActive(id: String, active: Boolean)
-
+    @Query("SELECT * FROM geofences WHERE id = :id")
+    suspend fun getById(id: String): GeofenceEntity?
 }

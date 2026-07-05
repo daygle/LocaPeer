@@ -96,7 +96,9 @@ data class AppSettings(
     /** Show distances (accuracy, radii) in feet/miles instead of metres/km. Defaults from locale. */
     val useImperialDistance: Boolean = false,
     /** Notify this user when someone else gets an alert (proximity/geofence) about them. */
-    val notifyOnTrackingAlerts: Boolean = false
+    val notifyOnTrackingAlerts: Boolean = false,
+    /** Draw geofence circles on the map. Off by default so the map stays uncluttered. */
+    val showGeofencesOnMap: Boolean = false
 )
 
 @Singleton
@@ -135,6 +137,7 @@ class AppPreferences @Inject constructor(
     private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
     private val KEY_USE_IMPERIAL_DISTANCE = booleanPreferencesKey("use_imperial_distance")
     private val KEY_NOTIFY_ON_TRACKING_ALERTS = booleanPreferencesKey("notify_on_tracking_alerts")
+    private val KEY_SHOW_GEOFENCES_ON_MAP = booleanPreferencesKey("show_geofences_on_map")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -180,7 +183,8 @@ class AppPreferences @Inject constructor(
                     ?: android.text.format.DateFormat.is24HourFormat(context),
                 useImperialElevation = prefs[KEY_USE_IMPERIAL_ELEVATION] ?: localeDefaultImperial(),
                 useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial(),
-                notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false
+                notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false,
+                showGeofencesOnMap = prefs[KEY_SHOW_GEOFENCES_ON_MAP] ?: false
             )
         }
 
@@ -261,6 +265,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setNotifyOnTrackingAlerts(notify: Boolean) {
         context.settingsStore.edit { it[KEY_NOTIFY_ON_TRACKING_ALERTS] = notify }
+    }
+
+    suspend fun setShowGeofencesOnMap(show: Boolean) {
+        context.settingsStore.edit { it[KEY_SHOW_GEOFENCES_ON_MAP] = show }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {

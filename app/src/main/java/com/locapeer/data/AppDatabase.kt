@@ -11,12 +11,13 @@ import com.locapeer.data.entity.*
         HeartbeatEntity::class,
         MessageEntity::class,
         GeofenceEntity::class,
+        GeofenceAssignmentEntity::class,
         ProximityAlertEntity::class,
         PeerSharingConfig::class,
         PendingMessageEntity::class,
         PendingRequestEntity::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -25,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun heartbeatDao(): HeartbeatDao
     abstract fun messageDao(): MessageDao
     abstract fun geofenceDao(): GeofenceDao
+    abstract fun geofenceAssignmentDao(): GeofenceAssignmentDao
     abstract fun proximityAlertDao(): ProximityAlertDao
     abstract fun peerSharingConfigDao(): PeerSharingConfigDao
     abstract fun pendingMessageDao(): PendingMessageDao

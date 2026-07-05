@@ -47,6 +47,7 @@ data class LocaPeerBackup(
     val privateKeyHex: String? = null,
     val contacts: List<ContactBackup>? = null,
     val geofences: List<GeofenceBackup>? = null,
+    val geofenceAssignments: List<GeofenceAssignmentBackup>? = null,
     val settings: SettingsBackup? = null
 )
 
@@ -82,7 +83,13 @@ data class GeofenceBackup(
     val name: String,
     val lat: Double,
     val lng: Double,
-    val radiusMetres: Int,
+    val radiusMetres: Int
+)
+
+@Serializable
+data class GeofenceAssignmentBackup(
+    val id: String,
+    val geofenceId: String,
     val trackedDeviceId: String,
     val triggerOn: String,
     val active: Boolean
@@ -128,6 +135,7 @@ class SettingsViewModel @Inject constructor(
     private val crypto: CryptoUtils,
     private val peerDao: PeerDao,
     private val geofenceDao: GeofenceDao,
+    private val geofenceAssignmentDao: com.locapeer.data.dao.GeofenceAssignmentDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
@@ -312,7 +320,11 @@ class SettingsViewModel @Inject constructor(
                     } else null,
                     geofences = if (BackupSection.GEOFENCES in sections)
                         geofenceDao.getAllGeofences().first().map { g ->
-                            GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres, g.trackedDeviceId, g.triggerOn, g.active)
+                            GeofenceBackup(g.id, g.name, g.lat, g.lng, g.radiusMetres)
+                        } else null,
+                    geofenceAssignments = if (BackupSection.GEOFENCES in sections)
+                        geofenceAssignmentDao.observeAll().first().map { a ->
+                            GeofenceAssignmentBackup(a.id, a.geofenceId, a.trackedDeviceId, a.triggerOn, a.active)
                         } else null,
                     settings = if (BackupSection.SETTINGS in sections)
                         SettingsBackup(
@@ -414,7 +426,18 @@ class SettingsViewModel @Inject constructor(
                 }
                 if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
                     backup.geofences.forEach { g ->
-                        geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres, g.trackedDeviceId, g.triggerOn, g.active))
+                        geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
+                    }
+                    backup.geofenceAssignments?.forEach { a ->
+                        geofenceAssignmentDao.upsert(
+                            com.locapeer.data.entity.GeofenceAssignmentEntity(
+                                id = a.id,
+                                geofenceId = a.geofenceId,
+                                trackedDeviceId = a.trackedDeviceId,
+                                triggerOn = a.triggerOn,
+                                active = a.active
+                            )
+                        )
                     }
                     restored += "${backup.geofences.size} geofences"
                 }

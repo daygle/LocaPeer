@@ -9,8 +9,8 @@ import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
-import com.locapeer.data.dao.GeofenceDao
-import com.locapeer.data.entity.GeofenceEntity
+import com.locapeer.data.dao.ActiveGeofence
+import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -43,7 +43,7 @@ private const val NOTIF_ID_GEOFENCE = 60000
 @Singleton
 class GeofenceEngine @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val geofenceDao: GeofenceDao,
+    private val geofenceAssignmentDao: GeofenceAssignmentDao,
     private val notificationManager: NotificationManager,
     private val relayClient: NostrRelayClient,
     private val keyManager: KeyManager,
@@ -59,7 +59,7 @@ class GeofenceEngine @Inject constructor(
     private val insideState = ConcurrentHashMap<String, Boolean>()
 
     suspend fun evaluate(current: HeartbeatEntity, previous: HeartbeatEntity?) {
-        val fences = geofenceDao.getActiveGeofencesForDevice(current.deviceId)
+        val fences = geofenceAssignmentDao.getActiveGeofencesForDevice(current.deviceId)
         fences.forEach { fence ->
             // A fix coarser than the fence itself can't tell inside from outside —
             // this also keeps suburb-precision peers from tripping street-sized fences.
@@ -138,7 +138,7 @@ class GeofenceEngine @Inject constructor(
     }
 
     private fun sendGeofenceNotification(
-        fence: GeofenceEntity,
+        fence: ActiveGeofence,
         personName: String,
         personDeviceId: String,
         title: String,

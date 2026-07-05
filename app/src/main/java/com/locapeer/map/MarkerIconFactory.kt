@@ -115,6 +115,64 @@ object MarkerIconFactory {
         return drawable
     }
 
+    /**
+     * A small rounded label drawn at a geofence centre showing its name and the contact it
+     * tracks, so it's clear on the map which user each geofence relates to.
+     */
+    fun createGeofenceLabel(context: Context, title: String, subtitle: String, color: Int): BitmapDrawable {
+        val key = "gflabel-$title-$subtitle-$color"
+        cache.get(key)?.let { return it }
+
+        val dp = context.resources.displayMetrics.density
+        val padH = dp * 8
+        val padV = dp * 5
+        val gap = dp * 2
+
+        val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = 0xFF1A1C1E.toInt()
+            textSize = dp * 12
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        }
+        val subtitleText = "👤 $subtitle"
+        val subtitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = 0xFF43474E.toInt()
+            textSize = dp * 10
+        }
+
+        val titleBounds = Rect().also { titlePaint.getTextBounds(title, 0, title.length, it) }
+        val subBounds = Rect().also { subtitlePaint.getTextBounds(subtitleText, 0, subtitleText.length, it) }
+
+        val contentW = maxOf(titlePaint.measureText(title), subtitlePaint.measureText(subtitleText))
+        val titleH = titleBounds.height().toFloat()
+        val subH = subBounds.height().toFloat()
+
+        val width = (contentW + padH * 2).toInt().coerceAtLeast(1)
+        val height = (titleH + subH + gap + padV * 2).toInt().coerceAtLeast(1)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        val rect = android.graphics.RectF(dp, dp, width - dp, height - dp)
+        // Opaque white card so it stays legible over the tinted fence fill.
+        canvas.drawRoundRect(rect, dp * 6, dp * 6, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = 0xF2FFFFFF.toInt()
+        })
+        canvas.drawRoundRect(rect, dp * 6, dp * 6, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = color
+            style = Paint.Style.STROKE
+            strokeWidth = dp * 1.5f
+        })
+
+        val textX = padH
+        val titleBaseline = padV - titleBounds.top
+        canvas.drawText(title, textX, titleBaseline, titlePaint)
+        val subBaseline = titleBaseline + titleBounds.bottom + gap - subBounds.top
+        canvas.drawText(subtitleText, textX, subBaseline, subtitlePaint)
+
+        val drawable = BitmapDrawable(context.resources, bitmap)
+        cache.put(key, drawable)
+        return drawable
+    }
+
     private var myLocationCache: Pair<String, BitmapDrawable>? = null
 
     /** Creates a pulsing dot for the user's own location, using their chosen pin colour. */

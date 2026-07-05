@@ -44,7 +44,10 @@ class BackupSerializationTest {
             )
         ),
         geofences = listOf(
-            GeofenceBackup("g1", "Home", 51.5, -0.1, 150, "dev1", "BOTH", false)
+            GeofenceBackup("g1", "Home", 51.5, -0.1, 150)
+        ),
+        geofenceAssignments = listOf(
+            GeofenceAssignmentBackup("a1", "g1", "dev1", "BOTH", false)
         ),
         settings = SettingsBackup(
             displayName = "Me",
