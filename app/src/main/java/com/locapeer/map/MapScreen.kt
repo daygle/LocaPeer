@@ -124,6 +124,7 @@ fun MapScreen(
             geofences = uiState.geofences,
             userLocation = userLocation,
             myPinColor = myPinColor,
+            isSosActive = isSosActive,
             lastMapCenter = lastMapCenter,
             centerOnUser = centerOnUser,
             centerOnPin = centerOnPin,
@@ -482,6 +483,7 @@ private fun OsmdroidMapView(
     geofences: List<GeofenceEntity>,
     userLocation: GeoPoint?,
     myPinColor: String = "",
+    isSosActive: Boolean = false,
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     centerOnPin: GeoPoint?,
@@ -669,7 +671,7 @@ private fun OsmdroidMapView(
                 val myMarker = Marker(mapView).apply {
                     position = loc
                     title = "You"
-                    icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor)
+                    icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive)
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                     infoWindow = null
                 }

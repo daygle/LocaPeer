@@ -34,6 +34,7 @@ import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.data.entity.scheduleRules
@@ -308,17 +309,26 @@ class HeartbeatService : LifecycleService() {
         
         when (intent?.action) {
             ACTION_SOS_ON -> {
+                Log.i(TAG, "SOS Mode ACTIVATED")
                 sosCommandReceived = true
                 isSos = true
                 intervalManager.setSosMode(enabled = true)
                 updateLocationRequest()
-                pulseNow()
+                updateServiceNotification()
+                // Force an immediate location fetch if we don't have one, then pulse
+                if (lastLat == 0.0 && lastLng == 0.0) {
+                    forceLocationFetchThenPulse()
+                } else {
+                    pulseNow()
+                }
             }
             ACTION_SOS_OFF -> {
+                Log.i(TAG, "SOS Mode DEACTIVATED")
                 sosCommandReceived = true
                 isSos = false
                 intervalManager.setSosMode(enabled = false)
                 updateLocationRequest()
+                updateServiceNotification()
                 reschedulePulse()
             }
             ACTION_STOP -> {
@@ -463,6 +473,26 @@ class HeartbeatService : LifecycleService() {
         handler.post(heartbeatRunnable)
     }
 
+    @SuppressLint("MissingPermission")
+    private fun forceLocationFetchThenPulse() {
+        fusedLocation.lastLocation.addOnSuccessListener { loc ->
+            if (loc != null) {
+                lastLat = loc.latitude
+                lastLng = loc.longitude
+                lastAccuracy = loc.accuracy
+                if (loc.hasBearing()) lastBearing = loc.bearing
+                if (loc.hasAltitude()) lastAltitude = loc.altitude
+                Log.d(TAG, "Force fetch successful: $lastLat, $lastLng")
+            } else {
+                Log.w(TAG, "Force fetch returned null location")
+            }
+            pulseNow()
+        }.addOnFailureListener {
+            Log.e(TAG, "Force fetch failed", it)
+            pulseNow()
+        }
+    }
+
     /**
      * Recompute the pulse schedule against the current interval without sending an
      * early heartbeat: the next one fires once the interval has elapsed since the
@@ -535,18 +565,36 @@ class HeartbeatService : LifecycleService() {
                     return@launch
                 }
 
-                val locationRecipients = peerDao.getPeersReceivingMyLocation().first()
+                // Recipients: 
+                // 1. In SOS mode: send ONLY to contacts marked as SOS contacts.
+                // 2. In Normal mode: send to all contacts who receive our location.
+                val allPeers = peerDao.getAllPeers().first()
                 val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
+                
+                val targetRecipients = allPeers.filter { peer ->
+                    val cfg = configMap[peer.deviceId]
+                    if (isSos) {
+                        cfg?.isSosContact == true
+                    } else {
+                        val roleAllows = peer.locationRole == PeerEntity.ROLE_SEND || 
+                                        peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE
+                        roleAllows && (cfg?.sharingEnabled ?: true)
+                    }
+                }
+
+                if (targetRecipients.isEmpty()) {
+                    Log.d(TAG, "No recipients for this heartbeat (isSos=$isSos)")
+                    return@launch
+                }
+
                 var sentCount = 0
 
                 // Move heavy crypto (NIP-44 encryption + Schnorr signing) to Default dispatcher
                 // to avoid skipping frames on the main thread.
                 withContext(Dispatchers.Default) {
-                    locationRecipients.forEach { recipient ->
+                    targetRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (isSos && cfg?.isSosContact != true) return@forEach
-                        if (!isSos && cfg != null && !cfg.sharingEnabled) return@forEach
                         if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules())) return@forEach
 
                         val (sendLat, sendLng) = if (
@@ -597,7 +645,7 @@ class HeartbeatService : LifecycleService() {
                         sentCount++
                     }
                 }
-                Log.d(TAG, "Heartbeat sent to $sentCount/${locationRecipients.size} recipients")
+                Log.d(TAG, "Heartbeat sent to $sentCount/${targetRecipients.size} recipients (isSos=$isSos)")
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to send heartbeat", e)
             }
@@ -649,15 +697,27 @@ class HeartbeatService : LifecycleService() {
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
+        val title = if (isSos) "SOS ACTIVE!" else getString(R.string.notification_heartbeat_title)
+        val text = if (isSos) "Broadcasting emergency alert to SOS contacts" else getString(R.string.notification_heartbeat_text)
+        val icon = if (isSos) R.drawable.ic_notif_alert else R.drawable.ic_notif_location
+        val color = if (isSos) 0xFFD32F2F.toInt() else 0xFF1976D2.toInt()
+
         return NotificationCompat.Builder(this, CHANNEL_ID_HEARTBEAT)
-            .setSmallIcon(R.drawable.ic_notif_location)
-            .setContentTitle(getString(R.string.notification_heartbeat_title))
-            .setContentText(getString(R.string.notification_heartbeat_text))
+            .setSmallIcon(icon)
+            .setContentTitle(title)
+            .setContentText(text)
+            .setColor(color)
+            .setColorized(isSos)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(if (isSos) NotificationCompat.PRIORITY_MAX else NotificationCompat.PRIORITY_LOW)
+            .setCategory(if (isSos) NotificationCompat.CATEGORY_ALARM else NotificationCompat.CATEGORY_SERVICE)
             .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
             .build()
+    }
+
+    private fun updateServiceNotification() {
+        notificationManager.notify(NOTIFICATION_ID_HEARTBEAT, buildNotification())
     }
 
     private fun createNotificationChannel() {

@@ -118,22 +118,23 @@ object MarkerIconFactory {
     private var myLocationCache: Pair<String, BitmapDrawable>? = null
 
     /** Creates a pulsing dot for the user's own location, using their chosen pin colour. */
-    fun createMyLocationIcon(context: Context, pinColor: String = ""): BitmapDrawable {
-        myLocationCache?.takeIf { it.first == pinColor }?.let { return it.second }
+    fun createMyLocationIcon(context: Context, pinColor: String = "", isSos: Boolean = false): BitmapDrawable {
+        val cacheKey = "$pinColor-$isSos"
+        myLocationCache?.takeIf { it.first == cacheKey }?.let { return it.second }
         val dp = context.resources.displayMetrics.density
         val sizePx = (dp * 48).toInt()
         val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         val cx = sizePx / 2f
 
-        val dotArgb = if (pinColor.isNotEmpty()) pinColor.toColorInt() else 0xFF4285F4.toInt()
-        val pulseArgb = (dotArgb and 0x00FFFFFF) or 0x33000000
+        val baseColor = if (isSos) "#D32F2F".toColorInt() else if (pinColor.isNotEmpty()) pinColor.toColorInt() else 0xFF4285F4.toInt()
+        val pulseArgb = (baseColor and 0x00FFFFFF) or 0x33000000
 
         // Outer pulse ring
         canvas.drawCircle(cx, cx, cx - 2, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = pulseArgb })
 
         // Inner dot
-        canvas.drawCircle(cx, cx, dp * 8, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = dotArgb })
+        canvas.drawCircle(cx, cx, dp * 8, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = baseColor })
 
         // White border
         canvas.drawCircle(cx, cx, dp * 8, Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -143,7 +144,7 @@ object MarkerIconFactory {
         })
 
         val drawable = BitmapDrawable(context.resources, bitmap)
-        myLocationCache = pinColor to drawable
+        myLocationCache = cacheKey to drawable
         return drawable
     }
 }
