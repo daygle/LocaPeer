@@ -98,8 +98,7 @@ class ProximityEngine @Inject constructor(
     }
 
     private fun sendNotification(personName: String, personDeviceId: String, distanceMetres: Int) {
-        val displayDistance = if (distanceMetres < 1000) "${distanceMetres}m away"
-        else "${"%.1f".format(distanceMetres / 1000.0)}km away"
+        val displayDistance = "${com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())} away"
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP

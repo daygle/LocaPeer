@@ -528,7 +528,7 @@ private fun HistoryMapTab(
 
                     Spacer(Modifier.height(6.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Text("±${ping.accuracy.toInt()} m accuracy",
+                        Text("±${DisplayFormat.distanceValue(ping.accuracy.toDouble())} accuracy",
                             style = MaterialTheme.typography.labelSmall)
                         Text("🔋 ${ping.battery}%",
                             style = MaterialTheme.typography.labelSmall)
@@ -613,7 +613,7 @@ private fun HistoryPingCard(
                 Spacer(Modifier.height(4.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        "±${ping.accuracy.toInt()} m",
+                        "±${DisplayFormat.distanceValue(ping.accuracy.toDouble())}",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

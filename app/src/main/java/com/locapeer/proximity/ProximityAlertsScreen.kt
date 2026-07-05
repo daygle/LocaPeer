@@ -185,4 +185,4 @@ private fun ProximityPeerCard(
 }
 
 private fun formatRadius(metres: Int): String =
-    if (metres < 1000) "${metres}m" else "${"%.1f".format(metres / 1000.0)}km"
+    com.locapeer.util.DisplayFormat.distanceValue(metres.toDouble())

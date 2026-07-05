@@ -302,7 +302,7 @@ fun PeerSharingScreen(
                         Column(modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 12.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 Text("Alert Radius", style = MaterialTheme.typography.bodySmall)
-                                Text("${radius}m", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
+                                Text(com.locapeer.util.DisplayFormat.distanceValue(radius.toDouble()), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             }
                             Slider(
                                 value = radius.toFloat(),

@@ -174,7 +174,7 @@ private fun GeofenceCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    "${fence.radiusMetres}m • ${fence.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
+                    "${com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble())} • ${fence.triggerOn.lowercase().replaceFirstChar { it.uppercase() }}",
                     style = MaterialTheme.typography.bodySmall,
                     color = triggerColor
                 )
@@ -299,7 +299,7 @@ private fun CreateGeofenceDialog(
                     )
                 }
 
-                Text("Radius: ${radius.roundToInt()}m")
+                Text("Radius: ${com.locapeer.util.DisplayFormat.distanceValue(radius.roundToInt().toDouble())}")
                 Slider(
                     value = radius,
                     onValueChange = { radius = it },

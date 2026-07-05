@@ -238,7 +238,8 @@ fun SettingsScreen(
                             ) {
                                 Text("Minimum Distance Between Points", style = MaterialTheme.typography.bodyMedium)
                                 Text(
-                                    if (minDistValue.roundToInt() == 0) "Off" else "${minDistValue.roundToInt()}m",
+                                    if (minDistValue.roundToInt() == 0) "Off"
+                                    else com.locapeer.util.DisplayFormat.distanceValue(minDistValue.roundToInt().toDouble()),
                                     style = MaterialTheme.typography.bodyMedium,
                                     fontWeight = FontWeight.SemiBold,
                                     color = MaterialTheme.colorScheme.primary
@@ -291,6 +292,21 @@ fun SettingsScreen(
                             Switch(
                                 checked = settings.useImperialElevation,
                                 onCheckedChange = { vm.setUseImperialElevation(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Distance Units") },
+                        supportingContent = {
+                            Text(if (settings.useImperialDistance) "Feet / miles" else "Metres / kilometres")
+                        },
+                        leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.useImperialDistance,
+                                onCheckedChange = { vm.setUseImperialDistance(it) }
                             )
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
