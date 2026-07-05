@@ -95,14 +95,14 @@ class ContactsViewModel @Inject constructor(
             diffMs < 60_000 -> "Just now"
             diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
             diffMs < 86_400_000 -> {
-                val fmt = SimpleDateFormat("h:mm a", Locale.getDefault())
+                val fmt = SimpleDateFormat(com.locapeer.util.DisplayFormat.timePattern(), Locale.getDefault())
                 fmt.format(Date(timestamp))
             }
             else -> {
                 val cal = Calendar.getInstance().also { it.timeInMillis = timestamp }
                 val today = Calendar.getInstance()
                 val fmt = if (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR))
-                    SimpleDateFormat("d MMM, h:mm a", Locale.getDefault())
+                    SimpleDateFormat("d MMM, ${com.locapeer.util.DisplayFormat.timePattern()}", Locale.getDefault())
                 else
                     SimpleDateFormat("d MMM yyyy", Locale.getDefault())
                 fmt.format(Date(timestamp))

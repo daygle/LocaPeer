@@ -33,6 +33,15 @@ object DatabaseModule {
         }
     }
 
+    /** v3: record GPS altitude for each heartbeat. */
+    private val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE heartbeats ADD COLUMN altitude REAL NOT NULL DEFAULT 0"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
@@ -45,7 +54,7 @@ object DatabaseModule {
             // testing, not silently wipe user data. Downgrades (installing an
             // older build over a newer database) have no migration path, so that
             // direction still rebuilds destructively rather than crash-looping.
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 

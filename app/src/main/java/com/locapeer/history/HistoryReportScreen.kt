@@ -26,6 +26,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.TimePickerDialog
+import com.locapeer.util.DisplayFormat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
@@ -74,7 +75,7 @@ fun HistoryReportScreen(
     var selectedTab by remember { mutableIntStateOf(0) }
 
     val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault()) }
-    val timeFormat = remember { SimpleDateFormat("HH:mm:ss", Locale.getDefault()) }
+    val timeFormat = remember(DisplayFormat.use24HourTime) { DisplayFormat.timeFormat(withSeconds = true) }
 
     Scaffold(
         topBar = {
@@ -364,7 +365,9 @@ private fun HistoryMapTab(
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }
     var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
-    val timestampFormat = remember { SimpleDateFormat("d MMM yyyy · HH:mm:ss", Locale.getDefault()) }
+    val timestampFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
+    }
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -529,8 +532,10 @@ private fun HistoryMapTab(
                             style = MaterialTheme.typography.labelSmall)
                         Text("🔋 ${ping.battery}%",
                             style = MaterialTheme.typography.labelSmall)
-                        if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
-                            Text("${(ping.speed * 3.6f).toInt()} km/h · ${bearingToCardinal(ping.bearing)}",
+                        Text(speedLabel(ping.motionState, ping.speed, ping.bearing),
+                            style = MaterialTheme.typography.labelSmall)
+                        if (ping.altitude != 0.0) {
+                            Text("⛰ ${DisplayFormat.elevationValue(ping.altitude)}",
                                 style = MaterialTheme.typography.labelSmall)
                         }
                     }
@@ -617,10 +622,14 @@ private fun HistoryPingCard(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    if (ping.motionState.uppercase() != "STATIONARY" && ping.speed > 0f) {
-                        val kmh = (ping.speed * 3.6f).toInt()
+                    Text(
+                        speedLabel(ping.motionState, ping.speed, ping.bearing),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    if (ping.altitude != 0.0) {
                         Text(
-                            "$kmh km/h · ${bearingToCardinal(ping.bearing)}",
+                            "⛰ ${DisplayFormat.elevationValue(ping.altitude)}",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -700,6 +709,19 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
         set(utc.get(Calendar.YEAR), utc.get(Calendar.MONTH), utc.get(Calendar.DAY_OF_MONTH), 0, 0, 0)
         set(Calendar.MILLISECOND, 0)
     }.timeInMillis
+}
+
+/**
+ * Human-readable speed for a ping. Always returns a value so location history rows and
+ * the pin popup have a speed field even when the person is still (shown as "0 km/h" /
+ * "0 mph") rather than the field vanishing entirely. Units follow the user's setting.
+ */
+private fun speedLabel(motionState: String, speed: Float, bearing: Float): String {
+    return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
+        "${DisplayFormat.speedValue(speed)} · ${bearingToCardinal(bearing)}"
+    } else {
+        DisplayFormat.speedValue(0f)
+    }
 }
 
 private fun bearingToCardinal(bearing: Float): String {

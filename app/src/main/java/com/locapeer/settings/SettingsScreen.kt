@@ -262,6 +262,57 @@ fun SettingsScreen(
                 }
             }
 
+            item { SectionLabel("Units & Display") }
+
+            item {
+                SettingsCard {
+                    ListItem(
+                        headlineContent = { Text("Speed Units") },
+                        supportingContent = {
+                            Text(if (settings.useImperialSpeed) "Miles per hour (mph)" else "Kilometres per hour (km/h)")
+                        },
+                        leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.useImperialSpeed,
+                                onCheckedChange = { vm.setUseImperialSpeed(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Elevation Units") },
+                        supportingContent = {
+                            Text(if (settings.useImperialElevation) "Feet (ft)" else "Metres (m)")
+                        },
+                        leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.useImperialElevation,
+                                onCheckedChange = { vm.setUseImperialElevation(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("24-Hour Time") },
+                        supportingContent = {
+                            Text(if (settings.use24HourTime) "13:30" else "1:30 PM")
+                        },
+                        leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.use24HourTime,
+                                onCheckedChange = { vm.setUse24HourTime(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+
             item { SectionLabel("Map") }
 
             item {

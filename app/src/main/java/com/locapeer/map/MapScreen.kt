@@ -39,6 +39,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.ui.components.RelayStatusChip
+import com.locapeer.util.DisplayFormat
 import com.locapeer.ui.theme.*
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.GeoPoint
@@ -767,9 +768,12 @@ private fun PinInfoSheet(
                     StatChip("Battery", "${hb.battery}%")
                     StatChip("Motion",
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
-                    if (hb.motionState.uppercase() != "STATIONARY" && hb.speed > 0f) {
+                    if (!hb.motionState.equals("STATIONARY", ignoreCase = true) && hb.speed > 0f) {
                         StatChip("Speed",
-                            "${(hb.speed * 3.6f).toInt()} km/h ${bearingToCardinal(hb.bearing)}")
+                            "${DisplayFormat.speedValue(hb.speed)} ${bearingToCardinal(hb.bearing)}")
+                    }
+                    if (hb.altitude != 0.0) {
+                        StatChip("Elevation", DisplayFormat.elevationValue(hb.altitude))
                     }
                 }
 

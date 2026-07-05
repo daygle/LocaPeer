@@ -133,5 +133,5 @@ class GeofenceEngine @Inject constructor(
     }
 
     private fun formatTime(millis: Long): String =
-        SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(millis))
+        com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
 }
