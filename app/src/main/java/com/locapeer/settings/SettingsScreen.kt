@@ -523,6 +523,27 @@ fun SettingsScreen(
                 }
             }
 
+            item { SectionLabel("Privacy") }
+
+            item {
+                SettingsCard {
+                    ListItem(
+                        headlineContent = { Text("Notify me when I'm tracked") },
+                        supportingContent = {
+                            Text("Get a notification when a contact's proximity or geofence alert for you is triggered.")
+                        },
+                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.notifyOnTrackingAlerts,
+                                onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            }
+
             item { SectionLabel("Appearance") }
 
             item {

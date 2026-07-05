@@ -32,6 +32,7 @@ object NostrEventKind {
     const val SUPERVISED_REGISTER = 1055
     const val SUPERVISED_REGISTER_ACCEPT = 1056
     const val SUPERVISED_REGISTER_DECLINE = 1057
+    const val TRACKING_ALERT = 1058
 }
 
 @Serializable

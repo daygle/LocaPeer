@@ -96,6 +96,7 @@ private const val NOTIF_ID_MESSAGE = 10000
 const val NOTIF_ID_TRACK_REQUEST = 20000
 private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
+private const val NOTIF_ID_TRACKING_ALERT = 80000
 const val NOTIF_ID_SUPERVISED_REGISTER = 70000
 
 private val CONTROL_KINDS = listOf(
@@ -109,7 +110,8 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
     NostrEventKind.SUPERVISED_REGISTER,
     NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
-    NostrEventKind.SUPERVISED_REGISTER_DECLINE
+    NostrEventKind.SUPERVISED_REGISTER_DECLINE,
+    NostrEventKind.TRACKING_ALERT
 )
 
 @Singleton
@@ -171,7 +173,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.TRACK_DECLINE,
                         NostrEventKind.PEER_REMOVED,
                         NostrEventKind.DELETE_MY_MESSAGES,
-                        NostrEventKind.DELETE_MY_LOCATION
+                        NostrEventKind.DELETE_MY_LOCATION,
+                        NostrEventKind.TRACKING_ALERT
                     ),
                     pTags = listOf(pubHex),
                     since = nowEpoch
@@ -237,6 +240,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.PEER_REMOVED -> scope.launch { processPeerRemoved(event) }
                     NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
                     NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
+                    NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
                 }
               } catch (e: Exception) {
                 Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
@@ -651,6 +655,41 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         peerManager.handleDeleteMyLocation(event.pubkey)
+    }
+
+    private suspend fun processTrackingAlert(event: NostrEvent) {
+        val settings = prefs.settings.first()
+        if (!settings.notifyOnTrackingAlerts) return
+
+        peerDao.getPeer(event.pubkey) ?: return
+        if (!NostrEvent.verify(event, crypto)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try { json.decodeFromString<TrackingAlertPayload>(plaintext) } catch (e: Exception) { return }
+
+        val title = "Tracking Alert"
+        val message = when (payload.type) {
+            "PROXIMITY" -> "${payload.triggerName} received a proximity alert about you"
+            "GEOFENCE" -> "${payload.triggerName} received an alert that you entered/exited fence: ${payload.alertName}"
+            else -> "${payload.triggerName} is monitoring your location"
+        }
+
+        val intent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pi = PendingIntent.getActivity(context, NOTIF_ID_TRACKING_ALERT, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_location)
+            .setContentTitle(title)
+            .setContentText(message)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(event.pubkey, NOTIF_ID_TRACKING_ALERT, notification)
     }
 
     private suspend fun processTrackRequest(event: NostrEvent) {

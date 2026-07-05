@@ -110,7 +110,8 @@ data class SettingsBackup(
     val useImperialSpeed: Boolean = false,
     val use24HourTime: Boolean = true,
     val useImperialElevation: Boolean = false,
-    val useImperialDistance: Boolean = false
+    val useImperialDistance: Boolean = false,
+    val notifyOnTrackingAlerts: Boolean = false
 )
 
 /** Parsed backup file ready for selective restore. */
@@ -335,7 +336,8 @@ class SettingsViewModel @Inject constructor(
                             useImperialSpeed = s.useImperialSpeed,
                             use24HourTime = s.use24HourTime,
                             useImperialElevation = s.useImperialElevation,
-                            useImperialDistance = s.useImperialDistance
+                            useImperialDistance = s.useImperialDistance,
+                            notifyOnTrackingAlerts = s.notifyOnTrackingAlerts
                         ) else null
                 )
                 val json = jsonExport.encodeToString(backup)
@@ -435,6 +437,7 @@ class SettingsViewModel @Inject constructor(
                     prefs.setUse24HourTime(s.use24HourTime)
                     prefs.setUseImperialElevation(s.useImperialElevation)
                     prefs.setUseImperialDistance(s.useImperialDistance)
+                    prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
                     restored += "settings"
                 }
                 // Identity and/or display name may have changed; refresh the shown pubkey and QR.
@@ -525,6 +528,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setUseImperialDistance(imperial: Boolean) {
         viewModelScope.launch { prefs.setUseImperialDistance(imperial) }
+    }
+
+    fun setNotifyOnTrackingAlerts(notify: Boolean) {
+        viewModelScope.launch { prefs.setNotifyOnTrackingAlerts(notify) }
     }
 
     companion object {

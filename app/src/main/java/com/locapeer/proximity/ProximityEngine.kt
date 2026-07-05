@@ -8,12 +8,26 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
 import com.locapeer.R
+import com.locapeer.crypto.CryptoUtils
+import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.ProximityAlertDao
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.nostr.NostrEvent
+import com.locapeer.nostr.NostrEventKind
+import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
+import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import com.google.android.gms.location.LocationServices
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,8 +46,13 @@ private const val NOTIF_ID_PROXIMITY = 50000
 class ProximityEngine @Inject constructor(
     @ApplicationContext private val context: Context,
     private val proximityAlertDao: ProximityAlertDao,
-    private val notificationManager: NotificationManager
+    private val notificationManager: NotificationManager,
+    private val relayClient: NostrRelayClient,
+    private val keyManager: KeyManager,
+    private val crypto: CryptoUtils,
+    private val prefs: AppPreferences
 ) {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private var fusedLocation = LocationServices.getFusedLocationProviderClient(context)
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
     // Whether each peer is currently within their alert radius, with hysteresis.
@@ -94,6 +113,36 @@ class ProximityEngine @Inject constructor(
             if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return
             lastNotifiedAt[peerId] = now
             sendNotification(peerHeartbeat.displayName, peerId, distanceMetres.toInt())
+            sendTrackingAlertToPeer(peerId)
+        }
+    }
+
+    private fun sendTrackingAlertToPeer(peerPubkey: String) {
+        scope.launch {
+            try {
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val myName = prefs.settings.first().displayName.ifBlank { "Someone" }
+                val payload = TrackingAlertPayload(
+                    type = "PROXIMITY",
+                    triggerName = myName
+                )
+                val encrypted = crypto.nip44Encrypt(
+                    crypto.hexToBytes(privHex),
+                    peerPubkey,
+                    Json.encodeToString(payload)
+                )
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.TRACKING_ALERT,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peerPubkey)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            } catch (e: Exception) {
+                android.util.Log.e("ProximityEngine", "Failed to send tracking alert to $peerPubkey", e)
+            }
         }
     }
 

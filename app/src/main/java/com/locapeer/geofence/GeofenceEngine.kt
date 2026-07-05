@@ -7,11 +7,25 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
 import com.locapeer.R
+import com.locapeer.crypto.CryptoUtils
+import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
+import com.locapeer.nostr.NostrEvent
+import com.locapeer.nostr.NostrEventKind
+import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
+import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -30,8 +44,13 @@ private const val NOTIF_ID_GEOFENCE = 60000
 class GeofenceEngine @Inject constructor(
     @ApplicationContext private val context: Context,
     private val geofenceDao: GeofenceDao,
-    private val notificationManager: NotificationManager
+    private val notificationManager: NotificationManager,
+    private val relayClient: NostrRelayClient,
+    private val keyManager: KeyManager,
+    private val crypto: CryptoUtils,
+    private val prefs: AppPreferences
 ) {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     // Tracks the last time a notification was sent per fenceId to prevent GPS-jitter spam
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
     // Inside/outside membership per fence+person, with hysteresis. In-memory: after a
@@ -83,6 +102,37 @@ class GeofenceEngine @Inject constructor(
                     title = "${current.displayName} $verb ${fence.name}",
                     subtitle = "at ${formatTime(current.timestamp)} · ${com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble())} radius"
                 )
+                sendTrackingAlertToPeer(current.deviceId, fence.name)
+            }
+        }
+    }
+
+    private fun sendTrackingAlertToPeer(peerPubkey: String, fenceName: String) {
+        scope.launch {
+            try {
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val myName = prefs.settings.first().displayName.ifBlank { "Someone" }
+                val payload = TrackingAlertPayload(
+                    type = "GEOFENCE",
+                    alertName = fenceName,
+                    triggerName = myName
+                )
+                val encrypted = crypto.nip44Encrypt(
+                    crypto.hexToBytes(privHex),
+                    peerPubkey,
+                    Json.encodeToString(payload)
+                )
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.TRACKING_ALERT,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peerPubkey)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            } catch (e: Exception) {
+                android.util.Log.e("GeofenceEngine", "Failed to send tracking alert to $peerPubkey", e)
             }
         }
     }

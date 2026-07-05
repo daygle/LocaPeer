@@ -94,7 +94,9 @@ data class AppSettings(
     /** Show elevation in feet instead of metres. Defaults from the device locale. */
     val useImperialElevation: Boolean = false,
     /** Show distances (accuracy, radii) in feet/miles instead of metres/km. Defaults from locale. */
-    val useImperialDistance: Boolean = false
+    val useImperialDistance: Boolean = false,
+    /** Notify this user when someone else gets an alert (proximity/geofence) about them. */
+    val notifyOnTrackingAlerts: Boolean = false
 )
 
 @Singleton
@@ -132,6 +134,7 @@ class AppPreferences @Inject constructor(
     private val KEY_USE_24_HOUR_TIME = booleanPreferencesKey("use_24_hour_time")
     private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
     private val KEY_USE_IMPERIAL_DISTANCE = booleanPreferencesKey("use_imperial_distance")
+    private val KEY_NOTIFY_ON_TRACKING_ALERTS = booleanPreferencesKey("notify_on_tracking_alerts")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -176,7 +179,8 @@ class AppPreferences @Inject constructor(
                 use24HourTime = prefs[KEY_USE_24_HOUR_TIME]
                     ?: android.text.format.DateFormat.is24HourFormat(context),
                 useImperialElevation = prefs[KEY_USE_IMPERIAL_ELEVATION] ?: localeDefaultImperial(),
-                useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial()
+                useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial(),
+                notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false
             )
         }
 
@@ -253,6 +257,10 @@ class AppPreferences @Inject constructor(
 
     suspend fun setUseImperialDistance(imperial: Boolean) {
         context.settingsStore.edit { it[KEY_USE_IMPERIAL_DISTANCE] = imperial }
+    }
+
+    suspend fun setNotifyOnTrackingAlerts(notify: Boolean) {
+        context.settingsStore.edit { it[KEY_NOTIFY_ON_TRACKING_ALERTS] = notify }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {
