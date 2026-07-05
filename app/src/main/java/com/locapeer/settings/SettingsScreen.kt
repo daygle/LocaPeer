@@ -38,6 +38,7 @@ fun SettingsScreen(
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCustomizeNav: () -> Unit = {},
     onNavigateToGlobalSchedule: () -> Unit = {},
+    onNavigateToGeofences: () -> Unit = {},
     onNavigateToMyHistory: (pubkeyHex: String) -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
@@ -174,6 +175,13 @@ fun SettingsScreen(
                         subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
                         else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
                         onClick = onNavigateToGlobalSchedule
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    NavRow(
+                        icon = Icons.Default.Fence,
+                        label = "Geofences",
+                        subtitle = "Manage shared geofence areas",
+                        onClick = onNavigateToGeofences
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
