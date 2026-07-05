@@ -227,6 +227,7 @@ fun LocaPeerNavHost(
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
+                    onNavigateToGeofences = { navController.navigate("geofences") },
                     onNavigateToMyHistory = { pubkeyHex ->
                         navController.navigate("history-report?peerId=$pubkeyHex")
                     }
