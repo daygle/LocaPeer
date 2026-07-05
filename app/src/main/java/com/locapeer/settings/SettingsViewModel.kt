@@ -59,6 +59,8 @@ data class ContactBackup(
     val locationRole: String = "SEND_RECEIVE",
     val messagingEnabled: Boolean = true,
     val addedAt: Long? = null,
+    val isArchived: Boolean = false,
+    val archivedAt: Long = 0,
     val sharingConfig: SharingConfigBackup? = null
 )
 
@@ -69,7 +71,9 @@ data class SharingConfigBackup(
     val scheduleRulesJson: String,
     val isSosContact: Boolean,
     val retentionDaysLocation: Int,
-    val retentionDaysMessages: Int
+    val retentionDaysMessages: Int,
+    val isMySupervised: Boolean = false,
+    val notifyOnMissedHeartbeat: Boolean = false
 )
 
 @Serializable
@@ -143,6 +147,12 @@ class SettingsViewModel @Inject constructor(
     val profileQr: StateFlow<Bitmap?> = _profileQr
 
     init {
+        refreshProfile()
+    }
+
+    /** Recompute the displayed public key and profile QR from the current identity and settings.
+     *  Must be called after anything that changes the keypair or display name (e.g. a restore). */
+    private fun refreshProfile() {
         viewModelScope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             _publicKeyHex.value = pubHex
@@ -160,7 +170,10 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun updateDisplayName(name: String) {
-        viewModelScope.launch { prefs.updateDisplayName(name) }
+        viewModelScope.launch {
+            prefs.updateDisplayName(name)
+            refreshProfile()
+        }
     }
 
     fun setPinColor(hex: String) {
@@ -259,7 +272,7 @@ class SettingsViewModel @Inject constructor(
     fun exportBackup(uri: Uri, sections: Set<BackupSection>) {
         viewModelScope.launch {
             try {
-                val s = settings.value
+                val s = prefs.settings.first()
                 val backup = LocaPeerBackup(
                     privateKeyHex = if (BackupSection.PRIVATE_KEY in sections)
                         keyManager.exportPrivateKeyHex() else null,
@@ -275,10 +288,18 @@ class SettingsViewModel @Inject constructor(
                                 locationRole = p.locationRole,
                                 messagingEnabled = p.messagingEnabled,
                                 addedAt = p.addedAt,
+                                isArchived = p.isArchived,
+                                archivedAt = p.archivedAt,
                                 sharingConfig = cfg?.let {
                                     SharingConfigBackup(
-                                        it.sharingEnabled, it.precisionMode, it.scheduleRulesJson,
-                                        it.isSosContact, it.retentionDaysLocation, it.retentionDaysMessages
+                                        sharingEnabled = it.sharingEnabled,
+                                        precisionMode = it.precisionMode,
+                                        scheduleRulesJson = it.scheduleRulesJson,
+                                        isSosContact = it.isSosContact,
+                                        retentionDaysLocation = it.retentionDaysLocation,
+                                        retentionDaysMessages = it.retentionDaysMessages,
+                                        isMySupervised = it.isMySupervised,
+                                        notifyOnMissedHeartbeat = it.notifyOnMissedHeartbeat
                                     )
                                 }
                             )
@@ -361,6 +382,8 @@ class SettingsViewModel @Inject constructor(
                             relayUrl = c.relayUrl,
                             locationRole = c.locationRole,
                             messagingEnabled = c.messagingEnabled,
+                            isArchived = c.isArchived,
+                            archivedAt = c.archivedAt,
                             addedAt = c.addedAt ?: System.currentTimeMillis()
                         ))
                         c.sharingConfig?.let { sc ->
@@ -370,6 +393,8 @@ class SettingsViewModel @Inject constructor(
                                 precisionMode = sc.precisionMode,
                                 scheduleRulesJson = sc.scheduleRulesJson,
                                 isSosContact = sc.isSosContact,
+                                isMySupervised = sc.isMySupervised,
+                                notifyOnMissedHeartbeat = sc.notifyOnMissedHeartbeat,
                                 retentionDaysLocation = sc.retentionDaysLocation,
                                 retentionDaysMessages = sc.retentionDaysMessages
                             ))
@@ -399,6 +424,10 @@ class SettingsViewModel @Inject constructor(
                     prefs.setGlobalScheduleRules(s.globalScheduleRules)
                     prefs.setCustomRelays(s.customRelays)
                     restored += "settings"
+                }
+                // Identity and/or display name may have changed; refresh the shown pubkey and QR.
+                if (BackupSection.PRIVATE_KEY in sections || BackupSection.SETTINGS in sections) {
+                    refreshProfile()
                 }
                 _backupResult.value = "Restored: ${restored.joinToString(", ")}"
             } catch (e: Exception) {
