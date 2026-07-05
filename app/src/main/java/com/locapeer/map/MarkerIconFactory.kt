@@ -129,13 +129,13 @@ object MarkerIconFactory {
         val gap = dp * 2
 
         val titlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFF1A1C1E.toInt()
+            this.color = 0xFF1A1C1E.toInt()
             textSize = dp * 12
             typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         }
         val subtitleText = "👤 $subtitle"
         val subtitlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = 0xFF43474E.toInt()
+            this.color = 0xFF43474E.toInt()
             textSize = dp * 10
         }
 
