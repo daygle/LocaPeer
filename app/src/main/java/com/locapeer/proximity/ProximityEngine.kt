@@ -90,7 +90,6 @@ class ProximityEngine @Inject constructor(
         // When the combined uncertainty exceeds the radius, "within radius" can't
         // be decided — this also keeps suburb-precision peers from false-alerting.
         val uncertainty = ownLocation.accuracy.toDouble() + peerHeartbeat.accuracy.toDouble()
-        if (uncertainty > alert.radiusMetres.toDouble()) return
 
         val distanceMetres = GeoMath.haversineMetres(
             ownLocation.latitude, ownLocation.longitude,
@@ -103,6 +102,13 @@ class ProximityEngine @Inject constructor(
         val inside = GeoMath.isInsideWithHysteresis(
             distanceMetres, alert.radiusMetres.toDouble(), buffer, wasInside == true
         )
+
+        // If the uncertainty is larger than the radius, we can't reliably confirm
+        // a NEW entry. However, if we are currently "outside" even with the buffer,
+        // we allow the state to update to "outside" so that future entry alerts
+        // can fire when accuracy improves.
+        if (inside && wasInside != true && uncertainty > alert.radiusMetres.toDouble()) return
+
         wasNearby[peerId] = inside
         // First observation since process start: seed only. A peer who was already
         // nearby shouldn't re-alert on every app restart; arrivals fire next beat.

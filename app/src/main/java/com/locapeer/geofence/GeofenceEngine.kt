@@ -61,17 +61,22 @@ class GeofenceEngine @Inject constructor(
     suspend fun evaluate(current: HeartbeatEntity, previous: HeartbeatEntity?) {
         val fences = geofenceAssignmentDao.getActiveGeofencesForDevice(current.deviceId)
         fences.forEach { fence ->
-            // A fix coarser than the fence itself can't tell inside from outside —
-            // this also keeps suburb-precision peers from tripping street-sized fences.
-            if (current.accuracy > fence.radiusMetres.toFloat()) return@forEach
-
             val key = "${fence.id}:${current.deviceId}"
-            val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
-            val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val wasInside = insideState[key]
                 ?: previous?.takeIf { it.accuracy <= fence.radiusMetres.toFloat() }
                     ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres.toDouble() }
+
+            val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
+            val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
+
+            // A fix coarser than the fence itself can't reliably tell inside from outside —
+            // this keeps suburb-precision peers from tripping street-sized fences.
+            // However, we only enforce this for "inside" results; if a fix is far enough
+            // away to be "outside" even with its accuracy buffer, we accept it so that
+            // EXIT alerts fire even during poor GPS reception.
+            if (inNow && wasInside != true && current.accuracy > fence.radiusMetres.toFloat()) return@forEach
+
             insideState[key] = inNow
             // First reliable observation for this fence+person: seed only — we don't
             // know where they came from, so neither entered nor exited can fire.
