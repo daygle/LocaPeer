@@ -94,15 +94,26 @@ class HistoryReportViewModel @Inject constructor(
             }
         }
         viewModelScope.launch {
-            heartbeats.collectLatest { pings ->
-                val cached = _addresses.value
-                val pending = pings.filter { it.id !in cached }
-                pending.forEachIndexed { index, ping ->
-                    if (index > 0) delay(250)
-                    val addr = geocodeLocation(ping.lat, ping.lng) ?: return@forEachIndexed
-                    _addresses.update { it + (ping.id to addr) }
+            // Reverse geocoding is opt-in: the platform Geocoder sends the queried
+            // coordinates off-device, so only look up addresses when the user has enabled it.
+            // Re-evaluates live when the toggle flips (collectLatest cancels the in-flight run).
+            heartbeats
+                .combine(
+                    prefs.settings.map { it.reverseGeocodingEnabled }.distinctUntilChanged()
+                ) { pings, enabled -> pings to enabled }
+                .collectLatest { (pings, enabled) ->
+                    if (!enabled) {
+                        _addresses.value = emptyMap()
+                        return@collectLatest
+                    }
+                    val cached = _addresses.value
+                    val pending = pings.filter { it.id !in cached }
+                    pending.forEachIndexed { index, ping ->
+                        if (index > 0) delay(250)
+                        val addr = geocodeLocation(ping.lat, ping.lng) ?: return@forEachIndexed
+                        _addresses.update { it + (ping.id to addr) }
+                    }
                 }
-            }
         }
     }
 

@@ -205,6 +205,21 @@ fun SettingsScreen(
                         subtitle = "Browse your own location timeline",
                         onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text("Look Up Addresses in History") },
+                        supportingContent = {
+                            Text("Show street addresses for history points. Sends those coordinates to your device's geocoding service (usually Google).")
+                        },
+                        leadingContent = { Icon(Icons.Default.Place, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.reverseGeocodingEnabled,
+                                onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 

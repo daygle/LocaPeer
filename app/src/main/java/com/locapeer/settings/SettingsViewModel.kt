@@ -557,6 +557,10 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setNotifyOnTrackingAlerts(notify) }
     }
 
+    fun setReverseGeocodingEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setReverseGeocodingEnabled(enabled) }
+    }
+
     companion object {
         private val jsonExport = Json { encodeDefaults = true }
         private val jsonImport = Json { ignoreUnknownKeys = true }
