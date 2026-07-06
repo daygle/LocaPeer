@@ -31,11 +31,42 @@ object MotionMath {
 
     /**
      * Consecutive agreeing samples required to switch state. Asymmetric on purpose:
-     * quick to detect motion, slow to settle — a couple of zero-speed fixes at a
-     * red light must not drop a drive into STATIONARY and its low-power polling.
+     * quick to detect faster motion, slow to give it up. Accelerating into a faster
+     * tier trips in 2 samples; decelerating is stickier so a brief slow stretch — a
+     * train dwelling at a platform, a car at a red light, a patch of poor-accuracy
+     * GPS in a tunnel or metal carriage — doesn't drop an established drive to
+     * WALKING (and its slower pulse cadence) or STATIONARY (and its low-power
+     * polling) before the device has provably slowed for good.
      */
-    fun samplesRequiredToSwitch(to: MotionState): Int =
-        if (to == MotionState.STATIONARY) 4 else 2
+    fun samplesRequiredToSwitch(from: MotionState, to: MotionState): Int {
+        val fromRank = speedRank(from)
+        val toRank = speedRank(to)
+        return when {
+            // Accelerating or holding tier: detect motion promptly.
+            toRank >= fromRank -> 2
+            // Settling all the way to stationary: needs the most evidence.
+            to == MotionState.STATIONARY -> 4
+            // Dropping out of vehicle/cycling speed: hold through brief dips.
+            fromRank >= speedRank(MotionState.CYCLING) -> 4
+            // Other slow-downs: mild stickiness.
+            else -> 3
+        }
+    }
+
+    /**
+     * States ordered by representative speed, for the deceleration hysteresis in
+     * [samplesRequiredToSwitch]. Not the enum's declaration order — DRIVING is
+     * declared before CYCLING there. UNKNOWN sits at the walking tier, matching how
+     * it is treated for interval selection.
+     */
+    private fun speedRank(state: MotionState): Int = when (state) {
+        MotionState.STATIONARY -> 0
+        MotionState.WALKING -> 1
+        MotionState.UNKNOWN -> 1
+        MotionState.RUNNING -> 2
+        MotionState.CYCLING -> 3
+        MotionState.DRIVING -> 4
+    }
 
     /**
      * True when the device has provably left the place where it became stationary:
