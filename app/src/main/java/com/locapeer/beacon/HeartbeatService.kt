@@ -181,7 +181,7 @@ class HeartbeatService : LifecycleService() {
             candidateMotionState = newState
             candidateMotionCount = 1
         }
-        val required = MotionMath.samplesRequiredToSwitch(newState)
+        val required = MotionMath.samplesRequiredToSwitch(currentMotionState, newState)
         if (candidateMotionCount >= required || currentMotionState == MotionState.UNKNOWN) {
             currentMotionState = newState
             candidateMotionCount = 0

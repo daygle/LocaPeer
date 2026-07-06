@@ -49,12 +49,32 @@ class MotionMathTest {
     // --- samplesRequiredToSwitch ---
 
     @Test
-    fun `settling into stationary needs more evidence than starting to move`() {
-        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.STATIONARY))
-        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.WALKING))
-        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.RUNNING))
-        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.CYCLING))
-        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.DRIVING))
+    fun `accelerating into a faster tier trips quickly`() {
+        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.STATIONARY, MotionState.WALKING))
+        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.WALKING, MotionState.DRIVING))
+        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.CYCLING, MotionState.DRIVING))
+        // An unknown starting point should also detect motion promptly.
+        assertEquals(2, MotionMath.samplesRequiredToSwitch(MotionState.UNKNOWN, MotionState.DRIVING))
+    }
+
+    @Test
+    fun `settling into stationary needs the most evidence`() {
+        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.WALKING, MotionState.STATIONARY))
+        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.DRIVING, MotionState.STATIONARY))
+    }
+
+    @Test
+    fun `leaving vehicle or cycling speed is sticky through brief dips`() {
+        // A train dwelling at a platform / poor-GPS patch must not demote a drive
+        // to WALKING on a couple of slow samples.
+        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.DRIVING, MotionState.WALKING))
+        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.DRIVING, MotionState.CYCLING))
+        assertEquals(4, MotionMath.samplesRequiredToSwitch(MotionState.CYCLING, MotionState.WALKING))
+    }
+
+    @Test
+    fun `slow-downs below cycling speed are only mildly sticky`() {
+        assertEquals(3, MotionMath.samplesRequiredToSwitch(MotionState.RUNNING, MotionState.WALKING))
     }
 
     // --- shouldExitStationary ---
