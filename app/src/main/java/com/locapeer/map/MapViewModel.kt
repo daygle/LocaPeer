@@ -103,6 +103,15 @@ class MapViewModel @Inject constructor(
         .map { it.showGeofencesOnMap }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
+    /**
+     * Look up street addresses for tapped pins via the device geocoder. Off by default:
+     * like the History report, this sends the queried coordinates to the OS geocoding
+     * backend, so it stays behind the same explicit opt-in.
+     */
+    val reverseGeocodingEnabled: StateFlow<Boolean> = appPreferences.settings
+        .map { it.reverseGeocodingEnabled }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
     fun toggleGeofences() {
         viewModelScope.launch {
             appPreferences.setShowGeofencesOnMap(!showGeofences.value)
