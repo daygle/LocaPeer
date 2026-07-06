@@ -52,6 +52,18 @@ interface MessageDao {
     @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
     suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
 
+    /**
+     * Scoped variant used when a peer reports delivery/read state (DELIVERY_ACK / READ_RECEIPT).
+     * Only messages we sent to that specific peer may be touched, so a contact cannot flip the
+     * displayed delivery state of messages we sent to *other* contacts by replaying the public
+     * event ids it observed on the relay.
+     */
+    @Query(
+        "UPDATE messages SET deliveryState = :state " +
+            "WHERE nostrEventId = :nostrEventId AND nostrEventId != '' AND peerId = :peerId AND isMine = 1"
+    )
+    suspend fun updateDeliveryStateByNostrEventIdForPeer(nostrEventId: String, peerId: String, state: String)
+
     @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0 AND isBlocked = 0")
     suspend fun getUnreadFromPeer(peerId: String): List<MessageEntity>
 

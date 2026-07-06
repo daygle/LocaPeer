@@ -365,7 +365,7 @@ class MessagingViewModel @Inject constructor(
 
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
         receipt.eventIds.forEach { eventId ->
-            messageDao.updateDeliveryStateByNostrEventId(eventId, DeliveryState.READ.name)
+            messageDao.updateDeliveryStateByNostrEventIdForPeer(eventId, event.pubkey, DeliveryState.READ.name)
         }
     }
 
@@ -374,6 +374,10 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch {
             val sender = peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
             if (!sender.messagingEnabled) return@launch  // suppress typing from disabled contacts
+            // Verify the signature so an unrelated party can't forge a "contact is typing"
+            // indicator by publishing an unsigned event carrying the contact's pubkey.
+            // Schnorr verification is CPU-heavy, so keep it off the Main dispatcher.
+            if (!withContext(Dispatchers.Default) { NostrEvent.verify(event, crypto) }) return@launch
             _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
             typingClearJobs[fromPubkey]?.cancel()
             typingClearJobs[fromPubkey] = viewModelScope.launch {
@@ -396,7 +400,7 @@ class MessagingViewModel @Inject constructor(
             }
         } ?: return
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
-        messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
+        messageDao.updateDeliveryStateByNostrEventIdForPeer(payload.eventId, event.pubkey, DeliveryState.DELIVERED.name)
     }
 
     private fun processDeletionEvent(event: NostrEvent) {

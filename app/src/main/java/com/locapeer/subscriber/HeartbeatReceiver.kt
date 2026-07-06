@@ -423,7 +423,7 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
         receipt.eventIds.forEach { eventId ->
-            messageDao.updateDeliveryStateByNostrEventId(eventId, DeliveryState.READ.name)
+            messageDao.updateDeliveryStateByNostrEventIdForPeer(eventId, event.pubkey, DeliveryState.READ.name)
         }
     }
 
@@ -435,7 +435,7 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
-        messageDao.updateDeliveryStateByNostrEventId(payload.eventId, DeliveryState.DELIVERED.name)
+        messageDao.updateDeliveryStateByNostrEventIdForPeer(payload.eventId, event.pubkey, DeliveryState.DELIVERED.name)
     }
 
     private suspend fun processUnlockRequest(event: NostrEvent) {
