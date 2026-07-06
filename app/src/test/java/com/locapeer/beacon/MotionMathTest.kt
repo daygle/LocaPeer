@@ -46,6 +46,24 @@ class MotionMathTest {
         assertTrue(speed < 1000f / 100f)
     }
 
+    @Test
+    fun `capping the subtraction lets real motion register on coarse moving fixes`() {
+        // 450m in 30s (15 m/s) between two 200m fixes. Uncapped, the 400m subtraction
+        // drags it to walking speed and would demote a drive.
+        assertTrue(MotionMath.derivedSpeedMps(450f, 30f, 400f) < MotionMath.WALKING_MAX_MPS)
+        // Capped at 150m, the same fixes read as vehicle speed.
+        val capped = MotionMath.derivedSpeedMps(450f, 30f, 400f, MotionMath.MOVING_ACCURACY_SUBTRACT_CAP_M)
+        assertEquals(10f, capped, 0.001f)
+        assertTrue(capped >= MotionMath.CYCLING_MAX_MPS)
+    }
+
+    @Test
+    fun `cap never subtracts more than the real accuracy sum`() {
+        // Accuracy (100m) below the cap: full subtraction still applies, so parked
+        // drift within the uncertainty still reads as zero even with a cap in force.
+        assertEquals(0f, MotionMath.derivedSpeedMps(80f, 120f, 100f, MotionMath.MOVING_ACCURACY_SUBTRACT_CAP_M))
+    }
+
     // --- samplesRequiredToSwitch ---
 
     @Test

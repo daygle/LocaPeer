@@ -67,6 +67,17 @@ const val ACTION_PULSE_CHECK = "com.locapeer.PULSE_CHECK"
 private const val PULSE_BACKSTOP_SLACK_MS = 90_000L
 /** Ignore cached last-known locations older than this when pre-seeding at startup. */
 private const val MAX_SEED_AGE_MS = 10 * 60_000L
+/**
+ * How long to hold high-accuracy GPS after the device leaves a settled place, so the
+ * classifier gets clean speed to reach the right moving state (notably DRIVING, the
+ * only state that otherwise requests high accuracy) instead of being stuck on the
+ * coarse fixes used while stationary. Auto-expires back to the settled profile.
+ */
+private const val CLASSIFY_BOOST_MS = 45_000L
+
+private fun MotionState.isMoving(): Boolean =
+    this == MotionState.WALKING || this == MotionState.RUNNING ||
+        this == MotionState.CYCLING || this == MotionState.DRIVING
 
 @AndroidEntryPoint
 class HeartbeatService : LifecycleService() {
@@ -115,6 +126,8 @@ class HeartbeatService : LifecycleService() {
     private var stationaryAnchorLng = 0.0
     private var stationaryAnchorAcc = 0f
     @Volatile private var lastPulseElapsedMs = 0L
+    /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
+    @Volatile private var classificationBoostUntilMs = 0L
 
     private var isStarted = false
 
@@ -152,12 +165,23 @@ class HeartbeatService : LifecycleService() {
     private fun estimateSpeed(loc: android.location.Location): Float? {
         val derived = if (prevFixElapsedNs > 0L) {
             val dtSec = (loc.elapsedRealtimeNanos - prevFixElapsedNs) / 1_000_000_000f
-            if (dtSec in 1f..600f) {
+            // Cap the window at 240s: past that the previous fix is likely a doze gap or
+            // a LocationFilter stale-accept (its threshold is 5 min), and dividing a large
+            // displacement over such a gap would fabricate a one-off high speed.
+            if (dtSec in 1f..240f) {
                 val dist = FloatArray(1)
                 android.location.Location.distanceBetween(
                     prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist,
                 )
-                MotionMath.derivedSpeedMps(dist[0], dtSec, prevFixAccuracy + loc.accuracy)
+                // Once moving, cap the accuracy subtraction so a coarse fix can't zero out
+                // real speed and demote the state; while stationary/unknown keep the fully
+                // conservative reading that rejects parked drift.
+                val subtractCap = if (currentMotionState.isMoving()) {
+                    MotionMath.MOVING_ACCURACY_SUBTRACT_CAP_M
+                } else {
+                    Float.MAX_VALUE
+                }
+                MotionMath.derivedSpeedMps(dist[0], dtSec, prevFixAccuracy + loc.accuracy, subtractCap)
             } else null
         } else null
         prevFixLat = loc.latitude
@@ -183,6 +207,7 @@ class HeartbeatService : LifecycleService() {
         }
         val required = MotionMath.samplesRequiredToSwitch(currentMotionState, newState)
         if (candidateMotionCount >= required || currentMotionState == MotionState.UNKNOWN) {
+            val previous = currentMotionState
             currentMotionState = newState
             candidateMotionCount = 0
             if (newState == MotionState.STATIONARY) {
@@ -191,10 +216,39 @@ class HeartbeatService : LifecycleService() {
                 stationaryAnchorLng = lastLng
                 stationaryAnchorAcc = lastAccuracy
             }
+            // Just started moving from a settled state: boost GPS so the classifier can
+            // reach the correct moving state (esp. DRIVING) on clean fixes.
+            if (newState.isMoving() && !previous.isMoving()) beginClassificationBoost()
             intervalManager.updateMotionState(newState)
             updateLocationRequest()
             reschedulePulse()
         }
+    }
+
+    /**
+     * Arm the high-accuracy GPS window for [CLASSIFY_BOOST_MS] and schedule a re-request
+     * so it falls back to the settled state's power profile once the window elapses.
+     * Called when the device leaves a settled place, where the coarse stationary-grade
+     * fixes would otherwise underclassify the new motion. The caller is expected to
+     * refresh the location request (via the [updateLocationRequest] it already issues on
+     * a state change) so the boost takes effect immediately.
+     *
+     * A single settled exit can reach here twice — first from [checkStationaryExit]
+     * (STATIONARY -> UNKNOWN), then from the fix that latches UNKNOWN -> moving. An
+     * already-running window is left as-is rather than re-armed, so the total boost
+     * never exceeds [CLASSIFY_BOOST_MS] from the first trigger.
+     */
+    private fun beginClassificationBoost() {
+        val now = SystemClock.elapsedRealtime()
+        if (now < classificationBoostUntilMs) return
+        classificationBoostUntilMs = now + CLASSIFY_BOOST_MS
+        handler.removeCallbacks(locationBoostDowngrade)
+        handler.postDelayed(locationBoostDowngrade, CLASSIFY_BOOST_MS)
+    }
+
+    private val locationBoostDowngrade = Runnable {
+        // Boost window elapsed; re-request so GPS returns to the current state's profile.
+        if (isStarted) updateLocationRequest()
     }
 
     /**
@@ -205,9 +259,9 @@ class HeartbeatService : LifecycleService() {
      * STATIONARY for an entire drive — and never upgrades to GPS to find out.
      * Instead compare against where the device *became* stationary: total
      * displacement grows without bound while driving, so once it clears the
-     * combined uncertainty the device has provably moved. Exit provisionally to
-     * WALKING; the upgraded location request then classifies properly within a
-     * couple of fixes.
+     * combined uncertainty the device has provably moved. Exit to UNKNOWN — which
+     * latches on the very next classified fix rather than asserting a possibly-wrong
+     * WALKING — and boost GPS so that fix carries clean speed.
      */
     private fun checkStationaryExit(loc: android.location.Location) {
         if (!stationaryAnchorSet) return
@@ -225,9 +279,10 @@ class HeartbeatService : LifecycleService() {
         }
         if (MotionMath.shouldExitStationary(dist[0], stationaryAnchorAcc, loc.accuracy)) {
             stationaryAnchorSet = false
-            currentMotionState = MotionState.WALKING
+            currentMotionState = MotionState.UNKNOWN
             candidateMotionCount = 0
-            intervalManager.updateMotionState(MotionState.WALKING)
+            beginClassificationBoost()
+            intervalManager.updateMotionState(MotionState.UNKNOWN)
             updateLocationRequest()
             reschedulePulse()
         }
@@ -420,9 +475,16 @@ class HeartbeatService : LifecycleService() {
         // Below 20% battery the heartbeat cadence already stretches to the
         // low-battery interval; keeping full-rate GPS running would defeat it.
         val lowBattery = !isSos && intervalManager.isLowBattery()
+        // A brief high-accuracy window right after leaving a settled place, so the
+        // classifier reaches the right moving state before GPS relaxes. Never overrides
+        // low battery (which must stay frugal) and is moot while stationary.
+        val boosting = !isSos && !lowBattery &&
+            currentMotionState != MotionState.STATIONARY &&
+            SystemClock.elapsedRealtime() < classificationBoostUntilMs
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
             lowBattery -> Priority.PRIORITY_LOW_POWER
+            boosting -> Priority.PRIORITY_HIGH_ACCURACY
             currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
             currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
@@ -431,6 +493,7 @@ class HeartbeatService : LifecycleService() {
             isSos -> 10_000L
             lowBattery -> 120_000L
             currentMotionState == MotionState.STATIONARY -> 120_000L
+            boosting -> 15_000L
             else -> 30_000L
         }
         return LocationRequest.Builder(priority, pollIntervalMs)
@@ -751,6 +814,7 @@ class HeartbeatService : LifecycleService() {
     override fun onDestroy() {
         isRunning = false
         handler.removeCallbacks(heartbeatRunnable)
+        handler.removeCallbacks(locationBoostDowngrade)
         try {
             (getSystemService(ALARM_SERVICE) as AlarmManager).cancel(pulseCheckIntent())
         } catch (e: Exception) {

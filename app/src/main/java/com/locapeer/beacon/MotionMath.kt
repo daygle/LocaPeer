@@ -13,6 +13,16 @@ object MotionMath {
     /** Extra displacement beyond the fixes' combined accuracy before a stationary exit trips. */
     const val STATIONARY_EXIT_BUFFER_M = 150f
 
+    /**
+     * Cap on how much combined fix accuracy is subtracted from displacement when
+     * deriving speed *while already moving* (see [derivedSpeedMps]). Subtracting the
+     * full accuracy is right for rejecting drift while parked, but on a poor-accuracy
+     * pair mid-trip (a tunnel, a metal carriage) it can zero out real motion and
+     * demote a drive. Once the device is established as moving, drift is no longer the
+     * risk, so the subtraction is capped and true speed registers sooner.
+     */
+    const val MOVING_ACCURACY_SUBTRACT_CAP_M = 150f
+
     fun classify(speedMps: Float): MotionState = when {
         speedMps < STATIONARY_MAX_MPS -> MotionState.STATIONARY
         speedMps < WALKING_MAX_MPS -> MotionState.WALKING
@@ -25,9 +35,19 @@ object MotionMath {
      * Displacement-derived speed with the fixes' combined accuracy subtracted:
      * drift inside the uncertainty reads as zero, real movement beyond it registers
      * (underestimated, which the classification hysteresis tolerates).
+     *
+     * [maxAccuracySubtractM] caps how much accuracy is removed. The default of no cap
+     * gives the fully-conservative reading used while parked/UNKNOWN, where drift
+     * rejection matters most; callers pass [MOVING_ACCURACY_SUBTRACT_CAP_M] once the
+     * device is established as moving so a coarse fix can't zero out real speed.
      */
-    fun derivedSpeedMps(distanceM: Float, dtSec: Float, accuracySumM: Float): Float =
-        (distanceM - accuracySumM).coerceAtLeast(0f) / dtSec
+    fun derivedSpeedMps(
+        distanceM: Float,
+        dtSec: Float,
+        accuracySumM: Float,
+        maxAccuracySubtractM: Float = Float.MAX_VALUE,
+    ): Float =
+        (distanceM - accuracySumM.coerceAtMost(maxAccuracySubtractM)).coerceAtLeast(0f) / dtSec
 
     /**
      * Consecutive agreeing samples required to switch state. Asymmetric on purpose:
