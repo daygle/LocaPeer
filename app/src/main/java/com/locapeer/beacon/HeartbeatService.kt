@@ -232,9 +232,16 @@ class HeartbeatService : LifecycleService() {
      * fixes would otherwise underclassify the new motion. The caller is expected to
      * refresh the location request (via the [updateLocationRequest] it already issues on
      * a state change) so the boost takes effect immediately.
+     *
+     * A single settled exit can reach here twice — first from [checkStationaryExit]
+     * (STATIONARY -> UNKNOWN), then from the fix that latches UNKNOWN -> moving. An
+     * already-running window is left as-is rather than re-armed, so the total boost
+     * never exceeds [CLASSIFY_BOOST_MS] from the first trigger.
      */
     private fun beginClassificationBoost() {
-        classificationBoostUntilMs = SystemClock.elapsedRealtime() + CLASSIFY_BOOST_MS
+        val now = SystemClock.elapsedRealtime()
+        if (now < classificationBoostUntilMs) return
+        classificationBoostUntilMs = now + CLASSIFY_BOOST_MS
         handler.removeCallbacks(locationBoostDowngrade)
         handler.postDelayed(locationBoostDowngrade, CLASSIFY_BOOST_MS)
     }
