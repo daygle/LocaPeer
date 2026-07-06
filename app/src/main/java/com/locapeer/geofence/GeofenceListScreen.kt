@@ -604,14 +604,20 @@ private fun GeofenceAreaDialog(
                             Text("Radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                             // Typing here updates radiusText, the same state the slider reads from,
                             // so entering a value moves the slider (and vice versa) automatically.
+                            // Cap the digit count so a pasted value can't overflow Int and make
+                            // toIntOrNull() return null (which would snap the slider to the fallback).
+                            // One digit beyond MAX_RADIUS_M's width still lets an out-of-range entry
+                            // surface through normal validation.
+                            val maxRadiusDigits = MAX_RADIUS_M.toString().length + 1
                             OutlinedTextField(
                                 value = radiusText,
-                                onValueChange = { input -> radiusText = input.filter { it.isDigit() } },
+                                onValueChange = { input -> radiusText = input.filter { it.isDigit() }.take(maxRadiusDigits) },
+                                label = { Text("Radius") },
                                 isError = radiusError,
                                 singleLine = true,
                                 suffix = { Text("m") },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                modifier = Modifier.width(140.dp)
+                                modifier = Modifier.width(160.dp)
                             )
                         }
                         Slider(
