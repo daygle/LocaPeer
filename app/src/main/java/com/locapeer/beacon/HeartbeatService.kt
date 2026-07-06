@@ -141,7 +141,7 @@ class HeartbeatService : LifecycleService() {
                 if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // If no heartbeat has gone out yet (empty lastLocation cache at start,
                 // so the initial pulse was skipped), send one now that a fix exists.
-                if (isStarted && lastPulseElapsedMs == 0L) pulseNow()
+                if (isStarted && (lastPulseElapsedMs == 0L)) pulseNow()
             }
         }
     }
@@ -155,7 +155,7 @@ class HeartbeatService : LifecycleService() {
             if (dtSec in 1f..600f) {
                 val dist = FloatArray(1)
                 android.location.Location.distanceBetween(
-                    prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist
+                    prevFixLat, prevFixLng, loc.latitude, loc.longitude, dist,
                 )
                 MotionMath.derivedSpeedMps(dist[0], dtSec, prevFixAccuracy + loc.accuracy)
             } else null
@@ -561,7 +561,7 @@ class HeartbeatService : LifecycleService() {
                 }
 
                 val now = java.util.Calendar.getInstance()
-                val dayIndex = when (now.get(java.util.Calendar.DAY_OF_WEEK)) {
+                val dayIndex = when (now[java.util.Calendar.DAY_OF_WEEK]) {
                     java.util.Calendar.MONDAY    -> 0
                     java.util.Calendar.TUESDAY   -> 1
                     java.util.Calendar.WEDNESDAY -> 2

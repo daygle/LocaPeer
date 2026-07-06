@@ -14,7 +14,4 @@ interface GeofenceDao {
 
     @Query("SELECT * FROM geofences ORDER BY name ASC")
     fun getAllGeofences(): Flow<List<GeofenceEntity>>
-
-    @Query("SELECT * FROM geofences WHERE id = :id")
-    suspend fun getById(id: String): GeofenceEntity?
 }

@@ -5,8 +5,6 @@ import com.locapeer.data.entity.PendingMessageEntity
 
 @Dao
 interface PendingMessageDao {
-    @Query("SELECT * FROM pending_messages ORDER BY id ASC")
-    suspend fun getAll(): List<PendingMessageEntity>
 
     @Query("SELECT * FROM pending_messages WHERE relayUrl = :relayUrl ORDER BY id ASC")
     suspend fun getForRelay(relayUrl: String): List<PendingMessageEntity>
