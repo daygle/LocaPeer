@@ -310,9 +310,12 @@ class NostrRelayClient @Inject constructor(
                         "EVENT" -> {
                             if (arr.size < 3) return
                             val event = json.decodeFromJsonElement<NostrEvent>(arr[2])
-                            // Fast path: an id we've already accepted (a valid copy from another
-                            // relay, or a relay retransmit) needs no re-verification. This keeps
-                            // the "verify each event at most once across all relays" property.
+                            // Fast path: skip re-verifying an id we've already accepted (a valid
+                            // copy from another relay, or a relay retransmit), so steady-state
+                            // duplicates cost nothing and only novel ids are verified. (onMessage
+                            // runs per relay connection, so two relays delivering the same new id
+                            // at once can both verify it before either records it — a rare, harmless
+                            // double-check, never a re-verify of an already-accepted event.)
                             if (synchronized(recentEventLock) { recentEventIds.contains(event.id) }) return
                             // Verify the signature BEFORE recording the id. The event id is a hash
                             // of the content only — it does not cover the signature — so a forged
@@ -321,7 +324,9 @@ class NostrRelayClient @Inject constructor(
                             // honest relay would be dropped as a duplicate. Refusing to cache
                             // unverified ids closes that cross-relay suppression vector.
                             if (!NostrEvent.verify(event, crypto)) {
-                                Log.w(TAG, "Dropping event ${event.id} from $url: invalid signature")
+                                // event.id is untrusted and unbounded; truncate so a hostile relay
+                                // can't turn dropped-event logging into log spam / large allocations.
+                                Log.w(TAG, "Dropping event ${event.id.take(16)} from $url: invalid signature")
                                 return
                             }
                             val isNew = synchronized(recentEventLock) {
