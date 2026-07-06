@@ -476,14 +476,14 @@ class HeartbeatService : LifecycleService() {
     @SuppressLint("MissingPermission")
     private fun forceLocationFetchThenPulse() {
         fusedLocation.lastLocation.addOnSuccessListener { loc ->
-            if (loc != null) {
-                lastLat = loc.latitude
-                lastLng = loc.longitude
-                lastAccuracy = loc.accuracy
-                if (loc.hasBearing()) lastBearing = loc.bearing
-                if (loc.hasAltitude()) lastAltitude = loc.altitude
-                Log.d(TAG, "Force fetch successful: $lastLat, $lastLng")
-            } else {
+                if (loc != null) {
+                    lastLat = loc.latitude
+                    lastLng = loc.longitude
+                    lastAccuracy = loc.accuracy
+                    if (loc.hasBearing()) lastBearing = loc.bearing
+                    if (loc.hasAltitude()) lastAltitude = loc.altitude
+                    Log.d(TAG, "Force fetch successful")
+                } else {
                 Log.w(TAG, "Force fetch returned null location")
             }
             pulseNow()

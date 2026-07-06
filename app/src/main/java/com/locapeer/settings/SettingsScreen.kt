@@ -509,7 +509,7 @@ fun SettingsScreen(
                     }
                     ListItem(
                         headlineContent = { Text("Export Backup") },
-                        supportingContent = { Text("Save key, contacts, geofences & settings") },
+                        supportingContent = { Text("Save your private key and contacts to a file. Keep this file secure!") },
                         leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { showExportDialog = true; vm.clearBackupResult() },

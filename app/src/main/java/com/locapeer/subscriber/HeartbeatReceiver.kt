@@ -762,8 +762,9 @@ class HeartbeatReceiver @Inject constructor(
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val notifTitle = if (payload.isRoleChange) "Sharing update from ${payload.senderDisplayName}"
-                         else "New Contact: ${payload.senderDisplayName}"
+        val senderLabel = payload.senderDisplayName.take(40).ifBlank { "Someone" }
+        val notifTitle = if (payload.isRoleChange) "Sharing update from $senderLabel"
+                         else "New Contact: $senderLabel"
         val requestedRoleLabel = when (payload.requestedRole) {
             PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
             PeerEntity.ROLE_SEND -> "Send Location"
@@ -773,11 +774,11 @@ class HeartbeatReceiver @Inject constructor(
         }
         val notifBody = when {
             payload.isRoleChange && requestedRoleLabel != null ->
-                "${payload.senderDisplayName} is requesting: $requestedRoleLabel"
+                "$senderLabel is requesting: $requestedRoleLabel"
             payload.isRoleChange ->
-                "${payload.senderDisplayName} wants to update how you share locations."
+                "$senderLabel wants to update how you share locations."
             else ->
-                "${payload.senderDisplayName} added you as a contact and wants to connect."
+                "$senderLabel added you as a contact and wants to connect."
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
