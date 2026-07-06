@@ -1,6 +1,7 @@
 package com.locapeer.nostr
 
 import android.util.Log
+import com.locapeer.crypto.CryptoUtils
 import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PendingMessageEntity
@@ -44,6 +45,7 @@ class NostrRelayClient @Inject constructor(
     private val pendingMessageDao: PendingMessageDao,
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
+    private val crypto: CryptoUtils,
 ) {
     private val json by lazy { 
         Json { 
@@ -308,6 +310,20 @@ class NostrRelayClient @Inject constructor(
                         "EVENT" -> {
                             if (arr.size < 3) return
                             val event = json.decodeFromJsonElement<NostrEvent>(arr[2])
+                            // Fast path: an id we've already accepted (a valid copy from another
+                            // relay, or a relay retransmit) needs no re-verification. This keeps
+                            // the "verify each event at most once across all relays" property.
+                            if (synchronized(recentEventLock) { recentEventIds.contains(event.id) }) return
+                            // Verify the signature BEFORE recording the id. The event id is a hash
+                            // of the content only — it does not cover the signature — so a forged
+                            // event can echo a known id with a content it doesn't hold the key for.
+                            // If such an event were cached, the genuine event later arriving from an
+                            // honest relay would be dropped as a duplicate. Refusing to cache
+                            // unverified ids closes that cross-relay suppression vector.
+                            if (!NostrEvent.verify(event, crypto)) {
+                                Log.w(TAG, "Dropping event ${event.id} from $url: invalid signature")
+                                return
+                            }
                             val isNew = synchronized(recentEventLock) {
                                 if (recentEventIds.contains(event.id)) {
                                     false
