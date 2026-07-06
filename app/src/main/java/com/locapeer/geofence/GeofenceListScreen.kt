@@ -602,11 +602,16 @@ private fun GeofenceAreaDialog(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text("Radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                            Text(
-                                com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
-                                style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.secondary
+                            // Typing here updates radiusText, the same state the slider reads from,
+                            // so entering a value moves the slider (and vice versa) automatically.
+                            OutlinedTextField(
+                                value = radiusText,
+                                onValueChange = { input -> radiusText = input.filter { it.isDigit() } },
+                                isError = radiusError,
+                                singleLine = true,
+                                suffix = { Text("m") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                modifier = Modifier.width(140.dp)
                             )
                         }
                         Slider(
@@ -615,13 +620,15 @@ private fun GeofenceAreaDialog(
                             valueRange = MIN_RADIUS_M.toFloat()..MAX_RADIUS_M.toFloat(),
                             modifier = Modifier.fillMaxWidth()
                         )
-                        if (radiusError) {
-                            Text(
-                                "$MIN_RADIUS_M to $MAX_RADIUS_M m",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.error
-                            )
-                        }
+                        Text(
+                            if (radiusError)
+                                "Enter $MIN_RADIUS_M to $MAX_RADIUS_M m"
+                            else
+                                com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (radiusError) MaterialTheme.colorScheme.error
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             }
