@@ -376,7 +376,8 @@ class MessagingViewModel @Inject constructor(
             if (!sender.messagingEnabled) return@launch  // suppress typing from disabled contacts
             // Verify the signature so an unrelated party can't forge a "contact is typing"
             // indicator by publishing an unsigned event carrying the contact's pubkey.
-            if (!NostrEvent.verify(event, crypto)) return@launch
+            // Schnorr verification is CPU-heavy, so keep it off the Main dispatcher.
+            if (!withContext(Dispatchers.Default) { NostrEvent.verify(event, crypto) }) return@launch
             _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
             typingClearJobs[fromPubkey]?.cancel()
             typingClearJobs[fromPubkey] = viewModelScope.launch {
