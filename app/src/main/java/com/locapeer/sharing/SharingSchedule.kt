@@ -9,10 +9,6 @@ object SharingSchedule {
 
     fun isActive(rules: List<ScheduleRule>): Boolean {
         if (rules.isEmpty()) return true
-        return rules.any { isActive(it.days, it.startMinute, it.endMinute) }
-    }
-
-    fun isActive(days: Int, startMinute: Int, endMinute: Int): Boolean {
         val now = Calendar.getInstance()
         val dayIndex = when (now.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY    -> 0
@@ -24,10 +20,24 @@ object SharingSchedule {
             Calendar.SUNDAY    -> 6
             else               -> 0
         }
+        val currentMinute = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
+        return isActive(rules, dayIndex, currentMinute)
+    }
+
+    fun isActive(rules: List<ScheduleRule>, dayIndex: Int, currentMinute: Int): Boolean {
+        if (rules.isEmpty()) return true
+        return rules.any { isActive(it.days, it.startMinute, it.endMinute, dayIndex, currentMinute) }
+    }
+
+    /**
+     * Checks if the schedule is active for a specific rule and time.
+     * Uses inclusive comparison for the end minute so that a rule ending at 23:59 (1439)
+     * covers the full last minute of the day.
+     */
+    fun isActive(days: Int, startMinute: Int, endMinute: Int, dayIndex: Int, currentMinute: Int): Boolean {
         if (days and (1 shl dayIndex) == 0) return false
-        val current = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
-        return if (startMinute <= endMinute) current in startMinute until endMinute
-        else current >= startMinute || current < endMinute
+        return if (startMinute <= endMinute) currentMinute in startMinute..endMinute
+        else currentMinute >= startMinute || currentMinute <= endMinute
     }
 
     /**

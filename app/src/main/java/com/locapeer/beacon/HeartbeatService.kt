@@ -560,7 +560,20 @@ class HeartbeatService : LifecycleService() {
                     heartbeatDao.deleteOlderThanForDevice(pubHex, cutoff)
                 }
 
-                if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules)) {
+                val now = java.util.Calendar.getInstance()
+                val dayIndex = when (now.get(java.util.Calendar.DAY_OF_WEEK)) {
+                    java.util.Calendar.MONDAY    -> 0
+                    java.util.Calendar.TUESDAY   -> 1
+                    java.util.Calendar.WEDNESDAY -> 2
+                    java.util.Calendar.THURSDAY  -> 3
+                    java.util.Calendar.FRIDAY    -> 4
+                    java.util.Calendar.SATURDAY  -> 5
+                    java.util.Calendar.SUNDAY    -> 6
+                    else                         -> 0
+                }
+                val currentMinute = now.get(java.util.Calendar.HOUR_OF_DAY) * 60 + now.get(java.util.Calendar.MINUTE)
+
+                if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules, dayIndex, currentMinute)) {
                     Log.d(TAG, "Heartbeat suppressed: outside global schedule")
                     return@launch
                 }
@@ -595,7 +608,7 @@ class HeartbeatService : LifecycleService() {
                     targetRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules())) return@forEach
+                        if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules(), dayIndex, currentMinute)) return@forEach
 
                         val (sendLat, sendLng) = if (
                             cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
