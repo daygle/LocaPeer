@@ -610,9 +610,12 @@ class HeartbeatService : LifecycleService() {
 
                         if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules(), dayIndex, currentMinute)) return@forEach
 
-                        val (sendLat, sendLng) = if (
-                            cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
-                        ) {
+                        // Suburb precision deliberately shares only an approximate area. Coarsen the
+                        // position AND drop the fine-grained fields that would otherwise undo it:
+                        // exact altitude is a strong location discriminator, and exact speed/bearing
+                        // let a recipient dead-reckon a finer track than the ~1 km grid implies.
+                        val suburb = cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
+                        val (sendLat, sendLng) = if (suburb) {
                             SharingSchedule.toSuburbPrecision(lastLat, lastLng)
                         } else {
                             lastLat to lastLng
@@ -624,15 +627,15 @@ class HeartbeatService : LifecycleService() {
                             timestamp = Instant.now().toString(),
                             lat = sendLat,
                             lng = sendLng,
-                            accuracy = if (cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos) 1100f else lastAccuracy,
+                            accuracy = if (suburb) 1100f else lastAccuracy,
                             battery = battery,
                             motionState = currentMotionState.name,
                             isSos = isSos,
                             retentionDays = cfg?.retentionDaysLocation ?: 30,
                             pinColor = settings.pinColor,
-                            speed = lastSpeed,
-                            bearing = lastBearing,
-                            altitude = lastAltitude,
+                            speed = if (suburb) 0f else lastSpeed,
+                            bearing = if (suburb) 0f else lastBearing,
+                            altitude = if (suburb) 0.0 else lastAltitude,
                             expectedIntervalSeconds = expectedIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)
