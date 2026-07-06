@@ -105,8 +105,13 @@ fun LocaPeerNavHost(
                 navController.navigate("chat/$peerId/${Uri.encode(target.peerName.ifBlank { "Chat" })}")
             }
             "map" -> {
-                navController.navigate(Screen.Map.route) {
-                    popUpTo(Screen.Map.route) { inclusive = true }
+                val peerId = target.peerId
+                if (peerId != null) {
+                    navController.navigate("${Screen.Map.route}?peerId=$peerId")
+                } else {
+                    navController.navigate(Screen.Map.route) {
+                        popUpTo(Screen.Map.route) { inclusive = true }
+                    }
                 }
             }
             "scan" -> {
@@ -156,10 +161,11 @@ fun LocaPeerNavHost(
             popExitTransition = { fadeExit }
         ) {
             composable(
-                route = "${Screen.Map.route}?lat={lat}&lng={lng}",
+                route = "${Screen.Map.route}?lat={lat}&lng={lng}&peerId={peerId}",
                 arguments = listOf(
                     navArgument("lat") { type = NavType.StringType; nullable = true; defaultValue = null },
-                    navArgument("lng") { type = NavType.StringType; nullable = true; defaultValue = null }
+                    navArgument("lng") { type = NavType.StringType; nullable = true; defaultValue = null },
+                    navArgument("peerId") { type = NavType.StringType; nullable = true; defaultValue = null }
                 )
             ) {
                 MapScreen(

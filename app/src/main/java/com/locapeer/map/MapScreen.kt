@@ -88,6 +88,7 @@ fun MapScreen(
     val uiState by vm.uiState.collectAsState()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
     var showFriendList by remember { mutableStateOf(value = false) }
+    var showSosConfirm by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsState()
     val hasSosContacts by vm.hasSosContacts.collectAsState()
     val userLocation by vm.userLocation.collectAsState()
@@ -149,10 +150,38 @@ fun MapScreen(
         if (hasSosContacts) {
             SosButton(
                 isActive = isSosActive,
-                onClick = { vm.toggleSos() },
+                onClick = { showSosConfirm = true },
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(16.dp)
+            )
+        }
+
+        if (showSosConfirm) {
+            AlertDialog(
+                onDismissRequest = { showSosConfirm = false },
+                icon = { Icon(Icons.Default.Warning, contentDescription = null, tint = SosRed) },
+                title = { Text(if (isSosActive) "Deactivate SOS?" else "Activate SOS?") },
+                text = {
+                    Text(
+                        if (isSosActive) "This will stop the high-priority location broadcast to your emergency contacts."
+                        else "This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated."
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            vm.toggleSos()
+                            showSosConfirm = false
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = SosRed)
+                    ) {
+                        Text(if (isSosActive) "Deactivate" else "Activate")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showSosConfirm = false }) { Text("Cancel") }
+                }
             )
         }
 
@@ -728,12 +757,6 @@ private fun OsmdroidMapView(
     )
 }
 
-private fun bearingToCardinal(bearing: Float): String {
-    val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
-    val normalized = ((bearing % 360f) + 360f) % 360f
-    return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
-}
-
 @Composable
 private fun PinInfoSheet(
     pin: PinData,
@@ -816,7 +839,7 @@ private fun PinInfoSheet(
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
                     if (!hb.motionState.equals("STATIONARY", ignoreCase = true) && hb.speed > 0f) {
                         StatChip("Speed",
-                            "${DisplayFormat.speedValue(hb.speed)} ${bearingToCardinal(hb.bearing)}")
+                            "${DisplayFormat.speedValue(hb.speed)} ${DisplayFormat.bearingToCardinal(hb.bearing)}")
                     }
                     if (hb.altitude != 0.0) {
                         StatChip("Elevation", DisplayFormat.elevationValue(hb.altitude))

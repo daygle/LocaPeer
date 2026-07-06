@@ -134,9 +134,16 @@ class MapViewModel @Inject constructor(
     init {
         val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
         val argLng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
+        val argPeerId = savedStateHandle.get<String>("peerId")
 
         if (argLat != null && argLng != null) {
             _centerOnArgs.value = GeoPoint(argLat, argLng)
+        } else if (argPeerId != null) {
+            viewModelScope.launch {
+                heartbeatDao.getLatestHeartbeat(argPeerId)?.let { hb ->
+                    _centerOnArgs.value = GeoPoint(hb.lat, hb.lng)
+                }
+            }
         }
 
         viewModelScope.launch {
@@ -148,8 +155,8 @@ class MapViewModel @Inject constructor(
                 // If we have center args, we'll use those instead of saved center for the initial view
                 if (_centerOnArgs.value == null) {
                     _lastMapCenter.value = Triple(lat, lng, zoom)
-                } else {
-                    _lastMapCenter.value = Triple(argLat!!, argLng!!, 16.0)
+                } else if (argLat != null && argLng != null) {
+                    _lastMapCenter.value = Triple(argLat, argLng, 16.0)
                 }
             } else if (argLat != null && argLng != null) {
                 _lastMapCenter.value = Triple(argLat, argLng, 16.0)
@@ -198,7 +205,8 @@ class MapViewModel @Inject constructor(
         val myPubkey = try { keyManager.ensureKeypair().second } catch (_: Exception) { "" }
         val pins = peers.filter { it.deviceId != myPubkey }.map { peer ->
             val hb = heartbeatMap[peer.deviceId]
-            val overdue = hb != null && (now - hb.timestamp) > 30 * 60 * 1000L
+            val intervalSec = hb?.expectedIntervalSeconds ?: 900L
+            val overdue = hb != null && (now - hb.timestamp) > (intervalSec * 1000L * 2).coerceAtLeast(120_000L)
             PinData(peer, hb, overdue)
         }
         val nameByDevice = peers.associate { it.deviceId to it.displayName }

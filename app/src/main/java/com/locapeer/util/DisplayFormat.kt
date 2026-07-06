@@ -67,4 +67,11 @@ object DisplayFormat {
         return if (meters < 1000) "${Math.round(meters)} m"
                else "${"%.1f".format(meters / 1000.0)} km"
     }
+
+    /** Direction string from a 0–360 degree bearing, e.g. "N", "SW". */
+    fun bearingToCardinal(bearing: Float): String {
+        val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
+        val normalized = ((bearing % 360f) + 360f) % 360f
+        return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
+    }
 }

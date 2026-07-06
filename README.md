@@ -5,7 +5,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 ## Features
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
-- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) and drops during low battery, saving power without sacrificing accuracy.
+- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) using a custom GPS-based motion engine, saving power during low battery without sacrificing accuracy.
 - **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** - Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
@@ -39,7 +39,7 @@ When sharing is enabled, the app publishes a `HEARTBEAT` event encrypted individ
 | Low Battery (<20%) | 30 min |
 | SOS active | 15 sec |
 
-Motion state is detected via Android Activity Recognition and displayed alongside each location ping.
+Motion state is detected via a custom speed-based classification engine and displayed alongside each location ping.
 
 ### Precision Modes
 Each contact relationship can be set to one of two precision levels:
@@ -81,8 +81,9 @@ Schedule rules specify which days of the week (Monday–Sunday bitmask) and whic
 | 1055 | `SUPERVISED_REGISTER` | Supervised device initiates supervisor registration |
 | 1056 | `SUPERVISED_REGISTER_ACCEPT` | Supervisor accepts device registration |
 | 1057 | `SUPERVISED_REGISTER_DECLINE` | Supervisor declines device registration |
+| 1058 | `TRACKING_ALERT` | Notifies peer when someone receives an alert about them |
 
-Custom application events (kinds 1040–1057) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
+Custom application events (kinds 1040–1058) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
 
 ## Technical Architecture
 
@@ -96,7 +97,7 @@ Custom application events (kinds 1040–1057) are tagged with the recipient's pu
 | **Cryptography** | `secp256k1-kmp` (BIP-340 Schnorr) + Bouncy Castle (NIP-44 v2 ChaCha20-HMAC-SHA256) |
 | **Maps** | OSMDroid (OpenStreetMap) |
 | **Location** | Android FusedLocationProviderClient |
-| **Activity Sensing** | Android Activity Recognition API |
+| **Motion Classification** | Custom GPS-based engine (MotionMath) |
 | **QR Codes** | ZXing (generation) + ML Kit Vision (scanning) |
 
 ## Building
@@ -120,6 +121,7 @@ cd LocaPeer
 - **Per-Peer Encryption**: Each heartbeat is encrypted individually for its recipient using keys derived for that conversation.
 - **Hardware-Backed Keys**: Private keys never leave the device and are protected by the TEE/SE via Android Keystore where supported.
 - **Schnorr Signatures**: Every event is signed with BIP-340 Schnorr; recipients verify the signature before processing.
+- **Tracking Transparency**: `TRACKING_ALERT` (kind 1058) events notify you if another user receives a geofence or proximity alert triggered by your movement, ensuring you are aware of how your location data is being monitored.
 - **Replay Protection**: Control events are checked for freshness (300-second window for unlock events, 24-hour window for registration); a 30-day catch-up window for offline delivery replays only recent history.
 - **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings on sensitive screens.
 

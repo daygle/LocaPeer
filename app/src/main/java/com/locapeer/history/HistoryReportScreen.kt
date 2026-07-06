@@ -29,6 +29,7 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
+import com.locapeer.ui.components.EmptyState
 import com.locapeer.util.DisplayFormat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
@@ -249,19 +250,39 @@ fun HistoryReportScreen(
             }
 
             when (selectedTab) {
-                0 -> HistoryMapTab(
-                    heartbeats = heartbeats,
-                    addresses = addresses,
-                    modifier = Modifier.weight(1f)
-                )
-                1 -> HistoryListTab(
-                    heartbeats = heartbeats,
-                    addresses = addresses,
-                    timeFormat = timeFormat,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 16.dp)
-                )
+                0 -> {
+                    if (heartbeats.isEmpty()) {
+                        EmptyState(
+                            icon = Icons.Default.History,
+                            title = "No history for this day",
+                            subtitle = "Try selecting a different date or checking your connection."
+                        )
+                    } else {
+                        HistoryMapTab(
+                            heartbeats = heartbeats,
+                            addresses = addresses,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+                1 -> {
+                    if (heartbeats.isEmpty()) {
+                        EmptyState(
+                            icon = Icons.Default.History,
+                            title = "No history for this day",
+                            subtitle = "Try selecting a different date or checking your connection."
+                        )
+                    } else {
+                        HistoryListTab(
+                            heartbeats = heartbeats,
+                            addresses = addresses,
+                            timeFormat = timeFormat,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(horizontal = 16.dp)
+                        )
+                    }
+                }
             }
         }
     }
@@ -714,16 +735,10 @@ private fun utcMidnightToLocalDayStart(utcMs: Long): Long {
  */
 private fun speedLabel(motionState: String, speed: Float, bearing: Float): String {
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
-        "${DisplayFormat.speedValue(speed)} · ${bearingToCardinal(bearing)}"
+        "${DisplayFormat.speedValue(speed)} · ${DisplayFormat.bearingToCardinal(bearing)}"
     } else {
         DisplayFormat.speedValue(0f)
     }
-}
-
-private fun bearingToCardinal(bearing: Float): String {
-    val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
-    val normalized = ((bearing % 360f) + 360f) % 360f
-    return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
 }
 
 private fun initialUtcTodayMs(): Long {
