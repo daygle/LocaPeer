@@ -102,6 +102,7 @@ fun MapScreen(
     val mapFixedLat by vm.mapFixedLat.collectAsState()
     val mapFixedLng by vm.mapFixedLng.collectAsState()
     val showGeofences by vm.showGeofences.collectAsState()
+    val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsState()
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
@@ -117,8 +118,11 @@ fun MapScreen(
         }
     }
 
-    LaunchedEffect(selectedPin) {
+    LaunchedEffect(selectedPin, reverseGeocodingEnabled) {
         selectedPinAddress = null
+        // Reverse geocoding is opt-in: the platform Geocoder sends the queried coordinates
+        // off-device, so only look up an address when the user has enabled it.
+        if (!reverseGeocodingEnabled) return@LaunchedEffect
         val hb = selectedPin?.heartbeat ?: return@LaunchedEffect
         selectedPinAddress = geocodeLocation(context, hb.lat, hb.lng)
     }
@@ -910,9 +914,17 @@ private suspend fun geocodeLocation(context: android.content.Context, lat: Doubl
             val geocoder = Geocoder(context, Locale.getDefault())
             val addr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 suspendCancellableCoroutine { cont ->
-                    geocoder.getFromLocation(lat, lng, 1) { addresses ->
-                        cont.resume(addresses.firstOrNull())
-                    }
+                    // Resume on both callbacks: on failure the platform calls onError instead of
+                    // onGeocode, and without an onError branch the continuation would never resume.
+                    geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
+                        override fun onGeocode(addresses: MutableList<android.location.Address>) {
+                            if (cont.isActive) cont.resume(addresses.firstOrNull())
+                        }
+
+                        override fun onError(errorMessage: String?) {
+                            if (cont.isActive) cont.resume(null)
+                        }
+                    })
                 }
             } else {
                 geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()

@@ -161,9 +161,18 @@ class HistoryReportViewModel @Inject constructor(
             try {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     suspendCancellableCoroutine { cont ->
-                        geocoder.getFromLocation(lat, lng, 1) { addresses ->
-                            cont.resume(addresses.firstOrNull()?.let { formatAddress(it) })
-                        }
+                        // Handle both callbacks: on failure the platform invokes onError instead
+                        // of onGeocode. Without an onError branch the continuation never resumes,
+                        // hanging this lookup and stalling the sequential loop that awaits it.
+                        geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
+                            override fun onGeocode(addresses: MutableList<Address>) {
+                                if (cont.isActive) cont.resume(addresses.firstOrNull()?.let { formatAddress(it) })
+                            }
+
+                            override fun onError(errorMessage: String?) {
+                                if (cont.isActive) cont.resume(null)
+                            }
+                        })
                     }
                 } else {
                     geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()?.let { formatAddress(it) }

@@ -207,9 +207,9 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Look Up Addresses in History") },
+                        headlineContent = { Text("Look Up Addresses") },
                         supportingContent = {
-                            Text("Show street addresses for history points. Sends those coordinates to your device's geocoding service (usually Google).")
+                            Text("Show street addresses for history points and tapped map pins. Sends those coordinates to your device's geocoding service (usually Google).")
                         },
                         leadingContent = { Icon(Icons.Default.Place, contentDescription = null) },
                         trailingContent = {
