@@ -20,6 +20,14 @@ object GeoMath {
     }
 
     /**
+     * Latitude offset by a north/south distance in metres (positive = north).
+     * Used to place a geofence's label on its circle edge instead of its centre,
+     * so stacked fences sharing a centre don't hide each other's labels.
+     */
+    fun offsetLatitude(lat: Double, metresNorth: Double): Double =
+        lat + Math.toDegrees(metresNorth / EARTH_RADIUS_M)
+
+    /**
      * Hysteresis membership test for a circular zone: once inside, a point only
      * counts as having left when it clears the radius plus the buffer. This stops
      * fix jitter at the boundary from flapping between inside and outside.

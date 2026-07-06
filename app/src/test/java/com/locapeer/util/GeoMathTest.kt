@@ -34,6 +34,29 @@ class GeoMathTest {
     }
 
     @Test
+    fun `offsetLatitude shifts north by the expected degrees`() {
+        // ~111 m per 0.001° of latitude, so 111 m north ≈ +0.001°.
+        val lat = -33.8688
+        assertEquals(lat + 0.001, GeoMath.offsetLatitude(lat, 111.0), 0.00001)
+    }
+
+    @Test
+    fun `offsetLatitude moves south for negative metres`() {
+        val lat = -33.8688
+        assertTrue(GeoMath.offsetLatitude(lat, -111.0) < lat)
+        assertEquals(0.0, GeoMath.offsetLatitude(lat, 0.0) - lat, 0.0)
+    }
+
+    @Test
+    fun `offsetLatitude distance round-trips through haversine`() {
+        // A point offset 250 m north should measure 250 m away by great-circle.
+        val lat = -33.8688
+        val lng = 151.2093
+        val northLat = GeoMath.offsetLatitude(lat, 250.0)
+        assertEquals(250.0, GeoMath.haversineMetres(lat, lng, northLat, lng), 0.5)
+    }
+
+    @Test
     fun `hysteresis requires clearing radius plus buffer to leave`() {
         val radius = 500.0
         val buffer = 100.0

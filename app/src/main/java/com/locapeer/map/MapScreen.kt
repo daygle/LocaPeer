@@ -39,6 +39,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
+import com.locapeer.util.GeoMath
 import com.locapeer.ui.theme.*
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -702,16 +703,22 @@ private fun OsmdroidMapView(
                 }
                 mapView.overlays.add(circle)
 
-                // Label at the centre showing the fence name and the contacts it's assigned to.
+                // Label showing the fence name and the contacts it's assigned to. Anchor it to
+                // the top edge of the circle (not the centre) so fences that share a centre —
+                // e.g. a large suburb zone and a small home zone on the same point — separate by
+                // radius instead of stacking their labels on top of each other.
                 val label = Marker(mapView).apply {
-                    position = GeoPoint(fence.lat, fence.lng)
+                    position = GeoPoint(
+                        GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()),
+                        fence.lng
+                    )
                     icon = MarkerIconFactory.createGeofenceLabel(
                         context = context,
                         title = fence.name,
                         subtitle = geofenceOnMap.assignedLabel,
                         color = strokeArgb
                     )
-                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                     infoWindow = null
                     isDraggable = false
                     // Decorative label: consume clicks so osmdroid doesn't recenter or
