@@ -285,8 +285,7 @@ private fun GeofenceAreaCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp),
-        onClick = onEdit
+            .padding(horizontal = 16.dp, vertical = 6.dp)
     ) {
         Row(
             modifier = Modifier
@@ -328,6 +327,9 @@ private fun GeofenceAreaCard(
                         color = MaterialTheme.colorScheme.outline
                     )
                 }
+            }
+            IconButton(onClick = onEdit) {
+                Icon(Icons.Default.Edit, contentDescription = "Edit")
             }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
