@@ -292,12 +292,39 @@ class HeartbeatService : LifecycleService() {
 
     private val heartbeatRunnable = object : Runnable {
         override fun run() {
-            if (broadcastHeartbeat()) {
-                lastPulseElapsedMs = SystemClock.elapsedRealtime()
+            val now = java.util.Calendar.getInstance()
+            val dayIndex = when (now[java.util.Calendar.DAY_OF_WEEK]) {
+                java.util.Calendar.MONDAY    -> 0
+                java.util.Calendar.TUESDAY   -> 1
+                java.util.Calendar.WEDNESDAY -> 2
+                java.util.Calendar.THURSDAY  -> 3
+                java.util.Calendar.FRIDAY    -> 4
+                java.util.Calendar.SATURDAY  -> 5
+                java.util.Calendar.SUNDAY    -> 6
+                else                         -> 0
             }
+            val currentMinute = now.get(java.util.Calendar.HOUR_OF_DAY) * 60 + now.get(java.util.Calendar.MINUTE)
+            val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules, dayIndex, currentMinute)
+
+            if (scheduleActive) {
+                if (broadcastHeartbeat()) {
+                    lastPulseElapsedMs = SystemClock.elapsedRealtime()
+                }
+            } else {
+                Log.d(TAG, "Heartbeat suppressed: outside global schedule. Suspending GPS.")
+                // Stop GPS to save battery during off-hours
+                try {
+                    fusedLocation.removeLocationUpdates(locationCallback)
+                } catch (e: Exception) {}
+            }
+
             val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
             handler.postDelayed(this, interval)
-            armDozeBackstop(interval)
+            
+            // Only arm the doze backstop for significant intervals to avoid excessive system calls
+            if (interval >= 300_000L) {
+                armDozeBackstop(interval)
+            }
         }
     }
 
@@ -494,7 +521,7 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
-            currentMotionState == MotionState.STATIONARY -> 120_000L
+            currentMotionState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             boosting -> 15_000L
             else -> 30_000L
         }
@@ -505,6 +532,16 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun updateLocationRequest() {
+        // If the global schedule is inactive, don't start location updates.
+        // The heartbeatRunnable will re-check and resume them when the schedule re-opens.
+        if (!isSos && !SharingSchedule.isActive(currentSettings.globalScheduleRules)) {
+            Log.d(TAG, "updateLocationRequest suppressed: outside global schedule")
+            try {
+                fusedLocation.removeLocationUpdates(locationCallback)
+            } catch (_: Exception) {}
+            return
+        }
+
         try {
             fusedLocation.removeLocationUpdates(locationCallback)
             fusedLocation.requestLocationUpdates(buildLocationRequest(), locationCallback, Looper.getMainLooper())
