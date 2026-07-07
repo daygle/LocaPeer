@@ -71,7 +71,9 @@ class BackupSerializationTest {
             useImperialSpeed = true,
             use24HourTime = false,
             useImperialElevation = true,
-            useImperialDistance = true
+            useImperialDistance = true,
+            notifyOnTrackingAlerts = true,
+            reverseGeocodingEnabled = true
         )
     )
 
