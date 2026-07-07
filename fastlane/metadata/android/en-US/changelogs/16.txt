@@ -1,7 +1,7 @@
-Schedule your alerts your way!
+Schedule your alerts!
 
 • Geofence alerts now support schedules — choose the days and times you want to be notified.
 • Proximity alerts can be scheduled too, or kept always on.
-• Smoother conversations: faster search and sorting by date, name or unread.
-• Clearer background-location setup so you know exactly which permission to grant.
+• Smoother conversations: faster search and sorting by date, name, or unread count.
+• Clearer background location setup so you know exactly which permission to grant.
 • General UI polish and performance improvements.
