@@ -330,19 +330,14 @@ class NostrRelayClient @Inject constructor(
                                 return
                             }
                             val isNew = synchronized(recentEventLock) {
-                                if (recentEventIds.contains(event.id)) {
-                                    false
-                                } else {
-                                    if (recentEventIds.size >= 2000) {
-                                        val it = recentEventIds.iterator()
-                                        if (it.hasNext()) {
-                                            it.next()
-                                            it.remove()
-                                        }
+                                if (recentEventIds.size >= 2000 && !recentEventIds.contains(event.id)) {
+                                    val it = recentEventIds.iterator()
+                                    if (it.hasNext()) {
+                                        it.next()
+                                        it.remove()
                                     }
-                                    recentEventIds.add(event.id)
-                                    true
                                 }
+                                recentEventIds.add(event.id)
                             }
                             if (isNew) {
                                 if (eventsSinceLastSave.incrementAndGet() >= 100) {

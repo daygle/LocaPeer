@@ -34,6 +34,5 @@ interface PeerDao {
     )
     suspend fun setArchived(peerId: String, archived: Boolean, now: Long)
 
-    @Query("UPDATE peers SET isArchived = 0 WHERE deviceId = :peerId OR publicKeyHex = :peerId")
-    suspend fun unarchive(peerId: String)
+    suspend fun unarchive(peerId: String) = setArchived(peerId, false, 0)
 }
