@@ -846,6 +846,7 @@ private fun PinInfoSheet(
                 ) {
                     StatChip("Last seen", formatTimestamp(hb.timestamp))
                     StatChip("Battery", "${hb.battery}%")
+                    StatChip("Accuracy", "±${DisplayFormat.distanceValue(hb.accuracy.toDouble())}")
                     StatChip("Motion",
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
                     if (!hb.motionState.equals("STATIONARY", ignoreCase = true) && hb.speed > 0f) {

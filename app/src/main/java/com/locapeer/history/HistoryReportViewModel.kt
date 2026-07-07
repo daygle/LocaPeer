@@ -77,8 +77,14 @@ class HistoryReportViewModel @Inject constructor(
         }
             .flatMapLatest { it }
             .combine(
-                prefs.settings.map { it.historyMinDistanceMeters }.distinctUntilChanged()
-            ) { pings, minDistanceM -> HistoryThinning.thin(pings, minDistanceM) }
+                prefs.settings
+                    .map { it.historyMinDistanceMeters to it.historyMaxAccuracyMeters }
+                    .distinctUntilChanged()
+            ) { pings, (minDistanceM, maxAccuracyM) ->
+                // Drop low-accuracy fixes first, then thin the survivors by spacing.
+                val accurate = HistoryThinning.filterByAccuracy(pings, maxAccuracyM)
+                HistoryThinning.thin(accurate, minDistanceM)
+            }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _addresses = MutableStateFlow<Map<Long, String>>(emptyMap())

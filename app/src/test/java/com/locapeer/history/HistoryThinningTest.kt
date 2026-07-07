@@ -8,14 +8,14 @@ import org.junit.Test
 class HistoryThinningTest {
 
     // ~0.001° latitude ≈ 111m; tests sit on the equator so the conversion is uniform.
-    private fun point(id: Long, northMetres: Double, isSos: Boolean = false) = HeartbeatEntity(
+    private fun point(id: Long, northMetres: Double, isSos: Boolean = false, accuracy: Float = 10f) = HeartbeatEntity(
         id = id,
         deviceId = "dev",
         displayName = "Test",
         timestamp = id,
         lat = northMetres / 111_000.0,
         lng = 0.0,
-        accuracy = 10f,
+        accuracy = accuracy,
         battery = 100,
         motionState = "STATIONARY",
         isSos = isSos,
@@ -74,5 +74,39 @@ class HistoryThinningTest {
     fun `moving trail is untouched when spacing already exceeds the threshold`() {
         val points = listOf(point(1, 0.0), point(2, 150.0), point(3, 300.0), point(4, 450.0))
         assertEquals(listOf(1L, 2L, 3L, 4L), ids(HistoryThinning.thin(points, 100)))
+    }
+
+    @Test
+    fun `zero accuracy threshold keeps every point`() {
+        val points = listOf(point(1, 0.0, accuracy = 5f), point(2, 5.0, accuracy = 800f))
+        assertSame(points, HistoryThinning.filterByAccuracy(points, 0))
+    }
+
+    @Test
+    fun `accuracy filter drops points coarser than the threshold`() {
+        val points = listOf(
+            point(1, 0.0, accuracy = 8f),
+            point(2, 5.0, accuracy = 250f),
+            point(3, 10.0, accuracy = 100f),
+            point(4, 15.0, accuracy = 600f)
+        )
+        // 100m threshold: the 8m and 100m fixes survive (<=), the 250m and 600m are hidden.
+        assertEquals(listOf(1L, 3L), ids(HistoryThinning.filterByAccuracy(points, 100)))
+    }
+
+    @Test
+    fun `accuracy filter never hides sos pings`() {
+        val points = listOf(
+            point(1, 0.0, accuracy = 8f),
+            point(2, 5.0, isSos = true, accuracy = 900f),
+            point(3, 10.0, accuracy = 700f)
+        )
+        assertEquals(listOf(1L, 2L), ids(HistoryThinning.filterByAccuracy(points, 100)))
+    }
+
+    @Test
+    fun `accuracy filter keeps identity when nothing is removed`() {
+        val points = listOf(point(1, 0.0, accuracy = 8f), point(2, 5.0, accuracy = 30f))
+        assertSame(points, HistoryThinning.filterByAccuracy(points, 100))
     }
 }

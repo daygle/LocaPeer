@@ -377,42 +377,29 @@ fun SettingsScreen(
                         onClick = { showIntervalsDialog = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Icon(
-                            Icons.Default.Straighten,
-                            contentDescription = null,
-                            modifier = Modifier.padding(top = 2.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(16.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            var minDistValue by remember(settings.historyMinDistanceMeters) {
-                                mutableFloatStateOf(settings.historyMinDistanceMeters.toFloat())
-                            }
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("Minimum Distance Filtering", style = MaterialTheme.typography.bodyMedium)
-                                Text(
-                                    if (minDistValue.roundToInt() == 0) "Off"
-                                    else com.locapeer.util.DisplayFormat.distanceValue(minDistValue.roundToInt().toDouble()),
-                                    style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary
-                                )
-                            }
-                            Text("Only record points that are at least this far from the previous one.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            Slider(
-                                value = minDistValue,
-                                onValueChange = { minDistValue = it },
-                                onValueChangeFinished = { vm.setHistoryMinDistanceMeters(minDistValue.roundToInt()) },
-                                valueRange = 0f..500f,
-                                steps = 19,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
+                    MetresFilterSliderRow(
+                        icon = Icons.Default.Straighten,
+                        title = "Minimum Distance Filtering",
+                        subtitle = "Only show points that are at least this far from the previous one.",
+                        valueMeters = settings.historyMinDistanceMeters,
+                        onCommit = { vm.setHistoryMinDistanceMeters(it) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    MetresFilterSliderRow(
+                        icon = Icons.Default.GpsOff,
+                        title = "Discard Low-Accuracy Fixes",
+                        subtitle = "Don't broadcast or record your own fixes with an accuracy radius larger than this. SOS is never skipped.",
+                        valueMeters = settings.sendMaxAccuracyMeters,
+                        onCommit = { vm.setSendMaxAccuracyMeters(it) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    MetresFilterSliderRow(
+                        icon = Icons.Default.FilterAlt,
+                        title = "Hide Low-Accuracy Points",
+                        subtitle = "Hide history points with an accuracy radius larger than this. Nothing is deleted.",
+                        valueMeters = settings.historyMaxAccuracyMeters,
+                        onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
+                    )
                 }
             }
 
@@ -923,6 +910,57 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
         modifier = Modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
+}
+
+/**
+ * A labelled 0–500 m slider used for the distance/accuracy filters. Shows "Off" at 0 and the
+ * unit-aware distance otherwise, and only commits on release so the setting isn't rewritten on
+ * every drag frame.
+ */
+@Composable
+private fun MetresFilterSliderRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    valueMeters: Int,
+    onCommit: (Int) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.Top
+    ) {
+        Icon(
+            icon,
+            contentDescription = null,
+            modifier = Modifier.padding(top = 2.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            var value by remember(valueMeters) { mutableFloatStateOf(valueMeters.toFloat()) }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(title, style = MaterialTheme.typography.bodyMedium)
+                Text(
+                    if (value.roundToInt() == 0) "Off"
+                    else com.locapeer.util.DisplayFormat.distanceValue(value.roundToInt().toDouble()),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Slider(
+                value = value,
+                onValueChange = { value = it },
+                onValueChangeFinished = { onCommit(value.roundToInt()) },
+                valueRange = 0f..500f,
+                steps = 19,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
 }
 
 @Composable

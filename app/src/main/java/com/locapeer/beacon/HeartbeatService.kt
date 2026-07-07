@@ -153,8 +153,10 @@ class HeartbeatService : LifecycleService() {
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
                 if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // If no heartbeat has gone out yet (empty lastLocation cache at start,
-                // so the initial pulse was skipped), send one now that a fix exists.
-                if (isStarted && (lastPulseElapsedMs == 0L)) pulseNow()
+                // so the initial pulse was skipped), send one now that a usable fix
+                // exists. Skip when the fix fails the accuracy gate: it would only be
+                // withheld again, re-triggering this on every fix until GPS sharpens.
+                if (isStarted && lastPulseElapsedMs == 0L && !sendGateBlocks(loc.accuracy)) pulseNow()
             }
         }
     }
@@ -575,10 +577,26 @@ class HeartbeatService : LifecycleService() {
         armDozeBackstop(delay)
     }
 
+    /**
+     * Sender-side accuracy gate: true when a fix this coarse must be withheld from
+     * local history and peers. Never blocks in SOS — a coarse emergency position
+     * still beats none. 0 (the default) never blocks.
+     */
+    private fun sendGateBlocks(accuracyM: Float): Boolean {
+        val gate = currentSettings.sendMaxAccuracyMeters
+        return !isSos && gate > 0 && accuracyM > gate
+    }
+
     /** Returns false when no heartbeat was recorded because no location fix exists yet. */
     private fun broadcastHeartbeat(isSos: Boolean = this.isSos): Boolean {
         if (lastLat == 0.0 && lastLng == 0.0) {
             Log.d(TAG, "Skipping heartbeat: no location fixed yet")
+            return false
+        }
+        // Sender-side accuracy gate: withhold a fix we don't trust from both local
+        // history and peers, so a coarse cell fix doesn't paint a misleading pin.
+        if (sendGateBlocks(lastAccuracy)) {
+            Log.d(TAG, "Skipping heartbeat: accuracy ${lastAccuracy}m worse than gate ${currentSettings.sendMaxAccuracyMeters}m")
             return false
         }
         val battery = getBatteryLevel()
