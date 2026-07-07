@@ -390,14 +390,30 @@ class SettingsViewModel @Inject constructor(
     fun applyRestore(sections: Set<BackupSection>) {
         val pending = _pendingRestore.value ?: return
         viewModelScope.launch {
-            try {
-                val backup = pending.backup
-                val restored = mutableListOf<String>()
-                if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
-                    keyManager.importPrivateKey(backup.privateKeyHex)
-                    restored += "identity"
+            val backup = pending.backup
+            val restored = mutableListOf<String>()
+            val failed = mutableListOf<String>()
+
+            // Each section is restored independently so that one bad section (most commonly a
+            // malformed private key in a hand-edited backup) does not discard the others the
+            // user also selected, and a mid-way failure is reported rather than swallowed.
+            if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
+                val key = backup.privateKeyHex.trim().lowercase()
+                if (!PRIVATE_KEY_REGEX.matches(key)) {
+                    Log.e(TAG, "Identity restore failed: private key is not 64 hex characters")
+                    failed += "identity"
+                } else {
+                    try {
+                        keyManager.importPrivateKey(key)
+                        restored += "identity"
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Identity restore failed", e)
+                        failed += "identity"
+                    }
                 }
-                if (BackupSection.CONTACTS in sections && backup.contacts != null) {
+            }
+            if (BackupSection.CONTACTS in sections && backup.contacts != null) {
+                try {
                     backup.contacts.forEach { c ->
                         peerDao.upsertPeer(PeerEntity(
                             deviceId = c.deviceId,
@@ -425,8 +441,13 @@ class SettingsViewModel @Inject constructor(
                         }
                     }
                     restored += "${backup.contacts.size} contacts"
+                } catch (e: Exception) {
+                    Log.e(TAG, "Contacts restore failed", e)
+                    failed += "contacts"
                 }
-                if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
+            }
+            if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
+                try {
                     backup.geofences.forEach { g ->
                         geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
                     }
@@ -442,8 +463,13 @@ class SettingsViewModel @Inject constructor(
                         )
                     }
                     restored += "${backup.geofences.size} geofences"
+                } catch (e: Exception) {
+                    Log.e(TAG, "Geofences restore failed", e)
+                    failed += "geofences"
                 }
-                if (BackupSection.SETTINGS in sections && backup.settings != null) {
+            }
+            if (BackupSection.SETTINGS in sections && backup.settings != null) {
+                try {
                     val s = backup.settings
                     prefs.updateDisplayName(s.displayName)
                     prefs.updateIntervals(s.stationaryIntervalMinutes, s.walkingIntervalMinutes,
@@ -465,18 +491,24 @@ class SettingsViewModel @Inject constructor(
                     prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
                     prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
                     restored += "settings"
+                } catch (e: Exception) {
+                    Log.e(TAG, "Settings restore failed", e)
+                    failed += "settings"
                 }
-                // Identity and/or display name may have changed; refresh the shown pubkey and QR.
-                if (BackupSection.PRIVATE_KEY in sections || BackupSection.SETTINGS in sections) {
-                    refreshProfile()
-                }
-                _backupResult.value = "Restored: ${restored.joinToString(", ")}"
-            } catch (e: Exception) {
-                Log.e(TAG, "Restore failed", e)
-                _backupResult.value = "Restore failed: ${e.message}"
-            } finally {
-                _pendingRestore.value = null
             }
+            // Identity and/or display name may have changed; refresh the shown pubkey and QR.
+            if ("identity" in restored || "settings" in restored) {
+                refreshProfile()
+            }
+            _backupResult.value = buildString {
+                if (restored.isNotEmpty()) append("Restored: ${restored.joinToString(", ")}")
+                if (failed.isNotEmpty()) {
+                    if (isNotEmpty()) append(". ")
+                    append("Failed: ${failed.joinToString(", ")}")
+                }
+                if (isEmpty()) append("Nothing to restore")
+            }
+            _pendingRestore.value = null
         }
     }
 
@@ -567,6 +599,8 @@ class SettingsViewModel @Inject constructor(
     companion object {
         private val jsonExport = Json { encodeDefaults = true }
         private val jsonImport = Json { ignoreUnknownKeys = true }
+        /** A restorable identity is a 32-byte secp256k1 scalar written as 64 lowercase hex chars. */
+        private val PRIVATE_KEY_REGEX = Regex("^[0-9a-f]{64}$")
     }
 
 }
