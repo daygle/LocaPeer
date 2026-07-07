@@ -581,6 +581,14 @@ class HeartbeatService : LifecycleService() {
             Log.d(TAG, "Skipping heartbeat: no location fixed yet")
             return false
         }
+        // Sender-side accuracy gate: withhold a fix we don't trust from both local
+        // history and peers, so a coarse cell fix doesn't paint a misleading pin.
+        // Never applied in SOS — a coarse emergency position still beats none.
+        val sendGate = currentSettings.sendMaxAccuracyMeters
+        if (!isSos && sendGate > 0 && lastAccuracy > sendGate) {
+            Log.d(TAG, "Skipping heartbeat: accuracy ${lastAccuracy}m worse than gate ${sendGate}m")
+            return false
+        }
         val battery = getBatteryLevel()
         intervalManager.updateBattery(battery)
         // Battery is sampled once per heartbeat; when it crosses the low-battery

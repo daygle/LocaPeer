@@ -14,6 +14,21 @@ import com.locapeer.util.GeoMath
  */
 object HistoryThinning {
 
+    /**
+     * Display-time accuracy filter: hides points whose reported accuracy radius is
+     * larger than [maxAccuracyM], so a coarse cell fix doesn't drag the trail off to
+     * a spot the device never really was. Non-destructive like [thin] — every ping
+     * stays stored, and SOS pings are always kept whatever their accuracy.
+     * 0 (or negative) shows every point.
+     */
+    fun filterByAccuracy(points: List<HeartbeatEntity>, maxAccuracyM: Int): List<HeartbeatEntity> {
+        if (maxAccuracyM <= 0) return points
+        val filtered = points.filter { it.isSos || it.accuracy <= maxAccuracyM }
+        // Preserve identity when nothing was removed so downstream distinctUntilChanged
+        // / == checks can short-circuit.
+        return if (filtered.size == points.size) points else filtered
+    }
+
     /** [points] must be in chronological order, as the history queries return them. */
     fun thin(points: List<HeartbeatEntity>, minDistanceM: Int): List<HeartbeatEntity> {
         if (minDistanceM <= 0 || points.size <= 1) return points

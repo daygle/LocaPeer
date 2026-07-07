@@ -110,6 +110,8 @@ data class SettingsBackup(
     val localLocationRetentionDays: Int = 90,
     val localMessageRetentionDays: Int = 90,
     val historyMinDistanceMeters: Int = 0,
+    val historyMaxAccuracyMeters: Int = 0,
+    val sendMaxAccuracyMeters: Int = 0,
     val heartbeatEnabled: Boolean = true,
     val onboardingComplete: Boolean = true,
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
@@ -342,6 +344,8 @@ class SettingsViewModel @Inject constructor(
                             localLocationRetentionDays = s.localLocationRetentionDays,
                             localMessageRetentionDays = s.localMessageRetentionDays,
                             historyMinDistanceMeters = s.historyMinDistanceMeters,
+                            historyMaxAccuracyMeters = s.historyMaxAccuracyMeters,
+                            sendMaxAccuracyMeters = s.sendMaxAccuracyMeters,
                             heartbeatEnabled = s.heartbeatEnabled,
                             onboardingComplete = s.onboardingComplete,
                             globalScheduleRules = s.globalScheduleRules,
@@ -488,6 +492,8 @@ class SettingsViewModel @Inject constructor(
                         prefs.setLocalLocationRetentionDays(s.localLocationRetentionDays)
                         prefs.setLocalMessageRetentionDays(s.localMessageRetentionDays)
                         prefs.setHistoryMinDistanceMeters(s.historyMinDistanceMeters)
+                        prefs.setHistoryMaxAccuracyMeters(s.historyMaxAccuracyMeters)
+                        prefs.setSendMaxAccuracyMeters(s.sendMaxAccuracyMeters)
                         setHeartbeatEnabled(s.heartbeatEnabled)
                         prefs.setOnboardingComplete(s.onboardingComplete)
                         prefs.setGlobalScheduleRules(s.globalScheduleRules)
@@ -586,6 +592,14 @@ class SettingsViewModel @Inject constructor(
 
     fun setHistoryMinDistanceMeters(meters: Int) {
         viewModelScope.launch { prefs.setHistoryMinDistanceMeters(meters) }
+    }
+
+    fun setHistoryMaxAccuracyMeters(meters: Int) {
+        viewModelScope.launch { prefs.setHistoryMaxAccuracyMeters(meters) }
+    }
+
+    fun setSendMaxAccuracyMeters(meters: Int) {
+        viewModelScope.launch { prefs.setSendMaxAccuracyMeters(meters) }
     }
 
     fun setUseImperialSpeed(imperial: Boolean) {

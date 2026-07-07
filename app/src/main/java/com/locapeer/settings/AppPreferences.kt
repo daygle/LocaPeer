@@ -67,6 +67,18 @@ data class AppSettings(
      * Display-time filter only — every ping is still stored. 0 = show all.
      */
     val historyMinDistanceMeters: Int = 0,
+    /**
+     * Hide history points whose accuracy radius is larger than this (metres).
+     * Display-time filter only — every ping is still stored, so lowering the
+     * threshold re-reveals them. SOS pings are always shown. 0 = show all.
+     */
+    val historyMaxAccuracyMeters: Int = 0,
+    /**
+     * Don't broadcast or record own fixes whose accuracy radius is larger than
+     * this (metres). A sender-side quality gate applied before storage and
+     * transmission. SOS is never gated. 0 = broadcast every fix.
+     */
+    val sendMaxAccuracyMeters: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
     val customRelays: List<String> = HARDCODED_RELAYS,
@@ -129,6 +141,8 @@ class AppPreferences @Inject constructor(
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
     private val KEY_LOCAL_MESSAGE_RETENTION = intPreferencesKey("local_message_retention_days")
     private val KEY_HISTORY_MIN_DISTANCE = intPreferencesKey("history_min_distance_m")
+    private val KEY_HISTORY_MAX_ACCURACY = intPreferencesKey("history_max_accuracy_m")
+    private val KEY_SEND_MAX_ACCURACY = intPreferencesKey("send_max_accuracy_m")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
@@ -179,6 +193,8 @@ class AppPreferences @Inject constructor(
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,
                 historyMinDistanceMeters = prefs[KEY_HISTORY_MIN_DISTANCE] ?: 0,
+                historyMaxAccuracyMeters = prefs[KEY_HISTORY_MAX_ACCURACY] ?: 0,
+                sendMaxAccuracyMeters = prefs[KEY_SEND_MAX_ACCURACY] ?: 0,
                 pinColor = prefs[KEY_PIN_COLOR] ?: "",
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
                 customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
@@ -234,6 +250,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setHistoryMinDistanceMeters(meters: Int) {
         context.settingsStore.edit { it[KEY_HISTORY_MIN_DISTANCE] = meters }
+    }
+
+    suspend fun setHistoryMaxAccuracyMeters(meters: Int) {
+        context.settingsStore.edit { it[KEY_HISTORY_MAX_ACCURACY] = meters }
+    }
+
+    suspend fun setSendMaxAccuracyMeters(meters: Int) {
+        context.settingsStore.edit { it[KEY_SEND_MAX_ACCURACY] = meters }
     }
 
     suspend fun setPinColor(hex: String) {

@@ -63,6 +63,8 @@ class BackupSerializationTest {
             localLocationRetentionDays = 30,
             localMessageRetentionDays = 60,
             historyMinDistanceMeters = 25,
+            historyMaxAccuracyMeters = 150,
+            sendMaxAccuracyMeters = 75,
             heartbeatEnabled = false,
             onboardingComplete = true,
             globalScheduleRules = listOf(ScheduleRule(id = "r1", label = "Work", days = 0b0011111)),
