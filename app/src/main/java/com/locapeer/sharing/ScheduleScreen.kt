@@ -197,7 +197,7 @@ private fun RuleCard(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun RuleEditDialog(
+fun RuleEditDialog(
     rule: ScheduleRule,
     onRuleChanged: (ScheduleRule) -> Unit,
     onConfirm: () -> Unit,
@@ -290,7 +290,7 @@ private fun RuleEditDialog(
 }
 
 @Composable
-private fun DayPicker(days: Int, onDaysChanged: (Int) -> Unit) {
+fun DayPicker(days: Int, onDaysChanged: (Int) -> Unit) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween

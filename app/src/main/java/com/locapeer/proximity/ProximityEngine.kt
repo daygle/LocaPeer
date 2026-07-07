@@ -16,6 +16,8 @@ import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
+import com.locapeer.sharing.SharingSchedule
+import com.locapeer.sharing.toScheduleRules
 import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -115,6 +117,11 @@ class ProximityEngine @Inject constructor(
         if (wasInside == null) return
 
         if (inside && !wasInside) {
+            // Schedule check: only notify if the current time matches the alert's schedule.
+            // Empty schedule defaults to active (all days/times).
+            val rules = alert.scheduleRules.toScheduleRules()
+            if (!SharingSchedule.isActive(rules)) return
+
             val now = System.currentTimeMillis()
             if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return
             lastNotifiedAt[peerId] = now

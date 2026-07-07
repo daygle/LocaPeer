@@ -38,6 +38,8 @@ import java.util.Locale
 import java.util.UUID
 import javax.inject.Inject
 
+enum class SortOrder { DATE, NAME, UNREAD }
+
 @HiltViewModel
 class MessagingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -57,17 +59,43 @@ class MessagingViewModel @Inject constructor(
         peerDao.getAllPeers()
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> = _searchQuery
+
+    private val _sortOrder = MutableStateFlow(SortOrder.DATE)
+    val sortOrder: StateFlow<SortOrder> = _sortOrder
+
     val conversations: StateFlow<List<ConversationSummary>?> =
-        messageDao.getConversationSummaries()
-            .combine(peerDao.getAllPeers()) { msgs, peers ->
-                val peerMap = peers.associateBy { it.deviceId }
-                msgs.mapNotNull { msg ->
-                    val peer = peerMap[msg.peerId] ?: return@mapNotNull null
-                    if (peer.isArchived) return@mapNotNull null
-                    ConversationSummary(peer = peer, lastMessage = msg)
-                }
+        combine(
+            messageDao.getConversationSummaries(),
+            peerDao.getAllPeers(),
+            _searchQuery,
+            _sortOrder,
+            messageDao.getUnreadCountsPerPeer().map { rows -> rows.associate { it.peerId to it.cnt } }
+        ) { msgs, peers, query, sort, unreadCounts ->
+            val peerMap = peers.associateBy { it.deviceId }
+            val base = msgs.mapNotNull { msg ->
+                val peer = peerMap[msg.peerId] ?: return@mapNotNull null
+                if (peer.isArchived) return@mapNotNull null
+                ConversationSummary(peer = peer, lastMessage = msg)
             }
-            .stateIn(viewModelScope, SharingStarted.Lazily, null)
+            
+            val filtered = if (query.isBlank()) base
+            else base.filter {
+                it.peer.displayName.contains(query, ignoreCase = true) ||
+                it.lastMessage.content.contains(query, ignoreCase = true)
+            }
+            
+            when (sort) {
+                SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage.timestamp }
+                SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase(Locale.ROOT) }
+                SortOrder.UNREAD -> filtered.sortedWith(
+                    compareByDescending<ConversationSummary> { (unreadCounts[it.peer.deviceId] ?: 0) > 0 }
+                        .thenByDescending { it.lastMessage.timestamp }
+                )
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val archivedConversations: StateFlow<List<ConversationSummary>> =
         messageDao.getConversationSummaries()
@@ -97,7 +125,7 @@ class MessagingViewModel @Inject constructor(
     val typingPeers: StateFlow<Map<String, Long>> = _typingPeers
 
     private val typingClearJobs = mutableMapOf<String, Job>()
-    private var lastTypingSentAt = 0L
+    private val lastTypingSentAt = mutableMapOf<String, Long>()
     private var myListeningPubkey: String? = null
     private var eventsJob: Job? = null
     private var okEventsJob: Job? = null
@@ -190,11 +218,20 @@ class MessagingViewModel @Inject constructor(
         peerIds.forEach { markRead(it) }
     }
 
-    /** Call on every keystroke in the chat input; throttles and sends one typing event per 3 s. */
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+    fun setSortOrder(order: SortOrder) {
+        _sortOrder.value = order
+    }
+
+    /** Call on every keystroke in the chat input; throttles and sends one typing event per 3 s per peer. */
     fun onTyping(peerId: String) {
         val now = System.currentTimeMillis()
-        if (now - lastTypingSentAt > 3000L) {
-            lastTypingSentAt = now
+        val last = lastTypingSentAt[peerId] ?: 0L
+        if (now - last > 3000L) {
+            lastTypingSentAt[peerId] = now
             viewModelScope.launch { sendTypingEvent(peerId) }
         }
     }
@@ -224,7 +261,7 @@ class MessagingViewModel @Inject constructor(
                 peerDao.unarchive(peerId)
 
                 val msg = MessageEntity(
-                    id = UUID.randomUUID().toString(),
+                    id = event.id,
                     peerId = peerId,
                     senderPublicKeyHex = pubHex,
                     content = content,
@@ -245,6 +282,9 @@ class MessagingViewModel @Inject constructor(
         myListeningPubkey = myPubHex
         createMessageChannel()
         viewModelScope.launch {
+            // Get messages from the last 24 hours to cover offline periods.
+            // A more robust app would store/query the last received timestamp per relay.
+            val since = (System.currentTimeMillis() / 1000L) - (24 * 60 * 60)
             relayClient.subscribe(
                 "lp-dm-${myPubHex.take(16)}",
                 NostrFilter(
@@ -255,7 +295,8 @@ class MessagingViewModel @Inject constructor(
                         NostrEventKind.DELIVERY_ACK,
                         NostrEventKind.EVENT_DELETION
                     ),
-                    pTags = listOf(myPubHex)
+                    pTags = listOf(myPubHex),
+                    since = since
                 )
             )
         }

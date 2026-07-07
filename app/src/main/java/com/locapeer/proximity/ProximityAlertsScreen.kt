@@ -4,20 +4,35 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.NearMe
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.sharing.RuleEditDialog
+import com.locapeer.sharing.ScheduleRule
+import com.locapeer.sharing.SharingSchedule
+import com.locapeer.sharing.newScheduleRule
+import com.locapeer.sharing.toScheduleRules
 import com.locapeer.ui.components.EmptyState
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import kotlin.math.roundToInt
+
+private val RADIUS_OPTIONS = listOf(100, 250, 500, 1000, 2000, 5000, 10000)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -71,10 +86,12 @@ fun ProximityAlertsScreen(
                             vm.setActive(
                                 state.peer.deviceId,
                                 enabled,
-                                state.alert?.radiusMetres ?: 500
+                                state.alert?.radiusMetres ?: 500,
+                                state.alert?.scheduleRules ?: "[]"
                             )
                         },
-                        onRadiusChanged = { vm.setRadius(state.peer.deviceId, it) }
+                        onRadiusChanged = { vm.setRadius(state.peer.deviceId, it) },
+                        onScheduleChanged = { vm.setScheduleRules(state.peer.deviceId, it) }
                     )
                 }
             }
@@ -86,11 +103,17 @@ fun ProximityAlertsScreen(
 private fun ProximityPeerCard(
     state: PeerProximityState,
     onToggle: (Boolean) -> Unit,
-    onRadiusChanged: (Int) -> Unit
+    onRadiusChanged: (Int) -> Unit,
+    onScheduleChanged: (String) -> Unit
 ) {
     val isEnabled = state.alert?.active == true
     val savedRadius = state.alert?.radiusMetres ?: 500
-    var sliderValue by remember(savedRadius) { mutableFloatStateOf(savedRadius.toFloat()) }
+    val rules = remember(state.alert?.scheduleRules) {
+        state.alert?.scheduleRules?.toScheduleRules() ?: emptyList()
+    }
+    val hasSchedule = rules.isNotEmpty()
+
+    var showScheduleDialog by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -131,17 +154,23 @@ private fun ProximityPeerCard(
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(
-                        if (isEnabled) "Alert when within ${formatRadius(savedRadius)}"
-                        else "Alerts off",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = if (isEnabled) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text(
+                            if (isEnabled) "Alert when within ${formatRadius(savedRadius)}"
+                            else "Alerts off",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (isEnabled) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        if (isEnabled && hasSchedule) {
+                            Icon(Icons.Default.Schedule, null, modifier = Modifier.size(12.dp), tint = MaterialTheme.colorScheme.primary)
+                        }
+                    }
                 }
                 Switch(
                     checked = isEnabled,
-                    onCheckedChange = onToggle
+                    onCheckedChange = onToggle,
+                    modifier = Modifier.scale(0.8f)
                 )
             }
 
@@ -152,35 +181,168 @@ private fun ProximityPeerCard(
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Alert radius", style = MaterialTheme.typography.bodySmall)
+                    Text("Alert radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                     Text(
-                        formatRadius(sliderValue.roundToInt()),
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.SemiBold,
+                        formatRadius(savedRadius),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
+                
+                // Limited options slider
+                val initialIndex = RADIUS_OPTIONS.indexOf(savedRadius).coerceAtLeast(0)
+                var sliderIndex by remember(savedRadius) { mutableFloatStateOf(initialIndex.toFloat()) }
+                
                 Slider(
-                    value = sliderValue,
-                    onValueChange = { sliderValue = it },
-                    onValueChangeFinished = { onRadiusChanged(sliderValue.roundToInt()) },
-                    valueRange = 100f..10000f,
-                    steps = 98,
+                    value = sliderIndex,
+                    onValueChange = { sliderIndex = it },
+                    onValueChangeFinished = { 
+                        onRadiusChanged(RADIUS_OPTIONS[sliderIndex.roundToInt()])
+                    },
+                    valueRange = 0f..(RADIUS_OPTIONS.size - 1).toFloat(),
+                    steps = RADIUS_OPTIONS.size - 2,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text("100m", style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Text("10km", style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("100m", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("10km", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+
+                Spacer(Modifier.height(16.dp))
+                
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text("Alert Schedule", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(
+                            if (hasSchedule) "${rules.size} active rules" else "Always on",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    OutlinedButton(
+                        onClick = { showScheduleDialog = true },
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Text("Edit Schedule", style = MaterialTheme.typography.labelMedium)
+                    }
                 }
             }
         }
+    }
+
+    if (showScheduleDialog) {
+        ProximityScheduleDialog(
+            initialRules = rules,
+            onDismiss = { showScheduleDialog = false },
+            onSave = { 
+                onScheduleChanged(Json.encodeToString(it))
+                showScheduleDialog = false
+            }
+        )
+    }
+}
+
+@Composable
+fun ProximityScheduleDialog(
+    initialRules: List<ScheduleRule>,
+    onDismiss: () -> Unit,
+    onSave: (List<ScheduleRule>) -> Unit
+) {
+    var scheduleRules by remember { mutableStateOf(initialRules) }
+    var editingRule by remember { mutableStateOf<ScheduleRule?>(null) }
+    var isNewRule by remember { mutableStateOf(false) }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Alert Schedule") },
+        text = {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Rules", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
+                        Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(4.dp))
+                        Text("Add Rule")
+                    }
+                }
+
+                if (scheduleRules.isEmpty()) {
+                    Text(
+                        "Alerts active at all times. Add a rule to restrict when alerts are sent.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    scheduleRules.forEach { rule ->
+                        Card(
+                            onClick = { editingRule = rule; isNewRule = false },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    if (rule.label.isNotBlank()) {
+                                        Text(rule.label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                                    }
+                                    Text(
+                                        "${SharingSchedule.formatDays(rule.days)} • ${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                }
+                                IconButton(onClick = { scheduleRules = scheduleRules.filter { it.id != rule.id } }) {
+                                    Icon(Icons.Default.Delete, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.error)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = { onSave(scheduleRules) }) {
+                Text("Save")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text("Cancel") }
+        }
+    )
+
+    editingRule?.let { rule ->
+        RuleEditDialog(
+            rule = rule,
+            onRuleChanged = { editingRule = it },
+            onConfirm = {
+                scheduleRules = if (isNewRule) scheduleRules + rule
+                               else scheduleRules.map { if (it.id == rule.id) rule else it }
+                editingRule = null
+            },
+            onDismiss = { editingRule = null }
+        )
     }
 }
 

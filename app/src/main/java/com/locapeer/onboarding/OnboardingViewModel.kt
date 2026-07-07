@@ -23,13 +23,15 @@ data class OnboardingState(
     val publicKeyHex: String = "",
     val step: OnboardingStep = OnboardingStep.IDENTITY,
     val isLoading: Boolean = true,
-    val importError: String? = null
+    val importError: String? = null,
+    val showPermissionDeniedError: Boolean = false
 )
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
     private val keyManager: KeyManager,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val crypto: com.locapeer.crypto.CryptoUtils
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(OnboardingState())
@@ -43,7 +45,7 @@ class OnboardingViewModel @Inject constructor(
     }
 
     fun setDisplayName(name: String) {
-        _state.value = _state.value.copy(displayName = name)
+        _state.value = _state.value.copy(displayName = name, showPermissionDeniedError = false)
     }
 
     fun nextStep() {
@@ -55,7 +57,11 @@ class OnboardingViewModel @Inject constructor(
             OnboardingStep.BATTERY -> OnboardingStep.DONE
             OnboardingStep.DONE -> OnboardingStep.DONE
         }
-        _state.value = _state.value.copy(step = next)
+        _state.value = _state.value.copy(step = next, showPermissionDeniedError = false)
+    }
+
+    fun setPermissionDenied(denied: Boolean) {
+        _state.value = _state.value.copy(showPermissionDeniedError = denied)
     }
 
     fun importPrivateKey(privHex: String) {
@@ -64,6 +70,17 @@ class OnboardingViewModel @Inject constructor(
             _state.value = _state.value.copy(importError = "Invalid key - must be 64 hex characters.")
             return
         }
+        
+        try {
+            if (!crypto.isValidPrivateKey(crypto.hexToBytes(cleaned))) {
+                _state.value = _state.value.copy(importError = "Invalid private key - out of curve range.")
+                return
+            }
+        } catch (_: Exception) {
+            _state.value = _state.value.copy(importError = "Invalid hex format.")
+            return
+        }
+
         _state.value = _state.value.copy(isLoading = true, importError = null)
         viewModelScope.launch {
             try {

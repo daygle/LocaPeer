@@ -32,14 +32,32 @@ class ProximityViewModel @Inject constructor(
         peers.map { peer -> PeerProximityState(peer, alertMap[peer.deviceId]) }
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    fun setActive(peerDeviceId: String, active: Boolean, currentRadius: Int) {
+    fun setActive(peerDeviceId: String, active: Boolean, currentRadius: Int, scheduleRules: String = "[]") {
         viewModelScope.launch {
             if (active) {
                 proximityAlertDao.upsert(
-                    ProximityAlertEntity(peerDeviceId = peerDeviceId, radiusMetres = currentRadius, active = true)
+                    ProximityAlertEntity(
+                        peerDeviceId = peerDeviceId,
+                        radiusMetres = currentRadius,
+                        active = true,
+                        scheduleRules = scheduleRules
+                    )
                 )
             } else {
                 proximityAlertDao.setActive(peerDeviceId, false)
+            }
+        }
+    }
+
+    fun setScheduleRules(peerDeviceId: String, scheduleRules: String) {
+        viewModelScope.launch {
+            val existing = proximityAlertDao.getForPeer(peerDeviceId)
+            if (existing != null) {
+                proximityAlertDao.upsert(existing.copy(scheduleRules = scheduleRules))
+            } else {
+                proximityAlertDao.upsert(
+                    ProximityAlertEntity(peerDeviceId = peerDeviceId, scheduleRules = scheduleRules, active = false)
+                )
             }
         }
     }

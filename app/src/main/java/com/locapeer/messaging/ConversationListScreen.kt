@@ -48,7 +48,6 @@ import java.util.Date
 import java.util.Locale
 
 private enum class LoadState { LOADING, EMPTY, CONTENT }
-private enum class SortOrder { DATE, NAME, UNREAD }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -60,12 +59,12 @@ fun ConversationListScreen(
     val archivedConversations by vm.archivedConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
+    val searchQuery by vm.searchQuery.collectAsState()
+    val sortOrder by vm.sortOrder.collectAsState()
 
     var showContactPicker by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) }
     var showSearch by remember { mutableStateOf(false) }
-    var searchQuery by remember { mutableStateOf("") }
-    var sortOrder by remember { mutableStateOf(SortOrder.DATE) }
     var selectedIds by remember { mutableStateOf<Set<String>>(emptySet()) }
     var showSortMenu by remember { mutableStateOf(false) }
     var showBulkDeleteDialog by remember { mutableStateOf(false) }
@@ -78,22 +77,7 @@ fun ConversationListScreen(
         (activeList ?: emptyList()).map { it.peer.deviceId }.toSet()
     }
 
-    val displayList = remember(activeList, searchQuery, sortOrder, unreadCounts) {
-        val base = activeList ?: return@remember null
-        val filtered = if (searchQuery.isBlank()) base
-        else base.filter {
-            it.peer.displayName.contains(searchQuery, ignoreCase = true) ||
-            it.lastMessage.content.contains(searchQuery, ignoreCase = true)
-        }
-        when (sortOrder) {
-            SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage.timestamp }
-            SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase() }
-            SortOrder.UNREAD -> filtered.sortedWith(
-                compareByDescending<ConversationSummary> { (unreadCounts[it.peer.deviceId] ?: 0) > 0 }
-                    .thenByDescending { it.lastMessage.timestamp }
-            )
-        }
-    }
+    val displayList = activeList
 
     val loadState = when {
         displayList == null -> LoadState.LOADING
@@ -191,7 +175,7 @@ fun ConversationListScreen(
                         } else {
                             IconButton(onClick = {
                                 showSearch = !showSearch
-                                if (!showSearch) searchQuery = ""
+                                if (!showSearch) vm.setSearchQuery("")
                             }) {
                                 Icon(
                                     Icons.Default.Search,
@@ -210,17 +194,17 @@ fun ConversationListScreen(
                                 ) {
                                     DropdownMenuItem(
                                         text = { Text("Date") },
-                                        onClick = { sortOrder = SortOrder.DATE; showSortMenu = false },
+                                        onClick = { vm.setSortOrder(SortOrder.DATE); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
                                     )
                                     DropdownMenuItem(
                                         text = { Text("Name") },
-                                        onClick = { sortOrder = SortOrder.NAME; showSortMenu = false },
+                                        onClick = { vm.setSortOrder(SortOrder.NAME); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
                                     )
                                     DropdownMenuItem(
                                         text = { Text("Unread") },
-                                        onClick = { sortOrder = SortOrder.UNREAD; showSortMenu = false },
+                                        onClick = { vm.setSortOrder(SortOrder.UNREAD); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
                                     )
                                 }
@@ -238,13 +222,13 @@ fun ConversationListScreen(
                 ) {
                     OutlinedTextField(
                         value = searchQuery,
-                        onValueChange = { searchQuery = it },
+                        onValueChange = { vm.setSearchQuery(it) },
                         placeholder = { Text("Search conversations…") },
                         singleLine = true,
                         leadingIcon = { Icon(Icons.Default.Search, null) },
                         trailingIcon = {
                             if (searchQuery.isNotEmpty()) {
-                                IconButton(onClick = { searchQuery = "" }) {
+                                IconButton(onClick = { vm.setSearchQuery("") }) {
                                     Icon(Icons.Default.Close, null)
                                 }
                             }

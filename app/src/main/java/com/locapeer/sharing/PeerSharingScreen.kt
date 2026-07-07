@@ -21,9 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
+import com.locapeer.data.entity.scheduleRules
+import com.locapeer.proximity.ProximityScheduleDialog
+import com.locapeer.sharing.toScheduleRules
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
-import com.locapeer.data.entity.scheduleRules
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
@@ -257,6 +259,8 @@ fun PeerSharingScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
 
                     val alertActive = proximityAlert?.active ?: false
+                    var showProximityScheduleDialog by remember { mutableStateOf(false) }
+
                     ListItem(
                         headlineContent = { Text("Proximity Alert") },
                         supportingContent = { Text("Notify me when $peerName is nearby") },
@@ -269,16 +273,65 @@ fun PeerSharingScreen(
 
                     if (alertActive && receivesLocation) {
                         val radius = proximityAlert?.radiusMetres ?: 500
+                        val proxRules = remember(proximityAlert?.scheduleRules) { 
+                            proximityAlert?.scheduleRules?.toScheduleRules() ?: emptyList() 
+                        }
+                        val hasProxSchedule = proxRules.isNotEmpty()
+
                         Column(modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 12.dp)) {
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                                 Text("Alert Radius", style = MaterialTheme.typography.bodySmall)
                                 Text(com.locapeer.util.DisplayFormat.distanceValue(radius.toDouble()), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             }
+                            
+                            // Limited options slider for better UX
+                            val options = listOf(100, 250, 500, 1000, 2000, 5000, 10000)
+                            val currentIndex = options.indexOf(radius).coerceAtLeast(0)
+                            var sliderIdx by remember(radius) { mutableFloatStateOf(currentIndex.toFloat()) }
+
                             Slider(
-                                value = radius.toFloat(),
-                                onValueChange = { vm.setProximityAlertRadius(it.roundToInt()) },
-                                valueRange = 100f..5000f,
-                                steps = 48
+                                value = sliderIdx,
+                                onValueChange = { sliderIdx = it },
+                                onValueChangeFinished = { 
+                                    vm.setProximityAlertRadius(options[sliderIdx.roundToInt()])
+                                },
+                                valueRange = 0f..(options.size - 1).toFloat(),
+                                steps = options.size - 2
+                            )
+
+                            Spacer(Modifier.height(8.dp))
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text("Alert Schedule", style = MaterialTheme.typography.bodySmall)
+                                    Text(
+                                        if (hasProxSchedule) "${proxRules.size} active rules" else "Always on",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = if (hasProxSchedule) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                                TextButton(
+                                    onClick = { showProximityScheduleDialog = true },
+                                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+                                    modifier = Modifier.height(32.dp)
+                                ) {
+                                    Text("Edit", style = MaterialTheme.typography.labelMedium)
+                                }
+                            }
+                        }
+
+                        if (showProximityScheduleDialog) {
+                            ProximityScheduleDialog(
+                                initialRules = proxRules,
+                                onDismiss = { showProximityScheduleDialog = false },
+                                onSave = { rules ->
+                                    vm.setProximityAlertSchedule(rules)
+                                    showProximityScheduleDialog = false
+                                }
                             )
                         }
                     }

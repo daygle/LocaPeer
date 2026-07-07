@@ -162,6 +162,20 @@ class PeerSharingViewModel @Inject constructor(
         }
     }
 
+    fun setProximityAlertSchedule(rules: List<ScheduleRule>) {
+        viewModelScope.launch {
+            val rulesJson = Json.encodeToString(rules)
+            val existing = proximityAlertDao.getForPeer(currentPeerId)
+            if (existing != null) {
+                proximityAlertDao.upsert(existing.copy(scheduleRules = rulesJson))
+            } else {
+                proximityAlertDao.upsert(
+                    ProximityAlertEntity(peerDeviceId = currentPeerId, scheduleRules = rulesJson, active = false)
+                )
+            }
+        }
+    }
+
     fun setRetentionDaysLocation(days: Int) {
         viewModelScope.launch {
             val existing = configDao.getForPeer(currentPeerId)

@@ -24,5 +24,6 @@ data class GeofenceAssignmentEntity(
     /** ENTER, EXIT, or BOTH */
     val triggerOn: String,
     val active: Boolean = true,
+    val scheduleRules: String = "[]",
     val createdAt: Long = System.currentTimeMillis()
 )

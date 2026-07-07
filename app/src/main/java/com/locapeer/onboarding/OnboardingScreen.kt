@@ -44,7 +44,11 @@ fun OnboardingScreen(
     val backgroundLocationLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { granted ->
-        if (granted) vm.nextStep()
+        if (granted) {
+            vm.nextStep()
+        } else {
+            vm.setPermissionDenied(true)
+        }
     }
 
     Surface(
@@ -62,7 +66,10 @@ fun OnboardingScreen(
             when (state.step) {
                 OnboardingStep.IDENTITY -> IdentityStep(state, vm)
                 OnboardingStep.PERMISSIONS -> PermissionsStep(basicPermissionsState) { vm.nextStep() }
-                OnboardingStep.BACKGROUND_LOCATION -> BackgroundLocationStep {
+                OnboardingStep.BACKGROUND_LOCATION -> BackgroundLocationStep(
+                    showError = state.showPermissionDeniedError
+                ) {
+                    vm.setPermissionDenied(false)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                         backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
                     } else {
@@ -262,12 +269,22 @@ private fun PermissionsStep(
 }
 
 @Composable
-private fun BackgroundLocationStep(onNext: () -> Unit) {
+private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
     StepHeader(
         icon = Icons.Default.LocationOn,
         title = "Background Location",
         description = "To keep your contacts updated while the app is closed, please select 'Allow all the time' in the next screen."
     )
+
+    if (showError) {
+        Spacer(Modifier.height(16.dp))
+        Text(
+            "Background location is required to update your contacts when the app is closed. Please try again and select 'Allow all the time'.",
+            color = MaterialTheme.colorScheme.error,
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
+    }
 
     Spacer(Modifier.height(48.dp))
 

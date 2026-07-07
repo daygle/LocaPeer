@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class ProximityAlertEntity(
     @PrimaryKey val peerDeviceId: String,
     val radiusMetres: Int = 500,
-    val active: Boolean = true
+    val active: Boolean = true,
+    val scheduleRules: String = "[]"
 )

@@ -85,14 +85,15 @@ class GeofenceViewModel @Inject constructor(
 
     // --- Contact assignments ---
 
-    fun addAssignment(geofenceId: String, trackedDeviceId: String, triggerOn: String) {
+    fun addAssignment(geofenceId: String, trackedDeviceId: String, triggerOn: String, scheduleRules: String = "[]") {
         viewModelScope.launch {
             assignmentDao.upsert(
                 GeofenceAssignmentEntity(
                     id = UUID.randomUUID().toString(),
                     geofenceId = geofenceId,
                     trackedDeviceId = trackedDeviceId,
-                    triggerOn = triggerOn
+                    triggerOn = triggerOn,
+                    scheduleRules = scheduleRules
                 )
             )
         }
@@ -102,7 +103,8 @@ class GeofenceViewModel @Inject constructor(
         existing: AssignmentWithArea,
         trackedDeviceId: String,
         geofenceId: String,
-        triggerOn: String
+        triggerOn: String,
+        scheduleRules: String
     ) {
         viewModelScope.launch {
             assignmentDao.upsert(
@@ -111,7 +113,8 @@ class GeofenceViewModel @Inject constructor(
                     geofenceId = geofenceId,
                     trackedDeviceId = trackedDeviceId,
                     triggerOn = triggerOn,
-                    active = existing.active
+                    active = existing.active,
+                    scheduleRules = scheduleRules
                 )
             )
         }

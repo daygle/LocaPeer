@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -41,10 +42,18 @@ import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.dao.AssignmentWithArea
 import com.locapeer.data.entity.GeofenceEntity
+import com.locapeer.sharing.DayPicker
+import com.locapeer.sharing.RuleEditDialog
+import com.locapeer.sharing.ScheduleRule
+import com.locapeer.sharing.SharingSchedule
+import com.locapeer.sharing.newScheduleRule
+import com.locapeer.sharing.toScheduleRules
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -252,12 +261,12 @@ private fun ContactGeofencesScreen(
             existing = editingAssignment,
             areas = areas,
             onDismiss = { showAssignDialog = false; editingAssignment = null },
-            onSave = { geofenceId, trigger ->
+            onSave = { geofenceId, trigger, scheduleRules ->
                 val current = editingAssignment
                 if (current != null) {
-                    vm.updateAssignment(current, peerId, geofenceId, trigger)
+                    vm.updateAssignment(current, peerId, geofenceId, trigger, scheduleRules)
                 } else {
-                    vm.addAssignment(geofenceId, peerId, trigger)
+                    vm.addAssignment(geofenceId, peerId, trigger, scheduleRules)
                 }
                 showAssignDialog = false
                 editingAssignment = null
@@ -350,6 +359,9 @@ private fun AssignmentCard(
         "EXIT" -> GeofenceExit
         else -> GeofenceBoth
     }
+    val rules = remember(assignment.scheduleRules) { assignment.scheduleRules.toScheduleRules() }
+    val hasSchedule = rules.isNotEmpty()
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -363,7 +375,7 @@ private fun AssignmentCard(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Surface(
                         color = triggerColor.copy(alpha = 0.2f),
                         shape = MaterialTheme.shapes.extraSmall,
@@ -376,7 +388,14 @@ private fun AssignmentCard(
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
                         )
                     }
-                    Spacer(Modifier.width(8.dp))
+                    if (hasSchedule) {
+                        Icon(Icons.Default.Schedule, null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.primary)
+                        Text(
+                            "${rules.size} rules",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                     Text(
                         com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
                         style = MaterialTheme.typography.bodySmall,
@@ -650,12 +669,18 @@ private fun AssignmentDialog(
     existing: AssignmentWithArea?,
     areas: List<GeofenceEntity>,
     onDismiss: () -> Unit,
-    onSave: (geofenceId: String, triggerOn: String) -> Unit
+    onSave: (geofenceId: String, triggerOn: String, scheduleRules: String) -> Unit
 ) {
     var selectedGeofenceId by remember {
         mutableStateOf(existing?.geofenceId ?: areas.firstOrNull()?.id ?: "")
     }
     var triggerOn by remember { mutableStateOf(existing?.triggerOn ?: "ENTER") }
+    var scheduleRules by remember {
+        mutableStateOf(existing?.scheduleRules?.toScheduleRules() ?: emptyList())
+    }
+
+    var editingRule by remember { mutableStateOf<ScheduleRule?>(null) }
+    var isNewRule by remember { mutableStateOf(false) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -714,15 +739,82 @@ private fun AssignmentDialog(
                         )
                     }
                 }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Alert Schedule", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
+                        Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(4.dp))
+                        Text("Add Rule")
+                    }
+                }
+
+                if (scheduleRules.isEmpty()) {
+                    Text(
+                        "Alerts active at all times. Add a rule to restrict when alerts are sent.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                } else {
+                    scheduleRules.forEach { rule ->
+                        Card(
+                            onClick = { editingRule = rule; isNewRule = false },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    if (rule.label.isNotBlank()) {
+                                        Text(rule.label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                                    }
+                                    Text(
+                                        "${SharingSchedule.formatDays(rule.days)} • ${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}",
+                                        style = MaterialTheme.typography.labelSmall
+                                    )
+                                }
+                                IconButton(onClick = { scheduleRules = scheduleRules.filter { it.id != rule.id } }) {
+                                    Icon(Icons.Default.Delete, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.error)
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         confirmButton = {
-            Button(onClick = { if (selectedGeofenceId.isNotEmpty()) onSave(selectedGeofenceId, triggerOn) }) {
+            Button(onClick = {
+                if (selectedGeofenceId.isNotEmpty()) {
+                    val rulesJson = Json.encodeToString(scheduleRules)
+                    onSave(selectedGeofenceId, triggerOn, rulesJson)
+                }
+            }) {
                 Text(if (existing != null) "Save" else "Assign")
             }
         },
         dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
     )
+
+    editingRule?.let { rule ->
+        RuleEditDialog(
+            rule = rule,
+            onRuleChanged = { editingRule = it },
+            onConfirm = {
+                scheduleRules = if (isNewRule) scheduleRules + rule
+                               else scheduleRules.map { if (it.id == rule.id) rule else it }
+                editingRule = null
+            },
+            onDismiss = { editingRule = null }
+        )
+    }
 }
 
 private const val MIN_RADIUS_M = 50
