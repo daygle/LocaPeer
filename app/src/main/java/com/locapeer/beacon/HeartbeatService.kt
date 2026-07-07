@@ -307,6 +307,12 @@ class HeartbeatService : LifecycleService() {
             val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules, dayIndex, currentMinute)
 
             if (scheduleActive) {
+                // If we were previously off-schedule, the GPS might be stopped. 
+                // Restart it immediately upon entering the active window.
+                if (lastPulseElapsedMs != 0L && !isSos && !SharingSchedule.isActive(currentSettings.globalScheduleRules, dayIndex, (currentMinute - 1).let { if (it < 0) 1439 else it })) {
+                    updateLocationRequest()
+                }
+
                 if (broadcastHeartbeat()) {
                     lastPulseElapsedMs = SystemClock.elapsedRealtime()
                 }
