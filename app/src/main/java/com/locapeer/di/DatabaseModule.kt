@@ -100,6 +100,40 @@ object DatabaseModule {
         }
     }
 
+    /** v5: add missing scheduleRules to geofences and proximity alerts. */
+    private val MIGRATION_4_5 = object : Migration(4, 5) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            // This handles both the "broken" v4 (from an upgrade missing the columns)
+            // and the "intermediate" v4 (from a fresh install of the code that
+            // changed entities but forgot to bump version).
+            val cursor1 = db.query("PRAGMA table_info(geofence_assignments)")
+            var hasGeofenceRules = false
+            while (cursor1.moveToNext()) {
+                if (cursor1.getString(cursor1.getColumnIndexOrThrow("name")) == "scheduleRules") {
+                    hasGeofenceRules = true
+                    break
+                }
+            }
+            cursor1.close()
+            if (!hasGeofenceRules) {
+                db.execSQL("ALTER TABLE geofence_assignments ADD COLUMN scheduleRules TEXT NOT NULL DEFAULT '[]'")
+            }
+
+            val cursor2 = db.query("PRAGMA table_info(proximity_alerts)")
+            var hasProximityRules = false
+            while (cursor2.moveToNext()) {
+                if (cursor2.getString(cursor2.getColumnIndexOrThrow("name")) == "scheduleRules") {
+                    hasProximityRules = true
+                    break
+                }
+            }
+            cursor2.close()
+            if (!hasProximityRules) {
+                db.execSQL("ALTER TABLE proximity_alerts ADD COLUMN scheduleRules TEXT NOT NULL DEFAULT '[]'")
+            }
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
@@ -112,7 +146,7 @@ object DatabaseModule {
             // testing, not silently wipe user data. Downgrades (installing an
             // older build over a newer database) have no migration path, so that
             // direction still rebuilds destructively rather than crash-looping.
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 
