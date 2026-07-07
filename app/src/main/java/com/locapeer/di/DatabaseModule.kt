@@ -74,7 +74,7 @@ object DatabaseModule {
             // One assignment per existing geofence, referencing the (soon-to-be-trimmed) area.
             db.execSQL(
                 """
-                INSERT INTO geofence_assignments (id, geofenceId, trackedDeviceId, triggerOn, active, createdAt)
+                INSERT INTO geofence_assignments (id, geofenceId, trackededDeviceId, triggerOn, active, createdAt)
                 SELECT id || ':a', id, trackedDeviceId, triggerOn, active, createdAt FROM geofences
                 """.trimIndent()
             )
@@ -134,6 +134,8 @@ object DatabaseModule {
         }
     }
 
+    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
@@ -146,7 +148,7 @@ object DatabaseModule {
             // testing, not silently wipe user data. Downgrades (installing an
             // older build over a newer database) have no migration path, so that
             // direction still rebuilds destructively rather than crash-looping.
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            .addMigrations(*ALL_MIGRATIONS)
             .fallbackToDestructiveMigrationOnDowngrade(true)
             .build()
 
