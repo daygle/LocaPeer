@@ -393,122 +393,138 @@ class SettingsViewModel @Inject constructor(
             val backup = pending.backup
             val restored = mutableListOf<String>()
             val failed = mutableListOf<String>()
+            // Tracked separately from the user-facing [restored] strings so the profile refresh
+            // does not depend on message wording.
+            var identityRestored = false
+            var settingsRestored = false
 
             // Each section is restored independently so that one bad section (most commonly a
             // malformed private key in a hand-edited backup) does not discard the others the
-            // user also selected, and a mid-way failure is reported rather than swallowed.
-            if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
-                val key = backup.privateKeyHex.trim().lowercase()
-                if (!PRIVATE_KEY_REGEX.matches(key)) {
-                    Log.e(TAG, "Identity restore failed: private key is not 64 hex characters")
-                    failed += "identity"
-                } else {
-                    try {
-                        keyManager.importPrivateKey(key)
-                        restored += "identity"
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Identity restore failed", e)
+            // user also selected, and a mid-way failure is reported rather than swallowed. The
+            // outer try/finally guards against any unexpected error still clearing the pending
+            // state so the UI can never get stuck on the section picker.
+            try {
+                if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
+                    val key = backup.privateKeyHex.trim().lowercase()
+                    if (!PRIVATE_KEY_REGEX.matches(key)) {
+                        Log.e(TAG, "Identity restore failed: private key must be 64 hex characters (0-9, a-f)")
                         failed += "identity"
-                    }
-                }
-            }
-            if (BackupSection.CONTACTS in sections && backup.contacts != null) {
-                try {
-                    backup.contacts.forEach { c ->
-                        peerDao.upsertPeer(PeerEntity(
-                            deviceId = c.deviceId,
-                            displayName = c.displayName,
-                            publicKeyHex = c.publicKeyHex,
-                            relayUrl = c.relayUrl,
-                            locationRole = c.locationRole,
-                            messagingEnabled = c.messagingEnabled,
-                            isArchived = c.isArchived,
-                            archivedAt = c.archivedAt,
-                            addedAt = c.addedAt ?: System.currentTimeMillis()
-                        ))
-                        c.sharingConfig?.let { sc ->
-                            sharingConfigDao.upsert(PeerSharingConfig(
-                                peerDeviceId = c.deviceId,
-                                sharingEnabled = sc.sharingEnabled,
-                                precisionMode = sc.precisionMode,
-                                scheduleRulesJson = sc.scheduleRulesJson,
-                                isSosContact = sc.isSosContact,
-                                isMySupervised = sc.isMySupervised,
-                                notifyOnMissedHeartbeat = sc.notifyOnMissedHeartbeat,
-                                retentionDaysLocation = sc.retentionDaysLocation,
-                                retentionDaysMessages = sc.retentionDaysMessages
-                            ))
+                    } else {
+                        try {
+                            keyManager.importPrivateKey(key)
+                            identityRestored = true
+                            restored += "identity"
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Identity restore failed", e)
+                            failed += "identity"
                         }
                     }
-                    restored += "${backup.contacts.size} contacts"
-                } catch (e: Exception) {
-                    Log.e(TAG, "Contacts restore failed", e)
-                    failed += "contacts"
                 }
-            }
-            if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
-                try {
-                    backup.geofences.forEach { g ->
-                        geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
+                if (BackupSection.CONTACTS in sections && backup.contacts != null) {
+                    try {
+                        backup.contacts.forEach { c ->
+                            peerDao.upsertPeer(PeerEntity(
+                                deviceId = c.deviceId,
+                                displayName = c.displayName,
+                                publicKeyHex = c.publicKeyHex,
+                                relayUrl = c.relayUrl,
+                                locationRole = c.locationRole,
+                                messagingEnabled = c.messagingEnabled,
+                                isArchived = c.isArchived,
+                                archivedAt = c.archivedAt,
+                                addedAt = c.addedAt ?: System.currentTimeMillis()
+                            ))
+                            c.sharingConfig?.let { sc ->
+                                sharingConfigDao.upsert(PeerSharingConfig(
+                                    peerDeviceId = c.deviceId,
+                                    sharingEnabled = sc.sharingEnabled,
+                                    precisionMode = sc.precisionMode,
+                                    scheduleRulesJson = sc.scheduleRulesJson,
+                                    isSosContact = sc.isSosContact,
+                                    isMySupervised = sc.isMySupervised,
+                                    notifyOnMissedHeartbeat = sc.notifyOnMissedHeartbeat,
+                                    retentionDaysLocation = sc.retentionDaysLocation,
+                                    retentionDaysMessages = sc.retentionDaysMessages
+                                ))
+                            }
+                        }
+                        restored += "${backup.contacts.size} contacts"
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Contacts restore failed", e)
+                        failed += "contacts"
                     }
-                    backup.geofenceAssignments?.forEach { a ->
-                        geofenceAssignmentDao.upsert(
-                            com.locapeer.data.entity.GeofenceAssignmentEntity(
-                                id = a.id,
-                                geofenceId = a.geofenceId,
-                                trackedDeviceId = a.trackedDeviceId,
-                                triggerOn = a.triggerOn,
-                                active = a.active
+                }
+                if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
+                    try {
+                        backup.geofences.forEach { g ->
+                            geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
+                        }
+                        backup.geofenceAssignments?.forEach { a ->
+                            geofenceAssignmentDao.upsert(
+                                com.locapeer.data.entity.GeofenceAssignmentEntity(
+                                    id = a.id,
+                                    geofenceId = a.geofenceId,
+                                    trackedDeviceId = a.trackedDeviceId,
+                                    triggerOn = a.triggerOn,
+                                    active = a.active
+                                )
                             )
-                        )
+                        }
+                        restored += "${backup.geofences.size} geofences"
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Geofences restore failed", e)
+                        failed += "geofences"
                     }
-                    restored += "${backup.geofences.size} geofences"
-                } catch (e: Exception) {
-                    Log.e(TAG, "Geofences restore failed", e)
-                    failed += "geofences"
                 }
-            }
-            if (BackupSection.SETTINGS in sections && backup.settings != null) {
-                try {
-                    val s = backup.settings
-                    prefs.updateDisplayName(s.displayName)
-                    prefs.updateIntervals(s.stationaryIntervalMinutes, s.walkingIntervalMinutes,
-                        s.runningIntervalMinutes, s.cyclingIntervalMinutes, s.drivingIntervalMinutes, s.lowBatteryIntervalMinutes)
-                    prefs.setNavTabIds(s.navTabIds)
-                    prefs.setStartRoute(s.startRoute)
-                    prefs.setPinColor(s.pinColor)
-                    prefs.setLocalLocationRetentionDays(s.localLocationRetentionDays)
-                    prefs.setLocalMessageRetentionDays(s.localMessageRetentionDays)
-                    prefs.setHistoryMinDistanceMeters(s.historyMinDistanceMeters)
-                    setHeartbeatEnabled(s.heartbeatEnabled)
-                    prefs.setOnboardingComplete(s.onboardingComplete)
-                    prefs.setGlobalScheduleRules(s.globalScheduleRules)
-                    prefs.setCustomRelays(s.customRelays)
-                    prefs.setUseImperialSpeed(s.useImperialSpeed)
-                    prefs.setUse24HourTime(s.use24HourTime)
-                    prefs.setUseImperialElevation(s.useImperialElevation)
-                    prefs.setUseImperialDistance(s.useImperialDistance)
-                    prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
-                    prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
-                    restored += "settings"
-                } catch (e: Exception) {
-                    Log.e(TAG, "Settings restore failed", e)
-                    failed += "settings"
+                if (BackupSection.SETTINGS in sections && backup.settings != null) {
+                    try {
+                        val s = backup.settings
+                        prefs.updateDisplayName(s.displayName)
+                        prefs.updateIntervals(s.stationaryIntervalMinutes, s.walkingIntervalMinutes,
+                            s.runningIntervalMinutes, s.cyclingIntervalMinutes, s.drivingIntervalMinutes, s.lowBatteryIntervalMinutes)
+                        prefs.setNavTabIds(s.navTabIds)
+                        prefs.setStartRoute(s.startRoute)
+                        prefs.setPinColor(s.pinColor)
+                        prefs.setLocalLocationRetentionDays(s.localLocationRetentionDays)
+                        prefs.setLocalMessageRetentionDays(s.localMessageRetentionDays)
+                        prefs.setHistoryMinDistanceMeters(s.historyMinDistanceMeters)
+                        setHeartbeatEnabled(s.heartbeatEnabled)
+                        prefs.setOnboardingComplete(s.onboardingComplete)
+                        prefs.setGlobalScheduleRules(s.globalScheduleRules)
+                        prefs.setCustomRelays(s.customRelays)
+                        prefs.setUseImperialSpeed(s.useImperialSpeed)
+                        prefs.setUse24HourTime(s.use24HourTime)
+                        prefs.setUseImperialElevation(s.useImperialElevation)
+                        prefs.setUseImperialDistance(s.useImperialDistance)
+                        prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
+                        prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
+                        settingsRestored = true
+                        restored += "settings"
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Settings restore failed", e)
+                        failed += "settings"
+                    }
                 }
-            }
-            // Identity and/or display name may have changed; refresh the shown pubkey and QR.
-            if ("identity" in restored || "settings" in restored) {
-                refreshProfile()
-            }
-            _backupResult.value = buildString {
-                if (restored.isNotEmpty()) append("Restored: ${restored.joinToString(", ")}")
-                if (failed.isNotEmpty()) {
-                    if (isNotEmpty()) append(". ")
-                    append("Failed: ${failed.joinToString(", ")}")
+                // Identity and/or display name may have changed; refresh the shown pubkey and QR.
+                if (identityRestored || settingsRestored) {
+                    refreshProfile()
                 }
-                if (isEmpty()) append("Nothing to restore")
+                _backupResult.value = buildString {
+                    if (restored.isNotEmpty()) append("Restored: ${restored.joinToString(", ")}")
+                    if (failed.isNotEmpty()) {
+                        if (isNotEmpty()) append(". ")
+                        append("Failed: ${failed.joinToString(", ")}")
+                    }
+                    if (isEmpty()) append("Nothing to restore")
+                }
+            } catch (e: Exception) {
+                // Defensive: per-section blocks already catch their own failures, so this only
+                // trips on something unexpected. Still surface it and let finally clear the state.
+                Log.e(TAG, "Restore failed unexpectedly", e)
+                _backupResult.value = "Restore failed: ${e.message}"
+            } finally {
+                _pendingRestore.value = null
             }
-            _pendingRestore.value = null
         }
     }
 
