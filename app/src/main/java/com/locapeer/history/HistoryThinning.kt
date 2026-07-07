@@ -23,10 +23,18 @@ object HistoryThinning {
      */
     fun filterByAccuracy(points: List<HeartbeatEntity>, maxAccuracyM: Int): List<HeartbeatEntity> {
         if (maxAccuracyM <= 0) return points
-        val filtered = points.filter { it.isSos || it.accuracy <= maxAccuracyM }
-        // Preserve identity when nothing was removed so downstream distinctUntilChanged
-        // / == checks can short-circuit.
-        return if (filtered.size == points.size) points else filtered
+        // The common case is that nothing is coarse enough to drop, so scan first and
+        // return the original list untouched — no allocation, and downstream
+        // distinctUntilChanged / == checks can short-circuit on identity.
+        val firstDrop = points.indexOfFirst { !it.isSos && it.accuracy > maxAccuracyM }
+        if (firstDrop < 0) return points
+        val kept = ArrayList<HeartbeatEntity>(points.size)
+        kept.addAll(points.subList(0, firstDrop))
+        for (i in firstDrop + 1 until points.size) {
+            val p = points[i]
+            if (p.isSos || p.accuracy <= maxAccuracyM) kept += p
+        }
+        return kept
     }
 
     /** [points] must be in chronological order, as the history queries return them. */

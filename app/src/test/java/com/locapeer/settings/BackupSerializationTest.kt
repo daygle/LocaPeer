@@ -144,4 +144,34 @@ class BackupSerializationTest {
         assertEquals(false, cfg.isMySupervised)
         assertEquals(false, cfg.notifyOnMissedHeartbeat)
     }
+
+    @Test
+    fun `older settings backup without accuracy fields decodes with defaults`() {
+        // A settings block produced before historyMaxAccuracyMeters / sendMaxAccuracyMeters existed.
+        val legacyJson = """
+            {
+              "version": 2,
+              "settings": {
+                "displayName": "Me",
+                "stationaryIntervalMinutes": 15,
+                "walkingIntervalMinutes": 5,
+                "runningIntervalMinutes": 2,
+                "cyclingIntervalMinutes": 3,
+                "drivingIntervalMinutes": 2,
+                "lowBatteryIntervalMinutes": 30,
+                "navTabIds": ["map", "settings"],
+                "startRoute": "map",
+                "historyMinDistanceMeters": 25
+              }
+            }
+        """.trimIndent()
+
+        val restored = jsonImport.decodeFromString<LocaPeerBackup>(legacyJson)
+        val settings = restored.settings!!
+        assertEquals(25, settings.historyMinDistanceMeters)
+        // The new accuracy thresholds must default to 0 (off) so old backups don't
+        // silently enable filtering after a restore.
+        assertEquals(0, settings.historyMaxAccuracyMeters)
+        assertEquals(0, settings.sendMaxAccuracyMeters)
+    }
 }
