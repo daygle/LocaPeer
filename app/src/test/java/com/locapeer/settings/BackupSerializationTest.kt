@@ -68,7 +68,6 @@ class BackupSerializationTest {
             heartbeatEnabled = false,
             onboardingComplete = true,
             globalScheduleRules = listOf(ScheduleRule(id = "r1", label = "Work", days = 0b0011111)),
-            customRelays = listOf("wss://relay.example"),
             // Non-default unit/format preferences so the round-trip actually exercises them.
             useImperialSpeed = true,
             use24HourTime = false,

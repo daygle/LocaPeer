@@ -13,6 +13,7 @@ import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -98,7 +99,7 @@ class PendingRequestsViewModel @Inject constructor(
     private suspend fun sendTrackAccept(recipientPubkey: String, recipientRelay: String, locationRole: String) {
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val settings = prefs.settings.first()
-        val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+        val myRelay = HARDCODED_RELAYS.first()
         val payload = TrackAcceptPayload(
             acceptorPublicKeyHex = pubHex,
             acceptorDisplayName = settings.displayName.ifBlank { "Someone" },

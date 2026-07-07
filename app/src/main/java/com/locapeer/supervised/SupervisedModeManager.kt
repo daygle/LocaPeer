@@ -6,6 +6,7 @@ import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.HARDCODED_RELAYS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -95,7 +96,7 @@ class SupervisedModeManager @Inject constructor(
         scope.launch {
             val settings = prefs.settings.first()
             val (privHex, pubHex) = keyManager.ensureKeypair()
-            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val myRelay = HARDCODED_RELAYS.first()
             val payload = json.encodeToString(
                 SupervisedRegisterPayload(
                     devicePubkeyHex = pubHex,

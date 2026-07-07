@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.KeyManager
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +41,7 @@ class InviteViewModel @Inject constructor(
                 val inviteData = InviteData(
                     publicKeyHex = pubHex,
                     displayName = settings.displayName,
-                    relayUrl = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net",
+                    relayUrl = HARDCODED_RELAYS.first(),
                     deviceId = pubHex
                 )
                 val json = Json.encodeToString(inviteData)

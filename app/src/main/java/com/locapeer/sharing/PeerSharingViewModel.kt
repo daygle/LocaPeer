@@ -18,6 +18,7 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -224,7 +225,7 @@ class PeerSharingViewModel @Inject constructor(
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val settings = prefs.settings.first()
-            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val myRelay = HARDCODED_RELAYS.first()
             val payload = TrackRequestPayload(
                 senderPublicKeyHex = pubHex,
                 senderDisplayName = settings.displayName.ifBlank { "Someone" },

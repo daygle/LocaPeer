@@ -81,7 +81,6 @@ data class AppSettings(
     val sendMaxAccuracyMeters: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
-    val customRelays: List<String> = HARDCODED_RELAYS,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = listOf("map", "messages", "history-tab", "contacts", "invite", "settings"),
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
@@ -145,7 +144,6 @@ class AppPreferences @Inject constructor(
     private val KEY_SEND_MAX_ACCURACY = intPreferencesKey("send_max_accuracy_m")
     private val KEY_PIN_COLOR = stringPreferencesKey("pin_color")
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
-    private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
     private val KEY_LAST_HEARTBEAT_SUB_EPOCH = longPreferencesKey("last_heartbeat_sub_epoch")
     private val KEY_MAP_START_ZOOM = doublePreferencesKey("map_start_zoom")
@@ -197,7 +195,6 @@ class AppPreferences @Inject constructor(
                 sendMaxAccuracyMeters = prefs[KEY_SEND_MAX_ACCURACY] ?: 0,
                 pinColor = prefs[KEY_PIN_COLOR] ?: "",
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
-                customRelays = prefs[KEY_CUSTOM_RELAYS]?.split(",")?.filter { it.isNotBlank() } ?: HARDCODED_RELAYS,
                 mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
                 mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "OWN_PIN",
                 mapFixedLat = prefs[KEY_MAP_FIXED_LAT] ?: 0.0,
@@ -262,10 +259,6 @@ class AppPreferences @Inject constructor(
 
     suspend fun setPinColor(hex: String) {
         context.settingsStore.edit { it[KEY_PIN_COLOR] = hex }
-    }
-
-    suspend fun setCustomRelays(relays: List<String>) {
-        context.settingsStore.edit { it[KEY_CUSTOM_RELAYS] = relays.joinToString(",") }
     }
 
     suspend fun setSosActive(active: Boolean) {

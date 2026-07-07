@@ -9,6 +9,7 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
+import com.locapeer.settings.HARDCODED_RELAYS
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
@@ -117,7 +118,7 @@ class ScanViewModel @Inject constructor(
         try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val settings = prefs.settings.first()
-            val myRelay = settings.customRelays.firstOrNull() ?: "wss://relay.daygle.net"
+            val myRelay = HARDCODED_RELAYS.first()
             val myDisplayName = settings.displayName.ifBlank { "Someone" }
 
             val payload = TrackRequestPayload(

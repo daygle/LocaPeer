@@ -6,6 +6,7 @@ import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.HARDCODED_RELAYS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -108,12 +109,10 @@ class NostrRelayClient @Inject constructor(
             }
         }
         scope.launch {
-            combine(
-                prefs.settings.map { it.customRelays }.distinctUntilChanged(),
-                peerDao.getAllPeers().map { peers -> peers.map { it.relayUrl } }.distinctUntilChanged()
-            ) { custom, peerRelays ->
-                (custom + peerRelays).filter { it.isNotBlank() }.toSet()
-            }.collect { allUrls ->
+            peerDao.getAllPeers().map { peers -> 
+                peers.map { it.relayUrl } 
+            }.distinctUntilChanged().collect { peerRelays ->
+                val allUrls = (HARDCODED_RELAYS + peerRelays).filter { it.isNotBlank() }.toSet()
                 updateRelays(allUrls.toList())
             }
         }

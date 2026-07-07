@@ -24,6 +24,7 @@ import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
+import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -115,7 +116,6 @@ data class SettingsBackup(
     val heartbeatEnabled: Boolean = true,
     val onboardingComplete: Boolean = true,
     val globalScheduleRules: List<ScheduleRule> = emptyList(),
-    val customRelays: List<String> = emptyList(),
     val useImperialSpeed: Boolean = false,
     val use24HourTime: Boolean = true,
     val useImperialElevation: Boolean = false,
@@ -177,7 +177,7 @@ class SettingsViewModel @Inject constructor(
                 InviteData(
                     publicKeyHex = pubHex,
                     displayName = s.displayName,
-                    relayUrl = s.customRelays.firstOrNull() ?: "wss://relay.daygle.net",
+                    relayUrl = HARDCODED_RELAYS.first(),
                     deviceId = pubHex
                 )
             )
@@ -349,7 +349,6 @@ class SettingsViewModel @Inject constructor(
                             heartbeatEnabled = s.heartbeatEnabled,
                             onboardingComplete = s.onboardingComplete,
                             globalScheduleRules = s.globalScheduleRules,
-                            customRelays = s.customRelays,
                             useImperialSpeed = s.useImperialSpeed,
                             use24HourTime = s.use24HourTime,
                             useImperialElevation = s.useImperialElevation,
@@ -497,7 +496,6 @@ class SettingsViewModel @Inject constructor(
                         setHeartbeatEnabled(s.heartbeatEnabled)
                         prefs.setOnboardingComplete(s.onboardingComplete)
                         prefs.setGlobalScheduleRules(s.globalScheduleRules)
-                        prefs.setCustomRelays(s.customRelays)
                         prefs.setUseImperialSpeed(s.useImperialSpeed)
                         prefs.setUse24HourTime(s.use24HourTime)
                         prefs.setUseImperialElevation(s.useImperialElevation)
