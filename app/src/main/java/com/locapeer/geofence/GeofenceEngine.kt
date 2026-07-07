@@ -99,7 +99,7 @@ class GeofenceEngine @Inject constructor(
                 if (now - last < COOLDOWN_MS) return@forEach
                 lastNotifiedAt[cooldownKey] = now
 
-                val verb = if (entered) "arrived at" else "left"
+                val verb = if (entered) "Entered" else "Left"
                 sendGeofenceNotification(
                     fence = fence,
                     personName = current.displayName,
@@ -175,7 +175,7 @@ class GeofenceEngine @Inject constructor(
         )
 
         val notification = NotificationCompat.Builder(context, "locapeer_alerts")
-            .setSmallIcon(R.drawable.ic_notif_alert)
+            .setSmallIcon(R.drawable.ic_notif_locapeer)
             .setContentTitle(title)
             .setContentText(subtitle)
             .setStyle(NotificationCompat.BigTextStyle().bigText(subtitle))
