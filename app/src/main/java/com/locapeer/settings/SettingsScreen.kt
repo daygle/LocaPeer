@@ -42,8 +42,7 @@ import com.locapeer.ui.components.MapLocationPicker
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class)
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
 fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
