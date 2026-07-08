@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── 通知チャンネルとフォアグラウンドサービス ─────────────────────── -->
+    <string name="channel_name_heartbeat">位置情報の配信</string>
+    <string name="channel_desc_heartbeat">承認された連絡先に現在地を配信します</string>
+    <string name="channel_name_alerts">アラート</string>
+    <string name="channel_desc_alerts">ハートビートの未検出やジオフェンスのアラート</string>
+    <string name="channel_name_messages">メッセージ</string>
+    <string name="channel_desc_messages">受信したピアメッセージ</string>
+    <string name="notification_heartbeat_title">LocaPeerが実行中です</string>
+    <string name="notification_heartbeat_text">現在地を他のユーザーと共有しています</string>
+
+    <!-- ── 共通/再利用可能なアクション ──────────────────────────────────────── -->
+    <string name="common_save">保存</string>
+    <string name="common_cancel">キャンセル</string>
+    <string name="common_done">完了</string>
+    <string name="common_delete">削除</string>
+    <string name="common_disable">無効にする</string>
+    <string name="common_enable">有効にする</string>
+    <string name="common_restore">復元</string>
+    <string name="common_unlock">ロック解除</string>
+    <string name="common_password">パスワード</string>
+    <string name="common_not_now">後で</string>
+    <string name="common_off">オフ</string>
+    <string name="common_approve">承認</string>
+    <string name="common_deny">拒否</string>
+
+    <!-- ── ナビゲーションタブのラベル ──────────────────────────────────────────── -->
+    <string name="tab_map">マップ</string>
+    <string name="tab_messages">メッセージ</string>
+    <string name="tab_history">履歴</string>
+    <string name="tab_contacts">連絡先</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">設定</string>
+
+    <!-- ── 移動/活動状態 ───────────────────────────────────────── -->
+    <string name="motion_stationary">静止</string>
+    <string name="motion_walking">歩行</string>
+    <string name="motion_running">走行</string>
+    <string name="motion_cycling">サイクリング</string>
+    <string name="motion_driving">運転</string>
+
+    <!-- ── バックアップセクション ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">秘密鍵</string>
+    <string name="backup_section_contacts">連絡先</string>
+    <string name="backup_section_geofences">ジオフェンス</string>
+    <string name="backup_section_settings">設定</string>
+
+    <!-- ── 監視リクエストダイアログ (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">監視リクエスト</string>
+    <string name="supervision_request_message">「%1$s」が設定へのアクセスを求めています。許可しますか？</string>
+
+    <!-- ── 設定画面 ────────────────────────────────────────────────── -->
+    <string name="settings_title">設定</string>
+
+    <!-- セクションラベル -->
+    <string name="settings_section_location_privacy">位置情報とプライバシー</string>
+    <string name="settings_section_security">セキュリティ</string>
+    <string name="settings_section_map">マップ</string>
+    <string name="settings_section_battery_performance">バッテリーとパフォーマンス</string>
+    <string name="settings_section_units_display">単位と表示</string>
+    <string name="settings_section_retention">保持（このデバイス）</string>
+    <string name="settings_section_appearance">外観</string>
+    <string name="settings_section_backup_keys">バックアップと鍵</string>
+    <string name="settings_section_about">詳細</string>
+
+    <!-- プロフィール -->
+    <string name="settings_edit_name">名前を編集</string>
+    <string name="settings_my_qr">自分のQR</string>
+    <string name="settings_no_name_set">名前未設定</string>
+
+    <!-- 位置情報とプライバシー -->
+    <string name="settings_share_location">現在地を共有</string>
+    <string name="settings_broadcasting">連絡先に配信中</string>
+    <string name="settings_not_broadcasting">配信停止中</string>
+    <string name="settings_sharing_schedule">共有スケジュール</string>
+    <string name="settings_always_on">常にオン</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">%1$d 個のルール</item>
+    </plurals>
+    <string name="settings_geofences">ジオフェンス</string>
+    <string name="settings_geofences_subtitle">共有ジオフェンスエリアを管理</string>
+    <string name="settings_notify_when_tracked">追跡時に通知</string>
+    <string name="settings_notify_when_tracked_subtitle">連絡先の近接またはジオフェンスアラートが自分に対してトリガーされたときに通知を受け取ります。</string>
+    <string name="settings_my_location_history">自分の位置履歴</string>
+    <string name="settings_my_location_history_subtitle">自分の位置情報のタイムラインを閲覧</string>
+    <string name="settings_lookup_addresses">住所を検索</string>
+    <string name="settings_lookup_addresses_subtitle">履歴ポイントやタップしたマップピンの住所を表示します。座標はデバイスのジオコーディングサービス（通常はGoogle）に送信されます。</string>
+
+    <!-- セキュリティ -->
+    <string name="settings_supervision_active">監視が有効</string>
+    <string name="settings_supervision_active_subtitle">設定には監視者の承認が必要です</string>
+    <string name="settings_disable_supervised">監視モードを無効にする</string>
+    <string name="settings_supervised_mode">監視モード</string>
+    <string name="settings_supervised_mode_subtitle">設定へのアクセスに監視者の承認を必要とする</string>
+
+    <!-- マップ -->
+    <string name="settings_starting_point">開始地点</string>
+    <string name="settings_map_current_location">現在地</string>
+    <string name="settings_map_all_contacts">すべての連絡先</string>
+    <string name="settings_map_fixed_location">固定位置</string>
+    <string name="settings_map_last_position">最後の位置</string>
+    <string name="settings_map_starting_point_title">マップの開始地点</string>
+    <string name="settings_no_location_set">位置未設定</string>
+    <string name="settings_pick_location_on_map">マップ上で位置を選択</string>
+    <string name="settings_default_zoom_level">デフォルトのズームレベル</string>
+    <string name="settings_map_pin_colour">マップピンの色</string>
+
+    <!-- バッテリーとパフォーマンス -->
+    <string name="settings_update_cadence">更新頻度</string>
+    <string name="settings_update_cadence_subtitle">位置情報の配信頻度を調整</string>
+    <string name="settings_update_cadence_dialog_message">活動内容に基づいて位置情報の更新頻度を制御します。頻繁に更新するとバッテリーの消費が増えます。</string>
+    <string name="settings_min_distance_filtering">最小距離フィルタリング</string>
+    <string name="settings_min_distance_filtering_subtitle">前のポイントから少なくともこれだけ離れたポイントのみを表示します。</string>
+    <string name="settings_discard_low_accuracy">低精度の測位を破棄</string>
+    <string name="settings_discard_low_accuracy_subtitle">これより精度半径が大きい自分の測位を配信または記録しません。SOSは常に実行されます。</string>
+    <string name="settings_hide_low_accuracy">低精度のポイントを隠す</string>
+    <string name="settings_hide_low_accuracy_subtitle">これより精度半径が大きい履歴ポイントを隠します。削除はされません。</string>
+    <string name="settings_low_battery" formatted="false">低バッテリー (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d 分</string>
+    <string name="settings_motion_detection">動作検出</string>
+    <string name="settings_motion_detection_on">有効 - 履歴内の移動タイプ（歩行、運転）を精緻化します</string>
+    <string name="settings_motion_detection_off">オフ - より正確な移動ラベルのために身体活動へのアクセスを許可してください</string>
+    <string name="settings_enable_motion_title">動作検出を有効にする</string>
+    <string name="settings_enable_motion_message">身体活動へのアクセスを許可すると、LocaPeerは履歴内で歩行、運転、静止をより正確に区別できるようになります。現在はオフになっています。システム設定から再度有効にできます。</string>
+    <string name="settings_open_settings">設定を開く</string>
+
+    <!-- 単位と表示 -->
+    <string name="settings_speed_units">速度の単位</string>
+    <string name="settings_speed_imperial">ヤード・ポンド法 (mph)</string>
+    <string name="settings_speed_metric">メートル法 (km/h)</string>
+    <string name="settings_elevation_units">高度の単位</string>
+    <string name="settings_elevation_imperial">ヤード・ポンド法 (フィート)</string>
+    <string name="settings_elevation_metric">メートル法 (メートル)</string>
+    <string name="settings_distance_units">距離の単位</string>
+    <string name="settings_distance_imperial">ヤード・ポンド法 (ft/mi)</string>
+    <string name="settings_distance_metric">メートル法 (m/km)</string>
+    <string name="settings_time_format">時間形式</string>
+    <string name="settings_time_24h">24時間形式 (13:30)</string>
+    <string name="settings_time_12h">12時間形式 (1:30 PM)</string>
+
+    <!-- 保持 -->
+    <string name="settings_retention_location">位置データ</string>
+    <string name="settings_retention_location_subtitle">連絡先の位置データをローカルに保持する期間</string>
+    <string name="settings_clear_all_location">すべての位置データを消去</string>
+    <string name="settings_retention_messages">メッセージ</string>
+    <string name="settings_retention_messages_subtitle">受信メッセージをローカルに保持する期間</string>
+    <string name="settings_clear_all_messages">すべてのメッセージを消去</string>
+
+    <!-- 外観 -->
+    <string name="settings_customize_nav">ナビゲーションのカスタマイズ</string>
+    <string name="settings_customize_nav_subtitle">ボトムタブの選択と並べ替え</string>
+    <string name="settings_start_page">スタートページ</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_language_title">アプリの言語</string>
+    <string name="settings_language_system">システムのデフォルト</string>
+
+    <!-- バックアップと鍵 -->
+    <string name="settings_export_backup">バックアップを書き出し</string>
+    <string name="settings_export_backup_subtitle">秘密鍵と連絡先をファイルに保存します。このファイルは厳重に保管してください！</string>
+    <string name="settings_import_backup">バックアップを読み込み</string>
+    <string name="settings_import_backup_subtitle">以前に書き出したファイルから復元します</string>
+    <string name="settings_view_private_key">秘密鍵を表示</string>
+    <string name="settings_view_private_key_subtitle">64文字の16進数識別キーを表示します</string>
+
+    <!-- 詳細 -->
+    <string name="settings_about_locapeer">LocaPeerについて</string>
+    <string name="settings_about_subtitle">バージョン、リレーの状態、オープンソース</string>
+
+    <!-- ダイアログ -->
+    <string name="settings_edit_display_name">表示名を編集</string>
+    <string name="settings_display_name_label">表示名</string>
+    <string name="settings_my_invite_qr">自分の招待QR</string>
+    <string name="settings_invite_qr_subtitle">他の人がこれをスキャンして、あなたの追跡を開始できます。</string>
+    <string name="settings_invite_qr_cd">招待QR</string>
+    <string name="settings_private_key_title">秘密鍵</string>
+    <string name="settings_private_key_warning">これは安全に保管してください。この鍵を持つ人は誰でもあなたになりすますことができます。</string>
+    <string name="settings_clear_location_title">位置履歴を消去しますか？</string>
+    <string name="settings_clear_location_message">保存されているすべての位置情報は永久に削除されます。</string>
+    <string name="settings_clear_messages_title">メッセージ履歴を消去しますか？</string>
+    <string name="settings_clear_messages_message">保存されているすべてのメッセージは永久に削除されます。</string>
+    <string name="settings_encrypted_backup_title">暗号化されたバックアップ</string>
+    <string name="settings_encrypted_backup_message">このバックアップは暗号化されています。続行するにはパスワードを入力してください。</string>
+    <string name="settings_select_restore_title">復元するデータを選択</string>
+    <string name="settings_select_export_title">書き出すデータを選択</string>
+    <string name="settings_export_password_hint">必要に応じて、バックアップファイルを暗号化するためのパスワードを設定します。</string>
+    <string name="settings_backup_password_optional">バックアップパスワード（任意）</string>
+    <string name="settings_select_sections">含めるセクションを選択：</string>
+    <string name="settings_choose_file_location">ファイルの保存場所を選択</string>
+    <string name="settings_not_in_backup">このバックアップには含まれていません</string>
+    <string name="settings_enable_supervised_title">監視モードを有効にする</string>
+    <string name="settings_enable_supervised_message">監視者となるピアを選択してください。監視者は自分のデバイスから設定へのアクセスを承認する必要があります。</string>
+    <string name="settings_no_peers_found">ピアが見つかりません。まず相手の招待QRコードをスキャンしてピアを追加してください。</string>
+    <string name="settings_disable_supervised_title">監視モードを無効にしますか？</string>
+    <string name="settings_disable_supervised_message">監視者の承認なしで設定にアクセスできるようになります。</string>
+
+    <!-- ── その他共通/再利用可能 ─────────────────────────────────────────── -->
+    <string name="common_remove">削除</string>
+    <string name="common_leave">退出</string>
+    <string name="common_name">名前</string>
+    <string name="common_search">検索</string>
+    <string name="common_sort">並べ替え</string>
+
+    <!-- コンテンツの説明 (共有) -->
+    <string name="cd_message">メッセージ</string>
+    <string name="cd_show_on_map">マップに表示</string>
+    <string name="cd_more_options">その他のオプション</string>
+
+    <!-- ── 連絡先画面 ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">%1$d 個選択済み</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">選択をキャンセル</string>
+    <string name="contacts_cd_select_all">すべて選択</string>
+    <string name="contacts_cd_deselect_all">すべて選択解除</string>
+    <string name="contacts_cd_qr_invite">QR / 招待</string>
+    <string name="contacts_cd_pending_requests">保留中のリクエスト</string>
+    <string name="contacts_sort_last_seen">最終確認</string>
+    <string name="contacts_search_placeholder">連絡先を検索…</string>
+    <string name="contacts_empty_title">連絡先がまだありません</string>
+    <string name="contacts_empty_subtitle">QRコードをスキャンして誰かと繋がり、位置情報の共有を開始しましょう。</string>
+    <string name="contacts_scan_qr">QRコードをスキャン</string>
+    <string name="contacts_bulk_delete_messages">メッセージを削除</string>
+    <string name="contacts_bulk_delete_locations">位置情報を削除</string>
+    <string name="contacts_last_seen">最終確認: %1$s</string>
+    <string name="contacts_no_location_yet">位置データがまだありません</string>
+    <string name="contacts_view_sharing_settings">共有設定を表示</string>
+    <string name="contacts_view_location_history">位置履歴を表示</string>
+    <string name="contacts_rename_contact">連絡先の名前を変更</string>
+    <string name="contacts_on_contact_device">連絡先のデバイス上</string>
+    <string name="contacts_delete_my_messages_title">自分のメッセージを削除</string>
+    <string name="contacts_delete_locations_title">共有位置情報を削除</string>
+    <string name="contacts_remove_contact_title">連絡先を削除</string>
+    <string name="contacts_leave_title">連絡先リストから退出</string>
+    <string name="contacts_rename_title">連絡先の名前を変更</string>
+    <string name="contacts_remove_contact_body">%1$sを連絡先から削除しますか？相手の位置履歴もローカルから削除されます。</string>
+    <string name="contacts_leave_body">これにより、あなたは%1$sの連絡先から削除され、相手のデバイスからあなたのメッセージと位置データがすべて削除されます。また、相手の位置情報へのアクセス権も失われます。</string>
+    <string name="contacts_delete_my_messages_body">%1$sのデバイスから送信したすべてのメッセージが削除されます。この操作は取り消せません。</string>
+    <string name="contacts_delete_locations_body">%1$sのデバイスから共有したすべての位置データが削除されます。この操作は取り消せません。</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">%1$d 件の連絡先を削除</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">%1$d 件の連絡先を削除しますか？位置履歴もローカルから削除されます。</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">この%1$d件の連絡先のデバイスから送信したすべてのメッセージをリモート削除しますか？この操作は取り消せません。</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">この%1$d件の連絡先のデバイスから共有したすべての位置履歴をリモート削除しますか？この操作は取り消せません。</item>
+    </plurals>
+
+    <string name="common_continue">続行</string>
+
+    <!-- ── オンボーディング ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">バックアップから復元</string>
+    <string name="onboarding_restore_message">64文字の16進数秘密鍵を貼り付けて、本人識別情報と連絡先を復元します。</string>
+    <string name="onboarding_private_key_hex">秘密鍵 (16進数)</string>
+    <string name="onboarding_tagline">連絡先とのプライベートな位置共有。\nアカウント不要。専用サーバー不要。</string>
+    <string name="onboarding_feature_e2e_title">エンドツーエンド暗号化</string>
+    <string name="onboarding_feature_e2e_subtitle">位置情報はデバイス上で暗号化されます</string>
+    <string name="onboarding_feature_servers_title">専用サーバーなし</string>
+    <string name="onboarding_feature_servers_subtitle">オープンなNostrリレーを安全な転送手段として使用します - データは暗号化されプライバシーが保たれます</string>
+    <string name="onboarding_feature_phone_title">スマートフォン内に保持</string>
+    <string name="onboarding_feature_phone_subtitle">完全な位置履歴はデバイス内に留まります。現在の位置のみが選択した連絡先に共有されます</string>
+    <string name="onboarding_name_prompt">連絡先には何と呼ばれたいですか？</string>
+    <string name="onboarding_name_placeholder">例：お母さん、お父さん、アリス…</string>
+    <string name="onboarding_get_started">始める</string>
+    <string name="onboarding_restore_from_backup">バックアップから復元</string>
+    <string name="onboarding_key_note">秘密鍵はローカルで生成され、このデバイスの外に出ることはありません。</string>
+    <string name="onboarding_permissions_title">権限</string>
+    <string name="onboarding_permissions_desc">LocaPeerには、位置情報を共有するための位置情報アクセス、招待コードをスキャンするためのカメラアクセス、バックグラウンドの状態を確認するための通知アクセスが必要です。身体活動へのアクセスは任意ですが、移動（歩行、運転）をより正確に判別するのに役立ちます。</string>
+    <string name="onboarding_before_ask_title">許可を求める前に</string>
+    <string name="onboarding_before_ask_intro">次に、いくつかのシステムプロンプトが表示されます：</string>
+    <string name="onboarding_before_ask_location">• 位置情報 - 現在地を共有するために必要です。</string>
+    <string name="onboarding_before_ask_camera">• カメラ - 招待コードをスキャンするために使用します。</string>
+    <string name="onboarding_before_ask_notifications">• 通知 - バックグラウンドの状態を表示するために使用します。</string>
+    <string name="onboarding_before_ask_activity">• 身体活動 - 任意です。歩行、運転、静止をより正確に判別できるようになります。スキップして後で設定から有効にすることもできます。</string>
+    <string name="onboarding_grant_permissions">権限を許可</string>
+    <string name="onboarding_bg_location_title">バックグラウンドでの位置情報</string>
+    <string name="onboarding_bg_location_desc">アプリが閉じている間も連絡先に情報を更新し続けるには、次の画面で「常に許可」を選択してください。</string>
+    <string name="onboarding_bg_location_error">アプリが閉じているときに連絡先を更新するには、バックグラウンドでの位置情報アクセスが必要です。もう一度試して「常に許可」を選択してください。</string>
+    <string name="onboarding_configure_location">位置情報を設定</string>
+    <string name="onboarding_battery_title">バッテリー</string>
+    <string name="onboarding_battery_desc">Androidはバッテリー節約のためにLocaPeerを停止させることがあります。確実に更新を行うには、LocaPeerを最適化から除外してください。</string>
+    <string name="onboarding_disable_optimizations">最適化を無効にする</string>
+    <string name="onboarding_done_title">準備完了！</string>
+    <string name="onboarding_done_desc">プライベートな位置情報ネットワークの準備が整いました。</string>
+    <string name="onboarding_start_using">LocaPeerの使用を開始</string>
+
+    <string name="common_try_again">再試行</string>
+
+    <!-- ── 招待スキャン画面 ─────────────────────────────────────────────── -->
+    <string name="scan_title">招待をスキャン</string>
+    <string name="scan_camera_needed">QRコードをスキャンするにはカメラの権限が必要です。</string>
+    <string name="scan_grant_permission">権限を許可</string>
+    <string name="scan_add_contact_title">連絡先を追加しますか？</string>
+    <string name="scan_add_contact_message">これにより%1$sと繋がり、お互いの位置情報の共有を開始します。</string>
+    <string name="scan_add_share">追加して共有</string>
+    <string name="scan_request_sent_title">リクエスト送信済み！</string>
+    <string name="scan_request_sent_message">%1$sにリクエストが送信されました。相手が承認すると繋がります。</string>
+    <string name="scan_failed">スキャン失敗: %1$s</string>
+
+    <string name="cd_back">戻る</string>
+    <string name="common_review">確認</string>
+    <string name="common_decline">辞退</string>
+
+    <!-- 共有ロールのラベル (共有) -->
+    <string name="role_send_receive">送信/受信</string>
+    <string name="role_send">送信</string>
+    <string name="role_receive">受信</string>
+    <string name="role_none">共有なし</string>
+
+    <!-- ── 招待画面 ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">自分の招待</string>
+    <string name="invite_tab_add_contact">連絡先を追加</string>
+    <string name="invite_your_qr_title">自分のQRコード</string>
+    <string name="invite_your_qr_subtitle">相手にこれをスキャンさせて、あなたの位置情報をフォローさせます</string>
+    <string name="invite_qr_cd">自分のQRコード</string>
+    <string name="invite_qr_error">QR生成エラー</string>
+    <string name="invite_share_link">招待リンクを共有</string>
+    <string name="invite_encryption_note">あなたの位置情報は、スキャンした人のデバイス専用に暗号化されます。</string>
+    <string name="invite_camera_required_title">カメラアクセスが必要</string>
+    <string name="invite_camera_required_message">QRコードをスキャンするためにカメラの権限を許可してください。</string>
+    <string name="invite_point_camera">カメラをLocaPeerのQRに向けてください</string>
+    <string name="invite_paste_title">または招待リンクを貼り付け</string>
+    <string name="invite_process_link">リンクを処理</string>
+    <string name="invite_fallback_name">連絡先</string>
+    <string name="invite_success_message">承認されると%1$sと繋がります。</string>
+    <string name="invite_confirm_add_title">%1$sを追加しますか？</string>
+    <string name="invite_confirm_add_message">連絡先に追加して位置情報を共有しますか？</string>
+
+    <!-- ── 保留中のリクエスト画面 ────────────────────────────────────────── -->
+    <string name="pending_empty">保留中のリクエストはありません</string>
+    <string name="pending_requesting">リクエスト中: %1$s · %2$s</string>
+    <string name="pending_role_change">ロール変更リクエスト · %1$s</string>
+    <string name="pending_new_request">新規共有リクエスト · %1$s</string>
+
+    <string name="common_save_changes">変更を保存</string>
+
+    <!-- ── 受信共有リクエスト画面 ──────────────────────────────────── -->
+    <string name="incoming_update_title">共有設定を更新</string>
+    <string name="incoming_new_title">新しい連絡先リクエスト</string>
+    <string name="incoming_update_subtitle">%1$sが共有方法の更新を求めています。以下の設定を確認してください。</string>
+    <string name="incoming_new_subtitle">%1$sがあなたを連絡先に追加しました！お返しに何を共有するか選択できます。</string>
+    <string name="incoming_section_location">位置情報</string>
+    <string name="incoming_share_my_location">自分の位置情報を%1$sに共有</string>
+    <string name="incoming_share_my_location_sub">相手にあなたの現在地が表示されます</string>
+    <string name="incoming_see_their_location">%1$sの位置情報を表示</string>
+    <string name="incoming_see_their_location_sub">相手がどこにいるか表示されます</string>
+    <string name="incoming_section_messaging">メッセージ</string>
+    <string name="incoming_allow_messages">メッセージを許可</string>
+    <string name="incoming_allow_messages_sub">%1$sからのチャットメッセージを受信する</string>
+
+    <string name="common_request">リクエスト</string>
+    <string name="common_edit">編集</string>
+
+    <!-- ── ピア共有（連絡先設定）画面 ─────────────────────────── -->
+    <string name="peer_title">連絡先の設定</string>
+    <string name="peer_section_roles">位置情報の共有ロール</string>
+    <string name="peer_send_on">%1$sにあなたの位置情報が表示されます</string>
+    <string name="peer_send_off">%1$sに位置情報を共有していません</string>
+    <string name="peer_receive_title">%1$sの位置情報を受信</string>
+    <string name="peer_receive_on">%1$sの位置情報を表示できます</string>
+    <string name="peer_receive_off">%1$sの位置情報へのアクセス権がありません</string>
+    <string name="peer_section_privacy">プライバシーと共有コントロール</string>
+    <string name="peer_pause_sharing">共有を一時停止</string>
+    <string name="peer_pause_sub">%1$sへの位置情報の送信を一時的に停止します</string>
+    <string name="peer_precision">位置情報の精度</string>
+    <string name="peer_precision_exact_sub">正確なGPS座標</string>
+    <string name="peer_precision_suburb_sub">おおよその位置（市区町村レベル）</string>
+    <string name="peer_always_sharing">常に共有</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">%1$d 個の有効な共有ルール</item>
+    </plurals>
+    <string name="peer_section_alerts">アラートとモニタリング</string>
+    <string name="peer_sos_contact">SOS連絡先</string>
+    <string name="peer_sos_sub">共有が一時停止されていても、あなたの緊急アラートを受信します</string>
+    <string name="peer_missed_alert">位置情報の未検出アラート</string>
+    <string name="peer_missed_on">%1$sが位置情報の報告を停止したときに通知を受け取る</string>
+    <string name="peer_requires_access">%1$sの位置情報へのアクセス権が必要です</string>
+    <string name="peer_proximity_alert">近接アラート</string>
+    <string name="peer_proximity_sub">%1$sが近くに来たときに通知を受け取る</string>
+    <string name="peer_alert_radius">アラート半径</string>
+    <string name="peer_alert_schedule">アラートスケジュール</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">%1$d 個の有効なルール</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$sの到着および出発ゾーンを設定</string>
+    <string name="peer_supervise">このデバイスを監視</string>
+    <string name="peer_supervise_on">%1$sからのロック解除リクエストを受信して承認します</string>
+    <string name="peer_supervise_off">%1$sが監視モードのロック解除リクエストを送信することを許可する</string>
+    <string name="peer_messaging_sub">%1$sからのチャットメッセージを有効/無効にする</string>
+    <string name="peer_section_history">移動履歴</string>
+    <string name="peer_location_history">位置履歴</string>
+    <string name="peer_location_history_sub">%1$sの移動履歴とマップレポートを表示</string>
+    <string name="peer_section_retention">リモートデータの保持</string>
+    <string name="peer_retention_location_sub">%1$sがあなたの位置履歴を保持する期間</string>
+    <string name="peer_purge_location">%1$sからすべての位置データを消去</string>
+    <string name="peer_retention_messages_sub">%1$sがあなたの送信メッセージを保持する期間</string>
+    <string name="peer_purge_messages">%1$sからすべてのメッセージを消去</string>
+    <string name="peer_precision_exact">正確なGPS</string>
+    <string name="peer_precision_exact_desc">正確な座標</string>
+    <string name="peer_precision_suburb">市区町村 (~1km)</string>
+    <string name="peer_precision_suburb_desc">近隣レベルのみ</string>
+
+    <!-- ── 会話リスト（メッセージ）画面 ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">%1$d 件の会話を削除しますか？</item>
+    </plurals>
+    <string name="conv_delete_locally">ローカルから削除</string>
+    <string name="conv_delete_locally_sub">自分のデバイスからのみ削除されます。</string>
+    <string name="conv_delete_both">両方から削除</string>
+    <string name="conv_bulk_delete_both_sub">各連絡先に対してもあなたのメッセージの削除を依頼します。</string>
+    <string name="conv_delete_both_sub">ローカルから削除し、相手にも送信メッセージの削除を依頼します。</string>
+    <string name="conv_cd_exit_selection">選択を終了</string>
+    <string name="conv_cd_select_all">すべて選択</string>
+    <string name="conv_cd_new_message">新規メッセージ</string>
+    <string name="conv_sort_date">日付</string>
+    <string name="conv_sort_unread">未読</string>
+    <string name="conv_search_placeholder">会話を検索…</string>
+    <string name="conv_tab_chats">チャット</string>
+    <string name="conv_tab_archived">アーカイブ済み</string>
+    <string name="conv_mark_read">既読にする</string>
+    <string name="conv_archive">アーカイブ</string>
+    <string name="conv_unarchive">アーカイブ解除</string>
+    <string name="conv_empty_no_results">「%1$s」の結果はありません</string>
+    <string name="conv_empty_no_results_sub">別の検索語を試してください</string>
+    <string name="conv_empty_archived_title">アーカイブされたチャットはありません</string>
+    <string name="conv_empty_archived_sub">チャットをアーカイブして受信トレイを整理しましょう</string>
+    <string name="conv_empty_title">メッセージがまだありません</string>
+    <string name="conv_empty_sub">マップを開いて誰かをタップし\n会話を開始しましょう</string>
+    <string name="conv_delete_title">会話を削除しますか？</string>
+    <string name="conv_delete_message">%1$sとの会話をどのように削除しますか？</string>
+    <string name="conv_messages_blocked">メッセージがブロックされています</string>
+    <string name="conv_preview_mine">自分: %1$s</string>
+    <string name="conv_new_message_title">新規メッセージ</string>
+    <string name="conv_picker_empty">連絡先がまだありません。QRコードをスキャンして連絡先を追加してください。</string>
+
+    <!-- ── チャット画面 ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">チャット履歴を消去しますか？</string>
+    <string name="chat_clear_message">%1$sとの会話をどのように消去しますか？</string>
+    <string name="chat_clear_locally">ローカルから消去</string>
+    <string name="chat_clear_both">両方から消去</string>
+    <string name="chat_clear_both_sub">ローカルから消去し、%1$sに送信メッセージの削除を依頼します。</string>
+    <string name="chat_cd_options">オプション</string>
+    <string name="chat_clear_history_menu">チャット履歴を消去</string>
+    <string name="chat_typing">%1$sが入力中…</string>
+    <string name="chat_blocked_banner">%1$sからのメッセージをブロックしています。解除するには連絡先へ移動してください。</string>
+    <string name="chat_delete_msg_title">メッセージを削除しますか？</string>
+    <string name="chat_delete_msg_message">このメッセージをどのように削除しますか？</string>
+    <string name="chat_delete_from_contact">相手から削除</string>
+    <string name="chat_delete_from_contact_sub">相手のデバイスから削除するようリクエストを送信します。</string>
+    <string name="chat_delete_both_sub">ローカルから削除し、リモート削除を依頼します。</string>
+    <string name="chat_cd_share_location">位置情報を共有</string>
+    <string name="chat_input_placeholder">メッセージ…</string>
+    <string name="chat_cd_send">送信</string>
+
+    <string name="common_close">閉じる</string>
+
+    <!-- ── マップ画面 ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOSを有効にしますか？</string>
+    <string name="map_sos_deactivate_title">SOSを解除しますか？</string>
+    <string name="map_sos_activate_msg">解除されるまで、指定されたSOS連絡先に15秒ごとに現在地を配信します。</string>
+    <string name="map_sos_deactivate_msg">緊急連絡先への優先度の高い位置配信を停止します。</string>
+    <string name="map_activate">有効にする</string>
+    <string name="map_deactivate">解除する</string>
+    <string name="map_cd_style">マップスタイル</string>
+    <string name="map_cd_show_geofences">ジオフェンスを表示</string>
+    <string name="map_cd_hide_geofences">ジオフェンスを隠す</string>
+    <string name="map_cd_follow">追従</string>
+    <string name="map_cd_friends">友達</string>
+    <string name="map_no_friends">まだ追跡している友達はいません</string>
+    <string name="map_you">自分</string>
+    <string name="map_cd_go_my_location">現在地に移動</string>
+    <string name="map_sos_active">⚠ SOS有効</string>
+    <string name="map_away">離席</string>
+    <string name="map_no_location_yet">まだ位置情報がありません</string>
+    <string name="map_cd_go_location">位置に移動</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOSオン</string>
+    <string name="map_overdue">遅延 - 最近の更新なし</string>
+    <string name="map_stat_last_seen">最終確認</string>
+    <string name="map_stat_battery">バッテリー</string>
+    <string name="map_stat_accuracy">精度</string>
+    <string name="map_stat_motion">動作</string>
+    <string name="map_stat_speed">速度</string>
+    <string name="map_stat_elevation">高度</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── 履歴レポート画面 ──────────────────────────────────────────── -->
+    <string name="history_title_peer">履歴: %1$s</string>
+    <string name="history_select_person">人を選択</string>
+    <string name="history_person_label">人</string>
+    <string name="history_cd_prev_day">前日</string>
+    <string name="history_cd_next_day">翌日</string>
+    <string name="history_time_filter">時間フィルタ:</string>
+    <string name="history_cd_reset_time">時間をリセット</string>
+    <string name="history_tab_list">リスト</string>
+    <string name="history_empty_title">この日の履歴はありません</string>
+    <string name="history_empty_sub">別の日付を選択するか、接続を確認してください。</string>
+    <string name="history_start_time">開始時刻</string>
+    <string name="history_end_time">終了時刻</string>
+    <string name="history_no_data_title">位置データなし</string>
+    <string name="history_no_data_sub">この日または時間範囲に記録された測位はありません。</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">%1$d 件の測位が記録されました</item>
+    </plurals>
+    <string name="history_cd_dismiss">閉じる</string>
+    <string name="history_accuracy_label">精度 ±%1$s</string>
+    <string name="history_emergency_sos">緊急SOS信号</string>
+    <string name="history_detail_location">位置</string>
+    <string name="history_detail_coordinates">座標</string>
+    <string name="history_within">±%1$s 以内</string>
+    <string name="history_detail_movement">動作</string>
+    <string name="history_movement_desc">%1$s %2$s 方向 %3$s</string>
+
+    <string name="common_create">作成</string>
+
+    <!-- ── ジオフェンス画面 ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">ジオフェンスエリアを追加</string>
+    <string name="geo_cd_assign">ジオフェンスを割り当て</string>
+    <string name="geo_unknown">不明</string>
+    <string name="geo_empty_title">ジオフェンスなし</string>
+    <string name="geo_empty_sub">+をタップしてジオフェンスエリアを作成し、共有設定から連絡先を割り当てます。</string>
+    <string name="geo_delete_title">ジオフェンスを削除しますか？</string>
+    <string name="geo_delete_simple">「%1$s」を削除しますか？</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">「%1$s」は %2$d 件の連絡先に割り当てられています。削除するとこれらの割り当ても削除されます。</item>
+    </plurals>
+    <string name="geo_for_contact">%1$sのジオフェンス</string>
+    <string name="geo_empty_contact_title">連絡先のジオフェンスなし</string>
+    <string name="geo_empty_contact_sub">+をタップしてジオフェンスエリアを割り当て、到着時、出発時、またはその両方でアラートを出すか選択します。</string>
+    <string name="geo_no_areas_title">ジオフェンスがまだありません</string>
+    <string name="geo_no_areas_msg">まずジオフェンス画面からジオフェンスエリアを作成し、ここで割り当ててください。</string>
+    <string name="geo_radius_label">半径 %1$s</string>
+    <string name="geo_contacts_label">連絡先: %1$s</string>
+    <string name="geo_no_contacts_assigned">割り当てられた連絡先なし</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">%1$d 個のルール</item>
+    </plurals>
+    <string name="geo_trigger_enter">入室</string>
+    <string name="geo_trigger_exit">退出</string>
+    <string name="geo_trigger_both">両方</string>
+    <string name="geo_edit_title">ジオフェンスを編集</string>
+    <string name="geo_new_title">新規ジオフェンス</string>
+    <string name="geo_cd_my_location">現在地</string>
+    <string name="geo_hint_tap">マップをタップして配置</string>
+    <string name="geo_hint_pinch">ピンチでサイズ変更 • ドラッグで移動</string>
+    <string name="geo_basic_info">基本情報</string>
+    <string name="geo_name_placeholder">例：自宅、職場</string>
+    <string name="geo_name_required">名前は必須です</string>
+    <string name="geo_latitude">緯度</string>
+    <string name="geo_longitude">経度</string>
+    <string name="geo_lat_range">-90 から 90</string>
+    <string name="geo_lng_range">-180 から 180</string>
+    <string name="geo_radius">半径</string>
+    <string name="geo_radius_range">%1$d から %2$d mを入力</string>
+    <string name="geo_edit_assignment">割り当てを編集</string>
+    <string name="geo_assign_title">ジオフェンスを割り当て</string>
+    <string name="geo_select_area">ジオフェンスエリアを選択</string>
+    <string name="geo_trigger_title">通知をトリガーする条件</string>
+    <string name="geo_add_rule">ルールを追加</string>
+    <string name="geo_alerts_all_times">アラートは常に有効です。ルールを追加して送信時間を制限できます。</string>
+    <string name="geo_assign_action">割り当て</string>
+
+    <!-- ── 近接アラート画面 ────────────────────────────────────────── -->
+    <string name="prox_title">近接アラート</string>
+    <string name="prox_empty_title">追跡している人はいません</string>
+    <string name="prox_empty_sub">スキャンタブから相手の招待QRをスキャンして\n位置情報の追跡を開始しましょう</string>
+    <string name="prox_intro">追跡している人が指定した距離以内に来たときに通知を受け取ります。</string>
+    <string name="prox_alert_within">%1$s 以内に来たら通知</string>
+    <string name="prox_alerts_off">アラートオフ</string>
+    <string name="prox_alert_radius">アラート半径</string>
+    <string name="prox_edit_schedule">スケジュールを編集</string>
+    <string name="prox_rules">ルール</string>
+
+    <!-- ── スケジュール画面 / ルールエディタ ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$sのスケジュール</string>
+    <string name="schedule_cd_add_rule">ルールを追加</string>
+    <string name="schedule_empty_title">スケジュールルールなし</string>
+    <string name="schedule_empty_global">位置情報は常に共有されます。共有時間を制限するにはルールを追加してください。</string>
+    <string name="schedule_empty_peer">%1$sとの共有は常に有効です。共有時間を制限するにはルールを追加してください。</string>
+    <string name="schedule_active_hint">いずれかのルールが現在時刻に一致するときに有効になります。空の場合は常にオンです。</string>
+    <string name="schedule_all_day">終日</string>
+    <string name="schedule_plus_one_day"> (+1日)</string>
+    <string name="schedule_rule_number">ルール %1$d</string>
+    <string name="schedule_cd_delete_rule">ルールを削除</string>
+    <string name="schedule_edit_rule">ルールを編集</string>
+    <string name="schedule_label_optional">ラベル（任意）</string>
+    <string name="schedule_label_placeholder">例：勤務時間、週末</string>
+    <string name="schedule_active_days">有効な曜日</string>
+    <string name="schedule_time_window">時間枠</string>
+    <string name="schedule_start">開始</string>
+    <string name="schedule_end">終了</string>
+    <string name="schedule_overnight">深夜：当日 %1$s から翌日 %2$s まで有効</string>
+
+    <!-- ── 監視ゲート ───────────────────────────────────────────────── -->
+    <string name="gate_title">デバイスは監視されています</string>
+    <string name="gate_message">設定にアクセスするには監視者の承認が必要です。</string>
+    <string name="gate_request_access">アクセスをリクエスト</string>
+    <string name="gate_waiting">監視者の承認を待機中…</string>
+    <string name="gate_denied">監視者によってアクセスが拒否されました。</string>
+    <string name="gate_timed_out">リクエストがタイムアウトしました。監視者からの応答がありません。</string>
+
+    <!-- ── 保持セレクタ ─────────────────────────────────────────────── -->
+    <string name="retention_forever">無期限</string>
+    <string name="retention_keep_for">保持期間: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d 日間</item>
+    </plurals>
+
+    <string name="common_select">選択</string>
+
+    <!-- ── マップ位置ピッカー ────────────────────────────────────────────── -->
+    <string name="picker_title">固定位置を選択</string>
+
+    <!-- ── ナビゲーションのカスタマイズ画面 ────────────────────────────────────── -->
+    <string name="customize_nav_intro">ボトムバーに表示するタブとその順序を選択します。マップは常に含まれます。</string>
+    <string name="customize_cd_move_up">上に移動</string>
+    <string name="customize_cd_move_down">下に移動</string>
+
+    <!-- ── 詳細画面 ───────────────────────────────────────────────────── -->
+    <string name="about_version">バージョン %1$s (ビルド %2$d)</string>
+    <string name="about_tagline">信頼できる人とのプライベートな位置共有。アカウントなし、クラウドなし、追跡なし。</string>
+    <string name="about_relay_connections">リレー接続</string>
+    <string name="about_connected">接続済み</string>
+    <string name="about_disconnected">切断</string>
+    <string name="about_open_source">オープンソースライブラリ</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMapベースのマップレンダリング</string>
+    <string name="about_lib_okhttp_desc">Nostrリレー用のWebSocketトランスポート</string>
+    <string name="about_lib_compose_desc">UIフレームワーク</string>
+    <string name="about_lib_hilt_desc">依存関係注入</string>
+    <string name="about_lib_room_desc">ローカルデータベース</string>
+    <string name="about_map_attribution">Map data © OpenStreetMap contributors</string>
+
+    <!-- ── 通知 ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">承認</string>
+    <string name="notif_someone">誰か</string>
+    <string name="notif_sos_title">%1$sからのSOS！</string>
+    <string name="notif_sos_text">%1$sが（%2$s、 %3$s）でSOSを発信しました</string>
+    <string name="notif_supervisor_request_title">%1$sがあなたの監視を求めています</string>
+    <string name="notif_supervisor_request_text">このデバイスからのロック解除リクエストを承認するには同意してください</string>
+    <string name="notif_supervisor_request_big">同意すると、監視モードが有効なときに%1$sがあなたにロック解除の承認リクエストを送信できるようになります。</string>
+    <string name="notif_supervised_active_title">監視モードが有効です</string>
+    <string name="notif_supervised_active_text">監視者が承認しました - 監視モードの設定が完了しました</string>
+    <string name="notif_supervised_declined_title">監視モードが拒否されました</string>
+    <string name="notif_supervised_declined_text">監視者がリクエストを拒否しました - 監視モードは無効になりました</string>
+    <string name="notif_tracking_alert_title">追跡アラート</string>
+    <string name="notif_tracking_proximity">%1$sがあなたに関する近接アラートを受信しました</string>
+    <string name="notif_tracking_geofence">%1$sがあなたがフェンス： %2$sに入った/出たというアラートを受信しました</string>
+    <string name="notif_tracking_generic">%1$sがあなたの位置情報をモニタリングしています</string>
+    <string name="notif_track_update_title">%1$sからの共有更新</string>
+    <string name="notif_track_new_title">新しい連絡先: %1$s</string>
+    <string name="notif_role_send_receive">位置情報を送信/受信</string>
+    <string name="notif_role_send">位置情報を送信</string>
+    <string name="notif_role_receive">位置情報を受信</string>
+    <string name="notif_role_none">位置情報の共有なし</string>
+    <string name="notif_track_requesting">%1$sのリクエスト: %2$s</string>
+    <string name="notif_track_update_body">%1$sが位置情報の共有方法の更新を求めています。</string>
+    <string name="notif_track_new_body">%1$sがあなたを連絡先に追加し、接続を求めています。</string>
+    <string name="notif_contact_connected_title">連絡先が接続されました</string>
+    <string name="notif_contact_connected_text">%1$sと接続されました。</string>
+    <string name="notif_request_declined_title">リクエスト拒否</string>
+    <string name="notif_request_declined_text">%1$sが位置情報共有のリクエストを拒否しました。</string>
+    <string name="notif_message_person">%1$sにメッセージを送信</string>
+    <string name="notif_geofence_entered_title">%1$sが%2$sに入りました</string>
+    <string name="notif_geofence_left_title">%1$sが%2$sから出ました</string>
+    <string name="notif_geofence_subtitle">%1$sにて · 半径 %2$s</string>
+    <string name="notif_person_nearby">%1$sが近くにいます</string>
+    <string name="notif_distance_from_you">あなたから %1$s</string>
+    <string name="notif_missed_title">%1$sからの更新なし</string>
+    <string name="notif_missed_text">%1$s分前に（%2$s、 %3$s）の近くで確認されました</string>
+    <string name="notif_sos_active_title">SOS発信中！</string>
+    <string name="notif_sos_active_text">SOS連絡先に緊急アラートを配信しています</string>
+    <string name="notif_messages_group_title">LocaPeerメッセージ</string>
+
+    <!-- ── トースト ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$sからの連絡先リクエストを拒否しました</string>
+    <string name="toast_now_supervising">%1$sのデバイスを監視しています</string>
+    <string name="toast_declined_supervision">%1$sからの監視リクエストを拒否しました</string>
+</resources>
