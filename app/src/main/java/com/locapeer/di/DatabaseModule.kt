@@ -59,6 +59,7 @@ object DatabaseModule {
                     trackedDeviceId TEXT NOT NULL,
                     triggerOn TEXT NOT NULL,
                     active INTEGER NOT NULL,
+                    scheduleRules TEXT NOT NULL DEFAULT '[]',
                     createdAt INTEGER NOT NULL
                 )
                 """.trimIndent()
@@ -74,8 +75,8 @@ object DatabaseModule {
             // One assignment per existing geofence, referencing the (soon-to-be-trimmed) area.
             db.execSQL(
                 """
-                INSERT INTO geofence_assignments (id, geofenceId, trackededDeviceId, triggerOn, active, createdAt)
-                SELECT id || ':a', id, trackedDeviceId, triggerOn, active, createdAt FROM geofences
+                INSERT INTO geofence_assignments (id, geofenceId, trackedDeviceId, triggerOn, active, scheduleRules, createdAt)
+                SELECT id || ':a', id, trackedDeviceId, triggerOn, active, '[]', createdAt FROM geofences
                 """.trimIndent()
             )
             // Rebuild geofences without the moved columns.
@@ -97,6 +98,9 @@ object DatabaseModule {
             )
             db.execSQL("DROP TABLE geofences")
             db.execSQL("ALTER TABLE geofences_new RENAME TO geofences")
+
+            // v4 also added scheduleRules to proximity alerts.
+            db.execSQL("ALTER TABLE proximity_alerts ADD COLUMN scheduleRules TEXT NOT NULL DEFAULT '[]'")
         }
     }
 
