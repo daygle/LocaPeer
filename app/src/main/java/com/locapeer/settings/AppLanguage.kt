@@ -20,7 +20,14 @@ import androidx.core.os.LocaleListCompat
  */
 enum class AppLanguage(val tag: String, val nativeName: String?) {
     SYSTEM("", null),
-    ENGLISH("en", "English");
+    ENGLISH("en", "English"),
+    SPANISH("es", "Español"),
+    FRENCH("fr", "Français"),
+    GERMAN("de", "Deutsch"),
+    ITALIAN("it", "Italiano"),
+    PORTUGUESE("pt", "Português"),
+    JAPANESE("ja", "日本語"),
+    CHINESE_SIMPLIFIED("zh-rCN", "简体中文");
 
     companion object {
         /** The currently applied language, resolved from the persisted app locale. */
