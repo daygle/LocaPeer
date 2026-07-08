@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 /**
  * A geofence *area*: a named circular region on the map. Areas are global and can be
- * shared across contacts — which contact a geofence watches, and whether it fires on
+ * shared across contacts - which contact a geofence watches, and whether it fires on
  * entry/exit, lives in [GeofenceAssignmentEntity].
  */
 @Entity(tableName = "geofences")

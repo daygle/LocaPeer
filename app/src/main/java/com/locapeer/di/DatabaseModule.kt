@@ -145,7 +145,7 @@ object DatabaseModule {
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
             // The app is live with testers, so every schema change from here on
-            // must bump the version and ship a Migration — in-place edits to an
+            // must bump the version and ship a Migration - in-place edits to an
             // existing version leave installed devices with a mismatched schema
             // that crashes Room's validation on launch. There is deliberately no
             // destructive upgrade fallback: a missing migration must crash in

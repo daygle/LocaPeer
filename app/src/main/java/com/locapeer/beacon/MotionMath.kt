@@ -52,9 +52,9 @@ object MotionMath {
     /**
      * Consecutive agreeing samples required to switch state. Asymmetric on purpose:
      * quick to detect faster motion, slow to give it up. Accelerating into a faster
-     * tier trips in 2 samples; decelerating is stickier so a brief slow stretch — a
+     * tier trips in 2 samples; decelerating is stickier so a brief slow stretch - a
      * train dwelling at a platform, a car at a red light, a patch of poor-accuracy
-     * GPS in a tunnel or metal carriage — doesn't drop an established drive to
+     * GPS in a tunnel or metal carriage - doesn't drop an established drive to
      * WALKING (and its slower pulse cadence) or STATIONARY (and its low-power
      * polling) before the device has provably slowed for good.
      */
@@ -75,7 +75,7 @@ object MotionMath {
 
     /**
      * States ordered by representative speed, for the deceleration hysteresis in
-     * [samplesRequiredToSwitch]. Not the enum's declaration order — DRIVING is
+     * [samplesRequiredToSwitch]. Not the enum's declaration order - DRIVING is
      * declared before CYCLING there. UNKNOWN sits at the walking tier, matching how
      * it is treated for interval selection.
      */

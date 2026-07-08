@@ -12,13 +12,13 @@ import kotlin.math.max
  * Two independent rejection rules, each with an escape hatch so the filter can
  * never wedge the position permanently:
  *
- * 1. Accuracy gate — a fix far less accurate than the one we already have adds
+ * 1. Accuracy gate - a fix far less accurate than the one we already have adds
  *    no information about a device that hasn't provably moved; holding the
  *    better position beats wobbling to the worse one. The gate is relative
  *    (see [ACCURACY_GATE_FACTOR]) so that in genuinely coarse-only coverage,
  *    where every fix is cell-grade, fixes still flow.
  *
- * 2. Jump rejection — a fix implying faster-than-plausible travel from the
+ * 2. Jump rejection - a fix implying faster-than-plausible travel from the
  *    last accepted position is a glitch... unless the *next* fix agrees with
  *    it, in which case the device really moved (or the anchor was the outlier)
  *    and that corroborating fix is accepted. The first rejected point stays
@@ -44,7 +44,7 @@ class LocationFilter {
 
         /**
          * Gate floor: fixes at least this accurate always pass the accuracy
-         * gate, however good the previous fix was — a 60m fix after a 5m GPS
+         * gate, however good the previous fix was - a 60m fix after a 5m GPS
          * fix is normal indoors, not an outlier.
          */
         const val ACCURACY_GATE_FLOOR_M = 100f

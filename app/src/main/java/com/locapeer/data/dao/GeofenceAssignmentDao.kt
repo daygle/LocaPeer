@@ -4,7 +4,7 @@ import androidx.room.*
 import com.locapeer.data.entity.GeofenceAssignmentEntity
 import kotlinx.coroutines.flow.Flow
 
-/** A geofence area joined with the trigger for a specific assignment — what the engine evaluates. */
+/** A geofence area joined with the trigger for a specific assignment - what the engine evaluates. */
 data class ActiveGeofence(
     val id: String,
     val name: String,

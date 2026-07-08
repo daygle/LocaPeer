@@ -420,7 +420,7 @@ private fun AssignmentCard(
 
 /**
  * Formats a coordinate with a fixed locale. These strings are parsed back with
- * toDoubleOrNull(), which only accepts '.' — a locale-dependent ',' separator would
+ * toDoubleOrNull(), which only accepts '.' - a locale-dependent ',' separator would
  * make the field unparseable and block saving.
  */
 private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.US, value)
@@ -596,7 +596,7 @@ private fun GeofenceAreaDialog(
                                 onValueChange = { latText = it },
                                 label = { Text("Latitude") },
                                 isError = latError,
-                                supportingText = if (latError) { { Text("−90 to 90") } } else null,
+                                supportingText = if (latError) { { Text("-90 to 90") } } else null,
                                 singleLine = true,
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
@@ -606,7 +606,7 @@ private fun GeofenceAreaDialog(
                                 onValueChange = { lngText = it },
                                 label = { Text("Longitude") },
                                 isError = lngError,
-                                supportingText = if (lngError) { { Text("−180 to 180") } } else null,
+                                supportingText = if (lngError) { { Text("-180 to 180") } } else null,
                                 singleLine = true,
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)

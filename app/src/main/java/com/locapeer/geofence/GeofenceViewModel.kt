@@ -37,7 +37,7 @@ class GeofenceViewModel @Inject constructor(
     val geofences = geofenceDao.getAllGeofences()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    /** Every assignment across all contacts — used to show which contacts an area is assigned to. */
+    /** Every assignment across all contacts - used to show which contacts an area is assigned to. */
     val allAssignments = assignmentDao.observeAll()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 

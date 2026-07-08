@@ -123,7 +123,7 @@ class HeartbeatService : LifecycleService() {
     /**
      * Latest sensor-based reading from Activity Recognition, or null until the first
      * transition fires (also when AR is unavailable or its permission was denied).
-     * Fused with [currentMotionState] to produce the stored/broadcast label — see
+     * Fused with [currentMotionState] to produce the stored/broadcast label - see
      * [MotionFusion.fuse]. Interval selection stays keyed off the GPS state.
      */
     @Volatile private var arMotionState: MotionState? = null
@@ -147,7 +147,7 @@ class HeartbeatService : LifecycleService() {
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(result: LocationResult) {
             result.lastLocation?.let { loc ->
-                // Outlier fixes are dropped wholesale — before motion
+                // Outlier fixes are dropped wholesale - before motion
                 // classification too, since a glitch fix also poisons the
                 // displacement-derived speed of the fix after it.
                 if (!locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
@@ -257,7 +257,7 @@ class HeartbeatService : LifecycleService() {
      * refresh the location request (via the [updateLocationRequest] it already issues on
      * a state change) so the boost takes effect immediately.
      *
-     * A single settled exit can reach here twice — first from [checkStationaryExit]
+     * A single settled exit can reach here twice - first from [checkStationaryExit]
      * (STATIONARY -> UNKNOWN), then from the fix that latches UNKNOWN -> moving. An
      * already-running window is left as-is rather than re-armed, so the total boost
      * never exceeds [CLASSIFY_BOOST_MS] from the first trigger.
@@ -280,12 +280,12 @@ class HeartbeatService : LifecycleService() {
      * stationary can be so coarse (cell-tower fixes are off by hundreds of metres
      * to kilometres) that the distance travelled between fixes never exceeds their
      * accuracy radius, so speed-based detection reads 0 and the device stays
-     * STATIONARY for an entire drive — and never upgrades to GPS to find out.
+     * STATIONARY for an entire drive - and never upgrades to GPS to find out.
      * Instead compare against where the device *became* stationary: total
      * displacement grows without bound while driving, so once it clears the
-     * combined uncertainty the device has provably moved. Exit to UNKNOWN — which
+     * combined uncertainty the device has provably moved. Exit to UNKNOWN - which
      * latches on the very next classified fix rather than asserting a possibly-wrong
-     * WALKING — and boost GPS so that fix carries clean speed.
+     * WALKING - and boost GPS so that fix carries clean speed.
      */
     private fun checkStationaryExit(loc: android.location.Location) {
         if (!stationaryAnchorSet) return
@@ -360,7 +360,7 @@ class HeartbeatService : LifecycleService() {
      * Doze defers both handler callbacks and low-power location fixes, so a phone
      * left untouched can stretch pins far past the stationary interval (and trip
      * peers' missed-heartbeat alerts). This alarm punches through idle and re-runs
-     * the pulse check; it is a backstop, not the scheduler — the slack means the
+     * the pulse check; it is a backstop, not the scheduler - the slack means the
      * handler wins whenever the device is awake, making the check a no-op. It also
      * revives the service if it died: alarm delivery grants the temporary allowlist
      * that permits the foreground-service start.
@@ -620,7 +620,7 @@ class HeartbeatService : LifecycleService() {
     /**
      * Subscribe to Activity Recognition transitions so a sensor-based motion reading
      * corroborates the GPS classifier (see [MotionFusion]). Only ENTER transitions are
-     * requested — the most recent one is the current activity. Gracefully no-ops when
+     * requested - the most recent one is the current activity. Gracefully no-ops when
      * the permission is absent; the service then simply runs GPS-only as before.
      */
     @SuppressLint("MissingPermission")
@@ -739,7 +739,7 @@ class HeartbeatService : LifecycleService() {
 
     /**
      * Sender-side accuracy gate: true when a fix this coarse must be withheld from
-     * local history and peers. Never blocks in SOS — a coarse emergency position
+     * local history and peers. Never blocks in SOS - a coarse emergency position
      * still beats none. 0 (the default) never blocks.
      */
     private fun sendGateBlocks(accuracyM: Float): Boolean {

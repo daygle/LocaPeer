@@ -80,7 +80,7 @@ class GeoMathTest {
             inside = GeoMath.isInsideWithHysteresis(d, radius, buffer, inside)
             inside
         }
-        // Enters at 95 and never leaves — no distance exceeds radius+buffer (150).
+        // Enters at 95 and never leaves - no distance exceeds radius+buffer (150).
         assertEquals(listOf(true, true, true, true, true, true), states)
     }
 }

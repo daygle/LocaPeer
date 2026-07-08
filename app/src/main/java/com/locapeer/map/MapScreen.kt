@@ -704,8 +704,8 @@ private fun OsmdroidMapView(
                 mapView.overlays.add(circle)
 
                 // Label showing the fence name and the contacts it's assigned to. Anchor it to
-                // the top edge of the circle (not the centre) so fences that share a centre —
-                // e.g. a large suburb zone and a small home zone on the same point — separate by
+                // the top edge of the circle (not the centre) so fences that share a centre -
+                // e.g. a large suburb zone and a small home zone on the same point - separate by
                 // radius instead of stacking their labels on top of each other.
                 val label = Marker(mapView).apply {
                     position = GeoPoint(

@@ -53,7 +53,7 @@ object MotionFusion {
      *     "a walk read as driving": AR positively identifies on-foot motion from the
      *     accelerometer, so GPS scatter can no longer assert DRIVING. The known cost is
      *     AR's transition latency briefly lagging the label at the very start of a trip,
-     *     and the rare slow-vehicle case AR reports as on-foot — both far milder than a
+     *     and the rare slow-vehicle case AR reports as on-foot - both far milder than a
      *     wholesale wrong state. GPS remains authoritative for position, speed, bearing
      *     and the pulse cadence, none of which this touches.
      *  2. With no AR reading, fall back to the GPS state, except that a transitional /
@@ -78,7 +78,7 @@ object MotionFusion {
     }
 
     /**
-     * The state that should drive **pulse cadence and GPS power** — deliberately different
+     * The state that should drive **pulse cadence and GPS power** - deliberately different
      * from [fuse], which drives the label. For the label AR always wins; for cadence that
      * is unsafe, because AR's STILL lags at the start of a trip and would slow GPS down
      * exactly when a drive is beginning. So:
@@ -86,7 +86,7 @@ object MotionFusion {
      *  1. A positive on-foot / cycling AR reading (WALKING, RUNNING, CYCLING) is
      *     authoritative: it is incompatible with being in a vehicle and never appears at
      *     drive start (the sequence there is STILL → IN_VEHICLE), so it can safely cap a
-     *     stale GPS DRIVING and relax the power profile — the shop-visit battery case.
+     *     stale GPS DRIVING and relax the power profile - the shop-visit battery case.
      *  2. Otherwise use whichever signal demands the faster cadence (higher rank). This
      *     keeps GPS's fast motion-onset detection and never lets a lagging AR STILL slow a
      *     freshly detected drive; STILL (rank 0) can only ever match, never lower, GPS.

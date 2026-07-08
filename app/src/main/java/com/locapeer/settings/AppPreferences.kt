@@ -64,12 +64,12 @@ data class AppSettings(
     val localMessageRetentionDays: Int = 90,
     /**
      * Hide history points closer than this to the previously shown one (metres).
-     * Display-time filter only — every ping is still stored. 0 = show all.
+     * Display-time filter only - every ping is still stored. 0 = show all.
      */
     val historyMinDistanceMeters: Int = 0,
     /**
      * Hide history points whose accuracy radius is larger than this (metres).
-     * Display-time filter only — every ping is still stored, so lowering the
+     * Display-time filter only - every ping is still stored, so lowering the
      * threshold re-reveals them. SOS pings are always shown. 0 = show all.
      */
     val historyMaxAccuracyMeters: Int = 0,

@@ -309,11 +309,11 @@ class NostrRelayClient @Inject constructor(
                             // copy from another relay, or a relay retransmit), so steady-state
                             // duplicates cost nothing and only novel ids are verified. (onMessage
                             // runs per relay connection, so two relays delivering the same new id
-                            // at once can both verify it before either records it — a rare, harmless
+                            // at once can both verify it before either records it - a rare, harmless
                             // double-check, never a re-verify of an already-accepted event.)
                             if (synchronized(recentEventLock) { recentEventIds.contains(event.id) }) return
                             // Verify the signature BEFORE recording the id. The event id is a hash
-                            // of the content only — it does not cover the signature — so a forged
+                            // of the content only - it does not cover the signature - so a forged
                             // event can echo a known id with a content it doesn't hold the key for.
                             // If such an event were cached, the genuine event later arriving from an
                             // honest relay would be dropped as a duplicate. Refusing to cache

@@ -213,7 +213,7 @@ fun HistoryReportScreen(
                                     val minute = ((startTimeOffset % 3_600_000) / 60_000).toInt()
                                     Text(String.format("%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
                                 }
-                                Text("—", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text("-", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 TextButton(onClick = { showEndTimePicker = true }) {
                                     val hour = (endTimeOffset / 3_600_000).toInt()
                                     val minute = ((endTimeOffset % 3_600_000) / 60_000).toInt()

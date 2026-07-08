@@ -221,7 +221,7 @@ class HeartbeatReceiver @Inject constructor(
         relayClient.events
             .onEach { event ->
               // A single malformed/hostile event must never cancel the collector and stop
-              // all future event processing — isolate every dispatch.
+              // all future event processing - isolate every dispatch.
               try {
                 when (event.kind) {
                     NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
@@ -294,7 +294,7 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         // Drop normal heartbeats from peers we are not configured to receive from.
-        // SOS alerts bypass role checks — emergencies override access control.
+        // SOS alerts bypass role checks - emergencies override access control.
         if (event.kind == NostrEventKind.HEARTBEAT &&
             broadcaster.locationRole != PeerEntity.ROLE_RECEIVE &&
             broadcaster.locationRole != PeerEntity.ROLE_SEND_RECEIVE) {
@@ -311,7 +311,7 @@ class HeartbeatReceiver @Inject constructor(
             val canonicalDeviceId = event.pubkey
             val timestampMs = Instant.parse(payload.timestamp).toEpochMilli()
             // Catch-up subscriptions can replay events already stored (relay overlap,
-            // dedupe-cache eviction across restarts) — never insert the same ping twice.
+            // dedupe-cache eviction across restarts) - never insert the same ping twice.
             if (heartbeatDao.countByDeviceAndTimestamp(canonicalDeviceId, timestampMs) > 0) {
                 advanceHeartbeatBaseline(event.createdAt)
                 return
@@ -339,7 +339,7 @@ class HeartbeatReceiver @Inject constructor(
                 heartbeatDao.deleteOlderThanForDevice(canonicalDeviceId, cutoff)
             }
             // Replayed (old) heartbeats are history backfill: recording them is correct,
-            // but alerting on them is not — the situation they describe is long over.
+            // but alerting on them is not - the situation they describe is long over.
             val isFresh = System.currentTimeMillis() - timestampMs < FRESH_HEARTBEAT_MS
             if (isFresh) {
                 if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
@@ -357,7 +357,7 @@ class HeartbeatReceiver @Inject constructor(
      * starts near where this one left off instead of replaying the whole window.
      * Only near-live events advance it: relays replay stored events newest-first, so
      * taking the baseline from a replayed event could skip older ones still streaming
-     * in if the app dies mid-replay. Re-replaying is safe — inserts are deduped.
+     * in if the app dies mid-replay. Re-replaying is safe - inserts are deduped.
      */
     private suspend fun advanceHeartbeatBaseline(eventEpoch: Long) {
         val nowEpoch = System.currentTimeMillis() / 1000
@@ -477,7 +477,7 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processRegisterRequest(event: NostrEvent) {
-        // Ignore requests older than 24 hours — supervisor must be reachable within a day
+        // Ignore requests older than 24 hours - supervisor must be reachable within a day
         if (event.createdAt < Instant.now().epochSecond - 86400) return
         peerDao.getPeer(event.pubkey) ?: return
         if (!NostrEvent.verify(event, crypto)) return
@@ -568,7 +568,7 @@ class HeartbeatReceiver @Inject constructor(
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
                 .setContentTitle("Supervised mode active")
-                .setContentText("Your supervisor confirmed — supervised mode is now set up")
+                .setContentText("Your supervisor confirmed - supervised mode is now set up")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
@@ -580,7 +580,7 @@ class HeartbeatReceiver @Inject constructor(
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
                 .setContentTitle("Supervised mode declined")
-                .setContentText("Your supervisor declined the request — supervised mode has been disabled")
+                .setContentText("Your supervisor declined the request - supervised mode has been disabled")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
@@ -728,7 +728,7 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         val notifId = event.pubkey.hashCode() + 20000
-        // Suppress relay retransmissions for new requests only — role changes are always shown
+        // Suppress relay retransmissions for new requests only - role changes are always shown
         if (!payload.isRoleChange &&
             notificationManager.activeNotifications.any { it.id == NOTIF_ID_TRACK_REQUEST && it.tag == event.pubkey }
         ) return
@@ -847,7 +847,7 @@ class HeartbeatReceiver @Inject constructor(
 
         // Bind the payload's claimed identity to the signing key. The accept only ever
         // touches the signer's peer row, so a payload advertising a different pubkey is
-        // either malformed or an attempt to redirect the relationship — reject it.
+        // either malformed or an attempt to redirect the relationship - reject it.
         if (payload.acceptorPublicKeyHex != event.pubkey) {
             Log.w(TAG, "Track accept identity mismatch: payload=${payload.acceptorPublicKeyHex} signer=${event.pubkey}")
             return
@@ -856,7 +856,7 @@ class HeartbeatReceiver @Inject constructor(
         // A TRACK_ACCEPT is only meaningful as a reply to a request we sent, and every
         // outgoing request is preceded by a local peer row (scanning adds the peer
         // optimistically; role-change requests operate on an existing contact). With no
-        // local record we never asked this key — ignoring the accept prevents a stranger
+        // local record we never asked this key - ignoring the accept prevents a stranger
         // from unilaterally self-adding as a location recipient.
         val existingPeer = peerDao.getPeer(event.pubkey) ?: run {
             Log.w(TAG, "Ignoring unsolicited track accept from ${event.pubkey}")
@@ -885,7 +885,7 @@ class HeartbeatReceiver @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(payload.acceptorRelayUrl)
-        // Only notify if this is a new connection or a role change — not on catch-up re-delivery.
+        // Only notify if this is a new connection or a role change - not on catch-up re-delivery.
         // Show the locally-stored contact name, not the payload's (remote-controlled) name, so a
         // peer can't spoof the name rendered in the system notification.
         val notifyName = existingPeer.displayName.ifBlank { payload.acceptorDisplayName }

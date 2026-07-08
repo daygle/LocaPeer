@@ -251,20 +251,20 @@ private fun PermissionsStep(
     StepHeader(
         icon = Icons.AutoMirrored.Filled.FactCheck,
         title = "Permissions",
-        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional — it helps label your movement (walking, driving) more accurately."
+        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional - it helps label your movement (walking, driving) more accurately."
     )
 
     Spacer(Modifier.height(48.dp))
 
     // Gate advancing on the required permissions only. The optional ones (e.g.
     // Activity Recognition) are requested in the same prompt but their denial must
-    // not block onboarding — tracking still works without them.
+    // not block onboarding - tracking still works without them.
     val requiredGranted = permissionsState.permissions
         .filter { it.permission in PermissionManager.REQUIRED_PERMISSIONS }
         .all { it.status.isGranted }
 
-    // Explain what's about to be asked — especially the optional physical-activity
-    // access — before the system dialogs appear, so the prompts have context.
+    // Explain what's about to be asked - especially the optional physical-activity
+    // access - before the system dialogs appear, so the prompts have context.
     var showRationale by remember { mutableStateOf(false) }
     if (showRationale) {
         AlertDialog(
@@ -274,10 +274,10 @@ private fun PermissionsStep(
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("You'll see a few system prompts next:")
-                    Text("• Location — required, to share your position.")
-                    Text("• Camera — to scan invite codes.")
-                    Text("• Notifications — for background status.")
-                    Text("• Physical activity — optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.")
+                    Text("• Location - required, to share your position.")
+                    Text("• Camera - to scan invite codes.")
+                    Text("• Notifications - for background status.")
+                    Text("• Physical activity - optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.")
                 }
             },
             confirmButton = {

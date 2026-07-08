@@ -75,7 +75,7 @@ class MotionFusionTest {
 
     @Test
     fun `AR still never slows a freshly detected GPS drive`() {
-        // Drive-start safety: GPS already DRIVING, AR still lagging on STILL — keep DRIVING.
+        // Drive-start safety: GPS already DRIVING, AR still lagging on STILL - keep DRIVING.
         assertEquals(MotionState.DRIVING, MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.STATIONARY))
     }
 

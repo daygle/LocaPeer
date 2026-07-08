@@ -72,7 +72,7 @@ class GeofenceEngine @Inject constructor(
             val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
 
-            // A fix coarser than the fence itself can't reliably tell inside from outside —
+            // A fix coarser than the fence itself can't reliably tell inside from outside -
             // this keeps suburb-precision peers from tripping street-sized fences.
             // However, we only enforce this for "inside" results; if a fix is far enough
             // away to be "outside" even with its accuracy buffer, we accept it so that
@@ -80,7 +80,7 @@ class GeofenceEngine @Inject constructor(
             if (inNow && wasInside != true && current.accuracy > fence.radiusMetres.toFloat()) return@forEach
 
             insideState[key] = inNow
-            // First reliable observation for this fence+person: seed only — we don't
+            // First reliable observation for this fence+person: seed only - we don't
             // know where they came from, so neither entered nor exited can fire.
             if (wasInside == null) return@forEach
 

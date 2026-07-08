@@ -2,7 +2,7 @@
 <!--
   LocaPeer notification small icon: the launcher's location-pin + peer-network
   motif rendered as a flat white silhouette (notification icons are tinted by
-  the system, so only alpha/shape matters — colour is ignored).
+  the system, so only alpha/shape matters - colour is ignored).
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"

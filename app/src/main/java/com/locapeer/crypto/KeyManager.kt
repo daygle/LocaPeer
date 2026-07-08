@@ -108,7 +108,7 @@ class KeyManager @Inject constructor(
                 }
             }
 
-            Log.w(TAG, "No valid keypair found — generating new one")
+            Log.w(TAG, "No valid keypair found - generating new one")
             generateAndSaveKeypair()
         }
     }

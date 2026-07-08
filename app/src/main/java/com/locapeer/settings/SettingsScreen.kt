@@ -10,6 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
@@ -965,12 +966,12 @@ fun SettingsScreen(
     if (showMotionRationale) {
         AlertDialog(
             onDismissRequest = { showMotionRationale = false },
-            icon = { Icon(Icons.Default.DirectionsWalk, contentDescription = null) },
+            icon = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
             title = { Text("Enable motion detection") },
             text = {
                 Text(
                     "Physical activity access lets LocaPeer tell walking, driving and standing " +
-                        "still apart more accurately in your history. It's currently turned off — " +
+                        "still apart more accurately in your history. It's currently turned off - " +
                         "you can re-enable it from system settings."
                 )
             },
@@ -1035,7 +1036,7 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
 /**
  * Optional Activity Recognition permission toggle. When granted it shows an enabled state
  * and is inert; when not, it is tappable to request the permission (or, once permanently
- * denied, to open system settings — handled by the caller).
+ * denied, to open system settings - handled by the caller).
  */
 @Composable
 private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
@@ -1043,11 +1044,11 @@ private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
         headlineContent = { Text("Motion Detection") },
         supportingContent = {
             Text(
-                if (granted) "Enabled — refines your movement type (walking, driving) in history"
-                else "Off — allow physical activity access for more accurate movement labels"
+                if (granted) "Enabled - refines your movement type (walking, driving) in history"
+                else "Off - allow physical activity access for more accurate movement labels"
             )
         },
-        leadingContent = { Icon(Icons.Default.DirectionsWalk, contentDescription = null) },
+        leadingContent = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
         trailingContent = {
             if (granted) {
                 Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)

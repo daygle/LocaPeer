@@ -59,7 +59,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             if (alertConfigs[peer.deviceId]?.notifyOnMissedHeartbeat != true) return@forEach
             val latest = heartbeatDao.getLatestHeartbeat(peer.deviceId) ?: return@forEach
             // The sender reports its own interval in every ping. The 60s floor keeps
-            // SOS-rate (15s) senders from alerting on mere relay jitter — combined
+            // SOS-rate (15s) senders from alerting on mere relay jitter - combined
             // with the ×2 threshold below that means 2 min of silence.
             val expected = (latest.expectedIntervalSeconds * 1000L).coerceAtLeast(60_000L)
             val elapsed = now - latest.timestamp
@@ -85,7 +85,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
     /**
      * Watchdog: the heartbeat service is sticky and restarted on boot, but an OEM
-     * task killer can take it down without either hook firing — tracking would then
+     * task killer can take it down without either hook firing - tracking would then
      * silently stop until the app is next opened. This worker already runs every
      * 15 minutes, so re-assert the service here. Started via an alarm PendingIntent
      * because a background worker may not launch a foreground service directly on

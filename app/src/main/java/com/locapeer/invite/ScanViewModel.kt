@@ -50,7 +50,7 @@ class ScanViewModel @Inject constructor(
     /**
      * Parse and validate an invite, then stage it for explicit confirmation instead of
      * adding the contact immediately. Establishing two-way location sharing must be a
-     * deliberate user action — a scanned QR or, more importantly, a `locapeer://` deep
+     * deliberate user action - a scanned QR or, more importantly, a `locapeer://` deep
      * link that a webpage or message could trigger, must not silently add a contact.
      */
     fun processQrCode(raw: String) {
@@ -66,7 +66,7 @@ class ScanViewModel @Inject constructor(
             // A device is identified by its Nostr key: deviceId and publicKeyHex must be the
             // same key. Rejecting a mismatch prevents a crafted invite from upserting an
             // existing peer row (keyed by deviceId) while pointing publicKeyHex at an
-            // attacker-controlled key — which would hijack whose key we encrypt to/verify from.
+            // attacker-controlled key - which would hijack whose key we encrypt to/verify from.
             if (!invite.publicKeyHex.equals(invite.deviceId, ignoreCase = true)) {
                 _scanState.value = ScanState(error = "Invalid invite: key mismatch")
                 processed = false
