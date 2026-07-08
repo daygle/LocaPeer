@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -36,7 +35,7 @@ class ScanViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val crypto: CryptoUtils,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
 ) : ViewModel() {
 
     private val _scanState = MutableStateFlow(ScanState())
@@ -97,7 +96,7 @@ class ScanViewModel @Inject constructor(
                     relayUrl = invite.relayUrl,
                     locationRole = PeerEntity.ROLE_SEND_RECEIVE,
                     messagingEnabled = existing?.messagingEnabled ?: true,
-                    addedAt = existing?.addedAt ?: System.currentTimeMillis()
+                    addedAt = existing?.addedAt ?: System.currentTimeMillis(),
                 )
                 peerDao.upsertPeer(peer)
                 relayClient.connect(invite.relayUrl)
@@ -112,7 +111,7 @@ class ScanViewModel @Inject constructor(
     }
 
     private fun isValidPubKeyHex(hex: String): Boolean =
-        hex.length == 64 && hex.all { it in '0'..'9' || it in 'a'..'f' || it in 'A'..'F' }
+        hex.length == 64 && hex.all { it.isDigit() || (it.lowercaseChar() in 'a'..'f') }
 
     private suspend fun sendTrackRequest(target: InviteData) {
         try {
@@ -125,12 +124,12 @@ class ScanViewModel @Inject constructor(
                 senderPublicKeyHex = pubHex,
                 senderDisplayName = myDisplayName,
                 senderDeviceId = pubHex,
-                senderRelayUrl = myRelay
+                senderRelayUrl = myRelay,
             )
             val encrypted = crypto.nip44Encrypt(
                 crypto.hexToBytes(privHex),
                 target.publicKeyHex,
-                json.encodeToString(payload)
+                json.encodeToString(payload),
             )
             val event = NostrEvent.build(
                 privKeyHex = privHex,
@@ -138,7 +137,7 @@ class ScanViewModel @Inject constructor(
                 kind = NostrEventKind.TRACK_REQUEST,
                 content = encrypted,
                 tags = listOf(listOf("p", target.publicKeyHex)),
-                crypto = crypto
+                crypto = crypto,
             )
             relayClient.publishEvent(event)
         } catch (e: Exception) {

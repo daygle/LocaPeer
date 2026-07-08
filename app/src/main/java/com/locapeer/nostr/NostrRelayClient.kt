@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -28,7 +27,6 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
-import kotlinx.serialization.json.jsonPrimitive
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -36,6 +34,7 @@ import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -112,7 +111,9 @@ class NostrRelayClient @Inject constructor(
             peerDao.getAllPeers().map { peers -> 
                 peers.map { it.relayUrl } 
             }.distinctUntilChanged().collect { peerRelays ->
-                val allUrls = (HARDCODED_RELAYS + peerRelays).filter { it.isNotBlank() }.toSet()
+                val allUrls = (HARDCODED_RELAYS + peerRelays).asSequence()
+                    .filter { it.isNotBlank() }
+                    .toSet()
                 updateRelays(allUrls.toList())
             }
         }
@@ -157,11 +158,6 @@ class NostrRelayClient @Inject constructor(
         if (isGloballyConnected) {
             conn.connect()
         }
-    }
-
-    fun disconnect() {
-        isGloballyConnected = false
-        relays.values.forEach { it.disconnect() }
     }
 
     fun publishEvent(event: NostrEvent) {
@@ -279,10 +275,10 @@ class NostrRelayClient @Inject constructor(
             reconnectJob = scope.launch {
                 // Exponential backoff: 5s, 10s, 20s, 40s … capped at 5 minutes, +±20% jitter
                 val baseDelay = minOf(5_000L * (1L shl reconnectAttempts.coerceAtMost(6)), 300_000L)
-                val jitter = ((baseDelay * 0.2) * (Math.random() * 2 - 1)).toLong()
+                val jitter = ((baseDelay * 0.2) * ((Math.random() * 2.0) - 1.0)).toLong()
                 val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
                 Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${reconnectAttempts + 1})")
-                delay(waitMs)
+                delay(waitMs.milliseconds)
                 if (!isGloballyConnected) return@launch
                 // Don't overwrite if another connection attempt started in the meantime
                 if (isConnected || webSocket != null) return@launch

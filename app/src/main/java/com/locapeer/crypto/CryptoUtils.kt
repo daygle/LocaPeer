@@ -21,23 +21,26 @@ import javax.inject.Singleton
 class CryptoUtils @Inject constructor() {
 
     private val random = SecureRandom()
-    private val CURVE_N = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
+
+    companion object {
+        private val CURVE_ORDER = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
+    }
 
     fun generatePrivateKey(): ByteArray {
         val key = ByteArray(32)
         while (true) {
             random.nextBytes(key)
             val bi = BigInteger(1, key)
-            if (bi > BigInteger.ZERO && bi < CURVE_N) break
+            if ((bi > BigInteger.ZERO) && (bi < CURVE_ORDER)) break
         }
         return normalizePrivateKey(key)
     }
 
-    /** True iff [privKey] is a 32-byte scalar in the valid secp256k1 range (0, CURVE_N). */
+    /** True iff [privKey] is a 32-byte scalar in the valid secp256k1 range (0, CURVE_ORDER). */
     fun isValidPrivateKey(privKey: ByteArray): Boolean {
         if (privKey.size != 32) return false
         val bi = BigInteger(1, privKey)
-        return bi > BigInteger.ZERO && bi < CURVE_N
+        return (bi > BigInteger.ZERO) && (bi < CURVE_ORDER)
     }
 
     /**
@@ -51,14 +54,14 @@ class CryptoUtils @Inject constructor() {
         val isEven = if (pub.size == 33) {
             pub[0] == 0x02.toByte()
         } else {
-            pub[64] % 2 == 0
+            (pub[64] % 2) == 0
         }
         
         return if (isEven) {
             privKey
         } else {
             val bi = BigInteger(1, privKey)
-            val normalized = CURVE_N.subtract(bi)
+            val normalized = CURVE_ORDER.subtract(bi)
             val bytes = normalized.toByteArray()
             if (bytes.size > 32) {
                 bytes.copyOfRange(bytes.size - 32, bytes.size)
@@ -141,7 +144,7 @@ class CryptoUtils @Inject constructor() {
         } catch (_: Exception) {
             throw SecurityException("Invalid base64 payload")
         }
-        require(payload.size >= 1 + 32 + 32) { "Invalid NIP-44 payload size" }
+        require(payload.size >= (1 + 32 + 32)) { "Invalid NIP-44 payload size" }
         require(payload[0] == 0x02.toByte()) { "Unsupported NIP-44 version" }
 
         val nonce = payload.copyOfRange(1, 33)
