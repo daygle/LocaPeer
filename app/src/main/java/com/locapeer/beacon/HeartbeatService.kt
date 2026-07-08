@@ -628,7 +628,7 @@ class HeartbeatService : LifecycleService() {
             transitions.add(
                 ActivityTransition.Builder()
                     .setActivityType(activityType)
-                    .setActivityTransitionType(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                    .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
                     .build()
             )
         }
