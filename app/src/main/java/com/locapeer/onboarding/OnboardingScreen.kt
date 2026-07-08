@@ -263,11 +263,40 @@ private fun PermissionsStep(
         .filter { it.permission in PermissionManager.REQUIRED_PERMISSIONS }
         .all { it.status.isGranted }
 
+    // Explain what's about to be asked — especially the optional physical-activity
+    // access — before the system dialogs appear, so the prompts have context.
+    var showRationale by remember { mutableStateOf(false) }
+    if (showRationale) {
+        AlertDialog(
+            onDismissRequest = { showRationale = false },
+            icon = { Icon(Icons.AutoMirrored.Filled.FactCheck, contentDescription = null) },
+            title = { Text("Before we ask") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("You'll see a few system prompts next:")
+                    Text("• Location — required, to share your position.")
+                    Text("• Camera — to scan invite codes.")
+                    Text("• Notifications — for background status.")
+                    Text("• Physical activity — optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.")
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showRationale = false
+                    permissionsState.launchMultiplePermissionRequest()
+                }) { Text("Continue") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRationale = false }) { Text("Cancel") }
+            }
+        )
+    }
+
     if (requiredGranted) {
         LaunchedEffect(Unit) { onNext() }
     } else {
         Button(
-            onClick = { permissionsState.launchMultiplePermissionRequest() },
+            onClick = { showRationale = true },
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
