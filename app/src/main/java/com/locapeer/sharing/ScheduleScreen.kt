@@ -14,11 +14,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.ui.components.TimePickerDialog
@@ -44,8 +46,8 @@ fun ScheduleScreen(
     }
 
     val rules by vm.rules.collectAsState()
-    val title = if (vm.scope == "global") "Sharing Schedule"
-                else "Schedule for ${vm.peerName}"
+    val title = if (vm.scope == "global") stringResource(R.string.settings_sharing_schedule)
+                else stringResource(R.string.schedule_for_peer, vm.peerName)
 
     var editingRule by remember { mutableStateOf<ScheduleRule?>(null) }
     var isNewRule by remember { mutableStateOf(false) }
@@ -56,7 +58,7 @@ fun ScheduleScreen(
                 title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -66,7 +68,7 @@ fun ScheduleScreen(
                 editingRule = newScheduleRule()
                 isNewRule = true
             }) {
-                Icon(Icons.Default.Add, contentDescription = "Add rule")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.schedule_cd_add_rule))
             }
         }
     ) { padding ->
@@ -87,16 +89,16 @@ fun ScheduleScreen(
                 )
                 Spacer(Modifier.height(16.dp))
                 Text(
-                    "No schedule rules",
+                    stringResource(R.string.schedule_empty_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
                     if (vm.scope == "global")
-                        "Location is shared at all times. Add a rule to restrict when sharing is active."
+                        stringResource(R.string.schedule_empty_global)
                     else
-                        "Location is always shared with ${vm.peerName}. Add a rule to restrict when.",
+                        stringResource(R.string.schedule_empty_peer, vm.peerName),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -117,7 +119,7 @@ fun ScheduleScreen(
                         )
                     ) {
                         Text(
-                            "Active when any rule matches the current time. Empty = always on.",
+                            stringResource(R.string.schedule_active_hint),
                             modifier = Modifier.padding(12.dp),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -161,9 +163,9 @@ private fun RuleCard(
 ) {
     val daysSummary = SharingSchedule.formatDays(rule.days)
     val overnight = rule.startMinute > rule.endMinute
-    val timeSummary = if (rule.startMinute == 0 && rule.endMinute == 1439) "All day"
+    val timeSummary = if (rule.startMinute == 0 && rule.endMinute == 1439) stringResource(R.string.schedule_all_day)
                       else "${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}" +
-                           if (overnight) " (+1 day)" else ""
+                           if (overnight) stringResource(R.string.schedule_plus_one_day) else ""
 
     Card(
         onClick = onEdit,
@@ -177,7 +179,7 @@ private fun RuleCard(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    rule.label.ifBlank { "Rule ${index + 1}" },
+                    rule.label.ifBlank { stringResource(R.string.schedule_rule_number, index + 1) },
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -188,7 +190,7 @@ private fun RuleCard(
                     color = MaterialTheme.colorScheme.primary)
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete rule",
+                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.schedule_cd_delete_rule),
                     tint = MaterialTheme.colorScheme.error)
             }
         }
@@ -208,25 +210,25 @@ fun RuleEditDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Rule") },
+        title = { Text(stringResource(R.string.schedule_edit_rule)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 OutlinedTextField(
                     value = rule.label,
                     onValueChange = { onRuleChanged(rule.copy(label = it)) },
-                    label = { Text("Label (optional)") },
-                    placeholder = { Text("e.g. Work hours, Weekends") },
+                    label = { Text(stringResource(R.string.schedule_label_optional)) },
+                    placeholder = { Text(stringResource(R.string.schedule_label_placeholder)) },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
                     modifier = Modifier.fillMaxWidth()
                 )
-                Text("Active Days", style = MaterialTheme.typography.labelMedium,
+                Text(stringResource(R.string.schedule_active_days), style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary)
                 DayPicker(
                     days = rule.days,
                     onDaysChanged = { onRuleChanged(rule.copy(days = it)) }
                 )
-                Text("Time Window", style = MaterialTheme.typography.labelMedium,
+                Text(stringResource(R.string.schedule_time_window), style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.primary)
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                     OutlinedButton(
@@ -234,7 +236,7 @@ fun RuleEditDialog(
                         modifier = Modifier.weight(1f)
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("Start", style = MaterialTheme.typography.labelSmall,
+                            Text(stringResource(R.string.schedule_start), style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(SharingSchedule.formatTime(rule.startMinute),
                                 style = MaterialTheme.typography.titleSmall,
@@ -246,7 +248,7 @@ fun RuleEditDialog(
                         modifier = Modifier.weight(1f)
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text("End", style = MaterialTheme.typography.labelSmall,
+                            Text(stringResource(R.string.schedule_end), style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(SharingSchedule.formatTime(rule.endMinute),
                                 style = MaterialTheme.typography.titleSmall,
@@ -256,7 +258,7 @@ fun RuleEditDialog(
                 }
                 if (rule.startMinute > rule.endMinute) {
                     Text(
-                        "Overnight: active from ${SharingSchedule.formatTime(rule.startMinute)} until ${SharingSchedule.formatTime(rule.endMinute)} next day",
+                        stringResource(R.string.schedule_overnight, SharingSchedule.formatTime(rule.startMinute), SharingSchedule.formatTime(rule.endMinute)),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -264,17 +266,17 @@ fun RuleEditDialog(
             }
         },
         confirmButton = {
-            Button(onClick = onConfirm, enabled = rule.days != 0) { Text("Save") }
+            Button(onClick = onConfirm, enabled = rule.days != 0) { Text(stringResource(R.string.common_save)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 
     if (showStartPicker) {
         TimePickerDialog(
             initialMinute = rule.startMinute,
-            title = "Start Time",
+            title = stringResource(R.string.history_start_time),
             onConfirm = { onRuleChanged(rule.copy(startMinute = it)); showStartPicker = false },
             onDismiss = { showStartPicker = false }
         )
@@ -282,7 +284,7 @@ fun RuleEditDialog(
     if (showEndPicker) {
         TimePickerDialog(
             initialMinute = rule.endMinute,
-            title = "End Time",
+            title = stringResource(R.string.history_end_time),
             onConfirm = { onRuleChanged(rule.copy(endMinute = it)); showEndPicker = false },
             onDismiss = { showEndPicker = false }
         )

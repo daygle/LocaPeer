@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import android.location.Geocoder
 import android.os.Build
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -37,6 +38,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.locapeer.R
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
@@ -166,11 +168,11 @@ fun MapScreen(
             AlertDialog(
                 onDismissRequest = { showSosConfirm = false },
                 icon = { Icon(Icons.Default.Warning, contentDescription = null, tint = SosRed) },
-                title = { Text(if (isSosActive) "Deactivate SOS?" else "Activate SOS?") },
+                title = { Text(if (isSosActive) stringResource(R.string.map_sos_deactivate_title) else stringResource(R.string.map_sos_activate_title)) },
                 text = {
                     Text(
-                        if (isSosActive) "This will stop the high-priority location broadcast to your emergency contacts."
-                        else "This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated."
+                        if (isSosActive) stringResource(R.string.map_sos_deactivate_msg)
+                        else stringResource(R.string.map_sos_activate_msg)
                     )
                 },
                 confirmButton = {
@@ -181,11 +183,11 @@ fun MapScreen(
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = SosRed)
                     ) {
-                        Text(if (isSosActive) "Deactivate" else "Activate")
+                        Text(if (isSosActive) stringResource(R.string.map_deactivate) else stringResource(R.string.map_activate))
                     }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showSosConfirm = false }) { Text("Cancel") }
+                    TextButton(onClick = { showSosConfirm = false }) { Text(stringResource(R.string.common_cancel)) }
                 }
             )
         }
@@ -204,7 +206,7 @@ fun MapScreen(
                 contentColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.shadow(4.dp, CircleShape)
             ) {
-                Icon(if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode, contentDescription = "Map Style")
+                Icon(if (isDark) Icons.Default.LightMode else Icons.Default.DarkMode, contentDescription = stringResource(R.string.map_cd_style))
             }
 
             // Geofence Visibility Toggle
@@ -214,7 +216,7 @@ fun MapScreen(
                 contentColor = if (showGeofences) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.shadow(4.dp, CircleShape)
             ) {
-                Icon(Icons.Default.Fence, contentDescription = if (showGeofences) "Hide geofences" else "Show geofences")
+                Icon(Icons.Default.Fence, contentDescription = if (showGeofences) stringResource(R.string.map_cd_hide_geofences) else stringResource(R.string.map_cd_show_geofences))
             }
 
             // Follow Mode / Locate Me
@@ -224,7 +226,7 @@ fun MapScreen(
                 contentColor = if (isFollowingUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                 modifier = Modifier.shadow(4.dp, CircleShape)
             ) {
-                Icon(if (isFollowingUser) Icons.Default.MyLocation else Icons.Default.LocationSearching, contentDescription = "Follow Me")
+                Icon(if (isFollowingUser) Icons.Default.MyLocation else Icons.Default.LocationSearching, contentDescription = stringResource(R.string.map_cd_follow))
             }
 
             // Friends List Toggle
@@ -234,7 +236,7 @@ fun MapScreen(
                 contentColor = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.shadow(4.dp, CircleShape)
             ) {
-                Icon(Icons.Default.People, contentDescription = "Friends")
+                Icon(Icons.Default.People, contentDescription = stringResource(R.string.map_cd_friends))
             }
         }
 
@@ -339,12 +341,12 @@ private fun FriendListPanel(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Contacts",
+                    stringResource(R.string.tab_contacts),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = "Close")
+                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close))
                 }
             }
 
@@ -357,7 +359,7 @@ private fun FriendListPanel(
 
             if (pins.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No friends tracked yet", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.map_no_friends), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -415,7 +417,7 @@ private fun MeItem(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                "You",
+                stringResource(R.string.map_you),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -425,7 +427,7 @@ private fun MeItem(
             IconButton(onClick = onLocate) {
                 Icon(
                     Icons.Default.PinDrop,
-                    contentDescription = "Go to my location",
+                    contentDescription = stringResource(R.string.map_cd_go_my_location),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp)
                 )
@@ -477,17 +479,17 @@ private fun FriendItem(
             )
             Text(
                 when {
-                    hb?.isSos == true -> "⚠ SOS ACTIVE"
-                    pin.isOverdue -> "Away"
+                    hb?.isSos == true -> stringResource(R.string.map_sos_active)
+                    pin.isOverdue -> stringResource(R.string.map_away)
                     hb != null -> hb.motionState.lowercase().replaceFirstChar { it.uppercase() }
-                    else -> "No location yet"
+                    else -> stringResource(R.string.map_no_location_yet)
                 },
                 style = MaterialTheme.typography.labelSmall,
                 color = if (hb?.isSos == true) SosRed else MaterialTheme.colorScheme.onSurfaceVariant
             )
             if (hb != null) {
                 Text(
-                    "Last seen: ${formatTimestamp(hb.timestamp)}",
+                    stringResource(R.string.contacts_last_seen, formatTimestamp(hb.timestamp)),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -497,7 +499,7 @@ private fun FriendItem(
         IconButton(onClick = onMessage) {
             Icon(
                 Icons.AutoMirrored.Filled.Chat,
-                contentDescription = "Message",
+                contentDescription = stringResource(R.string.cd_message),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )
@@ -506,7 +508,7 @@ private fun FriendItem(
             IconButton(onClick = onLocate) {
                 Icon(
                     Icons.Default.PinDrop,
-                    contentDescription = "Go to location",
+                    contentDescription = stringResource(R.string.map_cd_go_location),
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(20.dp)
                 )
@@ -524,10 +526,10 @@ private fun SosButton(isActive: Boolean, onClick: () -> Unit, modifier: Modifier
         containerColor = containerColor,
         contentColor = contentColor,
         modifier = modifier.shadow(if (isActive) 12.dp else 4.dp, RoundedCornerShape(16.dp)),
-        icon = { Icon(Icons.Default.Warning, contentDescription = "SOS") },
+        icon = { Icon(Icons.Default.Warning, contentDescription = stringResource(R.string.map_sos)) },
         text = {
             Text(
-                if (isActive) "SOS ON" else "SOS",
+                if (isActive) stringResource(R.string.map_sos_on) else stringResource(R.string.map_sos),
                 fontWeight = FontWeight.ExtraBold
             )
         }
@@ -817,13 +819,13 @@ private fun PinInfoSheet(
                         )
                         when {
                             hb?.isSos == true -> Text(
-                                "⚠ SOS ACTIVE",
+                                stringResource(R.string.map_sos_active),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = SosRed
                             )
                             pin.isOverdue -> Text(
-                                "Overdue - no recent update",
+                                stringResource(R.string.map_overdue),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.error
                             )
@@ -831,7 +833,7 @@ private fun PinInfoSheet(
                     }
                 }
                 IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = "Close")
+                    Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close))
                 }
             }
 
@@ -844,17 +846,17 @@ private fun PinInfoSheet(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    StatChip("Last seen", formatTimestamp(hb.timestamp))
-                    StatChip("Battery", "${hb.battery}%")
-                    StatChip("Accuracy", "±${DisplayFormat.distanceValue(hb.accuracy.toDouble())}")
-                    StatChip("Motion",
+                    StatChip(stringResource(R.string.map_stat_last_seen), formatTimestamp(hb.timestamp))
+                    StatChip(stringResource(R.string.map_stat_battery), "${hb.battery}%")
+                    StatChip(stringResource(R.string.map_stat_accuracy), "±${DisplayFormat.distanceValue(hb.accuracy.toDouble())}")
+                    StatChip(stringResource(R.string.map_stat_motion),
                         hb.motionState.lowercase().replaceFirstChar { it.uppercase() })
                     if (!hb.motionState.equals("STATIONARY", ignoreCase = true) && hb.speed > 0f) {
-                        StatChip("Speed",
+                        StatChip(stringResource(R.string.map_stat_speed),
                             "${DisplayFormat.speedValue(hb.speed)} ${DisplayFormat.bearingToCardinal(hb.bearing)}")
                     }
                     if (hb.altitude != 0.0) {
-                        StatChip("Elevation", DisplayFormat.elevationValue(hb.altitude))
+                        StatChip(stringResource(R.string.map_stat_elevation), DisplayFormat.elevationValue(hb.altitude))
                     }
                 }
 
@@ -880,7 +882,7 @@ private fun PinInfoSheet(
                 }
             } else {
                 Spacer(Modifier.height(8.dp))
-                Text("No location data yet",
+                Text(stringResource(R.string.contacts_no_location_yet),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
@@ -890,12 +892,12 @@ private fun PinInfoSheet(
                 OutlinedButton(onClick = onViewHistory, modifier = Modifier.weight(1f)) {
                     Icon(Icons.Default.History, null, Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("History")
+                    Text(stringResource(R.string.tab_history))
                 }
                 Button(onClick = onMessage, modifier = Modifier.weight(1f)) {
                     Icon(Icons.AutoMirrored.Filled.Chat, null, Modifier.size(16.dp))
                     Spacer(Modifier.width(4.dp))
-                    Text("Message")
+                    Text(stringResource(R.string.cd_message))
                 }
             }
         }

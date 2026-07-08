@@ -17,6 +17,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.locapeer.R
 import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
@@ -88,16 +91,16 @@ fun HistoryReportScreen(
                 title = {
                     Text(
                         when {
-                            selectedPeerId == selfPubkeyHex -> "My Location History"
-                            selectedPeer != null -> "History: ${selectedPeer.displayName}"
-                            else -> "Location History"
+                            selectedPeerId == selfPubkeyHex -> stringResource(R.string.settings_my_location_history)
+                            selectedPeer != null -> stringResource(R.string.history_title_peer, selectedPeer.displayName)
+                            else -> stringResource(R.string.peer_location_history)
                         }
                     )
                 },
                 navigationIcon = {
                     if (onNavigateBack != null) {
                         IconButton(onClick = onNavigateBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                         }
                     }
                 }
@@ -121,11 +124,11 @@ fun HistoryReportScreen(
                             value = when {
                                 selectedPeerId == selfPubkeyHex -> selfDisplayName
                                 selectedPeer != null -> selectedPeer.displayName
-                                else -> "Select Person"
+                                else -> stringResource(R.string.history_select_person)
                             },
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("Person") },
+                            label = { Text(stringResource(R.string.history_person_label)) },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(peerDropdownExpanded) },
                             modifier = Modifier
                                 .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable, true)
@@ -167,7 +170,7 @@ fun HistoryReportScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(onClick = { vm.prevDay() }) {
-                                Icon(Icons.Default.ChevronLeft, contentDescription = "Previous Day")
+                                Icon(Icons.Default.ChevronLeft, contentDescription = stringResource(R.string.history_cd_prev_day))
                             }
                             TextButton(
                                 onClick = { showDatePicker = true },
@@ -183,7 +186,7 @@ fun HistoryReportScreen(
                                 onClick = { vm.nextDay() },
                                 enabled = !vm.isToday()
                             ) {
-                                Icon(Icons.Default.ChevronRight, contentDescription = "Next Day")
+                                Icon(Icons.Default.ChevronRight, contentDescription = stringResource(R.string.history_cd_next_day))
                             }
                         }
 
@@ -204,7 +207,7 @@ fun HistoryReportScreen(
                                 Icon(Icons.Default.AccessTime, null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                                 Spacer(Modifier.width(8.dp))
                                 Text(
-                                    "Time Filter:",
+                                    stringResource(R.string.history_time_filter),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -225,7 +228,7 @@ fun HistoryReportScreen(
                                 IconButton(onClick = { vm.resetTimeRange() }, modifier = Modifier.size(32.dp)) {
                                     Icon(
                                         Icons.Default.Close,
-                                        contentDescription = "Reset Time",
+                                        contentDescription = stringResource(R.string.history_cd_reset_time),
                                         modifier = Modifier.size(18.dp)
                                     )
                                 }
@@ -241,12 +244,12 @@ fun HistoryReportScreen(
                 Tab(
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
-                    text = { Text("Map") }
+                    text = { Text(stringResource(R.string.tab_map)) }
                 )
                 Tab(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
-                    text = { Text("List") }
+                    text = { Text(stringResource(R.string.history_tab_list)) }
                 )
             }
 
@@ -255,8 +258,8 @@ fun HistoryReportScreen(
                     if (heartbeats.isEmpty()) {
                         EmptyState(
                             icon = Icons.Default.History,
-                            title = "No history for this day",
-                            subtitle = "Try selecting a different date or checking your connection."
+                            title = stringResource(R.string.history_empty_title),
+                            subtitle = stringResource(R.string.history_empty_sub)
                         )
                     } else {
                         HistoryMapTab(
@@ -270,8 +273,8 @@ fun HistoryReportScreen(
                     if (heartbeats.isEmpty()) {
                         EmptyState(
                             icon = Icons.Default.History,
-                            title = "No history for this day",
-                            subtitle = "Try selecting a different date or checking your connection."
+                            title = stringResource(R.string.history_empty_title),
+                            subtitle = stringResource(R.string.history_empty_sub)
                         )
                     } else {
                         HistoryListTab(
@@ -303,7 +306,7 @@ fun HistoryReportScreen(
         val currentMinutes = (startTimeOffset / 60_000).toInt()
         TimePickerDialog(
             initialMinute = currentMinutes,
-            title = "Start Time",
+            title = stringResource(R.string.history_start_time),
             onConfirm = { minutes ->
                 vm.setTimeRange(minutes * 60_000L, endTimeOffset)
                 showStartTimePicker = false
@@ -316,7 +319,7 @@ fun HistoryReportScreen(
         val currentMinutes = (endTimeOffset / 60_000).toInt()
         TimePickerDialog(
             initialMinute = currentMinutes,
-            title = "End Time",
+            title = stringResource(R.string.history_end_time),
             onConfirm = { minutes ->
                 vm.setTimeRange(startTimeOffset, minutes * 60_000L)
                 showEndTimePicker = false
@@ -336,8 +339,8 @@ private fun HistoryListTab(
     if (heartbeats.isEmpty()) {
         EmptyState(
             icon = Icons.Default.History,
-            title = "No location data",
-            subtitle = "There are no recorded pings for this day or time range.",
+            title = stringResource(R.string.history_no_data_title),
+            subtitle = stringResource(R.string.history_no_data_sub),
             modifier = modifier
         )
     } else {
@@ -346,7 +349,7 @@ private fun HistoryListTab(
         Column(modifier = modifier) {
             Spacer(Modifier.height(8.dp))
             Text(
-                "${heartbeats.size} ping${if (heartbeats.size == 1) "" else "s"} recorded",
+                pluralStringResource(R.plurals.history_pings_recorded, heartbeats.size, heartbeats.size),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -384,8 +387,8 @@ private fun HistoryMapTab(
     if (heartbeats.isEmpty()) {
         EmptyState(
             icon = Icons.Default.History,
-            title = "No location data",
-            subtitle = "There are no recorded pings for this day or time range.",
+            title = stringResource(R.string.history_no_data_title),
+            subtitle = stringResource(R.string.history_no_data_sub),
             modifier = modifier
         )
         return
@@ -538,7 +541,7 @@ private fun HistoryMapTab(
                             )
                         }
                         IconButton(onClick = { selectedPing = null }, modifier = Modifier.size(24.dp)) {
-                            Icon(Icons.Default.Close, contentDescription = "Dismiss", modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.history_cd_dismiss), modifier = Modifier.size(16.dp))
                         }
                     }
 
@@ -557,7 +560,7 @@ private fun HistoryMapTab(
 
                     Spacer(Modifier.height(6.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Text("±${DisplayFormat.distanceValue(ping.accuracy.toDouble())} accuracy",
+                        Text(stringResource(R.string.history_accuracy_label, DisplayFormat.distanceValue(ping.accuracy.toDouble())),
                             style = MaterialTheme.typography.labelSmall)
                         Text("🔋 ${ping.battery}%",
                             style = MaterialTheme.typography.labelSmall)
@@ -611,7 +614,7 @@ private fun HistoryPingCard(
                     Spacer(Modifier.height(2.dp))
                     Icon(
                         Icons.Default.Warning,
-                        contentDescription = "SOS",
+                        contentDescription = stringResource(R.string.map_sos),
                         tint = MaterialTheme.colorScheme.error,
                         modifier = Modifier.size(16.dp)
                     )
@@ -690,7 +693,7 @@ private fun HistoryPingDetailDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_close)) }
         },
         icon = {
             Icon(
@@ -734,7 +737,7 @@ private fun HistoryPingDetailDialog(
                                 modifier = Modifier.size(18.dp)
                             )
                             Text(
-                                "Emergency SOS signal",
+                                stringResource(R.string.history_emergency_sos),
                                 style = MaterialTheme.typography.bodyMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onErrorContainer
@@ -744,15 +747,15 @@ private fun HistoryPingDetailDialog(
                 }
 
                 if (!address.isNullOrBlank()) {
-                    DetailRow("Location", address)
+                    DetailRow(stringResource(R.string.history_detail_location), address)
                 }
-                DetailRow("Coordinates", "%.5f°, %.5f°".format(ping.lat, ping.lng))
-                DetailRow("Accuracy", "within ±${DisplayFormat.distanceValue(ping.accuracy.toDouble())}")
-                DetailRow("Movement", motionDescription(ping.motionState, ping.speed, ping.bearing))
+                DetailRow(stringResource(R.string.history_detail_coordinates), "%.5f°, %.5f°".format(ping.lat, ping.lng))
+                DetailRow(stringResource(R.string.map_stat_accuracy), stringResource(R.string.history_within, DisplayFormat.distanceValue(ping.accuracy.toDouble())))
+                DetailRow(stringResource(R.string.history_detail_movement), motionDescription(ping.motionState, ping.speed, ping.bearing, stringResource(R.string.history_movement_desc)))
                 if (ping.altitude != 0.0) {
-                    DetailRow("Elevation", DisplayFormat.elevationValue(ping.altitude))
+                    DetailRow(stringResource(R.string.map_stat_elevation), DisplayFormat.elevationValue(ping.altitude))
                 }
-                DetailRow("Battery", "${ping.battery}%")
+                DetailRow(stringResource(R.string.map_stat_battery), "${ping.battery}%")
             }
         }
     )
@@ -773,11 +776,14 @@ private fun DetailRow(label: String, value: String) {
     }
 }
 
-/** Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE". */
-private fun motionDescription(motionState: String, speed: Float, bearing: Float): String {
+/**
+ * Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE".
+ * [movingFormat] is a localized "%1$s %2$s heading %3$s" template (activity, speed, cardinal).
+ */
+private fun motionDescription(motionState: String, speed: Float, bearing: Float, movingFormat: String): String {
     val activity = motionLabel(motionState)
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
-        "$activity ${DisplayFormat.speedValue(speed)} heading ${DisplayFormat.bearingToCardinal(bearing)}"
+        String.format(movingFormat, activity, DisplayFormat.speedValue(speed), DisplayFormat.bearingToCardinal(bearing))
     } else {
         activity
     }
@@ -831,10 +837,10 @@ private fun HistoryDatePickerDialog(
                 datePickerState.selectedDateMillis?.let { utcMs ->
                     onConfirm(utcMidnightToLocalDayStart(utcMs))
                 } ?: onDismiss()
-            }) { Text("OK") }
+            }) { Text(stringResource(R.string.common_ok)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     ) {
         DatePicker(state = datePickerState)

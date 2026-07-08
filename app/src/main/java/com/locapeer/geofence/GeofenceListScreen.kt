@@ -27,6 +27,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -112,17 +114,17 @@ private fun GlobalGeofencesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Geofences") },
+                title = { Text(stringResource(R.string.settings_geofences)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showCreateDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add geofence area")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.geo_cd_add_area))
             }
         }
     ) { padding ->
@@ -132,8 +134,9 @@ private fun GlobalGeofencesScreen(
                 .padding(padding)
         ) {
             items(areas, key = { it.id }) { area ->
+                val unknownName = stringResource(R.string.geo_unknown)
                 val names = assignmentsByFence[area.id].orEmpty()
-                    .map { nameByDevice[it.trackedDeviceId] ?: "Unknown" }
+                    .map { nameByDevice[it.trackedDeviceId] ?: unknownName }
                     .distinct()
                 GeofenceAreaCard(
                     area = area,
@@ -146,8 +149,8 @@ private fun GlobalGeofencesScreen(
                 item {
                     EmptyState(
                         icon = Icons.Default.Fence,
-                        title = "No geofences",
-                        subtitle = "Tap + to create a geofence area, then assign contacts to it from their sharing settings.",
+                        title = stringResource(R.string.geo_empty_title),
+                        subtitle = stringResource(R.string.geo_empty_sub),
                         modifier = Modifier.fillParentMaxSize()
                     )
                 }
@@ -176,19 +179,19 @@ private fun GlobalGeofencesScreen(
         val count = assignmentsByFence[area.id].orEmpty().size
         AlertDialog(
             onDismissRequest = { pendingDelete = null },
-            title = { Text("Delete geofence?") },
+            title = { Text(stringResource(R.string.geo_delete_title)) },
             text = {
                 Text(
                     if (count > 0)
-                        "\"${area.name}\" is assigned to $count contact${if (count == 1) "" else "s"}. Deleting it removes those assignments too."
+                        pluralStringResource(R.plurals.geo_delete_assigned, count, area.name, count)
                     else
-                        "Delete \"${area.name}\"?"
+                        stringResource(R.string.geo_delete_simple, area.name)
                 )
             },
             confirmButton = {
-                TextButton(onClick = { vm.deleteArea(area); pendingDelete = null }) { Text("Delete") }
+                TextButton(onClick = { vm.deleteArea(area); pendingDelete = null }) { Text(stringResource(R.string.common_delete)) }
             },
-            dismissButton = { TextButton(onClick = { pendingDelete = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { pendingDelete = null }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 }
@@ -207,7 +210,7 @@ private fun ContactGeofencesScreen(
         .collectAsState(initial = emptyList())
 
     val contactName = broadcasters.find { it.peer.deviceId == peerId }?.peer?.displayName
-    val title = if (contactName != null) "Geofences for $contactName" else "Geofences"
+    val title = if (contactName != null) stringResource(R.string.geo_for_contact, contactName) else stringResource(R.string.settings_geofences)
 
     var showAssignDialog by remember { mutableStateOf(false) }
     var editingAssignment by remember { mutableStateOf<AssignmentWithArea?>(null) }
@@ -219,14 +222,14 @@ private fun ContactGeofencesScreen(
                 title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { if (areas.isEmpty()) showNoAreas = true else showAssignDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Assign geofence")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.geo_cd_assign))
             }
         }
     ) { padding ->
@@ -247,8 +250,8 @@ private fun ContactGeofencesScreen(
                 item {
                     EmptyState(
                         icon = Icons.Default.Fence,
-                        title = "No geofences for contact",
-                        subtitle = "Tap + to assign a geofence area and choose whether to alert on arrival, departure, or both.",
+                        title = stringResource(R.string.geo_empty_contact_title),
+                        subtitle = stringResource(R.string.geo_empty_contact_sub),
                         modifier = Modifier.fillParentMaxSize()
                     )
                 }
@@ -277,9 +280,9 @@ private fun ContactGeofencesScreen(
     if (showNoAreas) {
         AlertDialog(
             onDismissRequest = { showNoAreas = false },
-            title = { Text("No geofences yet") },
-            text = { Text("Create a geofence area first from the Geofences screen, then assign it here.") },
-            confirmButton = { TextButton(onClick = { showNoAreas = false }) { Text("OK") } }
+            title = { Text(stringResource(R.string.geo_no_areas_title)) },
+            text = { Text(stringResource(R.string.geo_no_areas_msg)) },
+            confirmButton = { TextButton(onClick = { showNoAreas = false }) { Text(stringResource(R.string.common_ok)) } }
         )
     }
 }
@@ -319,29 +322,29 @@ private fun GeofenceAreaCard(
             Column(modifier = Modifier.weight(1f)) {
                 Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 Text(
-                    "${com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())} radius",
+                    stringResource(R.string.geo_radius_label, com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 if (assignedNames.isNotEmpty()) {
                     Text(
-                        "Contacts: ${assignedNames.joinToString(", ")}",
+                        stringResource(R.string.geo_contacts_label, assignedNames.joinToString(", ")),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                 } else {
                     Text(
-                        "No contacts assigned",
+                        stringResource(R.string.geo_no_contacts_assigned),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.outline
                     )
                 }
             }
             IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+                Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.common_edit))
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Delete", tint = MaterialTheme.colorScheme.error)
+                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.common_delete), tint = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -358,6 +361,11 @@ private fun AssignmentCard(
         "ENTER" -> GeofenceEnter
         "EXIT" -> GeofenceExit
         else -> GeofenceBoth
+    }
+    val triggerLabel = when (assignment.triggerOn) {
+        "ENTER" -> stringResource(R.string.geo_trigger_enter)
+        "EXIT" -> stringResource(R.string.geo_trigger_exit)
+        else -> stringResource(R.string.geo_trigger_both)
     }
     val rules = remember(assignment.scheduleRules) { assignment.scheduleRules.toScheduleRules() }
     val hasSchedule = rules.isNotEmpty()
@@ -382,7 +390,7 @@ private fun AssignmentCard(
                         modifier = Modifier.padding(vertical = 2.dp)
                     ) {
                         Text(
-                            assignment.triggerOn,
+                            triggerLabel,
                             style = MaterialTheme.typography.labelSmall,
                             color = triggerColor,
                             modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
@@ -391,7 +399,7 @@ private fun AssignmentCard(
                     if (hasSchedule) {
                         Icon(Icons.Default.Schedule, null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.primary)
                         Text(
-                            "${rules.size} rules",
+                            pluralStringResource(R.plurals.geo_rules_count, rules.size, rules.size),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -409,10 +417,10 @@ private fun AssignmentCard(
                 modifier = Modifier.scale(0.8f)
             )
             IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = "Edit")
+                Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.common_edit))
             }
             IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = "Remove", tint = MaterialTheme.colorScheme.error)
+                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.common_remove), tint = MaterialTheme.colorScheme.error)
             }
         }
     }
@@ -469,10 +477,10 @@ private fun GeofenceAreaDialog(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text(if (existing != null) "Edit Geofence" else "New Geofence") },
+                    title = { Text(if (existing != null) stringResource(R.string.geo_edit_title) else stringResource(R.string.geo_new_title)) },
                     navigationIcon = {
                         IconButton(onClick = onDismiss) {
-                            Icon(Icons.Default.Close, contentDescription = "Cancel")
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_cancel))
                         }
                     },
                     actions = {
@@ -483,7 +491,7 @@ private fun GeofenceAreaDialog(
                             },
                             modifier = Modifier.padding(end = 8.dp)
                         ) {
-                            Text(if (existing != null) "Save" else "Create")
+                            Text(if (existing != null) stringResource(R.string.common_save) else stringResource(R.string.common_create))
                         }
                     }
                 )
@@ -538,14 +546,14 @@ private fun GeofenceAreaDialog(
                         if (loadingMyLocation) {
                             CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
                         } else {
-                            Icon(Icons.Default.MyLocation, "My location")
+                            Icon(Icons.Default.MyLocation, stringResource(R.string.geo_cd_my_location))
                         }
                     }
 
                     val hint = if (lat == null || lng == null) {
-                        "Tap the map to place"
+                        stringResource(R.string.geo_hint_tap)
                     } else {
-                        "Pinch to resize • Drag to move"
+                        stringResource(R.string.geo_hint_pinch)
                     }
                     val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
                     Surface(
@@ -572,14 +580,14 @@ private fun GeofenceAreaDialog(
                     verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("Basic Info", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.geo_basic_info), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                         OutlinedTextField(
                             value = name,
                             onValueChange = { name = it },
-                            label = { Text("Name") },
-                            placeholder = { Text("e.g. Home, Work") },
+                            label = { Text(stringResource(R.string.common_name)) },
+                            placeholder = { Text(stringResource(R.string.geo_name_placeholder)) },
                             isError = nameError,
-                            supportingText = if (nameError) { { Text("Name is required") } } else null,
+                            supportingText = if (nameError) { { Text(stringResource(R.string.geo_name_required)) } } else null,
                             singleLine = true,
                             leadingIcon = { Icon(Icons.Default.Fence, null) },
                             modifier = Modifier.fillMaxWidth()
@@ -589,14 +597,14 @@ private fun GeofenceAreaDialog(
                     HorizontalDivider(thickness = 0.5.dp)
 
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Text("Coordinates", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.history_detail_coordinates), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                             OutlinedTextField(
                                 value = latText,
                                 onValueChange = { latText = it },
-                                label = { Text("Latitude") },
+                                label = { Text(stringResource(R.string.geo_latitude)) },
                                 isError = latError,
-                                supportingText = if (latError) { { Text("-90 to 90") } } else null,
+                                supportingText = if (latError) { { Text(stringResource(R.string.geo_lat_range)) } } else null,
                                 singleLine = true,
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
@@ -604,9 +612,9 @@ private fun GeofenceAreaDialog(
                             OutlinedTextField(
                                 value = lngText,
                                 onValueChange = { lngText = it },
-                                label = { Text("Longitude") },
+                                label = { Text(stringResource(R.string.geo_longitude)) },
                                 isError = lngError,
-                                supportingText = if (lngError) { { Text("-180 to 180") } } else null,
+                                supportingText = if (lngError) { { Text(stringResource(R.string.geo_lng_range)) } } else null,
                                 singleLine = true,
                                 modifier = Modifier.weight(1f),
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
@@ -622,7 +630,7 @@ private fun GeofenceAreaDialog(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text("Radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                            Text(stringResource(R.string.geo_radius), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                             // Typing here updates radiusText, the same state the slider reads from,
                             // so entering a value moves the slider (and vice versa) automatically.
                             // Cap the digit count so a pasted value can't overflow Int and make
@@ -633,7 +641,7 @@ private fun GeofenceAreaDialog(
                             OutlinedTextField(
                                 value = radiusText,
                                 onValueChange = { input -> radiusText = input.filter { it.isDigit() }.take(maxRadiusDigits) },
-                                label = { Text("Radius") },
+                                label = { Text(stringResource(R.string.geo_radius)) },
                                 isError = radiusError,
                                 singleLine = true,
                                 suffix = { Text("m") },
@@ -649,7 +657,7 @@ private fun GeofenceAreaDialog(
                         )
                         Text(
                             if (radiusError)
-                                "Enter $MIN_RADIUS_M to $MAX_RADIUS_M m"
+                                stringResource(R.string.geo_radius_range, MIN_RADIUS_M, MAX_RADIUS_M)
                             else
                                 com.locapeer.util.DisplayFormat.distanceValue(radiusForMap.toDouble()),
                             style = MaterialTheme.typography.bodySmall,
@@ -684,7 +692,7 @@ private fun AssignmentDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (existing != null) "Edit Assignment" else "Assign Geofence") },
+        title = { Text(if (existing != null) stringResource(R.string.geo_edit_assignment) else stringResource(R.string.geo_assign_title)) },
         text = {
             Column(
                 modifier = Modifier
@@ -692,7 +700,7 @@ private fun AssignmentDialog(
                     .selectableGroup(),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text("Select Geofence Area", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.geo_select_area), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                 areas.forEach { area ->
                     Surface(
                         onClick = { selectedGeofenceId = area.id },
@@ -725,16 +733,21 @@ private fun AssignmentDialog(
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
 
-                Text("Trigger Notification On", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                Text(stringResource(R.string.geo_trigger_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     listOf("ENTER", "EXIT", "BOTH").forEach { t ->
+                        val chipLabel = when (t) {
+                            "ENTER" -> stringResource(R.string.geo_trigger_enter)
+                            "EXIT" -> stringResource(R.string.geo_trigger_exit)
+                            else -> stringResource(R.string.geo_trigger_both)
+                        }
                         FilterChip(
                             selected = triggerOn == t,
                             onClick = { triggerOn = t },
-                            label = { Text(t.lowercase().replaceFirstChar { it.uppercase() }) },
+                            label = { Text(chipLabel) },
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -747,17 +760,17 @@ private fun AssignmentDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Alert Schedule", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.peer_alert_schedule), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                     TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
                         Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(4.dp))
-                        Text("Add Rule")
+                        Text(stringResource(R.string.geo_add_rule))
                     }
                 }
 
                 if (scheduleRules.isEmpty()) {
                     Text(
-                        "Alerts active at all times. Add a rule to restrict when alerts are sent.",
+                        stringResource(R.string.geo_alerts_all_times),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -797,10 +810,10 @@ private fun AssignmentDialog(
                     onSave(selectedGeofenceId, triggerOn, rulesJson)
                 }
             }) {
-                Text(if (existing != null) "Save" else "Assign")
+                Text(if (existing != null) stringResource(R.string.common_save) else stringResource(R.string.geo_assign_action))
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
     )
 
     editingRule?.let { rule ->

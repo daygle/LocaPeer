@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.locapeer.R
 import com.locapeer.map.MarkerIconFactory
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -31,7 +33,7 @@ fun MapLocationPicker(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Pick Fixed Location") },
+        title = { Text(stringResource(R.string.picker_title)) },
         text = {
             Box(modifier = Modifier.fillMaxSize().padding(vertical = 8.dp)) {
                 AndroidView(
@@ -74,12 +76,12 @@ fun MapLocationPicker(
         },
         confirmButton = {
             TextButton(onClick = { onLocationSelected(selectedPoint.value.latitude, selectedPoint.value.longitude) }) {
-                Text("Select")
+                Text(stringResource(R.string.common_select))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )

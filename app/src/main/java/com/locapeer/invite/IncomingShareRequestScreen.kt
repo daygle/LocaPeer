@@ -8,8 +8,10 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,10 +48,10 @@ fun IncomingShareRequestScreen(
         else -> PeerEntity.ROLE_NONE
     }
 
-    val title = if (isRoleChange) "Update Sharing Settings" else "New Contact Request"
+    val title = if (isRoleChange) stringResource(R.string.incoming_update_title) else stringResource(R.string.incoming_new_title)
     val subtitle = when {
-        isRoleChange -> "$senderName wants to update how you share. Review the settings below."
-        else -> "$senderName added you as a contact! You can now choose what to share back."
+        isRoleChange -> stringResource(R.string.incoming_update_subtitle, senderName)
+        else -> stringResource(R.string.incoming_new_subtitle, senderName)
     }
 
     Scaffold(
@@ -65,7 +67,7 @@ fun IncomingShareRequestScreen(
             Text(subtitle, style = MaterialTheme.typography.bodyLarge)
 
             Text(
-                "Location",
+                stringResource(R.string.incoming_section_location),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -76,8 +78,8 @@ fun IncomingShareRequestScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListItem(
-                    headlineContent = { Text("Share my location with $senderName") },
-                    supportingContent = { Text("They will be able to see where you are") },
+                    headlineContent = { Text(stringResource(R.string.incoming_share_my_location, senderName)) },
+                    supportingContent = { Text(stringResource(R.string.incoming_share_my_location_sub)) },
                     leadingContent = {
                         Icon(
                             Icons.Default.LocationOn,
@@ -93,8 +95,8 @@ fun IncomingShareRequestScreen(
                 )
                 HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                 ListItem(
-                    headlineContent = { Text("See ${senderName}'s location") },
-                    supportingContent = { Text("You will be able to see where they are") },
+                    headlineContent = { Text(stringResource(R.string.incoming_see_their_location, senderName)) },
+                    supportingContent = { Text(stringResource(R.string.incoming_see_their_location_sub)) },
                     leadingContent = {
                         Icon(
                             Icons.Default.Visibility,
@@ -113,7 +115,7 @@ fun IncomingShareRequestScreen(
             HorizontalDivider()
 
             Text(
-                "Messaging",
+                stringResource(R.string.incoming_section_messaging),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -124,8 +126,8 @@ fun IncomingShareRequestScreen(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 ListItem(
-                    headlineContent = { Text("Allow Messages") },
-                    supportingContent = { Text("Receive chat messages from $senderName") },
+                    headlineContent = { Text(stringResource(R.string.incoming_allow_messages)) },
+                    supportingContent = { Text(stringResource(R.string.incoming_allow_messages_sub, senderName)) },
                     leadingContent = {
                         Icon(
                             Icons.AutoMirrored.Filled.Chat,
@@ -160,7 +162,7 @@ fun IncomingShareRequestScreen(
                         color = MaterialTheme.colorScheme.onPrimary
                     )
                 } else {
-                    Text(if (isRoleChange) "Save Changes" else "Add Contact")
+                    Text(if (isRoleChange) stringResource(R.string.common_save_changes) else stringResource(R.string.invite_tab_add_contact))
                 }
             }
 
@@ -169,7 +171,7 @@ fun IncomingShareRequestScreen(
                 enabled = state !is IncomingRequestState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Decline")
+                Text(stringResource(R.string.common_decline))
             }
         }
     }

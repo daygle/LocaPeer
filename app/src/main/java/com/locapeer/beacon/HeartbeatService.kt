@@ -957,8 +957,8 @@ class HeartbeatService : LifecycleService() {
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
-        val title = if (isSos) "SOS ACTIVE!" else getString(R.string.notification_heartbeat_title)
-        val text = if (isSos) "Broadcasting emergency alert to SOS contacts" else getString(R.string.notification_heartbeat_text)
+        val title = if (isSos) getString(R.string.notif_sos_active_title) else getString(R.string.notification_heartbeat_title)
+        val text = if (isSos) getString(R.string.notif_sos_active_text) else getString(R.string.notification_heartbeat_text)
         val icon = if (isSos) R.drawable.ic_notif_alert else R.drawable.ic_notif_location
         val color = if (isSos) 0xFFD32F2F.toInt() else 0xFF1976D2.toInt()
 

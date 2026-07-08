@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -17,6 +18,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
+import com.locapeer.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -35,7 +37,7 @@ fun ScanScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Scan Invite") }) }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.scan_title)) }) }
     ) { padding ->
         Box(
             modifier = Modifier
@@ -50,9 +52,9 @@ fun ScanScreen(
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                         modifier = Modifier.padding(24.dp)
                     ) {
-                        Text("Camera permission is needed to scan QR codes.")
+                        Text(stringResource(R.string.scan_camera_needed))
                         Button(onClick = { cameraPermission.launchPermissionRequest() }) {
-                            Text("Grant Permission")
+                            Text(stringResource(R.string.scan_grant_permission))
                         }
                     }
                 }
@@ -63,16 +65,16 @@ fun ScanScreen(
                         modifier = Modifier.padding(24.dp)
                     ) {
                         Text(
-                            "Add contact?",
+                            stringResource(R.string.scan_add_contact_title),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            "This will connect you with ${scanState.pendingName} and start sharing your location with each other.",
+                            stringResource(R.string.scan_add_contact_message, scanState.pendingName ?: ""),
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                            OutlinedButton(onClick = { vm.reset() }) { Text("Cancel") }
-                            Button(onClick = { vm.confirmAdd() }) { Text("Add & Share") }
+                            OutlinedButton(onClick = { vm.reset() }) { Text(stringResource(R.string.common_cancel)) }
+                            Button(onClick = { vm.confirmAdd() }) { Text(stringResource(R.string.scan_add_share)) }
                         }
                     }
                 }
@@ -83,14 +85,14 @@ fun ScanScreen(
                         modifier = Modifier.padding(24.dp)
                     ) {
                         Text(
-                            "Request Sent!",
+                            stringResource(R.string.scan_request_sent_title),
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            "A request has been sent to ${scanState.addedName}. You'll be connected once they accept.",
+                            stringResource(R.string.scan_request_sent_message, scanState.addedName ?: ""),
                             style = MaterialTheme.typography.bodyMedium
                         )
-                        Button(onClick = onNavigateBack) { Text("Done") }
+                        Button(onClick = onNavigateBack) { Text(stringResource(R.string.common_done)) }
                     }
                 }
                 scanState.error != null -> {
@@ -98,8 +100,8 @@ fun ScanScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(24.dp)
                     ) {
-                        Text("Scan failed: ${scanState.error}")
-                        Button(onClick = { vm.reset() }) { Text("Try Again") }
+                        Text(stringResource(R.string.scan_failed, scanState.error ?: ""))
+                        Button(onClick = { vm.reset() }) { Text(stringResource(R.string.common_try_again)) }
                     }
                 }
                 else -> {

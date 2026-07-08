@@ -528,7 +528,7 @@ class MessagingViewModel @Inject constructor(
 
         val summary = NotificationCompat.Builder(context, "locapeer_messages")
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("LocaPeer Messages")
+            .setContentTitle(context.getString(R.string.notif_messages_group_title))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setGroup(GROUP_KEY_MESSAGES)
             .setGroupSummary(true)

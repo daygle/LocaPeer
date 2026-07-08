@@ -11,8 +11,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.locapeer.R
 import com.locapeer.settings.AppPreferences
 import kotlinx.coroutines.launch
 
@@ -44,10 +46,10 @@ fun CustomizeNavScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Customize Navigation") },
+                title = { Text(stringResource(R.string.settings_customize_nav)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -59,7 +61,7 @@ fun CustomizeNavScreen(
                 .padding(padding)
         ) {
             Text(
-                "Choose which tabs appear in the bottom bar and their order. Map is always included.",
+                stringResource(R.string.customize_nav_intro),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
@@ -74,7 +76,7 @@ fun CustomizeNavScreen(
                     ListItem(
                         headlineContent = {
                             Text(
-                                screen.label,
+                                stringResource(screen.labelRes),
                                 fontWeight = if (isMap) FontWeight.SemiBold else FontWeight.Normal
                             )
                         },
@@ -96,7 +98,7 @@ fun CustomizeNavScreen(
                                         },
                                         enabled = index > 0
                                     ) {
-                                        Icon(Icons.Default.KeyboardArrowUp, contentDescription = "Move up", modifier = Modifier.size(20.dp))
+                                        Icon(Icons.Default.KeyboardArrowUp, contentDescription = stringResource(R.string.customize_cd_move_up), modifier = Modifier.size(20.dp))
                                     }
                                     IconButton(
                                         onClick = {
@@ -109,7 +111,7 @@ fun CustomizeNavScreen(
                                         },
                                         enabled = index < items.size - 1
                                     ) {
-                                        Icon(Icons.Default.KeyboardArrowDown, contentDescription = "Move down", modifier = Modifier.size(20.dp))
+                                        Icon(Icons.Default.KeyboardArrowDown, contentDescription = stringResource(R.string.customize_cd_move_down), modifier = Modifier.size(20.dp))
                                     }
                                 } else {
                                     // Placeholder width so Map row aligns with others

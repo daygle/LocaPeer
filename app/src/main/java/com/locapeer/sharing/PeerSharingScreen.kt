@@ -16,9 +16,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PrecisionMode
 import com.locapeer.data.entity.scheduleRules
@@ -86,10 +89,10 @@ fun PeerSharingScreen(
         snackbarHost = { SnackbarHost(snackbarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text("Contact Settings") },
+                title = { Text(stringResource(R.string.peer_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -133,14 +136,14 @@ fun PeerSharingScreen(
             }
 
             // ── 1. Sharing Roles ─────────────────────────────────────────────
-            item { SectionLabel("Location Sharing Roles") }
+            item { SectionLabel(stringResource(R.string.peer_section_roles)) }
             item {
                 SettingsCard {
                     val isSend = role == PeerEntity.ROLE_SEND || role == PeerEntity.ROLE_SEND_RECEIVE
                     val isReceive = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
-                        headlineContent = { Text("Share My Location") },
-                        supportingContent = { Text(if (isSend) "$peerName can see your location" else "You are not sharing your location with $peerName") },
+                        headlineContent = { Text(stringResource(R.string.settings_share_location)) },
+                        supportingContent = { Text(if (isSend) stringResource(R.string.peer_send_on, peerName) else stringResource(R.string.peer_send_off, peerName)) },
                         leadingContent = {
                             Icon(
                                 Icons.Default.LocationOn,
@@ -155,10 +158,10 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Receive ${peerName}'s Location") },
+                        headlineContent = { Text(stringResource(R.string.peer_receive_title, peerName)) },
                         supportingContent = {
-                            Text(if (isReceive) "You can see ${peerName}'s location"
-                            else "You don't have access to ${peerName}'s location")
+                            Text(if (isReceive) stringResource(R.string.peer_receive_on, peerName)
+                            else stringResource(R.string.peer_receive_off, peerName))
                         },
                         leadingContent = {
                             Icon(
@@ -172,7 +175,7 @@ fun PeerSharingScreen(
                                 OutlinedButton(
                                     onClick = { vm.requestLocationAccess() },
                                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp)
-                                ) { Text("Request", style = MaterialTheme.typography.labelMedium) }
+                                ) { Text(stringResource(R.string.common_request), style = MaterialTheme.typography.labelMedium) }
                             }
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
@@ -181,12 +184,12 @@ fun PeerSharingScreen(
             }
 
             // ── 2. Privacy & Controls ────────────────────────────────────────
-            item { SectionLabel("Privacy & Sharing Controls") }
+            item { SectionLabel(stringResource(R.string.peer_section_privacy)) }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Pause Sharing") },
-                        supportingContent = { Text("Temporarily stop sending your location to $peerName") },
+                        headlineContent = { Text(stringResource(R.string.peer_pause_sharing)) },
+                        supportingContent = { Text(stringResource(R.string.peer_pause_sub, peerName)) },
                         leadingContent = { Icon(Icons.Default.PauseCircle, contentDescription = null, tint = if (isPaused) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = isPaused, onCheckedChange = { vm.setSharingEnabled(!it) })
@@ -195,8 +198,8 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Location Precision") },
-                        supportingContent = { Text(if (precisionMode == PrecisionMode.EXACT.name) "Exact GPS coordinates" else "Approximate location (Suburb level)") },
+                        headlineContent = { Text(stringResource(R.string.peer_precision)) },
+                        supportingContent = { Text(if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact_sub) else stringResource(R.string.peer_precision_suburb_sub)) },
                         leadingContent = { Icon(if (precisionMode == PrecisionMode.EXACT.name) Icons.Default.GpsFixed else Icons.Default.LocationCity, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
                         modifier = Modifier.clickable(enabled = sharingEnabled) { showPrecisionDialog = true },
@@ -204,10 +207,10 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Sharing Schedule") },
+                        headlineContent = { Text(stringResource(R.string.settings_sharing_schedule)) },
                         supportingContent = {
-                            Text(if (scheduleRules.isEmpty()) "Always sharing"
-                            else "${scheduleRules.size} active sharing rule${if (scheduleRules.size == 1) "" else "s"}")
+                            Text(if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
+                            else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size))
                         },
                         leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
@@ -218,12 +221,12 @@ fun PeerSharingScreen(
             }
 
             // ── 3. Alerts & Activity ─────────────────────────────────────────
-            item { SectionLabel("Alerts & Monitoring") }
+            item { SectionLabel(stringResource(R.string.peer_section_alerts)) }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("SOS Contact") },
-                        supportingContent = { Text("Receive your emergency alerts even if sharing is paused") },
+                        headlineContent = { Text(stringResource(R.string.peer_sos_contact)) },
+                        supportingContent = { Text(stringResource(R.string.peer_sos_sub)) },
                         leadingContent = { Icon(Icons.Default.Warning, contentDescription = null, tint = if (isSosContact) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = isSosContact, onCheckedChange = { vm.setSosContact(it) })
@@ -233,11 +236,11 @@ fun PeerSharingScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     val receivesLocation = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
-                        headlineContent = { Text("Missed Location Alert") },
+                        headlineContent = { Text(stringResource(R.string.peer_missed_alert)) },
                         supportingContent = {
                             Text(
-                                if (receivesLocation) "Notify me if $peerName stops reporting their location"
-                                else "Requires access to ${peerName}'s location"
+                                if (receivesLocation) stringResource(R.string.peer_missed_on, peerName)
+                                else stringResource(R.string.peer_requires_access, peerName)
                             )
                         },
                         leadingContent = {
@@ -262,8 +265,8 @@ fun PeerSharingScreen(
                     var showProximityScheduleDialog by remember { mutableStateOf(false) }
 
                     ListItem(
-                        headlineContent = { Text("Proximity Alert") },
-                        supportingContent = { Text("Notify me when $peerName is nearby") },
+                        headlineContent = { Text(stringResource(R.string.peer_proximity_alert)) },
+                        supportingContent = { Text(stringResource(R.string.peer_proximity_sub, peerName)) },
                         leadingContent = { Icon(Icons.Default.NearMe, contentDescription = null, tint = if (alertActive) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = alertActive, onCheckedChange = { vm.setProximityAlertEnabled(it) }, enabled = receivesLocation)
@@ -273,17 +276,17 @@ fun PeerSharingScreen(
 
                     if (alertActive && receivesLocation) {
                         val radius = proximityAlert?.radiusMetres ?: 500
-                        val proxRules = remember(proximityAlert?.scheduleRules) { 
-                            proximityAlert?.scheduleRules?.toScheduleRules() ?: emptyList() 
+                        val proxRules = remember(proximityAlert?.scheduleRules) {
+                            proximityAlert?.scheduleRules?.toScheduleRules() ?: emptyList()
                         }
                         val hasProxSchedule = proxRules.isNotEmpty()
 
                         Column(modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 12.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                                Text("Alert Radius", style = MaterialTheme.typography.bodySmall)
+                                Text(stringResource(R.string.peer_alert_radius), style = MaterialTheme.typography.bodySmall)
                                 Text(com.locapeer.util.DisplayFormat.distanceValue(radius.toDouble()), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             }
-                            
+
                             // Limited options slider for better UX
                             val options = listOf(100, 250, 500, 1000, 2000, 5000, 10000)
                             val currentIndex = options.indexOf(radius).coerceAtLeast(0)
@@ -292,7 +295,7 @@ fun PeerSharingScreen(
                             Slider(
                                 value = sliderIdx,
                                 onValueChange = { sliderIdx = it },
-                                onValueChangeFinished = { 
+                                onValueChangeFinished = {
                                     vm.setProximityAlertRadius(options[sliderIdx.roundToInt()])
                                 },
                                 valueRange = 0f..(options.size - 1).toFloat(),
@@ -307,9 +310,9 @@ fun PeerSharingScreen(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text("Alert Schedule", style = MaterialTheme.typography.bodySmall)
+                                    Text(stringResource(R.string.peer_alert_schedule), style = MaterialTheme.typography.bodySmall)
                                     Text(
-                                        if (hasProxSchedule) "${proxRules.size} active rules" else "Always on",
+                                        if (hasProxSchedule) pluralStringResource(R.plurals.peer_proximity_rules, proxRules.size, proxRules.size) else stringResource(R.string.settings_always_on),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = if (hasProxSchedule) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -319,7 +322,7 @@ fun PeerSharingScreen(
                                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
                                     modifier = Modifier.height(32.dp)
                                 ) {
-                                    Text("Edit", style = MaterialTheme.typography.labelMedium)
+                                    Text(stringResource(R.string.common_edit), style = MaterialTheme.typography.labelMedium)
                                 }
                             }
                         }
@@ -337,8 +340,8 @@ fun PeerSharingScreen(
                     }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Geofences") },
-                        supportingContent = { Text("Set up arrival and departure zones for $peerName") },
+                        headlineContent = { Text(stringResource(R.string.settings_geofences)) },
+                        supportingContent = { Text(stringResource(R.string.peer_geofences_sub, peerName)) },
                         leadingContent = { Icon(Icons.Default.Fence, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
                         modifier = Modifier.clickable(enabled = receivesLocation) { onNavigateToGeofences(peerId) },
@@ -346,8 +349,8 @@ fun PeerSharingScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Supervise This Device") },
-                        supportingContent = { Text(if (isMySupervised) "You receive and approve unlock requests from $peerName" else "Allow $peerName to send you supervised-mode unlock requests") },
+                        headlineContent = { Text(stringResource(R.string.peer_supervise)) },
+                        supportingContent = { Text(if (isMySupervised) stringResource(R.string.peer_supervise_on, peerName) else stringResource(R.string.peer_supervise_off, peerName)) },
                         leadingContent = {
                             Icon(
                                 Icons.Default.Security,
@@ -364,12 +367,12 @@ fun PeerSharingScreen(
             }
 
             // ── 4. Messaging ─────────────────────────────────────────────────
-            item { SectionLabel("Messaging") }
+            item { SectionLabel(stringResource(R.string.incoming_section_messaging)) }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Allow Messages") },
-                        supportingContent = { Text("Enable/disable chat messages from $peerName") },
+                        headlineContent = { Text(stringResource(R.string.incoming_allow_messages)) },
+                        supportingContent = { Text(stringResource(R.string.peer_messaging_sub, peerName)) },
                         leadingContent = { Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = null, tint = if (messagingEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(checked = messagingEnabled, onCheckedChange = { vm.setMessagingEnabled(it) })
@@ -380,13 +383,13 @@ fun PeerSharingScreen(
             }
 
             // ── 5. History ───────────────────────────────────────────────────
-            item { SectionLabel("Movement History") }
+            item { SectionLabel(stringResource(R.string.peer_section_history)) }
             item {
                 SettingsCard {
                     val receivesLocation = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
                     ListItem(
-                        headlineContent = { Text("Location History") },
-                        supportingContent = { Text("View movement history and map report for $peerName") },
+                        headlineContent = { Text(stringResource(R.string.peer_location_history)) },
+                        supportingContent = { Text(stringResource(R.string.peer_location_history_sub, peerName)) },
                         leadingContent = { Icon(Icons.Default.History, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null) },
                         modifier = Modifier.clickable(enabled = receivesLocation) { onNavigateToHistory(peerId) },
@@ -396,7 +399,7 @@ fun PeerSharingScreen(
             }
 
             // ── 6. Retention ─────────────────────────────────────────────────
-            item { SectionLabel("Remote Data Retention") }
+            item { SectionLabel(stringResource(R.string.peer_section_retention)) }
             item {
                 SettingsCard {
                     purgeResult?.let { msg ->
@@ -414,21 +417,21 @@ fun PeerSharingScreen(
                     }
                     RetentionRow(
                         icon = Icons.Default.LocationOff,
-                        title = "Location Data",
-                        subtitle = "How long $peerName keeps your location history",
+                        title = stringResource(R.string.settings_retention_location),
+                        subtitle = stringResource(R.string.peer_retention_location_sub, peerName),
                         selected = retentionDaysLocation,
                         onSelected = { vm.setRetentionDaysLocation(it) },
-                        purgeLabel = "Purge All Location Data from $peerName",
+                        purgeLabel = stringResource(R.string.peer_purge_location, peerName),
                         onPurge = { vm.sendLocationPurgeNow() }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
                         icon = Icons.Default.DeleteSweep,
-                        title = "Messages",
-                        subtitle = "How long $peerName keeps messages you sent",
+                        title = stringResource(R.string.settings_retention_messages),
+                        subtitle = stringResource(R.string.peer_retention_messages_sub, peerName),
                         selected = retentionDaysMessages,
                         onSelected = { vm.setRetentionDaysMessages(it) },
-                        purgeLabel = "Purge All Messages from $peerName",
+                        purgeLabel = stringResource(R.string.peer_purge_messages, peerName),
                         onPurge = { vm.sendMessagePurgeNow() }
                     )
                 }
@@ -439,7 +442,7 @@ fun PeerSharingScreen(
     if (showPrecisionDialog) {
         AlertDialog(
             onDismissRequest = { showPrecisionDialog = false },
-            title = { Text("Location Precision") },
+            title = { Text(stringResource(R.string.peer_precision)) },
             text = {
                 Column {
                     Row(
@@ -449,8 +452,8 @@ fun PeerSharingScreen(
                         RadioButton(selected = precisionMode == PrecisionMode.EXACT.name, onClick = { vm.setPrecisionMode(PrecisionMode.EXACT); showPrecisionDialog = false })
                         Spacer(Modifier.width(12.dp))
                         Column {
-                            Text("Exact GPS", style = MaterialTheme.typography.bodyLarge)
-                            Text("Precise coordinates", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.peer_precision_exact), style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(R.string.peer_precision_exact_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                     Row(
@@ -460,14 +463,14 @@ fun PeerSharingScreen(
                         RadioButton(selected = precisionMode == PrecisionMode.SUBURB.name, onClick = { vm.setPrecisionMode(PrecisionMode.SUBURB); showPrecisionDialog = false })
                         Spacer(Modifier.width(12.dp))
                         Column {
-                            Text("Suburb (~1km)", style = MaterialTheme.typography.bodyLarge)
-                            Text("Neighbourhood-level only", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.peer_precision_suburb), style = MaterialTheme.typography.bodyLarge)
+                            Text(stringResource(R.string.peer_precision_suburb_desc), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
             },
             confirmButton = {},
-            dismissButton = { TextButton(onClick = { showPrecisionDialog = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showPrecisionDialog = false }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 }

@@ -6,19 +6,21 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.locapeer.R
 import kotlin.math.roundToInt
 
-val RETENTION_OPTIONS = listOf(
-    0 to "Forever",
-    1 to "1 day",
-    3 to "3 days",
-    7 to "7 days",
-    14 to "14 days",
-    30 to "30 days",
-    90 to "90 days"
-)
+/** Retention durations offered by the selector, in days (0 = keep forever). */
+val RETENTION_OPTIONS = listOf(0, 1, 3, 7, 14, 30, 90)
+
+/** Localized label for a retention duration in days. */
+@Composable
+private fun retentionLabel(days: Int): String =
+    if (days == 0) stringResource(R.string.retention_forever)
+    else pluralStringResource(R.plurals.retention_days, days, days)
 
 @Composable
 fun RetentionRow(
@@ -54,7 +56,7 @@ fun RetentionRow(
 
 @Composable
 fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
-    val initialIndex = RETENTION_OPTIONS.indexOfFirst { it.first == selected }.coerceAtLeast(0)
+    val initialIndex = RETENTION_OPTIONS.indexOfFirst { it == selected }.coerceAtLeast(0)
     var sliderValue by remember(selected) { mutableFloatStateOf(initialIndex.toFloat()) }
     val currentIndex = sliderValue.roundToInt().coerceIn(0, RETENTION_OPTIONS.size - 1)
 
@@ -64,7 +66,7 @@ fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Keep for: ${RETENTION_OPTIONS[currentIndex].second}",
+                text = stringResource(R.string.retention_keep_for, retentionLabel(RETENTION_OPTIONS[currentIndex])),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
@@ -75,7 +77,7 @@ fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
             onValueChange = { sliderValue = it },
             onValueChangeFinished = {
                 val finalIndex = sliderValue.roundToInt().coerceIn(0, RETENTION_OPTIONS.size - 1)
-                onSelected(RETENTION_OPTIONS[finalIndex].first)
+                onSelected(RETENTION_OPTIONS[finalIndex])
             },
             valueRange = 0f..(RETENTION_OPTIONS.size - 1).toFloat(),
             steps = RETENTION_OPTIONS.size - 2,
@@ -85,8 +87,8 @@ fun RetentionSelector(selected: Int, onSelected: (Int) -> Unit) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text("Forever", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text("90 days", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(stringResource(R.string.retention_forever), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(pluralStringResource(R.plurals.retention_days, 90, 90), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
