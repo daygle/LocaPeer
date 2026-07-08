@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">LocaPeer</string>
+
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Location Broadcast</string>
     <string name="channel_desc_heartbeat">Broadcasts your location to your approved contacts</string>
     <string name="channel_name_alerts">Alerts</string>
@@ -9,4 +11,189 @@
     <string name="channel_desc_messages">Incoming peer messages</string>
     <string name="notification_heartbeat_title">LocaPeer is running</string>
     <string name="notification_heartbeat_text">Sharing your location with others</string>
+
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_done">Done</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_disable">Disable</string>
+    <string name="common_enable">Enable</string>
+    <string name="common_restore">Restore</string>
+    <string name="common_unlock">Unlock</string>
+    <string name="common_password">Password</string>
+    <string name="common_not_now">Not now</string>
+    <string name="common_off">Off</string>
+    <string name="common_approve">Approve</string>
+    <string name="common_deny">Deny</string>
+
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="tab_map">Map</string>
+    <string name="tab_messages">Messages</string>
+    <string name="tab_history">History</string>
+    <string name="tab_contacts">Contacts</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Settings</string>
+
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
+    <string name="motion_stationary">Stationary</string>
+    <string name="motion_walking">Walking</string>
+    <string name="motion_running">Running</string>
+    <string name="motion_cycling">Cycling</string>
+    <string name="motion_driving">Driving</string>
+
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Private Key</string>
+    <string name="backup_section_contacts">Contacts</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Settings</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Supervision Request</string>
+    <string name="supervision_request_message">\"%1$s\" is requesting access to their settings. Allow?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
+    <string name="settings_title">Settings</string>
+
+    <!-- Section labels -->
+    <string name="settings_section_location_privacy">Location &amp; Privacy</string>
+    <string name="settings_section_security">Security</string>
+    <string name="settings_section_map">Map</string>
+    <string name="settings_section_battery_performance">Battery &amp; Performance</string>
+    <string name="settings_section_units_display">Units &amp; Display</string>
+    <string name="settings_section_retention">Retention (This Device)</string>
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_backup_keys">Backup &amp; Keys</string>
+    <string name="settings_section_about">About</string>
+
+    <!-- Profile -->
+    <string name="settings_edit_name">Edit Name</string>
+    <string name="settings_my_qr">My QR</string>
+    <string name="settings_no_name_set">No name set</string>
+
+    <!-- Location &amp; Privacy -->
+    <string name="settings_share_location">Share My Location</string>
+    <string name="settings_broadcasting">Broadcasting to your contacts</string>
+    <string name="settings_not_broadcasting">Not broadcasting</string>
+    <string name="settings_sharing_schedule">Sharing Schedule</string>
+    <string name="settings_always_on">Always on</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d rule</item>
+        <item quantity="other">%1$d rules</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Manage shared geofence areas</string>
+    <string name="settings_notify_when_tracked">Notify When Tracked</string>
+    <string name="settings_notify_when_tracked_subtitle">Get a notification when a contact\'s proximity or geofence alert for you is triggered.</string>
+    <string name="settings_my_location_history">My Location History</string>
+    <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
+    <string name="settings_lookup_addresses">Look Up Addresses</string>
+    <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins. Sends those coordinates to your device\'s geocoding service (usually Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Supervision Active</string>
+    <string name="settings_supervision_active_subtitle">Settings require supervisor approval</string>
+    <string name="settings_disable_supervised">Disable Supervised Mode</string>
+    <string name="settings_supervised_mode">Supervised Mode</string>
+    <string name="settings_supervised_mode_subtitle">Require supervisor approval to access settings</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Starting Point</string>
+    <string name="settings_map_current_location">Current Location</string>
+    <string name="settings_map_all_contacts">All Contacts</string>
+    <string name="settings_map_fixed_location">Fixed Location</string>
+    <string name="settings_map_last_position">Last Position</string>
+    <string name="settings_map_starting_point_title">Map Starting Point</string>
+    <string name="settings_no_location_set">No location set</string>
+    <string name="settings_pick_location_on_map">Pick Location on Map</string>
+    <string name="settings_default_zoom_level">Default Zoom Level</string>
+    <string name="settings_map_pin_colour">Map Pin Colour</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Update Cadence</string>
+    <string name="settings_update_cadence_subtitle">Adjust how often your location is broadcasted</string>
+    <string name="settings_update_cadence_dialog_message">Control how often your location is updated based on your activity. Frequent updates use more battery.</string>
+    <string name="settings_min_distance_filtering">Minimum Distance Filtering</string>
+    <string name="settings_min_distance_filtering_subtitle">Only show points that are at least this far from the previous one.</string>
+    <string name="settings_discard_low_accuracy">Discard Low-Accuracy Fixes</string>
+    <string name="settings_discard_low_accuracy_subtitle">Don\'t broadcast or record your own fixes with an accuracy radius larger than this. SOS is never skipped.</string>
+    <string name="settings_hide_low_accuracy">Hide Low-Accuracy Points</string>
+    <string name="settings_hide_low_accuracy_subtitle">Hide history points with an accuracy radius larger than this. Nothing is deleted.</string>
+    <string name="settings_low_battery" formatted="false">Low Battery (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Motion Detection</string>
+    <string name="settings_motion_detection_on">Enabled - refines your movement type (walking, driving) in history</string>
+    <string name="settings_motion_detection_off">Off - allow physical activity access for more accurate movement labels</string>
+    <string name="settings_enable_motion_title">Enable motion detection</string>
+    <string name="settings_enable_motion_message">Physical activity access lets LocaPeer tell walking, driving and standing still apart more accurately in your history. It\'s currently turned off - you can re-enable it from system settings.</string>
+    <string name="settings_open_settings">Open Settings</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Speed Units</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metric (km/h)</string>
+    <string name="settings_elevation_units">Elevation Units</string>
+    <string name="settings_elevation_imperial">Imperial (feet)</string>
+    <string name="settings_elevation_metric">Metric (metres)</string>
+    <string name="settings_distance_units">Distance Units</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metric (m/km)</string>
+    <string name="settings_time_format">Time Format</string>
+    <string name="settings_time_24h">24-Hour (13:30)</string>
+    <string name="settings_time_12h">12-Hour (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Location Data</string>
+    <string name="settings_retention_location_subtitle">How long to keep contacts\' location data locally</string>
+    <string name="settings_clear_all_location">Clear All Location Data</string>
+    <string name="settings_retention_messages">Messages</string>
+    <string name="settings_retention_messages_subtitle">How long to keep received messages locally</string>
+    <string name="settings_clear_all_messages">Clear All Messages</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Customize Navigation</string>
+    <string name="settings_customize_nav_subtitle">Choose and reorder bottom tabs</string>
+    <string name="settings_start_page">Start Page</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_title">App Language</string>
+    <string name="settings_language_system">System default</string>
+
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Export Backup</string>
+    <string name="settings_export_backup_subtitle">Save your private key and contacts to a file. Keep this file secure!</string>
+    <string name="settings_import_backup">Import Backup</string>
+    <string name="settings_import_backup_subtitle">Restore from a previously exported file</string>
+    <string name="settings_view_private_key">View Private Key</string>
+    <string name="settings_view_private_key_subtitle">Show your 64-character hex identity key</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">About LocaPeer</string>
+    <string name="settings_about_subtitle">Version, relay status, open source</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Edit Display Name</string>
+    <string name="settings_display_name_label">Display Name</string>
+    <string name="settings_my_invite_qr">My Invite QR</string>
+    <string name="settings_invite_qr_subtitle">Others can scan this to start tracking you.</string>
+    <string name="settings_invite_qr_cd">Invite QR</string>
+    <string name="settings_private_key_title">Private Key</string>
+    <string name="settings_private_key_warning">Keep this safe. Anyone with this key can impersonate you.</string>
+    <string name="settings_clear_location_title">Clear Location History?</string>
+    <string name="settings_clear_location_message">All stored location pings will be permanently deleted.</string>
+    <string name="settings_clear_messages_title">Clear Message History?</string>
+    <string name="settings_clear_messages_message">All stored messages will be permanently deleted.</string>
+    <string name="settings_encrypted_backup_title">Encrypted Backup</string>
+    <string name="settings_encrypted_backup_message">This backup is encrypted. Please enter the password to continue.</string>
+    <string name="settings_select_restore_title">Select Data to Restore</string>
+    <string name="settings_select_export_title">Select Data to Export</string>
+    <string name="settings_export_password_hint">Optionally set a password to encrypt your backup file.</string>
+    <string name="settings_backup_password_optional">Backup Password (Optional)</string>
+    <string name="settings_select_sections">Select sections to include:</string>
+    <string name="settings_choose_file_location">Choose file location</string>
+    <string name="settings_not_in_backup">Not in this backup</string>
+    <string name="settings_enable_supervised_title">Enable Supervised Mode</string>
+    <string name="settings_enable_supervised_message">Choose a peer who will act as supervisor. They must approve access to settings from their device.</string>
+    <string name="settings_no_peers_found">No peers found. Add a peer first by scanning their invite QR code.</string>
+    <string name="settings_disable_supervised_title">Disable Supervised Mode?</string>
+    <string name="settings_disable_supervised_message">Settings will be accessible without supervisor approval.</string>
 </resources>
