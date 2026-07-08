@@ -15,9 +15,12 @@ import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.annotation.StringRes
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import android.net.Uri
+import com.locapeer.R
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
@@ -42,13 +45,13 @@ import com.locapeer.sharing.ScheduleScreen
 import javax.inject.Inject
 import javax.inject.Singleton
 
-sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    object Map      : Screen("map",          "Map",      Icons.Default.Map)
-    object Messages : Screen("messages",     "Messages", Icons.AutoMirrored.Filled.Message)
-    object Contacts : Screen("contacts",     "Contacts", Icons.Default.People)
-    object Invite   : Screen("invite",       "QR / Invite", Icons.Default.QrCode)
-    object Settings : Screen("settings",     "Settings", Icons.Default.Settings)
-    object History  : Screen("history-tab",  "History",  Icons.Default.History)
+sealed class Screen(val route: String, @StringRes val labelRes: Int, val icon: ImageVector) {
+    object Map      : Screen("map",          R.string.tab_map,      Icons.Default.Map)
+    object Messages : Screen("messages",     R.string.tab_messages, Icons.AutoMirrored.Filled.Message)
+    object Contacts : Screen("contacts",     R.string.tab_contacts, Icons.Default.People)
+    object Invite   : Screen("invite",       R.string.contacts_cd_qr_invite, Icons.Default.QrCode)
+    object Settings : Screen("settings",     R.string.tab_settings, Icons.Default.Settings)
+    object History  : Screen("history-tab",  R.string.tab_history,  Icons.Default.History)
 }
 
 /** All tabs that can appear in the bottom nav, in their canonical order. */
@@ -143,8 +146,8 @@ fun LocaPeerNavHost(
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(screen.icon, contentDescription = screen.label) },
-                            label = { Text(screen.label, style = MaterialTheme.typography.labelMedium) }
+                            icon = { Icon(screen.icon, contentDescription = stringResource(screen.labelRes)) },
+                            label = { Text(stringResource(screen.labelRes), style = MaterialTheme.typography.labelMedium) }
                         )
                     }
                 }

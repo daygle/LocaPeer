@@ -15,8 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.locapeer.R
 import com.locapeer.nostr.NostrRelayClient
 import javax.inject.Inject
 
@@ -33,10 +35,10 @@ fun AboutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("About LocaPeer") },
+                title = { Text(stringResource(R.string.settings_about_locapeer)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -77,13 +79,13 @@ fun AboutScreen(
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(
-                    "LocaPeer",
+                    stringResource(R.string.app_name),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    "Version $versionName (build $versionCode)",
+                    stringResource(R.string.about_version, versionName, versionCode),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -91,7 +93,7 @@ fun AboutScreen(
 
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
                 Text(
-                    "Private location sharing with people you trust. No accounts, no cloud, no tracking by us.",
+                    stringResource(R.string.about_tagline),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(16.dp)
@@ -102,13 +104,13 @@ fun AboutScreen(
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(
-                        "Relay Connections",
+                        stringResource(R.string.about_relay_connections),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                     if (relayStatus.isEmpty()) {
                         Text(
-                            "Disconnected",
+                            stringResource(R.string.about_disconnected),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -120,7 +122,7 @@ fun AboutScreen(
                             ) {
                                 Icon(
                                     Icons.Default.Circle,
-                                    contentDescription = if (connected) "Connected" else "Disconnected",
+                                    contentDescription = if (connected) stringResource(R.string.about_connected) else stringResource(R.string.about_disconnected),
                                     modifier = Modifier.size(10.dp),
                                     tint = if (connected) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
                                 )
@@ -131,7 +133,7 @@ fun AboutScreen(
                                         fontWeight = FontWeight.Medium
                                     )
                                     Text(
-                                        if (connected) "Connected" else "Disconnected",
+                                        if (connected) stringResource(R.string.about_connected) else stringResource(R.string.about_disconnected),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = if (connected) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
                                     )
@@ -146,16 +148,16 @@ fun AboutScreen(
             Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
                 Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        "Open Source Libraries",
+                        stringResource(R.string.about_open_source),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary
                     )
                     listOf(
-                        "OSMDroid" to "OpenStreetMap-based map rendering",
-                        "OkHttp" to "WebSocket transport for Nostr relay",
-                        "Jetpack Compose" to "UI framework",
-                        "Hilt" to "Dependency injection",
-                        "Room" to "Local database"
+                        "OSMDroid" to stringResource(R.string.about_lib_osmdroid_desc),
+                        "OkHttp" to stringResource(R.string.about_lib_okhttp_desc),
+                        "Jetpack Compose" to stringResource(R.string.about_lib_compose_desc),
+                        "Hilt" to stringResource(R.string.about_lib_hilt_desc),
+                        "Room" to stringResource(R.string.about_lib_room_desc)
                     ).forEach { (lib, desc) ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -170,7 +172,7 @@ fun AboutScreen(
             }
 
             Text(
-                "Map data © OpenStreetMap contributors",
+                stringResource(R.string.about_map_attribution),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

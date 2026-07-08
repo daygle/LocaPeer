@@ -19,9 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.sharing.RuleEditDialog
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.SharingSchedule
@@ -45,10 +48,10 @@ fun ProximityAlertsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Proximity Alerts") },
+                title = { Text(stringResource(R.string.prox_title)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -57,8 +60,8 @@ fun ProximityAlertsScreen(
         if (peerStates.isEmpty()) {
             EmptyState(
                 icon = Icons.Default.NearMe,
-                title = "No tracked people",
-                subtitle = "Scan someone's invite QR from the Scan tab\nto start tracking their location",
+                title = stringResource(R.string.prox_empty_title),
+                subtitle = stringResource(R.string.prox_empty_sub),
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
@@ -73,7 +76,7 @@ fun ProximityAlertsScreen(
             ) {
                 item {
                     Text(
-                        "Get notified when a tracked person comes within a chosen distance of you.",
+                        stringResource(R.string.prox_intro),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -156,8 +159,8 @@ private fun ProximityPeerCard(
                     )
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text(
-                            if (isEnabled) "Alert when within ${formatRadius(savedRadius)}"
-                            else "Alerts off",
+                            if (isEnabled) stringResource(R.string.prox_alert_within, formatRadius(savedRadius))
+                            else stringResource(R.string.prox_alerts_off),
                             style = MaterialTheme.typography.bodySmall,
                             color = if (isEnabled) MaterialTheme.colorScheme.primary
                             else MaterialTheme.colorScheme.onSurfaceVariant
@@ -184,7 +187,7 @@ private fun ProximityPeerCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Alert radius", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.prox_alert_radius), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                     Text(
                         formatRadius(savedRadius),
                         style = MaterialTheme.typography.bodyMedium,
@@ -223,9 +226,9 @@ private fun ProximityPeerCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Alert Schedule", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.peer_alert_schedule), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
                         Text(
-                            if (hasSchedule) "${rules.size} active rules" else "Always on",
+                            if (hasSchedule) pluralStringResource(R.plurals.peer_proximity_rules, rules.size, rules.size) else stringResource(R.string.settings_always_on),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -235,7 +238,7 @@ private fun ProximityPeerCard(
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
-                        Text("Edit Schedule", style = MaterialTheme.typography.labelMedium)
+                        Text(stringResource(R.string.prox_edit_schedule), style = MaterialTheme.typography.labelMedium)
                     }
                 }
             }
@@ -266,7 +269,7 @@ fun ProximityScheduleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Alert Schedule") },
+        title = { Text(stringResource(R.string.peer_alert_schedule)) },
         text = {
             Column(
                 modifier = Modifier
@@ -279,17 +282,17 @@ fun ProximityScheduleDialog(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Rules", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    Text(stringResource(R.string.prox_rules), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
                         Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(4.dp))
-                        Text("Add Rule")
+                        Text(stringResource(R.string.geo_add_rule))
                     }
                 }
 
                 if (scheduleRules.isEmpty()) {
                     Text(
-                        "Alerts active at all times. Add a rule to restrict when alerts are sent.",
+                        stringResource(R.string.geo_alerts_all_times),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -324,11 +327,11 @@ fun ProximityScheduleDialog(
         },
         confirmButton = {
             Button(onClick = { onSave(scheduleRules) }) {
-                Text("Save")
+                Text(stringResource(R.string.common_save))
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 

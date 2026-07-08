@@ -578,4 +578,75 @@
     <string name="geo_add_rule">Add Rule</string>
     <string name="geo_alerts_all_times">Alerts active at all times. Add a rule to restrict when alerts are sent.</string>
     <string name="geo_assign_action">Assign</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Proximity Alerts</string>
+    <string name="prox_empty_title">No tracked people</string>
+    <string name="prox_empty_sub">Scan someone\'s invite QR from the Scan tab\nto start tracking their location</string>
+    <string name="prox_intro">Get notified when a tracked person comes within a chosen distance of you.</string>
+    <string name="prox_alert_within">Alert when within %1$s</string>
+    <string name="prox_alerts_off">Alerts off</string>
+    <string name="prox_alert_radius">Alert radius</string>
+    <string name="prox_edit_schedule">Edit Schedule</string>
+    <string name="prox_rules">Rules</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Schedule for %1$s</string>
+    <string name="schedule_cd_add_rule">Add rule</string>
+    <string name="schedule_empty_title">No schedule rules</string>
+    <string name="schedule_empty_global">Location is shared at all times. Add a rule to restrict when sharing is active.</string>
+    <string name="schedule_empty_peer">Location is always shared with %1$s. Add a rule to restrict when.</string>
+    <string name="schedule_active_hint">Active when any rule matches the current time. Empty = always on.</string>
+    <string name="schedule_all_day">All day</string>
+    <string name="schedule_plus_one_day"> (+1 day)</string>
+    <string name="schedule_rule_number">Rule %1$d</string>
+    <string name="schedule_cd_delete_rule">Delete rule</string>
+    <string name="schedule_edit_rule">Edit Rule</string>
+    <string name="schedule_label_optional">Label (optional)</string>
+    <string name="schedule_label_placeholder">e.g. Work hours, Weekends</string>
+    <string name="schedule_active_days">Active Days</string>
+    <string name="schedule_time_window">Time Window</string>
+    <string name="schedule_start">Start</string>
+    <string name="schedule_end">End</string>
+    <string name="schedule_overnight">Overnight: active from %1$s until %2$s next day</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Device is Supervised</string>
+    <string name="gate_message">Supervisor approval is required to access settings.</string>
+    <string name="gate_request_access">Request Access</string>
+    <string name="gate_waiting">Waiting for supervisor approval…</string>
+    <string name="gate_denied">Access denied by supervisor.</string>
+    <string name="gate_timed_out">Request timed out. Supervisor did not respond.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Forever</string>
+    <string name="retention_keep_for">Keep for: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+
+    <string name="common_select">Select</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Pick Fixed Location</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Choose which tabs appear in the bottom bar and their order. Map is always included.</string>
+    <string name="customize_cd_move_up">Move up</string>
+    <string name="customize_cd_move_down">Move down</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Version %1$s (build %2$d)</string>
+    <string name="about_tagline">Private location sharing with people you trust. No accounts, no cloud, no tracking by us.</string>
+    <string name="about_relay_connections">Relay Connections</string>
+    <string name="about_connected">Connected</string>
+    <string name="about_disconnected">Disconnected</string>
+    <string name="about_open_source">Open Source Libraries</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap-based map rendering</string>
+    <string name="about_lib_okhttp_desc">WebSocket transport for Nostr relay</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Local database</string>
+    <string name="about_map_attribution">Map data © OpenStreetMap contributors</string>
 </resources>

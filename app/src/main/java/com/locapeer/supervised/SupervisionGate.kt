@@ -10,9 +10,11 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.locapeer.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,7 +42,7 @@ fun SupervisionGate(
                     title = {},
                     navigationIcon = {
                         IconButton(onClick = onNavigateBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                         }
                     }
                 )
@@ -63,13 +65,13 @@ fun SupervisionGate(
             )
             Spacer(Modifier.height(16.dp))
             Text(
-                "Device is Supervised",
+                stringResource(R.string.gate_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(Modifier.height(6.dp))
             Text(
-                "Supervisor approval is required to access settings.",
+                stringResource(R.string.gate_message),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -81,38 +83,38 @@ fun SupervisionGate(
                     Button(
                         onClick = onRequestAccess,
                         modifier = Modifier.fillMaxWidth()
-                    ) { Text("Request Access") }
+                    ) { Text(stringResource(R.string.gate_request_access)) }
                 }
                 is SupervisedModeManager.UnlockState.Requesting -> {
                     CircularProgressIndicator()
                     Spacer(Modifier.height(16.dp))
                     Text(
-                        "Waiting for supervisor approval…",
+                        stringResource(R.string.gate_waiting),
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
                     Spacer(Modifier.height(16.dp))
-                    TextButton(onClick = onReset) { Text("Cancel") }
+                    TextButton(onClick = onReset) { Text(stringResource(R.string.common_cancel)) }
                 }
                 is SupervisedModeManager.UnlockState.Denied -> {
                     Text(
-                        "Access denied by supervisor.",
+                        stringResource(R.string.gate_denied),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center
                     )
                     Spacer(Modifier.height(16.dp))
-                    Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text("Try Again") }
+                    Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.common_try_again)) }
                 }
                 is SupervisedModeManager.UnlockState.TimedOut -> {
                     Text(
-                        "Request timed out. Supervisor did not respond.",
+                        stringResource(R.string.gate_timed_out),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center
                     )
                     Spacer(Modifier.height(16.dp))
-                    Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text("Try Again") }
+                    Button(onClick = onReset, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.common_try_again)) }
                 }
                 is SupervisedModeManager.UnlockState.Approved -> CircularProgressIndicator()
             }
