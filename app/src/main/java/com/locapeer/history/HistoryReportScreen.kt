@@ -25,6 +25,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
@@ -774,11 +775,7 @@ private fun DetailRow(label: String, value: String) {
 
 /** Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE". */
 private fun motionDescription(motionState: String, speed: Float, bearing: Float): String {
-    val activity = when (motionState.uppercase()) {
-        "WALKING" -> "Walking"
-        "DRIVING" -> "Driving"
-        else -> "Stationary"
-    }
+    val activity = motionLabel(motionState)
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
         "$activity ${DisplayFormat.speedValue(speed)} heading ${DisplayFormat.bearingToCardinal(bearing)}"
     } else {
@@ -786,16 +783,21 @@ private fun motionDescription(motionState: String, speed: Float, bearing: Float)
     }
 }
 
+/**
+ * Human-readable label for a stored motion state string. Resolves against [MotionState] so every
+ * classified state (walking, running, cycling, driving, unknown) is named correctly rather than
+ * collapsing unrecognised values to "Stationary". Unknown/blank strings fall back to Stationary.
+ */
+private fun motionLabel(motionState: String): String =
+    MotionState.entries.firstOrNull { it.name.equals(motionState, ignoreCase = true) }?.displayName
+        ?: MotionState.STATIONARY.displayName
+
 @Composable
 private fun MotionChip(motionState: String) {
-    val label = when (motionState.uppercase()) {
-        "WALKING" -> "Walking"
-        "DRIVING" -> "Driving"
-        else -> "Stationary"
-    }
+    val label = motionLabel(motionState)
     val color = when (motionState.uppercase()) {
-        "WALKING" -> MaterialTheme.colorScheme.tertiaryContainer
-        "DRIVING" -> MaterialTheme.colorScheme.primaryContainer
+        "WALKING", "RUNNING" -> MaterialTheme.colorScheme.tertiaryContainer
+        "DRIVING", "CYCLING" -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
     Surface(color = color, shape = MaterialTheme.shapes.small) {
