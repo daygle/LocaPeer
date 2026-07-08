@@ -25,6 +25,19 @@ object PermissionManager {
         }
     }
 
+    /**
+     * Permissions we request alongside the required set but do not gate on: the app
+     * works without them. ACTIVITY_RECOGNITION (Android 10+) lets Activity Recognition
+     * refine motion classification; if denied, tracking falls back to GPS-only. Below
+     * API 29 it is an install-time permission and needs no runtime request.
+     */
+    val OPTIONAL_PERMISSIONS: List<String> =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            listOf(Manifest.permission.ACTIVITY_RECOGNITION)
+        } else {
+            emptyList()
+        }
+
     fun hasBasicPermissions(context: Context): Boolean {
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED

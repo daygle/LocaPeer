@@ -20,6 +20,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.ActivityRecognition
+import com.google.android.gms.location.ActivityTransition
+import com.google.android.gms.location.ActivityTransitionRequest
+import com.google.android.gms.location.ActivityTransitionResult
+import com.google.android.gms.location.DetectedActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -62,6 +67,7 @@ const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
 const val ACTION_PULSE_CHECK = "com.locapeer.PULSE_CHECK"
+const val ACTION_ACTIVITY_TRANSITION = "com.locapeer.ACTIVITY_TRANSITION"
 
 /** Slack added to the doze-backstop alarm so the handler normally fires first. */
 private const val PULSE_BACKSTOP_SLACK_MS = 90_000L
@@ -114,6 +120,13 @@ class HeartbeatService : LifecycleService() {
      *  restore, which could otherwise read a stale flag mid-write and undo the command. */
     @Volatile private var sosCommandReceived = false
     @Volatile private var currentMotionState = MotionState.UNKNOWN
+    /**
+     * Latest sensor-based reading from Activity Recognition, or null until the first
+     * transition fires (also when AR is unavailable or its permission was denied).
+     * Fused with [currentMotionState] to produce the stored/broadcast label — see
+     * [MotionFusion.fuse]. Interval selection stays keyed off the GPS state.
+     */
+    @Volatile private var arMotionState: MotionState? = null
     private var candidateMotionState = MotionState.UNKNOWN
     private var candidateMotionCount = 0
     private var prevFixLat = 0.0
@@ -428,6 +441,7 @@ class HeartbeatService : LifecycleService() {
             // Doze backstop fired: catch up if the handler was frozen past the
             // interval, otherwise this just re-arms the schedule.
             ACTION_PULSE_CHECK -> reschedulePulse()
+            ACTION_ACTIVITY_TRANSITION -> handleActivityTransition(intent)
         }
         return START_STICKY
     }
@@ -484,6 +498,8 @@ class HeartbeatService : LifecycleService() {
         } else {
             Log.e(TAG, "Cannot start location updates: permission missing")
         }
+
+        startActivityRecognition()
 
         lifecycleScope.launch {
             try {
@@ -575,6 +591,78 @@ class HeartbeatService : LifecycleService() {
         return false
     }
 
+    /** True when Activity Recognition can be used: the runtime permission exists on
+     *  Android 10+, and is a normal install-time permission (auto-granted) below that. */
+    private fun hasActivityRecognitionPermission(): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
+
+    private fun activityTransitionIntent(): PendingIntent =
+        PendingIntent.getForegroundService(
+            this, 1,
+            Intent(this, HeartbeatService::class.java).setAction(ACTION_ACTIVITY_TRANSITION),
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+    /**
+     * Subscribe to Activity Recognition transitions so a sensor-based motion reading
+     * corroborates the GPS classifier (see [MotionFusion]). Only ENTER transitions are
+     * requested — the most recent one is the current activity. Gracefully no-ops when
+     * the permission is absent; the service then simply runs GPS-only as before.
+     */
+    @SuppressLint("MissingPermission")
+    private fun startActivityRecognition() {
+        if (!hasActivityRecognitionPermission()) {
+            Log.d(TAG, "Activity Recognition unavailable; motion labels use GPS only")
+            return
+        }
+        val transitions = listOf(
+            DetectedActivity.STILL,
+            DetectedActivity.WALKING,
+            DetectedActivity.RUNNING,
+            DetectedActivity.ON_BICYCLE,
+            DetectedActivity.IN_VEHICLE,
+        ).map { type ->
+            ActivityTransition.Builder()
+                .setActivityType(type)
+                .setActivityTransitionType(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                .build()
+        }
+        try {
+            ActivityRecognition.getClient(this)
+                .requestActivityTransitionUpdates(ActivityTransitionRequest(transitions), activityTransitionIntent())
+                .addOnFailureListener { Log.w(TAG, "Failed to subscribe to activity transitions", it) }
+        } catch (e: Exception) {
+            Log.w(TAG, "Activity Recognition subscription error", e)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun stopActivityRecognition() {
+        if (!hasActivityRecognitionPermission()) return
+        try {
+            ActivityRecognition.getClient(this)
+                .removeActivityTransitionUpdates(activityTransitionIntent())
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to remove activity transition updates", e)
+        }
+    }
+
+    /** Apply the newest ENTER transition to [arMotionState]; ignore types with no
+     *  usable motion signal so a stale-but-valid reading is never clobbered. */
+    private fun handleActivityTransition(intent: Intent?) {
+        if (intent == null || !ActivityTransitionResult.hasResult(intent)) return
+        val result = ActivityTransitionResult.extractResult(intent) ?: return
+        result.transitionEvents
+            .lastOrNull { it.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER }
+            ?.let { event ->
+                MotionFusion.fromActivityType(event.activityType)?.let { mapped ->
+                    arMotionState = mapped
+                    Log.d(TAG, "Activity Recognition -> $mapped")
+                }
+            }
+    }
+
     /** Fire a heartbeat now and restart the pulse schedule from this moment. */
     private fun pulseNow() {
         handler.removeCallbacks(heartbeatRunnable)
@@ -659,6 +747,9 @@ class HeartbeatService : LifecycleService() {
 
                 val nowMs = System.currentTimeMillis()
                 val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
+                // Stored/broadcast label fuses the GPS classifier with the Activity
+                // Recognition reading; interval selection above stays GPS-driven.
+                val motionStateLabel = MotionFusion.fuse(currentMotionState, arMotionState).name
                 heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
@@ -668,7 +759,7 @@ class HeartbeatService : LifecycleService() {
                         lng = lastLng,
                         accuracy = lastAccuracy,
                         battery = battery,
-                        motionState = currentMotionState.name,
+                        motionState = motionStateLabel,
                         isSos = isSos,
                         receivedAt = nowMs,
                         pinColor = settings.pinColor,
@@ -753,7 +844,7 @@ class HeartbeatService : LifecycleService() {
                             lng = sendLng,
                             accuracy = if (suburb) 1100f else lastAccuracy,
                             battery = battery,
-                            motionState = currentMotionState.name,
+                            motionState = motionStateLabel,
                             isSos = isSos,
                             retentionDays = cfg?.retentionDaysLocation ?: 30,
                             pinColor = settings.pinColor,
@@ -876,6 +967,7 @@ class HeartbeatService : LifecycleService() {
         isRunning = false
         handler.removeCallbacks(heartbeatRunnable)
         handler.removeCallbacks(locationBoostDowngrade)
+        stopActivityRecognition()
         try {
             (getSystemService(ALARM_SERVICE) as AlarmManager).cancel(pulseCheckIntent())
         } catch (e: Exception) {

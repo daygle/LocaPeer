@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -38,7 +39,7 @@ fun OnboardingScreen(
     val context = LocalContext.current
 
     val basicPermissionsState = rememberMultiplePermissionsState(
-        permissions = PermissionManager.REQUIRED_PERMISSIONS
+        permissions = PermissionManager.REQUIRED_PERMISSIONS + PermissionManager.OPTIONAL_PERMISSIONS
     )
 
     val backgroundLocationLauncher = rememberLauncherForActivityResult(
@@ -255,7 +256,14 @@ private fun PermissionsStep(
 
     Spacer(Modifier.height(48.dp))
 
-    if (permissionsState.allPermissionsGranted) {
+    // Gate advancing on the required permissions only. The optional ones (e.g.
+    // Activity Recognition) are requested in the same prompt but their denial must
+    // not block onboarding — tracking still works without them.
+    val requiredGranted = permissionsState.permissions
+        .filter { it.permission in PermissionManager.REQUIRED_PERMISSIONS }
+        .all { it.status.isGranted }
+
+    if (requiredGranted) {
         LaunchedEffect(Unit) { onNext() }
     } else {
         Button(
