@@ -5,9 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.beacon.HeartbeatService
@@ -54,7 +55,7 @@ const val EXTRA_CANCEL_NOTIF_TAG = "cancelNotifTag"
 const val EXTRA_CANCEL_NOTIF_ID = "cancelNotifId"
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var keyManager: KeyManager
@@ -81,13 +82,13 @@ class MainActivity : ComponentActivity() {
                     val req = pendingApproval!!
                     AlertDialog(
                         onDismissRequest = { approvalManager.respond(approved = false) },
-                        title = { Text("Supervision Request") },
-                        text = { Text("\"${req.deviceName}\" is requesting access to their settings. Allow?") },
+                        title = { Text(stringResource(R.string.supervision_request_title)) },
+                        text = { Text(stringResource(R.string.supervision_request_message, req.deviceName)) },
                         confirmButton = {
-                            Button(onClick = { approvalManager.respond(approved = true) }) { Text("Approve") }
+                            Button(onClick = { approvalManager.respond(approved = true) }) { Text(stringResource(R.string.common_approve)) }
                         },
                         dismissButton = {
-                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) { Text("Deny") }
+                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) { Text(stringResource(R.string.common_deny)) }
                         },
                     )
                 }

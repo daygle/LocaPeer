@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Languages LocaPeer ships translations for. The Android 13+ system language picker
+    reads this list, and AppLanguage (com.locapeer.settings.AppLanguage) mirrors it for
+    the in-app selector. To add a language: create res/values-<tag>/strings.xml, add a
+    <locale> entry here, and add the matching entry to AppLanguage.
+-->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="en" />
+</locale-config>

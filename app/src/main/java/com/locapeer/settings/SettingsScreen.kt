@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,6 +39,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.MapLocationPicker
@@ -86,6 +89,7 @@ fun SettingsScreen(
     var showElevationUnitDialog by remember { mutableStateOf(false) }
     var showDistanceUnitDialog by remember { mutableStateOf(false) }
     var showTimeFormatDialog by remember { mutableStateOf(false) }
+    var showLanguageDialog by remember { mutableStateOf(false) }
     var showFixedLocationPicker by remember { mutableStateOf(false) }
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
@@ -101,9 +105,9 @@ fun SettingsScreen(
     var exportPassword by remember { mutableStateOf("") }
     val exportLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
-    ) { uri -> 
+    ) { uri ->
         uri?.let { vm.exportBackup(it, exportSections, exportPassword.takeIf { p -> p.isNotBlank() }) }
-        exportPassword = "" 
+        exportPassword = ""
     }
     val backupResult by vm.backupResult.collectAsState()
     val pendingRestore by vm.pendingRestore.collectAsState()
@@ -113,7 +117,7 @@ fun SettingsScreen(
     ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("Settings") }) }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.settings_title)) }) }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
@@ -150,7 +154,7 @@ fun SettingsScreen(
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            settings.displayName.ifBlank { "No name set" },
+                            settings.displayName.ifBlank { stringResource(R.string.settings_no_name_set) },
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -166,24 +170,24 @@ fun SettingsScreen(
                         OutlinedButton(onClick = { nameInput = settings.displayName; showNameDialog = true }) {
                             Icon(Icons.Default.Edit, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("Edit Name")
+                            Text(stringResource(R.string.settings_edit_name))
                         }
                         OutlinedButton(onClick = { showProfileQr = true }) {
                             Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
-                            Text("My QR")
+                            Text(stringResource(R.string.settings_my_qr))
                         }
                     }
                 }
             }
 
             // ── 2. Location & Privacy ──────────────────────────────────────
-            item { SectionLabel("Location & Privacy") }
+            item { SectionLabel(stringResource(R.string.settings_section_location_privacy)) }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Share My Location") },
-                        supportingContent = { Text(if (settings.heartbeatEnabled) "Broadcasting to your contacts" else "Not broadcasting") },
+                        headlineContent = { Text(stringResource(R.string.settings_share_location)) },
+                        supportingContent = { Text(if (settings.heartbeatEnabled) stringResource(R.string.settings_broadcasting) else stringResource(R.string.settings_not_broadcasting)) },
                         leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (settings.heartbeatEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
                             Switch(
@@ -196,23 +200,23 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.Schedule,
-                        label = "Sharing Schedule",
-                        subtitle = if (settings.globalScheduleRules.isEmpty()) "Always on"
-                        else "${settings.globalScheduleRules.size} rule${if (settings.globalScheduleRules.size == 1) "" else "s"}",
+                        label = stringResource(R.string.settings_sharing_schedule),
+                        subtitle = if (settings.globalScheduleRules.isEmpty()) stringResource(R.string.settings_always_on)
+                        else pluralStringResource(R.plurals.settings_schedule_rule_count, settings.globalScheduleRules.size, settings.globalScheduleRules.size),
                         onClick = onNavigateToGlobalSchedule
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.Fence,
-                        label = "Geofences",
-                        subtitle = "Manage shared geofence areas",
+                        label = stringResource(R.string.settings_geofences),
+                        subtitle = stringResource(R.string.settings_geofences_subtitle),
                         onClick = onNavigateToGeofences
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Notify When Tracked") },
+                        headlineContent = { Text(stringResource(R.string.settings_notify_when_tracked)) },
                         supportingContent = {
-                            Text("Get a notification when a contact's proximity or geofence alert for you is triggered.")
+                            Text(stringResource(R.string.settings_notify_when_tracked_subtitle))
                         },
                         leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
                         trailingContent = {
@@ -226,15 +230,15 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.History,
-                        label = "My Location History",
-                        subtitle = "Browse your own location timeline",
+                        label = stringResource(R.string.settings_my_location_history),
+                        subtitle = stringResource(R.string.settings_my_location_history_subtitle),
                         onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Look Up Addresses") },
+                        headlineContent = { Text(stringResource(R.string.settings_lookup_addresses)) },
                         supportingContent = {
-                            Text("Show street addresses for history points and tapped map pins. Sends those coordinates to your device's geocoding service (usually Google).")
+                            Text(stringResource(R.string.settings_lookup_addresses_subtitle))
                         },
                         leadingContent = { Icon(Icons.Default.Place, contentDescription = null) },
                         trailingContent = {
@@ -249,27 +253,27 @@ fun SettingsScreen(
             }
 
             // ── 3. Security ──────────────────────────────────────────────────
-            item { SectionLabel("Security") }
+            item { SectionLabel(stringResource(R.string.settings_section_security)) }
             item {
                 SettingsCard {
                     if (settings.supervisedModeEnabled) {
                         ListItem(
-                            headlineContent = { Text("Supervision Active") },
-                            supportingContent = { Text("Settings require supervisor approval") },
+                            headlineContent = { Text(stringResource(R.string.settings_supervision_active)) },
+                            supportingContent = { Text(stringResource(R.string.settings_supervision_active_subtitle)) },
                             leadingContent = { Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
                         HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                         ListItem(
-                            headlineContent = { Text("Disable Supervised Mode", color = MaterialTheme.colorScheme.error) },
+                            headlineContent = { Text(stringResource(R.string.settings_disable_supervised), color = MaterialTheme.colorScheme.error) },
                             leadingContent = { Icon(Icons.Default.LockOpen, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
                             modifier = Modifier.clickable { showDisableSupervisedConfirm = true },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
                     } else {
                         ListItem(
-                            headlineContent = { Text("Supervised Mode") },
-                            supportingContent = { Text("Require supervisor approval to access settings") },
+                            headlineContent = { Text(stringResource(R.string.settings_supervised_mode)) },
+                            supportingContent = { Text(stringResource(R.string.settings_supervised_mode_subtitle)) },
                             leadingContent = { Icon(Icons.Default.Lock, contentDescription = null) },
                             trailingContent = {
                                 Switch(checked = false, onCheckedChange = { if (it) showSupervisedSetup = true })
@@ -281,17 +285,17 @@ fun SettingsScreen(
             }
 
             // ── 4. Map ───────────────────────────────────────────────────────
-            item { SectionLabel("Map") }
+            item { SectionLabel(stringResource(R.string.settings_section_map)) }
             item {
                 SettingsCard {
                     val startingPointLabel = when (settings.mapStartingPoint) {
-                        "OWN_PIN" -> "Current Location"
-                        "FIT_ALL" -> "All Contacts"
-                        "FIXED_LOCATION" -> "Fixed Location"
-                        else -> "Last Position"
+                        "OWN_PIN" -> stringResource(R.string.settings_map_current_location)
+                        "FIT_ALL" -> stringResource(R.string.settings_map_all_contacts)
+                        "FIXED_LOCATION" -> stringResource(R.string.settings_map_fixed_location)
+                        else -> stringResource(R.string.settings_map_last_position)
                     }
                     ListItem(
-                        headlineContent = { Text("Starting Point") },
+                        headlineContent = { Text(stringResource(R.string.settings_starting_point)) },
                         supportingContent = { Text(startingPointLabel) },
                         leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
@@ -308,7 +312,7 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 if (hasFixed) "%.5f, %.5f".format(settings.mapFixedLat, settings.mapFixedLng)
-                                else "No location set",
+                                else stringResource(R.string.settings_no_location_set),
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -318,7 +322,7 @@ fun SettingsScreen(
                             ) {
                                 Icon(Icons.Default.Map, contentDescription = null, modifier = Modifier.size(16.dp))
                                 Spacer(Modifier.width(6.dp))
-                                Text("Pick Location on Map")
+                                Text(stringResource(R.string.settings_pick_location_on_map))
                             }
                         }
                     }
@@ -338,7 +342,7 @@ fun SettingsScreen(
                         Spacer(Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text("Default Zoom Level", style = MaterialTheme.typography.bodyMedium)
+                                Text(stringResource(R.string.settings_default_zoom_level), style = MaterialTheme.typography.bodyMedium)
                                 Text(settings.mapStartZoom.toInt().toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                             }
                             Slider(
@@ -353,7 +357,7 @@ fun SettingsScreen(
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         leadingContent = { Icon(Icons.Default.Palette, contentDescription = null) },
-                        headlineContent = { Text("Map Pin Colour") },
+                        headlineContent = { Text(stringResource(R.string.settings_map_pin_colour)) },
                         supportingContent = {
                             Column(
                                 modifier = Modifier.padding(top = 8.dp),
@@ -392,36 +396,36 @@ fun SettingsScreen(
             }
 
             // ── 5. Performance ───────────────────────────────────────────────
-            item { SectionLabel("Battery & Performance") }
+            item { SectionLabel(stringResource(R.string.settings_section_battery_performance)) }
             item {
                 SettingsCard {
                     NavRow(
                         icon = Icons.Default.Timer,
-                        label = "Update Cadence",
-                        subtitle = "Adjust how often your location is broadcasted",
+                        label = stringResource(R.string.settings_update_cadence),
+                        subtitle = stringResource(R.string.settings_update_cadence_subtitle),
                         onClick = { showIntervalsDialog = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     MetresFilterSliderRow(
                         icon = Icons.Default.Straighten,
-                        title = "Minimum Distance Filtering",
-                        subtitle = "Only show points that are at least this far from the previous one.",
+                        title = stringResource(R.string.settings_min_distance_filtering),
+                        subtitle = stringResource(R.string.settings_min_distance_filtering_subtitle),
                         valueMeters = settings.historyMinDistanceMeters,
                         onCommit = { vm.setHistoryMinDistanceMeters(it) }
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     MetresFilterSliderRow(
                         icon = Icons.Default.GpsOff,
-                        title = "Discard Low-Accuracy Fixes",
-                        subtitle = "Don't broadcast or record your own fixes with an accuracy radius larger than this. SOS is never skipped.",
+                        title = stringResource(R.string.settings_discard_low_accuracy),
+                        subtitle = stringResource(R.string.settings_discard_low_accuracy_subtitle),
                         valueMeters = settings.sendMaxAccuracyMeters,
                         onCommit = { vm.setSendMaxAccuracyMeters(it) }
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     MetresFilterSliderRow(
                         icon = Icons.Default.FilterAlt,
-                        title = "Hide Low-Accuracy Points",
-                        subtitle = "Hide history points with an accuracy radius larger than this. Nothing is deleted.",
+                        title = stringResource(R.string.settings_hide_low_accuracy),
+                        subtitle = stringResource(R.string.settings_hide_low_accuracy_subtitle),
                         valueMeters = settings.historyMaxAccuracyMeters,
                         onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
                     )
@@ -447,12 +451,12 @@ fun SettingsScreen(
             }
 
             // ── 6. Units & Display ───────────────────────────────────────────
-            item { SectionLabel("Units & Display") }
+            item { SectionLabel(stringResource(R.string.settings_section_units_display)) }
             item {
                 SettingsCard {
                     ListItem(
-                        headlineContent = { Text("Speed Units") },
-                        supportingContent = { Text(if (settings.useImperialSpeed) "Imperial (mph)" else "Metric (km/h)") },
+                        headlineContent = { Text(stringResource(R.string.settings_speed_units)) },
+                        supportingContent = { Text(if (settings.useImperialSpeed) stringResource(R.string.settings_speed_imperial) else stringResource(R.string.settings_speed_metric)) },
                         leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { showSpeedUnitDialog = true },
@@ -460,8 +464,8 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Elevation Units") },
-                        supportingContent = { Text(if (settings.useImperialElevation) "Imperial (feet)" else "Metric (metres)") },
+                        headlineContent = { Text(stringResource(R.string.settings_elevation_units)) },
+                        supportingContent = { Text(if (settings.useImperialElevation) stringResource(R.string.settings_elevation_imperial) else stringResource(R.string.settings_elevation_metric)) },
                         leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { showElevationUnitDialog = true },
@@ -469,8 +473,8 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Distance Units") },
-                        supportingContent = { Text(if (settings.useImperialDistance) "Imperial (ft/mi)" else "Metric (m/km)") },
+                        headlineContent = { Text(stringResource(R.string.settings_distance_units)) },
+                        supportingContent = { Text(if (settings.useImperialDistance) stringResource(R.string.settings_distance_imperial) else stringResource(R.string.settings_distance_metric)) },
                         leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { showDistanceUnitDialog = true },
@@ -478,8 +482,8 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Time Format") },
-                        supportingContent = { Text(if (settings.use24HourTime) "24-Hour (13:30)" else "12-Hour (1:30 PM)") },
+                        headlineContent = { Text(stringResource(R.string.settings_time_format)) },
+                        supportingContent = { Text(if (settings.use24HourTime) stringResource(R.string.settings_time_24h) else stringResource(R.string.settings_time_12h)) },
                         leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { showTimeFormatDialog = true },
@@ -489,56 +493,64 @@ fun SettingsScreen(
             }
 
             // ── 7. Retention ─────────────────────────────────────────────────
-            item { SectionLabel("Retention (This Device)") }
+            item { SectionLabel(stringResource(R.string.settings_section_retention)) }
             item {
                 SettingsCard {
                     RetentionRow(
                         icon = Icons.Default.LocationOn,
-                        title = "Location Data",
-                        subtitle = "How long to keep contacts' location data locally",
+                        title = stringResource(R.string.settings_retention_location),
+                        subtitle = stringResource(R.string.settings_retention_location_subtitle),
                         selected = settings.localLocationRetentionDays,
                         onSelected = { vm.setLocalLocationRetentionDays(it) },
-                        purgeLabel = "Clear All Location Data",
+                        purgeLabel = stringResource(R.string.settings_clear_all_location),
                         onPurge = { showClearLocationConfirm = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     RetentionRow(
                         icon = Icons.AutoMirrored.Filled.Message,
-                        title = "Messages",
-                        subtitle = "How long to keep received messages locally",
+                        title = stringResource(R.string.settings_retention_messages),
+                        subtitle = stringResource(R.string.settings_retention_messages_subtitle),
                         selected = settings.localMessageRetentionDays,
                         onSelected = { vm.setLocalMessageRetentionDays(it) },
-                        purgeLabel = "Clear All Messages",
+                        purgeLabel = stringResource(R.string.settings_clear_all_messages),
                         onPurge = { showClearMessageConfirm = true }
                     )
                 }
             }
 
             // ── 8. Appearance ────────────────────────────────────────────────
-            item { SectionLabel("Appearance") }
+            item { SectionLabel(stringResource(R.string.settings_section_appearance)) }
             item {
                 SettingsCard {
                     NavRow(
                         icon = Icons.Default.GridView,
-                        label = "Customize Navigation",
-                        subtitle = "Choose and reorder bottom tabs",
+                        label = stringResource(R.string.settings_customize_nav),
+                        subtitle = stringResource(R.string.settings_customize_nav_subtitle),
                         onClick = onNavigateToCustomizeNav
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     NavRow(
                         icon = Icons.Default.Home,
-                        label = "Start Page",
+                        label = stringResource(R.string.settings_start_page),
                         subtitle = settings.navTabIds
                             .firstOrNull { it == settings.startRoute }
                             ?.replaceFirstChar { it.uppercaseChar() }
-                            ?: "Map",
+                            ?: stringResource(R.string.tab_map),
                         onClick = { showStartPageDialog = true }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    val currentLanguage = AppLanguage.current()
+                    NavRow(
+                        icon = Icons.Default.Language,
+                        label = stringResource(R.string.settings_language),
+                        subtitle = currentLanguage.nativeName ?: stringResource(R.string.settings_language_system),
+                        onClick = { showLanguageDialog = true }
                     )
                 }
             }
 
             // ── 9. Keys & Backup ──────────────────────────────────────────────
-            item { SectionLabel("Backup & Keys") }
+            item { SectionLabel(stringResource(R.string.settings_section_backup_keys)) }
             item {
                 SettingsCard {
                     backupResult?.let { msg ->
@@ -553,8 +565,8 @@ fun SettingsScreen(
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     }
                     ListItem(
-                        headlineContent = { Text("Export Backup") },
-                        supportingContent = { Text("Save your private key and contacts to a file. Keep this file secure!") },
+                        headlineContent = { Text(stringResource(R.string.settings_export_backup)) },
+                        supportingContent = { Text(stringResource(R.string.settings_export_backup_subtitle)) },
                         leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { showExportDialog = true; vm.clearBackupResult() },
@@ -562,8 +574,8 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("Import Backup") },
-                        supportingContent = { Text("Restore from a previously exported file") },
+                        headlineContent = { Text(stringResource(R.string.settings_import_backup)) },
+                        supportingContent = { Text(stringResource(R.string.settings_import_backup_subtitle)) },
                         leadingContent = { Icon(Icons.Default.Download, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
@@ -571,8 +583,8 @@ fun SettingsScreen(
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
-                        headlineContent = { Text("View Private Key") },
-                        supportingContent = { Text("Show your 64-character hex identity key") },
+                        headlineContent = { Text(stringResource(R.string.settings_view_private_key)) },
+                        supportingContent = { Text(stringResource(R.string.settings_view_private_key_subtitle)) },
                         leadingContent = { Icon(Icons.Default.VpnKey, contentDescription = null) },
                         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
                         modifier = Modifier.clickable { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
@@ -582,13 +594,13 @@ fun SettingsScreen(
             }
 
             // ── 10. About ────────────────────────────────────────────────────
-            item { SectionLabel("About") }
+            item { SectionLabel(stringResource(R.string.settings_section_about)) }
             item {
                 SettingsCard {
                     NavRow(
                         icon = Icons.Default.Info,
-                        label = "About LocaPeer",
-                        subtitle = "Version, relay status, open source",
+                        label = stringResource(R.string.settings_about_locapeer),
+                        subtitle = stringResource(R.string.settings_about_subtitle),
                         onClick = onNavigateToAbout
                     )
                 }
@@ -601,12 +613,12 @@ fun SettingsScreen(
     if (showNameDialog) {
         AlertDialog(
             onDismissRequest = { showNameDialog = false },
-            title = { Text("Edit Display Name") },
+            title = { Text(stringResource(R.string.settings_edit_display_name)) },
             text = {
                 OutlinedTextField(
                     value = nameInput,
                     onValueChange = { nameInput = it },
-                    label = { Text("Display Name") },
+                    label = { Text(stringResource(R.string.settings_display_name_label)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -615,71 +627,71 @@ fun SettingsScreen(
                 TextButton(
                     onClick = { vm.updateDisplayName(nameInput); showNameDialog = false },
                     enabled = nameInput.isNotBlank()
-                ) { Text("Save") }
+                ) { Text(stringResource(R.string.common_save)) }
             },
-            dismissButton = { TextButton(onClick = { showNameDialog = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showNameDialog = false }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
     if (showProfileQr) {
         AlertDialog(
             onDismissRequest = { showProfileQr = false },
-            title = { Text("My Invite QR") },
+            title = { Text(stringResource(R.string.settings_my_invite_qr)) },
             text = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        "Others can scan this to start tracking you.",
+                        stringResource(R.string.settings_invite_qr_subtitle),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     profileQr?.let { bmp ->
-                        Image(bitmap = bmp.asImageBitmap(), contentDescription = "Invite QR", modifier = Modifier.size(220.dp))
+                        Image(bitmap = bmp.asImageBitmap(), contentDescription = stringResource(R.string.settings_invite_qr_cd), modifier = Modifier.size(220.dp))
                     } ?: CircularProgressIndicator()
                 }
             },
-            confirmButton = { TextButton(onClick = { showProfileQr = false }) { Text("Done") } }
+            confirmButton = { TextButton(onClick = { showProfileQr = false }) { Text(stringResource(R.string.common_done)) } }
         )
     }
 
     if (showKeyDialog) {
         AlertDialog(
             onDismissRequest = { showKeyDialog = false },
-            title = { Text("Private Key") },
+            title = { Text(stringResource(R.string.settings_private_key_title)) },
             text = {
                 Column {
-                    Text("Keep this safe. Anyone with this key can impersonate you.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.settings_private_key_warning), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                     Spacer(Modifier.height(8.dp))
                     SelectionContainer { Text(exportedKey, style = MaterialTheme.typography.bodySmall) }
                 }
             },
-            confirmButton = { TextButton(onClick = { showKeyDialog = false }) { Text("Done") } }
+            confirmButton = { TextButton(onClick = { showKeyDialog = false }) { Text(stringResource(R.string.common_done)) } }
         )
     }
 
     if (showClearLocationConfirm) {
         AlertDialog(
             onDismissRequest = { showClearLocationConfirm = false },
-            title = { Text("Clear Location History?") },
-            text = { Text("All stored location pings will be permanently deleted.") },
+            title = { Text(stringResource(R.string.settings_clear_location_title)) },
+            text = { Text(stringResource(R.string.settings_clear_location_message)) },
             confirmButton = {
-                TextButton(onClick = { vm.clearLocationHistory(); showClearLocationConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Delete") }
+                TextButton(onClick = { vm.clearLocationHistory(); showClearLocationConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text(stringResource(R.string.common_delete)) }
             },
-            dismissButton = { TextButton(onClick = { showClearLocationConfirm = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showClearLocationConfirm = false }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
     if (showClearMessageConfirm) {
         AlertDialog(
             onDismissRequest = { showClearMessageConfirm = false },
-            title = { Text("Clear Message History?") },
-            text = { Text("All stored messages will be permanently deleted.") },
+            title = { Text(stringResource(R.string.settings_clear_messages_title)) },
+            text = { Text(stringResource(R.string.settings_clear_messages_message)) },
             confirmButton = {
-                TextButton(onClick = { vm.clearMessageHistory(); showClearMessageConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Delete") }
+                TextButton(onClick = { vm.clearMessageHistory(); showClearMessageConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text(stringResource(R.string.common_delete)) }
             },
-            dismissButton = { TextButton(onClick = { showClearMessageConfirm = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showClearMessageConfirm = false }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
@@ -688,15 +700,15 @@ fun SettingsScreen(
             var passwordInput by remember { mutableStateOf("") }
             AlertDialog(
                 onDismissRequest = { vm.dismissPendingRestore() },
-                title = { Text("Encrypted Backup") },
+                title = { Text(stringResource(R.string.settings_encrypted_backup_title)) },
                 text = {
                     Column {
-                        Text("This backup is encrypted. Please enter the password to continue.", style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.settings_encrypted_backup_message), style = MaterialTheme.typography.bodySmall)
                         Spacer(Modifier.height(16.dp))
                         OutlinedTextField(
                             value = passwordInput,
                             onValueChange = { passwordInput = it },
-                            label = { Text("Password") },
+                            label = { Text(stringResource(R.string.common_password)) },
                             visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                             singleLine = true,
                             isError = restorePasswordError != null,
@@ -709,10 +721,10 @@ fun SettingsScreen(
                     Button(
                         onClick = { vm.decryptBackupForRestore(passwordInput) },
                         enabled = passwordInput.isNotBlank()
-                    ) { Text("Unlock") }
+                    ) { Text(stringResource(R.string.common_unlock)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text(stringResource(R.string.common_cancel)) }
                 }
             )
             return@let
@@ -721,20 +733,20 @@ fun SettingsScreen(
         var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
         AlertDialog(
             onDismissRequest = { vm.dismissPendingRestore() },
-            title = { Text("Select Data to Restore") },
+            title = { Text(stringResource(R.string.settings_select_restore_title)) },
             text = {
                 Column {
-                    BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
-                    BackupSectionItem("Contacts", BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
-                    BackupSectionItem("Geofences", BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
-                    BackupSectionItem("Settings", BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_private_key), BackupSection.PRIVATE_KEY, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_contacts), BackupSection.CONTACTS, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_geofences), BackupSection.GEOFENCES, importSections, restore.availableSections) { importSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_settings), BackupSection.SETTINGS, importSections, restore.availableSections) { importSections = it }
                 }
             },
             confirmButton = {
-                Button(onClick = { vm.applyRestore(importSections) }, enabled = importSections.isNotEmpty()) { Text("Restore") }
+                Button(onClick = { vm.applyRestore(importSections) }, enabled = importSections.isNotEmpty()) { Text(stringResource(R.string.common_restore)) }
             },
             dismissButton = {
-                TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+                TextButton(onClick = { vm.dismissPendingRestore() }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -750,37 +762,37 @@ fun SettingsScreen(
     if (showDisableSupervisedConfirm) {
         AlertDialog(
             onDismissRequest = { showDisableSupervisedConfirm = false },
-            title = { Text("Disable Supervised Mode?") },
-            text = { Text("Settings will be accessible without supervisor approval.") },
+            title = { Text(stringResource(R.string.settings_disable_supervised_title)) },
+            text = { Text(stringResource(R.string.settings_disable_supervised_message)) },
             confirmButton = {
-                TextButton(onClick = { vm.disableSupervisedMode(); showDisableSupervisedConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("Disable") }
+                TextButton(onClick = { vm.disableSupervisedMode(); showDisableSupervisedConfirm = false }, colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text(stringResource(R.string.common_disable)) }
             },
-            dismissButton = { TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { showDisableSupervisedConfirm = false }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
     if (showExportDialog) {
         AlertDialog(
             onDismissRequest = { showExportDialog = false; exportPassword = "" },
-            title = { Text("Select Data to Export") },
+            title = { Text(stringResource(R.string.settings_select_export_title)) },
             text = {
                 Column {
-                    Text("Optionally set a password to encrypt your backup file.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(stringResource(R.string.settings_export_password_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(16.dp))
                     OutlinedTextField(
                         value = exportPassword,
                         onValueChange = { exportPassword = it },
-                        label = { Text("Backup Password (Optional)") },
+                        label = { Text(stringResource(R.string.settings_backup_password_optional)) },
                         visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(Modifier.height(24.dp))
-                    Text("Select sections to include:", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-                    BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
-                    BackupSectionItem("Contacts", BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
-                    BackupSectionItem("Geofences", BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
-                    BackupSectionItem("Settings", BackupSection.SETTINGS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    Text(stringResource(R.string.settings_select_sections), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
+                    BackupSectionItem(stringResource(R.string.backup_section_private_key), BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_contacts), BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_geofences), BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    BackupSectionItem(stringResource(R.string.backup_section_settings), BackupSection.SETTINGS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
                 }
             },
             confirmButton = {
@@ -790,26 +802,26 @@ fun SettingsScreen(
                         exportLauncher.launch("locapeer-backup.json")
                     },
                     enabled = exportSections.isNotEmpty()
-                ) { Text("Choose file location") }
+                ) { Text(stringResource(R.string.settings_choose_file_location)) }
             },
             dismissButton = {
-                TextButton(onClick = { showExportDialog = false; exportPassword = "" }) { Text("Cancel") }
+                TextButton(onClick = { showExportDialog = false; exportPassword = "" }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
 
     if (showStartPageDialog) {
         val tabLabels = mapOf(
-            "map" to "Map",
-            "messages" to "Messages",
-            "history-tab" to "History",
-            "contacts" to "Contacts",
-            "invite" to "QR",
-            "settings" to "Settings"
+            "map" to stringResource(R.string.tab_map),
+            "messages" to stringResource(R.string.tab_messages),
+            "history-tab" to stringResource(R.string.tab_history),
+            "contacts" to stringResource(R.string.tab_contacts),
+            "invite" to stringResource(R.string.tab_qr),
+            "settings" to stringResource(R.string.tab_settings)
         )
         AlertDialog(
             onDismissRequest = { showStartPageDialog = false },
-            title = { Text("Start Page") },
+            title = { Text(stringResource(R.string.settings_start_page)) },
             text = {
                 Column {
                     settings.navTabIds.forEach { route ->
@@ -839,21 +851,58 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showStartPageDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showStartPageDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            }
+        )
+    }
+
+    if (showLanguageDialog) {
+        val current = AppLanguage.current()
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(stringResource(R.string.settings_language_title)) },
+            text = {
+                Column {
+                    AppLanguage.entries.forEach { language ->
+                        val label = language.nativeName ?: stringResource(R.string.settings_language_system)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    AppLanguage.apply(language)
+                                    showLanguageDialog = false
+                                }
+                                .padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = current == language,
+                                onClick = {
+                                    AppLanguage.apply(language)
+                                    showLanguageDialog = false
+                                }
+                            )
+                            Text(label, modifier = Modifier.padding(start = 8.dp))
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showLanguageDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
 
     if (showMapStartingPointDialog) {
         val options = listOf(
-            "RESTORE_LAST"   to "Last Position",
-            "OWN_PIN"        to "Current Location",
-            "FIT_ALL"        to "All Contacts",
-            "FIXED_LOCATION" to "Fixed Location"
+            "RESTORE_LAST"   to stringResource(R.string.settings_map_last_position),
+            "OWN_PIN"        to stringResource(R.string.settings_map_current_location),
+            "FIT_ALL"        to stringResource(R.string.settings_map_all_contacts),
+            "FIXED_LOCATION" to stringResource(R.string.settings_map_fixed_location)
         )
         AlertDialog(
             onDismissRequest = { showMapStartingPointDialog = false },
-            title = { Text("Map Starting Point") },
+            title = { Text(stringResource(R.string.settings_map_starting_point_title)) },
             text = {
                 Column {
                     options.forEach { (mode, label) ->
@@ -880,7 +929,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showMapStartingPointDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showMapStartingPointDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -888,7 +937,7 @@ fun SettingsScreen(
     if (showIntervalsDialog) {
         AlertDialog(
             onDismissRequest = { showIntervalsDialog = false },
-            title = { Text("Update Cadence") },
+            title = { Text(stringResource(R.string.settings_update_cadence)) },
             text = {
                 Column(
                     modifier = Modifier
@@ -896,25 +945,25 @@ fun SettingsScreen(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Text("Control how often your location is updated based on your activity. Frequent updates use more battery.",
+                    Text(stringResource(R.string.settings_update_cadence_dialog_message),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 
-                    IntervalSlider("Stationary", settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
-                    IntervalSlider("Walking",    settings.walkingIntervalMinutes,    1f..15f, 13) { vm.updateIntervals(walking = it) }
-                    IntervalSlider("Running",    settings.runningIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(running = it) }
-                    IntervalSlider("Cycling",    settings.cyclingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(cycling = it) }
-                    IntervalSlider("Driving",    settings.drivingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(driving = it) }
-                    IntervalSlider("Low Battery (< 20%)", settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
+                    IntervalSlider(stringResource(R.string.motion_stationary), settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
+                    IntervalSlider(stringResource(R.string.motion_walking),    settings.walkingIntervalMinutes,    1f..15f, 13) { vm.updateIntervals(walking = it) }
+                    IntervalSlider(stringResource(R.string.motion_running),    settings.runningIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(running = it) }
+                    IntervalSlider(stringResource(R.string.motion_cycling),    settings.cyclingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(cycling = it) }
+                    IntervalSlider(stringResource(R.string.motion_driving),    settings.drivingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(driving = it) }
+                    IntervalSlider(stringResource(R.string.settings_low_battery), settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
                 }
             },
-            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text("Done") } }
+            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } }
         )
     }
 
     if (showSpeedUnitDialog) {
         UnitSelectionDialog(
-            title = "Speed Units",
-            options = listOf(false to "Metric (km/h)", true to "Imperial (mph)"),
+            title = stringResource(R.string.settings_speed_units),
+            options = listOf(false to stringResource(R.string.settings_speed_metric), true to stringResource(R.string.settings_speed_imperial)),
             current = settings.useImperialSpeed,
             onSelected = { vm.setUseImperialSpeed(it); showSpeedUnitDialog = false },
             onDismiss = { showSpeedUnitDialog = false }
@@ -923,8 +972,8 @@ fun SettingsScreen(
 
     if (showElevationUnitDialog) {
         UnitSelectionDialog(
-            title = "Elevation Units",
-            options = listOf(false to "Metric (metres)", true to "Imperial (feet)"),
+            title = stringResource(R.string.settings_elevation_units),
+            options = listOf(false to stringResource(R.string.settings_elevation_metric), true to stringResource(R.string.settings_elevation_imperial)),
             current = settings.useImperialElevation,
             onSelected = { vm.setUseImperialElevation(it); showElevationUnitDialog = false },
             onDismiss = { showElevationUnitDialog = false }
@@ -933,8 +982,8 @@ fun SettingsScreen(
 
     if (showDistanceUnitDialog) {
         UnitSelectionDialog(
-            title = "Distance Units",
-            options = listOf(false to "Metric (m/km)", true to "Imperial (ft/mi)"),
+            title = stringResource(R.string.settings_distance_units),
+            options = listOf(false to stringResource(R.string.settings_distance_metric), true to stringResource(R.string.settings_distance_imperial)),
             current = settings.useImperialDistance,
             onSelected = { vm.setUseImperialDistance(it); showDistanceUnitDialog = false },
             onDismiss = { showDistanceUnitDialog = false }
@@ -943,8 +992,8 @@ fun SettingsScreen(
 
     if (showTimeFormatDialog) {
         UnitSelectionDialog(
-            title = "Time Format",
-            options = listOf(false to "12-Hour (1:30 PM)", true to "24-Hour (13:30)"),
+            title = stringResource(R.string.settings_time_format),
+            options = listOf(false to stringResource(R.string.settings_time_12h), true to stringResource(R.string.settings_time_24h)),
             current = settings.use24HourTime,
             onSelected = { vm.setUse24HourTime(it); showTimeFormatDialog = false },
             onDismiss = { showTimeFormatDialog = false }
@@ -967,22 +1016,18 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { showMotionRationale = false },
             icon = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
-            title = { Text("Enable motion detection") },
+            title = { Text(stringResource(R.string.settings_enable_motion_title)) },
             text = {
-                Text(
-                    "Physical activity access lets LocaPeer tell walking, driving and standing " +
-                        "still apart more accurately in your history. It's currently turned off - " +
-                        "you can re-enable it from system settings."
-                )
+                Text(stringResource(R.string.settings_enable_motion_message))
             },
             confirmButton = {
                 TextButton(onClick = {
                     showMotionRationale = false
                     openAppSettings(context)
-                }) { Text("Open Settings") }
+                }) { Text(stringResource(R.string.settings_open_settings)) }
             },
             dismissButton = {
-                TextButton(onClick = { showMotionRationale = false }) { Text("Not now") }
+                TextButton(onClick = { showMotionRationale = false }) { Text(stringResource(R.string.common_not_now)) }
             }
         )
     }
@@ -1041,11 +1086,11 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
 @Composable
 private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
     ListItem(
-        headlineContent = { Text("Motion Detection") },
+        headlineContent = { Text(stringResource(R.string.settings_motion_detection)) },
         supportingContent = {
             Text(
-                if (granted) "Enabled - refines your movement type (walking, driving) in history"
-                else "Off - allow physical activity access for more accurate movement labels"
+                if (granted) stringResource(R.string.settings_motion_detection_on)
+                else stringResource(R.string.settings_motion_detection_off)
             )
         },
         leadingContent = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
@@ -1092,7 +1137,7 @@ private fun MetresFilterSliderRow(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(title, style = MaterialTheme.typography.bodyMedium)
                 Text(
-                    if (value.roundToInt() == 0) "Off"
+                    if (value.roundToInt() == 0) stringResource(R.string.common_off)
                     else com.locapeer.util.DisplayFormat.distanceValue(value.roundToInt().toDouble()),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.SemiBold,
@@ -1118,7 +1163,7 @@ private fun IntervalSlider(label: String, value: Int, range: ClosedFloatingPoint
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(label, style = MaterialTheme.typography.bodySmall)
-            Text("${sliderValue.roundToInt()} min", style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
+            Text(stringResource(R.string.settings_minutes_short, sliderValue.roundToInt()), style = MaterialTheme.typography.bodySmall, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
         }
         Slider(
             value = sliderValue,
@@ -1163,7 +1208,7 @@ private fun UnitSelectionDialog(
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
     )
 }
 
@@ -1176,17 +1221,17 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Enable Supervised Mode") },
+        title = { Text(stringResource(R.string.settings_enable_supervised_title)) },
         text = {
             Column {
                 Text(
-                    "Choose a peer who will act as supervisor. They must approve access to settings from their device.",
+                    stringResource(R.string.settings_enable_supervised_message),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 if (peers.isEmpty()) {
                     Spacer(Modifier.height(16.dp))
-                    Text("No peers found. Add a peer first by scanning their invite QR code.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.settings_no_peers_found), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
                 } else {
                     Spacer(Modifier.height(12.dp))
                     peers.forEach { peer ->
@@ -1203,9 +1248,9 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
             }
         },
         confirmButton = {
-            Button(onClick = { onConfirm(selectedPubkey) }, enabled = selectedPubkey.isNotEmpty()) { Text("Enable") }
+            Button(onClick = { onConfirm(selectedPubkey) }, enabled = selectedPubkey.isNotEmpty()) { Text(stringResource(R.string.common_enable)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
     )
 }
 
@@ -1243,7 +1288,7 @@ private fun BackupSectionItem(
             )
             if (!enabled) {
                 Text(
-                    "Not in this backup",
+                    stringResource(R.string.settings_not_in_backup),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
