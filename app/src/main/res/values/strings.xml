@@ -359,4 +359,58 @@
     <string name="incoming_section_messaging">Messaging</string>
     <string name="incoming_allow_messages">Allow Messages</string>
     <string name="incoming_allow_messages_sub">Receive chat messages from %1$s</string>
+
+    <string name="common_request">Request</string>
+    <string name="common_edit">Edit</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Contact Settings</string>
+    <string name="peer_section_roles">Location Sharing Roles</string>
+    <string name="peer_send_on">%1$s can see your location</string>
+    <string name="peer_send_off">You are not sharing your location with %1$s</string>
+    <string name="peer_receive_title">Receive %1$s\'s Location</string>
+    <string name="peer_receive_on">You can see %1$s\'s location</string>
+    <string name="peer_receive_off">You don\'t have access to %1$s\'s location</string>
+    <string name="peer_section_privacy">Privacy &amp; Sharing Controls</string>
+    <string name="peer_pause_sharing">Pause Sharing</string>
+    <string name="peer_pause_sub">Temporarily stop sending your location to %1$s</string>
+    <string name="peer_precision">Location Precision</string>
+    <string name="peer_precision_exact_sub">Exact GPS coordinates</string>
+    <string name="peer_precision_suburb_sub">Approximate location (Suburb level)</string>
+    <string name="peer_always_sharing">Always sharing</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d active sharing rule</item>
+        <item quantity="other">%1$d active sharing rules</item>
+    </plurals>
+    <string name="peer_section_alerts">Alerts &amp; Monitoring</string>
+    <string name="peer_sos_contact">SOS Contact</string>
+    <string name="peer_sos_sub">Receive your emergency alerts even if sharing is paused</string>
+    <string name="peer_missed_alert">Missed Location Alert</string>
+    <string name="peer_missed_on">Notify me if %1$s stops reporting their location</string>
+    <string name="peer_requires_access">Requires access to %1$s\'s location</string>
+    <string name="peer_proximity_alert">Proximity Alert</string>
+    <string name="peer_proximity_sub">Notify me when %1$s is nearby</string>
+    <string name="peer_alert_radius">Alert Radius</string>
+    <string name="peer_alert_schedule">Alert Schedule</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d active rule</item>
+        <item quantity="other">%1$d active rules</item>
+    </plurals>
+    <string name="peer_geofences_sub">Set up arrival and departure zones for %1$s</string>
+    <string name="peer_supervise">Supervise This Device</string>
+    <string name="peer_supervise_on">You receive and approve unlock requests from %1$s</string>
+    <string name="peer_supervise_off">Allow %1$s to send you supervised-mode unlock requests</string>
+    <string name="peer_messaging_sub">Enable/disable chat messages from %1$s</string>
+    <string name="peer_section_history">Movement History</string>
+    <string name="peer_location_history">Location History</string>
+    <string name="peer_location_history_sub">View movement history and map report for %1$s</string>
+    <string name="peer_section_retention">Remote Data Retention</string>
+    <string name="peer_retention_location_sub">How long %1$s keeps your location history</string>
+    <string name="peer_purge_location">Purge All Location Data from %1$s</string>
+    <string name="peer_retention_messages_sub">How long %1$s keeps messages you sent</string>
+    <string name="peer_purge_messages">Purge All Messages from %1$s</string>
+    <string name="peer_precision_exact">Exact GPS</string>
+    <string name="peer_precision_exact_desc">Precise coordinates</string>
+    <string name="peer_precision_suburb">Suburb (~1km)</string>
+    <string name="peer_precision_suburb_desc">Neighbourhood-level only</string>
 </resources>
