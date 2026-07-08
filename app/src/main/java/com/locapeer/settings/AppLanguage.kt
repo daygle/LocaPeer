@@ -27,8 +27,13 @@ enum class AppLanguage(val tag: String, val nativeName: String?) {
         fun current(): AppLanguage {
             val locales = AppCompatDelegate.getApplicationLocales()
             if (locales.isEmpty) return SYSTEM
-            val language = locales[0]?.language ?: return SYSTEM
-            return entries.firstOrNull { it.tag.isNotEmpty() && it.tag == language } ?: SYSTEM
+            val locale = locales[0] ?: return SYSTEM
+            // Match the full BCP-47 tag first (e.g. "pt-BR", "zh-Hant") so region/script
+            // variants resolve, then fall back to the primary language subtag (e.g. "pt").
+            val fullTag = locale.toLanguageTag()
+            return entries.firstOrNull { it.tag.isNotEmpty() && it.tag.equals(fullTag, ignoreCase = true) }
+                ?: entries.firstOrNull { it.tag.isNotEmpty() && it.tag.equals(locale.language, ignoreCase = true) }
+                ?: SYSTEM
         }
 
         /**
