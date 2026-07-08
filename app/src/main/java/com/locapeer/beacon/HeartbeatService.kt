@@ -643,7 +643,10 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun stopActivityRecognition() {
-        if (!hasActivityRecognitionPermission()) return
+        // Always attempt removal, even if the permission is now missing: if the user
+        // revoked ACTIVITY_RECOGNITION while updates were registered, guarding on the
+        // permission here would leave the transition PendingIntent live and keep waking
+        // the service. Removal needs no permission; SecurityException is caught below.
         try {
             ActivityRecognition.getClient(this)
                 .removeActivityTransitionUpdates(activityTransitionIntent())
