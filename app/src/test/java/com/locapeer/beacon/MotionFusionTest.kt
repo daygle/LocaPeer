@@ -63,4 +63,33 @@ class MotionFusionTest {
     fun `AR resolves an UNKNOWN GPS state when present`() {
         assertEquals(MotionState.WALKING, MotionFusion.fuse(MotionState.UNKNOWN, MotionState.WALKING))
     }
+
+    // --- fuseForInterval: cadence/power state ---
+
+    @Test
+    fun `on-foot AR caps a stale GPS driving cadence`() {
+        // Shop-visit battery case: GPS stuck DRIVING, AR says the user is walking.
+        assertEquals(MotionState.WALKING, MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.WALKING))
+        assertEquals(MotionState.CYCLING, MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.CYCLING))
+    }
+
+    @Test
+    fun `AR still never slows a freshly detected GPS drive`() {
+        // Drive-start safety: GPS already DRIVING, AR still lagging on STILL — keep DRIVING.
+        assertEquals(MotionState.DRIVING, MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.STATIONARY))
+    }
+
+    @Test
+    fun `cadence takes the faster of the two signals`() {
+        // AR detects a vehicle before GPS: poll at the faster cadence.
+        assertEquals(MotionState.DRIVING, MotionFusion.fuseForInterval(MotionState.STATIONARY, MotionState.DRIVING))
+        // Both agree stationary.
+        assertEquals(MotionState.STATIONARY, MotionFusion.fuseForInterval(MotionState.STATIONARY, MotionState.STATIONARY))
+    }
+
+    @Test
+    fun `cadence falls back to GPS when AR absent`() {
+        assertEquals(MotionState.DRIVING, MotionFusion.fuseForInterval(MotionState.DRIVING, null))
+        assertEquals(MotionState.STATIONARY, MotionFusion.fuseForInterval(MotionState.STATIONARY, null))
+    }
 }

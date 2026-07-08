@@ -65,4 +65,36 @@ object MotionFusion {
         gpsState == MotionState.UNKNOWN -> MotionState.STATIONARY
         else -> gpsState
     }
+
+    /** States ordered by poll cadence (faster motion → shorter interval). UNKNOWN sits at
+     *  the walking tier, matching how the interval manager already treats it. */
+    private fun cadenceRank(state: MotionState): Int = when (state) {
+        MotionState.STATIONARY -> 0
+        MotionState.WALKING -> 1
+        MotionState.UNKNOWN -> 1
+        MotionState.RUNNING -> 2
+        MotionState.CYCLING -> 3
+        MotionState.DRIVING -> 4
+    }
+
+    /**
+     * The state that should drive **pulse cadence and GPS power** — deliberately different
+     * from [fuse], which drives the label. For the label AR always wins; for cadence that
+     * is unsafe, because AR's STILL lags at the start of a trip and would slow GPS down
+     * exactly when a drive is beginning. So:
+     *
+     *  1. A positive on-foot / cycling AR reading (WALKING, RUNNING, CYCLING) is
+     *     authoritative: it is incompatible with being in a vehicle and never appears at
+     *     drive start (the sequence there is STILL → IN_VEHICLE), so it can safely cap a
+     *     stale GPS DRIVING and relax the power profile — the shop-visit battery case.
+     *  2. Otherwise use whichever signal demands the faster cadence (higher rank). This
+     *     keeps GPS's fast motion-onset detection and never lets a lagging AR STILL slow a
+     *     freshly detected drive; STILL (rank 0) can only ever match, never lower, GPS.
+     */
+    fun fuseForInterval(gpsState: MotionState, arState: MotionState?): MotionState = when {
+        arState == null -> gpsState
+        arState == MotionState.WALKING || arState == MotionState.RUNNING || arState == MotionState.CYCLING -> arState
+        cadenceRank(arState) > cadenceRank(gpsState) -> arState
+        else -> gpsState
+    }
 }

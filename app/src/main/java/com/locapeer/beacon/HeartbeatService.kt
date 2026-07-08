@@ -206,6 +206,15 @@ class HeartbeatService : LifecycleService() {
         return if (loc.hasSpeed()) loc.speed else derived
     }
 
+    /**
+     * State that drives pulse cadence and GPS power: the GPS classifier fused with the
+     * latest Activity Recognition reading (see [MotionFusion.fuseForInterval]). Recomputed
+     * wherever either input changes so a stale GPS DRIVING doesn't keep the radio hot while
+     * AR reports the user is on foot.
+     */
+    private fun effectiveIntervalState(): MotionState =
+        MotionFusion.fuseForInterval(currentMotionState, arMotionState)
+
     // Require consecutive fixes to agree before switching state (see
     // MotionMath.samplesRequiredToSwitch), so a single noisy GPS speed sample
     // doesn't churn the location request and pulse schedule.
@@ -234,7 +243,7 @@ class HeartbeatService : LifecycleService() {
             // Just started moving from a settled state: boost GPS so the classifier can
             // reach the correct moving state (esp. DRIVING) on clean fixes.
             if (newState.isMoving() && !previous.isMoving()) beginClassificationBoost()
-            intervalManager.updateMotionState(newState)
+            intervalManager.updateMotionState(effectiveIntervalState())
             updateLocationRequest()
             reschedulePulse()
         }
@@ -297,7 +306,7 @@ class HeartbeatService : LifecycleService() {
             currentMotionState = MotionState.UNKNOWN
             candidateMotionCount = 0
             beginClassificationBoost()
-            intervalManager.updateMotionState(MotionState.UNKNOWN)
+            intervalManager.updateMotionState(effectiveIntervalState())
             updateLocationRequest()
             reschedulePulse()
         }
@@ -532,18 +541,22 @@ class HeartbeatService : LifecycleService() {
         val boosting = !isSos && !lowBattery &&
             currentMotionState != MotionState.STATIONARY &&
             SystemClock.elapsedRealtime() < classificationBoostUntilMs
+        // The power profile follows the fused cadence state, so AR reporting on-foot can
+        // relax a stale GPS DRIVING off high accuracy. The boost window still keys off the
+        // GPS classifier, since it exists to help that classifier reach the right state.
+        val cadenceState = effectiveIntervalState()
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
             lowBattery -> Priority.PRIORITY_LOW_POWER
             boosting -> Priority.PRIORITY_HIGH_ACCURACY
-            currentMotionState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
-            currentMotionState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
+            cadenceState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+            cadenceState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
         }
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
-            currentMotionState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
+            cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             boosting -> 15_000L
             else -> 30_000L
         }
@@ -664,8 +677,17 @@ class HeartbeatService : LifecycleService() {
             .lastOrNull { it.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER }
             ?.let { event ->
                 MotionFusion.fromActivityType(event.activityType)?.let { mapped ->
+                    val changed = mapped != arMotionState
                     arMotionState = mapped
                     Log.d(TAG, "Activity Recognition -> $mapped")
+                    // A new reading can change the effective cadence state (e.g. AR now
+                    // reports on-foot while GPS is a stale DRIVING), so re-apply it to the
+                    // interval, the GPS power profile and the pulse schedule.
+                    if (changed && isStarted) {
+                        intervalManager.updateMotionState(effectiveIntervalState())
+                        updateLocationRequest()
+                        reschedulePulse()
+                    }
                 }
             }
     }
