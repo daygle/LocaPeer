@@ -80,12 +80,12 @@ hilt {
 ksp {
     // Room writes a JSON snapshot of each schema version here on build.
     // Commit them: migrations are written and tested against these files.
-    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.schemaLocation", "${layout.projectDirectory.dir("schemas").asFile.path}")
 }
 
 dependencies {
     // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2026.06.00"))
+    implementation(platform("androidx.compose:compose-bom:2026.06.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -105,12 +105,12 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.8")
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.60")
-    ksp("com.google.dagger:hilt-compiler:2.60")
+    implementation("com.google.dagger:hilt-android:2.60.1")
+    ksp("com.google.dagger:hilt-compiler:2.60.1")
     implementation("com.google.errorprone:error_prone_annotations:2.50.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.3.0")
-    implementation("androidx.hilt:hilt-work:1.3.0")
-    ksp("androidx.hilt:hilt-compiler:1.3.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.4.0")
+    implementation("androidx.hilt:hilt-work:1.4.0")
+    ksp("androidx.hilt:hilt-compiler:1.4.0")
 
     // Room
     implementation("androidx.room:room-runtime:2.8.4")
@@ -133,7 +133,7 @@ dependencies {
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
     // published CVEs. Only the low-level crypto.* primitives (SHA-256, ChaCha20, HKDF,
     // HMAC) are used here, and their API is stable across these versions.
-    implementation("org.bouncycastle:bcprov-jdk18on:1.78.1")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.84")
 
     // QR Code
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
@@ -162,7 +162,7 @@ dependencies {
 
     // Unit tests
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.room:room-testing:2.8.4")
 }
