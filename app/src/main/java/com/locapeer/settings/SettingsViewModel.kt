@@ -33,6 +33,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -44,7 +46,14 @@ enum class BackupSection { PRIVATE_KEY, CONTACTS, GEOFENCES, SETTINGS }
 
 @Serializable
 data class LocaPeerBackup(
-    val version: Int = 2,
+    val version: Int = 3,
+    /** Base64-encoded encrypted backup payload (AES-GCM). Only present if encrypted. */
+    val ciphertext: String? = null,
+    /** Base64-encoded 12-byte IV for GCM. */
+    val iv: String? = null,
+    /** Base64-encoded 16-byte salt for PBKDF2. */
+    val salt: String? = null,
+    // Original fields below are null when 'ciphertext' is present
     val privateKeyHex: String? = null,
     val contacts: List<ContactBackup>? = null,
     val geofences: List<GeofenceBackup>? = null,
@@ -127,7 +136,8 @@ data class SettingsBackup(
 /** Parsed backup file ready for selective restore. */
 data class PendingRestore(
     val backup: LocaPeerBackup,
-    val availableSections: Set<BackupSection>
+    val availableSections: Set<BackupSection>,
+    val requiresPassword: Boolean = false
 )
 
 @HiltViewModel
@@ -285,11 +295,11 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun exportBackup(uri: Uri, sections: Set<BackupSection>) {
+    fun exportBackup(uri: Uri, sections: Set<BackupSection>, password: String? = null) {
         viewModelScope.launch {
             try {
                 val s = prefs.settings.first()
-                val backup = LocaPeerBackup(
+                val plainBackup = LocaPeerBackup(
                     privateKeyHex = if (BackupSection.PRIVATE_KEY in sections)
                         keyManager.exportPrivateKeyHex() else null,
                     contacts = if (BackupSection.CONTACTS in sections) {
@@ -357,10 +367,27 @@ class SettingsViewModel @Inject constructor(
                             reverseGeocodingEnabled = s.reverseGeocodingEnabled
                         ) else null
                 )
-                val json = jsonExport.encodeToString(backup)
+
+                val finalBackup = if (!password.isNullOrBlank()) {
+                    val plainJson = jsonExport.encodeToString(plainBackup)
+                    val salt = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
+                    val iv = ByteArray(12).also { java.security.SecureRandom().nextBytes(it) }
+                    val key = crypto.deriveBackupKey(password, salt)
+                    val encrypted = crypto.aesEncrypt(plainJson.toByteArray(Charsets.UTF_8), key, iv)
+                    LocaPeerBackup(
+                        version = 3,
+                        ciphertext = android.util.Base64.encodeToString(encrypted, android.util.Base64.NO_WRAP),
+                        iv = android.util.Base64.encodeToString(iv, android.util.Base64.NO_WRAP),
+                        salt = android.util.Base64.encodeToString(salt, android.util.Base64.NO_WRAP)
+                    )
+                } else {
+                    plainBackup
+                }
+
+                val json = jsonExport.encodeToString(finalBackup)
                 context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
                 val parts = sections.map { it.name.lowercase().replaceFirstChar { c -> c.uppercaseChar() } }
-                _backupResult.value = "Backup saved: ${parts.joinToString(", ")}"
+                _backupResult.value = "Backup saved${if (!password.isNullOrBlank()) " (encrypted)" else ""}: ${parts.joinToString(", ")}"
             } catch (e: Exception) {
                 Log.e(TAG, "Backup export failed", e)
                 _backupResult.value = "Backup failed: ${e.message}"
@@ -376,19 +403,63 @@ class SettingsViewModel @Inject constructor(
                     it.readBytes().toString(Charsets.UTF_8)
                 } ?: run { _backupResult.value = "Could not read file"; return@launch }
                 val backup = jsonImport.decodeFromString<LocaPeerBackup>(json)
-                val available = buildSet {
-                    if (backup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
-                    if (!backup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
-                    if (!backup.geofences.isNullOrEmpty()) add(BackupSection.GEOFENCES)
-                    if (backup.settings != null) add(BackupSection.SETTINGS)
+                
+                if (backup.ciphertext != null) {
+                    // This is an encrypted backup, we need a password before we can show available sections
+                    _pendingRestore.value = PendingRestore(backup, emptySet(), requiresPassword = true)
+                } else {
+                    val available = buildSet {
+                        if (backup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
+                        if (!backup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
+                        if (!backup.geofences.isNullOrEmpty()) add(BackupSection.GEOFENCES)
+                        if (backup.settings != null) add(BackupSection.SETTINGS)
+                    }
+                    _pendingRestore.value = PendingRestore(backup, available, requiresPassword = false)
                 }
-                _pendingRestore.value = PendingRestore(backup, available)
             } catch (e: Exception) {
                 Log.e(TAG, "Backup load failed", e)
                 _backupResult.value = "Could not read backup: ${e.message}"
             }
         }
     }
+
+    /** Attempts to decrypt an encrypted backup using the provided password. */
+    fun decryptBackupForRestore(password: String) {
+        val pending = _pendingRestore.value ?: return
+        val backup = pending.backup
+        if (backup.ciphertext == null || backup.iv == null || backup.salt == null) return
+
+        viewModelScope.launch {
+            try {
+                val salt = android.util.Base64.decode(backup.salt, android.util.Base64.NO_WRAP)
+                val iv = android.util.Base64.decode(backup.iv, android.util.Base64.NO_WRAP)
+                val ciphertext = android.util.Base64.decode(backup.ciphertext, android.util.Base64.NO_WRAP)
+                
+                // Key derivation is CPU-heavy (PBKDF2), do it on Default dispatcher
+                val decryptedJson = withContext(Dispatchers.Default) {
+                    val key = crypto.deriveBackupKey(password, salt)
+                    val decryptedBytes = crypto.aesDecrypt(ciphertext, key, iv)
+                    String(decryptedBytes, Charsets.UTF_8)
+                }
+
+                val decryptedBackup = jsonImport.decodeFromString<LocaPeerBackup>(decryptedJson)
+                val available = buildSet {
+                    if (decryptedBackup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
+                    if (!decryptedBackup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
+                    if (!decryptedBackup.geofences.isNullOrEmpty()) add(BackupSection.GEOFENCES)
+                    if (decryptedBackup.settings != null) add(BackupSection.SETTINGS)
+                }
+                _pendingRestore.value = PendingRestore(decryptedBackup, available, requiresPassword = false)
+                _restorePasswordError.value = null
+            } catch (e: Exception) {
+                Log.w(TAG, "Backup decryption failed", e)
+                _restorePasswordError.value = "Incorrect password"
+            }
+        }
+    }
+
+    private val _restorePasswordError = MutableStateFlow<String?>(null)
+    val restorePasswordError: StateFlow<String?> = _restorePasswordError
 
     fun applyRestore(sections: Set<BackupSection>) {
         val pending = _pendingRestore.value ?: return

@@ -251,4 +251,27 @@ class CryptoUtils @Inject constructor() {
         val chunk = if (nextPower <= 256) 32 else nextPower / 8
         return chunk * (n / chunk + 1)
     }
+
+    /** Backup encryption: Derives a 256-bit AES key from a password using PBKDF2-HMAC-SHA256. */
+    fun deriveBackupKey(password: String, salt: ByteArray): ByteArray {
+        val iterations = 600_000 // OWASP 2023 recommendation for SHA-256
+        val keyLength = 256
+        val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
+        val spec = javax.crypto.spec.PBEKeySpec(password.toCharArray(), salt, iterations, keyLength)
+        return factory.generateSecret(spec).encoded
+    }
+
+    /** Encrypts data for backup using AES-256-GCM. */
+    fun aesEncrypt(data: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
+        val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(javax.crypto.Cipher.ENCRYPT_MODE, javax.crypto.spec.SecretKeySpec(key, "AES"), javax.crypto.spec.GCMParameterSpec(128, iv))
+        return cipher.doFinal(data)
+    }
+
+    /** Decrypts data from backup using AES-256-GCM. */
+    fun aesDecrypt(ciphertext: ByteArray, key: ByteArray, iv: ByteArray): ByteArray {
+        val cipher = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+        cipher.init(javax.crypto.Cipher.DECRYPT_MODE, javax.crypto.spec.SecretKeySpec(key, "AES"), javax.crypto.spec.GCMParameterSpec(128, iv))
+        return cipher.doFinal(ciphertext)
+    }
 }

@@ -78,11 +78,16 @@ fun SettingsScreen(
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
+    var exportPassword by remember { mutableStateOf("") }
     val exportLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.CreateDocument("application/json")
-    ) { uri -> uri?.let { vm.exportBackup(it, exportSections) } }
+    ) { uri -> 
+        uri?.let { vm.exportBackup(it, exportSections, exportPassword.takeIf { p -> p.isNotBlank() }) }
+        exportPassword = "" 
+    }
     val backupResult by vm.backupResult.collectAsState()
     val pendingRestore by vm.pendingRestore.collectAsState()
+    val restorePasswordError by vm.restorePasswordError.collectAsState()
     val importLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
@@ -641,6 +646,40 @@ fun SettingsScreen(
     }
 
     pendingRestore?.let { restore ->
+        if (restore.requiresPassword) {
+            var passwordInput by remember { mutableStateOf("") }
+            AlertDialog(
+                onDismissRequest = { vm.dismissPendingRestore() },
+                title = { Text("Encrypted Backup") },
+                text = {
+                    Column {
+                        Text("This backup is encrypted. Please enter the password to continue.", style = MaterialTheme.typography.bodySmall)
+                        Spacer(Modifier.height(16.dp))
+                        OutlinedTextField(
+                            value = passwordInput,
+                            onValueChange = { passwordInput = it },
+                            label = { Text("Password") },
+                            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                            singleLine = true,
+                            isError = restorePasswordError != null,
+                            supportingText = restorePasswordError?.let { { Text(it) } },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = { vm.decryptBackupForRestore(passwordInput) },
+                        enabled = passwordInput.isNotBlank()
+                    ) { Text("Unlock") }
+                },
+                dismissButton = {
+                    TextButton(onClick = { vm.dismissPendingRestore() }) { Text("Cancel") }
+                }
+            )
+            return@let
+        }
+
         var importSections by remember(restore) { mutableStateOf(restore.availableSections) }
         AlertDialog(
             onDismissRequest = { vm.dismissPendingRestore() },
@@ -684,10 +723,22 @@ fun SettingsScreen(
 
     if (showExportDialog) {
         AlertDialog(
-            onDismissRequest = { showExportDialog = false },
+            onDismissRequest = { showExportDialog = false; exportPassword = "" },
             title = { Text("Select Data to Export") },
             text = {
                 Column {
+                    Text("Optionally set a password to encrypt your backup file.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Spacer(Modifier.height(16.dp))
+                    OutlinedTextField(
+                        value = exportPassword,
+                        onValueChange = { exportPassword = it },
+                        label = { Text("Backup Password (Optional)") },
+                        visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(Modifier.height(24.dp))
+                    Text("Select sections to include:", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     BackupSectionItem("Private Key", BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
                     BackupSectionItem("Contacts", BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
                     BackupSectionItem("Geofences", BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
@@ -704,7 +755,7 @@ fun SettingsScreen(
                 ) { Text("Choose file location") }
             },
             dismissButton = {
-                TextButton(onClick = { showExportDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showExportDialog = false; exportPassword = "" }) { Text("Cancel") }
             }
         )
     }

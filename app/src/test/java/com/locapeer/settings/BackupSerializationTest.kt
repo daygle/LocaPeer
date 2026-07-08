@@ -111,6 +111,23 @@ class BackupSerializationTest {
     }
 
     @Test
+    fun `encrypted backup fields are present in serialized form`() {
+        val encrypted = LocaPeerBackup(
+            version = 3,
+            ciphertext = "encrypted-data",
+            iv = "iv-data",
+            salt = "salt-data"
+        )
+        val json = jsonExport.encodeToString(encrypted)
+        val restored = jsonImport.decodeFromString<LocaPeerBackup>(json)
+        assertEquals("encrypted-data", restored.ciphertext)
+        assertEquals("iv-data", restored.iv)
+        assertEquals("salt-data", restored.salt)
+        assertEquals(3, restored.version)
+        assertNull(restored.privateKeyHex)
+    }
+
+    @Test
     fun `older backup without newly-added fields still decodes with defaults`() {
         // A v2 backup produced before isArchived / isMySupervised / notifyOnMissedHeartbeat existed.
         val legacyJson = """
