@@ -83,7 +83,7 @@ fun ContactsScreen(
                             Icon(Icons.Default.Close, contentDescription = stringResource(R.string.contacts_cd_cancel_selection))
                         }
                     },
-                    title = { Text(stringResource(R.string.contacts_selected_count, selectedIds.size)) },
+                    title = { Text(pluralStringResource(R.plurals.contacts_selected_count, selectedIds.size, selectedIds.size)) },
                     actions = {
                         IconButton(onClick = {
                             selectedIds = if (allSelected) emptySet() else allIds

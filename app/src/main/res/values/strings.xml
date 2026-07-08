@@ -210,7 +210,10 @@
     <string name="cd_more_options">More options</string>
 
     <!-- ── Contacts screen ────────────────────────────────────────────────── -->
-    <string name="contacts_selected_count">%1$d selected</string>
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
     <string name="contacts_cd_cancel_selection">Cancel selection</string>
     <string name="contacts_cd_select_all">Select all</string>
     <string name="contacts_cd_deselect_all">Deselect all</string>
@@ -254,4 +257,106 @@
         <item quantity="one">Remote delete all location history you shared from this contact\'s device? This cannot be undone.</item>
         <item quantity="other">Remote delete all location history you shared from %1$d contacts\' devices? This cannot be undone.</item>
     </plurals>
+
+    <string name="common_continue">Continue</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Restore from Backup</string>
+    <string name="onboarding_restore_message">Paste your 64-character hex private key to restore your identity and contacts.</string>
+    <string name="onboarding_private_key_hex">Private key (hex)</string>
+    <string name="onboarding_tagline">Private location sharing with contacts.\nNo accounts. No proprietary servers.</string>
+    <string name="onboarding_feature_e2e_title">End-to-End Encrypted</string>
+    <string name="onboarding_feature_e2e_subtitle">Your location is encrypted on-device</string>
+    <string name="onboarding_feature_servers_title">No Proprietary Servers</string>
+    <string name="onboarding_feature_servers_subtitle">Uses open Nostr relays as a secure transport - your data stays encrypted and private</string>
+    <string name="onboarding_feature_phone_title">Stays on Your Phone</string>
+    <string name="onboarding_feature_phone_subtitle">Your full location history stays on your device. Only your current position is shared with selected contacts</string>
+    <string name="onboarding_name_prompt">What should your contacts call you?</string>
+    <string name="onboarding_name_placeholder">e.g. Mom, Dad, Alice…</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_restore_from_backup">Restore From Backup</string>
+    <string name="onboarding_key_note">Your private key is generated locally and never leaves this device.</string>
+    <string name="onboarding_permissions_title">Permissions</string>
+    <string name="onboarding_permissions_desc">LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional - it helps label your movement (walking, driving) more accurately.</string>
+    <string name="onboarding_before_ask_title">Before we ask</string>
+    <string name="onboarding_before_ask_intro">You\'ll see a few system prompts next:</string>
+    <string name="onboarding_before_ask_location">• Location - required, to share your position.</string>
+    <string name="onboarding_before_ask_camera">• Camera - to scan invite codes.</string>
+    <string name="onboarding_before_ask_notifications">• Notifications - for background status.</string>
+    <string name="onboarding_before_ask_activity">• Physical activity - optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.</string>
+    <string name="onboarding_grant_permissions">Grant Permissions</string>
+    <string name="onboarding_bg_location_title">Background Location</string>
+    <string name="onboarding_bg_location_desc">To keep your contacts updated while the app is closed, please select \'Allow all the time\' in the next screen.</string>
+    <string name="onboarding_bg_location_error">Background location is required to update your contacts when the app is closed. Please try again and select \'Allow all the time\'.</string>
+    <string name="onboarding_configure_location">Configure Location</string>
+    <string name="onboarding_battery_title">Battery</string>
+    <string name="onboarding_battery_desc">Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimizations.</string>
+    <string name="onboarding_disable_optimizations">Disable Optimizations</string>
+    <string name="onboarding_done_title">All Set!</string>
+    <string name="onboarding_done_desc">Your private location network is ready.</string>
+    <string name="onboarding_start_using">Start Using LocaPeer</string>
+
+    <string name="common_try_again">Try Again</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Scan Invite</string>
+    <string name="scan_camera_needed">Camera permission is needed to scan QR codes.</string>
+    <string name="scan_grant_permission">Grant Permission</string>
+    <string name="scan_add_contact_title">Add contact?</string>
+    <string name="scan_add_contact_message">This will connect you with %1$s and start sharing your location with each other.</string>
+    <string name="scan_add_share">Add &amp; Share</string>
+    <string name="scan_request_sent_title">Request Sent!</string>
+    <string name="scan_request_sent_message">A request has been sent to %1$s. You\'ll be connected once they accept.</string>
+    <string name="scan_failed">Scan failed: %1$s</string>
+
+    <string name="cd_back">Back</string>
+    <string name="common_review">Review</string>
+    <string name="common_decline">Decline</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Send/Receive</string>
+    <string name="role_send">Send</string>
+    <string name="role_receive">Receive</string>
+    <string name="role_none">No Sharing</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">My Invite</string>
+    <string name="invite_tab_add_contact">Add Contact</string>
+    <string name="invite_your_qr_title">Your QR Code</string>
+    <string name="invite_your_qr_subtitle">Let someone scan this to follow your location</string>
+    <string name="invite_qr_cd">Your QR code</string>
+    <string name="invite_qr_error">Error generating QR</string>
+    <string name="invite_share_link">Share Invite Link</string>
+    <string name="invite_encryption_note">Your location will be encrypted specifically for the scanner\'s device.</string>
+    <string name="invite_camera_required_title">Camera Access Required</string>
+    <string name="invite_camera_required_message">Grant camera permission to scan a QR code.</string>
+    <string name="invite_point_camera">Point camera at a LocaPeer QR</string>
+    <string name="invite_paste_title">Or Paste Invite Link</string>
+    <string name="invite_process_link">Process Link</string>
+    <string name="invite_fallback_name">Contact</string>
+    <string name="invite_success_message">You\'ll be connected with %1$s once they accept.</string>
+    <string name="invite_confirm_add_title">Add %1$s?</string>
+    <string name="invite_confirm_add_message">Add them to your contacts and share location?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">No pending requests</string>
+    <string name="pending_requesting">Requesting: %1$s · %2$s</string>
+    <string name="pending_role_change">Role change request · %1$s</string>
+    <string name="pending_new_request">New sharing request · %1$s</string>
+
+    <string name="common_save_changes">Save Changes</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Update Sharing Settings</string>
+    <string name="incoming_new_title">New Contact Request</string>
+    <string name="incoming_update_subtitle">%1$s wants to update how you share. Review the settings below.</string>
+    <string name="incoming_new_subtitle">%1$s added you as a contact! You can now choose what to share back.</string>
+    <string name="incoming_section_location">Location</string>
+    <string name="incoming_share_my_location">Share my location with %1$s</string>
+    <string name="incoming_share_my_location_sub">They will be able to see where you are</string>
+    <string name="incoming_see_their_location">See %1$s\'s location</string>
+    <string name="incoming_see_their_location_sub">You will be able to see where they are</string>
+    <string name="incoming_section_messaging">Messaging</string>
+    <string name="incoming_allow_messages">Allow Messages</string>
+    <string name="incoming_allow_messages_sub">Receive chat messages from %1$s</string>
 </resources>

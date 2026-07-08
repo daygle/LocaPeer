@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.CompoundBarcodeView
+import com.locapeer.R
 
 private enum class InviteTab { MY_INVITE, ADD_CONTACT }
 
@@ -54,10 +56,10 @@ fun InviteScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("QR / Invite", fontWeight = FontWeight.SemiBold) },
+                title = { Text(stringResource(R.string.contacts_cd_qr_invite), fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -72,13 +74,13 @@ fun InviteScreen(
                 Tab(
                     selected = selectedTab == InviteTab.MY_INVITE,
                     onClick = { selectedTab = InviteTab.MY_INVITE },
-                    text = { Text("My Invite") },
+                    text = { Text(stringResource(R.string.invite_tab_my_invite)) },
                     icon = { Icon(Icons.Default.QrCode2, null) }
                 )
                 Tab(
                     selected = selectedTab == InviteTab.ADD_CONTACT,
                     onClick = { selectedTab = InviteTab.ADD_CONTACT },
-                    text = { Text("Add Contact") },
+                    text = { Text(stringResource(R.string.invite_tab_add_contact)) },
                     icon = { Icon(Icons.Default.PersonAdd, null) }
                 )
             }
@@ -114,12 +116,12 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                "Your QR Code",
+                stringResource(R.string.invite_your_qr_title),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                "Let someone scan this to follow your location",
+                stringResource(R.string.invite_your_qr_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -139,11 +141,11 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
                 if (state.qrBitmap != null) {
                     Image(
                         bitmap = state.qrBitmap!!.asImageBitmap(),
-                        contentDescription = "Your QR code",
+                        contentDescription = stringResource(R.string.invite_qr_cd),
                         modifier = Modifier.fillMaxSize()
                     )
                 } else if (state.error) {
-                    Text("Error generating QR", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.invite_qr_error), color = MaterialTheme.colorScheme.error)
                 } else {
                     CircularProgressIndicator()
                 }
@@ -156,7 +158,7 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
                     type = "text/plain"
                     putExtra(Intent.EXTRA_TEXT, state.inviteLink)
                 }
-                context.startActivity(Intent.createChooser(intent, "Share Invite Link"))
+                context.startActivity(Intent.createChooser(intent, context.getString(R.string.invite_share_link)))
             },
             enabled = state.inviteLink.isNotEmpty(),
             modifier = Modifier.fillMaxWidth(),
@@ -164,7 +166,7 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
         ) {
             Icon(Icons.Default.Share, null)
             Spacer(Modifier.width(8.dp))
-            Text("Share Invite Link")
+            Text(stringResource(R.string.invite_share_link))
         }
 
         Card(
@@ -178,7 +180,7 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
             ) {
                 Icon(Icons.Default.Lock, null, modifier = Modifier.size(20.dp).padding(top = 2.dp))
                 Text(
-                    "Your location will be encrypted specifically for the scanner's device.",
+                    stringResource(R.string.invite_encryption_note),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -209,14 +211,14 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                 ) {
                     Icon(Icons.Default.CameraAlt, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
-                Text("Camera Access Required", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Text("Grant camera permission to scan a QR code.", textAlign = TextAlign.Center)
+                Text(stringResource(R.string.invite_camera_required_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.invite_camera_required_message), textAlign = TextAlign.Center)
                 Button(onClick = { cameraPermission.launchPermissionRequest() }) {
-                    Text("Grant Permission")
+                    Text(stringResource(R.string.scan_grant_permission))
                 }
             }
         } else if (scanState.success) {
-            SuccessView(scanState.addedName ?: "Contact", onDone, vm)
+            SuccessView(scanState.addedName ?: stringResource(R.string.invite_fallback_name), onDone, vm)
         } else if (scanState.pendingName != null) {
             ConfirmView(scanState.pendingName!!, vm)
         } else {
@@ -228,13 +230,13 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                     shape = RoundedCornerShape(16.dp),
                     color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
                 ) {
-                    Text("Point camera at a LocaPeer QR", modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
+                    Text(stringResource(R.string.invite_point_camera), modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
                 }
             }
 
             // Paste Section
             Column(modifier = Modifier.padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                Text("Or Paste Invite Link", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                Text(stringResource(R.string.invite_paste_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                 OutlinedTextField(
                     value = pasteText,
                     onValueChange = { pasteText = it },
@@ -252,7 +254,7 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                 ) {
                     Icon(Icons.Default.ContentPaste, null)
                     Spacer(Modifier.width(8.dp))
-                    Text("Process Link")
+                    Text(stringResource(R.string.invite_process_link))
                 }
                 if (scanState.error != null) {
                     Text(scanState.error!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
@@ -303,10 +305,10 @@ private fun SuccessView(name: String, onDone: () -> Unit, vm: ScanViewModel) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(Icons.Default.CheckCircle, null, modifier = Modifier.size(64.dp), tint = MaterialTheme.colorScheme.primary)
-        Text("Request Sent!", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-        Text("You'll be connected with $name once they accept.", textAlign = TextAlign.Center)
+        Text(stringResource(R.string.scan_request_sent_title), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.invite_success_message, name), textAlign = TextAlign.Center)
         Button(onClick = { vm.reset(); onDone() }, modifier = Modifier.fillMaxWidth()) {
-            Text("Done")
+            Text(stringResource(R.string.common_done))
         }
     }
 }
@@ -319,13 +321,13 @@ private fun ConfirmView(name: String, vm: ScanViewModel) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(Icons.Default.PersonAdd, null, modifier = Modifier.size(64.dp), tint = MaterialTheme.colorScheme.primary)
-        Text("Add $name?", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-        Text("Add them to your contacts and share location?", textAlign = TextAlign.Center)
+        Text(stringResource(R.string.invite_confirm_add_title, name), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+        Text(stringResource(R.string.invite_confirm_add_message), textAlign = TextAlign.Center)
         Button(onClick = { vm.confirmAdd() }, modifier = Modifier.fillMaxWidth()) {
-            Text("Add & Share")
+            Text(stringResource(R.string.scan_add_share))
         }
         TextButton(onClick = { vm.reset() }) {
-            Text("Cancel")
+            Text(stringResource(R.string.common_cancel))
         }
     }
 }

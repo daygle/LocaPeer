@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import com.locapeer.R
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -103,18 +105,18 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
         AlertDialog(
             onDismissRequest = { showImportDialog = false; vm.clearImportError() },
             icon = { Icon(Icons.Default.VpnKey, contentDescription = null) },
-            title = { Text("Restore from Backup") },
+            title = { Text(stringResource(R.string.onboarding_restore_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                     Text(
-                        "Paste your 64-character hex private key to restore your identity and contacts.",
+                        stringResource(R.string.onboarding_restore_message),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     OutlinedTextField(
                         value = importInput,
                         onValueChange = { importInput = it; vm.clearImportError() },
-                        label = { Text("Private key (hex)") },
+                        label = { Text(stringResource(R.string.onboarding_private_key_hex)) },
                         singleLine = true,
                         textStyle = LocalTextStyle.current.copy(fontFamily = FontFamily.Monospace),
                         isError = state.importError != null,
@@ -128,10 +130,10 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
                 Button(
                     onClick = { vm.importPrivateKey(importInput) },
                     enabled = importInput.isNotBlank() && !state.isLoading
-                ) { Text("Restore") }
+                ) { Text(stringResource(R.string.common_restore)) }
             },
             dismissButton = {
-                TextButton(onClick = { showImportDialog = false; vm.clearImportError() }) { Text("Cancel") }
+                TextButton(onClick = { showImportDialog = false; vm.clearImportError() }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -154,7 +156,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(32.dp))
 
     Text(
-        "LocaPeer",
+        stringResource(R.string.app_name),
         style = MaterialTheme.typography.displayMedium,
         color = MaterialTheme.colorScheme.primary
     )
@@ -162,7 +164,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     Spacer(Modifier.height(12.dp))
 
     Text(
-        "Private location sharing with contacts.\nNo accounts. No proprietary servers.",
+        stringResource(R.string.onboarding_tagline),
         style = MaterialTheme.typography.bodyLarge,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -172,26 +174,26 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
 
     FeatureRow(
         icon = Icons.Default.Lock,
-        title = "End-to-End Encrypted",
-        subtitle = "Your location is encrypted on-device"
+        title = stringResource(R.string.onboarding_feature_e2e_title),
+        subtitle = stringResource(R.string.onboarding_feature_e2e_subtitle)
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.CloudOff,
-        title = "No Proprietary Servers",
-        subtitle = "Uses open Nostr relays as a secure transport - your data stays encrypted and private"
+        title = stringResource(R.string.onboarding_feature_servers_title),
+        subtitle = stringResource(R.string.onboarding_feature_servers_subtitle)
     )
     Spacer(Modifier.height(20.dp))
     FeatureRow(
         icon = Icons.Default.PhoneAndroid,
-        title = "Stays on Your Phone",
-        subtitle = "Your full location history stays on your device. Only your current position is shared with selected contacts"
+        title = stringResource(R.string.onboarding_feature_phone_title),
+        subtitle = stringResource(R.string.onboarding_feature_phone_subtitle)
     )
 
     Spacer(Modifier.height(48.dp))
 
     Text(
-        "What should your contacts call you?",
+        stringResource(R.string.onboarding_name_prompt),
         style = MaterialTheme.typography.titleMedium,
         modifier = Modifier.fillMaxWidth()
     )
@@ -201,8 +203,8 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     OutlinedTextField(
         value = state.displayName,
         onValueChange = vm::setDisplayName,
-        label = { Text("Display Name") },
-        placeholder = { Text("e.g. Mom, Dad, Alice…") },
+        label = { Text(stringResource(R.string.settings_display_name_label)) },
+        placeholder = { Text(stringResource(R.string.onboarding_name_placeholder)) },
         singleLine = true,
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp)
@@ -218,7 +220,7 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
             .height(56.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Text("Get Started", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.onboarding_get_started), style = MaterialTheme.typography.titleMedium)
     }
 
     Spacer(Modifier.height(12.dp))
@@ -229,13 +231,13 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
     ) {
         Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(8.dp))
-        Text("Restore From Backup")
+        Text(stringResource(R.string.onboarding_restore_from_backup))
     }
 
     Spacer(Modifier.height(16.dp))
 
     Text(
-        "Your private key is generated locally and never leaves this device.",
+        stringResource(R.string.onboarding_key_note),
         style = MaterialTheme.typography.labelSmall,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.outline
@@ -250,8 +252,8 @@ private fun PermissionsStep(
 ) {
     StepHeader(
         icon = Icons.AutoMirrored.Filled.FactCheck,
-        title = "Permissions",
-        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional - it helps label your movement (walking, driving) more accurately."
+        title = stringResource(R.string.onboarding_permissions_title),
+        description = stringResource(R.string.onboarding_permissions_desc)
     )
 
     Spacer(Modifier.height(48.dp))
@@ -270,24 +272,24 @@ private fun PermissionsStep(
         AlertDialog(
             onDismissRequest = { showRationale = false },
             icon = { Icon(Icons.AutoMirrored.Filled.FactCheck, contentDescription = null) },
-            title = { Text("Before we ask") },
+            title = { Text(stringResource(R.string.onboarding_before_ask_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("You'll see a few system prompts next:")
-                    Text("• Location - required, to share your position.")
-                    Text("• Camera - to scan invite codes.")
-                    Text("• Notifications - for background status.")
-                    Text("• Physical activity - optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.")
+                    Text(stringResource(R.string.onboarding_before_ask_intro))
+                    Text(stringResource(R.string.onboarding_before_ask_location))
+                    Text(stringResource(R.string.onboarding_before_ask_camera))
+                    Text(stringResource(R.string.onboarding_before_ask_notifications))
+                    Text(stringResource(R.string.onboarding_before_ask_activity))
                 }
             },
             confirmButton = {
                 TextButton(onClick = {
                     showRationale = false
                     permissionsState.launchMultiplePermissionRequest()
-                }) { Text("Continue") }
+                }) { Text(stringResource(R.string.common_continue)) }
             },
             dismissButton = {
-                TextButton(onClick = { showRationale = false }) { Text("Cancel") }
+                TextButton(onClick = { showRationale = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -300,7 +302,7 @@ private fun PermissionsStep(
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
-            Text("Grant Permissions", style = MaterialTheme.typography.titleMedium)
+            Text(stringResource(R.string.onboarding_grant_permissions), style = MaterialTheme.typography.titleMedium)
         }
     }
 }
@@ -309,14 +311,14 @@ private fun PermissionsStep(
 private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
     StepHeader(
         icon = Icons.Default.LocationOn,
-        title = "Background Location",
-        description = "To keep your contacts updated while the app is closed, please select 'Allow all the time' in the next screen."
+        title = stringResource(R.string.onboarding_bg_location_title),
+        description = stringResource(R.string.onboarding_bg_location_desc)
     )
 
     if (showError) {
         Spacer(Modifier.height(16.dp))
         Text(
-            "Background location is required to update your contacts when the app is closed. Please try again and select 'Allow all the time'.",
+            stringResource(R.string.onboarding_bg_location_error),
             color = MaterialTheme.colorScheme.error,
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
@@ -330,7 +332,7 @@ private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
         modifier = Modifier.fillMaxWidth().height(56.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Text("Configure Location", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.onboarding_configure_location), style = MaterialTheme.typography.titleMedium)
     }
 }
 
@@ -338,8 +340,8 @@ private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
 private fun BatteryStep(onNext: () -> Unit) {
     StepHeader(
         icon = Icons.Default.BatteryChargingFull,
-        title = "Battery",
-        description = "Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimizations."
+        title = stringResource(R.string.onboarding_battery_title),
+        description = stringResource(R.string.onboarding_battery_desc)
     )
 
     Spacer(Modifier.height(48.dp))
@@ -349,7 +351,7 @@ private fun BatteryStep(onNext: () -> Unit) {
         modifier = Modifier.fillMaxWidth().height(56.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Text("Disable Optimizations", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.onboarding_disable_optimizations), style = MaterialTheme.typography.titleMedium)
     }
 }
 
@@ -357,8 +359,8 @@ private fun BatteryStep(onNext: () -> Unit) {
 private fun DoneStep(onComplete: () -> Unit) {
     StepHeader(
         icon = Icons.Default.CheckCircle,
-        title = "All Set!",
-        description = "Your private location network is ready."
+        title = stringResource(R.string.onboarding_done_title),
+        description = stringResource(R.string.onboarding_done_desc)
     )
 
     Spacer(Modifier.height(48.dp))
@@ -368,7 +370,7 @@ private fun DoneStep(onComplete: () -> Unit) {
         modifier = Modifier.fillMaxWidth().height(56.dp),
         shape = RoundedCornerShape(16.dp)
     ) {
-        Text("Start Using LocaPeer", style = MaterialTheme.typography.titleMedium)
+        Text(stringResource(R.string.onboarding_start_using), style = MaterialTheme.typography.titleMedium)
     }
 }
 

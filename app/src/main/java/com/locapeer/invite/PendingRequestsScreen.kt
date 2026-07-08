@@ -16,8 +16,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.PendingRequestEntity
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -35,10 +37,10 @@ fun PendingRequestsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Pending Requests") },
+                title = { Text(stringResource(R.string.contacts_cd_pending_requests)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 }
             )
@@ -60,7 +62,7 @@ fun PendingRequestsScreen(
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        "No pending requests",
+                        stringResource(R.string.pending_empty),
                         style = MaterialTheme.typography.titleMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -105,16 +107,16 @@ private fun PendingRequestRow(
         SimpleDateFormat("MMM d, ${com.locapeer.util.DisplayFormat.timePattern()}", Locale.getDefault()).format(Date(request.receivedAt))
     }
     val requestedRoleLabel = when (request.requestedRole) {
-        "SEND_RECEIVE" -> "Send/Receive"
-        "SEND" -> "Send"
-        "RECEIVE" -> "Receive"
-        "NONE" -> "No Sharing"
+        "SEND_RECEIVE" -> stringResource(R.string.role_send_receive)
+        "SEND" -> stringResource(R.string.role_send)
+        "RECEIVE" -> stringResource(R.string.role_receive)
+        "NONE" -> stringResource(R.string.role_none)
         else -> null
     }
     val subtitle = when {
-        request.isRoleChange && requestedRoleLabel != null -> "Requesting: $requestedRoleLabel · $timeLabel"
-        request.isRoleChange -> "Role change request · $timeLabel"
-        else -> "New sharing request · $timeLabel"
+        request.isRoleChange && requestedRoleLabel != null -> stringResource(R.string.pending_requesting, requestedRoleLabel, timeLabel)
+        request.isRoleChange -> stringResource(R.string.pending_role_change, timeLabel)
+        else -> stringResource(R.string.pending_new_request, timeLabel)
     }
 
     ListItem(
@@ -130,11 +132,11 @@ private fun PendingRequestRow(
         },
         trailingContent = {
             Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                TextButton(onClick = onReview) { Text("Review") }
+                TextButton(onClick = onReview) { Text(stringResource(R.string.common_review)) }
                 IconButton(onClick = onDecline) {
                     Icon(
                         Icons.Default.Close,
-                        contentDescription = "Decline",
+                        contentDescription = stringResource(R.string.common_decline),
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
