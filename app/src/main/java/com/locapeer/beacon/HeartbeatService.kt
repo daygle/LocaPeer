@@ -616,17 +616,21 @@ class HeartbeatService : LifecycleService() {
             Log.d(TAG, "Activity Recognition unavailable; motion labels use GPS only")
             return
         }
-        val transitions = listOf(
+        val activityTypes: List<Int> = listOf(
             DetectedActivity.STILL,
             DetectedActivity.WALKING,
             DetectedActivity.RUNNING,
             DetectedActivity.ON_BICYCLE,
             DetectedActivity.IN_VEHICLE,
-        ).map { type ->
-            ActivityTransition.Builder()
-                .setActivityType(type)
-                .setActivityTransitionType(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
-                .build()
+        )
+        val transitions = ArrayList<ActivityTransition>()
+        for (activityType in activityTypes) {
+            transitions.add(
+                ActivityTransition.Builder()
+                    .setActivityType(activityType)
+                    .setActivityTransitionType(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
+                    .build()
+            )
         }
         try {
             ActivityRecognition.getClient(this)
