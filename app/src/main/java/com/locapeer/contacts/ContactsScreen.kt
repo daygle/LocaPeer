@@ -18,10 +18,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.ui.components.EmptyState
 
@@ -77,41 +80,41 @@ fun ContactsScreen(
                 TopAppBar(
                     navigationIcon = {
                         IconButton(onClick = { selectedIds = emptySet() }) {
-                            Icon(Icons.Default.Close, contentDescription = "Cancel selection")
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.contacts_cd_cancel_selection))
                         }
                     },
-                    title = { Text("${selectedIds.size} selected") },
+                    title = { Text(stringResource(R.string.contacts_selected_count, selectedIds.size)) },
                     actions = {
                         IconButton(onClick = {
                             selectedIds = if (allSelected) emptySet() else allIds
                         }) {
                             Icon(
                                 if (allSelected) Icons.Default.CheckBox else Icons.Default.CheckBoxOutlineBlank,
-                                contentDescription = if (allSelected) "Deselect all" else "Select all"
+                                contentDescription = if (allSelected) stringResource(R.string.contacts_cd_deselect_all) else stringResource(R.string.contacts_cd_select_all)
                             )
                         }
                     }
                 )
             } else {
                 TopAppBar(
-                    title = { Text("Contacts") },
+                    title = { Text(stringResource(R.string.tab_contacts)) },
                     actions = {
                         IconButton(onClick = {
                             showSearch = !showSearch
                             if (!showSearch) searchQuery = ""
                         }) {
-                            Icon(Icons.Default.Search, contentDescription = "Search")
+                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.common_search))
                         }
                         Box {
                             IconButton(onClick = { showSortMenu = true }) {
-                                Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = "Sort")
+                                Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = stringResource(R.string.common_sort))
                             }
                             DropdownMenu(
                                 expanded = showSortMenu,
                                 onDismissRequest = { showSortMenu = false }
                             ) {
                                 DropdownMenuItem(
-                                    text = { Text("Last Seen") },
+                                    text = { Text(stringResource(R.string.contacts_sort_last_seen)) },
                                     leadingIcon = { Icon(Icons.Default.AccessTime, null, Modifier.size(18.dp)) },
                                     trailingIcon = if (sortOrder == SortOrder.LAST_SEEN) {
                                         { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
@@ -119,7 +122,7 @@ fun ContactsScreen(
                                     onClick = { sortOrder = SortOrder.LAST_SEEN; showSortMenu = false }
                                 )
                                 DropdownMenuItem(
-                                    text = { Text("Name") },
+                                    text = { Text(stringResource(R.string.common_name)) },
                                     leadingIcon = { Icon(Icons.Default.SortByAlpha, null, Modifier.size(18.dp)) },
                                     trailingIcon = if (sortOrder == SortOrder.NAME) {
                                         { Icon(Icons.Default.Check, null, Modifier.size(16.dp)) }
@@ -129,16 +132,16 @@ fun ContactsScreen(
                             }
                         }
                         IconButton(onClick = { selectedIds = allIds }) {
-                            Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = "Select all")
+                            Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = stringResource(R.string.contacts_cd_select_all))
                         }
                         IconButton(onClick = onNavigateToInvite) {
-                            Icon(Icons.Default.QrCode, contentDescription = "QR / Invite")
+                            Icon(Icons.Default.QrCode, contentDescription = stringResource(R.string.contacts_cd_qr_invite))
                         }
                         BadgedBox(
                             badge = { if (pendingCount > 0) Badge { Text("$pendingCount") } }
                         ) {
                             IconButton(onClick = onNavigateToPendingRequests) {
-                                Icon(Icons.Default.Inbox, contentDescription = "Pending Requests")
+                                Icon(Icons.Default.Inbox, contentDescription = stringResource(R.string.contacts_cd_pending_requests))
                             }
                         }
                     }
@@ -155,17 +158,17 @@ fun ContactsScreen(
                     ) {
                         BulkActionButton(
                             icon = { Icon(Icons.Default.DeleteSweep, null) },
-                            label = "Delete Messages",
+                            label = stringResource(R.string.contacts_bulk_delete_messages),
                             onClick = { pendingBulkAction = BulkAction.DELETE_MESSAGES }
                         )
                         BulkActionButton(
                             icon = { Icon(Icons.Default.LocationOff, null) },
-                            label = "Delete Locations",
+                            label = stringResource(R.string.contacts_bulk_delete_locations),
                             onClick = { pendingBulkAction = BulkAction.DELETE_LOCATION }
                         )
                         BulkActionButton(
                             icon = { Icon(Icons.Default.Delete, null) },
-                            label = "Remove",
+                            label = stringResource(R.string.common_remove),
                             onClick = { pendingBulkAction = BulkAction.REMOVE }
                         )
                     }
@@ -182,7 +185,7 @@ fun ContactsScreen(
                 OutlinedTextField(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
-                    placeholder = { Text("Search contacts…") },
+                    placeholder = { Text(stringResource(R.string.contacts_search_placeholder)) },
                     leadingIcon = { Icon(Icons.Default.Search, null) },
                     trailingIcon = {
                         if (searchQuery.isNotEmpty()) {
@@ -201,13 +204,13 @@ fun ContactsScreen(
             if (contacts.isEmpty()) {
                 EmptyState(
                     icon = Icons.Default.People,
-                    title = "No contacts yet",
-                    subtitle = "Scan a QR code to connect with someone and start sharing locations.",
+                    title = stringResource(R.string.contacts_empty_title),
+                    subtitle = stringResource(R.string.contacts_empty_subtitle),
                 ) {
                     FilledTonalButton(onClick = onNavigateToInvite) {
                         Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(Modifier.width(8.dp))
-                        Text("Scan QR Code")
+                        Text(stringResource(R.string.contacts_scan_qr))
                     }
                 }
             } else {
@@ -249,22 +252,21 @@ fun ContactsScreen(
     // Bulk action confirmation dialogs
     pendingBulkAction?.let { action ->
         val count = selectedIds.size
-        val plural = count > 1
         val (title, body, confirmLabel) = when (action) {
             BulkAction.REMOVE -> Triple(
-                "Remove ${if (plural) "$count Contacts" else "Contact"}",
-                "Remove ${if (plural) "$count contacts" else "this contact"}? Their location history will also be deleted locally.",
-                "Remove"
+                pluralStringResource(R.plurals.contacts_bulk_remove_title, count, count),
+                pluralStringResource(R.plurals.contacts_bulk_remove_body, count, count),
+                stringResource(R.string.common_remove)
             )
             BulkAction.DELETE_MESSAGES -> Triple(
-                "Delete My Messages",
-                "Remote delete all messages you sent from ${if (plural) "$count contacts'" else "this contact's"} device? This cannot be undone.",
-                "Delete"
+                stringResource(R.string.contacts_delete_my_messages_title),
+                pluralStringResource(R.plurals.contacts_bulk_delete_messages_body, count, count),
+                stringResource(R.string.common_delete)
             )
             BulkAction.DELETE_LOCATION -> Triple(
-                "Delete Shared Locations",
-                "Remote delete all location history you shared from ${if (plural) "$count contacts'" else "this contact's"} device? This cannot be undone.",
-                "Delete"
+                stringResource(R.string.contacts_delete_locations_title),
+                pluralStringResource(R.plurals.contacts_bulk_delete_locations_body, count, count),
+                stringResource(R.string.common_delete)
             )
         }
         AlertDialog(
@@ -285,7 +287,7 @@ fun ContactsScreen(
                     }
                 ) { Text(confirmLabel, color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { pendingBulkAction = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { pendingBulkAction = null }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
@@ -293,12 +295,12 @@ fun ContactsScreen(
     editingContact?.let { contact ->
         AlertDialog(
             onDismissRequest = { editingContact = null },
-            title = { Text("Rename contact") },
+            title = { Text(stringResource(R.string.contacts_rename_title)) },
             text = {
                 OutlinedTextField(
                     value = nameInput,
                     onValueChange = { nameInput = it },
-                    label = { Text("Name") },
+                    label = { Text(stringResource(R.string.common_name)) },
                     singleLine = true
                 )
             },
@@ -306,9 +308,9 @@ fun ContactsScreen(
                 TextButton(
                     onClick = { vm.renamePeer(contact.peer, nameInput); editingContact = null },
                     enabled = nameInput.isNotBlank()
-                ) { Text("Save") }
+                ) { Text(stringResource(R.string.common_save)) }
             },
-            dismissButton = { TextButton(onClick = { editingContact = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { editingContact = null }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 
@@ -316,24 +318,24 @@ fun ContactsScreen(
     confirmAction?.let { (contact, action) ->
         val (title, body, confirmLabel) = when (action) {
             DataAction.REMOVE_CONTACT -> Triple(
-                "Remove Contact",
-                "Remove ${contact.peer.displayName} from your contacts? Their location history will also be deleted locally.",
-                "Remove"
+                stringResource(R.string.contacts_remove_contact_title),
+                stringResource(R.string.contacts_remove_contact_body, contact.peer.displayName),
+                stringResource(R.string.common_remove)
             )
             DataAction.REMOVE_SELF -> Triple(
-                "Leave Contact List",
-                "This will remove you from ${contact.peer.displayName}'s contacts and delete all your messages and location data from their device. You will also lose access to their location.",
-                "Leave"
+                stringResource(R.string.contacts_leave_title),
+                stringResource(R.string.contacts_leave_body, contact.peer.displayName),
+                stringResource(R.string.common_leave)
             )
             DataAction.DELETE_MESSAGES -> Triple(
-                "Delete My Messages",
-                "This will delete all messages you sent from ${contact.peer.displayName}'s device. This cannot be undone.",
-                "Delete"
+                stringResource(R.string.contacts_delete_my_messages_title),
+                stringResource(R.string.contacts_delete_my_messages_body, contact.peer.displayName),
+                stringResource(R.string.common_delete)
             )
             DataAction.DELETE_LOCATION -> Triple(
-                "Delete Shared Locations",
-                "This will delete all location data you have shared from ${contact.peer.displayName}'s device. This cannot be undone.",
-                "Delete"
+                stringResource(R.string.contacts_delete_locations_title),
+                stringResource(R.string.contacts_delete_locations_body, contact.peer.displayName),
+                stringResource(R.string.common_delete)
             )
         }
         AlertDialog(
@@ -353,7 +355,7 @@ fun ContactsScreen(
                     }
                 ) { Text(confirmLabel, color = MaterialTheme.colorScheme.error) }
             },
-            dismissButton = { TextButton(onClick = { confirmAction = null }) { Text("Cancel") } }
+            dismissButton = { TextButton(onClick = { confirmAction = null }) { Text(stringResource(R.string.common_cancel)) } }
         )
     }
 }
@@ -432,7 +434,7 @@ private fun ContactRow(
         },
         supportingContent = {
             Text(
-                if (hb != null) "Last seen: ${formatLastSeen(hb.timestamp)}" else "No location data yet",
+                if (hb != null) stringResource(R.string.contacts_last_seen, formatLastSeen(hb.timestamp)) else stringResource(R.string.contacts_no_location_yet),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -444,7 +446,7 @@ private fun ContactRow(
                         IconButton(onClick = onMessage) {
                             Icon(
                                 Icons.AutoMirrored.Filled.Chat,
-                                contentDescription = "Message",
+                                contentDescription = stringResource(R.string.cd_message),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
@@ -454,7 +456,7 @@ private fun ContactRow(
                         IconButton(onClick = { onShowOnMap(hb) }) {
                             Icon(
                                 Icons.Default.LocationOn,
-                                contentDescription = "Show on map",
+                                contentDescription = stringResource(R.string.cd_show_on_map),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
@@ -462,47 +464,47 @@ private fun ContactRow(
                     }
                     Box {
                         IconButton(onClick = { showOverflow = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "More options", modifier = Modifier.size(22.dp))
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.cd_more_options), modifier = Modifier.size(22.dp))
                         }
                         DropdownMenu(
                             expanded = showOverflow,
                             onDismissRequest = { showOverflow = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text("View Sharing Settings") },
+                                text = { Text(stringResource(R.string.contacts_view_sharing_settings)) },
                                 leadingIcon = { Icon(Icons.Default.Settings, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onSharingSettings() }
                             )
                             DropdownMenuItem(
-                                text = { Text("View Location History") },
+                                text = { Text(stringResource(R.string.contacts_view_location_history)) },
                                 leadingIcon = { Icon(Icons.Default.History, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onShowHistory() }
                             )
                             DropdownMenuItem(
-                                text = { Text("Rename Contact") },
+                                text = { Text(stringResource(R.string.contacts_rename_contact)) },
                                 leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onRename() }
                             )
                             HorizontalDivider()
                             Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
                                 Text(
-                                    "On Contact's Device",
+                                    stringResource(R.string.contacts_on_contact_device),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
                             DropdownMenuItem(
-                                text = { Text("Delete My Messages") },
+                                text = { Text(stringResource(R.string.contacts_delete_my_messages_title)) },
                                 leadingIcon = { Icon(Icons.Default.DeleteSweep, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onDeleteMyMessages() }
                             )
                             DropdownMenuItem(
-                                text = { Text("Delete Shared Locations") },
+                                text = { Text(stringResource(R.string.contacts_delete_locations_title)) },
                                 leadingIcon = { Icon(Icons.Default.LocationOff, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onDeleteMyLocation() }
                             )
                             DropdownMenuItem(
-                                text = { Text("Leave Contact List", color = MaterialTheme.colorScheme.error) },
+                                text = { Text(stringResource(R.string.contacts_leave_title), color = MaterialTheme.colorScheme.error) },
                                 leadingIcon = {
                                     Icon(
                                         Icons.Default.PersonRemove,
@@ -515,7 +517,7 @@ private fun ContactRow(
                             )
                             HorizontalDivider()
                             DropdownMenuItem(
-                                text = { Text("Remove Contact", color = MaterialTheme.colorScheme.error) },
+                                text = { Text(stringResource(R.string.contacts_remove_contact_title), color = MaterialTheme.colorScheme.error) },
                                 leadingIcon = {
                                     Icon(
                                         Icons.Default.Delete,

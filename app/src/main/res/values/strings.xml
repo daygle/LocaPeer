@@ -196,4 +196,62 @@
     <string name="settings_no_peers_found">No peers found. Add a peer first by scanning their invite QR code.</string>
     <string name="settings_disable_supervised_title">Disable Supervised Mode?</string>
     <string name="settings_disable_supervised_message">Settings will be accessible without supervisor approval.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Remove</string>
+    <string name="common_leave">Leave</string>
+    <string name="common_name">Name</string>
+    <string name="common_search">Search</string>
+    <string name="common_sort">Sort</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Message</string>
+    <string name="cd_show_on_map">Show on map</string>
+    <string name="cd_more_options">More options</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <string name="contacts_selected_count">%1$d selected</string>
+    <string name="contacts_cd_cancel_selection">Cancel selection</string>
+    <string name="contacts_cd_select_all">Select all</string>
+    <string name="contacts_cd_deselect_all">Deselect all</string>
+    <string name="contacts_cd_qr_invite">QR / Invite</string>
+    <string name="contacts_cd_pending_requests">Pending Requests</string>
+    <string name="contacts_sort_last_seen">Last Seen</string>
+    <string name="contacts_search_placeholder">Search contacts…</string>
+    <string name="contacts_empty_title">No contacts yet</string>
+    <string name="contacts_empty_subtitle">Scan a QR code to connect with someone and start sharing locations.</string>
+    <string name="contacts_scan_qr">Scan QR Code</string>
+    <string name="contacts_bulk_delete_messages">Delete Messages</string>
+    <string name="contacts_bulk_delete_locations">Delete Locations</string>
+    <string name="contacts_last_seen">Last seen: %1$s</string>
+    <string name="contacts_no_location_yet">No location data yet</string>
+    <string name="contacts_view_sharing_settings">View Sharing Settings</string>
+    <string name="contacts_view_location_history">View Location History</string>
+    <string name="contacts_rename_contact">Rename Contact</string>
+    <string name="contacts_on_contact_device">On Contact\'s Device</string>
+    <string name="contacts_delete_my_messages_title">Delete My Messages</string>
+    <string name="contacts_delete_locations_title">Delete Shared Locations</string>
+    <string name="contacts_remove_contact_title">Remove Contact</string>
+    <string name="contacts_leave_title">Leave Contact List</string>
+    <string name="contacts_rename_title">Rename contact</string>
+    <string name="contacts_remove_contact_body">Remove %1$s from your contacts? Their location history will also be deleted locally.</string>
+    <string name="contacts_leave_body">This will remove you from %1$s\'s contacts and delete all your messages and location data from their device. You will also lose access to their location.</string>
+    <string name="contacts_delete_my_messages_body">This will delete all messages you sent from %1$s\'s device. This cannot be undone.</string>
+    <string name="contacts_delete_locations_body">This will delete all location data you have shared from %1$s\'s device. This cannot be undone.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Remove Contact</item>
+        <item quantity="other">Remove %1$d Contacts</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Remove this contact? Their location history will also be deleted locally.</item>
+        <item quantity="other">Remove %1$d contacts? Their location history will also be deleted locally.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Remote delete all messages you sent from this contact\'s device? This cannot be undone.</item>
+        <item quantity="other">Remote delete all messages you sent from %1$d contacts\' devices? This cannot be undone.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Remote delete all location history you shared from this contact\'s device? This cannot be undone.</item>
+        <item quantity="other">Remote delete all location history you shared from %1$d contacts\' devices? This cannot be undone.</item>
+    </plurals>
 </resources>
