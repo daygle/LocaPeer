@@ -340,6 +340,8 @@ private fun HistoryListTab(
             modifier = modifier
         )
     } else {
+        var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
+
         Column(modifier = modifier) {
             Spacer(Modifier.height(8.dp))
             Text(
@@ -354,11 +356,20 @@ private fun HistoryListTab(
                     HistoryPingCard(
                         ping = ping,
                         address = addresses[ping.id],
-                        timeFormat = timeFormat
+                        timeFormat = timeFormat,
+                        onClick = { selectedPing = ping }
                     )
                 }
                 item { Spacer(Modifier.height(16.dp)) }
             }
+        }
+
+        selectedPing?.let { ping ->
+            HistoryPingDetailDialog(
+                ping = ping,
+                address = addresses[ping.id],
+                onDismiss = { selectedPing = null }
+            )
         }
     }
 }
@@ -569,9 +580,11 @@ private fun HistoryMapTab(
 private fun HistoryPingCard(
     ping: HeartbeatEntity,
     address: String?,
-    timeFormat: SimpleDateFormat
+    timeFormat: SimpleDateFormat,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (ping.isSos)
@@ -656,6 +669,120 @@ private fun HistoryPingCard(
                 MotionChip(ping.motionState)
             }
         }
+    }
+}
+
+@Composable
+private fun HistoryPingDetailDialog(
+    ping: HeartbeatEntity,
+    address: String?,
+    onDismiss: () -> Unit
+) {
+    val fullTimeFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat("EEEE, d MMM yyyy", Locale.getDefault())
+    }
+    val clockFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), Locale.getDefault())
+    }
+    val when0 = Date(ping.timestamp)
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Close") }
+        },
+        icon = {
+            Icon(
+                if (ping.isSos) Icons.Default.Warning else Icons.Default.History,
+                contentDescription = null,
+                tint = if (ping.isSos) MaterialTheme.colorScheme.error
+                       else MaterialTheme.colorScheme.primary
+            )
+        },
+        title = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    clockFormat.format(when0),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    fullTimeFormat.format(when0),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (ping.isSos) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.Warning,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                "Emergency SOS signal",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onErrorContainer
+                            )
+                        }
+                    }
+                }
+
+                if (!address.isNullOrBlank()) {
+                    DetailRow("Location", address)
+                }
+                DetailRow("Coordinates", "%.5f°, %.5f°".format(ping.lat, ping.lng))
+                DetailRow("Accuracy", "within ±${DisplayFormat.distanceValue(ping.accuracy.toDouble())}")
+                DetailRow("Movement", motionDescription(ping.motionState, ping.speed, ping.bearing))
+                if (ping.altitude != 0.0) {
+                    DetailRow("Elevation", DisplayFormat.elevationValue(ping.altitude))
+                }
+                DetailRow("Battery", "${ping.battery}%")
+            }
+        }
+    )
+}
+
+@Composable
+private fun DetailRow(label: String, value: String) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            value,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+/** Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE". */
+private fun motionDescription(motionState: String, speed: Float, bearing: Float): String {
+    val activity = when (motionState.uppercase()) {
+        "WALKING" -> "Walking"
+        "DRIVING" -> "Driving"
+        else -> "Stationary"
+    }
+    return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
+        "$activity ${DisplayFormat.speedValue(speed)} heading ${DisplayFormat.bearingToCardinal(bearing)}"
+    } else {
+        activity
     }
 }
 
