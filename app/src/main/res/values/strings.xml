@@ -527,4 +527,55 @@
     <string name="history_within">within ±%1$s</string>
     <string name="history_detail_movement">Movement</string>
     <string name="history_movement_desc">%1$s %2$s heading %3$s</string>
+
+    <string name="common_create">Create</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Add geofence area</string>
+    <string name="geo_cd_assign">Assign geofence</string>
+    <string name="geo_unknown">Unknown</string>
+    <string name="geo_empty_title">No geofences</string>
+    <string name="geo_empty_sub">Tap + to create a geofence area, then assign contacts to it from their sharing settings.</string>
+    <string name="geo_delete_title">Delete geofence?</string>
+    <string name="geo_delete_simple">Delete \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" is assigned to %2$d contact. Deleting it removes those assignments too.</item>
+        <item quantity="other">\"%1$s\" is assigned to %2$d contacts. Deleting it removes those assignments too.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences for %1$s</string>
+    <string name="geo_empty_contact_title">No geofences for contact</string>
+    <string name="geo_empty_contact_sub">Tap + to assign a geofence area and choose whether to alert on arrival, departure, or both.</string>
+    <string name="geo_no_areas_title">No geofences yet</string>
+    <string name="geo_no_areas_msg">Create a geofence area first from the Geofences screen, then assign it here.</string>
+    <string name="geo_radius_label">%1$s radius</string>
+    <string name="geo_contacts_label">Contacts: %1$s</string>
+    <string name="geo_no_contacts_assigned">No contacts assigned</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d rule</item>
+        <item quantity="other">%1$d rules</item>
+    </plurals>
+    <string name="geo_trigger_enter">Enter</string>
+    <string name="geo_trigger_exit">Exit</string>
+    <string name="geo_trigger_both">Both</string>
+    <string name="geo_edit_title">Edit Geofence</string>
+    <string name="geo_new_title">New Geofence</string>
+    <string name="geo_cd_my_location">My location</string>
+    <string name="geo_hint_tap">Tap the map to place</string>
+    <string name="geo_hint_pinch">Pinch to resize • Drag to move</string>
+    <string name="geo_basic_info">Basic Info</string>
+    <string name="geo_name_placeholder">e.g. Home, Work</string>
+    <string name="geo_name_required">Name is required</string>
+    <string name="geo_latitude">Latitude</string>
+    <string name="geo_longitude">Longitude</string>
+    <string name="geo_lat_range">-90 to 90</string>
+    <string name="geo_lng_range">-180 to 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Enter %1$d to %2$d m</string>
+    <string name="geo_edit_assignment">Edit Assignment</string>
+    <string name="geo_assign_title">Assign Geofence</string>
+    <string name="geo_select_area">Select Geofence Area</string>
+    <string name="geo_trigger_title">Trigger Notification On</string>
+    <string name="geo_add_rule">Add Rule</string>
+    <string name="geo_alerts_all_times">Alerts active at all times. Add a rule to restrict when alerts are sent.</string>
+    <string name="geo_assign_action">Assign</string>
 </resources>
