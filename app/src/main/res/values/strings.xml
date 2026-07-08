@@ -649,4 +649,50 @@
     <string name="about_lib_hilt_desc">Dependency injection</string>
     <string name="about_lib_room_desc">Local database</string>
     <string name="about_map_attribution">Map data © OpenStreetMap contributors</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Accept</string>
+    <string name="notif_someone">Someone</string>
+    <string name="notif_sos_title">SOS from %1$s!</string>
+    <string name="notif_sos_text">%1$s has activated SOS at (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s wants you to be their supervisor</string>
+    <string name="notif_supervisor_request_text">Accept to allow unlock approval requests from this device</string>
+    <string name="notif_supervisor_request_big">Accept to allow %1$s to send you unlock approval requests when supervised mode is active.</string>
+    <string name="notif_supervised_active_title">Supervised mode active</string>
+    <string name="notif_supervised_active_text">Your supervisor confirmed - supervised mode is now set up</string>
+    <string name="notif_supervised_declined_title">Supervised mode declined</string>
+    <string name="notif_supervised_declined_text">Your supervisor declined the request - supervised mode has been disabled</string>
+    <string name="notif_tracking_alert_title">Tracking Alert</string>
+    <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
+    <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
+    <string name="notif_tracking_generic">%1$s is monitoring your location</string>
+    <string name="notif_track_update_title">Sharing update from %1$s</string>
+    <string name="notif_track_new_title">New Contact: %1$s</string>
+    <string name="notif_role_send_receive">Send/Receive Location</string>
+    <string name="notif_role_send">Send Location</string>
+    <string name="notif_role_receive">Receive Location</string>
+    <string name="notif_role_none">No Location Sharing</string>
+    <string name="notif_track_requesting">%1$s is requesting: %2$s</string>
+    <string name="notif_track_update_body">%1$s wants to update how you share locations.</string>
+    <string name="notif_track_new_body">%1$s added you as a contact and wants to connect.</string>
+    <string name="notif_contact_connected_title">Contact Connected</string>
+    <string name="notif_contact_connected_text">%1$s is now connected with you.</string>
+    <string name="notif_request_declined_title">Request Declined</string>
+    <string name="notif_request_declined_text">%1$s has declined your location sharing request.</string>
+    <string name="notif_message_person">Message %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s entered %2$s</string>
+    <string name="notif_geofence_left_title">%1$s left %2$s</string>
+    <string name="notif_geofence_subtitle">at %1$s · %2$s radius</string>
+    <string name="notif_person_nearby">%1$s is nearby</string>
+    <string name="notif_distance_from_you">%1$s from you</string>
+    <string name="notif_missed_title">No update from %1$s</string>
+    <string name="notif_missed_text">Last seen %1$sm ago near (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ACTIVE!</string>
+    <string name="notif_sos_active_text">Broadcasting emergency alert to SOS contacts</string>
+    <string name="notif_messages_group_title">LocaPeer Messages</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Declined contact request from %1$s</string>
+    <string name="toast_now_supervising">Now supervising %1$s\'s device</string>
+    <string name="toast_declined_supervision">Declined supervision request from %1$s</string>
 </resources>

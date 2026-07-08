@@ -373,8 +373,8 @@ class HeartbeatReceiver @Inject constructor(
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_alert)
-            .setContentTitle("SOS from $name!")
-            .setContentText("${name} has activated SOS at (${payload.lat}, ${payload.lng})")
+            .setContentTitle(context.getString(R.string.notif_sos_title, name))
+            .setContentText(context.getString(R.string.notif_sos_text, name, payload.lat.toString(), payload.lng.toString()))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(pi)
@@ -528,14 +528,14 @@ class HeartbeatReceiver @Inject constructor(
         )
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_alert)
-            .setContentTitle("${payload.deviceName} wants you to be their supervisor")
-            .setContentText("Accept to allow unlock approval requests from this device")
+            .setContentTitle(context.getString(R.string.notif_supervisor_request_title, payload.deviceName))
+            .setContentText(context.getString(R.string.notif_supervisor_request_text))
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText("Accept to allow ${payload.deviceName} to send you unlock approval requests when supervised mode is active."))
+                .bigText(context.getString(R.string.notif_supervisor_request_big, payload.deviceName)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(openAppPi)
-            .addAction(0, "Accept", acceptPi)
-            .addAction(0, "Decline", declinePi)
+            .addAction(0, context.getString(R.string.notif_action_accept), acceptPi)
+            .addAction(0, context.getString(R.string.common_decline), declinePi)
             .setAutoCancel(false)
             .build()
         notificationManager.notify(event.pubkey, NOTIF_ID_SUPERVISED_REGISTER, notification)
@@ -567,8 +567,8 @@ class HeartbeatReceiver @Inject constructor(
         if (accepted) {
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
-                .setContentTitle("Supervised mode active")
-                .setContentText("Your supervisor confirmed - supervised mode is now set up")
+                .setContentTitle(context.getString(R.string.notif_supervised_active_title))
+                .setContentText(context.getString(R.string.notif_supervised_active_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
@@ -579,8 +579,8 @@ class HeartbeatReceiver @Inject constructor(
             supervisedModeManager.reset()
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
-                .setContentTitle("Supervised mode declined")
-                .setContentText("Your supervisor declined the request - supervised mode has been disabled")
+                .setContentTitle(context.getString(R.string.notif_supervised_declined_title))
+                .setContentText(context.getString(R.string.notif_supervised_declined_text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pi)
                 .setAutoCancel(true)
@@ -670,11 +670,11 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<TrackingAlertPayload>(plaintext) } catch (e: Exception) { return }
 
-        val title = "Tracking Alert"
+        val title = context.getString(R.string.notif_tracking_alert_title)
         val message = when (payload.type) {
-            "PROXIMITY" -> "${payload.triggerName} received a proximity alert about you"
-            "GEOFENCE" -> "${payload.triggerName} received an alert that you entered/exited fence: ${payload.alertName}"
-            else -> "${payload.triggerName} is monitoring your location"
+            "PROXIMITY" -> context.getString(R.string.notif_tracking_proximity, payload.triggerName)
+            "GEOFENCE" -> context.getString(R.string.notif_tracking_geofence, payload.triggerName, payload.alertName)
+            else -> context.getString(R.string.notif_tracking_generic, payload.triggerName)
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
@@ -763,23 +763,23 @@ class HeartbeatReceiver @Inject constructor(
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val senderLabel = payload.senderDisplayName.take(40).ifBlank { "Someone" }
-        val notifTitle = if (payload.isRoleChange) "Sharing update from $senderLabel"
-                         else "New Contact: $senderLabel"
+        val senderLabel = payload.senderDisplayName.take(40).ifBlank { context.getString(R.string.notif_someone) }
+        val notifTitle = if (payload.isRoleChange) context.getString(R.string.notif_track_update_title, senderLabel)
+                         else context.getString(R.string.notif_track_new_title, senderLabel)
         val requestedRoleLabel = when (payload.requestedRole) {
-            PeerEntity.ROLE_SEND_RECEIVE -> "Send/Receive Location"
-            PeerEntity.ROLE_SEND -> "Send Location"
-            PeerEntity.ROLE_RECEIVE -> "Receive Location"
-            PeerEntity.ROLE_NONE -> "No Location Sharing"
+            PeerEntity.ROLE_SEND_RECEIVE -> context.getString(R.string.notif_role_send_receive)
+            PeerEntity.ROLE_SEND -> context.getString(R.string.notif_role_send)
+            PeerEntity.ROLE_RECEIVE -> context.getString(R.string.notif_role_receive)
+            PeerEntity.ROLE_NONE -> context.getString(R.string.notif_role_none)
             else -> null
         }
         val notifBody = when {
             payload.isRoleChange && requestedRoleLabel != null ->
-                "$senderLabel is requesting: $requestedRoleLabel"
+                context.getString(R.string.notif_track_requesting, senderLabel, requestedRoleLabel)
             payload.isRoleChange ->
-                "$senderLabel wants to update how you share locations."
+                context.getString(R.string.notif_track_update_body, senderLabel)
             else ->
-                "$senderLabel added you as a contact and wants to connect."
+                context.getString(R.string.notif_track_new_body, senderLabel)
         }
 
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
@@ -789,8 +789,8 @@ class HeartbeatReceiver @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
             .setContentIntent(reviewPi)
-            .addAction(0, "Review", reviewPi)
-            .addAction(0, "Decline", declinePi)
+            .addAction(0, context.getString(R.string.common_review), reviewPi)
+            .addAction(0, context.getString(R.string.common_decline), declinePi)
             .build()
         notificationManager.notify(event.pubkey, NOTIF_ID_TRACK_REQUEST, notification)
     }
@@ -933,8 +933,8 @@ class HeartbeatReceiver @Inject constructor(
         val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Contact Connected")
-            .setContentText("$name is now connected with you.")
+            .setContentTitle(context.getString(R.string.notif_contact_connected_title))
+            .setContentText(context.getString(R.string.notif_contact_connected_text, name))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pi)
             .setAutoCancel(true)
@@ -950,8 +950,8 @@ class HeartbeatReceiver @Inject constructor(
         val pi = PendingIntent.getActivity(context, notifId, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle("Request Declined")
-            .setContentText("$name has declined your location sharing request.")
+            .setContentTitle(context.getString(R.string.notif_request_declined_title))
+            .setContentText(context.getString(R.string.notif_request_declined_text, name))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pi)
             .setAutoCancel(true)

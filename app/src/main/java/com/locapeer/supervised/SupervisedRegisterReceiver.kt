@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerSharingConfigDao
@@ -78,14 +79,14 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                         }
                         sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Now supervising ${requesterName}'s device", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_now_supervising, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_SUPERVISED_REGISTER_DECLINE -> {
                         Log.d("SupervisedRegisterReceiver", "Declined supervised registration from $requesterName")
                         sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = false)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Declined supervision request from $requesterName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_declined_supervision, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

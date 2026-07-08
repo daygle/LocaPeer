@@ -106,13 +106,16 @@ class GeofenceEngine @Inject constructor(
                 if (now - last < COOLDOWN_MS) return@forEach
                 lastNotifiedAt[cooldownKey] = now
 
-                val verb = if (entered) "Entered" else "Left"
+                val title = if (entered)
+                    context.getString(R.string.notif_geofence_entered_title, current.displayName, fence.name)
+                else
+                    context.getString(R.string.notif_geofence_left_title, current.displayName, fence.name)
                 sendGeofenceNotification(
                     fence = fence,
                     personName = current.displayName,
                     personDeviceId = current.deviceId,
-                    title = "${current.displayName} $verb ${fence.name}",
-                    subtitle = "at ${formatTime(current.timestamp)} · ${com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble())} radius"
+                    title = title,
+                    subtitle = context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
                 )
                 sendTrackingAlertToPeer(current.deviceId, fence.name)
             }
@@ -188,7 +191,7 @@ class GeofenceEngine @Inject constructor(
             .setStyle(NotificationCompat.BigTextStyle().bigText(subtitle))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(openMapPi)
-            .addAction(R.drawable.ic_notif_message, "Message $personName", chatPi)
+            .addAction(R.drawable.ic_notif_message, context.getString(R.string.notif_message_person, personName), chatPi)
             .setAutoCancel(true)
             .build()
         notificationManager.notify("${fence.id}:$personDeviceId", NOTIF_ID_GEOFENCE, notification)

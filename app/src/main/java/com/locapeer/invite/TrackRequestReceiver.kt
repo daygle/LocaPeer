@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PendingRequestDao
@@ -66,7 +67,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
                         sendTrackDecline(ep, senderPubkey, senderRelay, isRoleChange)
                         ep.pendingRequestDao().deleteByPubkey(senderPubkey)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, "Declined contact request from $senderName", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_declined_contact, senderName), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
