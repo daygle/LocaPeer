@@ -466,4 +466,65 @@
     <string name="chat_cd_share_location">Share Location</string>
     <string name="chat_input_placeholder">Message…</string>
     <string name="chat_cd_send">Send</string>
+
+    <string name="common_close">Close</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Activate SOS?</string>
+    <string name="map_sos_deactivate_title">Deactivate SOS?</string>
+    <string name="map_sos_activate_msg">This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated.</string>
+    <string name="map_sos_deactivate_msg">This will stop the high-priority location broadcast to your emergency contacts.</string>
+    <string name="map_activate">Activate</string>
+    <string name="map_deactivate">Deactivate</string>
+    <string name="map_cd_style">Map Style</string>
+    <string name="map_cd_show_geofences">Show geofences</string>
+    <string name="map_cd_hide_geofences">Hide geofences</string>
+    <string name="map_cd_follow">Follow Me</string>
+    <string name="map_cd_friends">Friends</string>
+    <string name="map_no_friends">No friends tracked yet</string>
+    <string name="map_you">You</string>
+    <string name="map_cd_go_my_location">Go to my location</string>
+    <string name="map_sos_active">⚠ SOS ACTIVE</string>
+    <string name="map_away">Away</string>
+    <string name="map_no_location_yet">No location yet</string>
+    <string name="map_cd_go_location">Go to location</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ON</string>
+    <string name="map_overdue">Overdue - no recent update</string>
+    <string name="map_stat_last_seen">Last seen</string>
+    <string name="map_stat_battery">Battery</string>
+    <string name="map_stat_accuracy">Accuracy</string>
+    <string name="map_stat_motion">Motion</string>
+    <string name="map_stat_speed">Speed</string>
+    <string name="map_stat_elevation">Elevation</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">History: %1$s</string>
+    <string name="history_select_person">Select Person</string>
+    <string name="history_person_label">Person</string>
+    <string name="history_cd_prev_day">Previous Day</string>
+    <string name="history_cd_next_day">Next Day</string>
+    <string name="history_time_filter">Time Filter:</string>
+    <string name="history_cd_reset_time">Reset Time</string>
+    <string name="history_tab_list">List</string>
+    <string name="history_empty_title">No history for this day</string>
+    <string name="history_empty_sub">Try selecting a different date or checking your connection.</string>
+    <string name="history_start_time">Start Time</string>
+    <string name="history_end_time">End Time</string>
+    <string name="history_no_data_title">No location data</string>
+    <string name="history_no_data_sub">There are no recorded pings for this day or time range.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d ping recorded</item>
+        <item quantity="other">%1$d pings recorded</item>
+    </plurals>
+    <string name="history_cd_dismiss">Dismiss</string>
+    <string name="history_accuracy_label">±%1$s accuracy</string>
+    <string name="history_emergency_sos">Emergency SOS signal</string>
+    <string name="history_detail_location">Location</string>
+    <string name="history_detail_coordinates">Coordinates</string>
+    <string name="history_within">within ±%1$s</string>
+    <string name="history_detail_movement">Movement</string>
+    <string name="history_movement_desc">%1$s %2$s heading %3$s</string>
 </resources>
