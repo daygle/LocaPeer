@@ -25,6 +25,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
+import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
@@ -340,6 +341,8 @@ private fun HistoryListTab(
             modifier = modifier
         )
     } else {
+        var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
+
         Column(modifier = modifier) {
             Spacer(Modifier.height(8.dp))
             Text(
@@ -354,11 +357,20 @@ private fun HistoryListTab(
                     HistoryPingCard(
                         ping = ping,
                         address = addresses[ping.id],
-                        timeFormat = timeFormat
+                        timeFormat = timeFormat,
+                        onClick = { selectedPing = ping }
                     )
                 }
                 item { Spacer(Modifier.height(16.dp)) }
             }
+        }
+
+        selectedPing?.let { ping ->
+            HistoryPingDetailDialog(
+                ping = ping,
+                address = addresses[ping.id],
+                onDismiss = { selectedPing = null }
+            )
         }
     }
 }
@@ -569,9 +581,11 @@ private fun HistoryMapTab(
 private fun HistoryPingCard(
     ping: HeartbeatEntity,
     address: String?,
-    timeFormat: SimpleDateFormat
+    timeFormat: SimpleDateFormat,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
             containerColor = if (ping.isSos)
@@ -660,15 +674,130 @@ private fun HistoryPingCard(
 }
 
 @Composable
-private fun MotionChip(motionState: String) {
-    val label = when (motionState.uppercase()) {
-        "WALKING" -> "Walking"
-        "DRIVING" -> "Driving"
-        else -> "Stationary"
+private fun HistoryPingDetailDialog(
+    ping: HeartbeatEntity,
+    address: String?,
+    onDismiss: () -> Unit
+) {
+    val fullTimeFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat("EEEE, d MMM yyyy", Locale.getDefault())
     }
+    val clockFormat = remember(DisplayFormat.use24HourTime) {
+        SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), Locale.getDefault())
+    }
+    val when0 = Date(ping.timestamp)
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("Close") }
+        },
+        icon = {
+            Icon(
+                if (ping.isSos) Icons.Default.Warning else Icons.Default.History,
+                contentDescription = null,
+                tint = if (ping.isSos) MaterialTheme.colorScheme.error
+                       else MaterialTheme.colorScheme.primary
+            )
+        },
+        title = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    clockFormat.format(when0),
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    fullTimeFormat.format(when0),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                if (ping.isSos) {
+                    Surface(
+                        color = MaterialTheme.colorScheme.errorContainer,
+                        shape = MaterialTheme.shapes.small,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.Warning,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                "Emergency SOS signal",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onErrorContainer
+                            )
+                        }
+                    }
+                }
+
+                if (!address.isNullOrBlank()) {
+                    DetailRow("Location", address)
+                }
+                DetailRow("Coordinates", "%.5f°, %.5f°".format(ping.lat, ping.lng))
+                DetailRow("Accuracy", "within ±${DisplayFormat.distanceValue(ping.accuracy.toDouble())}")
+                DetailRow("Movement", motionDescription(ping.motionState, ping.speed, ping.bearing))
+                if (ping.altitude != 0.0) {
+                    DetailRow("Elevation", DisplayFormat.elevationValue(ping.altitude))
+                }
+                DetailRow("Battery", "${ping.battery}%")
+            }
+        }
+    )
+}
+
+@Composable
+private fun DetailRow(label: String, value: String) {
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            value,
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
+
+/** Full-sentence description of motion for the detail popup, e.g. "Driving 48 km/h heading NE". */
+private fun motionDescription(motionState: String, speed: Float, bearing: Float): String {
+    val activity = motionLabel(motionState)
+    return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
+        "$activity ${DisplayFormat.speedValue(speed)} heading ${DisplayFormat.bearingToCardinal(bearing)}"
+    } else {
+        activity
+    }
+}
+
+/**
+ * Human-readable label for a stored motion state string. Resolves against [MotionState] so every
+ * classified state (walking, running, cycling, driving, unknown) is named correctly rather than
+ * collapsing unrecognised values to "Stationary". Unknown/blank strings fall back to Stationary.
+ */
+private fun motionLabel(motionState: String): String =
+    MotionState.entries.firstOrNull { it.name.equals(motionState, ignoreCase = true) }?.displayName
+        ?: MotionState.STATIONARY.displayName
+
+@Composable
+private fun MotionChip(motionState: String) {
+    val label = motionLabel(motionState)
     val color = when (motionState.uppercase()) {
-        "WALKING" -> MaterialTheme.colorScheme.tertiaryContainer
-        "DRIVING" -> MaterialTheme.colorScheme.primaryContainer
+        "WALKING", "RUNNING" -> MaterialTheme.colorScheme.tertiaryContainer
+        "DRIVING", "CYCLING" -> MaterialTheme.colorScheme.primaryContainer
         else -> MaterialTheme.colorScheme.secondaryContainer
     }
     Surface(color = color, shape = MaterialTheme.shapes.small) {
