@@ -26,6 +26,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -38,7 +39,7 @@ fun OnboardingScreen(
     val context = LocalContext.current
 
     val basicPermissionsState = rememberMultiplePermissionsState(
-        permissions = PermissionManager.REQUIRED_PERMISSIONS
+        permissions = PermissionManager.REQUIRED_PERMISSIONS + PermissionManager.OPTIONAL_PERMISSIONS
     )
 
     val backgroundLocationLauncher = rememberLauncherForActivityResult(
@@ -250,16 +251,52 @@ private fun PermissionsStep(
     StepHeader(
         icon = Icons.AutoMirrored.Filled.FactCheck,
         title = "Permissions",
-        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status."
+        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional — it helps label your movement (walking, driving) more accurately."
     )
 
     Spacer(Modifier.height(48.dp))
 
-    if (permissionsState.allPermissionsGranted) {
+    // Gate advancing on the required permissions only. The optional ones (e.g.
+    // Activity Recognition) are requested in the same prompt but their denial must
+    // not block onboarding — tracking still works without them.
+    val requiredGranted = permissionsState.permissions
+        .filter { it.permission in PermissionManager.REQUIRED_PERMISSIONS }
+        .all { it.status.isGranted }
+
+    // Explain what's about to be asked — especially the optional physical-activity
+    // access — before the system dialogs appear, so the prompts have context.
+    var showRationale by remember { mutableStateOf(false) }
+    if (showRationale) {
+        AlertDialog(
+            onDismissRequest = { showRationale = false },
+            icon = { Icon(Icons.AutoMirrored.Filled.FactCheck, contentDescription = null) },
+            title = { Text("Before we ask") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("You'll see a few system prompts next:")
+                    Text("• Location — required, to share your position.")
+                    Text("• Camera — to scan invite codes.")
+                    Text("• Notifications — for background status.")
+                    Text("• Physical activity — optional. It lets LocaPeer tell walking, driving and standing still apart more accurately. You can skip it and enable it later in Settings.")
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = {
+                    showRationale = false
+                    permissionsState.launchMultiplePermissionRequest()
+                }) { Text("Continue") }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRationale = false }) { Text("Cancel") }
+            }
+        )
+    }
+
+    if (requiredGranted) {
         LaunchedEffect(Unit) { onNext() }
     } else {
         Button(
-            onClick = { permissionsState.launchMultiplePermissionRequest() },
+            onClick = { showRationale = true },
             modifier = Modifier.fillMaxWidth().height(56.dp),
             shape = RoundedCornerShape(16.dp)
         ) {
