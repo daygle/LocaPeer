@@ -251,7 +251,7 @@ private fun PermissionsStep(
     StepHeader(
         icon = Icons.AutoMirrored.Filled.FactCheck,
         title = "Permissions",
-        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status."
+        description = "LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional — it helps label your movement (walking, driving) more accurately."
     )
 
     Spacer(Modifier.height(48.dp))
