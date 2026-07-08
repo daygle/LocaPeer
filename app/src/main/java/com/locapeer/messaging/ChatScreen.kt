@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.LinkAnnotation
@@ -39,6 +40,7 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import android.content.Intent
@@ -77,14 +79,14 @@ fun ChatScreen(
         AlertDialog(
             onDismissRequest = { showClearChatDialog = false },
             icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null) },
-            title = { Text("Clear chat history?") },
+            title = { Text(stringResource(R.string.chat_clear_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("How do you want to clear this conversation with $peerName?")
+                    Text(stringResource(R.string.chat_clear_message, peerName))
 
                     ListItem(
-                        headlineContent = { Text("Clear locally") },
-                        supportingContent = { Text("Removed from your device only.") },
+                        headlineContent = { Text(stringResource(R.string.chat_clear_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             vm.deleteConversation(peerId)
                             showClearChatDialog = false
@@ -93,8 +95,8 @@ fun ChatScreen(
                     )
 
                     ListItem(
-                        headlineContent = { Text("Clear from both") },
-                        supportingContent = { Text("Removes it locally and requests $peerName to delete messages you sent.") },
+                        headlineContent = { Text(stringResource(R.string.chat_clear_both)) },
+                        supportingContent = { Text(stringResource(R.string.chat_clear_both_sub, peerName)) },
                         modifier = Modifier.clickable {
                             vm.deleteConversation(peerId)
                             vm.deleteConversationFromRemote(peerId)
@@ -106,7 +108,7 @@ fun ChatScreen(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showClearChatDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showClearChatDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -138,20 +140,20 @@ fun ChatScreen(
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 },
                 actions = {
                     Box {
                         IconButton(onClick = { showOptionsMenu = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "Options")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.chat_cd_options))
                         }
                         DropdownMenu(
                             expanded = showOptionsMenu,
                             onDismissRequest = { showOptionsMenu = false }
                         ) {
                             DropdownMenuItem(
-                                text = { Text(if (isArchived) "Unarchive" else "Archive") },
+                                text = { Text(if (isArchived) stringResource(R.string.conv_unarchive) else stringResource(R.string.conv_archive)) },
                                 leadingIcon = { Icon(if (isArchived) Icons.Default.Unarchive else Icons.Default.Archive, null) },
                                 onClick = {
                                     showOptionsMenu = false
@@ -160,7 +162,7 @@ fun ChatScreen(
                             )
                             HorizontalDivider()
                             DropdownMenuItem(
-                                text = { Text("Clear Chat History", color = MaterialTheme.colorScheme.error) },
+                                text = { Text(stringResource(R.string.chat_clear_history_menu), color = MaterialTheme.colorScheme.error) },
                                 leadingIcon = { Icon(Icons.Default.DeleteSweep, null, tint = MaterialTheme.colorScheme.error) },
                                 onClick = {
                                     showOptionsMenu = false
@@ -180,7 +182,7 @@ fun ChatScreen(
                     exit = fadeOut() + shrinkVertically()
                 ) {
                     Text(
-                        "$peerName is typing…",
+                        stringResource(R.string.chat_typing, peerName),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
@@ -206,7 +208,7 @@ fun ChatScreen(
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
-                                "You have blocked messages from $peerName. Go to Contacts to unblock.",
+                                stringResource(R.string.chat_blocked_banner, peerName),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer
                             )
@@ -275,34 +277,34 @@ private fun SwipeToDeleteMessage(
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-            title = { Text("Delete message?") },
+            title = { Text(stringResource(R.string.chat_delete_msg_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("How do you want to delete this message?")
-                    
+                    Text(stringResource(R.string.chat_delete_msg_message))
+
                     ListItem(
-                        headlineContent = { Text("Delete locally") },
-                        supportingContent = { Text("Removed from your device only.") },
-                        modifier = Modifier.clickable { 
+                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
+                        modifier = Modifier.clickable {
                             onDeleteLocal()
                             showDeleteDialog = false
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
-                    
+
                     if (msg.isMine) {
                         ListItem(
-                            headlineContent = { Text("Delete from contact") },
-                            supportingContent = { Text("Sends a request to remove it from their device.") },
-                            modifier = Modifier.clickable { 
+                            headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
+                            supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
+                            modifier = Modifier.clickable {
                                 onDeleteRemote()
                                 showDeleteDialog = false
                             },
                             colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                         )
                         ListItem(
-                            headlineContent = { Text("Delete from both") },
-                            supportingContent = { Text("Removes it locally and requests remote deletion.") },
+                            headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                            supportingContent = { Text(stringResource(R.string.chat_delete_both_sub)) },
                             modifier = Modifier.clickable { 
                                 onDeleteLocal()
                                 onDeleteRemote()
@@ -315,7 +317,7 @@ private fun SwipeToDeleteMessage(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -335,7 +337,7 @@ private fun SwipeToDeleteMessage(
             ) {
                 Icon(
                     Icons.Default.Delete,
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.common_delete),
                     tint = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
@@ -499,14 +501,14 @@ private fun ChatInputBar(
             IconButton(onClick = onLocationShare) {
                 Icon(
                     Icons.Default.MyLocation,
-                    contentDescription = "Share Location",
+                    contentDescription = stringResource(R.string.chat_cd_share_location),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
             OutlinedTextField(
                 value = value,
                 onValueChange = onValueChange,
-                placeholder = { Text("Message…") },
+                placeholder = { Text(stringResource(R.string.chat_input_placeholder)) },
                 modifier = Modifier.weight(1f),
                 maxLines = 4
             )
@@ -515,7 +517,7 @@ private fun ChatInputBar(
                 onClick = onSend,
                 enabled = value.isNotBlank()
             ) {
-                Icon(Icons.AutoMirrored.Filled.Send, contentDescription = "Send")
+                Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.chat_cd_send))
             }
         }
     }

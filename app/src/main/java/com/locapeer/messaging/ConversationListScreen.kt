@@ -36,10 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
@@ -105,12 +108,12 @@ fun ConversationListScreen(
         AlertDialog(
             onDismissRequest = { showBulkDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-            title = { Text("Delete $count ${if (count == 1) "conversation" else "conversations"}?") },
+            title = { Text(pluralStringResource(R.plurals.conv_delete_count, count, count)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     ListItem(
-                        headlineContent = { Text("Delete locally") },
-                        supportingContent = { Text("Removed from your device only.") },
+                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
                             selectedIds.forEach { vm.deleteConversation(it) }
                             showBulkDeleteDialog = false
@@ -119,8 +122,8 @@ fun ConversationListScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     ListItem(
-                        headlineContent = { Text("Delete from both") },
-                        supportingContent = { Text("Also requests each contact to delete your messages.") },
+                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                        supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
                         modifier = Modifier.clickable {
                             selectedIds.forEach {
                                 vm.deleteConversation(it)
@@ -135,7 +138,7 @@ fun ConversationListScreen(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showBulkDeleteDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showBulkDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -147,15 +150,15 @@ fun ConversationListScreen(
                     navigationIcon = {
                         if (isSelectionMode) {
                             IconButton(onClick = { selectedIds = emptySet() }) {
-                                Icon(Icons.Default.Close, contentDescription = "Exit selection")
+                                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.conv_cd_exit_selection))
                             }
                         }
                     },
                     title = {
                         if (isSelectionMode) {
-                            Text("${selectedIds.size} selected", fontWeight = FontWeight.SemiBold)
+                            Text(pluralStringResource(R.plurals.contacts_selected_count, selectedIds.size, selectedIds.size), fontWeight = FontWeight.SemiBold)
                         } else {
-                            Text("Messages", fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(R.string.tab_messages), fontWeight = FontWeight.SemiBold)
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -169,7 +172,7 @@ fun ConversationListScreen(
                                 Icon(
                                     if (allSelected) Icons.Default.CheckBox
                                     else Icons.Default.CheckBoxOutlineBlank,
-                                    contentDescription = "Select All"
+                                    contentDescription = stringResource(R.string.conv_cd_select_all)
                                 )
                             }
                         } else {
@@ -179,38 +182,38 @@ fun ConversationListScreen(
                             }) {
                                 Icon(
                                     Icons.Default.Search,
-                                    contentDescription = "Search",
+                                    contentDescription = stringResource(R.string.common_search),
                                     tint = if (showSearch) MaterialTheme.colorScheme.primary
                                            else LocalContentColor.current
                                 )
                             }
                             Box {
                                 IconButton(onClick = { showSortMenu = true }) {
-                                    Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = "Sort")
+                                    Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = stringResource(R.string.common_sort))
                                 }
                                 DropdownMenu(
                                     expanded = showSortMenu,
                                     onDismissRequest = { showSortMenu = false }
                                 ) {
                                     DropdownMenuItem(
-                                        text = { Text("Date") },
+                                        text = { Text(stringResource(R.string.conv_sort_date)) },
                                         onClick = { vm.setSortOrder(SortOrder.DATE); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Name") },
+                                        text = { Text(stringResource(R.string.common_name)) },
                                         onClick = { vm.setSortOrder(SortOrder.NAME); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
                                     )
                                     DropdownMenuItem(
-                                        text = { Text("Unread") },
+                                        text = { Text(stringResource(R.string.conv_sort_unread)) },
                                         onClick = { vm.setSortOrder(SortOrder.UNREAD); showSortMenu = false },
                                         leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
                                     )
                                 }
                             }
                             IconButton(onClick = { selectedIds = allCurrentIds }) {
-                                Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = "Select All")
+                                Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = stringResource(R.string.conv_cd_select_all))
                             }
                         }
                     }
@@ -223,7 +226,7 @@ fun ConversationListScreen(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { vm.setSearchQuery(it) },
-                        placeholder = { Text("Search conversations…") },
+                        placeholder = { Text(stringResource(R.string.conv_search_placeholder)) },
                         singleLine = true,
                         leadingIcon = { Icon(Icons.Default.Search, null) },
                         trailingIcon = {
@@ -242,12 +245,12 @@ fun ConversationListScreen(
                     Tab(
                         selected = selectedTab == 0,
                         onClick = { selectedTab = 0 },
-                        text = { Text("Chats") }
+                        text = { Text(stringResource(R.string.conv_tab_chats)) }
                     )
                     Tab(
                         selected = selectedTab == 1,
                         onClick = { selectedTab = 1 },
-                        text = { Text("Archived") }
+                        text = { Text(stringResource(R.string.conv_tab_archived)) }
                     )
                 }
             }
@@ -262,7 +265,7 @@ fun ConversationListScreen(
                     ) {
                         BulkActionButton(
                             icon = { Icon(Icons.Default.DoneAll, contentDescription = null) },
-                            label = "Mark Read",
+                            label = stringResource(R.string.conv_mark_read),
                             onClick = {
                                 vm.markReadMultiple(selectedIds.toList())
                                 selectedIds = emptySet()
@@ -275,7 +278,7 @@ fun ConversationListScreen(
                                     contentDescription = null
                                 )
                             },
-                            label = if (archivingToArchive) "Archive" else "Unarchive",
+                            label = if (archivingToArchive) stringResource(R.string.conv_archive) else stringResource(R.string.conv_unarchive),
                             onClick = {
                                 selectedIds.forEach { vm.archiveConversation(it, archivingToArchive) }
                                 selectedIds = emptySet()
@@ -283,7 +286,7 @@ fun ConversationListScreen(
                         )
                         BulkActionButton(
                             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-                            label = "Delete",
+                            label = stringResource(R.string.common_delete),
                             onClick = { showBulkDeleteDialog = true }
                         )
                     }
@@ -293,7 +296,7 @@ fun ConversationListScreen(
         floatingActionButton = {
             if (!isSelectionMode) {
                 FloatingActionButton(onClick = { showContactPicker = true }) {
-                    Icon(Icons.Default.Add, contentDescription = "New message")
+                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.conv_cd_new_message))
                 }
             }
         }
@@ -316,14 +319,14 @@ fun ConversationListScreen(
                 }
                 LoadState.EMPTY -> {
                     val emptyTitle = when {
-                        searchQuery.isNotBlank() -> "No results for \"$searchQuery\""
-                        selectedTab == 1 -> "No archived chats"
-                        else -> "No messages yet"
+                        searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results, searchQuery)
+                        selectedTab == 1 -> stringResource(R.string.conv_empty_archived_title)
+                        else -> stringResource(R.string.conv_empty_title)
                     }
                     val emptySubtitle = when {
-                        searchQuery.isNotBlank() -> "Try a different search term"
-                        selectedTab == 1 -> "Archive chats to keep your inbox clean"
-                        else -> "Open the map and tap a person\nto start a conversation"
+                        searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results_sub)
+                        selectedTab == 1 -> stringResource(R.string.conv_empty_archived_sub)
+                        else -> stringResource(R.string.conv_empty_sub)
                     }
                     EmptyState(
                         icon = if (selectedTab == 0) Icons.Default.ChatBubbleOutline else Icons.Default.Archive,
@@ -436,19 +439,19 @@ private fun SwipeActionsConversation(
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
             icon = { Icon(Icons.Default.Delete, contentDescription = null) },
-            title = { Text("Delete conversation?") },
+            title = { Text(stringResource(R.string.conv_delete_title)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("How do you want to delete this conversation with ${conv.peer.displayName}?")
+                    Text(stringResource(R.string.conv_delete_message, conv.peer.displayName))
                     ListItem(
-                        headlineContent = { Text("Delete locally") },
-                        supportingContent = { Text("Removed from your device only.") },
+                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable { onDeleteLocal(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     ListItem(
-                        headlineContent = { Text("Delete from both") },
-                        supportingContent = { Text("Removes it locally and requests the peer to delete messages you sent.") },
+                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_both_sub)) },
                         modifier = Modifier.clickable { onDeleteLocal(); onDeleteRemote(); showDeleteDialog = false },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -456,7 +459,7 @@ private fun SwipeActionsConversation(
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -552,7 +555,7 @@ private fun ConversationRow(
                 if (isBlocked) {
                     Icon(
                         Icons.Default.Block,
-                        contentDescription = "Messages blocked",
+                        contentDescription = stringResource(R.string.conv_messages_blocked),
                         modifier = Modifier.size(14.dp),
                         tint = MaterialTheme.colorScheme.error
                     )
@@ -561,8 +564,8 @@ private fun ConversationRow(
         },
         supportingContent = {
             val preview = when {
-                isBlocked -> "Messages blocked"
-                summary.lastMessage.isMine -> "You: ${summary.lastMessage.content}"
+                isBlocked -> stringResource(R.string.conv_messages_blocked)
+                summary.lastMessage.isMine -> stringResource(R.string.conv_preview_mine, summary.lastMessage.content)
                 else -> summary.lastMessage.content
             }
             Text(
@@ -623,11 +626,11 @@ private fun ContactPickerDialog(
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
-        title = { Text("New Message") },
+        title = { Text(stringResource(R.string.conv_new_message_title)) },
         text = {
             if (peers.isEmpty()) {
                 Text(
-                    "No contacts yet. Scan a QR code to add a contact.",
+                    stringResource(R.string.conv_picker_empty),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -659,7 +662,7 @@ private fun ContactPickerDialog(
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) }
         }
     )
 }

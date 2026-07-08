@@ -413,4 +413,57 @@
     <string name="peer_precision_exact_desc">Precise coordinates</string>
     <string name="peer_precision_suburb">Suburb (~1km)</string>
     <string name="peer_precision_suburb_desc">Neighbourhood-level only</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Delete %1$d conversation?</item>
+        <item quantity="other">Delete %1$d conversations?</item>
+    </plurals>
+    <string name="conv_delete_locally">Delete locally</string>
+    <string name="conv_delete_locally_sub">Removed from your device only.</string>
+    <string name="conv_delete_both">Delete from both</string>
+    <string name="conv_bulk_delete_both_sub">Also requests each contact to delete your messages.</string>
+    <string name="conv_delete_both_sub">Removes it locally and requests the peer to delete messages you sent.</string>
+    <string name="conv_cd_exit_selection">Exit selection</string>
+    <string name="conv_cd_select_all">Select All</string>
+    <string name="conv_cd_new_message">New message</string>
+    <string name="conv_sort_date">Date</string>
+    <string name="conv_sort_unread">Unread</string>
+    <string name="conv_search_placeholder">Search conversations…</string>
+    <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_archived">Archived</string>
+    <string name="conv_mark_read">Mark Read</string>
+    <string name="conv_archive">Archive</string>
+    <string name="conv_unarchive">Unarchive</string>
+    <string name="conv_empty_no_results">No results for \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Try a different search term</string>
+    <string name="conv_empty_archived_title">No archived chats</string>
+    <string name="conv_empty_archived_sub">Archive chats to keep your inbox clean</string>
+    <string name="conv_empty_title">No messages yet</string>
+    <string name="conv_empty_sub">Open the map and tap a person\nto start a conversation</string>
+    <string name="conv_delete_title">Delete conversation?</string>
+    <string name="conv_delete_message">How do you want to delete this conversation with %1$s?</string>
+    <string name="conv_messages_blocked">Messages blocked</string>
+    <string name="conv_preview_mine">You: %1$s</string>
+    <string name="conv_new_message_title">New Message</string>
+    <string name="conv_picker_empty">No contacts yet. Scan a QR code to add a contact.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Clear chat history?</string>
+    <string name="chat_clear_message">How do you want to clear this conversation with %1$s?</string>
+    <string name="chat_clear_locally">Clear locally</string>
+    <string name="chat_clear_both">Clear from both</string>
+    <string name="chat_clear_both_sub">Removes it locally and requests %1$s to delete messages you sent.</string>
+    <string name="chat_cd_options">Options</string>
+    <string name="chat_clear_history_menu">Clear Chat History</string>
+    <string name="chat_typing">%1$s is typing…</string>
+    <string name="chat_blocked_banner">You have blocked messages from %1$s. Go to Contacts to unblock.</string>
+    <string name="chat_delete_msg_title">Delete message?</string>
+    <string name="chat_delete_msg_message">How do you want to delete this message?</string>
+    <string name="chat_delete_from_contact">Delete from contact</string>
+    <string name="chat_delete_from_contact_sub">Sends a request to remove it from their device.</string>
+    <string name="chat_delete_both_sub">Removes it locally and requests remote deletion.</string>
+    <string name="chat_cd_share_location">Share Location</string>
+    <string name="chat_input_placeholder">Message…</string>
+    <string name="chat_cd_send">Send</string>
 </resources>
