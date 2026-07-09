@@ -146,14 +146,14 @@ class HistoryReportViewModel @Inject constructor(
     }
 
     fun prevDay() {
-        _selectedDayStart.update { it - DAY_MS }
+        _selectedDayStart.update { shiftDayStart(it, -1) }
         _addresses.value = emptyMap()
         resetTimeRange()
     }
 
     fun nextDay() {
         val today = todayStartMs()
-        _selectedDayStart.update { ms -> minOf(ms + DAY_MS, today) }
+        _selectedDayStart.update { ms -> minOf(shiftDayStart(ms, 1), today) }
         _addresses.value = emptyMap()
         resetTimeRange()
     }
@@ -194,8 +194,22 @@ class HistoryReportViewModel @Inject constructor(
     companion object {
         private const val DAY_MS = 24 * 60 * 60 * 1000L
 
-        fun todayStartMs(): Long {
-            val cal = Calendar.getInstance()
+        fun todayStartMs(): Long = startOfDay(Calendar.getInstance())
+
+        /**
+         * Local midnight [deltaDays] away from the day containing [dayStartMs]. Uses calendar
+         * arithmetic rather than adding a fixed 24h so the result stays anchored to local
+         * midnight across daylight-saving transitions (a local day can be 23h or 25h).
+         */
+        private fun shiftDayStart(dayStartMs: Long, deltaDays: Int): Long {
+            val cal = Calendar.getInstance().apply {
+                timeInMillis = dayStartMs
+                add(Calendar.DAY_OF_YEAR, deltaDays)
+            }
+            return startOfDay(cal)
+        }
+
+        private fun startOfDay(cal: Calendar): Long {
             cal.set(Calendar.HOUR_OF_DAY, 0)
             cal.set(Calendar.MINUTE, 0)
             cal.set(Calendar.SECOND, 0)

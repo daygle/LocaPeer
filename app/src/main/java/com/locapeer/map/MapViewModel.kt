@@ -207,11 +207,13 @@ class MapViewModel @Inject constructor(
         peerDao.getReceiveContacts(),
         heartbeatDao.getLatestHeartbeatPerDevice(),
         geofenceDao.getAllGeofences(),
-        geofenceAssignmentDao.observeAll()
-    ) { peers, heartbeats, fences, assignments ->
+        geofenceAssignmentDao.observeAll(),
+        // Cached public-key flow instead of ensureKeypair() so a new heartbeat doesn't
+        // trigger an Android Keystore decrypt on every emission just to filter own pin.
+        keyManager.publicKeyHexFlow
+    ) { peers, heartbeats, fences, assignments, myPubkey ->
         val heartbeatMap = heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
-        val myPubkey = try { keyManager.ensureKeypair().second } catch (_: Exception) { "" }
         val pins = peers.filter { it.deviceId != myPubkey }.map { peer ->
             val hb = heartbeatMap[peer.deviceId]
             val intervalSec = hb?.expectedIntervalSeconds ?: 900L
