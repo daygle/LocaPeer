@@ -823,7 +823,11 @@ fun SettingsScreen(
             onDismissRequest = { showStartPageDialog = false },
             title = { Text(stringResource(R.string.settings_start_page)) },
             text = {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
                     settings.navTabIds.forEach { route ->
                         Row(
                             modifier = Modifier
@@ -832,7 +836,7 @@ fun SettingsScreen(
                                     vm.setStartRoute(route)
                                     showStartPageDialog = false
                                 }
-                                .padding(vertical = 4.dp),
+                                .padding(vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
@@ -844,7 +848,8 @@ fun SettingsScreen(
                             )
                             Text(
                                 tabLabels[route] ?: route.replaceFirstChar { it.uppercaseChar() },
-                                modifier = Modifier.padding(start = 8.dp)
+                                modifier = Modifier.padding(start = 12.dp),
+                                style = MaterialTheme.typography.bodyLarge
                             )
                         }
                     }
@@ -862,7 +867,11 @@ fun SettingsScreen(
             onDismissRequest = { showLanguageDialog = false },
             title = { Text(stringResource(R.string.settings_language_title)) },
             text = {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
                     AppLanguage.entries.forEach { language ->
                         val label = language.nativeName ?: stringResource(R.string.settings_language_system)
                         Row(
@@ -872,7 +881,7 @@ fun SettingsScreen(
                                     AppLanguage.apply(language)
                                     showLanguageDialog = false
                                 }
-                                .padding(vertical = 4.dp),
+                                .padding(vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
@@ -882,7 +891,11 @@ fun SettingsScreen(
                                     showLanguageDialog = false
                                 }
                             )
-                            Text(label, modifier = Modifier.padding(start = 8.dp))
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(start = 12.dp)
+                            )
                         }
                     }
                 }
@@ -904,7 +917,11 @@ fun SettingsScreen(
             onDismissRequest = { showMapStartingPointDialog = false },
             title = { Text(stringResource(R.string.settings_map_starting_point_title)) },
             text = {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
                     options.forEach { (mode, label) ->
                         Row(
                             modifier = Modifier
@@ -913,7 +930,7 @@ fun SettingsScreen(
                                     vm.setMapStartingPoint(mode)
                                     showMapStartingPointDialog = false
                                 }
-                                .padding(vertical = 4.dp),
+                                .padding(vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
@@ -923,7 +940,11 @@ fun SettingsScreen(
                                     showMapStartingPointDialog = false
                                 }
                             )
-                            Text(label, modifier = Modifier.padding(start = 8.dp))
+                            Text(
+                                text = label,
+                                modifier = Modifier.padding(start = 12.dp),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
                         }
                     }
                 }
@@ -1193,17 +1214,25 @@ private fun UnitSelectionDialog(
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = {
-            Column {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
                 options.forEach { (value, label) ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clickable { onSelected(value) }
-                            .padding(vertical = 4.dp),
+                            .padding(vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(selected = current == value, onClick = { onSelected(value) })
-                        Text(label, modifier = Modifier.padding(start = 12.dp), style = MaterialTheme.typography.bodyLarge)
+                        Text(
+                            text = label,
+                            modifier = Modifier.padding(start = 12.dp),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
             }
@@ -1223,7 +1252,11 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.settings_enable_supervised_title)) },
         text = {
-            Column {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
                 Text(
                     stringResource(R.string.settings_enable_supervised_message),
                     style = MaterialTheme.typography.bodySmall,
@@ -1235,11 +1268,17 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
                 } else {
                     Spacer(Modifier.height(12.dp))
                     peers.forEach { peer ->
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { selectedPubkey = peer.publicKeyHex }
+                                .padding(vertical = 8.dp)
+                        ) {
                             RadioButton(selected = selectedPubkey == peer.publicKeyHex, onClick = { selectedPubkey = peer.publicKeyHex })
-                            Spacer(Modifier.width(8.dp))
+                            Spacer(Modifier.width(12.dp))
                             Column {
-                                Text(peer.displayName, style = MaterialTheme.typography.bodyMedium)
+                                Text(peer.displayName, style = MaterialTheme.typography.bodyLarge)
                                 Text(peer.publicKeyHex.take(16) + "…", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
@@ -1269,7 +1308,7 @@ private fun BackupSectionItem(
             .clickable(enabled = enabled) {
                 onToggle(if (section in selected) selected - section else selected + section)
             }
-            .padding(vertical = 4.dp),
+            .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
@@ -1279,10 +1318,10 @@ private fun BackupSectionItem(
             },
             enabled = enabled
         )
-        Column(modifier = Modifier.padding(start = 8.dp)) {
+        Column(modifier = Modifier.padding(start = 12.dp)) {
             Text(
                 label,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyLarge,
                 color = if (enabled) MaterialTheme.colorScheme.onSurface
                 else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f)
             )
