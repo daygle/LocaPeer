@@ -598,16 +598,18 @@ private fun OsmdroidMapView(
     // Follow User Logic. Keyed on mapViewRef so the recentering waits for the AndroidView
     // factory to produce a non-null MapView; otherwise animateTo is a silent no-op.
     LaunchedEffect(userLocation, centerOnUser, mapViewRef) {
-        if (centerOnUser && userLocation != null && mapViewRef != null) {
-            mapViewRef.controller.animateTo(userLocation)
+        val mapView = mapViewRef
+        if (centerOnUser && userLocation != null && mapView != null) {
+            mapView.controller.animateTo(userLocation)
             onCenteredOnUser() // No-op for continuous follow
         }
     }
 
     // Initial positioning. Same race-condition guard as the explicit jump effect above.
     LaunchedEffect(userLocation, mapViewRef) {
-        if (userLocation != null && mapViewRef != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
-            mapViewRef.controller.setCenter(userLocation)
+        val mapView = mapViewRef
+        if (userLocation != null && mapView != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
+            mapView.controller.setCenter(userLocation)
             initialCenterDone = true
         }
     }
@@ -620,11 +622,12 @@ private fun OsmdroidMapView(
     // contact location. Without this guard the previous fix (#141) silently regressed
     // when the OSM MapView was created on a frame after the parameters arrived.
     LaunchedEffect(centerOnPin, mapViewRef) {
-        if (centerOnPin != null && mapViewRef != null) {
+        val mapView = mapViewRef
+        if (centerOnPin != null && mapView != null) {
             explicitCenterDone = true
             initialCenterDone = true
             fitAllDone = true
-            mapViewRef.controller.animateTo(centerOnPin)
+            mapView.controller.animateTo(centerOnPin)
             onCenteredOnPin()
         }
     }
