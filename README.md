@@ -5,7 +5,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 ## Features
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
-- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary) using a custom GPS-based motion engine, saving power during low battery without sacrificing accuracy.
+- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary), detected by a custom GPS speed engine fused with Android Activity Recognition, saving power during low battery and while stationary without sacrificing accuracy.
 - **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** - Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
@@ -13,10 +13,13 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 - **SOS Alerts** - One-tap emergency broadcast delivers your current coordinates as a high-priority notification exclusively to contacts you have designated as SOS contacts.
 - **Geofencing** - Set circular zones on the map and receive enter, exit, or both alerts when a tracked contact crosses the boundary. Notification actions let you message or open the map directly.
 - **Proximity Alerts** - Get notified when a contact comes within a configurable radius of your current position.
+- **Missed-Location Alerts** - Opt in per contact to be notified when someone you track goes silent for noticeably longer than their expected update interval.
 - **Encrypted Messaging** - Fully private direct messages with delivery receipts, read receipts, and real-time typing indicators.
-- **Location History** - Browse a contact's (or your own) past location data day-by-day in a list or on an interactive OpenStreetMap view with a direction/bearing summary.
+- **Location History** - Browse a contact's (or your own) past location data day-by-day, in a list or on an interactive OpenStreetMap view, with a direction/bearing summary and an adjustable time-of-day range. Optional distance-thinning and accuracy filters declutter the trail, and street-address lookup is available as an explicit opt-in (off by default, since it queries the device geocoder).
 - **Supervised Mode** - Lock Settings behind remote Nostr-based approval. Supervised devices register with a supervisor via a two-sided consent handshake; unlock requests are approved or denied in real time with no static PIN to compromise.
-- **Backup & Restore** - Export and selectively restore your identity, contacts, geofences, and settings to a local JSON file.
+- **Customizable Navigation & Units** - Choose which bottom-navigation tabs appear, reorder them, and set the screen shown on launch. Distances, speeds, elevation, and clock format follow your metric/imperial and 12/24-hour preferences.
+- **Localization** - Translated into 50+ languages with an in-app language picker (per-app locale on Android 13+, backported below).
+- **Backup & Restore** - Export and selectively restore your identity, contacts, geofences, and settings to a local JSON file, optionally password-encrypted (AES-256-GCM with a PBKDF2-HMAC-SHA256 derived key).
 - **Screenshot Protection** - `FLAG_SECURE` prevents UI capture of sensitive screens (maps, private key, profile QR).
 
 ## How It Works
@@ -39,7 +42,7 @@ When sharing is enabled, the app publishes a `HEARTBEAT` event encrypted individ
 | Low Battery (<20%) | 30 min |
 | SOS active | 15 sec |
 
-Motion state is detected via a custom speed-based classification engine and displayed alongside each location ping.
+Motion state is detected by a custom speed-based classifier and corroborated by Android Activity Recognition (sensor-based), so GPS scatter alone can't mislabel a walk as a drive. It is displayed alongside each location ping.
 
 ### Precision Modes
 Each contact relationship can be set to one of two precision levels:
@@ -96,16 +99,18 @@ Custom application events (kinds 1040–1058) are tagged with the recipient's pu
 | **Networking** | WebSockets via OkHttp |
 | **Cryptography** | `secp256k1-kmp` (BIP-340 Schnorr) + Bouncy Castle (NIP-44 v2 ChaCha20-HMAC-SHA256) |
 | **Maps** | OSMDroid (OpenStreetMap) |
-| **Location** | Android FusedLocationProviderClient |
-| **Motion Classification** | Custom GPS-based engine (MotionMath) |
-| **QR Codes** | ZXing (generation) + ML Kit Vision (scanning) |
+| **Location** | Google Play services: FusedLocationProviderClient + Activity Recognition |
+| **Motion Classification** | Custom GPS speed engine (MotionMath) fused with Activity Recognition (MotionFusion) |
+| **Background Work** | WorkManager (retention enforcement, missed-heartbeat watchdog) + boot receiver |
+| **QR Codes** | ZXing (generation and scanning via `zxing-android-embedded`) |
+| **Localization** | AppCompat per-app locales (`AppCompatDelegate.setApplicationLocales`) |
 
 ## Building
 
 **Requirements**
-- Android Studio Hedgehog or later
+- Android Studio (latest stable recommended, for `compileSdk` 37 support)
 - JDK 17+
-- Android SDK 34 (target) / SDK 26 (minimum)
+- Android SDK: `compileSdk` 37, `targetSdk` 36, `minSdk` 26 (Android 8.0)
 
 ```bash
 git clone https://github.com/daygle/LocaPeer.git
@@ -122,6 +127,9 @@ cd LocaPeer
 - **Hardware-Backed Keys**: Private keys never leave the device and are protected by the TEE/SE via Android Keystore where supported.
 - **Schnorr Signatures**: Every event is signed with BIP-340 Schnorr; recipients verify the signature before processing.
 - **Tracking Transparency**: `TRACKING_ALERT` (kind 1058) events notify you if another user receives a geofence or proximity alert triggered by your movement, ensuring you are aware of how your location data is being monitored.
+- **Sender-Side Quality Gate**: Optionally refuse to broadcast or store your own fixes coarser than a chosen accuracy, so a stray cell-tower fix never paints a misleading pin (SOS is never gated).
+- **Encrypted Backups**: Backup files can be password-protected; the payload is AES-256-GCM encrypted under a PBKDF2-HMAC-SHA256 key (600,000 iterations).
+- **On-Device Geocoding Opt-In**: Reverse geocoding (street addresses in History and on map pins) is off by default because it queries the OS geocoder off-device; it must be explicitly enabled.
 - **Replay Protection**: Control events are checked for freshness (300-second window for unlock events, 24-hour window for registration); a 30-day catch-up window for offline delivery replays only recent history.
 - **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings on sensitive screens.
 
