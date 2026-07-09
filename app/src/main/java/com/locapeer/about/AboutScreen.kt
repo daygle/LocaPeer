@@ -68,7 +68,7 @@ fun AboutScreen(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            painter = androidx.compose.ui.res.painterResource(R.mipmap.ic_launcher),
+                            painter = androidx.compose.ui.res.painterResource(R.drawable.ic_launcher_foreground),
                             contentDescription = null,
                             modifier = Modifier.size(56.dp),
                             tint = Color.Unspecified
