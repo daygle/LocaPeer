@@ -69,8 +69,9 @@ object DisplayFormat {
     }
 
     /**
-     * Relative "last seen" label: "Just now" / "5m ago" within the hour, a clock time for
-     * today, then "d MMM" (+ year once it differs). Shared by the map and contacts screens.
+     * Relative "last seen" label: "Just now" / "5m ago" within the hour, a clock time within
+     * the last 24 hours, "d MMM, <time>" for older same-year timestamps, and "d MMM yyyy"
+     * once the year differs. Shared by the map and contacts screens.
      */
     fun relativeTimestamp(millis: Long): String {
         val diffMs = System.currentTimeMillis() - millis

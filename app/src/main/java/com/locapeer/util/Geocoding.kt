@@ -48,8 +48,11 @@ object Geocoding {
             }
         }
 
-    private fun formatAddress(addr: Address): String? =
-        listOfNotNull(addr.thoroughfare, addr.locality, addr.adminArea)
+    private fun formatAddress(addr: Address): String? {
+        val parts = listOfNotNull(addr.thoroughfare, addr.locality, addr.adminArea)
             .joinToString(", ")
-            .ifBlank { addr.getAddressLine(0) }
+        // getAddressLine(0) can be null; treat null/blank as "no address" so callers
+        // get null instead of an empty label.
+        return (parts.ifBlank { addr.getAddressLine(0) })?.takeIf { it.isNotBlank() }
+    }
 }
