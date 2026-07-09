@@ -10,20 +10,20 @@
     <string name="channel_name_messages">Xabarlar</string>
     <string name="channel_desc_messages">Kiruvchi xabarlar</string>
     <string name="notification_heartbeat_title">LocaPeer ishlamoqda</string>
-    <string name="notification_heartbeat_text">Joylashuvingizni boshqalar bilan baham ko'rmoqda</string>
+    <string name="notification_heartbeat_text">Joylashuvingizni boshqalar bilan baham ko\'rmoqda</string>
 
     <!-- ── Umumiy harakatlar ──────────────────────────────────────── -->
     <string name="common_save">Saqlash</string>
     <string name="common_cancel">Bekor qilish</string>
     <string name="common_done">Tayyor</string>
-    <string name="common_delete">O'chirish</string>
-    <string name="common_disable">O'chirish</string>
+    <string name="common_delete">O\'chirish</string>
+    <string name="common_disable">O\'chirish</string>
     <string name="common_enable">Yoqish</string>
     <string name="common_restore">Tiklash</string>
     <string name="common_unlock">Qulfdan chiqarish</string>
     <string name="common_password">Parol</string>
     <string name="common_not_now">Hozir emas</string>
-    <string name="common_off">O'chiq</string>
+    <string name="common_off">O\'chiq</string>
     <string name="common_approve">Tasdiqlash</string>
     <string name="common_deny">Rad etish</string>
 
@@ -48,9 +48,9 @@
     <string name="settings_section_security">Xavfsizlik</string>
     <string name="settings_section_map">Xarita</string>
     <string name="settings_section_battery_performance">Batareya va unumdorlik</string>
-    <string name="settings_section_units_display">Birliklar va ko'rinish</string>
+    <string name="settings_section_units_display">Birliklar va ko\'rinish</string>
     <string name="settings_section_retention">Saqlash (Ushbu qurilma)</string>
-    <string name="settings_section_appearance">Ko'rinish</string>
+    <string name="settings_section_appearance">Ko\'rinish</string>
     <string name="settings_section_backup_keys">Zaxira va kalitlar</string>
     <string name="settings_section_about">Dastur haqida</string>
 
@@ -58,7 +58,7 @@
     <string name="settings_my_qr">Mening QR-kodim</string>
     <string name="settings_no_name_set">Nom belgilanmagan</string>
 
-    <string name="settings_share_location">Joylashuvni baham ko'rish</string>
+    <string name="settings_share_location">Joylashuvni baham ko\'rish</string>
     <string name="settings_language">Til</string>
     <string name="settings_language_title">Dastur tili</string>
     <string name="settings_language_system">Tizim tili</string>
