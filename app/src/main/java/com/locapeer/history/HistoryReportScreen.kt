@@ -444,6 +444,10 @@ private fun HistoryMapTab(
                 mapView.overlays.clear()
                 if (heartbeats.isEmpty()) return@AndroidView
 
+                // Read the selection here so the overlays rebuild (and the tapped pin is
+                // re-drawn highlighted) whenever it changes.
+                val selectedId = selectedPing?.id
+
                 val pinColor = heartbeats.last().pinColor
                 val lineArgb = if (pinColor.isNotEmpty())
                     android.graphics.Color.parseColor(pinColor).let {
@@ -461,6 +465,7 @@ private fun HistoryMapTab(
 
                 heartbeats.forEachIndexed { index, ping ->
                     val isLatest = index == heartbeats.lastIndex
+                    val isSelected = ping.id == selectedId
                     val marker = Marker(mapView).apply {
                         position = GeoPoint(ping.lat, ping.lng)
                         infoWindow = null
@@ -470,7 +475,8 @@ private fun HistoryMapTab(
                                 displayName = ping.displayName,
                                 isOverdue = false,
                                 isSos = ping.isSos,
-                                pinColor = ping.pinColor
+                                pinColor = ping.pinColor,
+                                isSelected = isSelected
                             )
                             setIcon(icon)
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -478,7 +484,8 @@ private fun HistoryMapTab(
                             val icon = MarkerIconFactory.createDotIcon(
                                 context = mapView.context,
                                 pinColor = ping.pinColor,
-                                isSos = ping.isSos
+                                isSos = ping.isSos,
+                                isSelected = isSelected
                             )
                             setIcon(icon)
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
@@ -491,16 +498,22 @@ private fun HistoryMapTab(
                     mapView.overlays.add(marker)
                 }
 
-                val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
-                val bounds = BoundingBox.fromGeoPoints(points)
-                if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpanWithDateLine < 1e-4)) {
-                    mapView.controller.setZoom(16.0)
-                    mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
-                } else if (mapView.width > 0) {
-                    mapView.zoomToBoundingBox(bounds, false, 64)
-                } else {
-                    mapView.addOnFirstLayoutListener { _, _, _, _, _ ->
+                // Only fit the viewport when the day's data changes — selecting a pin
+                // rebuilds the overlays and must not yank the camera back out.
+                val boundsKey = heartbeats.hashCode()
+                if (mapView.tag != boundsKey) {
+                    mapView.tag = boundsKey
+                    val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
+                    val bounds = BoundingBox.fromGeoPoints(points)
+                    if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpanWithDateLine < 1e-4)) {
+                        mapView.controller.setZoom(16.0)
+                        mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
+                    } else if (mapView.width > 0) {
                         mapView.zoomToBoundingBox(bounds, false, 64)
+                    } else {
+                        mapView.addOnFirstLayoutListener { _, _, _, _, _ ->
+                            mapView.zoomToBoundingBox(bounds, false, 64)
+                        }
                     }
                 }
                 mapView.invalidate()

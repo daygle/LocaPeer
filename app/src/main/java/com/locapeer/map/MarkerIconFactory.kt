@@ -21,11 +21,12 @@ object MarkerIconFactory {
     private val cache = LruCache<String, BitmapDrawable>(64)
 
     /** Creates a colored circle with initials as an OSMDroid marker icon. */
-    fun create(context: Context, displayName: String, isOverdue: Boolean, isSos: Boolean, pinColor: String = ""): BitmapDrawable {
-        val key = "$displayName-$isOverdue-$isSos-$pinColor"
+    fun create(context: Context, displayName: String, isOverdue: Boolean, isSos: Boolean, pinColor: String = "", isSelected: Boolean = false): BitmapDrawable {
+        val key = "$displayName-$isOverdue-$isSos-$pinColor-$isSelected"
         cache.get(key)?.let { return it }
 
-        val sizePx = (context.resources.displayMetrics.density * 48).toInt()
+        // Selected pins render larger so the tapped marker stands out on the history map
+        val sizePx = (context.resources.displayMetrics.density * if (isSelected) 60 else 48).toInt()
         val bitmap = Bitmap.createBitmap(sizePx + 8, sizePx + 16, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
@@ -87,15 +88,18 @@ object MarkerIconFactory {
     }
 
     /** Small filled circle for intermediate waypoint markers on the history map. */
-    fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false): BitmapDrawable {
-        val key = "dot-$pinColor-$isSos"
+    fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false, isSelected: Boolean = false): BitmapDrawable {
+        val key = "dot-$pinColor-$isSos-$isSelected"
         cache.get(key)?.let { return it }
 
         val dp = context.resources.displayMetrics.density
-        val sizePx = (dp * 14).toInt()
+        val dotPx = (dp * if (isSelected) 20 else 14).toInt()
+        val haloPx = if (isSelected) (dp * 7).toInt() else 0
+        val sizePx = dotPx + haloPx * 2
         val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         val cx = sizePx / 2f
+        val radius = dotPx / 2f - dp
 
         val fillColor = when {
             isSos -> "#D32F2F".toColorInt()
@@ -103,11 +107,18 @@ object MarkerIconFactory {
             else -> "#1976D2".toColorInt()
         }
 
-        canvas.drawCircle(cx, cx, cx - dp, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = fillColor })
-        canvas.drawCircle(cx, cx, cx - dp, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        if (isSelected) {
+            // Translucent halo behind the dot so the tapped pin stands out from its neighbours
+            canvas.drawCircle(cx, cx, cx, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                color = (fillColor and 0x00FFFFFF) or 0x55000000
+            })
+        }
+
+        canvas.drawCircle(cx, cx, radius, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = fillColor })
+        canvas.drawCircle(cx, cx, radius, Paint(Paint.ANTI_ALIAS_FLAG).apply {
             color = 0xFFFFFFFF.toInt()
             style = Paint.Style.STROKE
-            strokeWidth = dp * 1.5f
+            strokeWidth = dp * if (isSelected) 2f else 1.5f
         })
 
         val drawable = BitmapDrawable(context.resources, bitmap)
