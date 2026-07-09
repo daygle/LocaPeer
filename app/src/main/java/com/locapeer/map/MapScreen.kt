@@ -565,6 +565,7 @@ private fun OsmdroidMapView(
     // centering (own pin / fit-all) must not run and recentre the map away from it.
     // Kept as keyless remember so it survives the resets of initialCenterDone above.
     var explicitCenterDone by remember { mutableStateOf(false) }
+    val currentCenterOnPin by rememberUpdatedState(centerOnPin)
     val isFitAll = mapStartingPoint == "FIT_ALL"
 
     DisposableEffect(lifecycleOwner) {
@@ -638,7 +639,13 @@ private fun OsmdroidMapView(
                 points.minOf { it.latitude },
                 points.minOf { it.longitude }
             )
-            mv.post { mv.zoomToBoundingBox(box, true, 150) }
+            // The posted runnable outlives this effect, so re-check that no explicit
+            // centre request arrived in the meantime before it recentres the map.
+            mv.post {
+                if (!explicitCenterDone && currentCenterOnPin == null) {
+                    mv.zoomToBoundingBox(box, true, 150)
+                }
+            }
         }
     }
 
