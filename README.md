@@ -11,7 +11,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
 - **Role-Based Sharing** - Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
 - **SOS Alerts** - One-tap emergency broadcast delivers your current coordinates as a high-priority notification exclusively to contacts you have designated as SOS contacts.
-- **Geofencing** - Set circular zones on the map and receive enter, exit, or both alerts when a tracked contact crosses the boundary. Notification actions let you message or open the map directly.
+- **Geofencing** - Set circular zones by tapping the map, searching for an address, or entering coordinates, and receive enter, exit, or both alerts when a tracked contact crosses the boundary. Notification actions let you message or open the map directly.
 - **Proximity Alerts** - Get notified when a contact comes within a configurable radius of your current position.
 - **Missed-Location Alerts** - Opt in per contact to be notified when someone you track goes silent for noticeably longer than their expected update interval.
 - **Encrypted Messaging** - Fully private direct messages with delivery receipts, read receipts, and real-time typing indicators.
@@ -129,7 +129,7 @@ cd LocaPeer
 - **Tracking Transparency**: `TRACKING_ALERT` (kind 1058) events notify you if another user receives a geofence or proximity alert triggered by your movement, ensuring you are aware of how your location data is being monitored.
 - **Sender-Side Quality Gate**: Optionally refuse to broadcast or store your own fixes coarser than a chosen accuracy, so a stray cell-tower fix never paints a misleading pin (SOS is never gated).
 - **Encrypted Backups**: Backup files can be password-protected; the payload is AES-256-GCM encrypted under a PBKDF2-HMAC-SHA256 key (600,000 iterations).
-- **On-Device Geocoding Opt-In**: Reverse geocoding (street addresses in History and on map pins) is off by default because it queries the OS geocoder off-device; it must be explicitly enabled.
+- **On-Device Geocoding Opt-In**: Reverse geocoding (street addresses in History and on map pins) is off by default because it automatically sends tracked coordinates to the OS geocoder off-device; it must be explicitly enabled. Address search in the geofence editor also uses the OS geocoder, but sends only the text you type and only when you explicitly run a search.
 - **Replay Protection**: Control events are checked for freshness (300-second window for unlock events, 24-hour window for registration); a 30-day catch-up window for offline delivery replays only recent history.
 - **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings on sensitive screens.
 

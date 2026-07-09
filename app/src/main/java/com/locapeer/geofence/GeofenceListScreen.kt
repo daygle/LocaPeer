@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -54,6 +57,8 @@ import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
+import com.locapeer.util.Geocoding
+import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.osmdroid.events.MapEventsReceiver
@@ -446,6 +451,7 @@ private fun GeofenceAreaDialog(
 ) {
     val context = LocalContext.current
     val fusedLocation = remember { LocationServices.getFusedLocationProviderClient(context) }
+    val scope = rememberCoroutineScope()
 
     var name by remember { mutableStateOf(existing?.name ?: "") }
     var latText by remember { mutableStateOf(existing?.lat?.let { formatCoord(it) } ?: "") }
@@ -454,6 +460,27 @@ private fun GeofenceAreaDialog(
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
     var recenterTo by remember { mutableStateOf<GeoPoint?>(null) }
+
+    // Address search (forward geocoding). Hidden entirely when the device has no
+    // geocoder backend, e.g. emulators or de-Googled ROMs.
+    val geocoderAvailable = remember { Geocoding.isAvailable() }
+    var addressQuery by remember { mutableStateOf("") }
+    var searching by remember { mutableStateOf(false) }
+    var searchResults by remember { mutableStateOf<List<Geocoding.Match>>(emptyList()) }
+    var searchAttempted by remember { mutableStateOf(false) }
+    val performSearch: () -> Unit = {
+        val query = addressQuery.trim()
+        if (query.isNotEmpty() && !searching) {
+            searching = true
+            searchResults = emptyList()
+            searchAttempted = false
+            scope.launch {
+                searchResults = Geocoding.forwardGeocode(context, query)
+                searching = false
+                searchAttempted = true
+            }
+        }
+    }
 
     val lat = latText.toDoubleOrNull()
     val lng = lngText.toDoubleOrNull()
@@ -592,6 +619,66 @@ private fun GeofenceAreaDialog(
                             leadingIcon = { Icon(Icons.Default.Fence, null) },
                             modifier = Modifier.fillMaxWidth()
                         )
+                    }
+
+                    if (geocoderAvailable) {
+                        HorizontalDivider(thickness = 0.5.dp)
+
+                        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                            Text(stringResource(R.string.geo_search_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                            OutlinedTextField(
+                                value = addressQuery,
+                                onValueChange = { addressQuery = it; searchAttempted = false },
+                                label = { Text(stringResource(R.string.geo_search_label)) },
+                                placeholder = { Text(stringResource(R.string.geo_search_placeholder)) },
+                                singleLine = true,
+                                leadingIcon = { Icon(Icons.Default.Search, null) },
+                                trailingIcon = {
+                                    if (searching) {
+                                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                                    } else if (addressQuery.isNotBlank()) {
+                                        IconButton(onClick = performSearch) {
+                                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.geo_cd_search))
+                                        }
+                                    }
+                                },
+                                supportingText = if (searchAttempted && searchResults.isEmpty()) {
+                                    { Text(stringResource(R.string.geo_search_no_results)) }
+                                } else null,
+                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                                keyboardActions = KeyboardActions(onSearch = { performSearch() }),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            searchResults.forEach { match ->
+                                Surface(
+                                    onClick = {
+                                        latText = formatCoord(match.lat)
+                                        lngText = formatCoord(match.lng)
+                                        recenterTo = GeoPoint(match.lat, match.lng)
+                                        addressQuery = match.label
+                                        searchResults = emptyList()
+                                        searchAttempted = false
+                                    },
+                                    shape = MaterialTheme.shapes.medium,
+                                    border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Row(
+                                        modifier = Modifier.padding(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            Icons.Default.LocationOn,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.primary,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                        Spacer(Modifier.width(12.dp))
+                                        Text(match.label, style = MaterialTheme.typography.bodyMedium)
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     HorizontalDivider(thickness = 0.5.dp)

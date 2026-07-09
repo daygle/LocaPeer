@@ -563,6 +563,11 @@
     <string name="geo_hint_tap">Toque el mapa para colocar</string>
     <string name="geo_hint_pinch">Pellizcar para redimensionar • Arrastrar para mover</string>
     <string name="geo_basic_info">Información básica</string>
+    <string name="geo_search_title">Buscar por dirección</string>
+    <string name="geo_search_label">Dirección o lugar</string>
+    <string name="geo_search_placeholder">p. ej. Calle Mayor 10, Madrid</string>
+    <string name="geo_search_no_results">No se encontró ninguna dirección coincidente</string>
+    <string name="geo_cd_search">Buscar</string>
     <string name="geo_name_placeholder">ej. Casa, Trabajo</string>
     <string name="geo_name_required">El nombre es obligatorio</string>
     <string name="geo_latitude">Latitud</string>

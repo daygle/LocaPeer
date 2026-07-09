@@ -561,6 +561,11 @@
     <string name="geo_hint_tap">Toque no mapa para posicionar</string>
     <string name="geo_hint_pinch">Pince para redimensionar • Arraste para mover</string>
     <string name="geo_basic_info">Informações Básicas</string>
+    <string name="geo_search_title">Procurar por endereço</string>
+    <string name="geo_search_label">Endereço ou local</string>
+    <string name="geo_search_placeholder">ex.: Rua Principal 10, Lisboa</string>
+    <string name="geo_search_no_results">Nenhum endereço correspondente encontrado</string>
+    <string name="geo_cd_search">Procurar</string>
     <string name="geo_name_placeholder">ex: Casa, Trabalho</string>
     <string name="geo_name_required">O nome é obrigatório</string>
     <string name="geo_latitude">Latitude</string>

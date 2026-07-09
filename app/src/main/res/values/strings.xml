@@ -563,6 +563,11 @@
     <string name="geo_hint_tap">Tap the map to place</string>
     <string name="geo_hint_pinch">Pinch to resize • Drag to move</string>
     <string name="geo_basic_info">Basic Info</string>
+    <string name="geo_search_title">Find by Address</string>
+    <string name="geo_search_label">Address or place</string>
+    <string name="geo_search_placeholder">e.g. 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">No matching address found</string>
+    <string name="geo_cd_search">Search</string>
     <string name="geo_name_placeholder">e.g. Home, Work</string>
     <string name="geo_name_required">Name is required</string>
     <string name="geo_latitude">Latitude</string>
