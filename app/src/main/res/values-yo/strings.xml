@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Awọn ikanni iwifunni & Iṣẹ iwaju ─────────────────────── -->
+    <string name="channel_name_heartbeat">Ikede Ipo</string>
+    <string name="channel_desc_heartbeat">N kede ipo rẹ si awọn olubasọrọ rẹ ti o fọwọsi</string>
+    <string name="channel_name_alerts">Awọn Itaniji</string>
+    <string name="channel_desc_alerts">Awọn itaniji fun lilu ọkan ti o padanu ati geofence</string>
+    <string name="channel_name_messages">Awọn ifiranṣẹ</string>
+    <string name="channel_desc_messages">Awọn ifiranṣẹ ẹlẹgbẹ ti nwọle</string>
+    <string name="notification_heartbeat_title">LocaPeer nṣiṣẹ</string>
+    <string name="notification_heartbeat_text">Pinpin ipo rẹ pẹlu awọn miiran</string>
+
+    <!-- ── Awọn iṣe ti o wọpọ ──────────────────────────────────────── -->
+    <string name="common_save">Fipamọ</string>
+    <string name="common_cancel">fagilee</string>
+    <string name="common_done">Ti ṣe</string>
+    <string name="common_delete">Pa rẹ</string>
+    <string name="common_disable">Pa a</string>
+    <string name="common_enable">Mu ṣiṣẹ</string>
+    <string name="common_restore">Pada sipo</string>
+    <string name="common_unlock">Ṣii silẹ</string>
+    <string name="common_password">Ọrọ igbaniwọle</string>
+    <string name="common_not_now">Kii ṣe bayi</string>
+    <string name="common_off">Paa</string>
+    <string name="common_approve">Fọwọsi</string>
+    <string name="common_deny">Kọ</string>
+
+    <!-- ── Awọn aami taabu lilọ kiri ──────────────────────────────────────────── -->
+    <string name="tab_map">Maapu</string>
+    <string name="tab_messages">Awọn ifiranṣẹ</string>
+    <string name="tab_history">Itan</string>
+    <string name="tab_contacts">Awọn olubasọrọ</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Eto</string>
+
+    <!-- ── Awọn ipo gbigbe / ṣiṣe ───────────────────────────────────────── -->
+    <string name="motion_stationary">Duro jẹ</string>
+    <string name="motion_walking">Nrin kiri</string>
+    <string name="motion_running">Nsare</string>
+    <string name="motion_cycling">Ngun kẹkẹ</string>
+    <string name="motion_driving">Nwakọ</string>
+
+    <!-- ── Eto ────────────────────────────────────────────────── -->
+    <string name="settings_title">Eto</string>
+    <string name="settings_section_location_privacy">Ipo &amp; Aṣiri</string>
+    <string name="settings_section_security">Aabo</string>
+    <string name="settings_section_map">Maapu</string>
+    <string name="settings_section_battery_performance">Batiri &amp; Iṣẹ</string>
+    <string name="settings_section_units_display">Awọn ẹya &amp; Ifihan</string>
+    <string name="settings_section_retention">Idaduro (Ẹrọ Yi)</string>
+    <string name="settings_section_appearance">Irisi</string>
+    <string name="settings_section_backup_keys">Afẹyinti &amp; Awọn bọtini</string>
+    <string name="settings_section_about">Nipa</string>
+
+    <string name="settings_edit_name">Ṣatunkọ Orukọ</string>
+    <string name="settings_my_qr">QR mi</string>
+    <string name="settings_no_name_set">Ko si orukọ ti a ṣeto</string>
+
+    <string name="settings_share_location">Pin Ipo Mi</string>
+    <string name="settings_language">Ede</string>
+    <string name="settings_language_title">Ede Ohun elo</string>
+    <string name="settings_language_system">Aiyipada eto</string>
+
+    <string name="common_ok">O dara</string>
+    <string name="cd_back">Pada</string>
+</resources>

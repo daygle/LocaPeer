@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Хабарландыру арналары және алдыңғы қатарлы қызмет ─────────────────────── -->
+    <string name="channel_name_heartbeat">Орналасқан жерді көрсету</string>
+    <string name="channel_desc_heartbeat">Орналасқан жеріңізді мақұлданған контактілерге көрсетеді</string>
+    <string name="channel_name_alerts">Ескертулер</string>
+    <string name="channel_desc_alerts">Жоғалған сигнал және геозона ескертулері</string>
+    <string name="channel_name_messages">Хабарламалар</string>
+    <string name="channel_desc_messages">Кіріс хабарламалар</string>
+    <string name="notification_heartbeat_title">LocaPeer жұмыс істеп тұр</string>
+    <string name="notification_heartbeat_text">Орналасқан жеріңізді басқалармен бөлісуде</string>
+
+    <!-- ── Жалпы әрекеттер ──────────────────────────────────────── -->
+    <string name="common_save">Сақтау</string>
+    <string name="common_cancel">Бас тарту</string>
+    <string name="common_done">Дайын</string>
+    <string name="common_delete">Жою</string>
+    <string name="common_disable">Өшіру</string>
+    <string name="common_enable">Қосу</string>
+    <string name="common_restore">Қалпына келтіру</string>
+    <string name="common_unlock">Құлыптан босату</string>
+    <string name="common_password">Құпия сөз</string>
+    <string name="common_not_now">Қазір емес</string>
+    <string name="common_off">Өшірулі</string>
+    <string name="common_approve">Мақұлдау</string>
+    <string name="common_deny">Бас тарту</string>
+
+    <!-- ── Навигациялық қойындылар ──────────────────────────────────────────── -->
+    <string name="tab_map">Карта</string>
+    <string name="tab_messages">Хабарламалар</string>
+    <string name="tab_history">Тарих</string>
+    <string name="tab_contacts">Контактілер</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Баптаулар</string>
+
+    <!-- ── Қозғалыс күйлері ───────────────────────────────────────── -->
+    <string name="motion_stationary">Қозғалыссыз</string>
+    <string name="motion_walking">Жүру</string>
+    <string name="motion_running">Жүгіру</string>
+    <string name="motion_cycling">Велосипед</string>
+    <string name="motion_driving">Көлік жүргізу</string>
+
+    <!-- ── Баптаулар ────────────────────────────────────────────────── -->
+    <string name="settings_title">Баптаулар</string>
+    <string name="settings_section_location_privacy">Орналасқан жер және құпиялылық</string>
+    <string name="settings_section_security">Қауіпсіздік</string>
+    <string name="settings_section_map">Карта</string>
+    <string name="settings_section_battery_performance">Батарея және өнімділік</string>
+    <string name="settings_section_units_display">Бірліктер және дисплей</string>
+    <string name="settings_section_retention">Сақтау мерзімі (Бұл құрылғы)</string>
+    <string name="settings_section_appearance">Сыртқы түрі</string>
+    <string name="settings_section_backup_keys">Резервтік көшірме және кілттер</string>
+    <string name="settings_section_about">Қосымша туралы</string>
+
+    <string name="settings_edit_name">Атын өзгерту</string>
+    <string name="settings_my_qr">Менің QR-кодым</string>
+    <string name="settings_no_name_set">Аты көрсетілмеген</string>
+
+    <string name="settings_share_location">Орналасқан жерімді бөлісу</string>
+    <string name="settings_language">Тіл</string>
+    <string name="settings_language_title">Қосымша тілі</string>
+    <string name="settings_language_system">Жүйелік тіл</string>
+
+    <string name="common_ok">ОК</string>
+    <string name="cd_back">Артқа</string>
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Kanály oznámení & Služba na popředí ─────────────────────── -->
+    <string name="channel_name_heartbeat">Vysílání polohy</string>
+    <string name="channel_desc_heartbeat">Vysílá vaši polohu vašim schváleným kontaktům</string>
+    <string name="channel_name_alerts">Upozornění</string>
+    <string name="channel_desc_alerts">Upozornění na zmeškané signály a geozóny</string>
+    <string name="channel_name_messages">Zprávy</string>
+    <string name="channel_desc_messages">Příchozí zprávy</string>
+    <string name="notification_heartbeat_title">LocaPeer běží</string>
+    <string name="notification_heartbeat_text">Sdílení vaší polohy s ostatními</string>
+
+    <!-- ── Společné akce ──────────────────────────────────────── -->
+    <string name="common_save">Uložit</string>
+    <string name="common_cancel">Zrušit</string>
+    <string name="common_done">Hotovo</string>
+    <string name="common_delete">Smazat</string>
+    <string name="common_disable">Zakázat</string>
+    <string name="common_enable">Povolit</string>
+    <string name="common_restore">Obnovit</string>
+    <string name="common_unlock">Odemknout</string>
+    <string name="common_password">Heslo</string>
+    <string name="common_not_now">Teď ne</string>
+    <string name="common_off">Vypnuto</string>
+    <string name="common_approve">Schválit</string>
+    <string name="common_deny">Odmítnout</string>
+
+    <!-- ── Navigační karty ──────────────────────────────────────────── -->
+    <string name="tab_map">Mapa</string>
+    <string name="tab_messages">Zprávy</string>
+    <string name="tab_history">Historie</string>
+    <string name="tab_contacts">Kontakty</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Nastavení</string>
+
+    <!-- ── Pohyb / stavy aktivity ───────────────────────────────────────── -->
+    <string name="motion_stationary">Stojící</string>
+    <string name="motion_walking">Chůze</string>
+    <string name="motion_running">Běh</string>
+    <string name="motion_cycling">Cyklistika</string>
+    <string name="motion_driving">Řízení</string>
+
+    <!-- ── Nastavení ────────────────────────────────────────────────── -->
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_section_location_privacy">Poloha &amp; Soukromí</string>
+    <string name="settings_section_security">Zabezpečení</string>
+    <string name="settings_section_map">Mapa</string>
+    <string name="settings_section_battery_performance">Baterie &amp; Výkon</string>
+    <string name="settings_section_units_display">Jednotky &amp; Zobrazení</string>
+    <string name="settings_section_retention">Uchovávání (Toto zařízení)</string>
+    <string name="settings_section_appearance">Vzhled</string>
+    <string name="settings_section_backup_keys">Zálohování &amp; Klíče</string>
+    <string name="settings_section_about">O aplikaci</string>
+
+    <string name="settings_edit_name">Upravit jméno</string>
+    <string name="settings_my_qr">Můj QR</string>
+    <string name="settings_no_name_set">Jméno nenastaveno</string>
+
+    <string name="settings_share_location">Sdílet moji polohu</string>
+    <string name="settings_language">Jazyk</string>
+    <string name="settings_language_title">Jazyk aplikace</string>
+    <string name="settings_language_system">Výchozí systémový</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Zpět</string>
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Κανάλια ειδοποιήσεων & Υπηρεσία προσκηνίου ─────────────────────── -->
+    <string name="channel_name_heartbeat">Μετάδοση τοποθεσίας</string>
+    <string name="channel_desc_heartbeat">Μεταδίδει την τοποθεσία σας στις εγκεκριμένες επαφές σας</string>
+    <string name="channel_name_alerts">Ειδοποιήσεις</string>
+    <string name="channel_desc_alerts">Ειδοποιήσεις για χαμένο σήμα και γεωφράκτες</string>
+    <string name="channel_name_messages">Μηνύματα</string>
+    <string name="channel_desc_messages">Εισερχόμενα μηνύματα</string>
+    <string name="notification_heartbeat_title">Το LocaPeer εκτελείται</string>
+    <string name="notification_heartbeat_text">Κοινοποίηση της τοποθεσίας σας με άλλους</string>
+
+    <!-- ── Κοινές ενέργειες ──────────────────────────────────────── -->
+    <string name="common_save">Αποθήκευση</string>
+    <string name="common_cancel">Ακύρωση</string>
+    <string name="common_done">Τέλος</string>
+    <string name="common_delete">Διαγραφή</string>
+    <string name="common_disable">Απενεργοποίηση</string>
+    <string name="common_enable">Ενεργοποίηση</string>
+    <string name="common_restore">Επαναφορά</string>
+    <string name="common_unlock">Ξεκλείδωμα</string>
+    <string name="common_password">Κωδικός πρόσβασης</string>
+    <string name="common_not_now">Όχι τώρα</string>
+    <string name="common_off">Ανενεργό</string>
+    <string name="common_approve">Έγκριση</string>
+    <string name="common_deny">Απόρριψη</string>
+
+    <!-- ── Ετικέτες καρτελών πλοήγησης ──────────────────────────────────────────── -->
+    <string name="tab_map">Χάρτης</string>
+    <string name="tab_messages">Μηνύματα</string>
+    <string name="tab_history">Ιστορικό</string>
+    <string name="tab_contacts">Επαφές</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Ρυθμίσεις</string>
+
+    <!-- ── Καταστάσεις κίνησης / δραστηριότητας ───────────────────────────────────────── -->
+    <string name="motion_stationary">Στάσιμος</string>
+    <string name="motion_walking">Περπάτημα</string>
+    <string name="motion_running">Τρέξιμο</string>
+    <string name="motion_cycling">Ποδηλασία</string>
+    <string name="motion_driving">Οδήγηση</string>
+
+    <!-- ── Ρυθμίσεις ────────────────────────────────────────────────── -->
+    <string name="settings_title">Ρυθμίσεις</string>
+    <string name="settings_section_location_privacy">Τοποθεσία &amp; Απόρρητο</string>
+    <string name="settings_section_security">Ασφάλεια</string>
+    <string name="settings_section_map">Χάρτης</string>
+    <string name="settings_section_battery_performance">Μπαταρία &amp; Απόδοση</string>
+    <string name="settings_section_units_display">Μονάδες &amp; Εμφάνιση</string>
+    <string name="settings_section_retention">Διατήρηση (Αυτή η συσκευή)</string>
+    <string name="settings_section_appearance">Εμφάνιση</string>
+    <string name="settings_section_backup_keys">Αντίγραφα ασφαλείας &amp; Κλειδιά</string>
+    <string name="settings_section_about">Πληροφορίες</string>
+
+    <string name="settings_edit_name">Επεξεργασία ονόματος</string>
+    <string name="settings_my_qr">Το QR μου</string>
+    <string name="settings_no_name_set">Δεν ορίστηκε όνομα</string>
+
+    <string name="settings_share_location">Κοινοποίηση τοποθεσίας</string>
+    <string name="settings_language">Γλώσσα</string>
+    <string name="settings_language_title">Γλώσσα εφαρμογής</string>
+    <string name="settings_language_system">Προεπιλογή συστήματος</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Πίσω</string>
+</resources>

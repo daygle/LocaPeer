@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Канали сповіщень та фонова служба ─────────────────────── -->
+    <string name="channel_name_heartbeat">Трансляція місцезнаходження</string>
+    <string name="channel_desc_heartbeat">Транслює ваше місцезнаходження схваленим контактам</string>
+    <string name="channel_name_alerts">Сповіщення</string>
+    <string name="channel_desc_alerts">Сповіщення про пропущений сигнал та геозони</string>
+    <string name="channel_name_messages">Повідомлення</string>
+    <string name="channel_desc_messages">Вхідні повідомлення</string>
+    <string name="notification_heartbeat_title">LocaPeer працює</string>
+    <string name="notification_heartbeat_text">Ви ділитеся місцезнаходженням з іншими</string>
+
+    <!-- ── Спільні дії ──────────────────────────────────────── -->
+    <string name="common_save">Зберегти</string>
+    <string name="common_cancel">Скасувати</string>
+    <string name="common_done">Готово</string>
+    <string name="common_delete">Видалити</string>
+    <string name="common_disable">Вимкнути</string>
+    <string name="common_enable">Увімкнути</string>
+    <string name="common_restore">Відновити</string>
+    <string name="common_unlock">Розблокувати</string>
+    <string name="common_password">Пароль</string>
+    <string name="common_not_now">Не зараз</string>
+    <string name="common_off">Вимк.</string>
+    <string name="common_approve">Схвалити</string>
+    <string name="common_deny">Відхилити</string>
+
+    <!-- ── Вкладки навігації ──────────────────────────────────────────── -->
+    <string name="tab_map">Карта</string>
+    <string name="tab_messages">Повідомлення</string>
+    <string name="tab_history">Історія</string>
+    <string name="tab_contacts">Контакти</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Налаштування</string>
+
+    <!-- ── Стани руху / активності ───────────────────────────────────────── -->
+    <string name="motion_stationary">Нерухомо</string>
+    <string name="motion_walking">Ходьба</string>
+    <string name="motion_running">Біг</string>
+    <string name="motion_cycling">Велосипед</string>
+    <string name="motion_driving">Водіння</string>
+
+    <!-- ── Налаштування ────────────────────────────────────────────────── -->
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_section_location_privacy">Локація та приватність</string>
+    <string name="settings_section_security">Безпека</string>
+    <string name="settings_section_map">Карта</string>
+    <string name="settings_section_battery_performance">Батарея та продуктивність</string>
+    <string name="settings_section_units_display">Одиниці та відображення</string>
+    <string name="settings_section_retention">Зберігання (Цей пристрій)</string>
+    <string name="settings_section_appearance">Зовнішній вигляд</string>
+    <string name="settings_section_backup_keys">Резервне копіювання та ключі</string>
+    <string name="settings_section_about">Про додаток</string>
+
+    <string name="settings_edit_name">Змінити ім’я</string>
+    <string name="settings_my_qr">Мій QR</string>
+    <string name="settings_no_name_set">Ім’я не встановлено</string>
+
+    <string name="settings_share_location">Ділитися місцезнаходженням</string>
+    <string name="settings_language">Мова</string>
+    <string name="settings_language_title">Мова додатка</string>
+    <string name="settings_language_system">Системна за замовчуванням</string>
+
+    <string name="common_ok">ОК</string>
+    <string name="cd_back">Назад</string>
+</resources>

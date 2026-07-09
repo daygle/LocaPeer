@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── അറിയിപ്പ് ചാനലുകളും മുൻനിര സേവനവും ─────────────────────── -->
+    <string name="channel_name_heartbeat">ലൊക്കേഷൻ ബ്രോഡ്കാസ്റ്റ്</string>
+    <string name="channel_desc_heartbeat">നിങ്ങളുടെ അംഗീകൃത കോൺടാക്റ്റുകളിലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ ബ്രോഡ്കാസ്റ്റ് ചെയ്യുന്നു</string>
+    <string name="channel_name_alerts">അലേർട്ടുകൾ</string>
+    <string name="channel_desc_alerts">മിസ്ഡ് ഹാർട്ട്ബീറ്റ്, ജിയോഫെൻസ് അലേർട്ടുകൾ</string>
+    <string name="channel_name_messages">സന്ദേശങ്ങൾ</string>
+    <string name="channel_desc_messages">വരുന്ന സന്ദേശങ്ങൾ</string>
+    <string name="notification_heartbeat_title">LocaPeer പ്രവർത്തിക്കുന്നു</string>
+    <string name="notification_heartbeat_text">നിങ്ങളുടെ ലൊക്കേഷൻ മറ്റുള്ളവരുമായി പങ്കിടുന്നു</string>
+
+    <!-- ── സാധാരണ പ്രവർത്തനങ്ങൾ ──────────────────────────────────────── -->
+    <string name="common_save">സേവ് ചെയ്യുക</string>
+    <string name="common_cancel">റദ്ദാക്കുക</string>
+    <string name="common_done">പൂർത്തിയായി</string>
+    <string name="common_delete">ഡിലീറ്റ് ചെയ്യുക</string>
+    <string name="common_disable">പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="common_enable">പ്രവർത്തനസജ്ജമാക്കുക</string>
+    <string name="common_restore">പുനഃസ്ഥാപിക്കുക</string>
+    <string name="common_unlock">അൺലോക്ക് ചെയ്യുക</string>
+    <string name="common_password">പാസ്‌വേഡ്</string>
+    <string name="common_not_now">ഇപ്പോൾ വേണ്ട</string>
+    <string name="common_off">ഓഫ്</string>
+    <string name="common_approve">അംഗീകരിക്കുക</string>
+    <string name="common_deny">നിരസിക്കുക</string>
+
+    <!-- ── നാവിഗേഷൻ ടാബ് ലേബലുകൾ ──────────────────────────────────────────── -->
+    <string name="tab_map">മാപ്പ്</string>
+    <string name="tab_messages">സന്ദേശങ്ങൾ</string>
+    <string name="tab_history">ചരിത്രം</string>
+    <string name="tab_contacts">കോൺടാക്റ്റുകൾ</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ക്രമീകരണങ്ങൾ</string>
+
+    <!-- ── ചലന / പ്രവർത്തന നിലകൾ ───────────────────────────────────────── -->
+    <string name="motion_stationary">നിശ്ചലം</string>
+    <string name="motion_walking">നടക്കുന്നു</string>
+    <string name="motion_running">ഓടുന്നു</string>
+    <string name="motion_cycling">സൈക്ലിംഗ്</string>
+    <string name="motion_driving">ഡ്രൈവിംഗ്</string>
+
+    <!-- ── ക്രമീകരണങ്ങൾ ────────────────────────────────────────────────── -->
+    <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
+    <string name="settings_section_location_privacy">ലൊക്കേഷനും സ്വകാര്യതയും</string>
+    <string name="settings_section_security">സുരക്ഷ</string>
+    <string name="settings_section_map">മാപ്പ്</string>
+    <string name="settings_section_battery_performance">ബാറ്ററിയും പ്രകടനവും</string>
+    <string name="settings_section_units_display">യൂണിറ്റുകളും ഡിസ്‌പ്ലേയും</string>
+    <string name="settings_section_retention">സൂക്ഷിക്കൽ (ഈ ഉപകരണം)</string>
+    <string name="settings_section_appearance">രൂപഭാവം</string>
+    <string name="settings_section_backup_keys">ബാക്കപ്പും കീകളും</string>
+    <string name="settings_section_about">വിവരം</string>
+
+    <string name="settings_edit_name">പേര് മാറ്റുക</string>
+    <string name="settings_my_qr">എന്റെ QR</string>
+    <string name="settings_no_name_set">പേര് നൽകിയിട്ടില്ല</string>
+
+    <string name="settings_share_location">എന്റെ ലൊക്കേഷൻ പങ്കിടുക</string>
+    <string name="settings_language">ഭാഷ</string>
+    <string name="settings_language_title">ആപ്പ് ഭാഷ</string>
+    <string name="settings_language_system">സിസ്റ്റം ഡിഫോൾട്ട്</string>
+
+    <string name="common_ok">ശരി</string>
+    <string name="cd_back">പിന്നിലേക്ക്</string>
+</resources>

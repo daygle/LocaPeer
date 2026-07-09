@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Kanały powiadomień i usługa w tle ─────────────────────── -->
+    <string name="channel_name_heartbeat">Udostępnianie lokalizacji</string>
+    <string name="channel_desc_heartbeat">Udostępnia Twoją lokalizację zatwierdzonym kontaktom</string>
+    <string name="channel_name_alerts">Alerty</string>
+    <string name="channel_desc_alerts">Alerty o braku sygnału i geostrefach</string>
+    <string name="channel_name_messages">Wiadomości</string>
+    <string name="channel_desc_messages">Przychodzące wiadomości od rówieśników</string>
+    <string name="notification_heartbeat_title">LocaPeer działa</string>
+    <string name="notification_heartbeat_text">Udostępnianie lokalizacji innym</string>
+
+    <!-- ── Wspólne akcje ──────────────────────────────────────── -->
+    <string name="common_save">Zapisz</string>
+    <string name="common_cancel">Anuluj</string>
+    <string name="common_done">Gotowe</string>
+    <string name="common_delete">Usuń</string>
+    <string name="common_disable">Wyłącz</string>
+    <string name="common_enable">Włącz</string>
+    <string name="common_restore">Przywróć</string>
+    <string name="common_unlock">Odblokuj</string>
+    <string name="common_password">Hasło</string>
+    <string name="common_not_now">Nie teraz</string>
+    <string name="common_off">Wył.</string>
+    <string name="common_approve">Zatwierdź</string>
+    <string name="common_deny">Odmów</string>
+
+    <!-- ── Karty nawigacji ──────────────────────────────────────────── -->
+    <string name="tab_map">Mapa</string>
+    <string name="tab_messages">Wiadomości</string>
+    <string name="tab_history">Historia</string>
+    <string name="tab_contacts">Kontakty</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Ustawienia</string>
+
+    <!-- ── Ruch / stany aktywności ───────────────────────────────────────── -->
+    <string name="motion_stationary">Stacjonarny</string>
+    <string name="motion_walking">Chodzenie</string>
+    <string name="motion_running">Bieganie</string>
+    <string name="motion_cycling">Jazda na rowerze</string>
+    <string name="motion_driving">Jazda samochodem</string>
+
+    <!-- ── Ustawienia ────────────────────────────────────────────────── -->
+    <string name="settings_title">Ustawienia</string>
+    <string name="settings_section_location_privacy">Lokalizacja i prywatność</string>
+    <string name="settings_section_security">Bezpieczeństwo</string>
+    <string name="settings_section_map">Mapa</string>
+    <string name="settings_section_battery_performance">Bateria i wydajność</string>
+    <string name="settings_section_units_display">Jednostki i wyświetlanie</string>
+    <string name="settings_section_retention">Retencja (To urządzenie)</string>
+    <string name="settings_section_appearance">Wygląd</string>
+    <string name="settings_section_backup_keys">Kopia zapasowa i klucze</string>
+    <string name="settings_section_about">O programie</string>
+
+    <string name="settings_edit_name">Edytuj nazwę</string>
+    <string name="settings_my_qr">Mój kod QR</string>
+    <string name="settings_no_name_set">Nie ustawiono nazwy</string>
+
+    <string name="settings_share_location">Udostępnij moją lokalizację</string>
+    <string name="settings_language">Język</string>
+    <string name="settings_language_title">Język aplikacji</string>
+    <string name="settings_language_system">Domyślny systemowy</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Wstecz</string>
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Bildirim Kanalları & Ön Plan Hizmeti ─────────────────────── -->
+    <string name="channel_name_heartbeat">Konum Yayını</string>
+    <string name="channel_desc_heartbeat">Konumunuzu onaylanmış kişilerinize yayınlar</string>
+    <string name="channel_name_alerts">Uyarılar</string>
+    <string name="channel_desc_alerts">Kaçırılan sinyal ve coğrafi sınır uyarıları</string>
+    <string name="channel_name_messages">Mesajlar</string>
+    <string name="channel_desc_messages">Gelen mesajlar</string>
+    <string name="notification_heartbeat_title">LocaPeer çalışıyor</string>
+    <string name="notification_heartbeat_text">Konumunuzu başkalarıyla paylaşıyor</string>
+
+    <!-- ── Ortak Eylemler ──────────────────────────────────────── -->
+    <string name="common_save">Kaydet</string>
+    <string name="common_cancel">İptal</string>
+    <string name="common_done">Bitti</string>
+    <string name="common_delete">Sil</string>
+    <string name="common_disable">Devre Dışı Bırak</string>
+    <string name="common_enable">Etkinleştir</string>
+    <string name="common_restore">Geri Yükle</string>
+    <string name="common_unlock">Kilidi Aç</string>
+    <string name="common_password">Şifre</string>
+    <string name="common_not_now">Şimdi Değil</string>
+    <string name="common_off">Kapalı</string>
+    <string name="common_approve">Onayla</string>
+    <string name="common_deny">Reddet</string>
+
+    <!-- ── Navigasyon Sekmeleri ──────────────────────────────────────────── -->
+    <string name="tab_map">Harita</string>
+    <string name="tab_messages">Mesajlar</string>
+    <string name="tab_history">Geçmiş</string>
+    <string name="tab_contacts">Kişiler</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Ayarlar</string>
+
+    <!-- ── Hareket / Aktivite Durumları ───────────────────────────────────────── -->
+    <string name="motion_stationary">Sabit</string>
+    <string name="motion_walking">Yürüme</string>
+    <string name="motion_running">Koşma</string>
+    <string name="motion_cycling">Bisiklet</string>
+    <string name="motion_driving">Sürüş</string>
+
+    <!-- ── Ayarlar ────────────────────────────────────────────────── -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_section_location_privacy">Konum ve Gizlilik</string>
+    <string name="settings_section_security">Güvenlik</string>
+    <string name="settings_section_map">Harita</string>
+    <string name="settings_section_battery_performance">Pil ve Performans</string>
+    <string name="settings_section_units_display">Birimler ve Ekran</string>
+    <string name="settings_section_retention">Saklama (Bu Cihaz)</string>
+    <string name="settings_section_appearance">Görünüm</string>
+    <string name="settings_section_backup_keys">Yedekleme ve Anahtarlar</string>
+    <string name="settings_section_about">Hakkında</string>
+
+    <string name="settings_edit_name">İsmi Düzenle</string>
+    <string name="settings_my_qr">QR Kodum</string>
+    <string name="settings_no_name_set">İsim ayarlanmadı</string>
+
+    <string name="settings_share_location">Konumumu Paylaş</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_language_title">Uygulama Dili</string>
+    <string name="settings_language_system">Sistem varsayılanı</string>
+
+    <string name="common_ok">Tamam</string>
+    <string name="cd_back">Geri</string>
+</resources>

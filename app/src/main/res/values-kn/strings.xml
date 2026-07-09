@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── ಅಧಿಸೂಚನೆ ಚಾನೆಲ್‌ಗಳು ಮತ್ತು ಮುನ್ನೆಲೆ ಸೇವೆ ─────────────────────── -->
+    <string name="channel_name_heartbeat">ಸ್ಥಳ ಪ್ರಸಾರ</string>
+    <string name="channel_desc_heartbeat">ನಿಮ್ಮ ಅನುಮೋದಿತ ಸಂಪರ್ಕಗಳಿಗೆ ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಪ್ರಸಾರ ಮಾಡುತ್ತದೆ</string>
+    <string name="channel_name_alerts">ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="channel_desc_alerts">ತಪ್ಪಿದ ಹಾರ್ಟ್ಬೀಟ್ ಮತ್ತು ಜಿಯೋಫೆನ್ಸ್ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="channel_name_messages">ಸಂದೇಶಗಳು</string>
+    <string name="channel_desc_messages">ಒಳಬರುವ ಸಂದೇಶಗಳು</string>
+    <string name="notification_heartbeat_title">LocaPeer ಚಾಲನೆಯಲ್ಲಿದೆ</string>
+    <string name="notification_heartbeat_text">ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಇತರರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ</string>
+
+    <!-- ── ಸಾಮಾನ್ಯ ಕ್ರಿಯೆಗಳು ──────────────────────────────────────── -->
+    <string name="common_save">ಉಳಿಸಿ</string>
+    <string name="common_cancel">ರದ್ದುಮಾಡಿ</string>
+    <string name="common_done">ಮುಗಿದಿದೆ</string>
+    <string name="common_delete">ಅಳಿಸಿ</string>
+    <string name="common_disable">ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="common_enable">ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
+    <string name="common_restore">ಮರುಸ್ಥಾಪಿಸಿ</string>
+    <string name="common_unlock">ಅನ್ಲಾಕ್ ಮಾಡಿ</string>
+    <string name="common_password">ಪಾಸ್ವರ್ಡ್</string>
+    <string name="common_not_now">ಈಗ ಬೇಡ</string>
+    <string name="common_off">ಆಫ್</string>
+    <string name="common_approve">ಅನುಮೋದಿಸಿ</string>
+    <string name="common_deny">ನಿರಾಕರಿಸಿ</string>
+
+    <!-- ── ನ್ಯಾವಿಗೇಷನ್ ಟ್ಯಾಬ್ ಲೇಬಲ್‌ಗಳು ──────────────────────────────────────────── -->
+    <string name="tab_map">ನಕ್ಷೆ</string>
+    <string name="tab_messages">ಸಂದೇಶಗಳು</string>
+    <string name="tab_history">ಇತಿಹಾಸ</string>
+    <string name="tab_contacts">ಸಂಪರ್ಕಗಳು</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+
+    <!-- ── ಚಲನೆ / ಚಟುವಟಿಕೆಯ ಸ್ಥಿತಿಗಳು ───────────────────────────────────────── -->
+    <string name="motion_stationary">ಸ್ಥಿರವಾಗಿದೆ</string>
+    <string name="motion_walking">ನಡೆಯುತ್ತಿದ್ದಾರೆ</string>
+    <string name="motion_running">ಓಡುತ್ತಿದ್ದಾರೆ</string>
+    <string name="motion_cycling">ಸೈಕ್ಲಿಂಗ್</string>
+    <string name="motion_driving">ಡ್ರೈವಿಂಗ್</string>
+
+    <!-- ── ಸೆಟ್ಟಿಂಗ್‌ಗಳು ────────────────────────────────────────────────── -->
+    <string name="settings_title">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
+    <string name="settings_section_location_privacy">ಸ್ಥಳ ಮತ್ತು ಗೌಪ್ಯತೆ</string>
+    <string name="settings_section_security">ಭದ್ರತೆ</string>
+    <string name="settings_section_map">ನಕ್ಷೆ</string>
+    <string name="settings_section_battery_performance">ಬ್ಯಾಟರಿ ಮತ್ತು ಕಾರ್ಯಕ್ಷಮತೆ</string>
+    <string name="settings_section_units_display">ಘಟಕಗಳು ಮತ್ತು ಪ್ರದರ್ಶನ</string>
+    <string name="settings_section_retention">ಧಾರಣ (ಈ ಸಾಧನ)</string>
+    <string name="settings_section_appearance">ಗೋಚರತೆ</string>
+    <string name="settings_section_backup_keys">ಬ್ಯಾಕಪ್ ಮತ್ತು ಕೀಗಳು</string>
+    <string name="settings_section_about">ಬಗ್ಗೆ</string>
+
+    <string name="settings_edit_name">ಹೆಸರನ್ನು ಬದಲಿಸಿ</string>
+    <string name="settings_my_qr">ನನ್ನ QR</string>
+    <string name="settings_no_name_set">ಯಾವುದೇ ಹೆಸರನ್ನು ಹೊಂದಿಸಿಲ್ಲ</string>
+
+    <string name="settings_share_location">ನನ್ನ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="settings_language">ಭಾಷೆ</string>
+    <string name="settings_language_title">ಅಪ್ಲಿಕೇಶನ್ ಭಾಷೆ</string>
+    <string name="settings_language_system">ಸಿಸ್ಟಮ್ ಡೀಫಾಲ್ಟ್</string>
+
+    <string name="common_ok">ಸರಿ</string>
+    <string name="cd_back">ಹಿಂದಕ್ಕೆ</string>
+</resources>

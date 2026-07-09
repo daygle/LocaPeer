@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── کانال‌های اعلان و سرویس پیش‌زمینه ─────────────────────── -->
+    <string name="channel_name_heartbeat">پخش مکان</string>
+    <string name="channel_desc_heartbeat">مکان شما را برای مخاطبین تایید شده پخش می‌کند</string>
+    <string name="channel_name_alerts">هشدارها</string>
+    <string name="channel_desc_alerts">هشدارهای سیگنال از دست رفته و حصار جغرافیایی</string>
+    <string name="channel_name_messages">پیام‌ها</string>
+    <string name="channel_desc_messages">پیام‌های دریافتی</string>
+    <string name="notification_heartbeat_title">LocaPeer در حال اجراست</string>
+    <string name="notification_heartbeat_text">در حال اشتراک‌گذاری مکان شما با دیگران</string>
+
+    <!-- ── اقدامات مشترک ──────────────────────────────────────── -->
+    <string name="common_save">ذخیره</string>
+    <string name="common_cancel">لغو</string>
+    <string name="common_done">انجام شد</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_disable">غیرفعال کردن</string>
+    <string name="common_enable">فعال کردن</string>
+    <string name="common_restore">بازیابی</string>
+    <string name="common_unlock">باز کردن قفل</string>
+    <string name="common_password">رمز عبور</string>
+    <string name="common_not_now">الان نه</string>
+    <string name="common_off">خاموش</string>
+    <string name="common_approve">تایید</string>
+    <string name="common_deny">رد کردن</string>
+
+    <!-- ── زبانه‌های ناوبری ──────────────────────────────────────────── -->
+    <string name="tab_map">نقشه</string>
+    <string name="tab_messages">پیام‌ها</string>
+    <string name="tab_history">تاریخچه</string>
+    <string name="tab_contacts">مخاطبین</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">تنظیمات</string>
+
+    <!-- ── وضعیت‌های حرکت / فعالیت ───────────────────────────────────────── -->
+    <string name="motion_stationary">ثابت</string>
+    <string name="motion_walking">پیاده‌روی</string>
+    <string name="motion_running">دویدن</string>
+    <string name="motion_cycling">دوچرخه‌سواری</string>
+    <string name="motion_driving">رانندگی</string>
+
+    <!-- ── تنظیمات ────────────────────────────────────────────────── -->
+    <string name="settings_title">تنظیمات</string>
+    <string name="settings_section_location_privacy">مکان و حریم خصوصی</string>
+    <string name="settings_section_security">امنیت</string>
+    <string name="settings_section_map">نقشه</string>
+    <string name="settings_section_battery_performance">باتری و عملکرد</string>
+    <string name="settings_section_units_display">واحدها و نمایش</string>
+    <string name="settings_section_retention">نگهداری (این دستگاه)</string>
+    <string name="settings_section_appearance">ظاهر</string>
+    <string name="settings_section_backup_keys">پشتیبان‌گیری و کلیدها</string>
+    <string name="settings_section_about">درباره</string>
+
+    <string name="settings_edit_name">ویرایش نام</string>
+    <string name="settings_my_qr">QR من</string>
+    <string name="settings_no_name_set">نامی تنظیم نشده است</string>
+
+    <string name="settings_share_location">اشتراک‌گذاری مکان من</string>
+    <string name="settings_language">زبان</string>
+    <string name="settings_language_title">زبان برنامه</string>
+    <string name="settings_language_system">پیش‌فرض سیستم</string>
+
+    <string name="common_ok">تایید</string>
+    <string name="cd_back">بازگشت</string>
+</resources>

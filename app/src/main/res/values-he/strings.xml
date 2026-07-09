@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── ערוצי התראות ושירות קדמי ─────────────────────── -->
+    <string name="channel_name_heartbeat">שידור מיקום</string>
+    <string name="channel_desc_heartbeat">משדר את המיקום שלך לאנשי הקשר המאושרים שלך</string>
+    <string name="channel_name_alerts">התראות</string>
+    <string name="channel_desc_alerts">התראות על אות חסר וגדרות גיאוגרפיות</string>
+    <string name="channel_name_messages">הודעות</string>
+    <string name="channel_desc_messages">הודעות נכנסות</string>
+    <string name="notification_heartbeat_title">LocaPeer פועל</string>
+    <string name="notification_heartbeat_text">משתף את המיקום שלך עם אחרים</string>
+
+    <!-- ── פעולות נפוצות ──────────────────────────────────────── -->
+    <string name="common_save">שמור</string>
+    <string name="common_cancel">ביטול</string>
+    <string name="common_done">בוצע</string>
+    <string name="common_delete">מחק</string>
+    <string name="common_disable">השבת</string>
+    <string name="common_enable">אפשר</string>
+    <string name="common_restore">שחזר</string>
+    <string name="common_unlock">שחרר נעילה</string>
+    <string name="common_password">סיסמה</string>
+    <string name="common_not_now">לא עכשיו</string>
+    <string name="common_off">כבוי</string>
+    <string name="common_approve">אשר</string>
+    <string name="common_deny">דחה</string>
+
+    <!-- ── תוויות לשוניות ניווט ──────────────────────────────────────────── -->
+    <string name="tab_map">מפה</string>
+    <string name="tab_messages">הודעות</string>
+    <string name="tab_history">היסטוריה</string>
+    <string name="tab_contacts">אנשי קשר</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">הגדרות</string>
+
+    <!-- ── מצבי תנועה / פעילות ───────────────────────────────────────── -->
+    <string name="motion_stationary">נייח</string>
+    <string name="motion_walking">הליכה</string>
+    <string name="motion_running">ריצה</string>
+    <string name="motion_cycling">רכיבה על אופניים</string>
+    <string name="motion_driving">נהיגה</string>
+
+    <!-- ── הגדרות ────────────────────────────────────────────────── -->
+    <string name="settings_title">הגדרות</string>
+    <string name="settings_section_location_privacy">מיקום ופרטיות</string>
+    <string name="settings_section_security">אבטחה</string>
+    <string name="settings_section_map">מפה</string>
+    <string name="settings_section_battery_performance">סוללה וביצועים</string>
+    <string name="settings_section_units_display">יחידות ותצוגה</string>
+    <string name="settings_section_retention">שמירת נתונים (מכשיר זה)</string>
+    <string name="settings_section_appearance">מראה</string>
+    <string name="settings_section_backup_keys">גיבוי ומפתחות</string>
+    <string name="settings_section_about">אודות</string>
+
+    <string name="settings_edit_name">ערוך שם</string>
+    <string name="settings_my_qr">ה-QR שלי</string>
+    <string name="settings_no_name_set">לא הוגדר שם</string>
+
+    <string name="settings_share_location">שתף את המיקום שלי</string>
+    <string name="settings_language">שפה</string>
+    <string name="settings_language_title">שפת האפליקציה</string>
+    <string name="settings_language_system">ברירת מחדל של המערכת</string>
+
+    <string name="common_ok">אישור</string>
+    <string name="cd_back">חזור</string>
+</resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── قنوات الإشعارات وخدمة الخلفية ─────────────────────── -->
+    <string name="channel_name_heartbeat">بث الموقع</string>
+    <string name="channel_desc_heartbeat">يبث موقعك لجهات الاتصال المعتمدة لديك</string>
+    <string name="channel_name_alerts">التنبيهات</string>
+    <string name="channel_desc_alerts">تنبيهات نبضات القلب الفائتة والسياج الجغرافي</string>
+    <string name="channel_name_messages">الرسائل</string>
+    <string name="channel_desc_messages">رسائل الأقران الواردة</string>
+    <string name="notification_heartbeat_title">LocaPeer يعمل</string>
+    <string name="notification_heartbeat_text">مشاركة موقعك مع الآخرين</string>
+
+    <!-- ── إجراءات عامة ──────────────────────────────────────── -->
+    <string name="common_save">حفظ</string>
+    <string name="common_cancel">إلغاء</string>
+    <string name="common_done">تم</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_disable">تعطيل</string>
+    <string name="common_enable">تمكين</string>
+    <string name="common_restore">استعادة</string>
+    <string name="common_unlock">فتح القفل</string>
+    <string name="common_password">كلمة المرور</string>
+    <string name="common_not_now">ليس الآن</string>
+    <string name="common_off">إيقاف</string>
+    <string name="common_approve">موافقة</string>
+    <string name="common_deny">رفض</string>
+
+    <!-- ── علامات تبويب التنقل ──────────────────────────────────────────── -->
+    <string name="tab_map">الخريطة</string>
+    <string name="tab_messages">الرسائل</string>
+    <string name="tab_history">السجل</string>
+    <string name="tab_contacts">جهات الاتصال</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">الإعدادات</string>
+
+    <!-- ── حالات الحركة / النشاط ───────────────────────────────────────── -->
+    <string name="motion_stationary">ثابت</string>
+    <string name="motion_walking">مشي</string>
+    <string name="motion_running">جري</string>
+    <string name="motion_cycling">ركوب الدراجة</string>
+    <string name="motion_driving">قيادة</string>
+
+    <!-- ── الإعدادات ────────────────────────────────────────────────── -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_section_location_privacy">الموقع والخصوصية</string>
+    <string name="settings_section_security">الأمان</string>
+    <string name="settings_section_map">الخريطة</string>
+    <string name="settings_section_battery_performance">البطارية والأداء</string>
+    <string name="settings_section_units_display">الوحدات والعرض</string>
+    <string name="settings_section_retention">الاحتفاظ (هذا الجهاز)</string>
+    <string name="settings_section_appearance">المظهر</string>
+    <string name="settings_section_backup_keys">النسخ الاحتياطي والمفاتيح</string>
+    <string name="settings_section_about">حول</string>
+
+    <string name="settings_edit_name">تعديل الاسم</string>
+    <string name="settings_my_qr">كود QR الخاص بي</string>
+    <string name="settings_no_name_set">لم يتم تعيين اسم</string>
+
+    <string name="settings_share_location">مشاركة موقعي</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_language_title">لغة التطبيق</string>
+    <string name="settings_language_system">افتراضي النظام</string>
+
+    <string name="common_ok">موافق</string>
+    <string name="cd_back">رجوع</string>
+</resources>

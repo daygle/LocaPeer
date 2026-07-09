@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── د خبرتیا چینلونه او مخکښ خدمت ─────────────────────── -->
+    <string name="channel_name_heartbeat">د ځای خپرول</string>
+    <string name="channel_desc_heartbeat">ستاسو ځای ستاسو تایید شوي اړیکو ته خپروي</string>
+    <string name="channel_name_alerts">خبرتیاوې</string>
+    <string name="channel_desc_alerts">د ورک شوي سیګنال او جیو فینس خبرتیاوې</string>
+    <string name="channel_name_messages">پیغامونه</string>
+    <string name="channel_desc_messages">راتلونکي پیغامونه</string>
+    <string name="notification_heartbeat_title">LocaPeer روان دی</string>
+    <string name="notification_heartbeat_text">خپل ځای له نورو سره شریک کړئ</string>
+
+    <!-- ── عام فعالیتونه ──────────────────────────────────────── -->
+    <string name="common_save">خوندي کول</string>
+    <string name="common_cancel">لغوه کول</string>
+    <string name="common_done">وشول</string>
+    <string name="common_delete">پاکول</string>
+    <string name="common_disable">غیر فعال کول</string>
+    <string name="common_enable">فعالول</string>
+    <string name="common_restore">بیا رغول</string>
+    <string name="common_unlock">قفل خلاصول</string>
+    <string name="common_password">پټ نوم</string>
+    <string name="common_not_now">اوس نه</string>
+    <string name="common_off">بند</string>
+    <string name="common_approve">تایید</string>
+    <string name="common_deny">ردول</string>
+
+    <!-- ── د نیویګیشن ټب لیبلونه ──────────────────────────────────────────── -->
+    <string name="tab_map">نقشه</string>
+    <string name="tab_messages">پیغامونه</string>
+    <string name="tab_history">تاریخ</string>
+    <string name="tab_contacts">اړیکې</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ترتیبات</string>
+
+    <!-- ── د حرکت حالتونه ───────────────────────────────────────── -->
+    <string name="motion_stationary">ثابت</string>
+    <string name="motion_walking">روان</string>
+    <string name="motion_running">ځغاسته</string>
+    <string name="motion_cycling">سایکل چلول</string>
+    <string name="motion_driving">موټر چلول</string>
+
+    <!-- ── ترتیبات ────────────────────────────────────────────────── -->
+    <string name="settings_title">ترتیبات</string>
+    <string name="settings_section_location_privacy">ځای او محرمیت</string>
+    <string name="settings_section_security">امنیت</string>
+    <string name="settings_section_map">نقشه</string>
+    <string name="settings_section_battery_performance">بیټرۍ او فعالیت</string>
+    <string name="settings_section_units_display">واحدونه او ننداره</string>
+    <string name="settings_section_retention">ساتل (دا وسیله)</string>
+    <string name="settings_section_appearance">بڼه</string>
+    <string name="settings_section_backup_keys">بیک اپ او کیلي</string>
+    <string name="settings_section_about">په اړه</string>
+
+    <string name="settings_edit_name">نوم بدلول</string>
+    <string name="settings_my_qr">زما QR</string>
+    <string name="settings_no_name_set">نوم نه دی ټاکل شوی</string>
+
+    <string name="settings_share_location">خپل ځای شریک کړئ</string>
+    <string name="settings_language">ژبه</string>
+    <string name="settings_language_title">د اپلیکیشن ژبه</string>
+    <string name="settings_language_system">د سیسټم ډیفالټ</string>
+
+    <string name="common_ok">سمه ده</string>
+    <string name="cd_back">شاته</string>
+</resources>

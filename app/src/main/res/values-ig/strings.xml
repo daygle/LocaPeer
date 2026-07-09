@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Ọwa ọkwa & Ọrụ ihu ─────────────────────── -->
+    <string name="channel_name_heartbeat">Mgbasa Ozi Ebe</string>
+    <string name="channel_desc_heartbeat">Na-agbasa ebe ị nọ na kọntaktị gị akwadoro</string>
+    <string name="channel_name_alerts">Alerts</string>
+    <string name="channel_desc_alerts">Alerts maka heartbeat efu na geofence</string>
+    <string name="channel_name_messages">Ozi</string>
+    <string name="channel_desc_messages">Ozi ndị ọgbọ na-abata</string>
+    <string name="notification_heartbeat_title">LocaPeer na-agba ọsọ</string>
+    <string name="notification_heartbeat_text">Na-ekerịta ebe ị nọ ndị ọzọ</string>
+
+    <!-- ── Omume nkịtị ──────────────────────────────────────── -->
+    <string name="common_save">Chekwaa</string>
+    <string name="common_cancel">Kagbuo</string>
+    <string name="common_done">Emela</string>
+    <string name="common_delete">Hichapụ</string>
+    <string name="common_disable">Gbanyụọ</string>
+    <string name="common_enable">Kwado</string>
+    <string name="common_restore">Weghachi</string>
+    <string name="common_unlock">Kpọghe</string>
+    <string name="common_password">Paswọdu</string>
+    <string name="common_not_now">Ọ bụghị ugbu a</string>
+    <string name="common_off">Gbanyụọ</string>
+    <string name="common_approve">Kwado</string>
+    <string name="common_deny">Jụ</string>
+
+    <!-- ── Akara taabụ igodo ──────────────────────────────────────────── -->
+    <string name="tab_map">Maapụ</string>
+    <string name="tab_messages">Ozi</string>
+    <string name="tab_history">Akụkọ</string>
+    <string name="tab_contacts">Ndị kọntaktị</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Ntọala</string>
+
+    <!-- ── Ọnọdụ mmegharị / ọrụ ───────────────────────────────────────── -->
+    <string name="motion_stationary">Kwụsịrị</string>
+    <string name="motion_walking">Na-eje ije</string>
+    <string name="motion_running">Na-agba ọsọ</string>
+    <string name="motion_cycling">Na-agba ígwè</string>
+    <string name="motion_driving">Na-anya ụgbọ ala</string>
+
+    <!-- ── Ntọala ────────────────────────────────────────────────── -->
+    <string name="settings_title">Ntọala</string>
+    <string name="settings_section_location_privacy">Ebe &amp; Nzuzo</string>
+    <string name="settings_section_security">Nchebe</string>
+    <string name="settings_section_map">Maapụ</string>
+    <string name="settings_section_battery_performance">Batrị &amp; Arụmọrụ</string>
+    <string name="settings_section_units_display">Nkeji &amp; Ngosipụta</string>
+    <string name="settings_section_retention">Njide (Ngwaọrụ a)</string>
+    <string name="settings_section_appearance">Ọdịdị</string>
+    <string name="settings_section_backup_keys">Nkwado &amp; Igodo</string>
+    <string name="settings_section_about">Gbasara</string>
+
+    <string name="settings_edit_name">Dezie Aha</string>
+    <string name="settings_my_qr">QR m</string>
+    <string name="settings_no_name_set">Edebeghị aha</string>
+
+    <string name="settings_share_location">Kọrọ ebe m nọ</string>
+    <string name="settings_language">Asụsụ</string>
+    <string name="settings_language_title">Asụsụ ngwa</string>
+    <string name="settings_language_system">Sistemu ndabere</string>
+
+    <string name="common_ok">Ọ dị mma</string>
+    <string name="cd_back">Azu</string>
+</resources>

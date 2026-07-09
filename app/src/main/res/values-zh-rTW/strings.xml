@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── 通知頻道與前景服務 ─────────────────────── -->
+    <string name="channel_name_heartbeat">位置廣播</string>
+    <string name="channel_desc_heartbeat">將您的位置廣播給已核准的聯絡人</string>
+    <string name="channel_name_alerts">警報</string>
+    <string name="channel_desc_alerts">缺少心跳和地理圍欄警報</string>
+    <string name="channel_name_messages">訊息</string>
+    <string name="channel_desc_messages">傳入的對等訊息</string>
+    <string name="notification_heartbeat_title">LocaPeer 正在執行</string>
+    <string name="notification_heartbeat_text">正在與他人分享您的位置</string>
+
+    <!-- ── 通用動作 ──────────────────────────────────────── -->
+    <string name="common_save">儲存</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_done">完成</string>
+    <string name="common_delete">刪除</string>
+    <string name="common_disable">停用</string>
+    <string name="common_enable">啟用</string>
+    <string name="common_restore">還原</string>
+    <string name="common_unlock">解鎖</string>
+    <string name="common_password">密碼</string>
+    <string name="common_not_now">稍後再說</string>
+    <string name="common_off">關閉</string>
+    <string name="common_approve">核准</string>
+    <string name="common_deny">拒絕</string>
+
+    <!-- ── 導覽分頁標籤 ──────────────────────────────────────────── -->
+    <string name="tab_map">地圖</string>
+    <string name="tab_messages">訊息</string>
+    <string name="tab_history">歷史</string>
+    <string name="tab_contacts">聯絡人</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">設定</string>
+
+    <!-- ── 動作 / 活動狀態 ───────────────────────────────────────── -->
+    <string name="motion_stationary">靜止</string>
+    <string name="motion_walking">步行</string>
+    <string name="motion_running">跑步</string>
+    <string name="motion_cycling">騎自行車</string>
+    <string name="motion_driving">開車</string>
+
+    <!-- ── 設定 ────────────────────────────────────────────────── -->
+    <string name="settings_title">設定</string>
+    <string name="settings_section_location_privacy">位置與隱私</string>
+    <string name="settings_section_security">安全性</string>
+    <string name="settings_section_map">地圖</string>
+    <string name="settings_section_battery_performance">電池與效能</string>
+    <string name="settings_section_units_display">單位與顯示</string>
+    <string name="settings_section_retention">保留 (此裝置)</string>
+    <string name="settings_section_appearance">外觀</string>
+    <string name="settings_section_backup_keys">備份與金鑰</string>
+    <string name="settings_section_about">關於</string>
+
+    <string name="settings_edit_name">編輯名稱</string>
+    <string name="settings_my_qr">我的 QR</string>
+    <string name="settings_no_name_set">未設定名稱</string>
+
+    <string name="settings_share_location">分享我的位置</string>
+    <string name="settings_language">語言</string>
+    <string name="settings_language_title">應用程式語言</string>
+    <string name="settings_language_system">系統預設</string>
+
+    <string name="common_ok">確定</string>
+    <string name="cd_back">返回</string>
+</resources>

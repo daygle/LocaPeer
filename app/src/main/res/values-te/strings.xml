@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── నోటిఫికేషన్ ఛానెల్‌లు మరియు ఫోర్‌గ్రౌండ్ సర్వీస్ ─────────────────────── -->
+    <string name="channel_name_heartbeat">స్థాన ప్రసారం</string>
+    <string name="channel_desc_heartbeat">మీ ఆమోదించబడిన కాంటాక్ట్‌లకు మీ స్థానాన్ని ప్రసారం చేస్తుంది</string>
+    <string name="channel_name_alerts">హెచ్చరికలు</string>
+    <string name="channel_desc_alerts">మిస్డ్ హార్ట్‌బీట్ మరియు జియోఫెన్స్ హెచ్చరికలు</string>
+    <string name="channel_name_messages">సందేశాలు</string>
+    <string name="channel_desc_messages">వచ్చే సందేశాలు</string>
+    <string name="notification_heartbeat_title">LocaPeer రన్ అవుతోంది</string>
+    <string name="notification_heartbeat_text">మీ స్థానాన్ని ఇతరులతో పంచుకుంటోంది</string>
+
+    <!-- ── సాధారణ చర్యలు ──────────────────────────────────────── -->
+    <string name="common_save">సేవ్ చేయి</string>
+    <string name="common_cancel">రద్దు చేయి</string>
+    <string name="common_done">పూర్తయింది</string>
+    <string name="common_delete">తొలగించు</string>
+    <string name="common_disable">నిలిపివేయి</string>
+    <string name="common_enable">ప్రారంభించు</string>
+    <string name="common_restore">పునరుద్ధరించు</string>
+    <string name="common_unlock">అన్‌లాక్ చేయి</string>
+    <string name="common_password">పాస్‌వర్డ్</string>
+    <string name="common_not_now">ఇప్పుడు వద్దు</string>
+    <string name="common_off">ఆఫ్</string>
+    <string name="common_approve">ఆమోదించు</string>
+    <string name="common_deny">తిరస్కరించు</string>
+
+    <!-- ── నావిగేషన్ ట్యాబ్ లేబుల్స్ ──────────────────────────────────────────── -->
+    <string name="tab_map">మ్యాప్</string>
+    <string name="tab_messages">సందేశాలు</string>
+    <string name="tab_history">చరిత్ర</string>
+    <string name="tab_contacts">కాంటాక్ట్స్</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">సెట్టింగ్‌లు</string>
+
+    <!-- ── కదలిక / కార్యాచరణ స్థితులు ───────────────────────────────────────── -->
+    <string name="motion_stationary">స్థిరంగా ఉంది</string>
+    <string name="motion_walking">నడక</string>
+    <string name="motion_running">పరుగు</string>
+    <string name="motion_cycling">సైక్లింగ్</string>
+    <string name="motion_driving">డ్రైవింగ్</string>
+
+    <!-- ── సెట్టింగ్‌లు ────────────────────────────────────────────────── -->
+    <string name="settings_title">సెట్టింగ్‌లు</string>
+    <string name="settings_section_location_privacy">స్థానం మరియు గోప్యత</string>
+    <string name="settings_section_security">భద్రత</string>
+    <string name="settings_section_map">మ్యాప్</string>
+    <string name="settings_section_battery_performance">బ్యాటరీ మరియు పనితీరు</string>
+    <string name="settings_section_units_display">యూనిట్లు మరియు ప్రదర్శన</string>
+    <string name="settings_section_retention">ధారణ (ఈ పరికరం)</string>
+    <string name="settings_section_appearance">రూపం</string>
+    <string name="settings_section_backup_keys">బ్యాకప్ మరియు కీలు</string>
+    <string name="settings_section_about">గురించి</string>
+
+    <string name="settings_edit_name">పేరు సవరించు</string>
+    <string name="settings_my_qr">నా QR</string>
+    <string name="settings_no_name_set">పేరు సెట్ చేయబడలేదు</string>
+
+    <string name="settings_share_location">నా స్థానాన్ని పంచుకో</string>
+    <string name="settings_language">భాష</string>
+    <string name="settings_language_title">యాప్ భాష</string>
+    <string name="settings_language_system">సిస్టమ్ డిఫాల్ట్</string>
+
+    <string name="common_ok">సరే</string>
+    <string name="cd_back">వెనుకకు</string>
+</resources>

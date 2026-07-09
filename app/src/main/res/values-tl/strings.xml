@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Mga Channel ng Notification at Foreground Service ─────────────────────── -->
+    <string name="channel_name_heartbeat">Broadcast ng Lokasyon</string>
+    <string name="channel_desc_heartbeat">I-broadcast ang iyong lokasyon sa iyong mga aprubadong contact</string>
+    <string name="channel_name_alerts">Mga Alert</string>
+    <string name="channel_desc_alerts">Mga alerto para sa nakaligtaang heartbeat at geofence</string>
+    <string name="channel_name_messages">Mga Mensahe</string>
+    <string name="channel_desc_messages">Mga papasok na mensahe ng peer</string>
+    <string name="notification_heartbeat_title">Tumatakbo ang LocaPeer</string>
+    <string name="notification_heartbeat_text">Ibinabahagi ang iyong lokasyon sa iba</string>
+
+    <!-- ── Mga Karaniwang Aksyon ──────────────────────────────────────── -->
+    <string name="common_save">I-save</string>
+    <string name="common_cancel">Kanselahin</string>
+    <string name="common_done">Tapos na</string>
+    <string name="common_delete">I-delete</string>
+    <string name="common_disable">I-disable</string>
+    <string name="common_enable">I-enable</string>
+    <string name="common_restore">I-restore</string>
+    <string name="common_unlock">I-unlock</string>
+    <string name="common_password">Password</string>
+    <string name="common_not_now">Huwag muna</string>
+    <string name="common_off">Off</string>
+    <string name="common_approve">Aprubahan</string>
+    <string name="common_deny">Tanggihan</string>
+
+    <!-- ── Mga Label ng Navigation Tab ──────────────────────────────────────────── -->
+    <string name="tab_map">Mapa</string>
+    <string name="tab_messages">Mga Mensahe</string>
+    <string name="tab_history">Kasaysayan</string>
+    <string name="tab_contacts">Mga Contact</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Mga Setting</string>
+
+    <!-- ── Mga Katayuan ng Paggalaw / Aktibidad ───────────────────────────────────────── -->
+    <string name="motion_stationary">Nakatigil</string>
+    <string name="motion_walking">Naglalakad</string>
+    <string name="motion_running">Tumatakbo</string>
+    <string name="motion_cycling">Nagbibisikleta</string>
+    <string name="motion_driving">Nagmamaneho</string>
+
+    <!-- ── Mga Setting ────────────────────────────────────────────────── -->
+    <string name="settings_title">Mga Setting</string>
+    <string name="settings_section_location_privacy">Lokasyon at Privacy</string>
+    <string name="settings_section_security">Seguridad</string>
+    <string name="settings_section_map">Mapa</string>
+    <string name="settings_section_battery_performance">Baterya at Performance</string>
+    <string name="settings_section_units_display">Mga Unit at Display</string>
+    <string name="settings_section_retention">Retention (Device na Ito)</string>
+    <string name="settings_section_appearance">Hitsura</string>
+    <string name="settings_section_backup_keys">Backup at Mga Key</string>
+    <string name="settings_section_about">Tungkol</string>
+
+    <string name="settings_edit_name">I-edit ang Pangalan</string>
+    <string name="settings_my_qr">Aking QR</string>
+    <string name="settings_no_name_set">Walang nakatakdang pangalan</string>
+
+    <string name="settings_share_location">Ibahagi ang Aking Lokasyon</string>
+    <string name="settings_language">Wika</string>
+    <string name="settings_language_title">Wika ng App</string>
+    <string name="settings_language_system">System default</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Bumalik</string>
+</resources>

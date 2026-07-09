@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Kênh thông báo & Dịch vụ chạy ngầm ─────────────────────── -->
+    <string name="channel_name_heartbeat">Phát sóng vị trí</string>
+    <string name="channel_desc_heartbeat">Phát sóng vị trí của bạn cho các liên hệ đã được phê duyệt</string>
+    <string name="channel_name_alerts">Cảnh báo</string>
+    <string name="channel_desc_alerts">Cảnh báo nhịp tim bị bỏ lỡ và hàng rào địa lý</string>
+    <string name="channel_name_messages">Tin nhắn</string>
+    <string name="channel_desc_messages">Tin nhắn đến</string>
+    <string name="notification_heartbeat_title">LocaPeer đang chạy</string>
+    <string name="notification_heartbeat_text">Đang chia sẻ vị trí của bạn với người khác</string>
+
+    <!-- ── Hành động chung ──────────────────────────────────────── -->
+    <string name="common_save">Lưu</string>
+    <string name="common_cancel">Hủy</string>
+    <string name="common_done">Xong</string>
+    <string name="common_delete">Xóa</string>
+    <string name="common_disable">Vô hiệu hóa</string>
+    <string name="common_enable">Bật</string>
+    <string name="common_restore">Khôi phục</string>
+    <string name="common_unlock">Mở khóa</string>
+    <string name="common_password">Mật khẩu</string>
+    <string name="common_not_now">Để sau</string>
+    <string name="common_off">Tắt</string>
+    <string name="common_approve">Phê duyệt</string>
+    <string name="common_deny">Từ chối</string>
+
+    <!-- ── Nhãn tab điều hướng ──────────────────────────────────────────── -->
+    <string name="tab_map">Bản đồ</string>
+    <string name="tab_messages">Tin nhắn</string>
+    <string name="tab_history">Lịch sử</string>
+    <string name="tab_contacts">Liên hệ</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Cài đặt</string>
+
+    <!-- ── Trạng thái chuyển động / hoạt động ───────────────────────────────────────── -->
+    <string name="motion_stationary">Đứng yên</string>
+    <string name="motion_walking">Đi bộ</string>
+    <string name="motion_running">Chạy</string>
+    <string name="motion_cycling">Đạp xe</string>
+    <string name="motion_driving">Lái xe</string>
+
+    <!-- ── Cài đặt ────────────────────────────────────────────────── -->
+    <string name="settings_title">Cài đặt</string>
+    <string name="settings_section_location_privacy">Vị trí &amp; Quyền riêng tư</string>
+    <string name="settings_section_security">Bảo mật</string>
+    <string name="settings_section_map">Bản đồ</string>
+    <string name="settings_section_battery_performance">Pin &amp; Hiệu suất</string>
+    <string name="settings_section_units_display">Đơn vị &amp; Hiển thị</string>
+    <string name="settings_section_retention">Lưu trữ (Thiết bị này)</string>
+    <string name="settings_section_appearance">Giao diện</string>
+    <string name="settings_section_backup_keys">Sao lưu &amp; Khóa</string>
+    <string name="settings_section_about">Giới thiệu</string>
+
+    <string name="settings_edit_name">Chỉnh sửa tên</string>
+    <string name="settings_my_qr">QR của tôi</string>
+    <string name="settings_no_name_set">Chưa đặt tên</string>
+
+    <string name="settings_share_location">Chia sẻ vị trí của tôi</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="settings_language_title">Ngôn ngữ ứng dụng</string>
+    <string name="settings_language_system">Mặc định hệ thống</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Quay lại</string>
+</resources>

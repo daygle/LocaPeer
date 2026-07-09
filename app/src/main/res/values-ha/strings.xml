@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Tashoshin sanarwa & sabis na gaba ─────────────────────── -->
+    <string name="channel_name_heartbeat">Watsa Wuri</string>
+    <string name="channel_desc_heartbeat">Yana watsa wurin ku ga lambobinku da aka amince da su</string>
+    <string name="channel_name_alerts">Gargaɗi</string>
+    <string name="channel_desc_alerts">Gargaɗi game da bugun zuciya da aka rasa da shingen ƙasa</string>
+    <string name="channel_name_messages">Saƙonni</string>
+    <string name="channel_desc_messages">Saƙonni masu shigowa</string>
+    <string name="notification_heartbeat_title">LocaPeer yana aiki</string>
+    <string name="notification_heartbeat_text">Raba wurin ku da wasu</string>
+
+    <!-- ── Ayyuka na gama gari ──────────────────────────────────────── -->
+    <string name="common_save">Ajiye</string>
+    <string name="common_cancel">Soke</string>
+    <string name="common_done">An gama</string>
+    <string name="common_delete">Goge</string>
+    <string name="common_disable">Kashe</string>
+    <string name="common_enable">Kunna</string>
+    <string name="common_restore">Maido</string>
+    <string name="common_unlock">Buɗe</string>
+    <string name="common_password">Kalmar sirri</string>
+    <string name="common_not_now">Ba yanzu ba</string>
+    <string name="common_off">A kashe</string>
+    <string name="common_approve">Amince</string>
+    <string name="common_deny">Ƙi</string>
+
+    <!-- ── Alamun shafin kewayawa ──────────────────────────────────────────── -->
+    <string name="tab_map">Taswira</string>
+    <string name="tab_messages">Saƙonni</string>
+    <string name="tab_history">Tarihi</string>
+    <string name="tab_contacts">Lambobi</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Saituna</string>
+
+    <!-- ── Yanayin motsi / aiki ───────────────────────────────────────── -->
+    <string name="motion_stationary">Ba ya motsi</string>
+    <string name="motion_walking">Yana tafiya</string>
+    <string name="motion_running">Yana gudu</string>
+    <string name="motion_cycling">Yana koyon keke</string>
+    <string name="motion_driving">Yana tuki</string>
+
+    <!-- ── Saituna ────────────────────────────────────────────────── -->
+    <string name="settings_title">Saituna</string>
+    <string name="settings_section_location_privacy">Wuri &amp; Sirri</string>
+    <string name="settings_section_security">Tsaro</string>
+    <string name="settings_section_map">Taswira</string>
+    <string name="settings_section_battery_performance">Baturi &amp; Aiki</string>
+    <string name="settings_section_units_display">Raka\'a &amp; Nuni</string>
+    <string name="settings_section_retention">Riƙewa (Wannan Na'urar)</string>
+    <string name="settings_section_appearance">Kamanni</string>
+    <string name="settings_section_backup_keys">Ajiye &amp; Maɓallai</string>
+    <string name="settings_section_about">Game da</string>
+
+    <string name="settings_edit_name">Gyara Suna</string>
+    <string name="settings_my_qr">QR nawa</string>
+    <string name="settings_no_name_set">Ba a sa suna ba</string>
+
+    <string name="settings_share_location">Raba Wurina</string>
+    <string name="settings_language">Harshe</string>
+    <string name="settings_language_title">Harshen App</string>
+    <string name="settings_language_system">Tsohuwar tsarin</string>
+
+    <string name="common_ok">KO</string>
+    <string name="cd_back">Baya</string>
+</resources>

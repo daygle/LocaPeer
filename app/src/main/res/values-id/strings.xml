@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Saluran Notifikasi & Layanan Latar Depan ─────────────────────── -->
+    <string name="channel_name_heartbeat">Siaran Lokasi</string>
+    <string name="channel_desc_heartbeat">Menyiarkan lokasi Anda ke kontak yang disetujui</string>
+    <string name="channel_name_alerts">Peringatan</string>
+    <string name="channel_desc_alerts">Peringatan heartbeat terlewat dan geofence</string>
+    <string name="channel_name_messages">Pesan</string>
+    <string name="channel_desc_messages">Pesan masuk</string>
+    <string name="notification_heartbeat_title">LocaPeer sedang berjalan</string>
+    <string name="notification_heartbeat_text">Berbagi lokasi Anda dengan orang lain</string>
+
+    <!-- ── Tindakan Umum ──────────────────────────────────────── -->
+    <string name="common_save">Simpan</string>
+    <string name="common_cancel">Batal</string>
+    <string name="common_done">Selesai</string>
+    <string name="common_delete">Hapus</string>
+    <string name="common_disable">Nonaktifkan</string>
+    <string name="common_enable">Aktifkan</string>
+    <string name="common_restore">Pulihkan</string>
+    <string name="common_unlock">Buka Kunci</string>
+    <string name="common_password">Kata Sandi</string>
+    <string name="common_not_now">Nanti Saja</string>
+    <string name="common_off">Mati</string>
+    <string name="common_approve">Setujui</string>
+    <string name="common_deny">Tolak</string>
+
+    <!-- ── Label Tab Navigasi ──────────────────────────────────────────── -->
+    <string name="tab_map">Peta</string>
+    <string name="tab_messages">Pesan</string>
+    <string name="tab_history">Riwayat</string>
+    <string name="tab_contacts">Kontak</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Pengaturan</string>
+
+    <!-- ── Status Gerakan / Aktivitas ───────────────────────────────────────── -->
+    <string name="motion_stationary">Diam</string>
+    <string name="motion_walking">Berjalan</string>
+    <string name="motion_running">Berlari</string>
+    <string name="motion_cycling">Bersepeda</string>
+    <string name="motion_driving">Mengemudi</string>
+
+    <!-- ── Pengaturan ────────────────────────────────────────────────── -->
+    <string name="settings_title">Pengaturan</string>
+    <string name="settings_section_location_privacy">Lokasi &amp; Privasi</string>
+    <string name="settings_section_security">Keamanan</string>
+    <string name="settings_section_map">Peta</string>
+    <string name="settings_section_battery_performance">Baterai &amp; Performa</string>
+    <string name="settings_section_units_display">Unit &amp; Tampilan</string>
+    <string name="settings_section_retention">Penyimpanan (Perangkat Ini)</string>
+    <string name="settings_section_appearance">Tampilan</string>
+    <string name="settings_section_backup_keys">Cadangan &amp; Kunci</string>
+    <string name="settings_section_about">Tentang</string>
+
+    <string name="settings_edit_name">Edit Nama</string>
+    <string name="settings_my_qr">QR Saya</string>
+    <string name="settings_no_name_set">Nama belum diatur</string>
+
+    <string name="settings_share_location">Bagikan Lokasi Saya</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="settings_language_title">Bahasa Aplikasi</string>
+    <string name="settings_language_system">Default sistem</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Kembali</string>
+</resources>

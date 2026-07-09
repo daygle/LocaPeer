@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── ช่องทางการแจ้งเตือนและบริการเบื้องหน้า ─────────────────────── -->
+    <string name="channel_name_heartbeat">การแพร่สัญญาณตำแหน่ง</string>
+    <string name="channel_desc_heartbeat">แพร่สัญญาณตำแหน่งของคุณไปยังผู้ติดต่อที่ได้รับการอนุมัติ</string>
+    <string name="channel_name_alerts">การแจ้งเตือน</string>
+    <string name="channel_desc_alerts">การแจ้งเตือนสัญญาณที่ขาดหายไปและขอบเขตพื้นที่</string>
+    <string name="channel_name_messages">ข้อความ</string>
+    <string name="channel_desc_messages">ข้อความที่เข้ามา</string>
+    <string name="notification_heartbeat_title">LocaPeer กำลังทำงาน</string>
+    <string name="notification_heartbeat_text">กำลังแชร์ตำแหน่งของคุณกับผู้อื่น</string>
+
+    <!-- ── การดำเนินการทั่วไป ──────────────────────────────────────── -->
+    <string name="common_save">บันทึก</string>
+    <string name="common_cancel">ยกเลิก</string>
+    <string name="common_done">เสร็จสิ้น</string>
+    <string name="common_delete">ลบ</string>
+    <string name="common_disable">ปิดใช้งาน</string>
+    <string name="common_enable">เปิดใช้งาน</string>
+    <string name="common_restore">กู้คืน</string>
+    <string name="common_unlock">ปลดล็อก</string>
+    <string name="common_password">รหัสผ่าน</string>
+    <string name="common_not_now">ไว้ทีหลัง</string>
+    <string name="common_off">ปิด</string>
+    <string name="common_approve">อนุมัติ</string>
+    <string name="common_deny">ปฏิเสธ</string>
+
+    <!-- ── แท็บการนำทาง ──────────────────────────────────────────── -->
+    <string name="tab_map">แผนที่</string>
+    <string name="tab_messages">ข้อความ</string>
+    <string name="tab_history">ประวัติ</string>
+    <string name="tab_contacts">ผู้ติดต่อ</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ตั้งค่า</string>
+
+    <!-- ── การเคลื่อนไหว / สถานะกิจกรรม ───────────────────────────────────────── -->
+    <string name="motion_stationary">อยู่กับที่</string>
+    <string name="motion_walking">กำลังเดิน</string>
+    <string name="motion_running">กำลังวิ่ง</string>
+    <string name="motion_cycling">ปั่นจักรยาน</string>
+    <string name="motion_driving">กำลังขับรถ</string>
+
+    <!-- ── การตั้งค่า ────────────────────────────────────────────────── -->
+    <string name="settings_title">ตั้งค่า</string>
+    <string name="settings_section_location_privacy">ตำแหน่งและความเป็นส่วนตัว</string>
+    <string name="settings_section_security">ความปลอดภัย</string>
+    <string name="settings_section_map">แผนที่</string>
+    <string name="settings_section_battery_performance">แบตเตอรี่และประสิทธิภาพ</string>
+    <string name="settings_section_units_display">หน่วยและการแสดงผล</string>
+    <string name="settings_section_retention">การเก็บรักษา (อุปกรณ์นี้)</string>
+    <string name="settings_section_appearance">รูปลักษณ์</string>
+    <string name="settings_section_backup_keys">การสำรองข้อมูลและคีย์</string>
+    <string name="settings_section_about">เกี่ยวกับ</string>
+
+    <string name="settings_edit_name">แก้ไขชื่อ</string>
+    <string name="settings_my_qr">QR ของฉัน</string>
+    <string name="settings_no_name_set">ยังไม่ได้ตั้งชื่อ</string>
+
+    <string name="settings_share_location">แชร์ตำแหน่งของฉัน</string>
+    <string name="settings_language">ภาษา</string>
+    <string name="settings_language_title">ภาษาของแอป</string>
+    <string name="settings_language_system">ค่าเริ่มต้นของระบบ</string>
+
+    <string name="common_ok">ตกลง</string>
+    <string name="cd_back">กลับ</string>
+</resources>

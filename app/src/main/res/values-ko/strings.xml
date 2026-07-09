@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── 알림 채널 및 포그라운드 서비스 ─────────────────────── -->
+    <string name="channel_name_heartbeat">위치 방송</string>
+    <string name="channel_desc_heartbeat">승인된 연락처에 내 위치를 방송합니다</string>
+    <string name="channel_name_alerts">경고</string>
+    <string name="channel_desc_alerts">하트비트 누락 및 지오펜스 경고</string>
+    <string name="channel_name_messages">메시지</string>
+    <string name="channel_desc_messages">수신되는 피어 메시지</string>
+    <string name="notification_heartbeat_title">LocaPeer 실행 중</string>
+    <string name="notification_heartbeat_text">다른 사람과 위치를 공유하고 있습니다</string>
+
+    <!-- ── 공통 동작 ──────────────────────────────────────── -->
+    <string name="common_save">저장</string>
+    <string name="common_cancel">취소</string>
+    <string name="common_done">완료</string>
+    <string name="common_delete">삭제</string>
+    <string name="common_disable">비활성화</string>
+    <string name="common_enable">활성화</string>
+    <string name="common_restore">복원</string>
+    <string name="common_unlock">잠금 해제</string>
+    <string name="common_password">비밀번호</string>
+    <string name="common_not_now">나중에</string>
+    <string name="common_off">꺼짐</string>
+    <string name="common_approve">승인</string>
+    <string name="common_deny">거부</string>
+
+    <!-- ── 탐색 탭 레이블 ──────────────────────────────────────────── -->
+    <string name="tab_map">지도</string>
+    <string name="tab_messages">메시지</string>
+    <string name="tab_history">기록</string>
+    <string name="tab_contacts">연락처</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">설정</string>
+
+    <!-- ── 동작 / 활동 상태 ───────────────────────────────────────── -->
+    <string name="motion_stationary">정지</string>
+    <string name="motion_walking">걷기</string>
+    <string name="motion_running">달리기</string>
+    <string name="motion_cycling">자전거</string>
+    <string name="motion_driving">운전</string>
+
+    <!-- ── 설정 ────────────────────────────────────────────────── -->
+    <string name="settings_title">설정</string>
+    <string name="settings_section_location_privacy">위치 및 개인정보</string>
+    <string name="settings_section_security">보안</string>
+    <string name="settings_section_map">지도</string>
+    <string name="settings_section_battery_performance">배터리 및 성능</string>
+    <string name="settings_section_units_display">단위 및 표시</string>
+    <string name="settings_section_retention">보관 (이 기기)</string>
+    <string name="settings_section_appearance">모양</string>
+    <string name="settings_section_backup_keys">백업 및 키</string>
+    <string name="settings_section_about">정보</string>
+
+    <string name="settings_edit_name">이름 편집</string>
+    <string name="settings_my_qr">내 QR</string>
+    <string name="settings_no_name_set">이름 설정 안 됨</string>
+
+    <string name="settings_share_location">내 위치 공유</string>
+    <string name="settings_language">언어</string>
+    <string name="settings_language_title">앱 언어</string>
+    <string name="settings_language_system">시스템 기본값</string>
+
+    <string name="common_ok">확인</string>
+    <string name="cd_back">뒤로</string>
+</resources>

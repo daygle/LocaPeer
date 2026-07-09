@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Canais de notificação e serviço em primeiro plano ─────────────────────── -->
+    <string name="channel_name_heartbeat">Transmissão de Localização</string>
+    <string name="channel_desc_heartbeat">Transmite sua localização para seus contatos aprovados</string>
+    <string name="channel_name_alerts">Alertas</string>
+    <string name="channel_desc_alerts">Alertas de batimento cardíaco perdido e cercas geográficas</string>
+    <string name="channel_name_messages">Mensagens</string>
+    <string name="channel_desc_messages">Mensagens de contatos recebidas</string>
+    <string name="notification_heartbeat_title">LocaPeer está rodando</string>
+    <string name="notification_heartbeat_text">Compartilhando sua localização com outros</string>
+
+    <!-- ── Ações comuns ──────────────────────────────────────── -->
+    <string name="common_save">Salvar</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_done">Pronto</string>
+    <string name="common_delete">Excluir</string>
+    <string name="common_disable">Desativar</string>
+    <string name="common_enable">Ativar</string>
+    <string name="common_restore">Restaurar</string>
+    <string name="common_unlock">Desbloquear</string>
+    <string name="common_password">Senha</string>
+    <string name="common_not_now">Agora não</string>
+    <string name="common_off">Desligado</string>
+    <string name="common_approve">Aprovar</string>
+    <string name="common_deny">Recusar</string>
+
+    <!-- ── Etiquetas de navegação ──────────────────────────────────────────── -->
+    <string name="tab_map">Mapa</string>
+    <string name="tab_messages">Mensagens</string>
+    <string name="tab_history">Histórico</string>
+    <string name="tab_contacts">Contatos</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Configurações</string>
+
+    <!-- ── Estados de movimento ───────────────────────────────────────── -->
+    <string name="motion_stationary">Parado</string>
+    <string name="motion_walking">Caminhando</string>
+    <string name="motion_running">Correndo</string>
+    <string name="motion_cycling">Pedalando</string>
+    <string name="motion_driving">Dirigindo</string>
+
+    <!-- ── Configurações ────────────────────────────────────────────────── -->
+    <string name="settings_title">Configurações</string>
+    <string name="settings_section_location_privacy">Localização e Privacidade</string>
+    <string name="settings_section_security">Segurança</string>
+    <string name="settings_section_map">Mapa</string>
+    <string name="settings_section_battery_performance">Bateria e Desempenho</string>
+    <string name="settings_section_units_display">Unidades e Exibição</string>
+    <string name="settings_section_retention">Retenção (Neste dispositivo)</string>
+    <string name="settings_section_appearance">Aparência</string>
+    <string name="settings_section_backup_keys">Backup e Chaves</string>
+    <string name="settings_section_about">Sobre</string>
+
+    <string name="settings_edit_name">Editar nome</string>
+    <string name="settings_my_qr">Meu QR</string>
+    <string name="settings_no_name_set">Nenhum nome definido</string>
+
+    <string name="settings_share_location">Compartilhar minha localização</string>
+    <string name="settings_language">Idioma</string>
+    <string name="settings_language_title">Idioma do App</string>
+    <string name="settings_language_system">Padrão do sistema</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Voltar</string>
+</resources>

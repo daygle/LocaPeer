@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── የማሳወቂያ ቻናሎች እና የፊት አገልግሎት ─────────────────────── -->
+    <string name="channel_name_heartbeat">የአካባቢ ስርጭት</string>
+    <string name="channel_desc_heartbeat">አካባቢዎን ለተፈቀደላቸው እውቂያዎች ያስተላልፋል</string>
+    <string name="channel_name_alerts">ማንቂያዎች</string>
+    <string name="channel_desc_alerts">ያመለጡ የልብ ምት እና የጂኦፌንስ ማንቂያዎች</string>
+    <string name="channel_name_messages">መልእክቶች</string>
+    <string name="channel_desc_messages">ገቢ መልእክቶች</string>
+    <string name="notification_heartbeat_title">LocaPeer እየሰራ ነው</string>
+    <string name="notification_heartbeat_text">አካባቢዎን ለሌሎች እያጋሩ ነው</string>
+
+    <!-- ── የተለመዱ ድርጊቶች ──────────────────────────────────────── -->
+    <string name="common_save">አስቀምጥ</string>
+    <string name="common_cancel">ሰርዝ</string>
+    <string name="common_done">ተጠናቅቋል</string>
+    <string name="common_delete">አጥፋ</string>
+    <string name="common_disable">አቦዝን</string>
+    <string name="common_enable">አንቃ</string>
+    <string name="common_restore">ወደ ነበረበት መልስ</string>
+    <string name="common_unlock">ክፈት</string>
+    <string name="common_password">የይለፍ ቃል</string>
+    <string name="common_not_now">አሁን አይደለም</string>
+    <string name="common_off">ጠፍቷል</string>
+    <string name="common_approve">ፍቀድ</string>
+    <string name="common_deny">ከልክል</string>
+
+    <!-- ── የአሰሳ ታብ ስሞች ──────────────────────────────────────────── -->
+    <string name="tab_map">ካርታ</string>
+    <string name="tab_messages">መልእክቶች</string>
+    <string name="tab_history">ታሪክ</string>
+    <string name="tab_contacts">እውቂያዎች</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ቅንብሮች</string>
+
+    <!-- ── የእንቅስቃሴ ሁኔታዎች ───────────────────────────────────────── -->
+    <string name="motion_stationary">ቆሟል</string>
+    <string name="motion_walking">እየተራመደ ነው</string>
+    <string name="motion_running">እየሮጠ ነው</string>
+    <string name="motion_cycling">ብስክሌት እየነዳ ነው</string>
+    <string name="motion_driving">መኪና እየነዳ ነው</string>
+
+    <!-- ── ቅንብሮች ────────────────────────────────────────────────── -->
+    <string name="settings_title">ቅንብሮች</string>
+    <string name="settings_section_location_privacy">አካባቢ እና ግላዊነት</string>
+    <string name="settings_section_security">ደህንነት</string>
+    <string name="settings_section_map">ካርታ</string>
+    <string name="settings_section_battery_performance">ባትሪ እና አፈጻጸም</string>
+    <string name="settings_section_units_display">ዩኒቶች እና ማሳያ</string>
+    <string name="settings_section_retention">የውሂብ ቆይታ (በዚህ መሣሪያ)</string>
+    <string name="settings_section_appearance">መልክ</string>
+    <string name="settings_section_backup_keys">መጠባበቂያ እና ቁልፎች</string>
+    <string name="settings_section_about">ስለ</string>
+
+    <string name="settings_edit_name">ስም አርም</string>
+    <string name="settings_my_qr">የእኔ QR</string>
+    <string name="settings_no_name_set">ስም አልተሰጠም</string>
+
+    <string name="settings_share_location">አካባቢዬን አጋራ</string>
+    <string name="settings_language">ቋንቋ</string>
+    <string name="settings_language_title">የመተግበሪያ ቋንቋ</string>
+    <string name="settings_language_system">የስርዓት ነባሪ</string>
+
+    <string name="common_ok">እሺ</string>
+    <string name="cd_back">ተመለስ</string>
+</resources>

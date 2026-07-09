@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── அறிவிப்பு சேனல்கள் மற்றும் முன்புற சேவை ─────────────────────── -->
+    <string name="channel_name_heartbeat">இருப்பிட ஒளிபரப்பு</string>
+    <string name="channel_desc_heartbeat">உங்கள் இருப்பிடத்தை உங்கள் அங்கீகரிக்கப்பட்ட தொடர்புகளுக்கு ஒளிபரப்புகிறது</string>
+    <string name="channel_name_alerts">எச்சரிக்கைகள்</string>
+    <string name="channel_desc_alerts">தவறிய ஹார்ட்பீட் மற்றும் ஜியோஃபென்ஸ் எச்சரிக்கைகள்</string>
+    <string name="channel_name_messages">செய்திகள்</string>
+    <string name="channel_desc_messages">உள்வரும் செய்திகள்</string>
+    <string name="notification_heartbeat_title">LocaPeer இயங்குகிறது</string>
+    <string name="notification_heartbeat_text">உங்கள் இருப்பிடத்தை மற்றவர்களுடன் பகிர்கிறது</string>
+
+    <!-- ── பொதுவான செயல்கள் ──────────────────────────────────────── -->
+    <string name="common_save">சேமி</string>
+    <string name="common_cancel">ரத்துசெய்</string>
+    <string name="common_done">முடிந்தது</string>
+    <string name="common_delete">நீக்கு</string>
+    <string name="common_disable">முடக்கு</string>
+    <string name="common_enable">செயல்படுத்து</string>
+    <string name="common_restore">மீட்டமை</string>
+    <string name="common_unlock">திற</string>
+    <string name="common_password">கடவுச்சொல்</string>
+    <string name="common_not_now">இப்போது வேண்டாம்</string>
+    <string name="common_off">முடக்கப்பட்டது</string>
+    <string name="common_approve">அங்கீகரி</string>
+    <string name="common_deny">மறு</string>
+
+    <!-- ── வழிசெலுத்தல் தாவல்கள் ──────────────────────────────────────────── -->
+    <string name="tab_map">வரைபடம்</string>
+    <string name="tab_messages">செய்திகள்</string>
+    <string name="tab_history">வரலாறு</string>
+    <string name="tab_contacts">தொடர்புகள்</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">அமைப்புகள்</string>
+
+    <!-- ── இயக்கம் / செயல்பாட்டு நிலைகள் ───────────────────────────────────────── -->
+    <string name="motion_stationary">நிலையானது</string>
+    <string name="motion_walking">நடத்தல்</string>
+    <string name="motion_running">ஓடுதல்</string>
+    <string name="motion_cycling">மிதிவண்டி</string>
+    <string name="motion_driving">வாகனம் ஓட்டுதல்</string>
+
+    <!-- ── அமைப்புகள் ────────────────────────────────────────────────── -->
+    <string name="settings_title">அமைப்புகள்</string>
+    <string name="settings_section_location_privacy">இருப்பிடம் மற்றும் தனியுரிமை</string>
+    <string name="settings_section_security">பாதுகாப்பு</string>
+    <string name="settings_section_map">வரைபடம்</string>
+    <string name="settings_section_battery_performance">பேட்டரி மற்றும் செயல்திறன்</string>
+    <string name="settings_section_units_display">அலகுகள் மற்றும் காட்சி</string>
+    <string name="settings_section_retention">தக்கவைப்பு (இந்த சாதனம்)</string>
+    <string name="settings_section_appearance">தோற்றம்</string>
+    <string name="settings_section_backup_keys">காப்புப்பிரதி மற்றும் விசைகள்</string>
+    <string name="settings_section_about">பற்றி</string>
+
+    <string name="settings_edit_name">பெயரைத் திருத்து</string>
+    <string name="settings_my_qr">எனது QR</string>
+    <string name="settings_no_name_set">பெயர் அமைக்கப்படவில்லை</string>
+
+    <string name="settings_share_location">எனது இருப்பிடத்தைப் பகிர்</string>
+    <string name="settings_language">மொழி</string>
+    <string name="settings_language_title">பயன்பாட்டு மொழி</string>
+    <string name="settings_language_system">கணினி இயல்புநிலை</string>
+
+    <string name="common_ok">சரி</string>
+    <string name="cd_back">பின்னால்</string>
+</resources>

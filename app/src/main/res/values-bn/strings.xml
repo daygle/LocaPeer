@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── নোটিফিকেশন চ্যানেল এবং ফোরগ্রাউন্ড সার্ভিস ─────────────────────── -->
+    <string name="channel_name_heartbeat">অবস্থান সম্প্রচার</string>
+    <string name="channel_desc_heartbeat">আপনার অনুমোদিত পরিচিতিদের কাছে আপনার অবস্থান সম্প্রচার করে</string>
+    <string name="channel_name_alerts">সতর্কতা</string>
+    <string name="channel_desc_alerts">মিসড হার্টবিট এবং জিওফেন্স সতর্কতা</string>
+    <string name="channel_name_messages">বার্তা</string>
+    <string name="channel_desc_messages">আগত পিয়ার বার্তা</string>
+    <string name="notification_heartbeat_title">LocaPeer চলছে</string>
+    <string name="notification_heartbeat_text">অন্যদের সাথে আপনার অবস্থান শেয়ার করা হচ্ছে</string>
+
+    <!-- ── সাধারণ কাজ ──────────────────────────────────────── -->
+    <string name="common_save">সংরক্ষণ করুন</string>
+    <string name="common_cancel">বাতিল করুন</string>
+    <string name="common_done">সম্পন্ন</string>
+    <string name="common_delete">মুছে ফেলুন</string>
+    <string name="common_disable">অক্ষম করুন</string>
+    <string name="common_enable">সক্ষম করুন</string>
+    <string name="common_restore">পুনরুদ্ধার করুন</string>
+    <string name="common_unlock">আনলক করুন</string>
+    <string name="common_password">পাসওয়ার্ড</string>
+    <string name="common_not_now">এখন নয়</string>
+    <string name="common_off">বন্ধ</string>
+    <string name="common_approve">অনুমোদন দিন</string>
+    <string name="common_deny">প্রত্যাখ্যান করুন</string>
+
+    <!-- ── নেভিগেশন ট্যাব লেবেল ──────────────────────────────────────────── -->
+    <string name="tab_map">মানচিত্র</string>
+    <string name="tab_messages">বার্তা</string>
+    <string name="tab_history">ইতিহাস</string>
+    <string name="tab_contacts">পরিচিতি</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">সেটিংস</string>
+
+    <!-- ── গতি / কার্যকলাপ অবস্থা ───────────────────────────────────────── -->
+    <string name="motion_stationary">স্থির</string>
+    <string name="motion_walking">হাঁটা</string>
+    <string name="motion_running">দৌড়ানো</string>
+    <string name="motion_cycling">সাইকেল চালানো</string>
+    <string name="motion_driving">ড্রাইভিং</string>
+
+    <!-- ── সেটিংস ────────────────────────────────────────────────── -->
+    <string name="settings_title">সেটিংস</string>
+    <string name="settings_section_location_privacy">অবস্থান এবং গোপনীয়তা</string>
+    <string name="settings_section_security">নিরাপত্তা</string>
+    <string name="settings_section_map">মানচিত্র</string>
+    <string name="settings_section_battery_performance">ব্যাটারি এবং কর্মক্ষমতা</string>
+    <string name="settings_section_units_display">ইউনিট এবং প্রদর্শন</string>
+    <string name="settings_section_retention">ধারণ (এই ডিভাইস)</string>
+    <string name="settings_section_appearance">চেহারা</string>
+    <string name="settings_section_backup_keys">ব্যাকআপ এবং কী</string>
+    <string name="settings_section_about">সম্পর্কে</string>
+
+    <string name="settings_edit_name">নাম পরিবর্তন করুন</string>
+    <string name="settings_my_qr">আমার QR</string>
+    <string name="settings_no_name_set">কোন নাম সেট করা নেই</string>
+
+    <string name="settings_share_location">আমার অবস্থান শেয়ার করুন</string>
+    <string name="settings_language">ভাষা</string>
+    <string name="settings_language_title">অ্যাপের ভাষা</string>
+    <string name="settings_language_system">সিস্টেম ডিফল্ট</string>
+
+    <string name="common_ok">ঠিক আছে</string>
+    <string name="cd_back">পিছনে</string>
+</resources>

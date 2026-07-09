@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Canale de notificare și serviciu în prim-plan ─────────────────────── -->
+    <string name="channel_name_heartbeat">Transmisie locație</string>
+    <string name="channel_desc_heartbeat">Transmite locația dvs. contactelor aprobate</string>
+    <string name="channel_name_alerts">Alerte</string>
+    <string name="channel_desc_alerts">Alerte pentru semnal pierdut și geofence</string>
+    <string name="channel_name_messages">Mesaje</string>
+    <string name="channel_desc_messages">Mesaje primite</string>
+    <string name="notification_heartbeat_title">LocaPeer rulează</string>
+    <string name="notification_heartbeat_text">Partajarea locației cu alții</string>
+
+    <!-- ── Acțiuni comune ──────────────────────────────────────── -->
+    <string name="common_save">Salvare</string>
+    <string name="common_cancel">Anulare</string>
+    <string name="common_done">Gata</string>
+    <string name="common_delete">Ștergere</string>
+    <string name="common_disable">Dezactivare</string>
+    <string name="common_enable">Activare</string>
+    <string name="common_restore">Restaurare</string>
+    <string name="common_unlock">Deblocare</string>
+    <string name="common_password">Parolă</string>
+    <string name="common_not_now">Nu acum</string>
+    <string name="common_off">Oprit</string>
+    <string name="common_approve">Aprobare</string>
+    <string name="common_deny">Refuz</string>
+
+    <!-- ── Etichete file navigare ──────────────────────────────────────────── -->
+    <string name="tab_map">Hartă</string>
+    <string name="tab_messages">Mesaje</string>
+    <string name="tab_history">Istoric</string>
+    <string name="tab_contacts">Contacte</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Setări</string>
+
+    <!-- ── Stări mișcare / activitate ───────────────────────────────────────── -->
+    <string name="motion_stationary">Staționar</string>
+    <string name="motion_walking">Mers</string>
+    <string name="motion_running">Alergare</string>
+    <string name="motion_cycling">Ciclism</string>
+    <string name="motion_driving">Condus</string>
+
+    <!-- ── Setări ────────────────────────────────────────────────── -->
+    <string name="settings_title">Setări</string>
+    <string name="settings_section_location_privacy">Locație și confidențialitate</string>
+    <string name="settings_section_security">Securitate</string>
+    <string name="settings_section_map">Hartă</string>
+    <string name="settings_section_battery_performance">Baterie și performanță</string>
+    <string name="settings_section_units_display">Unități și afișaj</string>
+    <string name="settings_section_retention">Retenție (Acest dispozitiv)</string>
+    <string name="settings_section_appearance">Aspect</string>
+    <string name="settings_section_backup_keys">Backup și chei</string>
+    <string name="settings_section_about">Despre</string>
+
+    <string name="settings_edit_name">Editare nume</string>
+    <string name="settings_my_qr">QR-ul meu</string>
+    <string name="settings_no_name_set">Niciun nume setat</string>
+
+    <string name="settings_share_location">Partajează locația mea</string>
+    <string name="settings_language">Limbă</string>
+    <string name="settings_language_title">Limba aplicației</string>
+    <string name="settings_language_system">Implicit sistem</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Înapoi</string>
+</resources>

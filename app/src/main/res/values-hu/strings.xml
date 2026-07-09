@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Értesítési csatornák és előtérszolgáltatás ─────────────────────── -->
+    <string name="channel_name_heartbeat">Helyszín közvetítése</string>
+    <string name="channel_desc_heartbeat">Közvetíti a helyzetedet a jóváhagyott kapcsolataidnak</string>
+    <string name="channel_name_alerts">Riasztások</string>
+    <string name="channel_desc_alerts">Riasztások elmaradt jelekről és geofence-ekről</string>
+    <string name="channel_name_messages">Üzenetek</string>
+    <string name="channel_desc_messages">Bejövő üzenetek</string>
+    <string name="notification_heartbeat_title">A LocaPeer fut</string>
+    <string name="notification_heartbeat_text">Helyzet megosztása másokkal</string>
+
+    <!-- ── Közös műveletek ──────────────────────────────────────── -->
+    <string name="common_save">Mentés</string>
+    <string name="common_cancel">Mégse</string>
+    <string name="common_done">Kész</string>
+    <string name="common_delete">Törlés</string>
+    <string name="common_disable">Letiltás</string>
+    <string name="common_enable">Engedélyezés</string>
+    <string name="common_restore">Visszaállítás</string>
+    <string name="common_unlock">Feloldás</string>
+    <string name="common_password">Jelszó</string>
+    <string name="common_not_now">Most ne</string>
+    <string name="common_off">Ki</string>
+    <string name="common_approve">Jóváhagyás</string>
+    <string name="common_deny">Elutasítás</string>
+
+    <!-- ── Navigációs fül feliratok ──────────────────────────────────────────── -->
+    <string name="tab_map">Térkép</string>
+    <string name="tab_messages">Üzenetek</string>
+    <string name="tab_history">Előzmények</string>
+    <string name="tab_contacts">Kapcsolatok</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Beállítások</string>
+
+    <!-- ── Mozgás / Tevékenységi állapotok ───────────────────────────────────────── -->
+    <string name="motion_stationary">Állóhelyzet</string>
+    <string name="motion_walking">Gyaloglás</string>
+    <string name="motion_running">Futás</string>
+    <string name="motion_cycling">Kerékpározás</string>
+    <string name="motion_driving">Vezetés</string>
+
+    <!-- ── Beállítások ────────────────────────────────────────────────── -->
+    <string name="settings_title">Beállítások</string>
+    <string name="settings_section_location_privacy">Helyszín és adatvédelem</string>
+    <string name="settings_section_security">Biztonság</string>
+    <string name="settings_section_map">Térkép</string>
+    <string name="settings_section_battery_performance">Akku és teljesítmény</string>
+    <string name="settings_section_units_display">Egységek és megjelenítés</string>
+    <string name="settings_section_retention">Megőrzés (ezen az eszközön)</string>
+    <string name="settings_section_appearance">Megjelenés</string>
+    <string name="settings_section_backup_keys">Biztonsági mentés és kulcsok</string>
+    <string name="settings_section_about">Névjegy</string>
+
+    <string name="settings_edit_name">Név szerkesztése</string>
+    <string name="settings_my_qr">QR-kódom</string>
+    <string name="settings_no_name_set">Nincs név beállítva</string>
+
+    <string name="settings_share_location">Helyzetem megosztása</string>
+    <string name="settings_language">Nyelv</string>
+    <string name="settings_language_title">Alkalmazás nyelve</string>
+    <string name="settings_language_system">Rendszer alapértelmezett</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Vissza</string>
+</resources>

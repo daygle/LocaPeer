@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Bildirishnoma kanallari va xizmat ─────────────────────── -->
+    <string name="channel_name_heartbeat">Joylashuvni uzatish</string>
+    <string name="channel_desc_heartbeat">Joylashuvingizni tasdiqlangan kontaktlarga uzatadi</string>
+    <string name="channel_name_alerts">Ogohlantirishlar</string>
+    <string name="channel_desc_alerts">Yo\'qotilgan signal va geozona ogohlantirishlari</string>
+    <string name="channel_name_messages">Xabarlar</string>
+    <string name="channel_desc_messages">Kiruvchi xabarlar</string>
+    <string name="notification_heartbeat_title">LocaPeer ishlamoqda</string>
+    <string name="notification_heartbeat_text">Joylashuvingizni boshqalar bilan baham ko'rmoqda</string>
+
+    <!-- ── Umumiy harakatlar ──────────────────────────────────────── -->
+    <string name="common_save">Saqlash</string>
+    <string name="common_cancel">Bekor qilish</string>
+    <string name="common_done">Tayyor</string>
+    <string name="common_delete">O'chirish</string>
+    <string name="common_disable">O'chirish</string>
+    <string name="common_enable">Yoqish</string>
+    <string name="common_restore">Tiklash</string>
+    <string name="common_unlock">Qulfdan chiqarish</string>
+    <string name="common_password">Parol</string>
+    <string name="common_not_now">Hozir emas</string>
+    <string name="common_off">O'chiq</string>
+    <string name="common_approve">Tasdiqlash</string>
+    <string name="common_deny">Rad etish</string>
+
+    <!-- ── Navigatsiya tablari ──────────────────────────────────────────── -->
+    <string name="tab_map">Xarita</string>
+    <string name="tab_messages">Xabarlar</string>
+    <string name="tab_history">Tarix</string>
+    <string name="tab_contacts">Kontaktlar</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Sozlamalar</string>
+
+    <!-- ── Harakat holatlari ───────────────────────────────────────── -->
+    <string name="motion_stationary">Harakatsiz</string>
+    <string name="motion_walking">Yurish</string>
+    <string name="motion_running">Yugurish</string>
+    <string name="motion_cycling">Velosiped</string>
+    <string name="motion_driving">Haydash</string>
+
+    <!-- ── Sozlamalar ────────────────────────────────────────────────── -->
+    <string name="settings_title">Sozlamalar</string>
+    <string name="settings_section_location_privacy">Joylashuv va maxfiylik</string>
+    <string name="settings_section_security">Xavfsizlik</string>
+    <string name="settings_section_map">Xarita</string>
+    <string name="settings_section_battery_performance">Batareya va unumdorlik</string>
+    <string name="settings_section_units_display">Birliklar va ko'rinish</string>
+    <string name="settings_section_retention">Saqlash (Ushbu qurilma)</string>
+    <string name="settings_section_appearance">Ko'rinish</string>
+    <string name="settings_section_backup_keys">Zaxira va kalitlar</string>
+    <string name="settings_section_about">Dastur haqida</string>
+
+    <string name="settings_edit_name">Nomni tahrirlash</string>
+    <string name="settings_my_qr">Mening QR-kodim</string>
+    <string name="settings_no_name_set">Nom belgilanmagan</string>
+
+    <string name="settings_share_location">Joylashuvni baham ko'rish</string>
+    <string name="settings_language">Til</string>
+    <string name="settings_language_title">Dastur tili</string>
+    <string name="settings_language_system">Tizim tili</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Orqaga</string>
+</resources>

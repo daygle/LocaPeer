@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Meldingskanalen & voorgrondservice ─────────────────────── -->
+    <string name="channel_name_heartbeat">Locatie-uitzending</string>
+    <string name="channel_desc_heartbeat">Zendt uw locatie uit naar uw goedgekeurde contacten</string>
+    <string name="channel_name_alerts">Meldingen</string>
+    <string name="channel_desc_alerts">Meldingen voor gemiste heartbeat en geofences</string>
+    <string name="channel_name_messages">Berichten</string>
+    <string name="channel_desc_messages">Inkomende peer-berichten</string>
+    <string name="notification_heartbeat_title">LocaPeer is actief</string>
+    <string name="notification_heartbeat_text">Uw locatie delen met anderen</string>
+
+    <!-- ── Algemene acties ──────────────────────────────────────── -->
+    <string name="common_save">Opslaan</string>
+    <string name="common_cancel">Annuleren</string>
+    <string name="common_done">Gereed</string>
+    <string name="common_delete">Verwijderen</string>
+    <string name="common_disable">Uitschakelen</string>
+    <string name="common_enable">Inschakelen</string>
+    <string name="common_restore">Herstellen</string>
+    <string name="common_unlock">Ontgrendelen</string>
+    <string name="common_password">Wachtwoord</string>
+    <string name="common_not_now">Niet nu</string>
+    <string name="common_off">Uit</string>
+    <string name="common_approve">Goedkeuren</string>
+    <string name="common_deny">Weigeren</string>
+
+    <!-- ── Navigatietabbladen ──────────────────────────────────────────── -->
+    <string name="tab_map">Kaart</string>
+    <string name="tab_messages">Berichten</string>
+    <string name="tab_history">Geschiedenis</string>
+    <string name="tab_contacts">Contacten</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Instellingen</string>
+
+    <!-- ── Beweging / activiteitsstatussen ───────────────────────────────────────── -->
+    <string name="motion_stationary">Stationair</string>
+    <string name="motion_walking">Wandelen</string>
+    <string name="motion_running">Hardlopen</string>
+    <string name="motion_cycling">Fietsen</string>
+    <string name="motion_driving">Rijden</string>
+
+    <!-- ── Instellingen ────────────────────────────────────────────────── -->
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_section_location_privacy">Locatie &amp; Privacy</string>
+    <string name="settings_section_security">Beveiliging</string>
+    <string name="settings_section_map">Kaart</string>
+    <string name="settings_section_battery_performance">Batterij &amp; Prestaties</string>
+    <string name="settings_section_units_display">Eenheden &amp; Weergave</string>
+    <string name="settings_section_retention">Bewaring (Dit apparaat)</string>
+    <string name="settings_section_appearance">Uiterlijk</string>
+    <string name="settings_section_backup_keys">Back-up &amp; Sleutels</string>
+    <string name="settings_section_about">Over</string>
+
+    <string name="settings_edit_name">Naam bewerken</string>
+    <string name="settings_my_qr">Mijn QR</string>
+    <string name="settings_no_name_set">Geen naam ingesteld</string>
+
+    <string name="settings_share_location">Mijn locatie delen</string>
+    <string name="settings_language">Taal</string>
+    <string name="settings_language_title">App-taal</string>
+    <string name="settings_language_system">Systeemstandaard</string>
+
+    <string name="common_ok">OK</string>
+    <string name="cd_back">Terug</string>
+</resources>

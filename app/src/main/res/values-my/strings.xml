@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── အကြောင်းကြားချက် ချန်နယ်များနှင့် ရှေ့တန်းဝန်ဆောင်မှု ─────────────────────── -->
+    <string name="channel_name_heartbeat">တည်နေရာ ထုတ်လွှင့်မှု</string>
+    <string name="channel_desc_heartbeat">သင်၏ အတည်ပြုပြီးသား အဆက်အသွယ်များထံ သင်၏တည်နေရာကို ထုတ်လွှင့်ပေးသည်</string>
+    <string name="channel_name_alerts">သတိပေးချက်များ</string>
+    <string name="channel_desc_alerts">လွဲချော်သွားသော အချက်ပြမှုနှင့် ဧရိယာသတ်မှတ်ချက် သတိပေးချက်များ</string>
+    <string name="channel_name_messages">မက်ဆေ့ဂျ်များ</string>
+    <string name="channel_desc_messages">ဝင်လာသော မက်ဆေ့ဂျ်များ</string>
+    <string name="notification_heartbeat_title">LocaPeer အလုပ်လုပ်နေသည်</string>
+    <string name="notification_heartbeat_text">သင်၏တည်နေရာကို အခြားသူများနှင့် မျှဝေနေသည်</string>
+
+    <!-- ── အသုံးများသော လုပ်ဆောင်ချက်များ ──────────────────────────────────────── -->
+    <string name="common_save">သိမ်းဆည်းရန်</string>
+    <string name="common_cancel">ပယ်ဖျက်ရန်</string>
+    <string name="common_done">ပြီးပါပြီ</string>
+    <string name="common_delete">ဖျက်ရန်</string>
+    <string name="common_disable">ပိတ်ရန်</string>
+    <string name="common_enable">ဖွင့်ရန်</string>
+    <string name="common_restore">ပြန်လည်ရယူရန်</string>
+    <string name="common_unlock">လော့ခ်ဖွင့်ရန်</string>
+    <string name="common_password">စကားဝှက်</string>
+    <string name="common_not_now">ယခုမဟုတ်သေးပါ</string>
+    <string name="common_off">ပိတ်ထားသည်</string>
+    <string name="common_approve">အတည်ပြုရန်</string>
+    <string name="common_deny">ငြင်းပယ်ရန်</string>
+
+    <!-- ── လမ်းညွှန် တက်ဘ် အမည်များ ──────────────────────────────────────────── -->
+    <string name="tab_map">မြေပုံ</string>
+    <string name="tab_messages">မက်ဆေ့ဂျ်များ</string>
+    <string name="tab_history">မှတ်တမ်း</string>
+    <string name="tab_contacts">အဆက်အသွယ်များ</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">ဆက်တင်များ</string>
+
+    <!-- ── လှုပ်ရှားမှု အခြေအနေများ ───────────────────────────────────────── -->
+    <string name="motion_stationary">ငြိမ်နေသည်</string>
+    <string name="motion_walking">လမ်းလျှောက်နေသည်</string>
+    <string name="motion_running">ပြေးနေသည်</string>
+    <string name="motion_cycling">စက်ဘီးစီးနေသည်</string>
+    <string name="motion_driving">ကားမောင်းနေသည်</string>
+
+    <!-- ── ဆက်တင်များ ────────────────────────────────────────────────── -->
+    <string name="settings_title">ဆက်တင်များ</string>
+    <string name="settings_section_location_privacy">တည်နေရာနှင့် ကိုယ်ရေးကိုယ်တာ</string>
+    <string name="settings_section_security">လုံခြုံရေး</string>
+    <string name="settings_section_map">မြေပုံ</string>
+    <string name="settings_section_battery_performance">ဘက်ထရီနှင့် စွမ်းဆောင်ရည်</string>
+    <string name="settings_section_units_display">ယူနစ်နှင့် ပြသမှု</string>
+    <string name="settings_section_retention">ဒေတာသိမ်းဆည်းမှု (ဤစက်ပစ္စည်း)</string>
+    <string name="settings_section_appearance">အသွင်အပြင်</string>
+    <string name="settings_section_backup_keys">မိတ္တူနှင့် သော့များ</string>
+    <string name="settings_section_about">အကြောင်း</string>
+
+    <string name="settings_edit_name">အမည်ပြင်ရန်</string>
+    <string name="settings_my_qr">ကျွန်ုပ်၏ QR</string>
+    <string name="settings_no_name_set">အမည်မပေးရသေးပါ</string>
+
+    <string name="settings_share_location">ကျွန်ုပ်၏တည်နေရာကို မျှဝေရန်</string>
+    <string name="settings_language">ဘာသာစကား</string>
+    <string name="settings_language_title">အက်ပ် ဘာသာစကား</string>
+    <string name="settings_language_system">စနစ်သုံး မူရင်းအတိုင်း</string>
+
+    <string name="common_ok">အိုကေ</string>
+    <string name="cd_back">နောက်သို့</string>
+</resources>

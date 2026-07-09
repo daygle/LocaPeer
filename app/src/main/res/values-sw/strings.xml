@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Vituo vya Arifa & Huduma ya Mbele ─────────────────────── -->
+    <string name="channel_name_heartbeat">Utangazaji wa Mahali</string>
+    <string name="channel_desc_heartbeat">Hutangaza eneo lako kwa anwani zako zilizoidhinishwa</string>
+    <string name="channel_name_alerts">Arifa</string>
+    <string name="channel_desc_alerts">Arifa za kukosa mapigo ya moyo na maeneo ya kijiografia</string>
+    <string name="channel_name_messages">Ujumbe</string>
+    <string name="channel_desc_messages">Ujumbe wa rika unaoingia</string>
+    <string name="notification_heartbeat_title">LocaPeer inafanya kazi</string>
+    <string name="notification_heartbeat_text">Kushiriki eneo lako na wengine</string>
+
+    <!-- ── Vitendo vya Kawaida ──────────────────────────────────────── -->
+    <string name="common_save">Hifadhi</string>
+    <string name="common_cancel">Ghairi</string>
+    <string name="common_done">Imekamilika</string>
+    <string name="common_delete">Futa</string>
+    <string name="common_disable">Zima</string>
+    <string name="common_enable">Wezesha</string>
+    <string name="common_restore">Rejesha</string>
+    <string name="common_unlock">Fungua</string>
+    <string name="common_password">Nenosiri</string>
+    <string name="common_not_now">Si sasa</string>
+    <string name="common_off">Zimwa</string>
+    <string name="common_approve">Idhinisha</string>
+    <string name="common_deny">Kataa</string>
+
+    <!-- ── Lebo za Vichupo vya Urambazaji ──────────────────────────────────────────── -->
+    <string name="tab_map">Ramani</string>
+    <string name="tab_messages">Ujumbe</string>
+    <string name="tab_history">Historia</string>
+    <string name="tab_contacts">Anwani</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Mipangilio</string>
+
+    <!-- ── Hali ya Mwendo / Shughuli ───────────────────────────────────────── -->
+    <string name="motion_stationary">Imetulia</string>
+    <string name="motion_walking">Kutembea</string>
+    <string name="motion_running">Kukimbia</string>
+    <string name="motion_cycling">Kuendesha baiskeli</string>
+    <string name="motion_driving">Kuendesha gari</string>
+
+    <!-- ── Mipangilio ────────────────────────────────────────────────── -->
+    <string name="settings_title">Mipangilio</string>
+    <string name="settings_section_location_privacy">Mahali &amp; Faragha</string>
+    <string name="settings_section_security">Usalama</string>
+    <string name="settings_section_map">Ramani</string>
+    <string name="settings_section_battery_performance">Betri &amp; Utendaji</string>
+    <string name="settings_section_units_display">Vitengo &amp; Maonyesho</string>
+    <string name="settings_section_retention">Uhifadhi (Kifaa Hiki)</string>
+    <string name="settings_section_appearance">Muonekano</string>
+    <string name="settings_section_backup_keys">Hifadhi Nakala &amp; Funguo</string>
+    <string name="settings_section_about">Kuhusu</string>
+
+    <string name="settings_edit_name">Hariri Jina</string>
+    <string name="settings_my_qr">QR Yangu</string>
+    <string name="settings_no_name_set">Jina halijawekwa</string>
+
+    <string name="settings_share_location">Shiriki Mahali Pangu</string>
+    <string name="settings_language">Lugha</string>
+    <string name="settings_language_title">Lugha ya Programu</string>
+    <string name="settings_language_system">Chaguo-msingi la mfumo</string>
+
+    <string name="common_ok">Sawa</string>
+    <string name="cd_back">Nyuma</string>
+</resources>

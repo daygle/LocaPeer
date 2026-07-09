@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Kanalên agahdarkirinê & Karûbarê pêşîn ─────────────────────── -->
+    <string name="channel_name_heartbeat">Weşana Cih</string>
+    <string name="channel_desc_heartbeat">Cihê we ji têkiliyên we yên pejirandî re weşand dike</string>
+    <string name="channel_name_alerts">Hişyarî</string>
+    <string name="channel_desc_alerts">Hişyariyên sînyala winda û sînorên erdnîgarî</string>
+    <string name="channel_name_messages">Peyam</string>
+    <string name="channel_desc_messages">Peyamên hatine</string>
+    <string name="notification_heartbeat_title">LocaPeer dixebite</string>
+    <string name="notification_heartbeat_text">Cihê xwe bi kesên din re parve dike</string>
+
+    <!-- ── Çalakiyên hevpar ──────────────────────────────────────── -->
+    <string name="common_save">Tomar bike</string>
+    <string name="common_cancel">Betal bike</string>
+    <string name="common_done">Temam</string>
+    <string name="common_delete">Rabe</string>
+    <string name="common_disable">Seqet bike</string>
+    <string name="common_enable">Çalak bike</string>
+    <string name="common_restore">Vegere</string>
+    <string name="common_unlock">Kilît veke</string>
+    <string name="common_password">Şîfre</string>
+    <string name="common_not_now">Niha na</string>
+    <string name="common_off">Girtî</string>
+    <string name="common_approve">Biperizîne</string>
+    <string name="common_deny">Red bike</string>
+
+    <!-- ── Navên tabloyan ──────────────────────────────────────────── -->
+    <string name="tab_map">Nexşe</string>
+    <string name="tab_messages">Peyam</string>
+    <string name="tab_history">Dîrok</string>
+    <string name="tab_contacts">Têkilî</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Sazkarî</string>
+
+    <!-- ── Rewşên tevgerê ───────────────────────────────────────── -->
+    <string name="motion_stationary">Rawestî</string>
+    <string name="motion_walking">Dimeşe</string>
+    <string name="motion_running">Dibezê</string>
+    <string name="motion_cycling">Bisiklêt</string>
+    <string name="motion_driving">Ajotini</string>
+
+    <!-- ── Sazkarî ────────────────────────────────────────────────── -->
+    <string name="settings_title">Sazkarî</string>
+    <string name="settings_section_location_privacy">Cih û Taybetmendî</string>
+    <string name="settings_section_security">Ewlehî</string>
+    <string name="settings_section_map">Nexşe</string>
+    <string name="settings_section_battery_performance">Pîl û Performans</string>
+    <string name="settings_section_units_display">Yekîne û Nîşandan</string>
+    <string name="settings_section_retention">Parastin (Ev Amûr)</string>
+    <string name="settings_section_appearance">Xuyabûn</string>
+    <string name="settings_section_backup_keys">Piştevanî û Kilît</string>
+    <string name="settings_section_about">Der barê me de</string>
+
+    <string name="settings_edit_name">Nav sererast bike</string>
+    <string name="settings_my_qr">QR-a min</string>
+    <string name="settings_no_name_set">Nav nehatiye danîn</string>
+
+    <string name="settings_share_location">Cihê xwe parve bike</string>
+    <string name="settings_language">Ziman</string>
+    <string name="settings_language_title">Zimanê Bernameyê</string>
+    <string name="settings_language_system">Zimanê pergalê</string>
+
+    <string name="common_ok">Temam</string>
+    <string name="cd_back">Vegere</string>
+</resources>

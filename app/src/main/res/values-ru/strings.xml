@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── Каналы уведомлений и служба переднего плана ─────────────────────── -->
+    <string name="channel_name_heartbeat">Трансляция местоположения</string>
+    <string name="channel_desc_heartbeat">Транслирует ваше местоположение одобренным контактам</string>
+    <string name="channel_name_alerts">Оповещения</string>
+    <string name="channel_desc_alerts">Оповещения о пропущенных сигналах и геозонах</string>
+    <string name="channel_name_messages">Сообщения</string>
+    <string name="channel_desc_messages">Входящие сообщения от пиров</string>
+    <string name="notification_heartbeat_title">LocaPeer запущен</string>
+    <string name="notification_heartbeat_text">Вы делитесь местоположением с другими</string>
+
+    <!-- ── Общие действия ──────────────────────────────────────── -->
+    <string name="common_save">Сохранить</string>
+    <string name="common_cancel">Отмена</string>
+    <string name="common_done">Готово</string>
+    <string name="common_delete">Удалить</string>
+    <string name="common_disable">Выключить</string>
+    <string name="common_enable">Включить</string>
+    <string name="common_restore">Восстановить</string>
+    <string name="common_unlock">Разблокировать</string>
+    <string name="common_password">Пароль</string>
+    <string name="common_not_now">Не сейчас</string>
+    <string name="common_off">Выкл.</string>
+    <string name="common_approve">Одобрить</string>
+    <string name="common_deny">Отклонить</string>
+
+    <!-- ── Вкладки навигации ──────────────────────────────────────────── -->
+    <string name="tab_map">Карта</string>
+    <string name="tab_messages">Сообщения</string>
+    <string name="tab_history">История</string>
+    <string name="tab_contacts">Контакты</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">Настройки</string>
+
+    <!-- ── Движение / состояния активности ───────────────────────────────────────── -->
+    <string name="motion_stationary">Неподвижно</string>
+    <string name="motion_walking">Ходьба</string>
+    <string name="motion_running">Бег</string>
+    <string name="motion_cycling">Велосипед</string>
+    <string name="motion_driving">Вождение</string>
+
+    <!-- ── Настройки ────────────────────────────────────────────────── -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_section_location_privacy">Локация и приватность</string>
+    <string name="settings_section_security">Безопасность</string>
+    <string name="settings_section_map">Карта</string>
+    <string name="settings_section_battery_performance">Батарея и производительность</string>
+    <string name="settings_section_units_display">Единицы и отображение</string>
+    <string name="settings_section_retention">Хранение (Это устройство)</string>
+    <string name="settings_section_appearance">Внешний вид</string>
+    <string name="settings_section_backup_keys">Резервное копирование и ключи</string>
+    <string name="settings_section_about">О приложении</string>
+
+    <string name="settings_edit_name">Изменить имя</string>
+    <string name="settings_my_qr">Мой QR</string>
+    <string name="settings_no_name_set">Имя не установлено</string>
+
+    <string name="settings_share_location">Делиться моим местоположением</string>
+    <string name="settings_language">Язык</string>
+    <string name="settings_language_title">Язык приложения</string>
+    <string name="settings_language_system">Системный по умолчанию</string>
+
+    <string name="common_ok">ОК</string>
+    <string name="cd_back">Назад</string>
+</resources>

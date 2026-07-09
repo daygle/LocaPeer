@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LocaPeer</string>
+
+    <!-- ── सूचना चॅनेल आणि अग्रभूमी सेवा ─────────────────────── -->
+    <string name="channel_name_heartbeat">स्थान प्रसारण</string>
+    <string name="channel_desc_heartbeat">तुमच्या मंजूर संपर्कांना तुमचे स्थान प्रसारित करते</string>
+    <string name="channel_name_alerts">सूचना</string>
+    <string name="channel_desc_alerts">मिस्ड हार्टबीट आणि जिओफेन्स अलर्ट</string>
+    <string name="channel_name_messages">संदेश</string>
+    <string name="channel_desc_messages">येणारे संदेश</string>
+    <string name="notification_heartbeat_title">LocaPeer चालू आहे</string>
+    <string name="notification_heartbeat_text">इतरांसोबत तुमचे स्थान शेअर करत आहे</string>
+
+    <!-- ── सामान्य क्रिया ──────────────────────────────────────── -->
+    <string name="common_save">जतन करा</string>
+    <string name="common_cancel">रद्द करा</string>
+    <string name="common_done">झाले</string>
+    <string name="common_delete">मिटवा</string>
+    <string name="common_disable">अक्षम करा</string>
+    <string name="common_enable">सक्षम करा</string>
+    <string name="common_restore">पुनर्संचयित करा</string>
+    <string name="common_unlock">अनलॉक करा</string>
+    <string name="common_password">पासवर्ड</string>
+    <string name="common_not_now">आत्ता नको</string>
+    <string name="common_off">बंद</string>
+    <string name="common_approve">मंजूर करा</string>
+    <string name="common_deny">नकार द्या</string>
+
+    <!-- ── नेव्हिगेशन टॅब लेबल्स ──────────────────────────────────────────── -->
+    <string name="tab_map">नकाशा</string>
+    <string name="tab_messages">संदेश</string>
+    <string name="tab_history">इतिहास</string>
+    <string name="tab_contacts">संपर्क</string>
+    <string name="tab_qr">QR</string>
+    <string name="tab_settings">सेटिंग्ज</string>
+
+    <!-- ── हालचाल / क्रियाकलाप स्थिती ───────────────────────────────────────── -->
+    <string name="motion_stationary">स्थिर</string>
+    <string name="motion_walking">चालणे</string>
+    <string name="motion_running">धावणे</string>
+    <string name="motion_cycling">सायकल चालवणे</string>
+    <string name="motion_driving">ड्रायव्हिंग</string>
+
+    <!-- ── सेटिंग्ज ────────────────────────────────────────────────── -->
+    <string name="settings_title">सेटिंग्ज</string>
+    <string name="settings_section_location_privacy">स्थान आणि गोपनीयता</string>
+    <string name="settings_section_security">सुरक्षा</string>
+    <string name="settings_section_map">नकाशा</string>
+    <string name="settings_section_battery_performance">बॅटरी आणि कार्यप्रदर्शन</string>
+    <string name="settings_section_units_display">युनिट्स आणि डिस्प्ले</string>
+    <string name="settings_section_retention">राखून ठेवणे (हे डिव्हाइस)</string>
+    <string name="settings_section_appearance">स्वरूप</string>
+    <string name="settings_section_backup_keys">बॅकअप आणि की</string>
+    <string name="settings_section_about">बद्दल</string>
+
+    <string name="settings_edit_name">नाव संपादित करा</string>
+    <string name="settings_my_qr">माझा QR</string>
+    <string name="settings_no_name_set">नाव सेट केलेले नाही</string>
+
+    <string name="settings_share_location">माझे स्थान शेअर करा</string>
+    <string name="settings_language">भाषा</string>
+    <string name="settings_language_title">अ‍ॅप भाषा</string>
+    <string name="settings_language_system">सिस्टम डीफॉल्ट</string>
+
+    <string name="common_ok">ठीक आहे</string>
+    <string name="cd_back">मागे</string>
+</resources>

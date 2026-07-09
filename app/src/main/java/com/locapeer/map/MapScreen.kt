@@ -648,9 +648,10 @@ private fun OsmdroidMapView(
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
                 
-                // Scale Bar
+                // Scale Bar (Range marker)
                 val scaleBar = ScaleBarOverlay(this)
-                scaleBar.setCentred(true)
+                scaleBar.setCentred(false)
+                scaleBar.setAlignRight(true)
                 scaleBar.setScaleBarOffset(20, 20)
                 overlays.add(scaleBar)
 
@@ -679,6 +680,13 @@ private fun OsmdroidMapView(
             val targetTileSource = if (isDark) CARTO_DARK else CARTO_LIGHT
             if (mapView.tileProvider.tileSource != targetTileSource) {
                 mapView.setTileSource(targetTileSource)
+            }
+
+            // Reposition compass to top-right to avoid SOS button on the left.
+            // Scale bar is also moved to top-right in the factory block.
+            mapView.overlays.filterIsInstance<CompassOverlay>().firstOrNull()?.let { compass ->
+                val density = mapView.context.resources.displayMetrics.density
+                compass.setCompassCenter(mapView.width - 45f * density, 85f * density)
             }
 
             // Remove previous markers/geofences but keep the permanent overlays (compass/scale)
