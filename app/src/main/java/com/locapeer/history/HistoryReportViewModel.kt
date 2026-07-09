@@ -72,8 +72,20 @@ class HistoryReportViewModel @Inject constructor(
 
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
         combine(_selectedPeerId, _selectedDayStart, _startTimeOffset, _endTimeOffset) { peerId, dayStart, startOff, endOff ->
-            if (peerId == null) flowOf(emptyList())
-            else heartbeatDao.getHeartbeatsForDay(peerId, dayStart + startOff, dayStart + endOff)
+            if (peerId == null) {
+                flowOf(emptyList())
+            } else {
+                // DST-aware day bounds: a local day can be 23h or 25h, so take the exclusive
+                // end from the next local midnight instead of a fixed 24h. Clamp the selected
+                // sub-range into [dayStart, nextMidnight); an un-narrowed end extends to the
+                // true day end so a 25h fall-back day's final hour isn't dropped and a 23h
+                // spring-forward day's window doesn't spill into the next day.
+                val dayEnd = shiftDayStart(dayStart, 1)
+                val from = (dayStart + startOff).coerceIn(dayStart, dayEnd)
+                val to = if (endOff >= DAY_MS - 1) dayEnd
+                         else (dayStart + endOff + 1).coerceIn(from, dayEnd)
+                heartbeatDao.getHeartbeatsForDay(peerId, from, to)
+            }
         }
             .flatMapLatest { it }
             .combine(

@@ -24,20 +24,6 @@ class AdaptiveIntervalManager @Inject constructor() {
             .coerceAtLeast(15_000L) // Minimum 15 seconds to avoid battery drain and relay spam
     }
 
-    fun getExpectedIntervalMillis(motionStateName: String, settings: AppSettings, batteryLevel: Int): Long {
-        val state = try {
-            MotionState.valueOf(motionStateName)
-        } catch (_: Exception) {
-            MotionState.UNKNOWN
-        }
-        val motionInterval = motionIntervalMillis(state, settings).coerceAtLeast(15_000L)
-        if (batteryLevel < 20) {
-            val lowBatteryInterval = (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
-            return maxOf(motionInterval, lowBatteryInterval)
-        }
-        return motionInterval
-    }
-
     private fun motionIntervalMillis(state: MotionState, settings: AppSettings): Long = when (state) {
         MotionState.STATIONARY -> settings.stationaryIntervalMinutes * 60_000L
         MotionState.WALKING -> settings.walkingIntervalMinutes * 60_000L

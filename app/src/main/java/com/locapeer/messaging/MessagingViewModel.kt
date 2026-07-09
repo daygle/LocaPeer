@@ -1,18 +1,11 @@
 package com.locapeer.messaging
 
 import android.annotation.SuppressLint
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
-import com.locapeer.MainActivity
-import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.MessageDao
@@ -35,7 +28,6 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.Locale
-import java.util.UUID
 import javax.inject.Inject
 
 enum class SortOrder { DATE, NAME, UNREAD }
@@ -47,8 +39,7 @@ class MessagingViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val relayClient: NostrRelayClient,
-    private val notificationManager: NotificationManager
+    private val relayClient: NostrRelayClient
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -280,19 +271,18 @@ class MessagingViewModel @Inject constructor(
     fun startListening(myPubHex: String) {
         if (myListeningPubkey == myPubHex && eventsJob?.isActive == true) return
         myListeningPubkey = myPubHex
-        createMessageChannel()
         viewModelScope.launch {
-            // Get messages from the last 24 hours to cover offline periods.
-            // A more robust app would store/query the last received timestamp per relay.
+            // Only the two kinds the always-on HeartbeatReceiver does NOT handle are
+            // subscribed here: TYPING (ephemeral, needs live UI handling) and EVENT_DELETION
+            // (NIP-09). Incoming DMs, read receipts and delivery acks are stored/notified by
+            // HeartbeatReceiver, and this screen reflects them through Room flows - handling
+            // them here too was pure duplication (double acks, redundant work).
             val since = (System.currentTimeMillis() / 1000L) - (24 * 60 * 60)
             relayClient.subscribe(
                 "lp-dm-${myPubHex.take(16)}",
                 NostrFilter(
                     kinds = listOf(
-                        NostrEventKind.ENCRYPTED_DM,
-                        NostrEventKind.READ_RECEIPT,
                         NostrEventKind.TYPING,
-                        NostrEventKind.DELIVERY_ACK,
                         NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(myPubHex),
@@ -308,10 +298,7 @@ class MessagingViewModel @Inject constructor(
               // collector and stop all future message processing.
               try {
                 when (event.kind) {
-                    NostrEventKind.ENCRYPTED_DM -> processIncomingDm(event)
-                    NostrEventKind.READ_RECEIPT -> processReadReceipt(event)
                     NostrEventKind.TYPING -> processTypingEvent(event)
-                    NostrEventKind.DELIVERY_ACK -> processDeliveryAck(event)
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
@@ -332,84 +319,6 @@ class MessagingViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private suspend fun processIncomingDm(event: NostrEvent) {
-        if (messageDao.getByNostrEventId(event.id) != null) return
-        val sender = peerDao.getPeer(event.pubkey) ?: return
-        val isBlocked = !sender.messagingEnabled
-
-        val plaintext = withContext(Dispatchers.Default) {
-            if (!NostrEvent.verify(event, crypto)) return@withContext null
-
-            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
-            try {
-                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-            } catch (e: Exception) {
-                null
-            }
-        } ?: return
-
-        val msg = MessageEntity(
-            id = event.id,
-            peerId = event.pubkey,
-            senderPublicKeyHex = event.pubkey,
-            content = plaintext,
-            timestamp = event.createdAt * 1000L,
-            isMine = false,
-            deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
-            nostrEventId = event.id,
-            isBlocked = isBlocked
-        )
-        // Auto-unarchive on receive, but don't let a late-arriving/queued message that predates
-        // an explicit archive action silently undo it.
-        if (!sender.isArchived || msg.timestamp > sender.archivedAt) {
-            peerDao.unarchive(event.pubkey)
-        }
-        messageDao.insert(msg)
-        if (!isBlocked) {
-            sendMessageNotification(sender, plaintext)
-            sendDeliveryAck(event.pubkey, event.id)
-        }
-    }
-
-    private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {
-        val peer = peerDao.getPeer(toPubkey) ?: return
-        val (privHex, pubHex) = keyManager.ensureKeypair()
-        val privBytes = crypto.hexToBytes(privHex)
-        val payload = json.encodeToString(DeliveryAckPayload(deliveredEventId))
-
-        val event = withContext(Dispatchers.Default) {
-            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
-            NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.DELIVERY_ACK,
-                content = encrypted,
-                tags = listOf(listOf("p", peer.publicKeyHex)),
-                crypto = crypto
-            )
-        }
-        relayClient.publishEvent(event)
-    }
-
-    private suspend fun processReadReceipt(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return  // only handle receipts from known peers
-
-        val plaintext = withContext(Dispatchers.Default) {
-            if (!NostrEvent.verify(event, crypto)) return@withContext null
-            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
-            try {
-                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-            } catch (e: Exception) {
-                null
-            }
-        } ?: return
-
-        val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
-        receipt.eventIds.forEach { eventId ->
-            messageDao.updateDeliveryStateByNostrEventIdForPeer(eventId, event.pubkey, DeliveryState.READ.name)
-        }
-    }
-
     private fun processTypingEvent(event: NostrEvent) {
         val fromPubkey = event.pubkey
         viewModelScope.launch {
@@ -426,22 +335,6 @@ class MessagingViewModel @Inject constructor(
                 _typingPeers.update { it - fromPubkey }
             }
         }
-    }
-
-    private suspend fun processDeliveryAck(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
-        
-        val plaintext = withContext(Dispatchers.Default) {
-            if (!NostrEvent.verify(event, crypto)) return@withContext null
-            val privHex = keyManager.getPrivateKeyHex() ?: return@withContext null
-            try {
-                crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
-            } catch (e: Exception) {
-                null
-            }
-        } ?: return
-        val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
-        messageDao.updateDeliveryStateByNostrEventIdForPeer(payload.eventId, event.pubkey, DeliveryState.DELIVERED.name)
     }
 
     private fun processDeletionEvent(event: NostrEvent) {
@@ -495,57 +388,6 @@ class MessagingViewModel @Inject constructor(
             )
         }
         relayClient.publishEvent(event)
-    }
-
-    private val lastNotificationTimes = mutableMapOf<String, Long>()
-    private val GROUP_KEY_MESSAGES = "com.locapeer.MESSAGES"
-
-    private fun sendMessageNotification(sender: PeerEntity, preview: String) {
-        val now = System.currentTimeMillis()
-        val lastTime = lastNotificationTimes[sender.deviceId] ?: 0L
-        
-        // Simple throttle: don't notify more than once every 2 seconds for the same peer
-        if (now - lastTime < 2000) return
-        lastNotificationTimes[sender.deviceId] = now
-
-        val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra("navigateTo", "chat")
-            putExtra("openChat", sender.deviceId)
-            putExtra("peerName", sender.displayName)
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-        }
-        val pi = PendingIntent.getActivity(context, sender.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
-        
-        val notification = NotificationCompat.Builder(context, "locapeer_messages")
-            .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle(sender.displayName)
-            .setContentText(preview.take(80))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pi)
-            .setAutoCancel(true)
-            .setGroup(GROUP_KEY_MESSAGES)
-            .build()
-
-        val summary = NotificationCompat.Builder(context, "locapeer_messages")
-            .setSmallIcon(R.drawable.ic_notif_message)
-            .setContentTitle(context.getString(R.string.notif_messages_group_title))
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setGroup(GROUP_KEY_MESSAGES)
-            .setGroupSummary(true)
-            .setAutoCancel(true)
-            .build()
-
-        notificationManager.notify(sender.deviceId, 10000, notification)
-        notificationManager.notify(999, summary)
-    }
-
-    private fun createMessageChannel() {
-        val channel = NotificationChannel(
-            "locapeer_messages",
-            context.getString(R.string.channel_name_messages),
-            NotificationManager.IMPORTANCE_HIGH
-        ).apply { description = context.getString(R.string.channel_desc_messages) }
-        notificationManager.createNotificationChannel(channel)
     }
 
     override fun onCleared() {

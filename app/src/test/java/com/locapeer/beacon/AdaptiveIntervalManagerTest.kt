@@ -81,34 +81,4 @@ class AdaptiveIntervalManagerTest {
         manager.updateBattery(20)
         assertFalse(manager.isLowBattery())
     }
-
-    @Test
-    fun `expected interval matches motion state at healthy battery`() {
-        assertEquals(
-            15 * 60_000L,
-            manager.getExpectedIntervalMillis(MotionState.STATIONARY.name, settings, batteryLevel = 80)
-        )
-        assertEquals(
-            2 * 60_000L,
-            manager.getExpectedIntervalMillis(MotionState.DRIVING.name, settings, batteryLevel = 80)
-        )
-    }
-
-    @Test
-    fun `expected interval accounts for the sender being in low-battery mode`() {
-        // A stationary sender below 20% beats at their low-battery interval, not 15 min.
-        assertEquals(
-            30 * 60_000L,
-            manager.getExpectedIntervalMillis(MotionState.STATIONARY.name, settings, batteryLevel = 15)
-        )
-        // The expectation never shrinks below the motion interval.
-        assertEquals(
-            15 * 60_000L,
-            manager.getExpectedIntervalMillis(
-                MotionState.STATIONARY.name,
-                settings.copy(lowBatteryIntervalMinutes = 1),
-                batteryLevel = 15
-            )
-        )
-    }
 }
