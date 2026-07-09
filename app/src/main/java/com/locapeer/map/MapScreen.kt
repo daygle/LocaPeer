@@ -196,8 +196,8 @@ fun MapScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+                .padding(end = 24.dp, bottom = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             // Map Style Toggle
             FloatingActionButton(
@@ -650,9 +650,11 @@ private fun OsmdroidMapView(
                 
                 // Scale Bar (Range marker)
                 val scaleBar = ScaleBarOverlay(this)
+                val density = ctx.resources.displayMetrics.density
                 scaleBar.setCentred(false)
                 scaleBar.setAlignRight(true)
-                scaleBar.setScaleBarOffset(20, 20)
+                // Move it slightly more from the edges (values are in pixels)
+                scaleBar.setScaleBarOffset((20 * density).toInt(), (20 * density).toInt())
                 overlays.add(scaleBar)
 
                 // Compass

@@ -38,6 +38,7 @@ fun PeerSharingScreen(
     peerId: String,
     peerName: String,
     onNavigateBack: () -> Unit,
+    onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     onNavigateToSchedule: () -> Unit = {},
     onNavigateToGeofences: (String) -> Unit = {},
     onNavigateToHistory: (String) -> Unit = {},
@@ -93,6 +94,13 @@ fun PeerSharingScreen(
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
+                    }
+                },
+                actions = {
+                    state.heartbeat?.let { hb ->
+                        IconButton(onClick = { onNavigateToMap(hb.lat, hb.lng) }) {
+                            Icon(Icons.Default.LocationOn, contentDescription = stringResource(R.string.cd_show_on_map))
+                        }
                     }
                 }
             )

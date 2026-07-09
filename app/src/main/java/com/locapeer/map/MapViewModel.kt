@@ -70,7 +70,7 @@ class MapViewModel @Inject constructor(
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
     @ApplicationContext private val appContext: Context,
-    savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     val relayStatus = relayClient.relayStatus
@@ -141,18 +141,26 @@ class MapViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     init {
-        val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
-        val argLng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
-        val argPeerId = savedStateHandle.get<String>("peerId")
-
-        if (argLat != null && argLng != null) {
-            _centerOnArgs.value = GeoPoint(argLat, argLng)
-        } else if (argPeerId != null) {
-            viewModelScope.launch {
-                heartbeatDao.getLatestHeartbeat(argPeerId)?.let { hb ->
-                    _centerOnArgs.value = GeoPoint(hb.lat, hb.lng)
+        // Observe navigation arguments. We use flows because if the user is already on the map
+        // and taps a "show on map" button elsewhere, the same ViewModel instance may be
+        // reused (due to launchSingleTop), and SavedStateHandle will be updated with new args.
+        viewModelScope.launch {
+            combine(
+                savedStateHandle.getStateFlow<String?>("lat", null),
+                savedStateHandle.getStateFlow<String?>("lng", null),
+                savedStateHandle.getStateFlow<String?>("peerId", null)
+            ) { lat, lng, peerId -> Triple(lat, lng, peerId) }
+                .collect { (latStr, lngStr, peerId) ->
+                    val lat = latStr?.toDoubleOrNull()
+                    val lng = lngStr?.toDoubleOrNull()
+                    if (lat != null && lng != null) {
+                        _centerOnArgs.value = GeoPoint(lat, lng)
+                    } else if (peerId != null) {
+                        heartbeatDao.getLatestHeartbeat(peerId)?.let { hb ->
+                            _centerOnArgs.value = GeoPoint(hb.lat, hb.lng)
+                        }
+                    }
                 }
-            }
         }
 
         viewModelScope.launch {
@@ -160,21 +168,27 @@ class MapViewModel @Inject constructor(
             val lat = prefs[KEY_LAT]
             val lng = prefs[KEY_LNG]
             val zoom = prefs[KEY_ZOOM]
-            if (lat != null && lng != null && zoom != null) {
+
+            val argLat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
+            val argLng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
+
+            if (argLat != null && argLng != null) {
+                _lastMapCenter.value = Triple(argLat, argLng, 16.0)
+            } else if (lat != null && lng != null && zoom != null) {
                 // If we have center args, we'll use those instead of saved center for the initial view
                 if (_centerOnArgs.value == null) {
                     _lastMapCenter.value = Triple(lat, lng, zoom)
-                } else if (argLat != null && argLng != null) {
-                    _lastMapCenter.value = Triple(argLat, argLng, 16.0)
                 }
-            } else if (argLat != null && argLng != null) {
-                _lastMapCenter.value = Triple(argLat, argLng, 16.0)
             }
         }
     }
 
     fun consumeCenterArgs() {
         _centerOnArgs.value = null
+        // Clear the args from SavedStateHandle so they don't re-trigger on config change
+        savedStateHandle["lat"] = null
+        savedStateHandle["lng"] = null
+        savedStateHandle["peerId"] = null
     }
 
     fun saveMapPosition(lat: Double, lng: Double, zoom: Double) {

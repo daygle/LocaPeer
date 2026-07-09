@@ -68,10 +68,10 @@ fun AboutScreen(
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
-                            Icons.Default.MyLocation,
+                            painter = androidx.compose.ui.res.painterResource(R.mipmap.ic_launcher),
                             contentDescription = null,
-                            modifier = Modifier.size(48.dp),
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                            modifier = Modifier.size(56.dp),
+                            tint = Color.Unspecified
                         )
                     }
                 }

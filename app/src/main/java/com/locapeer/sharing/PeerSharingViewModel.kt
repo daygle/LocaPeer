@@ -34,7 +34,8 @@ import javax.inject.Inject
 data class PeerSharingUiState(
     val peer: PeerEntity? = null,
     val config: PeerSharingConfig? = null,
-    val proximityAlert: ProximityAlertEntity? = null
+    val proximityAlert: ProximityAlertEntity? = null,
+    val heartbeat: com.locapeer.data.entity.HeartbeatEntity? = null
 )
 
 @HiltViewModel
@@ -47,7 +48,8 @@ class PeerSharingViewModel @Inject constructor(
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
     private val prefs: AppPreferences,
-    private val peerManager: PeerManager
+    private val peerManager: PeerManager,
+    private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -74,9 +76,10 @@ class PeerSharingViewModel @Inject constructor(
             val peerFlow = peerDao.observePeer(peerId)
             val configFlow = configDao.observeForPeer(peerId)
             val alertFlow = proximityAlertDao.observeForPeer(peerId)
+            val heartbeatFlow = heartbeatDao.observeLatestHeartbeat(peerId)
 
-            combine(peerFlow, configFlow, alertFlow) { peer, config, alert ->
-                PeerSharingUiState(peer, config, alert)
+            combine(peerFlow, configFlow, alertFlow, heartbeatFlow) { peer, config, alert, hb ->
+                PeerSharingUiState(peer, config, alert, hb)
             }.collect {
                 _uiState.value = it
             }
