@@ -561,6 +561,11 @@ private fun OsmdroidMapView(
         )
     }
     var fitAllDone by remember { mutableStateOf(false) }
+    // Once an explicit "show on map" target has been applied, the automatic start-up
+    // centering (own pin / fit-all) must not run and recentre the map away from it.
+    // Kept as keyless remember so it survives the resets of initialCenterDone above.
+    var explicitCenterDone by remember { mutableStateOf(false) }
+    val currentCenterOnPin by rememberUpdatedState(centerOnPin)
     val isFitAll = mapStartingPoint == "FIT_ALL"
 
     DisposableEffect(lifecycleOwner) {
@@ -600,7 +605,7 @@ private fun OsmdroidMapView(
 
     // Initial positioning
     LaunchedEffect(userLocation) {
-        if (userLocation != null && !initialCenterDone) {
+        if (userLocation != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
             mapViewRef?.controller?.setCenter(userLocation)
             initialCenterDone = true
         }
@@ -609,6 +614,9 @@ private fun OsmdroidMapView(
     // Jump to a contact's pin
     LaunchedEffect(centerOnPin) {
         if (centerOnPin != null) {
+            explicitCenterDone = true
+            initialCenterDone = true
+            fitAllDone = true
             mapViewRef?.controller?.animateTo(centerOnPin)
             onCenteredOnPin()
         }
@@ -617,7 +625,7 @@ private fun OsmdroidMapView(
     // Fit all contacts into view
     LaunchedEffect(pins, isFitAll, mapViewRef) {
         val mv = mapViewRef ?: return@LaunchedEffect
-        if (!isFitAll || fitAllDone) return@LaunchedEffect
+        if (!isFitAll || fitAllDone || explicitCenterDone || centerOnPin != null) return@LaunchedEffect
         val points = pins.mapNotNull { it.heartbeat?.let { hb -> GeoPoint(hb.lat, hb.lng) } }
         if (points.isEmpty()) return@LaunchedEffect
         fitAllDone = true
@@ -631,7 +639,13 @@ private fun OsmdroidMapView(
                 points.minOf { it.latitude },
                 points.minOf { it.longitude }
             )
-            mv.post { mv.zoomToBoundingBox(box, true, 150) }
+            // The posted runnable outlives this effect, so re-check that no explicit
+            // centre request arrived in the meantime before it recentres the map.
+            mv.post {
+                if (!explicitCenterDone && currentCenterOnPin == null) {
+                    mv.zoomToBoundingBox(box, true, 150)
+                }
+            }
         }
     }
 

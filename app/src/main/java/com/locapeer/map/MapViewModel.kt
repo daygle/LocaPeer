@@ -127,7 +127,17 @@ class MapViewModel @Inject constructor(
     private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
     val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
 
-    private val _centerOnArgs = MutableStateFlow<GeoPoint?>(null)
+    // Seed synchronously from the nav args so an explicit "show on map" target is already
+    // visible on the screen's first composition, before the async collectors below run.
+    // Otherwise the map's own start-up centering can win the race and jump to the user's
+    // location instead of the requested contact location.
+    private val _centerOnArgs = MutableStateFlow<GeoPoint?>(
+        run {
+            val lat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
+            val lng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
+            if (lat != null && lng != null) GeoPoint(lat, lng) else null
+        }
+    )
     val centerOnArgs: StateFlow<GeoPoint?> = _centerOnArgs.asStateFlow()
 
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
