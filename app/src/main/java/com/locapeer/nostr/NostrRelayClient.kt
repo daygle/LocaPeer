@@ -237,6 +237,10 @@ class NostrRelayClient @Inject constructor(
     private inner class RelayConnection(val url: String) {
         @Volatile var webSocket: WebSocket? = null
         @Volatile var isConnected = false
+        // Touched from OkHttp callback threads, sendToAll callers and the reconnect
+        // coroutine; guarded by reconnectLock so concurrent scheduleReconnect calls
+        // can't both pass the isActive check and arm duplicate backoff timers.
+        private val reconnectLock = Any()
         private var reconnectJob: Job? = null
         private var reconnectAttempts = 0
 
@@ -255,8 +259,11 @@ class NostrRelayClient @Inject constructor(
         }
 
         fun disconnect() {
-            reconnectJob?.cancel()
-            reconnectAttempts = 0
+            synchronized(reconnectLock) {
+                reconnectJob?.cancel()
+                reconnectJob = null
+                reconnectAttempts = 0
+            }
             webSocket?.close(1000, "Disconnecting")
             webSocket = null
             isConnected = false
@@ -271,19 +278,22 @@ class NostrRelayClient @Inject constructor(
             if (isConnected) webSocket?.send(msg) ?: false else false
 
         fun scheduleReconnect() {
-            if (reconnectJob?.isActive == true) return
-            reconnectJob = scope.launch {
-                // Exponential backoff: 5s, 10s, 20s, 40s … capped at 5 minutes, +±20% jitter
-                val baseDelay = minOf(5_000L * (1L shl reconnectAttempts.coerceAtMost(6)), 300_000L)
-                val jitter = ((baseDelay * 0.2) * ((Math.random() * 2.0) - 1.0)).toLong()
-                val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
-                Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${reconnectAttempts + 1})")
-                delay(waitMs.milliseconds)
-                if (!isGloballyConnected) return@launch
-                // Don't overwrite if another connection attempt started in the meantime
-                if (isConnected || webSocket != null) return@launch
-                reconnectAttempts++
-                connect()
+            synchronized(reconnectLock) {
+                if (reconnectJob?.isActive == true) return
+                reconnectJob = scope.launch {
+                    // Exponential backoff: 5s, 10s, 20s, 40s … capped at 5 minutes, +±20% jitter
+                    val attempt = synchronized(reconnectLock) { reconnectAttempts }
+                    val baseDelay = minOf(5_000L * (1L shl attempt.coerceAtMost(6)), 300_000L)
+                    val jitter = ((baseDelay * 0.2) * ((Math.random() * 2.0) - 1.0)).toLong()
+                    val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
+                    Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${attempt + 1})")
+                    delay(waitMs.milliseconds)
+                    if (!isGloballyConnected) return@launch
+                    // Don't overwrite if another connection attempt started in the meantime
+                    if (isConnected || webSocket != null) return@launch
+                    synchronized(reconnectLock) { reconnectAttempts++ }
+                    connect()
+                }
             }
         }
 
@@ -291,7 +301,7 @@ class NostrRelayClient @Inject constructor(
             override fun onOpen(webSocket: WebSocket, response: Response) {
                 Log.d(TAG, "Connected to $url")
                 isConnected = true
-                reconnectAttempts = 0
+                synchronized(reconnectLock) { reconnectAttempts = 0 }
                 _relayStatus.update { it + (url to true) }
                 flushPendingTo(this@RelayConnection)
             }

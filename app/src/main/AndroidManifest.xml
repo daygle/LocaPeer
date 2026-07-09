@@ -29,6 +29,13 @@
     <!-- Wake lock to keep CPU running during background work -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Exact alarms: on Android 12+ only exact-alarm delivery grants the temporary
+         allowlist that permits restarting the heartbeat foreground service from the
+         background (doze backstop, watchdog); inexact alarms are explicitly denied
+         that start. Pre-granted on 12-13; on 14+ the user enables it under
+         "Alarms & reminders" and the code falls back to inexact when not granted. -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <!-- Camera for QR scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
