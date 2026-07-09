@@ -6,6 +6,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -65,7 +67,11 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             val elapsed = now - latest.timestamp
             if (elapsed > expected * 2) {
                 val minutesAgo = elapsed / 60_000
+                // Unique data URI: extras don't participate in PendingIntent matching
+                // (Intent.filterEquals), so without it a requestCode hash collision
+                // between two peers would silently share one PendingIntent.
                 val intent = Intent(applicationContext, MainActivity::class.java)
+                    .setData(Uri.parse("locapeer-notif://missed/${peer.deviceId}"))
                 val pi = PendingIntent.getActivity(
                     applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
                 )
@@ -89,7 +95,10 @@ class MissedHeartbeatWorker @AssistedInject constructor(
      * silently stop until the app is next opened. This worker already runs every
      * 15 minutes, so re-assert the service here. Started via an alarm PendingIntent
      * because a background worker may not launch a foreground service directly on
-     * Android 12+, while alarm delivery grants the temporary allowlist that can.
+     * Android 12+, while EXACT alarm delivery grants the temporary allowlist that
+     * can. Inexact delivery gets the FGS-not-allowed allowlist on 12+ and the
+     * restart is silently dropped, so fall back to it only when the exact-alarm
+     * permission is missing (still correct pre-12, and harmless otherwise).
      */
     private fun ensureHeartbeatServiceRunning(heartbeatEnabled: Boolean) {
         if (!heartbeatEnabled || HeartbeatService.isRunning) return
@@ -105,12 +114,14 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
             val alarmManager = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.setAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + 1000L,
-                pi
-            )
-            Log.i("MissedHeartbeatWorker", "Heartbeat service not running; scheduled restart")
+            val triggerAt = SystemClock.elapsedRealtime() + 1000L
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pi)
+                Log.i("MissedHeartbeatWorker", "Heartbeat service not running; scheduled restart")
+            } else {
+                alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pi)
+                Log.w("MissedHeartbeatWorker", "Heartbeat service not running; exact-alarm permission missing, restart may be blocked")
+            }
         } catch (e: Exception) {
             Log.e("MissedHeartbeatWorker", "Failed to schedule heartbeat service restart", e)
         }

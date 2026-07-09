@@ -323,6 +323,10 @@ class HeartbeatService : LifecycleService() {
 
     private val heartbeatRunnable = object : Runnable {
         override fun run() {
+            // Backstop against posts that land after onDestroy (which clears pending
+            // callbacks before this could be re-posted): without it one stale post
+            // re-arms the self-rescheduling loop in a destroyed service.
+            if (!isStarted) return
             val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
 
             if (scheduleActive) {
@@ -360,11 +364,21 @@ class HeartbeatService : LifecycleService() {
     private fun armDozeBackstop(delayMs: Long) {
         try {
             val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
-            alarmManager.setAndAllowWhileIdle(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + delayMs + PULSE_BACKSTOP_SLACK_MS,
-                pulseCheckIntent()
-            )
+            val triggerAt = SystemClock.elapsedRealtime() + delayMs + PULSE_BACKSTOP_SLACK_MS
+            // Exact when permitted: on Android 12+ only exact-alarm delivery grants the
+            // temporary allowlist that allows the revive-if-died foreground-service
+            // start; an inexact alarm still reaches the running service but its
+            // allowlist forbids the FGS start, so the revival would be silently
+            // dropped. Inexact remains the fallback for the pulse-catch-up case.
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()) {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pulseCheckIntent()
+                )
+            } else {
+                alarmManager.setAndAllowWhileIdle(
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pulseCheckIntent()
+                )
+            }
         } catch (e: Exception) {
             Log.w(TAG, "Failed to arm doze backstop alarm", e)
         }
@@ -698,6 +712,9 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun forceLocationFetchThenPulse() {
+        // Both listeners run on the main thread and check isStarted so a callback
+        // landing after onDestroy can't re-post the (self-rescheduling) heartbeat
+        // runnable into a destroyed service and keep pulsing phantom heartbeats.
         fusedLocation.lastLocation.addOnSuccessListener { loc ->
                 if (loc != null) {
                     lastLat = loc.latitude
@@ -709,10 +726,10 @@ class HeartbeatService : LifecycleService() {
                 } else {
                 Log.w(TAG, "Force fetch returned null location")
             }
-            pulseNow()
+            if (isStarted) pulseNow()
         }.addOnFailureListener {
             Log.e(TAG, "Force fetch failed", it)
-            pulseNow()
+            if (isStarted) pulseNow()
         }
     }
 
@@ -981,6 +998,7 @@ class HeartbeatService : LifecycleService() {
 
     override fun onDestroy() {
         isRunning = false
+        isStarted = false
         handler.removeCallbacks(heartbeatRunnable)
         handler.removeCallbacks(locationBoostDowngrade)
         stopActivityRecognition()

@@ -4,6 +4,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
 import com.locapeer.R
@@ -157,13 +158,17 @@ class GeofenceEngine @Inject constructor(
         title: String,
         subtitle: String
     ) {
+        // A unique data URI keys each PendingIntent to its fence+person. The request
+        // code alone can't: extras don't participate in PendingIntent matching
+        // (Intent.filterEquals), so two keys whose String.hashCode collides would
+        // share one PendingIntent and FLAG_UPDATE_CURRENT would overwrite the other
+        // notification's extras, routing its tap to the wrong fence/person.
         val openMapIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = Uri.parse("locapeer-notif://geofence/${fence.id}/$personDeviceId/map")
             putExtra("navigateTo", "map")
             putExtra("highlightPeer", personDeviceId)
         }
-        // Request codes include the person so two people triggering the same fence
-        // don't overwrite each other's PendingIntent extras.
         val openMapPi = PendingIntent.getActivity(
             context, "${fence.id}:$personDeviceId:map".hashCode(), openMapIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
@@ -171,6 +176,7 @@ class GeofenceEngine @Inject constructor(
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = Uri.parse("locapeer-notif://geofence/${fence.id}/$personDeviceId/chat")
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
             putExtra("peerName", personName)
