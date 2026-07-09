@@ -28,9 +28,6 @@ interface MessageDao {
     )
     fun getConversationSummaries(): Flow<List<MessageEntity>>
 
-    @Query("SELECT COUNT(*) FROM messages WHERE peerId = :peerId AND isRead = 0 AND isMine = 0 AND isBlocked = 0")
-    fun getUnreadCount(peerId: String): Flow<Int>
-
     @Query("SELECT peerId, COUNT(*) as cnt FROM messages WHERE isRead = 0 AND isMine = 0 AND isBlocked = 0 GROUP BY peerId")
     fun getUnreadCountsPerPeer(): Flow<List<UnreadCountRow>>
 

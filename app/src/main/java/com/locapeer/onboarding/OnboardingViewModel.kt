@@ -29,6 +29,7 @@ data class OnboardingState(
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
     private val keyManager: KeyManager,
     private val prefs: AppPreferences,
     private val crypto: com.locapeer.crypto.CryptoUtils
@@ -67,17 +68,17 @@ class OnboardingViewModel @Inject constructor(
     fun importPrivateKey(privHex: String) {
         val cleaned = privHex.trim().lowercase()
         if (!cleaned.matches(Regex("^[0-9a-f]{64}$"))) {
-            _state.value = _state.value.copy(importError = "Invalid key - must be 64 hex characters.")
+            _state.value = _state.value.copy(importError = context.getString(com.locapeer.R.string.onboarding_error_key_length))
             return
         }
-        
+
         try {
             if (!crypto.isValidPrivateKey(crypto.hexToBytes(cleaned))) {
-                _state.value = _state.value.copy(importError = "Invalid private key - out of curve range.")
+                _state.value = _state.value.copy(importError = context.getString(com.locapeer.R.string.onboarding_error_key_range))
                 return
             }
         } catch (_: Exception) {
-            _state.value = _state.value.copy(importError = "Invalid hex format.")
+            _state.value = _state.value.copy(importError = context.getString(com.locapeer.R.string.onboarding_error_hex))
             return
         }
 
@@ -90,7 +91,7 @@ class OnboardingViewModel @Inject constructor(
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,
-                    importError = "Failed to import key: ${e.message}"
+                    importError = context.getString(com.locapeer.R.string.onboarding_error_import_failed, e.message ?: "")
                 )
             }
         }

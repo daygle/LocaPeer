@@ -31,6 +31,7 @@ data class ScanState(
 
 @HiltViewModel
 class ScanViewModel @Inject constructor(
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
     private val peerDao: PeerDao,
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
@@ -59,7 +60,7 @@ class ScanViewModel @Inject constructor(
         try {
             val invite = json.decodeFromString<InviteData>(raw)
             if (!isValidPubKeyHex(invite.publicKeyHex) || !isValidPubKeyHex(invite.deviceId)) {
-                _scanState.value = ScanState(error = "Invalid invite: bad public key")
+                _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_bad_pubkey))
                 processed = false
                 return
             }
@@ -68,7 +69,7 @@ class ScanViewModel @Inject constructor(
             // existing peer row (keyed by deviceId) while pointing publicKeyHex at an
             // attacker-controlled key - which would hijack whose key we encrypt to/verify from.
             if (!invite.publicKeyHex.equals(invite.deviceId, ignoreCase = true)) {
-                _scanState.value = ScanState(error = "Invalid invite: key mismatch")
+                _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_key_mismatch))
                 processed = false
                 return
             }
@@ -76,9 +77,11 @@ class ScanViewModel @Inject constructor(
             // matches later events (and dedupes against an existing lowercase row).
             val canonicalKey = invite.publicKeyHex.lowercase()
             pendingInvite = invite.copy(publicKeyHex = canonicalKey, deviceId = canonicalKey)
-            _scanState.value = ScanState(pendingName = invite.displayName.ifBlank { "this contact" })
+            _scanState.value = ScanState(
+                pendingName = invite.displayName.ifBlank { context.getString(com.locapeer.R.string.scan_fallback_contact) }
+            )
         } catch (e: Exception) {
-            _scanState.value = ScanState(error = e.message ?: "Unknown error")
+            _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
             processed = false
         }
     }
@@ -104,7 +107,7 @@ class ScanViewModel @Inject constructor(
                 pendingInvite = null
                 _scanState.value = ScanState(success = true, addedName = invite.displayName)
             } catch (e: Exception) {
-                _scanState.value = ScanState(error = e.message ?: "Unknown error")
+                _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
                 processed = false
             }
         }
@@ -156,7 +159,7 @@ class ScanViewModel @Inject constructor(
             val raw = String(android.util.Base64.decode(base64, android.util.Base64.URL_SAFE))
             processQrCode(raw)
         } catch (_: Exception) {
-            _scanState.value = ScanState(error = "Invalid invite link")
+            _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_invalid_link))
         }
     }
 

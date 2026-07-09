@@ -38,7 +38,7 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         super.onCreate()
         // Seed display formatting from the device, then keep it in sync with user settings so
         // the app's synchronous time/speed formatters reflect the current preference.
-        DisplayFormat.initClockDefault(this)
+        DisplayFormat.init(this)
         appPreferences.settings
             .onEach {
                 DisplayFormat.useImperialSpeed = it.useImperialSpeed

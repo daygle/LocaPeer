@@ -35,8 +35,6 @@ import com.locapeer.invite.EXTRA_REQUESTED_ROLE
 import com.locapeer.invite.EXTRA_SENDER_NAME
 import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
-import com.locapeer.invite.TrackAcceptPayload
-import com.locapeer.invite.TrackDeclinePayload
 import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.invite.TrackRequestReceiver
 import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_ACCEPT
@@ -56,12 +54,10 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
-import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -132,17 +128,14 @@ class HeartbeatReceiver @Inject constructor(
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
-    private val peerManager: PeerManager
+    private val peerManager: PeerManager,
+    private val trackResponseSender: com.locapeer.invite.TrackResponseSender
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
 
     /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
     @Volatile private var lastPersistedHbEpoch = 0L
-
-    fun stop() {
-        scope.cancel()
-    }
 
     fun start() {
         createAlertChannel()
@@ -721,7 +714,13 @@ class HeartbeatReceiver @Inject constructor(
             if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE) return
             if (existing != null && existing.locationRole == PeerEntity.ROLE_RECEIVE) {
                 peerDao.upsertPeer(existing.copy(locationRole = PeerEntity.ROLE_SEND_RECEIVE))
-                sendTrackAcceptResponse(payload.senderPublicKeyHex, payload.senderRelayUrl, payload.senderDisplayName)
+                try {
+                    trackResponseSender.sendAccept(
+                        payload.senderPublicKeyHex, payload.senderRelayUrl, PeerEntity.ROLE_SEND_RECEIVE
+                    )
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to send track accept response", e)
+                }
                 Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
                 return
             }
@@ -793,37 +792,6 @@ class HeartbeatReceiver @Inject constructor(
             .addAction(0, context.getString(R.string.common_decline), declinePi)
             .build()
         notificationManager.notify(event.pubkey, NOTIF_ID_TRACK_REQUEST, notification)
-    }
-
-    private suspend fun sendTrackAcceptResponse(recipientPubkey: String, recipientRelay: String, recipientName: String) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val settings = prefs.settings.first()
-            val myRelay = HARDCODED_RELAYS.first()
-            val payload = TrackAcceptPayload(
-                acceptorPublicKeyHex = pubHex,
-                acceptorDisplayName = settings.displayName.ifBlank { "Someone" },
-                acceptorDeviceId = pubHex,
-                acceptorRelayUrl = myRelay,
-                acceptedRole = PeerEntity.ROLE_SEND_RECEIVE
-            )
-            val encrypted = crypto.nip44Encrypt(
-                crypto.hexToBytes(privHex),
-                recipientPubkey,
-                json.encodeToString<TrackAcceptPayload>(payload)
-            )
-            val event = NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.TRACK_ACCEPT,
-                content = encrypted,
-                tags = listOf(listOf("p", recipientPubkey)),
-                crypto = crypto
-            )
-            relayClient.publishEvent(event)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to send track accept response", e)
-        }
     }
 
     private suspend fun processTrackAccept(event: NostrEvent) {

@@ -695,4 +695,46 @@
     <string name="toast_declined_contact">Declined contact request from %1$s</string>
     <string name="toast_now_supervising">Now supervising %1$s\'s device</string>
     <string name="toast_declined_supervision">Declined supervision request from %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Just now</string>
+    <string name="time_minutes_ago">%1$dm ago</string>
+    <string name="fallback_me">Me</string>
+    <string name="geo_unassigned">Unassigned</string>
+    <string name="days_every_day">Every day</string>
+    <string name="days_weekdays">Weekdays</string>
+    <string name="days_weekends">Weekends</string>
+    <string name="days_none">No days</string>
+    <string name="chat_my_location_message">My current location: %1$s</string>
+    <string name="scan_error_bad_pubkey">Invalid invite: bad public key</string>
+    <string name="scan_error_key_mismatch">Invalid invite: key mismatch</string>
+    <string name="scan_error_unknown">Unknown error</string>
+    <string name="scan_error_invalid_link">Invalid invite link</string>
+    <string name="scan_fallback_contact">this contact</string>
+    <string name="backup_saved">Backup saved: %1$s</string>
+    <string name="backup_saved_encrypted">Backup saved (encrypted): %1$s</string>
+    <string name="backup_failed">Backup failed: %1$s</string>
+    <string name="backup_could_not_read_file">Could not read file</string>
+    <string name="backup_could_not_read">Could not read backup: %1$s</string>
+    <string name="backup_incorrect_password">Incorrect password</string>
+    <string name="restore_result_restored">Restored: %1$s</string>
+    <string name="restore_result_failed">Failed: %1$s</string>
+    <string name="restore_nothing">Nothing to restore</string>
+    <string name="restore_failed">Restore failed: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacts</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="other">%1$d geofences</item>
+    </plurals>
+    <string name="peer_role_change_sent">Role change request sent to %1$s</string>
+    <string name="peer_not_found">Peer not found</string>
+    <string name="peer_purge_location_sent">Remote delete command for ALL locations sent to %1$s</string>
+    <string name="peer_purge_messages_sent">Remote delete command for ALL messages sent to %1$s</string>
+    <string name="onboarding_error_key_length">Invalid key - must be 64 hex characters.</string>
+    <string name="onboarding_error_key_range">Invalid private key - out of curve range.</string>
+    <string name="onboarding_error_hex">Invalid hex format.</string>
+    <string name="onboarding_error_import_failed">Failed to import key: %1$s</string>
 </resources>

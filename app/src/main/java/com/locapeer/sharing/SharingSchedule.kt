@@ -5,10 +5,21 @@ import java.util.Calendar
 
 object SharingSchedule {
 
-    val DAY_LABELS = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    /**
+     * Localized short weekday labels, Monday-first to match the rule matcher's day
+     * indexing. Read from the platform's locale data so day names follow the user's
+     * language without maintaining 50 translations of our own.
+     */
+    fun dayLabels(): List<String> {
+        val symbols = java.text.DateFormatSymbols(java.util.Locale.getDefault()).shortWeekdays
+        return listOf(
+            Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
+            Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY,
+        ).map { symbols[it] }
+    }
 
-    fun isActive(rules: List<ScheduleRule>): Boolean {
-        if (rules.isEmpty()) return true
+    /** Current local (dayIndex, minuteOfDay) in the rule matcher's convention: Monday = 0. */
+    fun nowDayMinute(): Pair<Int, Int> {
         val now = Calendar.getInstance()
         val dayIndex = when (now.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY    -> 0
@@ -21,6 +32,12 @@ object SharingSchedule {
             else               -> 0
         }
         val currentMinute = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
+        return dayIndex to currentMinute
+    }
+
+    fun isActive(rules: List<ScheduleRule>): Boolean {
+        if (rules.isEmpty()) return true
+        val (dayIndex, currentMinute) = nowDayMinute()
         return isActive(rules, dayIndex, currentMinute)
     }
 
@@ -55,12 +72,14 @@ object SharingSchedule {
         return DisplayFormat.timeFormat().format(time)
     }
 
+    // English fallbacks only apply before DisplayFormat.init (e.g. JVM unit tests);
+    // in the app the Application seeds the context first.
     fun formatDays(days: Int): String = when (days) {
-        0b1111111 -> "Every day"
-        0b0011111 -> "Weekdays"
-        0b1100000 -> "Weekends"
-        0          -> "No days"
-        else -> DAY_LABELS.filterIndexed { i, _ -> (days shr i) and 1 == 1 }.joinToString(", ")
+        0b1111111 -> DisplayFormat.appString(com.locapeer.R.string.days_every_day) ?: "Every day"
+        0b0011111 -> DisplayFormat.appString(com.locapeer.R.string.days_weekdays) ?: "Weekdays"
+        0b1100000 -> DisplayFormat.appString(com.locapeer.R.string.days_weekends) ?: "Weekends"
+        0          -> DisplayFormat.appString(com.locapeer.R.string.days_none) ?: "No days"
+        else -> dayLabels().filterIndexed { i, _ -> (days shr i) and 1 == 1 }.joinToString(", ")
     }
 
     fun toSuburbPrecision(lat: Double, lng: Double): Pair<Double, Double> =

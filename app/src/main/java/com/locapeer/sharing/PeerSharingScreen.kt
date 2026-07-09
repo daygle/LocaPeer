@@ -410,16 +410,13 @@ fun PeerSharingScreen(
             item { SectionLabel(stringResource(R.string.peer_section_retention)) }
             item {
                 SettingsCard {
-                    purgeResult?.let { msg ->
+                    purgeResult?.let { result ->
                         Text(
-                            msg,
+                            result.message,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (msg.contains("not", ignoreCase = true) ||
-                                msg.contains("Forever", ignoreCase = true) ||
-                                msg.contains("not found", ignoreCase = true))
-                                MaterialTheme.colorScheme.onSurfaceVariant
-                            else MaterialTheme.colorScheme.primary
+                            color = if (result.isError) MaterialTheme.colorScheme.onSurfaceVariant
+                                    else MaterialTheme.colorScheme.primary
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     }

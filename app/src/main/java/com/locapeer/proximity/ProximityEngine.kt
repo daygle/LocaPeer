@@ -134,7 +134,7 @@ class ProximityEngine @Inject constructor(
         scope.launch {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
-                val myName = prefs.settings.first().displayName.ifBlank { "Someone" }
+                val myName = prefs.settings.first().displayName.ifBlank { context.getString(R.string.notif_someone) }
                 val payload = TrackingAlertPayload(
                     type = "PROXIMITY",
                     triggerName = myName
@@ -160,7 +160,9 @@ class ProximityEngine @Inject constructor(
     }
 
     private fun sendNotification(personName: String, personDeviceId: String, distanceMetres: Int) {
-        val displayDistance = "${com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())} away"
+        // The distance is inserted into the localized "%1$s from you" template, so it must
+        // not carry its own English suffix (that produced "500 m away from you").
+        val displayDistance = com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP

@@ -21,16 +21,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import android.location.Geocoder
-import android.os.Build
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
-import java.util.Locale
-import kotlin.coroutines.resume
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -42,6 +35,7 @@ import com.locapeer.R
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
+import com.locapeer.util.Geocoding
 import com.locapeer.ui.theme.*
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -127,7 +121,7 @@ fun MapScreen(
         // off-device, so only look up an address when the user has enabled it.
         if (!reverseGeocodingEnabled) return@LaunchedEffect
         val hb = selectedPin?.heartbeat ?: return@LaunchedEffect
-        selectedPinAddress = geocodeLocation(context, hb.lat, hb.lng)
+        selectedPinAddress = Geocoding.reverseGeocode(context, hb.lat, hb.lng)
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -926,33 +920,3 @@ private fun StatChip(label: String, value: String) {
     }
 }
 
-@Suppress("DEPRECATION")
-private suspend fun geocodeLocation(context: android.content.Context, lat: Double, lng: Double): String? =
-    withContext(Dispatchers.IO) {
-        if (!Geocoder.isPresent()) return@withContext null
-        try {
-            val geocoder = Geocoder(context, Locale.getDefault())
-            val addr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                suspendCancellableCoroutine { cont ->
-                    // Resume on both callbacks: on failure the platform calls onError instead of
-                    // onGeocode, and without an onError branch the continuation would never resume.
-                    geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
-                        override fun onGeocode(addresses: MutableList<android.location.Address>) {
-                            if (cont.isActive) cont.resume(addresses.firstOrNull())
-                        }
-
-                        override fun onError(errorMessage: String?) {
-                            if (cont.isActive) cont.resume(null)
-                        }
-                    })
-                }
-            } else {
-                geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()
-            }
-            addr?.let {
-                listOfNotNull(it.thoroughfare, it.locality, it.adminArea)
-                    .joinToString(", ")
-                    .ifBlank { it.getAddressLine(0) }
-            }
-        } catch (e: Exception) { null }
-    }

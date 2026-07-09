@@ -21,7 +21,6 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
-import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
 import com.locapeer.settings.HARDCODED_RELAYS
@@ -153,9 +152,7 @@ class SettingsViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
-    private val relayClient: NostrRelayClient,
-    private val supervisedModeManager: SupervisedModeManager,
-    private val peerManager: com.locapeer.peer.PeerManager
+    private val supervisedModeManager: SupervisedModeManager
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -232,17 +229,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun removePeer(deviceId: String) {
-        viewModelScope.launch { peerManager.removePeer(deviceId) }
-    }
-
-    fun updatePeerName(deviceId: String, newName: String) {
-        viewModelScope.launch {
-            val peer = peerDao.getPeer(deviceId) ?: return@launch
-            peerDao.upsertPeer(peer.copy(displayName = newName))
-        }
-    }
-
     fun setMapStartZoom(zoom: Double) {
         viewModelScope.launch { prefs.setMapStartZoom(zoom) }
     }
@@ -253,31 +239,6 @@ class SettingsViewModel @Inject constructor(
 
     fun setMapFixedLocation(lat: Double, lng: Double) {
         viewModelScope.launch { prefs.setMapFixedLocation(lat, lng) }
-    }
-
-    @android.annotation.SuppressLint("MissingPermission")
-    fun captureCurrentLocationAsFixed(onResult: (success: Boolean) -> Unit) {
-        val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
-                         context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        if (!hasLocation) {
-            onResult(false)
-            return
-        }
-
-        com.google.android.gms.location.LocationServices
-            .getFusedLocationProviderClient(context)
-            .lastLocation
-            .addOnSuccessListener { loc ->
-                if (loc != null) {
-                    viewModelScope.launch {
-                        prefs.setMapFixedLocation(loc.latitude, loc.longitude)
-                        onResult(true)
-                    }
-                } else {
-                    onResult(false)
-                }
-            }
-            .addOnFailureListener { onResult(false) }
     }
 
     fun clearLocationHistory() {
@@ -386,11 +347,15 @@ class SettingsViewModel @Inject constructor(
 
                 val json = jsonExport.encodeToString(finalBackup)
                 context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
-                val parts = sections.map { it.name.lowercase().replaceFirstChar { c -> c.uppercaseChar() } }
-                _backupResult.value = "Backup saved${if (!password.isNullOrBlank()) " (encrypted)" else ""}: ${parts.joinToString(", ")}"
+                val parts = sections.joinToString(", ") { context.getString(sectionLabelRes(it)) }
+                _backupResult.value = context.getString(
+                    if (!password.isNullOrBlank()) com.locapeer.R.string.backup_saved_encrypted
+                    else com.locapeer.R.string.backup_saved,
+                    parts
+                )
             } catch (e: Exception) {
                 Log.e(TAG, "Backup export failed", e)
-                _backupResult.value = "Backup failed: ${e.message}"
+                _backupResult.value = context.getString(com.locapeer.R.string.backup_failed, e.message ?: "")
             }
         }
     }
@@ -401,7 +366,10 @@ class SettingsViewModel @Inject constructor(
             try {
                 val json = context.contentResolver.openInputStream(uri)?.use {
                     it.readBytes().toString(Charsets.UTF_8)
-                } ?: run { _backupResult.value = "Could not read file"; return@launch }
+                } ?: run {
+                    _backupResult.value = context.getString(com.locapeer.R.string.backup_could_not_read_file)
+                    return@launch
+                }
                 val backup = jsonImport.decodeFromString<LocaPeerBackup>(json)
                 
                 if (backup.ciphertext != null) {
@@ -418,7 +386,7 @@ class SettingsViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Backup load failed", e)
-                _backupResult.value = "Could not read backup: ${e.message}"
+                _backupResult.value = context.getString(com.locapeer.R.string.backup_could_not_read, e.message ?: "")
             }
         }
     }
@@ -453,7 +421,7 @@ class SettingsViewModel @Inject constructor(
                 _restorePasswordError.value = null
             } catch (e: Exception) {
                 Log.w(TAG, "Backup decryption failed", e)
-                _restorePasswordError.value = "Incorrect password"
+                _restorePasswordError.value = context.getString(com.locapeer.R.string.backup_incorrect_password)
             }
         }
     }
@@ -478,19 +446,20 @@ class SettingsViewModel @Inject constructor(
             // outer try/finally guards against any unexpected error still clearing the pending
             // state so the UI can never get stuck on the section picker.
             try {
+                val identityLabel = context.getString(com.locapeer.R.string.backup_section_private_key)
                 if (BackupSection.PRIVATE_KEY in sections && backup.privateKeyHex != null) {
                     val key = backup.privateKeyHex.trim().lowercase()
                     if (!PRIVATE_KEY_REGEX.matches(key)) {
                         Log.e(TAG, "Identity restore failed: private key must be 64 hex characters (0-9, a-f)")
-                        failed += "identity"
+                        failed += identityLabel
                     } else {
                         try {
                             keyManager.importPrivateKey(key)
                             identityRestored = true
-                            restored += "identity"
+                            restored += identityLabel
                         } catch (e: Exception) {
                             Log.e(TAG, "Identity restore failed", e)
-                            failed += "identity"
+                            failed += identityLabel
                         }
                     }
                 }
@@ -522,10 +491,12 @@ class SettingsViewModel @Inject constructor(
                                 ))
                             }
                         }
-                        restored += "${backup.contacts.size} contacts"
+                        restored += context.resources.getQuantityString(
+                            com.locapeer.R.plurals.restore_contacts_count, backup.contacts.size, backup.contacts.size
+                        )
                     } catch (e: Exception) {
                         Log.e(TAG, "Contacts restore failed", e)
-                        failed += "contacts"
+                        failed += context.getString(com.locapeer.R.string.backup_section_contacts)
                     }
                 }
                 if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
@@ -544,10 +515,12 @@ class SettingsViewModel @Inject constructor(
                                 )
                             )
                         }
-                        restored += "${backup.geofences.size} geofences"
+                        restored += context.resources.getQuantityString(
+                            com.locapeer.R.plurals.restore_geofences_count, backup.geofences.size, backup.geofences.size
+                        )
                     } catch (e: Exception) {
                         Log.e(TAG, "Geofences restore failed", e)
-                        failed += "geofences"
+                        failed += context.getString(com.locapeer.R.string.backup_section_geofences)
                     }
                 }
                 if (BackupSection.SETTINGS in sections && backup.settings != null) {
@@ -574,10 +547,10 @@ class SettingsViewModel @Inject constructor(
                         prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
                         prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
                         settingsRestored = true
-                        restored += "settings"
+                        restored += context.getString(com.locapeer.R.string.backup_section_settings)
                     } catch (e: Exception) {
                         Log.e(TAG, "Settings restore failed", e)
-                        failed += "settings"
+                        failed += context.getString(com.locapeer.R.string.backup_section_settings)
                     }
                 }
                 // Identity and/or display name may have changed; refresh the shown pubkey and QR.
@@ -585,18 +558,20 @@ class SettingsViewModel @Inject constructor(
                     refreshProfile()
                 }
                 _backupResult.value = buildString {
-                    if (restored.isNotEmpty()) append("Restored: ${restored.joinToString(", ")}")
+                    if (restored.isNotEmpty()) {
+                        append(context.getString(com.locapeer.R.string.restore_result_restored, restored.joinToString(", ")))
+                    }
                     if (failed.isNotEmpty()) {
                         if (isNotEmpty()) append(". ")
-                        append("Failed: ${failed.joinToString(", ")}")
+                        append(context.getString(com.locapeer.R.string.restore_result_failed, failed.joinToString(", ")))
                     }
-                    if (isEmpty()) append("Nothing to restore")
+                    if (isEmpty()) append(context.getString(com.locapeer.R.string.restore_nothing))
                 }
             } catch (e: Exception) {
                 // Defensive: per-section blocks already catch their own failures, so this only
                 // trips on something unexpected. Still surface it and let finally clear the state.
                 Log.e(TAG, "Restore failed unexpectedly", e)
-                _backupResult.value = "Restore failed: ${e.message}"
+                _backupResult.value = context.getString(com.locapeer.R.string.restore_failed, e.message ?: "")
             } finally {
                 _pendingRestore.value = null
             }
@@ -629,10 +604,6 @@ class SettingsViewModel @Inject constructor(
     fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
 
     fun resetUnlockState() = supervisedModeManager.reset()
-
-    fun setGlobalScheduleRules(rules: List<ScheduleRule>) {
-        viewModelScope.launch { prefs.setGlobalScheduleRules(rules) }
-    }
 
     fun updateIntervals(
         stationary: Int? = null,
@@ -700,6 +671,13 @@ class SettingsViewModel @Inject constructor(
         private val jsonImport = Json { ignoreUnknownKeys = true }
         /** A restorable identity is a 32-byte secp256k1 scalar written as 64 lowercase hex chars. */
         private val PRIVATE_KEY_REGEX = Regex("^[0-9a-f]{64}$")
+
+        private fun sectionLabelRes(section: BackupSection): Int = when (section) {
+            BackupSection.PRIVATE_KEY -> com.locapeer.R.string.backup_section_private_key
+            BackupSection.CONTACTS -> com.locapeer.R.string.backup_section_contacts
+            BackupSection.GEOFENCES -> com.locapeer.R.string.backup_section_geofences
+            BackupSection.SETTINGS -> com.locapeer.R.string.backup_section_settings
+        }
     }
 
 }

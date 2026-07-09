@@ -23,10 +23,20 @@ object DisplayFormat {
     @Volatile var useImperialElevation: Boolean = false
     @Volatile var useImperialDistance: Boolean = false
 
-    /** Seed the clock default from the device before the settings flow first emits. */
-    fun initClockDefault(context: Context) {
+    @android.annotation.SuppressLint("StaticFieldLeak") // application context only; outlives everything
+    @Volatile private var appContext: Context? = null
+
+    /** Seed the holder from the Application: stores the app context that backs the localized
+     *  fragments below, and the device clock setting as the 24-hour default. */
+    fun init(context: Context) {
+        appContext = context.applicationContext
         use24HourTime = DateFormat.is24HourFormat(context)
     }
+
+    /** Localized string via the app context, or null before [init] (e.g. JVM unit tests),
+     *  in which case callers fall back to their English literal. */
+    internal fun appString(resId: Int, vararg formatArgs: Any): String? =
+        appContext?.getString(resId, *formatArgs)
 
     /** Clock-time pattern honouring the user's 12/24-hour choice. */
     fun timePattern(withSeconds: Boolean = false): String = when {
@@ -66,6 +76,31 @@ object DisplayFormat {
         }
         return if (meters < 1000) "${Math.round(meters)} m"
                else "${"%.1f".format(meters / 1000.0)} km"
+    }
+
+    /**
+     * Relative "last seen" label: "Just now" / "5m ago" within the hour, a clock time within
+     * the last 24 hours, "d MMM, <time>" for older same-year timestamps, and "d MMM yyyy"
+     * once the year differs. Shared by the map and contacts screens.
+     */
+    fun relativeTimestamp(millis: Long): String {
+        val diffMs = System.currentTimeMillis() - millis
+        return when {
+            diffMs < 60_000 ->
+                appString(com.locapeer.R.string.time_just_now) ?: "Just now"
+            diffMs < 3_600_000 ->
+                appString(com.locapeer.R.string.time_minutes_ago, diffMs / 60_000) ?: "${diffMs / 60_000}m ago"
+            diffMs < 86_400_000 -> timeFormat().format(java.util.Date(millis))
+            else -> {
+                val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
+                val today = java.util.Calendar.getInstance()
+                val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
+                    SimpleDateFormat("d MMM, ${timePattern()}", Locale.getDefault())
+                else
+                    SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                fmt.format(java.util.Date(millis))
+            }
+        }
     }
 
     /** Direction string from a 0–360 degree bearing, e.g. "N", "SW". */
