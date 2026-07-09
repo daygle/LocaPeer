@@ -31,5 +31,18 @@ data class PeerEntity(
         const val ROLE_RECEIVE = "RECEIVE"
         const val ROLE_SEND = "SEND"
         const val ROLE_SEND_RECEIVE = "SEND_RECEIVE"
+
+        /**
+         * The location role after granting reception of this peer's location, leaving any
+         * existing SEND capability intact. Used when a supervised device is accepted: being
+         * their supervisor implies we should receive their location, so a messaging-only
+         * (NONE) or send-only (SEND) relationship is promoted to also RECEIVE. Roles that
+         * already receive (RECEIVE / SEND_RECEIVE) are returned unchanged.
+         */
+        fun roleWithReceive(current: String): String = when (current) {
+            ROLE_NONE -> ROLE_RECEIVE
+            ROLE_SEND -> ROLE_SEND_RECEIVE
+            else -> current
+        }
     }
 }

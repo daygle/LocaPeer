@@ -9,7 +9,9 @@ import android.widget.Toast
 import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
@@ -35,6 +37,7 @@ const val EXTRA_REQUESTER_RELAY = "requester_relay"
 @InstallIn(SingletonComponent::class)
 interface SupervisedRegisterReceiverEntryPoint {
     fun sharingConfigDao(): PeerSharingConfigDao
+    fun peerDao(): PeerDao
     fun keyManager(): KeyManager
     fun relayClient(): NostrRelayClient
     fun crypto(): CryptoUtils
@@ -76,6 +79,17 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                                     isMySupervised = true
                                 )
                             )
+                        }
+                        // Supervising a device implies receiving its location, so promote the
+                        // peer's role to RECEIVE. Without this, incoming heartbeats are dropped
+                        // (HeartbeatReceiver only stores pings from RECEIVE/SEND_RECEIVE peers)
+                        // and the supervised contact shows no location pin.
+                        val peer = ep.peerDao().getPeer(requesterPubkey)
+                        if (peer != null) {
+                            val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
+                            if (promotedRole != peer.locationRole) {
+                                ep.peerDao().upsertPeer(peer.copy(locationRole = promotedRole))
+                            }
                         }
                         sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true)
                         launch(Dispatchers.Main) {
