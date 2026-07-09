@@ -72,8 +72,20 @@ class HistoryReportViewModel @Inject constructor(
 
     val heartbeats: StateFlow<List<HeartbeatEntity>> =
         combine(_selectedPeerId, _selectedDayStart, _startTimeOffset, _endTimeOffset) { peerId, dayStart, startOff, endOff ->
-            if (peerId == null) flowOf(emptyList())
-            else heartbeatDao.getHeartbeatsForDay(peerId, dayStart + startOff, dayStart + endOff)
+            if (peerId == null) {
+                flowOf(emptyList())
+            } else {
+                // DST-aware day bounds: a local day can be 23h or 25h, so take the exclusive
+                // end from the next local midnight instead of a fixed 24h. Clamp the selected
+                // sub-range into [dayStart, nextMidnight); an un-narrowed end extends to the
+                // true day end so a 25h fall-back day's final hour isn't dropped and a 23h
+                // spring-forward day's window doesn't spill into the next day.
+                val dayEnd = shiftDayStart(dayStart, 1)
+                val from = (dayStart + startOff).coerceIn(dayStart, dayEnd)
+                val to = if (endOff >= DAY_MS - 1) dayEnd
+                         else (dayStart + endOff + 1).coerceIn(from, dayEnd)
+                heartbeatDao.getHeartbeatsForDay(peerId, from, to)
+            }
         }
             .flatMapLatest { it }
             .combine(
@@ -146,14 +158,14 @@ class HistoryReportViewModel @Inject constructor(
     }
 
     fun prevDay() {
-        _selectedDayStart.update { it - DAY_MS }
+        _selectedDayStart.update { shiftDayStart(it, -1) }
         _addresses.value = emptyMap()
         resetTimeRange()
     }
 
     fun nextDay() {
         val today = todayStartMs()
-        _selectedDayStart.update { ms -> minOf(ms + DAY_MS, today) }
+        _selectedDayStart.update { ms -> minOf(shiftDayStart(ms, 1), today) }
         _addresses.value = emptyMap()
         resetTimeRange()
     }
@@ -194,8 +206,22 @@ class HistoryReportViewModel @Inject constructor(
     companion object {
         private const val DAY_MS = 24 * 60 * 60 * 1000L
 
-        fun todayStartMs(): Long {
-            val cal = Calendar.getInstance()
+        fun todayStartMs(): Long = startOfDay(Calendar.getInstance())
+
+        /**
+         * Local midnight [deltaDays] away from the day containing [dayStartMs]. Uses calendar
+         * arithmetic rather than adding a fixed 24h so the result stays anchored to local
+         * midnight across daylight-saving transitions (a local day can be 23h or 25h).
+         */
+        private fun shiftDayStart(dayStartMs: Long, deltaDays: Int): Long {
+            val cal = Calendar.getInstance().apply {
+                timeInMillis = dayStartMs
+                add(Calendar.DAY_OF_YEAR, deltaDays)
+            }
+            return startOfDay(cal)
+        }
+
+        private fun startOfDay(cal: Calendar): Long {
             cal.set(Calendar.HOUR_OF_DAY, 0)
             cal.set(Calendar.MINUTE, 0)
             cal.set(Calendar.SECOND, 0)
