@@ -81,9 +81,10 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                             )
                         }
                         // Supervising a device implies receiving its location, so promote the
-                        // peer's role to RECEIVE. Without this, incoming heartbeats are dropped
-                        // (HeartbeatReceiver only stores pings from RECEIVE/SEND_RECEIVE peers)
-                        // and the supervised contact shows no location pin.
+                        // peer's role to also receive it (NONE -> RECEIVE, SEND -> SEND_RECEIVE),
+                        // leaving any existing SEND capability intact. Without this, incoming
+                        // heartbeats are dropped (HeartbeatReceiver only stores pings from
+                        // RECEIVE/SEND_RECEIVE peers) and the supervised contact shows no pin.
                         val peer = ep.peerDao().getPeer(requesterPubkey)
                         if (peer != null) {
                             val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
