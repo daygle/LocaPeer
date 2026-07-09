@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">My Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
-    <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins. Sends those coordinates to your device\'s geocoding service (usually Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins, and search by address when placing geofences. Sends those coordinates or your typed search to your device\'s geocoding service (usually Google).</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>
@@ -563,6 +563,11 @@
     <string name="geo_hint_tap">Tap the map to place</string>
     <string name="geo_hint_pinch">Pinch to resize • Drag to move</string>
     <string name="geo_basic_info">Basic Info</string>
+    <string name="geo_search_title">Find by Address</string>
+    <string name="geo_search_label">Address or place</string>
+    <string name="geo_search_placeholder">e.g. 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">No matching address found</string>
+    <string name="geo_cd_search">Search</string>
     <string name="geo_name_placeholder">e.g. Home, Work</string>
     <string name="geo_name_required">Name is required</string>
     <string name="geo_latitude">Latitude</string>

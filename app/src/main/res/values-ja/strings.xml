@@ -87,7 +87,7 @@
     <string name="settings_my_location_history">自分の位置履歴</string>
     <string name="settings_my_location_history_subtitle">自分の位置情報のタイムラインを閲覧</string>
     <string name="settings_lookup_addresses">住所を検索</string>
-    <string name="settings_lookup_addresses_subtitle">履歴ポイントやタップしたマップピンの住所を表示します。座標はデバイスのジオコーディングサービス（通常はGoogle）に送信されます。</string>
+    <string name="settings_lookup_addresses_subtitle">履歴ポイントやタップしたマップピンの住所を表示し、ジオフェンス作成時に住所検索を有効にします。座標や入力した検索テキストはデバイスのジオコーディングサービス（通常はGoogle）に送信されます。</string>
 
     <!-- セキュリティ -->
     <string name="settings_supervision_active">監視が有効</string>
@@ -551,6 +551,11 @@
     <string name="geo_hint_tap">マップをタップして配置</string>
     <string name="geo_hint_pinch">ピンチでサイズ変更 • ドラッグで移動</string>
     <string name="geo_basic_info">基本情報</string>
+    <string name="geo_search_title">住所で検索</string>
+    <string name="geo_search_label">住所または場所</string>
+    <string name="geo_search_placeholder">例: 東京都千代田区1-1</string>
+    <string name="geo_search_no_results">一致する住所が見つかりません</string>
+    <string name="geo_cd_search">検索</string>
     <string name="geo_name_placeholder">例：自宅、職場</string>
     <string name="geo_name_required">名前は必須です</string>
     <string name="geo_latitude">緯度</string>

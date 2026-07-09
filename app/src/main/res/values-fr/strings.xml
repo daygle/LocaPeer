@@ -89,7 +89,7 @@
     <string name="settings_my_location_history">Mon historique de localisation</string>
     <string name="settings_my_location_history_subtitle">Parcourir votre propre chronologie de localisation</string>
     <string name="settings_lookup_addresses">Rechercher des adresses</string>
-    <string name="settings_lookup_addresses_subtitle">Afficher les adresses postales pour les points de l\'historique et les épingles de carte touchées. Envoie ces coordonnées au service de géocodage de votre appareil (généralement Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Afficher les adresses postales pour les points de l\'historique et les épingles de carte touchées, et rechercher par adresse lors du placement des géorepérages. Envoie ces coordonnées ou le texte saisi au service de géocodage de votre appareil (généralement Google).</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision active</string>
@@ -564,6 +564,11 @@
     <string name="geo_hint_tap">Touchez la carte pour placer</string>
     <string name="geo_hint_pinch">Pincez pour redimensionner • Faites glisser pour déplacer</string>
     <string name="geo_basic_info">Informations de base</string>
+    <string name="geo_search_title">Rechercher par adresse</string>
+    <string name="geo_search_label">Adresse ou lieu</string>
+    <string name="geo_search_placeholder">p. ex. 10 rue de la Paix, Paris</string>
+    <string name="geo_search_no_results">Aucune adresse correspondante trouvée</string>
+    <string name="geo_cd_search">Rechercher</string>
     <string name="geo_name_placeholder">ex: Domicile, Travail</string>
     <string name="geo_name_required">Le nom est requis</string>
     <string name="geo_latitude">Latitude</string>

@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Meu Histórico de Localização</string>
     <string name="settings_my_location_history_subtitle">Navegue por sua própria linha do tempo de localização</string>
     <string name="settings_lookup_addresses">Consultar Endereços</string>
-    <string name="settings_lookup_addresses_subtitle">Mostrar endereços para pontos do histórico e pins tocados no mapa. Envia essas coordenadas para o serviço de geocodificação do seu dispositivo (geralmente o Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Mostrar endereços para pontos do histórico e pins tocados no mapa, e pesquisar por endereço ao colocar geocercas. Envia essas coordenadas ou o texto digitado para o serviço de geocodificação do seu dispositivo (geralmente o Google).</string>
 
     <!-- Segurança -->
     <string name="settings_supervision_active">Supervisão Ativa</string>
@@ -561,6 +561,11 @@
     <string name="geo_hint_tap">Toque no mapa para posicionar</string>
     <string name="geo_hint_pinch">Pince para redimensionar • Arraste para mover</string>
     <string name="geo_basic_info">Informações Básicas</string>
+    <string name="geo_search_title">Procurar por endereço</string>
+    <string name="geo_search_label">Endereço ou local</string>
+    <string name="geo_search_placeholder">ex.: Rua Principal 10, Lisboa</string>
+    <string name="geo_search_no_results">Nenhum endereço correspondente encontrado</string>
+    <string name="geo_cd_search">Procurar</string>
     <string name="geo_name_placeholder">ex: Casa, Trabalho</string>
     <string name="geo_name_required">O nome é obrigatório</string>
     <string name="geo_latitude">Latitude</string>

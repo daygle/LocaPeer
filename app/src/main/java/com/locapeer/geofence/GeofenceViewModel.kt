@@ -11,10 +11,12 @@ import com.locapeer.data.entity.GeofenceAssignmentEntity
 import com.locapeer.data.entity.GeofenceEntity
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -30,8 +32,17 @@ class GeofenceViewModel @Inject constructor(
     private val geofenceDao: GeofenceDao,
     private val assignmentDao: GeofenceAssignmentDao,
     private val peerDao: PeerDao,
-    private val heartbeatDao: HeartbeatDao
+    private val heartbeatDao: HeartbeatDao,
+    appPreferences: AppPreferences
 ) : ViewModel() {
+
+    /**
+     * Address search in the geofence editor queries the OS geocoder, so it stays behind
+     * the same "Look Up Addresses" opt-in as reverse geocoding in History and on map pins.
+     */
+    val addressSearchEnabled = appPreferences.settings
+        .map { it.reverseGeocodingEnabled }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     /** Shared geofence areas (location + radius), independent of any contact. */
     val geofences = geofenceDao.getAllGeofences()
