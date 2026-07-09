@@ -141,6 +141,15 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
+    /**
+     * True while location updates are stopped because the global schedule is inactive,
+     * so the pulse that finds the schedule open again knows to restart GPS. Probing
+     * "was the previous minute inactive?" instead is wrong whenever the pulse interval
+     * exceeds one minute: the first in-window pulse usually lands well past the first
+     * minute, the check reads the window as already-open, and GPS stays off for the
+     * whole active window while stale coordinates keep being broadcast.
+     */
+    @Volatile private var gpsSuspendedBySchedule = false
 
     private var isStarted = false
 
@@ -314,26 +323,11 @@ class HeartbeatService : LifecycleService() {
 
     private val heartbeatRunnable = object : Runnable {
         override fun run() {
-            val now = java.util.Calendar.getInstance()
-            val dayIndex = when (now[java.util.Calendar.DAY_OF_WEEK]) {
-                java.util.Calendar.MONDAY    -> 0
-                java.util.Calendar.TUESDAY   -> 1
-                java.util.Calendar.WEDNESDAY -> 2
-                java.util.Calendar.THURSDAY  -> 3
-                java.util.Calendar.FRIDAY    -> 4
-                java.util.Calendar.SATURDAY  -> 5
-                java.util.Calendar.SUNDAY    -> 6
-                else                         -> 0
-            }
-            val currentMinute = now.get(java.util.Calendar.HOUR_OF_DAY) * 60 + now.get(java.util.Calendar.MINUTE)
-            val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules, dayIndex, currentMinute)
+            val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
 
             if (scheduleActive) {
-                // If we were previously off-schedule, the GPS might be stopped. 
-                // Restart it immediately upon entering the active window.
-                if (lastPulseElapsedMs != 0L && !isSos && !SharingSchedule.isActive(currentSettings.globalScheduleRules, dayIndex, (currentMinute - 1).let { if (it < 0) 1439 else it })) {
-                    updateLocationRequest()
-                }
+                // GPS was stopped while off-schedule; restart it now the window is open.
+                if (gpsSuspendedBySchedule) updateLocationRequest()
 
                 if (broadcastHeartbeat()) {
                     lastPulseElapsedMs = SystemClock.elapsedRealtime()
@@ -341,9 +335,7 @@ class HeartbeatService : LifecycleService() {
             } else {
                 Log.d(TAG, "Heartbeat suppressed: outside global schedule. Suspending GPS.")
                 // Stop GPS to save battery during off-hours
-                try {
-                    fusedLocation.removeLocationUpdates(locationCallback)
-                } catch (e: Exception) {}
+                suspendLocationUpdatesForSchedule()
             }
 
             val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
@@ -565,18 +557,24 @@ class HeartbeatService : LifecycleService() {
             .build()
     }
 
+    private fun suspendLocationUpdatesForSchedule() {
+        gpsSuspendedBySchedule = true
+        try {
+            fusedLocation.removeLocationUpdates(locationCallback)
+        } catch (_: Exception) {}
+    }
+
     @SuppressLint("MissingPermission")
     private fun updateLocationRequest() {
         // If the global schedule is inactive, don't start location updates.
         // The heartbeatRunnable will re-check and resume them when the schedule re-opens.
         if (!isSos && !SharingSchedule.isActive(currentSettings.globalScheduleRules)) {
             Log.d(TAG, "updateLocationRequest suppressed: outside global schedule")
-            try {
-                fusedLocation.removeLocationUpdates(locationCallback)
-            } catch (_: Exception) {}
+            suspendLocationUpdatesForSchedule()
             return
         }
 
+        gpsSuspendedBySchedule = false
         try {
             fusedLocation.removeLocationUpdates(locationCallback)
             fusedLocation.requestLocationUpdates(buildLocationRequest(), locationCallback, Looper.getMainLooper())
@@ -804,18 +802,7 @@ class HeartbeatService : LifecycleService() {
                     heartbeatDao.deleteOlderThanForDevice(pubHex, cutoff)
                 }
 
-                val now = java.util.Calendar.getInstance()
-                val dayIndex = when (now[java.util.Calendar.DAY_OF_WEEK]) {
-                    java.util.Calendar.MONDAY    -> 0
-                    java.util.Calendar.TUESDAY   -> 1
-                    java.util.Calendar.WEDNESDAY -> 2
-                    java.util.Calendar.THURSDAY  -> 3
-                    java.util.Calendar.FRIDAY    -> 4
-                    java.util.Calendar.SATURDAY  -> 5
-                    java.util.Calendar.SUNDAY    -> 6
-                    else                         -> 0
-                }
-                val currentMinute = now.get(java.util.Calendar.HOUR_OF_DAY) * 60 + now.get(java.util.Calendar.MINUTE)
+                val (dayIndex, currentMinute) = SharingSchedule.nowDayMinute()
 
                 if (!isSos && !SharingSchedule.isActive(settings.globalScheduleRules, dayIndex, currentMinute)) {
                     Log.d(TAG, "Heartbeat suppressed: outside global schedule")

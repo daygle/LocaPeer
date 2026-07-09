@@ -64,14 +64,3 @@ fun ConversationShimmerRow() {
         }
     }
 }
-
-@Composable
-fun PeerCardShimmer() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
-    ) {
-        ShimmerBox(modifier = Modifier.fillMaxWidth().height(80.dp))
-    }
-}

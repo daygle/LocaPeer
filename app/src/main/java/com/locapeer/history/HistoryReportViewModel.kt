@@ -1,9 +1,6 @@
 package com.locapeer.history
 
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.locapeer.crypto.KeyManager
@@ -12,9 +9,9 @@ import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.settings.AppPreferences
+import com.locapeer.util.Geocoding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,12 +26,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
 import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
-import kotlin.coroutines.resume
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
@@ -45,8 +38,6 @@ class HistoryReportViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val prefs: AppPreferences
 ) : ViewModel() {
-
-    private val geocoder = Geocoder(context, Locale.getDefault())
 
     val receiveContacts: StateFlow<List<PeerEntity>> = peerDao.getReceiveContacts()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
@@ -128,7 +119,8 @@ class HistoryReportViewModel @Inject constructor(
                     val pending = pings.filter { it.id !in cached }
                     pending.forEachIndexed { index, ping ->
                         if (index > 0) delay(250)
-                        val addr = geocodeLocation(ping.lat, ping.lng) ?: return@forEachIndexed
+                        val addr = Geocoding.reverseGeocode(context, ping.lat, ping.lng)
+                            ?: return@forEachIndexed
                         _addresses.update { it + (ping.id to addr) }
                     }
                 }
@@ -171,37 +163,6 @@ class HistoryReportViewModel @Inject constructor(
     }
 
     fun isToday(): Boolean = _selectedDayStart.value == todayStartMs()
-
-    @Suppress("DEPRECATION")
-    private suspend fun geocodeLocation(lat: Double, lng: Double): String? =
-        withContext(Dispatchers.IO) {
-            if (!Geocoder.isPresent()) return@withContext null
-            try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    suspendCancellableCoroutine { cont ->
-                        // Handle both callbacks: on failure the platform invokes onError instead
-                        // of onGeocode. Without an onError branch the continuation never resumes,
-                        // hanging this lookup and stalling the sequential loop that awaits it.
-                        geocoder.getFromLocation(lat, lng, 1, object : Geocoder.GeocodeListener {
-                            override fun onGeocode(addresses: MutableList<Address>) {
-                                if (cont.isActive) cont.resume(addresses.firstOrNull()?.let { formatAddress(it) })
-                            }
-
-                            override fun onError(errorMessage: String?) {
-                                if (cont.isActive) cont.resume(null)
-                            }
-                        })
-                    }
-                } else {
-                    geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()?.let { formatAddress(it) }
-                }
-            } catch (e: Exception) { null }
-        }
-
-    private fun formatAddress(addr: Address): String =
-        listOfNotNull(addr.thoroughfare, addr.locality, addr.adminArea)
-            .joinToString(", ")
-            .ifBlank { addr.getAddressLine(0) ?: "" }
 
     companion object {
         private const val DAY_MS = 24 * 60 * 60 * 1000L

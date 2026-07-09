@@ -21,7 +21,6 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
-import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
 import com.locapeer.settings.HARDCODED_RELAYS
@@ -153,9 +152,7 @@ class SettingsViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
-    private val relayClient: NostrRelayClient,
-    private val supervisedModeManager: SupervisedModeManager,
-    private val peerManager: com.locapeer.peer.PeerManager
+    private val supervisedModeManager: SupervisedModeManager
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -232,17 +229,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun removePeer(deviceId: String) {
-        viewModelScope.launch { peerManager.removePeer(deviceId) }
-    }
-
-    fun updatePeerName(deviceId: String, newName: String) {
-        viewModelScope.launch {
-            val peer = peerDao.getPeer(deviceId) ?: return@launch
-            peerDao.upsertPeer(peer.copy(displayName = newName))
-        }
-    }
-
     fun setMapStartZoom(zoom: Double) {
         viewModelScope.launch { prefs.setMapStartZoom(zoom) }
     }
@@ -253,31 +239,6 @@ class SettingsViewModel @Inject constructor(
 
     fun setMapFixedLocation(lat: Double, lng: Double) {
         viewModelScope.launch { prefs.setMapFixedLocation(lat, lng) }
-    }
-
-    @android.annotation.SuppressLint("MissingPermission")
-    fun captureCurrentLocationAsFixed(onResult: (success: Boolean) -> Unit) {
-        val hasLocation = context.checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
-                         context.checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        if (!hasLocation) {
-            onResult(false)
-            return
-        }
-
-        com.google.android.gms.location.LocationServices
-            .getFusedLocationProviderClient(context)
-            .lastLocation
-            .addOnSuccessListener { loc ->
-                if (loc != null) {
-                    viewModelScope.launch {
-                        prefs.setMapFixedLocation(loc.latitude, loc.longitude)
-                        onResult(true)
-                    }
-                } else {
-                    onResult(false)
-                }
-            }
-            .addOnFailureListener { onResult(false) }
     }
 
     fun clearLocationHistory() {
@@ -629,10 +590,6 @@ class SettingsViewModel @Inject constructor(
     fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
 
     fun resetUnlockState() = supervisedModeManager.reset()
-
-    fun setGlobalScheduleRules(rules: List<ScheduleRule>) {
-        viewModelScope.launch { prefs.setGlobalScheduleRules(rules) }
-    }
 
     fun updateIntervals(
         stationary: Int? = null,

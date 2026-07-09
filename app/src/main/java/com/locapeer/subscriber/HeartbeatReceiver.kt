@@ -61,7 +61,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -139,10 +138,6 @@ class HeartbeatReceiver @Inject constructor(
 
     /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
     @Volatile private var lastPersistedHbEpoch = 0L
-
-    fun stop() {
-        scope.cancel()
-    }
 
     fun start() {
         createAlertChannel()

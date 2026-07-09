@@ -7,8 +7,8 @@ object SharingSchedule {
 
     val DAY_LABELS = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
 
-    fun isActive(rules: List<ScheduleRule>): Boolean {
-        if (rules.isEmpty()) return true
+    /** Current local (dayIndex, minuteOfDay) in the rule matcher's convention: Monday = 0. */
+    fun nowDayMinute(): Pair<Int, Int> {
         val now = Calendar.getInstance()
         val dayIndex = when (now.get(Calendar.DAY_OF_WEEK)) {
             Calendar.MONDAY    -> 0
@@ -21,6 +21,12 @@ object SharingSchedule {
             else               -> 0
         }
         val currentMinute = now.get(Calendar.HOUR_OF_DAY) * 60 + now.get(Calendar.MINUTE)
+        return dayIndex to currentMinute
+    }
+
+    fun isActive(rules: List<ScheduleRule>): Boolean {
+        if (rules.isEmpty()) return true
+        val (dayIndex, currentMinute) = nowDayMinute()
         return isActive(rules, dayIndex, currentMinute)
     }
 

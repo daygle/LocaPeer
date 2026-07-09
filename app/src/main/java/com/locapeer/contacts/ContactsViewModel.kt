@@ -17,10 +17,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 data class ContactItem(
@@ -88,25 +84,5 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    fun formatLastSeen(timestamp: Long): String {
-        val now = System.currentTimeMillis()
-        val diffMs = now - timestamp
-        return when {
-            diffMs < 60_000 -> "Just now"
-            diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
-            diffMs < 86_400_000 -> {
-                val fmt = SimpleDateFormat(com.locapeer.util.DisplayFormat.timePattern(), Locale.getDefault())
-                fmt.format(Date(timestamp))
-            }
-            else -> {
-                val cal = Calendar.getInstance().also { it.timeInMillis = timestamp }
-                val today = Calendar.getInstance()
-                val fmt = if (cal.get(Calendar.YEAR) == today.get(Calendar.YEAR))
-                    SimpleDateFormat("d MMM, ${com.locapeer.util.DisplayFormat.timePattern()}", Locale.getDefault())
-                else
-                    SimpleDateFormat("d MMM yyyy", Locale.getDefault())
-                fmt.format(Date(timestamp))
-            }
-        }
-    }
+    fun formatLastSeen(timestamp: Long): String = com.locapeer.util.DisplayFormat.relativeTimestamp(timestamp)
 }

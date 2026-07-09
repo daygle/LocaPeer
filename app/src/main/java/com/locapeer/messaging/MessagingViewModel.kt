@@ -39,12 +39,11 @@ class MessagingViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val relayClient: NostrRelayClient
+    private val relayClient: NostrRelayClient,
+    private val peerManager: com.locapeer.peer.PeerManager
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
-
-    val relayStatus = relayClient.relayStatus
 
     val peers: StateFlow<List<PeerEntity>> =
         peerDao.getAllPeers()
@@ -100,10 +99,6 @@ class MessagingViewModel @Inject constructor(
             }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
-    /** Observe whether incoming messages from this peer are allowed. */
-    fun getMessagingEnabled(peerId: String): Flow<Boolean> =
-        peerDao.observePeer(peerId).map { it?.messagingEnabled ?: true }
-
     fun observePeer(peerId: String): Flow<PeerEntity?> = peerDao.observePeer(peerId)
 
     val unreadCounts: StateFlow<Map<String, Int>> =
@@ -134,7 +129,6 @@ class MessagingViewModel @Inject constructor(
             }
     }
 
-    fun getUnreadCount(peerId: String) = messageDao.getUnreadCount(peerId)
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
     fun deleteMessage(msg: MessageEntity) {
@@ -168,29 +162,9 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun deleteConversationFromRemote(peerId: String) {
-        viewModelScope.launch {
-            try {
-                val peer = peerDao.getPeer(peerId) ?: return@launch
-                val (privHex, pubHex) = keyManager.ensureKeypair()
-                val payload = mapOf("senderPubKeyHex" to pubHex)
-                val encrypted = crypto.nip44Encrypt(
-                    crypto.hexToBytes(privHex),
-                    peer.publicKeyHex,
-                    json.encodeToString(payload)
-                )
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.DELETE_MY_MESSAGES,
-                    content = encrypted,
-                    tags = listOf(listOf("p", peer.publicKeyHex)),
-                    crypto = crypto
-                )
-                relayClient.publishEvent(event)
-            } catch (e: Exception) {
-                android.util.Log.e("MessagingViewModel", "deleteConversationFromRemote failed", e)
-            }
-        }
+        // PeerManager owns the DELETE_MY_MESSAGES event (typed payload, error handling);
+        // this previously duplicated it with a hand-rolled map payload.
+        viewModelScope.launch { peerManager.sendDeleteMyMessages(peerId) }
     }
 
     fun archiveConversation(peerId: String, archived: Boolean) {

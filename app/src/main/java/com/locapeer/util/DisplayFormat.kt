@@ -68,6 +68,28 @@ object DisplayFormat {
                else "${"%.1f".format(meters / 1000.0)} km"
     }
 
+    /**
+     * Relative "last seen" label: "Just now" / "5m ago" within the hour, a clock time for
+     * today, then "d MMM" (+ year once it differs). Shared by the map and contacts screens.
+     */
+    fun relativeTimestamp(millis: Long): String {
+        val diffMs = System.currentTimeMillis() - millis
+        return when {
+            diffMs < 60_000 -> "Just now"
+            diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
+            diffMs < 86_400_000 -> timeFormat().format(java.util.Date(millis))
+            else -> {
+                val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
+                val today = java.util.Calendar.getInstance()
+                val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
+                    SimpleDateFormat("d MMM, ${timePattern()}", Locale.getDefault())
+                else
+                    SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                fmt.format(java.util.Date(millis))
+            }
+        }
+    }
+
     /** Direction string from a 0–360 degree bearing, e.g. "N", "SW". */
     fun bearingToCardinal(bearing: Float): String {
         val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")

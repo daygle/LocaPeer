@@ -66,8 +66,6 @@ class PeerSharingViewModel @Inject constructor(
     val roleChangeResult: StateFlow<String?> = _roleChangeResult.asStateFlow()
     fun clearRoleChangeResult() { _roleChangeResult.value = null }
 
-    fun clearPurgeResult() { _lastPurgeResult.value = null }
-
     fun init(peerId: String) {
         if (currentPeerId == peerId) return
         currentPeerId = peerId
@@ -109,15 +107,6 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setPrecisionMode(currentPeerId, mode.name)
             else configDao.upsert(defaultConfig().copy(precisionMode = mode.name))
-        }
-    }
-
-    fun setScheduleRules(rules: List<ScheduleRule>) {
-        viewModelScope.launch {
-            val rulesJson = Json.encodeToString(rules)
-            val existing = configDao.getForPeer(currentPeerId)
-            if (existing != null) configDao.setScheduleRules(currentPeerId, rulesJson)
-            else configDao.upsert(defaultConfig().copy(scheduleRulesJson = rulesJson))
         }
     }
 

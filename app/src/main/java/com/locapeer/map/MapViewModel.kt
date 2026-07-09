@@ -1,10 +1,6 @@
 package com.locapeer.map
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
 import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
@@ -201,18 +197,6 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    private fun hasLocationPermission(): Boolean =
-        ContextCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED ||
-        ContextCompat.checkSelfPermission(appContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
-
-    @SuppressLint("MissingPermission")
-    fun fetchUserLocation() {
-        // HeartbeatService is already updating DB; this just triggers a refresh if needed
-        // but since userLocation now observes the DB, it will update automatically.
-    }
-
     fun toggleSos() {
         if (sosManager.isSosActive.value) sosManager.deactivateSos() else sosManager.activateSos()
     }
@@ -251,21 +235,5 @@ class MapViewModel @Inject constructor(
         private val KEY_ZOOM = doublePreferencesKey("map_last_zoom")
     }
 
-    fun formatTimestamp(millis: Long): String {
-        val diffMs = System.currentTimeMillis() - millis
-        return when {
-            diffMs < 60_000 -> "Just now"
-            diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
-            diffMs < 86_400_000 -> java.text.SimpleDateFormat(com.locapeer.util.DisplayFormat.timePattern(), java.util.Locale.getDefault()).format(java.util.Date(millis))
-            else -> {
-                val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
-                val today = java.util.Calendar.getInstance()
-                val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
-                    java.text.SimpleDateFormat("d MMM, ${com.locapeer.util.DisplayFormat.timePattern()}", java.util.Locale.getDefault())
-                else
-                    java.text.SimpleDateFormat("d MMM yyyy", java.util.Locale.getDefault())
-                fmt.format(java.util.Date(millis))
-            }
-        }
-    }
+    fun formatTimestamp(millis: Long): String = com.locapeer.util.DisplayFormat.relativeTimestamp(millis)
 }
