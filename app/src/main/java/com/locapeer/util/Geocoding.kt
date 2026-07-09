@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.os.Build
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -61,6 +62,8 @@ object Geocoding {
                         ?: return@mapNotNull null
                     Match(label, addr.latitude, addr.longitude)
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 emptyList()
             }
@@ -92,6 +95,8 @@ object Geocoding {
                     geocoder.getFromLocation(lat, lng, 1)?.firstOrNull()
                 }
                 addr?.let { formatAddress(it) }
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 null
             }

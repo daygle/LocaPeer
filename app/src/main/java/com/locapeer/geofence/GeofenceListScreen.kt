@@ -475,9 +475,16 @@ private fun GeofenceAreaDialog(
             searchResults = emptyList()
             searchAttempted = false
             scope.launch {
-                searchResults = Geocoding.forwardGeocode(context, query)
-                searching = false
-                searchAttempted = true
+                try {
+                    val results = Geocoding.forwardGeocode(context, query)
+                    // Drop stale results: the user may have edited the query mid-flight.
+                    if (addressQuery.trim() == query) {
+                        searchResults = results
+                        searchAttempted = true
+                    }
+                } finally {
+                    searching = false
+                }
             }
         }
     }
