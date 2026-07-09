@@ -595,29 +595,36 @@ private fun OsmdroidMapView(
         }
     }
 
-    // Follow User Logic
-    LaunchedEffect(userLocation, centerOnUser) {
-        if (centerOnUser && userLocation != null) {
-            mapViewRef?.controller?.animateTo(userLocation)
-            onCenteredOnUser()
+    // Follow User Logic. Keyed on mapViewRef so the recentering waits for the AndroidView
+    // factory to produce a non-null MapView; otherwise animateTo is a silent no-op.
+    LaunchedEffect(userLocation, centerOnUser, mapViewRef) {
+        if (centerOnUser && userLocation != null && mapViewRef != null) {
+            mapViewRef.controller.animateTo(userLocation)
+            onCenteredOnUser() // No-op for continuous follow
         }
     }
 
-    // Initial positioning
-    LaunchedEffect(userLocation) {
-        if (userLocation != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
-            mapViewRef?.controller?.setCenter(userLocation)
+    // Initial positioning. Same race-condition guard as the explicit jump effect above.
+    LaunchedEffect(userLocation, mapViewRef) {
+        if (userLocation != null && mapViewRef != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
+            mapViewRef.controller.setCenter(userLocation)
             initialCenterDone = true
         }
     }
 
-    // Jump to a contact's pin
-    LaunchedEffect(centerOnPin) {
-        if (centerOnPin != null) {
+    // Jump to a contact's pin. Keyed on mapViewRef so we wait until the AndroidView
+    // factory has produced a non-null MapView before consuming the request - otherwise
+    // animateTo runs while mapViewRef is still null (silent no-op), the effect then calls
+    // onCenteredOnPin() which clears centerOnPin, and the AndroidView subsequently falls
+    // back to the saved lastMapCenter (the user's previous view) instead of the requested
+    // contact location. Without this guard the previous fix (#141) silently regressed
+    // when the OSM MapView was created on a frame after the parameters arrived.
+    LaunchedEffect(centerOnPin, mapViewRef) {
+        if (centerOnPin != null && mapViewRef != null) {
             explicitCenterDone = true
             initialCenterDone = true
             fitAllDone = true
-            mapViewRef?.controller?.animateTo(centerOnPin)
+            mapViewRef.controller.animateTo(centerOnPin)
             onCenteredOnPin()
         }
     }
