@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Meu Histórico de Localização</string>
     <string name="settings_my_location_history_subtitle">Navegue por sua própria linha do tempo de localização</string>
     <string name="settings_lookup_addresses">Consultar Endereços</string>
-    <string name="settings_lookup_addresses_subtitle">Mostrar endereços para pontos do histórico e pins tocados no mapa. Envia essas coordenadas para o serviço de geocodificação do seu dispositivo (geralmente o Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Mostrar endereços para pontos do histórico e pins tocados no mapa, e pesquisar por endereço ao colocar geocercas. Envia essas coordenadas ou o texto digitado para o serviço de geocodificação do seu dispositivo (geralmente o Google).</string>
 
     <!-- Segurança -->
     <string name="settings_supervision_active">Supervisão Ativa</string>

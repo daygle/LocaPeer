@@ -111,10 +111,11 @@ data class AppSettings(
     /** Draw geofence circles on the map. Off by default so the map stays uncluttered. */
     val showGeofencesOnMap: Boolean = false,
     /**
-     * Look up street addresses for history points via the device geocoder. Off by default:
-     * the platform Geocoder sends the queried coordinates to the OS geocoding backend
-     * (Google on most devices), which is at odds with the app's relay-only design, so it
-     * must be an explicit, informed opt-in.
+     * Look up street addresses for history points, and search by address in the geofence
+     * editor, via the device geocoder. Off by default: the platform Geocoder sends the
+     * queried coordinates or typed address to the OS geocoding backend (Google on most
+     * devices), which is at odds with the app's relay-only design, so it must be an
+     * explicit, informed opt-in.
      */
     val reverseGeocodingEnabled: Boolean = false
 )

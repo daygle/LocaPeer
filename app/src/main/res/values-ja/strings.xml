@@ -87,7 +87,7 @@
     <string name="settings_my_location_history">自分の位置履歴</string>
     <string name="settings_my_location_history_subtitle">自分の位置情報のタイムラインを閲覧</string>
     <string name="settings_lookup_addresses">住所を検索</string>
-    <string name="settings_lookup_addresses_subtitle">履歴ポイントやタップしたマップピンの住所を表示します。座標はデバイスのジオコーディングサービス（通常はGoogle）に送信されます。</string>
+    <string name="settings_lookup_addresses_subtitle">履歴ポイントやタップしたマップピンの住所を表示し、ジオフェンス作成時に住所検索を有効にします。座標や入力した検索テキストはデバイスのジオコーディングサービス（通常はGoogle）に送信されます。</string>
 
     <!-- セキュリティ -->
     <string name="settings_supervision_active">監視が有効</string>

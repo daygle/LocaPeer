@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Cronologia delle mie posizioni</string>
     <string name="settings_my_location_history_subtitle">Sfoglia la tua cronologia delle posizioni</string>
     <string name="settings_lookup_addresses">Cerca indirizzi</string>
-    <string name="settings_lookup_addresses_subtitle">Mostra gli indirizzi stradali per i punti della cronologia e i pin della mappa toccati. Invia le coordinate al servizio di geocodifica del dispositivo (solitamente Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Mostra gli indirizzi stradali per i punti della cronologia e i pin della mappa toccati, e cerca per indirizzo quando posizioni i geofence. Invia le coordinate o il testo digitato al servizio di geocodifica del dispositivo (solitamente Google).</string>
 
     <!-- Sicurezza -->
     <string name="settings_supervision_active">Supervisione attiva</string>

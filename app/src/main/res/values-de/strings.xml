@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Mein Standortverlauf</string>
     <string name="settings_my_location_history_subtitle">Durchsuchen Sie Ihre eigene Standort-Zeitachse</string>
     <string name="settings_lookup_addresses">Adressen nachschlagen</string>
-    <string name="settings_lookup_addresses_subtitle">Postanschriften für Verlaufspunkte und angetippte Karten-Pins anzeigen. Sendet diese Koordinaten an den Geocoding-Dienst Ihres Geräts (normalerweise Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Postanschriften für Verlaufspunkte und angetippte Karten-Pins anzeigen sowie Adresssuche beim Platzieren von Geofences. Sendet diese Koordinaten bzw. den eingegebenen Suchtext an den Geocoding-Dienst Ihres Geräts (normalerweise Google).</string>
 
     <!-- Sicherheit -->
     <string name="settings_supervision_active">Überwachung aktiv</string>

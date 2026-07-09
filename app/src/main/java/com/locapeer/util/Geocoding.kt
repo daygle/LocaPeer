@@ -15,11 +15,10 @@ import kotlin.coroutines.resume
  * Shared geocoding helper for the map pin sheet, the history report, and the
  * geofence editor's address search.
  *
- * Both directions query the OS geocoding backend (Google on most devices):
- * - [reverseGeocode] sends *tracked coordinates* off-device, so callers must keep
- *   it behind the reverse-geocoding opt-in setting.
- * - [forwardGeocode] sends only the text the user just typed, and only when they
- *   explicitly run a search, so it is not gated behind that setting.
+ * Both directions query the OS geocoding backend (Google on most devices), so
+ * callers must keep both behind the "Look Up Addresses" opt-in setting:
+ * - [reverseGeocode] sends *tracked coordinates* off-device.
+ * - [forwardGeocode] sends the address text the user typed into a search.
  */
 object Geocoding {
 

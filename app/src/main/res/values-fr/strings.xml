@@ -89,7 +89,7 @@
     <string name="settings_my_location_history">Mon historique de localisation</string>
     <string name="settings_my_location_history_subtitle">Parcourir votre propre chronologie de localisation</string>
     <string name="settings_lookup_addresses">Rechercher des adresses</string>
-    <string name="settings_lookup_addresses_subtitle">Afficher les adresses postales pour les points de l\'historique et les épingles de carte touchées. Envoie ces coordonnées au service de géocodage de votre appareil (généralement Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Afficher les adresses postales pour les points de l\'historique et les épingles de carte touchées, et rechercher par adresse lors du placement des géorepérages. Envoie ces coordonnées ou le texte saisi au service de géocodage de votre appareil (généralement Google).</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision active</string>

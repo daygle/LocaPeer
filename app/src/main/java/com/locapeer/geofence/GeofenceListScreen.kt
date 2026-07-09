@@ -108,6 +108,7 @@ private fun GlobalGeofencesScreen(
     val areas by vm.geofences.collectAsState()
     val assignments by vm.allAssignments.collectAsState()
     val broadcasters by vm.receiveContactsWithLocation.collectAsState()
+    val addressSearchEnabled by vm.addressSearchEnabled.collectAsState()
 
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingArea by remember { mutableStateOf<GeofenceEntity?>(null) }
@@ -166,6 +167,7 @@ private fun GlobalGeofencesScreen(
     if (showCreateDialog || editingArea != null) {
         GeofenceAreaDialog(
             existing = editingArea,
+            addressSearchEnabled = addressSearchEnabled,
             onDismiss = { showCreateDialog = false; editingArea = null },
             onSave = { name, lat, lng, radius ->
                 val current = editingArea
@@ -446,6 +448,7 @@ private fun formatCoord(value: Double): String = "%.6f".format(java.util.Locale.
 @Composable
 private fun GeofenceAreaDialog(
     existing: GeofenceEntity?,
+    addressSearchEnabled: Boolean,
     onDismiss: () -> Unit,
     onSave: (String, Double, Double, Int) -> Unit
 ) {
@@ -461,9 +464,11 @@ private fun GeofenceAreaDialog(
     var loadingMyLocation by remember { mutableStateOf(false) }
     var recenterTo by remember { mutableStateOf<GeoPoint?>(null) }
 
-    // Address search (forward geocoding). Hidden entirely when the device has no
-    // geocoder backend, e.g. emulators or de-Googled ROMs.
+    // Address search (forward geocoding). Hidden while the "Look Up Addresses" opt-in
+    // is off (queries go to the OS geocoding backend) and when the device has no
+    // geocoder backend at all, e.g. emulators or de-Googled ROMs.
     val geocoderAvailable = remember { Geocoding.isAvailable() }
+    val showAddressSearch = addressSearchEnabled && geocoderAvailable
     var addressQuery by remember { mutableStateOf("") }
     var searching by remember { mutableStateOf(false) }
     var searchResults by remember { mutableStateOf<List<Geocoding.Match>>(emptyList()) }
@@ -628,7 +633,7 @@ private fun GeofenceAreaDialog(
                         )
                     }
 
-                    if (geocoderAvailable) {
+                    if (showAddressSearch) {
                         HorizontalDivider(thickness = 0.5.dp)
 
                         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

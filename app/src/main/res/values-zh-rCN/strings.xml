@@ -87,7 +87,7 @@
     <string name="settings_my_location_history">我的位置历史</string>
     <string name="settings_my_location_history_subtitle">浏览您自己的位置时间轴</string>
     <string name="settings_lookup_addresses">查询地址</string>
-    <string name="settings_lookup_addresses_subtitle">显示历史记录点和点击的地图图钉的街道地址。将坐标发送到您的设备的地理编码服务（通常是 Google）。</string>
+    <string name="settings_lookup_addresses_subtitle">显示历史记录点和点击的地图图钉的街道地址，并在设置地理围栏时按地址搜索。将坐标或输入的搜索文本发送到您的设备的地理编码服务（通常是 Google）。</string>
 
     <!-- 安全 -->
     <string name="settings_supervision_active">监管已激活</string>

@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Mi historial de ubicaciones</string>
     <string name="settings_my_location_history_subtitle">Explore su propia línea de tiempo de ubicaciones</string>
     <string name="settings_lookup_addresses">Buscar direcciones</string>
-    <string name="settings_lookup_addresses_subtitle">Mostrar direcciones postales para puntos del historial y pines del mapa tocados. Envía esas coordenadas al servicio de geocodificación de su dispositivo (normalmente Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Mostrar direcciones postales para puntos del historial y pines del mapa tocados, y buscar por dirección al colocar geocercas. Envía esas coordenadas o el texto de búsqueda al servicio de geocodificación de su dispositivo (normalmente Google).</string>
 
     <!-- Seguridad -->
     <string name="settings_supervision_active">Supervisión activa</string>

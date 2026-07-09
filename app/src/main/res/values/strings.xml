@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">My Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
-    <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins. Sends those coordinates to your device\'s geocoding service (usually Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins, and search by address when placing geofences. Sends those coordinates or your typed search to your device\'s geocoding service (usually Google).</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>
