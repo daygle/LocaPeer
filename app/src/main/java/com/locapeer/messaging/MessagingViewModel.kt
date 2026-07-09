@@ -124,7 +124,8 @@ class MessagingViewModel @Inject constructor(
                 loc?.let {
                     val lat = String.format(Locale.US, "%.5f", it.latitude)
                     val lng = String.format(Locale.US, "%.5f", it.longitude)
-                    sendMessage(peerId, "My current location: https://www.openstreetmap.org/?mlat=$lat&mlon=$lng#map=16/$lat/$lng")
+                    val url = "https://www.openstreetmap.org/?mlat=$lat&mlon=$lng#map=16/$lat/$lng"
+                    sendMessage(peerId, context.getString(com.locapeer.R.string.chat_my_location_message, url))
                 }
             }
     }

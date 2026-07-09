@@ -23,10 +23,20 @@ object DisplayFormat {
     @Volatile var useImperialElevation: Boolean = false
     @Volatile var useImperialDistance: Boolean = false
 
-    /** Seed the clock default from the device before the settings flow first emits. */
-    fun initClockDefault(context: Context) {
+    @android.annotation.SuppressLint("StaticFieldLeak") // application context only; outlives everything
+    @Volatile private var appContext: Context? = null
+
+    /** Seed the holder from the Application: stores the app context that backs the localized
+     *  fragments below, and the device clock setting as the 24-hour default. */
+    fun init(context: Context) {
+        appContext = context.applicationContext
         use24HourTime = DateFormat.is24HourFormat(context)
     }
+
+    /** Localized string via the app context, or null before [init] (e.g. JVM unit tests),
+     *  in which case callers fall back to their English literal. */
+    internal fun appString(resId: Int, vararg formatArgs: Any): String? =
+        appContext?.getString(resId, *formatArgs)
 
     /** Clock-time pattern honouring the user's 12/24-hour choice. */
     fun timePattern(withSeconds: Boolean = false): String = when {
@@ -76,8 +86,10 @@ object DisplayFormat {
     fun relativeTimestamp(millis: Long): String {
         val diffMs = System.currentTimeMillis() - millis
         return when {
-            diffMs < 60_000 -> "Just now"
-            diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
+            diffMs < 60_000 ->
+                appString(com.locapeer.R.string.time_just_now) ?: "Just now"
+            diffMs < 3_600_000 ->
+                appString(com.locapeer.R.string.time_minutes_ago, diffMs / 60_000) ?: "${diffMs / 60_000}m ago"
             diffMs < 86_400_000 -> timeFormat().format(java.util.Date(millis))
             else -> {
                 val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }

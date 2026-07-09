@@ -297,7 +297,7 @@ fun DayPicker(days: Int, onDaysChanged: (Int) -> Unit) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        SharingSchedule.DAY_LABELS.forEachIndexed { index, label ->
+        SharingSchedule.dayLabels().forEachIndexed { index, label ->
             val isSelected = (days shr index) and 1 == 1
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,

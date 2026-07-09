@@ -46,8 +46,8 @@ class HistoryReportViewModel @Inject constructor(
     val selfPubkeyHex: StateFlow<String?> = _selfPubkeyHex
 
     val selfDisplayName: StateFlow<String> = prefs.settings
-        .map { it.displayName.ifBlank { "Me" } }
-        .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
+        .map { it.displayName.ifBlank { context.getString(com.locapeer.R.string.fallback_me) } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, context.getString(com.locapeer.R.string.fallback_me))
 
     private val _selectedPeerId = MutableStateFlow<String?>(null)
     val selectedPeerId: StateFlow<String?> = _selectedPeerId

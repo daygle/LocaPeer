@@ -72,8 +72,8 @@ class MapViewModel @Inject constructor(
     val relayStatus = relayClient.relayStatus
 
     val myDisplayName: StateFlow<String> = appPreferences.settings
-        .map { it.displayName.ifBlank { "Me" } }
-        .stateIn(viewModelScope, SharingStarted.Lazily, "Me")
+        .map { it.displayName.ifBlank { appContext.getString(com.locapeer.R.string.fallback_me) } }
+        .stateIn(viewModelScope, SharingStarted.Lazily, appContext.getString(com.locapeer.R.string.fallback_me))
 
     val myPinColor: StateFlow<String> = appPreferences.settings
         .map { it.pinColor }
@@ -220,11 +220,13 @@ class MapViewModel @Inject constructor(
         }
         val nameByDevice = peers.associate { it.deviceId to it.displayName }
         val assignmentsByFence = assignments.groupBy { it.geofenceId }
+        val unknownLabel = appContext.getString(com.locapeer.R.string.geo_unknown)
+        val unassignedLabel = appContext.getString(com.locapeer.R.string.geo_unassigned)
         val fencesOnMap = fences.map { fence ->
             val names = assignmentsByFence[fence.id].orEmpty()
-                .map { nameByDevice[it.trackedDeviceId] ?: "Unknown" }
+                .map { nameByDevice[it.trackedDeviceId] ?: unknownLabel }
                 .distinct()
-            GeofenceOnMap(fence, if (names.isEmpty()) "Unassigned" else names.joinToString(", "))
+            GeofenceOnMap(fence, if (names.isEmpty()) unassignedLabel else names.joinToString(", "))
         }
         MapUiState(pins = pins, geofences = fencesOnMap)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())

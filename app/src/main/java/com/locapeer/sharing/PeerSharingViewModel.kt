@@ -38,8 +38,12 @@ data class PeerSharingUiState(
     val heartbeat: com.locapeer.data.entity.HeartbeatEntity? = null
 )
 
+/** Outcome of a manual remote-purge command, typed so the UI doesn't sniff message text. */
+data class PurgeResult(val message: String, val isError: Boolean = false)
+
 @HiltViewModel
 class PeerSharingViewModel @Inject constructor(
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
     private val peerDao: PeerDao,
     private val configDao: PeerSharingConfigDao,
     private val messageDao: MessageDao,
@@ -59,8 +63,8 @@ class PeerSharingViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(PeerSharingUiState())
     val uiState: StateFlow<PeerSharingUiState> = _uiState.asStateFlow()
 
-    private val _lastPurgeResult = MutableStateFlow<String?>(null)
-    val lastPurgeResult: StateFlow<String?> = _lastPurgeResult.asStateFlow()
+    private val _lastPurgeResult = MutableStateFlow<PurgeResult?>(null)
+    val lastPurgeResult: StateFlow<PurgeResult?> = _lastPurgeResult.asStateFlow()
 
     private val _roleChangeResult = MutableStateFlow<String?>(null)
     val roleChangeResult: StateFlow<String?> = _roleChangeResult.asStateFlow()
@@ -242,7 +246,8 @@ class PeerSharingViewModel @Inject constructor(
                     crypto = crypto
                 )
             )
-            _roleChangeResult.value = "Role change request sent to ${peer.displayName}"
+            _roleChangeResult.value =
+                context.getString(com.locapeer.R.string.peer_role_change_sent, peer.displayName)
         }
     }
 
@@ -252,11 +257,13 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
             if (peer == null) {
-                _lastPurgeResult.value = "Peer not found"
+                _lastPurgeResult.value =
+                    PurgeResult(context.getString(com.locapeer.R.string.peer_not_found), isError = true)
                 return@launch
             }
             peerManager.sendDeleteMyLocation(currentPeerId)
-            _lastPurgeResult.value = "Remote delete command for ALL locations sent to ${peer.displayName}"
+            _lastPurgeResult.value =
+                PurgeResult(context.getString(com.locapeer.R.string.peer_purge_location_sent, peer.displayName))
         }
     }
 
@@ -266,11 +273,13 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             val peer = peerDao.getPeer(currentPeerId)
             if (peer == null) {
-                _lastPurgeResult.value = "Peer not found"
+                _lastPurgeResult.value =
+                    PurgeResult(context.getString(com.locapeer.R.string.peer_not_found), isError = true)
                 return@launch
             }
             peerManager.sendDeleteMyMessages(currentPeerId)
-            _lastPurgeResult.value = "Remote delete command for ALL messages sent to ${peer.displayName}"
+            _lastPurgeResult.value =
+                PurgeResult(context.getString(com.locapeer.R.string.peer_purge_messages_sent, peer.displayName))
         }
     }
 }
