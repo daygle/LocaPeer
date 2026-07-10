@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── 알림 채널 및 포그라운드 서비스 ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">위치 방송</string>
     <string name="channel_desc_heartbeat">승인된 연락처에 내 위치를 방송합니다</string>
     <string name="channel_name_alerts">경고</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer 실행 중</string>
     <string name="notification_heartbeat_text">다른 사람과 위치를 공유하고 있습니다</string>
 
-    <!-- ── 공통 동작 ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">저장</string>
     <string name="common_cancel">취소</string>
     <string name="common_done">완료</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">승인</string>
     <string name="common_deny">거부</string>
 
-    <!-- ── 탐색 탭 레이블 ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">지도</string>
     <string name="tab_messages">메시지</string>
     <string name="tab_history">기록</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">설정</string>
 
-    <!-- ── 동작 / 활동 상태 ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">정지</string>
     <string name="motion_walking">걷기</string>
     <string name="motion_running">달리기</string>
     <string name="motion_cycling">자전거</string>
     <string name="motion_driving">운전</string>
 
-    <!-- ── 설정 ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">개인 키</string>
+    <string name="backup_section_contacts">연락처</string>
+    <string name="backup_section_geofences">지오펜스</string>
+    <string name="backup_section_settings">설정</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">감독 요청</string>
+    <string name="supervision_request_message">\"%1$s\" 님이 자신의 설정에 대한 접근을 요청합니다. 허용하시겠습니까?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">설정</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">위치 및 개인정보</string>
     <string name="settings_section_security">보안</string>
     <string name="settings_section_map">지도</string>
@@ -54,15 +66,669 @@
     <string name="settings_section_backup_keys">백업 및 키</string>
     <string name="settings_section_about">정보</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">이름 편집</string>
     <string name="settings_my_qr">내 QR</string>
     <string name="settings_no_name_set">이름 설정 안 됨</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">내 위치 공유</string>
+    <string name="settings_broadcasting">연락처에 전송 중</string>
+    <string name="settings_not_broadcasting">전송 중 아님</string>
+    <string name="settings_sharing_schedule">공유 일정</string>
+    <string name="settings_always_on">항상 켜짐</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">규칙 %1$d개</item>
+    </plurals>
+    <string name="settings_geofences">지오펜스</string>
+    <string name="settings_geofences_subtitle">공유된 지오펜스 영역 관리</string>
+    <string name="settings_notify_when_tracked">추적 시 알림</string>
+    <string name="settings_notify_when_tracked_subtitle">연락처의 근접 또는 지오펜스 알림이 나에 대해 작동하면 알림을 받습니다.</string>
+    <string name="settings_my_location_history">위치 기록</string>
+    <string name="settings_my_location_history_subtitle">내 위치 타임라인 살펴보기</string>
+    <string name="settings_lookup_addresses">주소 조회</string>
+    <string name="settings_lookup_addresses_subtitle">기록 지점과 지도에서 탭한 핀의 주소를 표시하고, 지오펜스를 배치할 때 주소로 검색합니다. 해당 좌표나 입력한 검색어가 기기의 지오코딩 서비스(보통 Google)로 전송됩니다.</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">감독 활성화됨</string>
+    <string name="settings_supervision_active_subtitle">설정에 감독자 승인이 필요합니다</string>
+    <string name="settings_disable_supervised">감독 모드 끄기</string>
+    <string name="settings_supervised_mode">감독 모드</string>
+    <string name="settings_supervised_mode_subtitle">설정 접근에 감독자 승인 요구</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">시작 지점</string>
+    <string name="settings_map_current_location">현재 위치</string>
+    <string name="settings_map_all_contacts">모든 연락처</string>
+    <string name="settings_map_fixed_location">고정 위치</string>
+    <string name="settings_map_last_position">마지막 위치</string>
+    <string name="settings_map_starting_point_title">지도 시작 지점</string>
+    <string name="settings_no_location_set">설정된 위치 없음</string>
+    <string name="settings_pick_location_on_map">지도에서 위치 선택</string>
+    <string name="settings_default_zoom_level">기본 확대 수준</string>
+    <string name="settings_map_pin_colour">지도 핀 색상</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">업데이트 주기</string>
+    <string name="settings_update_cadence_subtitle">위치 전송 빈도 조정</string>
+    <string name="settings_update_cadence_dialog_message">활동에 따라 위치가 얼마나 자주 업데이트될지 제어합니다. 잦은 업데이트는 배터리를 더 소모합니다.</string>
+    <string name="settings_update_cadence_reset">기본값으로 재설정</string>
+    <string name="settings_min_distance_filtering">최소 거리 필터링</string>
+    <string name="settings_min_distance_filtering_subtitle">이전 지점에서 최소 이 거리만큼 떨어진 지점만 표시합니다.</string>
+    <string name="settings_discard_low_accuracy">낮은 정확도 위치 무시</string>
+    <string name="settings_discard_low_accuracy_subtitle">정확도 반경이 이 값보다 큰 내 위치는 전송하거나 기록하지 않습니다. SOS는 절대 건너뛰지 않습니다.</string>
+    <string name="settings_hide_low_accuracy">낮은 정확도 지점 숨기기</string>
+    <string name="settings_hide_low_accuracy_subtitle">정확도 반경이 이 값보다 큰 기록 지점을 숨깁니다. 아무것도 삭제되지 않습니다.</string>
+    <string name="settings_low_battery" formatted="false">배터리 부족 (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d분</string>
+    <string name="settings_motion_detection">동작 감지</string>
+    <string name="settings_motion_detection_on">켜짐 — 기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
+    <string name="settings_motion_detection_off">꺼짐 — 더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
+    <string name="settings_enable_motion_title">동작 감지 켜기</string>
+    <string name="settings_enable_motion_message">신체 활동 접근을 허용하면 LocaPeer가 기록에서 걷기, 운전, 정지 상태를 더 정확하게 구분할 수 있습니다. 현재 꺼져 있으며 시스템 설정에서 다시 켤 수 있습니다.</string>
+    <string name="settings_open_settings">설정 열기</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">속도 단위</string>
+    <string name="settings_speed_imperial">야드파운드법 (mph)</string>
+    <string name="settings_speed_metric">미터법 (km/h)</string>
+    <string name="settings_elevation_units">고도 단위</string>
+    <string name="settings_elevation_imperial">야드파운드법 (피트)</string>
+    <string name="settings_elevation_metric">미터법 (미터)</string>
+    <string name="settings_distance_units">거리 단위</string>
+    <string name="settings_distance_imperial">야드파운드법 (ft/mi)</string>
+    <string name="settings_distance_metric">미터법 (m/km)</string>
+    <string name="settings_time_format">시간 형식</string>
+    <string name="settings_time_24h">24시간 (13:30)</string>
+    <string name="settings_time_12h">12시간 (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">위치 데이터</string>
+    <string name="settings_retention_location_subtitle">연락처의 위치 데이터를 로컬에 보관할 기간</string>
+    <string name="settings_clear_all_location">모든 위치 데이터 지우기</string>
+    <string name="settings_retention_messages">메시지</string>
+    <string name="settings_retention_messages_subtitle">받은 메시지를 로컬에 보관할 기간</string>
+    <string name="settings_clear_all_messages">모든 메시지 지우기</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">탐색 사용자 지정</string>
+    <string name="settings_customize_nav_subtitle">하단 탭 선택 및 순서 변경</string>
+    <string name="settings_start_page">시작 페이지</string>
     <string name="settings_language">언어</string>
     <string name="settings_language_title">앱 언어</string>
     <string name="settings_language_system">시스템 기본값</string>
 
-    <string name="common_ok">확인</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">백업 내보내기</string>
+    <string name="settings_export_backup_subtitle">개인 키와 연락처를 파일로 저장합니다. 이 파일을 안전하게 보관하세요!</string>
+    <string name="settings_import_backup">백업 가져오기</string>
+    <string name="settings_import_backup_subtitle">이전에 내보낸 파일에서 복원</string>
+    <string name="settings_view_private_key">개인 키 보기</string>
+    <string name="settings_view_private_key_subtitle">64자 16진수 신원 키 표시</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">LocaPeer 정보</string>
+    <string name="settings_about_subtitle">버전, 릴레이 상태, 오픈 소스</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">표시 이름 편집</string>
+    <string name="settings_display_name_label">표시 이름</string>
+    <string name="settings_my_invite_qr">내 초대 QR</string>
+    <string name="settings_invite_qr_subtitle">다른 사람이 스캔하면 나를 추적할 수 있습니다.</string>
+    <string name="settings_invite_qr_cd">초대 QR</string>
+    <string name="settings_private_key_title">개인 키</string>
+    <string name="settings_private_key_warning">안전하게 보관하세요. 이 키를 가진 사람은 누구나 나를 사칭할 수 있습니다.</string>
+    <string name="settings_clear_location_title">위치 기록을 지울까요?</string>
+    <string name="settings_clear_location_message">저장된 모든 위치 기록이 영구적으로 삭제됩니다.</string>
+    <string name="settings_clear_messages_title">메시지 기록을 지울까요?</string>
+    <string name="settings_clear_messages_message">저장된 모든 메시지가 영구적으로 삭제됩니다.</string>
+    <string name="settings_encrypted_backup_title">암호화된 백업</string>
+    <string name="settings_encrypted_backup_message">이 백업은 암호화되어 있습니다. 계속하려면 비밀번호를 입력하세요.</string>
+    <string name="settings_select_restore_title">복원할 데이터 선택</string>
+    <string name="settings_select_export_title">내보낼 데이터 선택</string>
+    <string name="settings_export_password_hint">백업 파일을 암호화하려면 비밀번호를 설정하세요(선택 사항).</string>
+    <string name="settings_backup_password_optional">백업 비밀번호 (선택 사항)</string>
+    <string name="settings_select_sections">포함할 섹션 선택:</string>
+    <string name="settings_choose_file_location">파일 위치 선택</string>
+    <string name="settings_not_in_backup">이 백업에 없음</string>
+    <string name="settings_enable_supervised_title">감독 모드 켜기</string>
+    <string name="settings_enable_supervised_message">감독자 역할을 할 연락처를 선택하세요. 해당 연락처가 자신의 기기에서 설정 접근을 승인해야 합니다.</string>
+    <string name="settings_no_peers_found">연락처가 없습니다. 먼저 초대 QR 코드를 스캔하여 연락처를 추가하세요.</string>
+    <string name="settings_disable_supervised_title">감독 모드를 끌까요?</string>
+    <string name="settings_disable_supervised_message">감독자 승인 없이 설정에 접근할 수 있게 됩니다.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">제거</string>
+    <string name="common_name">이름</string>
+    <string name="common_search">검색</string>
+    <string name="common_sort">정렬</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">메시지</string>
+    <string name="cd_show_on_map">지도에서 보기</string>
+    <string name="cd_more_options">더 보기</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">%1$d개 선택됨</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">선택 취소</string>
+    <string name="contacts_cd_select_all">모두 선택</string>
+    <string name="contacts_cd_deselect_all">모두 선택 해제</string>
+    <string name="contacts_cd_qr_invite">QR / 초대</string>
+    <string name="contacts_cd_pending_requests">대기 중인 요청</string>
+    <string name="contacts_sort_last_seen">마지막 확인</string>
+    <string name="contacts_search_placeholder">연락처 검색…</string>
+    <string name="contacts_empty_title">아직 연락처가 없습니다</string>
+    <string name="contacts_empty_subtitle">QR 코드를 스캔하여 누군가와 연결하고 위치 공유를 시작하세요.</string>
+    <string name="contacts_scan_qr">QR 코드 스캔</string>
+    <string name="contacts_bulk_delete_messages">메시지 삭제</string>
+    <string name="contacts_bulk_delete_locations">위치 삭제</string>
+    <string name="contacts_last_seen">마지막 확인: %1$s</string>
+    <string name="contacts_no_location_yet">아직 위치 데이터 없음</string>
+    <string name="contacts_view_sharing_settings">공유 설정</string>
+    <string name="contacts_view_location_history">위치 기록</string>
+    <string name="contacts_rename_contact">연락처 이름 바꾸기</string>
+    <string name="contacts_on_contact_device">연락처의 기기에서</string>
+    <string name="contacts_delete_my_messages_title">내 메시지 삭제</string>
+    <string name="contacts_delete_locations_title">공유한 위치 삭제</string>
+    <string name="contacts_remove_contact_title">연락처 제거</string>
+    <string name="contacts_leave_title">연락처 및 데이터 삭제</string>
+    <string name="contacts_rename_title">연락처 이름 바꾸기</string>
+    <string name="contacts_remove_contact_body">%1$s 님을 연락처에서 제거할까요? 해당 위치 기록도 이 기기에서 삭제됩니다.</string>
+    <string name="contacts_leave_body">%1$s 님의 연락처에서 내가 제거되고, 내 모든 메시지와 위치 데이터가 상대 기기에서 삭제됩니다. 상대의 위치에 대한 접근도 잃게 됩니다.</string>
+    <string name="contacts_delete_my_messages_body">내가 보낸 모든 메시지가 %1$s 님의 기기에서 삭제됩니다. 되돌릴 수 없습니다.</string>
+    <string name="contacts_delete_locations_body">내가 공유한 모든 위치 데이터가 %1$s 님의 기기에서 삭제됩니다. 되돌릴 수 없습니다.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">연락처 %1$d개 제거</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">연락처 %1$d개를 제거할까요? 위치 기록도 이 기기에서 삭제됩니다.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">%1$d명의 연락처 기기에서 내가 보낸 모든 메시지를 원격 삭제할까요? 되돌릴 수 없습니다.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">%1$d명의 연락처 기기에서 내가 공유한 모든 위치 기록을 원격 삭제할까요? 되돌릴 수 없습니다.</item>
+    </plurals>
+
+    <string name="common_continue">계속</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">백업에서 복원</string>
+    <string name="onboarding_restore_message">신원과 연락처를 복원하려면 64자 16진수 개인 키를 붙여넣으세요.</string>
+    <string name="onboarding_private_key_hex">개인 키 (16진수)</string>
+    <string name="onboarding_tagline">연락처와의 비공개 위치 공유.\n계정 없음. 독점 서버 없음.</string>
+    <string name="onboarding_feature_e2e_title">종단 간 암호화</string>
+    <string name="onboarding_feature_e2e_subtitle">위치가 기기에서 암호화됩니다</string>
+    <string name="onboarding_feature_servers_title">독점 서버 없음</string>
+    <string name="onboarding_feature_servers_subtitle">개방형 Nostr 릴레이를 보안 전송 수단으로 사용합니다 — 데이터는 암호화된 채 비공개로 유지됩니다</string>
+    <string name="onboarding_feature_phone_title">휴대폰에만 저장</string>
+    <string name="onboarding_feature_phone_subtitle">전체 위치 기록은 내 기기에만 남습니다. 선택한 연락처에는 현재 위치만 공유됩니다</string>
+    <string name="onboarding_name_prompt">연락처들이 나를 뭐라고 부르면 좋을까요?</string>
+    <string name="onboarding_name_placeholder">예: 엄마, 아빠, 지수…</string>
+    <string name="onboarding_get_started">시작하기</string>
+    <string name="onboarding_restore_from_backup">백업에서 복원</string>
+    <string name="onboarding_key_note">개인 키는 로컬에서 생성되며 이 기기를 절대 벗어나지 않습니다.</string>
+    <string name="onboarding_permissions_title">권한</string>
+    <string name="onboarding_permissions_desc">LocaPeer는 위치 공유를 위한 위치 접근, 초대 코드 스캔을 위한 카메라 접근, 백그라운드 상태를 위한 알림 접근이 필요합니다. 신체 활동 접근은 선택 사항이며 이동(걷기, 운전)을 더 정확하게 라벨링하는 데 도움이 됩니다.</string>
+    <string name="onboarding_before_ask_title">요청하기 전에</string>
+    <string name="onboarding_before_ask_intro">곧 몇 가지 시스템 알림이 표시됩니다:</string>
+    <string name="onboarding_before_ask_location">• 위치 — 필수, 내 위치를 공유하기 위해.</string>
+    <string name="onboarding_before_ask_camera">• 카메라 — 초대 코드 스캔용.</string>
+    <string name="onboarding_before_ask_notifications">• 알림 — 백그라운드 상태용.</string>
+    <string name="onboarding_before_ask_activity">• 신체 활동 — 선택 사항. LocaPeer가 걷기, 운전, 정지 상태를 더 정확하게 구분할 수 있습니다. 건너뛰고 나중에 설정에서 켤 수 있습니다.</string>
+    <string name="onboarding_grant_permissions">권한 부여</string>
+    <string name="onboarding_bg_location_title">백그라운드 위치</string>
+    <string name="onboarding_bg_location_desc">앱이 닫혀 있는 동안에도 연락처에 최신 위치를 알리려면 다음 화면에서 \"항상 허용\"을 선택하세요.</string>
+    <string name="onboarding_bg_location_error">앱이 닫혀 있을 때 연락처를 업데이트하려면 백그라운드 위치가 필요합니다. 다시 시도하고 \"항상 허용\"을 선택하세요.</string>
+    <string name="onboarding_configure_location">위치 구성</string>
+    <string name="onboarding_battery_title">배터리</string>
+    <string name="onboarding_battery_desc">Android가 배터리 절약을 위해 LocaPeer를 중지할 수 있습니다. 안정적인 업데이트를 위해 LocaPeer를 최적화에서 제외하세요.</string>
+    <string name="onboarding_disable_optimizations">최적화 끄기</string>
+    <string name="onboarding_done_title">준비 완료!</string>
+    <string name="onboarding_done_desc">비공개 위치 네트워크가 준비되었습니다.</string>
+    <string name="onboarding_start_using">LocaPeer 사용 시작</string>
+
+    <string name="common_try_again">다시 시도</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">초대 스캔</string>
+    <string name="scan_camera_needed">QR 코드를 스캔하려면 카메라 권한이 필요합니다.</string>
+    <string name="scan_grant_permission">권한 부여</string>
+    <string name="scan_add_contact_title">연락처를 추가할까요?</string>
+    <string name="scan_add_contact_message">%1$s 님과 연결되어 서로 위치를 공유하게 됩니다.</string>
+    <string name="scan_add_share">추가 및 공유</string>
+    <string name="scan_request_sent_title">요청 전송됨!</string>
+    <string name="scan_request_sent_message">%1$s 님에게 요청을 보냈습니다. 상대가 수락하면 연결됩니다.</string>
+    <string name="scan_failed">스캔 실패: %1$s</string>
+
     <string name="cd_back">뒤로</string>
+    <string name="common_review">검토</string>
+    <string name="common_decline">거절</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">보내기/받기</string>
+    <string name="role_send">보내기</string>
+    <string name="role_receive">받기</string>
+    <string name="role_none">공유 안 함</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">내 초대</string>
+    <string name="invite_tab_add_contact">연락처 추가</string>
+    <string name="invite_your_qr_title">내 QR 코드</string>
+    <string name="invite_your_qr_subtitle">다른 사람이 스캔하면 내 위치를 팔로우할 수 있습니다</string>
+    <string name="invite_qr_cd">내 QR 코드</string>
+    <string name="invite_qr_error">QR 생성 오류</string>
+    <string name="invite_share_link">초대 링크 공유</string>
+    <string name="invite_encryption_note">내 위치는 스캔한 사람의 기기 전용으로 암호화됩니다.</string>
+    <string name="invite_camera_required_title">카메라 접근 필요</string>
+    <string name="invite_camera_required_message">QR 코드를 스캔하려면 카메라 권한을 부여하세요.</string>
+    <string name="invite_point_camera">카메라를 LocaPeer QR에 향하게 하세요</string>
+    <string name="invite_paste_title">또는 초대 링크 붙여넣기</string>
+    <string name="invite_process_link">링크 처리</string>
+    <string name="invite_fallback_name">연락처</string>
+    <string name="invite_success_message">%1$s 님이 수락하면 연결됩니다.</string>
+    <string name="invite_confirm_add_title">%1$s 님을 추가할까요?</string>
+    <string name="invite_confirm_add_message">연락처에 추가하고 위치를 공유할까요?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">대기 중인 요청 없음</string>
+    <string name="pending_requesting">요청 중: %1$s · %2$s</string>
+    <string name="pending_role_change">역할 변경 요청 · %1$s</string>
+    <string name="pending_new_request">새 공유 요청 · %1$s</string>
+
+    <string name="common_save_changes">변경 사항 저장</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">공유 설정 업데이트</string>
+    <string name="incoming_new_title">새 연락처 요청</string>
+    <string name="incoming_update_subtitle">%1$s 님이 공유 방식을 변경하려고 합니다. 아래 설정을 검토하세요.</string>
+    <string name="incoming_new_subtitle">%1$s 님이 나를 연락처로 추가했습니다! 이제 무엇을 공유할지 선택할 수 있습니다.</string>
+    <string name="incoming_section_location">위치</string>
+    <string name="incoming_share_my_location">내 위치를 %1$s 님과 공유</string>
+    <string name="incoming_share_my_location_sub">상대가 내 위치를 볼 수 있게 됩니다</string>
+    <string name="incoming_see_their_location">%1$s 님의 위치 보기</string>
+    <string name="incoming_see_their_location_sub">상대의 위치를 볼 수 있게 됩니다</string>
+    <string name="incoming_section_messaging">메시지</string>
+    <string name="incoming_allow_messages">메시지 허용</string>
+    <string name="incoming_allow_messages_sub">%1$s 님의 채팅 메시지 받기</string>
+
+    <string name="common_request">요청</string>
+    <string name="common_edit">편집</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">연락처 설정</string>
+    <string name="peer_section_roles">위치 공유 역할</string>
+    <string name="peer_send_on">%1$s 님이 내 위치를 볼 수 있습니다</string>
+    <string name="peer_send_off">%1$s 님과 위치를 공유하고 있지 않습니다</string>
+    <string name="peer_receive_title">%1$s 님의 위치 받기</string>
+    <string name="peer_receive_on">%1$s 님의 위치를 볼 수 있습니다</string>
+    <string name="peer_receive_off">%1$s 님의 위치에 접근할 수 없습니다</string>
+    <string name="peer_section_privacy">개인정보 및 공유 제어</string>
+    <string name="peer_pause_sharing">공유 일시중지</string>
+    <string name="peer_pause_sub">%1$s 님에게 위치 전송을 일시적으로 중단</string>
+    <string name="peer_precision">위치 정밀도</string>
+    <string name="peer_precision_exact_sub">정확한 GPS 좌표</string>
+    <string name="peer_precision_suburb_sub">대략적인 위치 (동네 수준)</string>
+    <string name="peer_always_sharing">항상 공유 중</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">활성 공유 규칙 %1$d개</item>
+    </plurals>
+    <string name="peer_section_alerts">알림 및 모니터링</string>
+    <string name="peer_sos_contact">SOS 연락처</string>
+    <string name="peer_sos_sub">공유가 일시중지되어도 내 긴급 알림을 받습니다</string>
+    <string name="peer_missed_alert">위치 누락 알림</string>
+    <string name="peer_missed_on">%1$s 님이 위치 보고를 중단하면 알림</string>
+    <string name="peer_requires_access">%1$s 님의 위치 접근이 필요합니다</string>
+    <string name="peer_proximity_alert">근접 알림</string>
+    <string name="peer_proximity_sub">%1$s 님이 근처에 있으면 알림</string>
+    <string name="peer_alert_radius">알림 반경</string>
+    <string name="peer_alert_schedule">알림 일정</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">활성 규칙 %1$d개</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s 님을 위한 도착/출발 구역 설정</string>
+    <string name="peer_supervise">이 기기 감독</string>
+    <string name="peer_supervise_on">%1$s 님의 잠금 해제 요청을 받고 승인합니다</string>
+    <string name="peer_supervise_off">%1$s 님이 감독 모드 잠금 해제 요청을 보낼 수 있도록 허용</string>
+    <string name="peer_messaging_sub">%1$s 님의 채팅 메시지 켜기/끄기</string>
+    <string name="peer_section_history">이동 기록</string>
+    <string name="peer_location_history">위치 기록</string>
+    <string name="peer_location_history_sub">%1$s 님의 이동 기록과 지도 보고서 보기</string>
+    <string name="peer_section_retention">원격 데이터 보존</string>
+    <string name="peer_retention_location_sub">%1$s 님이 내 위치 기록을 보관하는 기간</string>
+    <string name="peer_purge_location">%1$s 기기에서 모든 위치 데이터 삭제</string>
+    <string name="peer_retention_messages_sub">%1$s 님이 내가 보낸 메시지를 보관하는 기간</string>
+    <string name="peer_purge_messages">%1$s 기기에서 모든 메시지 삭제</string>
+    <string name="peer_precision_exact">정확한 GPS</string>
+    <string name="peer_precision_exact_desc">정밀 좌표</string>
+    <string name="peer_precision_suburb">동네 (~1km)</string>
+    <string name="peer_precision_suburb_desc">동네 수준만</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">대화 %1$d개를 삭제할까요?</item>
+    </plurals>
+    <string name="conv_delete_locally">로컬에서 삭제</string>
+    <string name="conv_delete_locally_sub">내 기기에서만 대화를 제거합니다.</string>
+    <string name="conv_delete_both">로컬/연락처에서 삭제</string>
+    <string name="conv_bulk_delete_both_sub">대화를 로컬과 연락처 기기에서 삭제합니다.</string>
+    <string name="conv_delete_both_sub">대화를 로컬에서 삭제하고 연락처 기기에 해당 대화의 삭제 요청을 보냅니다.</string>
+    <string name="conv_cd_exit_selection">선택 종료</string>
+    <string name="conv_cd_select_all">모두 선택</string>
+    <string name="conv_cd_new_message">새 메시지</string>
+    <string name="conv_sort_date">날짜</string>
+    <string name="conv_sort_unread">읽지 않음</string>
+    <string name="conv_search_placeholder">대화 검색…</string>
+    <string name="conv_tab_chats">채팅</string>
+    <string name="conv_tab_archived">보관됨</string>
+    <string name="conv_mark_read">읽음으로 표시</string>
+    <string name="conv_archive">보관</string>
+    <string name="conv_unarchive">보관 해제</string>
+    <string name="conv_empty_no_results">\"%1$s\"에 대한 결과 없음</string>
+    <string name="conv_empty_no_results_sub">다른 검색어를 시도해 보세요</string>
+    <string name="conv_empty_archived_title">보관된 채팅 없음</string>
+    <string name="conv_empty_archived_sub">채팅을 보관하여 받은편지함을 깔끔하게 유지하세요</string>
+    <string name="conv_empty_title">아직 메시지가 없습니다</string>
+    <string name="conv_empty_sub">지도를 열고 사람을 탭하여\n대화를 시작하세요</string>
+    <string name="conv_delete_title">대화를 삭제할까요?</string>
+    <string name="conv_delete_message">%1$s 님과의 이 대화를 어떻게 삭제할까요?</string>
+    <string name="conv_messages_blocked">메시지 차단됨</string>
+    <string name="conv_preview_mine">나: %1$s</string>
+    <string name="conv_new_message_title">새 메시지</string>
+    <string name="conv_picker_empty">아직 연락처가 없습니다. QR 코드를 스캔하여 연락처를 추가하세요.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">채팅 기록을 지울까요?</string>
+    <string name="chat_clear_message">%1$s 님과의 이 대화를 어떻게 지울까요?</string>
+    <string name="chat_clear_locally">로컬에서 지우기</string>
+    <string name="chat_clear_both">로컬/연락처에서 지우기</string>
+    <string name="chat_clear_both_sub">채팅을 로컬에서 지우고 내가 보낸 메시지에 대한 삭제 요청을 %1$s 님에게 보냅니다.</string>
+    <string name="chat_cd_options">옵션</string>
+    <string name="chat_clear_history_menu">채팅 기록 지우기</string>
+    <string name="chat_typing">%1$s 님이 입력 중…</string>
+    <string name="chat_blocked_banner">%1$s 님의 메시지를 차단했습니다. 차단을 해제하려면 연락처로 이동하세요.</string>
+    <string name="chat_delete_msg_title">메시지를 삭제할까요?</string>
+    <string name="chat_delete_msg_message">이 메시지를 어떻게 삭제할까요?</string>
+    <string name="chat_delete_from_contact">연락처에서 삭제</string>
+    <string name="chat_delete_from_contact_sub">연락처의 기기에서 채팅을 삭제합니다.</string>
+    <string name="chat_delete_both_sub">채팅을 로컬에서 제거하고 연락처의 기기에서 자동으로 삭제합니다.</string>
+    <string name="chat_cd_share_location">위치 공유</string>
+    <string name="chat_input_placeholder">메시지…</string>
+    <string name="chat_cd_send">보내기</string>
+
+    <string name="common_close">닫기</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS를 활성화할까요?</string>
+    <string name="map_sos_deactivate_title">SOS를 비활성화할까요?</string>
+    <string name="map_sos_activate_msg">비활성화할 때까지 15초마다 지정된 SOS 연락처에 내 위치를 전송합니다.</string>
+    <string name="map_sos_deactivate_msg">긴급 연락처로의 고우선순위 위치 전송이 중단됩니다.</string>
+    <string name="map_activate">활성화</string>
+    <string name="map_deactivate">비활성화</string>
+    <string name="map_cd_style">지도 스타일</string>
+    <string name="map_cd_show_geofences">지오펜스 표시</string>
+    <string name="map_cd_hide_geofences">지오펜스 숨기기</string>
+    <string name="map_cd_follow">나를 따라오기</string>
+    <string name="map_cd_friends">친구</string>
+    <string name="map_no_friends">아직 추적 중인 사람이 없습니다</string>
+    <string name="map_you">나</string>
+    <string name="map_cd_go_my_location">내 위치로 이동</string>
+    <string name="map_sos_active">⚠ SOS 활성화됨</string>
+    <string name="map_away">멀리 있음</string>
+    <string name="map_no_location_yet">아직 위치 없음</string>
+    <string name="map_cd_go_location">위치로 이동</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS 켜짐</string>
+    <string name="map_overdue">지연됨 — 최근 업데이트 없음</string>
+    <string name="map_stat_last_seen">마지막 확인</string>
+    <string name="map_stat_battery">배터리</string>
+    <string name="map_stat_accuracy">정확도</string>
+    <string name="map_stat_motion">동작</string>
+    <string name="map_stat_speed">속도</string>
+    <string name="map_stat_elevation">고도</string>
+
+    <string name="common_ok">확인</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">기록: %1$s</string>
+    <string name="history_select_person">사람 선택</string>
+    <string name="history_person_label">사람</string>
+    <string name="history_cd_prev_day">이전 날</string>
+    <string name="history_cd_next_day">다음 날</string>
+    <string name="history_time_filter">시간 필터:</string>
+    <string name="history_cd_reset_time">시간 재설정</string>
+    <string name="history_tab_list">목록</string>
+    <string name="history_empty_title">이 날짜의 기록이 없습니다</string>
+    <string name="history_empty_sub">다른 날짜를 선택하거나 연결 상태를 확인해 보세요.</string>
+    <string name="history_start_time">시작 시간</string>
+    <string name="history_end_time">종료 시간</string>
+    <string name="history_no_data_title">위치 데이터 없음</string>
+    <string name="history_no_data_sub">이 날짜 또는 시간 범위에 기록된 위치가 없습니다.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">위치 %1$d개 기록됨</item>
+    </plurals>
+    <string name="history_cd_dismiss">닫기</string>
+    <string name="history_accuracy_label">±%1$s 정확도</string>
+    <string name="history_emergency_sos">긴급 SOS 신호</string>
+    <string name="history_detail_location">위치</string>
+    <string name="history_detail_coordinates">좌표</string>
+    <string name="history_within">±%1$s 이내</string>
+    <string name="history_detail_movement">이동</string>
+    <string name="history_movement_desc">%1$s %2$s, 방향 %3$s</string>
+
+    <string name="common_create">만들기</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">지오펜스 영역 추가</string>
+    <string name="geo_cd_assign">지오펜스 할당</string>
+    <string name="geo_unknown">알 수 없음</string>
+    <string name="geo_empty_title">지오펜스 없음</string>
+    <string name="geo_empty_sub">+를 탭하여 지오펜스 영역을 만든 다음, 각 연락처의 공유 설정에서 연락처를 할당하세요.</string>
+    <string name="geo_delete_title">지오펜스를 삭제할까요?</string>
+    <string name="geo_delete_simple">\"%1$s\"을(를) 삭제할까요?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">\"%1$s\"이(가) 연락처 %2$d명에게 할당되어 있습니다. 삭제하면 해당 할당도 제거됩니다.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s 님의 지오펜스</string>
+    <string name="geo_empty_contact_title">연락처에 지오펜스 없음</string>
+    <string name="geo_empty_contact_sub">+를 탭하여 지오펜스 영역을 할당하고 도착, 출발 또는 둘 다에 알림을 받을지 선택하세요.</string>
+    <string name="geo_no_areas_title">아직 지오펜스가 없습니다</string>
+    <string name="geo_no_areas_msg">먼저 지오펜스 화면에서 지오펜스 영역을 만든 다음 여기에서 할당하세요.</string>
+    <string name="geo_radius_label">반경 %1$s</string>
+    <string name="geo_contacts_label">연락처: %1$s</string>
+    <string name="geo_no_contacts_assigned">할당된 연락처 없음</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">규칙 %1$d개</item>
+    </plurals>
+    <string name="geo_trigger_enter">진입</string>
+    <string name="geo_trigger_exit">이탈</string>
+    <string name="geo_trigger_both">둘 다</string>
+    <string name="geo_edit_title">지오펜스 편집</string>
+    <string name="geo_new_title">새 지오펜스</string>
+    <string name="geo_cd_my_location">내 위치</string>
+    <string name="geo_cd_radius_increase">반경 늘리기</string>
+    <string name="geo_cd_radius_decrease">반경 줄이기</string>
+    <string name="geo_hint_tap">지도를 탭하거나 길게 눌러 배치하세요</string>
+    <string name="geo_hint_move">손가락을 모아 확대 • 핀을 길게 누르거나 끌어 이동</string>
+    <string name="geo_basic_info">기본 정보</string>
+    <string name="geo_search_title">주소로 찾기</string>
+    <string name="geo_search_label">주소 또는 장소</string>
+    <string name="geo_search_placeholder">예: 서울시 중구 세종대로 110</string>
+    <string name="geo_search_no_results">일치하는 주소를 찾을 수 없습니다</string>
+    <string name="geo_cd_search">검색</string>
+    <string name="geo_name_placeholder">예: 집, 직장</string>
+    <string name="geo_name_required">이름은 필수입니다</string>
+    <string name="geo_latitude">위도</string>
+    <string name="geo_longitude">경도</string>
+    <string name="geo_lat_range">-90 ~ 90</string>
+    <string name="geo_lng_range">-180 ~ 180</string>
+    <string name="geo_radius">반경</string>
+    <string name="geo_radius_range">%1$d ~ %2$d m 입력</string>
+    <string name="geo_edit_assignment">할당 편집</string>
+    <string name="geo_assign_title">지오펜스 할당</string>
+    <string name="geo_select_area">지오펜스 영역 선택</string>
+    <string name="geo_trigger_title">알림 트리거 시점</string>
+    <string name="geo_add_rule">규칙 추가</string>
+    <string name="geo_alerts_all_times">알림이 항상 활성화되어 있습니다. 알림 전송 시간을 제한하려면 규칙을 추가하세요.</string>
+    <string name="geo_assign_action">할당</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">근접 알림</string>
+    <string name="prox_empty_title">추적 중인 사람 없음</string>
+    <string name="prox_empty_sub">스캔 탭에서 다른 사람의 초대 QR을 스캔하여\n위치 추적을 시작하세요</string>
+    <string name="prox_intro">추적 중인 사람이 선택한 거리 안에 들어오면 알림을 받습니다.</string>
+    <string name="prox_alert_within">%1$s 이내일 때 알림</string>
+    <string name="prox_alerts_off">알림 꺼짐</string>
+    <string name="prox_alert_radius">알림 반경</string>
+    <string name="prox_edit_schedule">일정 편집</string>
+    <string name="prox_rules">규칙</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s 님의 일정</string>
+    <string name="schedule_cd_add_rule">규칙 추가</string>
+    <string name="schedule_empty_title">일정 규칙 없음</string>
+    <string name="schedule_empty_global">위치가 항상 공유됩니다. 공유 활성 시간을 제한하려면 규칙을 추가하세요.</string>
+    <string name="schedule_empty_peer">위치가 항상 %1$s 님과 공유됩니다. 시간을 제한하려면 규칙을 추가하세요.</string>
+    <string name="schedule_active_hint">어떤 규칙이든 현재 시간과 일치하면 활성화됩니다. 비어 있음 = 항상 켜짐.</string>
+    <string name="schedule_all_day">종일</string>
+    <string name="schedule_plus_one_day"> (+1일)</string>
+    <string name="schedule_rule_number">규칙 %1$d</string>
+    <string name="schedule_cd_delete_rule">규칙 삭제</string>
+    <string name="schedule_edit_rule">규칙 편집</string>
+    <string name="schedule_label_optional">라벨 (선택 사항)</string>
+    <string name="schedule_label_placeholder">예: 근무 시간, 주말</string>
+    <string name="schedule_active_days">활성 요일</string>
+    <string name="schedule_time_window">시간대</string>
+    <string name="schedule_start">시작</string>
+    <string name="schedule_end">종료</string>
+    <string name="schedule_overnight">야간: %1$s부터 다음 날 %2$s까지 활성</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">기기가 감독되고 있습니다</string>
+    <string name="gate_message">설정에 접근하려면 감독자 승인이 필요합니다.</string>
+    <string name="gate_request_access">접근 요청</string>
+    <string name="gate_waiting">감독자 승인 대기 중…</string>
+    <string name="gate_denied">감독자가 접근을 거부했습니다.</string>
+    <string name="gate_timed_out">요청 시간이 초과되었습니다. 감독자가 응답하지 않았습니다.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">영구</string>
+    <string name="retention_keep_for">보관 기간: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d일</item>
+    </plurals>
+
+    <string name="common_select">선택</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">고정 위치 선택</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">하단 바에 표시할 탭과 순서를 선택하세요. 지도는 항상 포함됩니다.</string>
+    <string name="customize_cd_move_up">위로 이동</string>
+    <string name="customize_cd_move_down">아래로 이동</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">버전 %1$s (빌드 %2$d)</string>
+    <string name="about_tagline">신뢰하는 사람들과의 비공개 위치 공유. 계정 없음, 클라우드 없음, 우리의 추적 없음.</string>
+    <string name="about_relay_connections">릴레이 연결</string>
+    <string name="about_connected">연결됨</string>
+    <string name="about_disconnected">연결 끊김</string>
+    <string name="about_open_source">오픈 소스 라이브러리</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap 기반 지도 렌더링</string>
+    <string name="about_lib_okhttp_desc">Nostr 릴레이용 WebSocket 전송</string>
+    <string name="about_lib_compose_desc">UI 프레임워크</string>
+    <string name="about_lib_hilt_desc">의존성 주입</string>
+    <string name="about_lib_room_desc">로컬 데이터베이스</string>
+    <string name="about_map_attribution">지도 데이터 © OpenStreetMap 기여자</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">수락</string>
+    <string name="notif_someone">누군가</string>
+    <string name="notif_sos_title">%1$s 님의 SOS!</string>
+    <string name="notif_sos_text">%1$s 님이 (%2$s, %3$s)에서 SOS를 활성화했습니다</string>
+    <string name="notif_supervisor_request_title">%1$s 님이 나를 감독자로 요청합니다</string>
+    <string name="notif_supervisor_request_text">이 기기의 잠금 해제 승인 요청을 허용하려면 수락하세요</string>
+    <string name="notif_supervisor_request_big">감독 모드가 활성화된 동안 %1$s 님이 잠금 해제 승인 요청을 보낼 수 있도록 수락하세요.</string>
+    <string name="notif_supervised_active_title">감독 모드 활성화됨</string>
+    <string name="notif_supervised_active_text">감독자가 확인했습니다 — 감독 모드가 설정되었습니다</string>
+    <string name="notif_supervised_declined_title">감독 모드 거절됨</string>
+    <string name="notif_supervised_declined_text">감독자가 요청을 거절했습니다 — 감독 모드가 비활성화되었습니다</string>
+    <string name="notif_tracking_alert_title">추적 알림</string>
+    <string name="notif_tracking_proximity">%1$s 님이 나에 대한 근접 알림을 받았습니다</string>
+    <string name="notif_tracking_geofence">%1$s 님이 내가 구역 %2$s에 진입/이탈했다는 알림을 받았습니다</string>
+    <string name="notif_tracking_generic">%1$s 님이 내 위치를 모니터링하고 있습니다</string>
+    <string name="notif_track_update_title">%1$s 님의 공유 업데이트</string>
+    <string name="notif_track_new_title">새 연락처: %1$s</string>
+    <string name="notif_role_send_receive">위치 보내기/받기</string>
+    <string name="notif_role_send">위치 보내기</string>
+    <string name="notif_role_receive">위치 받기</string>
+    <string name="notif_role_none">위치 공유 없음</string>
+    <string name="notif_track_requesting">%1$s 님의 요청: %2$s</string>
+    <string name="notif_track_update_body">%1$s 님이 위치 공유 방식을 변경하려고 합니다.</string>
+    <string name="notif_track_new_body">%1$s 님이 나를 연락처로 추가하고 연결을 원합니다.</string>
+    <string name="notif_contact_connected_title">연락처 연결됨</string>
+    <string name="notif_contact_connected_text">%1$s 님이 이제 나와 연결되었습니다.</string>
+    <string name="notif_request_declined_title">요청 거절됨</string>
+    <string name="notif_request_declined_text">%1$s 님이 내 위치 공유 요청을 거절했습니다.</string>
+    <string name="notif_message_person">%1$s 님에게 메시지</string>
+    <string name="notif_geofence_entered_title">%1$s 님이 %2$s에 들어왔습니다</string>
+    <string name="notif_geofence_left_title">%1$s 님이 %2$s에서 나갔습니다</string>
+    <string name="notif_geofence_subtitle">%1$s · 반경 %2$s</string>
+    <string name="notif_person_nearby">%1$s 님이 근처에 있습니다</string>
+    <string name="notif_distance_from_you">나에게서 %1$s</string>
+    <string name="notif_missed_title">%1$s 님의 업데이트 없음</string>
+    <string name="notif_missed_text">%1$s분 전에 (%2$s, %3$s) 근처에서 마지막으로 확인됨</string>
+    <string name="notif_sos_active_title">SOS 활성화됨!</string>
+    <string name="notif_sos_active_text">SOS 연락처에 긴급 알림 전송 중</string>
+    <string name="notif_messages_group_title">LocaPeer 메시지</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s 님의 연락처 요청을 거절했습니다</string>
+    <string name="toast_now_supervising">이제 %1$s 님의 기기를 감독합니다</string>
+    <string name="toast_declined_supervision">%1$s 님의 감독 요청을 거절했습니다</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">방금 전</string>
+    <string name="time_minutes_ago">%1$d분 전</string>
+    <string name="fallback_me">나</string>
+    <string name="fallback_unknown">알 수 없음</string>
+    <string name="geo_unassigned">미할당</string>
+    <string name="days_every_day">매일</string>
+    <string name="days_weekdays">평일</string>
+    <string name="days_weekends">주말</string>
+    <string name="days_none">요일 없음</string>
+    <string name="chat_my_location_message">내 현재 위치: %1$s</string>
+    <string name="scan_error_bad_pubkey">잘못된 초대: 공개 키 오류</string>
+    <string name="scan_error_key_mismatch">잘못된 초대: 키 불일치</string>
+    <string name="scan_error_unknown">알 수 없는 오류</string>
+    <string name="scan_error_invalid_link">잘못된 초대 링크</string>
+    <string name="scan_fallback_contact">이 연락처</string>
+    <string name="backup_saved">백업 저장됨: %1$s</string>
+    <string name="backup_saved_encrypted">백업 저장됨 (암호화): %1$s</string>
+    <string name="backup_failed">백업 실패: %1$s</string>
+    <string name="backup_could_not_read_file">파일을 읽을 수 없습니다</string>
+    <string name="backup_could_not_write_file">파일을 쓸 수 없습니다</string>
+    <string name="backup_could_not_read">백업을 읽을 수 없습니다: %1$s</string>
+    <string name="backup_incorrect_password">잘못된 비밀번호</string>
+    <string name="restore_result_restored">복원됨: %1$s</string>
+    <string name="restore_result_failed">실패: %1$s</string>
+    <string name="restore_nothing">복원할 항목 없음</string>
+    <string name="restore_failed">복원 실패: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">연락처 %1$d개</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">지오펜스 %1$d개</item>
+    </plurals>
+    <string name="peer_role_change_sent">역할 변경 요청을 %1$s 님에게 보냈습니다</string>
+    <string name="peer_not_found">연락처를 찾을 수 없습니다</string>
+    <string name="peer_purge_location_sent">모든 위치의 원격 삭제 명령을 %1$s 님에게 보냈습니다</string>
+    <string name="peer_purge_messages_sent">모든 메시지의 원격 삭제 명령을 %1$s 님에게 보냈습니다</string>
+    <string name="onboarding_error_key_length">잘못된 키 — 64자 16진수여야 합니다.</string>
+    <string name="onboarding_error_key_range">잘못된 개인 키 — 곡선 범위를 벗어났습니다.</string>
+    <string name="onboarding_error_hex">잘못된 16진수 형식입니다.</string>
+    <string name="onboarding_error_import_failed">키 가져오기 실패: %1$s</string>
 </resources>

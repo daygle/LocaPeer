@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── 通知頻道與前景服務 ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">位置廣播</string>
     <string name="channel_desc_heartbeat">將您的位置廣播給已核准的聯絡人</string>
     <string name="channel_name_alerts">警報</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer 正在執行</string>
     <string name="notification_heartbeat_text">正在與他人分享您的位置</string>
 
-    <!-- ── 通用動作 ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">儲存</string>
     <string name="common_cancel">取消</string>
     <string name="common_done">完成</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">核准</string>
     <string name="common_deny">拒絕</string>
 
-    <!-- ── 導覽分頁標籤 ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">地圖</string>
     <string name="tab_messages">訊息</string>
     <string name="tab_history">歷史</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">設定</string>
 
-    <!-- ── 動作 / 活動狀態 ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">靜止</string>
     <string name="motion_walking">步行</string>
     <string name="motion_running">跑步</string>
     <string name="motion_cycling">騎自行車</string>
     <string name="motion_driving">開車</string>
 
-    <!-- ── 設定 ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">私鑰</string>
+    <string name="backup_section_contacts">聯絡人</string>
+    <string name="backup_section_geofences">地理圍欄</string>
+    <string name="backup_section_settings">設定</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">監督要求</string>
+    <string name="supervision_request_message">「%1$s」要求存取自己的設定。要允許嗎？</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">設定</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">位置與隱私</string>
     <string name="settings_section_security">安全性</string>
     <string name="settings_section_map">地圖</string>
@@ -54,15 +66,669 @@
     <string name="settings_section_backup_keys">備份與金鑰</string>
     <string name="settings_section_about">關於</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">編輯名稱</string>
     <string name="settings_my_qr">我的 QR</string>
     <string name="settings_no_name_set">未設定名稱</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">分享我的位置</string>
+    <string name="settings_broadcasting">正在向您的聯絡人廣播</string>
+    <string name="settings_not_broadcasting">未廣播</string>
+    <string name="settings_sharing_schedule">分享排程</string>
+    <string name="settings_always_on">永遠開啟</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">%1$d 條規則</item>
+    </plurals>
+    <string name="settings_geofences">地理圍欄</string>
+    <string name="settings_geofences_subtitle">管理共用的地理圍欄區域</string>
+    <string name="settings_notify_when_tracked">被追蹤時通知</string>
+    <string name="settings_notify_when_tracked_subtitle">當聯絡人針對您的鄰近或地理圍欄警示被觸發時收到通知。</string>
+    <string name="settings_my_location_history">位置紀錄</string>
+    <string name="settings_my_location_history_subtitle">瀏覽您自己的位置時間軸</string>
+    <string name="settings_lookup_addresses">查詢地址</string>
+    <string name="settings_lookup_addresses_subtitle">顯示紀錄點和點選地圖圖釘的街道地址，並在設置地理圍欄時以地址搜尋。這些座標或您輸入的搜尋內容會傳送到裝置的地理編碼服務（通常是 Google）。</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">監督已啟用</string>
+    <string name="settings_supervision_active_subtitle">設定需要監督者核准</string>
+    <string name="settings_disable_supervised">停用受監督模式</string>
+    <string name="settings_supervised_mode">受監督模式</string>
+    <string name="settings_supervised_mode_subtitle">存取設定需要監督者核准</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">起始點</string>
+    <string name="settings_map_current_location">目前位置</string>
+    <string name="settings_map_all_contacts">所有聯絡人</string>
+    <string name="settings_map_fixed_location">固定位置</string>
+    <string name="settings_map_last_position">上次位置</string>
+    <string name="settings_map_starting_point_title">地圖起始點</string>
+    <string name="settings_no_location_set">未設定位置</string>
+    <string name="settings_pick_location_on_map">在地圖上選擇位置</string>
+    <string name="settings_default_zoom_level">預設縮放等級</string>
+    <string name="settings_map_pin_colour">地圖圖釘顏色</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">更新頻率</string>
+    <string name="settings_update_cadence_subtitle">調整您的位置廣播頻率</string>
+    <string name="settings_update_cadence_dialog_message">根據您的活動控制位置更新頻率。頻繁更新會消耗更多電量。</string>
+    <string name="settings_update_cadence_reset">重設為預設值</string>
+    <string name="settings_min_distance_filtering">最小距離篩選</string>
+    <string name="settings_min_distance_filtering_subtitle">只顯示與前一點至少相距此距離的位置點。</string>
+    <string name="settings_discard_low_accuracy">捨棄低精確度定位</string>
+    <string name="settings_discard_low_accuracy_subtitle">精確度半徑大於此值的自身定位不廣播也不記錄。SOS 絕不略過。</string>
+    <string name="settings_hide_low_accuracy">隱藏低精確度位置點</string>
+    <string name="settings_hide_low_accuracy_subtitle">隱藏精確度半徑大於此值的紀錄點。不會刪除任何資料。</string>
+    <string name="settings_low_battery" formatted="false">低電量 (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d 分鐘</string>
+    <string name="settings_motion_detection">動作偵測</string>
+    <string name="settings_motion_detection_on">已啟用 — 精確判斷紀錄中的移動類型（步行、駕駛）</string>
+    <string name="settings_motion_detection_off">關閉 — 允許身體活動存取以取得更準確的移動標籤</string>
+    <string name="settings_enable_motion_title">啟用動作偵測</string>
+    <string name="settings_enable_motion_message">身體活動存取可讓 LocaPeer 在您的紀錄中更準確地區分步行、駕駛與靜止。目前已關閉 — 您可以在系統設定中重新啟用。</string>
+    <string name="settings_open_settings">開啟設定</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">速度單位</string>
+    <string name="settings_speed_imperial">英制 (mph)</string>
+    <string name="settings_speed_metric">公制 (km/h)</string>
+    <string name="settings_elevation_units">海拔單位</string>
+    <string name="settings_elevation_imperial">英制（英尺）</string>
+    <string name="settings_elevation_metric">公制（公尺）</string>
+    <string name="settings_distance_units">距離單位</string>
+    <string name="settings_distance_imperial">英制 (ft/mi)</string>
+    <string name="settings_distance_metric">公制 (m/km)</string>
+    <string name="settings_time_format">時間格式</string>
+    <string name="settings_time_24h">24 小時制 (13:30)</string>
+    <string name="settings_time_12h">12 小時制 (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">位置資料</string>
+    <string name="settings_retention_location_subtitle">聯絡人位置資料在本機保留的時間</string>
+    <string name="settings_clear_all_location">清除所有位置資料</string>
+    <string name="settings_retention_messages">訊息</string>
+    <string name="settings_retention_messages_subtitle">收到的訊息在本機保留的時間</string>
+    <string name="settings_clear_all_messages">清除所有訊息</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">自訂導覽</string>
+    <string name="settings_customize_nav_subtitle">選擇並重新排序底部分頁</string>
+    <string name="settings_start_page">起始頁面</string>
     <string name="settings_language">語言</string>
     <string name="settings_language_title">應用程式語言</string>
     <string name="settings_language_system">系統預設</string>
 
-    <string name="common_ok">確定</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">匯出備份</string>
+    <string name="settings_export_backup_subtitle">將您的私鑰與聯絡人儲存至檔案。請妥善保管此檔案！</string>
+    <string name="settings_import_backup">匯入備份</string>
+    <string name="settings_import_backup_subtitle">從先前匯出的檔案還原</string>
+    <string name="settings_view_private_key">檢視私鑰</string>
+    <string name="settings_view_private_key_subtitle">顯示您的 64 字元十六進位身分金鑰</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">關於 LocaPeer</string>
+    <string name="settings_about_subtitle">版本、中繼站狀態、開放原始碼</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">編輯顯示名稱</string>
+    <string name="settings_display_name_label">顯示名稱</string>
+    <string name="settings_my_invite_qr">我的邀請 QR 碼</string>
+    <string name="settings_invite_qr_subtitle">其他人可以掃描此碼開始追蹤您。</string>
+    <string name="settings_invite_qr_cd">邀請 QR 碼</string>
+    <string name="settings_private_key_title">私鑰</string>
+    <string name="settings_private_key_warning">請妥善保管。任何擁有此金鑰的人都可以冒充您。</string>
+    <string name="settings_clear_location_title">要清除位置紀錄嗎？</string>
+    <string name="settings_clear_location_message">所有儲存的位置紀錄將被永久刪除。</string>
+    <string name="settings_clear_messages_title">要清除訊息紀錄嗎？</string>
+    <string name="settings_clear_messages_message">所有儲存的訊息將被永久刪除。</string>
+    <string name="settings_encrypted_backup_title">加密備份</string>
+    <string name="settings_encrypted_backup_message">此備份已加密。請輸入密碼以繼續。</string>
+    <string name="settings_select_restore_title">選擇要還原的資料</string>
+    <string name="settings_select_export_title">選擇要匯出的資料</string>
+    <string name="settings_export_password_hint">可選擇設定密碼來加密您的備份檔案。</string>
+    <string name="settings_backup_password_optional">備份密碼（選填）</string>
+    <string name="settings_select_sections">選擇要包含的區段：</string>
+    <string name="settings_choose_file_location">選擇檔案位置</string>
+    <string name="settings_not_in_backup">此備份中沒有</string>
+    <string name="settings_enable_supervised_title">啟用受監督模式</string>
+    <string name="settings_enable_supervised_message">選擇一位擔任監督者的聯絡人。對方必須從自己的裝置核准設定的存取。</string>
+    <string name="settings_no_peers_found">找不到聯絡人。請先掃描對方的邀請 QR 碼來新增聯絡人。</string>
+    <string name="settings_disable_supervised_title">要停用受監督模式嗎？</string>
+    <string name="settings_disable_supervised_message">無需監督者核准即可存取設定。</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">移除</string>
+    <string name="common_name">名稱</string>
+    <string name="common_search">搜尋</string>
+    <string name="common_sort">排序</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">訊息</string>
+    <string name="cd_show_on_map">在地圖上顯示</string>
+    <string name="cd_more_options">更多選項</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">已選取 %1$d 個</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">取消選取</string>
+    <string name="contacts_cd_select_all">全選</string>
+    <string name="contacts_cd_deselect_all">取消全選</string>
+    <string name="contacts_cd_qr_invite">QR / 邀請</string>
+    <string name="contacts_cd_pending_requests">待處理要求</string>
+    <string name="contacts_sort_last_seen">上次上線</string>
+    <string name="contacts_search_placeholder">搜尋聯絡人…</string>
+    <string name="contacts_empty_title">還沒有聯絡人</string>
+    <string name="contacts_empty_subtitle">掃描 QR 碼與他人連結並開始分享位置。</string>
+    <string name="contacts_scan_qr">掃描 QR 碼</string>
+    <string name="contacts_bulk_delete_messages">刪除訊息</string>
+    <string name="contacts_bulk_delete_locations">刪除位置</string>
+    <string name="contacts_last_seen">上次上線：%1$s</string>
+    <string name="contacts_no_location_yet">還沒有位置資料</string>
+    <string name="contacts_view_sharing_settings">分享設定</string>
+    <string name="contacts_view_location_history">位置紀錄</string>
+    <string name="contacts_rename_contact">重新命名聯絡人</string>
+    <string name="contacts_on_contact_device">在聯絡人的裝置上</string>
+    <string name="contacts_delete_my_messages_title">刪除我的訊息</string>
+    <string name="contacts_delete_locations_title">刪除已分享的位置</string>
+    <string name="contacts_remove_contact_title">移除聯絡人</string>
+    <string name="contacts_leave_title">刪除聯絡人與資料</string>
+    <string name="contacts_rename_title">重新命名聯絡人</string>
+    <string name="contacts_remove_contact_body">要將 %1$s 從您的聯絡人中移除嗎？對方的位置紀錄也會從本機刪除。</string>
+    <string name="contacts_leave_body">這會將您從 %1$s 的聯絡人中移除，並從對方裝置刪除您的所有訊息與位置資料。您也將失去對方位置的存取權。</string>
+    <string name="contacts_delete_my_messages_body">這會從 %1$s 的裝置刪除您傳送的所有訊息。此操作無法復原。</string>
+    <string name="contacts_delete_locations_body">這會從 %1$s 的裝置刪除您分享的所有位置資料。此操作無法復原。</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">移除 %1$d 位聯絡人</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">要移除 %1$d 位聯絡人嗎？他們的位置紀錄也會從本機刪除。</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">要從 %1$d 位聯絡人的裝置遠端刪除您傳送的所有訊息嗎？此操作無法復原。</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">要從 %1$d 位聯絡人的裝置遠端刪除您分享的所有位置紀錄嗎？此操作無法復原。</item>
+    </plurals>
+
+    <string name="common_continue">繼續</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">從備份還原</string>
+    <string name="onboarding_restore_message">貼上您的 64 字元十六進位私鑰以還原身分與聯絡人。</string>
+    <string name="onboarding_private_key_hex">私鑰（十六進位）</string>
+    <string name="onboarding_tagline">與聯絡人私密分享位置。\n無帳號。無專有伺服器。</string>
+    <string name="onboarding_feature_e2e_title">端對端加密</string>
+    <string name="onboarding_feature_e2e_subtitle">您的位置在裝置上加密</string>
+    <string name="onboarding_feature_servers_title">無專有伺服器</string>
+    <string name="onboarding_feature_servers_subtitle">使用開放的 Nostr 中繼站作為安全傳輸 — 您的資料保持加密且私密</string>
+    <string name="onboarding_feature_phone_title">留在您的手機上</string>
+    <string name="onboarding_feature_phone_subtitle">完整位置紀錄留在您的裝置上。只有目前位置會分享給選定的聯絡人</string>
+    <string name="onboarding_name_prompt">您的聯絡人該怎麼稱呼您？</string>
+    <string name="onboarding_name_placeholder">例如：媽媽、爸爸、小美…</string>
+    <string name="onboarding_get_started">開始使用</string>
+    <string name="onboarding_restore_from_backup">從備份還原</string>
+    <string name="onboarding_key_note">您的私鑰在本機產生，絕不會離開此裝置。</string>
+    <string name="onboarding_permissions_title">權限</string>
+    <string name="onboarding_permissions_desc">LocaPeer 需要位置存取以分享您的位置、相機存取以掃描邀請碼，以及通知存取以顯示背景狀態。身體活動存取為選用 — 可協助更準確地標記您的移動方式（步行、駕駛）。</string>
+    <string name="onboarding_before_ask_title">在詢問之前</string>
+    <string name="onboarding_before_ask_intro">接下來您會看到幾個系統提示：</string>
+    <string name="onboarding_before_ask_location">• 位置 — 必要，用於分享您的位置。</string>
+    <string name="onboarding_before_ask_camera">• 相機 — 用於掃描邀請碼。</string>
+    <string name="onboarding_before_ask_notifications">• 通知 — 用於背景狀態。</string>
+    <string name="onboarding_before_ask_activity">• 身體活動 — 選用。可讓 LocaPeer 更準確地區分步行、駕駛與靜止。您可以略過，之後在設定中啟用。</string>
+    <string name="onboarding_grant_permissions">授予權限</string>
+    <string name="onboarding_bg_location_title">背景位置</string>
+    <string name="onboarding_bg_location_desc">為了在應用程式關閉時持續更新您的聯絡人，請在下一個畫面選擇「一律允許」。</string>
+    <string name="onboarding_bg_location_error">應用程式關閉時需要背景位置才能更新您的聯絡人。請再試一次並選擇「一律允許」。</string>
+    <string name="onboarding_configure_location">設定位置</string>
+    <string name="onboarding_battery_title">電池</string>
+    <string name="onboarding_battery_desc">Android 可能會為了省電而停止 LocaPeer。為確保可靠更新，請將 LocaPeer 排除在最佳化之外。</string>
+    <string name="onboarding_disable_optimizations">停用最佳化</string>
+    <string name="onboarding_done_title">全部完成！</string>
+    <string name="onboarding_done_desc">您的私密位置網路已準備就緒。</string>
+    <string name="onboarding_start_using">開始使用 LocaPeer</string>
+
+    <string name="common_try_again">再試一次</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">掃描邀請</string>
+    <string name="scan_camera_needed">掃描 QR 碼需要相機權限。</string>
+    <string name="scan_grant_permission">授予權限</string>
+    <string name="scan_add_contact_title">要新增聯絡人嗎？</string>
+    <string name="scan_add_contact_message">這會將您與 %1$s 連結，並開始互相分享位置。</string>
+    <string name="scan_add_share">新增並分享</string>
+    <string name="scan_request_sent_title">要求已送出！</string>
+    <string name="scan_request_sent_message">已向 %1$s 送出要求。對方接受後即可連結。</string>
+    <string name="scan_failed">掃描失敗：%1$s</string>
+
     <string name="cd_back">返回</string>
+    <string name="common_review">檢視</string>
+    <string name="common_decline">拒絕</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">傳送/接收</string>
+    <string name="role_send">傳送</string>
+    <string name="role_receive">接收</string>
+    <string name="role_none">不分享</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">我的邀請</string>
+    <string name="invite_tab_add_contact">新增聯絡人</string>
+    <string name="invite_your_qr_title">您的 QR 碼</string>
+    <string name="invite_your_qr_subtitle">讓別人掃描此碼以追蹤您的位置</string>
+    <string name="invite_qr_cd">您的 QR 碼</string>
+    <string name="invite_qr_error">產生 QR 碼時發生錯誤</string>
+    <string name="invite_share_link">分享邀請連結</string>
+    <string name="invite_encryption_note">您的位置將專門為掃描者的裝置加密。</string>
+    <string name="invite_camera_required_title">需要相機存取</string>
+    <string name="invite_camera_required_message">請授予相機權限以掃描 QR 碼。</string>
+    <string name="invite_point_camera">將相機對準 LocaPeer QR 碼</string>
+    <string name="invite_paste_title">或貼上邀請連結</string>
+    <string name="invite_process_link">處理連結</string>
+    <string name="invite_fallback_name">聯絡人</string>
+    <string name="invite_success_message">%1$s 接受後即可連結。</string>
+    <string name="invite_confirm_add_title">要新增 %1$s 嗎？</string>
+    <string name="invite_confirm_add_message">將對方加入您的聯絡人並分享位置？</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">沒有待處理要求</string>
+    <string name="pending_requesting">要求中：%1$s · %2$s</string>
+    <string name="pending_role_change">角色變更要求 · %1$s</string>
+    <string name="pending_new_request">新分享要求 · %1$s</string>
+
+    <string name="common_save_changes">儲存變更</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">更新分享設定</string>
+    <string name="incoming_new_title">新聯絡人要求</string>
+    <string name="incoming_update_subtitle">%1$s 想要更新分享方式。請檢視以下設定。</string>
+    <string name="incoming_new_subtitle">%1$s 已將您加為聯絡人！現在您可以選擇要回饋分享什麼。</string>
+    <string name="incoming_section_location">位置</string>
+    <string name="incoming_share_my_location">與 %1$s 分享我的位置</string>
+    <string name="incoming_share_my_location_sub">對方將能看到您的所在位置</string>
+    <string name="incoming_see_their_location">檢視 %1$s 的位置</string>
+    <string name="incoming_see_their_location_sub">您將能看到對方的所在位置</string>
+    <string name="incoming_section_messaging">訊息</string>
+    <string name="incoming_allow_messages">允許訊息</string>
+    <string name="incoming_allow_messages_sub">接收來自 %1$s 的聊天訊息</string>
+
+    <string name="common_request">要求</string>
+    <string name="common_edit">編輯</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">聯絡人設定</string>
+    <string name="peer_section_roles">位置分享角色</string>
+    <string name="peer_send_on">%1$s 可以看到您的位置</string>
+    <string name="peer_send_off">您未與 %1$s 分享位置</string>
+    <string name="peer_receive_title">接收 %1$s 的位置</string>
+    <string name="peer_receive_on">您可以看到 %1$s 的位置</string>
+    <string name="peer_receive_off">您無法存取 %1$s 的位置</string>
+    <string name="peer_section_privacy">隱私與分享控制</string>
+    <string name="peer_pause_sharing">暫停分享</string>
+    <string name="peer_pause_sub">暫時停止向 %1$s 傳送您的位置</string>
+    <string name="peer_precision">位置精確度</string>
+    <string name="peer_precision_exact_sub">精確的 GPS 座標</string>
+    <string name="peer_precision_suburb_sub">大約位置（社區層級）</string>
+    <string name="peer_always_sharing">永遠分享中</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">%1$d 條生效的分享規則</item>
+    </plurals>
+    <string name="peer_section_alerts">警示與監控</string>
+    <string name="peer_sos_contact">SOS 聯絡人</string>
+    <string name="peer_sos_sub">即使分享暫停也會收到您的緊急警示</string>
+    <string name="peer_missed_alert">位置遺失警示</string>
+    <string name="peer_missed_on">當 %1$s 停止回報位置時通知我</string>
+    <string name="peer_requires_access">需要存取 %1$s 的位置</string>
+    <string name="peer_proximity_alert">鄰近警示</string>
+    <string name="peer_proximity_sub">當 %1$s 在附近時通知我</string>
+    <string name="peer_alert_radius">警示半徑</string>
+    <string name="peer_alert_schedule">警示排程</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">%1$d 條生效規則</item>
+    </plurals>
+    <string name="peer_geofences_sub">為 %1$s 設定抵達與離開區域</string>
+    <string name="peer_supervise">監督此裝置</string>
+    <string name="peer_supervise_on">您會收到並核准來自 %1$s 的解鎖要求</string>
+    <string name="peer_supervise_off">允許 %1$s 向您傳送受監督模式解鎖要求</string>
+    <string name="peer_messaging_sub">啟用/停用來自 %1$s 的聊天訊息</string>
+    <string name="peer_section_history">移動紀錄</string>
+    <string name="peer_location_history">位置紀錄</string>
+    <string name="peer_location_history_sub">檢視 %1$s 的移動紀錄與地圖報告</string>
+    <string name="peer_section_retention">遠端資料保留</string>
+    <string name="peer_retention_location_sub">%1$s 保留您位置紀錄的時間</string>
+    <string name="peer_purge_location">清除 %1$s 上的所有位置資料</string>
+    <string name="peer_retention_messages_sub">%1$s 保留您傳送訊息的時間</string>
+    <string name="peer_purge_messages">清除 %1$s 上的所有訊息</string>
+    <string name="peer_precision_exact">精確 GPS</string>
+    <string name="peer_precision_exact_desc">精確座標</string>
+    <string name="peer_precision_suburb">社區（約 1 公里）</string>
+    <string name="peer_precision_suburb_desc">僅到社區層級</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">要刪除 %1$d 則對話嗎？</item>
+    </plurals>
+    <string name="conv_delete_locally">從本機刪除</string>
+    <string name="conv_delete_locally_sub">僅從您的裝置移除對話。</string>
+    <string name="conv_delete_both">從本機/聯絡人刪除</string>
+    <string name="conv_bulk_delete_both_sub">從本機及您的聯絡人處刪除對話。</string>
+    <string name="conv_delete_both_sub">從本機刪除對話，並在聯絡人的裝置上觸發該對話的刪除要求。</string>
+    <string name="conv_cd_exit_selection">離開選取</string>
+    <string name="conv_cd_select_all">全選</string>
+    <string name="conv_cd_new_message">新訊息</string>
+    <string name="conv_sort_date">日期</string>
+    <string name="conv_sort_unread">未讀</string>
+    <string name="conv_search_placeholder">搜尋對話…</string>
+    <string name="conv_tab_chats">聊天</string>
+    <string name="conv_tab_archived">已封存</string>
+    <string name="conv_mark_read">標為已讀</string>
+    <string name="conv_archive">封存</string>
+    <string name="conv_unarchive">取消封存</string>
+    <string name="conv_empty_no_results">找不到「%1$s」的結果</string>
+    <string name="conv_empty_no_results_sub">請嘗試其他搜尋字詞</string>
+    <string name="conv_empty_archived_title">沒有已封存的聊天</string>
+    <string name="conv_empty_archived_sub">封存聊天以保持收件匣整潔</string>
+    <string name="conv_empty_title">還沒有訊息</string>
+    <string name="conv_empty_sub">開啟地圖並點選一個人\n即可開始對話</string>
+    <string name="conv_delete_title">要刪除對話嗎？</string>
+    <string name="conv_delete_message">您想如何刪除與 %1$s 的這段對話？</string>
+    <string name="conv_messages_blocked">訊息已封鎖</string>
+    <string name="conv_preview_mine">您：%1$s</string>
+    <string name="conv_new_message_title">新訊息</string>
+    <string name="conv_picker_empty">還沒有聯絡人。掃描 QR 碼以新增聯絡人。</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">要清除聊天紀錄嗎？</string>
+    <string name="chat_clear_message">您想如何清除與 %1$s 的這段對話？</string>
+    <string name="chat_clear_locally">從本機清除</string>
+    <string name="chat_clear_both">從本機/聯絡人清除</string>
+    <string name="chat_clear_both_sub">從本機清除聊天，並向 %1$s 傳送刪除您所傳訊息的要求。</string>
+    <string name="chat_cd_options">選項</string>
+    <string name="chat_clear_history_menu">清除聊天紀錄</string>
+    <string name="chat_typing">%1$s 正在輸入…</string>
+    <string name="chat_blocked_banner">您已封鎖來自 %1$s 的訊息。請前往「聯絡人」解除封鎖。</string>
+    <string name="chat_delete_msg_title">要刪除訊息嗎？</string>
+    <string name="chat_delete_msg_message">您想如何刪除這則訊息？</string>
+    <string name="chat_delete_from_contact">從聯絡人刪除</string>
+    <string name="chat_delete_from_contact_sub">從聯絡人的裝置刪除聊天。</string>
+    <string name="chat_delete_both_sub">從本機移除聊天，並自動從聯絡人的裝置刪除。</string>
+    <string name="chat_cd_share_location">分享位置</string>
+    <string name="chat_input_placeholder">訊息…</string>
+    <string name="chat_cd_send">傳送</string>
+
+    <string name="common_close">關閉</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">要啟動 SOS 嗎？</string>
+    <string name="map_sos_deactivate_title">要停用 SOS 嗎？</string>
+    <string name="map_sos_activate_msg">這會每 15 秒向您指定的 SOS 聯絡人廣播您的位置，直到停用為止。</string>
+    <string name="map_sos_deactivate_msg">這會停止向您的緊急聯絡人進行高優先度位置廣播。</string>
+    <string name="map_activate">啟動</string>
+    <string name="map_deactivate">停用</string>
+    <string name="map_cd_style">地圖樣式</string>
+    <string name="map_cd_show_geofences">顯示地理圍欄</string>
+    <string name="map_cd_hide_geofences">隱藏地理圍欄</string>
+    <string name="map_cd_follow">跟隨我</string>
+    <string name="map_cd_friends">朋友</string>
+    <string name="map_no_friends">還沒有追蹤任何人</string>
+    <string name="map_you">您</string>
+    <string name="map_cd_go_my_location">前往我的位置</string>
+    <string name="map_sos_active">⚠ SOS 啟動中</string>
+    <string name="map_away">遠離</string>
+    <string name="map_no_location_yet">還沒有位置</string>
+    <string name="map_cd_go_location">前往位置</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS 開啟</string>
+    <string name="map_overdue">逾期 — 沒有最近的更新</string>
+    <string name="map_stat_last_seen">上次上線</string>
+    <string name="map_stat_battery">電量</string>
+    <string name="map_stat_accuracy">精確度</string>
+    <string name="map_stat_motion">移動</string>
+    <string name="map_stat_speed">速度</string>
+    <string name="map_stat_elevation">海拔</string>
+
+    <string name="common_ok">確定</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">紀錄：%1$s</string>
+    <string name="history_select_person">選擇人員</string>
+    <string name="history_person_label">人員</string>
+    <string name="history_cd_prev_day">前一天</string>
+    <string name="history_cd_next_day">後一天</string>
+    <string name="history_time_filter">時間篩選：</string>
+    <string name="history_cd_reset_time">重設時間</string>
+    <string name="history_tab_list">清單</string>
+    <string name="history_empty_title">這一天沒有紀錄</string>
+    <string name="history_empty_sub">請試著選擇其他日期或檢查您的連線。</string>
+    <string name="history_start_time">開始時間</string>
+    <string name="history_end_time">結束時間</string>
+    <string name="history_no_data_title">沒有位置資料</string>
+    <string name="history_no_data_sub">這一天或此時間範圍內沒有記錄的位置。</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">已記錄 %1$d 個位置點</item>
+    </plurals>
+    <string name="history_cd_dismiss">關閉</string>
+    <string name="history_accuracy_label">±%1$s 精確度</string>
+    <string name="history_emergency_sos">緊急 SOS 訊號</string>
+    <string name="history_detail_location">位置</string>
+    <string name="history_detail_coordinates">座標</string>
+    <string name="history_within">±%1$s 以內</string>
+    <string name="history_detail_movement">移動</string>
+    <string name="history_movement_desc">%1$s %2$s，方向 %3$s</string>
+
+    <string name="common_create">建立</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">新增地理圍欄區域</string>
+    <string name="geo_cd_assign">指派地理圍欄</string>
+    <string name="geo_unknown">未知</string>
+    <string name="geo_empty_title">沒有地理圍欄</string>
+    <string name="geo_empty_sub">點選 + 建立地理圍欄區域，然後在聯絡人的分享設定中指派給他們。</string>
+    <string name="geo_delete_title">要刪除地理圍欄嗎？</string>
+    <string name="geo_delete_simple">要刪除「%1$s」嗎？</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">「%1$s」已指派給 %2$d 位聯絡人。刪除後這些指派也會一併移除。</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s 的地理圍欄</string>
+    <string name="geo_empty_contact_title">此聯絡人沒有地理圍欄</string>
+    <string name="geo_empty_contact_sub">點選 + 指派地理圍欄區域，並選擇在抵達、離開或兩者時發出警示。</string>
+    <string name="geo_no_areas_title">還沒有地理圍欄</string>
+    <string name="geo_no_areas_msg">請先在「地理圍欄」畫面建立區域，再到這裡指派。</string>
+    <string name="geo_radius_label">%1$s 半徑</string>
+    <string name="geo_contacts_label">聯絡人：%1$s</string>
+    <string name="geo_no_contacts_assigned">未指派聯絡人</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">%1$d 條規則</item>
+    </plurals>
+    <string name="geo_trigger_enter">進入</string>
+    <string name="geo_trigger_exit">離開</string>
+    <string name="geo_trigger_both">兩者</string>
+    <string name="geo_edit_title">編輯地理圍欄</string>
+    <string name="geo_new_title">新增地理圍欄</string>
+    <string name="geo_cd_my_location">我的位置</string>
+    <string name="geo_cd_radius_increase">增加半徑</string>
+    <string name="geo_cd_radius_decrease">縮小半徑</string>
+    <string name="geo_hint_tap">點選或長按地圖以放置</string>
+    <string name="geo_hint_move">雙指縮放 • 長按或拖曳圖釘以移動</string>
+    <string name="geo_basic_info">基本資訊</string>
+    <string name="geo_search_title">以地址尋找</string>
+    <string name="geo_search_label">地址或地點</string>
+    <string name="geo_search_placeholder">例如：台北市中正區重慶南路一段122號</string>
+    <string name="geo_search_no_results">找不到相符的地址</string>
+    <string name="geo_cd_search">搜尋</string>
+    <string name="geo_name_placeholder">例如：家、公司</string>
+    <string name="geo_name_required">名稱為必填</string>
+    <string name="geo_latitude">緯度</string>
+    <string name="geo_longitude">經度</string>
+    <string name="geo_lat_range">-90 至 90</string>
+    <string name="geo_lng_range">-180 至 180</string>
+    <string name="geo_radius">半徑</string>
+    <string name="geo_radius_range">請輸入 %1$d 至 %2$d 公尺</string>
+    <string name="geo_edit_assignment">編輯指派</string>
+    <string name="geo_assign_title">指派地理圍欄</string>
+    <string name="geo_select_area">選擇地理圍欄區域</string>
+    <string name="geo_trigger_title">觸發通知時機</string>
+    <string name="geo_add_rule">新增規則</string>
+    <string name="geo_alerts_all_times">警示隨時有效。新增規則以限制傳送警示的時間。</string>
+    <string name="geo_assign_action">指派</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">鄰近警示</string>
+    <string name="prox_empty_title">沒有追蹤中的人員</string>
+    <string name="prox_empty_sub">在「掃描」分頁掃描他人的邀請 QR 碼\n即可開始追蹤位置</string>
+    <string name="prox_intro">當追蹤中的人員進入您選擇的距離內時收到通知。</string>
+    <string name="prox_alert_within">在 %1$s 內時警示</string>
+    <string name="prox_alerts_off">警示關閉</string>
+    <string name="prox_alert_radius">警示半徑</string>
+    <string name="prox_edit_schedule">編輯排程</string>
+    <string name="prox_rules">規則</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s 的排程</string>
+    <string name="schedule_cd_add_rule">新增規則</string>
+    <string name="schedule_empty_title">沒有排程規則</string>
+    <string name="schedule_empty_global">位置隨時分享中。新增規則以限制分享的時間。</string>
+    <string name="schedule_empty_peer">位置一律與 %1$s 分享。新增規則以限制時間。</string>
+    <string name="schedule_active_hint">任一規則符合目前時間即生效。空白 = 永遠開啟。</string>
+    <string name="schedule_all_day">全天</string>
+    <string name="schedule_plus_one_day">（+1 天）</string>
+    <string name="schedule_rule_number">規則 %1$d</string>
+    <string name="schedule_cd_delete_rule">刪除規則</string>
+    <string name="schedule_edit_rule">編輯規則</string>
+    <string name="schedule_label_optional">標籤（選填）</string>
+    <string name="schedule_label_placeholder">例如：上班時間、週末</string>
+    <string name="schedule_active_days">生效日</string>
+    <string name="schedule_time_window">時間範圍</string>
+    <string name="schedule_start">開始</string>
+    <string name="schedule_end">結束</string>
+    <string name="schedule_overnight">跨夜：從 %1$s 到隔天 %2$s 生效</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">裝置受監督中</string>
+    <string name="gate_message">存取設定需要監督者核准。</string>
+    <string name="gate_request_access">要求存取</string>
+    <string name="gate_waiting">等待監督者核准…</string>
+    <string name="gate_denied">監督者拒絕了存取。</string>
+    <string name="gate_timed_out">要求逾時。監督者未回應。</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">永久</string>
+    <string name="retention_keep_for">保留：%1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d 天</item>
+    </plurals>
+
+    <string name="common_select">選擇</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">選擇固定位置</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">選擇底部列要顯示的分頁及其順序。「地圖」永遠包含在內。</string>
+    <string name="customize_cd_move_up">上移</string>
+    <string name="customize_cd_move_down">下移</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">版本 %1$s（組建 %2$d）</string>
+    <string name="about_tagline">與您信任的人私密分享位置。無帳號、無雲端、我們不追蹤。</string>
+    <string name="about_relay_connections">中繼站連線</string>
+    <string name="about_connected">已連線</string>
+    <string name="about_disconnected">已斷線</string>
+    <string name="about_open_source">開放原始碼程式庫</string>
+    <string name="about_lib_osmdroid_desc">以 OpenStreetMap 為基礎的地圖繪製</string>
+    <string name="about_lib_okhttp_desc">Nostr 中繼站的 WebSocket 傳輸</string>
+    <string name="about_lib_compose_desc">UI 框架</string>
+    <string name="about_lib_hilt_desc">依賴注入</string>
+    <string name="about_lib_room_desc">本機資料庫</string>
+    <string name="about_map_attribution">地圖資料 © OpenStreetMap 貢獻者</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">接受</string>
+    <string name="notif_someone">有人</string>
+    <string name="notif_sos_title">來自 %1$s 的 SOS！</string>
+    <string name="notif_sos_text">%1$s 已在 (%2$s, %3$s) 啟動 SOS</string>
+    <string name="notif_supervisor_request_title">%1$s 想請您擔任監督者</string>
+    <string name="notif_supervisor_request_text">接受以允許來自此裝置的解鎖核准要求</string>
+    <string name="notif_supervisor_request_big">接受後，%1$s 就能在受監督模式啟用時向您傳送解鎖核准要求。</string>
+    <string name="notif_supervised_active_title">受監督模式已啟用</string>
+    <string name="notif_supervised_active_text">您的監督者已確認 — 受監督模式現已設定完成</string>
+    <string name="notif_supervised_declined_title">受監督模式遭拒</string>
+    <string name="notif_supervised_declined_text">您的監督者拒絕了要求 — 受監督模式已停用</string>
+    <string name="notif_tracking_alert_title">追蹤警示</string>
+    <string name="notif_tracking_proximity">%1$s 收到了關於您的鄰近警示</string>
+    <string name="notif_tracking_geofence">%1$s 收到您進入/離開圍欄的警示：%2$s</string>
+    <string name="notif_tracking_generic">%1$s 正在監控您的位置</string>
+    <string name="notif_track_update_title">來自 %1$s 的分享更新</string>
+    <string name="notif_track_new_title">新聯絡人：%1$s</string>
+    <string name="notif_role_send_receive">傳送/接收位置</string>
+    <string name="notif_role_send">傳送位置</string>
+    <string name="notif_role_receive">接收位置</string>
+    <string name="notif_role_none">不分享位置</string>
+    <string name="notif_track_requesting">%1$s 要求：%2$s</string>
+    <string name="notif_track_update_body">%1$s 想要更新位置分享方式。</string>
+    <string name="notif_track_new_body">%1$s 已將您加為聯絡人並想要連結。</string>
+    <string name="notif_contact_connected_title">聯絡人已連結</string>
+    <string name="notif_contact_connected_text">%1$s 現在已與您連結。</string>
+    <string name="notif_request_declined_title">要求遭拒</string>
+    <string name="notif_request_declined_text">%1$s 拒絕了您的位置分享要求。</string>
+    <string name="notif_message_person">傳訊息給 %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s 進入了 %2$s</string>
+    <string name="notif_geofence_left_title">%1$s 離開了 %2$s</string>
+    <string name="notif_geofence_subtitle">於 %1$s · 半徑 %2$s</string>
+    <string name="notif_person_nearby">%1$s 在附近</string>
+    <string name="notif_distance_from_you">距您 %1$s</string>
+    <string name="notif_missed_title">沒有來自 %1$s 的更新</string>
+    <string name="notif_missed_text">上次上線於 %1$s 分鐘前，靠近 (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS 啟動中！</string>
+    <string name="notif_sos_active_text">正在向 SOS 聯絡人廣播緊急警示</string>
+    <string name="notif_messages_group_title">LocaPeer 訊息</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">已拒絕來自 %1$s 的聯絡人要求</string>
+    <string name="toast_now_supervising">現在監督 %1$s 的裝置</string>
+    <string name="toast_declined_supervision">已拒絕來自 %1$s 的監督要求</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">剛剛</string>
+    <string name="time_minutes_ago">%1$d 分鐘前</string>
+    <string name="fallback_me">我</string>
+    <string name="fallback_unknown">未知</string>
+    <string name="geo_unassigned">未指派</string>
+    <string name="days_every_day">每天</string>
+    <string name="days_weekdays">平日</string>
+    <string name="days_weekends">週末</string>
+    <string name="days_none">未選擇日子</string>
+    <string name="chat_my_location_message">我的目前位置：%1$s</string>
+    <string name="scan_error_bad_pubkey">邀請無效：公鑰錯誤</string>
+    <string name="scan_error_key_mismatch">邀請無效：金鑰不符</string>
+    <string name="scan_error_unknown">未知錯誤</string>
+    <string name="scan_error_invalid_link">邀請連結無效</string>
+    <string name="scan_fallback_contact">此聯絡人</string>
+    <string name="backup_saved">備份已儲存：%1$s</string>
+    <string name="backup_saved_encrypted">備份已儲存（已加密）：%1$s</string>
+    <string name="backup_failed">備份失敗：%1$s</string>
+    <string name="backup_could_not_read_file">無法讀取檔案</string>
+    <string name="backup_could_not_write_file">無法寫入檔案</string>
+    <string name="backup_could_not_read">無法讀取備份：%1$s</string>
+    <string name="backup_incorrect_password">密碼錯誤</string>
+    <string name="restore_result_restored">已還原：%1$s</string>
+    <string name="restore_result_failed">失敗：%1$s</string>
+    <string name="restore_nothing">沒有可還原的內容</string>
+    <string name="restore_failed">還原失敗：%1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">%1$d 位聯絡人</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">%1$d 個地理圍欄</item>
+    </plurals>
+    <string name="peer_role_change_sent">已向 %1$s 送出角色變更要求</string>
+    <string name="peer_not_found">找不到聯絡人</string>
+    <string name="peer_purge_location_sent">已向 %1$s 送出遠端刪除全部位置的指令</string>
+    <string name="peer_purge_messages_sent">已向 %1$s 送出遠端刪除全部訊息的指令</string>
+    <string name="onboarding_error_key_length">金鑰無效 — 必須為 64 個十六進位字元。</string>
+    <string name="onboarding_error_key_range">私鑰無效 — 超出曲線範圍。</string>
+    <string name="onboarding_error_hex">十六進位格式無效。</string>
+    <string name="onboarding_error_import_failed">匯入金鑰失敗：%1$s</string>
 </resources>
