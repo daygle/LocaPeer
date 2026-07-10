@@ -157,7 +157,7 @@ fun LocaPeerNavHost(
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(padding),
+            modifier = Modifier.padding(bottom = padding.calculateBottomPadding()),
             enterTransition = { fadeEnter },
             exitTransition = { fadeExit },
             popEnterTransition = { fadeEnter },

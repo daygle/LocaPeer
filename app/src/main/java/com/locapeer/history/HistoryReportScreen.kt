@@ -1,5 +1,6 @@
 package com.locapeer.history
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -28,6 +29,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.R
+import com.locapeer.map.MapTileSources
 import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
@@ -73,6 +75,8 @@ fun HistoryReportScreen(
     val heartbeats by vm.heartbeats.collectAsState()
     val addresses by vm.addresses.collectAsState()
     val selfDisplayName by vm.selfDisplayName.collectAsState()
+
+    val isDark = isSystemInDarkTheme()
 
     val selectedPeer = broadcasters.find { it.deviceId == selectedPeerId }
 
@@ -265,6 +269,7 @@ fun HistoryReportScreen(
                         HistoryMapTab(
                             heartbeats = heartbeats,
                             addresses = addresses,
+                            isDark = isDark,
                             modifier = Modifier.weight(1f)
                         )
                     }
@@ -382,6 +387,7 @@ private fun HistoryListTab(
 private fun HistoryMapTab(
     heartbeats: List<HeartbeatEntity>,
     addresses: Map<Long, String>,
+    isDark: Boolean,
     modifier: Modifier = Modifier
 ) {
     if (heartbeats.isEmpty()) {
@@ -423,7 +429,7 @@ private fun HistoryMapTab(
             factory = { ctx ->
                 @Suppress("DEPRECATION")
                 MapView(ctx).apply {
-                    setTileSource(TileSourceFactory.MAPNIK)
+                    setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT)
                     setBuiltInZoomControls(false)
                     setMultiTouchControls(true)
                     isVerticalMapRepetitionEnabled = false
@@ -441,6 +447,10 @@ private fun HistoryMapTab(
                 }.also { mapViewRef = it }
             },
             update = { mapView ->
+                val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT
+                if (mapView.tileProvider.tileSource != targetTileSource) {
+                    mapView.setTileSource(targetTileSource)
+                }
                 mapView.overlays.clear()
                 if (heartbeats.isEmpty()) return@AndroidView
 
