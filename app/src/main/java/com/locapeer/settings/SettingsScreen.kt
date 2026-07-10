@@ -977,7 +977,8 @@ fun SettingsScreen(
                     IntervalSlider(stringResource(R.string.settings_low_battery), settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
                 }
             },
-            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } }
+            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } },
+            dismissButton = { TextButton(onClick = { vm.resetIntervals() }) { Text(stringResource(R.string.settings_update_cadence_reset)) } }
         )
     }
 

@@ -112,6 +112,7 @@
     <string name="settings_update_cadence">更新频率</string>
     <string name="settings_update_cadence_subtitle">调整位置广播的频率</string>
     <string name="settings_update_cadence_dialog_message">根据您的活动控制位置更新的频率。频繁更新会消耗更多电池。</string>
+    <string name="settings_update_cadence_reset">恢复默认值</string>
     <string name="settings_min_distance_filtering">最小距离过滤</string>
     <string name="settings_min_distance_filtering_subtitle">仅显示与上一点至少相距此距离的点。</string>
     <string name="settings_discard_low_accuracy">舍弃低精度定位</string>

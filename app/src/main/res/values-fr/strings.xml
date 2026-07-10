@@ -114,6 +114,7 @@
     <string name="settings_update_cadence">Cadence de mise à jour</string>
     <string name="settings_update_cadence_subtitle">Régler la fréquence de diffusion de votre localisation</string>
     <string name="settings_update_cadence_dialog_message">Contrôler la fréquence de mise à jour de votre localisation en fonction de votre activité. Des mises à jour fréquentes utilisent plus de batterie.</string>
+    <string name="settings_update_cadence_reset">Réinitialiser les valeurs par défaut</string>
     <string name="settings_min_distance_filtering">Filtrage par distance minimale</string>
     <string name="settings_min_distance_filtering_subtitle">N\'afficher que les points qui sont au moins à cette distance du précédent.</string>
     <string name="settings_discard_low_accuracy">Ignorer les positions peu précises</string>

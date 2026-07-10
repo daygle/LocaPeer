@@ -113,6 +113,7 @@
     <string name="settings_update_cadence">Frequência de Atualização</string>
     <string name="settings_update_cadence_subtitle">Ajuste a frequência com que sua localização é transmitida</string>
     <string name="settings_update_cadence_dialog_message">Controle a frequência com que sua localização é atualizada com base em sua atividade. Atualizações frequentes consomem mais bateria.</string>
+    <string name="settings_update_cadence_reset">Restaurar padrões</string>
     <string name="settings_min_distance_filtering">Filtragem de Distância Mínima</string>
     <string name="settings_min_distance_filtering_subtitle">Mostrar apenas pontos que estejam pelo menos a esta distância do anterior.</string>
     <string name="settings_discard_low_accuracy">Descartar Fixes de Baixa Precisão</string>

@@ -113,6 +113,7 @@
     <string name="settings_update_cadence">Update Cadence</string>
     <string name="settings_update_cadence_subtitle">Adjust how often your location is broadcasted</string>
     <string name="settings_update_cadence_dialog_message">Control how often your location is updated based on your activity. Frequent updates use more battery.</string>
+    <string name="settings_update_cadence_reset">Reset to defaults</string>
     <string name="settings_min_distance_filtering">Minimum Distance Filtering</string>
     <string name="settings_min_distance_filtering_subtitle">Only show points that are at least this far from the previous one.</string>
     <string name="settings_discard_low_accuracy">Discard Low-Accuracy Fixes</string>

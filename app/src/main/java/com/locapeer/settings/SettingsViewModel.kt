@@ -630,6 +630,10 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun resetIntervals() {
+        viewModelScope.launch { prefs.resetIntervals() }
+    }
+
     fun setStartRoute(route: String) {
         viewModelScope.launch { prefs.setStartRoute(route) }
     }
