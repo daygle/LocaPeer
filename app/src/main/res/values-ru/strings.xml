@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Каналы уведомлений и служба переднего плана ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Трансляция местоположения</string>
     <string name="channel_desc_heartbeat">Транслирует ваше местоположение одобренным контактам</string>
     <string name="channel_name_alerts">Оповещения</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer запущен</string>
     <string name="notification_heartbeat_text">Вы делитесь местоположением с другими</string>
 
-    <!-- ── Общие действия ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Сохранить</string>
     <string name="common_cancel">Отмена</string>
     <string name="common_done">Готово</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Одобрить</string>
     <string name="common_deny">Отклонить</string>
 
-    <!-- ── Вкладки навигации ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Сообщения</string>
     <string name="tab_history">История</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Настройки</string>
 
-    <!-- ── Движение / состояния активности ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Неподвижно</string>
     <string name="motion_walking">Ходьба</string>
     <string name="motion_running">Бег</string>
     <string name="motion_cycling">Велосипед</string>
     <string name="motion_driving">Вождение</string>
 
-    <!-- ── Настройки ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Закрытый ключ</string>
+    <string name="backup_section_contacts">Контакты</string>
+    <string name="backup_section_geofences">Геозоны</string>
+    <string name="backup_section_settings">Настройки</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Запрос на доступ</string>
+    <string name="supervision_request_message">«%1$s» запрашивает доступ к своим настройкам. Разрешить?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Настройки</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Локация и приватность</string>
     <string name="settings_section_security">Безопасность</string>
     <string name="settings_section_map">Карта</string>
@@ -54,15 +66,714 @@
     <string name="settings_section_backup_keys">Резервное копирование и ключи</string>
     <string name="settings_section_about">О приложении</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Изменить имя</string>
     <string name="settings_my_qr">Мой QR</string>
     <string name="settings_no_name_set">Имя не установлено</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Делиться моим местоположением</string>
+    <string name="settings_broadcasting">Передаётся вашим контактам</string>
+    <string name="settings_not_broadcasting">Передача выключена</string>
+    <string name="settings_sharing_schedule">Расписание передачи</string>
+    <string name="settings_always_on">Всегда включено</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d правило</item>
+        <item quantity="few">%1$d правила</item>
+        <item quantity="many">%1$d правил</item>
+        <item quantity="other">%1$d правила</item>
+    </plurals>
+    <string name="settings_geofences">Геозоны</string>
+    <string name="settings_geofences_subtitle">Управление общими геозонами</string>
+    <string name="settings_notify_when_tracked">Уведомлять об отслеживании</string>
+    <string name="settings_notify_when_tracked_subtitle">Получать уведомление, когда у контакта срабатывает оповещение о близости или геозоне, связанное с вами.</string>
+    <string name="settings_my_location_history">История местоположений</string>
+    <string name="settings_my_location_history_subtitle">Просмотр собственной хронологии перемещений</string>
+    <string name="settings_lookup_addresses">Определять адреса</string>
+    <string name="settings_lookup_addresses_subtitle">Показывать почтовые адреса для точек истории и меток на карте, а также искать по адресу при создании геозон. Координаты и поисковые запросы отправляются в службу геокодирования вашего устройства (обычно Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Наблюдение активно</string>
+    <string name="settings_supervision_active_subtitle">Для настроек требуется одобрение супервизора</string>
+    <string name="settings_disable_supervised">Выключить контролируемый режим</string>
+    <string name="settings_supervised_mode">Контролируемый режим</string>
+    <string name="settings_supervised_mode_subtitle">Требовать одобрение супервизора для доступа к настройкам</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Начальная точка</string>
+    <string name="settings_map_current_location">Текущее местоположение</string>
+    <string name="settings_map_all_contacts">Все контакты</string>
+    <string name="settings_map_fixed_location">Заданное место</string>
+    <string name="settings_map_last_position">Последняя позиция</string>
+    <string name="settings_map_starting_point_title">Начальная точка карты</string>
+    <string name="settings_no_location_set">Место не задано</string>
+    <string name="settings_pick_location_on_map">Выбрать место на карте</string>
+    <string name="settings_default_zoom_level">Масштаб по умолчанию</string>
+    <string name="settings_map_pin_colour">Цвет метки на карте</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Частота обновлений</string>
+    <string name="settings_update_cadence_subtitle">Настройте, как часто передаётся ваше местоположение</string>
+    <string name="settings_update_cadence_dialog_message">Управляйте частотой обновления местоположения в зависимости от вашей активности. Частые обновления расходуют больше заряда батареи.</string>
+    <string name="settings_update_cadence_reset">Сбросить по умолчанию</string>
+    <string name="settings_min_distance_filtering">Минимальное расстояние</string>
+    <string name="settings_min_distance_filtering_subtitle">Показывать только точки, удалённые от предыдущей не менее чем на это расстояние.</string>
+    <string name="settings_discard_low_accuracy">Отбрасывать неточные координаты</string>
+    <string name="settings_discard_low_accuracy_subtitle">Не передавать и не записывать собственные координаты с радиусом погрешности больше этого значения. SOS передаётся всегда.</string>
+    <string name="settings_hide_low_accuracy">Скрывать неточные точки</string>
+    <string name="settings_hide_low_accuracy_subtitle">Скрывать точки истории с радиусом погрешности больше этого значения. Данные не удаляются.</string>
+    <string name="settings_low_battery" formatted="false">Низкий заряд (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d мин</string>
+    <string name="settings_motion_detection">Распознавание движения</string>
+    <string name="settings_motion_detection_on">Включено — уточняет тип движения (ходьба, вождение) в истории</string>
+    <string name="settings_motion_detection_off">Выключено — разрешите доступ к физической активности для более точных меток движения</string>
+    <string name="settings_enable_motion_title">Включить распознавание движения</string>
+    <string name="settings_enable_motion_message">Доступ к физической активности помогает LocaPeer точнее различать ходьбу, вождение и неподвижность в вашей истории. Сейчас он выключен — его можно снова включить в настройках системы.</string>
+    <string name="settings_open_settings">Открыть настройки</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Единицы скорости</string>
+    <string name="settings_speed_imperial">Имперские (мили/ч)</string>
+    <string name="settings_speed_metric">Метрические (км/ч)</string>
+    <string name="settings_elevation_units">Единицы высоты</string>
+    <string name="settings_elevation_imperial">Имперские (футы)</string>
+    <string name="settings_elevation_metric">Метрические (метры)</string>
+    <string name="settings_distance_units">Единицы расстояния</string>
+    <string name="settings_distance_imperial">Имперские (футы/мили)</string>
+    <string name="settings_distance_metric">Метрические (м/км)</string>
+    <string name="settings_time_format">Формат времени</string>
+    <string name="settings_time_24h">24-часовой (13:30)</string>
+    <string name="settings_time_12h">12-часовой (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Данные о местоположении</string>
+    <string name="settings_retention_location_subtitle">Как долго хранить данные о местоположении контактов на этом устройстве</string>
+    <string name="settings_clear_all_location">Очистить все данные о местоположении</string>
+    <string name="settings_retention_messages">Сообщения</string>
+    <string name="settings_retention_messages_subtitle">Как долго хранить полученные сообщения на этом устройстве</string>
+    <string name="settings_clear_all_messages">Очистить все сообщения</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Настроить навигацию</string>
+    <string name="settings_customize_nav_subtitle">Выбор и порядок нижних вкладок</string>
+    <string name="settings_start_page">Начальная страница</string>
     <string name="settings_language">Язык</string>
     <string name="settings_language_title">Язык приложения</string>
     <string name="settings_language_system">Системный по умолчанию</string>
 
-    <string name="common_ok">ОК</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Экспорт резервной копии</string>
+    <string name="settings_export_backup_subtitle">Сохраните закрытый ключ и контакты в файл. Храните этот файл в надёжном месте!</string>
+    <string name="settings_import_backup">Импорт резервной копии</string>
+    <string name="settings_import_backup_subtitle">Восстановление из ранее экспортированного файла</string>
+    <string name="settings_view_private_key">Показать закрытый ключ</string>
+    <string name="settings_view_private_key_subtitle">Показать ваш 64-символьный шестнадцатеричный ключ</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">О LocaPeer</string>
+    <string name="settings_about_subtitle">Версия, состояние ретрансляторов, открытый код</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Изменить отображаемое имя</string>
+    <string name="settings_display_name_label">Отображаемое имя</string>
+    <string name="settings_my_invite_qr">Мой QR-код приглашения</string>
+    <string name="settings_invite_qr_subtitle">Другие могут отсканировать его, чтобы начать отслеживать вас.</string>
+    <string name="settings_invite_qr_cd">QR-код приглашения</string>
+    <string name="settings_private_key_title">Закрытый ключ</string>
+    <string name="settings_private_key_warning">Храните его в безопасности. Любой, у кого есть этот ключ, может выдать себя за вас.</string>
+    <string name="settings_clear_location_title">Очистить историю местоположений?</string>
+    <string name="settings_clear_location_message">Все сохранённые точки местоположения будут удалены безвозвратно.</string>
+    <string name="settings_clear_messages_title">Очистить историю сообщений?</string>
+    <string name="settings_clear_messages_message">Все сохранённые сообщения будут удалены безвозвратно.</string>
+    <string name="settings_encrypted_backup_title">Зашифрованная резервная копия</string>
+    <string name="settings_encrypted_backup_message">Эта резервная копия зашифрована. Введите пароль, чтобы продолжить.</string>
+    <string name="settings_select_restore_title">Выберите данные для восстановления</string>
+    <string name="settings_select_export_title">Выберите данные для экспорта</string>
+    <string name="settings_export_password_hint">При желании задайте пароль для шифрования файла резервной копии.</string>
+    <string name="settings_backup_password_optional">Пароль резервной копии (необязательно)</string>
+    <string name="settings_select_sections">Выберите разделы для включения:</string>
+    <string name="settings_choose_file_location">Выберите расположение файла</string>
+    <string name="settings_not_in_backup">Нет в этой резервной копии</string>
+    <string name="settings_enable_supervised_title">Включить контролируемый режим</string>
+    <string name="settings_enable_supervised_message">Выберите пира, который будет супервизором. Доступ к настройкам потребует одобрения с его устройства.</string>
+    <string name="settings_no_peers_found">Пиры не найдены. Сначала добавьте пира, отсканировав его QR-код приглашения.</string>
+    <string name="settings_disable_supervised_title">Выключить контролируемый режим?</string>
+    <string name="settings_disable_supervised_message">Настройки станут доступны без одобрения супервизора.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Убрать</string>
+    <string name="common_name">Имя</string>
+    <string name="common_search">Поиск</string>
+    <string name="common_sort">Сортировка</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Сообщение</string>
+    <string name="cd_show_on_map">Показать на карте</string>
+    <string name="cd_more_options">Ещё</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">Выбрано: %1$d</item>
+        <item quantity="few">Выбрано: %1$d</item>
+        <item quantity="many">Выбрано: %1$d</item>
+        <item quantity="other">Выбрано: %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Отменить выбор</string>
+    <string name="contacts_cd_select_all">Выбрать все</string>
+    <string name="contacts_cd_deselect_all">Снять выбор</string>
+    <string name="contacts_cd_qr_invite">QR / приглашение</string>
+    <string name="contacts_cd_pending_requests">Ожидающие запросы</string>
+    <string name="contacts_sort_last_seen">Последняя активность</string>
+    <string name="contacts_search_placeholder">Поиск контактов…</string>
+    <string name="contacts_empty_title">Пока нет контактов</string>
+    <string name="contacts_empty_subtitle">Отсканируйте QR-код, чтобы связаться с кем-нибудь и начать делиться местоположением.</string>
+    <string name="contacts_scan_qr">Сканировать QR-код</string>
+    <string name="contacts_bulk_delete_messages">Удалить сообщения</string>
+    <string name="contacts_bulk_delete_locations">Удалить местоположения</string>
+    <string name="contacts_last_seen">Был(а) в сети: %1$s</string>
+    <string name="contacts_no_location_yet">Данных о местоположении пока нет</string>
+    <string name="contacts_view_sharing_settings">Настройки обмена</string>
+    <string name="contacts_view_location_history">История местоположений</string>
+    <string name="contacts_rename_contact">Переименовать контакт</string>
+    <string name="contacts_on_contact_device">На устройстве контакта</string>
+    <string name="contacts_delete_my_messages_title">Удалить мои сообщения</string>
+    <string name="contacts_delete_locations_title">Удалить переданные местоположения</string>
+    <string name="contacts_remove_contact_title">Удалить контакт</string>
+    <string name="contacts_leave_title">Удалить контакт и данные</string>
+    <string name="contacts_rename_title">Переименовать контакт</string>
+    <string name="contacts_remove_contact_body">Удалить %1$s из контактов? История его местоположений также будет удалена с этого устройства.</string>
+    <string name="contacts_leave_body">Вы будете удалены из контактов %1$s, а все ваши сообщения и данные о местоположении будут стёрты с его устройства. Вы также потеряете доступ к его местоположению.</string>
+    <string name="contacts_delete_my_messages_body">Все отправленные вами сообщения будут удалены с устройства %1$s. Это действие нельзя отменить.</string>
+    <string name="contacts_delete_locations_body">Все данные о местоположении, которыми вы поделились, будут удалены с устройства %1$s. Это действие нельзя отменить.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Удалить контакт</item>
+        <item quantity="few">Удалить %1$d контакта</item>
+        <item quantity="many">Удалить %1$d контактов</item>
+        <item quantity="other">Удалить %1$d контакта</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Удалить этот контакт? История его местоположений также будет удалена с этого устройства.</item>
+        <item quantity="few">Удалить %1$d контакта? История их местоположений также будет удалена с этого устройства.</item>
+        <item quantity="many">Удалить %1$d контактов? История их местоположений также будет удалена с этого устройства.</item>
+        <item quantity="other">Удалить %1$d контакта? История их местоположений также будет удалена с этого устройства.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Удалить с устройства этого контакта все отправленные вами сообщения? Это действие нельзя отменить.</item>
+        <item quantity="few">Удалить с устройств %1$d контактов все отправленные вами сообщения? Это действие нельзя отменить.</item>
+        <item quantity="many">Удалить с устройств %1$d контактов все отправленные вами сообщения? Это действие нельзя отменить.</item>
+        <item quantity="other">Удалить с устройств %1$d контактов все отправленные вами сообщения? Это действие нельзя отменить.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Удалить с устройства этого контакта всю переданную вами историю местоположений? Это действие нельзя отменить.</item>
+        <item quantity="few">Удалить с устройств %1$d контактов всю переданную вами историю местоположений? Это действие нельзя отменить.</item>
+        <item quantity="many">Удалить с устройств %1$d контактов всю переданную вами историю местоположений? Это действие нельзя отменить.</item>
+        <item quantity="other">Удалить с устройств %1$d контактов всю переданную вами историю местоположений? Это действие нельзя отменить.</item>
+    </plurals>
+
+    <string name="common_continue">Продолжить</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Восстановление из резервной копии</string>
+    <string name="onboarding_restore_message">Вставьте свой 64-символьный шестнадцатеричный закрытый ключ, чтобы восстановить личность и контакты.</string>
+    <string name="onboarding_private_key_hex">Закрытый ключ (hex)</string>
+    <string name="onboarding_tagline">Приватный обмен местоположением с контактами.\nБез учётных записей. Без проприетарных серверов.</string>
+    <string name="onboarding_feature_e2e_title">Сквозное шифрование</string>
+    <string name="onboarding_feature_e2e_subtitle">Ваше местоположение шифруется на устройстве</string>
+    <string name="onboarding_feature_servers_title">Без проприетарных серверов</string>
+    <string name="onboarding_feature_servers_subtitle">Открытые ретрансляторы Nostr используются как защищённый транспорт — ваши данные остаются зашифрованными и приватными</string>
+    <string name="onboarding_feature_phone_title">Всё остаётся на телефоне</string>
+    <string name="onboarding_feature_phone_subtitle">Полная история местоположений хранится только на вашем устройстве. Выбранным контактам передаётся лишь текущая позиция</string>
+    <string name="onboarding_name_prompt">Как вас будут называть ваши контакты?</string>
+    <string name="onboarding_name_placeholder">напр. Мама, Папа, Алиса…</string>
+    <string name="onboarding_get_started">Начать</string>
+    <string name="onboarding_restore_from_backup">Восстановить из резервной копии</string>
+    <string name="onboarding_key_note">Закрытый ключ создаётся локально и никогда не покидает это устройство.</string>
+    <string name="onboarding_permissions_title">Разрешения</string>
+    <string name="onboarding_permissions_desc">LocaPeer нужен доступ к местоположению для передачи вашей позиции, к камере — для сканирования кодов приглашений и к уведомлениям — для фонового статуса. Доступ к физической активности необязателен: он помогает точнее определять тип движения (ходьба, вождение).</string>
+    <string name="onboarding_before_ask_title">Прежде чем спросить</string>
+    <string name="onboarding_before_ask_intro">Сейчас появится несколько системных запросов:</string>
+    <string name="onboarding_before_ask_location">• Местоположение — обязательно, чтобы передавать вашу позицию.</string>
+    <string name="onboarding_before_ask_camera">• Камера — для сканирования кодов приглашений.</string>
+    <string name="onboarding_before_ask_notifications">• Уведомления — для фонового статуса.</string>
+    <string name="onboarding_before_ask_activity">• Физическая активность — необязательно. Помогает LocaPeer точнее различать ходьбу, вождение и неподвижность. Можно пропустить и включить позже в настройках.</string>
+    <string name="onboarding_grant_permissions">Выдать разрешения</string>
+    <string name="onboarding_bg_location_title">Фоновое местоположение</string>
+    <string name="onboarding_bg_location_desc">Чтобы ваши контакты получали обновления при закрытом приложении, выберите на следующем экране «Разрешить в любом режиме».</string>
+    <string name="onboarding_bg_location_error">Фоновое местоположение необходимо для обновлений при закрытом приложении. Попробуйте снова и выберите «Разрешить в любом режиме».</string>
+    <string name="onboarding_configure_location">Настроить местоположение</string>
+    <string name="onboarding_battery_title">Батарея</string>
+    <string name="onboarding_battery_desc">Android может останавливать LocaPeer для экономии заряда. Для надёжных обновлений исключите LocaPeer из оптимизации батареи.</string>
+    <string name="onboarding_disable_optimizations">Отключить оптимизацию</string>
+    <string name="onboarding_done_title">Готово!</string>
+    <string name="onboarding_done_desc">Ваша приватная сеть местоположений готова.</string>
+    <string name="onboarding_start_using">Начать пользоваться LocaPeer</string>
+
+    <string name="common_try_again">Повторить</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Сканировать приглашение</string>
+    <string name="scan_camera_needed">Для сканирования QR-кодов нужно разрешение на камеру.</string>
+    <string name="scan_grant_permission">Выдать разрешение</string>
+    <string name="scan_add_contact_title">Добавить контакт?</string>
+    <string name="scan_add_contact_message">Вы свяжетесь с %1$s и начнёте делиться местоположением друг с другом.</string>
+    <string name="scan_add_share">Добавить и делиться</string>
+    <string name="scan_request_sent_title">Запрос отправлен!</string>
+    <string name="scan_request_sent_message">Запрос отправлен %1$s. Вы будете связаны после его принятия.</string>
+    <string name="scan_failed">Сканирование не удалось: %1$s</string>
+
     <string name="cd_back">Назад</string>
+    <string name="common_review">Просмотреть</string>
+    <string name="common_decline">Отклонить</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Отправка/приём</string>
+    <string name="role_send">Отправка</string>
+    <string name="role_receive">Приём</string>
+    <string name="role_none">Без обмена</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Моё приглашение</string>
+    <string name="invite_tab_add_contact">Добавить контакт</string>
+    <string name="invite_your_qr_title">Ваш QR-код</string>
+    <string name="invite_your_qr_subtitle">Дайте его отсканировать, чтобы следить за вашим местоположением</string>
+    <string name="invite_qr_cd">Ваш QR-код</string>
+    <string name="invite_qr_error">Ошибка создания QR-кода</string>
+    <string name="invite_share_link">Поделиться ссылкой-приглашением</string>
+    <string name="invite_encryption_note">Ваше местоположение будет зашифровано специально для устройства сканирующего.</string>
+    <string name="invite_camera_required_title">Нужен доступ к камере</string>
+    <string name="invite_camera_required_message">Разрешите доступ к камере, чтобы отсканировать QR-код.</string>
+    <string name="invite_point_camera">Наведите камеру на QR-код LocaPeer</string>
+    <string name="invite_paste_title">Или вставьте ссылку-приглашение</string>
+    <string name="invite_process_link">Обработать ссылку</string>
+    <string name="invite_fallback_name">Контакт</string>
+    <string name="invite_success_message">Вы будете связаны с %1$s после принятия приглашения.</string>
+    <string name="invite_confirm_add_title">Добавить %1$s?</string>
+    <string name="invite_confirm_add_message">Добавить в контакты и делиться местоположением?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Нет ожидающих запросов</string>
+    <string name="pending_requesting">Запрашивает: %1$s · %2$s</string>
+    <string name="pending_role_change">Запрос на смену роли · %1$s</string>
+    <string name="pending_new_request">Новый запрос на обмен · %1$s</string>
+
+    <string name="common_save_changes">Сохранить изменения</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Обновить настройки обмена</string>
+    <string name="incoming_new_title">Новый запрос в контакты</string>
+    <string name="incoming_update_subtitle">%1$s хочет изменить условия обмена. Проверьте настройки ниже.</string>
+    <string name="incoming_new_subtitle">%1$s добавил(а) вас в контакты! Теперь вы можете выбрать, чем делиться в ответ.</string>
+    <string name="incoming_section_location">Местоположение</string>
+    <string name="incoming_share_my_location">Делиться моим местоположением с %1$s</string>
+    <string name="incoming_share_my_location_sub">Этот контакт сможет видеть, где вы находитесь</string>
+    <string name="incoming_see_their_location">Видеть местоположение %1$s</string>
+    <string name="incoming_see_their_location_sub">Вы сможете видеть, где находится этот контакт</string>
+    <string name="incoming_section_messaging">Сообщения</string>
+    <string name="incoming_allow_messages">Разрешить сообщения</string>
+    <string name="incoming_allow_messages_sub">Получать сообщения чата от %1$s</string>
+
+    <string name="common_request">Запросить</string>
+    <string name="common_edit">Изменить</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Настройки контакта</string>
+    <string name="peer_section_roles">Роли обмена местоположением</string>
+    <string name="peer_send_on">%1$s видит ваше местоположение</string>
+    <string name="peer_send_off">Вы не делитесь местоположением с %1$s</string>
+    <string name="peer_receive_title">Получать местоположение %1$s</string>
+    <string name="peer_receive_on">Вы видите местоположение %1$s</string>
+    <string name="peer_receive_off">У вас нет доступа к местоположению %1$s</string>
+    <string name="peer_section_privacy">Приватность и обмен</string>
+    <string name="peer_pause_sharing">Приостановить обмен</string>
+    <string name="peer_pause_sub">Временно не отправлять местоположение %1$s</string>
+    <string name="peer_precision">Точность местоположения</string>
+    <string name="peer_precision_exact_sub">Точные GPS-координаты</string>
+    <string name="peer_precision_suburb_sub">Приблизительное местоположение (на уровне района)</string>
+    <string name="peer_always_sharing">Обмен всегда включён</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d активное правило обмена</item>
+        <item quantity="few">%1$d активных правила обмена</item>
+        <item quantity="many">%1$d активных правил обмена</item>
+        <item quantity="other">%1$d активного правила обмена</item>
+    </plurals>
+    <string name="peer_section_alerts">Оповещения и наблюдение</string>
+    <string name="peer_sos_contact">Контакт для SOS</string>
+    <string name="peer_sos_sub">Получать ваши экстренные оповещения, даже если обмен приостановлен</string>
+    <string name="peer_missed_alert">Оповещение о пропаже сигнала</string>
+    <string name="peer_missed_on">Уведомлять, если %1$s перестанет сообщать местоположение</string>
+    <string name="peer_requires_access">Требуется доступ к местоположению %1$s</string>
+    <string name="peer_proximity_alert">Оповещение о близости</string>
+    <string name="peer_proximity_sub">Уведомлять, когда %1$s поблизости</string>
+    <string name="peer_alert_radius">Радиус оповещения</string>
+    <string name="peer_alert_schedule">Расписание оповещений</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d активное правило</item>
+        <item quantity="few">%1$d активных правила</item>
+        <item quantity="many">%1$d активных правил</item>
+        <item quantity="other">%1$d активного правила</item>
+    </plurals>
+    <string name="peer_geofences_sub">Настройте зоны прибытия и убытия для %1$s</string>
+    <string name="peer_supervise">Наблюдать за этим устройством</string>
+    <string name="peer_supervise_on">Вы получаете и одобряете запросы на разблокировку от %1$s</string>
+    <string name="peer_supervise_off">Разрешить %1$s отправлять вам запросы на разблокировку контролируемого режима</string>
+    <string name="peer_messaging_sub">Включить или выключить сообщения чата от %1$s</string>
+    <string name="peer_section_history">История перемещений</string>
+    <string name="peer_location_history">История местоположений</string>
+    <string name="peer_location_history_sub">История перемещений и отчёт на карте для %1$s</string>
+    <string name="peer_section_retention">Хранение данных на удалённом устройстве</string>
+    <string name="peer_retention_location_sub">Как долго %1$s хранит вашу историю местоположений</string>
+    <string name="peer_purge_location">Стереть все данные о местоположении у %1$s</string>
+    <string name="peer_retention_messages_sub">Как долго %1$s хранит отправленные вами сообщения</string>
+    <string name="peer_purge_messages">Стереть все сообщения у %1$s</string>
+    <string name="peer_precision_exact">Точный GPS</string>
+    <string name="peer_precision_exact_desc">Точные координаты</string>
+    <string name="peer_precision_suburb">Район (~1 км)</string>
+    <string name="peer_precision_suburb_desc">Только на уровне района</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Удалить %1$d беседу?</item>
+        <item quantity="few">Удалить %1$d беседы?</item>
+        <item quantity="many">Удалить %1$d бесед?</item>
+        <item quantity="other">Удалить %1$d беседы?</item>
+    </plurals>
+    <string name="conv_delete_locally">Удалить локально</string>
+    <string name="conv_delete_locally_sub">Удаляет беседу только с вашего устройства.</string>
+    <string name="conv_delete_both">Удалить локально и у контакта</string>
+    <string name="conv_bulk_delete_both_sub">Удаляет беседу локально и у вашего контакта.</string>
+    <string name="conv_delete_both_sub">Удаляет беседу локально и отправляет на устройство контакта запрос на её удаление.</string>
+    <string name="conv_cd_exit_selection">Выйти из режима выбора</string>
+    <string name="conv_cd_select_all">Выбрать все</string>
+    <string name="conv_cd_new_message">Новое сообщение</string>
+    <string name="conv_sort_date">Дата</string>
+    <string name="conv_sort_unread">Непрочитанные</string>
+    <string name="conv_search_placeholder">Поиск бесед…</string>
+    <string name="conv_tab_chats">Чаты</string>
+    <string name="conv_tab_archived">Архив</string>
+    <string name="conv_mark_read">Прочитано</string>
+    <string name="conv_archive">В архив</string>
+    <string name="conv_unarchive">Из архива</string>
+    <string name="conv_empty_no_results">Ничего не найдено по запросу «%1$s»</string>
+    <string name="conv_empty_no_results_sub">Попробуйте другой запрос</string>
+    <string name="conv_empty_archived_title">Нет архивных чатов</string>
+    <string name="conv_empty_archived_sub">Архивируйте чаты, чтобы навести порядок во входящих</string>
+    <string name="conv_empty_title">Сообщений пока нет</string>
+    <string name="conv_empty_sub">Откройте карту и нажмите на человека,\nчтобы начать беседу</string>
+    <string name="conv_delete_title">Удалить беседу?</string>
+    <string name="conv_delete_message">Как удалить эту беседу с %1$s?</string>
+    <string name="conv_messages_blocked">Сообщения заблокированы</string>
+    <string name="conv_preview_mine">Вы: %1$s</string>
+    <string name="conv_new_message_title">Новое сообщение</string>
+    <string name="conv_picker_empty">Пока нет контактов. Отсканируйте QR-код, чтобы добавить контакт.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Очистить историю чата?</string>
+    <string name="chat_clear_message">Как очистить эту беседу с %1$s?</string>
+    <string name="chat_clear_locally">Очистить локально</string>
+    <string name="chat_clear_both">Очистить локально и у контакта</string>
+    <string name="chat_clear_both_sub">Очищает чат локально и отправляет %1$s запрос на удаление отправленных вами сообщений.</string>
+    <string name="chat_cd_options">Параметры</string>
+    <string name="chat_clear_history_menu">Очистить историю чата</string>
+    <string name="chat_typing">%1$s печатает…</string>
+    <string name="chat_blocked_banner">Вы заблокировали сообщения от %1$s. Разблокировать можно в разделе «Контакты».</string>
+    <string name="chat_delete_msg_title">Удалить сообщение?</string>
+    <string name="chat_delete_msg_message">Как удалить это сообщение?</string>
+    <string name="chat_delete_from_contact">Удалить у контакта</string>
+    <string name="chat_delete_from_contact_sub">Удаляет сообщение с устройства контакта.</string>
+    <string name="chat_delete_both_sub">Удаляет сообщение локально и автоматически стирает его с устройства контакта.</string>
+    <string name="chat_cd_share_location">Поделиться местоположением</string>
+    <string name="chat_input_placeholder">Сообщение…</string>
+    <string name="chat_cd_send">Отправить</string>
+
+    <string name="common_close">Закрыть</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Включить SOS?</string>
+    <string name="map_sos_deactivate_title">Выключить SOS?</string>
+    <string name="map_sos_activate_msg">Ваше местоположение будет передаваться каждые 15 секунд выбранным SOS-контактам до отключения.</string>
+    <string name="map_sos_deactivate_msg">Приоритетная передача местоположения экстренным контактам будет остановлена.</string>
+    <string name="map_activate">Включить</string>
+    <string name="map_deactivate">Выключить</string>
+    <string name="map_cd_style">Стиль карты</string>
+    <string name="map_cd_show_geofences">Показать геозоны</string>
+    <string name="map_cd_hide_geofences">Скрыть геозоны</string>
+    <string name="map_cd_follow">Следовать за мной</string>
+    <string name="map_cd_friends">Друзья</string>
+    <string name="map_no_friends">Пока никто не отслеживается</string>
+    <string name="map_you">Вы</string>
+    <string name="map_cd_go_my_location">К моему местоположению</string>
+    <string name="map_sos_active">⚠ SOS АКТИВЕН</string>
+    <string name="map_away">Далеко</string>
+    <string name="map_no_location_yet">Местоположения пока нет</string>
+    <string name="map_cd_go_location">К местоположению</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ВКЛ</string>
+    <string name="map_overdue">Просрочено — давно нет обновлений</string>
+    <string name="map_stat_last_seen">Последний сигнал</string>
+    <string name="map_stat_battery">Батарея</string>
+    <string name="map_stat_accuracy">Точность</string>
+    <string name="map_stat_motion">Движение</string>
+    <string name="map_stat_speed">Скорость</string>
+    <string name="map_stat_elevation">Высота</string>
+
+    <string name="common_ok">ОК</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">История: %1$s</string>
+    <string name="history_select_person">Выбрать человека</string>
+    <string name="history_person_label">Человек</string>
+    <string name="history_cd_prev_day">Предыдущий день</string>
+    <string name="history_cd_next_day">Следующий день</string>
+    <string name="history_time_filter">Фильтр по времени:</string>
+    <string name="history_cd_reset_time">Сбросить время</string>
+    <string name="history_tab_list">Список</string>
+    <string name="history_empty_title">За этот день истории нет</string>
+    <string name="history_empty_sub">Выберите другую дату или проверьте подключение.</string>
+    <string name="history_start_time">Время начала</string>
+    <string name="history_end_time">Время окончания</string>
+    <string name="history_no_data_title">Нет данных о местоположении</string>
+    <string name="history_no_data_sub">За этот день или период нет записанных точек.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Записана %1$d точка</item>
+        <item quantity="few">Записаны %1$d точки</item>
+        <item quantity="many">Записано %1$d точек</item>
+        <item quantity="other">Записано %1$d точки</item>
+    </plurals>
+    <string name="history_cd_dismiss">Закрыть</string>
+    <string name="history_accuracy_label">Точность ±%1$s</string>
+    <string name="history_emergency_sos">Экстренный сигнал SOS</string>
+    <string name="history_detail_location">Местоположение</string>
+    <string name="history_detail_coordinates">Координаты</string>
+    <string name="history_within">в пределах ±%1$s</string>
+    <string name="history_detail_movement">Движение</string>
+    <string name="history_movement_desc">%1$s %2$s, курс %3$s</string>
+
+    <string name="common_create">Создать</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Добавить геозону</string>
+    <string name="geo_cd_assign">Назначить геозону</string>
+    <string name="geo_unknown">Неизвестно</string>
+    <string name="geo_empty_title">Нет геозон</string>
+    <string name="geo_empty_sub">Нажмите +, чтобы создать геозону, а затем назначьте ей контакты в их настройках обмена.</string>
+    <string name="geo_delete_title">Удалить геозону?</string>
+    <string name="geo_delete_simple">Удалить «%1$s»?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">«%1$s» назначена %2$d контакту. При удалении эти назначения тоже будут удалены.</item>
+        <item quantity="few">«%1$s» назначена %2$d контактам. При удалении эти назначения тоже будут удалены.</item>
+        <item quantity="many">«%1$s» назначена %2$d контактам. При удалении эти назначения тоже будут удалены.</item>
+        <item quantity="other">«%1$s» назначена %2$d контактам. При удалении эти назначения тоже будут удалены.</item>
+    </plurals>
+    <string name="geo_for_contact">Геозоны для %1$s</string>
+    <string name="geo_empty_contact_title">Нет геозон для контакта</string>
+    <string name="geo_empty_contact_sub">Нажмите +, чтобы назначить геозону и выбрать, когда оповещать: при входе, выходе или в обоих случаях.</string>
+    <string name="geo_no_areas_title">Геозон пока нет</string>
+    <string name="geo_no_areas_msg">Сначала создайте геозону на экране «Геозоны», затем назначьте её здесь.</string>
+    <string name="geo_radius_label">Радиус %1$s</string>
+    <string name="geo_contacts_label">Контакты: %1$s</string>
+    <string name="geo_no_contacts_assigned">Контакты не назначены</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d правило</item>
+        <item quantity="few">%1$d правила</item>
+        <item quantity="many">%1$d правил</item>
+        <item quantity="other">%1$d правила</item>
+    </plurals>
+    <string name="geo_trigger_enter">Вход</string>
+    <string name="geo_trigger_exit">Выход</string>
+    <string name="geo_trigger_both">Оба</string>
+    <string name="geo_edit_title">Изменить геозону</string>
+    <string name="geo_new_title">Новая геозона</string>
+    <string name="geo_cd_my_location">Моё местоположение</string>
+    <string name="geo_cd_radius_increase">Увеличить радиус</string>
+    <string name="geo_cd_radius_decrease">Уменьшить радиус</string>
+    <string name="geo_hint_tap">Нажмите или удерживайте карту, чтобы разместить</string>
+    <string name="geo_hint_move">Масштаб — щипком • Удерживайте или перетащите метку, чтобы переместить</string>
+    <string name="geo_basic_info">Основные сведения</string>
+    <string name="geo_search_title">Поиск по адресу</string>
+    <string name="geo_search_label">Адрес или место</string>
+    <string name="geo_search_placeholder">напр. ул. Главная 10, Спрингфилд</string>
+    <string name="geo_search_no_results">Подходящий адрес не найден</string>
+    <string name="geo_cd_search">Поиск</string>
+    <string name="geo_name_placeholder">напр. Дом, Работа</string>
+    <string name="geo_name_required">Укажите название</string>
+    <string name="geo_latitude">Широта</string>
+    <string name="geo_longitude">Долгота</string>
+    <string name="geo_lat_range">От -90 до 90</string>
+    <string name="geo_lng_range">От -180 до 180</string>
+    <string name="geo_radius">Радиус</string>
+    <string name="geo_radius_range">Введите от %1$d до %2$d м</string>
+    <string name="geo_edit_assignment">Изменить назначение</string>
+    <string name="geo_assign_title">Назначить геозону</string>
+    <string name="geo_select_area">Выберите геозону</string>
+    <string name="geo_trigger_title">Оповещать при</string>
+    <string name="geo_add_rule">Добавить правило</string>
+    <string name="geo_alerts_all_times">Оповещения активны всегда. Добавьте правило, чтобы ограничить время их отправки.</string>
+    <string name="geo_assign_action">Назначить</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Оповещения о близости</string>
+    <string name="prox_empty_title">Никто не отслеживается</string>
+    <string name="prox_empty_sub">Отсканируйте чей-нибудь QR-код на вкладке «Сканировать»,\nчтобы начать отслеживать местоположение</string>
+    <string name="prox_intro">Получайте уведомления, когда отслеживаемый человек оказывается ближе выбранного расстояния.</string>
+    <string name="prox_alert_within">Оповещать в пределах %1$s</string>
+    <string name="prox_alerts_off">Оповещения выключены</string>
+    <string name="prox_alert_radius">Радиус оповещения</string>
+    <string name="prox_edit_schedule">Изменить расписание</string>
+    <string name="prox_rules">Правила</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Расписание для %1$s</string>
+    <string name="schedule_cd_add_rule">Добавить правило</string>
+    <string name="schedule_empty_title">Нет правил расписания</string>
+    <string name="schedule_empty_global">Местоположение передаётся всегда. Добавьте правило, чтобы ограничить время передачи.</string>
+    <string name="schedule_empty_peer">Местоположение всегда передаётся %1$s. Добавьте правило, чтобы ограничить время.</string>
+    <string name="schedule_active_hint">Активно, когда любое правило совпадает с текущим временем. Пусто = всегда включено.</string>
+    <string name="schedule_all_day">Весь день</string>
+    <string name="schedule_plus_one_day"> (+1 день)</string>
+    <string name="schedule_rule_number">Правило %1$d</string>
+    <string name="schedule_cd_delete_rule">Удалить правило</string>
+    <string name="schedule_edit_rule">Изменить правило</string>
+    <string name="schedule_label_optional">Метка (необязательно)</string>
+    <string name="schedule_label_placeholder">напр. Рабочие часы, Выходные</string>
+    <string name="schedule_active_days">Активные дни</string>
+    <string name="schedule_time_window">Интервал времени</string>
+    <string name="schedule_start">Начало</string>
+    <string name="schedule_end">Конец</string>
+    <string name="schedule_overnight">Через ночь: активно с %1$s до %2$s следующего дня</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Устройство под наблюдением</string>
+    <string name="gate_message">Для доступа к настройкам требуется одобрение супервизора.</string>
+    <string name="gate_request_access">Запросить доступ</string>
+    <string name="gate_waiting">Ожидание одобрения супервизора…</string>
+    <string name="gate_denied">Супервизор отклонил доступ.</string>
+    <string name="gate_timed_out">Время запроса истекло. Супервизор не ответил.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Бессрочно</string>
+    <string name="retention_keep_for">Хранить: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дня</item>
+        <item quantity="many">%1$d дней</item>
+        <item quantity="other">%1$d дня</item>
+    </plurals>
+
+    <string name="common_select">Выбрать</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Выбор заданного места</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Выберите вкладки нижней панели и их порядок. Карта включена всегда.</string>
+    <string name="customize_cd_move_up">Вверх</string>
+    <string name="customize_cd_move_down">Вниз</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Версия %1$s (сборка %2$d)</string>
+    <string name="about_tagline">Приватный обмен местоположением с теми, кому вы доверяете. Без учётных записей, без облака, без слежки с нашей стороны.</string>
+    <string name="about_relay_connections">Подключения к ретрансляторам</string>
+    <string name="about_connected">Подключено</string>
+    <string name="about_disconnected">Отключено</string>
+    <string name="about_open_source">Библиотеки с открытым кодом</string>
+    <string name="about_lib_osmdroid_desc">Отрисовка карт на основе OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket-транспорт для ретрансляторов Nostr</string>
+    <string name="about_lib_compose_desc">Фреймворк интерфейса</string>
+    <string name="about_lib_hilt_desc">Внедрение зависимостей</string>
+    <string name="about_lib_room_desc">Локальная база данных</string>
+    <string name="about_map_attribution">Данные карт © участники OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Принять</string>
+    <string name="notif_someone">Кто-то</string>
+    <string name="notif_sos_title">SOS от %1$s!</string>
+    <string name="notif_sos_text">%1$s включил(а) SOS в точке (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s просит вас стать супервизором</string>
+    <string name="notif_supervisor_request_text">Примите, чтобы разрешить запросы на одобрение разблокировки с этого устройства</string>
+    <string name="notif_supervisor_request_big">Примите, чтобы %1$s мог(ла) отправлять вам запросы на одобрение разблокировки в контролируемом режиме.</string>
+    <string name="notif_supervised_active_title">Контролируемый режим активен</string>
+    <string name="notif_supervised_active_text">Супервизор подтвердил — контролируемый режим настроен</string>
+    <string name="notif_supervised_declined_title">Контролируемый режим отклонён</string>
+    <string name="notif_supervised_declined_text">Супервизор отклонил запрос — контролируемый режим выключен</string>
+    <string name="notif_tracking_alert_title">Оповещение об отслеживании</string>
+    <string name="notif_tracking_proximity">%1$s получил(а) оповещение о вашей близости</string>
+    <string name="notif_tracking_geofence">%1$s получил(а) оповещение о входе/выходе из зоны: %2$s</string>
+    <string name="notif_tracking_generic">%1$s следит за вашим местоположением</string>
+    <string name="notif_track_update_title">Обновление обмена от %1$s</string>
+    <string name="notif_track_new_title">Новый контакт: %1$s</string>
+    <string name="notif_role_send_receive">Отправка и приём местоположения</string>
+    <string name="notif_role_send">Отправка местоположения</string>
+    <string name="notif_role_receive">Приём местоположения</string>
+    <string name="notif_role_none">Без обмена местоположением</string>
+    <string name="notif_track_requesting">%1$s запрашивает: %2$s</string>
+    <string name="notif_track_update_body">%1$s хочет изменить условия обмена местоположением.</string>
+    <string name="notif_track_new_body">%1$s добавил(а) вас в контакты и хочет связаться.</string>
+    <string name="notif_contact_connected_title">Контакт подключён</string>
+    <string name="notif_contact_connected_text">%1$s теперь связан(а) с вами.</string>
+    <string name="notif_request_declined_title">Запрос отклонён</string>
+    <string name="notif_request_declined_text">%1$s отклонил(а) ваш запрос на обмен местоположением.</string>
+    <string name="notif_message_person">Написать %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s вошёл(ла) в %2$s</string>
+    <string name="notif_geofence_left_title">%1$s покинул(а) %2$s</string>
+    <string name="notif_geofence_subtitle">в %1$s · радиус %2$s</string>
+    <string name="notif_person_nearby">%1$s поблизости</string>
+    <string name="notif_distance_from_you">%1$s от вас</string>
+    <string name="notif_missed_title">Нет обновлений от %1$s</string>
+    <string name="notif_missed_text">Последний сигнал %1$s мин назад возле (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS АКТИВЕН!</string>
+    <string name="notif_sos_active_text">Экстренное оповещение передаётся SOS-контактам</string>
+    <string name="notif_messages_group_title">Сообщения LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Запрос на контакт от %1$s отклонён</string>
+    <string name="toast_now_supervising">Вы теперь наблюдаете за устройством %1$s</string>
+    <string name="toast_declined_supervision">Запрос на наблюдение от %1$s отклонён</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Только что</string>
+    <string name="time_minutes_ago">%1$d мин назад</string>
+    <string name="fallback_me">Я</string>
+    <string name="fallback_unknown">Неизвестно</string>
+    <string name="geo_unassigned">Не назначено</string>
+    <string name="days_every_day">Каждый день</string>
+    <string name="days_weekdays">Будни</string>
+    <string name="days_weekends">Выходные</string>
+    <string name="days_none">Нет дней</string>
+    <string name="chat_my_location_message">Моё текущее местоположение: %1$s</string>
+    <string name="scan_error_bad_pubkey">Недействительное приглашение: неверный открытый ключ</string>
+    <string name="scan_error_key_mismatch">Недействительное приглашение: ключи не совпадают</string>
+    <string name="scan_error_unknown">Неизвестная ошибка</string>
+    <string name="scan_error_invalid_link">Недействительная ссылка-приглашение</string>
+    <string name="scan_fallback_contact">этот контакт</string>
+    <string name="backup_saved">Резервная копия сохранена: %1$s</string>
+    <string name="backup_saved_encrypted">Резервная копия сохранена (зашифрована): %1$s</string>
+    <string name="backup_failed">Резервное копирование не удалось: %1$s</string>
+    <string name="backup_could_not_read_file">Не удалось прочитать файл</string>
+    <string name="backup_could_not_write_file">Не удалось записать файл</string>
+    <string name="backup_could_not_read">Не удалось прочитать резервную копию: %1$s</string>
+    <string name="backup_incorrect_password">Неверный пароль</string>
+    <string name="restore_result_restored">Восстановлено: %1$s</string>
+    <string name="restore_result_failed">Не удалось: %1$s</string>
+    <string name="restore_nothing">Нечего восстанавливать</string>
+    <string name="restore_failed">Восстановление не удалось: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d контакт</item>
+        <item quantity="few">%1$d контакта</item>
+        <item quantity="many">%1$d контактов</item>
+        <item quantity="other">%1$d контакта</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d геозона</item>
+        <item quantity="few">%1$d геозоны</item>
+        <item quantity="many">%1$d геозон</item>
+        <item quantity="other">%1$d геозоны</item>
+    </plurals>
+    <string name="peer_role_change_sent">Запрос на смену роли отправлен %1$s</string>
+    <string name="peer_not_found">Пир не найден</string>
+    <string name="peer_purge_location_sent">Команда удаления ВСЕХ местоположений отправлена %1$s</string>
+    <string name="peer_purge_messages_sent">Команда удаления ВСЕХ сообщений отправлена %1$s</string>
+    <string name="onboarding_error_key_length">Недействительный ключ — должно быть 64 шестнадцатеричных символа.</string>
+    <string name="onboarding_error_key_range">Недействительный закрытый ключ — вне диапазона кривой.</string>
+    <string name="onboarding_error_hex">Неверный шестнадцатеричный формат.</string>
+    <string name="onboarding_error_import_failed">Не удалось импортировать ключ: %1$s</string>
 </resources>

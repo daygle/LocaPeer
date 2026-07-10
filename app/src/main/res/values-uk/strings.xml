@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Канали сповіщень та фонова служба ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Трансляція місцезнаходження</string>
     <string name="channel_desc_heartbeat">Транслює ваше місцезнаходження схваленим контактам</string>
     <string name="channel_name_alerts">Сповіщення</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer працює</string>
     <string name="notification_heartbeat_text">Ви ділитеся місцезнаходженням з іншими</string>
 
-    <!-- ── Спільні дії ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Зберегти</string>
     <string name="common_cancel">Скасувати</string>
     <string name="common_done">Готово</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Схвалити</string>
     <string name="common_deny">Відхилити</string>
 
-    <!-- ── Вкладки навігації ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Повідомлення</string>
     <string name="tab_history">Історія</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Налаштування</string>
 
-    <!-- ── Стани руху / активності ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Нерухомо</string>
     <string name="motion_walking">Ходьба</string>
     <string name="motion_running">Біг</string>
     <string name="motion_cycling">Велосипед</string>
     <string name="motion_driving">Водіння</string>
 
-    <!-- ── Налаштування ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Закритий ключ</string>
+    <string name="backup_section_contacts">Контакти</string>
+    <string name="backup_section_geofences">Геозони</string>
+    <string name="backup_section_settings">Налаштування</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Запит на доступ</string>
+    <string name="supervision_request_message">«%1$s» просить доступ до своїх налаштувань. Дозволити?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Налаштування</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Локація та приватність</string>
     <string name="settings_section_security">Безпека</string>
     <string name="settings_section_map">Карта</string>
@@ -54,15 +66,714 @@
     <string name="settings_section_backup_keys">Резервне копіювання та ключі</string>
     <string name="settings_section_about">Про додаток</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Змінити ім’я</string>
     <string name="settings_my_qr">Мій QR</string>
     <string name="settings_no_name_set">Ім’я не встановлено</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Ділитися місцезнаходженням</string>
+    <string name="settings_broadcasting">Передається вашим контактам</string>
+    <string name="settings_not_broadcasting">Передавання вимкнено</string>
+    <string name="settings_sharing_schedule">Розклад передавання</string>
+    <string name="settings_always_on">Завжди ввімкнено</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d правило</item>
+        <item quantity="few">%1$d правила</item>
+        <item quantity="many">%1$d правил</item>
+        <item quantity="other">%1$d правила</item>
+    </plurals>
+    <string name="settings_geofences">Геозони</string>
+    <string name="settings_geofences_subtitle">Керування спільними геозонами</string>
+    <string name="settings_notify_when_tracked">Сповіщати про стеження</string>
+    <string name="settings_notify_when_tracked_subtitle">Отримувати сповіщення, коли в контакту спрацьовує оповіщення про наближення або геозону, повʼязане з вами.</string>
+    <string name="settings_my_location_history">Історія місцезнаходжень</string>
+    <string name="settings_my_location_history_subtitle">Перегляд власної хронології переміщень</string>
+    <string name="settings_lookup_addresses">Визначати адреси</string>
+    <string name="settings_lookup_addresses_subtitle">Показувати поштові адреси для точок історії та позначок на мапі, а також шукати за адресою під час створення геозон. Координати й пошукові запити надсилаються до служби геокодування вашого пристрою (зазвичай Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Нагляд активний</string>
+    <string name="settings_supervision_active_subtitle">Для налаштувань потрібне схвалення наглядача</string>
+    <string name="settings_disable_supervised">Вимкнути контрольований режим</string>
+    <string name="settings_supervised_mode">Контрольований режим</string>
+    <string name="settings_supervised_mode_subtitle">Вимагати схвалення наглядача для доступу до налаштувань</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Початкова точка</string>
+    <string name="settings_map_current_location">Поточне місцезнаходження</string>
+    <string name="settings_map_all_contacts">Усі контакти</string>
+    <string name="settings_map_fixed_location">Задане місце</string>
+    <string name="settings_map_last_position">Остання позиція</string>
+    <string name="settings_map_starting_point_title">Початкова точка мапи</string>
+    <string name="settings_no_location_set">Місце не задано</string>
+    <string name="settings_pick_location_on_map">Вибрати місце на мапі</string>
+    <string name="settings_default_zoom_level">Масштаб за замовчуванням</string>
+    <string name="settings_map_pin_colour">Колір позначки на мапі</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Частота оновлень</string>
+    <string name="settings_update_cadence_subtitle">Налаштуйте, як часто передається ваше місцезнаходження</string>
+    <string name="settings_update_cadence_dialog_message">Керуйте частотою оновлення місцезнаходження залежно від вашої активності. Часті оновлення споживають більше заряду батареї.</string>
+    <string name="settings_update_cadence_reset">Скинути до типових</string>
+    <string name="settings_min_distance_filtering">Мінімальна відстань</string>
+    <string name="settings_min_distance_filtering_subtitle">Показувати лише точки, віддалені від попередньої щонайменше на цю відстань.</string>
+    <string name="settings_discard_low_accuracy">Відкидати неточні координати</string>
+    <string name="settings_discard_low_accuracy_subtitle">Не передавати й не записувати власні координати з радіусом похибки більшим за це значення. SOS передається завжди.</string>
+    <string name="settings_hide_low_accuracy">Приховувати неточні точки</string>
+    <string name="settings_hide_low_accuracy_subtitle">Приховувати точки історії з радіусом похибки більшим за це значення. Дані не видаляються.</string>
+    <string name="settings_low_battery" formatted="false">Низький заряд (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d хв</string>
+    <string name="settings_motion_detection">Розпізнавання руху</string>
+    <string name="settings_motion_detection_on">Увімкнено — уточнює тип руху (ходьба, керування авто) в історії</string>
+    <string name="settings_motion_detection_off">Вимкнено — надайте доступ до фізичної активності для точніших міток руху</string>
+    <string name="settings_enable_motion_title">Увімкнути розпізнавання руху</string>
+    <string name="settings_enable_motion_message">Доступ до фізичної активності допомагає LocaPeer точніше розрізняти ходьбу, керування авто та нерухомість у вашій історії. Зараз він вимкнений — його можна знову ввімкнути в системних налаштуваннях.</string>
+    <string name="settings_open_settings">Відкрити налаштування</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Одиниці швидкості</string>
+    <string name="settings_speed_imperial">Імперські (милі/год)</string>
+    <string name="settings_speed_metric">Метричні (км/год)</string>
+    <string name="settings_elevation_units">Одиниці висоти</string>
+    <string name="settings_elevation_imperial">Імперські (фути)</string>
+    <string name="settings_elevation_metric">Метричні (метри)</string>
+    <string name="settings_distance_units">Одиниці відстані</string>
+    <string name="settings_distance_imperial">Імперські (фути/милі)</string>
+    <string name="settings_distance_metric">Метричні (м/км)</string>
+    <string name="settings_time_format">Формат часу</string>
+    <string name="settings_time_24h">24-годинний (13:30)</string>
+    <string name="settings_time_12h">12-годинний (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Дані про місцезнаходження</string>
+    <string name="settings_retention_location_subtitle">Як довго зберігати дані про місцезнаходження контактів на цьому пристрої</string>
+    <string name="settings_clear_all_location">Очистити всі дані про місцезнаходження</string>
+    <string name="settings_retention_messages">Повідомлення</string>
+    <string name="settings_retention_messages_subtitle">Як довго зберігати отримані повідомлення на цьому пристрої</string>
+    <string name="settings_clear_all_messages">Очистити всі повідомлення</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Налаштувати навігацію</string>
+    <string name="settings_customize_nav_subtitle">Вибір і порядок нижніх вкладок</string>
+    <string name="settings_start_page">Початкова сторінка</string>
     <string name="settings_language">Мова</string>
     <string name="settings_language_title">Мова додатка</string>
     <string name="settings_language_system">Системна за замовчуванням</string>
 
-    <string name="common_ok">ОК</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Експорт резервної копії</string>
+    <string name="settings_export_backup_subtitle">Збережіть закритий ключ і контакти у файл. Тримайте цей файл у безпеці!</string>
+    <string name="settings_import_backup">Імпорт резервної копії</string>
+    <string name="settings_import_backup_subtitle">Відновлення з раніше експортованого файлу</string>
+    <string name="settings_view_private_key">Показати закритий ключ</string>
+    <string name="settings_view_private_key_subtitle">Показати ваш 64-символьний шістнадцятковий ключ</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Про LocaPeer</string>
+    <string name="settings_about_subtitle">Версія, стан ретрансляторів, відкритий код</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Змінити відображуване імʼя</string>
+    <string name="settings_display_name_label">Відображуване імʼя</string>
+    <string name="settings_my_invite_qr">Мій QR-код запрошення</string>
+    <string name="settings_invite_qr_subtitle">Інші можуть відсканувати його, щоб почати стежити за вами.</string>
+    <string name="settings_invite_qr_cd">QR-код запрошення</string>
+    <string name="settings_private_key_title">Закритий ключ</string>
+    <string name="settings_private_key_warning">Тримайте його в безпеці. Будь-хто з цим ключем може видати себе за вас.</string>
+    <string name="settings_clear_location_title">Очистити історію місцезнаходжень?</string>
+    <string name="settings_clear_location_message">Усі збережені точки місцезнаходження буде видалено безповоротно.</string>
+    <string name="settings_clear_messages_title">Очистити історію повідомлень?</string>
+    <string name="settings_clear_messages_message">Усі збережені повідомлення буде видалено безповоротно.</string>
+    <string name="settings_encrypted_backup_title">Зашифрована резервна копія</string>
+    <string name="settings_encrypted_backup_message">Ця резервна копія зашифрована. Введіть пароль, щоб продовжити.</string>
+    <string name="settings_select_restore_title">Виберіть дані для відновлення</string>
+    <string name="settings_select_export_title">Виберіть дані для експорту</string>
+    <string name="settings_export_password_hint">За бажанням задайте пароль для шифрування файлу резервної копії.</string>
+    <string name="settings_backup_password_optional">Пароль резервної копії (необовʼязково)</string>
+    <string name="settings_select_sections">Виберіть розділи для включення:</string>
+    <string name="settings_choose_file_location">Виберіть розташування файлу</string>
+    <string name="settings_not_in_backup">Немає в цій резервній копії</string>
+    <string name="settings_enable_supervised_title">Увімкнути контрольований режим</string>
+    <string name="settings_enable_supervised_message">Виберіть піра, який буде наглядачем. Доступ до налаштувань потребуватиме схвалення з його пристрою.</string>
+    <string name="settings_no_peers_found">Пірів не знайдено. Спершу додайте піра, відсканувавши його QR-код запрошення.</string>
+    <string name="settings_disable_supervised_title">Вимкнути контрольований режим?</string>
+    <string name="settings_disable_supervised_message">Налаштування стануть доступними без схвалення наглядача.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Прибрати</string>
+    <string name="common_name">Імʼя</string>
+    <string name="common_search">Пошук</string>
+    <string name="common_sort">Сортування</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Повідомлення</string>
+    <string name="cd_show_on_map">Показати на мапі</string>
+    <string name="cd_more_options">Більше</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">Вибрано: %1$d</item>
+        <item quantity="few">Вибрано: %1$d</item>
+        <item quantity="many">Вибрано: %1$d</item>
+        <item quantity="other">Вибрано: %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Скасувати вибір</string>
+    <string name="contacts_cd_select_all">Вибрати всі</string>
+    <string name="contacts_cd_deselect_all">Зняти вибір</string>
+    <string name="contacts_cd_qr_invite">QR / запрошення</string>
+    <string name="contacts_cd_pending_requests">Запити в очікуванні</string>
+    <string name="contacts_sort_last_seen">Остання активність</string>
+    <string name="contacts_search_placeholder">Пошук контактів…</string>
+    <string name="contacts_empty_title">Поки немає контактів</string>
+    <string name="contacts_empty_subtitle">Відскануйте QR-код, щоб звʼязатися з кимось і почати ділитися місцезнаходженням.</string>
+    <string name="contacts_scan_qr">Сканувати QR-код</string>
+    <string name="contacts_bulk_delete_messages">Видалити повідомлення</string>
+    <string name="contacts_bulk_delete_locations">Видалити місцезнаходження</string>
+    <string name="contacts_last_seen">Востаннє в мережі: %1$s</string>
+    <string name="contacts_no_location_yet">Даних про місцезнаходження поки немає</string>
+    <string name="contacts_view_sharing_settings">Налаштування обміну</string>
+    <string name="contacts_view_location_history">Історія місцезнаходжень</string>
+    <string name="contacts_rename_contact">Перейменувати контакт</string>
+    <string name="contacts_on_contact_device">На пристрої контакту</string>
+    <string name="contacts_delete_my_messages_title">Видалити мої повідомлення</string>
+    <string name="contacts_delete_locations_title">Видалити передані місцезнаходження</string>
+    <string name="contacts_remove_contact_title">Видалити контакт</string>
+    <string name="contacts_leave_title">Видалити контакт і дані</string>
+    <string name="contacts_rename_title">Перейменувати контакт</string>
+    <string name="contacts_remove_contact_body">Видалити %1$s з контактів? Історію його місцезнаходжень також буде видалено з цього пристрою.</string>
+    <string name="contacts_leave_body">Вас буде видалено з контактів %1$s, а всі ваші повідомлення й дані про місцезнаходження буде стерто з його пристрою. Ви також втратите доступ до його місцезнаходження.</string>
+    <string name="contacts_delete_my_messages_body">Усі надіслані вами повідомлення буде видалено з пристрою %1$s. Цю дію не можна скасувати.</string>
+    <string name="contacts_delete_locations_body">Усі дані про місцезнаходження, якими ви поділилися, буде видалено з пристрою %1$s. Цю дію не можна скасувати.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Видалити контакт</item>
+        <item quantity="few">Видалити %1$d контакти</item>
+        <item quantity="many">Видалити %1$d контактів</item>
+        <item quantity="other">Видалити %1$d контакту</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Видалити цей контакт? Історію його місцезнаходжень також буде видалено з цього пристрою.</item>
+        <item quantity="few">Видалити %1$d контакти? Історію їхніх місцезнаходжень також буде видалено з цього пристрою.</item>
+        <item quantity="many">Видалити %1$d контактів? Історію їхніх місцезнаходжень також буде видалено з цього пристрою.</item>
+        <item quantity="other">Видалити %1$d контакту? Історію їхніх місцезнаходжень також буде видалено з цього пристрою.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Видалити з пристрою цього контакту всі надіслані вами повідомлення? Цю дію не можна скасувати.</item>
+        <item quantity="few">Видалити з пристроїв %1$d контактів усі надіслані вами повідомлення? Цю дію не можна скасувати.</item>
+        <item quantity="many">Видалити з пристроїв %1$d контактів усі надіслані вами повідомлення? Цю дію не можна скасувати.</item>
+        <item quantity="other">Видалити з пристроїв %1$d контактів усі надіслані вами повідомлення? Цю дію не можна скасувати.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Видалити з пристрою цього контакту всю передану вами історію місцезнаходжень? Цю дію не можна скасувати.</item>
+        <item quantity="few">Видалити з пристроїв %1$d контактів усю передану вами історію місцезнаходжень? Цю дію не можна скасувати.</item>
+        <item quantity="many">Видалити з пристроїв %1$d контактів усю передану вами історію місцезнаходжень? Цю дію не можна скасувати.</item>
+        <item quantity="other">Видалити з пристроїв %1$d контактів усю передану вами історію місцезнаходжень? Цю дію не можна скасувати.</item>
+    </plurals>
+
+    <string name="common_continue">Продовжити</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Відновлення з резервної копії</string>
+    <string name="onboarding_restore_message">Вставте свій 64-символьний шістнадцятковий закритий ключ, щоб відновити особу та контакти.</string>
+    <string name="onboarding_private_key_hex">Закритий ключ (hex)</string>
+    <string name="onboarding_tagline">Приватний обмін місцезнаходженням із контактами.\nБез облікових записів. Без пропрієтарних серверів.</string>
+    <string name="onboarding_feature_e2e_title">Наскрізне шифрування</string>
+    <string name="onboarding_feature_e2e_subtitle">Ваше місцезнаходження шифрується на пристрої</string>
+    <string name="onboarding_feature_servers_title">Без пропрієтарних серверів</string>
+    <string name="onboarding_feature_servers_subtitle">Відкриті ретранслятори Nostr використовуються як захищений транспорт — ваші дані залишаються зашифрованими та приватними</string>
+    <string name="onboarding_feature_phone_title">Усе залишається на телефоні</string>
+    <string name="onboarding_feature_phone_subtitle">Повна історія місцезнаходжень зберігається лише на вашому пристрої. Вибраним контактам передається тільки поточна позиція</string>
+    <string name="onboarding_name_prompt">Як вас називатимуть ваші контакти?</string>
+    <string name="onboarding_name_placeholder">напр. Мама, Тато, Аліса…</string>
+    <string name="onboarding_get_started">Почати</string>
+    <string name="onboarding_restore_from_backup">Відновити з резервної копії</string>
+    <string name="onboarding_key_note">Закритий ключ створюється локально й ніколи не залишає цей пристрій.</string>
+    <string name="onboarding_permissions_title">Дозволи</string>
+    <string name="onboarding_permissions_desc">LocaPeer потребує доступу до місцезнаходження для передавання вашої позиції, до камери — для сканування кодів запрошень і до сповіщень — для фонового статусу. Доступ до фізичної активності необовʼязковий: він допомагає точніше визначати тип руху (ходьба, керування авто).</string>
+    <string name="onboarding_before_ask_title">Перш ніж запитати</string>
+    <string name="onboarding_before_ask_intro">Зараз зʼявиться кілька системних запитів:</string>
+    <string name="onboarding_before_ask_location">• Місцезнаходження — обовʼязково, щоб передавати вашу позицію.</string>
+    <string name="onboarding_before_ask_camera">• Камера — для сканування кодів запрошень.</string>
+    <string name="onboarding_before_ask_notifications">• Сповіщення — для фонового статусу.</string>
+    <string name="onboarding_before_ask_activity">• Фізична активність — необовʼязково. Допомагає LocaPeer точніше розрізняти ходьбу, керування авто та нерухомість. Можна пропустити й увімкнути пізніше в налаштуваннях.</string>
+    <string name="onboarding_grant_permissions">Надати дозволи</string>
+    <string name="onboarding_bg_location_title">Фонове місцезнаходження</string>
+    <string name="onboarding_bg_location_desc">Щоб ваші контакти отримували оновлення, коли застосунок закрито, виберіть на наступному екрані «Дозволити завжди».</string>
+    <string name="onboarding_bg_location_error">Фонове місцезнаходження необхідне для оновлень, коли застосунок закрито. Спробуйте ще раз і виберіть «Дозволити завжди».</string>
+    <string name="onboarding_configure_location">Налаштувати місцезнаходження</string>
+    <string name="onboarding_battery_title">Батарея</string>
+    <string name="onboarding_battery_desc">Android може зупиняти LocaPeer для економії заряду. Для надійних оновлень виключіть LocaPeer з оптимізації батареї.</string>
+    <string name="onboarding_disable_optimizations">Вимкнути оптимізацію</string>
+    <string name="onboarding_done_title">Готово!</string>
+    <string name="onboarding_done_desc">Ваша приватна мережа місцезнаходжень готова.</string>
+    <string name="onboarding_start_using">Почати користуватися LocaPeer</string>
+
+    <string name="common_try_again">Спробувати ще раз</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Сканувати запрошення</string>
+    <string name="scan_camera_needed">Для сканування QR-кодів потрібен дозвіл на камеру.</string>
+    <string name="scan_grant_permission">Надати дозвіл</string>
+    <string name="scan_add_contact_title">Додати контакт?</string>
+    <string name="scan_add_contact_message">Ви звʼяжетеся з %1$s і почнете ділитися місцезнаходженням одне з одним.</string>
+    <string name="scan_add_share">Додати й ділитися</string>
+    <string name="scan_request_sent_title">Запит надіслано!</string>
+    <string name="scan_request_sent_message">Запит надіслано %1$s. Ви будете звʼязані після його прийняття.</string>
+    <string name="scan_failed">Сканування не вдалося: %1$s</string>
+
     <string name="cd_back">Назад</string>
+    <string name="common_review">Переглянути</string>
+    <string name="common_decline">Відхилити</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Надсилання/отримання</string>
+    <string name="role_send">Надсилання</string>
+    <string name="role_receive">Отримання</string>
+    <string name="role_none">Без обміну</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Моє запрошення</string>
+    <string name="invite_tab_add_contact">Додати контакт</string>
+    <string name="invite_your_qr_title">Ваш QR-код</string>
+    <string name="invite_your_qr_subtitle">Дайте його відсканувати, щоб стежити за вашим місцезнаходженням</string>
+    <string name="invite_qr_cd">Ваш QR-код</string>
+    <string name="invite_qr_error">Помилка створення QR-коду</string>
+    <string name="invite_share_link">Поділитися посиланням-запрошенням</string>
+    <string name="invite_encryption_note">Ваше місцезнаходження буде зашифровано спеціально для пристрою того, хто сканує.</string>
+    <string name="invite_camera_required_title">Потрібен доступ до камери</string>
+    <string name="invite_camera_required_message">Надайте дозвіл на камеру, щоб відсканувати QR-код.</string>
+    <string name="invite_point_camera">Наведіть камеру на QR-код LocaPeer</string>
+    <string name="invite_paste_title">Або вставте посилання-запрошення</string>
+    <string name="invite_process_link">Обробити посилання</string>
+    <string name="invite_fallback_name">Контакт</string>
+    <string name="invite_success_message">Ви будете звʼязані з %1$s після прийняття запрошення.</string>
+    <string name="invite_confirm_add_title">Додати %1$s?</string>
+    <string name="invite_confirm_add_message">Додати до контактів і ділитися місцезнаходженням?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Немає запитів в очікуванні</string>
+    <string name="pending_requesting">Запитує: %1$s · %2$s</string>
+    <string name="pending_role_change">Запит на зміну ролі · %1$s</string>
+    <string name="pending_new_request">Новий запит на обмін · %1$s</string>
+
+    <string name="common_save_changes">Зберегти зміни</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Оновити налаштування обміну</string>
+    <string name="incoming_new_title">Новий запит у контакти</string>
+    <string name="incoming_update_subtitle">%1$s хоче змінити умови обміну. Перегляньте налаштування нижче.</string>
+    <string name="incoming_new_subtitle">%1$s додав(-ла) вас у контакти! Тепер ви можете вибрати, чим ділитися у відповідь.</string>
+    <string name="incoming_section_location">Місцезнаходження</string>
+    <string name="incoming_share_my_location">Ділитися моїм місцезнаходженням з %1$s</string>
+    <string name="incoming_share_my_location_sub">Цей контакт зможе бачити, де ви</string>
+    <string name="incoming_see_their_location">Бачити місцезнаходження %1$s</string>
+    <string name="incoming_see_their_location_sub">Ви зможете бачити, де цей контакт</string>
+    <string name="incoming_section_messaging">Повідомлення</string>
+    <string name="incoming_allow_messages">Дозволити повідомлення</string>
+    <string name="incoming_allow_messages_sub">Отримувати повідомлення чату від %1$s</string>
+
+    <string name="common_request">Запросити</string>
+    <string name="common_edit">Змінити</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Налаштування контакту</string>
+    <string name="peer_section_roles">Ролі обміну місцезнаходженням</string>
+    <string name="peer_send_on">%1$s бачить ваше місцезнаходження</string>
+    <string name="peer_send_off">Ви не ділитеся місцезнаходженням з %1$s</string>
+    <string name="peer_receive_title">Отримувати місцезнаходження %1$s</string>
+    <string name="peer_receive_on">Ви бачите місцезнаходження %1$s</string>
+    <string name="peer_receive_off">У вас немає доступу до місцезнаходження %1$s</string>
+    <string name="peer_section_privacy">Приватність і обмін</string>
+    <string name="peer_pause_sharing">Призупинити обмін</string>
+    <string name="peer_pause_sub">Тимчасово не надсилати місцезнаходження %1$s</string>
+    <string name="peer_precision">Точність місцезнаходження</string>
+    <string name="peer_precision_exact_sub">Точні GPS-координати</string>
+    <string name="peer_precision_suburb_sub">Приблизне місцезнаходження (на рівні району)</string>
+    <string name="peer_always_sharing">Обмін завжди ввімкнено</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d активне правило обміну</item>
+        <item quantity="few">%1$d активні правила обміну</item>
+        <item quantity="many">%1$d активних правил обміну</item>
+        <item quantity="other">%1$d активного правила обміну</item>
+    </plurals>
+    <string name="peer_section_alerts">Оповіщення та нагляд</string>
+    <string name="peer_sos_contact">Контакт для SOS</string>
+    <string name="peer_sos_sub">Отримувати ваші екстрені оповіщення, навіть якщо обмін призупинено</string>
+    <string name="peer_missed_alert">Оповіщення про зникнення сигналу</string>
+    <string name="peer_missed_on">Сповіщати, якщо %1$s перестане повідомляти місцезнаходження</string>
+    <string name="peer_requires_access">Потрібен доступ до місцезнаходження %1$s</string>
+    <string name="peer_proximity_alert">Оповіщення про наближення</string>
+    <string name="peer_proximity_sub">Сповіщати, коли %1$s поблизу</string>
+    <string name="peer_alert_radius">Радіус оповіщення</string>
+    <string name="peer_alert_schedule">Розклад оповіщень</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d активне правило</item>
+        <item quantity="few">%1$d активні правила</item>
+        <item quantity="many">%1$d активних правил</item>
+        <item quantity="other">%1$d активного правила</item>
+    </plurals>
+    <string name="peer_geofences_sub">Налаштуйте зони прибуття та відбуття для %1$s</string>
+    <string name="peer_supervise">Наглядати за цим пристроєм</string>
+    <string name="peer_supervise_on">Ви отримуєте та схвалюєте запити на розблокування від %1$s</string>
+    <string name="peer_supervise_off">Дозволити %1$s надсилати вам запити на розблокування контрольованого режиму</string>
+    <string name="peer_messaging_sub">Увімкнути або вимкнути повідомлення чату від %1$s</string>
+    <string name="peer_section_history">Історія переміщень</string>
+    <string name="peer_location_history">Історія місцезнаходжень</string>
+    <string name="peer_location_history_sub">Історія переміщень і звіт на мапі для %1$s</string>
+    <string name="peer_section_retention">Зберігання даних на віддаленому пристрої</string>
+    <string name="peer_retention_location_sub">Як довго %1$s зберігає вашу історію місцезнаходжень</string>
+    <string name="peer_purge_location">Стерти всі дані про місцезнаходження в %1$s</string>
+    <string name="peer_retention_messages_sub">Як довго %1$s зберігає надіслані вами повідомлення</string>
+    <string name="peer_purge_messages">Стерти всі повідомлення в %1$s</string>
+    <string name="peer_precision_exact">Точний GPS</string>
+    <string name="peer_precision_exact_desc">Точні координати</string>
+    <string name="peer_precision_suburb">Район (~1 км)</string>
+    <string name="peer_precision_suburb_desc">Лише на рівні району</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Видалити %1$d розмову?</item>
+        <item quantity="few">Видалити %1$d розмови?</item>
+        <item quantity="many">Видалити %1$d розмов?</item>
+        <item quantity="other">Видалити %1$d розмови?</item>
+    </plurals>
+    <string name="conv_delete_locally">Видалити локально</string>
+    <string name="conv_delete_locally_sub">Видаляє розмову лише з вашого пристрою.</string>
+    <string name="conv_delete_both">Видалити локально та в контакту</string>
+    <string name="conv_bulk_delete_both_sub">Видаляє розмову локально та у вашого контакту.</string>
+    <string name="conv_delete_both_sub">Видаляє розмову локально й надсилає на пристрій контакту запит на її видалення.</string>
+    <string name="conv_cd_exit_selection">Вийти з режиму вибору</string>
+    <string name="conv_cd_select_all">Вибрати всі</string>
+    <string name="conv_cd_new_message">Нове повідомлення</string>
+    <string name="conv_sort_date">Дата</string>
+    <string name="conv_sort_unread">Непрочитані</string>
+    <string name="conv_search_placeholder">Пошук розмов…</string>
+    <string name="conv_tab_chats">Чати</string>
+    <string name="conv_tab_archived">Архів</string>
+    <string name="conv_mark_read">Прочитано</string>
+    <string name="conv_archive">В архів</string>
+    <string name="conv_unarchive">З архіву</string>
+    <string name="conv_empty_no_results">Нічого не знайдено за запитом «%1$s»</string>
+    <string name="conv_empty_no_results_sub">Спробуйте інший запит</string>
+    <string name="conv_empty_archived_title">Немає архівних чатів</string>
+    <string name="conv_empty_archived_sub">Архівуйте чати, щоб навести лад у вхідних</string>
+    <string name="conv_empty_title">Повідомлень поки немає</string>
+    <string name="conv_empty_sub">Відкрийте мапу й натисніть на людину,\nщоб почати розмову</string>
+    <string name="conv_delete_title">Видалити розмову?</string>
+    <string name="conv_delete_message">Як видалити цю розмову з %1$s?</string>
+    <string name="conv_messages_blocked">Повідомлення заблоковано</string>
+    <string name="conv_preview_mine">Ви: %1$s</string>
+    <string name="conv_new_message_title">Нове повідомлення</string>
+    <string name="conv_picker_empty">Поки немає контактів. Відскануйте QR-код, щоб додати контакт.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Очистити історію чату?</string>
+    <string name="chat_clear_message">Як очистити цю розмову з %1$s?</string>
+    <string name="chat_clear_locally">Очистити локально</string>
+    <string name="chat_clear_both">Очистити локально та в контакту</string>
+    <string name="chat_clear_both_sub">Очищає чат локально й надсилає %1$s запит на видалення надісланих вами повідомлень.</string>
+    <string name="chat_cd_options">Параметри</string>
+    <string name="chat_clear_history_menu">Очистити історію чату</string>
+    <string name="chat_typing">%1$s пише…</string>
+    <string name="chat_blocked_banner">Ви заблокували повідомлення від %1$s. Розблокувати можна в розділі «Контакти».</string>
+    <string name="chat_delete_msg_title">Видалити повідомлення?</string>
+    <string name="chat_delete_msg_message">Як видалити це повідомлення?</string>
+    <string name="chat_delete_from_contact">Видалити в контакту</string>
+    <string name="chat_delete_from_contact_sub">Видаляє повідомлення з пристрою контакту.</string>
+    <string name="chat_delete_both_sub">Видаляє повідомлення локально й автоматично стирає його з пристрою контакту.</string>
+    <string name="chat_cd_share_location">Поділитися місцезнаходженням</string>
+    <string name="chat_input_placeholder">Повідомлення…</string>
+    <string name="chat_cd_send">Надіслати</string>
+
+    <string name="common_close">Закрити</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Увімкнути SOS?</string>
+    <string name="map_sos_deactivate_title">Вимкнути SOS?</string>
+    <string name="map_sos_activate_msg">Ваше місцезнаходження передаватиметься кожні 15 секунд вибраним SOS-контактам до вимкнення.</string>
+    <string name="map_sos_deactivate_msg">Пріоритетне передавання місцезнаходження екстреним контактам буде зупинено.</string>
+    <string name="map_activate">Увімкнути</string>
+    <string name="map_deactivate">Вимкнути</string>
+    <string name="map_cd_style">Стиль мапи</string>
+    <string name="map_cd_show_geofences">Показати геозони</string>
+    <string name="map_cd_hide_geofences">Сховати геозони</string>
+    <string name="map_cd_follow">Слідувати за мною</string>
+    <string name="map_cd_friends">Друзі</string>
+    <string name="map_no_friends">Поки ніхто не відстежується</string>
+    <string name="map_you">Ви</string>
+    <string name="map_cd_go_my_location">До мого місцезнаходження</string>
+    <string name="map_sos_active">⚠ SOS АКТИВНИЙ</string>
+    <string name="map_away">Далеко</string>
+    <string name="map_no_location_yet">Місцезнаходження поки немає</string>
+    <string name="map_cd_go_location">До місцезнаходження</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS УВІМК</string>
+    <string name="map_overdue">Прострочено — давно немає оновлень</string>
+    <string name="map_stat_last_seen">Останній сигнал</string>
+    <string name="map_stat_battery">Батарея</string>
+    <string name="map_stat_accuracy">Точність</string>
+    <string name="map_stat_motion">Рух</string>
+    <string name="map_stat_speed">Швидкість</string>
+    <string name="map_stat_elevation">Висота</string>
+
+    <string name="common_ok">ОК</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Історія: %1$s</string>
+    <string name="history_select_person">Вибрати людину</string>
+    <string name="history_person_label">Людина</string>
+    <string name="history_cd_prev_day">Попередній день</string>
+    <string name="history_cd_next_day">Наступний день</string>
+    <string name="history_time_filter">Фільтр за часом:</string>
+    <string name="history_cd_reset_time">Скинути час</string>
+    <string name="history_tab_list">Список</string>
+    <string name="history_empty_title">За цей день історії немає</string>
+    <string name="history_empty_sub">Виберіть іншу дату або перевірте підключення.</string>
+    <string name="history_start_time">Час початку</string>
+    <string name="history_end_time">Час завершення</string>
+    <string name="history_no_data_title">Немає даних про місцезнаходження</string>
+    <string name="history_no_data_sub">За цей день чи період немає записаних точок.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Записано %1$d точку</item>
+        <item quantity="few">Записано %1$d точки</item>
+        <item quantity="many">Записано %1$d точок</item>
+        <item quantity="other">Записано %1$d точки</item>
+    </plurals>
+    <string name="history_cd_dismiss">Закрити</string>
+    <string name="history_accuracy_label">Точність ±%1$s</string>
+    <string name="history_emergency_sos">Екстрений сигнал SOS</string>
+    <string name="history_detail_location">Місцезнаходження</string>
+    <string name="history_detail_coordinates">Координати</string>
+    <string name="history_within">у межах ±%1$s</string>
+    <string name="history_detail_movement">Рух</string>
+    <string name="history_movement_desc">%1$s %2$s, курс %3$s</string>
+
+    <string name="common_create">Створити</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Додати геозону</string>
+    <string name="geo_cd_assign">Призначити геозону</string>
+    <string name="geo_unknown">Невідомо</string>
+    <string name="geo_empty_title">Немає геозон</string>
+    <string name="geo_empty_sub">Натисніть +, щоб створити геозону, а потім призначте їй контакти в їхніх налаштуваннях обміну.</string>
+    <string name="geo_delete_title">Видалити геозону?</string>
+    <string name="geo_delete_simple">Видалити «%1$s»?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">«%1$s» призначено %2$d контакту. Після видалення ці призначення також зникнуть.</item>
+        <item quantity="few">«%1$s» призначено %2$d контактам. Після видалення ці призначення також зникнуть.</item>
+        <item quantity="many">«%1$s» призначено %2$d контактам. Після видалення ці призначення також зникнуть.</item>
+        <item quantity="other">«%1$s» призначено %2$d контактам. Після видалення ці призначення також зникнуть.</item>
+    </plurals>
+    <string name="geo_for_contact">Геозони для %1$s</string>
+    <string name="geo_empty_contact_title">Немає геозон для контакту</string>
+    <string name="geo_empty_contact_sub">Натисніть +, щоб призначити геозону й вибрати, коли сповіщати: під час прибуття, відбуття чи в обох випадках.</string>
+    <string name="geo_no_areas_title">Геозон поки немає</string>
+    <string name="geo_no_areas_msg">Спершу створіть геозону на екрані «Геозони», а потім призначте її тут.</string>
+    <string name="geo_radius_label">Радіус %1$s</string>
+    <string name="geo_contacts_label">Контакти: %1$s</string>
+    <string name="geo_no_contacts_assigned">Контакти не призначені</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d правило</item>
+        <item quantity="few">%1$d правила</item>
+        <item quantity="many">%1$d правил</item>
+        <item quantity="other">%1$d правила</item>
+    </plurals>
+    <string name="geo_trigger_enter">Вхід</string>
+    <string name="geo_trigger_exit">Вихід</string>
+    <string name="geo_trigger_both">Обидва</string>
+    <string name="geo_edit_title">Змінити геозону</string>
+    <string name="geo_new_title">Нова геозона</string>
+    <string name="geo_cd_my_location">Моє місцезнаходження</string>
+    <string name="geo_cd_radius_increase">Збільшити радіус</string>
+    <string name="geo_cd_radius_decrease">Зменшити радіус</string>
+    <string name="geo_hint_tap">Натисніть або утримуйте мапу, щоб розмістити</string>
+    <string name="geo_hint_move">Масштаб — щипком • Утримуйте або перетягніть позначку, щоб перемістити</string>
+    <string name="geo_basic_info">Основні відомості</string>
+    <string name="geo_search_title">Пошук за адресою</string>
+    <string name="geo_search_label">Адреса або місце</string>
+    <string name="geo_search_placeholder">напр. вул. Головна 10, Спрінгфілд</string>
+    <string name="geo_search_no_results">Відповідної адреси не знайдено</string>
+    <string name="geo_cd_search">Пошук</string>
+    <string name="geo_name_placeholder">напр. Дім, Робота</string>
+    <string name="geo_name_required">Вкажіть назву</string>
+    <string name="geo_latitude">Широта</string>
+    <string name="geo_longitude">Довгота</string>
+    <string name="geo_lat_range">Від -90 до 90</string>
+    <string name="geo_lng_range">Від -180 до 180</string>
+    <string name="geo_radius">Радіус</string>
+    <string name="geo_radius_range">Введіть від %1$d до %2$d м</string>
+    <string name="geo_edit_assignment">Змінити призначення</string>
+    <string name="geo_assign_title">Призначити геозону</string>
+    <string name="geo_select_area">Виберіть геозону</string>
+    <string name="geo_trigger_title">Сповіщати при</string>
+    <string name="geo_add_rule">Додати правило</string>
+    <string name="geo_alerts_all_times">Оповіщення активні завжди. Додайте правило, щоб обмежити час їх надсилання.</string>
+    <string name="geo_assign_action">Призначити</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Оповіщення про наближення</string>
+    <string name="prox_empty_title">Ніхто не відстежується</string>
+    <string name="prox_empty_sub">Відскануйте чийсь QR-код на вкладці «Сканувати»,\nщоб почати відстежувати місцезнаходження</string>
+    <string name="prox_intro">Отримуйте сповіщення, коли відстежувана людина опиняється ближче за вибрану відстань.</string>
+    <string name="prox_alert_within">Сповіщати в межах %1$s</string>
+    <string name="prox_alerts_off">Оповіщення вимкнено</string>
+    <string name="prox_alert_radius">Радіус оповіщення</string>
+    <string name="prox_edit_schedule">Змінити розклад</string>
+    <string name="prox_rules">Правила</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Розклад для %1$s</string>
+    <string name="schedule_cd_add_rule">Додати правило</string>
+    <string name="schedule_empty_title">Немає правил розкладу</string>
+    <string name="schedule_empty_global">Місцезнаходження передається завжди. Додайте правило, щоб обмежити час передавання.</string>
+    <string name="schedule_empty_peer">Місцезнаходження завжди передається %1$s. Додайте правило, щоб обмежити час.</string>
+    <string name="schedule_active_hint">Активно, коли будь-яке правило збігається з поточним часом. Порожньо = завжди ввімкнено.</string>
+    <string name="schedule_all_day">Увесь день</string>
+    <string name="schedule_plus_one_day"> (+1 день)</string>
+    <string name="schedule_rule_number">Правило %1$d</string>
+    <string name="schedule_cd_delete_rule">Видалити правило</string>
+    <string name="schedule_edit_rule">Змінити правило</string>
+    <string name="schedule_label_optional">Мітка (необовʼязково)</string>
+    <string name="schedule_label_placeholder">напр. Робочі години, Вихідні</string>
+    <string name="schedule_active_days">Активні дні</string>
+    <string name="schedule_time_window">Проміжок часу</string>
+    <string name="schedule_start">Початок</string>
+    <string name="schedule_end">Кінець</string>
+    <string name="schedule_overnight">Через ніч: активно з %1$s до %2$s наступного дня</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Пристрій під наглядом</string>
+    <string name="gate_message">Для доступу до налаштувань потрібне схвалення наглядача.</string>
+    <string name="gate_request_access">Запросити доступ</string>
+    <string name="gate_waiting">Очікування схвалення наглядача…</string>
+    <string name="gate_denied">Наглядач відхилив доступ.</string>
+    <string name="gate_timed_out">Час запиту минув. Наглядач не відповів.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Безстроково</string>
+    <string name="retention_keep_for">Зберігати: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d день</item>
+        <item quantity="few">%1$d дні</item>
+        <item quantity="many">%1$d днів</item>
+        <item quantity="other">%1$d дня</item>
+    </plurals>
+
+    <string name="common_select">Вибрати</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Вибір заданого місця</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Виберіть вкладки нижньої панелі та їхній порядок. Мапа включена завжди.</string>
+    <string name="customize_cd_move_up">Вгору</string>
+    <string name="customize_cd_move_down">Вниз</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Версія %1$s (збірка %2$d)</string>
+    <string name="about_tagline">Приватний обмін місцезнаходженням із тими, кому ви довіряєте. Без облікових записів, без хмари, без стеження з нашого боку.</string>
+    <string name="about_relay_connections">Підключення до ретрансляторів</string>
+    <string name="about_connected">Підключено</string>
+    <string name="about_disconnected">Відключено</string>
+    <string name="about_open_source">Бібліотеки з відкритим кодом</string>
+    <string name="about_lib_osmdroid_desc">Відображення мап на основі OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket-транспорт для ретрансляторів Nostr</string>
+    <string name="about_lib_compose_desc">Фреймворк інтерфейсу</string>
+    <string name="about_lib_hilt_desc">Впровадження залежностей</string>
+    <string name="about_lib_room_desc">Локальна база даних</string>
+    <string name="about_map_attribution">Дані мап © учасники OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Прийняти</string>
+    <string name="notif_someone">Хтось</string>
+    <string name="notif_sos_title">SOS від %1$s!</string>
+    <string name="notif_sos_text">%1$s увімкнув(-ла) SOS у точці (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s просить вас стати наглядачем</string>
+    <string name="notif_supervisor_request_text">Прийміть, щоб дозволити запити на схвалення розблокування з цього пристрою</string>
+    <string name="notif_supervisor_request_big">Прийміть, щоб %1$s міг(могла) надсилати вам запити на схвалення розблокування в контрольованому режимі.</string>
+    <string name="notif_supervised_active_title">Контрольований режим активний</string>
+    <string name="notif_supervised_active_text">Наглядач підтвердив — контрольований режим налаштовано</string>
+    <string name="notif_supervised_declined_title">Контрольований режим відхилено</string>
+    <string name="notif_supervised_declined_text">Наглядач відхилив запит — контрольований режим вимкнено</string>
+    <string name="notif_tracking_alert_title">Оповіщення про стеження</string>
+    <string name="notif_tracking_proximity">%1$s отримав(-ла) оповіщення про ваше наближення</string>
+    <string name="notif_tracking_geofence">%1$s отримав(-ла) оповіщення про вхід/вихід із зони: %2$s</string>
+    <string name="notif_tracking_generic">%1$s стежить за вашим місцезнаходженням</string>
+    <string name="notif_track_update_title">Оновлення обміну від %1$s</string>
+    <string name="notif_track_new_title">Новий контакт: %1$s</string>
+    <string name="notif_role_send_receive">Надсилання й отримання місцезнаходження</string>
+    <string name="notif_role_send">Надсилання місцезнаходження</string>
+    <string name="notif_role_receive">Отримання місцезнаходження</string>
+    <string name="notif_role_none">Без обміну місцезнаходженням</string>
+    <string name="notif_track_requesting">%1$s запитує: %2$s</string>
+    <string name="notif_track_update_body">%1$s хоче змінити умови обміну місцезнаходженням.</string>
+    <string name="notif_track_new_body">%1$s додав(-ла) вас у контакти й хоче звʼязатися.</string>
+    <string name="notif_contact_connected_title">Контакт підключено</string>
+    <string name="notif_contact_connected_text">%1$s тепер звʼязаний(-а) з вами.</string>
+    <string name="notif_request_declined_title">Запит відхилено</string>
+    <string name="notif_request_declined_text">%1$s відхилив(-ла) ваш запит на обмін місцезнаходженням.</string>
+    <string name="notif_message_person">Написати %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s увійшов(-ла) у %2$s</string>
+    <string name="notif_geofence_left_title">%1$s покинув(-ла) %2$s</string>
+    <string name="notif_geofence_subtitle">о %1$s · радіус %2$s</string>
+    <string name="notif_person_nearby">%1$s поблизу</string>
+    <string name="notif_distance_from_you">%1$s від вас</string>
+    <string name="notif_missed_title">Немає оновлень від %1$s</string>
+    <string name="notif_missed_text">Останній сигнал %1$s хв тому біля (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS АКТИВНИЙ!</string>
+    <string name="notif_sos_active_text">Екстрене оповіщення передається SOS-контактам</string>
+    <string name="notif_messages_group_title">Повідомлення LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Запит на контакт від %1$s відхилено</string>
+    <string name="toast_now_supervising">Ви тепер наглядаєте за пристроєм %1$s</string>
+    <string name="toast_declined_supervision">Запит на нагляд від %1$s відхилено</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Щойно</string>
+    <string name="time_minutes_ago">%1$d хв тому</string>
+    <string name="fallback_me">Я</string>
+    <string name="fallback_unknown">Невідомо</string>
+    <string name="geo_unassigned">Не призначено</string>
+    <string name="days_every_day">Щодня</string>
+    <string name="days_weekdays">Будні</string>
+    <string name="days_weekends">Вихідні</string>
+    <string name="days_none">Немає днів</string>
+    <string name="chat_my_location_message">Моє поточне місцезнаходження: %1$s</string>
+    <string name="scan_error_bad_pubkey">Недійсне запрошення: неправильний відкритий ключ</string>
+    <string name="scan_error_key_mismatch">Недійсне запрошення: ключі не збігаються</string>
+    <string name="scan_error_unknown">Невідома помилка</string>
+    <string name="scan_error_invalid_link">Недійсне посилання-запрошення</string>
+    <string name="scan_fallback_contact">цей контакт</string>
+    <string name="backup_saved">Резервну копію збережено: %1$s</string>
+    <string name="backup_saved_encrypted">Резервну копію збережено (зашифровано): %1$s</string>
+    <string name="backup_failed">Резервне копіювання не вдалося: %1$s</string>
+    <string name="backup_could_not_read_file">Не вдалося прочитати файл</string>
+    <string name="backup_could_not_write_file">Не вдалося записати файл</string>
+    <string name="backup_could_not_read">Не вдалося прочитати резервну копію: %1$s</string>
+    <string name="backup_incorrect_password">Неправильний пароль</string>
+    <string name="restore_result_restored">Відновлено: %1$s</string>
+    <string name="restore_result_failed">Не вдалося: %1$s</string>
+    <string name="restore_nothing">Немає чого відновлювати</string>
+    <string name="restore_failed">Відновлення не вдалося: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d контакт</item>
+        <item quantity="few">%1$d контакти</item>
+        <item quantity="many">%1$d контактів</item>
+        <item quantity="other">%1$d контакту</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d геозона</item>
+        <item quantity="few">%1$d геозони</item>
+        <item quantity="many">%1$d геозон</item>
+        <item quantity="other">%1$d геозони</item>
+    </plurals>
+    <string name="peer_role_change_sent">Запит на зміну ролі надіслано %1$s</string>
+    <string name="peer_not_found">Піра не знайдено</string>
+    <string name="peer_purge_location_sent">Команду видалення ВСІХ місцезнаходжень надіслано %1$s</string>
+    <string name="peer_purge_messages_sent">Команду видалення ВСІХ повідомлень надіслано %1$s</string>
+    <string name="onboarding_error_key_length">Недійсний ключ — має бути 64 шістнадцяткові символи.</string>
+    <string name="onboarding_error_key_range">Недійсний закритий ключ — поза діапазоном кривої.</string>
+    <string name="onboarding_error_hex">Неправильний шістнадцятковий формат.</string>
+    <string name="onboarding_error_import_failed">Не вдалося імпортувати ключ: %1$s</string>
 </resources>

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Kanały powiadomień i usługa w tle ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Udostępnianie lokalizacji</string>
     <string name="channel_desc_heartbeat">Udostępnia Twoją lokalizację zatwierdzonym kontaktom</string>
     <string name="channel_name_alerts">Alerty</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer działa</string>
     <string name="notification_heartbeat_text">Udostępnianie lokalizacji innym</string>
 
-    <!-- ── Wspólne akcje ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Zapisz</string>
     <string name="common_cancel">Anuluj</string>
     <string name="common_done">Gotowe</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Zatwierdź</string>
     <string name="common_deny">Odmów</string>
 
-    <!-- ── Karty nawigacji ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Wiadomości</string>
     <string name="tab_history">Historia</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Ustawienia</string>
 
-    <!-- ── Ruch / stany aktywności ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Stacjonarny</string>
     <string name="motion_walking">Chodzenie</string>
     <string name="motion_running">Bieganie</string>
     <string name="motion_cycling">Jazda na rowerze</string>
     <string name="motion_driving">Jazda samochodem</string>
 
-    <!-- ── Ustawienia ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Klucz prywatny</string>
+    <string name="backup_section_contacts">Kontakty</string>
+    <string name="backup_section_geofences">Geoogrodzenia</string>
+    <string name="backup_section_settings">Ustawienia</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Prośba o dostęp</string>
+    <string name="supervision_request_message">„%1$s” prosi o dostęp do swoich ustawień. Zezwolić?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Ustawienia</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Lokalizacja i prywatność</string>
     <string name="settings_section_security">Bezpieczeństwo</string>
     <string name="settings_section_map">Mapa</string>
@@ -54,15 +66,714 @@
     <string name="settings_section_backup_keys">Kopia zapasowa i klucze</string>
     <string name="settings_section_about">O programie</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Edytuj nazwę</string>
     <string name="settings_my_qr">Mój kod QR</string>
     <string name="settings_no_name_set">Nie ustawiono nazwy</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Udostępnij moją lokalizację</string>
+    <string name="settings_broadcasting">Nadawanie do Twoich kontaktów</string>
+    <string name="settings_not_broadcasting">Nadawanie wyłączone</string>
+    <string name="settings_sharing_schedule">Harmonogram udostępniania</string>
+    <string name="settings_always_on">Zawsze włączone</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d reguła</item>
+        <item quantity="few">%1$d reguły</item>
+        <item quantity="many">%1$d reguł</item>
+        <item quantity="other">%1$d reguły</item>
+    </plurals>
+    <string name="settings_geofences">Geoogrodzenia</string>
+    <string name="settings_geofences_subtitle">Zarządzaj współdzielonymi obszarami geoogrodzeń</string>
+    <string name="settings_notify_when_tracked">Powiadamiaj o śledzeniu</string>
+    <string name="settings_notify_when_tracked_subtitle">Otrzymuj powiadomienie, gdy u kontaktu uruchomi się dotyczący Ciebie alert zbliżeniowy lub geoogrodzenia.</string>
+    <string name="settings_my_location_history">Historia lokalizacji</string>
+    <string name="settings_my_location_history_subtitle">Przeglądaj własną oś czasu lokalizacji</string>
+    <string name="settings_lookup_addresses">Wyszukuj adresy</string>
+    <string name="settings_lookup_addresses_subtitle">Pokazuj adresy dla punktów historii i dotkniętych pinezek na mapie oraz wyszukuj po adresie przy tworzeniu geoogrodzeń. Współrzędne i wpisane zapytania są wysyłane do usługi geokodowania urządzenia (zwykle Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Nadzór aktywny</string>
+    <string name="settings_supervision_active_subtitle">Ustawienia wymagają zgody opiekuna</string>
+    <string name="settings_disable_supervised">Wyłącz tryb nadzorowany</string>
+    <string name="settings_supervised_mode">Tryb nadzorowany</string>
+    <string name="settings_supervised_mode_subtitle">Wymagaj zgody opiekuna na dostęp do ustawień</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Punkt początkowy</string>
+    <string name="settings_map_current_location">Bieżąca lokalizacja</string>
+    <string name="settings_map_all_contacts">Wszystkie kontakty</string>
+    <string name="settings_map_fixed_location">Stała lokalizacja</string>
+    <string name="settings_map_last_position">Ostatnia pozycja</string>
+    <string name="settings_map_starting_point_title">Punkt początkowy mapy</string>
+    <string name="settings_no_location_set">Nie ustawiono lokalizacji</string>
+    <string name="settings_pick_location_on_map">Wybierz lokalizację na mapie</string>
+    <string name="settings_default_zoom_level">Domyślny poziom przybliżenia</string>
+    <string name="settings_map_pin_colour">Kolor pinezki na mapie</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Częstotliwość aktualizacji</string>
+    <string name="settings_update_cadence_subtitle">Dostosuj, jak często nadawana jest Twoja lokalizacja</string>
+    <string name="settings_update_cadence_dialog_message">Kontroluj, jak często aktualizowana jest Twoja lokalizacja w zależności od aktywności. Częste aktualizacje zużywają więcej baterii.</string>
+    <string name="settings_update_cadence_reset">Przywróć domyślne</string>
+    <string name="settings_min_distance_filtering">Minimalna odległość</string>
+    <string name="settings_min_distance_filtering_subtitle">Pokazuj tylko punkty oddalone od poprzedniego co najmniej o tę odległość.</string>
+    <string name="settings_discard_low_accuracy">Odrzucaj niedokładne pomiary</string>
+    <string name="settings_discard_low_accuracy_subtitle">Nie nadawaj ani nie zapisuj własnych pozycji o promieniu dokładności większym niż ta wartość. SOS nigdy nie jest pomijany.</string>
+    <string name="settings_hide_low_accuracy">Ukrywaj niedokładne punkty</string>
+    <string name="settings_hide_low_accuracy_subtitle">Ukrywaj punkty historii o promieniu dokładności większym niż ta wartość. Nic nie jest usuwane.</string>
+    <string name="settings_low_battery" formatted="false">Niski poziom baterii (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Wykrywanie ruchu</string>
+    <string name="settings_motion_detection_on">Włączone — doprecyzowuje typ ruchu (chód, jazda) w historii</string>
+    <string name="settings_motion_detection_off">Wyłączone — zezwól na dostęp do aktywności fizycznej, aby uzyskać dokładniejsze etykiety ruchu</string>
+    <string name="settings_enable_motion_title">Włącz wykrywanie ruchu</string>
+    <string name="settings_enable_motion_message">Dostęp do aktywności fizycznej pozwala LocaPeer dokładniej odróżniać chód, jazdę i postój w historii. Obecnie jest wyłączony — możesz włączyć go ponownie w ustawieniach systemu.</string>
+    <string name="settings_open_settings">Otwórz ustawienia</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Jednostki prędkości</string>
+    <string name="settings_speed_imperial">Imperialne (mph)</string>
+    <string name="settings_speed_metric">Metryczne (km/h)</string>
+    <string name="settings_elevation_units">Jednostki wysokości</string>
+    <string name="settings_elevation_imperial">Imperialne (stopy)</string>
+    <string name="settings_elevation_metric">Metryczne (metry)</string>
+    <string name="settings_distance_units">Jednostki odległości</string>
+    <string name="settings_distance_imperial">Imperialne (ft/mi)</string>
+    <string name="settings_distance_metric">Metryczne (m/km)</string>
+    <string name="settings_time_format">Format czasu</string>
+    <string name="settings_time_24h">24-godzinny (13:30)</string>
+    <string name="settings_time_12h">12-godzinny (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Dane lokalizacji</string>
+    <string name="settings_retention_location_subtitle">Jak długo przechowywać lokalnie dane lokalizacji kontaktów</string>
+    <string name="settings_clear_all_location">Wyczyść wszystkie dane lokalizacji</string>
+    <string name="settings_retention_messages">Wiadomości</string>
+    <string name="settings_retention_messages_subtitle">Jak długo przechowywać lokalnie odebrane wiadomości</string>
+    <string name="settings_clear_all_messages">Wyczyść wszystkie wiadomości</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Dostosuj nawigację</string>
+    <string name="settings_customize_nav_subtitle">Wybierz i uporządkuj dolne karty</string>
+    <string name="settings_start_page">Strona startowa</string>
     <string name="settings_language">Język</string>
     <string name="settings_language_title">Język aplikacji</string>
     <string name="settings_language_system">Domyślny systemowy</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Eksportuj kopię zapasową</string>
+    <string name="settings_export_backup_subtitle">Zapisz klucz prywatny i kontakty do pliku. Przechowuj ten plik w bezpiecznym miejscu!</string>
+    <string name="settings_import_backup">Importuj kopię zapasową</string>
+    <string name="settings_import_backup_subtitle">Przywróć z wcześniej wyeksportowanego pliku</string>
+    <string name="settings_view_private_key">Pokaż klucz prywatny</string>
+    <string name="settings_view_private_key_subtitle">Pokaż swój 64-znakowy szesnastkowy klucz tożsamości</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">O LocaPeer</string>
+    <string name="settings_about_subtitle">Wersja, stan przekaźników, otwarty kod</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Edytuj wyświetlaną nazwę</string>
+    <string name="settings_display_name_label">Wyświetlana nazwa</string>
+    <string name="settings_my_invite_qr">Mój kod QR zaproszenia</string>
+    <string name="settings_invite_qr_subtitle">Inni mogą go zeskanować, aby zacząć Cię śledzić.</string>
+    <string name="settings_invite_qr_cd">Kod QR zaproszenia</string>
+    <string name="settings_private_key_title">Klucz prywatny</string>
+    <string name="settings_private_key_warning">Przechowuj go bezpiecznie. Każdy, kto ma ten klucz, może się pod Ciebie podszyć.</string>
+    <string name="settings_clear_location_title">Wyczyścić historię lokalizacji?</string>
+    <string name="settings_clear_location_message">Wszystkie zapisane punkty lokalizacji zostaną trwale usunięte.</string>
+    <string name="settings_clear_messages_title">Wyczyścić historię wiadomości?</string>
+    <string name="settings_clear_messages_message">Wszystkie zapisane wiadomości zostaną trwale usunięte.</string>
+    <string name="settings_encrypted_backup_title">Zaszyfrowana kopia zapasowa</string>
+    <string name="settings_encrypted_backup_message">Ta kopia zapasowa jest zaszyfrowana. Podaj hasło, aby kontynuować.</string>
+    <string name="settings_select_restore_title">Wybierz dane do przywrócenia</string>
+    <string name="settings_select_export_title">Wybierz dane do eksportu</string>
+    <string name="settings_export_password_hint">Opcjonalnie ustaw hasło, aby zaszyfrować plik kopii zapasowej.</string>
+    <string name="settings_backup_password_optional">Hasło kopii zapasowej (opcjonalne)</string>
+    <string name="settings_select_sections">Wybierz sekcje do uwzględnienia:</string>
+    <string name="settings_choose_file_location">Wybierz lokalizację pliku</string>
+    <string name="settings_not_in_backup">Brak w tej kopii zapasowej</string>
+    <string name="settings_enable_supervised_title">Włącz tryb nadzorowany</string>
+    <string name="settings_enable_supervised_message">Wybierz osobę, która będzie opiekunem. Dostęp do ustawień będzie wymagał zgody z jej urządzenia.</string>
+    <string name="settings_no_peers_found">Nie znaleziono kontaktów. Najpierw dodaj kontakt, skanując jego kod QR zaproszenia.</string>
+    <string name="settings_disable_supervised_title">Wyłączyć tryb nadzorowany?</string>
+    <string name="settings_disable_supervised_message">Ustawienia będą dostępne bez zgody opiekuna.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Usuń</string>
+    <string name="common_name">Nazwa</string>
+    <string name="common_search">Szukaj</string>
+    <string name="common_sort">Sortuj</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Wiadomość</string>
+    <string name="cd_show_on_map">Pokaż na mapie</string>
+    <string name="cd_more_options">Więcej opcji</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">Zaznaczono: %1$d</item>
+        <item quantity="few">Zaznaczono: %1$d</item>
+        <item quantity="many">Zaznaczono: %1$d</item>
+        <item quantity="other">Zaznaczono: %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Anuluj zaznaczenie</string>
+    <string name="contacts_cd_select_all">Zaznacz wszystko</string>
+    <string name="contacts_cd_deselect_all">Odznacz wszystko</string>
+    <string name="contacts_cd_qr_invite">QR / zaproszenie</string>
+    <string name="contacts_cd_pending_requests">Oczekujące prośby</string>
+    <string name="contacts_sort_last_seen">Ostatnio widziani</string>
+    <string name="contacts_search_placeholder">Szukaj kontaktów…</string>
+    <string name="contacts_empty_title">Brak kontaktów</string>
+    <string name="contacts_empty_subtitle">Zeskanuj kod QR, aby połączyć się z kimś i zacząć udostępniać lokalizację.</string>
+    <string name="contacts_scan_qr">Skanuj kod QR</string>
+    <string name="contacts_bulk_delete_messages">Usuń wiadomości</string>
+    <string name="contacts_bulk_delete_locations">Usuń lokalizacje</string>
+    <string name="contacts_last_seen">Ostatnio widziano: %1$s</string>
+    <string name="contacts_no_location_yet">Brak danych lokalizacji</string>
+    <string name="contacts_view_sharing_settings">Ustawienia udostępniania</string>
+    <string name="contacts_view_location_history">Historia lokalizacji</string>
+    <string name="contacts_rename_contact">Zmień nazwę kontaktu</string>
+    <string name="contacts_on_contact_device">Na urządzeniu kontaktu</string>
+    <string name="contacts_delete_my_messages_title">Usuń moje wiadomości</string>
+    <string name="contacts_delete_locations_title">Usuń udostępnione lokalizacje</string>
+    <string name="contacts_remove_contact_title">Usuń kontakt</string>
+    <string name="contacts_leave_title">Usuń kontakt i dane</string>
+    <string name="contacts_rename_title">Zmień nazwę kontaktu</string>
+    <string name="contacts_remove_contact_body">Usunąć %1$s z kontaktów? Historia jego lokalizacji zostanie także usunięta lokalnie.</string>
+    <string name="contacts_leave_body">Zostaniesz usunięty(-a) z kontaktów %1$s, a wszystkie Twoje wiadomości i dane lokalizacji zostaną skasowane z jego urządzenia. Stracisz też dostęp do jego lokalizacji.</string>
+    <string name="contacts_delete_my_messages_body">Wszystkie wysłane przez Ciebie wiadomości zostaną usunięte z urządzenia %1$s. Tej operacji nie można cofnąć.</string>
+    <string name="contacts_delete_locations_body">Wszystkie udostępnione przez Ciebie dane lokalizacji zostaną usunięte z urządzenia %1$s. Tej operacji nie można cofnąć.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Usuń kontakt</item>
+        <item quantity="few">Usuń %1$d kontakty</item>
+        <item quantity="many">Usuń %1$d kontaktów</item>
+        <item quantity="other">Usuń %1$d kontaktu</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Usunąć ten kontakt? Historia jego lokalizacji zostanie także usunięta lokalnie.</item>
+        <item quantity="few">Usunąć %1$d kontakty? Historia ich lokalizacji zostanie także usunięta lokalnie.</item>
+        <item quantity="many">Usunąć %1$d kontaktów? Historia ich lokalizacji zostanie także usunięta lokalnie.</item>
+        <item quantity="other">Usunąć %1$d kontaktu? Historia ich lokalizacji zostanie także usunięta lokalnie.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Zdalnie usunąć wszystkie wiadomości wysłane przez Ciebie z urządzenia tego kontaktu? Tej operacji nie można cofnąć.</item>
+        <item quantity="few">Zdalnie usunąć wszystkie wiadomości wysłane przez Ciebie z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+        <item quantity="many">Zdalnie usunąć wszystkie wiadomości wysłane przez Ciebie z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+        <item quantity="other">Zdalnie usunąć wszystkie wiadomości wysłane przez Ciebie z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Zdalnie usunąć całą udostępnioną przez Ciebie historię lokalizacji z urządzenia tego kontaktu? Tej operacji nie można cofnąć.</item>
+        <item quantity="few">Zdalnie usunąć całą udostępnioną przez Ciebie historię lokalizacji z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+        <item quantity="many">Zdalnie usunąć całą udostępnioną przez Ciebie historię lokalizacji z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+        <item quantity="other">Zdalnie usunąć całą udostępnioną przez Ciebie historię lokalizacji z urządzeń %1$d kontaktów? Tej operacji nie można cofnąć.</item>
+    </plurals>
+
+    <string name="common_continue">Kontynuuj</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Przywróć z kopii zapasowej</string>
+    <string name="onboarding_restore_message">Wklej swój 64-znakowy szesnastkowy klucz prywatny, aby przywrócić tożsamość i kontakty.</string>
+    <string name="onboarding_private_key_hex">Klucz prywatny (hex)</string>
+    <string name="onboarding_tagline">Prywatne udostępnianie lokalizacji kontaktom.\nBez kont. Bez własnościowych serwerów.</string>
+    <string name="onboarding_feature_e2e_title">Szyfrowanie end-to-end</string>
+    <string name="onboarding_feature_e2e_subtitle">Twoja lokalizacja jest szyfrowana na urządzeniu</string>
+    <string name="onboarding_feature_servers_title">Bez własnościowych serwerów</string>
+    <string name="onboarding_feature_servers_subtitle">Otwarte przekaźniki Nostr służą jako bezpieczny transport — Twoje dane pozostają zaszyfrowane i prywatne</string>
+    <string name="onboarding_feature_phone_title">Zostaje na Twoim telefonie</string>
+    <string name="onboarding_feature_phone_subtitle">Pełna historia lokalizacji pozostaje na Twoim urządzeniu. Wybranym kontaktom udostępniana jest tylko bieżąca pozycja</string>
+    <string name="onboarding_name_prompt">Jak mają Cię nazywać Twoje kontakty?</string>
+    <string name="onboarding_name_placeholder">np. Mama, Tata, Ala…</string>
+    <string name="onboarding_get_started">Rozpocznij</string>
+    <string name="onboarding_restore_from_backup">Przywróć z kopii zapasowej</string>
+    <string name="onboarding_key_note">Twój klucz prywatny jest generowany lokalnie i nigdy nie opuszcza tego urządzenia.</string>
+    <string name="onboarding_permissions_title">Uprawnienia</string>
+    <string name="onboarding_permissions_desc">LocaPeer potrzebuje dostępu do lokalizacji, aby udostępniać Twoją pozycję, do aparatu, aby skanować kody zaproszeń, oraz do powiadomień dla statusu w tle. Dostęp do aktywności fizycznej jest opcjonalny — pomaga dokładniej oznaczać Twój ruch (chód, jazda).</string>
+    <string name="onboarding_before_ask_title">Zanim zapytamy</string>
+    <string name="onboarding_before_ask_intro">Za chwilę zobaczysz kilka systemowych próśb:</string>
+    <string name="onboarding_before_ask_location">• Lokalizacja — wymagana, aby udostępniać Twoją pozycję.</string>
+    <string name="onboarding_before_ask_camera">• Aparat — do skanowania kodów zaproszeń.</string>
+    <string name="onboarding_before_ask_notifications">• Powiadomienia — dla statusu w tle.</string>
+    <string name="onboarding_before_ask_activity">• Aktywność fizyczna — opcjonalna. Pozwala LocaPeer dokładniej odróżniać chód, jazdę i postój. Możesz to pominąć i włączyć później w Ustawieniach.</string>
+    <string name="onboarding_grant_permissions">Przyznaj uprawnienia</string>
+    <string name="onboarding_bg_location_title">Lokalizacja w tle</string>
+    <string name="onboarding_bg_location_desc">Aby kontakty otrzymywały aktualizacje, gdy aplikacja jest zamknięta, na następnym ekranie wybierz „Zawsze zezwalaj”.</string>
+    <string name="onboarding_bg_location_error">Lokalizacja w tle jest wymagana do aktualizowania kontaktów, gdy aplikacja jest zamknięta. Spróbuj ponownie i wybierz „Zawsze zezwalaj”.</string>
+    <string name="onboarding_configure_location">Skonfiguruj lokalizację</string>
+    <string name="onboarding_battery_title">Bateria</string>
+    <string name="onboarding_battery_desc">Android może zatrzymywać LocaPeer, aby oszczędzać baterię. Aby zapewnić niezawodne aktualizacje, wyklucz LocaPeer z optymalizacji.</string>
+    <string name="onboarding_disable_optimizations">Wyłącz optymalizacje</string>
+    <string name="onboarding_done_title">Gotowe!</string>
+    <string name="onboarding_done_desc">Twoja prywatna sieć lokalizacji jest gotowa.</string>
+    <string name="onboarding_start_using">Zacznij korzystać z LocaPeer</string>
+
+    <string name="common_try_again">Spróbuj ponownie</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Skanuj zaproszenie</string>
+    <string name="scan_camera_needed">Do skanowania kodów QR potrzebne jest uprawnienie aparatu.</string>
+    <string name="scan_grant_permission">Przyznaj uprawnienie</string>
+    <string name="scan_add_contact_title">Dodać kontakt?</string>
+    <string name="scan_add_contact_message">Połączysz się z %1$s i zaczniecie wzajemnie udostępniać sobie lokalizację.</string>
+    <string name="scan_add_share">Dodaj i udostępnij</string>
+    <string name="scan_request_sent_title">Prośba wysłana!</string>
+    <string name="scan_request_sent_message">Prośba została wysłana do %1$s. Po jej zaakceptowaniu zostaniecie połączeni.</string>
+    <string name="scan_failed">Skanowanie nie powiodło się: %1$s</string>
+
     <string name="cd_back">Wstecz</string>
+    <string name="common_review">Przejrzyj</string>
+    <string name="common_decline">Odrzuć</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Wysyłanie/odbieranie</string>
+    <string name="role_send">Wysyłanie</string>
+    <string name="role_receive">Odbieranie</string>
+    <string name="role_none">Bez udostępniania</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Moje zaproszenie</string>
+    <string name="invite_tab_add_contact">Dodaj kontakt</string>
+    <string name="invite_your_qr_title">Twój kod QR</string>
+    <string name="invite_your_qr_subtitle">Pozwól komuś go zeskanować, aby śledził Twoją lokalizację</string>
+    <string name="invite_qr_cd">Twój kod QR</string>
+    <string name="invite_qr_error">Błąd generowania kodu QR</string>
+    <string name="invite_share_link">Udostępnij link z zaproszeniem</string>
+    <string name="invite_encryption_note">Twoja lokalizacja zostanie zaszyfrowana specjalnie dla urządzenia osoby skanującej.</string>
+    <string name="invite_camera_required_title">Wymagany dostęp do aparatu</string>
+    <string name="invite_camera_required_message">Przyznaj uprawnienie aparatu, aby zeskanować kod QR.</string>
+    <string name="invite_point_camera">Skieruj aparat na kod QR LocaPeer</string>
+    <string name="invite_paste_title">Lub wklej link z zaproszeniem</string>
+    <string name="invite_process_link">Przetwórz link</string>
+    <string name="invite_fallback_name">Kontakt</string>
+    <string name="invite_success_message">Po zaakceptowaniu połączysz się z %1$s.</string>
+    <string name="invite_confirm_add_title">Dodać %1$s?</string>
+    <string name="invite_confirm_add_message">Dodać do kontaktów i udostępniać lokalizację?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Brak oczekujących próśb</string>
+    <string name="pending_requesting">Prosi o: %1$s · %2$s</string>
+    <string name="pending_role_change">Prośba o zmianę roli · %1$s</string>
+    <string name="pending_new_request">Nowa prośba o udostępnianie · %1$s</string>
+
+    <string name="common_save_changes">Zapisz zmiany</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Aktualizuj ustawienia udostępniania</string>
+    <string name="incoming_new_title">Nowa prośba o kontakt</string>
+    <string name="incoming_update_subtitle">%1$s chce zmienić sposób udostępniania. Przejrzyj poniższe ustawienia.</string>
+    <string name="incoming_new_subtitle">%1$s dodał(a) Cię jako kontakt! Możesz teraz wybrać, co udostępniać w zamian.</string>
+    <string name="incoming_section_location">Lokalizacja</string>
+    <string name="incoming_share_my_location">Udostępniaj moją lokalizację %1$s</string>
+    <string name="incoming_share_my_location_sub">Ta osoba będzie widzieć, gdzie jesteś</string>
+    <string name="incoming_see_their_location">Zobacz lokalizację %1$s</string>
+    <string name="incoming_see_their_location_sub">Będziesz widzieć, gdzie jest ta osoba</string>
+    <string name="incoming_section_messaging">Wiadomości</string>
+    <string name="incoming_allow_messages">Zezwól na wiadomości</string>
+    <string name="incoming_allow_messages_sub">Odbieraj wiadomości czatu od %1$s</string>
+
+    <string name="common_request">Poproś</string>
+    <string name="common_edit">Edytuj</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Ustawienia kontaktu</string>
+    <string name="peer_section_roles">Role udostępniania lokalizacji</string>
+    <string name="peer_send_on">%1$s widzi Twoją lokalizację</string>
+    <string name="peer_send_off">Nie udostępniasz swojej lokalizacji %1$s</string>
+    <string name="peer_receive_title">Odbieraj lokalizację %1$s</string>
+    <string name="peer_receive_on">Widzisz lokalizację %1$s</string>
+    <string name="peer_receive_off">Nie masz dostępu do lokalizacji %1$s</string>
+    <string name="peer_section_privacy">Prywatność i udostępnianie</string>
+    <string name="peer_pause_sharing">Wstrzymaj udostępnianie</string>
+    <string name="peer_pause_sub">Tymczasowo przestań wysyłać swoją lokalizację do %1$s</string>
+    <string name="peer_precision">Dokładność lokalizacji</string>
+    <string name="peer_precision_exact_sub">Dokładne współrzędne GPS</string>
+    <string name="peer_precision_suburb_sub">Przybliżona lokalizacja (poziom dzielnicy)</string>
+    <string name="peer_always_sharing">Zawsze udostępniane</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d aktywna reguła udostępniania</item>
+        <item quantity="few">%1$d aktywne reguły udostępniania</item>
+        <item quantity="many">%1$d aktywnych reguł udostępniania</item>
+        <item quantity="other">%1$d aktywnej reguły udostępniania</item>
+    </plurals>
+    <string name="peer_section_alerts">Alerty i monitorowanie</string>
+    <string name="peer_sos_contact">Kontakt SOS</string>
+    <string name="peer_sos_sub">Odbieraj alerty alarmowe nawet przy wstrzymanym udostępnianiu</string>
+    <string name="peer_missed_alert">Alert braku lokalizacji</string>
+    <string name="peer_missed_on">Powiadom mnie, jeśli %1$s przestanie zgłaszać lokalizację</string>
+    <string name="peer_requires_access">Wymaga dostępu do lokalizacji %1$s</string>
+    <string name="peer_proximity_alert">Alert zbliżeniowy</string>
+    <string name="peer_proximity_sub">Powiadom mnie, gdy %1$s będzie w pobliżu</string>
+    <string name="peer_alert_radius">Promień alertu</string>
+    <string name="peer_alert_schedule">Harmonogram alertów</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d aktywna reguła</item>
+        <item quantity="few">%1$d aktywne reguły</item>
+        <item quantity="many">%1$d aktywnych reguł</item>
+        <item quantity="other">%1$d aktywnej reguły</item>
+    </plurals>
+    <string name="peer_geofences_sub">Skonfiguruj strefy przybycia i wyjazdu dla %1$s</string>
+    <string name="peer_supervise">Nadzoruj to urządzenie</string>
+    <string name="peer_supervise_on">Otrzymujesz i zatwierdzasz prośby o odblokowanie od %1$s</string>
+    <string name="peer_supervise_off">Zezwól %1$s na wysyłanie próśb o odblokowanie trybu nadzorowanego</string>
+    <string name="peer_messaging_sub">Włącz/wyłącz wiadomości czatu od %1$s</string>
+    <string name="peer_section_history">Historia przemieszczania</string>
+    <string name="peer_location_history">Historia lokalizacji</string>
+    <string name="peer_location_history_sub">Zobacz historię przemieszczania i raport mapowy dla %1$s</string>
+    <string name="peer_section_retention">Przechowywanie danych zdalnych</string>
+    <string name="peer_retention_location_sub">Jak długo %1$s przechowuje Twoją historię lokalizacji</string>
+    <string name="peer_purge_location">Wymaż wszystkie dane lokalizacji u %1$s</string>
+    <string name="peer_retention_messages_sub">Jak długo %1$s przechowuje wysłane przez Ciebie wiadomości</string>
+    <string name="peer_purge_messages">Wymaż wszystkie wiadomości u %1$s</string>
+    <string name="peer_precision_exact">Dokładny GPS</string>
+    <string name="peer_precision_exact_desc">Precyzyjne współrzędne</string>
+    <string name="peer_precision_suburb">Dzielnica (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Tylko poziom okolicy</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Usunąć %1$d rozmowę?</item>
+        <item quantity="few">Usunąć %1$d rozmowy?</item>
+        <item quantity="many">Usunąć %1$d rozmów?</item>
+        <item quantity="other">Usunąć %1$d rozmowy?</item>
+    </plurals>
+    <string name="conv_delete_locally">Usuń lokalnie</string>
+    <string name="conv_delete_locally_sub">Usuwa rozmowę tylko z Twojego urządzenia.</string>
+    <string name="conv_delete_both">Usuń lokalnie i u kontaktu</string>
+    <string name="conv_bulk_delete_both_sub">Usuwa rozmowę lokalnie i u Twojego kontaktu.</string>
+    <string name="conv_delete_both_sub">Usuwa rozmowę lokalnie i wysyła na urządzenie kontaktu żądanie jej usunięcia.</string>
+    <string name="conv_cd_exit_selection">Zakończ zaznaczanie</string>
+    <string name="conv_cd_select_all">Zaznacz wszystko</string>
+    <string name="conv_cd_new_message">Nowa wiadomość</string>
+    <string name="conv_sort_date">Data</string>
+    <string name="conv_sort_unread">Nieprzeczytane</string>
+    <string name="conv_search_placeholder">Szukaj rozmów…</string>
+    <string name="conv_tab_chats">Czaty</string>
+    <string name="conv_tab_archived">Zarchiwizowane</string>
+    <string name="conv_mark_read">Oznacz jako przeczytane</string>
+    <string name="conv_archive">Archiwizuj</string>
+    <string name="conv_unarchive">Przywróć z archiwum</string>
+    <string name="conv_empty_no_results">Brak wyników dla „%1$s”</string>
+    <string name="conv_empty_no_results_sub">Spróbuj innego wyszukiwania</string>
+    <string name="conv_empty_archived_title">Brak zarchiwizowanych czatów</string>
+    <string name="conv_empty_archived_sub">Archiwizuj czaty, aby utrzymać porządek w skrzynce</string>
+    <string name="conv_empty_title">Brak wiadomości</string>
+    <string name="conv_empty_sub">Otwórz mapę i dotknij osoby,\naby rozpocząć rozmowę</string>
+    <string name="conv_delete_title">Usunąć rozmowę?</string>
+    <string name="conv_delete_message">Jak chcesz usunąć tę rozmowę z %1$s?</string>
+    <string name="conv_messages_blocked">Wiadomości zablokowane</string>
+    <string name="conv_preview_mine">Ty: %1$s</string>
+    <string name="conv_new_message_title">Nowa wiadomość</string>
+    <string name="conv_picker_empty">Brak kontaktów. Zeskanuj kod QR, aby dodać kontakt.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Wyczyścić historię czatu?</string>
+    <string name="chat_clear_message">Jak chcesz wyczyścić tę rozmowę z %1$s?</string>
+    <string name="chat_clear_locally">Wyczyść lokalnie</string>
+    <string name="chat_clear_both">Wyczyść lokalnie i u kontaktu</string>
+    <string name="chat_clear_both_sub">Czyści czat lokalnie i wysyła do %1$s żądanie usunięcia wysłanych przez Ciebie wiadomości.</string>
+    <string name="chat_cd_options">Opcje</string>
+    <string name="chat_clear_history_menu">Wyczyść historię czatu</string>
+    <string name="chat_typing">%1$s pisze…</string>
+    <string name="chat_blocked_banner">Wiadomości od %1$s są zablokowane. Odblokuj w Kontaktach.</string>
+    <string name="chat_delete_msg_title">Usunąć wiadomość?</string>
+    <string name="chat_delete_msg_message">Jak chcesz usunąć tę wiadomość?</string>
+    <string name="chat_delete_from_contact">Usuń u kontaktu</string>
+    <string name="chat_delete_from_contact_sub">Usuwa wiadomość z urządzenia kontaktu.</string>
+    <string name="chat_delete_both_sub">Usuwa wiadomość lokalnie i automatycznie kasuje ją z urządzenia kontaktu.</string>
+    <string name="chat_cd_share_location">Udostępnij lokalizację</string>
+    <string name="chat_input_placeholder">Wiadomość…</string>
+    <string name="chat_cd_send">Wyślij</string>
+
+    <string name="common_close">Zamknij</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Aktywować SOS?</string>
+    <string name="map_sos_deactivate_title">Dezaktywować SOS?</string>
+    <string name="map_sos_activate_msg">Twoja lokalizacja będzie nadawana co 15 sekund do wyznaczonych kontaktów SOS aż do dezaktywacji.</string>
+    <string name="map_sos_deactivate_msg">Priorytetowe nadawanie lokalizacji do kontaktów alarmowych zostanie zatrzymane.</string>
+    <string name="map_activate">Aktywuj</string>
+    <string name="map_deactivate">Dezaktywuj</string>
+    <string name="map_cd_style">Styl mapy</string>
+    <string name="map_cd_show_geofences">Pokaż geoogrodzenia</string>
+    <string name="map_cd_hide_geofences">Ukryj geoogrodzenia</string>
+    <string name="map_cd_follow">Podążaj za mną</string>
+    <string name="map_cd_friends">Znajomi</string>
+    <string name="map_no_friends">Nikt nie jest jeszcze śledzony</string>
+    <string name="map_you">Ty</string>
+    <string name="map_cd_go_my_location">Przejdź do mojej lokalizacji</string>
+    <string name="map_sos_active">⚠ SOS AKTYWNE</string>
+    <string name="map_away">Daleko</string>
+    <string name="map_no_location_yet">Brak lokalizacji</string>
+    <string name="map_cd_go_location">Przejdź do lokalizacji</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS WŁ.</string>
+    <string name="map_overdue">Zaległe — brak niedawnej aktualizacji</string>
+    <string name="map_stat_last_seen">Ostatnio widziano</string>
+    <string name="map_stat_battery">Bateria</string>
+    <string name="map_stat_accuracy">Dokładność</string>
+    <string name="map_stat_motion">Ruch</string>
+    <string name="map_stat_speed">Prędkość</string>
+    <string name="map_stat_elevation">Wysokość</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Historia: %1$s</string>
+    <string name="history_select_person">Wybierz osobę</string>
+    <string name="history_person_label">Osoba</string>
+    <string name="history_cd_prev_day">Poprzedni dzień</string>
+    <string name="history_cd_next_day">Następny dzień</string>
+    <string name="history_time_filter">Filtr czasu:</string>
+    <string name="history_cd_reset_time">Resetuj czas</string>
+    <string name="history_tab_list">Lista</string>
+    <string name="history_empty_title">Brak historii dla tego dnia</string>
+    <string name="history_empty_sub">Wybierz inną datę lub sprawdź połączenie.</string>
+    <string name="history_start_time">Czas rozpoczęcia</string>
+    <string name="history_end_time">Czas zakończenia</string>
+    <string name="history_no_data_title">Brak danych lokalizacji</string>
+    <string name="history_no_data_sub">Brak zarejestrowanych punktów dla tego dnia lub zakresu czasu.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Zarejestrowano %1$d punkt</item>
+        <item quantity="few">Zarejestrowano %1$d punkty</item>
+        <item quantity="many">Zarejestrowano %1$d punktów</item>
+        <item quantity="other">Zarejestrowano %1$d punktu</item>
+    </plurals>
+    <string name="history_cd_dismiss">Zamknij</string>
+    <string name="history_accuracy_label">Dokładność ±%1$s</string>
+    <string name="history_emergency_sos">Alarmowy sygnał SOS</string>
+    <string name="history_detail_location">Lokalizacja</string>
+    <string name="history_detail_coordinates">Współrzędne</string>
+    <string name="history_within">w promieniu ±%1$s</string>
+    <string name="history_detail_movement">Ruch</string>
+    <string name="history_movement_desc">%1$s %2$s, kurs %3$s</string>
+
+    <string name="common_create">Utwórz</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Dodaj obszar geoogrodzenia</string>
+    <string name="geo_cd_assign">Przypisz geoogrodzenie</string>
+    <string name="geo_unknown">Nieznane</string>
+    <string name="geo_empty_title">Brak geoogrodzeń</string>
+    <string name="geo_empty_sub">Dotknij +, aby utworzyć obszar geoogrodzenia, a następnie przypisz do niego kontakty w ich ustawieniach udostępniania.</string>
+    <string name="geo_delete_title">Usunąć geoogrodzenie?</string>
+    <string name="geo_delete_simple">Usunąć „%1$s”?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">„%1$s” jest przypisane do %2$d kontaktu. Usunięcie skasuje także te przypisania.</item>
+        <item quantity="few">„%1$s” jest przypisane do %2$d kontaktów. Usunięcie skasuje także te przypisania.</item>
+        <item quantity="many">„%1$s” jest przypisane do %2$d kontaktów. Usunięcie skasuje także te przypisania.</item>
+        <item quantity="other">„%1$s” jest przypisane do %2$d kontaktu. Usunięcie skasuje także te przypisania.</item>
+    </plurals>
+    <string name="geo_for_contact">Geoogrodzenia dla %1$s</string>
+    <string name="geo_empty_contact_title">Brak geoogrodzeń dla kontaktu</string>
+    <string name="geo_empty_contact_sub">Dotknij +, aby przypisać obszar geoogrodzenia i wybrać, czy alarmować przy przybyciu, wyjeździe czy obu.</string>
+    <string name="geo_no_areas_title">Brak geoogrodzeń</string>
+    <string name="geo_no_areas_msg">Najpierw utwórz obszar geoogrodzenia na ekranie Geoogrodzenia, a potem przypisz go tutaj.</string>
+    <string name="geo_radius_label">Promień %1$s</string>
+    <string name="geo_contacts_label">Kontakty: %1$s</string>
+    <string name="geo_no_contacts_assigned">Brak przypisanych kontaktów</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d reguła</item>
+        <item quantity="few">%1$d reguły</item>
+        <item quantity="many">%1$d reguł</item>
+        <item quantity="other">%1$d reguły</item>
+    </plurals>
+    <string name="geo_trigger_enter">Wejście</string>
+    <string name="geo_trigger_exit">Wyjście</string>
+    <string name="geo_trigger_both">Oba</string>
+    <string name="geo_edit_title">Edytuj geoogrodzenie</string>
+    <string name="geo_new_title">Nowe geoogrodzenie</string>
+    <string name="geo_cd_my_location">Moja lokalizacja</string>
+    <string name="geo_cd_radius_increase">Zwiększ promień</string>
+    <string name="geo_cd_radius_decrease">Zmniejsz promień</string>
+    <string name="geo_hint_tap">Dotknij lub przytrzymaj mapę, aby umieścić</string>
+    <string name="geo_hint_move">Zsuń palce, aby powiększyć • Przytrzymaj lub przeciągnij pinezkę, aby przesunąć</string>
+    <string name="geo_basic_info">Podstawowe informacje</string>
+    <string name="geo_search_title">Znajdź po adresie</string>
+    <string name="geo_search_label">Adres lub miejsce</string>
+    <string name="geo_search_placeholder">np. ul. Główna 10, Warszawa</string>
+    <string name="geo_search_no_results">Nie znaleziono pasującego adresu</string>
+    <string name="geo_cd_search">Szukaj</string>
+    <string name="geo_name_placeholder">np. Dom, Praca</string>
+    <string name="geo_name_required">Nazwa jest wymagana</string>
+    <string name="geo_latitude">Szerokość geograficzna</string>
+    <string name="geo_longitude">Długość geograficzna</string>
+    <string name="geo_lat_range">Od -90 do 90</string>
+    <string name="geo_lng_range">Od -180 do 180</string>
+    <string name="geo_radius">Promień</string>
+    <string name="geo_radius_range">Wpisz od %1$d do %2$d m</string>
+    <string name="geo_edit_assignment">Edytuj przypisanie</string>
+    <string name="geo_assign_title">Przypisz geoogrodzenie</string>
+    <string name="geo_select_area">Wybierz obszar geoogrodzenia</string>
+    <string name="geo_trigger_title">Powiadamiaj przy</string>
+    <string name="geo_add_rule">Dodaj regułę</string>
+    <string name="geo_alerts_all_times">Alerty aktywne przez cały czas. Dodaj regułę, aby ograniczyć, kiedy są wysyłane.</string>
+    <string name="geo_assign_action">Przypisz</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Alerty zbliżeniowe</string>
+    <string name="prox_empty_title">Brak śledzonych osób</string>
+    <string name="prox_empty_sub">Zeskanuj czyjś kod QR z karty Skanuj,\naby zacząć śledzić jego lokalizację</string>
+    <string name="prox_intro">Otrzymuj powiadomienia, gdy śledzona osoba znajdzie się w wybranej odległości od Ciebie.</string>
+    <string name="prox_alert_within">Alert w promieniu %1$s</string>
+    <string name="prox_alerts_off">Alerty wyłączone</string>
+    <string name="prox_alert_radius">Promień alertu</string>
+    <string name="prox_edit_schedule">Edytuj harmonogram</string>
+    <string name="prox_rules">Reguły</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Harmonogram dla %1$s</string>
+    <string name="schedule_cd_add_rule">Dodaj regułę</string>
+    <string name="schedule_empty_title">Brak reguł harmonogramu</string>
+    <string name="schedule_empty_global">Lokalizacja jest udostępniana cały czas. Dodaj regułę, aby ograniczyć, kiedy udostępnianie jest aktywne.</string>
+    <string name="schedule_empty_peer">Lokalizacja jest zawsze udostępniana %1$s. Dodaj regułę, aby to ograniczyć.</string>
+    <string name="schedule_active_hint">Aktywne, gdy dowolna reguła pasuje do bieżącego czasu. Pusto = zawsze włączone.</string>
+    <string name="schedule_all_day">Cały dzień</string>
+    <string name="schedule_plus_one_day"> (+1 dzień)</string>
+    <string name="schedule_rule_number">Reguła %1$d</string>
+    <string name="schedule_cd_delete_rule">Usuń regułę</string>
+    <string name="schedule_edit_rule">Edytuj regułę</string>
+    <string name="schedule_label_optional">Etykieta (opcjonalna)</string>
+    <string name="schedule_label_placeholder">np. Godziny pracy, Weekendy</string>
+    <string name="schedule_active_days">Aktywne dni</string>
+    <string name="schedule_time_window">Przedział czasu</string>
+    <string name="schedule_start">Początek</string>
+    <string name="schedule_end">Koniec</string>
+    <string name="schedule_overnight">Przez noc: aktywne od %1$s do %2$s następnego dnia</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Urządzenie jest nadzorowane</string>
+    <string name="gate_message">Dostęp do ustawień wymaga zgody opiekuna.</string>
+    <string name="gate_request_access">Poproś o dostęp</string>
+    <string name="gate_waiting">Oczekiwanie na zgodę opiekuna…</string>
+    <string name="gate_denied">Opiekun odmówił dostępu.</string>
+    <string name="gate_timed_out">Upłynął limit czasu prośby. Opiekun nie odpowiedział.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Bezterminowo</string>
+    <string name="retention_keep_for">Przechowuj przez: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d dzień</item>
+        <item quantity="few">%1$d dni</item>
+        <item quantity="many">%1$d dni</item>
+        <item quantity="other">%1$d dnia</item>
+    </plurals>
+
+    <string name="common_select">Wybierz</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Wybierz stałą lokalizację</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Wybierz, które karty mają się pojawiać na dolnym pasku, i ich kolejność. Mapa jest zawsze uwzględniona.</string>
+    <string name="customize_cd_move_up">Przesuń w górę</string>
+    <string name="customize_cd_move_down">Przesuń w dół</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Wersja %1$s (kompilacja %2$d)</string>
+    <string name="about_tagline">Prywatne udostępnianie lokalizacji zaufanym osobom. Bez kont, bez chmury, bez śledzenia z naszej strony.</string>
+    <string name="about_relay_connections">Połączenia z przekaźnikami</string>
+    <string name="about_connected">Połączono</string>
+    <string name="about_disconnected">Rozłączono</string>
+    <string name="about_open_source">Biblioteki open source</string>
+    <string name="about_lib_osmdroid_desc">Renderowanie map na bazie OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Transport WebSocket dla przekaźników Nostr</string>
+    <string name="about_lib_compose_desc">Framework interfejsu</string>
+    <string name="about_lib_hilt_desc">Wstrzykiwanie zależności</string>
+    <string name="about_lib_room_desc">Lokalna baza danych</string>
+    <string name="about_map_attribution">Dane mapy © autorzy OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Akceptuj</string>
+    <string name="notif_someone">Ktoś</string>
+    <string name="notif_sos_title">SOS od %1$s!</string>
+    <string name="notif_sos_text">%1$s aktywował(a) SOS w punkcie (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s prosi, abyś został(a) opiekunem</string>
+    <string name="notif_supervisor_request_text">Zaakceptuj, aby zezwolić na prośby o zatwierdzenie odblokowania z tego urządzenia</string>
+    <string name="notif_supervisor_request_big">Zaakceptuj, aby %1$s mógł (mogła) wysyłać Ci prośby o zatwierdzenie odblokowania, gdy tryb nadzorowany jest aktywny.</string>
+    <string name="notif_supervised_active_title">Tryb nadzorowany aktywny</string>
+    <string name="notif_supervised_active_text">Opiekun potwierdził — tryb nadzorowany został skonfigurowany</string>
+    <string name="notif_supervised_declined_title">Tryb nadzorowany odrzucony</string>
+    <string name="notif_supervised_declined_text">Opiekun odrzucił prośbę — tryb nadzorowany został wyłączony</string>
+    <string name="notif_tracking_alert_title">Alert o śledzeniu</string>
+    <string name="notif_tracking_proximity">%1$s otrzymał(a) dotyczący Ciebie alert zbliżeniowy</string>
+    <string name="notif_tracking_geofence">%1$s otrzymał(a) alert o Twoim wejściu/wyjściu ze strefy: %2$s</string>
+    <string name="notif_tracking_generic">%1$s monitoruje Twoją lokalizację</string>
+    <string name="notif_track_update_title">Aktualizacja udostępniania od %1$s</string>
+    <string name="notif_track_new_title">Nowy kontakt: %1$s</string>
+    <string name="notif_role_send_receive">Wysyłanie/odbieranie lokalizacji</string>
+    <string name="notif_role_send">Wysyłanie lokalizacji</string>
+    <string name="notif_role_receive">Odbieranie lokalizacji</string>
+    <string name="notif_role_none">Bez udostępniania lokalizacji</string>
+    <string name="notif_track_requesting">%1$s prosi o: %2$s</string>
+    <string name="notif_track_update_body">%1$s chce zmienić sposób udostępniania lokalizacji.</string>
+    <string name="notif_track_new_body">%1$s dodał(a) Cię jako kontakt i chce się połączyć.</string>
+    <string name="notif_contact_connected_title">Kontakt połączony</string>
+    <string name="notif_contact_connected_text">%1$s jest teraz z Tobą połączony(-a).</string>
+    <string name="notif_request_declined_title">Prośba odrzucona</string>
+    <string name="notif_request_declined_text">%1$s odrzucił(a) Twoją prośbę o udostępnianie lokalizacji.</string>
+    <string name="notif_message_person">Napisz do %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s wszedł (weszła) do %2$s</string>
+    <string name="notif_geofence_left_title">%1$s opuścił(a) %2$s</string>
+    <string name="notif_geofence_subtitle">w %1$s · promień %2$s</string>
+    <string name="notif_person_nearby">%1$s jest w pobliżu</string>
+    <string name="notif_distance_from_you">%1$s od Ciebie</string>
+    <string name="notif_missed_title">Brak aktualizacji od %1$s</string>
+    <string name="notif_missed_text">Ostatnio widziano %1$s min temu w pobliżu (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS AKTYWNE!</string>
+    <string name="notif_sos_active_text">Nadawanie alarmu do kontaktów SOS</string>
+    <string name="notif_messages_group_title">Wiadomości LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Odrzucono prośbę o kontakt od %1$s</string>
+    <string name="toast_now_supervising">Nadzorujesz teraz urządzenie %1$s</string>
+    <string name="toast_declined_supervision">Odrzucono prośbę o nadzór od %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Przed chwilą</string>
+    <string name="time_minutes_ago">%1$d min temu</string>
+    <string name="fallback_me">Ja</string>
+    <string name="fallback_unknown">Nieznany</string>
+    <string name="geo_unassigned">Nieprzypisane</string>
+    <string name="days_every_day">Codziennie</string>
+    <string name="days_weekdays">Dni robocze</string>
+    <string name="days_weekends">Weekendy</string>
+    <string name="days_none">Brak dni</string>
+    <string name="chat_my_location_message">Moja bieżąca lokalizacja: %1$s</string>
+    <string name="scan_error_bad_pubkey">Nieprawidłowe zaproszenie: błędny klucz publiczny</string>
+    <string name="scan_error_key_mismatch">Nieprawidłowe zaproszenie: klucze się nie zgadzają</string>
+    <string name="scan_error_unknown">Nieznany błąd</string>
+    <string name="scan_error_invalid_link">Nieprawidłowy link z zaproszeniem</string>
+    <string name="scan_fallback_contact">ten kontakt</string>
+    <string name="backup_saved">Kopia zapasowa zapisana: %1$s</string>
+    <string name="backup_saved_encrypted">Kopia zapasowa zapisana (zaszyfrowana): %1$s</string>
+    <string name="backup_failed">Tworzenie kopii nie powiodło się: %1$s</string>
+    <string name="backup_could_not_read_file">Nie można odczytać pliku</string>
+    <string name="backup_could_not_write_file">Nie można zapisać pliku</string>
+    <string name="backup_could_not_read">Nie można odczytać kopii zapasowej: %1$s</string>
+    <string name="backup_incorrect_password">Nieprawidłowe hasło</string>
+    <string name="restore_result_restored">Przywrócono: %1$s</string>
+    <string name="restore_result_failed">Niepowodzenie: %1$s</string>
+    <string name="restore_nothing">Nie ma nic do przywrócenia</string>
+    <string name="restore_failed">Przywracanie nie powiodło się: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="few">%1$d kontakty</item>
+        <item quantity="many">%1$d kontaktów</item>
+        <item quantity="other">%1$d kontaktu</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geoogrodzenie</item>
+        <item quantity="few">%1$d geoogrodzenia</item>
+        <item quantity="many">%1$d geoogrodzeń</item>
+        <item quantity="other">%1$d geoogrodzenia</item>
+    </plurals>
+    <string name="peer_role_change_sent">Prośba o zmianę roli wysłana do %1$s</string>
+    <string name="peer_not_found">Nie znaleziono kontaktu</string>
+    <string name="peer_purge_location_sent">Polecenie zdalnego usunięcia WSZYSTKICH lokalizacji wysłane do %1$s</string>
+    <string name="peer_purge_messages_sent">Polecenie zdalnego usunięcia WSZYSTKICH wiadomości wysłane do %1$s</string>
+    <string name="onboarding_error_key_length">Nieprawidłowy klucz — musi mieć 64 znaki szesnastkowe.</string>
+    <string name="onboarding_error_key_range">Nieprawidłowy klucz prywatny — poza zakresem krzywej.</string>
+    <string name="onboarding_error_hex">Nieprawidłowy format szesnastkowy.</string>
+    <string name="onboarding_error_import_failed">Nie udało się zaimportować klucza: %1$s</string>
 </resources>
