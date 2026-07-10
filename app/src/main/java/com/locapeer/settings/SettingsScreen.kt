@@ -360,11 +360,16 @@ fun SettingsScreen(
                         headlineContent = { Text(stringResource(R.string.settings_map_pin_colour)) },
                         supportingContent = {
                             Column(
-                                modifier = Modifier.padding(top = 8.dp),
-                                verticalArrangement = Arrangement.spacedBy(10.dp)
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 8.dp),
+                                verticalArrangement = Arrangement.spacedBy(12.dp)
                             ) {
                                 PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
-                                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
                                         rowColors.forEach { hex ->
                                             val color = Color(android.graphics.Color.parseColor(hex))
                                             val isSelected = hex == settings.pinColor
