@@ -577,7 +577,7 @@ private fun OsmdroidMapView(
             userLocation?.let { loc ->
                 val myMarker = Marker(mapView).apply {
                     position = loc
-                    title = "You"
+                    title = context.getString(R.string.map_you)
                     icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive)
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
                     infoWindow = null

@@ -17,6 +17,7 @@
     <string name="common_cancel">Cancelar</string>
     <string name="common_done">Concluído</string>
     <string name="common_delete">Excluir</string>
+    <string name="common_create">Criar</string>
     <string name="common_disable">Desativar</string>
     <string name="common_enable">Ativar</string>
     <string name="common_restore">Restaurar</string>
@@ -700,4 +701,38 @@
     <string name="toast_declined_contact">Solicitação de contato de %1$s recusada</string>
     <string name="toast_now_supervising">Agora supervisionando o dispositivo de %1$s</string>
     <string name="toast_declined_supervision">Solicitação de supervisão de %1$s recusada</string>
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Agora mesmo</string>
+    <string name="time_minutes_ago">há %1$d min</string>
+    <string name="fallback_me">Eu</string>
+    <string name="fallback_unknown">Desconhecido</string>
+    <string name="geo_unassigned">Não atribuída</string>
+    <string name="days_every_day">Todos os dias</string>
+    <string name="days_weekdays">Dias úteis</string>
+    <string name="days_weekends">Fins de semana</string>
+    <string name="days_none">Nenhum dia</string>
+    <string name="chat_my_location_message">Minha localização atual: %1$s</string>
+    <string name="backup_saved">Backup salvo: %1$s</string>
+    <string name="backup_saved_encrypted">Backup salvo (criptografado): %1$s</string>
+    <string name="backup_failed">Falha no backup: %1$s</string>
+    <string name="backup_could_not_read_file">Não foi possível ler o arquivo</string>
+    <string name="backup_could_not_read">Não foi possível ler o backup: %1$s</string>
+    <string name="backup_incorrect_password">Senha incorreta</string>
+    <string name="restore_result_restored">Restaurado: %1$s</string>
+    <string name="restore_result_failed">Falhou: %1$s</string>
+    <string name="restore_nothing">Nada para restaurar</string>
+    <string name="restore_failed">Falha na restauração: %1$s</string>
+    <string name="onboarding_error_hex">Formato hexadecimal inválido.</string>
+    <string name="onboarding_error_key_length">Chave inválida: deve ter 64 caracteres hexadecimais.</string>
+    <string name="onboarding_error_key_range">Chave privada inválida: fora do intervalo da curva.</string>
+    <string name="onboarding_error_import_failed">Falha ao importar a chave: %1$s</string>
+    <string name="scan_error_invalid_link">Link de convite inválido</string>
+    <string name="scan_error_bad_pubkey">Convite inválido: chave pública incorreta</string>
+    <string name="scan_error_key_mismatch">Convite inválido: as chaves não correspondem</string>
+    <string name="scan_error_unknown">Erro desconhecido</string>
+    <string name="scan_fallback_contact">este contato</string>
+    <string name="peer_not_found">Par não encontrado</string>
+    <string name="peer_purge_location_sent">Comando de exclusão remota de TODAS as localizações enviado para %1$s</string>
+    <string name="peer_purge_messages_sent">Comando de exclusão remota de TODAS as mensagens enviado para %1$s</string>
+    <string name="peer_role_change_sent">Solicitação de mudança de função enviada para %1$s</string>
 </resources>

@@ -558,13 +558,12 @@ fun SettingsScreen(
             item { SectionLabel(stringResource(R.string.settings_section_backup_keys)) }
             item {
                 SettingsCard {
-                    backupResult?.let { msg ->
+                    backupResult?.let { result ->
                         Text(
-                            msg,
+                            result.message,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.labelSmall,
-                            color = if (msg.startsWith("Backup failed") || msg.startsWith("Restore failed") || msg.startsWith("Could not"))
-                                MaterialTheme.colorScheme.error
+                            color = if (result.isError) MaterialTheme.colorScheme.error
                             else MaterialTheme.colorScheme.primary
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
