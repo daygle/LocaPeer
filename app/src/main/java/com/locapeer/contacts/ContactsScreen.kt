@@ -25,7 +25,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
-import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.ui.components.EmptyState
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
@@ -37,7 +36,6 @@ private enum class BulkAction { REMOVE, DELETE_MESSAGES, DELETE_LOCATION }
 fun ContactsScreen(
     onNavigateToChat: (peerId: String, peerName: String) -> Unit,
     onNavigateToSharingSettings: (peerId: String, peerName: String) -> Unit = { _, _ -> },
-    onNavigateToMap: (lat: Double, lng: Double) -> Unit = { _, _ -> },
     onNavigateToPendingRequests: () -> Unit = {},
     onNavigateToHistory: (peerId: String) -> Unit = {},
     onNavigateToInvite: () -> Unit = {},
@@ -223,7 +221,6 @@ fun ContactsScreen(
                             isSelectionMode = isSelectionMode,
                             formatLastSeen = vm::formatLastSeen,
                             onMessage = { onNavigateToChat(item.peer.deviceId, item.peer.displayName) },
-                            onShowOnMap = { hb -> onNavigateToMap(hb.lat, hb.lng) },
                             onShowHistory = { onNavigateToHistory(item.peer.deviceId) },
                             onRename = { nameInput = item.peer.displayName; editingContact = item },
                             onDeleteContact = { confirmAction = item to DataAction.REMOVE_CONTACT },
@@ -380,7 +377,6 @@ private fun ContactRow(
     isSelectionMode: Boolean,
     formatLastSeen: (Long) -> String,
     onMessage: () -> Unit,
-    onShowOnMap: (HeartbeatEntity) -> Unit,
     onShowHistory: () -> Unit,
     onRename: () -> Unit,
     onDeleteContact: () -> Unit,
@@ -447,16 +443,6 @@ private fun ContactRow(
                             Icon(
                                 Icons.AutoMirrored.Filled.Chat,
                                 contentDescription = stringResource(R.string.cd_message),
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(22.dp)
-                            )
-                        }
-                    }
-                    if (hb != null) {
-                        IconButton(onClick = { onShowOnMap(hb) }) {
-                            Icon(
-                                Icons.Default.LocationOn,
-                                contentDescription = stringResource(R.string.cd_show_on_map),
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(22.dp)
                             )
