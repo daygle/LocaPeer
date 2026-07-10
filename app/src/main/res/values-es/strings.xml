@@ -717,12 +717,21 @@
     <string name="backup_saved_encrypted">Respaldo guardado (cifrado): %1$s</string>
     <string name="backup_failed">Error en el respaldo: %1$s</string>
     <string name="backup_could_not_read_file">No se pudo leer el archivo</string>
+    <string name="backup_could_not_write_file">No se pudo escribir el archivo</string>
     <string name="backup_could_not_read">No se pudo leer el respaldo: %1$s</string>
     <string name="backup_incorrect_password">Contraseña incorrecta</string>
     <string name="restore_result_restored">Restaurado: %1$s</string>
     <string name="restore_result_failed">Falló: %1$s</string>
     <string name="restore_nothing">Nada que restaurar</string>
     <string name="restore_failed">Error al restaurar: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contacto</item>
+        <item quantity="other">%1$d contactos</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geovalla</item>
+        <item quantity="other">%1$d geovallas</item>
+    </plurals>
     <string name="onboarding_error_hex">Formato hexadecimal no válido.</string>
     <string name="onboarding_error_key_length">Clave no válida: debe tener 64 caracteres hexadecimales.</string>
     <string name="onboarding_error_key_range">Clave privada no válida: fuera del rango de la curva.</string>

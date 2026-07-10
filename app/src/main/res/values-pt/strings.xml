@@ -716,12 +716,21 @@
     <string name="backup_saved_encrypted">Backup salvo (criptografado): %1$s</string>
     <string name="backup_failed">Falha no backup: %1$s</string>
     <string name="backup_could_not_read_file">Não foi possível ler o arquivo</string>
+    <string name="backup_could_not_write_file">Não foi possível gravar o arquivo</string>
     <string name="backup_could_not_read">Não foi possível ler o backup: %1$s</string>
     <string name="backup_incorrect_password">Senha incorreta</string>
     <string name="restore_result_restored">Restaurado: %1$s</string>
     <string name="restore_result_failed">Falhou: %1$s</string>
     <string name="restore_nothing">Nada para restaurar</string>
     <string name="restore_failed">Falha na restauração: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contato</item>
+        <item quantity="other">%1$d contatos</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geocerca</item>
+        <item quantity="other">%1$d geocercas</item>
+    </plurals>
     <string name="onboarding_error_hex">Formato hexadecimal inválido.</string>
     <string name="onboarding_error_key_length">Chave inválida: deve ter 64 caracteres hexadecimais.</string>
     <string name="onboarding_error_key_range">Chave privada inválida: fora do intervalo da curva.</string>

@@ -717,12 +717,21 @@
     <string name="backup_saved_encrypted">Backup salvato (crittografato): %1$s</string>
     <string name="backup_failed">Backup non riuscito: %1$s</string>
     <string name="backup_could_not_read_file">Impossibile leggere il file</string>
+    <string name="backup_could_not_write_file">Impossibile scrivere il file</string>
     <string name="backup_could_not_read">Impossibile leggere il backup: %1$s</string>
     <string name="backup_incorrect_password">Password errata</string>
     <string name="restore_result_restored">Ripristinato: %1$s</string>
     <string name="restore_result_failed">Non riuscito: %1$s</string>
     <string name="restore_nothing">Niente da ripristinare</string>
     <string name="restore_failed">Ripristino non riuscito: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contatto</item>
+        <item quantity="other">%1$d contatti</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="other">%1$d geofence</item>
+    </plurals>
     <string name="onboarding_error_hex">Formato esadecimale non valido.</string>
     <string name="onboarding_error_key_length">Chiave non valida: deve contenere 64 caratteri esadecimali.</string>
     <string name="onboarding_error_key_range">Chiave privata non valida: fuori dall\'intervallo della curva.</string>

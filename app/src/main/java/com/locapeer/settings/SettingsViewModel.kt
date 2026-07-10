@@ -349,7 +349,11 @@ class SettingsViewModel @Inject constructor(
                 }
 
                 val json = jsonExport.encodeToString(finalBackup)
-                context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
+                val output = context.contentResolver.openOutputStream(uri) ?: run {
+                    _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_write_file), isError = true)
+                    return@launch
+                }
+                output.use { it.write(json.toByteArray()) }
                 val parts = sections.joinToString(", ") { context.getString(sectionLabelRes(it)) }
                 _backupResult.value = BackupResult(context.getString(
                     if (!password.isNullOrBlank()) com.locapeer.R.string.backup_saved_encrypted
