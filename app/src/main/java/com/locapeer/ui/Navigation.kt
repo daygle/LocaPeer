@@ -5,6 +5,8 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.History
@@ -154,10 +156,16 @@ fun LocaPeerNavHost(
             }
         }
     ) { padding ->
+        // Apply (and consume) only the bottom padding: screens draw their own top bars
+        // under the status bar, and consuming the bottom inset stops nested Scaffolds
+        // (e.g. the history screen) from re-adding it as a white gap above the nav bar.
+        val bottomPadding = padding.calculateBottomPadding()
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(bottom = padding.calculateBottomPadding()),
+            modifier = Modifier
+                .padding(bottom = bottomPadding)
+                .consumeWindowInsets(PaddingValues(bottom = bottomPadding)),
             enterTransition = { fadeEnter },
             exitTransition = { fadeExit },
             popEnterTransition = { fadeEnter },
