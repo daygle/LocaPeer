@@ -471,6 +471,18 @@ private fun ContactRow(
                                 leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
                                 onClick = { showOverflow = false; onRename() }
                             )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.contacts_remove_contact_title), color = MaterialTheme.colorScheme.error) },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        null,
+                                        tint = MaterialTheme.colorScheme.error,
+                                        modifier = Modifier.size(18.dp)
+                                    )
+                                },
+                                onClick = { showOverflow = false; onDeleteContact() }
+                            )
                             HorizontalDivider()
                             Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
                                 Text(
@@ -500,19 +512,6 @@ private fun ContactRow(
                                     )
                                 },
                                 onClick = { showOverflow = false; onRemoveSelf() }
-                            )
-                            HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.contacts_remove_contact_title), color = MaterialTheme.colorScheme.error) },
-                                leadingIcon = {
-                                    Icon(
-                                        Icons.Default.Delete,
-                                        null,
-                                        tint = MaterialTheme.colorScheme.error,
-                                        modifier = Modifier.size(18.dp)
-                                    )
-                                },
-                                onClick = { showOverflow = false; onDeleteContact() }
                             )
                         }
                     }
