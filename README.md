@@ -6,7 +6,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map.
 - **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary), detected by a custom GPS speed engine fused with Android Activity Recognition, saving power during low battery and while stationary without sacrificing accuracy.
-- **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
+- **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KiB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** - Choose `EXACT` or `SUBURB` precision per contact. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
 - **Role-Based Sharing** - Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
@@ -18,7 +18,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 - **Location History** - Browse a contact's (or your own) past location data day-by-day, in a list or on an interactive OpenStreetMap view, with a direction/bearing summary and an adjustable time-of-day range. Optional distance-thinning and accuracy filters declutter the trail, and street-address lookup is available as an explicit opt-in (off by default, since it queries the device geocoder).
 - **Supervised Mode** - Lock Settings behind remote Nostr-based approval. Supervised devices register with a supervisor via a two-sided consent handshake; unlock requests are approved or denied in real time with no static PIN to compromise.
 - **Customizable Navigation & Units** - Choose which bottom-navigation tabs appear, reorder them, and set the screen shown on launch. Distances, speeds, elevation, and clock format follow your metric/imperial and 12/24-hour preferences.
-- **Localization** - Translated into 50+ languages with an in-app language picker (per-app locale on Android 13+, backported below).
+- **Localization** - Translated into 50+ languages with an in-app language picker (per-app locale on Android 13+, backed below).
 - **Backup & Restore** - Export and selectively restore your identity, contacts, geofences, and settings to a local JSON file, optionally password-encrypted (AES-256-GCM with a PBKDF2-HMAC-SHA256 derived key).
 - **Screenshot Protection** - `FLAG_SECURE` prevents UI capture of sensitive screens (maps, private key, profile QR).
 
@@ -50,7 +50,7 @@ Each contact relationship can be set to one of two precision levels:
 | Mode | Behaviour |
 |---|---|
 | `EXACT` | Full GPS coordinates transmitted |
-| `SUBURB` | Coordinates rounded to ~0.01°, obscuring exact position within an ~1.1 km radius |
+| `SUBURB` | Coordinates rounded to ~0.01°, obscuring exact position within a ~1.1 km radius |
 
 ### Sharing Schedules
 Schedule rules specify which days of the week (Monday–Sunday bitmask) and which minutes of the day (`startMinute`–`endMinute`) sharing is active. Multiple rules are combined with OR logic. An empty rule set means always on. SOS alerts bypass schedules entirely. Rules can be set globally or overridden per contact.
@@ -123,7 +123,7 @@ cd LocaPeer
 ## Privacy & Security
 
 - **Zero Trust Relay**: The Nostr relay is a dumb transport; all application event payloads are NIP-44 encrypted before leaving the device. The relay can see NIP-09 deletion requests (kind 5, plaintext by standard) and event metadata (kind, timestamp, pubkey), but cannot read your location data or message content.
-- **Per-Peer Encryption**: Each heartbeat is encrypted individually for its recipient using keys derived for that conversation.
+- **Peer-Peer Encryption**: Each heartbeat is encrypted individually for its recipient using keys derived for that conversation.
 - **Hardware-Backed Keys**: Private keys never leave the device and are protected by the TEE/SE via Android Keystore where supported.
 - **Schnorr Signatures**: Every event is signed with BIP-340 Schnorr; recipients verify the signature before processing.
 - **Tracking Transparency**: `TRACKING_ALERT` (kind 1058) events notify you if another user receives a geofence or proximity alert triggered by your movement, ensuring you are aware of how your location data is being monitored.
@@ -135,4 +135,4 @@ cd LocaPeer
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
