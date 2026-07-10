@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Kanály oznámení & Služba na popředí ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Vysílání polohy</string>
     <string name="channel_desc_heartbeat">Vysílá vaši polohu vašim schváleným kontaktům</string>
     <string name="channel_name_alerts">Upozornění</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer běží</string>
     <string name="notification_heartbeat_text">Sdílení vaší polohy s ostatními</string>
 
-    <!-- ── Společné akce ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Uložit</string>
     <string name="common_cancel">Zrušit</string>
     <string name="common_done">Hotovo</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Schválit</string>
     <string name="common_deny">Odmítnout</string>
 
-    <!-- ── Navigační karty ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Zprávy</string>
     <string name="tab_history">Historie</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Nastavení</string>
 
-    <!-- ── Pohyb / stavy aktivity ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Stojící</string>
     <string name="motion_walking">Chůze</string>
     <string name="motion_running">Běh</string>
     <string name="motion_cycling">Cyklistika</string>
     <string name="motion_driving">Řízení</string>
 
-    <!-- ── Nastavení ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Soukromý klíč</string>
+    <string name="backup_section_contacts">Kontakty</string>
+    <string name="backup_section_geofences">Geofence</string>
+    <string name="backup_section_settings">Nastavení</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Žádost o dohled</string>
+    <string name="supervision_request_message">„%1$s“ žádá o přístup ke svému nastavení. Povolit?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Nastavení</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Poloha &amp; Soukromí</string>
     <string name="settings_section_security">Zabezpečení</string>
     <string name="settings_section_map">Mapa</string>
@@ -54,15 +66,714 @@
     <string name="settings_section_backup_keys">Zálohování &amp; Klíče</string>
     <string name="settings_section_about">O aplikaci</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Upravit jméno</string>
     <string name="settings_my_qr">Můj QR</string>
     <string name="settings_no_name_set">Jméno nenastaveno</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Sdílet moji polohu</string>
+    <string name="settings_broadcasting">Vysílá se vašim kontaktům</string>
+    <string name="settings_not_broadcasting">Nevysílá se</string>
+    <string name="settings_sharing_schedule">Rozvrh sdílení</string>
+    <string name="settings_always_on">Vždy zapnuto</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d pravidlo</item>
+        <item quantity="few">%1$d pravidla</item>
+        <item quantity="many">%1$d pravidla</item>
+        <item quantity="other">%1$d pravidel</item>
+    </plurals>
+    <string name="settings_geofences">Geofence</string>
+    <string name="settings_geofences_subtitle">Správa sdílených oblastí geofence</string>
+    <string name="settings_notify_when_tracked">Upozornit při sledování</string>
+    <string name="settings_notify_when_tracked_subtitle">Dostávat oznámení, když se u kontaktu spustí upozornění na blízkost nebo geofence týkající se vás.</string>
+    <string name="settings_my_location_history">Historie polohy</string>
+    <string name="settings_my_location_history_subtitle">Procházejte svou vlastní časovou osu polohy</string>
+    <string name="settings_lookup_addresses">Vyhledávat adresy</string>
+    <string name="settings_lookup_addresses_subtitle">Zobrazovat adresy u bodů historie a špendlíků na mapě a hledat podle adresy při umisťování geofence. Souřadnice nebo zadané hledání se odesílají geokódovací službě zařízení (obvykle Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Dohled aktivní</string>
+    <string name="settings_supervision_active_subtitle">Nastavení vyžaduje schválení dohlížitele</string>
+    <string name="settings_disable_supervised">Vypnout režim pod dohledem</string>
+    <string name="settings_supervised_mode">Režim pod dohledem</string>
+    <string name="settings_supervised_mode_subtitle">Vyžadovat schválení dohlížitele pro přístup k nastavení</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Výchozí bod</string>
+    <string name="settings_map_current_location">Aktuální poloha</string>
+    <string name="settings_map_all_contacts">Všechny kontakty</string>
+    <string name="settings_map_fixed_location">Pevná poloha</string>
+    <string name="settings_map_last_position">Poslední pozice</string>
+    <string name="settings_map_starting_point_title">Výchozí bod mapy</string>
+    <string name="settings_no_location_set">Poloha není nastavena</string>
+    <string name="settings_pick_location_on_map">Vybrat polohu na mapě</string>
+    <string name="settings_default_zoom_level">Výchozí úroveň přiblížení</string>
+    <string name="settings_map_pin_colour">Barva špendlíku na mapě</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Frekvence aktualizací</string>
+    <string name="settings_update_cadence_subtitle">Upravte, jak často se vaše poloha vysílá</string>
+    <string name="settings_update_cadence_dialog_message">Určete, jak často se vaše poloha aktualizuje podle vaší aktivity. Časté aktualizace spotřebují více baterie.</string>
+    <string name="settings_update_cadence_reset">Obnovit výchozí</string>
+    <string name="settings_min_distance_filtering">Filtrování minimální vzdálenosti</string>
+    <string name="settings_min_distance_filtering_subtitle">Zobrazovat pouze body vzdálené od předchozího alespoň o tuto vzdálenost.</string>
+    <string name="settings_discard_low_accuracy">Zahazovat nepřesné záznamy</string>
+    <string name="settings_discard_low_accuracy_subtitle">Nevysílat ani nezaznamenávat vlastní polohy s poloměrem přesnosti větším než tato hodnota. SOS se nikdy nevynechává.</string>
+    <string name="settings_hide_low_accuracy">Skrývat nepřesné body</string>
+    <string name="settings_hide_low_accuracy_subtitle">Skrývat body historie s poloměrem přesnosti větším než tato hodnota. Nic se nemaže.</string>
+    <string name="settings_low_battery" formatted="false">Slabá baterie (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Detekce pohybu</string>
+    <string name="settings_motion_detection_on">Zapnuto — zpřesňuje typ pohybu (chůze, jízda) v historii</string>
+    <string name="settings_motion_detection_off">Vypnuto — povolte přístup k fyzické aktivitě pro přesnější štítky pohybu</string>
+    <string name="settings_enable_motion_title">Zapnout detekci pohybu</string>
+    <string name="settings_enable_motion_message">Přístup k fyzické aktivitě umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání v historii. Momentálně je vypnutý — můžete jej znovu povolit v nastavení systému.</string>
+    <string name="settings_open_settings">Otevřít nastavení</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Jednotky rychlosti</string>
+    <string name="settings_speed_imperial">Imperiální (mph)</string>
+    <string name="settings_speed_metric">Metrické (km/h)</string>
+    <string name="settings_elevation_units">Jednotky nadmořské výšky</string>
+    <string name="settings_elevation_imperial">Imperiální (stopy)</string>
+    <string name="settings_elevation_metric">Metrické (metry)</string>
+    <string name="settings_distance_units">Jednotky vzdálenosti</string>
+    <string name="settings_distance_imperial">Imperiální (ft/mi)</string>
+    <string name="settings_distance_metric">Metrické (m/km)</string>
+    <string name="settings_time_format">Formát času</string>
+    <string name="settings_time_24h">24hodinový (13:30)</string>
+    <string name="settings_time_12h">12hodinový (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Údaje o poloze</string>
+    <string name="settings_retention_location_subtitle">Jak dlouho uchovávat údaje o poloze kontaktů v tomto zařízení</string>
+    <string name="settings_clear_all_location">Vymazat všechny údaje o poloze</string>
+    <string name="settings_retention_messages">Zprávy</string>
+    <string name="settings_retention_messages_subtitle">Jak dlouho uchovávat přijaté zprávy v tomto zařízení</string>
+    <string name="settings_clear_all_messages">Vymazat všechny zprávy</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Přizpůsobit navigaci</string>
+    <string name="settings_customize_nav_subtitle">Vyberte a uspořádejte spodní karty</string>
+    <string name="settings_start_page">Úvodní stránka</string>
     <string name="settings_language">Jazyk</string>
     <string name="settings_language_title">Jazyk aplikace</string>
     <string name="settings_language_system">Výchozí systémový</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Exportovat zálohu</string>
+    <string name="settings_export_backup_subtitle">Uložte svůj soukromý klíč a kontakty do souboru. Uchovávejte jej v bezpečí!</string>
+    <string name="settings_import_backup">Importovat zálohu</string>
+    <string name="settings_import_backup_subtitle">Obnovit z dříve exportovaného souboru</string>
+    <string name="settings_view_private_key">Zobrazit soukromý klíč</string>
+    <string name="settings_view_private_key_subtitle">Zobrazit váš 64znakový hexadecimální klíč identity</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">O aplikaci LocaPeer</string>
+    <string name="settings_about_subtitle">Verze, stav relé, open source</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Upravit zobrazované jméno</string>
+    <string name="settings_display_name_label">Zobrazované jméno</string>
+    <string name="settings_my_invite_qr">Můj zvací QR kód</string>
+    <string name="settings_invite_qr_subtitle">Ostatní jej mohou naskenovat a začít vás sledovat.</string>
+    <string name="settings_invite_qr_cd">Zvací QR kód</string>
+    <string name="settings_private_key_title">Soukromý klíč</string>
+    <string name="settings_private_key_warning">Uchovávejte jej v bezpečí. Kdokoli s tímto klíčem se za vás může vydávat.</string>
+    <string name="settings_clear_location_title">Vymazat historii polohy?</string>
+    <string name="settings_clear_location_message">Všechny uložené záznamy polohy budou trvale smazány.</string>
+    <string name="settings_clear_messages_title">Vymazat historii zpráv?</string>
+    <string name="settings_clear_messages_message">Všechny uložené zprávy budou trvale smazány.</string>
+    <string name="settings_encrypted_backup_title">Šifrovaná záloha</string>
+    <string name="settings_encrypted_backup_message">Tato záloha je šifrovaná. Pro pokračování zadejte heslo.</string>
+    <string name="settings_select_restore_title">Vyberte data k obnovení</string>
+    <string name="settings_select_export_title">Vyberte data k exportu</string>
+    <string name="settings_export_password_hint">Volitelně nastavte heslo pro zašifrování souboru zálohy.</string>
+    <string name="settings_backup_password_optional">Heslo zálohy (volitelné)</string>
+    <string name="settings_select_sections">Vyberte sekce k zahrnutí:</string>
+    <string name="settings_choose_file_location">Zvolte umístění souboru</string>
+    <string name="settings_not_in_backup">V této záloze není</string>
+    <string name="settings_enable_supervised_title">Zapnout režim pod dohledem</string>
+    <string name="settings_enable_supervised_message">Vyberte kontakt, který bude dohlížitelem. Přístup k nastavení musí schválit ze svého zařízení.</string>
+    <string name="settings_no_peers_found">Žádné kontakty nenalezeny. Nejprve přidejte kontakt naskenováním jeho zvacího QR kódu.</string>
+    <string name="settings_disable_supervised_title">Vypnout režim pod dohledem?</string>
+    <string name="settings_disable_supervised_message">Nastavení bude přístupné bez schválení dohlížitele.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Odebrat</string>
+    <string name="common_name">Jméno</string>
+    <string name="common_search">Hledat</string>
+    <string name="common_sort">Seřadit</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Zpráva</string>
+    <string name="cd_show_on_map">Zobrazit na mapě</string>
+    <string name="cd_more_options">Další možnosti</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">Vybráno: %1$d</item>
+        <item quantity="few">Vybráno: %1$d</item>
+        <item quantity="many">Vybráno: %1$d</item>
+        <item quantity="other">Vybráno: %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Zrušit výběr</string>
+    <string name="contacts_cd_select_all">Vybrat vše</string>
+    <string name="contacts_cd_deselect_all">Zrušit výběr všeho</string>
+    <string name="contacts_cd_qr_invite">QR / pozvánka</string>
+    <string name="contacts_cd_pending_requests">Čekající žádosti</string>
+    <string name="contacts_sort_last_seen">Naposledy online</string>
+    <string name="contacts_search_placeholder">Hledat kontakty…</string>
+    <string name="contacts_empty_title">Zatím žádné kontakty</string>
+    <string name="contacts_empty_subtitle">Naskenujte QR kód, spojte se s někým a začněte sdílet polohu.</string>
+    <string name="contacts_scan_qr">Naskenovat QR kód</string>
+    <string name="contacts_bulk_delete_messages">Smazat zprávy</string>
+    <string name="contacts_bulk_delete_locations">Smazat polohy</string>
+    <string name="contacts_last_seen">Naposledy online: %1$s</string>
+    <string name="contacts_no_location_yet">Zatím žádné údaje o poloze</string>
+    <string name="contacts_view_sharing_settings">Nastavení sdílení</string>
+    <string name="contacts_view_location_history">Historie polohy</string>
+    <string name="contacts_rename_contact">Přejmenovat kontakt</string>
+    <string name="contacts_on_contact_device">V zařízení kontaktu</string>
+    <string name="contacts_delete_my_messages_title">Smazat moje zprávy</string>
+    <string name="contacts_delete_locations_title">Smazat sdílené polohy</string>
+    <string name="contacts_remove_contact_title">Odebrat kontakt</string>
+    <string name="contacts_leave_title">Smazat kontakt a data</string>
+    <string name="contacts_rename_title">Přejmenovat kontakt</string>
+    <string name="contacts_remove_contact_body">Odebrat %1$s z kontaktů? Historie jeho polohy bude také lokálně smazána.</string>
+    <string name="contacts_leave_body">Tímto se odeberete z kontaktů uživatele %1$s a všechny vaše zprávy a údaje o poloze budou smazány z jeho zařízení. Ztratíte také přístup k jeho poloze.</string>
+    <string name="contacts_delete_my_messages_body">Tímto smažete všechny zprávy, které jste odeslali, ze zařízení uživatele %1$s. Nelze to vrátit zpět.</string>
+    <string name="contacts_delete_locations_body">Tímto smažete všechny údaje o poloze, které jste sdíleli, ze zařízení uživatele %1$s. Nelze to vrátit zpět.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Odebrat kontakt</item>
+        <item quantity="few">Odebrat %1$d kontakty</item>
+        <item quantity="many">Odebrat %1$d kontaktu</item>
+        <item quantity="other">Odebrat %1$d kontaktů</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Odebrat tento kontakt? Historie jeho polohy bude také lokálně smazána.</item>
+        <item quantity="few">Odebrat %1$d kontakty? Historie jejich polohy bude také lokálně smazána.</item>
+        <item quantity="many">Odebrat %1$d kontaktu? Historie jejich polohy bude také lokálně smazána.</item>
+        <item quantity="other">Odebrat %1$d kontaktů? Historie jejich polohy bude také lokálně smazána.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Vzdáleně smazat všechny odeslané zprávy ze zařízení tohoto kontaktu? Nelze to vrátit zpět.</item>
+        <item quantity="few">Vzdáleně smazat všechny odeslané zprávy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+        <item quantity="many">Vzdáleně smazat všechny odeslané zprávy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+        <item quantity="other">Vzdáleně smazat všechny odeslané zprávy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Vzdáleně smazat celou sdílenou historii polohy ze zařízení tohoto kontaktu? Nelze to vrátit zpět.</item>
+        <item quantity="few">Vzdáleně smazat celou sdílenou historii polohy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+        <item quantity="many">Vzdáleně smazat celou sdílenou historii polohy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+        <item quantity="other">Vzdáleně smazat celou sdílenou historii polohy ze zařízení %1$d kontaktů? Nelze to vrátit zpět.</item>
+    </plurals>
+
+    <string name="common_continue">Pokračovat</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Obnovit ze zálohy</string>
+    <string name="onboarding_restore_message">Vložte svůj 64znakový hexadecimální soukromý klíč pro obnovení identity a kontaktů.</string>
+    <string name="onboarding_private_key_hex">Soukromý klíč (hex)</string>
+    <string name="onboarding_tagline">Soukromé sdílení polohy s kontakty.\nŽádné účty. Žádné proprietární servery.</string>
+    <string name="onboarding_feature_e2e_title">End-to-end šifrování</string>
+    <string name="onboarding_feature_e2e_subtitle">Vaše poloha je šifrována v zařízení</string>
+    <string name="onboarding_feature_servers_title">Žádné proprietární servery</string>
+    <string name="onboarding_feature_servers_subtitle">Používá otevřená relé Nostr jako zabezpečený přenos — vaše data zůstávají šifrovaná a soukromá</string>
+    <string name="onboarding_feature_phone_title">Zůstává ve vašem telefonu</string>
+    <string name="onboarding_feature_phone_subtitle">Celá historie polohy zůstává ve vašem zařízení. Vybraným kontaktům se sdílí jen aktuální pozice</string>
+    <string name="onboarding_name_prompt">Jak vás mají vaše kontakty oslovovat?</string>
+    <string name="onboarding_name_placeholder">např. Máma, Táta, Alice…</string>
+    <string name="onboarding_get_started">Začít</string>
+    <string name="onboarding_restore_from_backup">Obnovit ze zálohy</string>
+    <string name="onboarding_key_note">Soukromý klíč se generuje lokálně a nikdy neopustí toto zařízení.</string>
+    <string name="onboarding_permissions_title">Oprávnění</string>
+    <string name="onboarding_permissions_desc">LocaPeer potřebuje přístup k poloze pro sdílení vaší pozice, ke kameře pro skenování zvacích kódů a k oznámením pro stav na pozadí. Přístup k fyzické aktivitě je volitelný — pomáhá přesněji označovat váš pohyb (chůze, jízda).</string>
+    <string name="onboarding_before_ask_title">Než se zeptáme</string>
+    <string name="onboarding_before_ask_intro">Nyní se zobrazí několik systémových dotazů:</string>
+    <string name="onboarding_before_ask_location">• Poloha — povinná, pro sdílení vaší pozice.</string>
+    <string name="onboarding_before_ask_camera">• Kamera — pro skenování zvacích kódů.</string>
+    <string name="onboarding_before_ask_notifications">• Oznámení — pro stav na pozadí.</string>
+    <string name="onboarding_before_ask_activity">• Fyzická aktivita — volitelné. Umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání. Můžete přeskočit a povolit později v Nastavení.</string>
+    <string name="onboarding_grant_permissions">Udělit oprávnění</string>
+    <string name="onboarding_bg_location_title">Poloha na pozadí</string>
+    <string name="onboarding_bg_location_desc">Aby vaše kontakty dostávaly aktualizace i při zavřené aplikaci, vyberte na další obrazovce „Povolit vždy“.</string>
+    <string name="onboarding_bg_location_error">Poloha na pozadí je nutná pro aktualizace při zavřené aplikaci. Zkuste to znovu a vyberte „Povolit vždy“.</string>
+    <string name="onboarding_configure_location">Nastavit polohu</string>
+    <string name="onboarding_battery_title">Baterie</string>
+    <string name="onboarding_battery_desc">Android může LocaPeer zastavovat kvůli úspoře baterie. Pro spolehlivé aktualizace vyjměte LocaPeer z optimalizací.</string>
+    <string name="onboarding_disable_optimizations">Vypnout optimalizace</string>
+    <string name="onboarding_done_title">Hotovo!</string>
+    <string name="onboarding_done_desc">Vaše soukromá síť polohy je připravena.</string>
+    <string name="onboarding_start_using">Začít používat LocaPeer</string>
+
+    <string name="common_try_again">Zkusit znovu</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Naskenovat pozvánku</string>
+    <string name="scan_camera_needed">Ke skenování QR kódů je potřeba oprávnění kamery.</string>
+    <string name="scan_grant_permission">Udělit oprávnění</string>
+    <string name="scan_add_contact_title">Přidat kontakt?</string>
+    <string name="scan_add_contact_message">Tímto se spojíte s %1$s a začnete si navzájem sdílet polohu.</string>
+    <string name="scan_add_share">Přidat a sdílet</string>
+    <string name="scan_request_sent_title">Žádost odeslána!</string>
+    <string name="scan_request_sent_message">Žádost byla odeslána uživateli %1$s. Po přijetí budete propojeni.</string>
+    <string name="scan_failed">Skenování se nezdařilo: %1$s</string>
+
     <string name="cd_back">Zpět</string>
+    <string name="common_review">Zkontrolovat</string>
+    <string name="common_decline">Odmítnout</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Odesílat/přijímat</string>
+    <string name="role_send">Odesílat</string>
+    <string name="role_receive">Přijímat</string>
+    <string name="role_none">Bez sdílení</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Moje pozvánka</string>
+    <string name="invite_tab_add_contact">Přidat kontakt</string>
+    <string name="invite_your_qr_title">Váš QR kód</string>
+    <string name="invite_your_qr_subtitle">Nechte jej někoho naskenovat, aby mohl sledovat vaši polohu</string>
+    <string name="invite_qr_cd">Váš QR kód</string>
+    <string name="invite_qr_error">Chyba při generování QR</string>
+    <string name="invite_share_link">Sdílet zvací odkaz</string>
+    <string name="invite_encryption_note">Vaše poloha bude zašifrována speciálně pro zařízení skenujícího.</string>
+    <string name="invite_camera_required_title">Je vyžadován přístup ke kameře</string>
+    <string name="invite_camera_required_message">Udělte oprávnění kamery pro naskenování QR kódu.</string>
+    <string name="invite_point_camera">Namiřte kameru na QR kód LocaPeer</string>
+    <string name="invite_paste_title">Nebo vložte zvací odkaz</string>
+    <string name="invite_process_link">Zpracovat odkaz</string>
+    <string name="invite_fallback_name">Kontakt</string>
+    <string name="invite_success_message">Po přijetí budete propojeni s %1$s.</string>
+    <string name="invite_confirm_add_title">Přidat %1$s?</string>
+    <string name="invite_confirm_add_message">Přidat do kontaktů a sdílet polohu?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Žádné čekající žádosti</string>
+    <string name="pending_requesting">Žádá: %1$s · %2$s</string>
+    <string name="pending_role_change">Žádost o změnu role · %1$s</string>
+    <string name="pending_new_request">Nová žádost o sdílení · %1$s</string>
+
+    <string name="common_save_changes">Uložit změny</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Aktualizovat nastavení sdílení</string>
+    <string name="incoming_new_title">Nová žádost o kontakt</string>
+    <string name="incoming_update_subtitle">%1$s chce změnit způsob sdílení. Zkontrolujte nastavení níže.</string>
+    <string name="incoming_new_subtitle">%1$s si vás přidal(a) jako kontakt! Nyní si můžete vybrat, co budete sdílet zpět.</string>
+    <string name="incoming_section_location">Poloha</string>
+    <string name="incoming_share_my_location">Sdílet moji polohu s %1$s</string>
+    <string name="incoming_share_my_location_sub">Uvidí, kde se nacházíte</string>
+    <string name="incoming_see_their_location">Vidět polohu uživatele %1$s</string>
+    <string name="incoming_see_their_location_sub">Uvidíte, kde se nachází</string>
+    <string name="incoming_section_messaging">Zprávy</string>
+    <string name="incoming_allow_messages">Povolit zprávy</string>
+    <string name="incoming_allow_messages_sub">Přijímat zprávy chatu od %1$s</string>
+
+    <string name="common_request">Požádat</string>
+    <string name="common_edit">Upravit</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Nastavení kontaktu</string>
+    <string name="peer_section_roles">Role sdílení polohy</string>
+    <string name="peer_send_on">%1$s vidí vaši polohu</string>
+    <string name="peer_send_off">Nesdílíte svou polohu s %1$s</string>
+    <string name="peer_receive_title">Přijímat polohu uživatele %1$s</string>
+    <string name="peer_receive_on">Vidíte polohu uživatele %1$s</string>
+    <string name="peer_receive_off">Nemáte přístup k poloze uživatele %1$s</string>
+    <string name="peer_section_privacy">Soukromí a řízení sdílení</string>
+    <string name="peer_pause_sharing">Pozastavit sdílení</string>
+    <string name="peer_pause_sub">Dočasně přestat odesílat svou polohu uživateli %1$s</string>
+    <string name="peer_precision">Přesnost polohy</string>
+    <string name="peer_precision_exact_sub">Přesné GPS souřadnice</string>
+    <string name="peer_precision_suburb_sub">Přibližná poloha (úroveň čtvrti)</string>
+    <string name="peer_always_sharing">Vždy se sdílí</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d aktivní pravidlo sdílení</item>
+        <item quantity="few">%1$d aktivní pravidla sdílení</item>
+        <item quantity="many">%1$d aktivního pravidla sdílení</item>
+        <item quantity="other">%1$d aktivních pravidel sdílení</item>
+    </plurals>
+    <string name="peer_section_alerts">Upozornění a sledování</string>
+    <string name="peer_sos_contact">SOS kontakt</string>
+    <string name="peer_sos_sub">Přijímat vaše nouzová upozornění, i když je sdílení pozastaveno</string>
+    <string name="peer_missed_alert">Upozornění na výpadek polohy</string>
+    <string name="peer_missed_on">Upozornit mě, pokud %1$s přestane hlásit svou polohu</string>
+    <string name="peer_requires_access">Vyžaduje přístup k poloze uživatele %1$s</string>
+    <string name="peer_proximity_alert">Upozornění na blízkost</string>
+    <string name="peer_proximity_sub">Upozornit mě, když je %1$s poblíž</string>
+    <string name="peer_alert_radius">Poloměr upozornění</string>
+    <string name="peer_alert_schedule">Rozvrh upozornění</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d aktivní pravidlo</item>
+        <item quantity="few">%1$d aktivní pravidla</item>
+        <item quantity="many">%1$d aktivního pravidla</item>
+        <item quantity="other">%1$d aktivních pravidel</item>
+    </plurals>
+    <string name="peer_geofences_sub">Nastavte zóny příjezdu a odjezdu pro uživatele %1$s</string>
+    <string name="peer_supervise">Dohlížet na toto zařízení</string>
+    <string name="peer_supervise_on">Přijímáte a schvalujete žádosti o odemčení od %1$s</string>
+    <string name="peer_supervise_off">Povolit uživateli %1$s posílat vám žádosti o odemčení režimu pod dohledem</string>
+    <string name="peer_messaging_sub">Zapnout/vypnout zprávy chatu od %1$s</string>
+    <string name="peer_section_history">Historie pohybu</string>
+    <string name="peer_location_history">Historie polohy</string>
+    <string name="peer_location_history_sub">Zobrazit historii pohybu a mapový přehled pro %1$s</string>
+    <string name="peer_section_retention">Uchovávání dat na vzdáleném zařízení</string>
+    <string name="peer_retention_location_sub">Jak dlouho %1$s uchovává vaši historii polohy</string>
+    <string name="peer_purge_location">Vymazat všechny údaje o poloze u %1$s</string>
+    <string name="peer_retention_messages_sub">Jak dlouho %1$s uchovává zprávy, které jste odeslali</string>
+    <string name="peer_purge_messages">Vymazat všechny zprávy u %1$s</string>
+    <string name="peer_precision_exact">Přesné GPS</string>
+    <string name="peer_precision_exact_desc">Přesné souřadnice</string>
+    <string name="peer_precision_suburb">Čtvrť (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Pouze úroveň okolí</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Smazat %1$d konverzaci?</item>
+        <item quantity="few">Smazat %1$d konverzace?</item>
+        <item quantity="many">Smazat %1$d konverzace?</item>
+        <item quantity="other">Smazat %1$d konverzací?</item>
+    </plurals>
+    <string name="conv_delete_locally">Smazat lokálně</string>
+    <string name="conv_delete_locally_sub">Odstraní konverzaci pouze z vašeho zařízení.</string>
+    <string name="conv_delete_both">Smazat lokálně/u kontaktu</string>
+    <string name="conv_bulk_delete_both_sub">Smaže konverzaci lokálně i u vašeho kontaktu.</string>
+    <string name="conv_delete_both_sub">Smaže konverzaci lokálně a odešle na zařízení kontaktu žádost o její smazání.</string>
+    <string name="conv_cd_exit_selection">Ukončit výběr</string>
+    <string name="conv_cd_select_all">Vybrat vše</string>
+    <string name="conv_cd_new_message">Nová zpráva</string>
+    <string name="conv_sort_date">Datum</string>
+    <string name="conv_sort_unread">Nepřečtené</string>
+    <string name="conv_search_placeholder">Hledat konverzace…</string>
+    <string name="conv_tab_chats">Chaty</string>
+    <string name="conv_tab_archived">Archivované</string>
+    <string name="conv_mark_read">Označit jako přečtené</string>
+    <string name="conv_archive">Archivovat</string>
+    <string name="conv_unarchive">Zrušit archivaci</string>
+    <string name="conv_empty_no_results">Žádné výsledky pro „%1$s“</string>
+    <string name="conv_empty_no_results_sub">Zkuste jiný hledaný výraz</string>
+    <string name="conv_empty_archived_title">Žádné archivované chaty</string>
+    <string name="conv_empty_archived_sub">Archivujte chaty, ať máte v doručených pořádek</string>
+    <string name="conv_empty_title">Zatím žádné zprávy</string>
+    <string name="conv_empty_sub">Otevřete mapu a klepněte na osobu,\nabyste zahájili konverzaci</string>
+    <string name="conv_delete_title">Smazat konverzaci?</string>
+    <string name="conv_delete_message">Jak chcete smazat tuto konverzaci s %1$s?</string>
+    <string name="conv_messages_blocked">Zprávy blokovány</string>
+    <string name="conv_preview_mine">Vy: %1$s</string>
+    <string name="conv_new_message_title">Nová zpráva</string>
+    <string name="conv_picker_empty">Zatím žádné kontakty. Naskenujte QR kód a přidejte kontakt.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Vymazat historii chatu?</string>
+    <string name="chat_clear_message">Jak chcete vymazat tuto konverzaci s %1$s?</string>
+    <string name="chat_clear_locally">Vymazat lokálně</string>
+    <string name="chat_clear_both">Vymazat lokálně/u kontaktu</string>
+    <string name="chat_clear_both_sub">Vymaže chat lokálně a odešle uživateli %1$s žádost o smazání zpráv, které jste odeslali.</string>
+    <string name="chat_cd_options">Možnosti</string>
+    <string name="chat_clear_history_menu">Vymazat historii chatu</string>
+    <string name="chat_typing">%1$s píše…</string>
+    <string name="chat_blocked_banner">Zablokovali jste zprávy od %1$s. Odblokovat můžete v Kontaktech.</string>
+    <string name="chat_delete_msg_title">Smazat zprávu?</string>
+    <string name="chat_delete_msg_message">Jak chcete smazat tuto zprávu?</string>
+    <string name="chat_delete_from_contact">Smazat u kontaktu</string>
+    <string name="chat_delete_from_contact_sub">Smaže chat ze zařízení kontaktu.</string>
+    <string name="chat_delete_both_sub">Odstraní chat lokálně a automaticky jej smaže ze zařízení kontaktu.</string>
+    <string name="chat_cd_share_location">Sdílet polohu</string>
+    <string name="chat_input_placeholder">Zpráva…</string>
+    <string name="chat_cd_send">Odeslat</string>
+
+    <string name="common_close">Zavřít</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Aktivovat SOS?</string>
+    <string name="map_sos_deactivate_title">Deaktivovat SOS?</string>
+    <string name="map_sos_activate_msg">Vaše poloha se bude každých 15 sekund vysílat určeným SOS kontaktům, dokud SOS nedeaktivujete.</string>
+    <string name="map_sos_deactivate_msg">Tímto se zastaví prioritní vysílání polohy vašim nouzovým kontaktům.</string>
+    <string name="map_activate">Aktivovat</string>
+    <string name="map_deactivate">Deaktivovat</string>
+    <string name="map_cd_style">Styl mapy</string>
+    <string name="map_cd_show_geofences">Zobrazit geofence</string>
+    <string name="map_cd_hide_geofences">Skrýt geofence</string>
+    <string name="map_cd_follow">Sledovat mě</string>
+    <string name="map_cd_friends">Přátelé</string>
+    <string name="map_no_friends">Zatím nikdo není sledován</string>
+    <string name="map_you">Vy</string>
+    <string name="map_cd_go_my_location">Přejít na moji polohu</string>
+    <string name="map_sos_active">⚠ SOS AKTIVNÍ</string>
+    <string name="map_away">Daleko</string>
+    <string name="map_no_location_yet">Zatím žádná poloha</string>
+    <string name="map_cd_go_location">Přejít na polohu</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ZAP</string>
+    <string name="map_overdue">Zpožděno — žádná nedávná aktualizace</string>
+    <string name="map_stat_last_seen">Naposledy online</string>
+    <string name="map_stat_battery">Baterie</string>
+    <string name="map_stat_accuracy">Přesnost</string>
+    <string name="map_stat_motion">Pohyb</string>
+    <string name="map_stat_speed">Rychlost</string>
+    <string name="map_stat_elevation">Nadmořská výška</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Historie: %1$s</string>
+    <string name="history_select_person">Vybrat osobu</string>
+    <string name="history_person_label">Osoba</string>
+    <string name="history_cd_prev_day">Předchozí den</string>
+    <string name="history_cd_next_day">Následující den</string>
+    <string name="history_time_filter">Filtr času:</string>
+    <string name="history_cd_reset_time">Obnovit čas</string>
+    <string name="history_tab_list">Seznam</string>
+    <string name="history_empty_title">Pro tento den žádná historie</string>
+    <string name="history_empty_sub">Zkuste vybrat jiné datum nebo zkontrolujte připojení.</string>
+    <string name="history_start_time">Čas začátku</string>
+    <string name="history_end_time">Čas konce</string>
+    <string name="history_no_data_title">Žádné údaje o poloze</string>
+    <string name="history_no_data_sub">Pro tento den nebo časové rozmezí nejsou zaznamenané žádné body.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Zaznamenán %1$d bod</item>
+        <item quantity="few">Zaznamenány %1$d body</item>
+        <item quantity="many">Zaznamenáno %1$d bodu</item>
+        <item quantity="other">Zaznamenáno %1$d bodů</item>
+    </plurals>
+    <string name="history_cd_dismiss">Zavřít</string>
+    <string name="history_accuracy_label">Přesnost ±%1$s</string>
+    <string name="history_emergency_sos">Nouzový signál SOS</string>
+    <string name="history_detail_location">Poloha</string>
+    <string name="history_detail_coordinates">Souřadnice</string>
+    <string name="history_within">v rozmezí ±%1$s</string>
+    <string name="history_detail_movement">Pohyb</string>
+    <string name="history_movement_desc">%1$s %2$s, směr %3$s</string>
+
+    <string name="common_create">Vytvořit</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Přidat oblast geofence</string>
+    <string name="geo_cd_assign">Přiřadit geofence</string>
+    <string name="geo_unknown">Neznámé</string>
+    <string name="geo_empty_title">Žádné geofence</string>
+    <string name="geo_empty_sub">Klepnutím na + vytvořte oblast geofence a poté k ní přiřaďte kontakty v jejich nastavení sdílení.</string>
+    <string name="geo_delete_title">Smazat geofence?</string>
+    <string name="geo_delete_simple">Smazat „%1$s“?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">„%1$s“ je přiřazena %2$d kontaktu. Smazáním se odstraní i tato přiřazení.</item>
+        <item quantity="few">„%1$s“ je přiřazena %2$d kontaktům. Smazáním se odstraní i tato přiřazení.</item>
+        <item quantity="many">„%1$s“ je přiřazena %2$d kontaktům. Smazáním se odstraní i tato přiřazení.</item>
+        <item quantity="other">„%1$s“ je přiřazena %2$d kontaktům. Smazáním se odstraní i tato přiřazení.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofence pro %1$s</string>
+    <string name="geo_empty_contact_title">Žádné geofence pro kontakt</string>
+    <string name="geo_empty_contact_sub">Klepnutím na + přiřaďte oblast geofence a zvolte, zda upozorňovat při příjezdu, odjezdu nebo obojím.</string>
+    <string name="geo_no_areas_title">Zatím žádné geofence</string>
+    <string name="geo_no_areas_msg">Nejprve vytvořte oblast geofence na obrazovce Geofence a poté ji zde přiřaďte.</string>
+    <string name="geo_radius_label">Poloměr %1$s</string>
+    <string name="geo_contacts_label">Kontakty: %1$s</string>
+    <string name="geo_no_contacts_assigned">Žádné přiřazené kontakty</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d pravidlo</item>
+        <item quantity="few">%1$d pravidla</item>
+        <item quantity="many">%1$d pravidla</item>
+        <item quantity="other">%1$d pravidel</item>
+    </plurals>
+    <string name="geo_trigger_enter">Vstup</string>
+    <string name="geo_trigger_exit">Odchod</string>
+    <string name="geo_trigger_both">Obojí</string>
+    <string name="geo_edit_title">Upravit geofence</string>
+    <string name="geo_new_title">Nová geofence</string>
+    <string name="geo_cd_my_location">Moje poloha</string>
+    <string name="geo_cd_radius_increase">Zvětšit poloměr</string>
+    <string name="geo_cd_radius_decrease">Zmenšit poloměr</string>
+    <string name="geo_hint_tap">Klepnutím nebo podržením mapy umístíte</string>
+    <string name="geo_hint_move">Přiblížení dvěma prsty • Podržením nebo tažením špendlíku přesunete</string>
+    <string name="geo_basic_info">Základní údaje</string>
+    <string name="geo_search_title">Najít podle adresy</string>
+    <string name="geo_search_label">Adresa nebo místo</string>
+    <string name="geo_search_placeholder">např. Hlavní 10, Praha</string>
+    <string name="geo_search_no_results">Nebyla nalezena žádná odpovídající adresa</string>
+    <string name="geo_cd_search">Hledat</string>
+    <string name="geo_name_placeholder">např. Domov, Práce</string>
+    <string name="geo_name_required">Název je povinný</string>
+    <string name="geo_latitude">Zeměpisná šířka</string>
+    <string name="geo_longitude">Zeměpisná délka</string>
+    <string name="geo_lat_range">-90 až 90</string>
+    <string name="geo_lng_range">-180 až 180</string>
+    <string name="geo_radius">Poloměr</string>
+    <string name="geo_radius_range">Zadejte %1$d až %2$d m</string>
+    <string name="geo_edit_assignment">Upravit přiřazení</string>
+    <string name="geo_assign_title">Přiřadit geofence</string>
+    <string name="geo_select_area">Vyberte oblast geofence</string>
+    <string name="geo_trigger_title">Spustit oznámení při</string>
+    <string name="geo_add_rule">Přidat pravidlo</string>
+    <string name="geo_alerts_all_times">Upozornění jsou aktivní stále. Přidejte pravidlo pro omezení, kdy se upozornění odesílají.</string>
+    <string name="geo_assign_action">Přiřadit</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Upozornění na blízkost</string>
+    <string name="prox_empty_title">Žádné sledované osoby</string>
+    <string name="prox_empty_sub">Naskenujte něčí zvací QR na kartě Skenovat,\nabyste začali sledovat jeho polohu</string>
+    <string name="prox_intro">Dostávejte oznámení, když se sledovaná osoba přiblíží na zvolenou vzdálenost.</string>
+    <string name="prox_alert_within">Upozornit do %1$s</string>
+    <string name="prox_alerts_off">Upozornění vypnuta</string>
+    <string name="prox_alert_radius">Poloměr upozornění</string>
+    <string name="prox_edit_schedule">Upravit rozvrh</string>
+    <string name="prox_rules">Pravidla</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Rozvrh pro %1$s</string>
+    <string name="schedule_cd_add_rule">Přidat pravidlo</string>
+    <string name="schedule_empty_title">Žádná pravidla rozvrhu</string>
+    <string name="schedule_empty_global">Poloha se sdílí neustále. Přidejte pravidlo pro omezení, kdy je sdílení aktivní.</string>
+    <string name="schedule_empty_peer">Poloha se s %1$s sdílí neustále. Přidejte pravidlo pro omezení, kdy.</string>
+    <string name="schedule_active_hint">Aktivní, když libovolné pravidlo odpovídá aktuálnímu času. Prázdné = vždy zapnuto.</string>
+    <string name="schedule_all_day">Celý den</string>
+    <string name="schedule_plus_one_day"> (+1 den)</string>
+    <string name="schedule_rule_number">Pravidlo %1$d</string>
+    <string name="schedule_cd_delete_rule">Smazat pravidlo</string>
+    <string name="schedule_edit_rule">Upravit pravidlo</string>
+    <string name="schedule_label_optional">Štítek (volitelné)</string>
+    <string name="schedule_label_placeholder">např. Pracovní doba, Víkendy</string>
+    <string name="schedule_active_days">Aktivní dny</string>
+    <string name="schedule_time_window">Časové okno</string>
+    <string name="schedule_start">Začátek</string>
+    <string name="schedule_end">Konec</string>
+    <string name="schedule_overnight">Přes noc: aktivní od %1$s do %2$s následujícího dne</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Zařízení je pod dohledem</string>
+    <string name="gate_message">Pro přístup k nastavení je vyžadováno schválení dohlížitele.</string>
+    <string name="gate_request_access">Požádat o přístup</string>
+    <string name="gate_waiting">Čeká se na schválení dohlížitele…</string>
+    <string name="gate_denied">Přístup zamítnut dohlížitelem.</string>
+    <string name="gate_timed_out">Čas žádosti vypršel. Dohlížitel neodpověděl.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Navždy</string>
+    <string name="retention_keep_for">Uchovávat: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d den</item>
+        <item quantity="few">%1$d dny</item>
+        <item quantity="many">%1$d dne</item>
+        <item quantity="other">%1$d dní</item>
+    </plurals>
+
+    <string name="common_select">Vybrat</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Vybrat pevnou polohu</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Vyberte, které karty se zobrazí ve spodní liště, a jejich pořadí. Mapa je vždy zahrnuta.</string>
+    <string name="customize_cd_move_up">Posunout nahoru</string>
+    <string name="customize_cd_move_down">Posunout dolů</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Verze %1$s (sestavení %2$d)</string>
+    <string name="about_tagline">Soukromé sdílení polohy s lidmi, kterým důvěřujete. Žádné účty, žádný cloud, žádné sledování z naší strany.</string>
+    <string name="about_relay_connections">Připojení k relé</string>
+    <string name="about_connected">Připojeno</string>
+    <string name="about_disconnected">Odpojeno</string>
+    <string name="about_open_source">Open source knihovny</string>
+    <string name="about_lib_osmdroid_desc">Vykreslování map založené na OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket přenos pro relé Nostr</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Vkládání závislostí</string>
+    <string name="about_lib_room_desc">Lokální databáze</string>
+    <string name="about_map_attribution">Mapová data © přispěvatelé OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Přijmout</string>
+    <string name="notif_someone">Někdo</string>
+    <string name="notif_sos_title">SOS od %1$s!</string>
+    <string name="notif_sos_text">%1$s aktivoval(a) SOS na (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s chce, abyste byli jeho dohlížitelem</string>
+    <string name="notif_supervisor_request_text">Přijetím povolíte žádosti o schválení odemčení z tohoto zařízení</string>
+    <string name="notif_supervisor_request_big">Přijetím umožníte uživateli %1$s posílat vám žádosti o schválení odemčení, když je aktivní režim pod dohledem.</string>
+    <string name="notif_supervised_active_title">Režim pod dohledem aktivní</string>
+    <string name="notif_supervised_active_text">Dohlížitel potvrdil — režim pod dohledem je nyní nastaven</string>
+    <string name="notif_supervised_declined_title">Režim pod dohledem odmítnut</string>
+    <string name="notif_supervised_declined_text">Dohlížitel žádost odmítl — režim pod dohledem byl vypnut</string>
+    <string name="notif_tracking_alert_title">Upozornění na sledování</string>
+    <string name="notif_tracking_proximity">%1$s obdržel(a) upozornění na vaši blízkost</string>
+    <string name="notif_tracking_geofence">%1$s obdržel(a) upozornění, že jste vstoupili do zóny/opustili zónu: %2$s</string>
+    <string name="notif_tracking_generic">%1$s sleduje vaši polohu</string>
+    <string name="notif_track_update_title">Aktualizace sdílení od %1$s</string>
+    <string name="notif_track_new_title">Nový kontakt: %1$s</string>
+    <string name="notif_role_send_receive">Odesílat/přijímat polohu</string>
+    <string name="notif_role_send">Odesílat polohu</string>
+    <string name="notif_role_receive">Přijímat polohu</string>
+    <string name="notif_role_none">Bez sdílení polohy</string>
+    <string name="notif_track_requesting">%1$s žádá: %2$s</string>
+    <string name="notif_track_update_body">%1$s chce změnit způsob sdílení polohy.</string>
+    <string name="notif_track_new_body">%1$s si vás přidal(a) jako kontakt a chce se spojit.</string>
+    <string name="notif_contact_connected_title">Kontakt propojen</string>
+    <string name="notif_contact_connected_text">%1$s je s vámi nyní propojen(a).</string>
+    <string name="notif_request_declined_title">Žádost odmítnuta</string>
+    <string name="notif_request_declined_text">%1$s odmítl(a) vaši žádost o sdílení polohy.</string>
+    <string name="notif_message_person">Napsat %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s vstoupil(a) do %2$s</string>
+    <string name="notif_geofence_left_title">%1$s opustil(a) %2$s</string>
+    <string name="notif_geofence_subtitle">v %1$s · poloměr %2$s</string>
+    <string name="notif_person_nearby">%1$s je poblíž</string>
+    <string name="notif_distance_from_you">%1$s od vás</string>
+    <string name="notif_missed_title">Žádná aktualizace od %1$s</string>
+    <string name="notif_missed_text">Naposledy online před %1$s min poblíž (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS AKTIVNÍ!</string>
+    <string name="notif_sos_active_text">Vysílá se nouzové upozornění SOS kontaktům</string>
+    <string name="notif_messages_group_title">Zprávy LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Žádost o kontakt od %1$s odmítnuta</string>
+    <string name="toast_now_supervising">Nyní dohlížíte na zařízení uživatele %1$s</string>
+    <string name="toast_declined_supervision">Žádost o dohled od %1$s odmítnuta</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Právě teď</string>
+    <string name="time_minutes_ago">před %1$d min</string>
+    <string name="fallback_me">Já</string>
+    <string name="fallback_unknown">Neznámý</string>
+    <string name="geo_unassigned">Nepřiřazeno</string>
+    <string name="days_every_day">Každý den</string>
+    <string name="days_weekdays">Všední dny</string>
+    <string name="days_weekends">Víkendy</string>
+    <string name="days_none">Žádné dny</string>
+    <string name="chat_my_location_message">Moje aktuální poloha: %1$s</string>
+    <string name="scan_error_bad_pubkey">Neplatná pozvánka: chybný veřejný klíč</string>
+    <string name="scan_error_key_mismatch">Neplatná pozvánka: klíče se neshodují</string>
+    <string name="scan_error_unknown">Neznámá chyba</string>
+    <string name="scan_error_invalid_link">Neplatný zvací odkaz</string>
+    <string name="scan_fallback_contact">tento kontakt</string>
+    <string name="backup_saved">Záloha uložena: %1$s</string>
+    <string name="backup_saved_encrypted">Záloha uložena (šifrovaná): %1$s</string>
+    <string name="backup_failed">Zálohování se nezdařilo: %1$s</string>
+    <string name="backup_could_not_read_file">Soubor se nepodařilo přečíst</string>
+    <string name="backup_could_not_write_file">Soubor se nepodařilo zapsat</string>
+    <string name="backup_could_not_read">Zálohu se nepodařilo přečíst: %1$s</string>
+    <string name="backup_incorrect_password">Nesprávné heslo</string>
+    <string name="restore_result_restored">Obnoveno: %1$s</string>
+    <string name="restore_result_failed">Selhalo: %1$s</string>
+    <string name="restore_nothing">Není co obnovit</string>
+    <string name="restore_failed">Obnovení se nezdařilo: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="few">%1$d kontakty</item>
+        <item quantity="many">%1$d kontaktu</item>
+        <item quantity="other">%1$d kontaktů</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="few">%1$d geofence</item>
+        <item quantity="many">%1$d geofence</item>
+        <item quantity="other">%1$d geofencí</item>
+    </plurals>
+    <string name="peer_role_change_sent">Žádost o změnu role odeslána uživateli %1$s</string>
+    <string name="peer_not_found">Kontakt nenalezen</string>
+    <string name="peer_purge_location_sent">Příkaz ke vzdálenému smazání VŠECH poloh odeslán uživateli %1$s</string>
+    <string name="peer_purge_messages_sent">Příkaz ke vzdálenému smazání VŠECH zpráv odeslán uživateli %1$s</string>
+    <string name="onboarding_error_key_length">Neplatný klíč — musí mít 64 hexadecimálních znaků.</string>
+    <string name="onboarding_error_key_range">Neplatný soukromý klíč — mimo rozsah křivky.</string>
+    <string name="onboarding_error_hex">Neplatný hexadecimální formát.</string>
+    <string name="onboarding_error_import_failed">Import klíče se nezdařil: %1$s</string>
 </resources>
