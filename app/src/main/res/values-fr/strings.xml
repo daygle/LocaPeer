@@ -561,6 +561,8 @@
     <string name="geo_edit_title">Modifier la clôture virtuelle</string>
     <string name="geo_new_title">Nouvelle clôture virtuelle</string>
     <string name="geo_cd_my_location">Ma localisation</string>
+    <string name="geo_cd_radius_increase">Augmenter le rayon</string>
+    <string name="geo_cd_radius_decrease">Réduire le rayon</string>
     <string name="geo_hint_tap">Touchez ou maintenez la carte pour placer</string>
     <string name="geo_hint_move">Pincez pour zoomer • Maintenez ou faites glisser l\'épingle pour déplacer</string>
     <string name="geo_basic_info">Informations de base</string>

@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -563,27 +564,44 @@ private fun GeofenceAreaDialog(
                             .clipToBounds()
                     )
 
-                    SmallFloatingActionButton(
-                        onClick = {
-                            loadingMyLocation = true
-                            fusedLocation.lastLocation.addOnSuccessListener { loc ->
-                                loadingMyLocation = false
-                                if (loc != null) {
-                                    latText = formatCoord(loc.latitude)
-                                    lngText = formatCoord(loc.longitude)
-                                    recenterTo = GeoPoint(loc.latitude, loc.longitude)
-                                }
-                            }.addOnFailureListener { loadingMyLocation = false }
-                        },
+                    Column(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(16.dp),
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.End
                     ) {
-                        if (loadingMyLocation) {
-                            CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                        } else {
-                            Icon(Icons.Default.MyLocation, stringResource(R.string.geo_cd_my_location))
+                        SmallFloatingActionButton(
+                            onClick = { radiusText = stepRadius(radiusForMap, up = true).toString() },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Icon(Icons.Default.Add, stringResource(R.string.geo_cd_radius_increase))
+                        }
+                        SmallFloatingActionButton(
+                            onClick = { radiusText = stepRadius(radiusForMap, up = false).toString() },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Icon(Icons.Default.Remove, stringResource(R.string.geo_cd_radius_decrease))
+                        }
+                        SmallFloatingActionButton(
+                            onClick = {
+                                loadingMyLocation = true
+                                fusedLocation.lastLocation.addOnSuccessListener { loc ->
+                                    loadingMyLocation = false
+                                    if (loc != null) {
+                                        latText = formatCoord(loc.latitude)
+                                        lngText = formatCoord(loc.longitude)
+                                        recenterTo = GeoPoint(loc.latitude, loc.longitude)
+                                    }
+                                }.addOnFailureListener { loadingMyLocation = false }
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            if (loadingMyLocation) {
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                            } else {
+                                Icon(Icons.Default.MyLocation, stringResource(R.string.geo_cd_my_location))
+                            }
                         }
                     }
 
@@ -929,6 +947,16 @@ private fun AssignmentDialog(
 
 private const val MIN_RADIUS_M = 50
 private const val MAX_RADIUS_M = 50000
+
+/**
+ * Steps the radius up or down by ~10% so the on-map buttons feel proportionate
+ * across the whole 50 m - 50 km range, rounding to a tidy multiple of 10 m.
+ */
+private fun stepRadius(current: Int, up: Boolean): Int {
+    val step = (current / 10).coerceAtLeast(10)
+    val next = if (up) current + step else current - step
+    return (next / 10 * 10).coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
+}
 
 /**
  * An osmdroid map for picking a geofence centre:

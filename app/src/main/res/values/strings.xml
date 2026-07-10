@@ -560,6 +560,8 @@
     <string name="geo_edit_title">Edit Geofence</string>
     <string name="geo_new_title">New Geofence</string>
     <string name="geo_cd_my_location">My location</string>
+    <string name="geo_cd_radius_increase">Increase radius</string>
+    <string name="geo_cd_radius_decrease">Decrease radius</string>
     <string name="geo_hint_tap">Tap or hold the map to place</string>
     <string name="geo_hint_move">Pinch to zoom • Hold or drag the pin to move</string>
     <string name="geo_basic_info">Basic Info</string>
