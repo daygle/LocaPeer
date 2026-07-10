@@ -193,13 +193,6 @@ fun LocaPeerNavHost(
                     onNavigateToSharingSettings = { peerId, peerName ->
                         navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Contact" })}")
                     },
-                    onNavigateToMap = { lat, lng ->
-                        navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
-                            popUpTo(startDestination) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
                     onNavigateToPendingRequests = {
                         navController.navigate("pending-requests")
                     },
