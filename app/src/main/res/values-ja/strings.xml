@@ -112,6 +112,7 @@
     <string name="settings_update_cadence">更新頻度</string>
     <string name="settings_update_cadence_subtitle">位置情報の配信頻度を調整</string>
     <string name="settings_update_cadence_dialog_message">活動内容に基づいて位置情報の更新頻度を制御します。頻繁に更新するとバッテリーの消費が増えます。</string>
+    <string name="settings_update_cadence_reset">デフォルトに戻す</string>
     <string name="settings_min_distance_filtering">最小距離フィルタリング</string>
     <string name="settings_min_distance_filtering_subtitle">前のポイントから少なくともこれだけ離れたポイントのみを表示します。</string>
     <string name="settings_discard_low_accuracy">低精度の測位を破棄</string>

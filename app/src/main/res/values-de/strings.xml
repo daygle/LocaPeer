@@ -113,6 +113,7 @@
     <string name="settings_update_cadence">Aktualisierungsintervall</string>
     <string name="settings_update_cadence_subtitle">Anpassen, wie oft Ihr Standort übertragen wird</string>
     <string name="settings_update_cadence_dialog_message">Steuern Sie, wie oft Ihr Standort basierend auf Ihrer Aktivität aktualisiert wird. Häufige Aktualisierungen verbrauchen mehr Akku.</string>
+    <string name="settings_update_cadence_reset">Auf Standard zurücksetzen</string>
     <string name="settings_min_distance_filtering">Mindestentfernungsfilter</string>
     <string name="settings_min_distance_filtering_subtitle">Nur Punkte anzeigen, die mindestens so weit vom vorherigen entfernt sind.</string>
     <string name="settings_discard_low_accuracy">Ungenau Fixe verwerfen</string>

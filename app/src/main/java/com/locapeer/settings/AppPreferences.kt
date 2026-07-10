@@ -363,4 +363,15 @@ class AppPreferences @Inject constructor(
             lowBattery?.let { prefs[KEY_LOW_BATTERY_INTERVAL] = it }
         }
     }
+
+    suspend fun resetIntervals() {
+        context.settingsStore.edit { prefs ->
+            prefs.remove(KEY_STATIONARY_INTERVAL)
+            prefs.remove(KEY_WALKING_INTERVAL)
+            prefs.remove(KEY_RUNNING_INTERVAL)
+            prefs.remove(KEY_CYCLING_INTERVAL)
+            prefs.remove(KEY_DRIVING_INTERVAL)
+            prefs.remove(KEY_LOW_BATTERY_INTERVAL)
+        }
+    }
 }

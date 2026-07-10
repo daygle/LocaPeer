@@ -113,6 +113,7 @@
     <string name="settings_update_cadence">Cadenza aggiornamento</string>
     <string name="settings_update_cadence_subtitle">Regola la frequenza di trasmissione della tua posizione</string>
     <string name="settings_update_cadence_dialog_message">Controlla la frequenza di aggiornamento della posizione in base alla tua attività. Gli aggiornamenti frequenti consumano più batteria.</string>
+    <string name="settings_update_cadence_reset">Ripristina predefiniti</string>
     <string name="settings_min_distance_filtering">Filtro distanza minima</string>
     <string name="settings_min_distance_filtering_subtitle">Mostra solo i punti che si trovano almeno a questa distanza dal precedente.</string>
     <string name="settings_discard_low_accuracy">Scarta fix a bassa precisione</string>
