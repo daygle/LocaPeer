@@ -132,6 +132,9 @@ data class SettingsBackup(
     val reverseGeocodingEnabled: Boolean = false
 )
 
+/** Outcome message shown in the Keys & Backup card; [isError] drives its colour. */
+data class BackupResult(val message: String, val isError: Boolean = false)
+
 /** Parsed backup file ready for selective restore. */
 data class PendingRestore(
     val backup: LocaPeerBackup,
@@ -348,14 +351,14 @@ class SettingsViewModel @Inject constructor(
                 val json = jsonExport.encodeToString(finalBackup)
                 context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) }
                 val parts = sections.joinToString(", ") { context.getString(sectionLabelRes(it)) }
-                _backupResult.value = context.getString(
+                _backupResult.value = BackupResult(context.getString(
                     if (!password.isNullOrBlank()) com.locapeer.R.string.backup_saved_encrypted
                     else com.locapeer.R.string.backup_saved,
                     parts
-                )
+                ))
             } catch (e: Exception) {
                 Log.e(TAG, "Backup export failed", e)
-                _backupResult.value = context.getString(com.locapeer.R.string.backup_failed, e.message ?: "")
+                _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_failed, e.message ?: ""), isError = true)
             }
         }
     }
@@ -367,7 +370,7 @@ class SettingsViewModel @Inject constructor(
                 val json = context.contentResolver.openInputStream(uri)?.use {
                     it.readBytes().toString(Charsets.UTF_8)
                 } ?: run {
-                    _backupResult.value = context.getString(com.locapeer.R.string.backup_could_not_read_file)
+                    _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_read_file), isError = true)
                     return@launch
                 }
                 val backup = jsonImport.decodeFromString<LocaPeerBackup>(json)
@@ -386,7 +389,7 @@ class SettingsViewModel @Inject constructor(
                 }
             } catch (e: Exception) {
                 Log.e(TAG, "Backup load failed", e)
-                _backupResult.value = context.getString(com.locapeer.R.string.backup_could_not_read, e.message ?: "")
+                _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_read, e.message ?: ""), isError = true)
             }
         }
     }
@@ -557,21 +560,24 @@ class SettingsViewModel @Inject constructor(
                 if (identityRestored || settingsRestored) {
                     refreshProfile()
                 }
-                _backupResult.value = buildString {
-                    if (restored.isNotEmpty()) {
-                        append(context.getString(com.locapeer.R.string.restore_result_restored, restored.joinToString(", ")))
-                    }
-                    if (failed.isNotEmpty()) {
-                        if (isNotEmpty()) append(". ")
-                        append(context.getString(com.locapeer.R.string.restore_result_failed, failed.joinToString(", ")))
-                    }
-                    if (isEmpty()) append(context.getString(com.locapeer.R.string.restore_nothing))
-                }
+                _backupResult.value = BackupResult(
+                    message = buildString {
+                        if (restored.isNotEmpty()) {
+                            append(context.getString(com.locapeer.R.string.restore_result_restored, restored.joinToString(", ")))
+                        }
+                        if (failed.isNotEmpty()) {
+                            if (isNotEmpty()) append(". ")
+                            append(context.getString(com.locapeer.R.string.restore_result_failed, failed.joinToString(", ")))
+                        }
+                        if (isEmpty()) append(context.getString(com.locapeer.R.string.restore_nothing))
+                    },
+                    isError = failed.isNotEmpty()
+                )
             } catch (e: Exception) {
                 // Defensive: per-section blocks already catch their own failures, so this only
                 // trips on something unexpected. Still surface it and let finally clear the state.
                 Log.e(TAG, "Restore failed unexpectedly", e)
-                _backupResult.value = context.getString(com.locapeer.R.string.restore_failed, e.message ?: "")
+                _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.restore_failed, e.message ?: ""), isError = true)
             } finally {
                 _pendingRestore.value = null
             }
@@ -581,8 +587,8 @@ class SettingsViewModel @Inject constructor(
     fun dismissPendingRestore() { _pendingRestore.value = null }
     fun clearBackupResult() { _backupResult.value = null }
 
-    private val _backupResult = MutableStateFlow<String?>(null)
-    val backupResult: StateFlow<String?> = _backupResult
+    private val _backupResult = MutableStateFlow<BackupResult?>(null)
+    val backupResult: StateFlow<BackupResult?> = _backupResult
 
     private val _pendingRestore = MutableStateFlow<PendingRestore?>(null)
     val pendingRestore: StateFlow<PendingRestore?> = _pendingRestore

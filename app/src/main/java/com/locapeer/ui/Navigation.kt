@@ -406,7 +406,8 @@ fun LocaPeerNavHost(
                 val requestedRoleArg = entry.arguments?.getString("requestedRole")?.takeIf { it.isNotBlank() }
                 IncomingShareRequestScreen(
                     senderPubkey = entry.arguments?.getString("pubkey") ?: "",
-                    senderName = entry.arguments?.getString("name") ?: "Unknown",
+                    senderName = entry.arguments?.getString("name")?.takeIf { it.isNotBlank() }
+                        ?: stringResource(R.string.fallback_unknown),
                     senderRelay = entry.arguments?.getString("relay") ?: "",
                     isRoleChange = entry.arguments?.getBoolean("isRoleChange") ?: false,
                     requestedRole = requestedRoleArg,

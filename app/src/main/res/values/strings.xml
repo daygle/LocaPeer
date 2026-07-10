@@ -707,6 +707,7 @@
     <string name="time_just_now">Just now</string>
     <string name="time_minutes_ago">%1$dm ago</string>
     <string name="fallback_me">Me</string>
+    <string name="fallback_unknown">Unknown</string>
     <string name="geo_unassigned">Unassigned</string>
     <string name="days_every_day">Every day</string>
     <string name="days_weekdays">Weekdays</string>
