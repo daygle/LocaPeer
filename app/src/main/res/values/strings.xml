@@ -22,7 +22,7 @@
     <string name="common_restore">Restore</string>
     <string name="common_unlock">Unlock</string>
     <string name="common_password">Password</string>
-    <string name="common_not_now">Not now</string>
+    <string name="common_not_now">Not Now</string>
     <string name="common_off">Off</string>
     <string name="common_approve">Approve</string>
     <string name="common_deny">Deny</string>
@@ -235,7 +235,7 @@
     <string name="contacts_delete_locations_title">Delete Shared Locations</string>
     <string name="contacts_remove_contact_title">Remove Contact</string>
     <string name="contacts_leave_title">Delete Contact and Data</string>
-    <string name="contacts_rename_title">Rename contact</string>
+    <string name="contacts_rename_title">Rename Contact</string>
     <string name="contacts_remove_contact_body">Remove %1$s from your contacts? Their location history will also be deleted locally.</string>
     <string name="contacts_leave_body">This will remove you from %1$s\'s contacts and delete all your messages and location data from their device. You will also lose access to their location.</string>
     <string name="contacts_delete_my_messages_body">This will delete all messages you sent from %1$s\'s device. This cannot be undone.</string>
