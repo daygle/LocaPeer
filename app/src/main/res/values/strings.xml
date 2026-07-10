@@ -85,7 +85,7 @@
     <string name="settings_geofences_subtitle">Manage shared geofence areas</string>
     <string name="settings_notify_when_tracked">Notify When Tracked</string>
     <string name="settings_notify_when_tracked_subtitle">Get a notification when a contact\'s proximity or geofence alert for you is triggered.</string>
-    <string name="settings_my_location_history">My Location History</string>
+    <string name="settings_my_location_history">Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
     <string name="settings_lookup_addresses_subtitle">Show street addresses for history points and tapped map pins, and search by address when placing geofences. Sends those coordinates or your typed search to your device\'s geocoding service (usually Google).</string>
