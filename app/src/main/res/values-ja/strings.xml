@@ -548,8 +548,10 @@
     <string name="geo_edit_title">ジオフェンスを編集</string>
     <string name="geo_new_title">新規ジオフェンス</string>
     <string name="geo_cd_my_location">現在地</string>
-    <string name="geo_hint_tap">マップをタップして配置</string>
-    <string name="geo_hint_pinch">ピンチでサイズ変更 • ドラッグで移動</string>
+    <string name="geo_cd_radius_increase">半径を拡大</string>
+    <string name="geo_cd_radius_decrease">半径を縮小</string>
+    <string name="geo_hint_tap">マップをタップまたは長押しして配置</string>
+    <string name="geo_hint_move">ピンチでズーム • 長押しまたはピンをドラッグで移動</string>
     <string name="geo_basic_info">基本情報</string>
     <string name="geo_search_title">住所で検索</string>
     <string name="geo_search_label">住所または場所</string>

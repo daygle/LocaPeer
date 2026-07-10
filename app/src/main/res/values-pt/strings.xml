@@ -558,8 +558,10 @@
     <string name="geo_edit_title">Editar Geocerca</string>
     <string name="geo_new_title">Nova Geocerca</string>
     <string name="geo_cd_my_location">Minha localização</string>
-    <string name="geo_hint_tap">Toque no mapa para posicionar</string>
-    <string name="geo_hint_pinch">Pince para redimensionar • Arraste para mover</string>
+    <string name="geo_cd_radius_increase">Aumentar raio</string>
+    <string name="geo_cd_radius_decrease">Diminuir raio</string>
+    <string name="geo_hint_tap">Toque ou mantenha pressionado o mapa para posicionar</string>
+    <string name="geo_hint_move">Pince para ampliar • Mantenha pressionado ou arraste o pino para mover</string>
     <string name="geo_basic_info">Informações Básicas</string>
     <string name="geo_search_title">Procurar por endereço</string>
     <string name="geo_search_label">Endereço ou local</string>

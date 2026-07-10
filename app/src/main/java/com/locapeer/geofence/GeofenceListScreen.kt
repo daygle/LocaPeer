@@ -1,7 +1,6 @@
 package com.locapeer.geofence
 
 import android.annotation.SuppressLint
-import android.view.ScaleGestureDetector
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,6 +19,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -559,40 +559,56 @@ private fun GeofenceAreaDialog(
                             latText = formatCoord(la)
                             lngText = formatCoord(ln)
                         },
-                        onRadiusChange = { radiusText = it.toString() },
                         modifier = Modifier
                             .fillMaxSize()
                             .clipToBounds()
                     )
 
-                    SmallFloatingActionButton(
-                        onClick = {
-                            loadingMyLocation = true
-                            fusedLocation.lastLocation.addOnSuccessListener { loc ->
-                                loadingMyLocation = false
-                                if (loc != null) {
-                                    latText = formatCoord(loc.latitude)
-                                    lngText = formatCoord(loc.longitude)
-                                    recenterTo = GeoPoint(loc.latitude, loc.longitude)
-                                }
-                            }.addOnFailureListener { loadingMyLocation = false }
-                        },
+                    Column(
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(16.dp),
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalAlignment = Alignment.End
                     ) {
-                        if (loadingMyLocation) {
-                            CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
-                        } else {
-                            Icon(Icons.Default.MyLocation, stringResource(R.string.geo_cd_my_location))
+                        SmallFloatingActionButton(
+                            onClick = { radiusText = stepRadius(radiusForMap, up = true).toString() },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Icon(Icons.Default.Add, stringResource(R.string.geo_cd_radius_increase))
+                        }
+                        SmallFloatingActionButton(
+                            onClick = { radiusText = stepRadius(radiusForMap, up = false).toString() },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            Icon(Icons.Default.Remove, stringResource(R.string.geo_cd_radius_decrease))
+                        }
+                        SmallFloatingActionButton(
+                            onClick = {
+                                loadingMyLocation = true
+                                fusedLocation.lastLocation.addOnSuccessListener { loc ->
+                                    loadingMyLocation = false
+                                    if (loc != null) {
+                                        latText = formatCoord(loc.latitude)
+                                        lngText = formatCoord(loc.longitude)
+                                        recenterTo = GeoPoint(loc.latitude, loc.longitude)
+                                    }
+                                }.addOnFailureListener { loadingMyLocation = false }
+                            },
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        ) {
+                            if (loadingMyLocation) {
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                            } else {
+                                Icon(Icons.Default.MyLocation, stringResource(R.string.geo_cd_my_location))
+                            }
                         }
                     }
 
                     val hint = if (lat == null || lng == null) {
                         stringResource(R.string.geo_hint_tap)
                     } else {
-                        stringResource(R.string.geo_hint_pinch)
+                        stringResource(R.string.geo_hint_move)
                     }
                     val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
                     Surface(
@@ -933,12 +949,20 @@ private const val MIN_RADIUS_M = 50
 private const val MAX_RADIUS_M = 50000
 
 /**
- * An osmdroid map for picking a geofence centre and radius:
- * - tap (or drag the pin) sets the centre,
- * - a two-finger pinch resizes the circle (built-in pinch-zoom is disabled and replaced
- *   by the +/- buttons and double-tap so the gesture is free for resizing).
+ * Steps the radius up or down by ~10% so the on-map buttons feel proportionate
+ * across the whole 50 m - 50 km range, rounding to a tidy multiple of 10 m.
  */
-@SuppressLint("ClickableViewAccessibility")
+private fun stepRadius(current: Int, up: Boolean): Int {
+    val step = (current / 10).coerceAtLeast(10)
+    val next = if (up) current + step else current - step
+    return (next / 10 * 10).coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
+}
+
+/**
+ * An osmdroid map for picking a geofence centre:
+ * - tap or long-press (or drag the pin) sets the centre,
+ * - pinch zooms the map; the radius is edited via the field/slider below.
+ */
 @Composable
 private fun GeofencePickerMap(
     lat: Double?,
@@ -948,15 +972,12 @@ private fun GeofencePickerMap(
     recenterTo: GeoPoint?,
     onRecentered: () -> Unit,
     onPointSelected: (Double, Double) -> Unit,
-    onRadiusChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var mapView by remember { mutableStateOf<MapView?>(null) }
 
     // Gesture callbacks are captured once in the factory; keep them reading the latest values.
     val pointCb by rememberUpdatedState(onPointSelected)
-    val radiusCb by rememberUpdatedState(onRadiusChange)
-    val currentRadius by rememberUpdatedState(radiusMetres)
 
     DisposableEffect(Unit) {
         onDispose {
@@ -979,8 +1000,7 @@ private fun GeofencePickerMap(
             MapView(ctx).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
                 clipToOutline = true
-                // Pinch is repurposed for resizing, so disable pinch-zoom and expose zoom buttons.
-                setMultiTouchControls(false)
+                setMultiTouchControls(true)
                 zoomController.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
                 isVerticalMapRepetitionEnabled = false
 
@@ -989,26 +1009,12 @@ private fun GeofencePickerMap(
                         pointCb(p.latitude, p.longitude)
                         return true
                     }
-                    override fun longPressHelper(p: GeoPoint): Boolean = false
+                    override fun longPressHelper(p: GeoPoint): Boolean {
+                        pointCb(p.latitude, p.longitude)
+                        return true
+                    }
                 }
                 overlays.add(MapEventsOverlay(receiver))
-
-                val scaleDetector = ScaleGestureDetector(
-                    ctx,
-                    object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-                        override fun onScale(detector: ScaleGestureDetector): Boolean {
-                            val next = (currentRadius * detector.scaleFactor).roundToInt()
-                                .coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
-                            radiusCb(next)
-                            return true
-                        }
-                    }
-                )
-                setOnTouchListener { _, ev ->
-                    scaleDetector.onTouchEvent(ev)
-                    // Consume only while pinching so panning/tapping still reach the map.
-                    scaleDetector.isInProgress
-                }
 
                 if (initialCamera != null) {
                     controller.setZoom(15.0)
