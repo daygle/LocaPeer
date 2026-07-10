@@ -1,7 +1,6 @@
 package com.locapeer.geofence
 
 import android.annotation.SuppressLint
-import android.view.ScaleGestureDetector
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -559,7 +558,6 @@ private fun GeofenceAreaDialog(
                             latText = formatCoord(la)
                             lngText = formatCoord(ln)
                         },
-                        onRadiusChange = { radiusText = it.toString() },
                         modifier = Modifier
                             .fillMaxSize()
                             .clipToBounds()
@@ -592,7 +590,7 @@ private fun GeofenceAreaDialog(
                     val hint = if (lat == null || lng == null) {
                         stringResource(R.string.geo_hint_tap)
                     } else {
-                        stringResource(R.string.geo_hint_pinch)
+                        stringResource(R.string.geo_hint_move)
                     }
                     val hintAlign = if (lat == null || lng == null) Alignment.TopCenter else Alignment.BottomCenter
                     Surface(
@@ -933,12 +931,10 @@ private const val MIN_RADIUS_M = 50
 private const val MAX_RADIUS_M = 50000
 
 /**
- * An osmdroid map for picking a geofence centre and radius:
- * - tap (or drag the pin) sets the centre,
- * - a two-finger pinch resizes the circle (built-in pinch-zoom is disabled and replaced
- *   by the +/- buttons and double-tap so the gesture is free for resizing).
+ * An osmdroid map for picking a geofence centre:
+ * - tap or long-press (or drag the pin) sets the centre,
+ * - pinch zooms the map; the radius is edited via the field/slider below.
  */
-@SuppressLint("ClickableViewAccessibility")
 @Composable
 private fun GeofencePickerMap(
     lat: Double?,
@@ -948,15 +944,12 @@ private fun GeofencePickerMap(
     recenterTo: GeoPoint?,
     onRecentered: () -> Unit,
     onPointSelected: (Double, Double) -> Unit,
-    onRadiusChange: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var mapView by remember { mutableStateOf<MapView?>(null) }
 
     // Gesture callbacks are captured once in the factory; keep them reading the latest values.
     val pointCb by rememberUpdatedState(onPointSelected)
-    val radiusCb by rememberUpdatedState(onRadiusChange)
-    val currentRadius by rememberUpdatedState(radiusMetres)
 
     DisposableEffect(Unit) {
         onDispose {
@@ -979,8 +972,7 @@ private fun GeofencePickerMap(
             MapView(ctx).apply {
                 setTileSource(TileSourceFactory.MAPNIK)
                 clipToOutline = true
-                // Pinch is repurposed for resizing, so disable pinch-zoom and expose zoom buttons.
-                setMultiTouchControls(false)
+                setMultiTouchControls(true)
                 zoomController.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
                 isVerticalMapRepetitionEnabled = false
 
@@ -989,26 +981,12 @@ private fun GeofencePickerMap(
                         pointCb(p.latitude, p.longitude)
                         return true
                     }
-                    override fun longPressHelper(p: GeoPoint): Boolean = false
+                    override fun longPressHelper(p: GeoPoint): Boolean {
+                        pointCb(p.latitude, p.longitude)
+                        return true
+                    }
                 }
                 overlays.add(MapEventsOverlay(receiver))
-
-                val scaleDetector = ScaleGestureDetector(
-                    ctx,
-                    object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-                        override fun onScale(detector: ScaleGestureDetector): Boolean {
-                            val next = (currentRadius * detector.scaleFactor).roundToInt()
-                                .coerceIn(MIN_RADIUS_M, MAX_RADIUS_M)
-                            radiusCb(next)
-                            return true
-                        }
-                    }
-                )
-                setOnTouchListener { _, ev ->
-                    scaleDetector.onTouchEvent(ev)
-                    // Consume only while pinching so panning/tapping still reach the map.
-                    scaleDetector.isInProgress
-                }
 
                 if (initialCamera != null) {
                     controller.setZoom(15.0)

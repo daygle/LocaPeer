@@ -548,8 +548,8 @@
     <string name="geo_edit_title">编辑地理围栏</string>
     <string name="geo_new_title">新建地理围栏</string>
     <string name="geo_cd_my_location">我的位置</string>
-    <string name="geo_hint_tap">点击地图以放置</string>
-    <string name="geo_hint_pinch">捏合以缩放 • 拖动以移动</string>
+    <string name="geo_hint_tap">点击或长按地图以放置</string>
+    <string name="geo_hint_move">双指缩放 • 长按或拖动图钉以移动</string>
     <string name="geo_basic_info">基本信息</string>
     <string name="geo_search_title">按地址查找</string>
     <string name="geo_search_label">地址或地点</string>

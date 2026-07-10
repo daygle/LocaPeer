@@ -560,8 +560,8 @@
     <string name="geo_edit_title">Geofence bearbeiten</string>
     <string name="geo_new_title">Neuer Geofence</string>
     <string name="geo_cd_my_location">Mein Standort</string>
-    <string name="geo_hint_tap">Zum Platzieren auf Karte tippen</string>
-    <string name="geo_hint_pinch">Zum Ändern der Größe zusammenziehen • Zum Verschieben ziehen</string>
+    <string name="geo_hint_tap">Zum Platzieren auf Karte tippen oder gedrückt halten</string>
+    <string name="geo_hint_move">Zum Zoomen zusammenziehen • Zum Verschieben gedrückt halten oder Pin ziehen</string>
     <string name="geo_basic_info">Basisinfo</string>
     <string name="geo_search_title">Per Adresse suchen</string>
     <string name="geo_search_label">Adresse oder Ort</string>

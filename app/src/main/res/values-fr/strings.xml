@@ -561,8 +561,8 @@
     <string name="geo_edit_title">Modifier la clôture virtuelle</string>
     <string name="geo_new_title">Nouvelle clôture virtuelle</string>
     <string name="geo_cd_my_location">Ma localisation</string>
-    <string name="geo_hint_tap">Touchez la carte pour placer</string>
-    <string name="geo_hint_pinch">Pincez pour redimensionner • Faites glisser pour déplacer</string>
+    <string name="geo_hint_tap">Touchez ou maintenez la carte pour placer</string>
+    <string name="geo_hint_move">Pincez pour zoomer • Maintenez ou faites glisser l\'épingle pour déplacer</string>
     <string name="geo_basic_info">Informations de base</string>
     <string name="geo_search_title">Rechercher par adresse</string>
     <string name="geo_search_label">Adresse ou lieu</string>

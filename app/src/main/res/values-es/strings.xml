@@ -560,8 +560,8 @@
     <string name="geo_edit_title">Editar geovalla</string>
     <string name="geo_new_title">Nueva geovalla</string>
     <string name="geo_cd_my_location">Mi ubicación</string>
-    <string name="geo_hint_tap">Toque el mapa para colocar</string>
-    <string name="geo_hint_pinch">Pellizcar para redimensionar • Arrastrar para mover</string>
+    <string name="geo_hint_tap">Toque o mantenga pulsado el mapa para colocar</string>
+    <string name="geo_hint_move">Pellizcar para hacer zoom • Mantener pulsado o arrastrar el pin para mover</string>
     <string name="geo_basic_info">Información básica</string>
     <string name="geo_search_title">Buscar por dirección</string>
     <string name="geo_search_label">Dirección o lugar</string>
