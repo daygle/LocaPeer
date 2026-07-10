@@ -975,10 +975,14 @@ fun SettingsScreen(
                     IntervalSlider(stringResource(R.string.motion_cycling),    settings.cyclingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(cycling = it) }
                     IntervalSlider(stringResource(R.string.motion_driving),    settings.drivingIntervalMinutes,    1f..10f,  8) { vm.updateIntervals(driving = it) }
                     IntervalSlider(stringResource(R.string.settings_low_battery), settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
+
+                    TextButton(
+                        onClick = { vm.resetIntervals() },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) { Text(stringResource(R.string.settings_update_cadence_reset)) }
                 }
             },
-            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } },
-            dismissButton = { TextButton(onClick = { vm.resetIntervals() }) { Text(stringResource(R.string.settings_update_cadence_reset)) } }
+            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } }
         )
     }
 
