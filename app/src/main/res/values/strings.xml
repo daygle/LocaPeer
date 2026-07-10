@@ -227,8 +227,8 @@
     <string name="contacts_bulk_delete_locations">Delete Locations</string>
     <string name="contacts_last_seen">Last seen: %1$s</string>
     <string name="contacts_no_location_yet">No location data yet</string>
-    <string name="contacts_view_sharing_settings">View Sharing Settings</string>
-    <string name="contacts_view_location_history">View Location History</string>
+    <string name="contacts_view_sharing_settings">Sharing Settings</string>
+    <string name="contacts_view_location_history">Location History</string>
     <string name="contacts_rename_contact">Rename Contact</string>
     <string name="contacts_on_contact_device">On Contact\'s Device</string>
     <string name="contacts_delete_my_messages_title">Delete My Messages</string>
