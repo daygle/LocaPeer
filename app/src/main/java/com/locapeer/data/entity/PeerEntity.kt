@@ -44,5 +44,18 @@ data class PeerEntity(
             ROLE_SEND -> ROLE_SEND_RECEIVE
             else -> current
         }
+
+        /**
+         * The location role after granting this peer reception of *our* location, leaving any
+         * existing RECEIVE capability intact. Used when enabling supervised mode: the supervisor
+         * must receive the supervised device's location, so a messaging-only (NONE) or
+         * receive-only (RECEIVE) relationship is promoted to also SEND. Roles that already send
+         * (SEND / SEND_RECEIVE) are returned unchanged.
+         */
+        fun roleWithSend(current: String): String = when (current) {
+            ROLE_NONE -> ROLE_SEND
+            ROLE_RECEIVE -> ROLE_SEND_RECEIVE
+            else -> current
+        }
     }
 }

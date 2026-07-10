@@ -590,6 +590,18 @@ class SettingsViewModel @Inject constructor(
     fun enableSupervisedMode(supervisorPubkey: String) {
         viewModelScope.launch {
             prefs.setSupervisedMode(enabled = true, supervisorPubkey = supervisorPubkey)
+            // Supervision only works if the supervisor receives this device's location, so
+            // promote the supervisor contact's role to also send (NONE -> SEND,
+            // RECEIVE -> SEND_RECEIVE), leaving any existing RECEIVE capability intact.
+            // Without this the beacon never targets the supervisor (it only sends to
+            // SEND/SEND_RECEIVE peers) and the supervised device shows no pin on their side.
+            val supervisor = peerDao.getPeer(supervisorPubkey)
+            if (supervisor != null) {
+                val promotedRole = PeerEntity.roleWithSend(supervisor.locationRole)
+                if (promotedRole != supervisor.locationRole) {
+                    peerDao.upsertPeer(supervisor.copy(locationRole = promotedRole))
+                }
+            }
             supervisedModeManager.sendRegisterRequest(supervisorPubkey)
         }
     }
