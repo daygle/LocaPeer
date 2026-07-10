@@ -419,11 +419,11 @@
         <item quantity="one">Delete %1$d conversation?</item>
         <item quantity="other">Delete %1$d conversations?</item>
     </plurals>
-    <string name="conv_delete_locally">Delete locally</string>
-    <string name="conv_delete_locally_sub">Removed from your device only.</string>
-    <string name="conv_delete_both">Delete from both</string>
-    <string name="conv_bulk_delete_both_sub">Also requests each contact to delete your messages.</string>
-    <string name="conv_delete_both_sub">Removes it locally and requests the peer to delete messages you sent.</string>
+    <string name="conv_delete_locally">Delete Locally</string>
+    <string name="conv_delete_locally_sub">Removes conversation from your device only.</string>
+    <string name="conv_delete_both">Delete Locally/From Contact</string>
+    <string name="conv_bulk_delete_both_sub">Deletes conversation locally and from your contact.</string>
+    <string name="conv_delete_both_sub">Deletes the conversation locally and triggers a deletion request on the contacts device for the conversation.</string>
     <string name="conv_cd_exit_selection">Exit selection</string>
     <string name="conv_cd_select_all">Select All</string>
     <string name="conv_cd_new_message">New message</string>
@@ -451,9 +451,9 @@
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
     <string name="chat_clear_title">Clear chat history?</string>
     <string name="chat_clear_message">How do you want to clear this conversation with %1$s?</string>
-    <string name="chat_clear_locally">Clear locally</string>
-    <string name="chat_clear_both">Clear from both</string>
-    <string name="chat_clear_both_sub">Removes it locally and requests %1$s to delete messages you sent.</string>
+    <string name="chat_clear_locally">Clear Locally</string>
+    <string name="chat_clear_both">Clear Locally/From Contact</string>
+    <string name="chat_clear_both_sub">Clears the chat locally and triggers a deletion request to %1$s for the messages you sent.</string>
     <string name="chat_cd_options">Options</string>
     <string name="chat_clear_history_menu">Clear Chat History</string>
     <string name="chat_typing">%1$s is typing…</string>
@@ -461,8 +461,8 @@
     <string name="chat_delete_msg_title">Delete message?</string>
     <string name="chat_delete_msg_message">How do you want to delete this message?</string>
     <string name="chat_delete_from_contact">Delete from contact</string>
-    <string name="chat_delete_from_contact_sub">Sends a request to remove it from their device.</string>
-    <string name="chat_delete_both_sub">Removes it locally and requests remote deletion.</string>
+    <string name="chat_delete_from_contact_sub">Deletes the chat from the contact’s device.</string>
+    <string name="chat_delete_both_sub">Removes the chat locally and automatically deletes it from the contact’s device.</string>
     <string name="chat_cd_share_location">Share Location</string>
     <string name="chat_input_placeholder">Message…</string>
     <string name="chat_cd_send">Send</string>
