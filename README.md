@@ -53,7 +53,7 @@ Each contact relationship can be set to one of two precision levels:
 | `SUBURB` | Coordinates rounded to ~0.01°, obscuring exact position within a ~1.1 km radius |
 
 ### Sharing Schedules
-Schedule rules specify which days of the week (Monday–Sunday bitmask) and which minutes of the day (`startMinute`–`endMinute`) sharing is active. Multiple rules are combined with OR logic. An empty rule set means always on. SOS alerts bypass schedules entirely. Rules can be set globally or overridden per contact.
+Schedule rules specify which days of the week (Monday-Sunday bitmask) and which minutes of the day (`startMinute`-`endMinute`) sharing is active. Multiple rules are combined with OR logic. An empty rule set means always on. SOS alerts bypass schedules entirely. Rules can be set globally or overridden per contact.
 
 ### Supervised Mode
 1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions.
@@ -86,7 +86,7 @@ Schedule rules specify which days of the week (Monday–Sunday bitmask) and whic
 | 1057 | `SUPERVISED_REGISTER_DECLINE` | Supervisor declines device registration |
 | 1058 | `TRACKING_ALERT` | Notifies peer when someone receives an alert about them |
 
-Custom application events (kinds 1040–1058) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
+Custom application events (kinds 1040-1058) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
 
 ## Technical Architecture
 
