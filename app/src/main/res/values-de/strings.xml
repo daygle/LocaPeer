@@ -199,7 +199,6 @@
 
     <!-- ── Weitere gemeinsame / wiederverwendbare ─────────────────────────────────────────── -->
     <string name="common_remove">Entfernen</string>
-    <string name="common_leave">Verlassen</string>
     <string name="common_name">Name</string>
     <string name="common_search">Suchen</string>
     <string name="common_sort">Sortieren</string>
@@ -235,7 +234,7 @@
     <string name="contacts_delete_my_messages_title">Meine Nachrichten löschen</string>
     <string name="contacts_delete_locations_title">Geteilte Standorte löschen</string>
     <string name="contacts_remove_contact_title">Kontakt entfernen</string>
-    <string name="contacts_leave_title">Kontaktliste verlassen</string>
+    <string name="contacts_leave_title">Kontakt und Daten löschen</string>
     <string name="contacts_rename_title">Kontakt umbenennen</string>
     <string name="contacts_remove_contact_body">%1$s aus Ihren Kontakten entfernen? Der Standortverlauf wird lokal ebenfalls gelöscht.</string>
     <string name="contacts_leave_body">Dies entfernt Sie aus den Kontakten von %1$s und löscht alle Ihre Nachrichten und Standortdaten von seinem Gerät. Sie verlieren auch den Zugriff auf seinen Standort.</string>

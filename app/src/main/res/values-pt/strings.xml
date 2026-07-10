@@ -199,7 +199,6 @@
 
     <!-- ── Mais comuns / reutilizáveis ─────────────────────────────────────────── -->
     <string name="common_remove">Remover</string>
-    <string name="common_leave">Sair</string>
     <string name="common_name">Nome</string>
     <string name="common_search">Buscar</string>
     <string name="common_sort">Ordenar</string>
@@ -235,7 +234,7 @@
     <string name="contacts_delete_my_messages_title">Excluir Minhas Mensagens</string>
     <string name="contacts_delete_locations_title">Excluir Localizações Compartilhadas</string>
     <string name="contacts_remove_contact_title">Remover Contato</string>
-    <string name="contacts_leave_title">Sair da Lista de Contatos</string>
+    <string name="contacts_leave_title">Excluir Contato e Dados</string>
     <string name="contacts_rename_title">Renomear contato</string>
     <string name="contacts_remove_contact_body">Remover %1$s de seus contatos? O histórico de localização também será excluído localmente.</string>
     <string name="contacts_leave_body">Isso removerá você dos contatos de %1$s e excluirá todas as suas mensagens e dados de localização do dispositivo dele. Você também perderá o acesso à localização dele.</string>

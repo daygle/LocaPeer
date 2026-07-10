@@ -198,7 +198,6 @@
 
     <!-- ── 更多通用 / 可重用 ─────────────────────────────────────────── -->
     <string name="common_remove">移除</string>
-    <string name="common_leave">离开</string>
     <string name="common_name">名称</string>
     <string name="common_search">搜索</string>
     <string name="common_sort">排序</string>
@@ -233,7 +232,7 @@
     <string name="contacts_delete_my_messages_title">删除我的消息</string>
     <string name="contacts_delete_locations_title">删除共享位置</string>
     <string name="contacts_remove_contact_title">移除联系人</string>
-    <string name="contacts_leave_title">离开联系人列表</string>
+    <string name="contacts_leave_title">删除联系人和数据</string>
     <string name="contacts_rename_title">重命名联系人</string>
     <string name="contacts_remove_contact_body">从您的联系人中移除 %1$s？其位置历史也将被从本地删除。</string>
     <string name="contacts_leave_body">这将从 %1$s 的联系人中移除您，并从其设备中删除您的所有消息和位置数据。您也将失去对其位置的访问权限。</string>

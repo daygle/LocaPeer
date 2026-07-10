@@ -322,7 +322,7 @@ fun ContactsScreen(
             DataAction.REMOVE_SELF -> Triple(
                 stringResource(R.string.contacts_leave_title),
                 stringResource(R.string.contacts_leave_body, contact.peer.displayName),
-                stringResource(R.string.common_leave)
+                stringResource(R.string.common_delete)
             )
             DataAction.DELETE_MESSAGES -> Triple(
                 stringResource(R.string.contacts_delete_my_messages_title),

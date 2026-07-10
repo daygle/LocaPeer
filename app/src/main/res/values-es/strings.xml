@@ -199,7 +199,6 @@
 
     <!-- ── Más comunes / reutilizables ─────────────────────────────────────────── -->
     <string name="common_remove">Eliminar</string>
-    <string name="common_leave">Salir</string>
     <string name="common_name">Nombre</string>
     <string name="common_search">Buscar</string>
     <string name="common_sort">Ordenar</string>
@@ -235,7 +234,7 @@
     <string name="contacts_delete_my_messages_title">Eliminar mis mensajes</string>
     <string name="contacts_delete_locations_title">Eliminar ubicaciones compartidas</string>
     <string name="contacts_remove_contact_title">Eliminar contacto</string>
-    <string name="contacts_leave_title">Salir de la lista de contactos</string>
+    <string name="contacts_leave_title">Eliminar contacto y datos</string>
     <string name="contacts_rename_title">Renombrar contacto</string>
     <string name="contacts_remove_contact_body">¿Eliminar a %1$s de sus contactos? Su historial de ubicaciones también se eliminará localmente.</string>
     <string name="contacts_leave_body">Esto lo eliminará de los contactos de %1$s y eliminará todos sus mensajes y datos de ubicación de su dispositivo. También perderá el acceso a su ubicación.</string>
