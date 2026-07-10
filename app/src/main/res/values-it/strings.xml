@@ -199,7 +199,6 @@
 
     <!-- ── Altri comuni / riutilizzabili ─────────────────────────────────────────── -->
     <string name="common_remove">Rimuovi</string>
-    <string name="common_leave">Lascia</string>
     <string name="common_name">Nome</string>
     <string name="common_search">Cerca</string>
     <string name="common_sort">Ordina</string>
@@ -235,7 +234,7 @@
     <string name="contacts_delete_my_messages_title">Elimina i miei messaggi</string>
     <string name="contacts_delete_locations_title">Elimina posizioni condivise</string>
     <string name="contacts_remove_contact_title">Rimuovi contatto</string>
-    <string name="contacts_leave_title">Lascia lista contatti</string>
+    <string name="contacts_leave_title">Elimina contatto e dati</string>
     <string name="contacts_rename_title">Rinomina contatto</string>
     <string name="contacts_remove_contact_body">Rimuovere %1$s dai tuoi contatti? Anche la sua cronologia delle posizioni verrà eliminata localmente.</string>
     <string name="contacts_leave_body">Questo ti rimuoverà dai contatti di %1$s ed eliminerà tutti i tuoi messaggi e dati sulla posizione dal suo dispositivo. Perderai inoltre l\'accesso alla sua posizione.</string>

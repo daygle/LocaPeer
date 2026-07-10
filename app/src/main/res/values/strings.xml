@@ -199,7 +199,6 @@
 
     <!-- ── More common / reusable ─────────────────────────────────────────── -->
     <string name="common_remove">Remove</string>
-    <string name="common_leave">Leave</string>
     <string name="common_name">Name</string>
     <string name="common_search">Search</string>
     <string name="common_sort">Sort</string>
@@ -235,7 +234,7 @@
     <string name="contacts_delete_my_messages_title">Delete My Messages</string>
     <string name="contacts_delete_locations_title">Delete Shared Locations</string>
     <string name="contacts_remove_contact_title">Remove Contact</string>
-    <string name="contacts_leave_title">Leave Contact List</string>
+    <string name="contacts_leave_title">Delete Contact and Data</string>
     <string name="contacts_rename_title">Rename contact</string>
     <string name="contacts_remove_contact_body">Remove %1$s from your contacts? Their location history will also be deleted locally.</string>
     <string name="contacts_leave_body">This will remove you from %1$s\'s contacts and delete all your messages and location data from their device. You will also lose access to their location.</string>

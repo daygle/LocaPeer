@@ -200,7 +200,6 @@
 
     <!-- ── More common / reusable ─────────────────────────────────────────── -->
     <string name="common_remove">Retirer</string>
-    <string name="common_leave">Quitter</string>
     <string name="common_name">Nom</string>
     <string name="common_search">Rechercher</string>
     <string name="common_sort">Trier</string>
@@ -236,7 +235,7 @@
     <string name="contacts_delete_my_messages_title">Supprimer mes messages</string>
     <string name="contacts_delete_locations_title">Supprimer les localisations partagées</string>
     <string name="contacts_remove_contact_title">Retirer le contact</string>
-    <string name="contacts_leave_title">Quitter la liste de contacts</string>
+    <string name="contacts_leave_title">Supprimer le contact et les données</string>
     <string name="contacts_rename_title">Renommer le contact</string>
     <string name="contacts_remove_contact_body">Retirer %1$s de vos contacts ? Son historique de localisation sera également supprimé localement.</string>
     <string name="contacts_leave_body">Cela vous retirera des contacts de %1$s et supprimera tous vos messages et données de localisation de son appareil. Vous perdrez également l\'accès à sa localisation.</string>

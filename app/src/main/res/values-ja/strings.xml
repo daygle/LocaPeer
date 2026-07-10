@@ -198,7 +198,6 @@
 
     <!-- ── その他共通/再利用可能 ─────────────────────────────────────────── -->
     <string name="common_remove">削除</string>
-    <string name="common_leave">退出</string>
     <string name="common_name">名前</string>
     <string name="common_search">検索</string>
     <string name="common_sort">並べ替え</string>
@@ -233,7 +232,7 @@
     <string name="contacts_delete_my_messages_title">自分のメッセージを削除</string>
     <string name="contacts_delete_locations_title">共有位置情報を削除</string>
     <string name="contacts_remove_contact_title">連絡先を削除</string>
-    <string name="contacts_leave_title">連絡先リストから退出</string>
+    <string name="contacts_leave_title">連絡先とデータを削除</string>
     <string name="contacts_rename_title">連絡先の名前を変更</string>
     <string name="contacts_remove_contact_body">%1$sを連絡先から削除しますか？相手の位置履歴もローカルから削除されます。</string>
     <string name="contacts_leave_body">これにより、あなたは%1$sの連絡先から削除され、相手のデバイスからあなたのメッセージと位置データがすべて削除されます。また、相手の位置情報へのアクセス権も失われます。</string>
