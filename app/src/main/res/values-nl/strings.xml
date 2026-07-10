@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Meldingskanalen & voorgrondservice ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Locatie-uitzending</string>
     <string name="channel_desc_heartbeat">Zendt uw locatie uit naar uw goedgekeurde contacten</string>
     <string name="channel_name_alerts">Meldingen</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer is actief</string>
     <string name="notification_heartbeat_text">Uw locatie delen met anderen</string>
 
-    <!-- ── Algemene acties ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Opslaan</string>
     <string name="common_cancel">Annuleren</string>
     <string name="common_done">Gereed</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Goedkeuren</string>
     <string name="common_deny">Weigeren</string>
 
-    <!-- ── Navigatietabbladen ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Kaart</string>
     <string name="tab_messages">Berichten</string>
     <string name="tab_history">Geschiedenis</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Instellingen</string>
 
-    <!-- ── Beweging / activiteitsstatussen ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Stationair</string>
     <string name="motion_walking">Wandelen</string>
     <string name="motion_running">Hardlopen</string>
     <string name="motion_cycling">Fietsen</string>
     <string name="motion_driving">Rijden</string>
 
-    <!-- ── Instellingen ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Privésleutel</string>
+    <string name="backup_section_contacts">Contacten</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Instellingen</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Toezichtsverzoek</string>
+    <string name="supervision_request_message">\"%1$s\" vraagt toegang tot de eigen instellingen. Toestaan?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Instellingen</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Locatie &amp; Privacy</string>
     <string name="settings_section_security">Beveiliging</string>
     <string name="settings_section_map">Kaart</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Back-up &amp; Sleutels</string>
     <string name="settings_section_about">Over</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Naam bewerken</string>
     <string name="settings_my_qr">Mijn QR</string>
     <string name="settings_no_name_set">Geen naam ingesteld</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Mijn locatie delen</string>
+    <string name="settings_broadcasting">Wordt uitgezonden naar je contacten</string>
+    <string name="settings_not_broadcasting">Wordt niet uitgezonden</string>
+    <string name="settings_sharing_schedule">Deelschema</string>
+    <string name="settings_always_on">Altijd aan</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d regel</item>
+        <item quantity="other">%1$d regels</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Gedeelde geofencegebieden beheren</string>
+    <string name="settings_notify_when_tracked">Melden bij volgen</string>
+    <string name="settings_notify_when_tracked_subtitle">Ontvang een melding wanneer een nabijheids- of geofencemelding van een contact over jou wordt geactiveerd.</string>
+    <string name="settings_my_location_history">Locatiegeschiedenis</string>
+    <string name="settings_my_location_history_subtitle">Bekijk je eigen locatietijdlijn</string>
+    <string name="settings_lookup_addresses">Adressen opzoeken</string>
+    <string name="settings_lookup_addresses_subtitle">Toon straatadressen voor geschiedenispunten en aangetikte kaartspelden, en zoek op adres bij het plaatsen van geofences. Stuurt die coördinaten of je zoekopdracht naar de geocodeerdienst van je apparaat (meestal Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Toezicht actief</string>
+    <string name="settings_supervision_active_subtitle">Instellingen vereisen goedkeuring van de toezichthouder</string>
+    <string name="settings_disable_supervised">Toezichtmodus uitschakelen</string>
+    <string name="settings_supervised_mode">Toezichtmodus</string>
+    <string name="settings_supervised_mode_subtitle">Goedkeuring van toezichthouder vereisen voor toegang tot instellingen</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Beginpunt</string>
+    <string name="settings_map_current_location">Huidige locatie</string>
+    <string name="settings_map_all_contacts">Alle contacten</string>
+    <string name="settings_map_fixed_location">Vaste locatie</string>
+    <string name="settings_map_last_position">Laatste positie</string>
+    <string name="settings_map_starting_point_title">Beginpunt van de kaart</string>
+    <string name="settings_no_location_set">Geen locatie ingesteld</string>
+    <string name="settings_pick_location_on_map">Locatie op kaart kiezen</string>
+    <string name="settings_default_zoom_level">Standaard zoomniveau</string>
+    <string name="settings_map_pin_colour">Kleur kaartspeld</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Updatefrequentie</string>
+    <string name="settings_update_cadence_subtitle">Stel in hoe vaak je locatie wordt uitgezonden</string>
+    <string name="settings_update_cadence_dialog_message">Bepaal hoe vaak je locatie wordt bijgewerkt op basis van je activiteit. Frequente updates verbruiken meer batterij.</string>
+    <string name="settings_update_cadence_reset">Standaardwaarden herstellen</string>
+    <string name="settings_min_distance_filtering">Minimale afstandsfiltering</string>
+    <string name="settings_min_distance_filtering_subtitle">Toon alleen punten die minstens zo ver van het vorige punt liggen.</string>
+    <string name="settings_discard_low_accuracy">Onnauwkeurige metingen negeren</string>
+    <string name="settings_discard_low_accuracy_subtitle">Zend geen eigen metingen uit en sla ze niet op als de nauwkeurigheidsradius groter is dan deze waarde. SOS wordt nooit overgeslagen.</string>
+    <string name="settings_hide_low_accuracy">Onnauwkeurige punten verbergen</string>
+    <string name="settings_hide_low_accuracy_subtitle">Verberg geschiedenispunten met een nauwkeurigheidsradius groter dan deze waarde. Er wordt niets verwijderd.</string>
+    <string name="settings_low_battery" formatted="false">Batterij bijna leeg (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Bewegingsdetectie</string>
+    <string name="settings_motion_detection_on">Ingeschakeld — verfijnt je bewegingstype (lopen, autorijden) in de geschiedenis</string>
+    <string name="settings_motion_detection_off">Uit — sta toegang tot fysieke activiteit toe voor nauwkeurigere bewegingslabels</string>
+    <string name="settings_enable_motion_title">Bewegingsdetectie inschakelen</string>
+    <string name="settings_enable_motion_message">Met toegang tot fysieke activiteit kan LocaPeer lopen, autorijden en stilstaan nauwkeuriger onderscheiden in je geschiedenis. Het staat nu uit — je kunt het opnieuw inschakelen via de systeeminstellingen.</string>
+    <string name="settings_open_settings">Instellingen openen</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Snelheidseenheden</string>
+    <string name="settings_speed_imperial">Imperiaal (mph)</string>
+    <string name="settings_speed_metric">Metrisch (km/u)</string>
+    <string name="settings_elevation_units">Hoogte-eenheden</string>
+    <string name="settings_elevation_imperial">Imperiaal (voet)</string>
+    <string name="settings_elevation_metric">Metrisch (meters)</string>
+    <string name="settings_distance_units">Afstandseenheden</string>
+    <string name="settings_distance_imperial">Imperiaal (ft/mi)</string>
+    <string name="settings_distance_metric">Metrisch (m/km)</string>
+    <string name="settings_time_format">Tijdnotatie</string>
+    <string name="settings_time_24h">24-uurs (13:30)</string>
+    <string name="settings_time_12h">12-uurs (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Locatiegegevens</string>
+    <string name="settings_retention_location_subtitle">Hoelang locatiegegevens van contacten lokaal worden bewaard</string>
+    <string name="settings_clear_all_location">Alle locatiegegevens wissen</string>
+    <string name="settings_retention_messages">Berichten</string>
+    <string name="settings_retention_messages_subtitle">Hoelang ontvangen berichten lokaal worden bewaard</string>
+    <string name="settings_clear_all_messages">Alle berichten wissen</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Navigatie aanpassen</string>
+    <string name="settings_customize_nav_subtitle">Kies en herschik de tabbladen onderaan</string>
+    <string name="settings_start_page">Startpagina</string>
     <string name="settings_language">Taal</string>
     <string name="settings_language_title">App-taal</string>
     <string name="settings_language_system">Systeemstandaard</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Back-up exporteren</string>
+    <string name="settings_export_backup_subtitle">Sla je privésleutel en contacten op in een bestand. Bewaar dit bestand veilig!</string>
+    <string name="settings_import_backup">Back-up importeren</string>
+    <string name="settings_import_backup_subtitle">Herstellen vanuit een eerder geëxporteerd bestand</string>
+    <string name="settings_view_private_key">Privésleutel bekijken</string>
+    <string name="settings_view_private_key_subtitle">Toon je 64-tekens hexadecimale identiteitssleutel</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Over LocaPeer</string>
+    <string name="settings_about_subtitle">Versie, relaystatus, open source</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Weergavenaam bewerken</string>
+    <string name="settings_display_name_label">Weergavenaam</string>
+    <string name="settings_my_invite_qr">Mijn uitnodigings-QR</string>
+    <string name="settings_invite_qr_subtitle">Anderen kunnen deze scannen om je te gaan volgen.</string>
+    <string name="settings_invite_qr_cd">Uitnodigings-QR</string>
+    <string name="settings_private_key_title">Privésleutel</string>
+    <string name="settings_private_key_warning">Bewaar deze veilig. Iedereen met deze sleutel kan zich als jou voordoen.</string>
+    <string name="settings_clear_location_title">Locatiegeschiedenis wissen?</string>
+    <string name="settings_clear_location_message">Alle opgeslagen locatiepunten worden permanent verwijderd.</string>
+    <string name="settings_clear_messages_title">Berichtgeschiedenis wissen?</string>
+    <string name="settings_clear_messages_message">Alle opgeslagen berichten worden permanent verwijderd.</string>
+    <string name="settings_encrypted_backup_title">Versleutelde back-up</string>
+    <string name="settings_encrypted_backup_message">Deze back-up is versleuteld. Voer het wachtwoord in om door te gaan.</string>
+    <string name="settings_select_restore_title">Selecteer te herstellen gegevens</string>
+    <string name="settings_select_export_title">Selecteer te exporteren gegevens</string>
+    <string name="settings_export_password_hint">Stel optioneel een wachtwoord in om je back-upbestand te versleutelen.</string>
+    <string name="settings_backup_password_optional">Back-upwachtwoord (optioneel)</string>
+    <string name="settings_select_sections">Selecteer de onderdelen om op te nemen:</string>
+    <string name="settings_choose_file_location">Kies de bestandslocatie</string>
+    <string name="settings_not_in_backup">Niet in deze back-up</string>
+    <string name="settings_enable_supervised_title">Toezichtmodus inschakelen</string>
+    <string name="settings_enable_supervised_message">Kies een contact dat als toezichthouder optreedt. Die persoon moet toegang tot de instellingen goedkeuren vanaf het eigen apparaat.</string>
+    <string name="settings_no_peers_found">Geen contacten gevonden. Voeg eerst een contact toe door de uitnodigings-QR-code te scannen.</string>
+    <string name="settings_disable_supervised_title">Toezichtmodus uitschakelen?</string>
+    <string name="settings_disable_supervised_message">Instellingen worden toegankelijk zonder goedkeuring van de toezichthouder.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Verwijderen</string>
+    <string name="common_name">Naam</string>
+    <string name="common_search">Zoeken</string>
+    <string name="common_sort">Sorteren</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Bericht</string>
+    <string name="cd_show_on_map">Op kaart tonen</string>
+    <string name="cd_more_options">Meer opties</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d geselecteerd</item>
+        <item quantity="other">%1$d geselecteerd</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Selectie annuleren</string>
+    <string name="contacts_cd_select_all">Alles selecteren</string>
+    <string name="contacts_cd_deselect_all">Alles deselecteren</string>
+    <string name="contacts_cd_qr_invite">QR / uitnodiging</string>
+    <string name="contacts_cd_pending_requests">Openstaande verzoeken</string>
+    <string name="contacts_sort_last_seen">Laatst gezien</string>
+    <string name="contacts_search_placeholder">Contacten zoeken…</string>
+    <string name="contacts_empty_title">Nog geen contacten</string>
+    <string name="contacts_empty_subtitle">Scan een QR-code om met iemand te verbinden en locaties te delen.</string>
+    <string name="contacts_scan_qr">QR-code scannen</string>
+    <string name="contacts_bulk_delete_messages">Berichten verwijderen</string>
+    <string name="contacts_bulk_delete_locations">Locaties verwijderen</string>
+    <string name="contacts_last_seen">Laatst gezien: %1$s</string>
+    <string name="contacts_no_location_yet">Nog geen locatiegegevens</string>
+    <string name="contacts_view_sharing_settings">Deelinstellingen</string>
+    <string name="contacts_view_location_history">Locatiegeschiedenis</string>
+    <string name="contacts_rename_contact">Contact hernoemen</string>
+    <string name="contacts_on_contact_device">Op het apparaat van het contact</string>
+    <string name="contacts_delete_my_messages_title">Mijn berichten verwijderen</string>
+    <string name="contacts_delete_locations_title">Gedeelde locaties verwijderen</string>
+    <string name="contacts_remove_contact_title">Contact verwijderen</string>
+    <string name="contacts_leave_title">Contact en gegevens verwijderen</string>
+    <string name="contacts_rename_title">Contact hernoemen</string>
+    <string name="contacts_remove_contact_body">%1$s uit je contacten verwijderen? De locatiegeschiedenis wordt ook lokaal verwijderd.</string>
+    <string name="contacts_leave_body">Dit verwijdert je uit de contacten van %1$s en wist al je berichten en locatiegegevens van dat apparaat. Je verliest ook de toegang tot diens locatie.</string>
+    <string name="contacts_delete_my_messages_body">Dit verwijdert alle berichten die je hebt verstuurd van het apparaat van %1$s. Dit kan niet ongedaan worden gemaakt.</string>
+    <string name="contacts_delete_locations_body">Dit verwijdert alle locatiegegevens die je hebt gedeeld van het apparaat van %1$s. Dit kan niet ongedaan worden gemaakt.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Contact verwijderen</item>
+        <item quantity="other">%1$d contacten verwijderen</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Dit contact verwijderen? De locatiegeschiedenis wordt ook lokaal verwijderd.</item>
+        <item quantity="other">%1$d contacten verwijderen? Hun locatiegeschiedenis wordt ook lokaal verwijderd.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Alle door jou gestuurde berichten op afstand verwijderen van het apparaat van dit contact? Dit kan niet ongedaan worden gemaakt.</item>
+        <item quantity="other">Alle door jou gestuurde berichten op afstand verwijderen van de apparaten van %1$d contacten? Dit kan niet ongedaan worden gemaakt.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Alle door jou gedeelde locatiegeschiedenis op afstand verwijderen van het apparaat van dit contact? Dit kan niet ongedaan worden gemaakt.</item>
+        <item quantity="other">Alle door jou gedeelde locatiegeschiedenis op afstand verwijderen van de apparaten van %1$d contacten? Dit kan niet ongedaan worden gemaakt.</item>
+    </plurals>
+
+    <string name="common_continue">Doorgaan</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Herstellen vanuit back-up</string>
+    <string name="onboarding_restore_message">Plak je 64-tekens hexadecimale privésleutel om je identiteit en contacten te herstellen.</string>
+    <string name="onboarding_private_key_hex">Privésleutel (hex)</string>
+    <string name="onboarding_tagline">Privé locatie delen met contacten.\nGeen accounts. Geen propriëtaire servers.</string>
+    <string name="onboarding_feature_e2e_title">End-to-end versleuteld</string>
+    <string name="onboarding_feature_e2e_subtitle">Je locatie wordt op het apparaat versleuteld</string>
+    <string name="onboarding_feature_servers_title">Geen propriëtaire servers</string>
+    <string name="onboarding_feature_servers_subtitle">Gebruikt open Nostr-relays als beveiligd transport — je gegevens blijven versleuteld en privé</string>
+    <string name="onboarding_feature_phone_title">Blijft op je telefoon</string>
+    <string name="onboarding_feature_phone_subtitle">Je volledige locatiegeschiedenis blijft op je apparaat. Alleen je huidige positie wordt gedeeld met geselecteerde contacten</string>
+    <string name="onboarding_name_prompt">Hoe moeten je contacten je noemen?</string>
+    <string name="onboarding_name_placeholder">bijv. Mama, Papa, Anna…</string>
+    <string name="onboarding_get_started">Aan de slag</string>
+    <string name="onboarding_restore_from_backup">Herstellen vanuit back-up</string>
+    <string name="onboarding_key_note">Je privésleutel wordt lokaal gegenereerd en verlaat dit apparaat nooit.</string>
+    <string name="onboarding_permissions_title">Machtigingen</string>
+    <string name="onboarding_permissions_desc">LocaPeer heeft locatietoegang nodig om je positie te delen, cameratoegang om uitnodigingscodes te scannen en meldingstoegang voor achtergrondstatus. Toegang tot fysieke activiteit is optioneel — het helpt je beweging (lopen, autorijden) nauwkeuriger te labelen.</string>
+    <string name="onboarding_before_ask_title">Voordat we het vragen</string>
+    <string name="onboarding_before_ask_intro">Je ziet zo een paar systeemvragen:</string>
+    <string name="onboarding_before_ask_location">• Locatie — vereist, om je positie te delen.</string>
+    <string name="onboarding_before_ask_camera">• Camera — om uitnodigingscodes te scannen.</string>
+    <string name="onboarding_before_ask_notifications">• Meldingen — voor achtergrondstatus.</string>
+    <string name="onboarding_before_ask_activity">• Fysieke activiteit — optioneel. Hiermee kan LocaPeer lopen, autorijden en stilstaan beter onderscheiden. Je kunt dit overslaan en later inschakelen via Instellingen.</string>
+    <string name="onboarding_grant_permissions">Machtigingen verlenen</string>
+    <string name="onboarding_bg_location_title">Locatie op de achtergrond</string>
+    <string name="onboarding_bg_location_desc">Kies in het volgende scherm \"Altijd toestaan\" zodat je contacten updates krijgen terwijl de app gesloten is.</string>
+    <string name="onboarding_bg_location_error">Achtergrondlocatie is vereist om je contacten bij te werken wanneer de app gesloten is. Probeer opnieuw en kies \"Altijd toestaan\".</string>
+    <string name="onboarding_configure_location">Locatie configureren</string>
+    <string name="onboarding_battery_title">Batterij</string>
+    <string name="onboarding_battery_desc">Android kan LocaPeer stoppen om batterij te besparen. Sluit LocaPeer uit van optimalisaties voor betrouwbare updates.</string>
+    <string name="onboarding_disable_optimizations">Optimalisaties uitschakelen</string>
+    <string name="onboarding_done_title">Klaar!</string>
+    <string name="onboarding_done_desc">Je privélocatienetwerk is gereed.</string>
+    <string name="onboarding_start_using">LocaPeer gebruiken</string>
+
+    <string name="common_try_again">Opnieuw proberen</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Uitnodiging scannen</string>
+    <string name="scan_camera_needed">Cameramachtiging is nodig om QR-codes te scannen.</string>
+    <string name="scan_grant_permission">Machtiging verlenen</string>
+    <string name="scan_add_contact_title">Contact toevoegen?</string>
+    <string name="scan_add_contact_message">Dit verbindt je met %1$s en jullie gaan elkaars locatie delen.</string>
+    <string name="scan_add_share">Toevoegen en delen</string>
+    <string name="scan_request_sent_title">Verzoek verzonden!</string>
+    <string name="scan_request_sent_message">Er is een verzoek naar %1$s gestuurd. Zodra het wordt geaccepteerd, zijn jullie verbonden.</string>
+    <string name="scan_failed">Scannen mislukt: %1$s</string>
+
     <string name="cd_back">Terug</string>
+    <string name="common_review">Bekijken</string>
+    <string name="common_decline">Weigeren</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Verzenden/ontvangen</string>
+    <string name="role_send">Verzenden</string>
+    <string name="role_receive">Ontvangen</string>
+    <string name="role_none">Niet delen</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Mijn uitnodiging</string>
+    <string name="invite_tab_add_contact">Contact toevoegen</string>
+    <string name="invite_your_qr_title">Jouw QR-code</string>
+    <string name="invite_your_qr_subtitle">Laat iemand deze scannen om je locatie te volgen</string>
+    <string name="invite_qr_cd">Jouw QR-code</string>
+    <string name="invite_qr_error">Fout bij genereren van QR</string>
+    <string name="invite_share_link">Uitnodigingslink delen</string>
+    <string name="invite_encryption_note">Je locatie wordt specifiek versleuteld voor het apparaat van de scanner.</string>
+    <string name="invite_camera_required_title">Cameratoegang vereist</string>
+    <string name="invite_camera_required_message">Verleen cameramachtiging om een QR-code te scannen.</string>
+    <string name="invite_point_camera">Richt de camera op een LocaPeer-QR</string>
+    <string name="invite_paste_title">Of plak een uitnodigingslink</string>
+    <string name="invite_process_link">Link verwerken</string>
+    <string name="invite_fallback_name">Contact</string>
+    <string name="invite_success_message">Zodra %1$s accepteert, zijn jullie verbonden.</string>
+    <string name="invite_confirm_add_title">%1$s toevoegen?</string>
+    <string name="invite_confirm_add_message">Toevoegen aan je contacten en locatie delen?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Geen openstaande verzoeken</string>
+    <string name="pending_requesting">Vraagt: %1$s · %2$s</string>
+    <string name="pending_role_change">Rolwijzigingsverzoek · %1$s</string>
+    <string name="pending_new_request">Nieuw deelverzoek · %1$s</string>
+
+    <string name="common_save_changes">Wijzigingen opslaan</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Deelinstellingen bijwerken</string>
+    <string name="incoming_new_title">Nieuw contactverzoek</string>
+    <string name="incoming_update_subtitle">%1$s wil de manier van delen wijzigen. Bekijk de instellingen hieronder.</string>
+    <string name="incoming_new_subtitle">%1$s heeft je als contact toegevoegd! Je kunt nu kiezen wat je terug deelt.</string>
+    <string name="incoming_section_location">Locatie</string>
+    <string name="incoming_share_my_location">Mijn locatie delen met %1$s</string>
+    <string name="incoming_share_my_location_sub">Diegene kan zien waar je bent</string>
+    <string name="incoming_see_their_location">Locatie van %1$s zien</string>
+    <string name="incoming_see_their_location_sub">Jij kunt zien waar diegene is</string>
+    <string name="incoming_section_messaging">Berichten</string>
+    <string name="incoming_allow_messages">Berichten toestaan</string>
+    <string name="incoming_allow_messages_sub">Chatberichten van %1$s ontvangen</string>
+
+    <string name="common_request">Verzoeken</string>
+    <string name="common_edit">Bewerken</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Contactinstellingen</string>
+    <string name="peer_section_roles">Rollen voor locatie delen</string>
+    <string name="peer_send_on">%1$s kan je locatie zien</string>
+    <string name="peer_send_off">Je deelt je locatie niet met %1$s</string>
+    <string name="peer_receive_title">Locatie van %1$s ontvangen</string>
+    <string name="peer_receive_on">Je kunt de locatie van %1$s zien</string>
+    <string name="peer_receive_off">Je hebt geen toegang tot de locatie van %1$s</string>
+    <string name="peer_section_privacy">Privacy en deelopties</string>
+    <string name="peer_pause_sharing">Delen pauzeren</string>
+    <string name="peer_pause_sub">Stop tijdelijk met je locatie naar %1$s te sturen</string>
+    <string name="peer_precision">Locatienauwkeurigheid</string>
+    <string name="peer_precision_exact_sub">Exacte gps-coördinaten</string>
+    <string name="peer_precision_suburb_sub">Locatie bij benadering (wijkniveau)</string>
+    <string name="peer_always_sharing">Altijd delen</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d actieve deelregel</item>
+        <item quantity="other">%1$d actieve deelregels</item>
+    </plurals>
+    <string name="peer_section_alerts">Meldingen en bewaking</string>
+    <string name="peer_sos_contact">SOS-contact</string>
+    <string name="peer_sos_sub">Ontvang noodmeldingen, zelfs als het delen is gepauzeerd</string>
+    <string name="peer_missed_alert">Melding bij gemiste locatie</string>
+    <string name="peer_missed_on">Waarschuw me als %1$s geen locatie meer doorgeeft</string>
+    <string name="peer_requires_access">Vereist toegang tot de locatie van %1$s</string>
+    <string name="peer_proximity_alert">Nabijheidsmelding</string>
+    <string name="peer_proximity_sub">Waarschuw me wanneer %1$s in de buurt is</string>
+    <string name="peer_alert_radius">Meldingsradius</string>
+    <string name="peer_alert_schedule">Meldingsschema</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d actieve regel</item>
+        <item quantity="other">%1$d actieve regels</item>
+    </plurals>
+    <string name="peer_geofences_sub">Stel aankomst- en vertrekzones in voor %1$s</string>
+    <string name="peer_supervise">Toezicht houden op dit apparaat</string>
+    <string name="peer_supervise_on">Je ontvangt en keurt ontgrendelverzoeken van %1$s goed</string>
+    <string name="peer_supervise_off">Sta %1$s toe je ontgrendelverzoeken voor de toezichtmodus te sturen</string>
+    <string name="peer_messaging_sub">Chatberichten van %1$s in-/uitschakelen</string>
+    <string name="peer_section_history">Bewegingsgeschiedenis</string>
+    <string name="peer_location_history">Locatiegeschiedenis</string>
+    <string name="peer_location_history_sub">Bekijk bewegingsgeschiedenis en kaartrapport van %1$s</string>
+    <string name="peer_section_retention">Bewaartermijn op afstand</string>
+    <string name="peer_retention_location_sub">Hoelang %1$s je locatiegeschiedenis bewaart</string>
+    <string name="peer_purge_location">Alle locatiegegevens wissen bij %1$s</string>
+    <string name="peer_retention_messages_sub">Hoelang %1$s je verzonden berichten bewaart</string>
+    <string name="peer_purge_messages">Alle berichten wissen bij %1$s</string>
+    <string name="peer_precision_exact">Exacte gps</string>
+    <string name="peer_precision_exact_desc">Precieze coördinaten</string>
+    <string name="peer_precision_suburb">Wijk (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Alleen op buurtniveau</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d gesprek verwijderen?</item>
+        <item quantity="other">%1$d gesprekken verwijderen?</item>
+    </plurals>
+    <string name="conv_delete_locally">Lokaal verwijderen</string>
+    <string name="conv_delete_locally_sub">Verwijdert het gesprek alleen van jouw apparaat.</string>
+    <string name="conv_delete_both">Lokaal en bij contact verwijderen</string>
+    <string name="conv_bulk_delete_both_sub">Verwijdert het gesprek lokaal en bij je contact.</string>
+    <string name="conv_delete_both_sub">Verwijdert het gesprek lokaal en stuurt een verwijderverzoek naar het apparaat van het contact.</string>
+    <string name="conv_cd_exit_selection">Selectie sluiten</string>
+    <string name="conv_cd_select_all">Alles selecteren</string>
+    <string name="conv_cd_new_message">Nieuw bericht</string>
+    <string name="conv_sort_date">Datum</string>
+    <string name="conv_sort_unread">Ongelezen</string>
+    <string name="conv_search_placeholder">Gesprekken zoeken…</string>
+    <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_archived">Gearchiveerd</string>
+    <string name="conv_mark_read">Als gelezen markeren</string>
+    <string name="conv_archive">Archiveren</string>
+    <string name="conv_unarchive">Dearchiveren</string>
+    <string name="conv_empty_no_results">Geen resultaten voor \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Probeer een andere zoekterm</string>
+    <string name="conv_empty_archived_title">Geen gearchiveerde chats</string>
+    <string name="conv_empty_archived_sub">Archiveer chats om je inbox overzichtelijk te houden</string>
+    <string name="conv_empty_title">Nog geen berichten</string>
+    <string name="conv_empty_sub">Open de kaart en tik op een persoon\nom een gesprek te beginnen</string>
+    <string name="conv_delete_title">Gesprek verwijderen?</string>
+    <string name="conv_delete_message">Hoe wil je dit gesprek met %1$s verwijderen?</string>
+    <string name="conv_messages_blocked">Berichten geblokkeerd</string>
+    <string name="conv_preview_mine">Jij: %1$s</string>
+    <string name="conv_new_message_title">Nieuw bericht</string>
+    <string name="conv_picker_empty">Nog geen contacten. Scan een QR-code om een contact toe te voegen.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Chatgeschiedenis wissen?</string>
+    <string name="chat_clear_message">Hoe wil je dit gesprek met %1$s wissen?</string>
+    <string name="chat_clear_locally">Lokaal wissen</string>
+    <string name="chat_clear_both">Lokaal en bij contact wissen</string>
+    <string name="chat_clear_both_sub">Wist de chat lokaal en stuurt %1$s een verwijderverzoek voor de berichten die je hebt verstuurd.</string>
+    <string name="chat_cd_options">Opties</string>
+    <string name="chat_clear_history_menu">Chatgeschiedenis wissen</string>
+    <string name="chat_typing">%1$s is aan het typen…</string>
+    <string name="chat_blocked_banner">Je hebt berichten van %1$s geblokkeerd. Ga naar Contacten om te deblokkeren.</string>
+    <string name="chat_delete_msg_title">Bericht verwijderen?</string>
+    <string name="chat_delete_msg_message">Hoe wil je dit bericht verwijderen?</string>
+    <string name="chat_delete_from_contact">Bij contact verwijderen</string>
+    <string name="chat_delete_from_contact_sub">Verwijdert de chat van het apparaat van het contact.</string>
+    <string name="chat_delete_both_sub">Verwijdert de chat lokaal en wist deze automatisch van het apparaat van het contact.</string>
+    <string name="chat_cd_share_location">Locatie delen</string>
+    <string name="chat_input_placeholder">Bericht…</string>
+    <string name="chat_cd_send">Versturen</string>
+
+    <string name="common_close">Sluiten</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS activeren?</string>
+    <string name="map_sos_deactivate_title">SOS deactiveren?</string>
+    <string name="map_sos_activate_msg">Dit zendt je locatie elke 15 seconden uit naar je aangewezen SOS-contacten totdat het wordt gedeactiveerd.</string>
+    <string name="map_sos_deactivate_msg">Dit stopt de locatie-uitzending met hoge prioriteit naar je noodcontacten.</string>
+    <string name="map_activate">Activeren</string>
+    <string name="map_deactivate">Deactiveren</string>
+    <string name="map_cd_style">Kaartstijl</string>
+    <string name="map_cd_show_geofences">Geofences tonen</string>
+    <string name="map_cd_hide_geofences">Geofences verbergen</string>
+    <string name="map_cd_follow">Volg mij</string>
+    <string name="map_cd_friends">Vrienden</string>
+    <string name="map_no_friends">Nog niemand gevolgd</string>
+    <string name="map_you">Jij</string>
+    <string name="map_cd_go_my_location">Naar mijn locatie</string>
+    <string name="map_sos_active">⚠ SOS ACTIEF</string>
+    <string name="map_away">Afwezig</string>
+    <string name="map_no_location_yet">Nog geen locatie</string>
+    <string name="map_cd_go_location">Naar locatie</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS AAN</string>
+    <string name="map_overdue">Achterstallig — geen recente update</string>
+    <string name="map_stat_last_seen">Laatst gezien</string>
+    <string name="map_stat_battery">Batterij</string>
+    <string name="map_stat_accuracy">Nauwkeurigheid</string>
+    <string name="map_stat_motion">Beweging</string>
+    <string name="map_stat_speed">Snelheid</string>
+    <string name="map_stat_elevation">Hoogte</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Geschiedenis: %1$s</string>
+    <string name="history_select_person">Persoon selecteren</string>
+    <string name="history_person_label">Persoon</string>
+    <string name="history_cd_prev_day">Vorige dag</string>
+    <string name="history_cd_next_day">Volgende dag</string>
+    <string name="history_time_filter">Tijdfilter:</string>
+    <string name="history_cd_reset_time">Tijd resetten</string>
+    <string name="history_tab_list">Lijst</string>
+    <string name="history_empty_title">Geen geschiedenis voor deze dag</string>
+    <string name="history_empty_sub">Kies een andere datum of controleer je verbinding.</string>
+    <string name="history_start_time">Starttijd</string>
+    <string name="history_end_time">Eindtijd</string>
+    <string name="history_no_data_title">Geen locatiegegevens</string>
+    <string name="history_no_data_sub">Er zijn geen geregistreerde punten voor deze dag of dit tijdsbereik.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d punt geregistreerd</item>
+        <item quantity="other">%1$d punten geregistreerd</item>
+    </plurals>
+    <string name="history_cd_dismiss">Sluiten</string>
+    <string name="history_accuracy_label">±%1$s nauwkeurigheid</string>
+    <string name="history_emergency_sos">Nood-SOS-signaal</string>
+    <string name="history_detail_location">Locatie</string>
+    <string name="history_detail_coordinates">Coördinaten</string>
+    <string name="history_within">binnen ±%1$s</string>
+    <string name="history_detail_movement">Beweging</string>
+    <string name="history_movement_desc">%1$s %2$s richting %3$s</string>
+
+    <string name="common_create">Aanmaken</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Geofencegebied toevoegen</string>
+    <string name="geo_cd_assign">Geofence toewijzen</string>
+    <string name="geo_unknown">Onbekend</string>
+    <string name="geo_empty_title">Geen geofences</string>
+    <string name="geo_empty_sub">Tik op + om een geofencegebied te maken en wijs er vervolgens contacten aan toe via hun deelinstellingen.</string>
+    <string name="geo_delete_title">Geofence verwijderen?</string>
+    <string name="geo_delete_simple">\"%1$s\" verwijderen?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" is toegewezen aan %2$d contact. Bij verwijderen vervallen die toewijzingen ook.</item>
+        <item quantity="other">\"%1$s\" is toegewezen aan %2$d contacten. Bij verwijderen vervallen die toewijzingen ook.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences voor %1$s</string>
+    <string name="geo_empty_contact_title">Geen geofences voor contact</string>
+    <string name="geo_empty_contact_sub">Tik op + om een geofencegebied toe te wijzen en te kiezen of je bij aankomst, vertrek of beide gewaarschuwd wilt worden.</string>
+    <string name="geo_no_areas_title">Nog geen geofences</string>
+    <string name="geo_no_areas_msg">Maak eerst een geofencegebied via het scherm Geofences en wijs het daarna hier toe.</string>
+    <string name="geo_radius_label">%1$s radius</string>
+    <string name="geo_contacts_label">Contacten: %1$s</string>
+    <string name="geo_no_contacts_assigned">Geen contacten toegewezen</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d regel</item>
+        <item quantity="other">%1$d regels</item>
+    </plurals>
+    <string name="geo_trigger_enter">Binnenkomst</string>
+    <string name="geo_trigger_exit">Vertrek</string>
+    <string name="geo_trigger_both">Beide</string>
+    <string name="geo_edit_title">Geofence bewerken</string>
+    <string name="geo_new_title">Nieuwe geofence</string>
+    <string name="geo_cd_my_location">Mijn locatie</string>
+    <string name="geo_cd_radius_increase">Radius vergroten</string>
+    <string name="geo_cd_radius_decrease">Radius verkleinen</string>
+    <string name="geo_hint_tap">Tik of houd de kaart vast om te plaatsen</string>
+    <string name="geo_hint_move">Knijp om te zoomen • Houd vast of sleep de speld om te verplaatsen</string>
+    <string name="geo_basic_info">Basisgegevens</string>
+    <string name="geo_search_title">Zoeken op adres</string>
+    <string name="geo_search_label">Adres of plaats</string>
+    <string name="geo_search_placeholder">bijv. Hoofdstraat 10, Amsterdam</string>
+    <string name="geo_search_no_results">Geen passend adres gevonden</string>
+    <string name="geo_cd_search">Zoeken</string>
+    <string name="geo_name_placeholder">bijv. Thuis, Werk</string>
+    <string name="geo_name_required">Naam is verplicht</string>
+    <string name="geo_latitude">Breedtegraad</string>
+    <string name="geo_longitude">Lengtegraad</string>
+    <string name="geo_lat_range">-90 tot 90</string>
+    <string name="geo_lng_range">-180 tot 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Voer %1$d tot %2$d m in</string>
+    <string name="geo_edit_assignment">Toewijzing bewerken</string>
+    <string name="geo_assign_title">Geofence toewijzen</string>
+    <string name="geo_select_area">Geofencegebied selecteren</string>
+    <string name="geo_trigger_title">Melding activeren bij</string>
+    <string name="geo_add_rule">Regel toevoegen</string>
+    <string name="geo_alerts_all_times">Meldingen altijd actief. Voeg een regel toe om te beperken wanneer meldingen worden verzonden.</string>
+    <string name="geo_assign_action">Toewijzen</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Nabijheidsmeldingen</string>
+    <string name="prox_empty_title">Geen gevolgde personen</string>
+    <string name="prox_empty_sub">Scan iemands uitnodigings-QR via het tabblad Scannen\nom diens locatie te volgen</string>
+    <string name="prox_intro">Ontvang een melding wanneer een gevolgd persoon binnen een gekozen afstand van je komt.</string>
+    <string name="prox_alert_within">Melden binnen %1$s</string>
+    <string name="prox_alerts_off">Meldingen uit</string>
+    <string name="prox_alert_radius">Meldingsradius</string>
+    <string name="prox_edit_schedule">Schema bewerken</string>
+    <string name="prox_rules">Regels</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Schema voor %1$s</string>
+    <string name="schedule_cd_add_rule">Regel toevoegen</string>
+    <string name="schedule_empty_title">Geen schemaregels</string>
+    <string name="schedule_empty_global">Locatie wordt altijd gedeeld. Voeg een regel toe om te beperken wanneer delen actief is.</string>
+    <string name="schedule_empty_peer">Locatie wordt altijd gedeeld met %1$s. Voeg een regel toe om dit te beperken.</string>
+    <string name="schedule_active_hint">Actief wanneer een regel overeenkomt met de huidige tijd. Leeg = altijd aan.</string>
+    <string name="schedule_all_day">Hele dag</string>
+    <string name="schedule_plus_one_day"> (+1 dag)</string>
+    <string name="schedule_rule_number">Regel %1$d</string>
+    <string name="schedule_cd_delete_rule">Regel verwijderen</string>
+    <string name="schedule_edit_rule">Regel bewerken</string>
+    <string name="schedule_label_optional">Label (optioneel)</string>
+    <string name="schedule_label_placeholder">bijv. Werkuren, Weekenden</string>
+    <string name="schedule_active_days">Actieve dagen</string>
+    <string name="schedule_time_window">Tijdvenster</string>
+    <string name="schedule_start">Begin</string>
+    <string name="schedule_end">Einde</string>
+    <string name="schedule_overnight">Nachtelijk: actief van %1$s tot %2$s de volgende dag</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Apparaat staat onder toezicht</string>
+    <string name="gate_message">Goedkeuring van de toezichthouder is vereist voor toegang tot instellingen.</string>
+    <string name="gate_request_access">Toegang vragen</string>
+    <string name="gate_waiting">Wachten op goedkeuring van de toezichthouder…</string>
+    <string name="gate_denied">Toegang geweigerd door de toezichthouder.</string>
+    <string name="gate_timed_out">Verzoek verlopen. De toezichthouder heeft niet gereageerd.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Voor altijd</string>
+    <string name="retention_keep_for">Bewaren voor: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d dag</item>
+        <item quantity="other">%1$d dagen</item>
+    </plurals>
+
+    <string name="common_select">Selecteren</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Vaste locatie kiezen</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Kies welke tabbladen in de onderste balk verschijnen en in welke volgorde. Kaart is altijd inbegrepen.</string>
+    <string name="customize_cd_move_up">Omhoog</string>
+    <string name="customize_cd_move_down">Omlaag</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Versie %1$s (build %2$d)</string>
+    <string name="about_tagline">Privé locatie delen met mensen die je vertrouwt. Geen accounts, geen cloud, geen tracking door ons.</string>
+    <string name="about_relay_connections">Relayverbindingen</string>
+    <string name="about_connected">Verbonden</string>
+    <string name="about_disconnected">Niet verbonden</string>
+    <string name="about_open_source">Opensourcebibliotheken</string>
+    <string name="about_lib_osmdroid_desc">Kaartweergave op basis van OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket-transport voor Nostr-relay</string>
+    <string name="about_lib_compose_desc">UI-framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Lokale database</string>
+    <string name="about_map_attribution">Kaartgegevens © OpenStreetMap-bijdragers</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Accepteren</string>
+    <string name="notif_someone">Iemand</string>
+    <string name="notif_sos_title">SOS van %1$s!</string>
+    <string name="notif_sos_text">%1$s heeft SOS geactiveerd op (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s wil dat jij toezichthouder wordt</string>
+    <string name="notif_supervisor_request_text">Accepteer om ontgrendelverzoeken van dit apparaat toe te staan</string>
+    <string name="notif_supervisor_request_big">Accepteer zodat %1$s je goedkeuringsverzoeken voor ontgrendeling kan sturen wanneer de toezichtmodus actief is.</string>
+    <string name="notif_supervised_active_title">Toezichtmodus actief</string>
+    <string name="notif_supervised_active_text">Je toezichthouder heeft bevestigd — de toezichtmodus is nu ingesteld</string>
+    <string name="notif_supervised_declined_title">Toezichtmodus geweigerd</string>
+    <string name="notif_supervised_declined_text">Je toezichthouder heeft het verzoek geweigerd — de toezichtmodus is uitgeschakeld</string>
+    <string name="notif_tracking_alert_title">Volgmelding</string>
+    <string name="notif_tracking_proximity">%1$s heeft een nabijheidsmelding over jou ontvangen</string>
+    <string name="notif_tracking_geofence">%1$s heeft een melding ontvangen dat je zone %2$s bent binnengegaan/verlaten</string>
+    <string name="notif_tracking_generic">%1$s volgt je locatie</string>
+    <string name="notif_track_update_title">Deelupdate van %1$s</string>
+    <string name="notif_track_new_title">Nieuw contact: %1$s</string>
+    <string name="notif_role_send_receive">Locatie verzenden/ontvangen</string>
+    <string name="notif_role_send">Locatie verzenden</string>
+    <string name="notif_role_receive">Locatie ontvangen</string>
+    <string name="notif_role_none">Geen locatie delen</string>
+    <string name="notif_track_requesting">%1$s verzoekt: %2$s</string>
+    <string name="notif_track_update_body">%1$s wil de manier van locatie delen wijzigen.</string>
+    <string name="notif_track_new_body">%1$s heeft je als contact toegevoegd en wil verbinden.</string>
+    <string name="notif_contact_connected_title">Contact verbonden</string>
+    <string name="notif_contact_connected_text">%1$s is nu met je verbonden.</string>
+    <string name="notif_request_declined_title">Verzoek geweigerd</string>
+    <string name="notif_request_declined_text">%1$s heeft je verzoek om locatie te delen geweigerd.</string>
+    <string name="notif_message_person">Bericht aan %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s is %2$s binnengegaan</string>
+    <string name="notif_geofence_left_title">%1$s heeft %2$s verlaten</string>
+    <string name="notif_geofence_subtitle">om %1$s · %2$s radius</string>
+    <string name="notif_person_nearby">%1$s is in de buurt</string>
+    <string name="notif_distance_from_you">%1$s van jou</string>
+    <string name="notif_missed_title">Geen update van %1$s</string>
+    <string name="notif_missed_text">Laatst gezien %1$s min geleden nabij (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ACTIEF!</string>
+    <string name="notif_sos_active_text">Noodmelding wordt uitgezonden naar SOS-contacten</string>
+    <string name="notif_messages_group_title">LocaPeer-berichten</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Contactverzoek van %1$s geweigerd</string>
+    <string name="toast_now_supervising">Je houdt nu toezicht op het apparaat van %1$s</string>
+    <string name="toast_declined_supervision">Toezichtsverzoek van %1$s geweigerd</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Zojuist</string>
+    <string name="time_minutes_ago">%1$d min geleden</string>
+    <string name="fallback_me">Ik</string>
+    <string name="fallback_unknown">Onbekend</string>
+    <string name="geo_unassigned">Niet toegewezen</string>
+    <string name="days_every_day">Elke dag</string>
+    <string name="days_weekdays">Doordeweeks</string>
+    <string name="days_weekends">Weekenden</string>
+    <string name="days_none">Geen dagen</string>
+    <string name="chat_my_location_message">Mijn huidige locatie: %1$s</string>
+    <string name="scan_error_bad_pubkey">Ongeldige uitnodiging: onjuiste publieke sleutel</string>
+    <string name="scan_error_key_mismatch">Ongeldige uitnodiging: sleutels komen niet overeen</string>
+    <string name="scan_error_unknown">Onbekende fout</string>
+    <string name="scan_error_invalid_link">Ongeldige uitnodigingslink</string>
+    <string name="scan_fallback_contact">dit contact</string>
+    <string name="backup_saved">Back-up opgeslagen: %1$s</string>
+    <string name="backup_saved_encrypted">Back-up opgeslagen (versleuteld): %1$s</string>
+    <string name="backup_failed">Back-up mislukt: %1$s</string>
+    <string name="backup_could_not_read_file">Kan bestand niet lezen</string>
+    <string name="backup_could_not_write_file">Kan bestand niet schrijven</string>
+    <string name="backup_could_not_read">Kan back-up niet lezen: %1$s</string>
+    <string name="backup_incorrect_password">Onjuist wachtwoord</string>
+    <string name="restore_result_restored">Hersteld: %1$s</string>
+    <string name="restore_result_failed">Mislukt: %1$s</string>
+    <string name="restore_nothing">Niets te herstellen</string>
+    <string name="restore_failed">Herstellen mislukt: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacten</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="other">%1$d geofences</item>
+    </plurals>
+    <string name="peer_role_change_sent">Rolwijzigingsverzoek verzonden naar %1$s</string>
+    <string name="peer_not_found">Contact niet gevonden</string>
+    <string name="peer_purge_location_sent">Opdracht om ALLE locaties op afstand te verwijderen verzonden naar %1$s</string>
+    <string name="peer_purge_messages_sent">Opdracht om ALLE berichten op afstand te verwijderen verzonden naar %1$s</string>
+    <string name="onboarding_error_key_length">Ongeldige sleutel — moet 64 hexadecimale tekens zijn.</string>
+    <string name="onboarding_error_key_range">Ongeldige privésleutel — buiten het bereik van de curve.</string>
+    <string name="onboarding_error_hex">Ongeldig hexadecimaal formaat.</string>
+    <string name="onboarding_error_import_failed">Sleutel importeren mislukt: %1$s</string>
 </resources>
