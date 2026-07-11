@@ -9,6 +9,14 @@ interface HeartbeatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(heartbeat: HeartbeatEntity)
 
+    /**
+     * Insert a batch of heartbeats in a single transaction. Room fires one table
+     * invalidation per transaction, so batching a catch-up burst here collapses what
+     * would be hundreds of per-row UI refreshes into a handful.
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(heartbeats: List<HeartbeatEntity>)
+
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :dayStart AND timestamp < :dayEnd ORDER BY timestamp ASC")
     fun getHeartbeatsForDay(deviceId: String, dayStart: Long, dayEnd: Long): Flow<List<HeartbeatEntity>>
 
