@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
@@ -27,30 +26,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import android.Manifest
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
-import com.google.accompanist.permissions.shouldShowRationale
 import com.locapeer.R
-import com.locapeer.onboarding.PermissionManager
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.MapLocationPicker
 import com.locapeer.ui.components.RetentionRow
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
@@ -59,6 +43,7 @@ fun SettingsScreen(
     onNavigateToGlobalSchedule: () -> Unit = {},
     onNavigateToGeofences: () -> Unit = {},
     onNavigateToMyHistory: (pubkeyHex: String) -> Unit = {},
+    onNavigateToPermissions: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsState()
@@ -97,25 +82,6 @@ fun SettingsScreen(
     var showFixedLocationPicker by remember { mutableStateOf(false) }
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
     var showExportDialog by remember { mutableStateOf(false) }
-    // Activity Recognition is a runtime permission only on Android 10+; below that it is
-    // install-time granted, so the row is hidden there. motionAsked lets us tell a fresh
-    // "never asked" state (shouldShowRationale is also false then) from a permanent denial.
-    val context = LocalContext.current
-    val motionPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-        rememberPermissionState(Manifest.permission.ACTIVITY_RECOGNITION) else null
-    var motionAsked by remember { mutableStateOf(false) }
-    var showMotionRationale by remember { mutableStateOf(false) }
-    var batteryOptimizationIgnored by remember { mutableStateOf(PermissionManager.isIgnoringBatteryOptimizations(context)) }
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_RESUME) {
-                batteryOptimizationIgnored = PermissionManager.isIgnoringBatteryOptimizations(context)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
-    }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
     var exportPassword by remember { mutableStateOf("") }
     val exportLauncher = rememberLauncherForActivityResult(
@@ -271,6 +237,13 @@ fun SettingsScreen(
             item { SectionLabel(stringResource(R.string.settings_section_security)) }
             item {
                 SettingsCard {
+                    NavRow(
+                        icon = Icons.Default.Shield,
+                        label = stringResource(R.string.settings_permissions),
+                        subtitle = stringResource(R.string.settings_permissions_subtitle),
+                        onClick = onNavigateToPermissions
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     if (settings.supervisedModeEnabled) {
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.settings_supervision_active)) },
@@ -449,29 +422,6 @@ fun SettingsScreen(
                         valueMeters = settings.historyMaxAccuracyMeters,
                         onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    BatteryOptimizationRow(
-                        ignored = batteryOptimizationIgnored,
-                        onClick = { PermissionManager.requestBatteryOptimizationExemption(context) }
-                    )
-                    if (motionPermission != null) {
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        MotionDetectionRow(
-                            granted = motionPermission.status.isGranted,
-                            onClick = {
-                                when {
-                                    motionPermission.status.isGranted -> {}
-                                    // Asked before and the system will no longer prompt: route to settings.
-                                    motionAsked && !motionPermission.status.shouldShowRationale ->
-                                        showMotionRationale = true
-                                    else -> {
-                                        motionAsked = true
-                                        motionPermission.launchPermissionRequest()
-                                    }
-                                }
-                            }
-                        )
-                    }
                 }
             }
 
@@ -1061,34 +1011,6 @@ fun SettingsScreen(
             onDismiss = { showFixedLocationPicker = false }
         )
     }
-
-    if (showMotionRationale) {
-        AlertDialog(
-            onDismissRequest = { showMotionRationale = false },
-            icon = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
-            title = { Text(stringResource(R.string.settings_enable_motion_title)) },
-            text = {
-                Text(stringResource(R.string.settings_enable_motion_message))
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    showMotionRationale = false
-                    openAppSettings(context)
-                }) { Text(stringResource(R.string.settings_open_settings)) }
-            },
-            dismissButton = {
-                TextButton(onClick = { showMotionRationale = false }) { Text(stringResource(R.string.common_not_now)) }
-            }
-        )
-    }
-}
-
-private fun openAppSettings(context: Context) {
-    val intent = Intent(
-        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-        Uri.fromParts("package", context.packageName, null)
-    ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    context.startActivity(intent)
 }
 
 // ─── Shared composables ──────────────────────────────────────────────────────
@@ -1124,64 +1046,6 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
         leadingContent = { Icon(icon, contentDescription = null) },
         trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
         modifier = Modifier.clickable(onClick = onClick),
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
-}
-
-/**
- * Optional Activity Recognition permission toggle. When granted it shows an enabled state
- * and is inert; when not, it is tappable to request the permission (or, once permanently
- * denied, to open system settings - handled by the caller).
- */
-@Composable
-private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
-    ListItem(
-        headlineContent = { Text(stringResource(R.string.settings_motion_detection)) },
-        supportingContent = {
-            Text(
-                if (granted) stringResource(R.string.settings_motion_detection_on)
-                else stringResource(R.string.settings_motion_detection_off)
-            )
-        },
-        leadingContent = { Icon(Icons.AutoMirrored.Filled.DirectionsWalk, contentDescription = null) },
-        trailingContent = {
-            if (granted) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            } else {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        },
-        modifier = if (granted) Modifier else Modifier.clickable(onClick = onClick),
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
-}
-
-/**
- * Battery optimization status row. Shows a green checkmark when the app is set to
- * Unrestricted (i.e. exempted from battery optimization); otherwise it is tappable to
- * launch the system battery optimization settings for this app.
- */
-@Composable
-private fun BatteryOptimizationRow(ignored: Boolean, onClick: () -> Unit) {
-    ListItem(
-        headlineContent = { Text(stringResource(R.string.settings_battery_optimization)) },
-        supportingContent = {
-            Text(
-                if (ignored) stringResource(R.string.settings_battery_optimization_unrestricted)
-                else stringResource(R.string.settings_battery_optimization_restricted),
-                color = if (ignored) MaterialTheme.colorScheme.onSurfaceVariant
-                        else MaterialTheme.colorScheme.error
-            )
-        },
-        leadingContent = { Icon(Icons.Default.BatteryChargingFull, contentDescription = null) },
-        trailingContent = {
-            if (ignored) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            } else {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        },
-        modifier = if (ignored) Modifier else Modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
 }

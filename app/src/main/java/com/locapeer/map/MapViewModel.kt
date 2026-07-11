@@ -231,7 +231,7 @@ class MapViewModel @Inject constructor(
         val heartbeats: List<HeartbeatEntity>,
         val fences: List<GeofenceEntity>,
         val assignments: List<com.locapeer.data.entity.GeofenceAssignmentEntity>,
-        val myPubkey: String
+        val myPubkey: String?
     )
 
     val uiState: StateFlow<MapUiState> = combine(
