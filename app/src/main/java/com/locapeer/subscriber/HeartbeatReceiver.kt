@@ -217,7 +217,12 @@ class HeartbeatReceiver @Inject constructor(
               // all future event processing - isolate every dispatch.
               try {
                 when (event.kind) {
-                    NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> processEvent(event)
+                    NostrEventKind.HEARTBEAT, NostrEventKind.SOS_ALERT -> {
+                        processEvent(event)
+                        // During catch-up/bursts, yield briefly to allow the UI to breathe 
+                        // and prevent overwhelming the database with single-row transactions.
+                        kotlinx.coroutines.delay(10)
+                    }
                     NostrEventKind.PURGE_REQUEST -> processPurgeRequest(event)
                     NostrEventKind.MESSAGE_PURGE_REQUEST -> processMsgPurgeRequest(event)
                     NostrEventKind.ENCRYPTED_DM -> processDmInBackground(event)

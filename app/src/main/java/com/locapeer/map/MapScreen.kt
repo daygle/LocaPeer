@@ -540,6 +540,17 @@ private fun OsmdroidMapView(
                 val density = mapView.context.resources.displayMetrics.density
                 compass.setCompassCenter(mapView.width - 45f * density, 40f * density)
             }
+
+            // Only rebuild markers/geofences if the underlying data has actually changed.
+            // This prevents the 3.8s "Davey" lag during high-frequency heartbeat catch-up.
+            val dataHash = pins.hashCode() xor geofences.hashCode() xor userLocation.hashCode() xor isSosActive.hashCode() xor myPinColor.hashCode()
+            if (mapView.getTag(R.id.map_data_hash) == dataHash) {
+                // Same data, just invalidate to ensure correct orientation/compass rendering
+                mapView.invalidate()
+                return@AndroidView
+            }
+            mapView.setTag(R.id.map_data_hash, dataHash)
+
             mapView.overlays.removeAll { it is Marker || it is Polygon }
             geofences.forEach { geofenceOnMap ->
                 val fence = geofenceOnMap.fence
