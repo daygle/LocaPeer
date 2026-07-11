@@ -131,7 +131,8 @@ fun SettingsScreen(
                             settings.displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = if (settings.pinColor.isNotEmpty()) Color.White
+                            else MaterialTheme.colorScheme.onPrimaryContainer
                         )
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -508,10 +509,7 @@ fun SettingsScreen(
                     NavRow(
                         icon = Icons.Default.Home,
                         label = stringResource(R.string.settings_start_page),
-                        subtitle = settings.navTabIds
-                            .firstOrNull { it == settings.startRoute }
-                            ?.replaceFirstChar { it.uppercaseChar() }
-                            ?: stringResource(R.string.tab_map),
+                        subtitle = tabLabel(settings.startRoute),
                         onClick = { showStartPageDialog = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
@@ -786,14 +784,6 @@ fun SettingsScreen(
     }
 
     if (showStartPageDialog) {
-        val tabLabels = mapOf(
-            "map" to stringResource(R.string.tab_map),
-            "messages" to stringResource(R.string.tab_messages),
-            "history-tab" to stringResource(R.string.tab_history),
-            "contacts" to stringResource(R.string.tab_contacts),
-            "invite" to stringResource(R.string.tab_qr),
-            "settings" to stringResource(R.string.tab_settings)
-        )
         AlertDialog(
             onDismissRequest = { showStartPageDialog = false },
             title = { Text(stringResource(R.string.settings_start_page)) },
@@ -822,7 +812,7 @@ fun SettingsScreen(
                                 }
                             )
                             Text(
-                                tabLabels[route] ?: route.replaceFirstChar { it.uppercaseChar() },
+                                tabLabel(route),
                                 modifier = Modifier.padding(start = 12.dp),
                                 style = MaterialTheme.typography.bodyLarge
                             )
@@ -1015,6 +1005,18 @@ fun SettingsScreen(
 }
 
 // ─── Shared composables ──────────────────────────────────────────────────────
+
+/** Localized bottom-navigation label for a route id, matching the tabs shown in the app. */
+@Composable
+private fun tabLabel(route: String): String = when (route) {
+    "map" -> stringResource(R.string.tab_map)
+    "messages" -> stringResource(R.string.tab_messages)
+    "history-tab" -> stringResource(R.string.tab_history)
+    "contacts" -> stringResource(R.string.tab_contacts)
+    "invite" -> stringResource(R.string.tab_qr)
+    "settings" -> stringResource(R.string.tab_settings)
+    else -> route.replaceFirstChar { it.uppercaseChar() }
+}
 
 @Composable
 private fun SectionLabel(text: String) {
