@@ -63,6 +63,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.osmdroid.events.MapEventsReceiver
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.BoundingBox
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
@@ -948,6 +949,9 @@ private fun AssignmentDialog(
 private const val MIN_RADIUS_M = 50
 private const val MAX_RADIUS_M = 50000
 
+/** Breathing room (px) around the geofence circle when fitting the camera on open. */
+private const val MAP_FIT_PADDING_PX = 80
+
 /**
  * Steps the radius up or down by ~10% so the on-map buttons feel proportionate
  * across the whole 50 m - 50 km range, rounding to a tidy multiple of 10 m.
@@ -1017,8 +1021,16 @@ private fun GeofencePickerMap(
                 overlays.add(MapEventsOverlay(receiver))
 
                 if (initialCamera != null) {
-                    controller.setZoom(15.0)
+                    // Frame the whole geofence circle rather than a fixed zoom, so a large
+                    // radius isn't cut off. zoomToBoundingBox needs the view to be measured,
+                    // so defer it to the first layout pass (width/height are 0 in the factory).
                     controller.setCenter(initialCamera)
+                    val bounds = BoundingBox.fromGeoPoints(
+                        Polygon.pointsAsCircle(initialCamera, radiusMetres.toDouble())
+                    )
+                    addOnFirstLayoutListener { _, _, _, _, _ ->
+                        zoomToBoundingBox(bounds, false, MAP_FIT_PADDING_PX)
+                    }
                 } else {
                     controller.setZoom(4.0)
                 }
