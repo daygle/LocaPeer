@@ -653,15 +653,15 @@
         <item quantity="other">Ranaku %1$d</item>
     </plurals>
 
-    <string name="common_select">Họrọ</string>
+    <string name="common_select">Zaɓa</string>
 
     <!-- ── Map location picker ────────────────────────────────────────────── -->
     <string name="picker_title">Zabi Wuri Da Aka Sanya</string>
 
     <!-- ── Customize navigation screen ────────────────────────────────────── -->
     <string name="customize_nav_intro">Zaɓi waɗanne alamun shafukan da za su bayyana a kasan da kuma tsarin su. Taswira tana nan a kowane lokaci.</string>
-    <string name="customize_cd_move_up">Gaa n\'elu</string>
-    <string name="customize_cd_move_down">Gaa n\'ala</string>
+    <string name="customize_cd_move_up">Matsa sama</string>
+    <string name="customize_cd_move_down">Matsa ƙasa</string>
 
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Sigar %1$s (build %2$d)</string>
@@ -669,12 +669,12 @@
     <string name="about_relay_connections">Haɗin Relay</string>
     <string name="about_connected">An haɗa</string>
     <string name="about_disconnected">An cire haɗin</string>
-    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_open_source">Laburaren tushe na fili</string>
     <string name="about_lib_osmdroid_desc">Nunin taswira dangane da OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Sufurin WebSocket don relay Nostr</string>
     <string name="about_lib_compose_desc">UI framework</string>
     <string name="about_lib_hilt_desc">Dependency injection</string>
-    <string name="about_lib_room_desc">Ebe nchekwa data mpaghara</string>
+    <string name="about_lib_room_desc">Rumbun bayanai na gida</string>
     <string name="about_map_attribution">Bayanin taswira © masu ba da gudummawa ga OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

@@ -640,15 +640,15 @@
         <item quantity="other">Ụbọchị %1$d</item>
     </plurals>
 
-    <string name="common_select">Họrọ</string>
+    <string name="common_select">Yàn</string>
 
     <!-- ── Map location picker ────────────────────────────────────────────── -->
     <string name="picker_title">Họrọ Ipò Pàtó Kan</string>
 
     <!-- ── Customize navigation screen ────────────────────────────────────── -->
     <string name="customize_nav_intro">Mú àwọn taabu tí yóò hàn ní abẹ́lẹ̀ àti bí wọn yóò ṣe tẹ̀ lé ara wọn. Máàpù yóò máa wà níbẹ̀ ní gbogbo ìgbà.</string>
-    <string name="customize_cd_move_up">Gaa n\'elu</string>
-    <string name="customize_cd_move_down">Gaa n\'ala</string>
+    <string name="customize_cd_move_up">Gbe lọ sókè</string>
+    <string name="customize_cd_move_down">Gbe lọ sí ìsàlẹ̀</string>
 
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Ụdị %1$s (build %2$d)</string>
@@ -656,12 +656,12 @@
     <string name="about_relay_connections">Njikọ Relay</string>
     <string name="about_connected">Ejikọrọ</string>
     <string name="about_disconnected">Akwụsịla njikọ</string>
-    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_open_source">Àwọn ibi ìpamọ́ orísun ṣíṣí</string>
     <string name="about_lib_osmdroid_desc">Máàpù OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket fún Nostr relay</string>
     <string name="about_lib_compose_desc">UI framework</string>
     <string name="about_lib_hilt_desc">Dependency injection</string>
-    <string name="about_lib_room_desc">Ebe nchekwa data mpaghara</string>
+    <string name="about_lib_room_desc">Ibi ìpamọ́ data agbègbè</string>
     <string name="about_map_attribution">Data máàpù © ndị nyere aka na OpenStreetMap</string>
 
     <!-- ── Notifications ──────────────────────────────────────────────────── -->

@@ -262,19 +262,19 @@
     <string name="contacts_delete_my_messages_body">এটি %1$s-এর ডিভাইস থেকে আপনার পাঠানো সব বার্তা মুছে ফেলবে। এটি ফেরানো যাবে না।</string>
     <string name="contacts_delete_locations_body">এটি %1$s-এর ডিভাইস থেকে আপনার শেয়ার করা সব অবস্থানের ডেটা মুছে ফেলবে। এটি ফেরানো যাবে না।</string>
     <plurals name="contacts_bulk_remove_title">
-        <item quantity="one">পরিচিতি সরান</item>
+        <item quantity="one">%1$d পরিচিতি সরান</item>
         <item quantity="other">%1$d পরিচিতি সরান</item>
     </plurals>
     <plurals name="contacts_bulk_remove_body">
-        <item quantity="one">এই পরিচিতি সরাবেন? তাদের অবস্থানের ইতিহাসও স্থানীয়ভাবে মুছে যাবে।</item>
+        <item quantity="one">এই %1$d পরিচিতি সরাবেন? তাদের অবস্থানের ইতিহাসও স্থানীয়ভাবে মুছে যাবে।</item>
         <item quantity="other">%1$d পরিচিতি সরাবেন? তাদের অবস্থানের ইতিহাসও স্থানীয়ভাবে মুছে যাবে।</item>
     </plurals>
     <plurals name="contacts_bulk_delete_messages_body">
-        <item quantity="one">এই পরিচিতির ডিভাইস থেকে আপনার পাঠানো সব বার্তা দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
+        <item quantity="one">এই %1$d পরিচিতির ডিভাইস থেকে আপনার পাঠানো সব বার্তা দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
         <item quantity="other">%1$d পরিচিতির ডিভাইস থেকে আপনার পাঠানো সব বার্তা দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
     </plurals>
     <plurals name="contacts_bulk_delete_locations_body">
-        <item quantity="one">এই পরিচিতির ডিভাইস থেকে আপনার শেয়ার করা সব অবস্থানের ইতিহাস দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
+        <item quantity="one">এই %1$d পরিচিতির ডিভাইস থেকে আপনার শেয়ার করা সব অবস্থানের ইতিহাস দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
         <item quantity="other">%1$d পরিচিতির ডিভাইস থেকে আপনার শেয়ার করা সব অবস্থানের ইতিহাস দূরবর্তীভাবে মুছবেন? এটি ফেরানো যাবে না।</item>
     </plurals>
 

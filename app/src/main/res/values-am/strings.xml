@@ -266,7 +266,7 @@
         <item quantity="other">%1$d እውቂያዎችን ያስወግዱ</item>
     </plurals>
     <plurals name="contacts_bulk_remove_body">
-        <item quantity="one">ይህን እውቂያ ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</item>
+        <item quantity="one">ይህን %1$d እውቂያ ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</item>
         <item quantity="other">%1$d እውቂያዎችን ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</item>
     </plurals>
     <plurals name="contacts_bulk_delete_messages_body">
