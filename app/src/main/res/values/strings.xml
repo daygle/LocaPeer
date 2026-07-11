@@ -128,6 +128,9 @@
     <string name="settings_enable_motion_title">Enable motion detection</string>
     <string name="settings_enable_motion_message">Physical activity access lets LocaPeer tell walking, driving and standing still apart more accurately in your history. It\'s currently turned off - you can re-enable it from system settings.</string>
     <string name="settings_open_settings">Open Settings</string>
+    <string name="settings_battery_optimization">Battery Optimization</string>
+    <string name="settings_battery_optimization_unrestricted">Unrestricted — LocaPeer can run freely in the background</string>
+    <string name="settings_battery_optimization_restricted">Optimized — tap to set Unrestricted in system settings</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Speed Units</string>
