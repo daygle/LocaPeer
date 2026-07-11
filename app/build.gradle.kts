@@ -27,6 +27,15 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    lint {
+        // Project has 50+ locales. Don't block CI for missing translations.
+        disable += "MissingTranslation"
+        // Ensure we still fail on other real code errors
+        abortOnError = true
+        // Uploaded as artifact in CI
+        htmlReport = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
