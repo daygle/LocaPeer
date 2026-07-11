@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Mga Channel ng Notification at Foreground Service ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Broadcast ng Lokasyon</string>
     <string name="channel_desc_heartbeat">I-broadcast ang iyong lokasyon sa iyong mga aprubadong contact</string>
     <string name="channel_name_alerts">Mga Alert</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">Tumatakbo ang LocaPeer</string>
     <string name="notification_heartbeat_text">Ibinabahagi ang iyong lokasyon sa iba</string>
 
-    <!-- ── Mga Karaniwang Aksyon ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">I-save</string>
     <string name="common_cancel">Kanselahin</string>
     <string name="common_done">Tapos na</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Aprubahan</string>
     <string name="common_deny">Tanggihan</string>
 
-    <!-- ── Mga Label ng Navigation Tab ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Mga Mensahe</string>
     <string name="tab_history">Kasaysayan</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Mga Setting</string>
 
-    <!-- ── Mga Katayuan ng Paggalaw / Aktibidad ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Nakatigil</string>
     <string name="motion_walking">Naglalakad</string>
     <string name="motion_running">Tumatakbo</string>
     <string name="motion_cycling">Nagbibisikleta</string>
     <string name="motion_driving">Nagmamaneho</string>
 
-    <!-- ── Mga Setting ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Pribadong Susi</string>
+    <string name="backup_section_contacts">Mga Contact</string>
+    <string name="backup_section_geofences">Mga Geofence</string>
+    <string name="backup_section_settings">Mga Setting</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Kahilingan sa Pangangasiwa</string>
+    <string name="supervision_request_message">Humihiling ang \"%1$s\" ng access sa kanyang mga setting. Payagan?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Mga Setting</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Lokasyon at Privacy</string>
     <string name="settings_section_security">Seguridad</string>
     <string name="settings_section_map">Mapa</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Backup at Mga Key</string>
     <string name="settings_section_about">Tungkol</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">I-edit ang Pangalan</string>
     <string name="settings_my_qr">Aking QR</string>
     <string name="settings_no_name_set">Walang nakatakdang pangalan</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Ibahagi ang Aking Lokasyon</string>
+    <string name="settings_broadcasting">Nagbo-broadcast sa iyong mga contact</string>
+    <string name="settings_not_broadcasting">Hindi nagbo-broadcast</string>
+    <string name="settings_sharing_schedule">Iskedyul ng Pagbabahagi</string>
+    <string name="settings_always_on">Laging naka-on</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d panuntunan</item>
+        <item quantity="other">%1$d na panuntunan</item>
+    </plurals>
+    <string name="settings_geofences">Mga Geofence</string>
+    <string name="settings_geofences_subtitle">Pamahalaan ang mga nakabahaging geofence area</string>
+    <string name="settings_notify_when_tracked">Abisuhan Kapag Tinutunton</string>
+    <string name="settings_notify_when_tracked_subtitle">Makatanggap ng abiso kapag na-trigger ang proximity o geofence alert ng isang contact tungkol sa iyo.</string>
+    <string name="settings_my_location_history">Kasaysayan ng Lokasyon</string>
+    <string name="settings_my_location_history_subtitle">Tingnan ang timeline ng iyong sariling lokasyon</string>
+    <string name="settings_lookup_addresses">Hanapin ang mga Address</string>
+    <string name="settings_lookup_addresses_subtitle">Ipakita ang mga address para sa mga punto ng kasaysayan at mga pin sa mapa na na-tap, at maghanap ayon sa address kapag naglalagay ng geofence. Ipinapadala ang mga coordinate o ang na-type mong paghahanap sa geocoding service ng iyong device (kadalasan ay Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Aktibo ang Pangangasiwa</string>
+    <string name="settings_supervision_active_subtitle">Nangangailangan ng pag-apruba ng superbisor ang mga setting</string>
+    <string name="settings_disable_supervised">I-disable ang Supervised Mode</string>
+    <string name="settings_supervised_mode">Supervised Mode</string>
+    <string name="settings_supervised_mode_subtitle">Mangailangan ng pag-apruba ng superbisor para ma-access ang mga setting</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Panimulang Punto</string>
+    <string name="settings_map_current_location">Kasalukuyang Lokasyon</string>
+    <string name="settings_map_all_contacts">Lahat ng Contact</string>
+    <string name="settings_map_fixed_location">Nakapirming Lokasyon</string>
+    <string name="settings_map_last_position">Huling Posisyon</string>
+    <string name="settings_map_starting_point_title">Panimulang Punto ng Mapa</string>
+    <string name="settings_no_location_set">Walang nakatakdang lokasyon</string>
+    <string name="settings_pick_location_on_map">Pumili ng Lokasyon sa Mapa</string>
+    <string name="settings_default_zoom_level">Default na Zoom Level</string>
+    <string name="settings_map_pin_colour">Kulay ng Pin sa Mapa</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Dalas ng Update</string>
+    <string name="settings_update_cadence_subtitle">Isaayos kung gaano kadalas ibro-broadcast ang iyong lokasyon</string>
+    <string name="settings_update_cadence_dialog_message">Kontrolin kung gaano kadalas ina-update ang iyong lokasyon batay sa iyong aktibidad. Ang madalas na update ay mas gumagamit ng baterya.</string>
+    <string name="settings_update_cadence_reset">I-reset sa mga default</string>
+    <string name="settings_min_distance_filtering">Pag-filter ng Minimum na Distansya</string>
+    <string name="settings_min_distance_filtering_subtitle">Ipakita lang ang mga puntong nasa hindi bababa sa ganitong layo mula sa nauna.</string>
+    <string name="settings_discard_low_accuracy">Itapon ang mga Fix na Mababa ang Katumpakan</string>
+    <string name="settings_discard_low_accuracy_subtitle">Huwag i-broadcast o itala ang iyong mga fix na may accuracy radius na mas malaki rito. Hindi kailanman nilalaktawan ang SOS.</string>
+    <string name="settings_hide_low_accuracy">Itago ang mga Puntong Mababa ang Katumpakan</string>
+    <string name="settings_hide_low_accuracy_subtitle">Itago ang mga punto ng kasaysayan na may accuracy radius na mas malaki rito. Walang binubura.</string>
+    <string name="settings_low_battery" formatted="false">Mababang Baterya (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Pagtukoy ng Galaw</string>
+    <string name="settings_motion_detection_on">Naka-on — pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
+    <string name="settings_motion_detection_off">Naka-off — payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
+    <string name="settings_enable_motion_title">I-enable ang pagtukoy ng galaw</string>
+    <string name="settings_enable_motion_message">Tinutulungan ng access sa pisikal na aktibidad ang LocaPeer na mas tumpak na matukoy ang paglalakad, pagmamaneho at pananatiling nakatigil sa iyong kasaysayan. Naka-off ito sa kasalukuyan — maaari mong i-on ulit mula sa mga setting ng system.</string>
+    <string name="settings_open_settings">Buksan ang mga Setting</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Mga Yunit ng Bilis</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metric (km/h)</string>
+    <string name="settings_elevation_units">Mga Yunit ng Elevation</string>
+    <string name="settings_elevation_imperial">Imperial (feet)</string>
+    <string name="settings_elevation_metric">Metric (metro)</string>
+    <string name="settings_distance_units">Mga Yunit ng Distansya</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metric (m/km)</string>
+    <string name="settings_time_format">Format ng Oras</string>
+    <string name="settings_time_24h">24-Oras (13:30)</string>
+    <string name="settings_time_12h">12-Oras (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Data ng Lokasyon</string>
+    <string name="settings_retention_location_subtitle">Gaano katagal itatago nang lokal ang data ng lokasyon ng mga contact</string>
+    <string name="settings_clear_all_location">I-clear ang Lahat ng Data ng Lokasyon</string>
+    <string name="settings_retention_messages">Mga Mensahe</string>
+    <string name="settings_retention_messages_subtitle">Gaano katagal itatago nang lokal ang mga natanggap na mensahe</string>
+    <string name="settings_clear_all_messages">I-clear ang Lahat ng Mensahe</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">I-customize ang Navigation</string>
+    <string name="settings_customize_nav_subtitle">Piliin at ayusin ang mga tab sa ibaba</string>
+    <string name="settings_start_page">Panimulang Pahina</string>
     <string name="settings_language">Wika</string>
     <string name="settings_language_title">Wika ng App</string>
     <string name="settings_language_system">System default</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">I-export ang Backup</string>
+    <string name="settings_export_backup_subtitle">I-save ang iyong pribadong susi at mga contact sa isang file. Panatilihing ligtas ang file na ito!</string>
+    <string name="settings_import_backup">Mag-import ng Backup</string>
+    <string name="settings_import_backup_subtitle">I-restore mula sa naunang na-export na file</string>
+    <string name="settings_view_private_key">Tingnan ang Pribadong Susi</string>
+    <string name="settings_view_private_key_subtitle">Ipakita ang iyong 64-character na hex identity key</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Tungkol sa LocaPeer</string>
+    <string name="settings_about_subtitle">Bersyon, status ng relay, open source</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">I-edit ang Display Name</string>
+    <string name="settings_display_name_label">Display Name</string>
+    <string name="settings_my_invite_qr">Aking Invite QR</string>
+    <string name="settings_invite_qr_subtitle">Maaaring i-scan ito ng iba para simulan kang tuntunin.</string>
+    <string name="settings_invite_qr_cd">Invite QR</string>
+    <string name="settings_private_key_title">Pribadong Susi</string>
+    <string name="settings_private_key_warning">Panatilihin itong ligtas. Kahit sino na may susing ito ay maaaring magpanggap na ikaw.</string>
+    <string name="settings_clear_location_title">I-clear ang Kasaysayan ng Lokasyon?</string>
+    <string name="settings_clear_location_message">Permanenteng buburahin ang lahat ng naka-store na punto ng lokasyon.</string>
+    <string name="settings_clear_messages_title">I-clear ang Kasaysayan ng Mensahe?</string>
+    <string name="settings_clear_messages_message">Permanenteng buburahin ang lahat ng naka-store na mensahe.</string>
+    <string name="settings_encrypted_backup_title">Naka-encrypt na Backup</string>
+    <string name="settings_encrypted_backup_message">Naka-encrypt ang backup na ito. Ilagay ang password para magpatuloy.</string>
+    <string name="settings_select_restore_title">Piliin ang Data na I-restore</string>
+    <string name="settings_select_export_title">Piliin ang Data na I-export</string>
+    <string name="settings_export_password_hint">Opsyonal na magtakda ng password para i-encrypt ang iyong backup file.</string>
+    <string name="settings_backup_password_optional">Password ng Backup (Opsyonal)</string>
+    <string name="settings_select_sections">Piliin ang mga seksyong isasama:</string>
+    <string name="settings_choose_file_location">Pumili ng lokasyon ng file</string>
+    <string name="settings_not_in_backup">Wala sa backup na ito</string>
+    <string name="settings_enable_supervised_title">I-enable ang Supervised Mode</string>
+    <string name="settings_enable_supervised_message">Pumili ng contact na magsisilbing superbisor. Kailangan nilang aprubahan ang access sa mga setting mula sa kanilang device.</string>
+    <string name="settings_no_peers_found">Walang nakitang contact. Magdagdag muna ng contact sa pamamagitan ng pag-scan ng kanilang invite QR code.</string>
+    <string name="settings_disable_supervised_title">I-disable ang Supervised Mode?</string>
+    <string name="settings_disable_supervised_message">Ma-a-access ang mga setting nang walang pag-apruba ng superbisor.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Alisin</string>
+    <string name="common_name">Pangalan</string>
+    <string name="common_search">Maghanap</string>
+    <string name="common_sort">Ayusin</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Mensahe</string>
+    <string name="cd_show_on_map">Ipakita sa mapa</string>
+    <string name="cd_more_options">Higit pang opsyon</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d napili</item>
+        <item quantity="other">%1$d ang napili</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Kanselahin ang pagpili</string>
+    <string name="contacts_cd_select_all">Piliin lahat</string>
+    <string name="contacts_cd_deselect_all">Alisin ang pagpili sa lahat</string>
+    <string name="contacts_cd_qr_invite">QR / Imbitasyon</string>
+    <string name="contacts_cd_pending_requests">Mga Nakabinbing Kahilingan</string>
+    <string name="contacts_sort_last_seen">Huling Nakita</string>
+    <string name="contacts_search_placeholder">Maghanap ng mga contact…</string>
+    <string name="contacts_empty_title">Wala pang contact</string>
+    <string name="contacts_empty_subtitle">Mag-scan ng QR code para kumonekta sa isang tao at simulang magbahagi ng lokasyon.</string>
+    <string name="contacts_scan_qr">Mag-scan ng QR Code</string>
+    <string name="contacts_bulk_delete_messages">Burahin ang mga Mensahe</string>
+    <string name="contacts_bulk_delete_locations">Burahin ang mga Lokasyon</string>
+    <string name="contacts_last_seen">Huling nakita: %1$s</string>
+    <string name="contacts_no_location_yet">Wala pang data ng lokasyon</string>
+    <string name="contacts_view_sharing_settings">Mga Setting ng Pagbabahagi</string>
+    <string name="contacts_view_location_history">Kasaysayan ng Lokasyon</string>
+    <string name="contacts_rename_contact">Palitan ang Pangalan ng Contact</string>
+    <string name="contacts_on_contact_device">Sa Device ng Contact</string>
+    <string name="contacts_delete_my_messages_title">Burahin ang Aking mga Mensahe</string>
+    <string name="contacts_delete_locations_title">Burahin ang Nakabahaging mga Lokasyon</string>
+    <string name="contacts_remove_contact_title">Alisin ang Contact</string>
+    <string name="contacts_leave_title">Burahin ang Contact at Data</string>
+    <string name="contacts_rename_title">Palitan ang Pangalan ng Contact</string>
+    <string name="contacts_remove_contact_body">Alisin si %1$s sa iyong mga contact? Buburahin din nang lokal ang kanyang kasaysayan ng lokasyon.</string>
+    <string name="contacts_leave_body">Aalisin ka nito sa mga contact ni %1$s at buburahin ang lahat ng iyong mensahe at data ng lokasyon mula sa kanyang device. Mawawala rin ang iyong access sa kanyang lokasyon.</string>
+    <string name="contacts_delete_my_messages_body">Buburahin nito ang lahat ng mensaheng ipinadala mo mula sa device ni %1$s. Hindi ito maibabalik.</string>
+    <string name="contacts_delete_locations_body">Buburahin nito ang lahat ng data ng lokasyong ibinahagi mo mula sa device ni %1$s. Hindi ito maibabalik.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Alisin ang Contact</item>
+        <item quantity="other">Alisin ang %1$d Contact</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Alisin ang contact na ito? Buburahin din nang lokal ang kanyang kasaysayan ng lokasyon.</item>
+        <item quantity="other">Alisin ang %1$d contact? Buburahin din nang lokal ang kanilang kasaysayan ng lokasyon.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Remote na burahin ang lahat ng mensaheng ipinadala mo mula sa device ng contact na ito? Hindi ito maibabalik.</item>
+        <item quantity="other">Remote na burahin ang lahat ng mensaheng ipinadala mo mula sa mga device ng %1$d contact? Hindi ito maibabalik.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Remote na burahin ang lahat ng kasaysayan ng lokasyong ibinahagi mo mula sa device ng contact na ito? Hindi ito maibabalik.</item>
+        <item quantity="other">Remote na burahin ang lahat ng kasaysayan ng lokasyong ibinahagi mo mula sa mga device ng %1$d contact? Hindi ito maibabalik.</item>
+    </plurals>
+
+    <string name="common_continue">Magpatuloy</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">I-restore mula sa Backup</string>
+    <string name="onboarding_restore_message">I-paste ang iyong 64-character na hex na pribadong susi para i-restore ang iyong pagkakakilanlan at mga contact.</string>
+    <string name="onboarding_private_key_hex">Pribadong susi (hex)</string>
+    <string name="onboarding_tagline">Pribadong pagbabahagi ng lokasyon sa mga contact.\nWalang account. Walang proprietary server.</string>
+    <string name="onboarding_feature_e2e_title">End-to-End na Naka-encrypt</string>
+    <string name="onboarding_feature_e2e_subtitle">Naka-encrypt ang iyong lokasyon sa device</string>
+    <string name="onboarding_feature_servers_title">Walang Proprietary Server</string>
+    <string name="onboarding_feature_servers_subtitle">Gumagamit ng bukas na Nostr relay bilang secure na transport — nananatiling naka-encrypt at pribado ang iyong data</string>
+    <string name="onboarding_feature_phone_title">Nananatili sa Iyong Telepono</string>
+    <string name="onboarding_feature_phone_subtitle">Nananatili sa iyong device ang buong kasaysayan ng lokasyon mo. Ang kasalukuyang posisyon mo lang ang ibinabahagi sa mga piniling contact</string>
+    <string name="onboarding_name_prompt">Ano ang itatawag sa iyo ng iyong mga contact?</string>
+    <string name="onboarding_name_placeholder">hal. Nanay, Tatay, Anna…</string>
+    <string name="onboarding_get_started">Magsimula</string>
+    <string name="onboarding_restore_from_backup">I-restore Mula sa Backup</string>
+    <string name="onboarding_key_note">Ang iyong pribadong susi ay ginagawa nang lokal at hindi kailanman umaalis sa device na ito.</string>
+    <string name="onboarding_permissions_title">Mga Pahintulot</string>
+    <string name="onboarding_permissions_desc">Kailangan ng LocaPeer ng access sa lokasyon para ibahagi ang iyong posisyon, access sa camera para mag-scan ng invite code, at access sa notification para sa background status. Opsyonal ang access sa pisikal na aktibidad — tumutulong itong mas tumpak na ma-label ang iyong galaw (paglalakad, pagmamaneho).</string>
+    <string name="onboarding_before_ask_title">Bago kami magtanong</string>
+    <string name="onboarding_before_ask_intro">May makikita kang ilang system prompt sa susunod:</string>
+    <string name="onboarding_before_ask_location">• Lokasyon — kailangan, para ibahagi ang iyong posisyon.</string>
+    <string name="onboarding_before_ask_camera">• Camera — para mag-scan ng invite code.</string>
+    <string name="onboarding_before_ask_notifications">• Mga Notification — para sa background status.</string>
+    <string name="onboarding_before_ask_activity">• Pisikal na aktibidad — opsyonal. Nagbibigay-daan ito sa LocaPeer na mas tumpak na matukoy ang paglalakad, pagmamaneho at pananatiling nakatigil. Maaari mong laktawan at i-enable mamaya sa mga Setting.</string>
+    <string name="onboarding_grant_permissions">Ibigay ang mga Pahintulot</string>
+    <string name="onboarding_bg_location_title">Lokasyon sa Background</string>
+    <string name="onboarding_bg_location_desc">Para manatiling updated ang iyong mga contact habang sarado ang app, piliin ang \"Payagan sa lahat ng oras\" sa susunod na screen.</string>
+    <string name="onboarding_bg_location_error">Kailangan ang background location para i-update ang iyong mga contact kapag sarado ang app. Subukang muli at piliin ang \"Payagan sa lahat ng oras\".</string>
+    <string name="onboarding_configure_location">I-configure ang Lokasyon</string>
+    <string name="onboarding_battery_title">Baterya</string>
+    <string name="onboarding_battery_desc">Maaaring ihinto ng Android ang LocaPeer para makatipid ng baterya. Para sa maaasahang mga update, ibukod ang LocaPeer sa mga optimization.</string>
+    <string name="onboarding_disable_optimizations">I-disable ang mga Optimization</string>
+    <string name="onboarding_done_title">Handa Na!</string>
+    <string name="onboarding_done_desc">Handa na ang iyong pribadong network ng lokasyon.</string>
+    <string name="onboarding_start_using">Simulang Gamitin ang LocaPeer</string>
+
+    <string name="common_try_again">Subukang Muli</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Mag-scan ng Imbitasyon</string>
+    <string name="scan_camera_needed">Kailangan ng pahintulot sa camera para mag-scan ng QR code.</string>
+    <string name="scan_grant_permission">Ibigay ang Pahintulot</string>
+    <string name="scan_add_contact_title">Magdagdag ng contact?</string>
+    <string name="scan_add_contact_message">Ikokonekta ka nito kay %1$s at magsisimula kayong magbahagi ng lokasyon sa isa\'t isa.</string>
+    <string name="scan_add_share">Idagdag at Ibahagi</string>
+    <string name="scan_request_sent_title">Naipadala ang Kahilingan!</string>
+    <string name="scan_request_sent_message">May kahilingang naipadala kay %1$s. Makokonekta kayo kapag tinanggap niya.</string>
+    <string name="scan_failed">Nabigo ang pag-scan: %1$s</string>
+
     <string name="cd_back">Bumalik</string>
+    <string name="common_review">Suriin</string>
+    <string name="common_decline">Tanggihan</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Magpadala/Tumanggap</string>
+    <string name="role_send">Magpadala</string>
+    <string name="role_receive">Tumanggap</string>
+    <string name="role_none">Walang Pagbabahagi</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Aking Imbitasyon</string>
+    <string name="invite_tab_add_contact">Magdagdag ng Contact</string>
+    <string name="invite_your_qr_title">Iyong QR Code</string>
+    <string name="invite_your_qr_subtitle">Hayaang i-scan ito ng iba para sundan ang iyong lokasyon</string>
+    <string name="invite_qr_cd">Iyong QR code</string>
+    <string name="invite_qr_error">Error sa paggawa ng QR</string>
+    <string name="invite_share_link">Ibahagi ang Invite Link</string>
+    <string name="invite_encryption_note">Ie-encrypt ang iyong lokasyon partikular para sa device ng scanner.</string>
+    <string name="invite_camera_required_title">Kailangan ng Access sa Camera</string>
+    <string name="invite_camera_required_message">Ibigay ang pahintulot sa camera para mag-scan ng QR code.</string>
+    <string name="invite_point_camera">Itutok ang camera sa isang LocaPeer QR</string>
+    <string name="invite_paste_title">O I-paste ang Invite Link</string>
+    <string name="invite_process_link">Iproseso ang Link</string>
+    <string name="invite_fallback_name">Contact</string>
+    <string name="invite_success_message">Makokonekta ka kay %1$s kapag tinanggap niya.</string>
+    <string name="invite_confirm_add_title">Idagdag si %1$s?</string>
+    <string name="invite_confirm_add_message">Idagdag sila sa iyong mga contact at magbahagi ng lokasyon?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Walang nakabinbing kahilingan</string>
+    <string name="pending_requesting">Humihiling: %1$s · %2$s</string>
+    <string name="pending_role_change">Kahilingan sa pagbabago ng papel · %1$s</string>
+    <string name="pending_new_request">Bagong kahilingan sa pagbabahagi · %1$s</string>
+
+    <string name="common_save_changes">I-save ang mga Pagbabago</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">I-update ang mga Setting ng Pagbabahagi</string>
+    <string name="incoming_new_title">Bagong Kahilingan sa Contact</string>
+    <string name="incoming_update_subtitle">Gustong i-update ni %1$s kung paano kayo nagbabahagi. Suriin ang mga setting sa ibaba.</string>
+    <string name="incoming_new_subtitle">Idinagdag ka ni %1$s bilang contact! Maaari mo nang piliin kung ano ang ibabahagi mo pabalik.</string>
+    <string name="incoming_section_location">Lokasyon</string>
+    <string name="incoming_share_my_location">Ibahagi ang aking lokasyon kay %1$s</string>
+    <string name="incoming_share_my_location_sub">Makikita niya kung nasaan ka</string>
+    <string name="incoming_see_their_location">Tingnan ang lokasyon ni %1$s</string>
+    <string name="incoming_see_their_location_sub">Makikita mo kung nasaan sila</string>
+    <string name="incoming_section_messaging">Pagmemensahe</string>
+    <string name="incoming_allow_messages">Payagan ang mga Mensahe</string>
+    <string name="incoming_allow_messages_sub">Tumanggap ng mga mensahe ng chat mula kay %1$s</string>
+
+    <string name="common_request">Humiling</string>
+    <string name="common_edit">I-edit</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Mga Setting ng Contact</string>
+    <string name="peer_section_roles">Mga Papel sa Pagbabahagi ng Lokasyon</string>
+    <string name="peer_send_on">Makikita ni %1$s ang iyong lokasyon</string>
+    <string name="peer_send_off">Hindi mo ibinabahagi ang iyong lokasyon kay %1$s</string>
+    <string name="peer_receive_title">Tumanggap ng Lokasyon ni %1$s</string>
+    <string name="peer_receive_on">Makikita mo ang lokasyon ni %1$s</string>
+    <string name="peer_receive_off">Wala kang access sa lokasyon ni %1$s</string>
+    <string name="peer_section_privacy">Mga Kontrol sa Privacy at Pagbabahagi</string>
+    <string name="peer_pause_sharing">I-pause ang Pagbabahagi</string>
+    <string name="peer_pause_sub">Pansamantalang ihinto ang pagpapadala ng iyong lokasyon kay %1$s</string>
+    <string name="peer_precision">Katumpakan ng Lokasyon</string>
+    <string name="peer_precision_exact_sub">Eksaktong GPS coordinate</string>
+    <string name="peer_precision_suburb_sub">Tinatayang lokasyon (antas ng barangay)</string>
+    <string name="peer_always_sharing">Laging nagbabahagi</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d aktibong panuntunan sa pagbabahagi</item>
+        <item quantity="other">%1$d na aktibong panuntunan sa pagbabahagi</item>
+    </plurals>
+    <string name="peer_section_alerts">Mga Alerto at Pagsubaybay</string>
+    <string name="peer_sos_contact">SOS Contact</string>
+    <string name="peer_sos_sub">Tumatanggap ng iyong mga emergency alert kahit naka-pause ang pagbabahagi</string>
+    <string name="peer_missed_alert">Alerto sa Nawalang Lokasyon</string>
+    <string name="peer_missed_on">Abisuhan ako kung tumigil si %1$s sa pag-uulat ng kanyang lokasyon</string>
+    <string name="peer_requires_access">Kailangan ng access sa lokasyon ni %1$s</string>
+    <string name="peer_proximity_alert">Alerto sa Proximity</string>
+    <string name="peer_proximity_sub">Abisuhan ako kapag malapit si %1$s</string>
+    <string name="peer_alert_radius">Radius ng Alerto</string>
+    <string name="peer_alert_schedule">Iskedyul ng Alerto</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d aktibong panuntunan</item>
+        <item quantity="other">%1$d na aktibong panuntunan</item>
+    </plurals>
+    <string name="peer_geofences_sub">Mag-set up ng mga zone ng pagdating at pag-alis para kay %1$s</string>
+    <string name="peer_supervise">Pangasiwaan ang Device na Ito</string>
+    <string name="peer_supervise_on">Tumatanggap at umaapruba ka ng mga kahilingang mag-unlock mula kay %1$s</string>
+    <string name="peer_supervise_off">Payagan si %1$s na magpadala sa iyo ng mga kahilingang mag-unlock ng supervised mode</string>
+    <string name="peer_messaging_sub">I-enable/i-disable ang mga mensahe ng chat mula kay %1$s</string>
+    <string name="peer_section_history">Kasaysayan ng Paggalaw</string>
+    <string name="peer_location_history">Kasaysayan ng Lokasyon</string>
+    <string name="peer_location_history_sub">Tingnan ang kasaysayan ng paggalaw at ulat sa mapa para kay %1$s</string>
+    <string name="peer_section_retention">Remote na Pagpapanatili ng Data</string>
+    <string name="peer_retention_location_sub">Gaano katagal iniingatan ni %1$s ang iyong kasaysayan ng lokasyon</string>
+    <string name="peer_purge_location">Burahin ang Lahat ng Data ng Lokasyon mula kay %1$s</string>
+    <string name="peer_retention_messages_sub">Gaano katagal iniingatan ni %1$s ang mga mensaheng ipinadala mo</string>
+    <string name="peer_purge_messages">Burahin ang Lahat ng Mensahe mula kay %1$s</string>
+    <string name="peer_precision_exact">Eksaktong GPS</string>
+    <string name="peer_precision_exact_desc">Tumpak na mga coordinate</string>
+    <string name="peer_precision_suburb">Barangay (~1km)</string>
+    <string name="peer_precision_suburb_desc">Antas ng kapitbahayan lamang</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Burahin ang %1$d usapan?</item>
+        <item quantity="other">Burahin ang %1$d na usapan?</item>
+    </plurals>
+    <string name="conv_delete_locally">Burahin nang Lokal</string>
+    <string name="conv_delete_locally_sub">Inaalis ang usapan sa iyong device lamang.</string>
+    <string name="conv_delete_both">Burahin nang Lokal/Mula sa Contact</string>
+    <string name="conv_bulk_delete_both_sub">Binubura ang usapan nang lokal at mula sa iyong contact.</string>
+    <string name="conv_delete_both_sub">Binubura ang usapan nang lokal at nagti-trigger ng kahilingang burahin ito sa device ng contact.</string>
+    <string name="conv_cd_exit_selection">Lumabas sa pagpili</string>
+    <string name="conv_cd_select_all">Piliin Lahat</string>
+    <string name="conv_cd_new_message">Bagong mensahe</string>
+    <string name="conv_sort_date">Petsa</string>
+    <string name="conv_sort_unread">Hindi Nabasa</string>
+    <string name="conv_search_placeholder">Maghanap ng mga usapan…</string>
+    <string name="conv_tab_chats">Mga Chat</string>
+    <string name="conv_tab_archived">Naka-archive</string>
+    <string name="conv_mark_read">Markahang Nabasa</string>
+    <string name="conv_archive">I-archive</string>
+    <string name="conv_unarchive">I-unarchive</string>
+    <string name="conv_empty_no_results">Walang resulta para sa \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Subukan ang ibang termino sa paghahanap</string>
+    <string name="conv_empty_archived_title">Walang naka-archive na chat</string>
+    <string name="conv_empty_archived_sub">Mag-archive ng mga chat para maging malinis ang iyong inbox</string>
+    <string name="conv_empty_title">Wala pang mensahe</string>
+    <string name="conv_empty_sub">Buksan ang mapa at i-tap ang isang tao\npara magsimula ng usapan</string>
+    <string name="conv_delete_title">Burahin ang usapan?</string>
+    <string name="conv_delete_message">Paano mo gustong burahin ang usapang ito kay %1$s?</string>
+    <string name="conv_messages_blocked">Naka-block ang mga mensahe</string>
+    <string name="conv_preview_mine">Ikaw: %1$s</string>
+    <string name="conv_new_message_title">Bagong Mensahe</string>
+    <string name="conv_picker_empty">Wala pang contact. Mag-scan ng QR code para magdagdag ng contact.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">I-clear ang kasaysayan ng chat?</string>
+    <string name="chat_clear_message">Paano mo gustong i-clear ang usapang ito kay %1$s?</string>
+    <string name="chat_clear_locally">I-clear nang Lokal</string>
+    <string name="chat_clear_both">I-clear nang Lokal/Mula sa Contact</string>
+    <string name="chat_clear_both_sub">Kini-clear ang chat nang lokal at nagpapadala kay %1$s ng kahilingang burahin ang mga mensaheng ipinadala mo.</string>
+    <string name="chat_cd_options">Mga Opsyon</string>
+    <string name="chat_clear_history_menu">I-clear ang Kasaysayan ng Chat</string>
+    <string name="chat_typing">Nagta-type si %1$s…</string>
+    <string name="chat_blocked_banner">Na-block mo ang mga mensahe mula kay %1$s. Pumunta sa Contacts para mag-unblock.</string>
+    <string name="chat_delete_msg_title">Burahin ang mensahe?</string>
+    <string name="chat_delete_msg_message">Paano mo gustong burahin ang mensaheng ito?</string>
+    <string name="chat_delete_from_contact">Burahin mula sa contact</string>
+    <string name="chat_delete_from_contact_sub">Binubura ang chat mula sa device ng contact.</string>
+    <string name="chat_delete_both_sub">Inaalis ang chat nang lokal at awtomatikong binubura mula sa device ng contact.</string>
+    <string name="chat_cd_share_location">Ibahagi ang Lokasyon</string>
+    <string name="chat_input_placeholder">Mensahe…</string>
+    <string name="chat_cd_send">Ipadala</string>
+
+    <string name="common_close">Isara</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">I-activate ang SOS?</string>
+    <string name="map_sos_deactivate_title">I-deactivate ang SOS?</string>
+    <string name="map_sos_activate_msg">Ibro-broadcast nito ang iyong lokasyon kada 15 segundo sa iyong mga itinalagang SOS contact hanggang sa i-deactivate.</string>
+    <string name="map_sos_deactivate_msg">Ihihinto nito ang high-priority na broadcast ng lokasyon sa iyong mga emergency contact.</string>
+    <string name="map_activate">I-activate</string>
+    <string name="map_deactivate">I-deactivate</string>
+    <string name="map_cd_style">Estilo ng Mapa</string>
+    <string name="map_cd_show_geofences">Ipakita ang mga geofence</string>
+    <string name="map_cd_hide_geofences">Itago ang mga geofence</string>
+    <string name="map_cd_follow">Sundan Ako</string>
+    <string name="map_cd_friends">Mga Kaibigan</string>
+    <string name="map_no_friends">Wala pang tinutunton</string>
+    <string name="map_you">Ikaw</string>
+    <string name="map_cd_go_my_location">Pumunta sa lokasyon ko</string>
+    <string name="map_sos_active">⚠ AKTIBO ANG SOS</string>
+    <string name="map_away">Malayo</string>
+    <string name="map_no_location_yet">Wala pang lokasyon</string>
+    <string name="map_cd_go_location">Pumunta sa lokasyon</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">NAKA-ON ANG SOS</string>
+    <string name="map_overdue">Overdue — walang kamakailang update</string>
+    <string name="map_stat_last_seen">Huling nakita</string>
+    <string name="map_stat_battery">Baterya</string>
+    <string name="map_stat_accuracy">Katumpakan</string>
+    <string name="map_stat_motion">Galaw</string>
+    <string name="map_stat_speed">Bilis</string>
+    <string name="map_stat_elevation">Elevation</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Kasaysayan: %1$s</string>
+    <string name="history_select_person">Pumili ng Tao</string>
+    <string name="history_person_label">Tao</string>
+    <string name="history_cd_prev_day">Nakaraang Araw</string>
+    <string name="history_cd_next_day">Susunod na Araw</string>
+    <string name="history_time_filter">Filter ng Oras:</string>
+    <string name="history_cd_reset_time">I-reset ang Oras</string>
+    <string name="history_tab_list">Listahan</string>
+    <string name="history_empty_title">Walang kasaysayan sa araw na ito</string>
+    <string name="history_empty_sub">Subukang pumili ng ibang petsa o tingnan ang iyong koneksyon.</string>
+    <string name="history_start_time">Oras ng Simula</string>
+    <string name="history_end_time">Oras ng Pagtatapos</string>
+    <string name="history_no_data_title">Walang data ng lokasyon</string>
+    <string name="history_no_data_sub">Walang naitalang punto para sa araw o saklaw ng oras na ito.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d punto ang naitala</item>
+        <item quantity="other">%1$d na punto ang naitala</item>
+    </plurals>
+    <string name="history_cd_dismiss">Isara</string>
+    <string name="history_accuracy_label">±%1$s na katumpakan</string>
+    <string name="history_emergency_sos">Emergency SOS signal</string>
+    <string name="history_detail_location">Lokasyon</string>
+    <string name="history_detail_coordinates">Mga Coordinate</string>
+    <string name="history_within">sa loob ng ±%1$s</string>
+    <string name="history_detail_movement">Galaw</string>
+    <string name="history_movement_desc">%1$s %2$s papunta sa %3$s</string>
+
+    <string name="common_create">Gumawa</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Magdagdag ng geofence area</string>
+    <string name="geo_cd_assign">Mag-assign ng geofence</string>
+    <string name="geo_unknown">Hindi alam</string>
+    <string name="geo_empty_title">Walang geofence</string>
+    <string name="geo_empty_sub">I-tap ang + para gumawa ng geofence area, pagkatapos ay mag-assign ng mga contact dito mula sa kanilang mga setting ng pagbabahagi.</string>
+    <string name="geo_delete_title">Burahin ang geofence?</string>
+    <string name="geo_delete_simple">Burahin ang \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">Naka-assign ang \"%1$s\" sa %2$d contact. Aalisin din ng pagbura ang mga assignment na iyon.</item>
+        <item quantity="other">Naka-assign ang \"%1$s\" sa %2$d contact. Aalisin din ng pagbura ang mga assignment na iyon.</item>
+    </plurals>
+    <string name="geo_for_contact">Mga geofence para kay %1$s</string>
+    <string name="geo_empty_contact_title">Walang geofence para sa contact</string>
+    <string name="geo_empty_contact_sub">I-tap ang + para mag-assign ng geofence area at piliin kung mag-a-alert sa pagdating, pag-alis, o pareho.</string>
+    <string name="geo_no_areas_title">Wala pang geofence</string>
+    <string name="geo_no_areas_msg">Gumawa muna ng geofence area mula sa screen ng Geofences, pagkatapos ay i-assign ito rito.</string>
+    <string name="geo_radius_label">%1$s na radius</string>
+    <string name="geo_contacts_label">Mga Contact: %1$s</string>
+    <string name="geo_no_contacts_assigned">Walang naka-assign na contact</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d panuntunan</item>
+        <item quantity="other">%1$d na panuntunan</item>
+    </plurals>
+    <string name="geo_trigger_enter">Pasok</string>
+    <string name="geo_trigger_exit">Labas</string>
+    <string name="geo_trigger_both">Pareho</string>
+    <string name="geo_edit_title">I-edit ang Geofence</string>
+    <string name="geo_new_title">Bagong Geofence</string>
+    <string name="geo_cd_my_location">Lokasyon ko</string>
+    <string name="geo_cd_radius_increase">Dagdagan ang radius</string>
+    <string name="geo_cd_radius_decrease">Bawasan ang radius</string>
+    <string name="geo_hint_tap">I-tap o pindutin nang matagal ang mapa para maglagay</string>
+    <string name="geo_hint_move">Kurutin para mag-zoom • Pindutin o i-drag ang pin para ilipat</string>
+    <string name="geo_basic_info">Pangunahing Impormasyon</string>
+    <string name="geo_search_title">Hanapin ayon sa Address</string>
+    <string name="geo_search_label">Address o lugar</string>
+    <string name="geo_search_placeholder">hal. 10 Main St, Maynila</string>
+    <string name="geo_search_no_results">Walang nakitang tumutugmang address</string>
+    <string name="geo_cd_search">Maghanap</string>
+    <string name="geo_name_placeholder">hal. Bahay, Trabaho</string>
+    <string name="geo_name_required">Kailangan ang pangalan</string>
+    <string name="geo_latitude">Latitude</string>
+    <string name="geo_longitude">Longitude</string>
+    <string name="geo_lat_range">-90 hanggang 90</string>
+    <string name="geo_lng_range">-180 hanggang 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Maglagay ng %1$d hanggang %2$d m</string>
+    <string name="geo_edit_assignment">I-edit ang Assignment</string>
+    <string name="geo_assign_title">Mag-assign ng Geofence</string>
+    <string name="geo_select_area">Pumili ng Geofence Area</string>
+    <string name="geo_trigger_title">I-trigger ang Notification Kapag</string>
+    <string name="geo_add_rule">Magdagdag ng Panuntunan</string>
+    <string name="geo_alerts_all_times">Aktibo ang mga alerto sa lahat ng oras. Magdagdag ng panuntunan para limitahan kung kailan ipinapadala ang mga alerto.</string>
+    <string name="geo_assign_action">I-assign</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Mga Alerto sa Proximity</string>
+    <string name="prox_empty_title">Walang tinutuntong tao</string>
+    <string name="prox_empty_sub">Mag-scan ng invite QR ng isang tao mula sa Scan tab\npara simulang tuntunin ang kanilang lokasyon</string>
+    <string name="prox_intro">Makatanggap ng abiso kapag ang isang tinutuntong tao ay lumapit sa iyo sa napiling distansya.</string>
+    <string name="prox_alert_within">Mag-alerto kapag nasa loob ng %1$s</string>
+    <string name="prox_alerts_off">Naka-off ang mga alerto</string>
+    <string name="prox_alert_radius">Radius ng alerto</string>
+    <string name="prox_edit_schedule">I-edit ang Iskedyul</string>
+    <string name="prox_rules">Mga Panuntunan</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Iskedyul para kay %1$s</string>
+    <string name="schedule_cd_add_rule">Magdagdag ng panuntunan</string>
+    <string name="schedule_empty_title">Walang panuntunan sa iskedyul</string>
+    <string name="schedule_empty_global">Ibinabahagi ang lokasyon sa lahat ng oras. Magdagdag ng panuntunan para limitahan kung kailan aktibo ang pagbabahagi.</string>
+    <string name="schedule_empty_peer">Palaging ibinabahagi ang lokasyon kay %1$s. Magdagdag ng panuntunan para limitahan kung kailan.</string>
+    <string name="schedule_active_hint">Aktibo kapag may panuntunang tumutugma sa kasalukuyang oras. Walang laman = laging naka-on.</string>
+    <string name="schedule_all_day">Buong araw</string>
+    <string name="schedule_plus_one_day"> (+1 araw)</string>
+    <string name="schedule_rule_number">Panuntunan %1$d</string>
+    <string name="schedule_cd_delete_rule">Burahin ang panuntunan</string>
+    <string name="schedule_edit_rule">I-edit ang Panuntunan</string>
+    <string name="schedule_label_optional">Label (opsyonal)</string>
+    <string name="schedule_label_placeholder">hal. Oras ng trabaho, Katapusan ng linggo</string>
+    <string name="schedule_active_days">Mga Aktibong Araw</string>
+    <string name="schedule_time_window">Bintana ng Oras</string>
+    <string name="schedule_start">Simula</string>
+    <string name="schedule_end">Wakas</string>
+    <string name="schedule_overnight">Magdamag: aktibo mula %1$s hanggang %2$s kinabukasan</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Pinangangasiwaan ang Device</string>
+    <string name="gate_message">Kailangan ng pag-apruba ng superbisor para ma-access ang mga setting.</string>
+    <string name="gate_request_access">Humiling ng Access</string>
+    <string name="gate_waiting">Naghihintay ng pag-apruba ng superbisor…</string>
+    <string name="gate_denied">Tinanggihan ng superbisor ang access.</string>
+    <string name="gate_timed_out">Nag-time out ang kahilingan. Hindi tumugon ang superbisor.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Habambuhay</string>
+    <string name="retention_keep_for">Itago nang: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d araw</item>
+        <item quantity="other">%1$d na araw</item>
+    </plurals>
+
+    <string name="common_select">Pumili</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Pumili ng Nakapirming Lokasyon</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Piliin kung aling mga tab ang lalabas sa ibabang bar at ang pagkakasunod-sunod nila. Palaging kasama ang Mapa.</string>
+    <string name="customize_cd_move_up">Ilipat pataas</string>
+    <string name="customize_cd_move_down">Ilipat pababa</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Bersyon %1$s (build %2$d)</string>
+    <string name="about_tagline">Pribadong pagbabahagi ng lokasyon sa mga taong pinagkakatiwalaan mo. Walang account, walang cloud, walang pagsubaybay mula sa amin.</string>
+    <string name="about_relay_connections">Mga Koneksyon sa Relay</string>
+    <string name="about_connected">Nakakonekta</string>
+    <string name="about_disconnected">Naka-disconnect</string>
+    <string name="about_open_source">Mga Open Source Library</string>
+    <string name="about_lib_osmdroid_desc">Pag-render ng mapa batay sa OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket transport para sa Nostr relay</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Lokal na database</string>
+    <string name="about_map_attribution">Data ng mapa © mga contributor ng OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Tanggapin</string>
+    <string name="notif_someone">May isang tao</string>
+    <string name="notif_sos_title">SOS mula kay %1$s!</string>
+    <string name="notif_sos_text">Na-activate ni %1$s ang SOS sa (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">Gusto ni %1$s na ikaw ang maging superbisor niya</string>
+    <string name="notif_supervisor_request_text">Tanggapin para payagan ang mga kahilingan sa pag-apruba ng unlock mula sa device na ito</string>
+    <string name="notif_supervisor_request_big">Tanggapin para payagan si %1$s na magpadala sa iyo ng mga kahilingan sa pag-apruba ng unlock kapag aktibo ang supervised mode.</string>
+    <string name="notif_supervised_active_title">Aktibo ang supervised mode</string>
+    <string name="notif_supervised_active_text">Kinumpirma ng iyong superbisor — naka-set up na ngayon ang supervised mode</string>
+    <string name="notif_supervised_declined_title">Tinanggihan ang supervised mode</string>
+    <string name="notif_supervised_declined_text">Tinanggihan ng iyong superbisor ang kahilingan — na-disable ang supervised mode</string>
+    <string name="notif_tracking_alert_title">Alerto sa Pagtunton</string>
+    <string name="notif_tracking_proximity">Nakatanggap si %1$s ng proximity alert tungkol sa iyo</string>
+    <string name="notif_tracking_geofence">Nakatanggap si %1$s ng alerto na pumasok/lumabas ka sa fence: %2$s</string>
+    <string name="notif_tracking_generic">Sinusubaybayan ni %1$s ang iyong lokasyon</string>
+    <string name="notif_track_update_title">Update sa pagbabahagi mula kay %1$s</string>
+    <string name="notif_track_new_title">Bagong Contact: %1$s</string>
+    <string name="notif_role_send_receive">Magpadala/Tumanggap ng Lokasyon</string>
+    <string name="notif_role_send">Magpadala ng Lokasyon</string>
+    <string name="notif_role_receive">Tumanggap ng Lokasyon</string>
+    <string name="notif_role_none">Walang Pagbabahagi ng Lokasyon</string>
+    <string name="notif_track_requesting">Humihiling si %1$s: %2$s</string>
+    <string name="notif_track_update_body">Gustong i-update ni %1$s kung paano kayo nagbabahagi ng lokasyon.</string>
+    <string name="notif_track_new_body">Idinagdag ka ni %1$s bilang contact at gustong kumonekta.</string>
+    <string name="notif_contact_connected_title">Nakakonekta ang Contact</string>
+    <string name="notif_contact_connected_text">Nakakonekta na si %1$s sa iyo.</string>
+    <string name="notif_request_declined_title">Tinanggihan ang Kahilingan</string>
+    <string name="notif_request_declined_text">Tinanggihan ni %1$s ang iyong kahilingan sa pagbabahagi ng lokasyon.</string>
+    <string name="notif_message_person">Mag-message kay %1$s</string>
+    <string name="notif_geofence_entered_title">Pumasok si %1$s sa %2$s</string>
+    <string name="notif_geofence_left_title">Umalis si %1$s sa %2$s</string>
+    <string name="notif_geofence_subtitle">sa %1$s · %2$s na radius</string>
+    <string name="notif_person_nearby">Malapit si %1$s</string>
+    <string name="notif_distance_from_you">%1$s mula sa iyo</string>
+    <string name="notif_missed_title">Walang update mula kay %1$s</string>
+    <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas malapit sa (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">AKTIBO ANG SOS!</string>
+    <string name="notif_sos_active_text">Nagbo-broadcast ng emergency alert sa mga SOS contact</string>
+    <string name="notif_messages_group_title">Mga Mensahe ng LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Tinanggihan ang kahilingan sa contact mula kay %1$s</string>
+    <string name="toast_now_supervising">Pinangangasiwaan na ngayon ang device ni %1$s</string>
+    <string name="toast_declined_supervision">Tinanggihan ang kahilingan sa pangangasiwa mula kay %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Ngayon lang</string>
+    <string name="time_minutes_ago">%1$d min ang nakalipas</string>
+    <string name="fallback_me">Ako</string>
+    <string name="fallback_unknown">Hindi alam</string>
+    <string name="geo_unassigned">Hindi naka-assign</string>
+    <string name="days_every_day">Araw-araw</string>
+    <string name="days_weekdays">Mga araw ng trabaho</string>
+    <string name="days_weekends">Mga katapusan ng linggo</string>
+    <string name="days_none">Walang araw</string>
+    <string name="chat_my_location_message">Kasalukuyan kong lokasyon: %1$s</string>
+    <string name="scan_error_bad_pubkey">Di-wastong imbitasyon: maling public key</string>
+    <string name="scan_error_key_mismatch">Di-wastong imbitasyon: hindi tugma ang mga key</string>
+    <string name="scan_error_unknown">Hindi kilalang error</string>
+    <string name="scan_error_invalid_link">Di-wastong invite link</string>
+    <string name="scan_fallback_contact">contact na ito</string>
+    <string name="backup_saved">Na-save ang backup: %1$s</string>
+    <string name="backup_saved_encrypted">Na-save ang backup (naka-encrypt): %1$s</string>
+    <string name="backup_failed">Nabigo ang backup: %1$s</string>
+    <string name="backup_could_not_read_file">Hindi mabasa ang file</string>
+    <string name="backup_could_not_write_file">Hindi masulat ang file</string>
+    <string name="backup_could_not_read">Hindi mabasa ang backup: %1$s</string>
+    <string name="backup_incorrect_password">Maling password</string>
+    <string name="restore_result_restored">Na-restore: %1$s</string>
+    <string name="restore_result_failed">Nabigo: %1$s</string>
+    <string name="restore_nothing">Walang ma-restore</string>
+    <string name="restore_failed">Nabigo ang pag-restore: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d na contact</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="other">%1$d na geofence</item>
+    </plurals>
+    <string name="peer_role_change_sent">Naipadala ang kahilingan sa pagbabago ng papel kay %1$s</string>
+    <string name="peer_not_found">Hindi nakita ang contact</string>
+    <string name="peer_purge_location_sent">Naipadala kay %1$s ang remote delete command para sa LAHAT ng lokasyon</string>
+    <string name="peer_purge_messages_sent">Naipadala kay %1$s ang remote delete command para sa LAHAT ng mensahe</string>
+    <string name="onboarding_error_key_length">Di-wastong key — dapat 64 hex character.</string>
+    <string name="onboarding_error_key_range">Di-wastong pribadong key — labas sa saklaw ng curve.</string>
+    <string name="onboarding_error_hex">Di-wastong hex format.</string>
+    <string name="onboarding_error_import_failed">Nabigong i-import ang key: %1$s</string>
 </resources>
