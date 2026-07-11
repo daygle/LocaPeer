@@ -245,7 +245,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processMsgPurgeRequest(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -258,7 +257,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processPurgeRequest(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -272,13 +270,6 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processEvent(event: NostrEvent) {
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
         val broadcaster = peerDao.getPeer(event.pubkey) ?: return
-
-        // Verify the signature before any state mutation (e.g. unarchiving) so a forged
-        // event carrying a known contact's pubkey cannot trigger side effects.
-        if (!NostrEvent.verify(event, crypto)) {
-            Log.w(TAG, "Signature verification failed for event ${event.id}")
-            return
-        }
 
         // Ensure peer is unarchived if they send an SOS or update their heartbeat
         // so they are visible in the contacts/messaging UI during active tracking
@@ -380,7 +371,6 @@ class HeartbeatReceiver @Inject constructor(
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
         val isBlocked = !sender.messagingEnabled
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -410,7 +400,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -423,7 +412,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processDeliveryAckInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -441,7 +429,6 @@ class HeartbeatReceiver @Inject constructor(
         // any known contact can send a SUPERVISED_UNLOCK_REQUEST, so the isMySupervised flag prevents
         // social-engineering attacks from regular contacts.
         if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -460,7 +447,6 @@ class HeartbeatReceiver @Inject constructor(
         if (event.createdAt < Instant.now().epochSecond - 300) return
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -473,7 +459,6 @@ class HeartbeatReceiver @Inject constructor(
         // Ignore requests older than 24 hours - supervisor must be reachable within a day
         if (event.createdAt < Instant.now().epochSecond - 86400) return
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         // Don't re-notify if the supervisor already accepted this device
         if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised == true) return
         // Suppress relay retransmissions if the notification is still active
@@ -538,7 +523,6 @@ class HeartbeatReceiver @Inject constructor(
         if (event.createdAt < Instant.now().epochSecond - 86400) return
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -620,7 +604,6 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processPeerRemoved(event: NostrEvent) {
         // Only act if we know this peer - ignore unknown senders
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -633,7 +616,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processDeleteMyMessages(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -643,7 +625,6 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processDeleteMyLocation(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -656,7 +637,6 @@ class HeartbeatReceiver @Inject constructor(
         if (!settings.notifyOnTrackingAlerts) return
 
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -687,10 +667,6 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processTrackRequest(event: NostrEvent) {
-        if (!NostrEvent.verify(event, crypto)) {
-            Log.w(TAG, "Track request signature verification failed")
-            return
-        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -795,10 +771,6 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processTrackAccept(event: NostrEvent) {
-        if (!NostrEvent.verify(event, crypto)) {
-            Log.w(TAG, "Track accept signature verification failed")
-            return
-        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -866,10 +838,6 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processTrackDecline(event: NostrEvent) {
         // Only act if we actually sent a request to this peer (peer exists optimistically)
         peerDao.getPeer(event.pubkey) ?: return
-        if (!NostrEvent.verify(event, crypto)) {
-            Log.w(TAG, "Track decline signature verification failed")
-            return
-        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
