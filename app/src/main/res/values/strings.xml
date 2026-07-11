@@ -743,6 +743,7 @@
     <string name="backup_saved_encrypted">Backup saved (encrypted): %1$s</string>
     <string name="backup_failed">Backup failed: %1$s</string>
     <string name="backup_could_not_read_file">Could not read file</string>
+    <string name="backup_could_not_write_file">Could not write file</string>
     <string name="backup_could_not_read">Could not read backup: %1$s</string>
     <string name="backup_incorrect_password">Incorrect password</string>
     <string name="restore_result_restored">Restored: %1$s</string>

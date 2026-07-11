@@ -717,12 +717,21 @@
     <string name="backup_saved_encrypted">Sicherung gespeichert (verschlüsselt): %1$s</string>
     <string name="backup_failed">Sicherung fehlgeschlagen: %1$s</string>
     <string name="backup_could_not_read_file">Datei konnte nicht gelesen werden</string>
+    <string name="backup_could_not_write_file">Datei konnte nicht geschrieben werden</string>
     <string name="backup_could_not_read">Sicherung konnte nicht gelesen werden: %1$s</string>
     <string name="backup_incorrect_password">Falsches Passwort</string>
     <string name="restore_result_restored">Wiederhergestellt: %1$s</string>
     <string name="restore_result_failed">Fehlgeschlagen: %1$s</string>
     <string name="restore_nothing">Nichts wiederherzustellen</string>
     <string name="restore_failed">Wiederherstellung fehlgeschlagen: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d Kontakt</item>
+        <item quantity="other">%1$d Kontakte</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d Geofence</item>
+        <item quantity="other">%1$d Geofences</item>
+    </plurals>
     <string name="onboarding_error_hex">Ungültiges Hex-Format.</string>
     <string name="onboarding_error_key_length">Ungültiger Schlüssel – muss 64 Hex-Zeichen lang sein.</string>
     <string name="onboarding_error_key_range">Ungültiger privater Schlüssel – außerhalb des Kurvenbereichs.</string>

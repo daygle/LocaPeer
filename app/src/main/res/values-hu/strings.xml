@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Értesítési csatornák és előtérszolgáltatás ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Helyszín közvetítése</string>
     <string name="channel_desc_heartbeat">Közvetíti a helyzetedet a jóváhagyott kapcsolataidnak</string>
     <string name="channel_name_alerts">Riasztások</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">A LocaPeer fut</string>
     <string name="notification_heartbeat_text">Helyzet megosztása másokkal</string>
 
-    <!-- ── Közös műveletek ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Mentés</string>
     <string name="common_cancel">Mégse</string>
     <string name="common_done">Kész</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Jóváhagyás</string>
     <string name="common_deny">Elutasítás</string>
 
-    <!-- ── Navigációs fül feliratok ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Térkép</string>
     <string name="tab_messages">Üzenetek</string>
     <string name="tab_history">Előzmények</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Beállítások</string>
 
-    <!-- ── Mozgás / Tevékenységi állapotok ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Állóhelyzet</string>
     <string name="motion_walking">Gyaloglás</string>
     <string name="motion_running">Futás</string>
     <string name="motion_cycling">Kerékpározás</string>
     <string name="motion_driving">Vezetés</string>
 
-    <!-- ── Beállítások ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Privát kulcs</string>
+    <string name="backup_section_contacts">Névjegyek</string>
+    <string name="backup_section_geofences">Geokerítések</string>
+    <string name="backup_section_settings">Beállítások</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Felügyeleti kérelem</string>
+    <string name="supervision_request_message">„%1$s” hozzáférést kér a saját beállításaihoz. Engedélyezi?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Beállítások</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Helyszín és adatvédelem</string>
     <string name="settings_section_security">Biztonság</string>
     <string name="settings_section_map">Térkép</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Biztonsági mentés és kulcsok</string>
     <string name="settings_section_about">Névjegy</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Név szerkesztése</string>
     <string name="settings_my_qr">QR-kódom</string>
     <string name="settings_no_name_set">Nincs név beállítva</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Helyzetem megosztása</string>
+    <string name="settings_broadcasting">Sugárzás a névjegyeinek</string>
+    <string name="settings_not_broadcasting">Nincs sugárzás</string>
+    <string name="settings_sharing_schedule">Megosztási ütemterv</string>
+    <string name="settings_always_on">Mindig bekapcsolva</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d szabály</item>
+        <item quantity="other">%1$d szabály</item>
+    </plurals>
+    <string name="settings_geofences">Geokerítések</string>
+    <string name="settings_geofences_subtitle">Megosztott geokerítés-területek kezelése</string>
+    <string name="settings_notify_when_tracked">Értesítés követéskor</string>
+    <string name="settings_notify_when_tracked_subtitle">Értesítést kap, ha egy névjegy Önre vonatkozó közelségi vagy geokerítés-riasztása aktiválódik.</string>
+    <string name="settings_my_location_history">Helyelőzmények</string>
+    <string name="settings_my_location_history_subtitle">Saját helyadat-idővonalának böngészése</string>
+    <string name="settings_lookup_addresses">Címek keresése</string>
+    <string name="settings_lookup_addresses_subtitle">Utcacímek megjelenítése az előzménypontokhoz és a megérintett térképtűkhöz, valamint cím szerinti keresés geokerítések elhelyezésekor. A koordinátákat vagy a beírt keresést elküldi az eszköz geokódolási szolgáltatásának (általában Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Felügyelet aktív</string>
+    <string name="settings_supervision_active_subtitle">A beállításokhoz felügyelői jóváhagyás szükséges</string>
+    <string name="settings_disable_supervised">Felügyelt mód kikapcsolása</string>
+    <string name="settings_supervised_mode">Felügyelt mód</string>
+    <string name="settings_supervised_mode_subtitle">Felügyelői jóváhagyás megkövetelése a beállítások eléréséhez</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Kiindulási pont</string>
+    <string name="settings_map_current_location">Jelenlegi hely</string>
+    <string name="settings_map_all_contacts">Összes névjegy</string>
+    <string name="settings_map_fixed_location">Rögzített hely</string>
+    <string name="settings_map_last_position">Utolsó pozíció</string>
+    <string name="settings_map_starting_point_title">Térkép kiindulási pontja</string>
+    <string name="settings_no_location_set">Nincs hely beállítva</string>
+    <string name="settings_pick_location_on_map">Hely kiválasztása a térképen</string>
+    <string name="settings_default_zoom_level">Alapértelmezett nagyítás</string>
+    <string name="settings_map_pin_colour">Térképtű színe</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Frissítési gyakoriság</string>
+    <string name="settings_update_cadence_subtitle">Állítsa be, milyen gyakran sugározza a helyzetét</string>
+    <string name="settings_update_cadence_dialog_message">Szabályozza, milyen gyakran frissüljön a helyzete az aktivitása alapján. A gyakori frissítések több akkumulátort fogyasztanak.</string>
+    <string name="settings_update_cadence_reset">Alapértelmezések visszaállítása</string>
+    <string name="settings_min_distance_filtering">Minimális távolság szűrése</string>
+    <string name="settings_min_distance_filtering_subtitle">Csak azok a pontok jelenjenek meg, amelyek legalább ennyire vannak az előzőtől.</string>
+    <string name="settings_discard_low_accuracy">Pontatlan mérések eldobása</string>
+    <string name="settings_discard_low_accuracy_subtitle">Ne sugározza és ne rögzítse a saját helyzeteit, ha a pontossági sugár ennél nagyobb. Az SOS soha nem marad ki.</string>
+    <string name="settings_hide_low_accuracy">Pontatlan pontok elrejtése</string>
+    <string name="settings_hide_low_accuracy_subtitle">Az ennél nagyobb pontossági sugarú előzménypontok elrejtése. Semmi sem törlődik.</string>
+    <string name="settings_low_battery" formatted="false">Alacsony töltöttség (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d perc</string>
+    <string name="settings_motion_detection">Mozgásérzékelés</string>
+    <string name="settings_motion_detection_on">Bekapcsolva — pontosítja a mozgástípust (gyaloglás, vezetés) az előzményekben</string>
+    <string name="settings_motion_detection_off">Kikapcsolva — engedélyezze a testmozgás-hozzáférést a pontosabb mozgáscímkékhez</string>
+    <string name="settings_enable_motion_title">Mozgásérzékelés bekapcsolása</string>
+    <string name="settings_enable_motion_message">A testmozgás-hozzáférés révén a LocaPeer pontosabban megkülönbözteti a gyaloglást, a vezetést és az egy helyben állást az előzményekben. Jelenleg ki van kapcsolva — a rendszerbeállításokban újra engedélyezheti.</string>
+    <string name="settings_open_settings">Beállítások megnyitása</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Sebesség mértékegysége</string>
+    <string name="settings_speed_imperial">Angolszász (mph)</string>
+    <string name="settings_speed_metric">Metrikus (km/h)</string>
+    <string name="settings_elevation_units">Magasság mértékegysége</string>
+    <string name="settings_elevation_imperial">Angolszász (láb)</string>
+    <string name="settings_elevation_metric">Metrikus (méter)</string>
+    <string name="settings_distance_units">Távolság mértékegysége</string>
+    <string name="settings_distance_imperial">Angolszász (ft/mi)</string>
+    <string name="settings_distance_metric">Metrikus (m/km)</string>
+    <string name="settings_time_format">Időformátum</string>
+    <string name="settings_time_24h">24 órás (13:30)</string>
+    <string name="settings_time_12h">12 órás (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Helyadatok</string>
+    <string name="settings_retention_location_subtitle">Meddig tárolja helyben a névjegyek helyadatait</string>
+    <string name="settings_clear_all_location">Összes helyadat törlése</string>
+    <string name="settings_retention_messages">Üzenetek</string>
+    <string name="settings_retention_messages_subtitle">Meddig tárolja helyben a fogadott üzeneteket</string>
+    <string name="settings_clear_all_messages">Összes üzenet törlése</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Navigáció testreszabása</string>
+    <string name="settings_customize_nav_subtitle">Alsó lapok kiválasztása és átrendezése</string>
+    <string name="settings_start_page">Kezdőoldal</string>
     <string name="settings_language">Nyelv</string>
     <string name="settings_language_title">Alkalmazás nyelve</string>
     <string name="settings_language_system">Rendszer alapértelmezett</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Biztonsági mentés exportálása</string>
+    <string name="settings_export_backup_subtitle">Mentse privát kulcsát és névjegyeit fájlba. Tartsa biztonságban ezt a fájlt!</string>
+    <string name="settings_import_backup">Biztonsági mentés importálása</string>
+    <string name="settings_import_backup_subtitle">Visszaállítás korábban exportált fájlból</string>
+    <string name="settings_view_private_key">Privát kulcs megtekintése</string>
+    <string name="settings_view_private_key_subtitle">64 karakteres hexadecimális azonosítókulcs megjelenítése</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">A LocaPeer névjegye</string>
+    <string name="settings_about_subtitle">Verzió, relék állapota, nyílt forráskód</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Megjelenített név szerkesztése</string>
+    <string name="settings_display_name_label">Megjelenített név</string>
+    <string name="settings_my_invite_qr">Meghívó QR-kódom</string>
+    <string name="settings_invite_qr_subtitle">Mások beolvashatják, hogy követni kezdjék Önt.</string>
+    <string name="settings_invite_qr_cd">Meghívó QR-kód</string>
+    <string name="settings_private_key_title">Privát kulcs</string>
+    <string name="settings_private_key_warning">Tartsa biztonságban. Bárki, aki birtokolja ezt a kulcsot, kiadhatja magát Önnek.</string>
+    <string name="settings_clear_location_title">Törli a helyelőzményeket?</string>
+    <string name="settings_clear_location_message">Az összes tárolt helyadat véglegesen törlődik.</string>
+    <string name="settings_clear_messages_title">Törli az üzenetelőzményeket?</string>
+    <string name="settings_clear_messages_message">Az összes tárolt üzenet véglegesen törlődik.</string>
+    <string name="settings_encrypted_backup_title">Titkosított biztonsági mentés</string>
+    <string name="settings_encrypted_backup_message">Ez a biztonsági mentés titkosított. A folytatáshoz adja meg a jelszót.</string>
+    <string name="settings_select_restore_title">Válassza ki a visszaállítandó adatokat</string>
+    <string name="settings_select_export_title">Válassza ki az exportálandó adatokat</string>
+    <string name="settings_export_password_hint">Igény szerint állítson be jelszót a mentési fájl titkosításához.</string>
+    <string name="settings_backup_password_optional">Mentési jelszó (nem kötelező)</string>
+    <string name="settings_select_sections">Válassza ki a belefoglalandó részeket:</string>
+    <string name="settings_choose_file_location">Fájl helyének kiválasztása</string>
+    <string name="settings_not_in_backup">Nincs ebben a mentésben</string>
+    <string name="settings_enable_supervised_title">Felügyelt mód bekapcsolása</string>
+    <string name="settings_enable_supervised_message">Válasszon egy partnert, aki felügyelőként működik. Neki kell jóváhagynia a beállítások elérését a saját eszközéről.</string>
+    <string name="settings_no_peers_found">Nem található partner. Először adjon hozzá partnert a meghívó QR-kódjának beolvasásával.</string>
+    <string name="settings_disable_supervised_title">Kikapcsolja a felügyelt módot?</string>
+    <string name="settings_disable_supervised_message">A beállítások felügyelői jóváhagyás nélkül lesznek elérhetők.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Eltávolítás</string>
+    <string name="common_name">Név</string>
+    <string name="common_search">Keresés</string>
+    <string name="common_sort">Rendezés</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Üzenet</string>
+    <string name="cd_show_on_map">Megjelenítés a térképen</string>
+    <string name="cd_more_options">További lehetőségek</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d kiválasztva</item>
+        <item quantity="other">%1$d kiválasztva</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Kijelölés megszüntetése</string>
+    <string name="contacts_cd_select_all">Összes kijelölése</string>
+    <string name="contacts_cd_deselect_all">Kijelölés törlése</string>
+    <string name="contacts_cd_qr_invite">QR / Meghívó</string>
+    <string name="contacts_cd_pending_requests">Függőben lévő kérelmek</string>
+    <string name="contacts_sort_last_seen">Utoljára látva</string>
+    <string name="contacts_search_placeholder">Névjegyek keresése…</string>
+    <string name="contacts_empty_title">Még nincsenek névjegyek</string>
+    <string name="contacts_empty_subtitle">Olvasson be egy QR-kódot, hogy kapcsolatba lépjen valakivel és megoszthassák a helyzetüket.</string>
+    <string name="contacts_scan_qr">QR-kód beolvasása</string>
+    <string name="contacts_bulk_delete_messages">Üzenetek törlése</string>
+    <string name="contacts_bulk_delete_locations">Helyadatok törlése</string>
+    <string name="contacts_last_seen">Utoljára látva: %1$s</string>
+    <string name="contacts_no_location_yet">Még nincs helyadat</string>
+    <string name="contacts_view_sharing_settings">Megosztási beállítások</string>
+    <string name="contacts_view_location_history">Helyelőzmények</string>
+    <string name="contacts_rename_contact">Névjegy átnevezése</string>
+    <string name="contacts_on_contact_device">A partner eszközén</string>
+    <string name="contacts_delete_my_messages_title">Üzeneteim törlése</string>
+    <string name="contacts_delete_locations_title">Megosztott helyadatok törlése</string>
+    <string name="contacts_remove_contact_title">Névjegy eltávolítása</string>
+    <string name="contacts_leave_title">Névjegy és adatok törlése</string>
+    <string name="contacts_rename_title">Névjegy átnevezése</string>
+    <string name="contacts_remove_contact_body">Eltávolítja %1$s partnert a névjegyei közül? A helyelőzményei helyben is törlődnek.</string>
+    <string name="contacts_leave_body">Ez eltávolítja Önt %1$s névjegyei közül, és törli az összes üzenetét és helyadatát az ő eszközéről. Az ő helyzetéhez való hozzáférését is elveszíti.</string>
+    <string name="contacts_delete_my_messages_body">Ez törli az összes Ön által küldött üzenetet %1$s eszközéről. A művelet nem vonható vissza.</string>
+    <string name="contacts_delete_locations_body">Ez törli az összes Ön által megosztott helyadatot %1$s eszközéről. A művelet nem vonható vissza.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Névjegy eltávolítása</item>
+        <item quantity="other">%1$d névjegy eltávolítása</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Eltávolítja ezt a névjegyet? A helyelőzményei helyben is törlődnek.</item>
+        <item quantity="other">Eltávolít %1$d névjegyet? A helyelőzményeik helyben is törlődnek.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Távolról törli az összes elküldött üzenetét ennek a partnernek az eszközéről? A művelet nem vonható vissza.</item>
+        <item quantity="other">Távolról törli az összes elküldött üzenetét %1$d partner eszközéről? A művelet nem vonható vissza.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Távolról törli az összes megosztott helyelőzményét ennek a partnernek az eszközéről? A művelet nem vonható vissza.</item>
+        <item quantity="other">Távolról törli az összes megosztott helyelőzményét %1$d partner eszközéről? A művelet nem vonható vissza.</item>
+    </plurals>
+
+    <string name="common_continue">Folytatás</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Visszaállítás biztonsági mentésből</string>
+    <string name="onboarding_restore_message">Illessze be 64 karakteres hexadecimális privát kulcsát az identitása és névjegyei visszaállításához.</string>
+    <string name="onboarding_private_key_hex">Privát kulcs (hex)</string>
+    <string name="onboarding_tagline">Privát helymegosztás a névjegyekkel.\nNincsenek fiókok. Nincsenek zárt szerverek.</string>
+    <string name="onboarding_feature_e2e_title">Végpontok közötti titkosítás</string>
+    <string name="onboarding_feature_e2e_subtitle">Helyzete az eszközön titkosítódik</string>
+    <string name="onboarding_feature_servers_title">Nincsenek zárt szerverek</string>
+    <string name="onboarding_feature_servers_subtitle">Nyílt Nostr reléket használ biztonságos átvitelként — adatai titkosítottak és privátak maradnak</string>
+    <string name="onboarding_feature_phone_title">A telefonján marad</string>
+    <string name="onboarding_feature_phone_subtitle">A teljes helyelőzménye az eszközén marad. Csak az aktuális helyzete kerül megosztásra a kiválasztott névjegyekkel</string>
+    <string name="onboarding_name_prompt">Hogyan szólítsák a névjegyei?</string>
+    <string name="onboarding_name_placeholder">pl. Anya, Apa, Anna…</string>
+    <string name="onboarding_get_started">Kezdés</string>
+    <string name="onboarding_restore_from_backup">Visszaállítás mentésből</string>
+    <string name="onboarding_key_note">Privát kulcsa helyben jön létre, és soha nem hagyja el ezt az eszközt.</string>
+    <string name="onboarding_permissions_title">Engedélyek</string>
+    <string name="onboarding_permissions_desc">A LocaPeer-nek helyhozzáférés kell a pozíció megosztásához, kamerahozzáférés a meghívókódok beolvasásához és értesítési hozzáférés a háttérállapothoz. A testmozgás-hozzáférés nem kötelező — segít pontosabban címkézni a mozgását (gyaloglás, vezetés).</string>
+    <string name="onboarding_before_ask_title">Mielőtt megkérdezzük</string>
+    <string name="onboarding_before_ask_intro">Hamarosan néhány rendszerkérdést lát majd:</string>
+    <string name="onboarding_before_ask_location">• Hely — kötelező, a pozíció megosztásához.</string>
+    <string name="onboarding_before_ask_camera">• Kamera — a meghívókódok beolvasásához.</string>
+    <string name="onboarding_before_ask_notifications">• Értesítések — a háttérállapothoz.</string>
+    <string name="onboarding_before_ask_activity">• Testmozgás — nem kötelező. Segít a LocaPeer-nek pontosabban megkülönböztetni a gyaloglást, a vezetést és az állást. Kihagyhatja, és később a Beállításokban engedélyezheti.</string>
+    <string name="onboarding_grant_permissions">Engedélyek megadása</string>
+    <string name="onboarding_bg_location_title">Háttérbeli helymeghatározás</string>
+    <string name="onboarding_bg_location_desc">Ahhoz, hogy a névjegyei az alkalmazás bezárása után is frissüljenek, válassza a következő képernyőn a „Mindig engedélyezés” lehetőséget.</string>
+    <string name="onboarding_bg_location_error">A háttérbeli helymeghatározás szükséges a névjegyek frissítéséhez, amikor az alkalmazás be van zárva. Próbálja újra, és válassza a „Mindig engedélyezés” lehetőséget.</string>
+    <string name="onboarding_configure_location">Hely beállítása</string>
+    <string name="onboarding_battery_title">Akkumulátor</string>
+    <string name="onboarding_battery_desc">Az Android leállíthatja a LocaPeer-t az akkumulátor kímélése érdekében. A megbízható frissítésekhez zárja ki a LocaPeer-t az optimalizálásból.</string>
+    <string name="onboarding_disable_optimizations">Optimalizálás kikapcsolása</string>
+    <string name="onboarding_done_title">Minden kész!</string>
+    <string name="onboarding_done_desc">Privát helymegosztó hálózata készen áll.</string>
+    <string name="onboarding_start_using">LocaPeer használatának megkezdése</string>
+
+    <string name="common_try_again">Próbálja újra</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Meghívó beolvasása</string>
+    <string name="scan_camera_needed">A QR-kódok beolvasásához kameraengedély szükséges.</string>
+    <string name="scan_grant_permission">Engedély megadása</string>
+    <string name="scan_add_contact_title">Hozzáadja a névjegyet?</string>
+    <string name="scan_add_contact_message">Ezzel kapcsolatba lép %1$s partnerrel, és elkezdik megosztani egymással a helyzetüket.</string>
+    <string name="scan_add_share">Hozzáadás és megosztás</string>
+    <string name="scan_request_sent_title">Kérelem elküldve!</string>
+    <string name="scan_request_sent_message">Kérelem lett elküldve %1$s részére. Az elfogadás után kapcsolatba kerülnek.</string>
+    <string name="scan_failed">A beolvasás sikertelen: %1$s</string>
+
     <string name="cd_back">Vissza</string>
+    <string name="common_review">Áttekintés</string>
+    <string name="common_decline">Elutasítás</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Küldés/Fogadás</string>
+    <string name="role_send">Küldés</string>
+    <string name="role_receive">Fogadás</string>
+    <string name="role_none">Nincs megosztás</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Meghívóm</string>
+    <string name="invite_tab_add_contact">Névjegy hozzáadása</string>
+    <string name="invite_your_qr_title">Az Ön QR-kódja</string>
+    <string name="invite_your_qr_subtitle">Olvastassa be valakivel, hogy követhesse a helyzetét</string>
+    <string name="invite_qr_cd">Az Ön QR-kódja</string>
+    <string name="invite_qr_error">Hiba a QR-kód létrehozásakor</string>
+    <string name="invite_share_link">Meghívólink megosztása</string>
+    <string name="invite_encryption_note">Helyzete kifejezetten a beolvasó eszközéhez lesz titkosítva.</string>
+    <string name="invite_camera_required_title">Kamerahozzáférés szükséges</string>
+    <string name="invite_camera_required_message">Adjon kameraengedélyt a QR-kód beolvasásához.</string>
+    <string name="invite_point_camera">Irányítsa a kamerát egy LocaPeer QR-kódra</string>
+    <string name="invite_paste_title">Vagy illessze be a meghívólinket</string>
+    <string name="invite_process_link">Link feldolgozása</string>
+    <string name="invite_fallback_name">Névjegy</string>
+    <string name="invite_success_message">Miután %1$s elfogadja, kapcsolatba kerülnek.</string>
+    <string name="invite_confirm_add_title">Hozzáadja: %1$s?</string>
+    <string name="invite_confirm_add_message">Hozzáadja a névjegyeihez és megosztja a helyzetét?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Nincs függőben lévő kérelem</string>
+    <string name="pending_requesting">Kérelem: %1$s · %2$s</string>
+    <string name="pending_role_change">Szerepmódosítási kérelem · %1$s</string>
+    <string name="pending_new_request">Új megosztási kérelem · %1$s</string>
+
+    <string name="common_save_changes">Módosítások mentése</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Megosztási beállítások frissítése</string>
+    <string name="incoming_new_title">Új kapcsolatfelvételi kérelem</string>
+    <string name="incoming_update_subtitle">%1$s módosítani szeretné a megosztás módját. Tekintse át az alábbi beállításokat.</string>
+    <string name="incoming_new_subtitle">%1$s felvette Önt a névjegyei közé! Most kiválaszthatja, mit oszt meg viszonzásul.</string>
+    <string name="incoming_section_location">Hely</string>
+    <string name="incoming_share_my_location">Helyzetem megosztása %1$s partnerrel</string>
+    <string name="incoming_share_my_location_sub">Látni fogja, hol tartózkodik</string>
+    <string name="incoming_see_their_location">%1$s helyzetének megtekintése</string>
+    <string name="incoming_see_their_location_sub">Látni fogja, hol tartózkodik a partner</string>
+    <string name="incoming_section_messaging">Üzenetküldés</string>
+    <string name="incoming_allow_messages">Üzenetek engedélyezése</string>
+    <string name="incoming_allow_messages_sub">Csevegőüzenetek fogadása %1$s partnertől</string>
+
+    <string name="common_request">Kérelem</string>
+    <string name="common_edit">Szerkesztés</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Partner beállításai</string>
+    <string name="peer_section_roles">Helymegosztási szerepek</string>
+    <string name="peer_send_on">%1$s láthatja az Ön helyzetét</string>
+    <string name="peer_send_off">Nem osztja meg helyzetét %1$s partnerrel</string>
+    <string name="peer_receive_title">%1$s helyzetének fogadása</string>
+    <string name="peer_receive_on">Láthatja %1$s helyzetét</string>
+    <string name="peer_receive_off">Nincs hozzáférése %1$s helyzetéhez</string>
+    <string name="peer_section_privacy">Adatvédelem és megosztásvezérlés</string>
+    <string name="peer_pause_sharing">Megosztás szüneteltetése</string>
+    <string name="peer_pause_sub">Ideiglenesen ne küldje helyzetét %1$s részére</string>
+    <string name="peer_precision">Helymeghatározás pontossága</string>
+    <string name="peer_precision_exact_sub">Pontos GPS-koordináták</string>
+    <string name="peer_precision_suburb_sub">Hozzávetőleges hely (városrész szintű)</string>
+    <string name="peer_always_sharing">Mindig megosztva</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d aktív megosztási szabály</item>
+        <item quantity="other">%1$d aktív megosztási szabály</item>
+    </plurals>
+    <string name="peer_section_alerts">Riasztások és megfigyelés</string>
+    <string name="peer_sos_contact">SOS-partner</string>
+    <string name="peer_sos_sub">Vészjelzéseit akkor is megkapja, ha a megosztás szünetel</string>
+    <string name="peer_missed_alert">Kimaradt helyadat riasztás</string>
+    <string name="peer_missed_on">Értesítsen, ha %1$s nem jelenti tovább a helyzetét</string>
+    <string name="peer_requires_access">Hozzáférés szükséges %1$s helyzetéhez</string>
+    <string name="peer_proximity_alert">Közelségi riasztás</string>
+    <string name="peer_proximity_sub">Értesítsen, ha %1$s a közelben van</string>
+    <string name="peer_alert_radius">Riasztási sugár</string>
+    <string name="peer_alert_schedule">Riasztási ütemterv</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d aktív szabály</item>
+        <item quantity="other">%1$d aktív szabály</item>
+    </plurals>
+    <string name="peer_geofences_sub">Érkezési és távozási zónák beállítása %1$s számára</string>
+    <string name="peer_supervise">Ezen eszköz felügyelete</string>
+    <string name="peer_supervise_on">Fogadja és jóváhagyja %1$s feloldási kérelmeit</string>
+    <string name="peer_supervise_off">Engedélyezze, hogy %1$s felügyelt módú feloldási kérelmeket küldjön Önnek</string>
+    <string name="peer_messaging_sub">Csevegőüzenetek be-/kikapcsolása %1$s partnertől</string>
+    <string name="peer_section_history">Mozgáselőzmények</string>
+    <string name="peer_location_history">Helyelőzmények</string>
+    <string name="peer_location_history_sub">%1$s mozgáselőzményeinek és térképes jelentésének megtekintése</string>
+    <string name="peer_section_retention">Távoli adatmegőrzés</string>
+    <string name="peer_retention_location_sub">Meddig őrzi meg %1$s az Ön helyelőzményeit</string>
+    <string name="peer_purge_location">Összes helyadat törlése %1$s eszközéről</string>
+    <string name="peer_retention_messages_sub">Meddig őrzi meg %1$s az Ön által küldött üzeneteket</string>
+    <string name="peer_purge_messages">Összes üzenet törlése %1$s eszközéről</string>
+    <string name="peer_precision_exact">Pontos GPS</string>
+    <string name="peer_precision_exact_desc">Pontos koordináták</string>
+    <string name="peer_precision_suburb">Városrész (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Csak környék szintű</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Töröl %1$d beszélgetést?</item>
+        <item quantity="other">Töröl %1$d beszélgetést?</item>
+    </plurals>
+    <string name="conv_delete_locally">Törlés helyben</string>
+    <string name="conv_delete_locally_sub">Csak az Ön eszközéről távolítja el a beszélgetést.</string>
+    <string name="conv_delete_both">Törlés helyben/a partnernél</string>
+    <string name="conv_bulk_delete_both_sub">Törli a beszélgetést helyben és a partnerénél is.</string>
+    <string name="conv_delete_both_sub">Törli a beszélgetést helyben, és törlési kérelmet indít a partner eszközén a beszélgetésre.</string>
+    <string name="conv_cd_exit_selection">Kilépés a kijelölésből</string>
+    <string name="conv_cd_select_all">Összes kijelölése</string>
+    <string name="conv_cd_new_message">Új üzenet</string>
+    <string name="conv_sort_date">Dátum</string>
+    <string name="conv_sort_unread">Olvasatlan</string>
+    <string name="conv_search_placeholder">Beszélgetések keresése…</string>
+    <string name="conv_tab_chats">Csevegések</string>
+    <string name="conv_tab_archived">Archivált</string>
+    <string name="conv_mark_read">Megjelölés olvasottként</string>
+    <string name="conv_archive">Archiválás</string>
+    <string name="conv_unarchive">Archiválás visszavonása</string>
+    <string name="conv_empty_no_results">Nincs találat erre: „%1$s”</string>
+    <string name="conv_empty_no_results_sub">Próbáljon másik keresőkifejezést</string>
+    <string name="conv_empty_archived_title">Nincsenek archivált csevegések</string>
+    <string name="conv_empty_archived_sub">Archiválja a csevegéseket, hogy rendben tartsa a bejövő üzeneteket</string>
+    <string name="conv_empty_title">Még nincsenek üzenetek</string>
+    <string name="conv_empty_sub">Nyissa meg a térképet, és koppintson valakire\na beszélgetés megkezdéséhez</string>
+    <string name="conv_delete_title">Törli a beszélgetést?</string>
+    <string name="conv_delete_message">Hogyan szeretné törölni ezt a beszélgetést %1$s partnerrel?</string>
+    <string name="conv_messages_blocked">Üzenetek letiltva</string>
+    <string name="conv_preview_mine">Ön: %1$s</string>
+    <string name="conv_new_message_title">Új üzenet</string>
+    <string name="conv_picker_empty">Még nincsenek névjegyek. Olvasson be egy QR-kódot névjegy hozzáadásához.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Törli a csevegési előzményeket?</string>
+    <string name="chat_clear_message">Hogyan szeretné törölni ezt a beszélgetést %1$s partnerrel?</string>
+    <string name="chat_clear_locally">Törlés helyben</string>
+    <string name="chat_clear_both">Törlés helyben/a partnernél</string>
+    <string name="chat_clear_both_sub">Helyben törli a csevegést, és törlési kérelmet küld %1$s részére az Ön által küldött üzenetekre.</string>
+    <string name="chat_cd_options">Beállítások</string>
+    <string name="chat_clear_history_menu">Csevegési előzmények törlése</string>
+    <string name="chat_typing">%1$s éppen ír…</string>
+    <string name="chat_blocked_banner">Letiltotta %1$s üzeneteit. A feloldáshoz lépjen a Névjegyekhez.</string>
+    <string name="chat_delete_msg_title">Törli az üzenetet?</string>
+    <string name="chat_delete_msg_message">Hogyan szeretné törölni ezt az üzenetet?</string>
+    <string name="chat_delete_from_contact">Törlés a partnernél</string>
+    <string name="chat_delete_from_contact_sub">Törli a csevegést a partner eszközéről.</string>
+    <string name="chat_delete_both_sub">Helyben eltávolítja a csevegést, és automatikusan törli a partner eszközéről.</string>
+    <string name="chat_cd_share_location">Hely megosztása</string>
+    <string name="chat_input_placeholder">Üzenet…</string>
+    <string name="chat_cd_send">Küldés</string>
+
+    <string name="common_close">Bezárás</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Aktiválja az SOS-t?</string>
+    <string name="map_sos_deactivate_title">Kikapcsolja az SOS-t?</string>
+    <string name="map_sos_activate_msg">Ez 15 másodpercenként sugározza helyzetét a kijelölt SOS-partnereknek, amíg ki nem kapcsolja.</string>
+    <string name="map_sos_deactivate_msg">Ez leállítja a kiemelt prioritású helysugárzást a vészhelyzeti partnerei felé.</string>
+    <string name="map_activate">Aktiválás</string>
+    <string name="map_deactivate">Kikapcsolás</string>
+    <string name="map_cd_style">Térképstílus</string>
+    <string name="map_cd_show_geofences">Geokerítések megjelenítése</string>
+    <string name="map_cd_hide_geofences">Geokerítések elrejtése</string>
+    <string name="map_cd_follow">Kövessen engem</string>
+    <string name="map_cd_friends">Barátok</string>
+    <string name="map_no_friends">Még senkit sem követ</string>
+    <string name="map_you">Ön</string>
+    <string name="map_cd_go_my_location">Ugrás a helyzetemhez</string>
+    <string name="map_sos_active">⚠ SOS AKTÍV</string>
+    <string name="map_away">Távol</string>
+    <string name="map_no_location_yet">Még nincs helyadat</string>
+    <string name="map_cd_go_location">Ugrás a helyhez</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS BE</string>
+    <string name="map_overdue">Késésben — nincs friss frissítés</string>
+    <string name="map_stat_last_seen">Utoljára látva</string>
+    <string name="map_stat_battery">Akkumulátor</string>
+    <string name="map_stat_accuracy">Pontosság</string>
+    <string name="map_stat_motion">Mozgás</string>
+    <string name="map_stat_speed">Sebesség</string>
+    <string name="map_stat_elevation">Magasság</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Előzmények: %1$s</string>
+    <string name="history_select_person">Személy kiválasztása</string>
+    <string name="history_person_label">Személy</string>
+    <string name="history_cd_prev_day">Előző nap</string>
+    <string name="history_cd_next_day">Következő nap</string>
+    <string name="history_time_filter">Időszűrő:</string>
+    <string name="history_cd_reset_time">Idő visszaállítása</string>
+    <string name="history_tab_list">Lista</string>
+    <string name="history_empty_title">Nincs előzmény erre a napra</string>
+    <string name="history_empty_sub">Próbáljon másik dátumot választani, vagy ellenőrizze a kapcsolatot.</string>
+    <string name="history_start_time">Kezdési idő</string>
+    <string name="history_end_time">Befejezési idő</string>
+    <string name="history_no_data_title">Nincsenek helyadatok</string>
+    <string name="history_no_data_sub">Erre a napra vagy időtartamra nincsenek rögzített pontok.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d pont rögzítve</item>
+        <item quantity="other">%1$d pont rögzítve</item>
+    </plurals>
+    <string name="history_cd_dismiss">Bezárás</string>
+    <string name="history_accuracy_label">±%1$s pontosság</string>
+    <string name="history_emergency_sos">Vészhelyzeti SOS-jelzés</string>
+    <string name="history_detail_location">Hely</string>
+    <string name="history_detail_coordinates">Koordináták</string>
+    <string name="history_within">±%1$s tartományon belül</string>
+    <string name="history_detail_movement">Mozgás</string>
+    <string name="history_movement_desc">%1$s %2$s, irány: %3$s</string>
+
+    <string name="common_create">Létrehozás</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Geokerítés-terület hozzáadása</string>
+    <string name="geo_cd_assign">Geokerítés hozzárendelése</string>
+    <string name="geo_unknown">Ismeretlen</string>
+    <string name="geo_empty_title">Nincsenek geokerítések</string>
+    <string name="geo_empty_sub">Koppintson a + gombra geokerítés-terület létrehozásához, majd rendeljen hozzá névjegyeket a megosztási beállításaikból.</string>
+    <string name="geo_delete_title">Törli a geokerítést?</string>
+    <string name="geo_delete_simple">Törli: „%1$s”?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">„%1$s” %2$d partnerhez van hozzárendelve. A törlés ezeket a hozzárendeléseket is eltávolítja.</item>
+        <item quantity="other">„%1$s” %2$d partnerhez van hozzárendelve. A törlés ezeket a hozzárendeléseket is eltávolítja.</item>
+    </plurals>
+    <string name="geo_for_contact">Geokerítések %1$s számára</string>
+    <string name="geo_empty_contact_title">Nincs geokerítés a partnerhez</string>
+    <string name="geo_empty_contact_sub">Koppintson a + gombra geokerítés-terület hozzárendeléséhez, és válassza ki, hogy érkezéskor, távozáskor vagy mindkettőkor riasszon.</string>
+    <string name="geo_no_areas_title">Még nincsenek geokerítések</string>
+    <string name="geo_no_areas_msg">Először hozzon létre geokerítés-területet a Geokerítések képernyőn, majd itt rendelje hozzá.</string>
+    <string name="geo_radius_label">%1$s sugár</string>
+    <string name="geo_contacts_label">Névjegyek: %1$s</string>
+    <string name="geo_no_contacts_assigned">Nincs hozzárendelt névjegy</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d szabály</item>
+        <item quantity="other">%1$d szabály</item>
+    </plurals>
+    <string name="geo_trigger_enter">Belépés</string>
+    <string name="geo_trigger_exit">Kilépés</string>
+    <string name="geo_trigger_both">Mindkettő</string>
+    <string name="geo_edit_title">Geokerítés szerkesztése</string>
+    <string name="geo_new_title">Új geokerítés</string>
+    <string name="geo_cd_my_location">Saját helyzetem</string>
+    <string name="geo_cd_radius_increase">Sugár növelése</string>
+    <string name="geo_cd_radius_decrease">Sugár csökkentése</string>
+    <string name="geo_hint_tap">Koppintson vagy tartsa nyomva a térképet az elhelyezéshez</string>
+    <string name="geo_hint_move">Csippentéssel nagyíthat • Tartsa nyomva vagy húzza a tűt az áthelyezéshez</string>
+    <string name="geo_basic_info">Alapadatok</string>
+    <string name="geo_search_title">Keresés cím alapján</string>
+    <string name="geo_search_label">Cím vagy hely</string>
+    <string name="geo_search_placeholder">pl. Fő utca 10, Budapest</string>
+    <string name="geo_search_no_results">Nem található egyező cím</string>
+    <string name="geo_cd_search">Keresés</string>
+    <string name="geo_name_placeholder">pl. Otthon, Munkahely</string>
+    <string name="geo_name_required">A név megadása kötelező</string>
+    <string name="geo_latitude">Szélesség</string>
+    <string name="geo_longitude">Hosszúság</string>
+    <string name="geo_lat_range">-90 és 90 között</string>
+    <string name="geo_lng_range">-180 és 180 között</string>
+    <string name="geo_radius">Sugár</string>
+    <string name="geo_radius_range">Adjon meg %1$d és %2$d m közötti értéket</string>
+    <string name="geo_edit_assignment">Hozzárendelés szerkesztése</string>
+    <string name="geo_assign_title">Geokerítés hozzárendelése</string>
+    <string name="geo_select_area">Geokerítés-terület kiválasztása</string>
+    <string name="geo_trigger_title">Értesítés kiváltása ekkor</string>
+    <string name="geo_add_rule">Szabály hozzáadása</string>
+    <string name="geo_alerts_all_times">A riasztások mindig aktívak. Adjon hozzá szabályt a riasztások időbeli korlátozásához.</string>
+    <string name="geo_assign_action">Hozzárendelés</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Közelségi riasztások</string>
+    <string name="prox_empty_title">Nincs követett személy</string>
+    <string name="prox_empty_sub">Olvassa be valaki meghívó QR-kódját a Beolvasás lapon,\nhogy követni kezdje a helyzetét</string>
+    <string name="prox_intro">Kapjon értesítést, ha egy követett személy a kiválasztott távolságon belülre ér.</string>
+    <string name="prox_alert_within">Riasztás %1$s távolságon belül</string>
+    <string name="prox_alerts_off">Riasztások kikapcsolva</string>
+    <string name="prox_alert_radius">Riasztási sugár</string>
+    <string name="prox_edit_schedule">Ütemterv szerkesztése</string>
+    <string name="prox_rules">Szabályok</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Ütemterv %1$s számára</string>
+    <string name="schedule_cd_add_rule">Szabály hozzáadása</string>
+    <string name="schedule_empty_title">Nincsenek ütemezési szabályok</string>
+    <string name="schedule_empty_global">A hely mindig megosztásra kerül. Adjon hozzá szabályt a megosztás időbeli korlátozásához.</string>
+    <string name="schedule_empty_peer">A hely mindig meg van osztva %1$s partnerrel. Adjon hozzá szabályt az időbeli korlátozáshoz.</string>
+    <string name="schedule_active_hint">Akkor aktív, ha bármely szabály illeszkedik az aktuális időre. Üres = mindig bekapcsolva.</string>
+    <string name="schedule_all_day">Egész nap</string>
+    <string name="schedule_plus_one_day"> (+1 nap)</string>
+    <string name="schedule_rule_number">%1$d. szabály</string>
+    <string name="schedule_cd_delete_rule">Szabály törlése</string>
+    <string name="schedule_edit_rule">Szabály szerkesztése</string>
+    <string name="schedule_label_optional">Címke (nem kötelező)</string>
+    <string name="schedule_label_placeholder">pl. Munkaidő, Hétvégék</string>
+    <string name="schedule_active_days">Aktív napok</string>
+    <string name="schedule_time_window">Időablak</string>
+    <string name="schedule_start">Kezdés</string>
+    <string name="schedule_end">Befejezés</string>
+    <string name="schedule_overnight">Éjszakán át: aktív %1$s órától másnap %2$s óráig</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Az eszköz felügyelt</string>
+    <string name="gate_message">A beállítások eléréséhez felügyelői jóváhagyás szükséges.</string>
+    <string name="gate_request_access">Hozzáférés kérése</string>
+    <string name="gate_waiting">Várakozás a felügyelő jóváhagyására…</string>
+    <string name="gate_denied">A felügyelő megtagadta a hozzáférést.</string>
+    <string name="gate_timed_out">A kérelem lejárt. A felügyelő nem válaszolt.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Örökre</string>
+    <string name="retention_keep_for">Megőrzés: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d nap</item>
+        <item quantity="other">%1$d nap</item>
+    </plurals>
+
+    <string name="common_select">Kiválasztás</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Rögzített hely kiválasztása</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Válassza ki, mely lapok jelenjenek meg az alsó sávban és milyen sorrendben. A Térkép mindig szerepel.</string>
+    <string name="customize_cd_move_up">Mozgatás felfelé</string>
+    <string name="customize_cd_move_down">Mozgatás lefelé</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Verzió: %1$s (build %2$d)</string>
+    <string name="about_tagline">Privát helymegosztás azokkal, akikben megbízik. Nincsenek fiókok, nincs felhő, mi nem követjük.</string>
+    <string name="about_relay_connections">Relékapcsolatok</string>
+    <string name="about_connected">Csatlakoztatva</string>
+    <string name="about_disconnected">Leválasztva</string>
+    <string name="about_open_source">Nyílt forráskódú könyvtárak</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap-alapú térképmegjelenítés</string>
+    <string name="about_lib_okhttp_desc">WebSocket-átvitel a Nostr reléhez</string>
+    <string name="about_lib_compose_desc">Felületi keretrendszer</string>
+    <string name="about_lib_hilt_desc">Függőséginjektálás</string>
+    <string name="about_lib_room_desc">Helyi adatbázis</string>
+    <string name="about_map_attribution">Térképadatok © OpenStreetMap közreműködők</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Elfogadás</string>
+    <string name="notif_someone">Valaki</string>
+    <string name="notif_sos_title">SOS %1$s partnertől!</string>
+    <string name="notif_sos_text">%1$s SOS-t aktivált itt: (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s azt szeretné, hogy Ön legyen a felügyelője</string>
+    <string name="notif_supervisor_request_text">Fogadja el, hogy engedélyezze a feloldás-jóváhagyási kérelmeket erről az eszközről</string>
+    <string name="notif_supervisor_request_big">Fogadja el, hogy %1$s feloldás-jóváhagyási kérelmeket küldhessen Önnek, amikor a felügyelt mód aktív.</string>
+    <string name="notif_supervised_active_title">Felügyelt mód aktív</string>
+    <string name="notif_supervised_active_text">A felügyelő megerősítette — a felügyelt mód beállítva</string>
+    <string name="notif_supervised_declined_title">Felügyelt mód elutasítva</string>
+    <string name="notif_supervised_declined_text">A felügyelő elutasította a kérelmet — a felügyelt mód kikapcsolva</string>
+    <string name="notif_tracking_alert_title">Követési riasztás</string>
+    <string name="notif_tracking_proximity">%1$s közelségi riasztást kapott Önről</string>
+    <string name="notif_tracking_geofence">%1$s riasztást kapott arról, hogy Ön belépett a(z) %2$s kerítésbe / elhagyta azt</string>
+    <string name="notif_tracking_generic">%1$s figyeli az Ön helyzetét</string>
+    <string name="notif_track_update_title">Megosztási frissítés %1$s partnertől</string>
+    <string name="notif_track_new_title">Új névjegy: %1$s</string>
+    <string name="notif_role_send_receive">Hely küldése/fogadása</string>
+    <string name="notif_role_send">Hely küldése</string>
+    <string name="notif_role_receive">Hely fogadása</string>
+    <string name="notif_role_none">Nincs helymegosztás</string>
+    <string name="notif_track_requesting">%1$s ezt kéri: %2$s</string>
+    <string name="notif_track_update_body">%1$s módosítani szeretné a helymegosztás módját.</string>
+    <string name="notif_track_new_body">%1$s felvette Önt a névjegyei közé, és kapcsolódni szeretne.</string>
+    <string name="notif_contact_connected_title">Partner csatlakoztatva</string>
+    <string name="notif_contact_connected_text">%1$s mostantól kapcsolatban áll Önnel.</string>
+    <string name="notif_request_declined_title">Kérelem elutasítva</string>
+    <string name="notif_request_declined_text">%1$s elutasította a helymegosztási kérelmét.</string>
+    <string name="notif_message_person">Üzenet %1$s részére</string>
+    <string name="notif_geofence_entered_title">%1$s belépett ide: %2$s</string>
+    <string name="notif_geofence_left_title">%1$s elhagyta ezt: %2$s</string>
+    <string name="notif_geofence_subtitle">itt: %1$s · %2$s sugár</string>
+    <string name="notif_person_nearby">%1$s a közelben van</string>
+    <string name="notif_distance_from_you">%1$s távolságra Öntől</string>
+    <string name="notif_missed_title">Nincs frissítés %1$s partnertől</string>
+    <string name="notif_missed_text">Utoljára látva %1$s perce, itt: (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS AKTÍV!</string>
+    <string name="notif_sos_active_text">Vészjelzés sugárzása az SOS-partnereknek</string>
+    <string name="notif_messages_group_title">LocaPeer üzenetek</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s kapcsolatfelvételi kérelme elutasítva</string>
+    <string name="toast_now_supervising">Mostantól felügyeli %1$s eszközét</string>
+    <string name="toast_declined_supervision">%1$s felügyeleti kérelme elutasítva</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Épp most</string>
+    <string name="time_minutes_ago">%1$d perce</string>
+    <string name="fallback_me">Én</string>
+    <string name="fallback_unknown">Ismeretlen</string>
+    <string name="geo_unassigned">Nincs hozzárendelve</string>
+    <string name="days_every_day">Minden nap</string>
+    <string name="days_weekdays">Hétköznapok</string>
+    <string name="days_weekends">Hétvégék</string>
+    <string name="days_none">Nincs nap</string>
+    <string name="chat_my_location_message">Jelenlegi helyzetem: %1$s</string>
+    <string name="scan_error_bad_pubkey">Érvénytelen meghívó: hibás nyilvános kulcs</string>
+    <string name="scan_error_key_mismatch">Érvénytelen meghívó: a kulcsok nem egyeznek</string>
+    <string name="scan_error_unknown">Ismeretlen hiba</string>
+    <string name="scan_error_invalid_link">Érvénytelen meghívólink</string>
+    <string name="scan_fallback_contact">ez a névjegy</string>
+    <string name="backup_saved">Biztonsági mentés elmentve: %1$s</string>
+    <string name="backup_saved_encrypted">Biztonsági mentés elmentve (titkosítva): %1$s</string>
+    <string name="backup_failed">A biztonsági mentés sikertelen: %1$s</string>
+    <string name="backup_could_not_read_file">A fájl nem olvasható</string>
+    <string name="backup_could_not_write_file">A fájl nem írható</string>
+    <string name="backup_could_not_read">A biztonsági mentés nem olvasható: %1$s</string>
+    <string name="backup_incorrect_password">Helytelen jelszó</string>
+    <string name="restore_result_restored">Visszaállítva: %1$s</string>
+    <string name="restore_result_failed">Sikertelen: %1$s</string>
+    <string name="restore_nothing">Nincs mit visszaállítani</string>
+    <string name="restore_failed">A visszaállítás sikertelen: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d névjegy</item>
+        <item quantity="other">%1$d névjegy</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geokerítés</item>
+        <item quantity="other">%1$d geokerítés</item>
+    </plurals>
+    <string name="peer_role_change_sent">Szerepmódosítási kérelem elküldve %1$s részére</string>
+    <string name="peer_not_found">A partner nem található</string>
+    <string name="peer_purge_location_sent">Az ÖSSZES helyadat távoli törlésére vonatkozó parancs elküldve %1$s részére</string>
+    <string name="peer_purge_messages_sent">Az ÖSSZES üzenet távoli törlésére vonatkozó parancs elküldve %1$s részére</string>
+    <string name="onboarding_error_key_length">Érvénytelen kulcs — 64 hexadecimális karakternek kell lennie.</string>
+    <string name="onboarding_error_key_range">Érvénytelen privát kulcs — a görbe tartományán kívül esik.</string>
+    <string name="onboarding_error_hex">Érvénytelen hexadecimális formátum.</string>
+    <string name="onboarding_error_import_failed">A kulcs importálása sikertelen: %1$s</string>
 </resources>

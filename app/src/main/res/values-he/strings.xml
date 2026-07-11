@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── ערוצי התראות ושירות קדמי ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">שידור מיקום</string>
     <string name="channel_desc_heartbeat">משדר את המיקום שלך לאנשי הקשר המאושרים שלך</string>
     <string name="channel_name_alerts">התראות</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer פועל</string>
     <string name="notification_heartbeat_text">משתף את המיקום שלך עם אחרים</string>
 
-    <!-- ── פעולות נפוצות ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">שמור</string>
     <string name="common_cancel">ביטול</string>
     <string name="common_done">בוצע</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">אשר</string>
     <string name="common_deny">דחה</string>
 
-    <!-- ── תוויות לשוניות ניווט ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">מפה</string>
     <string name="tab_messages">הודעות</string>
     <string name="tab_history">היסטוריה</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">הגדרות</string>
 
-    <!-- ── מצבי תנועה / פעילות ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">נייח</string>
     <string name="motion_walking">הליכה</string>
     <string name="motion_running">ריצה</string>
     <string name="motion_cycling">רכיבה על אופניים</string>
     <string name="motion_driving">נהיגה</string>
 
-    <!-- ── הגדרות ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">מפתח פרטי</string>
+    <string name="backup_section_contacts">אנשי קשר</string>
+    <string name="backup_section_geofences">גדרות גאוגרפיות</string>
+    <string name="backup_section_settings">הגדרות</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">בקשת פיקוח</string>
+    <string name="supervision_request_message">\"%1$s\" מבקש גישה להגדרות שלו. לאפשר?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">הגדרות</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">מיקום ופרטיות</string>
     <string name="settings_section_security">אבטחה</string>
     <string name="settings_section_map">מפה</string>
@@ -54,15 +66,714 @@
     <string name="settings_section_backup_keys">גיבוי ומפתחות</string>
     <string name="settings_section_about">אודות</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">ערוך שם</string>
     <string name="settings_my_qr">ה-QR שלי</string>
     <string name="settings_no_name_set">לא הוגדר שם</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">שתף את המיקום שלי</string>
+    <string name="settings_broadcasting">משדר לאנשי הקשר שלך</string>
+    <string name="settings_not_broadcasting">לא משדר</string>
+    <string name="settings_sharing_schedule">לוח זמנים לשיתוף</string>
+    <string name="settings_always_on">פועל תמיד</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">כלל %1$d</item>
+        <item quantity="two">%1$d כללים</item>
+        <item quantity="many">%1$d כללים</item>
+        <item quantity="other">%1$d כללים</item>
+    </plurals>
+    <string name="settings_geofences">גדרות גאוגרפיות</string>
+    <string name="settings_geofences_subtitle">ניהול אזורי גדר גאוגרפית משותפים</string>
+    <string name="settings_notify_when_tracked">התראה במעקב</string>
+    <string name="settings_notify_when_tracked_subtitle">קבל התראה כאשר התראת קרבה או גדר גאוגרפית של איש קשר לגביך מופעלת.</string>
+    <string name="settings_my_location_history">היסטוריית מיקום</string>
+    <string name="settings_my_location_history_subtitle">עיין בציר הזמן של המיקום שלך</string>
+    <string name="settings_lookup_addresses">חיפוש כתובות</string>
+    <string name="settings_lookup_addresses_subtitle">הצג כתובות רחוב לנקודות היסטוריה ולסיכות מפה שנגעת בהן, וחפש לפי כתובת בעת הצבת גדרות גאוגרפיות. הקואורדינטות או החיפוש שהקלדת נשלחים לשירות הקידוד הגאוגרפי של המכשיר (בדרך כלל Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">פיקוח פעיל</string>
+    <string name="settings_supervision_active_subtitle">ההגדרות דורשות אישור מפקח</string>
+    <string name="settings_disable_supervised">השבת מצב מפוקח</string>
+    <string name="settings_supervised_mode">מצב מפוקח</string>
+    <string name="settings_supervised_mode_subtitle">דרוש אישור מפקח לגישה להגדרות</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">נקודת התחלה</string>
+    <string name="settings_map_current_location">מיקום נוכחי</string>
+    <string name="settings_map_all_contacts">כל אנשי הקשר</string>
+    <string name="settings_map_fixed_location">מיקום קבוע</string>
+    <string name="settings_map_last_position">מיקום אחרון</string>
+    <string name="settings_map_starting_point_title">נקודת ההתחלה של המפה</string>
+    <string name="settings_no_location_set">לא הוגדר מיקום</string>
+    <string name="settings_pick_location_on_map">בחר מיקום במפה</string>
+    <string name="settings_default_zoom_level">רמת זום ברירת מחדל</string>
+    <string name="settings_map_pin_colour">צבע סיכת המפה</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">תדירות עדכון</string>
+    <string name="settings_update_cadence_subtitle">כוונן את תדירות שידור המיקום שלך</string>
+    <string name="settings_update_cadence_dialog_message">שלוט בתדירות עדכון המיקום שלך בהתאם לפעילותך. עדכונים תכופים צורכים יותר סוללה.</string>
+    <string name="settings_update_cadence_reset">אפס לברירת מחדל</string>
+    <string name="settings_min_distance_filtering">סינון מרחק מינימלי</string>
+    <string name="settings_min_distance_filtering_subtitle">הצג רק נקודות המרוחקות לפחות מרחק זה מהנקודה הקודמת.</string>
+    <string name="settings_discard_low_accuracy">התעלם ממיקומים בדיוק נמוך</string>
+    <string name="settings_discard_low_accuracy_subtitle">אל תשדר ואל תרשום מיקומים משלך שרדיוס הדיוק שלהם גדול מערך זה. SOS לעולם לא מדולג.</string>
+    <string name="settings_hide_low_accuracy">הסתר נקודות בדיוק נמוך</string>
+    <string name="settings_hide_low_accuracy_subtitle">הסתר נקודות היסטוריה שרדיוס הדיוק שלהן גדול מערך זה. שום דבר לא נמחק.</string>
+    <string name="settings_low_battery" formatted="false">סוללה חלשה (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d דק׳</string>
+    <string name="settings_motion_detection">זיהוי תנועה</string>
+    <string name="settings_motion_detection_on">מופעל — מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
+    <string name="settings_motion_detection_off">כבוי — אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
+    <string name="settings_enable_motion_title">הפעל זיהוי תנועה</string>
+    <string name="settings_enable_motion_message">גישה לפעילות גופנית מאפשרת ל-LocaPeer להבחין בדיוק רב יותר בין הליכה, נהיגה ועמידה במקום בהיסטוריה שלך. כרגע היא כבויה — אפשר להפעילה מחדש מהגדרות המערכת.</string>
+    <string name="settings_open_settings">פתח הגדרות</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">יחידות מהירות</string>
+    <string name="settings_speed_imperial">אימפריאלי (mph)</string>
+    <string name="settings_speed_metric">מטרי (קמ״ש)</string>
+    <string name="settings_elevation_units">יחידות גובה</string>
+    <string name="settings_elevation_imperial">אימפריאלי (רגל)</string>
+    <string name="settings_elevation_metric">מטרי (מטרים)</string>
+    <string name="settings_distance_units">יחידות מרחק</string>
+    <string name="settings_distance_imperial">אימפריאלי (ft/mi)</string>
+    <string name="settings_distance_metric">מטרי (m/km)</string>
+    <string name="settings_time_format">תבנית שעה</string>
+    <string name="settings_time_24h">24 שעות (13:30)</string>
+    <string name="settings_time_12h">12 שעות (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">נתוני מיקום</string>
+    <string name="settings_retention_location_subtitle">כמה זמן לשמור מקומית את נתוני המיקום של אנשי הקשר</string>
+    <string name="settings_clear_all_location">מחק את כל נתוני המיקום</string>
+    <string name="settings_retention_messages">הודעות</string>
+    <string name="settings_retention_messages_subtitle">כמה זמן לשמור מקומית את ההודעות שהתקבלו</string>
+    <string name="settings_clear_all_messages">מחק את כל ההודעות</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">התאמת ניווט</string>
+    <string name="settings_customize_nav_subtitle">בחר וסדר מחדש את הכרטיסיות התחתונות</string>
+    <string name="settings_start_page">עמוד פתיחה</string>
     <string name="settings_language">שפה</string>
     <string name="settings_language_title">שפת האפליקציה</string>
     <string name="settings_language_system">ברירת מחדל של המערכת</string>
 
-    <string name="common_ok">אישור</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">ייצא גיבוי</string>
+    <string name="settings_export_backup_subtitle">שמור את המפתח הפרטי ואנשי הקשר שלך לקובץ. שמור על קובץ זה במקום מאובטח!</string>
+    <string name="settings_import_backup">ייבא גיבוי</string>
+    <string name="settings_import_backup_subtitle">שחזר מקובץ שיוצא בעבר</string>
+    <string name="settings_view_private_key">הצג מפתח פרטי</string>
+    <string name="settings_view_private_key_subtitle">הצג את מפתח הזהות ההקסדצימלי בן 64 התווים שלך</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">אודות LocaPeer</string>
+    <string name="settings_about_subtitle">גרסה, סטטוס ממסרים, קוד פתוח</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">ערוך שם תצוגה</string>
+    <string name="settings_display_name_label">שם תצוגה</string>
+    <string name="settings_my_invite_qr">קוד ה-QR של ההזמנה שלי</string>
+    <string name="settings_invite_qr_subtitle">אחרים יכולים לסרוק אותו כדי להתחיל לעקוב אחריך.</string>
+    <string name="settings_invite_qr_cd">קוד QR של הזמנה</string>
+    <string name="settings_private_key_title">מפתח פרטי</string>
+    <string name="settings_private_key_warning">שמור עליו במקום מאובטח. כל מי שברשותו מפתח זה יכול להתחזות אליך.</string>
+    <string name="settings_clear_location_title">למחוק את היסטוריית המיקום?</string>
+    <string name="settings_clear_location_message">כל נקודות המיקום השמורות יימחקו לצמיתות.</string>
+    <string name="settings_clear_messages_title">למחוק את היסטוריית ההודעות?</string>
+    <string name="settings_clear_messages_message">כל ההודעות השמורות יימחקו לצמיתות.</string>
+    <string name="settings_encrypted_backup_title">גיבוי מוצפן</string>
+    <string name="settings_encrypted_backup_message">גיבוי זה מוצפן. הזן את הסיסמה כדי להמשיך.</string>
+    <string name="settings_select_restore_title">בחר נתונים לשחזור</string>
+    <string name="settings_select_export_title">בחר נתונים לייצוא</string>
+    <string name="settings_export_password_hint">אופציונלי: הגדר סיסמה להצפנת קובץ הגיבוי שלך.</string>
+    <string name="settings_backup_password_optional">סיסמת גיבוי (אופציונלי)</string>
+    <string name="settings_select_sections">בחר את הקטעים לכלול:</string>
+    <string name="settings_choose_file_location">בחר מיקום קובץ</string>
+    <string name="settings_not_in_backup">לא קיים בגיבוי זה</string>
+    <string name="settings_enable_supervised_title">הפעל מצב מפוקח</string>
+    <string name="settings_enable_supervised_message">בחר איש קשר שישמש כמפקח. עליו לאשר גישה להגדרות מהמכשיר שלו.</string>
+    <string name="settings_no_peers_found">לא נמצאו אנשי קשר. תחילה הוסף איש קשר על ידי סריקת קוד ה-QR של ההזמנה שלו.</string>
+    <string name="settings_disable_supervised_title">להשבית מצב מפוקח?</string>
+    <string name="settings_disable_supervised_message">ניתן יהיה לגשת להגדרות ללא אישור מפקח.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">הסר</string>
+    <string name="common_name">שם</string>
+    <string name="common_search">חיפוש</string>
+    <string name="common_sort">מיון</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">הודעה</string>
+    <string name="cd_show_on_map">הצג במפה</string>
+    <string name="cd_more_options">אפשרויות נוספות</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d נבחר</item>
+        <item quantity="two">%1$d נבחרו</item>
+        <item quantity="many">%1$d נבחרו</item>
+        <item quantity="other">%1$d נבחרו</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">בטל בחירה</string>
+    <string name="contacts_cd_select_all">בחר הכול</string>
+    <string name="contacts_cd_deselect_all">בטל בחירת הכול</string>
+    <string name="contacts_cd_qr_invite">QR / הזמנה</string>
+    <string name="contacts_cd_pending_requests">בקשות ממתינות</string>
+    <string name="contacts_sort_last_seen">נראה לאחרונה</string>
+    <string name="contacts_search_placeholder">חפש אנשי קשר…</string>
+    <string name="contacts_empty_title">עדיין אין אנשי קשר</string>
+    <string name="contacts_empty_subtitle">סרוק קוד QR כדי להתחבר למישהו ולהתחיל לשתף מיקומים.</string>
+    <string name="contacts_scan_qr">סרוק קוד QR</string>
+    <string name="contacts_bulk_delete_messages">מחק הודעות</string>
+    <string name="contacts_bulk_delete_locations">מחק מיקומים</string>
+    <string name="contacts_last_seen">נראה לאחרונה: %1$s</string>
+    <string name="contacts_no_location_yet">עדיין אין נתוני מיקום</string>
+    <string name="contacts_view_sharing_settings">הגדרות שיתוף</string>
+    <string name="contacts_view_location_history">היסטוריית מיקום</string>
+    <string name="contacts_rename_contact">שנה שם איש קשר</string>
+    <string name="contacts_on_contact_device">במכשיר של איש הקשר</string>
+    <string name="contacts_delete_my_messages_title">מחק את ההודעות שלי</string>
+    <string name="contacts_delete_locations_title">מחק מיקומים ששותפו</string>
+    <string name="contacts_remove_contact_title">הסר איש קשר</string>
+    <string name="contacts_leave_title">מחק איש קשר ונתונים</string>
+    <string name="contacts_rename_title">שנה שם איש קשר</string>
+    <string name="contacts_remove_contact_body">להסיר את %1$s מאנשי הקשר שלך? היסטוריית המיקום שלו תימחק גם מקומית.</string>
+    <string name="contacts_leave_body">פעולה זו תסיר אותך מאנשי הקשר של %1$s ותמחק את כל ההודעות ונתוני המיקום שלך מהמכשיר שלו. תאבד גם את הגישה למיקום שלו.</string>
+    <string name="contacts_delete_my_messages_body">פעולה זו תמחק את כל ההודעות ששלחת מהמכשיר של %1$s. לא ניתן לבטל.</string>
+    <string name="contacts_delete_locations_body">פעולה זו תמחק את כל נתוני המיקום ששיתפת מהמכשיר של %1$s. לא ניתן לבטל.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">הסר איש קשר</item>
+        <item quantity="two">הסר %1$d אנשי קשר</item>
+        <item quantity="many">הסר %1$d אנשי קשר</item>
+        <item quantity="other">הסר %1$d אנשי קשר</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">להסיר את איש הקשר הזה? היסטוריית המיקום שלו תימחק גם מקומית.</item>
+        <item quantity="two">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
+        <item quantity="many">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
+        <item quantity="other">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">למחוק מרחוק את כל ההודעות ששלחת מהמכשיר של איש הקשר הזה? לא ניתן לבטל.</item>
+        <item quantity="two">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+        <item quantity="many">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+        <item quantity="other">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשיר של איש הקשר הזה? לא ניתן לבטל.</item>
+        <item quantity="two">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+        <item quantity="many">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+        <item quantity="other">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
+    </plurals>
+
+    <string name="common_continue">המשך</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">שחזר מגיבוי</string>
+    <string name="onboarding_restore_message">הדבק את המפתח הפרטי ההקסדצימלי בן 64 התווים שלך כדי לשחזר את הזהות ואנשי הקשר שלך.</string>
+    <string name="onboarding_private_key_hex">מפתח פרטי (הקס)</string>
+    <string name="onboarding_tagline">שיתוף מיקום פרטי עם אנשי קשר.\nללא חשבונות. ללא שרתים קנייניים.</string>
+    <string name="onboarding_feature_e2e_title">מוצפן מקצה לקצה</string>
+    <string name="onboarding_feature_e2e_subtitle">המיקום שלך מוצפן במכשיר</string>
+    <string name="onboarding_feature_servers_title">ללא שרתים קנייניים</string>
+    <string name="onboarding_feature_servers_subtitle">משתמש בממסרי Nostr פתוחים כאמצעי העברה מאובטח — הנתונים שלך נשארים מוצפנים ופרטיים</string>
+    <string name="onboarding_feature_phone_title">נשאר בטלפון שלך</string>
+    <string name="onboarding_feature_phone_subtitle">היסטוריית המיקום המלאה שלך נשארת במכשיר שלך. רק המיקום הנוכחי שלך משותף עם אנשי קשר נבחרים</string>
+    <string name="onboarding_name_prompt">איך אנשי הקשר שלך יקראו לך?</string>
+    <string name="onboarding_name_placeholder">לדוגמה אמא, אבא, נועה…</string>
+    <string name="onboarding_get_started">בואו נתחיל</string>
+    <string name="onboarding_restore_from_backup">שחזר מגיבוי</string>
+    <string name="onboarding_key_note">המפתח הפרטי שלך נוצר מקומית ולעולם אינו עוזב את המכשיר הזה.</string>
+    <string name="onboarding_permissions_title">הרשאות</string>
+    <string name="onboarding_permissions_desc">‏LocaPeer זקוק לגישת מיקום כדי לשתף את מיקומך, לגישת מצלמה כדי לסרוק קודי הזמנה, ולגישת התראות עבור סטטוס רקע. גישה לפעילות גופנית היא אופציונלית — היא עוזרת לתייג את התנועה שלך (הליכה, נהיגה) בדיוק רב יותר.</string>
+    <string name="onboarding_before_ask_title">לפני שנבקש</string>
+    <string name="onboarding_before_ask_intro">בהמשך תראה כמה בקשות מערכת:</string>
+    <string name="onboarding_before_ask_location">• מיקום — נדרש, כדי לשתף את מיקומך.</string>
+    <string name="onboarding_before_ask_camera">• מצלמה — לסריקת קודי הזמנה.</string>
+    <string name="onboarding_before_ask_notifications">• התראות — עבור סטטוס רקע.</string>
+    <string name="onboarding_before_ask_activity">• פעילות גופנית — אופציונלי. מאפשר ל-LocaPeer להבחין בדיוק רב יותר בין הליכה, נהיגה ועמידה. ניתן לדלג ולהפעיל מאוחר יותר בהגדרות.</string>
+    <string name="onboarding_grant_permissions">הענק הרשאות</string>
+    <string name="onboarding_bg_location_title">מיקום ברקע</string>
+    <string name="onboarding_bg_location_desc">כדי שאנשי הקשר שלך יישארו מעודכנים כשהאפליקציה סגורה, בחר \"אפשר תמיד\" במסך הבא.</string>
+    <string name="onboarding_bg_location_error">מיקום ברקע נדרש כדי לעדכן את אנשי הקשר שלך כשהאפליקציה סגורה. נסה שוב ובחר \"אפשר תמיד\".</string>
+    <string name="onboarding_configure_location">הגדר מיקום</string>
+    <string name="onboarding_battery_title">סוללה</string>
+    <string name="onboarding_battery_desc">‏Android עשוי לעצור את LocaPeer כדי לחסוך בסוללה. לעדכונים אמינים, החרג את LocaPeer מאופטימיזציות.</string>
+    <string name="onboarding_disable_optimizations">השבת אופטימיזציות</string>
+    <string name="onboarding_done_title">הכול מוכן!</string>
+    <string name="onboarding_done_desc">רשת המיקום הפרטית שלך מוכנה.</string>
+    <string name="onboarding_start_using">התחל להשתמש ב-LocaPeer</string>
+
+    <string name="common_try_again">נסה שוב</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">סרוק הזמנה</string>
+    <string name="scan_camera_needed">נדרשת הרשאת מצלמה לסריקת קודי QR.</string>
+    <string name="scan_grant_permission">הענק הרשאה</string>
+    <string name="scan_add_contact_title">להוסיף איש קשר?</string>
+    <string name="scan_add_contact_message">פעולה זו תחבר אותך עם %1$s ותתחיל שיתוף מיקום הדדי.</string>
+    <string name="scan_add_share">הוסף ושתף</string>
+    <string name="scan_request_sent_title">הבקשה נשלחה!</string>
+    <string name="scan_request_sent_message">נשלחה בקשה ל-%1$s. תתחברו ברגע שהוא יאשר.</string>
+    <string name="scan_failed">הסריקה נכשלה: %1$s</string>
+
     <string name="cd_back">חזור</string>
+    <string name="common_review">בדוק</string>
+    <string name="common_decline">דחה</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">שלח/קבל</string>
+    <string name="role_send">שלח</string>
+    <string name="role_receive">קבל</string>
+    <string name="role_none">ללא שיתוף</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">ההזמנה שלי</string>
+    <string name="invite_tab_add_contact">הוסף איש קשר</string>
+    <string name="invite_your_qr_title">קוד ה-QR שלך</string>
+    <string name="invite_your_qr_subtitle">תן למישהו לסרוק אותו כדי לעקוב אחר מיקומך</string>
+    <string name="invite_qr_cd">קוד ה-QR שלך</string>
+    <string name="invite_qr_error">שגיאה ביצירת QR</string>
+    <string name="invite_share_link">שתף קישור הזמנה</string>
+    <string name="invite_encryption_note">המיקום שלך יוצפן במיוחד עבור המכשיר של הסורק.</string>
+    <string name="invite_camera_required_title">נדרשת גישת מצלמה</string>
+    <string name="invite_camera_required_message">הענק הרשאת מצלמה כדי לסרוק קוד QR.</string>
+    <string name="invite_point_camera">כוון את המצלמה לקוד QR של LocaPeer</string>
+    <string name="invite_paste_title">או הדבק קישור הזמנה</string>
+    <string name="invite_process_link">עבד קישור</string>
+    <string name="invite_fallback_name">איש קשר</string>
+    <string name="invite_success_message">תתחברו עם %1$s ברגע שהוא יאשר.</string>
+    <string name="invite_confirm_add_title">להוסיף את %1$s?</string>
+    <string name="invite_confirm_add_message">להוסיף אותו לאנשי הקשר שלך ולשתף מיקום?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">אין בקשות ממתינות</string>
+    <string name="pending_requesting">מבקש: %1$s · %2$s</string>
+    <string name="pending_role_change">בקשת שינוי תפקיד · %1$s</string>
+    <string name="pending_new_request">בקשת שיתוף חדשה · %1$s</string>
+
+    <string name="common_save_changes">שמור שינויים</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">עדכן הגדרות שיתוף</string>
+    <string name="incoming_new_title">בקשת איש קשר חדשה</string>
+    <string name="incoming_update_subtitle">‏%1$s רוצה לעדכן את אופן השיתוף. בדוק את ההגדרות למטה.</string>
+    <string name="incoming_new_subtitle">‏%1$s הוסיף אותך כאיש קשר! כעת תוכל לבחור מה לשתף בחזרה.</string>
+    <string name="incoming_section_location">מיקום</string>
+    <string name="incoming_share_my_location">שתף את המיקום שלי עם %1$s</string>
+    <string name="incoming_share_my_location_sub">הוא יוכל לראות היכן אתה נמצא</string>
+    <string name="incoming_see_their_location">ראה את המיקום של %1$s</string>
+    <string name="incoming_see_their_location_sub">תוכל לראות היכן הוא נמצא</string>
+    <string name="incoming_section_messaging">הודעות</string>
+    <string name="incoming_allow_messages">אפשר הודעות</string>
+    <string name="incoming_allow_messages_sub">קבל הודעות צ׳אט מ-%1$s</string>
+
+    <string name="common_request">בקש</string>
+    <string name="common_edit">ערוך</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">הגדרות איש קשר</string>
+    <string name="peer_section_roles">תפקידי שיתוף מיקום</string>
+    <string name="peer_send_on">‏%1$s יכול לראות את מיקומך</string>
+    <string name="peer_send_off">אינך משתף את מיקומך עם %1$s</string>
+    <string name="peer_receive_title">קבל את המיקום של %1$s</string>
+    <string name="peer_receive_on">אתה יכול לראות את המיקום של %1$s</string>
+    <string name="peer_receive_off">אין לך גישה למיקום של %1$s</string>
+    <string name="peer_section_privacy">פרטיות ובקרות שיתוף</string>
+    <string name="peer_pause_sharing">השהה שיתוף</string>
+    <string name="peer_pause_sub">הפסק זמנית לשלוח את מיקומך ל-%1$s</string>
+    <string name="peer_precision">דיוק מיקום</string>
+    <string name="peer_precision_exact_sub">קואורדינטות GPS מדויקות</string>
+    <string name="peer_precision_suburb_sub">מיקום משוער (ברמת שכונה)</string>
+    <string name="peer_always_sharing">משתף תמיד</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">כלל שיתוף פעיל %1$d</item>
+        <item quantity="two">%1$d כללי שיתוף פעילים</item>
+        <item quantity="many">%1$d כללי שיתוף פעילים</item>
+        <item quantity="other">%1$d כללי שיתוף פעילים</item>
+    </plurals>
+    <string name="peer_section_alerts">התראות וניטור</string>
+    <string name="peer_sos_contact">איש קשר SOS</string>
+    <string name="peer_sos_sub">מקבל את התראות החירום שלך גם אם השיתוף מושהה</string>
+    <string name="peer_missed_alert">התראת מיקום חסר</string>
+    <string name="peer_missed_on">הודע לי אם %1$s יפסיק לדווח על מיקומו</string>
+    <string name="peer_requires_access">דורש גישה למיקום של %1$s</string>
+    <string name="peer_proximity_alert">התראת קרבה</string>
+    <string name="peer_proximity_sub">הודע לי כאשר %1$s נמצא בקרבת מקום</string>
+    <string name="peer_alert_radius">רדיוס התראה</string>
+    <string name="peer_alert_schedule">לוח זמנים להתראות</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">כלל פעיל %1$d</item>
+        <item quantity="two">%1$d כללים פעילים</item>
+        <item quantity="many">%1$d כללים פעילים</item>
+        <item quantity="other">%1$d כללים פעילים</item>
+    </plurals>
+    <string name="peer_geofences_sub">הגדר אזורי הגעה ועזיבה עבור %1$s</string>
+    <string name="peer_supervise">פקח על מכשיר זה</string>
+    <string name="peer_supervise_on">אתה מקבל ומאשר בקשות ביטול נעילה מ-%1$s</string>
+    <string name="peer_supervise_off">אפשר ל-%1$s לשלוח לך בקשות ביטול נעילה של מצב מפוקח</string>
+    <string name="peer_messaging_sub">הפעל/השבת הודעות צ׳אט מ-%1$s</string>
+    <string name="peer_section_history">היסטוריית תנועה</string>
+    <string name="peer_location_history">היסטוריית מיקום</string>
+    <string name="peer_location_history_sub">צפה בהיסטוריית התנועה ובדוח המפה של %1$s</string>
+    <string name="peer_section_retention">שמירת נתונים מרוחקת</string>
+    <string name="peer_retention_location_sub">כמה זמן %1$s שומר את היסטוריית המיקום שלך</string>
+    <string name="peer_purge_location">מחק את כל נתוני המיקום מ-%1$s</string>
+    <string name="peer_retention_messages_sub">כמה זמן %1$s שומר את ההודעות ששלחת</string>
+    <string name="peer_purge_messages">מחק את כל ההודעות מ-%1$s</string>
+    <string name="peer_precision_exact">‏GPS מדויק</string>
+    <string name="peer_precision_exact_desc">קואורדינטות מדויקות</string>
+    <string name="peer_precision_suburb">שכונה (~1 ק״מ)</string>
+    <string name="peer_precision_suburb_desc">ברמת שכונה בלבד</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">למחוק שיחה %1$d?</item>
+        <item quantity="two">למחוק %1$d שיחות?</item>
+        <item quantity="many">למחוק %1$d שיחות?</item>
+        <item quantity="other">למחוק %1$d שיחות?</item>
+    </plurals>
+    <string name="conv_delete_locally">מחק מקומית</string>
+    <string name="conv_delete_locally_sub">מסיר את השיחה מהמכשיר שלך בלבד.</string>
+    <string name="conv_delete_both">מחק מקומית/אצל איש הקשר</string>
+    <string name="conv_bulk_delete_both_sub">מוחק את השיחה מקומית ואצל איש הקשר שלך.</string>
+    <string name="conv_delete_both_sub">מוחק את השיחה מקומית ומפעיל בקשת מחיקה במכשיר של איש הקשר עבור השיחה.</string>
+    <string name="conv_cd_exit_selection">צא מהבחירה</string>
+    <string name="conv_cd_select_all">בחר הכול</string>
+    <string name="conv_cd_new_message">הודעה חדשה</string>
+    <string name="conv_sort_date">תאריך</string>
+    <string name="conv_sort_unread">לא נקרא</string>
+    <string name="conv_search_placeholder">חפש שיחות…</string>
+    <string name="conv_tab_chats">צ׳אטים</string>
+    <string name="conv_tab_archived">בארכיון</string>
+    <string name="conv_mark_read">סמן כנקרא</string>
+    <string name="conv_archive">העבר לארכיון</string>
+    <string name="conv_unarchive">הוצא מהארכיון</string>
+    <string name="conv_empty_no_results">אין תוצאות עבור \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">נסה מונח חיפוש אחר</string>
+    <string name="conv_empty_archived_title">אין צ׳אטים בארכיון</string>
+    <string name="conv_empty_archived_sub">העבר צ׳אטים לארכיון כדי לשמור על תיבת דואר נקייה</string>
+    <string name="conv_empty_title">עדיין אין הודעות</string>
+    <string name="conv_empty_sub">פתח את המפה והקש על אדם\nכדי להתחיל שיחה</string>
+    <string name="conv_delete_title">למחוק את השיחה?</string>
+    <string name="conv_delete_message">כיצד ברצונך למחוק שיחה זו עם %1$s?</string>
+    <string name="conv_messages_blocked">הודעות חסומות</string>
+    <string name="conv_preview_mine">אתה: %1$s</string>
+    <string name="conv_new_message_title">הודעה חדשה</string>
+    <string name="conv_picker_empty">עדיין אין אנשי קשר. סרוק קוד QR כדי להוסיף איש קשר.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">לנקות את היסטוריית הצ׳אט?</string>
+    <string name="chat_clear_message">כיצד ברצונך לנקות שיחה זו עם %1$s?</string>
+    <string name="chat_clear_locally">נקה מקומית</string>
+    <string name="chat_clear_both">נקה מקומית/אצל איש הקשר</string>
+    <string name="chat_clear_both_sub">מנקה את הצ׳אט מקומית ושולח ל-%1$s בקשת מחיקה עבור ההודעות ששלחת.</string>
+    <string name="chat_cd_options">אפשרויות</string>
+    <string name="chat_clear_history_menu">נקה היסטוריית צ׳אט</string>
+    <string name="chat_typing">‏%1$s מקליד…</string>
+    <string name="chat_blocked_banner">חסמת הודעות מ-%1$s. עבור לאנשי הקשר כדי לבטל את החסימה.</string>
+    <string name="chat_delete_msg_title">למחוק את ההודעה?</string>
+    <string name="chat_delete_msg_message">כיצד ברצונך למחוק הודעה זו?</string>
+    <string name="chat_delete_from_contact">מחק אצל איש הקשר</string>
+    <string name="chat_delete_from_contact_sub">מוחק את הצ׳אט מהמכשיר של איש הקשר.</string>
+    <string name="chat_delete_both_sub">מסיר את הצ׳אט מקומית ומוחק אותו אוטומטית מהמכשיר של איש הקשר.</string>
+    <string name="chat_cd_share_location">שתף מיקום</string>
+    <string name="chat_input_placeholder">הודעה…</string>
+    <string name="chat_cd_send">שלח</string>
+
+    <string name="common_close">סגור</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">להפעיל SOS?</string>
+    <string name="map_sos_deactivate_title">לבטל SOS?</string>
+    <string name="map_sos_activate_msg">פעולה זו תשדר את מיקומך כל 15 שניות לאנשי הקשר של SOS שהוגדרו עד לביטול.</string>
+    <string name="map_sos_deactivate_msg">פעולה זו תעצור את שידור המיקום בעדיפות גבוהה לאנשי הקשר לשעת חירום.</string>
+    <string name="map_activate">הפעל</string>
+    <string name="map_deactivate">בטל</string>
+    <string name="map_cd_style">סגנון מפה</string>
+    <string name="map_cd_show_geofences">הצג גדרות גאוגרפיות</string>
+    <string name="map_cd_hide_geofences">הסתר גדרות גאוגרפיות</string>
+    <string name="map_cd_follow">עקוב אחריי</string>
+    <string name="map_cd_friends">חברים</string>
+    <string name="map_no_friends">עדיין לא עוקבים אחר אף אחד</string>
+    <string name="map_you">אתה</string>
+    <string name="map_cd_go_my_location">עבור למיקום שלי</string>
+    <string name="map_sos_active">⚠ SOS פעיל</string>
+    <string name="map_away">רחוק</string>
+    <string name="map_no_location_yet">עדיין אין מיקום</string>
+    <string name="map_cd_go_location">עבור למיקום</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">‏SOS פועל</string>
+    <string name="map_overdue">באיחור — אין עדכון אחרון</string>
+    <string name="map_stat_last_seen">נראה לאחרונה</string>
+    <string name="map_stat_battery">סוללה</string>
+    <string name="map_stat_accuracy">דיוק</string>
+    <string name="map_stat_motion">תנועה</string>
+    <string name="map_stat_speed">מהירות</string>
+    <string name="map_stat_elevation">גובה</string>
+
+    <string name="common_ok">אישור</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">היסטוריה: %1$s</string>
+    <string name="history_select_person">בחר אדם</string>
+    <string name="history_person_label">אדם</string>
+    <string name="history_cd_prev_day">יום קודם</string>
+    <string name="history_cd_next_day">יום הבא</string>
+    <string name="history_time_filter">מסנן זמן:</string>
+    <string name="history_cd_reset_time">אפס זמן</string>
+    <string name="history_tab_list">רשימה</string>
+    <string name="history_empty_title">אין היסטוריה ליום זה</string>
+    <string name="history_empty_sub">נסה לבחור תאריך אחר או בדוק את החיבור שלך.</string>
+    <string name="history_start_time">שעת התחלה</string>
+    <string name="history_end_time">שעת סיום</string>
+    <string name="history_no_data_title">אין נתוני מיקום</string>
+    <string name="history_no_data_sub">אין נקודות מתועדות ליום או לטווח הזמן הזה.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">נקודה %1$d תועדה</item>
+        <item quantity="two">%1$d נקודות תועדו</item>
+        <item quantity="many">%1$d נקודות תועדו</item>
+        <item quantity="other">%1$d נקודות תועדו</item>
+    </plurals>
+    <string name="history_cd_dismiss">סגור</string>
+    <string name="history_accuracy_label">דיוק ±%1$s</string>
+    <string name="history_emergency_sos">אות SOS לשעת חירום</string>
+    <string name="history_detail_location">מיקום</string>
+    <string name="history_detail_coordinates">קואורדינטות</string>
+    <string name="history_within">בטווח ±%1$s</string>
+    <string name="history_detail_movement">תנועה</string>
+    <string name="history_movement_desc">%1$s %2$s בכיוון %3$s</string>
+
+    <string name="common_create">צור</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">הוסף אזור גדר גאוגרפית</string>
+    <string name="geo_cd_assign">שייך גדר גאוגרפית</string>
+    <string name="geo_unknown">לא ידוע</string>
+    <string name="geo_empty_title">אין גדרות גאוגרפיות</string>
+    <string name="geo_empty_sub">הקש על + כדי ליצור אזור גדר גאוגרפית, ואז שייך אליו אנשי קשר מהגדרות השיתוף שלהם.</string>
+    <string name="geo_delete_title">למחוק את הגדר הגאוגרפית?</string>
+    <string name="geo_delete_simple">למחוק את \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" משויך לאיש קשר %2$d. מחיקתו תסיר גם את השיוכים האלה.</item>
+        <item quantity="two">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
+        <item quantity="many">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
+        <item quantity="other">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
+    </plurals>
+    <string name="geo_for_contact">גדרות גאוגרפיות עבור %1$s</string>
+    <string name="geo_empty_contact_title">אין גדרות גאוגרפיות לאיש הקשר</string>
+    <string name="geo_empty_contact_sub">הקש על + כדי לשייך אזור גדר גאוגרפית ולבחור אם להתריע בהגעה, בעזיבה או בשניהם.</string>
+    <string name="geo_no_areas_title">עדיין אין גדרות גאוגרפיות</string>
+    <string name="geo_no_areas_msg">תחילה צור אזור גדר גאוגרפית ממסך הגדרות הגאוגרפיות, ואז שייך אותו כאן.</string>
+    <string name="geo_radius_label">רדיוס %1$s</string>
+    <string name="geo_contacts_label">אנשי קשר: %1$s</string>
+    <string name="geo_no_contacts_assigned">לא שויכו אנשי קשר</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">כלל %1$d</item>
+        <item quantity="two">%1$d כללים</item>
+        <item quantity="many">%1$d כללים</item>
+        <item quantity="other">%1$d כללים</item>
+    </plurals>
+    <string name="geo_trigger_enter">כניסה</string>
+    <string name="geo_trigger_exit">יציאה</string>
+    <string name="geo_trigger_both">שניהם</string>
+    <string name="geo_edit_title">ערוך גדר גאוגרפית</string>
+    <string name="geo_new_title">גדר גאוגרפית חדשה</string>
+    <string name="geo_cd_my_location">המיקום שלי</string>
+    <string name="geo_cd_radius_increase">הגדל רדיוס</string>
+    <string name="geo_cd_radius_decrease">הקטן רדיוס</string>
+    <string name="geo_hint_tap">הקש או החזק את המפה כדי למקם</string>
+    <string name="geo_hint_move">צבוט להגדלה • החזק או גרור את הסיכה כדי להזיז</string>
+    <string name="geo_basic_info">מידע בסיסי</string>
+    <string name="geo_search_title">מצא לפי כתובת</string>
+    <string name="geo_search_label">כתובת או מקום</string>
+    <string name="geo_search_placeholder">לדוגמה רחוב הרצל 10, תל אביב</string>
+    <string name="geo_search_no_results">לא נמצאה כתובת תואמת</string>
+    <string name="geo_cd_search">חיפוש</string>
+    <string name="geo_name_placeholder">לדוגמה בית, עבודה</string>
+    <string name="geo_name_required">שם נדרש</string>
+    <string name="geo_latitude">קו רוחב</string>
+    <string name="geo_longitude">קו אורך</string>
+    <string name="geo_lat_range">-90 עד 90</string>
+    <string name="geo_lng_range">-180 עד 180</string>
+    <string name="geo_radius">רדיוס</string>
+    <string name="geo_radius_range">הזן %1$d עד %2$d מ׳</string>
+    <string name="geo_edit_assignment">ערוך שיוך</string>
+    <string name="geo_assign_title">שייך גדר גאוגרפית</string>
+    <string name="geo_select_area">בחר אזור גדר גאוגרפית</string>
+    <string name="geo_trigger_title">הפעל התראה כאשר</string>
+    <string name="geo_add_rule">הוסף כלל</string>
+    <string name="geo_alerts_all_times">התראות פעילות בכל עת. הוסף כלל כדי להגביל מתי נשלחות התראות.</string>
+    <string name="geo_assign_action">שייך</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">התראות קרבה</string>
+    <string name="prox_empty_title">אין אנשים במעקב</string>
+    <string name="prox_empty_sub">סרוק את קוד ה-QR של ההזמנה של מישהו מכרטיסיית הסריקה\nכדי להתחיל לעקוב אחר מיקומו</string>
+    <string name="prox_intro">קבל התראה כאשר אדם במעקב מתקרב אליך למרחק שבחרת.</string>
+    <string name="prox_alert_within">התרע בטווח %1$s</string>
+    <string name="prox_alerts_off">התראות כבויות</string>
+    <string name="prox_alert_radius">רדיוס התראה</string>
+    <string name="prox_edit_schedule">ערוך לוח זמנים</string>
+    <string name="prox_rules">כללים</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">לוח זמנים עבור %1$s</string>
+    <string name="schedule_cd_add_rule">הוסף כלל</string>
+    <string name="schedule_empty_title">אין כללי לוח זמנים</string>
+    <string name="schedule_empty_global">המיקום משותף בכל עת. הוסף כלל כדי להגביל מתי השיתוף פעיל.</string>
+    <string name="schedule_empty_peer">המיקום משותף תמיד עם %1$s. הוסף כלל כדי להגביל מתי.</string>
+    <string name="schedule_active_hint">פעיל כאשר כלל כלשהו תואם את הזמן הנוכחי. ריק = פועל תמיד.</string>
+    <string name="schedule_all_day">כל היום</string>
+    <string name="schedule_plus_one_day"> (+1 יום)</string>
+    <string name="schedule_rule_number">כלל %1$d</string>
+    <string name="schedule_cd_delete_rule">מחק כלל</string>
+    <string name="schedule_edit_rule">ערוך כלל</string>
+    <string name="schedule_label_optional">תווית (אופציונלי)</string>
+    <string name="schedule_label_placeholder">לדוגמה שעות עבודה, סופי שבוע</string>
+    <string name="schedule_active_days">ימים פעילים</string>
+    <string name="schedule_time_window">חלון זמן</string>
+    <string name="schedule_start">התחלה</string>
+    <string name="schedule_end">סיום</string>
+    <string name="schedule_overnight">לילי: פעיל מ-%1$s עד %2$s למחרת</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">המכשיר מפוקח</string>
+    <string name="gate_message">נדרש אישור מפקח כדי לגשת להגדרות.</string>
+    <string name="gate_request_access">בקש גישה</string>
+    <string name="gate_waiting">ממתין לאישור מפקח…</string>
+    <string name="gate_denied">הגישה נדחתה על ידי המפקח.</string>
+    <string name="gate_timed_out">תם הזמן לבקשה. המפקח לא הגיב.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">לתמיד</string>
+    <string name="retention_keep_for">שמור למשך: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">יום %1$d</item>
+        <item quantity="two">%1$d ימים</item>
+        <item quantity="many">%1$d ימים</item>
+        <item quantity="other">%1$d ימים</item>
+    </plurals>
+
+    <string name="common_select">בחר</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">בחר מיקום קבוע</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">בחר אילו כרטיסיות יופיעו בסרגל התחתון ואת סדרן. המפה תמיד כלולה.</string>
+    <string name="customize_cd_move_up">הזז למעלה</string>
+    <string name="customize_cd_move_down">הזז למטה</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">גרסה %1$s (בנייה %2$d)</string>
+    <string name="about_tagline">שיתוף מיקום פרטי עם אנשים שאתה סומך עליהם. ללא חשבונות, ללא ענן, ללא מעקב מצדנו.</string>
+    <string name="about_relay_connections">חיבורי ממסר</string>
+    <string name="about_connected">מחובר</string>
+    <string name="about_disconnected">מנותק</string>
+    <string name="about_open_source">ספריות קוד פתוח</string>
+    <string name="about_lib_osmdroid_desc">עיבוד מפות מבוסס OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">העברת WebSocket עבור ממסר Nostr</string>
+    <string name="about_lib_compose_desc">מסגרת ממשק משתמש</string>
+    <string name="about_lib_hilt_desc">הזרקת תלויות</string>
+    <string name="about_lib_room_desc">מסד נתונים מקומי</string>
+    <string name="about_map_attribution">נתוני מפה © תורמי OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">אשר</string>
+    <string name="notif_someone">מישהו</string>
+    <string name="notif_sos_title">‏SOS מ-%1$s!</string>
+    <string name="notif_sos_text">‏%1$s הפעיל SOS ב-(%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">‏%1$s רוצה שתהיה המפקח שלו</string>
+    <string name="notif_supervisor_request_text">אשר כדי לאפשר בקשות אישור ביטול נעילה ממכשיר זה</string>
+    <string name="notif_supervisor_request_big">אשר כדי לאפשר ל-%1$s לשלוח לך בקשות אישור ביטול נעילה כאשר מצב מפוקח פעיל.</string>
+    <string name="notif_supervised_active_title">מצב מפוקח פעיל</string>
+    <string name="notif_supervised_active_text">המפקח שלך אישר — מצב מפוקח מוגדר כעת</string>
+    <string name="notif_supervised_declined_title">מצב מפוקח נדחה</string>
+    <string name="notif_supervised_declined_text">המפקח שלך דחה את הבקשה — מצב מפוקח הושבת</string>
+    <string name="notif_tracking_alert_title">התראת מעקב</string>
+    <string name="notif_tracking_proximity">‏%1$s קיבל התראת קרבה לגביך</string>
+    <string name="notif_tracking_geofence">‏%1$s קיבל התראה שנכנסת/יצאת מהגדר: %2$s</string>
+    <string name="notif_tracking_generic">‏%1$s מנטר את מיקומך</string>
+    <string name="notif_track_update_title">עדכון שיתוף מ-%1$s</string>
+    <string name="notif_track_new_title">איש קשר חדש: %1$s</string>
+    <string name="notif_role_send_receive">שלח/קבל מיקום</string>
+    <string name="notif_role_send">שלח מיקום</string>
+    <string name="notif_role_receive">קבל מיקום</string>
+    <string name="notif_role_none">ללא שיתוף מיקום</string>
+    <string name="notif_track_requesting">‏%1$s מבקש: %2$s</string>
+    <string name="notif_track_update_body">‏%1$s רוצה לעדכן את אופן שיתוף המיקומים שלך.</string>
+    <string name="notif_track_new_body">‏%1$s הוסיף אותך כאיש קשר ורוצה להתחבר.</string>
+    <string name="notif_contact_connected_title">איש קשר מחובר</string>
+    <string name="notif_contact_connected_text">‏%1$s מחובר אליך כעת.</string>
+    <string name="notif_request_declined_title">הבקשה נדחתה</string>
+    <string name="notif_request_declined_text">‏%1$s דחה את בקשת שיתוף המיקום שלך.</string>
+    <string name="notif_message_person">הודעה ל-%1$s</string>
+    <string name="notif_geofence_entered_title">‏%1$s נכנס ל-%2$s</string>
+    <string name="notif_geofence_left_title">‏%1$s עזב את %2$s</string>
+    <string name="notif_geofence_subtitle">ב-%1$s · רדיוס %2$s</string>
+    <string name="notif_person_nearby">‏%1$s בקרבת מקום</string>
+    <string name="notif_distance_from_you">‏%1$s ממך</string>
+    <string name="notif_missed_title">אין עדכון מ-%1$s</string>
+    <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳ ליד (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">‏SOS פעיל!</string>
+    <string name="notif_sos_active_text">משדר התראת חירום לאנשי הקשר של SOS</string>
+    <string name="notif_messages_group_title">הודעות LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">בקשת איש קשר מ-%1$s נדחתה</string>
+    <string name="toast_now_supervising">כעת מפקח על המכשיר של %1$s</string>
+    <string name="toast_declined_supervision">בקשת פיקוח מ-%1$s נדחתה</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">הרגע</string>
+    <string name="time_minutes_ago">לפני %1$d דק׳</string>
+    <string name="fallback_me">אני</string>
+    <string name="fallback_unknown">לא ידוע</string>
+    <string name="geo_unassigned">לא משויך</string>
+    <string name="days_every_day">כל יום</string>
+    <string name="days_weekdays">ימי חול</string>
+    <string name="days_weekends">סופי שבוע</string>
+    <string name="days_none">אין ימים</string>
+    <string name="chat_my_location_message">המיקום הנוכחי שלי: %1$s</string>
+    <string name="scan_error_bad_pubkey">הזמנה לא חוקית: מפתח ציבורי שגוי</string>
+    <string name="scan_error_key_mismatch">הזמנה לא חוקית: אי-התאמת מפתחות</string>
+    <string name="scan_error_unknown">שגיאה לא ידועה</string>
+    <string name="scan_error_invalid_link">קישור הזמנה לא חוקי</string>
+    <string name="scan_fallback_contact">איש קשר זה</string>
+    <string name="backup_saved">הגיבוי נשמר: %1$s</string>
+    <string name="backup_saved_encrypted">הגיבוי נשמר (מוצפן): %1$s</string>
+    <string name="backup_failed">הגיבוי נכשל: %1$s</string>
+    <string name="backup_could_not_read_file">לא ניתן לקרוא את הקובץ</string>
+    <string name="backup_could_not_write_file">לא ניתן לכתוב את הקובץ</string>
+    <string name="backup_could_not_read">לא ניתן לקרוא את הגיבוי: %1$s</string>
+    <string name="backup_incorrect_password">סיסמה שגויה</string>
+    <string name="restore_result_restored">שוחזר: %1$s</string>
+    <string name="restore_result_failed">נכשל: %1$s</string>
+    <string name="restore_nothing">אין מה לשחזר</string>
+    <string name="restore_failed">השחזור נכשל: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">איש קשר %1$d</item>
+        <item quantity="two">%1$d אנשי קשר</item>
+        <item quantity="many">%1$d אנשי קשר</item>
+        <item quantity="other">%1$d אנשי קשר</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">גדר גאוגרפית %1$d</item>
+        <item quantity="two">%1$d גדרות גאוגרפיות</item>
+        <item quantity="many">%1$d גדרות גאוגרפיות</item>
+        <item quantity="other">%1$d גדרות גאוגרפיות</item>
+    </plurals>
+    <string name="peer_role_change_sent">בקשת שינוי תפקיד נשלחה ל-%1$s</string>
+    <string name="peer_not_found">איש הקשר לא נמצא</string>
+    <string name="peer_purge_location_sent">פקודת מחיקה מרחוק של כל המיקומים נשלחה ל-%1$s</string>
+    <string name="peer_purge_messages_sent">פקודת מחיקה מרחוק של כל ההודעות נשלחה ל-%1$s</string>
+    <string name="onboarding_error_key_length">מפתח לא חוקי — חייב להיות 64 תווים הקסדצימליים.</string>
+    <string name="onboarding_error_key_range">מפתח פרטי לא חוקי — מחוץ לטווח העקומה.</string>
+    <string name="onboarding_error_hex">תבנית הקסדצימלית לא חוקית.</string>
+    <string name="onboarding_error_import_failed">ייבוא המפתח נכשל: %1$s</string>
 </resources>

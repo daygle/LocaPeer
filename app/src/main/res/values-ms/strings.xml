@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Saluran Notifikasi & Perkhidmatan Latar Depan ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Siaran Lokasi</string>
     <string name="channel_desc_heartbeat">Menyiarkan lokasi anda kepada kenalan yang diluluskan</string>
     <string name="channel_name_alerts">Amaran</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer sedang berjalan</string>
     <string name="notification_heartbeat_text">Berkongsi lokasi anda dengan orang lain</string>
 
-    <!-- ── Tindakan Biasa ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Simpan</string>
     <string name="common_cancel">Batal</string>
     <string name="common_done">Selesai</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Lulus</string>
     <string name="common_deny">Nafi</string>
 
-    <!-- ── Label Tab Navigasi ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Peta</string>
     <string name="tab_messages">Mesej</string>
     <string name="tab_history">Sejarah</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Tetapan</string>
 
-    <!-- ── Status Pergerakan / Aktiviti ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Pegun</string>
     <string name="motion_walking">Berjalan</string>
     <string name="motion_running">Berlari</string>
     <string name="motion_cycling">Berbasikal</string>
     <string name="motion_driving">Memandu</string>
 
-    <!-- ── Tetapan ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Kunci Peribadi</string>
+    <string name="backup_section_contacts">Kenalan</string>
+    <string name="backup_section_geofences">Geopagar</string>
+    <string name="backup_section_settings">Tetapan</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Permintaan Penyeliaan</string>
+    <string name="supervision_request_message">\"%1$s\" meminta akses kepada tetapannya. Benarkan?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Tetapan</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Lokasi &amp; Privasi</string>
     <string name="settings_section_security">Keselamatan</string>
     <string name="settings_section_map">Peta</string>
@@ -54,15 +66,669 @@
     <string name="settings_section_backup_keys">Sandaran &amp; Kunci</string>
     <string name="settings_section_about">Perihal</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Edit Nama</string>
     <string name="settings_my_qr">QR Saya</string>
     <string name="settings_no_name_set">Tiada nama ditetapkan</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Kongsi Lokasi Saya</string>
+    <string name="settings_broadcasting">Menyiarkan kepada kenalan anda</string>
+    <string name="settings_not_broadcasting">Tidak menyiarkan</string>
+    <string name="settings_sharing_schedule">Jadual Perkongsian</string>
+    <string name="settings_always_on">Sentiasa hidup</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">%1$d peraturan</item>
+    </plurals>
+    <string name="settings_geofences">Geopagar</string>
+    <string name="settings_geofences_subtitle">Urus kawasan geopagar yang dikongsi</string>
+    <string name="settings_notify_when_tracked">Maklumkan Apabila Dijejak</string>
+    <string name="settings_notify_when_tracked_subtitle">Terima pemberitahuan apabila amaran jarak dekat atau geopagar kenalan mengenai anda dicetuskan.</string>
+    <string name="settings_my_location_history">Sejarah Lokasi</string>
+    <string name="settings_my_location_history_subtitle">Semak imbas garis masa lokasi anda sendiri</string>
+    <string name="settings_lookup_addresses">Cari Alamat</string>
+    <string name="settings_lookup_addresses_subtitle">Paparkan alamat jalan untuk titik sejarah dan pin peta yang diketik, serta cari mengikut alamat semasa meletakkan geopagar. Koordinat atau carian anda dihantar ke perkhidmatan geokod peranti (biasanya Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Penyeliaan Aktif</string>
+    <string name="settings_supervision_active_subtitle">Tetapan memerlukan kelulusan penyelia</string>
+    <string name="settings_disable_supervised">Matikan Mod Diselia</string>
+    <string name="settings_supervised_mode">Mod Diselia</string>
+    <string name="settings_supervised_mode_subtitle">Perlukan kelulusan penyelia untuk mengakses tetapan</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Titik Permulaan</string>
+    <string name="settings_map_current_location">Lokasi Semasa</string>
+    <string name="settings_map_all_contacts">Semua Kenalan</string>
+    <string name="settings_map_fixed_location">Lokasi Tetap</string>
+    <string name="settings_map_last_position">Kedudukan Terakhir</string>
+    <string name="settings_map_starting_point_title">Titik Permulaan Peta</string>
+    <string name="settings_no_location_set">Tiada lokasi ditetapkan</string>
+    <string name="settings_pick_location_on_map">Pilih Lokasi di Peta</string>
+    <string name="settings_default_zoom_level">Tahap Zum Lalai</string>
+    <string name="settings_map_pin_colour">Warna Pin Peta</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Kekerapan Kemas Kini</string>
+    <string name="settings_update_cadence_subtitle">Laraskan kekerapan lokasi anda disiarkan</string>
+    <string name="settings_update_cadence_dialog_message">Kawal kekerapan lokasi anda dikemas kini berdasarkan aktiviti anda. Kemas kini yang kerap menggunakan lebih banyak bateri.</string>
+    <string name="settings_update_cadence_reset">Tetapkan semula kepada lalai</string>
+    <string name="settings_min_distance_filtering">Penapisan Jarak Minimum</string>
+    <string name="settings_min_distance_filtering_subtitle">Hanya tunjukkan titik yang berjarak sekurang-kurangnya sejauh ini daripada titik sebelumnya.</string>
+    <string name="settings_discard_low_accuracy">Buang Lokasi Ketepatan Rendah</string>
+    <string name="settings_discard_low_accuracy_subtitle">Jangan siarkan atau rekodkan lokasi anda yang jejari ketepatannya lebih besar daripada nilai ini. SOS tidak pernah dilangkau.</string>
+    <string name="settings_hide_low_accuracy">Sembunyikan Titik Ketepatan Rendah</string>
+    <string name="settings_hide_low_accuracy_subtitle">Sembunyikan titik sejarah dengan jejari ketepatan lebih besar daripada nilai ini. Tiada apa yang dipadamkan.</string>
+    <string name="settings_low_battery" formatted="false">Bateri Lemah (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Pengesanan Gerakan</string>
+    <string name="settings_motion_detection_on">Dihidupkan — memperhalusi jenis pergerakan anda (berjalan, memandu) dalam sejarah</string>
+    <string name="settings_motion_detection_off">Dimatikan — benarkan akses aktiviti fizikal untuk label pergerakan yang lebih tepat</string>
+    <string name="settings_enable_motion_title">Hidupkan pengesanan gerakan</string>
+    <string name="settings_enable_motion_message">Akses aktiviti fizikal membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat dalam sejarah anda. Ia kini dimatikan — anda boleh menghidupkannya semula daripada tetapan sistem.</string>
+    <string name="settings_open_settings">Buka Tetapan</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Unit Kelajuan</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metrik (km/j)</string>
+    <string name="settings_elevation_units">Unit Ketinggian</string>
+    <string name="settings_elevation_imperial">Imperial (kaki)</string>
+    <string name="settings_elevation_metric">Metrik (meter)</string>
+    <string name="settings_distance_units">Unit Jarak</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metrik (m/km)</string>
+    <string name="settings_time_format">Format Masa</string>
+    <string name="settings_time_24h">24 Jam (13:30)</string>
+    <string name="settings_time_12h">12 Jam (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Data Lokasi</string>
+    <string name="settings_retention_location_subtitle">Berapa lama data lokasi kenalan disimpan secara setempat</string>
+    <string name="settings_clear_all_location">Kosongkan Semua Data Lokasi</string>
+    <string name="settings_retention_messages">Mesej</string>
+    <string name="settings_retention_messages_subtitle">Berapa lama mesej yang diterima disimpan secara setempat</string>
+    <string name="settings_clear_all_messages">Kosongkan Semua Mesej</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Sesuaikan Navigasi</string>
+    <string name="settings_customize_nav_subtitle">Pilih dan susun semula tab bawah</string>
+    <string name="settings_start_page">Halaman Mula</string>
     <string name="settings_language">Bahasa</string>
     <string name="settings_language_title">Bahasa Aplikasi</string>
     <string name="settings_language_system">Lalai sistem</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Eksport Sandaran</string>
+    <string name="settings_export_backup_subtitle">Simpan kunci peribadi dan kenalan anda ke fail. Pastikan fail ini selamat!</string>
+    <string name="settings_import_backup">Import Sandaran</string>
+    <string name="settings_import_backup_subtitle">Pulihkan daripada fail yang dieksport sebelum ini</string>
+    <string name="settings_view_private_key">Lihat Kunci Peribadi</string>
+    <string name="settings_view_private_key_subtitle">Tunjukkan kunci identiti heks 64 aksara anda</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Perihal LocaPeer</string>
+    <string name="settings_about_subtitle">Versi, status geganti, sumber terbuka</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Sunting Nama Paparan</string>
+    <string name="settings_display_name_label">Nama Paparan</string>
+    <string name="settings_my_invite_qr">QR Jemputan Saya</string>
+    <string name="settings_invite_qr_subtitle">Orang lain boleh mengimbasnya untuk mula menjejaki anda.</string>
+    <string name="settings_invite_qr_cd">QR Jemputan</string>
+    <string name="settings_private_key_title">Kunci Peribadi</string>
+    <string name="settings_private_key_warning">Simpan dengan selamat. Sesiapa yang memiliki kunci ini boleh menyamar sebagai anda.</string>
+    <string name="settings_clear_location_title">Kosongkan Sejarah Lokasi?</string>
+    <string name="settings_clear_location_message">Semua titik lokasi yang disimpan akan dipadamkan secara kekal.</string>
+    <string name="settings_clear_messages_title">Kosongkan Sejarah Mesej?</string>
+    <string name="settings_clear_messages_message">Semua mesej yang disimpan akan dipadamkan secara kekal.</string>
+    <string name="settings_encrypted_backup_title">Sandaran Disulitkan</string>
+    <string name="settings_encrypted_backup_message">Sandaran ini disulitkan. Sila masukkan kata laluan untuk meneruskan.</string>
+    <string name="settings_select_restore_title">Pilih Data untuk Dipulihkan</string>
+    <string name="settings_select_export_title">Pilih Data untuk Dieksport</string>
+    <string name="settings_export_password_hint">Secara pilihan, tetapkan kata laluan untuk menyulitkan fail sandaran anda.</string>
+    <string name="settings_backup_password_optional">Kata Laluan Sandaran (Pilihan)</string>
+    <string name="settings_select_sections">Pilih bahagian untuk disertakan:</string>
+    <string name="settings_choose_file_location">Pilih lokasi fail</string>
+    <string name="settings_not_in_backup">Tiada dalam sandaran ini</string>
+    <string name="settings_enable_supervised_title">Hidupkan Mod Diselia</string>
+    <string name="settings_enable_supervised_message">Pilih kenalan yang akan bertindak sebagai penyelia. Mereka mesti meluluskan akses kepada tetapan daripada peranti mereka.</string>
+    <string name="settings_no_peers_found">Tiada kenalan dijumpai. Tambah kenalan dahulu dengan mengimbas kod QR jemputan mereka.</string>
+    <string name="settings_disable_supervised_title">Matikan Mod Diselia?</string>
+    <string name="settings_disable_supervised_message">Tetapan akan boleh diakses tanpa kelulusan penyelia.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Alih keluar</string>
+    <string name="common_name">Nama</string>
+    <string name="common_search">Cari</string>
+    <string name="common_sort">Isih</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Mesej</string>
+    <string name="cd_show_on_map">Tunjukkan di peta</string>
+    <string name="cd_more_options">Lagi pilihan</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">%1$d dipilih</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Batalkan pemilihan</string>
+    <string name="contacts_cd_select_all">Pilih semua</string>
+    <string name="contacts_cd_deselect_all">Nyahpilih semua</string>
+    <string name="contacts_cd_qr_invite">QR / Jemputan</string>
+    <string name="contacts_cd_pending_requests">Permintaan Tertunda</string>
+    <string name="contacts_sort_last_seen">Kali Terakhir Dilihat</string>
+    <string name="contacts_search_placeholder">Cari kenalan…</string>
+    <string name="contacts_empty_title">Belum ada kenalan</string>
+    <string name="contacts_empty_subtitle">Imbas kod QR untuk berhubung dengan seseorang dan mula berkongsi lokasi.</string>
+    <string name="contacts_scan_qr">Imbas Kod QR</string>
+    <string name="contacts_bulk_delete_messages">Padam Mesej</string>
+    <string name="contacts_bulk_delete_locations">Padam Lokasi</string>
+    <string name="contacts_last_seen">Kali terakhir dilihat: %1$s</string>
+    <string name="contacts_no_location_yet">Belum ada data lokasi</string>
+    <string name="contacts_view_sharing_settings">Tetapan Perkongsian</string>
+    <string name="contacts_view_location_history">Sejarah Lokasi</string>
+    <string name="contacts_rename_contact">Namakan Semula Kenalan</string>
+    <string name="contacts_on_contact_device">Pada Peranti Kenalan</string>
+    <string name="contacts_delete_my_messages_title">Padam Mesej Saya</string>
+    <string name="contacts_delete_locations_title">Padam Lokasi yang Dikongsi</string>
+    <string name="contacts_remove_contact_title">Alih Keluar Kenalan</string>
+    <string name="contacts_leave_title">Padam Kenalan dan Data</string>
+    <string name="contacts_rename_title">Namakan Semula Kenalan</string>
+    <string name="contacts_remove_contact_body">Alih keluar %1$s daripada kenalan anda? Sejarah lokasinya juga akan dipadamkan secara setempat.</string>
+    <string name="contacts_leave_body">Ini akan mengalih keluar anda daripada kenalan %1$s dan memadamkan semua mesej serta data lokasi anda daripada perantinya. Anda juga akan hilang akses kepada lokasinya.</string>
+    <string name="contacts_delete_my_messages_body">Ini akan memadamkan semua mesej yang anda hantar daripada peranti %1$s. Ini tidak boleh dibuat asal.</string>
+    <string name="contacts_delete_locations_body">Ini akan memadamkan semua data lokasi yang anda kongsi daripada peranti %1$s. Ini tidak boleh dibuat asal.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">Alih Keluar %1$d Kenalan</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">Alih keluar %1$d kenalan? Sejarah lokasi mereka juga akan dipadamkan secara setempat.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">Padam jauh semua mesej yang anda hantar daripada peranti %1$d kenalan? Ini tidak boleh dibuat asal.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">Padam jauh semua sejarah lokasi yang anda kongsi daripada peranti %1$d kenalan? Ini tidak boleh dibuat asal.</item>
+    </plurals>
+
+    <string name="common_continue">Teruskan</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Pulihkan daripada Sandaran</string>
+    <string name="onboarding_restore_message">Tampal kunci peribadi heks 64 aksara anda untuk memulihkan identiti dan kenalan anda.</string>
+    <string name="onboarding_private_key_hex">Kunci peribadi (heks)</string>
+    <string name="onboarding_tagline">Perkongsian lokasi peribadi dengan kenalan.\nTiada akaun. Tiada pelayan proprietari.</string>
+    <string name="onboarding_feature_e2e_title">Disulitkan Hujung ke Hujung</string>
+    <string name="onboarding_feature_e2e_subtitle">Lokasi anda disulitkan pada peranti</string>
+    <string name="onboarding_feature_servers_title">Tiada Pelayan Proprietari</string>
+    <string name="onboarding_feature_servers_subtitle">Menggunakan geganti Nostr terbuka sebagai pengangkutan selamat — data anda kekal disulitkan dan peribadi</string>
+    <string name="onboarding_feature_phone_title">Kekal pada Telefon Anda</string>
+    <string name="onboarding_feature_phone_subtitle">Sejarah lokasi penuh anda kekal pada peranti anda. Hanya kedudukan semasa dikongsi dengan kenalan terpilih</string>
+    <string name="onboarding_name_prompt">Apakah panggilan kenalan anda untuk anda?</string>
+    <string name="onboarding_name_placeholder">cth. Ibu, Ayah, Aina…</string>
+    <string name="onboarding_get_started">Mulakan</string>
+    <string name="onboarding_restore_from_backup">Pulihkan Daripada Sandaran</string>
+    <string name="onboarding_key_note">Kunci peribadi anda dijana secara setempat dan tidak pernah meninggalkan peranti ini.</string>
+    <string name="onboarding_permissions_title">Kebenaran</string>
+    <string name="onboarding_permissions_desc">LocaPeer memerlukan akses lokasi untuk berkongsi kedudukan anda, akses kamera untuk mengimbas kod jemputan, dan akses pemberitahuan untuk status latar belakang. Akses aktiviti fizikal adalah pilihan — ia membantu melabelkan pergerakan anda (berjalan, memandu) dengan lebih tepat.</string>
+    <string name="onboarding_before_ask_title">Sebelum kami bertanya</string>
+    <string name="onboarding_before_ask_intro">Anda akan melihat beberapa gesaan sistem seterusnya:</string>
+    <string name="onboarding_before_ask_location">• Lokasi — diperlukan, untuk berkongsi kedudukan anda.</string>
+    <string name="onboarding_before_ask_camera">• Kamera — untuk mengimbas kod jemputan.</string>
+    <string name="onboarding_before_ask_notifications">• Pemberitahuan — untuk status latar belakang.</string>
+    <string name="onboarding_before_ask_activity">• Aktiviti fizikal — pilihan. Ia membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat. Anda boleh melangkaunya dan menghidupkannya kemudian dalam Tetapan.</string>
+    <string name="onboarding_grant_permissions">Berikan Kebenaran</string>
+    <string name="onboarding_bg_location_title">Lokasi Latar Belakang</string>
+    <string name="onboarding_bg_location_desc">Untuk memastikan kenalan anda sentiasa dikemas kini semasa aplikasi ditutup, sila pilih \"Benarkan sepanjang masa\" pada skrin seterusnya.</string>
+    <string name="onboarding_bg_location_error">Lokasi latar belakang diperlukan untuk mengemas kini kenalan anda apabila aplikasi ditutup. Sila cuba lagi dan pilih \"Benarkan sepanjang masa\".</string>
+    <string name="onboarding_configure_location">Konfigurasikan Lokasi</string>
+    <string name="onboarding_battery_title">Bateri</string>
+    <string name="onboarding_battery_desc">Android mungkin menghentikan LocaPeer untuk menjimatkan bateri. Untuk kemas kini yang boleh dipercayai, sila kecualikan LocaPeer daripada pengoptimuman.</string>
+    <string name="onboarding_disable_optimizations">Matikan Pengoptimuman</string>
+    <string name="onboarding_done_title">Semua Sedia!</string>
+    <string name="onboarding_done_desc">Rangkaian lokasi peribadi anda sudah sedia.</string>
+    <string name="onboarding_start_using">Mula Gunakan LocaPeer</string>
+
+    <string name="common_try_again">Cuba Lagi</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Imbas Jemputan</string>
+    <string name="scan_camera_needed">Kebenaran kamera diperlukan untuk mengimbas kod QR.</string>
+    <string name="scan_grant_permission">Berikan Kebenaran</string>
+    <string name="scan_add_contact_title">Tambah kenalan?</string>
+    <string name="scan_add_contact_message">Ini akan menghubungkan anda dengan %1$s dan mula berkongsi lokasi antara satu sama lain.</string>
+    <string name="scan_add_share">Tambah &amp; Kongsi</string>
+    <string name="scan_request_sent_title">Permintaan Dihantar!</string>
+    <string name="scan_request_sent_message">Permintaan telah dihantar kepada %1$s. Anda akan dihubungkan setelah mereka menerima.</string>
+    <string name="scan_failed">Imbasan gagal: %1$s</string>
+
     <string name="cd_back">Kembali</string>
+    <string name="common_review">Semak</string>
+    <string name="common_decline">Tolak</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Hantar/Terima</string>
+    <string name="role_send">Hantar</string>
+    <string name="role_receive">Terima</string>
+    <string name="role_none">Tiada Perkongsian</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Jemputan Saya</string>
+    <string name="invite_tab_add_contact">Tambah Kenalan</string>
+    <string name="invite_your_qr_title">Kod QR Anda</string>
+    <string name="invite_your_qr_subtitle">Biarkan seseorang mengimbasnya untuk mengikuti lokasi anda</string>
+    <string name="invite_qr_cd">Kod QR anda</string>
+    <string name="invite_qr_error">Ralat menjana QR</string>
+    <string name="invite_share_link">Kongsi Pautan Jemputan</string>
+    <string name="invite_encryption_note">Lokasi anda akan disulitkan khusus untuk peranti pengimbas.</string>
+    <string name="invite_camera_required_title">Akses Kamera Diperlukan</string>
+    <string name="invite_camera_required_message">Berikan kebenaran kamera untuk mengimbas kod QR.</string>
+    <string name="invite_point_camera">Halakan kamera ke QR LocaPeer</string>
+    <string name="invite_paste_title">Atau Tampal Pautan Jemputan</string>
+    <string name="invite_process_link">Proses Pautan</string>
+    <string name="invite_fallback_name">Kenalan</string>
+    <string name="invite_success_message">Anda akan dihubungkan dengan %1$s setelah mereka menerima.</string>
+    <string name="invite_confirm_add_title">Tambah %1$s?</string>
+    <string name="invite_confirm_add_message">Tambahkan mereka ke kenalan anda dan kongsi lokasi?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Tiada permintaan tertunda</string>
+    <string name="pending_requesting">Meminta: %1$s · %2$s</string>
+    <string name="pending_role_change">Permintaan tukar peranan · %1$s</string>
+    <string name="pending_new_request">Permintaan perkongsian baharu · %1$s</string>
+
+    <string name="common_save_changes">Simpan Perubahan</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Kemas Kini Tetapan Perkongsian</string>
+    <string name="incoming_new_title">Permintaan Kenalan Baharu</string>
+    <string name="incoming_update_subtitle">%1$s mahu mengemas kini cara anda berkongsi. Semak tetapan di bawah.</string>
+    <string name="incoming_new_subtitle">%1$s menambah anda sebagai kenalan! Anda kini boleh memilih apa yang ingin dikongsi kembali.</string>
+    <string name="incoming_section_location">Lokasi</string>
+    <string name="incoming_share_my_location">Kongsi lokasi saya dengan %1$s</string>
+    <string name="incoming_share_my_location_sub">Mereka akan dapat melihat lokasi anda</string>
+    <string name="incoming_see_their_location">Lihat lokasi %1$s</string>
+    <string name="incoming_see_their_location_sub">Anda akan dapat melihat lokasi mereka</string>
+    <string name="incoming_section_messaging">Pemesejan</string>
+    <string name="incoming_allow_messages">Benarkan Mesej</string>
+    <string name="incoming_allow_messages_sub">Terima mesej sembang daripada %1$s</string>
+
+    <string name="common_request">Minta</string>
+    <string name="common_edit">Sunting</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Tetapan Kenalan</string>
+    <string name="peer_section_roles">Peranan Perkongsian Lokasi</string>
+    <string name="peer_send_on">%1$s boleh melihat lokasi anda</string>
+    <string name="peer_send_off">Anda tidak berkongsi lokasi dengan %1$s</string>
+    <string name="peer_receive_title">Terima Lokasi %1$s</string>
+    <string name="peer_receive_on">Anda boleh melihat lokasi %1$s</string>
+    <string name="peer_receive_off">Anda tiada akses kepada lokasi %1$s</string>
+    <string name="peer_section_privacy">Privasi &amp; Kawalan Perkongsian</string>
+    <string name="peer_pause_sharing">Jeda Perkongsian</string>
+    <string name="peer_pause_sub">Berhenti sementara menghantar lokasi anda kepada %1$s</string>
+    <string name="peer_precision">Kepersisan Lokasi</string>
+    <string name="peer_precision_exact_sub">Koordinat GPS tepat</string>
+    <string name="peer_precision_suburb_sub">Lokasi anggaran (peringkat kejiranan)</string>
+    <string name="peer_always_sharing">Sentiasa berkongsi</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">%1$d peraturan perkongsian aktif</item>
+    </plurals>
+    <string name="peer_section_alerts">Amaran &amp; Pemantauan</string>
+    <string name="peer_sos_contact">Kenalan SOS</string>
+    <string name="peer_sos_sub">Menerima amaran kecemasan anda walaupun perkongsian dijeda</string>
+    <string name="peer_missed_alert">Amaran Lokasi Terlepas</string>
+    <string name="peer_missed_on">Maklumkan saya jika %1$s berhenti melaporkan lokasinya</string>
+    <string name="peer_requires_access">Memerlukan akses kepada lokasi %1$s</string>
+    <string name="peer_proximity_alert">Amaran Jarak Dekat</string>
+    <string name="peer_proximity_sub">Maklumkan saya apabila %1$s berdekatan</string>
+    <string name="peer_alert_radius">Jejari Amaran</string>
+    <string name="peer_alert_schedule">Jadual Amaran</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">%1$d peraturan aktif</item>
+    </plurals>
+    <string name="peer_geofences_sub">Sediakan zon ketibaan dan pelepasan untuk %1$s</string>
+    <string name="peer_supervise">Selia Peranti Ini</string>
+    <string name="peer_supervise_on">Anda menerima dan meluluskan permintaan buka kunci daripada %1$s</string>
+    <string name="peer_supervise_off">Benarkan %1$s menghantar permintaan buka kunci mod diselia kepada anda</string>
+    <string name="peer_messaging_sub">Hidupkan/matikan mesej sembang daripada %1$s</string>
+    <string name="peer_section_history">Sejarah Pergerakan</string>
+    <string name="peer_location_history">Sejarah Lokasi</string>
+    <string name="peer_location_history_sub">Lihat sejarah pergerakan dan laporan peta untuk %1$s</string>
+    <string name="peer_section_retention">Pengekalan Data Jauh</string>
+    <string name="peer_retention_location_sub">Berapa lama %1$s menyimpan sejarah lokasi anda</string>
+    <string name="peer_purge_location">Buang Semua Data Lokasi daripada %1$s</string>
+    <string name="peer_retention_messages_sub">Berapa lama %1$s menyimpan mesej yang anda hantar</string>
+    <string name="peer_purge_messages">Buang Semua Mesej daripada %1$s</string>
+    <string name="peer_precision_exact">GPS Tepat</string>
+    <string name="peer_precision_exact_desc">Koordinat persis</string>
+    <string name="peer_precision_suburb">Kejiranan (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Peringkat kejiranan sahaja</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">Padam %1$d perbualan?</item>
+    </plurals>
+    <string name="conv_delete_locally">Padam Secara Setempat</string>
+    <string name="conv_delete_locally_sub">Mengalih keluar perbualan daripada peranti anda sahaja.</string>
+    <string name="conv_delete_both">Padam Setempat/Daripada Kenalan</string>
+    <string name="conv_bulk_delete_both_sub">Memadamkan perbualan secara setempat dan daripada kenalan anda.</string>
+    <string name="conv_delete_both_sub">Memadamkan perbualan secara setempat dan mencetuskan permintaan pemadaman perbualan pada peranti kenalan.</string>
+    <string name="conv_cd_exit_selection">Keluar daripada pemilihan</string>
+    <string name="conv_cd_select_all">Pilih Semua</string>
+    <string name="conv_cd_new_message">Mesej baharu</string>
+    <string name="conv_sort_date">Tarikh</string>
+    <string name="conv_sort_unread">Belum Dibaca</string>
+    <string name="conv_search_placeholder">Cari perbualan…</string>
+    <string name="conv_tab_chats">Sembang</string>
+    <string name="conv_tab_archived">Diarkibkan</string>
+    <string name="conv_mark_read">Tanda Dibaca</string>
+    <string name="conv_archive">Arkib</string>
+    <string name="conv_unarchive">Nyaharkib</string>
+    <string name="conv_empty_no_results">Tiada hasil untuk \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Cuba istilah carian lain</string>
+    <string name="conv_empty_archived_title">Tiada sembang diarkibkan</string>
+    <string name="conv_empty_archived_sub">Arkibkan sembang untuk memastikan peti masuk anda kemas</string>
+    <string name="conv_empty_title">Belum ada mesej</string>
+    <string name="conv_empty_sub">Buka peta dan ketik seseorang\nuntuk memulakan perbualan</string>
+    <string name="conv_delete_title">Padam perbualan?</string>
+    <string name="conv_delete_message">Bagaimanakah anda mahu memadamkan perbualan dengan %1$s ini?</string>
+    <string name="conv_messages_blocked">Mesej disekat</string>
+    <string name="conv_preview_mine">Anda: %1$s</string>
+    <string name="conv_new_message_title">Mesej Baharu</string>
+    <string name="conv_picker_empty">Belum ada kenalan. Imbas kod QR untuk menambah kenalan.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Kosongkan sejarah sembang?</string>
+    <string name="chat_clear_message">Bagaimanakah anda mahu mengosongkan perbualan dengan %1$s ini?</string>
+    <string name="chat_clear_locally">Kosongkan Secara Setempat</string>
+    <string name="chat_clear_both">Kosongkan Setempat/Daripada Kenalan</string>
+    <string name="chat_clear_both_sub">Mengosongkan sembang secara setempat dan menghantar permintaan pemadaman kepada %1$s untuk mesej yang anda hantar.</string>
+    <string name="chat_cd_options">Pilihan</string>
+    <string name="chat_clear_history_menu">Kosongkan Sejarah Sembang</string>
+    <string name="chat_typing">%1$s sedang menaip…</string>
+    <string name="chat_blocked_banner">Anda telah menyekat mesej daripada %1$s. Pergi ke Kenalan untuk menyahsekat.</string>
+    <string name="chat_delete_msg_title">Padam mesej?</string>
+    <string name="chat_delete_msg_message">Bagaimanakah anda mahu memadamkan mesej ini?</string>
+    <string name="chat_delete_from_contact">Padam daripada kenalan</string>
+    <string name="chat_delete_from_contact_sub">Memadamkan sembang daripada peranti kenalan.</string>
+    <string name="chat_delete_both_sub">Mengalih keluar sembang secara setempat dan memadamkannya secara automatik daripada peranti kenalan.</string>
+    <string name="chat_cd_share_location">Kongsi Lokasi</string>
+    <string name="chat_input_placeholder">Mesej…</string>
+    <string name="chat_cd_send">Hantar</string>
+
+    <string name="common_close">Tutup</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Aktifkan SOS?</string>
+    <string name="map_sos_deactivate_title">Nyahaktifkan SOS?</string>
+    <string name="map_sos_activate_msg">Ini akan menyiarkan lokasi anda setiap 15 saat kepada kenalan SOS yang ditetapkan sehingga dinyahaktifkan.</string>
+    <string name="map_sos_deactivate_msg">Ini akan menghentikan siaran lokasi keutamaan tinggi kepada kenalan kecemasan anda.</string>
+    <string name="map_activate">Aktifkan</string>
+    <string name="map_deactivate">Nyahaktifkan</string>
+    <string name="map_cd_style">Gaya Peta</string>
+    <string name="map_cd_show_geofences">Tunjukkan geopagar</string>
+    <string name="map_cd_hide_geofences">Sembunyikan geopagar</string>
+    <string name="map_cd_follow">Ikut Saya</string>
+    <string name="map_cd_friends">Rakan</string>
+    <string name="map_no_friends">Belum ada yang dijejaki</string>
+    <string name="map_you">Anda</string>
+    <string name="map_cd_go_my_location">Pergi ke lokasi saya</string>
+    <string name="map_sos_active">⚠ SOS AKTIF</string>
+    <string name="map_away">Jauh</string>
+    <string name="map_no_location_yet">Belum ada lokasi</string>
+    <string name="map_cd_go_location">Pergi ke lokasi</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS HIDUP</string>
+    <string name="map_overdue">Tertunggak — tiada kemas kini terkini</string>
+    <string name="map_stat_last_seen">Kali terakhir dilihat</string>
+    <string name="map_stat_battery">Bateri</string>
+    <string name="map_stat_accuracy">Ketepatan</string>
+    <string name="map_stat_motion">Gerakan</string>
+    <string name="map_stat_speed">Kelajuan</string>
+    <string name="map_stat_elevation">Ketinggian</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Sejarah: %1$s</string>
+    <string name="history_select_person">Pilih Orang</string>
+    <string name="history_person_label">Orang</string>
+    <string name="history_cd_prev_day">Hari Sebelumnya</string>
+    <string name="history_cd_next_day">Hari Seterusnya</string>
+    <string name="history_time_filter">Penapis Masa:</string>
+    <string name="history_cd_reset_time">Tetapkan Semula Masa</string>
+    <string name="history_tab_list">Senarai</string>
+    <string name="history_empty_title">Tiada sejarah untuk hari ini</string>
+    <string name="history_empty_sub">Cuba pilih tarikh lain atau semak sambungan anda.</string>
+    <string name="history_start_time">Masa Mula</string>
+    <string name="history_end_time">Masa Tamat</string>
+    <string name="history_no_data_title">Tiada data lokasi</string>
+    <string name="history_no_data_sub">Tiada titik yang direkodkan untuk hari atau julat masa ini.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">%1$d titik direkodkan</item>
+    </plurals>
+    <string name="history_cd_dismiss">Tutup</string>
+    <string name="history_accuracy_label">Ketepatan ±%1$s</string>
+    <string name="history_emergency_sos">Isyarat SOS kecemasan</string>
+    <string name="history_detail_location">Lokasi</string>
+    <string name="history_detail_coordinates">Koordinat</string>
+    <string name="history_within">dalam ±%1$s</string>
+    <string name="history_detail_movement">Pergerakan</string>
+    <string name="history_movement_desc">%1$s %2$s menghala %3$s</string>
+
+    <string name="common_create">Cipta</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Tambah kawasan geopagar</string>
+    <string name="geo_cd_assign">Tugaskan geopagar</string>
+    <string name="geo_unknown">Tidak diketahui</string>
+    <string name="geo_empty_title">Tiada geopagar</string>
+    <string name="geo_empty_sub">Ketik + untuk mencipta kawasan geopagar, kemudian tugaskan kenalan kepadanya daripada tetapan perkongsian mereka.</string>
+    <string name="geo_delete_title">Padam geopagar?</string>
+    <string name="geo_delete_simple">Padam \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">\"%1$s\" ditugaskan kepada %2$d kenalan. Memadamkannya turut mengalih keluar tugasan tersebut.</item>
+    </plurals>
+    <string name="geo_for_contact">Geopagar untuk %1$s</string>
+    <string name="geo_empty_contact_title">Tiada geopagar untuk kenalan</string>
+    <string name="geo_empty_contact_sub">Ketik + untuk menugaskan kawasan geopagar dan pilih sama ada amaran semasa tiba, pergi, atau kedua-duanya.</string>
+    <string name="geo_no_areas_title">Belum ada geopagar</string>
+    <string name="geo_no_areas_msg">Cipta kawasan geopagar dahulu daripada skrin Geopagar, kemudian tugaskannya di sini.</string>
+    <string name="geo_radius_label">Jejari %1$s</string>
+    <string name="geo_contacts_label">Kenalan: %1$s</string>
+    <string name="geo_no_contacts_assigned">Tiada kenalan ditugaskan</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">%1$d peraturan</item>
+    </plurals>
+    <string name="geo_trigger_enter">Masuk</string>
+    <string name="geo_trigger_exit">Keluar</string>
+    <string name="geo_trigger_both">Kedua-duanya</string>
+    <string name="geo_edit_title">Sunting Geopagar</string>
+    <string name="geo_new_title">Geopagar Baharu</string>
+    <string name="geo_cd_my_location">Lokasi saya</string>
+    <string name="geo_cd_radius_increase">Besarkan jejari</string>
+    <string name="geo_cd_radius_decrease">Kecilkan jejari</string>
+    <string name="geo_hint_tap">Ketik atau tahan peta untuk meletakkan</string>
+    <string name="geo_hint_move">Cubit untuk zum • Tahan atau seret pin untuk mengalihkan</string>
+    <string name="geo_basic_info">Maklumat Asas</string>
+    <string name="geo_search_title">Cari mengikut Alamat</string>
+    <string name="geo_search_label">Alamat atau tempat</string>
+    <string name="geo_search_placeholder">cth. 10 Jalan Besar, Kuala Lumpur</string>
+    <string name="geo_search_no_results">Tiada alamat sepadan dijumpai</string>
+    <string name="geo_cd_search">Cari</string>
+    <string name="geo_name_placeholder">cth. Rumah, Pejabat</string>
+    <string name="geo_name_required">Nama diperlukan</string>
+    <string name="geo_latitude">Latitud</string>
+    <string name="geo_longitude">Longitud</string>
+    <string name="geo_lat_range">-90 hingga 90</string>
+    <string name="geo_lng_range">-180 hingga 180</string>
+    <string name="geo_radius">Jejari</string>
+    <string name="geo_radius_range">Masukkan %1$d hingga %2$d m</string>
+    <string name="geo_edit_assignment">Sunting Tugasan</string>
+    <string name="geo_assign_title">Tugaskan Geopagar</string>
+    <string name="geo_select_area">Pilih Kawasan Geopagar</string>
+    <string name="geo_trigger_title">Cetuskan Pemberitahuan Semasa</string>
+    <string name="geo_add_rule">Tambah Peraturan</string>
+    <string name="geo_alerts_all_times">Amaran aktif sepanjang masa. Tambah peraturan untuk mengehadkan bila amaran dihantar.</string>
+    <string name="geo_assign_action">Tugaskan</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Amaran Jarak Dekat</string>
+    <string name="prox_empty_title">Tiada orang dijejaki</string>
+    <string name="prox_empty_sub">Imbas QR jemputan seseorang daripada tab Imbas\nuntuk mula menjejaki lokasinya</string>
+    <string name="prox_intro">Dapatkan pemberitahuan apabila orang yang dijejaki berada dalam jarak yang dipilih daripada anda.</string>
+    <string name="prox_alert_within">Amaran apabila dalam %1$s</string>
+    <string name="prox_alerts_off">Amaran dimatikan</string>
+    <string name="prox_alert_radius">Jejari amaran</string>
+    <string name="prox_edit_schedule">Sunting Jadual</string>
+    <string name="prox_rules">Peraturan</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Jadual untuk %1$s</string>
+    <string name="schedule_cd_add_rule">Tambah peraturan</string>
+    <string name="schedule_empty_title">Tiada peraturan jadual</string>
+    <string name="schedule_empty_global">Lokasi dikongsi sepanjang masa. Tambah peraturan untuk mengehadkan bila perkongsian aktif.</string>
+    <string name="schedule_empty_peer">Lokasi sentiasa dikongsi dengan %1$s. Tambah peraturan untuk mengehadkan bila.</string>
+    <string name="schedule_active_hint">Aktif apabila mana-mana peraturan sepadan dengan masa semasa. Kosong = sentiasa hidup.</string>
+    <string name="schedule_all_day">Sepanjang hari</string>
+    <string name="schedule_plus_one_day"> (+1 hari)</string>
+    <string name="schedule_rule_number">Peraturan %1$d</string>
+    <string name="schedule_cd_delete_rule">Padam peraturan</string>
+    <string name="schedule_edit_rule">Sunting Peraturan</string>
+    <string name="schedule_label_optional">Label (pilihan)</string>
+    <string name="schedule_label_placeholder">cth. Waktu kerja, Hujung minggu</string>
+    <string name="schedule_active_days">Hari Aktif</string>
+    <string name="schedule_time_window">Tetingkap Masa</string>
+    <string name="schedule_start">Mula</string>
+    <string name="schedule_end">Tamat</string>
+    <string name="schedule_overnight">Semalaman: aktif dari %1$s hingga %2$s hari berikutnya</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Peranti Diselia</string>
+    <string name="gate_message">Kelulusan penyelia diperlukan untuk mengakses tetapan.</string>
+    <string name="gate_request_access">Minta Akses</string>
+    <string name="gate_waiting">Menunggu kelulusan penyelia…</string>
+    <string name="gate_denied">Akses ditolak oleh penyelia.</string>
+    <string name="gate_timed_out">Permintaan tamat masa. Penyelia tidak membalas.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Selama-lamanya</string>
+    <string name="retention_keep_for">Simpan selama: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d hari</item>
+    </plurals>
+
+    <string name="common_select">Pilih</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Pilih Lokasi Tetap</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Pilih tab yang muncul dalam bar bawah dan susunannya. Peta sentiasa disertakan.</string>
+    <string name="customize_cd_move_up">Alih ke atas</string>
+    <string name="customize_cd_move_down">Alih ke bawah</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Versi %1$s (binaan %2$d)</string>
+    <string name="about_tagline">Perkongsian lokasi peribadi dengan orang yang anda percayai. Tiada akaun, tiada awan, tiada penjejakan oleh kami.</string>
+    <string name="about_relay_connections">Sambungan Geganti</string>
+    <string name="about_connected">Bersambung</string>
+    <string name="about_disconnected">Terputus</string>
+    <string name="about_open_source">Perpustakaan Sumber Terbuka</string>
+    <string name="about_lib_osmdroid_desc">Pemaparan peta berasaskan OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Pengangkutan WebSocket untuk geganti Nostr</string>
+    <string name="about_lib_compose_desc">Rangka kerja UI</string>
+    <string name="about_lib_hilt_desc">Suntikan kebergantungan</string>
+    <string name="about_lib_room_desc">Pangkalan data setempat</string>
+    <string name="about_map_attribution">Data peta © penyumbang OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Terima</string>
+    <string name="notif_someone">Seseorang</string>
+    <string name="notif_sos_title">SOS daripada %1$s!</string>
+    <string name="notif_sos_text">%1$s telah mengaktifkan SOS di (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s mahu anda menjadi penyelianya</string>
+    <string name="notif_supervisor_request_text">Terima untuk membenarkan permintaan kelulusan buka kunci daripada peranti ini</string>
+    <string name="notif_supervisor_request_big">Terima untuk membenarkan %1$s menghantar permintaan kelulusan buka kunci kepada anda apabila mod diselia aktif.</string>
+    <string name="notif_supervised_active_title">Mod diselia aktif</string>
+    <string name="notif_supervised_active_text">Penyelia anda mengesahkan — mod diselia kini disediakan</string>
+    <string name="notif_supervised_declined_title">Mod diselia ditolak</string>
+    <string name="notif_supervised_declined_text">Penyelia anda menolak permintaan — mod diselia telah dimatikan</string>
+    <string name="notif_tracking_alert_title">Amaran Penjejakan</string>
+    <string name="notif_tracking_proximity">%1$s menerima amaran jarak dekat mengenai anda</string>
+    <string name="notif_tracking_geofence">%1$s menerima amaran bahawa anda memasuki/keluar pagar: %2$s</string>
+    <string name="notif_tracking_generic">%1$s sedang memantau lokasi anda</string>
+    <string name="notif_track_update_title">Kemas kini perkongsian daripada %1$s</string>
+    <string name="notif_track_new_title">Kenalan Baharu: %1$s</string>
+    <string name="notif_role_send_receive">Hantar/Terima Lokasi</string>
+    <string name="notif_role_send">Hantar Lokasi</string>
+    <string name="notif_role_receive">Terima Lokasi</string>
+    <string name="notif_role_none">Tiada Perkongsian Lokasi</string>
+    <string name="notif_track_requesting">%1$s meminta: %2$s</string>
+    <string name="notif_track_update_body">%1$s mahu mengemas kini cara anda berkongsi lokasi.</string>
+    <string name="notif_track_new_body">%1$s menambah anda sebagai kenalan dan mahu berhubung.</string>
+    <string name="notif_contact_connected_title">Kenalan Dihubungkan</string>
+    <string name="notif_contact_connected_text">%1$s kini dihubungkan dengan anda.</string>
+    <string name="notif_request_declined_title">Permintaan Ditolak</string>
+    <string name="notif_request_declined_text">%1$s telah menolak permintaan perkongsian lokasi anda.</string>
+    <string name="notif_message_person">Mesej %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s memasuki %2$s</string>
+    <string name="notif_geofence_left_title">%1$s meninggalkan %2$s</string>
+    <string name="notif_geofence_subtitle">di %1$s · jejari %2$s</string>
+    <string name="notif_person_nearby">%1$s berdekatan</string>
+    <string name="notif_distance_from_you">%1$s daripada anda</string>
+    <string name="notif_missed_title">Tiada kemas kini daripada %1$s</string>
+    <string name="notif_missed_text">Kali terakhir dilihat %1$s min lalu berhampiran (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS AKTIF!</string>
+    <string name="notif_sos_active_text">Menyiarkan amaran kecemasan kepada kenalan SOS</string>
+    <string name="notif_messages_group_title">Mesej LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Permintaan kenalan daripada %1$s ditolak</string>
+    <string name="toast_now_supervising">Kini menyelia peranti %1$s</string>
+    <string name="toast_declined_supervision">Permintaan penyeliaan daripada %1$s ditolak</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Sebentar tadi</string>
+    <string name="time_minutes_ago">%1$d min lalu</string>
+    <string name="fallback_me">Saya</string>
+    <string name="fallback_unknown">Tidak diketahui</string>
+    <string name="geo_unassigned">Tidak ditugaskan</string>
+    <string name="days_every_day">Setiap hari</string>
+    <string name="days_weekdays">Hari bekerja</string>
+    <string name="days_weekends">Hujung minggu</string>
+    <string name="days_none">Tiada hari</string>
+    <string name="chat_my_location_message">Lokasi semasa saya: %1$s</string>
+    <string name="scan_error_bad_pubkey">Jemputan tidak sah: kunci awam salah</string>
+    <string name="scan_error_key_mismatch">Jemputan tidak sah: kunci tidak sepadan</string>
+    <string name="scan_error_unknown">Ralat tidak diketahui</string>
+    <string name="scan_error_invalid_link">Pautan jemputan tidak sah</string>
+    <string name="scan_fallback_contact">kenalan ini</string>
+    <string name="backup_saved">Sandaran disimpan: %1$s</string>
+    <string name="backup_saved_encrypted">Sandaran disimpan (disulitkan): %1$s</string>
+    <string name="backup_failed">Sandaran gagal: %1$s</string>
+    <string name="backup_could_not_read_file">Tidak dapat membaca fail</string>
+    <string name="backup_could_not_write_file">Tidak dapat menulis fail</string>
+    <string name="backup_could_not_read">Tidak dapat membaca sandaran: %1$s</string>
+    <string name="backup_incorrect_password">Kata laluan salah</string>
+    <string name="restore_result_restored">Dipulihkan: %1$s</string>
+    <string name="restore_result_failed">Gagal: %1$s</string>
+    <string name="restore_nothing">Tiada apa untuk dipulihkan</string>
+    <string name="restore_failed">Pemulihan gagal: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">%1$d kenalan</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">%1$d geopagar</item>
+    </plurals>
+    <string name="peer_role_change_sent">Permintaan tukar peranan dihantar kepada %1$s</string>
+    <string name="peer_not_found">Kenalan tidak dijumpai</string>
+    <string name="peer_purge_location_sent">Arahan padam jauh untuk SEMUA lokasi dihantar kepada %1$s</string>
+    <string name="peer_purge_messages_sent">Arahan padam jauh untuk SEMUA mesej dihantar kepada %1$s</string>
+    <string name="onboarding_error_key_length">Kunci tidak sah — mesti 64 aksara heks.</string>
+    <string name="onboarding_error_key_range">Kunci peribadi tidak sah — di luar julat lengkung.</string>
+    <string name="onboarding_error_hex">Format heks tidak sah.</string>
+    <string name="onboarding_error_import_failed">Gagal mengimport kunci: %1$s</string>
 </resources>

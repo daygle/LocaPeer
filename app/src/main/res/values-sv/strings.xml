@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Meddelandekanaler & Förgrundstjänst ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Platssändning</string>
     <string name="channel_desc_heartbeat">Sänder din plats till dina godkända kontakter</string>
     <string name="channel_name_alerts">Varningar</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer körs</string>
     <string name="notification_heartbeat_text">Delar din plats med andra</string>
 
-    <!-- ── Gemensamma åtgärder ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Spara</string>
     <string name="common_cancel">Avbryt</string>
     <string name="common_done">Klar</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Godkänn</string>
     <string name="common_deny">Neka</string>
 
-    <!-- ── Navigeringstabbar ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Karta</string>
     <string name="tab_messages">Meddelanden</string>
     <string name="tab_history">Historik</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Inställningar</string>
 
-    <!-- ── Rörelse / aktivitetsstatus ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Stillastående</string>
     <string name="motion_walking">Går</string>
     <string name="motion_running">Springer</string>
     <string name="motion_cycling">Cyklar</string>
     <string name="motion_driving">Kör bil</string>
 
-    <!-- ── Inställningar ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Privat nyckel</string>
+    <string name="backup_section_contacts">Kontakter</string>
+    <string name="backup_section_geofences">Geostaket</string>
+    <string name="backup_section_settings">Inställningar</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Tillsynsbegäran</string>
+    <string name="supervision_request_message">\"%1$s\" begär åtkomst till sina inställningar. Tillåt?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Inställningar</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Plats &amp; Integritet</string>
     <string name="settings_section_security">Säkerhet</string>
     <string name="settings_section_map">Karta</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Säkerhetskopiering &amp; Nycklar</string>
     <string name="settings_section_about">Om</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Redigera namn</string>
     <string name="settings_my_qr">Min QR</string>
     <string name="settings_no_name_set">Inget namn angett</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Dela min plats</string>
+    <string name="settings_broadcasting">Sänder till dina kontakter</string>
+    <string name="settings_not_broadcasting">Sänder inte</string>
+    <string name="settings_sharing_schedule">Delningsschema</string>
+    <string name="settings_always_on">Alltid på</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d regel</item>
+        <item quantity="other">%1$d regler</item>
+    </plurals>
+    <string name="settings_geofences">Geostaket</string>
+    <string name="settings_geofences_subtitle">Hantera delade geostaketområden</string>
+    <string name="settings_notify_when_tracked">Meddela vid spårning</string>
+    <string name="settings_notify_when_tracked_subtitle">Få en avisering när en kontakts närhets- eller geostaketlarm om dig utlöses.</string>
+    <string name="settings_my_location_history">Platshistorik</string>
+    <string name="settings_my_location_history_subtitle">Bläddra i din egen platstidslinje</string>
+    <string name="settings_lookup_addresses">Slå upp adresser</string>
+    <string name="settings_lookup_addresses_subtitle">Visa gatuadresser för historikpunkter och kartnålar du trycker på, och sök på adress när du placerar geostaket. Skickar koordinaterna eller din sökning till enhetens geokodningstjänst (vanligen Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Tillsyn aktiv</string>
+    <string name="settings_supervision_active_subtitle">Inställningar kräver tillsynspersonens godkännande</string>
+    <string name="settings_disable_supervised">Inaktivera övervakat läge</string>
+    <string name="settings_supervised_mode">Övervakat läge</string>
+    <string name="settings_supervised_mode_subtitle">Kräv tillsynspersonens godkännande för åtkomst till inställningar</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Startpunkt</string>
+    <string name="settings_map_current_location">Nuvarande plats</string>
+    <string name="settings_map_all_contacts">Alla kontakter</string>
+    <string name="settings_map_fixed_location">Fast plats</string>
+    <string name="settings_map_last_position">Senaste position</string>
+    <string name="settings_map_starting_point_title">Kartans startpunkt</string>
+    <string name="settings_no_location_set">Ingen plats angiven</string>
+    <string name="settings_pick_location_on_map">Välj plats på kartan</string>
+    <string name="settings_default_zoom_level">Standardzoomnivå</string>
+    <string name="settings_map_pin_colour">Kartnålens färg</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Uppdateringsfrekvens</string>
+    <string name="settings_update_cadence_subtitle">Justera hur ofta din plats sänds</string>
+    <string name="settings_update_cadence_dialog_message">Styr hur ofta din plats uppdateras baserat på din aktivitet. Täta uppdateringar drar mer batteri.</string>
+    <string name="settings_update_cadence_reset">Återställ till standard</string>
+    <string name="settings_min_distance_filtering">Minsta avståndsfiltrering</string>
+    <string name="settings_min_distance_filtering_subtitle">Visa bara punkter som ligger minst så här långt från föregående.</string>
+    <string name="settings_discard_low_accuracy">Kasta mätningar med låg noggrannhet</string>
+    <string name="settings_discard_low_accuracy_subtitle">Sänd eller spara inte egna positioner med en noggrannhetsradie större än detta. SOS hoppas aldrig över.</string>
+    <string name="settings_hide_low_accuracy">Dölj punkter med låg noggrannhet</string>
+    <string name="settings_hide_low_accuracy_subtitle">Dölj historikpunkter med en noggrannhetsradie större än detta. Inget raderas.</string>
+    <string name="settings_low_battery" formatted="false">Lågt batteri (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Rörelsedetektering</string>
+    <string name="settings_motion_detection_on">Aktiverad — förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
+    <string name="settings_motion_detection_off">Av — tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
+    <string name="settings_enable_motion_title">Aktivera rörelsedetektering</string>
+    <string name="settings_enable_motion_message">Åtkomst till fysisk aktivitet låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt i din historik. Den är för närvarande avstängd — du kan aktivera den igen i systeminställningarna.</string>
+    <string name="settings_open_settings">Öppna inställningar</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Hastighetsenheter</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metrisk (km/h)</string>
+    <string name="settings_elevation_units">Höjdenheter</string>
+    <string name="settings_elevation_imperial">Imperial (fot)</string>
+    <string name="settings_elevation_metric">Metrisk (meter)</string>
+    <string name="settings_distance_units">Avståndsenheter</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metrisk (m/km)</string>
+    <string name="settings_time_format">Tidsformat</string>
+    <string name="settings_time_24h">24-timmars (13:30)</string>
+    <string name="settings_time_12h">12-timmars (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Platsdata</string>
+    <string name="settings_retention_location_subtitle">Hur länge kontakters platsdata sparas lokalt</string>
+    <string name="settings_clear_all_location">Rensa all platsdata</string>
+    <string name="settings_retention_messages">Meddelanden</string>
+    <string name="settings_retention_messages_subtitle">Hur länge mottagna meddelanden sparas lokalt</string>
+    <string name="settings_clear_all_messages">Rensa alla meddelanden</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Anpassa navigering</string>
+    <string name="settings_customize_nav_subtitle">Välj och ordna om flikarna längst ned</string>
+    <string name="settings_start_page">Startsida</string>
     <string name="settings_language">Språk</string>
     <string name="settings_language_title">Appspråk</string>
     <string name="settings_language_system">Systemstandard</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Exportera säkerhetskopia</string>
+    <string name="settings_export_backup_subtitle">Spara din privata nyckel och dina kontakter i en fil. Förvara filen säkert!</string>
+    <string name="settings_import_backup">Importera säkerhetskopia</string>
+    <string name="settings_import_backup_subtitle">Återställ från en tidigare exporterad fil</string>
+    <string name="settings_view_private_key">Visa privat nyckel</string>
+    <string name="settings_view_private_key_subtitle">Visa din 64-teckens hexadecimala identitetsnyckel</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Om LocaPeer</string>
+    <string name="settings_about_subtitle">Version, relästatus, öppen källkod</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Redigera visningsnamn</string>
+    <string name="settings_display_name_label">Visningsnamn</string>
+    <string name="settings_my_invite_qr">Min inbjudnings-QR</string>
+    <string name="settings_invite_qr_subtitle">Andra kan skanna den för att börja spåra dig.</string>
+    <string name="settings_invite_qr_cd">Inbjudnings-QR</string>
+    <string name="settings_private_key_title">Privat nyckel</string>
+    <string name="settings_private_key_warning">Förvara den säkert. Vem som helst med denna nyckel kan utge sig för att vara du.</string>
+    <string name="settings_clear_location_title">Rensa platshistorik?</string>
+    <string name="settings_clear_location_message">Alla sparade platspunkter raderas permanent.</string>
+    <string name="settings_clear_messages_title">Rensa meddelandehistorik?</string>
+    <string name="settings_clear_messages_message">Alla sparade meddelanden raderas permanent.</string>
+    <string name="settings_encrypted_backup_title">Krypterad säkerhetskopia</string>
+    <string name="settings_encrypted_backup_message">Denna säkerhetskopia är krypterad. Ange lösenordet för att fortsätta.</string>
+    <string name="settings_select_restore_title">Välj data att återställa</string>
+    <string name="settings_select_export_title">Välj data att exportera</string>
+    <string name="settings_export_password_hint">Ange valfritt ett lösenord för att kryptera säkerhetskopian.</string>
+    <string name="settings_backup_password_optional">Lösenord för säkerhetskopia (valfritt)</string>
+    <string name="settings_select_sections">Välj avsnitt att inkludera:</string>
+    <string name="settings_choose_file_location">Välj filplats</string>
+    <string name="settings_not_in_backup">Finns inte i denna säkerhetskopia</string>
+    <string name="settings_enable_supervised_title">Aktivera övervakat läge</string>
+    <string name="settings_enable_supervised_message">Välj en kontakt som blir tillsynsperson. Hen måste godkänna åtkomst till inställningarna från sin enhet.</string>
+    <string name="settings_no_peers_found">Inga kontakter hittades. Lägg först till en kontakt genom att skanna dess inbjudnings-QR-kod.</string>
+    <string name="settings_disable_supervised_title">Inaktivera övervakat läge?</string>
+    <string name="settings_disable_supervised_message">Inställningarna blir åtkomliga utan tillsynspersonens godkännande.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Ta bort</string>
+    <string name="common_name">Namn</string>
+    <string name="common_search">Sök</string>
+    <string name="common_sort">Sortera</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Meddelande</string>
+    <string name="cd_show_on_map">Visa på kartan</string>
+    <string name="cd_more_options">Fler alternativ</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d markerad</item>
+        <item quantity="other">%1$d markerade</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Avbryt markering</string>
+    <string name="contacts_cd_select_all">Markera alla</string>
+    <string name="contacts_cd_deselect_all">Avmarkera alla</string>
+    <string name="contacts_cd_qr_invite">QR / inbjudan</string>
+    <string name="contacts_cd_pending_requests">Väntande förfrågningar</string>
+    <string name="contacts_sort_last_seen">Senast sedd</string>
+    <string name="contacts_search_placeholder">Sök kontakter…</string>
+    <string name="contacts_empty_title">Inga kontakter ännu</string>
+    <string name="contacts_empty_subtitle">Skanna en QR-kod för att koppla ihop dig med någon och börja dela platser.</string>
+    <string name="contacts_scan_qr">Skanna QR-kod</string>
+    <string name="contacts_bulk_delete_messages">Radera meddelanden</string>
+    <string name="contacts_bulk_delete_locations">Radera platser</string>
+    <string name="contacts_last_seen">Senast sedd: %1$s</string>
+    <string name="contacts_no_location_yet">Ingen platsdata ännu</string>
+    <string name="contacts_view_sharing_settings">Delningsinställningar</string>
+    <string name="contacts_view_location_history">Platshistorik</string>
+    <string name="contacts_rename_contact">Byt namn på kontakt</string>
+    <string name="contacts_on_contact_device">På kontaktens enhet</string>
+    <string name="contacts_delete_my_messages_title">Radera mina meddelanden</string>
+    <string name="contacts_delete_locations_title">Radera delade platser</string>
+    <string name="contacts_remove_contact_title">Ta bort kontakt</string>
+    <string name="contacts_leave_title">Radera kontakt och data</string>
+    <string name="contacts_rename_title">Byt namn på kontakt</string>
+    <string name="contacts_remove_contact_body">Ta bort %1$s från dina kontakter? Platshistoriken raderas också lokalt.</string>
+    <string name="contacts_leave_body">Detta tar bort dig från %1$s kontakter och raderar alla dina meddelanden och platsdata från dennes enhet. Du förlorar också åtkomsten till dennes plats.</string>
+    <string name="contacts_delete_my_messages_body">Detta raderar alla meddelanden du skickat från %1$s enhet. Det kan inte ångras.</string>
+    <string name="contacts_delete_locations_body">Detta raderar all platsdata du delat från %1$s enhet. Det kan inte ångras.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Ta bort kontakt</item>
+        <item quantity="other">Ta bort %1$d kontakter</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Ta bort denna kontakt? Platshistoriken raderas också lokalt.</item>
+        <item quantity="other">Ta bort %1$d kontakter? Deras platshistorik raderas också lokalt.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Fjärradera alla meddelanden du skickat från denna kontakts enhet? Det kan inte ångras.</item>
+        <item quantity="other">Fjärradera alla meddelanden du skickat från %1$d kontakters enheter? Det kan inte ångras.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Fjärradera all platshistorik du delat från denna kontakts enhet? Det kan inte ångras.</item>
+        <item quantity="other">Fjärradera all platshistorik du delat från %1$d kontakters enheter? Det kan inte ångras.</item>
+    </plurals>
+
+    <string name="common_continue">Fortsätt</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Återställ från säkerhetskopia</string>
+    <string name="onboarding_restore_message">Klistra in din 64-teckens hexadecimala privata nyckel för att återställa din identitet och dina kontakter.</string>
+    <string name="onboarding_private_key_hex">Privat nyckel (hex)</string>
+    <string name="onboarding_tagline">Privat platsdelning med kontakter.\nInga konton. Inga proprietära servrar.</string>
+    <string name="onboarding_feature_e2e_title">Totalsträckskrypterat</string>
+    <string name="onboarding_feature_e2e_subtitle">Din plats krypteras på enheten</string>
+    <string name="onboarding_feature_servers_title">Inga proprietära servrar</string>
+    <string name="onboarding_feature_servers_subtitle">Använder öppna Nostr-reläer som säker transport — din data förblir krypterad och privat</string>
+    <string name="onboarding_feature_phone_title">Stannar på din telefon</string>
+    <string name="onboarding_feature_phone_subtitle">Hela din platshistorik stannar på din enhet. Endast din nuvarande position delas med utvalda kontakter</string>
+    <string name="onboarding_name_prompt">Vad ska dina kontakter kalla dig?</string>
+    <string name="onboarding_name_placeholder">t.ex. Mamma, Pappa, Anna…</string>
+    <string name="onboarding_get_started">Kom igång</string>
+    <string name="onboarding_restore_from_backup">Återställ från säkerhetskopia</string>
+    <string name="onboarding_key_note">Din privata nyckel genereras lokalt och lämnar aldrig denna enhet.</string>
+    <string name="onboarding_permissions_title">Behörigheter</string>
+    <string name="onboarding_permissions_desc">LocaPeer behöver platsåtkomst för att dela din position, kameraåtkomst för att skanna inbjudningskoder och aviseringsåtkomst för bakgrundsstatus. Åtkomst till fysisk aktivitet är valfri — den hjälper till att etikettera din rörelse (gång, bilkörning) mer exakt.</string>
+    <string name="onboarding_before_ask_title">Innan vi frågar</string>
+    <string name="onboarding_before_ask_intro">Du kommer nu att se några systemfrågor:</string>
+    <string name="onboarding_before_ask_location">• Plats — krävs för att dela din position.</string>
+    <string name="onboarding_before_ask_camera">• Kamera — för att skanna inbjudningskoder.</string>
+    <string name="onboarding_before_ask_notifications">• Aviseringar — för bakgrundsstatus.</string>
+    <string name="onboarding_before_ask_activity">• Fysisk aktivitet — valfri. Låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt. Du kan hoppa över den och aktivera den senare i Inställningar.</string>
+    <string name="onboarding_grant_permissions">Bevilja behörigheter</string>
+    <string name="onboarding_bg_location_title">Plats i bakgrunden</string>
+    <string name="onboarding_bg_location_desc">Välj \"Tillåt alltid\" på nästa skärm så att dina kontakter hålls uppdaterade medan appen är stängd.</string>
+    <string name="onboarding_bg_location_error">Plats i bakgrunden krävs för att uppdatera dina kontakter när appen är stängd. Försök igen och välj \"Tillåt alltid\".</string>
+    <string name="onboarding_configure_location">Konfigurera plats</string>
+    <string name="onboarding_battery_title">Batteri</string>
+    <string name="onboarding_battery_desc">Android kan stoppa LocaPeer för att spara batteri. Undanta LocaPeer från optimeringar för tillförlitliga uppdateringar.</string>
+    <string name="onboarding_disable_optimizations">Inaktivera optimeringar</string>
+    <string name="onboarding_done_title">Klart!</string>
+    <string name="onboarding_done_desc">Ditt privata platsnätverk är redo.</string>
+    <string name="onboarding_start_using">Börja använda LocaPeer</string>
+
+    <string name="common_try_again">Försök igen</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Skanna inbjudan</string>
+    <string name="scan_camera_needed">Kamerabehörighet krävs för att skanna QR-koder.</string>
+    <string name="scan_grant_permission">Bevilja behörighet</string>
+    <string name="scan_add_contact_title">Lägga till kontakt?</string>
+    <string name="scan_add_contact_message">Detta kopplar ihop dig med %1$s och ni börjar dela plats med varandra.</string>
+    <string name="scan_add_share">Lägg till och dela</string>
+    <string name="scan_request_sent_title">Förfrågan skickad!</string>
+    <string name="scan_request_sent_message">En förfrågan har skickats till %1$s. Ni kopplas ihop när den accepteras.</string>
+    <string name="scan_failed">Skanningen misslyckades: %1$s</string>
+
     <string name="cd_back">Bakåt</string>
+    <string name="common_review">Granska</string>
+    <string name="common_decline">Avböj</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Skicka/ta emot</string>
+    <string name="role_send">Skicka</string>
+    <string name="role_receive">Ta emot</string>
+    <string name="role_none">Ingen delning</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Min inbjudan</string>
+    <string name="invite_tab_add_contact">Lägg till kontakt</string>
+    <string name="invite_your_qr_title">Din QR-kod</string>
+    <string name="invite_your_qr_subtitle">Låt någon skanna den för att följa din plats</string>
+    <string name="invite_qr_cd">Din QR-kod</string>
+    <string name="invite_qr_error">Fel vid generering av QR</string>
+    <string name="invite_share_link">Dela inbjudningslänk</string>
+    <string name="invite_encryption_note">Din plats krypteras specifikt för skannerns enhet.</string>
+    <string name="invite_camera_required_title">Kameraåtkomst krävs</string>
+    <string name="invite_camera_required_message">Bevilja kamerabehörighet för att skanna en QR-kod.</string>
+    <string name="invite_point_camera">Rikta kameran mot en LocaPeer-QR</string>
+    <string name="invite_paste_title">Eller klistra in inbjudningslänk</string>
+    <string name="invite_process_link">Bearbeta länk</string>
+    <string name="invite_fallback_name">Kontakt</string>
+    <string name="invite_success_message">Ni kopplas ihop när %1$s accepterar.</string>
+    <string name="invite_confirm_add_title">Lägga till %1$s?</string>
+    <string name="invite_confirm_add_message">Lägga till i dina kontakter och dela plats?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Inga väntande förfrågningar</string>
+    <string name="pending_requesting">Begär: %1$s · %2$s</string>
+    <string name="pending_role_change">Begäran om rollbyte · %1$s</string>
+    <string name="pending_new_request">Ny delningsförfrågan · %1$s</string>
+
+    <string name="common_save_changes">Spara ändringar</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Uppdatera delningsinställningar</string>
+    <string name="incoming_new_title">Ny kontaktförfrågan</string>
+    <string name="incoming_update_subtitle">%1$s vill uppdatera hur ni delar. Granska inställningarna nedan.</string>
+    <string name="incoming_new_subtitle">%1$s har lagt till dig som kontakt! Du kan nu välja vad du vill dela tillbaka.</string>
+    <string name="incoming_section_location">Plats</string>
+    <string name="incoming_share_my_location">Dela min plats med %1$s</string>
+    <string name="incoming_share_my_location_sub">Hen kommer att kunna se var du är</string>
+    <string name="incoming_see_their_location">Se %1$s plats</string>
+    <string name="incoming_see_their_location_sub">Du kommer att kunna se var hen är</string>
+    <string name="incoming_section_messaging">Meddelanden</string>
+    <string name="incoming_allow_messages">Tillåt meddelanden</string>
+    <string name="incoming_allow_messages_sub">Ta emot chattmeddelanden från %1$s</string>
+
+    <string name="common_request">Begär</string>
+    <string name="common_edit">Redigera</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Kontaktinställningar</string>
+    <string name="peer_section_roles">Roller för platsdelning</string>
+    <string name="peer_send_on">%1$s kan se din plats</string>
+    <string name="peer_send_off">Du delar inte din plats med %1$s</string>
+    <string name="peer_receive_title">Ta emot %1$s plats</string>
+    <string name="peer_receive_on">Du kan se %1$s plats</string>
+    <string name="peer_receive_off">Du har inte åtkomst till %1$s plats</string>
+    <string name="peer_section_privacy">Integritets- och delningskontroller</string>
+    <string name="peer_pause_sharing">Pausa delning</string>
+    <string name="peer_pause_sub">Sluta tillfälligt skicka din plats till %1$s</string>
+    <string name="peer_precision">Platsprecision</string>
+    <string name="peer_precision_exact_sub">Exakta GPS-koordinater</string>
+    <string name="peer_precision_suburb_sub">Ungefärlig plats (stadsdelsnivå)</string>
+    <string name="peer_always_sharing">Delar alltid</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d aktiv delningsregel</item>
+        <item quantity="other">%1$d aktiva delningsregler</item>
+    </plurals>
+    <string name="peer_section_alerts">Larm och övervakning</string>
+    <string name="peer_sos_contact">SOS-kontakt</string>
+    <string name="peer_sos_sub">Ta emot dina nödlarm även om delningen är pausad</string>
+    <string name="peer_missed_alert">Larm vid utebliven plats</string>
+    <string name="peer_missed_on">Meddela mig om %1$s slutar rapportera sin plats</string>
+    <string name="peer_requires_access">Kräver åtkomst till %1$s plats</string>
+    <string name="peer_proximity_alert">Närhetslarm</string>
+    <string name="peer_proximity_sub">Meddela mig när %1$s är i närheten</string>
+    <string name="peer_alert_radius">Larmradie</string>
+    <string name="peer_alert_schedule">Larmschema</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d aktiv regel</item>
+        <item quantity="other">%1$d aktiva regler</item>
+    </plurals>
+    <string name="peer_geofences_sub">Ställ in ankomst- och avfärdszoner för %1$s</string>
+    <string name="peer_supervise">Övervaka denna enhet</string>
+    <string name="peer_supervise_on">Du tar emot och godkänner upplåsningsförfrågningar från %1$s</string>
+    <string name="peer_supervise_off">Tillåt %1$s att skicka upplåsningsförfrågningar för övervakat läge till dig</string>
+    <string name="peer_messaging_sub">Aktivera/inaktivera chattmeddelanden från %1$s</string>
+    <string name="peer_section_history">Rörelsehistorik</string>
+    <string name="peer_location_history">Platshistorik</string>
+    <string name="peer_location_history_sub">Visa rörelsehistorik och kartrapport för %1$s</string>
+    <string name="peer_section_retention">Fjärrdatalagring</string>
+    <string name="peer_retention_location_sub">Hur länge %1$s behåller din platshistorik</string>
+    <string name="peer_purge_location">Rensa all platsdata hos %1$s</string>
+    <string name="peer_retention_messages_sub">Hur länge %1$s behåller meddelanden du skickat</string>
+    <string name="peer_purge_messages">Rensa alla meddelanden hos %1$s</string>
+    <string name="peer_precision_exact">Exakt GPS</string>
+    <string name="peer_precision_exact_desc">Precisa koordinater</string>
+    <string name="peer_precision_suburb">Stadsdel (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Endast områdesnivå</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Radera %1$d konversation?</item>
+        <item quantity="other">Radera %1$d konversationer?</item>
+    </plurals>
+    <string name="conv_delete_locally">Radera lokalt</string>
+    <string name="conv_delete_locally_sub">Tar bort konversationen endast från din enhet.</string>
+    <string name="conv_delete_both">Radera lokalt/hos kontakten</string>
+    <string name="conv_bulk_delete_both_sub">Raderar konversationen lokalt och hos din kontakt.</string>
+    <string name="conv_delete_both_sub">Raderar konversationen lokalt och utlöser en raderingsbegäran på kontaktens enhet för konversationen.</string>
+    <string name="conv_cd_exit_selection">Avsluta markering</string>
+    <string name="conv_cd_select_all">Markera alla</string>
+    <string name="conv_cd_new_message">Nytt meddelande</string>
+    <string name="conv_sort_date">Datum</string>
+    <string name="conv_sort_unread">Olästa</string>
+    <string name="conv_search_placeholder">Sök konversationer…</string>
+    <string name="conv_tab_chats">Chattar</string>
+    <string name="conv_tab_archived">Arkiverade</string>
+    <string name="conv_mark_read">Markera som läst</string>
+    <string name="conv_archive">Arkivera</string>
+    <string name="conv_unarchive">Avarkivera</string>
+    <string name="conv_empty_no_results">Inga resultat för \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Prova en annan sökterm</string>
+    <string name="conv_empty_archived_title">Inga arkiverade chattar</string>
+    <string name="conv_empty_archived_sub">Arkivera chattar för att hålla din inkorg ren</string>
+    <string name="conv_empty_title">Inga meddelanden ännu</string>
+    <string name="conv_empty_sub">Öppna kartan och tryck på en person\nför att starta en konversation</string>
+    <string name="conv_delete_title">Radera konversation?</string>
+    <string name="conv_delete_message">Hur vill du radera denna konversation med %1$s?</string>
+    <string name="conv_messages_blocked">Meddelanden blockerade</string>
+    <string name="conv_preview_mine">Du: %1$s</string>
+    <string name="conv_new_message_title">Nytt meddelande</string>
+    <string name="conv_picker_empty">Inga kontakter ännu. Skanna en QR-kod för att lägga till en kontakt.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Rensa chatthistorik?</string>
+    <string name="chat_clear_message">Hur vill du rensa denna konversation med %1$s?</string>
+    <string name="chat_clear_locally">Rensa lokalt</string>
+    <string name="chat_clear_both">Rensa lokalt/hos kontakten</string>
+    <string name="chat_clear_both_sub">Rensar chatten lokalt och skickar en raderingsbegäran till %1$s för meddelandena du skickat.</string>
+    <string name="chat_cd_options">Alternativ</string>
+    <string name="chat_clear_history_menu">Rensa chatthistorik</string>
+    <string name="chat_typing">%1$s skriver…</string>
+    <string name="chat_blocked_banner">Du har blockerat meddelanden från %1$s. Gå till Kontakter för att avblockera.</string>
+    <string name="chat_delete_msg_title">Radera meddelande?</string>
+    <string name="chat_delete_msg_message">Hur vill du radera detta meddelande?</string>
+    <string name="chat_delete_from_contact">Radera hos kontakten</string>
+    <string name="chat_delete_from_contact_sub">Raderar chatten från kontaktens enhet.</string>
+    <string name="chat_delete_both_sub">Tar bort chatten lokalt och raderar den automatiskt från kontaktens enhet.</string>
+    <string name="chat_cd_share_location">Dela plats</string>
+    <string name="chat_input_placeholder">Meddelande…</string>
+    <string name="chat_cd_send">Skicka</string>
+
+    <string name="common_close">Stäng</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Aktivera SOS?</string>
+    <string name="map_sos_deactivate_title">Inaktivera SOS?</string>
+    <string name="map_sos_activate_msg">Detta sänder din plats var 15:e sekund till dina utsedda SOS-kontakter tills det inaktiveras.</string>
+    <string name="map_sos_deactivate_msg">Detta stoppar högprioritetssändningen av din plats till dina nödkontakter.</string>
+    <string name="map_activate">Aktivera</string>
+    <string name="map_deactivate">Inaktivera</string>
+    <string name="map_cd_style">Kartstil</string>
+    <string name="map_cd_show_geofences">Visa geostaket</string>
+    <string name="map_cd_hide_geofences">Dölj geostaket</string>
+    <string name="map_cd_follow">Följ mig</string>
+    <string name="map_cd_friends">Vänner</string>
+    <string name="map_no_friends">Ingen spåras ännu</string>
+    <string name="map_you">Du</string>
+    <string name="map_cd_go_my_location">Gå till min plats</string>
+    <string name="map_sos_active">⚠ SOS AKTIVT</string>
+    <string name="map_away">Borta</string>
+    <string name="map_no_location_yet">Ingen plats ännu</string>
+    <string name="map_cd_go_location">Gå till plats</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS PÅ</string>
+    <string name="map_overdue">Försenad — ingen ny uppdatering</string>
+    <string name="map_stat_last_seen">Senast sedd</string>
+    <string name="map_stat_battery">Batteri</string>
+    <string name="map_stat_accuracy">Noggrannhet</string>
+    <string name="map_stat_motion">Rörelse</string>
+    <string name="map_stat_speed">Hastighet</string>
+    <string name="map_stat_elevation">Höjd</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Historik: %1$s</string>
+    <string name="history_select_person">Välj person</string>
+    <string name="history_person_label">Person</string>
+    <string name="history_cd_prev_day">Föregående dag</string>
+    <string name="history_cd_next_day">Nästa dag</string>
+    <string name="history_time_filter">Tidsfilter:</string>
+    <string name="history_cd_reset_time">Återställ tid</string>
+    <string name="history_tab_list">Lista</string>
+    <string name="history_empty_title">Ingen historik för denna dag</string>
+    <string name="history_empty_sub">Prova att välja ett annat datum eller kontrollera din anslutning.</string>
+    <string name="history_start_time">Starttid</string>
+    <string name="history_end_time">Sluttid</string>
+    <string name="history_no_data_title">Ingen platsdata</string>
+    <string name="history_no_data_sub">Det finns inga registrerade punkter för denna dag eller detta tidsintervall.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d punkt registrerad</item>
+        <item quantity="other">%1$d punkter registrerade</item>
+    </plurals>
+    <string name="history_cd_dismiss">Stäng</string>
+    <string name="history_accuracy_label">±%1$s noggrannhet</string>
+    <string name="history_emergency_sos">Nödsignal SOS</string>
+    <string name="history_detail_location">Plats</string>
+    <string name="history_detail_coordinates">Koordinater</string>
+    <string name="history_within">inom ±%1$s</string>
+    <string name="history_detail_movement">Rörelse</string>
+    <string name="history_movement_desc">%1$s %2$s kurs %3$s</string>
+
+    <string name="common_create">Skapa</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Lägg till geostaketområde</string>
+    <string name="geo_cd_assign">Tilldela geostaket</string>
+    <string name="geo_unknown">Okänt</string>
+    <string name="geo_empty_title">Inga geostaket</string>
+    <string name="geo_empty_sub">Tryck på + för att skapa ett geostaketområde och tilldela sedan kontakter till det via deras delningsinställningar.</string>
+    <string name="geo_delete_title">Radera geostaket?</string>
+    <string name="geo_delete_simple">Radera \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" är tilldelad %2$d kontakt. Radering tar även bort dessa tilldelningar.</item>
+        <item quantity="other">\"%1$s\" är tilldelad %2$d kontakter. Radering tar även bort dessa tilldelningar.</item>
+    </plurals>
+    <string name="geo_for_contact">Geostaket för %1$s</string>
+    <string name="geo_empty_contact_title">Inga geostaket för kontakten</string>
+    <string name="geo_empty_contact_sub">Tryck på + för att tilldela ett geostaketområde och välja om du vill larmas vid ankomst, avfärd eller båda.</string>
+    <string name="geo_no_areas_title">Inga geostaket ännu</string>
+    <string name="geo_no_areas_msg">Skapa först ett geostaketområde på skärmen Geostaket och tilldela det sedan här.</string>
+    <string name="geo_radius_label">%1$s radie</string>
+    <string name="geo_contacts_label">Kontakter: %1$s</string>
+    <string name="geo_no_contacts_assigned">Inga kontakter tilldelade</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d regel</item>
+        <item quantity="other">%1$d regler</item>
+    </plurals>
+    <string name="geo_trigger_enter">Inträde</string>
+    <string name="geo_trigger_exit">Utträde</string>
+    <string name="geo_trigger_both">Båda</string>
+    <string name="geo_edit_title">Redigera geostaket</string>
+    <string name="geo_new_title">Nytt geostaket</string>
+    <string name="geo_cd_my_location">Min plats</string>
+    <string name="geo_cd_radius_increase">Öka radien</string>
+    <string name="geo_cd_radius_decrease">Minska radien</string>
+    <string name="geo_hint_tap">Tryck eller håll på kartan för att placera</string>
+    <string name="geo_hint_move">Nyp för att zooma • Håll eller dra nålen för att flytta</string>
+    <string name="geo_basic_info">Grundläggande info</string>
+    <string name="geo_search_title">Hitta via adress</string>
+    <string name="geo_search_label">Adress eller plats</string>
+    <string name="geo_search_placeholder">t.ex. Storgatan 10, Stockholm</string>
+    <string name="geo_search_no_results">Ingen matchande adress hittades</string>
+    <string name="geo_cd_search">Sök</string>
+    <string name="geo_name_placeholder">t.ex. Hemma, Jobbet</string>
+    <string name="geo_name_required">Namn krävs</string>
+    <string name="geo_latitude">Latitud</string>
+    <string name="geo_longitude">Longitud</string>
+    <string name="geo_lat_range">-90 till 90</string>
+    <string name="geo_lng_range">-180 till 180</string>
+    <string name="geo_radius">Radie</string>
+    <string name="geo_radius_range">Ange %1$d till %2$d m</string>
+    <string name="geo_edit_assignment">Redigera tilldelning</string>
+    <string name="geo_assign_title">Tilldela geostaket</string>
+    <string name="geo_select_area">Välj geostaketområde</string>
+    <string name="geo_trigger_title">Utlös avisering vid</string>
+    <string name="geo_add_rule">Lägg till regel</string>
+    <string name="geo_alerts_all_times">Larm aktiva hela tiden. Lägg till en regel för att begränsa när larm skickas.</string>
+    <string name="geo_assign_action">Tilldela</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Närhetslarm</string>
+    <string name="prox_empty_title">Inga spårade personer</string>
+    <string name="prox_empty_sub">Skanna någons inbjudnings-QR från fliken Skanna\nför att börja spåra dennes plats</string>
+    <string name="prox_intro">Få en avisering när en spårad person kommer inom ett valt avstånd från dig.</string>
+    <string name="prox_alert_within">Larma inom %1$s</string>
+    <string name="prox_alerts_off">Larm av</string>
+    <string name="prox_alert_radius">Larmradie</string>
+    <string name="prox_edit_schedule">Redigera schema</string>
+    <string name="prox_rules">Regler</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Schema för %1$s</string>
+    <string name="schedule_cd_add_rule">Lägg till regel</string>
+    <string name="schedule_empty_title">Inga schemaregler</string>
+    <string name="schedule_empty_global">Platsen delas hela tiden. Lägg till en regel för att begränsa när delning är aktiv.</string>
+    <string name="schedule_empty_peer">Platsen delas alltid med %1$s. Lägg till en regel för att begränsa när.</string>
+    <string name="schedule_active_hint">Aktiv när någon regel matchar aktuell tid. Tomt = alltid på.</string>
+    <string name="schedule_all_day">Hela dagen</string>
+    <string name="schedule_plus_one_day"> (+1 dag)</string>
+    <string name="schedule_rule_number">Regel %1$d</string>
+    <string name="schedule_cd_delete_rule">Radera regel</string>
+    <string name="schedule_edit_rule">Redigera regel</string>
+    <string name="schedule_label_optional">Etikett (valfritt)</string>
+    <string name="schedule_label_placeholder">t.ex. Arbetstid, Helger</string>
+    <string name="schedule_active_days">Aktiva dagar</string>
+    <string name="schedule_time_window">Tidsfönster</string>
+    <string name="schedule_start">Start</string>
+    <string name="schedule_end">Slut</string>
+    <string name="schedule_overnight">Över natten: aktiv från %1$s till %2$s nästa dag</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Enheten är övervakad</string>
+    <string name="gate_message">Tillsynspersonens godkännande krävs för att komma åt inställningarna.</string>
+    <string name="gate_request_access">Begär åtkomst</string>
+    <string name="gate_waiting">Väntar på tillsynspersonens godkännande…</string>
+    <string name="gate_denied">Åtkomst nekad av tillsynspersonen.</string>
+    <string name="gate_timed_out">Begäran tog för lång tid. Tillsynspersonen svarade inte.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">För alltid</string>
+    <string name="retention_keep_for">Behåll i: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d dag</item>
+        <item quantity="other">%1$d dagar</item>
+    </plurals>
+
+    <string name="common_select">Välj</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Välj fast plats</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Välj vilka flikar som visas i det nedre fältet och deras ordning. Kartan ingår alltid.</string>
+    <string name="customize_cd_move_up">Flytta upp</string>
+    <string name="customize_cd_move_down">Flytta ned</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Version %1$s (bygge %2$d)</string>
+    <string name="about_tagline">Privat platsdelning med personer du litar på. Inga konton, inget moln, ingen spårning från oss.</string>
+    <string name="about_relay_connections">Reläanslutningar</string>
+    <string name="about_connected">Ansluten</string>
+    <string name="about_disconnected">Frånkopplad</string>
+    <string name="about_open_source">Bibliotek med öppen källkod</string>
+    <string name="about_lib_osmdroid_desc">Kartrendering baserad på OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket-transport för Nostr-relä</string>
+    <string name="about_lib_compose_desc">UI-ramverk</string>
+    <string name="about_lib_hilt_desc">Beroendeinjektion</string>
+    <string name="about_lib_room_desc">Lokal databas</string>
+    <string name="about_map_attribution">Kartdata © OpenStreetMap-bidragsgivare</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Acceptera</string>
+    <string name="notif_someone">Någon</string>
+    <string name="notif_sos_title">SOS från %1$s!</string>
+    <string name="notif_sos_text">%1$s har aktiverat SOS vid (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s vill att du blir dennes tillsynsperson</string>
+    <string name="notif_supervisor_request_text">Acceptera för att tillåta förfrågningar om upplåsningsgodkännande från denna enhet</string>
+    <string name="notif_supervisor_request_big">Acceptera för att låta %1$s skicka förfrågningar om upplåsningsgodkännande till dig när övervakat läge är aktivt.</string>
+    <string name="notif_supervised_active_title">Övervakat läge aktivt</string>
+    <string name="notif_supervised_active_text">Din tillsynsperson bekräftade — övervakat läge är nu konfigurerat</string>
+    <string name="notif_supervised_declined_title">Övervakat läge avböjt</string>
+    <string name="notif_supervised_declined_text">Din tillsynsperson avböjde begäran — övervakat läge har inaktiverats</string>
+    <string name="notif_tracking_alert_title">Spårningslarm</string>
+    <string name="notif_tracking_proximity">%1$s fick ett närhetslarm om dig</string>
+    <string name="notif_tracking_geofence">%1$s fick ett larm om att du gått in i/lämnat staketet: %2$s</string>
+    <string name="notif_tracking_generic">%1$s bevakar din plats</string>
+    <string name="notif_track_update_title">Delningsuppdatering från %1$s</string>
+    <string name="notif_track_new_title">Ny kontakt: %1$s</string>
+    <string name="notif_role_send_receive">Skicka/ta emot plats</string>
+    <string name="notif_role_send">Skicka plats</string>
+    <string name="notif_role_receive">Ta emot plats</string>
+    <string name="notif_role_none">Ingen platsdelning</string>
+    <string name="notif_track_requesting">%1$s begär: %2$s</string>
+    <string name="notif_track_update_body">%1$s vill uppdatera hur ni delar platser.</string>
+    <string name="notif_track_new_body">%1$s har lagt till dig som kontakt och vill koppla ihop sig.</string>
+    <string name="notif_contact_connected_title">Kontakt ansluten</string>
+    <string name="notif_contact_connected_text">%1$s är nu ansluten till dig.</string>
+    <string name="notif_request_declined_title">Förfrågan avböjd</string>
+    <string name="notif_request_declined_text">%1$s har avböjt din platsdelningsförfrågan.</string>
+    <string name="notif_message_person">Skicka meddelande till %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s gick in i %2$s</string>
+    <string name="notif_geofence_left_title">%1$s lämnade %2$s</string>
+    <string name="notif_geofence_subtitle">vid %1$s · %2$s radie</string>
+    <string name="notif_person_nearby">%1$s är i närheten</string>
+    <string name="notif_distance_from_you">%1$s från dig</string>
+    <string name="notif_missed_title">Ingen uppdatering från %1$s</string>
+    <string name="notif_missed_text">Senast sedd för %1$s min sedan nära (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS AKTIVT!</string>
+    <string name="notif_sos_active_text">Sänder nödlarm till SOS-kontakter</string>
+    <string name="notif_messages_group_title">LocaPeer-meddelanden</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Kontaktförfrågan från %1$s avböjd</string>
+    <string name="toast_now_supervising">Övervakar nu %1$s enhet</string>
+    <string name="toast_declined_supervision">Tillsynsförfrågan från %1$s avböjd</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Alldeles nyss</string>
+    <string name="time_minutes_ago">%1$d min sedan</string>
+    <string name="fallback_me">Jag</string>
+    <string name="fallback_unknown">Okänd</string>
+    <string name="geo_unassigned">Ej tilldelad</string>
+    <string name="days_every_day">Varje dag</string>
+    <string name="days_weekdays">Vardagar</string>
+    <string name="days_weekends">Helger</string>
+    <string name="days_none">Inga dagar</string>
+    <string name="chat_my_location_message">Min nuvarande plats: %1$s</string>
+    <string name="scan_error_bad_pubkey">Ogiltig inbjudan: felaktig publik nyckel</string>
+    <string name="scan_error_key_mismatch">Ogiltig inbjudan: nycklarna matchar inte</string>
+    <string name="scan_error_unknown">Okänt fel</string>
+    <string name="scan_error_invalid_link">Ogiltig inbjudningslänk</string>
+    <string name="scan_fallback_contact">denna kontakt</string>
+    <string name="backup_saved">Säkerhetskopia sparad: %1$s</string>
+    <string name="backup_saved_encrypted">Säkerhetskopia sparad (krypterad): %1$s</string>
+    <string name="backup_failed">Säkerhetskopieringen misslyckades: %1$s</string>
+    <string name="backup_could_not_read_file">Kunde inte läsa filen</string>
+    <string name="backup_could_not_write_file">Kunde inte skriva filen</string>
+    <string name="backup_could_not_read">Kunde inte läsa säkerhetskopian: %1$s</string>
+    <string name="backup_incorrect_password">Fel lösenord</string>
+    <string name="restore_result_restored">Återställt: %1$s</string>
+    <string name="restore_result_failed">Misslyckades: %1$s</string>
+    <string name="restore_nothing">Inget att återställa</string>
+    <string name="restore_failed">Återställningen misslyckades: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="other">%1$d kontakter</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geostaket</item>
+        <item quantity="other">%1$d geostaket</item>
+    </plurals>
+    <string name="peer_role_change_sent">Begäran om rollbyte skickad till %1$s</string>
+    <string name="peer_not_found">Kontakten hittades inte</string>
+    <string name="peer_purge_location_sent">Fjärraderingskommando för ALLA platser skickat till %1$s</string>
+    <string name="peer_purge_messages_sent">Fjärraderingskommando för ALLA meddelanden skickat till %1$s</string>
+    <string name="onboarding_error_key_length">Ogiltig nyckel — måste vara 64 hexadecimala tecken.</string>
+    <string name="onboarding_error_key_range">Ogiltig privat nyckel — utanför kurvans intervall.</string>
+    <string name="onboarding_error_hex">Ogiltigt hexformat.</string>
+    <string name="onboarding_error_import_failed">Kunde inte importera nyckeln: %1$s</string>
 </resources>

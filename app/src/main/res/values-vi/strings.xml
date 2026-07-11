@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Kênh thông báo & Dịch vụ chạy ngầm ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Phát sóng vị trí</string>
     <string name="channel_desc_heartbeat">Phát sóng vị trí của bạn cho các liên hệ đã được phê duyệt</string>
     <string name="channel_name_alerts">Cảnh báo</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer đang chạy</string>
     <string name="notification_heartbeat_text">Đang chia sẻ vị trí của bạn với người khác</string>
 
-    <!-- ── Hành động chung ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Lưu</string>
     <string name="common_cancel">Hủy</string>
     <string name="common_done">Xong</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Phê duyệt</string>
     <string name="common_deny">Từ chối</string>
 
-    <!-- ── Nhãn tab điều hướng ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Bản đồ</string>
     <string name="tab_messages">Tin nhắn</string>
     <string name="tab_history">Lịch sử</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Cài đặt</string>
 
-    <!-- ── Trạng thái chuyển động / hoạt động ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Đứng yên</string>
     <string name="motion_walking">Đi bộ</string>
     <string name="motion_running">Chạy</string>
     <string name="motion_cycling">Đạp xe</string>
     <string name="motion_driving">Lái xe</string>
 
-    <!-- ── Cài đặt ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Khóa riêng tư</string>
+    <string name="backup_section_contacts">Danh bạ</string>
+    <string name="backup_section_geofences">Hàng rào địa lý</string>
+    <string name="backup_section_settings">Cài đặt</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Yêu cầu giám sát</string>
+    <string name="supervision_request_message">\"%1$s\" đang yêu cầu quyền truy cập vào cài đặt của họ. Cho phép?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Cài đặt</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Vị trí &amp; Quyền riêng tư</string>
     <string name="settings_section_security">Bảo mật</string>
     <string name="settings_section_map">Bản đồ</string>
@@ -54,15 +66,669 @@
     <string name="settings_section_backup_keys">Sao lưu &amp; Khóa</string>
     <string name="settings_section_about">Giới thiệu</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Chỉnh sửa tên</string>
     <string name="settings_my_qr">QR của tôi</string>
     <string name="settings_no_name_set">Chưa đặt tên</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Chia sẻ vị trí của tôi</string>
+    <string name="settings_broadcasting">Đang phát tới danh bạ của bạn</string>
+    <string name="settings_not_broadcasting">Không phát</string>
+    <string name="settings_sharing_schedule">Lịch chia sẻ</string>
+    <string name="settings_always_on">Luôn bật</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">%1$d quy tắc</item>
+    </plurals>
+    <string name="settings_geofences">Hàng rào địa lý</string>
+    <string name="settings_geofences_subtitle">Quản lý các khu vực hàng rào địa lý được chia sẻ</string>
+    <string name="settings_notify_when_tracked">Thông báo khi bị theo dõi</string>
+    <string name="settings_notify_when_tracked_subtitle">Nhận thông báo khi cảnh báo khoảng cách gần hoặc hàng rào địa lý của một liên hệ về bạn được kích hoạt.</string>
+    <string name="settings_my_location_history">Lịch sử vị trí</string>
+    <string name="settings_my_location_history_subtitle">Xem dòng thời gian vị trí của chính bạn</string>
+    <string name="settings_lookup_addresses">Tra cứu địa chỉ</string>
+    <string name="settings_lookup_addresses_subtitle">Hiển thị địa chỉ đường phố cho các điểm lịch sử và ghim bản đồ được chạm, đồng thời tìm kiếm theo địa chỉ khi đặt hàng rào địa lý. Tọa độ hoặc nội dung tìm kiếm sẽ được gửi đến dịch vụ mã hóa địa lý của thiết bị (thường là Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Giám sát đang hoạt động</string>
+    <string name="settings_supervision_active_subtitle">Cài đặt cần được người giám sát phê duyệt</string>
+    <string name="settings_disable_supervised">Tắt chế độ được giám sát</string>
+    <string name="settings_supervised_mode">Chế độ được giám sát</string>
+    <string name="settings_supervised_mode_subtitle">Yêu cầu người giám sát phê duyệt để truy cập cài đặt</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Điểm bắt đầu</string>
+    <string name="settings_map_current_location">Vị trí hiện tại</string>
+    <string name="settings_map_all_contacts">Tất cả liên hệ</string>
+    <string name="settings_map_fixed_location">Vị trí cố định</string>
+    <string name="settings_map_last_position">Vị trí gần nhất</string>
+    <string name="settings_map_starting_point_title">Điểm bắt đầu của bản đồ</string>
+    <string name="settings_no_location_set">Chưa đặt vị trí</string>
+    <string name="settings_pick_location_on_map">Chọn vị trí trên bản đồ</string>
+    <string name="settings_default_zoom_level">Mức thu phóng mặc định</string>
+    <string name="settings_map_pin_colour">Màu ghim bản đồ</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Tần suất cập nhật</string>
+    <string name="settings_update_cadence_subtitle">Điều chỉnh tần suất phát vị trí của bạn</string>
+    <string name="settings_update_cadence_dialog_message">Kiểm soát tần suất cập nhật vị trí dựa trên hoạt động của bạn. Cập nhật thường xuyên sẽ tốn pin hơn.</string>
+    <string name="settings_update_cadence_reset">Đặt lại về mặc định</string>
+    <string name="settings_min_distance_filtering">Lọc khoảng cách tối thiểu</string>
+    <string name="settings_min_distance_filtering_subtitle">Chỉ hiển thị các điểm cách điểm trước ít nhất khoảng cách này.</string>
+    <string name="settings_discard_low_accuracy">Bỏ qua vị trí kém chính xác</string>
+    <string name="settings_discard_low_accuracy_subtitle">Không phát hoặc ghi lại vị trí của bạn nếu bán kính sai số lớn hơn giá trị này. SOS không bao giờ bị bỏ qua.</string>
+    <string name="settings_hide_low_accuracy">Ẩn các điểm kém chính xác</string>
+    <string name="settings_hide_low_accuracy_subtitle">Ẩn các điểm lịch sử có bán kính sai số lớn hơn giá trị này. Không có gì bị xóa.</string>
+    <string name="settings_low_battery" formatted="false">Pin yếu (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d phút</string>
+    <string name="settings_motion_detection">Phát hiện chuyển động</string>
+    <string name="settings_motion_detection_on">Đang bật — tinh chỉnh loại chuyển động (đi bộ, lái xe) trong lịch sử</string>
+    <string name="settings_motion_detection_off">Tắt — cho phép truy cập hoạt động thể chất để có nhãn chuyển động chính xác hơn</string>
+    <string name="settings_enable_motion_title">Bật phát hiện chuyển động</string>
+    <string name="settings_enable_motion_message">Quyền truy cập hoạt động thể chất giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên trong lịch sử của bạn. Hiện đang tắt — bạn có thể bật lại trong cài đặt hệ thống.</string>
+    <string name="settings_open_settings">Mở cài đặt</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Đơn vị tốc độ</string>
+    <string name="settings_speed_imperial">Hệ Anh (mph)</string>
+    <string name="settings_speed_metric">Hệ mét (km/h)</string>
+    <string name="settings_elevation_units">Đơn vị độ cao</string>
+    <string name="settings_elevation_imperial">Hệ Anh (feet)</string>
+    <string name="settings_elevation_metric">Hệ mét (mét)</string>
+    <string name="settings_distance_units">Đơn vị khoảng cách</string>
+    <string name="settings_distance_imperial">Hệ Anh (ft/mi)</string>
+    <string name="settings_distance_metric">Hệ mét (m/km)</string>
+    <string name="settings_time_format">Định dạng giờ</string>
+    <string name="settings_time_24h">24 giờ (13:30)</string>
+    <string name="settings_time_12h">12 giờ (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Dữ liệu vị trí</string>
+    <string name="settings_retention_location_subtitle">Thời gian lưu cục bộ dữ liệu vị trí của các liên hệ</string>
+    <string name="settings_clear_all_location">Xóa toàn bộ dữ liệu vị trí</string>
+    <string name="settings_retention_messages">Tin nhắn</string>
+    <string name="settings_retention_messages_subtitle">Thời gian lưu cục bộ các tin nhắn đã nhận</string>
+    <string name="settings_clear_all_messages">Xóa toàn bộ tin nhắn</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Tùy chỉnh điều hướng</string>
+    <string name="settings_customize_nav_subtitle">Chọn và sắp xếp lại các thẻ ở dưới</string>
+    <string name="settings_start_page">Trang bắt đầu</string>
     <string name="settings_language">Ngôn ngữ</string>
     <string name="settings_language_title">Ngôn ngữ ứng dụng</string>
     <string name="settings_language_system">Mặc định hệ thống</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Xuất bản sao lưu</string>
+    <string name="settings_export_backup_subtitle">Lưu khóa riêng tư và danh bạ của bạn vào một tệp. Hãy giữ tệp này an toàn!</string>
+    <string name="settings_import_backup">Nhập bản sao lưu</string>
+    <string name="settings_import_backup_subtitle">Khôi phục từ tệp đã xuất trước đó</string>
+    <string name="settings_view_private_key">Xem khóa riêng tư</string>
+    <string name="settings_view_private_key_subtitle">Hiển thị khóa danh tính hex 64 ký tự của bạn</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Về LocaPeer</string>
+    <string name="settings_about_subtitle">Phiên bản, trạng thái relay, mã nguồn mở</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Sửa tên hiển thị</string>
+    <string name="settings_display_name_label">Tên hiển thị</string>
+    <string name="settings_my_invite_qr">Mã QR lời mời của tôi</string>
+    <string name="settings_invite_qr_subtitle">Người khác có thể quét mã này để bắt đầu theo dõi bạn.</string>
+    <string name="settings_invite_qr_cd">Mã QR lời mời</string>
+    <string name="settings_private_key_title">Khóa riêng tư</string>
+    <string name="settings_private_key_warning">Hãy giữ an toàn. Bất kỳ ai có khóa này đều có thể mạo danh bạn.</string>
+    <string name="settings_clear_location_title">Xóa lịch sử vị trí?</string>
+    <string name="settings_clear_location_message">Tất cả các điểm vị trí đã lưu sẽ bị xóa vĩnh viễn.</string>
+    <string name="settings_clear_messages_title">Xóa lịch sử tin nhắn?</string>
+    <string name="settings_clear_messages_message">Tất cả tin nhắn đã lưu sẽ bị xóa vĩnh viễn.</string>
+    <string name="settings_encrypted_backup_title">Bản sao lưu được mã hóa</string>
+    <string name="settings_encrypted_backup_message">Bản sao lưu này được mã hóa. Vui lòng nhập mật khẩu để tiếp tục.</string>
+    <string name="settings_select_restore_title">Chọn dữ liệu để khôi phục</string>
+    <string name="settings_select_export_title">Chọn dữ liệu để xuất</string>
+    <string name="settings_export_password_hint">Tùy chọn đặt mật khẩu để mã hóa tệp sao lưu của bạn.</string>
+    <string name="settings_backup_password_optional">Mật khẩu sao lưu (tùy chọn)</string>
+    <string name="settings_select_sections">Chọn các phần cần bao gồm:</string>
+    <string name="settings_choose_file_location">Chọn vị trí tệp</string>
+    <string name="settings_not_in_backup">Không có trong bản sao lưu này</string>
+    <string name="settings_enable_supervised_title">Bật chế độ được giám sát</string>
+    <string name="settings_enable_supervised_message">Chọn một liên hệ làm người giám sát. Họ phải phê duyệt quyền truy cập cài đặt từ thiết bị của họ.</string>
+    <string name="settings_no_peers_found">Không tìm thấy liên hệ nào. Hãy thêm liên hệ trước bằng cách quét mã QR lời mời của họ.</string>
+    <string name="settings_disable_supervised_title">Tắt chế độ được giám sát?</string>
+    <string name="settings_disable_supervised_message">Cài đặt sẽ có thể truy cập mà không cần người giám sát phê duyệt.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Gỡ bỏ</string>
+    <string name="common_name">Tên</string>
+    <string name="common_search">Tìm kiếm</string>
+    <string name="common_sort">Sắp xếp</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Tin nhắn</string>
+    <string name="cd_show_on_map">Hiện trên bản đồ</string>
+    <string name="cd_more_options">Tùy chọn khác</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">Đã chọn %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Hủy lựa chọn</string>
+    <string name="contacts_cd_select_all">Chọn tất cả</string>
+    <string name="contacts_cd_deselect_all">Bỏ chọn tất cả</string>
+    <string name="contacts_cd_qr_invite">QR / Lời mời</string>
+    <string name="contacts_cd_pending_requests">Yêu cầu đang chờ</string>
+    <string name="contacts_sort_last_seen">Hoạt động gần nhất</string>
+    <string name="contacts_search_placeholder">Tìm liên hệ…</string>
+    <string name="contacts_empty_title">Chưa có liên hệ</string>
+    <string name="contacts_empty_subtitle">Quét mã QR để kết nối với ai đó và bắt đầu chia sẻ vị trí.</string>
+    <string name="contacts_scan_qr">Quét mã QR</string>
+    <string name="contacts_bulk_delete_messages">Xóa tin nhắn</string>
+    <string name="contacts_bulk_delete_locations">Xóa vị trí</string>
+    <string name="contacts_last_seen">Hoạt động gần nhất: %1$s</string>
+    <string name="contacts_no_location_yet">Chưa có dữ liệu vị trí</string>
+    <string name="contacts_view_sharing_settings">Cài đặt chia sẻ</string>
+    <string name="contacts_view_location_history">Lịch sử vị trí</string>
+    <string name="contacts_rename_contact">Đổi tên liên hệ</string>
+    <string name="contacts_on_contact_device">Trên thiết bị của liên hệ</string>
+    <string name="contacts_delete_my_messages_title">Xóa tin nhắn của tôi</string>
+    <string name="contacts_delete_locations_title">Xóa vị trí đã chia sẻ</string>
+    <string name="contacts_remove_contact_title">Gỡ liên hệ</string>
+    <string name="contacts_leave_title">Xóa liên hệ và dữ liệu</string>
+    <string name="contacts_rename_title">Đổi tên liên hệ</string>
+    <string name="contacts_remove_contact_body">Gỡ %1$s khỏi danh bạ của bạn? Lịch sử vị trí của họ cũng sẽ bị xóa cục bộ.</string>
+    <string name="contacts_leave_body">Thao tác này sẽ gỡ bạn khỏi danh bạ của %1$s và xóa tất cả tin nhắn cùng dữ liệu vị trí của bạn khỏi thiết bị của họ. Bạn cũng sẽ mất quyền xem vị trí của họ.</string>
+    <string name="contacts_delete_my_messages_body">Thao tác này sẽ xóa tất cả tin nhắn bạn đã gửi khỏi thiết bị của %1$s. Không thể hoàn tác.</string>
+    <string name="contacts_delete_locations_body">Thao tác này sẽ xóa tất cả dữ liệu vị trí bạn đã chia sẻ khỏi thiết bị của %1$s. Không thể hoàn tác.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">Gỡ %1$d liên hệ</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">Gỡ %1$d liên hệ? Lịch sử vị trí của họ cũng sẽ bị xóa cục bộ.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">Xóa từ xa tất cả tin nhắn bạn đã gửi khỏi thiết bị của %1$d liên hệ? Không thể hoàn tác.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">Xóa từ xa toàn bộ lịch sử vị trí bạn đã chia sẻ khỏi thiết bị của %1$d liên hệ? Không thể hoàn tác.</item>
+    </plurals>
+
+    <string name="common_continue">Tiếp tục</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Khôi phục từ bản sao lưu</string>
+    <string name="onboarding_restore_message">Dán khóa riêng tư hex 64 ký tự của bạn để khôi phục danh tính và danh bạ.</string>
+    <string name="onboarding_private_key_hex">Khóa riêng tư (hex)</string>
+    <string name="onboarding_tagline">Chia sẻ vị trí riêng tư với danh bạ.\nKhông tài khoản. Không máy chủ độc quyền.</string>
+    <string name="onboarding_feature_e2e_title">Mã hóa đầu cuối</string>
+    <string name="onboarding_feature_e2e_subtitle">Vị trí của bạn được mã hóa ngay trên thiết bị</string>
+    <string name="onboarding_feature_servers_title">Không máy chủ độc quyền</string>
+    <string name="onboarding_feature_servers_subtitle">Dùng các relay Nostr mở làm kênh truyền an toàn — dữ liệu của bạn luôn được mã hóa và riêng tư</string>
+    <string name="onboarding_feature_phone_title">Chỉ nằm trên điện thoại của bạn</string>
+    <string name="onboarding_feature_phone_subtitle">Toàn bộ lịch sử vị trí nằm trên thiết bị của bạn. Chỉ vị trí hiện tại được chia sẻ với các liên hệ đã chọn</string>
+    <string name="onboarding_name_prompt">Danh bạ của bạn nên gọi bạn là gì?</string>
+    <string name="onboarding_name_placeholder">ví dụ: Mẹ, Bố, Lan…</string>
+    <string name="onboarding_get_started">Bắt đầu</string>
+    <string name="onboarding_restore_from_backup">Khôi phục từ bản sao lưu</string>
+    <string name="onboarding_key_note">Khóa riêng tư của bạn được tạo cục bộ và không bao giờ rời khỏi thiết bị này.</string>
+    <string name="onboarding_permissions_title">Quyền</string>
+    <string name="onboarding_permissions_desc">LocaPeer cần quyền vị trí để chia sẻ vị trí của bạn, quyền máy ảnh để quét mã mời và quyền thông báo cho trạng thái nền. Quyền hoạt động thể chất là tùy chọn — giúp gắn nhãn chuyển động (đi bộ, lái xe) chính xác hơn.</string>
+    <string name="onboarding_before_ask_title">Trước khi chúng tôi hỏi</string>
+    <string name="onboarding_before_ask_intro">Bạn sẽ thấy một vài lời nhắc hệ thống tiếp theo:</string>
+    <string name="onboarding_before_ask_location">• Vị trí — bắt buộc, để chia sẻ vị trí của bạn.</string>
+    <string name="onboarding_before_ask_camera">• Máy ảnh — để quét mã mời.</string>
+    <string name="onboarding_before_ask_notifications">• Thông báo — cho trạng thái nền.</string>
+    <string name="onboarding_before_ask_activity">• Hoạt động thể chất — tùy chọn. Giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên. Bạn có thể bỏ qua và bật sau trong Cài đặt.</string>
+    <string name="onboarding_grant_permissions">Cấp quyền</string>
+    <string name="onboarding_bg_location_title">Vị trí nền</string>
+    <string name="onboarding_bg_location_desc">Để danh bạ của bạn luôn được cập nhật khi ứng dụng đóng, hãy chọn \"Luôn cho phép\" ở màn hình tiếp theo.</string>
+    <string name="onboarding_bg_location_error">Cần quyền vị trí nền để cập nhật danh bạ khi ứng dụng đóng. Vui lòng thử lại và chọn \"Luôn cho phép\".</string>
+    <string name="onboarding_configure_location">Cấu hình vị trí</string>
+    <string name="onboarding_battery_title">Pin</string>
+    <string name="onboarding_battery_desc">Android có thể dừng LocaPeer để tiết kiệm pin. Để cập nhật đáng tin cậy, hãy loại LocaPeer khỏi tối ưu hóa.</string>
+    <string name="onboarding_disable_optimizations">Tắt tối ưu hóa</string>
+    <string name="onboarding_done_title">Xong!</string>
+    <string name="onboarding_done_desc">Mạng vị trí riêng tư của bạn đã sẵn sàng.</string>
+    <string name="onboarding_start_using">Bắt đầu dùng LocaPeer</string>
+
+    <string name="common_try_again">Thử lại</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Quét lời mời</string>
+    <string name="scan_camera_needed">Cần quyền máy ảnh để quét mã QR.</string>
+    <string name="scan_grant_permission">Cấp quyền</string>
+    <string name="scan_add_contact_title">Thêm liên hệ?</string>
+    <string name="scan_add_contact_message">Thao tác này sẽ kết nối bạn với %1$s và hai bên bắt đầu chia sẻ vị trí cho nhau.</string>
+    <string name="scan_add_share">Thêm và chia sẻ</string>
+    <string name="scan_request_sent_title">Đã gửi yêu cầu!</string>
+    <string name="scan_request_sent_message">Đã gửi yêu cầu tới %1$s. Bạn sẽ được kết nối khi họ chấp nhận.</string>
+    <string name="scan_failed">Quét thất bại: %1$s</string>
+
     <string name="cd_back">Quay lại</string>
+    <string name="common_review">Xem lại</string>
+    <string name="common_decline">Từ chối</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Gửi/Nhận</string>
+    <string name="role_send">Gửi</string>
+    <string name="role_receive">Nhận</string>
+    <string name="role_none">Không chia sẻ</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Lời mời của tôi</string>
+    <string name="invite_tab_add_contact">Thêm liên hệ</string>
+    <string name="invite_your_qr_title">Mã QR của bạn</string>
+    <string name="invite_your_qr_subtitle">Để ai đó quét mã này nhằm theo dõi vị trí của bạn</string>
+    <string name="invite_qr_cd">Mã QR của bạn</string>
+    <string name="invite_qr_error">Lỗi tạo mã QR</string>
+    <string name="invite_share_link">Chia sẻ liên kết mời</string>
+    <string name="invite_encryption_note">Vị trí của bạn sẽ được mã hóa riêng cho thiết bị của người quét.</string>
+    <string name="invite_camera_required_title">Cần quyền máy ảnh</string>
+    <string name="invite_camera_required_message">Cấp quyền máy ảnh để quét mã QR.</string>
+    <string name="invite_point_camera">Hướng máy ảnh vào mã QR LocaPeer</string>
+    <string name="invite_paste_title">Hoặc dán liên kết mời</string>
+    <string name="invite_process_link">Xử lý liên kết</string>
+    <string name="invite_fallback_name">Liên hệ</string>
+    <string name="invite_success_message">Bạn sẽ được kết nối với %1$s khi họ chấp nhận.</string>
+    <string name="invite_confirm_add_title">Thêm %1$s?</string>
+    <string name="invite_confirm_add_message">Thêm họ vào danh bạ và chia sẻ vị trí?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Không có yêu cầu đang chờ</string>
+    <string name="pending_requesting">Đang yêu cầu: %1$s · %2$s</string>
+    <string name="pending_role_change">Yêu cầu đổi vai trò · %1$s</string>
+    <string name="pending_new_request">Yêu cầu chia sẻ mới · %1$s</string>
+
+    <string name="common_save_changes">Lưu thay đổi</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Cập nhật cài đặt chia sẻ</string>
+    <string name="incoming_new_title">Yêu cầu liên hệ mới</string>
+    <string name="incoming_update_subtitle">%1$s muốn cập nhật cách hai bên chia sẻ. Hãy xem các cài đặt bên dưới.</string>
+    <string name="incoming_new_subtitle">%1$s đã thêm bạn làm liên hệ! Giờ bạn có thể chọn chia sẻ lại những gì.</string>
+    <string name="incoming_section_location">Vị trí</string>
+    <string name="incoming_share_my_location">Chia sẻ vị trí của tôi với %1$s</string>
+    <string name="incoming_share_my_location_sub">Họ sẽ thấy được bạn đang ở đâu</string>
+    <string name="incoming_see_their_location">Xem vị trí của %1$s</string>
+    <string name="incoming_see_their_location_sub">Bạn sẽ thấy được họ đang ở đâu</string>
+    <string name="incoming_section_messaging">Nhắn tin</string>
+    <string name="incoming_allow_messages">Cho phép tin nhắn</string>
+    <string name="incoming_allow_messages_sub">Nhận tin nhắn trò chuyện từ %1$s</string>
+
+    <string name="common_request">Yêu cầu</string>
+    <string name="common_edit">Sửa</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Cài đặt liên hệ</string>
+    <string name="peer_section_roles">Vai trò chia sẻ vị trí</string>
+    <string name="peer_send_on">%1$s có thể thấy vị trí của bạn</string>
+    <string name="peer_send_off">Bạn không chia sẻ vị trí với %1$s</string>
+    <string name="peer_receive_title">Nhận vị trí của %1$s</string>
+    <string name="peer_receive_on">Bạn có thể thấy vị trí của %1$s</string>
+    <string name="peer_receive_off">Bạn không có quyền xem vị trí của %1$s</string>
+    <string name="peer_section_privacy">Quyền riêng tư và kiểm soát chia sẻ</string>
+    <string name="peer_pause_sharing">Tạm dừng chia sẻ</string>
+    <string name="peer_pause_sub">Tạm thời ngừng gửi vị trí của bạn tới %1$s</string>
+    <string name="peer_precision">Độ chính xác vị trí</string>
+    <string name="peer_precision_exact_sub">Tọa độ GPS chính xác</string>
+    <string name="peer_precision_suburb_sub">Vị trí gần đúng (cấp khu phố)</string>
+    <string name="peer_always_sharing">Luôn chia sẻ</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">%1$d quy tắc chia sẻ đang hoạt động</item>
+    </plurals>
+    <string name="peer_section_alerts">Cảnh báo và theo dõi</string>
+    <string name="peer_sos_contact">Liên hệ SOS</string>
+    <string name="peer_sos_sub">Nhận cảnh báo khẩn cấp của bạn ngay cả khi chia sẻ đang tạm dừng</string>
+    <string name="peer_missed_alert">Cảnh báo mất vị trí</string>
+    <string name="peer_missed_on">Báo cho tôi nếu %1$s ngừng báo cáo vị trí</string>
+    <string name="peer_requires_access">Cần quyền xem vị trí của %1$s</string>
+    <string name="peer_proximity_alert">Cảnh báo khoảng cách gần</string>
+    <string name="peer_proximity_sub">Báo cho tôi khi %1$s ở gần</string>
+    <string name="peer_alert_radius">Bán kính cảnh báo</string>
+    <string name="peer_alert_schedule">Lịch cảnh báo</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">%1$d quy tắc đang hoạt động</item>
+    </plurals>
+    <string name="peer_geofences_sub">Thiết lập vùng đến và đi cho %1$s</string>
+    <string name="peer_supervise">Giám sát thiết bị này</string>
+    <string name="peer_supervise_on">Bạn nhận và phê duyệt các yêu cầu mở khóa từ %1$s</string>
+    <string name="peer_supervise_off">Cho phép %1$s gửi cho bạn yêu cầu mở khóa chế độ được giám sát</string>
+    <string name="peer_messaging_sub">Bật/tắt tin nhắn trò chuyện từ %1$s</string>
+    <string name="peer_section_history">Lịch sử di chuyển</string>
+    <string name="peer_location_history">Lịch sử vị trí</string>
+    <string name="peer_location_history_sub">Xem lịch sử di chuyển và báo cáo bản đồ của %1$s</string>
+    <string name="peer_section_retention">Lưu trữ dữ liệu từ xa</string>
+    <string name="peer_retention_location_sub">%1$s giữ lịch sử vị trí của bạn trong bao lâu</string>
+    <string name="peer_purge_location">Xóa toàn bộ dữ liệu vị trí khỏi %1$s</string>
+    <string name="peer_retention_messages_sub">%1$s giữ tin nhắn bạn đã gửi trong bao lâu</string>
+    <string name="peer_purge_messages">Xóa toàn bộ tin nhắn khỏi %1$s</string>
+    <string name="peer_precision_exact">GPS chính xác</string>
+    <string name="peer_precision_exact_desc">Tọa độ chính xác</string>
+    <string name="peer_precision_suburb">Khu phố (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Chỉ ở cấp khu vực</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">Xóa %1$d cuộc trò chuyện?</item>
+    </plurals>
+    <string name="conv_delete_locally">Xóa cục bộ</string>
+    <string name="conv_delete_locally_sub">Chỉ gỡ cuộc trò chuyện khỏi thiết bị của bạn.</string>
+    <string name="conv_delete_both">Xóa cục bộ/khỏi liên hệ</string>
+    <string name="conv_bulk_delete_both_sub">Xóa cuộc trò chuyện cục bộ và ở phía liên hệ của bạn.</string>
+    <string name="conv_delete_both_sub">Xóa cuộc trò chuyện cục bộ và gửi yêu cầu xóa cuộc trò chuyện trên thiết bị của liên hệ.</string>
+    <string name="conv_cd_exit_selection">Thoát chế độ chọn</string>
+    <string name="conv_cd_select_all">Chọn tất cả</string>
+    <string name="conv_cd_new_message">Tin nhắn mới</string>
+    <string name="conv_sort_date">Ngày</string>
+    <string name="conv_sort_unread">Chưa đọc</string>
+    <string name="conv_search_placeholder">Tìm cuộc trò chuyện…</string>
+    <string name="conv_tab_chats">Trò chuyện</string>
+    <string name="conv_tab_archived">Đã lưu trữ</string>
+    <string name="conv_mark_read">Đánh dấu đã đọc</string>
+    <string name="conv_archive">Lưu trữ</string>
+    <string name="conv_unarchive">Bỏ lưu trữ</string>
+    <string name="conv_empty_no_results">Không có kết quả cho \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Hãy thử từ khóa khác</string>
+    <string name="conv_empty_archived_title">Không có cuộc trò chuyện đã lưu trữ</string>
+    <string name="conv_empty_archived_sub">Lưu trữ các cuộc trò chuyện để giữ hộp thư gọn gàng</string>
+    <string name="conv_empty_title">Chưa có tin nhắn</string>
+    <string name="conv_empty_sub">Mở bản đồ và chạm vào một người\nđể bắt đầu trò chuyện</string>
+    <string name="conv_delete_title">Xóa cuộc trò chuyện?</string>
+    <string name="conv_delete_message">Bạn muốn xóa cuộc trò chuyện với %1$s như thế nào?</string>
+    <string name="conv_messages_blocked">Tin nhắn bị chặn</string>
+    <string name="conv_preview_mine">Bạn: %1$s</string>
+    <string name="conv_new_message_title">Tin nhắn mới</string>
+    <string name="conv_picker_empty">Chưa có liên hệ. Quét mã QR để thêm liên hệ.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Xóa lịch sử trò chuyện?</string>
+    <string name="chat_clear_message">Bạn muốn xóa cuộc trò chuyện với %1$s như thế nào?</string>
+    <string name="chat_clear_locally">Xóa cục bộ</string>
+    <string name="chat_clear_both">Xóa cục bộ/khỏi liên hệ</string>
+    <string name="chat_clear_both_sub">Xóa cuộc trò chuyện cục bộ và gửi tới %1$s yêu cầu xóa các tin nhắn bạn đã gửi.</string>
+    <string name="chat_cd_options">Tùy chọn</string>
+    <string name="chat_clear_history_menu">Xóa lịch sử trò chuyện</string>
+    <string name="chat_typing">%1$s đang nhập…</string>
+    <string name="chat_blocked_banner">Bạn đã chặn tin nhắn từ %1$s. Vào Danh bạ để bỏ chặn.</string>
+    <string name="chat_delete_msg_title">Xóa tin nhắn?</string>
+    <string name="chat_delete_msg_message">Bạn muốn xóa tin nhắn này như thế nào?</string>
+    <string name="chat_delete_from_contact">Xóa khỏi liên hệ</string>
+    <string name="chat_delete_from_contact_sub">Xóa cuộc trò chuyện khỏi thiết bị của liên hệ.</string>
+    <string name="chat_delete_both_sub">Gỡ cuộc trò chuyện cục bộ và tự động xóa khỏi thiết bị của liên hệ.</string>
+    <string name="chat_cd_share_location">Chia sẻ vị trí</string>
+    <string name="chat_input_placeholder">Tin nhắn…</string>
+    <string name="chat_cd_send">Gửi</string>
+
+    <string name="common_close">Đóng</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Kích hoạt SOS?</string>
+    <string name="map_sos_deactivate_title">Hủy kích hoạt SOS?</string>
+    <string name="map_sos_activate_msg">Thao tác này sẽ phát vị trí của bạn mỗi 15 giây tới các liên hệ SOS đã chỉ định cho đến khi hủy kích hoạt.</string>
+    <string name="map_sos_deactivate_msg">Thao tác này sẽ dừng phát vị trí ưu tiên cao tới các liên hệ khẩn cấp.</string>
+    <string name="map_activate">Kích hoạt</string>
+    <string name="map_deactivate">Hủy kích hoạt</string>
+    <string name="map_cd_style">Kiểu bản đồ</string>
+    <string name="map_cd_show_geofences">Hiện hàng rào địa lý</string>
+    <string name="map_cd_hide_geofences">Ẩn hàng rào địa lý</string>
+    <string name="map_cd_follow">Theo tôi</string>
+    <string name="map_cd_friends">Bạn bè</string>
+    <string name="map_no_friends">Chưa theo dõi ai</string>
+    <string name="map_you">Bạn</string>
+    <string name="map_cd_go_my_location">Đến vị trí của tôi</string>
+    <string name="map_sos_active">⚠ SOS ĐANG BẬT</string>
+    <string name="map_away">Ở xa</string>
+    <string name="map_no_location_yet">Chưa có vị trí</string>
+    <string name="map_cd_go_location">Đến vị trí</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS BẬT</string>
+    <string name="map_overdue">Quá hạn — không có cập nhật gần đây</string>
+    <string name="map_stat_last_seen">Hoạt động gần nhất</string>
+    <string name="map_stat_battery">Pin</string>
+    <string name="map_stat_accuracy">Độ chính xác</string>
+    <string name="map_stat_motion">Chuyển động</string>
+    <string name="map_stat_speed">Tốc độ</string>
+    <string name="map_stat_elevation">Độ cao</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Lịch sử: %1$s</string>
+    <string name="history_select_person">Chọn người</string>
+    <string name="history_person_label">Người</string>
+    <string name="history_cd_prev_day">Ngày trước</string>
+    <string name="history_cd_next_day">Ngày sau</string>
+    <string name="history_time_filter">Bộ lọc thời gian:</string>
+    <string name="history_cd_reset_time">Đặt lại thời gian</string>
+    <string name="history_tab_list">Danh sách</string>
+    <string name="history_empty_title">Không có lịch sử cho ngày này</string>
+    <string name="history_empty_sub">Hãy thử chọn ngày khác hoặc kiểm tra kết nối của bạn.</string>
+    <string name="history_start_time">Giờ bắt đầu</string>
+    <string name="history_end_time">Giờ kết thúc</string>
+    <string name="history_no_data_title">Không có dữ liệu vị trí</string>
+    <string name="history_no_data_sub">Không có điểm nào được ghi cho ngày hoặc khoảng thời gian này.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">Đã ghi %1$d điểm</item>
+    </plurals>
+    <string name="history_cd_dismiss">Đóng</string>
+    <string name="history_accuracy_label">Độ chính xác ±%1$s</string>
+    <string name="history_emergency_sos">Tín hiệu SOS khẩn cấp</string>
+    <string name="history_detail_location">Vị trí</string>
+    <string name="history_detail_coordinates">Tọa độ</string>
+    <string name="history_within">trong phạm vi ±%1$s</string>
+    <string name="history_detail_movement">Chuyển động</string>
+    <string name="history_movement_desc">%1$s %2$s hướng %3$s</string>
+
+    <string name="common_create">Tạo</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Thêm khu vực hàng rào địa lý</string>
+    <string name="geo_cd_assign">Gán hàng rào địa lý</string>
+    <string name="geo_unknown">Không rõ</string>
+    <string name="geo_empty_title">Không có hàng rào địa lý</string>
+    <string name="geo_empty_sub">Chạm + để tạo khu vực hàng rào địa lý, sau đó gán liên hệ cho nó trong cài đặt chia sẻ của họ.</string>
+    <string name="geo_delete_title">Xóa hàng rào địa lý?</string>
+    <string name="geo_delete_simple">Xóa \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">\"%1$s\" được gán cho %2$d liên hệ. Xóa nó cũng sẽ gỡ các gán này.</item>
+    </plurals>
+    <string name="geo_for_contact">Hàng rào địa lý cho %1$s</string>
+    <string name="geo_empty_contact_title">Không có hàng rào địa lý cho liên hệ</string>
+    <string name="geo_empty_contact_sub">Chạm + để gán khu vực hàng rào địa lý và chọn cảnh báo khi đến, khi đi hoặc cả hai.</string>
+    <string name="geo_no_areas_title">Chưa có hàng rào địa lý</string>
+    <string name="geo_no_areas_msg">Hãy tạo khu vực hàng rào địa lý trước từ màn hình Hàng rào địa lý, rồi gán tại đây.</string>
+    <string name="geo_radius_label">Bán kính %1$s</string>
+    <string name="geo_contacts_label">Liên hệ: %1$s</string>
+    <string name="geo_no_contacts_assigned">Chưa gán liên hệ nào</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">%1$d quy tắc</item>
+    </plurals>
+    <string name="geo_trigger_enter">Vào</string>
+    <string name="geo_trigger_exit">Ra</string>
+    <string name="geo_trigger_both">Cả hai</string>
+    <string name="geo_edit_title">Sửa hàng rào địa lý</string>
+    <string name="geo_new_title">Hàng rào địa lý mới</string>
+    <string name="geo_cd_my_location">Vị trí của tôi</string>
+    <string name="geo_cd_radius_increase">Tăng bán kính</string>
+    <string name="geo_cd_radius_decrease">Giảm bán kính</string>
+    <string name="geo_hint_tap">Chạm hoặc giữ bản đồ để đặt</string>
+    <string name="geo_hint_move">Chụm để thu phóng • Giữ hoặc kéo ghim để di chuyển</string>
+    <string name="geo_basic_info">Thông tin cơ bản</string>
+    <string name="geo_search_title">Tìm theo địa chỉ</string>
+    <string name="geo_search_label">Địa chỉ hoặc địa điểm</string>
+    <string name="geo_search_placeholder">ví dụ: 10 Lê Lợi, Quận 1</string>
+    <string name="geo_search_no_results">Không tìm thấy địa chỉ phù hợp</string>
+    <string name="geo_cd_search">Tìm kiếm</string>
+    <string name="geo_name_placeholder">ví dụ: Nhà, Cơ quan</string>
+    <string name="geo_name_required">Bắt buộc nhập tên</string>
+    <string name="geo_latitude">Vĩ độ</string>
+    <string name="geo_longitude">Kinh độ</string>
+    <string name="geo_lat_range">-90 đến 90</string>
+    <string name="geo_lng_range">-180 đến 180</string>
+    <string name="geo_radius">Bán kính</string>
+    <string name="geo_radius_range">Nhập từ %1$d đến %2$d m</string>
+    <string name="geo_edit_assignment">Sửa gán</string>
+    <string name="geo_assign_title">Gán hàng rào địa lý</string>
+    <string name="geo_select_area">Chọn khu vực hàng rào địa lý</string>
+    <string name="geo_trigger_title">Kích hoạt thông báo khi</string>
+    <string name="geo_add_rule">Thêm quy tắc</string>
+    <string name="geo_alerts_all_times">Cảnh báo luôn hoạt động. Thêm quy tắc để giới hạn thời gian gửi cảnh báo.</string>
+    <string name="geo_assign_action">Gán</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Cảnh báo khoảng cách gần</string>
+    <string name="prox_empty_title">Chưa theo dõi ai</string>
+    <string name="prox_empty_sub">Quét mã QR lời mời của ai đó từ thẻ Quét\nđể bắt đầu theo dõi vị trí của họ</string>
+    <string name="prox_intro">Nhận thông báo khi người được theo dõi đến gần bạn trong khoảng cách đã chọn.</string>
+    <string name="prox_alert_within">Cảnh báo khi trong phạm vi %1$s</string>
+    <string name="prox_alerts_off">Cảnh báo tắt</string>
+    <string name="prox_alert_radius">Bán kính cảnh báo</string>
+    <string name="prox_edit_schedule">Sửa lịch</string>
+    <string name="prox_rules">Quy tắc</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Lịch cho %1$s</string>
+    <string name="schedule_cd_add_rule">Thêm quy tắc</string>
+    <string name="schedule_empty_title">Không có quy tắc lịch</string>
+    <string name="schedule_empty_global">Vị trí luôn được chia sẻ. Thêm quy tắc để giới hạn thời gian chia sẻ.</string>
+    <string name="schedule_empty_peer">Vị trí luôn được chia sẻ với %1$s. Thêm quy tắc để giới hạn thời gian.</string>
+    <string name="schedule_active_hint">Hoạt động khi bất kỳ quy tắc nào khớp với thời gian hiện tại. Trống = luôn bật.</string>
+    <string name="schedule_all_day">Cả ngày</string>
+    <string name="schedule_plus_one_day"> (+1 ngày)</string>
+    <string name="schedule_rule_number">Quy tắc %1$d</string>
+    <string name="schedule_cd_delete_rule">Xóa quy tắc</string>
+    <string name="schedule_edit_rule">Sửa quy tắc</string>
+    <string name="schedule_label_optional">Nhãn (tùy chọn)</string>
+    <string name="schedule_label_placeholder">ví dụ: Giờ làm việc, Cuối tuần</string>
+    <string name="schedule_active_days">Ngày hoạt động</string>
+    <string name="schedule_time_window">Khung giờ</string>
+    <string name="schedule_start">Bắt đầu</string>
+    <string name="schedule_end">Kết thúc</string>
+    <string name="schedule_overnight">Qua đêm: hoạt động từ %1$s đến %2$s ngày hôm sau</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Thiết bị đang được giám sát</string>
+    <string name="gate_message">Cần người giám sát phê duyệt để truy cập cài đặt.</string>
+    <string name="gate_request_access">Yêu cầu truy cập</string>
+    <string name="gate_waiting">Đang chờ người giám sát phê duyệt…</string>
+    <string name="gate_denied">Người giám sát đã từ chối truy cập.</string>
+    <string name="gate_timed_out">Yêu cầu hết hạn. Người giám sát không phản hồi.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Vĩnh viễn</string>
+    <string name="retention_keep_for">Giữ trong: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d ngày</item>
+    </plurals>
+
+    <string name="common_select">Chọn</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Chọn vị trí cố định</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Chọn các thẻ hiển thị ở thanh dưới và thứ tự của chúng. Bản đồ luôn được bao gồm.</string>
+    <string name="customize_cd_move_up">Di chuyển lên</string>
+    <string name="customize_cd_move_down">Di chuyển xuống</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Phiên bản %1$s (bản dựng %2$d)</string>
+    <string name="about_tagline">Chia sẻ vị trí riêng tư với những người bạn tin tưởng. Không tài khoản, không đám mây, chúng tôi không theo dõi.</string>
+    <string name="about_relay_connections">Kết nối relay</string>
+    <string name="about_connected">Đã kết nối</string>
+    <string name="about_disconnected">Đã ngắt kết nối</string>
+    <string name="about_open_source">Thư viện mã nguồn mở</string>
+    <string name="about_lib_osmdroid_desc">Hiển thị bản đồ dựa trên OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Truyền WebSocket cho relay Nostr</string>
+    <string name="about_lib_compose_desc">Khung giao diện</string>
+    <string name="about_lib_hilt_desc">Tiêm phụ thuộc</string>
+    <string name="about_lib_room_desc">Cơ sở dữ liệu cục bộ</string>
+    <string name="about_map_attribution">Dữ liệu bản đồ © cộng tác viên OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Chấp nhận</string>
+    <string name="notif_someone">Ai đó</string>
+    <string name="notif_sos_title">SOS từ %1$s!</string>
+    <string name="notif_sos_text">%1$s đã kích hoạt SOS tại (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s muốn bạn làm người giám sát của họ</string>
+    <string name="notif_supervisor_request_text">Chấp nhận để cho phép các yêu cầu phê duyệt mở khóa từ thiết bị này</string>
+    <string name="notif_supervisor_request_big">Chấp nhận để cho phép %1$s gửi cho bạn yêu cầu phê duyệt mở khóa khi chế độ được giám sát đang bật.</string>
+    <string name="notif_supervised_active_title">Chế độ được giám sát đang bật</string>
+    <string name="notif_supervised_active_text">Người giám sát của bạn đã xác nhận — chế độ được giám sát đã được thiết lập</string>
+    <string name="notif_supervised_declined_title">Chế độ được giám sát bị từ chối</string>
+    <string name="notif_supervised_declined_text">Người giám sát của bạn đã từ chối yêu cầu — chế độ được giám sát đã bị tắt</string>
+    <string name="notif_tracking_alert_title">Cảnh báo theo dõi</string>
+    <string name="notif_tracking_proximity">%1$s đã nhận cảnh báo khoảng cách gần về bạn</string>
+    <string name="notif_tracking_geofence">%1$s đã nhận cảnh báo rằng bạn vào/ra khỏi hàng rào: %2$s</string>
+    <string name="notif_tracking_generic">%1$s đang theo dõi vị trí của bạn</string>
+    <string name="notif_track_update_title">Cập nhật chia sẻ từ %1$s</string>
+    <string name="notif_track_new_title">Liên hệ mới: %1$s</string>
+    <string name="notif_role_send_receive">Gửi/Nhận vị trí</string>
+    <string name="notif_role_send">Gửi vị trí</string>
+    <string name="notif_role_receive">Nhận vị trí</string>
+    <string name="notif_role_none">Không chia sẻ vị trí</string>
+    <string name="notif_track_requesting">%1$s đang yêu cầu: %2$s</string>
+    <string name="notif_track_update_body">%1$s muốn cập nhật cách hai bên chia sẻ vị trí.</string>
+    <string name="notif_track_new_body">%1$s đã thêm bạn làm liên hệ và muốn kết nối.</string>
+    <string name="notif_contact_connected_title">Liên hệ đã kết nối</string>
+    <string name="notif_contact_connected_text">%1$s hiện đã kết nối với bạn.</string>
+    <string name="notif_request_declined_title">Yêu cầu bị từ chối</string>
+    <string name="notif_request_declined_text">%1$s đã từ chối yêu cầu chia sẻ vị trí của bạn.</string>
+    <string name="notif_message_person">Nhắn tin cho %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s đã vào %2$s</string>
+    <string name="notif_geofence_left_title">%1$s đã rời %2$s</string>
+    <string name="notif_geofence_subtitle">lúc %1$s · bán kính %2$s</string>
+    <string name="notif_person_nearby">%1$s đang ở gần</string>
+    <string name="notif_distance_from_you">cách bạn %1$s</string>
+    <string name="notif_missed_title">Không có cập nhật từ %1$s</string>
+    <string name="notif_missed_text">Hoạt động gần nhất %1$s phút trước gần (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ĐANG BẬT!</string>
+    <string name="notif_sos_active_text">Đang phát cảnh báo khẩn cấp tới các liên hệ SOS</string>
+    <string name="notif_messages_group_title">Tin nhắn LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Đã từ chối yêu cầu liên hệ từ %1$s</string>
+    <string name="toast_now_supervising">Đang giám sát thiết bị của %1$s</string>
+    <string name="toast_declined_supervision">Đã từ chối yêu cầu giám sát từ %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Vừa xong</string>
+    <string name="time_minutes_ago">%1$d phút trước</string>
+    <string name="fallback_me">Tôi</string>
+    <string name="fallback_unknown">Không rõ</string>
+    <string name="geo_unassigned">Chưa gán</string>
+    <string name="days_every_day">Hằng ngày</string>
+    <string name="days_weekdays">Ngày trong tuần</string>
+    <string name="days_weekends">Cuối tuần</string>
+    <string name="days_none">Không có ngày nào</string>
+    <string name="chat_my_location_message">Vị trí hiện tại của tôi: %1$s</string>
+    <string name="scan_error_bad_pubkey">Lời mời không hợp lệ: khóa công khai sai</string>
+    <string name="scan_error_key_mismatch">Lời mời không hợp lệ: khóa không khớp</string>
+    <string name="scan_error_unknown">Lỗi không xác định</string>
+    <string name="scan_error_invalid_link">Liên kết mời không hợp lệ</string>
+    <string name="scan_fallback_contact">liên hệ này</string>
+    <string name="backup_saved">Đã lưu bản sao lưu: %1$s</string>
+    <string name="backup_saved_encrypted">Đã lưu bản sao lưu (đã mã hóa): %1$s</string>
+    <string name="backup_failed">Sao lưu thất bại: %1$s</string>
+    <string name="backup_could_not_read_file">Không thể đọc tệp</string>
+    <string name="backup_could_not_write_file">Không thể ghi tệp</string>
+    <string name="backup_could_not_read">Không thể đọc bản sao lưu: %1$s</string>
+    <string name="backup_incorrect_password">Mật khẩu không đúng</string>
+    <string name="restore_result_restored">Đã khôi phục: %1$s</string>
+    <string name="restore_result_failed">Thất bại: %1$s</string>
+    <string name="restore_nothing">Không có gì để khôi phục</string>
+    <string name="restore_failed">Khôi phục thất bại: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">%1$d liên hệ</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">%1$d hàng rào địa lý</item>
+    </plurals>
+    <string name="peer_role_change_sent">Đã gửi yêu cầu đổi vai trò tới %1$s</string>
+    <string name="peer_not_found">Không tìm thấy liên hệ</string>
+    <string name="peer_purge_location_sent">Đã gửi lệnh xóa từ xa TẤT CẢ vị trí tới %1$s</string>
+    <string name="peer_purge_messages_sent">Đã gửi lệnh xóa từ xa TẤT CẢ tin nhắn tới %1$s</string>
+    <string name="onboarding_error_key_length">Khóa không hợp lệ — phải gồm 64 ký tự hex.</string>
+    <string name="onboarding_error_key_range">Khóa riêng tư không hợp lệ — nằm ngoài phạm vi đường cong.</string>
+    <string name="onboarding_error_hex">Định dạng hex không hợp lệ.</string>
+    <string name="onboarding_error_import_failed">Nhập khóa thất bại: %1$s</string>
 </resources>

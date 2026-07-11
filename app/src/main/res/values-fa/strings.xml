@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── کانال‌های اعلان و سرویس پیش‌زمینه ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">پخش مکان</string>
     <string name="channel_desc_heartbeat">مکان شما را برای مخاطبین تایید شده پخش می‌کند</string>
     <string name="channel_name_alerts">هشدارها</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer در حال اجراست</string>
     <string name="notification_heartbeat_text">در حال اشتراک‌گذاری مکان شما با دیگران</string>
 
-    <!-- ── اقدامات مشترک ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">ذخیره</string>
     <string name="common_cancel">لغو</string>
     <string name="common_done">انجام شد</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">تایید</string>
     <string name="common_deny">رد کردن</string>
 
-    <!-- ── زبانه‌های ناوبری ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">نقشه</string>
     <string name="tab_messages">پیام‌ها</string>
     <string name="tab_history">تاریخچه</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">تنظیمات</string>
 
-    <!-- ── وضعیت‌های حرکت / فعالیت ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">ثابت</string>
     <string name="motion_walking">پیاده‌روی</string>
     <string name="motion_running">دویدن</string>
     <string name="motion_cycling">دوچرخه‌سواری</string>
     <string name="motion_driving">رانندگی</string>
 
-    <!-- ── تنظیمات ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">کلید خصوصی</string>
+    <string name="backup_section_contacts">مخاطبین</string>
+    <string name="backup_section_geofences">حصارهای جغرافیایی</string>
+    <string name="backup_section_settings">تنظیمات</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">درخواست نظارت</string>
+    <string name="supervision_request_message">«%1$s» درخواست دسترسی به تنظیمات خود را دارد. اجازه می‌دهید؟</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">تنظیمات</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">مکان و حریم خصوصی</string>
     <string name="settings_section_security">امنیت</string>
     <string name="settings_section_map">نقشه</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">پشتیبان‌گیری و کلیدها</string>
     <string name="settings_section_about">درباره</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">ویرایش نام</string>
     <string name="settings_my_qr">QR من</string>
     <string name="settings_no_name_set">نامی تنظیم نشده است</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">اشتراک‌گذاری مکان من</string>
+    <string name="settings_broadcasting">در حال ارسال به مخاطبین شما</string>
+    <string name="settings_not_broadcasting">ارسال غیرفعال است</string>
+    <string name="settings_sharing_schedule">زمان‌بندی اشتراک‌گذاری</string>
+    <string name="settings_always_on">همیشه روشن</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d قاعده</item>
+        <item quantity="other">%1$d قاعده</item>
+    </plurals>
+    <string name="settings_geofences">حصارهای جغرافیایی</string>
+    <string name="settings_geofences_subtitle">مدیریت محدوده‌های حصار جغرافیایی مشترک</string>
+    <string name="settings_notify_when_tracked">اعلان هنگام ردیابی</string>
+    <string name="settings_notify_when_tracked_subtitle">وقتی هشدار مجاورت یا حصار جغرافیایی یکی از مخاطبین درباره شما فعال می‌شود، اعلان دریافت کنید.</string>
+    <string name="settings_my_location_history">تاریخچه موقعیت</string>
+    <string name="settings_my_location_history_subtitle">مرور خط زمانی موقعیت خودتان</string>
+    <string name="settings_lookup_addresses">جستجوی نشانی‌ها</string>
+    <string name="settings_lookup_addresses_subtitle">نمایش نشانی خیابان برای نقاط تاریخچه و پین‌های لمس‌شده روی نقشه، و جستجو بر اساس نشانی هنگام قرار دادن حصارهای جغرافیایی. این مختصات یا جستجوی شما به سرویس مکان‌یابی دستگاه (معمولاً Google) ارسال می‌شود.</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">نظارت فعال است</string>
+    <string name="settings_supervision_active_subtitle">تنظیمات به تأیید ناظر نیاز دارد</string>
+    <string name="settings_disable_supervised">غیرفعال‌کردن حالت تحت نظارت</string>
+    <string name="settings_supervised_mode">حالت تحت نظارت</string>
+    <string name="settings_supervised_mode_subtitle">برای دسترسی به تنظیمات تأیید ناظر لازم باشد</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">نقطه شروع</string>
+    <string name="settings_map_current_location">موقعیت فعلی</string>
+    <string name="settings_map_all_contacts">همه مخاطبین</string>
+    <string name="settings_map_fixed_location">موقعیت ثابت</string>
+    <string name="settings_map_last_position">آخرین موقعیت</string>
+    <string name="settings_map_starting_point_title">نقطه شروع نقشه</string>
+    <string name="settings_no_location_set">موقعیتی تنظیم نشده</string>
+    <string name="settings_pick_location_on_map">انتخاب موقعیت روی نقشه</string>
+    <string name="settings_default_zoom_level">بزرگ‌نمایی پیش‌فرض</string>
+    <string name="settings_map_pin_colour">رنگ پین نقشه</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">بسامد به‌روزرسانی</string>
+    <string name="settings_update_cadence_subtitle">تنظیم اینکه موقعیت شما هر چند وقت یک‌بار ارسال شود</string>
+    <string name="settings_update_cadence_dialog_message">بسامد به‌روزرسانی موقعیت را بر اساس فعالیت خود کنترل کنید. به‌روزرسانی‌های مکرر باتری بیشتری مصرف می‌کند.</string>
+    <string name="settings_update_cadence_reset">بازنشانی به پیش‌فرض</string>
+    <string name="settings_min_distance_filtering">فیلتر حداقل فاصله</string>
+    <string name="settings_min_distance_filtering_subtitle">فقط نقاطی را نشان بده که دست‌کم به این اندازه از نقطه قبلی فاصله دارند.</string>
+    <string name="settings_discard_low_accuracy">نادیده‌گرفتن نقاط کم‌دقت</string>
+    <string name="settings_discard_low_accuracy_subtitle">موقعیت‌های خودتان را که شعاع دقتشان بیشتر از این مقدار است، ارسال یا ثبت نکن. SOS هرگز نادیده گرفته نمی‌شود.</string>
+    <string name="settings_hide_low_accuracy">پنهان‌کردن نقاط کم‌دقت</string>
+    <string name="settings_hide_low_accuracy_subtitle">نقاط تاریخچه با شعاع دقت بیشتر از این مقدار پنهان می‌شوند. چیزی حذف نمی‌شود.</string>
+    <string name="settings_low_battery" formatted="false">باتری کم (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d دقیقه</string>
+    <string name="settings_motion_detection">تشخیص حرکت</string>
+    <string name="settings_motion_detection_on">فعال — نوع حرکت شما (پیاده‌روی، رانندگی) را در تاریخچه دقیق‌تر می‌کند</string>
+    <string name="settings_motion_detection_off">غیرفعال — برای برچسب‌های حرکتی دقیق‌تر، دسترسی به فعالیت بدنی را مجاز کنید</string>
+    <string name="settings_enable_motion_title">فعال‌کردن تشخیص حرکت</string>
+    <string name="settings_enable_motion_message">دسترسی به فعالیت بدنی به LocaPeer کمک می‌کند پیاده‌روی، رانندگی و سکون را در تاریخچه شما دقیق‌تر تشخیص دهد. اکنون غیرفعال است — می‌توانید آن را از تنظیمات سیستم دوباره فعال کنید.</string>
+    <string name="settings_open_settings">بازکردن تنظیمات</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">واحد سرعت</string>
+    <string name="settings_speed_imperial">امپریال (مایل بر ساعت)</string>
+    <string name="settings_speed_metric">متریک (کیلومتر بر ساعت)</string>
+    <string name="settings_elevation_units">واحد ارتفاع</string>
+    <string name="settings_elevation_imperial">امپریال (فوت)</string>
+    <string name="settings_elevation_metric">متریک (متر)</string>
+    <string name="settings_distance_units">واحد فاصله</string>
+    <string name="settings_distance_imperial">امپریال (فوت/مایل)</string>
+    <string name="settings_distance_metric">متریک (متر/کیلومتر)</string>
+    <string name="settings_time_format">قالب زمان</string>
+    <string name="settings_time_24h">۲۴ ساعته (13:30)</string>
+    <string name="settings_time_12h">۱۲ ساعته (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">داده‌های موقعیت</string>
+    <string name="settings_retention_location_subtitle">داده‌های موقعیت مخاطبین چه مدت به‌صورت محلی نگه داشته شود</string>
+    <string name="settings_clear_all_location">پاک‌کردن همه داده‌های موقعیت</string>
+    <string name="settings_retention_messages">پیام‌ها</string>
+    <string name="settings_retention_messages_subtitle">پیام‌های دریافتی چه مدت به‌صورت محلی نگه داشته شوند</string>
+    <string name="settings_clear_all_messages">پاک‌کردن همه پیام‌ها</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">شخصی‌سازی پیمایش</string>
+    <string name="settings_customize_nav_subtitle">انتخاب و مرتب‌سازی زبانه‌های پایین</string>
+    <string name="settings_start_page">صفحه شروع</string>
     <string name="settings_language">زبان</string>
     <string name="settings_language_title">زبان برنامه</string>
     <string name="settings_language_system">پیش‌فرض سیستم</string>
 
-    <string name="common_ok">تایید</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">برون‌بری پشتیبان</string>
+    <string name="settings_export_backup_subtitle">کلید خصوصی و مخاطبین خود را در یک فایل ذخیره کنید. این فایل را امن نگه دارید!</string>
+    <string name="settings_import_backup">درون‌ریزی پشتیبان</string>
+    <string name="settings_import_backup_subtitle">بازیابی از فایلی که قبلاً برون‌بری شده</string>
+    <string name="settings_view_private_key">مشاهده کلید خصوصی</string>
+    <string name="settings_view_private_key_subtitle">نمایش کلید هویتی ۶۴ نویسه‌ای هگز شما</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">درباره LocaPeer</string>
+    <string name="settings_about_subtitle">نسخه، وضعیت رله‌ها، متن‌باز</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">ویرایش نام نمایشی</string>
+    <string name="settings_display_name_label">نام نمایشی</string>
+    <string name="settings_my_invite_qr">کد QR دعوت من</string>
+    <string name="settings_invite_qr_subtitle">دیگران می‌توانند آن را اسکن کنند تا ردیابی شما را آغاز کنند.</string>
+    <string name="settings_invite_qr_cd">کد QR دعوت</string>
+    <string name="settings_private_key_title">کلید خصوصی</string>
+    <string name="settings_private_key_warning">آن را امن نگه دارید. هر کسی با این کلید می‌تواند خود را جای شما جا بزند.</string>
+    <string name="settings_clear_location_title">تاریخچه موقعیت پاک شود؟</string>
+    <string name="settings_clear_location_message">همه نقاط موقعیت ذخیره‌شده برای همیشه حذف خواهند شد.</string>
+    <string name="settings_clear_messages_title">تاریخچه پیام‌ها پاک شود؟</string>
+    <string name="settings_clear_messages_message">همه پیام‌های ذخیره‌شده برای همیشه حذف خواهند شد.</string>
+    <string name="settings_encrypted_backup_title">پشتیبان رمزگذاری‌شده</string>
+    <string name="settings_encrypted_backup_message">این پشتیبان رمزگذاری شده است. برای ادامه گذرواژه را وارد کنید.</string>
+    <string name="settings_select_restore_title">داده‌های موردنظر برای بازیابی را انتخاب کنید</string>
+    <string name="settings_select_export_title">داده‌های موردنظر برای برون‌بری را انتخاب کنید</string>
+    <string name="settings_export_password_hint">در صورت تمایل برای رمزگذاری فایل پشتیبان گذرواژه تعیین کنید.</string>
+    <string name="settings_backup_password_optional">گذرواژه پشتیبان (اختیاری)</string>
+    <string name="settings_select_sections">بخش‌های موردنظر را انتخاب کنید:</string>
+    <string name="settings_choose_file_location">محل فایل را انتخاب کنید</string>
+    <string name="settings_not_in_backup">در این پشتیبان موجود نیست</string>
+    <string name="settings_enable_supervised_title">فعال‌کردن حالت تحت نظارت</string>
+    <string name="settings_enable_supervised_message">مخاطبی را انتخاب کنید که ناظر باشد. او باید دسترسی به تنظیمات را از دستگاه خودش تأیید کند.</string>
+    <string name="settings_no_peers_found">مخاطبی یافت نشد. ابتدا با اسکن کد QR دعوت، یک مخاطب اضافه کنید.</string>
+    <string name="settings_disable_supervised_title">حالت تحت نظارت غیرفعال شود؟</string>
+    <string name="settings_disable_supervised_message">تنظیمات بدون تأیید ناظر در دسترس خواهد بود.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">حذف</string>
+    <string name="common_name">نام</string>
+    <string name="common_search">جستجو</string>
+    <string name="common_sort">مرتب‌سازی</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">پیام</string>
+    <string name="cd_show_on_map">نمایش روی نقشه</string>
+    <string name="cd_more_options">گزینه‌های بیشتر</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d انتخاب شد</item>
+        <item quantity="other">%1$d انتخاب شد</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">لغو انتخاب</string>
+    <string name="contacts_cd_select_all">انتخاب همه</string>
+    <string name="contacts_cd_deselect_all">لغو انتخاب همه</string>
+    <string name="contacts_cd_qr_invite">QR / دعوت</string>
+    <string name="contacts_cd_pending_requests">درخواست‌های در انتظار</string>
+    <string name="contacts_sort_last_seen">آخرین بازدید</string>
+    <string name="contacts_search_placeholder">جستجوی مخاطبین…</string>
+    <string name="contacts_empty_title">هنوز مخاطبی ندارید</string>
+    <string name="contacts_empty_subtitle">برای ارتباط با کسی و شروع اشتراک‌گذاری موقعیت، یک کد QR اسکن کنید.</string>
+    <string name="contacts_scan_qr">اسکن کد QR</string>
+    <string name="contacts_bulk_delete_messages">حذف پیام‌ها</string>
+    <string name="contacts_bulk_delete_locations">حذف موقعیت‌ها</string>
+    <string name="contacts_last_seen">آخرین بازدید: %1$s</string>
+    <string name="contacts_no_location_yet">هنوز داده موقعیتی نیست</string>
+    <string name="contacts_view_sharing_settings">تنظیمات اشتراک‌گذاری</string>
+    <string name="contacts_view_location_history">تاریخچه موقعیت</string>
+    <string name="contacts_rename_contact">تغییر نام مخاطب</string>
+    <string name="contacts_on_contact_device">روی دستگاه مخاطب</string>
+    <string name="contacts_delete_my_messages_title">حذف پیام‌های من</string>
+    <string name="contacts_delete_locations_title">حذف موقعیت‌های اشتراک‌گذاشته</string>
+    <string name="contacts_remove_contact_title">حذف مخاطب</string>
+    <string name="contacts_leave_title">حذف مخاطب و داده‌ها</string>
+    <string name="contacts_rename_title">تغییر نام مخاطب</string>
+    <string name="contacts_remove_contact_body">%1$s از مخاطبین شما حذف شود؟ تاریخچه موقعیت او نیز به‌صورت محلی حذف خواهد شد.</string>
+    <string name="contacts_leave_body">با این کار شما از مخاطبین %1$s حذف می‌شوید و همه پیام‌ها و داده‌های موقعیت شما از دستگاه او پاک می‌شود. دسترسی شما به موقعیت او نیز از بین می‌رود.</string>
+    <string name="contacts_delete_my_messages_body">با این کار همه پیام‌هایی که فرستاده‌اید از دستگاه %1$s حذف می‌شود. این عمل قابل بازگشت نیست.</string>
+    <string name="contacts_delete_locations_body">با این کار همه داده‌های موقعیتی که به اشتراک گذاشته‌اید از دستگاه %1$s حذف می‌شود. این عمل قابل بازگشت نیست.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">حذف مخاطب</item>
+        <item quantity="other">حذف %1$d مخاطب</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">این مخاطب حذف شود؟ تاریخچه موقعیت او نیز به‌صورت محلی حذف می‌شود.</item>
+        <item quantity="other">%1$d مخاطب حذف شوند؟ تاریخچه موقعیت آن‌ها نیز به‌صورت محلی حذف می‌شود.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">همه پیام‌های ارسالی شما از دستگاه این مخاطب از راه دور حذف شود؟ قابل بازگشت نیست.</item>
+        <item quantity="other">همه پیام‌های ارسالی شما از دستگاه‌های %1$d مخاطب از راه دور حذف شود؟ قابل بازگشت نیست.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">همه تاریخچه موقعیتی که به اشتراک گذاشته‌اید از دستگاه این مخاطب از راه دور حذف شود؟ قابل بازگشت نیست.</item>
+        <item quantity="other">همه تاریخچه موقعیتی که به اشتراک گذاشته‌اید از دستگاه‌های %1$d مخاطب از راه دور حذف شود؟ قابل بازگشت نیست.</item>
+    </plurals>
+
+    <string name="common_continue">ادامه</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">بازیابی از پشتیبان</string>
+    <string name="onboarding_restore_message">برای بازیابی هویت و مخاطبین، کلید خصوصی هگز ۶۴ نویسه‌ای خود را جای‌گذاری کنید.</string>
+    <string name="onboarding_private_key_hex">کلید خصوصی (هگز)</string>
+    <string name="onboarding_tagline">اشتراک‌گذاری خصوصی موقعیت با مخاطبین.\nبدون حساب کاربری. بدون سرورهای انحصاری.</string>
+    <string name="onboarding_feature_e2e_title">رمزگذاری سرتاسری</string>
+    <string name="onboarding_feature_e2e_subtitle">موقعیت شما روی دستگاه رمزگذاری می‌شود</string>
+    <string name="onboarding_feature_servers_title">بدون سرورهای انحصاری</string>
+    <string name="onboarding_feature_servers_subtitle">از رله‌های باز Nostr به‌عنوان بستر انتقال امن استفاده می‌کند — داده‌های شما رمزگذاری‌شده و خصوصی می‌ماند</string>
+    <string name="onboarding_feature_phone_title">روی گوشی شما می‌ماند</string>
+    <string name="onboarding_feature_phone_subtitle">تاریخچه کامل موقعیت شما روی دستگاه‌تان می‌ماند. فقط موقعیت فعلی شما با مخاطبین منتخب به اشتراک گذاشته می‌شود</string>
+    <string name="onboarding_name_prompt">مخاطبین‌تان شما را چه صدا کنند؟</string>
+    <string name="onboarding_name_placeholder">مثلاً مامان، بابا، سارا…</string>
+    <string name="onboarding_get_started">شروع</string>
+    <string name="onboarding_restore_from_backup">بازیابی از پشتیبان</string>
+    <string name="onboarding_key_note">کلید خصوصی شما به‌صورت محلی ساخته می‌شود و هرگز از این دستگاه خارج نمی‌شود.</string>
+    <string name="onboarding_permissions_title">مجوزها</string>
+    <string name="onboarding_permissions_desc">LocaPeer برای اشتراک‌گذاری موقعیت به دسترسی مکان، برای اسکن کدهای دعوت به دوربین و برای وضعیت پس‌زمینه به اعلان‌ها نیاز دارد. دسترسی به فعالیت بدنی اختیاری است — به برچسب‌گذاری دقیق‌تر حرکت شما (پیاده‌روی، رانندگی) کمک می‌کند.</string>
+    <string name="onboarding_before_ask_title">پیش از درخواست</string>
+    <string name="onboarding_before_ask_intro">در ادامه چند پیام سیستمی خواهید دید:</string>
+    <string name="onboarding_before_ask_location">• مکان — لازم است، برای اشتراک‌گذاری موقعیت شما.</string>
+    <string name="onboarding_before_ask_camera">• دوربین — برای اسکن کدهای دعوت.</string>
+    <string name="onboarding_before_ask_notifications">• اعلان‌ها — برای وضعیت پس‌زمینه.</string>
+    <string name="onboarding_before_ask_activity">• فعالیت بدنی — اختیاری. به LocaPeer امکان می‌دهد پیاده‌روی، رانندگی و سکون را دقیق‌تر تشخیص دهد. می‌توانید رد کنید و بعداً در تنظیمات فعالش کنید.</string>
+    <string name="onboarding_grant_permissions">اعطای مجوزها</string>
+    <string name="onboarding_bg_location_title">مکان در پس‌زمینه</string>
+    <string name="onboarding_bg_location_desc">برای اینکه مخاطبین شما هنگام بسته‌بودن برنامه به‌روز بمانند، در صفحه بعد «همیشه مجاز» را انتخاب کنید.</string>
+    <string name="onboarding_bg_location_error">مکان در پس‌زمینه برای به‌روزرسانی مخاطبین هنگام بسته‌بودن برنامه لازم است. دوباره تلاش کنید و «همیشه مجاز» را انتخاب کنید.</string>
+    <string name="onboarding_configure_location">پیکربندی مکان</string>
+    <string name="onboarding_battery_title">باتری</string>
+    <string name="onboarding_battery_desc">اندروید ممکن است برای صرفه‌جویی در باتری LocaPeer را متوقف کند. برای به‌روزرسانی‌های مطمئن، LocaPeer را از بهینه‌سازی‌ها مستثنا کنید.</string>
+    <string name="onboarding_disable_optimizations">غیرفعال‌کردن بهینه‌سازی‌ها</string>
+    <string name="onboarding_done_title">همه‌چیز آماده است!</string>
+    <string name="onboarding_done_desc">شبکه خصوصی موقعیت شما آماده است.</string>
+    <string name="onboarding_start_using">شروع استفاده از LocaPeer</string>
+
+    <string name="common_try_again">تلاش دوباره</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">اسکن دعوت</string>
+    <string name="scan_camera_needed">برای اسکن کدهای QR مجوز دوربین لازم است.</string>
+    <string name="scan_grant_permission">اعطای مجوز</string>
+    <string name="scan_add_contact_title">مخاطب اضافه شود؟</string>
+    <string name="scan_add_contact_message">با این کار با %1$s مرتبط می‌شوید و اشتراک‌گذاری موقعیت بین شما آغاز می‌شود.</string>
+    <string name="scan_add_share">افزودن و اشتراک‌گذاری</string>
+    <string name="scan_request_sent_title">درخواست ارسال شد!</string>
+    <string name="scan_request_sent_message">درخواستی برای %1$s ارسال شد. پس از پذیرش، ارتباط برقرار می‌شود.</string>
+    <string name="scan_failed">اسکن ناموفق بود: %1$s</string>
+
     <string name="cd_back">بازگشت</string>
+    <string name="common_review">بررسی</string>
+    <string name="common_decline">رد</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">ارسال/دریافت</string>
+    <string name="role_send">ارسال</string>
+    <string name="role_receive">دریافت</string>
+    <string name="role_none">بدون اشتراک‌گذاری</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">دعوت من</string>
+    <string name="invite_tab_add_contact">افزودن مخاطب</string>
+    <string name="invite_your_qr_title">کد QR شما</string>
+    <string name="invite_your_qr_subtitle">بگذارید کسی آن را اسکن کند تا موقعیت شما را دنبال کند</string>
+    <string name="invite_qr_cd">کد QR شما</string>
+    <string name="invite_qr_error">خطا در ساخت QR</string>
+    <string name="invite_share_link">اشتراک‌گذاری پیوند دعوت</string>
+    <string name="invite_encryption_note">موقعیت شما به‌طور اختصاصی برای دستگاه اسکن‌کننده رمزگذاری خواهد شد.</string>
+    <string name="invite_camera_required_title">دسترسی به دوربین لازم است</string>
+    <string name="invite_camera_required_message">برای اسکن کد QR، مجوز دوربین را بدهید.</string>
+    <string name="invite_point_camera">دوربین را به‌سوی کد QR لوکاپیر بگیرید</string>
+    <string name="invite_paste_title">یا پیوند دعوت را جای‌گذاری کنید</string>
+    <string name="invite_process_link">پردازش پیوند</string>
+    <string name="invite_fallback_name">مخاطب</string>
+    <string name="invite_success_message">پس از پذیرش %1$s، ارتباط برقرار می‌شود.</string>
+    <string name="invite_confirm_add_title">%1$s اضافه شود؟</string>
+    <string name="invite_confirm_add_message">به مخاطبین‌تان اضافه شود و موقعیت به اشتراک گذاشته شود؟</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">درخواستی در انتظار نیست</string>
+    <string name="pending_requesting">درخواست: %1$s · %2$s</string>
+    <string name="pending_role_change">درخواست تغییر نقش · %1$s</string>
+    <string name="pending_new_request">درخواست اشتراک‌گذاری جدید · %1$s</string>
+
+    <string name="common_save_changes">ذخیره تغییرات</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">به‌روزرسانی تنظیمات اشتراک‌گذاری</string>
+    <string name="incoming_new_title">درخواست مخاطب جدید</string>
+    <string name="incoming_update_subtitle">%1$s می‌خواهد نحوه اشتراک‌گذاری را تغییر دهد. تنظیمات زیر را بررسی کنید.</string>
+    <string name="incoming_new_subtitle">%1$s شما را به مخاطبین خود اضافه کرد! حالا می‌توانید انتخاب کنید در مقابل چه چیزی به اشتراک بگذارید.</string>
+    <string name="incoming_section_location">موقعیت</string>
+    <string name="incoming_share_my_location">اشتراک‌گذاری موقعیت من با %1$s</string>
+    <string name="incoming_share_my_location_sub">او می‌تواند ببیند کجا هستید</string>
+    <string name="incoming_see_their_location">دیدن موقعیت %1$s</string>
+    <string name="incoming_see_their_location_sub">می‌توانید ببینید او کجاست</string>
+    <string name="incoming_section_messaging">پیام‌رسانی</string>
+    <string name="incoming_allow_messages">اجازه پیام‌ها</string>
+    <string name="incoming_allow_messages_sub">دریافت پیام‌های گفتگو از %1$s</string>
+
+    <string name="common_request">درخواست</string>
+    <string name="common_edit">ویرایش</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">تنظیمات مخاطب</string>
+    <string name="peer_section_roles">نقش‌های اشتراک‌گذاری موقعیت</string>
+    <string name="peer_send_on">%1$s می‌تواند موقعیت شما را ببیند</string>
+    <string name="peer_send_off">موقعیت خود را با %1$s به اشتراک نمی‌گذارید</string>
+    <string name="peer_receive_title">دریافت موقعیت %1$s</string>
+    <string name="peer_receive_on">می‌توانید موقعیت %1$s را ببینید</string>
+    <string name="peer_receive_off">به موقعیت %1$s دسترسی ندارید</string>
+    <string name="peer_section_privacy">حریم خصوصی و کنترل‌های اشتراک‌گذاری</string>
+    <string name="peer_pause_sharing">توقف موقت اشتراک‌گذاری</string>
+    <string name="peer_pause_sub">ارسال موقعیت به %1$s را موقتاً متوقف کنید</string>
+    <string name="peer_precision">دقت موقعیت</string>
+    <string name="peer_precision_exact_sub">مختصات دقیق GPS</string>
+    <string name="peer_precision_suburb_sub">موقعیت تقریبی (در حد محله)</string>
+    <string name="peer_always_sharing">همیشه در حال اشتراک‌گذاری</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d قاعده اشتراک‌گذاری فعال</item>
+        <item quantity="other">%1$d قاعده اشتراک‌گذاری فعال</item>
+    </plurals>
+    <string name="peer_section_alerts">هشدارها و پایش</string>
+    <string name="peer_sos_contact">مخاطب SOS</string>
+    <string name="peer_sos_sub">دریافت هشدارهای اضطراری شما حتی وقتی اشتراک‌گذاری متوقف است</string>
+    <string name="peer_missed_alert">هشدار قطع موقعیت</string>
+    <string name="peer_missed_on">اگر %1$s گزارش موقعیت را متوقف کرد، به من اطلاع بده</string>
+    <string name="peer_requires_access">به دسترسی به موقعیت %1$s نیاز دارد</string>
+    <string name="peer_proximity_alert">هشدار مجاورت</string>
+    <string name="peer_proximity_sub">وقتی %1$s نزدیک است به من اطلاع بده</string>
+    <string name="peer_alert_radius">شعاع هشدار</string>
+    <string name="peer_alert_schedule">زمان‌بندی هشدار</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d قاعده فعال</item>
+        <item quantity="other">%1$d قاعده فعال</item>
+    </plurals>
+    <string name="peer_geofences_sub">تعیین محدوده‌های ورود و خروج برای %1$s</string>
+    <string name="peer_supervise">نظارت بر این دستگاه</string>
+    <string name="peer_supervise_on">درخواست‌های بازکردن قفل %1$s را دریافت و تأیید می‌کنید</string>
+    <string name="peer_supervise_off">به %1$s اجازه دهید درخواست‌های بازکردن قفل حالت تحت نظارت را برایتان بفرستد</string>
+    <string name="peer_messaging_sub">فعال/غیرفعال‌کردن پیام‌های گفتگو از %1$s</string>
+    <string name="peer_section_history">تاریخچه جابه‌جایی</string>
+    <string name="peer_location_history">تاریخچه موقعیت</string>
+    <string name="peer_location_history_sub">مشاهده تاریخچه جابه‌جایی و گزارش نقشه %1$s</string>
+    <string name="peer_section_retention">نگهداری داده در دستگاه مقابل</string>
+    <string name="peer_retention_location_sub">%1$s تاریخچه موقعیت شما را چه مدت نگه می‌دارد</string>
+    <string name="peer_purge_location">پاک‌سازی همه داده‌های موقعیت از %1$s</string>
+    <string name="peer_retention_messages_sub">%1$s پیام‌های ارسالی شما را چه مدت نگه می‌دارد</string>
+    <string name="peer_purge_messages">پاک‌سازی همه پیام‌ها از %1$s</string>
+    <string name="peer_precision_exact">GPS دقیق</string>
+    <string name="peer_precision_exact_desc">مختصات دقیق</string>
+    <string name="peer_precision_suburb">محله (~۱ کیلومتر)</string>
+    <string name="peer_precision_suburb_desc">فقط در حد محله</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d گفتگو حذف شود؟</item>
+        <item quantity="other">%1$d گفتگو حذف شوند؟</item>
+    </plurals>
+    <string name="conv_delete_locally">حذف محلی</string>
+    <string name="conv_delete_locally_sub">گفتگو را فقط از دستگاه شما حذف می‌کند.</string>
+    <string name="conv_delete_both">حذف محلی/از مخاطب</string>
+    <string name="conv_bulk_delete_both_sub">گفتگو را هم به‌صورت محلی و هم از مخاطب شما حذف می‌کند.</string>
+    <string name="conv_delete_both_sub">گفتگو را به‌صورت محلی حذف می‌کند و درخواست حذف گفتگو را روی دستگاه مخاطب فعال می‌کند.</string>
+    <string name="conv_cd_exit_selection">خروج از انتخاب</string>
+    <string name="conv_cd_select_all">انتخاب همه</string>
+    <string name="conv_cd_new_message">پیام جدید</string>
+    <string name="conv_sort_date">تاریخ</string>
+    <string name="conv_sort_unread">خوانده‌نشده</string>
+    <string name="conv_search_placeholder">جستجوی گفتگوها…</string>
+    <string name="conv_tab_chats">گفتگوها</string>
+    <string name="conv_tab_archived">بایگانی‌شده</string>
+    <string name="conv_mark_read">علامت خوانده‌شده</string>
+    <string name="conv_archive">بایگانی</string>
+    <string name="conv_unarchive">خروج از بایگانی</string>
+    <string name="conv_empty_no_results">نتیجه‌ای برای «%1$s» نیست</string>
+    <string name="conv_empty_no_results_sub">عبارت جستجوی دیگری امتحان کنید</string>
+    <string name="conv_empty_archived_title">گفتگوی بایگانی‌شده‌ای نیست</string>
+    <string name="conv_empty_archived_sub">گفتگوها را بایگانی کنید تا صندوق ورودی مرتب بماند</string>
+    <string name="conv_empty_title">هنوز پیامی نیست</string>
+    <string name="conv_empty_sub">نقشه را باز کنید و روی یک نفر بزنید\nتا گفتگو را شروع کنید</string>
+    <string name="conv_delete_title">گفتگو حذف شود؟</string>
+    <string name="conv_delete_message">می‌خواهید این گفتگو با %1$s را چگونه حذف کنید؟</string>
+    <string name="conv_messages_blocked">پیام‌ها مسدود شده‌اند</string>
+    <string name="conv_preview_mine">شما: %1$s</string>
+    <string name="conv_new_message_title">پیام جدید</string>
+    <string name="conv_picker_empty">هنوز مخاطبی ندارید. برای افزودن مخاطب یک کد QR اسکن کنید.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">تاریخچه گفتگو پاک شود؟</string>
+    <string name="chat_clear_message">می‌خواهید این گفتگو با %1$s را چگونه پاک کنید؟</string>
+    <string name="chat_clear_locally">پاک‌کردن محلی</string>
+    <string name="chat_clear_both">پاک‌کردن محلی/از مخاطب</string>
+    <string name="chat_clear_both_sub">گفتگو را به‌صورت محلی پاک می‌کند و درخواست حذف پیام‌های ارسالی شما را برای %1$s می‌فرستد.</string>
+    <string name="chat_cd_options">گزینه‌ها</string>
+    <string name="chat_clear_history_menu">پاک‌کردن تاریخچه گفتگو</string>
+    <string name="chat_typing">%1$s در حال نوشتن است…</string>
+    <string name="chat_blocked_banner">شما پیام‌های %1$s را مسدود کرده‌اید. برای رفع مسدودی به «مخاطبین» بروید.</string>
+    <string name="chat_delete_msg_title">پیام حذف شود؟</string>
+    <string name="chat_delete_msg_message">می‌خواهید این پیام را چگونه حذف کنید؟</string>
+    <string name="chat_delete_from_contact">حذف از مخاطب</string>
+    <string name="chat_delete_from_contact_sub">گفتگو را از دستگاه مخاطب حذف می‌کند.</string>
+    <string name="chat_delete_both_sub">گفتگو را به‌صورت محلی حذف می‌کند و خودکار از دستگاه مخاطب نیز پاک می‌کند.</string>
+    <string name="chat_cd_share_location">اشتراک‌گذاری موقعیت</string>
+    <string name="chat_input_placeholder">پیام…</string>
+    <string name="chat_cd_send">ارسال</string>
+
+    <string name="common_close">بستن</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS فعال شود؟</string>
+    <string name="map_sos_deactivate_title">SOS غیرفعال شود؟</string>
+    <string name="map_sos_activate_msg">با این کار موقعیت شما هر ۱۵ ثانیه برای مخاطبین SOS تعیین‌شده ارسال می‌شود تا زمانی که غیرفعالش کنید.</string>
+    <string name="map_sos_deactivate_msg">با این کار ارسال پراولویت موقعیت به مخاطبین اضطراری متوقف می‌شود.</string>
+    <string name="map_activate">فعال‌سازی</string>
+    <string name="map_deactivate">غیرفعال‌سازی</string>
+    <string name="map_cd_style">سبک نقشه</string>
+    <string name="map_cd_show_geofences">نمایش حصارهای جغرافیایی</string>
+    <string name="map_cd_hide_geofences">پنهان‌کردن حصارهای جغرافیایی</string>
+    <string name="map_cd_follow">من را دنبال کن</string>
+    <string name="map_cd_friends">دوستان</string>
+    <string name="map_no_friends">هنوز کسی ردیابی نمی‌شود</string>
+    <string name="map_you">شما</string>
+    <string name="map_cd_go_my_location">رفتن به موقعیت من</string>
+    <string name="map_sos_active">⚠ SOS فعال</string>
+    <string name="map_away">دور</string>
+    <string name="map_no_location_yet">هنوز موقعیتی نیست</string>
+    <string name="map_cd_go_location">رفتن به موقعیت</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS روشن</string>
+    <string name="map_overdue">تأخیر — به‌روزرسانی اخیری نیست</string>
+    <string name="map_stat_last_seen">آخرین بازدید</string>
+    <string name="map_stat_battery">باتری</string>
+    <string name="map_stat_accuracy">دقت</string>
+    <string name="map_stat_motion">حرکت</string>
+    <string name="map_stat_speed">سرعت</string>
+    <string name="map_stat_elevation">ارتفاع</string>
+
+    <string name="common_ok">تایید</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">تاریخچه: %1$s</string>
+    <string name="history_select_person">انتخاب فرد</string>
+    <string name="history_person_label">فرد</string>
+    <string name="history_cd_prev_day">روز قبل</string>
+    <string name="history_cd_next_day">روز بعد</string>
+    <string name="history_time_filter">فیلتر زمان:</string>
+    <string name="history_cd_reset_time">بازنشانی زمان</string>
+    <string name="history_tab_list">فهرست</string>
+    <string name="history_empty_title">تاریخچه‌ای برای این روز نیست</string>
+    <string name="history_empty_sub">تاریخ دیگری انتخاب کنید یا اتصال خود را بررسی کنید.</string>
+    <string name="history_start_time">زمان شروع</string>
+    <string name="history_end_time">زمان پایان</string>
+    <string name="history_no_data_title">داده موقعیتی نیست</string>
+    <string name="history_no_data_sub">برای این روز یا بازه زمانی نقطه‌ای ثبت نشده است.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d نقطه ثبت شد</item>
+        <item quantity="other">%1$d نقطه ثبت شد</item>
+    </plurals>
+    <string name="history_cd_dismiss">بستن</string>
+    <string name="history_accuracy_label">دقت ±%1$s</string>
+    <string name="history_emergency_sos">سیگنال اضطراری SOS</string>
+    <string name="history_detail_location">موقعیت</string>
+    <string name="history_detail_coordinates">مختصات</string>
+    <string name="history_within">در محدوده ±%1$s</string>
+    <string name="history_detail_movement">حرکت</string>
+    <string name="history_movement_desc">%1$s %2$s به‌سوی %3$s</string>
+
+    <string name="common_create">ایجاد</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">افزودن محدوده حصار جغرافیایی</string>
+    <string name="geo_cd_assign">اختصاص حصار جغرافیایی</string>
+    <string name="geo_unknown">نامشخص</string>
+    <string name="geo_empty_title">حصار جغرافیایی‌ای نیست</string>
+    <string name="geo_empty_sub">برای ایجاد محدوده حصار جغرافیایی روی + بزنید، سپس از تنظیمات اشتراک‌گذاری مخاطبین، آن‌ها را اختصاص دهید.</string>
+    <string name="geo_delete_title">حصار جغرافیایی حذف شود؟</string>
+    <string name="geo_delete_simple">«%1$s» حذف شود؟</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">«%1$s» به %2$d مخاطب اختصاص یافته است. حذف آن این اختصاص‌ها را نیز از بین می‌برد.</item>
+        <item quantity="other">«%1$s» به %2$d مخاطب اختصاص یافته است. حذف آن این اختصاص‌ها را نیز از بین می‌برد.</item>
+    </plurals>
+    <string name="geo_for_contact">حصارهای جغرافیایی %1$s</string>
+    <string name="geo_empty_contact_title">حصار جغرافیایی‌ای برای این مخاطب نیست</string>
+    <string name="geo_empty_contact_sub">روی + بزنید تا محدوده‌ای اختصاص دهید و انتخاب کنید هنگام ورود، خروج یا هر دو هشدار داده شود.</string>
+    <string name="geo_no_areas_title">هنوز حصار جغرافیایی‌ای نیست</string>
+    <string name="geo_no_areas_msg">ابتدا از صفحه «حصارهای جغرافیایی» یک محدوده بسازید، سپس اینجا اختصاص دهید.</string>
+    <string name="geo_radius_label">شعاع %1$s</string>
+    <string name="geo_contacts_label">مخاطبین: %1$s</string>
+    <string name="geo_no_contacts_assigned">مخاطبی اختصاص داده نشده</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d قاعده</item>
+        <item quantity="other">%1$d قاعده</item>
+    </plurals>
+    <string name="geo_trigger_enter">ورود</string>
+    <string name="geo_trigger_exit">خروج</string>
+    <string name="geo_trigger_both">هر دو</string>
+    <string name="geo_edit_title">ویرایش حصار جغرافیایی</string>
+    <string name="geo_new_title">حصار جغرافیایی جدید</string>
+    <string name="geo_cd_my_location">موقعیت من</string>
+    <string name="geo_cd_radius_increase">افزایش شعاع</string>
+    <string name="geo_cd_radius_decrease">کاهش شعاع</string>
+    <string name="geo_hint_tap">برای قراردادن، روی نقشه بزنید یا نگه دارید</string>
+    <string name="geo_hint_move">برای بزرگ‌نمایی دو انگشت را جمع کنید • برای جابه‌جایی پین را نگه دارید یا بکشید</string>
+    <string name="geo_basic_info">اطلاعات پایه</string>
+    <string name="geo_search_title">یافتن با نشانی</string>
+    <string name="geo_search_label">نشانی یا مکان</string>
+    <string name="geo_search_placeholder">مثلاً خیابان اصلی ۱۰، تهران</string>
+    <string name="geo_search_no_results">نشانی منطبقی یافت نشد</string>
+    <string name="geo_cd_search">جستجو</string>
+    <string name="geo_name_placeholder">مثلاً خانه، محل کار</string>
+    <string name="geo_name_required">نام الزامی است</string>
+    <string name="geo_latitude">عرض جغرافیایی</string>
+    <string name="geo_longitude">طول جغرافیایی</string>
+    <string name="geo_lat_range">از -90 تا 90</string>
+    <string name="geo_lng_range">از -180 تا 180</string>
+    <string name="geo_radius">شعاع</string>
+    <string name="geo_radius_range">بین %1$d تا %2$d متر وارد کنید</string>
+    <string name="geo_edit_assignment">ویرایش اختصاص</string>
+    <string name="geo_assign_title">اختصاص حصار جغرافیایی</string>
+    <string name="geo_select_area">انتخاب محدوده حصار جغرافیایی</string>
+    <string name="geo_trigger_title">فعال‌سازی اعلان هنگام</string>
+    <string name="geo_add_rule">افزودن قاعده</string>
+    <string name="geo_alerts_all_times">هشدارها همیشه فعال‌اند. برای محدودکردن زمان ارسال هشدارها یک قاعده اضافه کنید.</string>
+    <string name="geo_assign_action">اختصاص</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">هشدارهای مجاورت</string>
+    <string name="prox_empty_title">فردی ردیابی نمی‌شود</string>
+    <string name="prox_empty_sub">کد QR دعوت کسی را از زبانه اسکن، اسکن کنید\nتا ردیابی موقعیتش آغاز شود</string>
+    <string name="prox_intro">وقتی فرد ردیابی‌شده به فاصله انتخابی شما می‌رسد، اعلان دریافت کنید.</string>
+    <string name="prox_alert_within">هشدار در فاصله %1$s</string>
+    <string name="prox_alerts_off">هشدارها خاموش</string>
+    <string name="prox_alert_radius">شعاع هشدار</string>
+    <string name="prox_edit_schedule">ویرایش زمان‌بندی</string>
+    <string name="prox_rules">قواعد</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">زمان‌بندی %1$s</string>
+    <string name="schedule_cd_add_rule">افزودن قاعده</string>
+    <string name="schedule_empty_title">قاعده زمان‌بندی‌ای نیست</string>
+    <string name="schedule_empty_global">موقعیت همیشه به اشتراک گذاشته می‌شود. برای محدودکردن زمان اشتراک‌گذاری قاعده‌ای اضافه کنید.</string>
+    <string name="schedule_empty_peer">موقعیت همیشه با %1$s به اشتراک گذاشته می‌شود. برای محدودکردن زمان قاعده‌ای اضافه کنید.</string>
+    <string name="schedule_active_hint">وقتی هر قاعده‌ای با زمان فعلی منطبق باشد فعال است. خالی = همیشه روشن.</string>
+    <string name="schedule_all_day">تمام روز</string>
+    <string name="schedule_plus_one_day"> (+۱ روز)</string>
+    <string name="schedule_rule_number">قاعده %1$d</string>
+    <string name="schedule_cd_delete_rule">حذف قاعده</string>
+    <string name="schedule_edit_rule">ویرایش قاعده</string>
+    <string name="schedule_label_optional">برچسب (اختیاری)</string>
+    <string name="schedule_label_placeholder">مثلاً ساعات کاری، آخر هفته‌ها</string>
+    <string name="schedule_active_days">روزهای فعال</string>
+    <string name="schedule_time_window">بازه زمانی</string>
+    <string name="schedule_start">شروع</string>
+    <string name="schedule_end">پایان</string>
+    <string name="schedule_overnight">شبانه: از %1$s تا %2$s روز بعد فعال است</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">دستگاه تحت نظارت است</string>
+    <string name="gate_message">برای دسترسی به تنظیمات، تأیید ناظر لازم است.</string>
+    <string name="gate_request_access">درخواست دسترسی</string>
+    <string name="gate_waiting">در انتظار تأیید ناظر…</string>
+    <string name="gate_denied">ناظر دسترسی را رد کرد.</string>
+    <string name="gate_timed_out">مهلت درخواست تمام شد. ناظر پاسخ نداد.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">برای همیشه</string>
+    <string name="retention_keep_for">نگهداری برای: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d روز</item>
+        <item quantity="other">%1$d روز</item>
+    </plurals>
+
+    <string name="common_select">انتخاب</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">انتخاب موقعیت ثابت</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">انتخاب کنید کدام زبانه‌ها در نوار پایین نمایش داده شوند و ترتیبشان چه باشد. نقشه همیشه موجود است.</string>
+    <string name="customize_cd_move_up">انتقال به بالا</string>
+    <string name="customize_cd_move_down">انتقال به پایین</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">نسخه %1$s (ساخت %2$d)</string>
+    <string name="about_tagline">اشتراک‌گذاری خصوصی موقعیت با افراد مورد اعتمادتان. بدون حساب، بدون ابر، بدون ردیابی از سوی ما.</string>
+    <string name="about_relay_connections">اتصال‌های رله</string>
+    <string name="about_connected">متصل</string>
+    <string name="about_disconnected">قطع</string>
+    <string name="about_open_source">کتابخانه‌های متن‌باز</string>
+    <string name="about_lib_osmdroid_desc">رسم نقشه مبتنی بر OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">انتقال WebSocket برای رله Nostr</string>
+    <string name="about_lib_compose_desc">چارچوب رابط کاربری</string>
+    <string name="about_lib_hilt_desc">تزریق وابستگی</string>
+    <string name="about_lib_room_desc">پایگاه‌داده محلی</string>
+    <string name="about_map_attribution">داده‌های نقشه © مشارکت‌کنندگان OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">پذیرش</string>
+    <string name="notif_someone">شخصی</string>
+    <string name="notif_sos_title">SOS از %1$s!</string>
+    <string name="notif_sos_text">%1$s در (%2$s, %3$s) وضعیت SOS را فعال کرده است</string>
+    <string name="notif_supervisor_request_title">%1$s می‌خواهد شما ناظرش باشید</string>
+    <string name="notif_supervisor_request_text">برای اجازه‌دادن به درخواست‌های تأیید بازکردن قفل از این دستگاه، بپذیرید</string>
+    <string name="notif_supervisor_request_big">بپذیرید تا %1$s بتواند در حالت تحت نظارت برایتان درخواست تأیید بازکردن قفل بفرستد.</string>
+    <string name="notif_supervised_active_title">حالت تحت نظارت فعال است</string>
+    <string name="notif_supervised_active_text">ناظر شما تأیید کرد — حالت تحت نظارت اکنون تنظیم شده است</string>
+    <string name="notif_supervised_declined_title">حالت تحت نظارت رد شد</string>
+    <string name="notif_supervised_declined_text">ناظر شما درخواست را رد کرد — حالت تحت نظارت غیرفعال شد</string>
+    <string name="notif_tracking_alert_title">هشدار ردیابی</string>
+    <string name="notif_tracking_proximity">%1$s هشدار مجاورتی درباره شما دریافت کرد</string>
+    <string name="notif_tracking_geofence">%1$s هشداری دریافت کرد که شما وارد/خارج از حصار شدید: %2$s</string>
+    <string name="notif_tracking_generic">%1$s موقعیت شما را پایش می‌کند</string>
+    <string name="notif_track_update_title">به‌روزرسانی اشتراک‌گذاری از %1$s</string>
+    <string name="notif_track_new_title">مخاطب جدید: %1$s</string>
+    <string name="notif_role_send_receive">ارسال/دریافت موقعیت</string>
+    <string name="notif_role_send">ارسال موقعیت</string>
+    <string name="notif_role_receive">دریافت موقعیت</string>
+    <string name="notif_role_none">بدون اشتراک‌گذاری موقعیت</string>
+    <string name="notif_track_requesting">%1$s درخواست می‌کند: %2$s</string>
+    <string name="notif_track_update_body">%1$s می‌خواهد نحوه اشتراک‌گذاری موقعیت را تغییر دهد.</string>
+    <string name="notif_track_new_body">%1$s شما را به مخاطبین اضافه کرد و می‌خواهد ارتباط برقرار کند.</string>
+    <string name="notif_contact_connected_title">مخاطب متصل شد</string>
+    <string name="notif_contact_connected_text">%1$s اکنون با شما در ارتباط است.</string>
+    <string name="notif_request_declined_title">درخواست رد شد</string>
+    <string name="notif_request_declined_text">%1$s درخواست اشتراک‌گذاری موقعیت شما را رد کرد.</string>
+    <string name="notif_message_person">پیام به %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s وارد %2$s شد</string>
+    <string name="notif_geofence_left_title">%1$s از %2$s خارج شد</string>
+    <string name="notif_geofence_subtitle">در %1$s · شعاع %2$s</string>
+    <string name="notif_person_nearby">%1$s نزدیک است</string>
+    <string name="notif_distance_from_you">%1$s از شما</string>
+    <string name="notif_missed_title">به‌روزرسانی‌ای از %1$s نیست</string>
+    <string name="notif_missed_text">آخرین بازدید %1$s دقیقه پیش نزدیک (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS فعال!</string>
+    <string name="notif_sos_active_text">در حال ارسال هشدار اضطراری به مخاطبین SOS</string>
+    <string name="notif_messages_group_title">پیام‌های LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">درخواست مخاطب از %1$s رد شد</string>
+    <string name="toast_now_supervising">اکنون بر دستگاه %1$s نظارت می‌کنید</string>
+    <string name="toast_declined_supervision">درخواست نظارت از %1$s رد شد</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">همین حالا</string>
+    <string name="time_minutes_ago">%1$d دقیقه پیش</string>
+    <string name="fallback_me">من</string>
+    <string name="fallback_unknown">نامشخص</string>
+    <string name="geo_unassigned">اختصاص‌نیافته</string>
+    <string name="days_every_day">هر روز</string>
+    <string name="days_weekdays">روزهای کاری</string>
+    <string name="days_weekends">آخر هفته‌ها</string>
+    <string name="days_none">هیچ روزی</string>
+    <string name="chat_my_location_message">موقعیت فعلی من: %1$s</string>
+    <string name="scan_error_bad_pubkey">دعوت نامعتبر: کلید عمومی نادرست</string>
+    <string name="scan_error_key_mismatch">دعوت نامعتبر: کلیدها منطبق نیستند</string>
+    <string name="scan_error_unknown">خطای ناشناخته</string>
+    <string name="scan_error_invalid_link">پیوند دعوت نامعتبر</string>
+    <string name="scan_fallback_contact">این مخاطب</string>
+    <string name="backup_saved">پشتیبان ذخیره شد: %1$s</string>
+    <string name="backup_saved_encrypted">پشتیبان ذخیره شد (رمزگذاری‌شده): %1$s</string>
+    <string name="backup_failed">پشتیبان‌گیری ناموفق بود: %1$s</string>
+    <string name="backup_could_not_read_file">فایل خوانده نشد</string>
+    <string name="backup_could_not_write_file">فایل نوشته نشد</string>
+    <string name="backup_could_not_read">پشتیبان خوانده نشد: %1$s</string>
+    <string name="backup_incorrect_password">گذرواژه نادرست</string>
+    <string name="restore_result_restored">بازیابی شد: %1$s</string>
+    <string name="restore_result_failed">ناموفق: %1$s</string>
+    <string name="restore_nothing">چیزی برای بازیابی نیست</string>
+    <string name="restore_failed">بازیابی ناموفق بود: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d مخاطب</item>
+        <item quantity="other">%1$d مخاطب</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d حصار جغرافیایی</item>
+        <item quantity="other">%1$d حصار جغرافیایی</item>
+    </plurals>
+    <string name="peer_role_change_sent">درخواست تغییر نقش برای %1$s ارسال شد</string>
+    <string name="peer_not_found">مخاطب یافت نشد</string>
+    <string name="peer_purge_location_sent">فرمان حذف از راه دور همه موقعیت‌ها برای %1$s ارسال شد</string>
+    <string name="peer_purge_messages_sent">فرمان حذف از راه دور همه پیام‌ها برای %1$s ارسال شد</string>
+    <string name="onboarding_error_key_length">کلید نامعتبر — باید ۶۴ نویسه هگز باشد.</string>
+    <string name="onboarding_error_key_range">کلید خصوصی نامعتبر — خارج از محدوده منحنی.</string>
+    <string name="onboarding_error_hex">قالب هگز نامعتبر است.</string>
+    <string name="onboarding_error_import_failed">درون‌ریزی کلید ناموفق بود: %1$s</string>
 </resources>

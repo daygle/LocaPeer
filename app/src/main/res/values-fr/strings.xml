@@ -718,12 +718,21 @@
     <string name="backup_saved_encrypted">Sauvegarde enregistrée (chiffrée) : %1$s</string>
     <string name="backup_failed">Échec de la sauvegarde : %1$s</string>
     <string name="backup_could_not_read_file">Impossible de lire le fichier</string>
+    <string name="backup_could_not_write_file">Impossible d\'écrire le fichier</string>
     <string name="backup_could_not_read">Impossible de lire la sauvegarde : %1$s</string>
     <string name="backup_incorrect_password">Mot de passe incorrect</string>
     <string name="restore_result_restored">Restauré : %1$s</string>
     <string name="restore_result_failed">Échec : %1$s</string>
     <string name="restore_nothing">Rien à restaurer</string>
     <string name="restore_failed">Échec de la restauration : %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="other">%1$d contacts</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d clôture virtuelle</item>
+        <item quantity="other">%1$d clôtures virtuelles</item>
+    </plurals>
     <string name="onboarding_error_hex">Format hexadécimal invalide.</string>
     <string name="onboarding_error_key_length">Clé invalide : elle doit comporter 64 caractères hexadécimaux.</string>
     <string name="onboarding_error_key_range">Clé privée invalide : hors de la plage de la courbe.</string>

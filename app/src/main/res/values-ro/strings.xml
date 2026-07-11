@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Canale de notificare și serviciu în prim-plan ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Transmisie locație</string>
     <string name="channel_desc_heartbeat">Transmite locația dvs. contactelor aprobate</string>
     <string name="channel_name_alerts">Alerte</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer rulează</string>
     <string name="notification_heartbeat_text">Partajarea locației cu alții</string>
 
-    <!-- ── Acțiuni comune ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Salvare</string>
     <string name="common_cancel">Anulare</string>
     <string name="common_done">Gata</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Aprobare</string>
     <string name="common_deny">Refuz</string>
 
-    <!-- ── Etichete file navigare ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Hartă</string>
     <string name="tab_messages">Mesaje</string>
     <string name="tab_history">Istoric</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Setări</string>
 
-    <!-- ── Stări mișcare / activitate ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Staționar</string>
     <string name="motion_walking">Mers</string>
     <string name="motion_running">Alergare</string>
     <string name="motion_cycling">Ciclism</string>
     <string name="motion_driving">Condus</string>
 
-    <!-- ── Setări ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Cheie privată</string>
+    <string name="backup_section_contacts">Contacte</string>
+    <string name="backup_section_geofences">Perimetre virtuale</string>
+    <string name="backup_section_settings">Setări</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Cerere de supraveghere</string>
+    <string name="supervision_request_message">„%1$s” solicită acces la propriile setări. Permiteți?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Setări</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Locație și confidențialitate</string>
     <string name="settings_section_security">Securitate</string>
     <string name="settings_section_map">Hartă</string>
@@ -54,15 +66,699 @@
     <string name="settings_section_backup_keys">Backup și chei</string>
     <string name="settings_section_about">Despre</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Editare nume</string>
     <string name="settings_my_qr">QR-ul meu</string>
     <string name="settings_no_name_set">Niciun nume setat</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Partajează locația mea</string>
+    <string name="settings_broadcasting">Se transmite contactelor dvs.</string>
+    <string name="settings_not_broadcasting">Nu se transmite</string>
+    <string name="settings_sharing_schedule">Program de partajare</string>
+    <string name="settings_always_on">Mereu activ</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d regulă</item>
+        <item quantity="few">%1$d reguli</item>
+        <item quantity="other">%1$d de reguli</item>
+    </plurals>
+    <string name="settings_geofences">Perimetre virtuale</string>
+    <string name="settings_geofences_subtitle">Gestionați zonele de perimetru virtual partajate</string>
+    <string name="settings_notify_when_tracked">Notificare la urmărire</string>
+    <string name="settings_notify_when_tracked_subtitle">Primiți o notificare când se declanșează o alertă de proximitate sau de perimetru a unui contact referitoare la dvs.</string>
+    <string name="settings_my_location_history">Istoricul locațiilor</string>
+    <string name="settings_my_location_history_subtitle">Răsfoiți propria cronologie a locațiilor</string>
+    <string name="settings_lookup_addresses">Căutare adrese</string>
+    <string name="settings_lookup_addresses_subtitle">Afișați adrese pentru punctele din istoric și pinurile atinse pe hartă și căutați după adresă la plasarea perimetrelor. Trimite coordonatele sau căutarea tastată către serviciul de geocodare al dispozitivului (de obicei Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Supraveghere activă</string>
+    <string name="settings_supervision_active_subtitle">Setările necesită aprobarea supraveghetorului</string>
+    <string name="settings_disable_supervised">Dezactivați modul supravegheat</string>
+    <string name="settings_supervised_mode">Mod supravegheat</string>
+    <string name="settings_supervised_mode_subtitle">Necesită aprobarea supraveghetorului pentru accesul la setări</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Punct de pornire</string>
+    <string name="settings_map_current_location">Locația curentă</string>
+    <string name="settings_map_all_contacts">Toate contactele</string>
+    <string name="settings_map_fixed_location">Locație fixă</string>
+    <string name="settings_map_last_position">Ultima poziție</string>
+    <string name="settings_map_starting_point_title">Punctul de pornire al hărții</string>
+    <string name="settings_no_location_set">Nicio locație setată</string>
+    <string name="settings_pick_location_on_map">Alegeți locația pe hartă</string>
+    <string name="settings_default_zoom_level">Nivel de zoom implicit</string>
+    <string name="settings_map_pin_colour">Culoarea pinului pe hartă</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Frecvența actualizărilor</string>
+    <string name="settings_update_cadence_subtitle">Ajustați cât de des se transmite locația dvs.</string>
+    <string name="settings_update_cadence_dialog_message">Controlați cât de des se actualizează locația în funcție de activitatea dvs. Actualizările frecvente consumă mai multă baterie.</string>
+    <string name="settings_update_cadence_reset">Resetați la valorile implicite</string>
+    <string name="settings_min_distance_filtering">Filtrare după distanță minimă</string>
+    <string name="settings_min_distance_filtering_subtitle">Afișați doar punctele aflate cel puțin la această distanță de cel anterior.</string>
+    <string name="settings_discard_low_accuracy">Ignorați pozițiile imprecise</string>
+    <string name="settings_discard_low_accuracy_subtitle">Nu transmiteți și nu înregistrați propriile poziții cu raza de precizie mai mare decât această valoare. SOS nu este niciodată omis.</string>
+    <string name="settings_hide_low_accuracy">Ascundeți punctele imprecise</string>
+    <string name="settings_hide_low_accuracy_subtitle">Ascundeți punctele din istoric cu raza de precizie mai mare decât această valoare. Nu se șterge nimic.</string>
+    <string name="settings_low_battery" formatted="false">Baterie scăzută (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d min</string>
+    <string name="settings_motion_detection">Detectarea mișcării</string>
+    <string name="settings_motion_detection_on">Activată — rafinează tipul de mișcare (mers, condus) din istoric</string>
+    <string name="settings_motion_detection_off">Dezactivată — permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
+    <string name="settings_enable_motion_title">Activați detectarea mișcării</string>
+    <string name="settings_enable_motion_message">Accesul la activitatea fizică permite LocaPeer să distingă mai precis mersul, condusul și staționarea în istoricul dvs. Momentan este dezactivat — îl puteți reactiva din setările sistemului.</string>
+    <string name="settings_open_settings">Deschideți setările</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Unități de viteză</string>
+    <string name="settings_speed_imperial">Imperiale (mph)</string>
+    <string name="settings_speed_metric">Metrice (km/h)</string>
+    <string name="settings_elevation_units">Unități de altitudine</string>
+    <string name="settings_elevation_imperial">Imperiale (picioare)</string>
+    <string name="settings_elevation_metric">Metrice (metri)</string>
+    <string name="settings_distance_units">Unități de distanță</string>
+    <string name="settings_distance_imperial">Imperiale (ft/mi)</string>
+    <string name="settings_distance_metric">Metrice (m/km)</string>
+    <string name="settings_time_format">Format oră</string>
+    <string name="settings_time_24h">24 de ore (13:30)</string>
+    <string name="settings_time_12h">12 ore (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Date de locație</string>
+    <string name="settings_retention_location_subtitle">Cât timp se păstrează local datele de locație ale contactelor</string>
+    <string name="settings_clear_all_location">Ștergeți toate datele de locație</string>
+    <string name="settings_retention_messages">Mesaje</string>
+    <string name="settings_retention_messages_subtitle">Cât timp se păstrează local mesajele primite</string>
+    <string name="settings_clear_all_messages">Ștergeți toate mesajele</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Personalizați navigarea</string>
+    <string name="settings_customize_nav_subtitle">Alegeți și reordonați filele de jos</string>
+    <string name="settings_start_page">Pagina de pornire</string>
     <string name="settings_language">Limbă</string>
     <string name="settings_language_title">Limba aplicației</string>
     <string name="settings_language_system">Implicit sistem</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Exportați copia de rezervă</string>
+    <string name="settings_export_backup_subtitle">Salvați cheia privată și contactele într-un fișier. Păstrați acest fișier în siguranță!</string>
+    <string name="settings_import_backup">Importați copia de rezervă</string>
+    <string name="settings_import_backup_subtitle">Restaurați dintr-un fișier exportat anterior</string>
+    <string name="settings_view_private_key">Vizualizați cheia privată</string>
+    <string name="settings_view_private_key_subtitle">Afișați cheia de identitate hexazecimală de 64 de caractere</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Despre LocaPeer</string>
+    <string name="settings_about_subtitle">Versiune, stare relee, open source</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Editați numele afișat</string>
+    <string name="settings_display_name_label">Nume afișat</string>
+    <string name="settings_my_invite_qr">Codul meu QR de invitație</string>
+    <string name="settings_invite_qr_subtitle">Alții îl pot scana pentru a începe să vă urmărească.</string>
+    <string name="settings_invite_qr_cd">Cod QR de invitație</string>
+    <string name="settings_private_key_title">Cheie privată</string>
+    <string name="settings_private_key_warning">Păstrați-o în siguranță. Oricine deține această cheie se poate da drept dvs.</string>
+    <string name="settings_clear_location_title">Ștergeți istoricul locațiilor?</string>
+    <string name="settings_clear_location_message">Toate pozițiile stocate vor fi șterse definitiv.</string>
+    <string name="settings_clear_messages_title">Ștergeți istoricul mesajelor?</string>
+    <string name="settings_clear_messages_message">Toate mesajele stocate vor fi șterse definitiv.</string>
+    <string name="settings_encrypted_backup_title">Copie de rezervă criptată</string>
+    <string name="settings_encrypted_backup_message">Această copie de rezervă este criptată. Introduceți parola pentru a continua.</string>
+    <string name="settings_select_restore_title">Selectați datele de restaurat</string>
+    <string name="settings_select_export_title">Selectați datele de exportat</string>
+    <string name="settings_export_password_hint">Opțional, setați o parolă pentru a cripta fișierul copiei de rezervă.</string>
+    <string name="settings_backup_password_optional">Parolă copie de rezervă (opțional)</string>
+    <string name="settings_select_sections">Selectați secțiunile de inclus:</string>
+    <string name="settings_choose_file_location">Alegeți locația fișierului</string>
+    <string name="settings_not_in_backup">Nu există în această copie de rezervă</string>
+    <string name="settings_enable_supervised_title">Activați modul supravegheat</string>
+    <string name="settings_enable_supervised_message">Alegeți un contact care va fi supraveghetor. Acesta trebuie să aprobe accesul la setări de pe dispozitivul său.</string>
+    <string name="settings_no_peers_found">Nu s-au găsit contacte. Adăugați mai întâi un contact scanând codul QR de invitație.</string>
+    <string name="settings_disable_supervised_title">Dezactivați modul supravegheat?</string>
+    <string name="settings_disable_supervised_message">Setările vor fi accesibile fără aprobarea supraveghetorului.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Eliminați</string>
+    <string name="common_name">Nume</string>
+    <string name="common_search">Căutați</string>
+    <string name="common_sort">Sortați</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Mesaj</string>
+    <string name="cd_show_on_map">Afișați pe hartă</string>
+    <string name="cd_more_options">Mai multe opțiuni</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d selectat</item>
+        <item quantity="few">%1$d selectate</item>
+        <item quantity="other">%1$d selectate</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Anulați selecția</string>
+    <string name="contacts_cd_select_all">Selectați tot</string>
+    <string name="contacts_cd_deselect_all">Deselectați tot</string>
+    <string name="contacts_cd_qr_invite">QR / Invitație</string>
+    <string name="contacts_cd_pending_requests">Cereri în așteptare</string>
+    <string name="contacts_sort_last_seen">Văzut ultima dată</string>
+    <string name="contacts_search_placeholder">Căutați contacte…</string>
+    <string name="contacts_empty_title">Niciun contact încă</string>
+    <string name="contacts_empty_subtitle">Scanați un cod QR pentru a vă conecta cu cineva și a începe să partajați locații.</string>
+    <string name="contacts_scan_qr">Scanați codul QR</string>
+    <string name="contacts_bulk_delete_messages">Ștergeți mesajele</string>
+    <string name="contacts_bulk_delete_locations">Ștergeți locațiile</string>
+    <string name="contacts_last_seen">Văzut ultima dată: %1$s</string>
+    <string name="contacts_no_location_yet">Nicio dată de locație încă</string>
+    <string name="contacts_view_sharing_settings">Setări de partajare</string>
+    <string name="contacts_view_location_history">Istoricul locațiilor</string>
+    <string name="contacts_rename_contact">Redenumiți contactul</string>
+    <string name="contacts_on_contact_device">Pe dispozitivul contactului</string>
+    <string name="contacts_delete_my_messages_title">Ștergeți mesajele mele</string>
+    <string name="contacts_delete_locations_title">Ștergeți locațiile partajate</string>
+    <string name="contacts_remove_contact_title">Eliminați contactul</string>
+    <string name="contacts_leave_title">Ștergeți contactul și datele</string>
+    <string name="contacts_rename_title">Redenumiți contactul</string>
+    <string name="contacts_remove_contact_body">Eliminați %1$s din contacte? Istoricul locațiilor sale va fi șters și local.</string>
+    <string name="contacts_leave_body">Aceasta vă elimină din contactele lui %1$s și șterge toate mesajele și datele dvs. de locație de pe dispozitivul său. Veți pierde și accesul la locația sa.</string>
+    <string name="contacts_delete_my_messages_body">Aceasta va șterge toate mesajele trimise de dvs. de pe dispozitivul lui %1$s. Acțiunea nu poate fi anulată.</string>
+    <string name="contacts_delete_locations_body">Aceasta va șterge toate datele de locație partajate de dvs. de pe dispozitivul lui %1$s. Acțiunea nu poate fi anulată.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Eliminați contactul</item>
+        <item quantity="few">Eliminați %1$d contacte</item>
+        <item quantity="other">Eliminați %1$d de contacte</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Eliminați acest contact? Istoricul locațiilor sale va fi șters și local.</item>
+        <item quantity="few">Eliminați %1$d contacte? Istoricul locațiilor lor va fi șters și local.</item>
+        <item quantity="other">Eliminați %1$d de contacte? Istoricul locațiilor lor va fi șters și local.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Ștergeți de la distanță toate mesajele trimise de pe dispozitivul acestui contact? Acțiunea nu poate fi anulată.</item>
+        <item quantity="few">Ștergeți de la distanță toate mesajele trimise de pe dispozitivele a %1$d contacte? Acțiunea nu poate fi anulată.</item>
+        <item quantity="other">Ștergeți de la distanță toate mesajele trimise de pe dispozitivele a %1$d de contacte? Acțiunea nu poate fi anulată.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Ștergeți de la distanță tot istoricul locațiilor partajate de pe dispozitivul acestui contact? Acțiunea nu poate fi anulată.</item>
+        <item quantity="few">Ștergeți de la distanță tot istoricul locațiilor partajate de pe dispozitivele a %1$d contacte? Acțiunea nu poate fi anulată.</item>
+        <item quantity="other">Ștergeți de la distanță tot istoricul locațiilor partajate de pe dispozitivele a %1$d de contacte? Acțiunea nu poate fi anulată.</item>
+    </plurals>
+
+    <string name="common_continue">Continuați</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Restaurare din copia de rezervă</string>
+    <string name="onboarding_restore_message">Lipiți cheia privată hexazecimală de 64 de caractere pentru a vă restaura identitatea și contactele.</string>
+    <string name="onboarding_private_key_hex">Cheie privată (hex)</string>
+    <string name="onboarding_tagline">Partajare privată a locației cu contactele.\nFără conturi. Fără servere proprietare.</string>
+    <string name="onboarding_feature_e2e_title">Criptare end-to-end</string>
+    <string name="onboarding_feature_e2e_subtitle">Locația dvs. este criptată pe dispozitiv</string>
+    <string name="onboarding_feature_servers_title">Fără servere proprietare</string>
+    <string name="onboarding_feature_servers_subtitle">Folosește relee Nostr deschise ca transport securizat — datele dvs. rămân criptate și private</string>
+    <string name="onboarding_feature_phone_title">Rămâne pe telefonul dvs.</string>
+    <string name="onboarding_feature_phone_subtitle">Istoricul complet al locațiilor rămâne pe dispozitivul dvs. Doar poziția curentă este partajată cu contactele selectate</string>
+    <string name="onboarding_name_prompt">Cum să vă spună contactele?</string>
+    <string name="onboarding_name_placeholder">de ex. Mama, Tata, Ana…</string>
+    <string name="onboarding_get_started">Începeți</string>
+    <string name="onboarding_restore_from_backup">Restaurați din copia de rezervă</string>
+    <string name="onboarding_key_note">Cheia privată este generată local și nu părăsește niciodată acest dispozitiv.</string>
+    <string name="onboarding_permissions_title">Permisiuni</string>
+    <string name="onboarding_permissions_desc">LocaPeer are nevoie de acces la locație pentru a vă partaja poziția, la cameră pentru a scana codurile de invitație și la notificări pentru starea în fundal. Accesul la activitatea fizică este opțional — ajută la etichetarea mai precisă a mișcării (mers, condus).</string>
+    <string name="onboarding_before_ask_title">Înainte să întrebăm</string>
+    <string name="onboarding_before_ask_intro">Urmează câteva solicitări de sistem:</string>
+    <string name="onboarding_before_ask_location">• Locație — obligatorie, pentru a vă partaja poziția.</string>
+    <string name="onboarding_before_ask_camera">• Cameră — pentru scanarea codurilor de invitație.</string>
+    <string name="onboarding_before_ask_notifications">• Notificări — pentru starea în fundal.</string>
+    <string name="onboarding_before_ask_activity">• Activitate fizică — opțional. Permite LocaPeer să distingă mai precis mersul, condusul și staționarea. Puteți sări peste și activa mai târziu din Setări.</string>
+    <string name="onboarding_grant_permissions">Acordați permisiunile</string>
+    <string name="onboarding_bg_location_title">Locație în fundal</string>
+    <string name="onboarding_bg_location_desc">Pentru a vă ține contactele la curent când aplicația este închisă, selectați „Permiteți tot timpul” pe ecranul următor.</string>
+    <string name="onboarding_bg_location_error">Locația în fundal este necesară pentru a actualiza contactele când aplicația este închisă. Încercați din nou și selectați „Permiteți tot timpul”.</string>
+    <string name="onboarding_configure_location">Configurați locația</string>
+    <string name="onboarding_battery_title">Baterie</string>
+    <string name="onboarding_battery_desc">Android poate opri LocaPeer pentru a economisi baterie. Pentru actualizări fiabile, excludeți LocaPeer din optimizări.</string>
+    <string name="onboarding_disable_optimizations">Dezactivați optimizările</string>
+    <string name="onboarding_done_title">Totul este gata!</string>
+    <string name="onboarding_done_desc">Rețeaua dvs. privată de locații este pregătită.</string>
+    <string name="onboarding_start_using">Începeți să folosiți LocaPeer</string>
+
+    <string name="common_try_again">Încercați din nou</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Scanați invitația</string>
+    <string name="scan_camera_needed">Este necesară permisiunea camerei pentru a scana coduri QR.</string>
+    <string name="scan_grant_permission">Acordați permisiunea</string>
+    <string name="scan_add_contact_title">Adăugați contactul?</string>
+    <string name="scan_add_contact_message">Aceasta vă va conecta cu %1$s și veți începe să vă partajați locația reciproc.</string>
+    <string name="scan_add_share">Adăugați și partajați</string>
+    <string name="scan_request_sent_title">Cerere trimisă!</string>
+    <string name="scan_request_sent_message">O cerere a fost trimisă lui %1$s. Veți fi conectați după ce o acceptă.</string>
+    <string name="scan_failed">Scanarea a eșuat: %1$s</string>
+
     <string name="cd_back">Înapoi</string>
+    <string name="common_review">Verificați</string>
+    <string name="common_decline">Refuzați</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Trimitere/Primire</string>
+    <string name="role_send">Trimitere</string>
+    <string name="role_receive">Primire</string>
+    <string name="role_none">Fără partajare</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Invitația mea</string>
+    <string name="invite_tab_add_contact">Adăugați contact</string>
+    <string name="invite_your_qr_title">Codul dvs. QR</string>
+    <string name="invite_your_qr_subtitle">Lăsați pe cineva să-l scaneze pentru a vă urmări locația</string>
+    <string name="invite_qr_cd">Codul dvs. QR</string>
+    <string name="invite_qr_error">Eroare la generarea codului QR</string>
+    <string name="invite_share_link">Partajați linkul de invitație</string>
+    <string name="invite_encryption_note">Locația dvs. va fi criptată special pentru dispozitivul celui care scanează.</string>
+    <string name="invite_camera_required_title">Este necesar accesul la cameră</string>
+    <string name="invite_camera_required_message">Acordați permisiunea camerei pentru a scana un cod QR.</string>
+    <string name="invite_point_camera">Îndreptați camera spre un cod QR LocaPeer</string>
+    <string name="invite_paste_title">Sau lipiți linkul de invitație</string>
+    <string name="invite_process_link">Procesați linkul</string>
+    <string name="invite_fallback_name">Contact</string>
+    <string name="invite_success_message">Veți fi conectat cu %1$s după ce acceptă.</string>
+    <string name="invite_confirm_add_title">Adăugați %1$s?</string>
+    <string name="invite_confirm_add_message">Îl adăugați la contacte și partajați locația?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Nicio cerere în așteptare</string>
+    <string name="pending_requesting">Solicită: %1$s · %2$s</string>
+    <string name="pending_role_change">Cerere de schimbare a rolului · %1$s</string>
+    <string name="pending_new_request">Cerere nouă de partajare · %1$s</string>
+
+    <string name="common_save_changes">Salvați modificările</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Actualizați setările de partajare</string>
+    <string name="incoming_new_title">Cerere nouă de contact</string>
+    <string name="incoming_update_subtitle">%1$s vrea să actualizeze modul de partajare. Verificați setările de mai jos.</string>
+    <string name="incoming_new_subtitle">%1$s v-a adăugat drept contact! Acum puteți alege ce partajați înapoi.</string>
+    <string name="incoming_section_location">Locație</string>
+    <string name="incoming_share_my_location">Partajați locația mea cu %1$s</string>
+    <string name="incoming_share_my_location_sub">Va putea vedea unde sunteți</string>
+    <string name="incoming_see_their_location">Vedeți locația lui %1$s</string>
+    <string name="incoming_see_their_location_sub">Veți putea vedea unde se află</string>
+    <string name="incoming_section_messaging">Mesagerie</string>
+    <string name="incoming_allow_messages">Permiteți mesajele</string>
+    <string name="incoming_allow_messages_sub">Primiți mesaje de chat de la %1$s</string>
+
+    <string name="common_request">Solicitați</string>
+    <string name="common_edit">Editați</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Setările contactului</string>
+    <string name="peer_section_roles">Roluri de partajare a locației</string>
+    <string name="peer_send_on">%1$s vă poate vedea locația</string>
+    <string name="peer_send_off">Nu vă partajați locația cu %1$s</string>
+    <string name="peer_receive_title">Primiți locația lui %1$s</string>
+    <string name="peer_receive_on">Puteți vedea locația lui %1$s</string>
+    <string name="peer_receive_off">Nu aveți acces la locația lui %1$s</string>
+    <string name="peer_section_privacy">Controale de confidențialitate și partajare</string>
+    <string name="peer_pause_sharing">Suspendați partajarea</string>
+    <string name="peer_pause_sub">Opriți temporar trimiterea locației dvs. către %1$s</string>
+    <string name="peer_precision">Precizia locației</string>
+    <string name="peer_precision_exact_sub">Coordonate GPS exacte</string>
+    <string name="peer_precision_suburb_sub">Locație aproximativă (nivel de cartier)</string>
+    <string name="peer_always_sharing">Se partajează mereu</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d regulă de partajare activă</item>
+        <item quantity="few">%1$d reguli de partajare active</item>
+        <item quantity="other">%1$d de reguli de partajare active</item>
+    </plurals>
+    <string name="peer_section_alerts">Alerte și monitorizare</string>
+    <string name="peer_sos_contact">Contact SOS</string>
+    <string name="peer_sos_sub">Primește alertele dvs. de urgență chiar dacă partajarea este suspendată</string>
+    <string name="peer_missed_alert">Alertă de locație lipsă</string>
+    <string name="peer_missed_on">Anunțați-mă dacă %1$s nu își mai raportează locația</string>
+    <string name="peer_requires_access">Necesită acces la locația lui %1$s</string>
+    <string name="peer_proximity_alert">Alertă de proximitate</string>
+    <string name="peer_proximity_sub">Anunțați-mă când %1$s este în apropiere</string>
+    <string name="peer_alert_radius">Raza alertei</string>
+    <string name="peer_alert_schedule">Programul alertelor</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d regulă activă</item>
+        <item quantity="few">%1$d reguli active</item>
+        <item quantity="other">%1$d de reguli active</item>
+    </plurals>
+    <string name="peer_geofences_sub">Configurați zone de sosire și plecare pentru %1$s</string>
+    <string name="peer_supervise">Supravegheați acest dispozitiv</string>
+    <string name="peer_supervise_on">Primiți și aprobați cererile de deblocare de la %1$s</string>
+    <string name="peer_supervise_off">Permiteți lui %1$s să vă trimită cereri de deblocare în modul supravegheat</string>
+    <string name="peer_messaging_sub">Activați/dezactivați mesajele de chat de la %1$s</string>
+    <string name="peer_section_history">Istoricul deplasărilor</string>
+    <string name="peer_location_history">Istoricul locațiilor</string>
+    <string name="peer_location_history_sub">Vizualizați istoricul deplasărilor și raportul pe hartă pentru %1$s</string>
+    <string name="peer_section_retention">Păstrarea datelor la distanță</string>
+    <string name="peer_retention_location_sub">Cât timp păstrează %1$s istoricul locațiilor dvs.</string>
+    <string name="peer_purge_location">Ștergeți toate datele de locație de la %1$s</string>
+    <string name="peer_retention_messages_sub">Cât timp păstrează %1$s mesajele trimise de dvs.</string>
+    <string name="peer_purge_messages">Ștergeți toate mesajele de la %1$s</string>
+    <string name="peer_precision_exact">GPS exact</string>
+    <string name="peer_precision_exact_desc">Coordonate precise</string>
+    <string name="peer_precision_suburb">Cartier (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Doar la nivel de zonă</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Ștergeți %1$d conversație?</item>
+        <item quantity="few">Ștergeți %1$d conversații?</item>
+        <item quantity="other">Ștergeți %1$d de conversații?</item>
+    </plurals>
+    <string name="conv_delete_locally">Ștergeți local</string>
+    <string name="conv_delete_locally_sub">Elimină conversația doar de pe dispozitivul dvs.</string>
+    <string name="conv_delete_both">Ștergeți local/de la contact</string>
+    <string name="conv_bulk_delete_both_sub">Șterge conversația local și de la contactul dvs.</string>
+    <string name="conv_delete_both_sub">Șterge conversația local și declanșează o cerere de ștergere a conversației pe dispozitivul contactului.</string>
+    <string name="conv_cd_exit_selection">Ieșiți din selecție</string>
+    <string name="conv_cd_select_all">Selectați tot</string>
+    <string name="conv_cd_new_message">Mesaj nou</string>
+    <string name="conv_sort_date">Dată</string>
+    <string name="conv_sort_unread">Necitite</string>
+    <string name="conv_search_placeholder">Căutați conversații…</string>
+    <string name="conv_tab_chats">Conversații</string>
+    <string name="conv_tab_archived">Arhivate</string>
+    <string name="conv_mark_read">Marcați ca citit</string>
+    <string name="conv_archive">Arhivați</string>
+    <string name="conv_unarchive">Dezarhivați</string>
+    <string name="conv_empty_no_results">Niciun rezultat pentru „%1$s”</string>
+    <string name="conv_empty_no_results_sub">Încercați un alt termen de căutare</string>
+    <string name="conv_empty_archived_title">Nicio conversație arhivată</string>
+    <string name="conv_empty_archived_sub">Arhivați conversațiile pentru a păstra ordinea în inbox</string>
+    <string name="conv_empty_title">Niciun mesaj încă</string>
+    <string name="conv_empty_sub">Deschideți harta și atingeți o persoană\npentru a începe o conversație</string>
+    <string name="conv_delete_title">Ștergeți conversația?</string>
+    <string name="conv_delete_message">Cum doriți să ștergeți această conversație cu %1$s?</string>
+    <string name="conv_messages_blocked">Mesaje blocate</string>
+    <string name="conv_preview_mine">Dvs.: %1$s</string>
+    <string name="conv_new_message_title">Mesaj nou</string>
+    <string name="conv_picker_empty">Niciun contact încă. Scanați un cod QR pentru a adăuga un contact.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Ștergeți istoricul conversației?</string>
+    <string name="chat_clear_message">Cum doriți să ștergeți această conversație cu %1$s?</string>
+    <string name="chat_clear_locally">Ștergeți local</string>
+    <string name="chat_clear_both">Ștergeți local/de la contact</string>
+    <string name="chat_clear_both_sub">Șterge conversația local și trimite lui %1$s o cerere de ștergere a mesajelor trimise de dvs.</string>
+    <string name="chat_cd_options">Opțiuni</string>
+    <string name="chat_clear_history_menu">Ștergeți istoricul conversației</string>
+    <string name="chat_typing">%1$s scrie…</string>
+    <string name="chat_blocked_banner">Ați blocat mesajele de la %1$s. Mergeți la Contacte pentru a debloca.</string>
+    <string name="chat_delete_msg_title">Ștergeți mesajul?</string>
+    <string name="chat_delete_msg_message">Cum doriți să ștergeți acest mesaj?</string>
+    <string name="chat_delete_from_contact">Ștergeți de la contact</string>
+    <string name="chat_delete_from_contact_sub">Șterge conversația de pe dispozitivul contactului.</string>
+    <string name="chat_delete_both_sub">Elimină conversația local și o șterge automat de pe dispozitivul contactului.</string>
+    <string name="chat_cd_share_location">Partajați locația</string>
+    <string name="chat_input_placeholder">Mesaj…</string>
+    <string name="chat_cd_send">Trimiteți</string>
+
+    <string name="common_close">Închideți</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Activați SOS?</string>
+    <string name="map_sos_deactivate_title">Dezactivați SOS?</string>
+    <string name="map_sos_activate_msg">Aceasta vă va transmite locația la fiecare 15 secunde către contactele SOS desemnate, până la dezactivare.</string>
+    <string name="map_sos_deactivate_msg">Aceasta va opri transmisia prioritară a locației către contactele de urgență.</string>
+    <string name="map_activate">Activați</string>
+    <string name="map_deactivate">Dezactivați</string>
+    <string name="map_cd_style">Stilul hărții</string>
+    <string name="map_cd_show_geofences">Afișați perimetrele</string>
+    <string name="map_cd_hide_geofences">Ascundeți perimetrele</string>
+    <string name="map_cd_follow">Urmăriți-mă</string>
+    <string name="map_cd_friends">Prieteni</string>
+    <string name="map_no_friends">Nimeni urmărit încă</string>
+    <string name="map_you">Dvs.</string>
+    <string name="map_cd_go_my_location">Mergeți la locația mea</string>
+    <string name="map_sos_active">⚠ SOS ACTIV</string>
+    <string name="map_away">Departe</string>
+    <string name="map_no_location_yet">Nicio locație încă</string>
+    <string name="map_cd_go_location">Mergeți la locație</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS PORNIT</string>
+    <string name="map_overdue">Întârziat — nicio actualizare recentă</string>
+    <string name="map_stat_last_seen">Văzut ultima dată</string>
+    <string name="map_stat_battery">Baterie</string>
+    <string name="map_stat_accuracy">Precizie</string>
+    <string name="map_stat_motion">Mișcare</string>
+    <string name="map_stat_speed">Viteză</string>
+    <string name="map_stat_elevation">Altitudine</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Istoric: %1$s</string>
+    <string name="history_select_person">Selectați persoana</string>
+    <string name="history_person_label">Persoană</string>
+    <string name="history_cd_prev_day">Ziua precedentă</string>
+    <string name="history_cd_next_day">Ziua următoare</string>
+    <string name="history_time_filter">Filtru de timp:</string>
+    <string name="history_cd_reset_time">Resetați ora</string>
+    <string name="history_tab_list">Listă</string>
+    <string name="history_empty_title">Niciun istoric pentru această zi</string>
+    <string name="history_empty_sub">Încercați altă dată sau verificați conexiunea.</string>
+    <string name="history_start_time">Ora de început</string>
+    <string name="history_end_time">Ora de sfârșit</string>
+    <string name="history_no_data_title">Nicio dată de locație</string>
+    <string name="history_no_data_sub">Nu există poziții înregistrate pentru această zi sau acest interval.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d poziție înregistrată</item>
+        <item quantity="few">%1$d poziții înregistrate</item>
+        <item quantity="other">%1$d de poziții înregistrate</item>
+    </plurals>
+    <string name="history_cd_dismiss">Închideți</string>
+    <string name="history_accuracy_label">Precizie ±%1$s</string>
+    <string name="history_emergency_sos">Semnal SOS de urgență</string>
+    <string name="history_detail_location">Locație</string>
+    <string name="history_detail_coordinates">Coordonate</string>
+    <string name="history_within">în limita a ±%1$s</string>
+    <string name="history_detail_movement">Mișcare</string>
+    <string name="history_movement_desc">%1$s %2$s, direcție %3$s</string>
+
+    <string name="common_create">Creați</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Adăugați o zonă de perimetru</string>
+    <string name="geo_cd_assign">Atribuiți perimetrul</string>
+    <string name="geo_unknown">Necunoscut</string>
+    <string name="geo_empty_title">Niciun perimetru</string>
+    <string name="geo_empty_sub">Atingeți + pentru a crea o zonă de perimetru, apoi atribuiți-i contacte din setările lor de partajare.</string>
+    <string name="geo_delete_title">Ștergeți perimetrul?</string>
+    <string name="geo_delete_simple">Ștergeți „%1$s”?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">„%1$s” este atribuit unui %2$d contact. Ștergerea elimină și aceste atribuiri.</item>
+        <item quantity="few">„%1$s” este atribuit la %2$d contacte. Ștergerea elimină și aceste atribuiri.</item>
+        <item quantity="other">„%1$s” este atribuit la %2$d de contacte. Ștergerea elimină și aceste atribuiri.</item>
+    </plurals>
+    <string name="geo_for_contact">Perimetre pentru %1$s</string>
+    <string name="geo_empty_contact_title">Niciun perimetru pentru contact</string>
+    <string name="geo_empty_contact_sub">Atingeți + pentru a atribui o zonă de perimetru și a alege dacă alertați la sosire, la plecare sau la ambele.</string>
+    <string name="geo_no_areas_title">Niciun perimetru încă</string>
+    <string name="geo_no_areas_msg">Creați mai întâi o zonă de perimetru din ecranul Perimetre, apoi atribuiți-o aici.</string>
+    <string name="geo_radius_label">Rază de %1$s</string>
+    <string name="geo_contacts_label">Contacte: %1$s</string>
+    <string name="geo_no_contacts_assigned">Niciun contact atribuit</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d regulă</item>
+        <item quantity="few">%1$d reguli</item>
+        <item quantity="other">%1$d de reguli</item>
+    </plurals>
+    <string name="geo_trigger_enter">Intrare</string>
+    <string name="geo_trigger_exit">Ieșire</string>
+    <string name="geo_trigger_both">Ambele</string>
+    <string name="geo_edit_title">Editați perimetrul</string>
+    <string name="geo_new_title">Perimetru nou</string>
+    <string name="geo_cd_my_location">Locația mea</string>
+    <string name="geo_cd_radius_increase">Măriți raza</string>
+    <string name="geo_cd_radius_decrease">Micșorați raza</string>
+    <string name="geo_hint_tap">Atingeți sau țineți apăsat pe hartă pentru a plasa</string>
+    <string name="geo_hint_move">Apropiați degetele pentru zoom • Țineți apăsat sau trageți pinul pentru a-l muta</string>
+    <string name="geo_basic_info">Informații de bază</string>
+    <string name="geo_search_title">Găsiți după adresă</string>
+    <string name="geo_search_label">Adresă sau loc</string>
+    <string name="geo_search_placeholder">de ex. Str. Principală 10, București</string>
+    <string name="geo_search_no_results">Nu s-a găsit nicio adresă potrivită</string>
+    <string name="geo_cd_search">Căutați</string>
+    <string name="geo_name_placeholder">de ex. Acasă, Serviciu</string>
+    <string name="geo_name_required">Numele este obligatoriu</string>
+    <string name="geo_latitude">Latitudine</string>
+    <string name="geo_longitude">Longitudine</string>
+    <string name="geo_lat_range">-90 până la 90</string>
+    <string name="geo_lng_range">-180 până la 180</string>
+    <string name="geo_radius">Rază</string>
+    <string name="geo_radius_range">Introduceți %1$d până la %2$d m</string>
+    <string name="geo_edit_assignment">Editați atribuirea</string>
+    <string name="geo_assign_title">Atribuiți perimetrul</string>
+    <string name="geo_select_area">Selectați zona de perimetru</string>
+    <string name="geo_trigger_title">Declanșați notificarea la</string>
+    <string name="geo_add_rule">Adăugați o regulă</string>
+    <string name="geo_alerts_all_times">Alertele sunt active tot timpul. Adăugați o regulă pentru a restrânge când se trimit alerte.</string>
+    <string name="geo_assign_action">Atribuiți</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Alerte de proximitate</string>
+    <string name="prox_empty_title">Nicio persoană urmărită</string>
+    <string name="prox_empty_sub">Scanați codul QR de invitație al cuiva din fila Scanare\npentru a începe să-i urmăriți locația</string>
+    <string name="prox_intro">Primiți o notificare când o persoană urmărită ajunge la o distanță aleasă de dvs.</string>
+    <string name="prox_alert_within">Alertă la mai puțin de %1$s</string>
+    <string name="prox_alerts_off">Alerte dezactivate</string>
+    <string name="prox_alert_radius">Raza alertei</string>
+    <string name="prox_edit_schedule">Editați programul</string>
+    <string name="prox_rules">Reguli</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Program pentru %1$s</string>
+    <string name="schedule_cd_add_rule">Adăugați o regulă</string>
+    <string name="schedule_empty_title">Nicio regulă de program</string>
+    <string name="schedule_empty_global">Locația se partajează tot timpul. Adăugați o regulă pentru a restrânge când este activă partajarea.</string>
+    <string name="schedule_empty_peer">Locația se partajează mereu cu %1$s. Adăugați o regulă pentru a restrânge când.</string>
+    <string name="schedule_active_hint">Activ când orice regulă corespunde orei curente. Gol = mereu activ.</string>
+    <string name="schedule_all_day">Toată ziua</string>
+    <string name="schedule_plus_one_day"> (+1 zi)</string>
+    <string name="schedule_rule_number">Regula %1$d</string>
+    <string name="schedule_cd_delete_rule">Ștergeți regula</string>
+    <string name="schedule_edit_rule">Editați regula</string>
+    <string name="schedule_label_optional">Etichetă (opțional)</string>
+    <string name="schedule_label_placeholder">de ex. Ore de lucru, Weekenduri</string>
+    <string name="schedule_active_days">Zile active</string>
+    <string name="schedule_time_window">Interval orar</string>
+    <string name="schedule_start">Început</string>
+    <string name="schedule_end">Sfârșit</string>
+    <string name="schedule_overnight">Peste noapte: activ de la %1$s până la %2$s a doua zi</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Dispozitivul este supravegheat</string>
+    <string name="gate_message">Este necesară aprobarea supraveghetorului pentru a accesa setările.</string>
+    <string name="gate_request_access">Solicitați acces</string>
+    <string name="gate_waiting">Se așteaptă aprobarea supraveghetorului…</string>
+    <string name="gate_denied">Acces refuzat de supraveghetor.</string>
+    <string name="gate_timed_out">Cererea a expirat. Supraveghetorul nu a răspuns.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Pentru totdeauna</string>
+    <string name="retention_keep_for">Păstrați: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d zi</item>
+        <item quantity="few">%1$d zile</item>
+        <item quantity="other">%1$d de zile</item>
+    </plurals>
+
+    <string name="common_select">Selectați</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Alegeți locația fixă</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Alegeți ce file apar în bara de jos și ordinea lor. Harta este întotdeauna inclusă.</string>
+    <string name="customize_cd_move_up">Mutați în sus</string>
+    <string name="customize_cd_move_down">Mutați în jos</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Versiunea %1$s (build %2$d)</string>
+    <string name="about_tagline">Partajare privată a locației cu persoane de încredere. Fără conturi, fără cloud, fără urmărire din partea noastră.</string>
+    <string name="about_relay_connections">Conexiuni la relee</string>
+    <string name="about_connected">Conectat</string>
+    <string name="about_disconnected">Deconectat</string>
+    <string name="about_open_source">Biblioteci open source</string>
+    <string name="about_lib_osmdroid_desc">Redare de hărți bazată pe OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Transport WebSocket pentru releul Nostr</string>
+    <string name="about_lib_compose_desc">Framework de interfață</string>
+    <string name="about_lib_hilt_desc">Injectare de dependențe</string>
+    <string name="about_lib_room_desc">Bază de date locală</string>
+    <string name="about_map_attribution">Date hartă © contribuitorii OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Acceptați</string>
+    <string name="notif_someone">Cineva</string>
+    <string name="notif_sos_title">SOS de la %1$s!</string>
+    <string name="notif_sos_text">%1$s a activat SOS la (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s vrea să îi fiți supraveghetor</string>
+    <string name="notif_supervisor_request_text">Acceptați pentru a permite cereri de aprobare a deblocării de pe acest dispozitiv</string>
+    <string name="notif_supervisor_request_big">Acceptați pentru a permite lui %1$s să vă trimită cereri de aprobare a deblocării când modul supravegheat este activ.</string>
+    <string name="notif_supervised_active_title">Mod supravegheat activ</string>
+    <string name="notif_supervised_active_text">Supraveghetorul a confirmat — modul supravegheat este acum configurat</string>
+    <string name="notif_supervised_declined_title">Mod supravegheat refuzat</string>
+    <string name="notif_supervised_declined_text">Supraveghetorul a refuzat cererea — modul supravegheat a fost dezactivat</string>
+    <string name="notif_tracking_alert_title">Alertă de urmărire</string>
+    <string name="notif_tracking_proximity">%1$s a primit o alertă de proximitate despre dvs.</string>
+    <string name="notif_tracking_geofence">%1$s a primit o alertă că ați intrat/ieșit din perimetrul: %2$s</string>
+    <string name="notif_tracking_generic">%1$s vă monitorizează locația</string>
+    <string name="notif_track_update_title">Actualizare de partajare de la %1$s</string>
+    <string name="notif_track_new_title">Contact nou: %1$s</string>
+    <string name="notif_role_send_receive">Trimitere/Primire locație</string>
+    <string name="notif_role_send">Trimitere locație</string>
+    <string name="notif_role_receive">Primire locație</string>
+    <string name="notif_role_none">Fără partajarea locației</string>
+    <string name="notif_track_requesting">%1$s solicită: %2$s</string>
+    <string name="notif_track_update_body">%1$s vrea să actualizeze modul în care partajați locațiile.</string>
+    <string name="notif_track_new_body">%1$s v-a adăugat drept contact și vrea să se conecteze.</string>
+    <string name="notif_contact_connected_title">Contact conectat</string>
+    <string name="notif_contact_connected_text">%1$s este acum conectat cu dvs.</string>
+    <string name="notif_request_declined_title">Cerere refuzată</string>
+    <string name="notif_request_declined_text">%1$s a refuzat cererea dvs. de partajare a locației.</string>
+    <string name="notif_message_person">Mesaj către %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s a intrat în %2$s</string>
+    <string name="notif_geofence_left_title">%1$s a părăsit %2$s</string>
+    <string name="notif_geofence_subtitle">la %1$s · rază de %2$s</string>
+    <string name="notif_person_nearby">%1$s este în apropiere</string>
+    <string name="notif_distance_from_you">%1$s de dvs.</string>
+    <string name="notif_missed_title">Nicio actualizare de la %1$s</string>
+    <string name="notif_missed_text">Văzut ultima dată acum %1$s min lângă (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ACTIV!</string>
+    <string name="notif_sos_active_text">Se transmite alerta de urgență către contactele SOS</string>
+    <string name="notif_messages_group_title">Mesaje LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Cerere de contact de la %1$s refuzată</string>
+    <string name="toast_now_supervising">Acum supravegheați dispozitivul lui %1$s</string>
+    <string name="toast_declined_supervision">Cerere de supraveghere de la %1$s refuzată</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Chiar acum</string>
+    <string name="time_minutes_ago">acum %1$d min</string>
+    <string name="fallback_me">Eu</string>
+    <string name="fallback_unknown">Necunoscut</string>
+    <string name="geo_unassigned">Neatribuit</string>
+    <string name="days_every_day">În fiecare zi</string>
+    <string name="days_weekdays">Zile lucrătoare</string>
+    <string name="days_weekends">Weekenduri</string>
+    <string name="days_none">Nicio zi</string>
+    <string name="chat_my_location_message">Locația mea curentă: %1$s</string>
+    <string name="scan_error_bad_pubkey">Invitație nevalidă: cheie publică greșită</string>
+    <string name="scan_error_key_mismatch">Invitație nevalidă: cheile nu se potrivesc</string>
+    <string name="scan_error_unknown">Eroare necunoscută</string>
+    <string name="scan_error_invalid_link">Link de invitație nevalid</string>
+    <string name="scan_fallback_contact">acest contact</string>
+    <string name="backup_saved">Copie de rezervă salvată: %1$s</string>
+    <string name="backup_saved_encrypted">Copie de rezervă salvată (criptată): %1$s</string>
+    <string name="backup_failed">Copierea de rezervă a eșuat: %1$s</string>
+    <string name="backup_could_not_read_file">Fișierul nu a putut fi citit</string>
+    <string name="backup_could_not_write_file">Fișierul nu a putut fi scris</string>
+    <string name="backup_could_not_read">Copia de rezervă nu a putut fi citită: %1$s</string>
+    <string name="backup_incorrect_password">Parolă incorectă</string>
+    <string name="restore_result_restored">Restaurat: %1$s</string>
+    <string name="restore_result_failed">Eșuat: %1$s</string>
+    <string name="restore_nothing">Nimic de restaurat</string>
+    <string name="restore_failed">Restaurarea a eșuat: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d contact</item>
+        <item quantity="few">%1$d contacte</item>
+        <item quantity="other">%1$d de contacte</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d perimetru</item>
+        <item quantity="few">%1$d perimetre</item>
+        <item quantity="other">%1$d de perimetre</item>
+    </plurals>
+    <string name="peer_role_change_sent">Cerere de schimbare a rolului trimisă lui %1$s</string>
+    <string name="peer_not_found">Contactul nu a fost găsit</string>
+    <string name="peer_purge_location_sent">Comandă de ștergere de la distanță a TUTUROR locațiilor trimisă lui %1$s</string>
+    <string name="peer_purge_messages_sent">Comandă de ștergere de la distanță a TUTUROR mesajelor trimisă lui %1$s</string>
+    <string name="onboarding_error_key_length">Cheie nevalidă — trebuie să aibă 64 de caractere hexazecimale.</string>
+    <string name="onboarding_error_key_range">Cheie privată nevalidă — în afara intervalului curbei.</string>
+    <string name="onboarding_error_hex">Format hexazecimal nevalid.</string>
+    <string name="onboarding_error_import_failed">Importul cheii a eșuat: %1$s</string>
 </resources>

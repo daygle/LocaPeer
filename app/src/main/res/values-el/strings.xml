@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Κανάλια ειδοποιήσεων & Υπηρεσία προσκηνίου ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Μετάδοση τοποθεσίας</string>
     <string name="channel_desc_heartbeat">Μεταδίδει την τοποθεσία σας στις εγκεκριμένες επαφές σας</string>
     <string name="channel_name_alerts">Ειδοποιήσεις</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">Το LocaPeer εκτελείται</string>
     <string name="notification_heartbeat_text">Κοινοποίηση της τοποθεσίας σας με άλλους</string>
 
-    <!-- ── Κοινές ενέργειες ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Αποθήκευση</string>
     <string name="common_cancel">Ακύρωση</string>
     <string name="common_done">Τέλος</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Έγκριση</string>
     <string name="common_deny">Απόρριψη</string>
 
-    <!-- ── Ετικέτες καρτελών πλοήγησης ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Χάρτης</string>
     <string name="tab_messages">Μηνύματα</string>
     <string name="tab_history">Ιστορικό</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Ρυθμίσεις</string>
 
-    <!-- ── Καταστάσεις κίνησης / δραστηριότητας ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Στάσιμος</string>
     <string name="motion_walking">Περπάτημα</string>
     <string name="motion_running">Τρέξιμο</string>
     <string name="motion_cycling">Ποδηλασία</string>
     <string name="motion_driving">Οδήγηση</string>
 
-    <!-- ── Ρυθμίσεις ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Ιδιωτικό κλειδί</string>
+    <string name="backup_section_contacts">Επαφές</string>
+    <string name="backup_section_geofences">Γεωφράκτες</string>
+    <string name="backup_section_settings">Ρυθμίσεις</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Αίτημα εποπτείας</string>
+    <string name="supervision_request_message">Ο/Η «%1$s» ζητά πρόσβαση στις ρυθμίσεις του/της. Να επιτραπεί;</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Ρυθμίσεις</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Τοποθεσία &amp; Απόρρητο</string>
     <string name="settings_section_security">Ασφάλεια</string>
     <string name="settings_section_map">Χάρτης</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Αντίγραφα ασφαλείας &amp; Κλειδιά</string>
     <string name="settings_section_about">Πληροφορίες</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">Επεξεργασία ονόματος</string>
     <string name="settings_my_qr">Το QR μου</string>
     <string name="settings_no_name_set">Δεν ορίστηκε όνομα</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Κοινοποίηση τοποθεσίας</string>
+    <string name="settings_broadcasting">Μετάδοση στις επαφές σας</string>
+    <string name="settings_not_broadcasting">Δεν γίνεται μετάδοση</string>
+    <string name="settings_sharing_schedule">Πρόγραμμα κοινοποίησης</string>
+    <string name="settings_always_on">Πάντα ενεργό</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d κανόνας</item>
+        <item quantity="other">%1$d κανόνες</item>
+    </plurals>
+    <string name="settings_geofences">Γεωφράκτες</string>
+    <string name="settings_geofences_subtitle">Διαχείριση κοινόχρηστων περιοχών γεωφράκτη</string>
+    <string name="settings_notify_when_tracked">Ειδοποίηση κατά την παρακολούθηση</string>
+    <string name="settings_notify_when_tracked_subtitle">Λάβετε ειδοποίηση όταν ενεργοποιείται ειδοποίηση εγγύτητας ή γεωφράκτη μιας επαφής που σας αφορά.</string>
+    <string name="settings_my_location_history">Ιστορικό τοποθεσίας</string>
+    <string name="settings_my_location_history_subtitle">Περιηγηθείτε στο χρονολόγιο της τοποθεσίας σας</string>
+    <string name="settings_lookup_addresses">Αναζήτηση διευθύνσεων</string>
+    <string name="settings_lookup_addresses_subtitle">Εμφάνιση διευθύνσεων για σημεία ιστορικού και πινέζες του χάρτη, και αναζήτηση με διεύθυνση κατά την τοποθέτηση γεωφρακτών. Στέλνει τις συντεταγμένες ή την αναζήτησή σας στην υπηρεσία γεωκωδικοποίησης της συσκευής (συνήθως Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Εποπτεία ενεργή</string>
+    <string name="settings_supervision_active_subtitle">Οι ρυθμίσεις απαιτούν έγκριση επόπτη</string>
+    <string name="settings_disable_supervised">Απενεργοποίηση εποπτευόμενης λειτουργίας</string>
+    <string name="settings_supervised_mode">Εποπτευόμενη λειτουργία</string>
+    <string name="settings_supervised_mode_subtitle">Απαιτείται έγκριση επόπτη για πρόσβαση στις ρυθμίσεις</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Σημείο εκκίνησης</string>
+    <string name="settings_map_current_location">Τρέχουσα τοποθεσία</string>
+    <string name="settings_map_all_contacts">Όλες οι επαφές</string>
+    <string name="settings_map_fixed_location">Σταθερή τοποθεσία</string>
+    <string name="settings_map_last_position">Τελευταία θέση</string>
+    <string name="settings_map_starting_point_title">Σημείο εκκίνησης χάρτη</string>
+    <string name="settings_no_location_set">Δεν έχει οριστεί τοποθεσία</string>
+    <string name="settings_pick_location_on_map">Επιλογή τοποθεσίας στον χάρτη</string>
+    <string name="settings_default_zoom_level">Προεπιλεγμένο επίπεδο εστίασης</string>
+    <string name="settings_map_pin_colour">Χρώμα πινέζας χάρτη</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Συχνότητα ενημερώσεων</string>
+    <string name="settings_update_cadence_subtitle">Ρυθμίστε πόσο συχνά μεταδίδεται η τοποθεσία σας</string>
+    <string name="settings_update_cadence_dialog_message">Ελέγξτε πόσο συχνά ενημερώνεται η τοποθεσία σας ανάλογα με τη δραστηριότητά σας. Οι συχνές ενημερώσεις καταναλώνουν περισσότερη μπαταρία.</string>
+    <string name="settings_update_cadence_reset">Επαναφορά προεπιλογών</string>
+    <string name="settings_min_distance_filtering">Φιλτράρισμα ελάχιστης απόστασης</string>
+    <string name="settings_min_distance_filtering_subtitle">Εμφάνιση μόνο σημείων που απέχουν τουλάχιστον τόσο από το προηγούμενο.</string>
+    <string name="settings_discard_low_accuracy">Απόρριψη ανακριβών στιγμάτων</string>
+    <string name="settings_discard_low_accuracy_subtitle">Να μη μεταδίδονται ούτε να καταγράφονται στίγματα με ακτίνα ακρίβειας μεγαλύτερη από αυτήν. Το SOS δεν παραλείπεται ποτέ.</string>
+    <string name="settings_hide_low_accuracy">Απόκρυψη ανακριβών σημείων</string>
+    <string name="settings_hide_low_accuracy_subtitle">Απόκρυψη σημείων ιστορικού με ακτίνα ακρίβειας μεγαλύτερη από αυτήν. Δεν διαγράφεται τίποτα.</string>
+    <string name="settings_low_battery" formatted="false">Χαμηλή μπαταρία (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d λεπ.</string>
+    <string name="settings_motion_detection">Ανίχνευση κίνησης</string>
+    <string name="settings_motion_detection_on">Ενεργή — βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
+    <string name="settings_motion_detection_off">Ανενεργή — επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
+    <string name="settings_enable_motion_title">Ενεργοποίηση ανίχνευσης κίνησης</string>
+    <string name="settings_enable_motion_message">Η πρόσβαση στη σωματική δραστηριότητα επιτρέπει στο LocaPeer να ξεχωρίζει ακριβέστερα το περπάτημα, την οδήγηση και τη στάση στο ιστορικό σας. Είναι απενεργοποιημένη — μπορείτε να την ενεργοποιήσετε ξανά από τις ρυθμίσεις συστήματος.</string>
+    <string name="settings_open_settings">Άνοιγμα ρυθμίσεων</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Μονάδες ταχύτητας</string>
+    <string name="settings_speed_imperial">Αγγλοσαξονικές (mph)</string>
+    <string name="settings_speed_metric">Μετρικές (km/h)</string>
+    <string name="settings_elevation_units">Μονάδες υψομέτρου</string>
+    <string name="settings_elevation_imperial">Αγγλοσαξονικές (πόδια)</string>
+    <string name="settings_elevation_metric">Μετρικές (μέτρα)</string>
+    <string name="settings_distance_units">Μονάδες απόστασης</string>
+    <string name="settings_distance_imperial">Αγγλοσαξονικές (ft/mi)</string>
+    <string name="settings_distance_metric">Μετρικές (m/km)</string>
+    <string name="settings_time_format">Μορφή ώρας</string>
+    <string name="settings_time_24h">24ωρη (13:30)</string>
+    <string name="settings_time_12h">12ωρη (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Δεδομένα τοποθεσίας</string>
+    <string name="settings_retention_location_subtitle">Για πόσο διατηρούνται τοπικά τα δεδομένα τοποθεσίας των επαφών</string>
+    <string name="settings_clear_all_location">Εκκαθάριση όλων των δεδομένων τοποθεσίας</string>
+    <string name="settings_retention_messages">Μηνύματα</string>
+    <string name="settings_retention_messages_subtitle">Για πόσο διατηρούνται τοπικά τα εισερχόμενα μηνύματα</string>
+    <string name="settings_clear_all_messages">Εκκαθάριση όλων των μηνυμάτων</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Προσαρμογή πλοήγησης</string>
+    <string name="settings_customize_nav_subtitle">Επιλέξτε και αναδιατάξτε τις κάτω καρτέλες</string>
+    <string name="settings_start_page">Αρχική σελίδα</string>
     <string name="settings_language">Γλώσσα</string>
     <string name="settings_language_title">Γλώσσα εφαρμογής</string>
     <string name="settings_language_system">Προεπιλογή συστήματος</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Εξαγωγή αντιγράφου ασφαλείας</string>
+    <string name="settings_export_backup_subtitle">Αποθηκεύστε το ιδιωτικό κλειδί και τις επαφές σας σε αρχείο. Φυλάξτε το αρχείο με ασφάλεια!</string>
+    <string name="settings_import_backup">Εισαγωγή αντιγράφου ασφαλείας</string>
+    <string name="settings_import_backup_subtitle">Επαναφορά από αρχείο που έχει εξαχθεί προηγουμένως</string>
+    <string name="settings_view_private_key">Προβολή ιδιωτικού κλειδιού</string>
+    <string name="settings_view_private_key_subtitle">Εμφάνιση του δεκαεξαδικού κλειδιού ταυτότητας 64 χαρακτήρων</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">Σχετικά με το LocaPeer</string>
+    <string name="settings_about_subtitle">Έκδοση, κατάσταση αναμεταδοτών, ανοιχτός κώδικας</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Επεξεργασία εμφανιζόμενου ονόματος</string>
+    <string name="settings_display_name_label">Εμφανιζόμενο όνομα</string>
+    <string name="settings_my_invite_qr">Το QR πρόσκλησής μου</string>
+    <string name="settings_invite_qr_subtitle">Άλλοι μπορούν να το σαρώσουν για να αρχίσουν να σας παρακολουθούν.</string>
+    <string name="settings_invite_qr_cd">QR πρόσκλησης</string>
+    <string name="settings_private_key_title">Ιδιωτικό κλειδί</string>
+    <string name="settings_private_key_warning">Φυλάξτε το με ασφάλεια. Όποιος έχει αυτό το κλειδί μπορεί να υποδυθεί εσάς.</string>
+    <string name="settings_clear_location_title">Εκκαθάριση ιστορικού τοποθεσίας;</string>
+    <string name="settings_clear_location_message">Όλα τα αποθηκευμένα στίγματα θα διαγραφούν οριστικά.</string>
+    <string name="settings_clear_messages_title">Εκκαθάριση ιστορικού μηνυμάτων;</string>
+    <string name="settings_clear_messages_message">Όλα τα αποθηκευμένα μηνύματα θα διαγραφούν οριστικά.</string>
+    <string name="settings_encrypted_backup_title">Κρυπτογραφημένο αντίγραφο ασφαλείας</string>
+    <string name="settings_encrypted_backup_message">Αυτό το αντίγραφο ασφαλείας είναι κρυπτογραφημένο. Εισαγάγετε τον κωδικό πρόσβασης για να συνεχίσετε.</string>
+    <string name="settings_select_restore_title">Επιλέξτε δεδομένα για επαναφορά</string>
+    <string name="settings_select_export_title">Επιλέξτε δεδομένα για εξαγωγή</string>
+    <string name="settings_export_password_hint">Προαιρετικά, ορίστε κωδικό για την κρυπτογράφηση του αρχείου αντιγράφου ασφαλείας.</string>
+    <string name="settings_backup_password_optional">Κωδικός αντιγράφου ασφαλείας (προαιρετικό)</string>
+    <string name="settings_select_sections">Επιλέξτε ενότητες για συμπερίληψη:</string>
+    <string name="settings_choose_file_location">Επιλέξτε θέση αρχείου</string>
+    <string name="settings_not_in_backup">Δεν υπάρχει σε αυτό το αντίγραφο ασφαλείας</string>
+    <string name="settings_enable_supervised_title">Ενεργοποίηση εποπτευόμενης λειτουργίας</string>
+    <string name="settings_enable_supervised_message">Επιλέξτε μια επαφή που θα λειτουργεί ως επόπτης. Πρέπει να εγκρίνει την πρόσβαση στις ρυθμίσεις από τη συσκευή της.</string>
+    <string name="settings_no_peers_found">Δεν βρέθηκαν επαφές. Προσθέστε πρώτα μια επαφή σαρώνοντας το QR πρόσκλησής της.</string>
+    <string name="settings_disable_supervised_title">Απενεργοποίηση εποπτευόμενης λειτουργίας;</string>
+    <string name="settings_disable_supervised_message">Οι ρυθμίσεις θα είναι προσβάσιμες χωρίς έγκριση επόπτη.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Αφαίρεση</string>
+    <string name="common_name">Όνομα</string>
+    <string name="common_search">Αναζήτηση</string>
+    <string name="common_sort">Ταξινόμηση</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Μήνυμα</string>
+    <string name="cd_show_on_map">Εμφάνιση στον χάρτη</string>
+    <string name="cd_more_options">Περισσότερες επιλογές</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d επιλεγμένο</item>
+        <item quantity="other">%1$d επιλεγμένα</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Ακύρωση επιλογής</string>
+    <string name="contacts_cd_select_all">Επιλογή όλων</string>
+    <string name="contacts_cd_deselect_all">Αποεπιλογή όλων</string>
+    <string name="contacts_cd_qr_invite">QR / Πρόσκληση</string>
+    <string name="contacts_cd_pending_requests">Εκκρεμή αιτήματα</string>
+    <string name="contacts_sort_last_seen">Τελευταία εμφάνιση</string>
+    <string name="contacts_search_placeholder">Αναζήτηση επαφών…</string>
+    <string name="contacts_empty_title">Δεν υπάρχουν ακόμη επαφές</string>
+    <string name="contacts_empty_subtitle">Σαρώστε έναν κωδικό QR για να συνδεθείτε με κάποιον και να αρχίσετε να μοιράζεστε τοποθεσίες.</string>
+    <string name="contacts_scan_qr">Σάρωση κωδικού QR</string>
+    <string name="contacts_bulk_delete_messages">Διαγραφή μηνυμάτων</string>
+    <string name="contacts_bulk_delete_locations">Διαγραφή τοποθεσιών</string>
+    <string name="contacts_last_seen">Τελευταία εμφάνιση: %1$s</string>
+    <string name="contacts_no_location_yet">Δεν υπάρχουν ακόμη δεδομένα τοποθεσίας</string>
+    <string name="contacts_view_sharing_settings">Ρυθμίσεις κοινοποίησης</string>
+    <string name="contacts_view_location_history">Ιστορικό τοποθεσίας</string>
+    <string name="contacts_rename_contact">Μετονομασία επαφής</string>
+    <string name="contacts_on_contact_device">Στη συσκευή της επαφής</string>
+    <string name="contacts_delete_my_messages_title">Διαγραφή των μηνυμάτων μου</string>
+    <string name="contacts_delete_locations_title">Διαγραφή κοινοποιημένων τοποθεσιών</string>
+    <string name="contacts_remove_contact_title">Αφαίρεση επαφής</string>
+    <string name="contacts_leave_title">Διαγραφή επαφής και δεδομένων</string>
+    <string name="contacts_rename_title">Μετονομασία επαφής</string>
+    <string name="contacts_remove_contact_body">Αφαίρεση του/της %1$s από τις επαφές σας; Το ιστορικό τοποθεσίας του/της θα διαγραφεί επίσης τοπικά.</string>
+    <string name="contacts_leave_body">Αυτό θα σας αφαιρέσει από τις επαφές του/της %1$s και θα διαγράψει όλα τα μηνύματα και τα δεδομένα τοποθεσίας σας από τη συσκευή του/της. Θα χάσετε επίσης την πρόσβαση στην τοποθεσία του/της.</string>
+    <string name="contacts_delete_my_messages_body">Αυτό θα διαγράψει όλα τα μηνύματα που στείλατε από τη συσκευή του/της %1$s. Δεν είναι δυνατή η αναίρεση.</string>
+    <string name="contacts_delete_locations_body">Αυτό θα διαγράψει όλα τα δεδομένα τοποθεσίας που κοινοποιήσατε από τη συσκευή του/της %1$s. Δεν είναι δυνατή η αναίρεση.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Αφαίρεση επαφής</item>
+        <item quantity="other">Αφαίρεση %1$d επαφών</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Αφαίρεση αυτής της επαφής; Το ιστορικό τοποθεσίας της θα διαγραφεί επίσης τοπικά.</item>
+        <item quantity="other">Αφαίρεση %1$d επαφών; Το ιστορικό τοποθεσίας τους θα διαγραφεί επίσης τοπικά.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Απομακρυσμένη διαγραφή όλων των μηνυμάτων που στείλατε από τη συσκευή αυτής της επαφής; Δεν είναι δυνατή η αναίρεση.</item>
+        <item quantity="other">Απομακρυσμένη διαγραφή όλων των μηνυμάτων που στείλατε από τις συσκευές %1$d επαφών; Δεν είναι δυνατή η αναίρεση.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Απομακρυσμένη διαγραφή όλου του ιστορικού τοποθεσίας που κοινοποιήσατε από τη συσκευή αυτής της επαφής; Δεν είναι δυνατή η αναίρεση.</item>
+        <item quantity="other">Απομακρυσμένη διαγραφή όλου του ιστορικού τοποθεσίας που κοινοποιήσατε από τις συσκευές %1$d επαφών; Δεν είναι δυνατή η αναίρεση.</item>
+    </plurals>
+
+    <string name="common_continue">Συνέχεια</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Επαναφορά από αντίγραφο ασφαλείας</string>
+    <string name="onboarding_restore_message">Επικολλήστε το δεκαεξαδικό ιδιωτικό κλειδί 64 χαρακτήρων για να επαναφέρετε την ταυτότητα και τις επαφές σας.</string>
+    <string name="onboarding_private_key_hex">Ιδιωτικό κλειδί (hex)</string>
+    <string name="onboarding_tagline">Ιδιωτική κοινοποίηση τοποθεσίας με επαφές.\nΧωρίς λογαριασμούς. Χωρίς ιδιόκτητους διακομιστές.</string>
+    <string name="onboarding_feature_e2e_title">Κρυπτογράφηση από άκρο σε άκρο</string>
+    <string name="onboarding_feature_e2e_subtitle">Η τοποθεσία σας κρυπτογραφείται στη συσκευή</string>
+    <string name="onboarding_feature_servers_title">Χωρίς ιδιόκτητους διακομιστές</string>
+    <string name="onboarding_feature_servers_subtitle">Χρησιμοποιεί ανοιχτούς αναμεταδότες Nostr ως ασφαλή μεταφορά — τα δεδομένα σας παραμένουν κρυπτογραφημένα και ιδιωτικά</string>
+    <string name="onboarding_feature_phone_title">Μένει στο τηλέφωνό σας</string>
+    <string name="onboarding_feature_phone_subtitle">Το πλήρες ιστορικό τοποθεσίας μένει στη συσκευή σας. Μόνο η τρέχουσα θέση σας κοινοποιείται σε επιλεγμένες επαφές</string>
+    <string name="onboarding_name_prompt">Πώς να σας αποκαλούν οι επαφές σας;</string>
+    <string name="onboarding_name_placeholder">π.χ. Μαμά, Μπαμπάς, Άννα…</string>
+    <string name="onboarding_get_started">Ξεκινήστε</string>
+    <string name="onboarding_restore_from_backup">Επαναφορά από αντίγραφο ασφαλείας</string>
+    <string name="onboarding_key_note">Το ιδιωτικό σας κλειδί δημιουργείται τοπικά και δεν φεύγει ποτέ από αυτή τη συσκευή.</string>
+    <string name="onboarding_permissions_title">Άδειες</string>
+    <string name="onboarding_permissions_desc">Το LocaPeer χρειάζεται πρόσβαση στην τοποθεσία για να κοινοποιεί τη θέση σας, στην κάμερα για σάρωση κωδικών πρόσκλησης και στις ειδοποιήσεις για την κατάσταση στο παρασκήνιο. Η πρόσβαση στη σωματική δραστηριότητα είναι προαιρετική — βοηθά στην ακριβέστερη επισήμανση της κίνησής σας (περπάτημα, οδήγηση).</string>
+    <string name="onboarding_before_ask_title">Πριν ρωτήσουμε</string>
+    <string name="onboarding_before_ask_intro">Θα δείτε στη συνέχεια μερικά μηνύματα του συστήματος:</string>
+    <string name="onboarding_before_ask_location">• Τοποθεσία — απαραίτητη, για την κοινοποίηση της θέσης σας.</string>
+    <string name="onboarding_before_ask_camera">• Κάμερα — για σάρωση κωδικών πρόσκλησης.</string>
+    <string name="onboarding_before_ask_notifications">• Ειδοποιήσεις — για την κατάσταση στο παρασκήνιο.</string>
+    <string name="onboarding_before_ask_activity">• Σωματική δραστηριότητα — προαιρετική. Επιτρέπει στο LocaPeer να ξεχωρίζει ακριβέστερα το περπάτημα, την οδήγηση και τη στάση. Μπορείτε να την παραλείψετε και να την ενεργοποιήσετε αργότερα στις Ρυθμίσεις.</string>
+    <string name="onboarding_grant_permissions">Παραχώρηση αδειών</string>
+    <string name="onboarding_bg_location_title">Τοποθεσία στο παρασκήνιο</string>
+    <string name="onboarding_bg_location_desc">Για να ενημερώνονται οι επαφές σας όταν η εφαρμογή είναι κλειστή, επιλέξτε «Να επιτρέπεται πάντα» στην επόμενη οθόνη.</string>
+    <string name="onboarding_bg_location_error">Η τοποθεσία στο παρασκήνιο απαιτείται για την ενημέρωση των επαφών σας όταν η εφαρμογή είναι κλειστή. Δοκιμάστε ξανά και επιλέξτε «Να επιτρέπεται πάντα».</string>
+    <string name="onboarding_configure_location">Διαμόρφωση τοποθεσίας</string>
+    <string name="onboarding_battery_title">Μπαταρία</string>
+    <string name="onboarding_battery_desc">Το Android μπορεί να σταματήσει το LocaPeer για εξοικονόμηση μπαταρίας. Για αξιόπιστες ενημερώσεις, εξαιρέστε το LocaPeer από τις βελτιστοποιήσεις.</string>
+    <string name="onboarding_disable_optimizations">Απενεργοποίηση βελτιστοποιήσεων</string>
+    <string name="onboarding_done_title">Όλα έτοιμα!</string>
+    <string name="onboarding_done_desc">Το ιδιωτικό σας δίκτυο τοποθεσίας είναι έτοιμο.</string>
+    <string name="onboarding_start_using">Έναρξη χρήσης του LocaPeer</string>
+
+    <string name="common_try_again">Δοκιμάστε ξανά</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Σάρωση πρόσκλησης</string>
+    <string name="scan_camera_needed">Απαιτείται άδεια κάμερας για τη σάρωση κωδικών QR.</string>
+    <string name="scan_grant_permission">Παραχώρηση άδειας</string>
+    <string name="scan_add_contact_title">Προσθήκη επαφής;</string>
+    <string name="scan_add_contact_message">Αυτό θα σας συνδέσει με τον/την %1$s και θα αρχίσετε να μοιράζεστε την τοποθεσία σας μεταξύ σας.</string>
+    <string name="scan_add_share">Προσθήκη και κοινοποίηση</string>
+    <string name="scan_request_sent_title">Το αίτημα στάλθηκε!</string>
+    <string name="scan_request_sent_message">Στάλθηκε αίτημα στον/στην %1$s. Θα συνδεθείτε μόλις το αποδεχθεί.</string>
+    <string name="scan_failed">Η σάρωση απέτυχε: %1$s</string>
+
     <string name="cd_back">Πίσω</string>
+    <string name="common_review">Έλεγχος</string>
+    <string name="common_decline">Απόρριψη</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Αποστολή/Λήψη</string>
+    <string name="role_send">Αποστολή</string>
+    <string name="role_receive">Λήψη</string>
+    <string name="role_none">Χωρίς κοινοποίηση</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Η πρόσκλησή μου</string>
+    <string name="invite_tab_add_contact">Προσθήκη επαφής</string>
+    <string name="invite_your_qr_title">Ο κωδικός QR σας</string>
+    <string name="invite_your_qr_subtitle">Αφήστε κάποιον να τον σαρώσει για να παρακολουθεί την τοποθεσία σας</string>
+    <string name="invite_qr_cd">Ο κωδικός QR σας</string>
+    <string name="invite_qr_error">Σφάλμα δημιουργίας QR</string>
+    <string name="invite_share_link">Κοινοποίηση συνδέσμου πρόσκλησης</string>
+    <string name="invite_encryption_note">Η τοποθεσία σας θα κρυπτογραφηθεί ειδικά για τη συσκευή του σαρωτή.</string>
+    <string name="invite_camera_required_title">Απαιτείται πρόσβαση στην κάμερα</string>
+    <string name="invite_camera_required_message">Παραχωρήστε άδεια κάμερας για να σαρώσετε έναν κωδικό QR.</string>
+    <string name="invite_point_camera">Στρέψτε την κάμερα σε ένα QR του LocaPeer</string>
+    <string name="invite_paste_title">Ή επικολλήστε σύνδεσμο πρόσκλησης</string>
+    <string name="invite_process_link">Επεξεργασία συνδέσμου</string>
+    <string name="invite_fallback_name">Επαφή</string>
+    <string name="invite_success_message">Θα συνδεθείτε με τον/την %1$s μόλις αποδεχθεί.</string>
+    <string name="invite_confirm_add_title">Προσθήκη του/της %1$s;</string>
+    <string name="invite_confirm_add_message">Προσθήκη στις επαφές σας και κοινοποίηση τοποθεσίας;</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Δεν υπάρχουν εκκρεμή αιτήματα</string>
+    <string name="pending_requesting">Αίτημα: %1$s · %2$s</string>
+    <string name="pending_role_change">Αίτημα αλλαγής ρόλου · %1$s</string>
+    <string name="pending_new_request">Νέο αίτημα κοινοποίησης · %1$s</string>
+
+    <string name="common_save_changes">Αποθήκευση αλλαγών</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Ενημέρωση ρυθμίσεων κοινοποίησης</string>
+    <string name="incoming_new_title">Νέο αίτημα επαφής</string>
+    <string name="incoming_update_subtitle">Ο/Η %1$s θέλει να αλλάξει τον τρόπο κοινοποίησης. Ελέγξτε τις παρακάτω ρυθμίσεις.</string>
+    <string name="incoming_new_subtitle">Ο/Η %1$s σας πρόσθεσε ως επαφή! Μπορείτε τώρα να επιλέξετε τι θα κοινοποιείτε.</string>
+    <string name="incoming_section_location">Τοποθεσία</string>
+    <string name="incoming_share_my_location">Κοινοποίηση της τοποθεσίας μου στον/στην %1$s</string>
+    <string name="incoming_share_my_location_sub">Θα μπορεί να βλέπει πού βρίσκεστε</string>
+    <string name="incoming_see_their_location">Προβολή της τοποθεσίας του/της %1$s</string>
+    <string name="incoming_see_their_location_sub">Θα μπορείτε να βλέπετε πού βρίσκεται</string>
+    <string name="incoming_section_messaging">Μηνύματα</string>
+    <string name="incoming_allow_messages">Να επιτρέπονται μηνύματα</string>
+    <string name="incoming_allow_messages_sub">Λήψη μηνυμάτων συνομιλίας από τον/την %1$s</string>
+
+    <string name="common_request">Αίτημα</string>
+    <string name="common_edit">Επεξεργασία</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Ρυθμίσεις επαφής</string>
+    <string name="peer_section_roles">Ρόλοι κοινοποίησης τοποθεσίας</string>
+    <string name="peer_send_on">Ο/Η %1$s μπορεί να βλέπει την τοποθεσία σας</string>
+    <string name="peer_send_off">Δεν κοινοποιείτε την τοποθεσία σας στον/στην %1$s</string>
+    <string name="peer_receive_title">Λήψη τοποθεσίας του/της %1$s</string>
+    <string name="peer_receive_on">Μπορείτε να βλέπετε την τοποθεσία του/της %1$s</string>
+    <string name="peer_receive_off">Δεν έχετε πρόσβαση στην τοποθεσία του/της %1$s</string>
+    <string name="peer_section_privacy">Απόρρητο και έλεγχοι κοινοποίησης</string>
+    <string name="peer_pause_sharing">Παύση κοινοποίησης</string>
+    <string name="peer_pause_sub">Προσωρινή διακοπή αποστολής της τοποθεσίας σας στον/στην %1$s</string>
+    <string name="peer_precision">Ακρίβεια τοποθεσίας</string>
+    <string name="peer_precision_exact_sub">Ακριβείς συντεταγμένες GPS</string>
+    <string name="peer_precision_suburb_sub">Κατά προσέγγιση τοποθεσία (επίπεδο συνοικίας)</string>
+    <string name="peer_always_sharing">Πάντα σε κοινοποίηση</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d ενεργός κανόνας κοινοποίησης</item>
+        <item quantity="other">%1$d ενεργοί κανόνες κοινοποίησης</item>
+    </plurals>
+    <string name="peer_section_alerts">Ειδοποιήσεις και παρακολούθηση</string>
+    <string name="peer_sos_contact">Επαφή SOS</string>
+    <string name="peer_sos_sub">Λαμβάνει τις ειδοποιήσεις έκτακτης ανάγκης ακόμη κι αν η κοινοποίηση είναι σε παύση</string>
+    <string name="peer_missed_alert">Ειδοποίηση απώλειας τοποθεσίας</string>
+    <string name="peer_missed_on">Ειδοποίησέ με αν ο/η %1$s σταματήσει να αναφέρει την τοποθεσία του/της</string>
+    <string name="peer_requires_access">Απαιτεί πρόσβαση στην τοποθεσία του/της %1$s</string>
+    <string name="peer_proximity_alert">Ειδοποίηση εγγύτητας</string>
+    <string name="peer_proximity_sub">Ειδοποίησέ με όταν ο/η %1$s είναι κοντά</string>
+    <string name="peer_alert_radius">Ακτίνα ειδοποίησης</string>
+    <string name="peer_alert_schedule">Πρόγραμμα ειδοποιήσεων</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d ενεργός κανόνας</item>
+        <item quantity="other">%1$d ενεργοί κανόνες</item>
+    </plurals>
+    <string name="peer_geofences_sub">Ορίστε ζώνες άφιξης και αναχώρησης για τον/την %1$s</string>
+    <string name="peer_supervise">Εποπτεία αυτής της συσκευής</string>
+    <string name="peer_supervise_on">Λαμβάνετε και εγκρίνετε αιτήματα ξεκλειδώματος από τον/την %1$s</string>
+    <string name="peer_supervise_off">Επιτρέψτε στον/στην %1$s να σας στέλνει αιτήματα ξεκλειδώματος εποπτευόμενης λειτουργίας</string>
+    <string name="peer_messaging_sub">Ενεργοποίηση/απενεργοποίηση μηνυμάτων συνομιλίας από τον/την %1$s</string>
+    <string name="peer_section_history">Ιστορικό μετακινήσεων</string>
+    <string name="peer_location_history">Ιστορικό τοποθεσίας</string>
+    <string name="peer_location_history_sub">Προβολή ιστορικού μετακινήσεων και αναφοράς χάρτη για τον/την %1$s</string>
+    <string name="peer_section_retention">Απομακρυσμένη διατήρηση δεδομένων</string>
+    <string name="peer_retention_location_sub">Για πόσο διατηρεί ο/η %1$s το ιστορικό τοποθεσίας σας</string>
+    <string name="peer_purge_location">Οριστική διαγραφή όλων των δεδομένων τοποθεσίας από τον/την %1$s</string>
+    <string name="peer_retention_messages_sub">Για πόσο διατηρεί ο/η %1$s τα μηνύματα που στείλατε</string>
+    <string name="peer_purge_messages">Οριστική διαγραφή όλων των μηνυμάτων από τον/την %1$s</string>
+    <string name="peer_precision_exact">Ακριβές GPS</string>
+    <string name="peer_precision_exact_desc">Ακριβείς συντεταγμένες</string>
+    <string name="peer_precision_suburb">Συνοικία (~1 χλμ)</string>
+    <string name="peer_precision_suburb_desc">Μόνο σε επίπεδο γειτονιάς</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Διαγραφή %1$d συνομιλίας;</item>
+        <item quantity="other">Διαγραφή %1$d συνομιλιών;</item>
+    </plurals>
+    <string name="conv_delete_locally">Τοπική διαγραφή</string>
+    <string name="conv_delete_locally_sub">Αφαιρεί τη συνομιλία μόνο από τη συσκευή σας.</string>
+    <string name="conv_delete_both">Διαγραφή τοπικά/από την επαφή</string>
+    <string name="conv_bulk_delete_both_sub">Διαγράφει τη συνομιλία τοπικά και από την επαφή σας.</string>
+    <string name="conv_delete_both_sub">Διαγράφει τη συνομιλία τοπικά και στέλνει αίτημα διαγραφής της στη συσκευή της επαφής.</string>
+    <string name="conv_cd_exit_selection">Έξοδος από την επιλογή</string>
+    <string name="conv_cd_select_all">Επιλογή όλων</string>
+    <string name="conv_cd_new_message">Νέο μήνυμα</string>
+    <string name="conv_sort_date">Ημερομηνία</string>
+    <string name="conv_sort_unread">Μη αναγνωσμένα</string>
+    <string name="conv_search_placeholder">Αναζήτηση συνομιλιών…</string>
+    <string name="conv_tab_chats">Συνομιλίες</string>
+    <string name="conv_tab_archived">Αρχειοθετημένες</string>
+    <string name="conv_mark_read">Σήμανση ως αναγνωσμένο</string>
+    <string name="conv_archive">Αρχειοθέτηση</string>
+    <string name="conv_unarchive">Αναίρεση αρχειοθέτησης</string>
+    <string name="conv_empty_no_results">Κανένα αποτέλεσμα για «%1$s»</string>
+    <string name="conv_empty_no_results_sub">Δοκιμάστε διαφορετικό όρο αναζήτησης</string>
+    <string name="conv_empty_archived_title">Καμία αρχειοθετημένη συνομιλία</string>
+    <string name="conv_empty_archived_sub">Αρχειοθετήστε συνομιλίες για να κρατάτε τα εισερχόμενα τακτοποιημένα</string>
+    <string name="conv_empty_title">Δεν υπάρχουν ακόμη μηνύματα</string>
+    <string name="conv_empty_sub">Ανοίξτε τον χάρτη και πατήστε ένα άτομο\nγια να ξεκινήσετε συνομιλία</string>
+    <string name="conv_delete_title">Διαγραφή συνομιλίας;</string>
+    <string name="conv_delete_message">Πώς θέλετε να διαγράψετε αυτή τη συνομιλία με τον/την %1$s;</string>
+    <string name="conv_messages_blocked">Τα μηνύματα αποκλείστηκαν</string>
+    <string name="conv_preview_mine">Εσείς: %1$s</string>
+    <string name="conv_new_message_title">Νέο μήνυμα</string>
+    <string name="conv_picker_empty">Δεν υπάρχουν ακόμη επαφές. Σαρώστε έναν κωδικό QR για να προσθέσετε επαφή.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Εκκαθάριση ιστορικού συνομιλίας;</string>
+    <string name="chat_clear_message">Πώς θέλετε να εκκαθαρίσετε αυτή τη συνομιλία με τον/την %1$s;</string>
+    <string name="chat_clear_locally">Τοπική εκκαθάριση</string>
+    <string name="chat_clear_both">Εκκαθάριση τοπικά/από την επαφή</string>
+    <string name="chat_clear_both_sub">Εκκαθαρίζει τη συνομιλία τοπικά και στέλνει στον/στην %1$s αίτημα διαγραφής των μηνυμάτων που στείλατε.</string>
+    <string name="chat_cd_options">Επιλογές</string>
+    <string name="chat_clear_history_menu">Εκκαθάριση ιστορικού συνομιλίας</string>
+    <string name="chat_typing">Ο/Η %1$s πληκτρολογεί…</string>
+    <string name="chat_blocked_banner">Έχετε αποκλείσει τα μηνύματα από τον/την %1$s. Μεταβείτε στις Επαφές για άρση αποκλεισμού.</string>
+    <string name="chat_delete_msg_title">Διαγραφή μηνύματος;</string>
+    <string name="chat_delete_msg_message">Πώς θέλετε να διαγράψετε αυτό το μήνυμα;</string>
+    <string name="chat_delete_from_contact">Διαγραφή από την επαφή</string>
+    <string name="chat_delete_from_contact_sub">Διαγράφει τη συνομιλία από τη συσκευή της επαφής.</string>
+    <string name="chat_delete_both_sub">Αφαιρεί τη συνομιλία τοπικά και τη διαγράφει αυτόματα από τη συσκευή της επαφής.</string>
+    <string name="chat_cd_share_location">Κοινοποίηση τοποθεσίας</string>
+    <string name="chat_input_placeholder">Μήνυμα…</string>
+    <string name="chat_cd_send">Αποστολή</string>
+
+    <string name="common_close">Κλείσιμο</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Ενεργοποίηση SOS;</string>
+    <string name="map_sos_deactivate_title">Απενεργοποίηση SOS;</string>
+    <string name="map_sos_activate_msg">Αυτό θα μεταδίδει την τοποθεσία σας κάθε 15 δευτερόλεπτα στις καθορισμένες επαφές SOS μέχρι να απενεργοποιηθεί.</string>
+    <string name="map_sos_deactivate_msg">Αυτό θα σταματήσει τη μετάδοση υψηλής προτεραιότητας στις επαφές έκτακτης ανάγκης.</string>
+    <string name="map_activate">Ενεργοποίηση</string>
+    <string name="map_deactivate">Απενεργοποίηση</string>
+    <string name="map_cd_style">Στυλ χάρτη</string>
+    <string name="map_cd_show_geofences">Εμφάνιση γεωφρακτών</string>
+    <string name="map_cd_hide_geofences">Απόκρυψη γεωφρακτών</string>
+    <string name="map_cd_follow">Ακολούθησέ με</string>
+    <string name="map_cd_friends">Φίλοι</string>
+    <string name="map_no_friends">Κανείς δεν παρακολουθείται ακόμη</string>
+    <string name="map_you">Εσείς</string>
+    <string name="map_cd_go_my_location">Μετάβαση στην τοποθεσία μου</string>
+    <string name="map_sos_active">⚠ SOS ΕΝΕΡΓΟ</string>
+    <string name="map_away">Μακριά</string>
+    <string name="map_no_location_yet">Καμία τοποθεσία ακόμη</string>
+    <string name="map_cd_go_location">Μετάβαση στην τοποθεσία</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ΕΝΕΡΓΟ</string>
+    <string name="map_overdue">Καθυστέρηση — καμία πρόσφατη ενημέρωση</string>
+    <string name="map_stat_last_seen">Τελευταία εμφάνιση</string>
+    <string name="map_stat_battery">Μπαταρία</string>
+    <string name="map_stat_accuracy">Ακρίβεια</string>
+    <string name="map_stat_motion">Κίνηση</string>
+    <string name="map_stat_speed">Ταχύτητα</string>
+    <string name="map_stat_elevation">Υψόμετρο</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Ιστορικό: %1$s</string>
+    <string name="history_select_person">Επιλογή ατόμου</string>
+    <string name="history_person_label">Άτομο</string>
+    <string name="history_cd_prev_day">Προηγούμενη ημέρα</string>
+    <string name="history_cd_next_day">Επόμενη ημέρα</string>
+    <string name="history_time_filter">Φίλτρο ώρας:</string>
+    <string name="history_cd_reset_time">Επαναφορά ώρας</string>
+    <string name="history_tab_list">Λίστα</string>
+    <string name="history_empty_title">Κανένα ιστορικό για αυτή την ημέρα</string>
+    <string name="history_empty_sub">Δοκιμάστε άλλη ημερομηνία ή ελέγξτε τη σύνδεσή σας.</string>
+    <string name="history_start_time">Ώρα έναρξης</string>
+    <string name="history_end_time">Ώρα λήξης</string>
+    <string name="history_no_data_title">Καμία τοποθεσία</string>
+    <string name="history_no_data_sub">Δεν υπάρχουν καταγεγραμμένα στίγματα για αυτή την ημέρα ή το χρονικό διάστημα.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Καταγράφηκε %1$d στίγμα</item>
+        <item quantity="other">Καταγράφηκαν %1$d στίγματα</item>
+    </plurals>
+    <string name="history_cd_dismiss">Κλείσιμο</string>
+    <string name="history_accuracy_label">Ακρίβεια ±%1$s</string>
+    <string name="history_emergency_sos">Σήμα έκτακτης ανάγκης SOS</string>
+    <string name="history_detail_location">Τοποθεσία</string>
+    <string name="history_detail_coordinates">Συντεταγμένες</string>
+    <string name="history_within">εντός ±%1$s</string>
+    <string name="history_detail_movement">Κίνηση</string>
+    <string name="history_movement_desc">%1$s %2$s με πορεία %3$s</string>
+
+    <string name="common_create">Δημιουργία</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Προσθήκη περιοχής γεωφράκτη</string>
+    <string name="geo_cd_assign">Ανάθεση γεωφράκτη</string>
+    <string name="geo_unknown">Άγνωστο</string>
+    <string name="geo_empty_title">Δεν υπάρχουν γεωφράκτες</string>
+    <string name="geo_empty_sub">Πατήστε + για να δημιουργήσετε περιοχή γεωφράκτη και μετά αναθέστε της επαφές από τις ρυθμίσεις κοινοποίησής τους.</string>
+    <string name="geo_delete_title">Διαγραφή γεωφράκτη;</string>
+    <string name="geo_delete_simple">Διαγραφή του «%1$s»;</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">Το «%1$s» έχει ανατεθεί σε %2$d επαφή. Η διαγραφή αφαιρεί και αυτές τις αναθέσεις.</item>
+        <item quantity="other">Το «%1$s» έχει ανατεθεί σε %2$d επαφές. Η διαγραφή αφαιρεί και αυτές τις αναθέσεις.</item>
+    </plurals>
+    <string name="geo_for_contact">Γεωφράκτες για τον/την %1$s</string>
+    <string name="geo_empty_contact_title">Κανένας γεωφράκτης για την επαφή</string>
+    <string name="geo_empty_contact_sub">Πατήστε + για να αναθέσετε περιοχή γεωφράκτη και επιλέξτε αν θα ειδοποιείστε στην άφιξη, στην αναχώρηση ή και στα δύο.</string>
+    <string name="geo_no_areas_title">Δεν υπάρχουν ακόμη γεωφράκτες</string>
+    <string name="geo_no_areas_msg">Δημιουργήστε πρώτα μια περιοχή γεωφράκτη από την οθόνη Γεωφράκτες και μετά αναθέστε την εδώ.</string>
+    <string name="geo_radius_label">Ακτίνα %1$s</string>
+    <string name="geo_contacts_label">Επαφές: %1$s</string>
+    <string name="geo_no_contacts_assigned">Καμία ανατεθειμένη επαφή</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d κανόνας</item>
+        <item quantity="other">%1$d κανόνες</item>
+    </plurals>
+    <string name="geo_trigger_enter">Είσοδος</string>
+    <string name="geo_trigger_exit">Έξοδος</string>
+    <string name="geo_trigger_both">Και τα δύο</string>
+    <string name="geo_edit_title">Επεξεργασία γεωφράκτη</string>
+    <string name="geo_new_title">Νέος γεωφράκτης</string>
+    <string name="geo_cd_my_location">Η τοποθεσία μου</string>
+    <string name="geo_cd_radius_increase">Αύξηση ακτίνας</string>
+    <string name="geo_cd_radius_decrease">Μείωση ακτίνας</string>
+    <string name="geo_hint_tap">Πατήστε ή κρατήστε πατημένο τον χάρτη για τοποθέτηση</string>
+    <string name="geo_hint_move">Τσίμπημα για εστίαση • Κρατήστε ή σύρετε την πινέζα για μετακίνηση</string>
+    <string name="geo_basic_info">Βασικές πληροφορίες</string>
+    <string name="geo_search_title">Εύρεση με διεύθυνση</string>
+    <string name="geo_search_label">Διεύθυνση ή τοποθεσία</string>
+    <string name="geo_search_placeholder">π.χ. Κεντρική Οδός 10, Αθήνα</string>
+    <string name="geo_search_no_results">Δεν βρέθηκε αντίστοιχη διεύθυνση</string>
+    <string name="geo_cd_search">Αναζήτηση</string>
+    <string name="geo_name_placeholder">π.χ. Σπίτι, Δουλειά</string>
+    <string name="geo_name_required">Το όνομα είναι υποχρεωτικό</string>
+    <string name="geo_latitude">Γεωγραφικό πλάτος</string>
+    <string name="geo_longitude">Γεωγραφικό μήκος</string>
+    <string name="geo_lat_range">-90 έως 90</string>
+    <string name="geo_lng_range">-180 έως 180</string>
+    <string name="geo_radius">Ακτίνα</string>
+    <string name="geo_radius_range">Εισαγάγετε %1$d έως %2$d μ.</string>
+    <string name="geo_edit_assignment">Επεξεργασία ανάθεσης</string>
+    <string name="geo_assign_title">Ανάθεση γεωφράκτη</string>
+    <string name="geo_select_area">Επιλογή περιοχής γεωφράκτη</string>
+    <string name="geo_trigger_title">Ειδοποίηση κατά</string>
+    <string name="geo_add_rule">Προσθήκη κανόνα</string>
+    <string name="geo_alerts_all_times">Οι ειδοποιήσεις είναι πάντα ενεργές. Προσθέστε κανόνα για να περιορίσετε πότε αποστέλλονται.</string>
+    <string name="geo_assign_action">Ανάθεση</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Ειδοποιήσεις εγγύτητας</string>
+    <string name="prox_empty_title">Κανένα παρακολουθούμενο άτομο</string>
+    <string name="prox_empty_sub">Σαρώστε το QR πρόσκλησης κάποιου από την καρτέλα Σάρωση\nγια να αρχίσετε να παρακολουθείτε την τοποθεσία του</string>
+    <string name="prox_intro">Λάβετε ειδοποίηση όταν ένα παρακολουθούμενο άτομο πλησιάσει σε επιλεγμένη απόσταση από εσάς.</string>
+    <string name="prox_alert_within">Ειδοποίηση εντός %1$s</string>
+    <string name="prox_alerts_off">Ειδοποιήσεις ανενεργές</string>
+    <string name="prox_alert_radius">Ακτίνα ειδοποίησης</string>
+    <string name="prox_edit_schedule">Επεξεργασία προγράμματος</string>
+    <string name="prox_rules">Κανόνες</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Πρόγραμμα για τον/την %1$s</string>
+    <string name="schedule_cd_add_rule">Προσθήκη κανόνα</string>
+    <string name="schedule_empty_title">Κανένας κανόνας προγράμματος</string>
+    <string name="schedule_empty_global">Η τοποθεσία κοινοποιείται συνεχώς. Προσθέστε κανόνα για να περιορίσετε πότε είναι ενεργή η κοινοποίηση.</string>
+    <string name="schedule_empty_peer">Η τοποθεσία κοινοποιείται πάντα στον/στην %1$s. Προσθέστε κανόνα για να περιορίσετε πότε.</string>
+    <string name="schedule_active_hint">Ενεργό όταν οποιοσδήποτε κανόνας ταιριάζει με την τρέχουσα ώρα. Κενό = πάντα ενεργό.</string>
+    <string name="schedule_all_day">Όλη μέρα</string>
+    <string name="schedule_plus_one_day"> (+1 ημέρα)</string>
+    <string name="schedule_rule_number">Κανόνας %1$d</string>
+    <string name="schedule_cd_delete_rule">Διαγραφή κανόνα</string>
+    <string name="schedule_edit_rule">Επεξεργασία κανόνα</string>
+    <string name="schedule_label_optional">Ετικέτα (προαιρετικό)</string>
+    <string name="schedule_label_placeholder">π.χ. Ώρες εργασίας, Σαββατοκύριακα</string>
+    <string name="schedule_active_days">Ενεργές ημέρες</string>
+    <string name="schedule_time_window">Χρονικό παράθυρο</string>
+    <string name="schedule_start">Έναρξη</string>
+    <string name="schedule_end">Λήξη</string>
+    <string name="schedule_overnight">Ολονύκτιο: ενεργό από %1$s έως %2$s την επόμενη ημέρα</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Η συσκευή είναι εποπτευόμενη</string>
+    <string name="gate_message">Απαιτείται έγκριση επόπτη για πρόσβαση στις ρυθμίσεις.</string>
+    <string name="gate_request_access">Αίτημα πρόσβασης</string>
+    <string name="gate_waiting">Αναμονή για έγκριση επόπτη…</string>
+    <string name="gate_denied">Η πρόσβαση απορρίφθηκε από τον επόπτη.</string>
+    <string name="gate_timed_out">Το αίτημα έληξε. Ο επόπτης δεν απάντησε.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Για πάντα</string>
+    <string name="retention_keep_for">Διατήρηση για: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d ημέρα</item>
+        <item quantity="other">%1$d ημέρες</item>
+    </plurals>
+
+    <string name="common_select">Επιλογή</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Επιλογή σταθερής τοποθεσίας</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Επιλέξτε ποιες καρτέλες εμφανίζονται στην κάτω γραμμή και τη σειρά τους. Ο Χάρτης περιλαμβάνεται πάντα.</string>
+    <string name="customize_cd_move_up">Μετακίνηση πάνω</string>
+    <string name="customize_cd_move_down">Μετακίνηση κάτω</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Έκδοση %1$s (build %2$d)</string>
+    <string name="about_tagline">Ιδιωτική κοινοποίηση τοποθεσίας με άτομα που εμπιστεύεστε. Χωρίς λογαριασμούς, χωρίς cloud, χωρίς παρακολούθηση από εμάς.</string>
+    <string name="about_relay_connections">Συνδέσεις αναμεταδοτών</string>
+    <string name="about_connected">Συνδεδεμένο</string>
+    <string name="about_disconnected">Αποσυνδεδεμένο</string>
+    <string name="about_open_source">Βιβλιοθήκες ανοιχτού κώδικα</string>
+    <string name="about_lib_osmdroid_desc">Απόδοση χαρτών βασισμένη στο OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Μεταφορά WebSocket για τον αναμεταδότη Nostr</string>
+    <string name="about_lib_compose_desc">Πλαίσιο διεπαφής χρήστη</string>
+    <string name="about_lib_hilt_desc">Έγχυση εξαρτήσεων</string>
+    <string name="about_lib_room_desc">Τοπική βάση δεδομένων</string>
+    <string name="about_map_attribution">Δεδομένα χάρτη © συνεισφέροντες OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Αποδοχή</string>
+    <string name="notif_someone">Κάποιος</string>
+    <string name="notif_sos_title">SOS από τον/την %1$s!</string>
+    <string name="notif_sos_text">Ο/Η %1$s ενεργοποίησε SOS στο (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">Ο/Η %1$s θέλει να γίνετε επόπτης του/της</string>
+    <string name="notif_supervisor_request_text">Αποδεχθείτε για να επιτρέπονται αιτήματα έγκρισης ξεκλειδώματος από αυτή τη συσκευή</string>
+    <string name="notif_supervisor_request_big">Αποδεχθείτε για να μπορεί ο/η %1$s να σας στέλνει αιτήματα έγκρισης ξεκλειδώματος όταν είναι ενεργή η εποπτευόμενη λειτουργία.</string>
+    <string name="notif_supervised_active_title">Εποπτευόμενη λειτουργία ενεργή</string>
+    <string name="notif_supervised_active_text">Ο επόπτης επιβεβαίωσε — η εποπτευόμενη λειτουργία ρυθμίστηκε</string>
+    <string name="notif_supervised_declined_title">Η εποπτευόμενη λειτουργία απορρίφθηκε</string>
+    <string name="notif_supervised_declined_text">Ο επόπτης απέρριψε το αίτημα — η εποπτευόμενη λειτουργία απενεργοποιήθηκε</string>
+    <string name="notif_tracking_alert_title">Ειδοποίηση παρακολούθησης</string>
+    <string name="notif_tracking_proximity">Ο/Η %1$s έλαβε ειδοποίηση εγγύτητας για εσάς</string>
+    <string name="notif_tracking_geofence">Ο/Η %1$s έλαβε ειδοποίηση ότι μπήκατε/βγήκατε από τον φράκτη: %2$s</string>
+    <string name="notif_tracking_generic">Ο/Η %1$s παρακολουθεί την τοποθεσία σας</string>
+    <string name="notif_track_update_title">Ενημέρωση κοινοποίησης από τον/την %1$s</string>
+    <string name="notif_track_new_title">Νέα επαφή: %1$s</string>
+    <string name="notif_role_send_receive">Αποστολή/Λήψη τοποθεσίας</string>
+    <string name="notif_role_send">Αποστολή τοποθεσίας</string>
+    <string name="notif_role_receive">Λήψη τοποθεσίας</string>
+    <string name="notif_role_none">Χωρίς κοινοποίηση τοποθεσίας</string>
+    <string name="notif_track_requesting">Ο/Η %1$s ζητά: %2$s</string>
+    <string name="notif_track_update_body">Ο/Η %1$s θέλει να αλλάξει τον τρόπο κοινοποίησης τοποθεσιών.</string>
+    <string name="notif_track_new_body">Ο/Η %1$s σας πρόσθεσε ως επαφή και θέλει να συνδεθείτε.</string>
+    <string name="notif_contact_connected_title">Η επαφή συνδέθηκε</string>
+    <string name="notif_contact_connected_text">Ο/Η %1$s είναι πλέον συνδεδεμένος/η μαζί σας.</string>
+    <string name="notif_request_declined_title">Το αίτημα απορρίφθηκε</string>
+    <string name="notif_request_declined_text">Ο/Η %1$s απέρριψε το αίτημα κοινοποίησης τοποθεσίας.</string>
+    <string name="notif_message_person">Μήνυμα στον/στην %1$s</string>
+    <string name="notif_geofence_entered_title">Ο/Η %1$s μπήκε στο %2$s</string>
+    <string name="notif_geofence_left_title">Ο/Η %1$s έφυγε από το %2$s</string>
+    <string name="notif_geofence_subtitle">στις %1$s · ακτίνα %2$s</string>
+    <string name="notif_person_nearby">Ο/Η %1$s είναι κοντά</string>
+    <string name="notif_distance_from_you">%1$s από εσάς</string>
+    <string name="notif_missed_title">Καμία ενημέρωση από τον/την %1$s</string>
+    <string name="notif_missed_text">Τελευταία εμφάνιση πριν από %1$s λεπ. κοντά στο (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ΕΝΕΡΓΟ!</string>
+    <string name="notif_sos_active_text">Μετάδοση ειδοποίησης έκτακτης ανάγκης στις επαφές SOS</string>
+    <string name="notif_messages_group_title">Μηνύματα LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Το αίτημα επαφής από τον/την %1$s απορρίφθηκε</string>
+    <string name="toast_now_supervising">Εποπτεύετε πλέον τη συσκευή του/της %1$s</string>
+    <string name="toast_declined_supervision">Το αίτημα εποπτείας από τον/την %1$s απορρίφθηκε</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Μόλις τώρα</string>
+    <string name="time_minutes_ago">πριν από %1$d λεπ.</string>
+    <string name="fallback_me">Εγώ</string>
+    <string name="fallback_unknown">Άγνωστο</string>
+    <string name="geo_unassigned">Χωρίς ανάθεση</string>
+    <string name="days_every_day">Κάθε μέρα</string>
+    <string name="days_weekdays">Καθημερινές</string>
+    <string name="days_weekends">Σαββατοκύριακα</string>
+    <string name="days_none">Καμία ημέρα</string>
+    <string name="chat_my_location_message">Η τρέχουσα τοποθεσία μου: %1$s</string>
+    <string name="scan_error_bad_pubkey">Μη έγκυρη πρόσκληση: λανθασμένο δημόσιο κλειδί</string>
+    <string name="scan_error_key_mismatch">Μη έγκυρη πρόσκληση: τα κλειδιά δεν ταιριάζουν</string>
+    <string name="scan_error_unknown">Άγνωστο σφάλμα</string>
+    <string name="scan_error_invalid_link">Μη έγκυρος σύνδεσμος πρόσκλησης</string>
+    <string name="scan_fallback_contact">αυτή η επαφή</string>
+    <string name="backup_saved">Το αντίγραφο ασφαλείας αποθηκεύτηκε: %1$s</string>
+    <string name="backup_saved_encrypted">Το αντίγραφο ασφαλείας αποθηκεύτηκε (κρυπτογραφημένο): %1$s</string>
+    <string name="backup_failed">Η δημιουργία αντιγράφου απέτυχε: %1$s</string>
+    <string name="backup_could_not_read_file">Δεν ήταν δυνατή η ανάγνωση του αρχείου</string>
+    <string name="backup_could_not_write_file">Δεν ήταν δυνατή η εγγραφή του αρχείου</string>
+    <string name="backup_could_not_read">Δεν ήταν δυνατή η ανάγνωση του αντιγράφου ασφαλείας: %1$s</string>
+    <string name="backup_incorrect_password">Λανθασμένος κωδικός πρόσβασης</string>
+    <string name="restore_result_restored">Επαναφέρθηκαν: %1$s</string>
+    <string name="restore_result_failed">Απέτυχαν: %1$s</string>
+    <string name="restore_nothing">Τίποτα για επαναφορά</string>
+    <string name="restore_failed">Η επαναφορά απέτυχε: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d επαφή</item>
+        <item quantity="other">%1$d επαφές</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d γεωφράκτης</item>
+        <item quantity="other">%1$d γεωφράκτες</item>
+    </plurals>
+    <string name="peer_role_change_sent">Το αίτημα αλλαγής ρόλου στάλθηκε στον/στην %1$s</string>
+    <string name="peer_not_found">Η επαφή δεν βρέθηκε</string>
+    <string name="peer_purge_location_sent">Εντολή απομακρυσμένης διαγραφής ΟΛΩΝ των τοποθεσιών στάλθηκε στον/στην %1$s</string>
+    <string name="peer_purge_messages_sent">Εντολή απομακρυσμένης διαγραφής ΟΛΩΝ των μηνυμάτων στάλθηκε στον/στην %1$s</string>
+    <string name="onboarding_error_key_length">Μη έγκυρο κλειδί — πρέπει να αποτελείται από 64 δεκαεξαδικούς χαρακτήρες.</string>
+    <string name="onboarding_error_key_range">Μη έγκυρο ιδιωτικό κλειδί — εκτός εύρους καμπύλης.</string>
+    <string name="onboarding_error_hex">Μη έγκυρη δεκαεξαδική μορφή.</string>
+    <string name="onboarding_error_import_failed">Η εισαγωγή του κλειδιού απέτυχε: %1$s</string>
 </resources>

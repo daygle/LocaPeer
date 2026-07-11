@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── قنوات الإشعارات وخدمة الخلفية ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">بث الموقع</string>
     <string name="channel_desc_heartbeat">يبث موقعك لجهات الاتصال المعتمدة لديك</string>
     <string name="channel_name_alerts">التنبيهات</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer يعمل</string>
     <string name="notification_heartbeat_text">مشاركة موقعك مع الآخرين</string>
 
-    <!-- ── إجراءات عامة ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">حفظ</string>
     <string name="common_cancel">إلغاء</string>
     <string name="common_done">تم</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">موافقة</string>
     <string name="common_deny">رفض</string>
 
-    <!-- ── علامات تبويب التنقل ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">الخريطة</string>
     <string name="tab_messages">الرسائل</string>
     <string name="tab_history">السجل</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">الإعدادات</string>
 
-    <!-- ── حالات الحركة / النشاط ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">ثابت</string>
     <string name="motion_walking">مشي</string>
     <string name="motion_running">جري</string>
     <string name="motion_cycling">ركوب الدراجة</string>
     <string name="motion_driving">قيادة</string>
 
-    <!-- ── الإعدادات ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">المفتاح الخاص</string>
+    <string name="backup_section_contacts">جهات الاتصال</string>
+    <string name="backup_section_geofences">الأسوار الجغرافية</string>
+    <string name="backup_section_settings">الإعدادات</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">طلب إشراف</string>
+    <string name="supervision_request_message">يطلب \"%1$s\" الوصول إلى إعداداته. هل تسمح؟</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">الإعدادات</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">الموقع والخصوصية</string>
     <string name="settings_section_security">الأمان</string>
     <string name="settings_section_map">الخريطة</string>
@@ -54,15 +66,744 @@
     <string name="settings_section_backup_keys">النسخ الاحتياطي والمفاتيح</string>
     <string name="settings_section_about">حول</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">تعديل الاسم</string>
     <string name="settings_my_qr">كود QR الخاص بي</string>
     <string name="settings_no_name_set">لم يتم تعيين اسم</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">مشاركة موقعي</string>
+    <string name="settings_broadcasting">يجري البث إلى جهات اتصالك</string>
+    <string name="settings_not_broadcasting">لا يوجد بث</string>
+    <string name="settings_sharing_schedule">جدول المشاركة</string>
+    <string name="settings_always_on">مفعّل دائمًا</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="zero">لا قواعد</item>
+        <item quantity="one">قاعدة واحدة</item>
+        <item quantity="two">قاعدتان</item>
+        <item quantity="few">%1$d قواعد</item>
+        <item quantity="many">%1$d قاعدة</item>
+        <item quantity="other">%1$d قاعدة</item>
+    </plurals>
+    <string name="settings_geofences">الأسوار الجغرافية</string>
+    <string name="settings_geofences_subtitle">إدارة مناطق الأسوار الجغرافية المشتركة</string>
+    <string name="settings_notify_when_tracked">إشعار عند التتبع</string>
+    <string name="settings_notify_when_tracked_subtitle">احصل على إشعار عند تفعيل تنبيه القرب أو السور الجغرافي الخاص بك لدى جهة اتصال.</string>
+    <string name="settings_my_location_history">سجلّ المواقع</string>
+    <string name="settings_my_location_history_subtitle">تصفّح الخط الزمني لمواقعك</string>
+    <string name="settings_lookup_addresses">البحث عن العناوين</string>
+    <string name="settings_lookup_addresses_subtitle">عرض عناوين الشوارع لنقاط السجل والدبابيس المنقورة على الخريطة، والبحث بالعنوان عند وضع الأسوار الجغرافية. تُرسل هذه الإحداثيات أو بحثك المكتوب إلى خدمة الترميز الجغرافي في جهازك (عادةً Google).</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">الإشراف مفعّل</string>
+    <string name="settings_supervision_active_subtitle">تتطلب الإعدادات موافقة المشرف</string>
+    <string name="settings_disable_supervised">إيقاف الوضع الخاضع للإشراف</string>
+    <string name="settings_supervised_mode">الوضع الخاضع للإشراف</string>
+    <string name="settings_supervised_mode_subtitle">طلب موافقة المشرف للوصول إلى الإعدادات</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">نقطة البداية</string>
+    <string name="settings_map_current_location">الموقع الحالي</string>
+    <string name="settings_map_all_contacts">جميع جهات الاتصال</string>
+    <string name="settings_map_fixed_location">موقع ثابت</string>
+    <string name="settings_map_last_position">آخر موضع</string>
+    <string name="settings_map_starting_point_title">نقطة بداية الخريطة</string>
+    <string name="settings_no_location_set">لم يُحدَّد موقع</string>
+    <string name="settings_pick_location_on_map">اختيار موقع على الخريطة</string>
+    <string name="settings_default_zoom_level">مستوى التكبير الافتراضي</string>
+    <string name="settings_map_pin_colour">لون دبوس الخريطة</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">وتيرة التحديث</string>
+    <string name="settings_update_cadence_subtitle">اضبط عدد مرات بث موقعك</string>
+    <string name="settings_update_cadence_dialog_message">تحكّم في وتيرة تحديث موقعك بناءً على نشاطك. التحديثات المتكررة تستهلك بطارية أكثر.</string>
+    <string name="settings_update_cadence_reset">إعادة التعيين إلى الافتراضي</string>
+    <string name="settings_min_distance_filtering">تصفية الحد الأدنى للمسافة</string>
+    <string name="settings_min_distance_filtering_subtitle">عرض النقاط التي تبعد عن السابقة بهذه المسافة على الأقل فقط.</string>
+    <string name="settings_discard_low_accuracy">تجاهل المواقع منخفضة الدقة</string>
+    <string name="settings_discard_low_accuracy_subtitle">عدم بث أو تسجيل مواقعك التي يتجاوز نصف قطر دقتها هذه القيمة. لا يتم تخطي SOS أبدًا.</string>
+    <string name="settings_hide_low_accuracy">إخفاء النقاط منخفضة الدقة</string>
+    <string name="settings_hide_low_accuracy_subtitle">إخفاء نقاط السجل التي يتجاوز نصف قطر دقتها هذه القيمة. لا يُحذف أي شيء.</string>
+    <string name="settings_low_battery" formatted="false">بطارية منخفضة (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d د</string>
+    <string name="settings_motion_detection">اكتشاف الحركة</string>
+    <string name="settings_motion_detection_on">مفعّل — يحسّن نوع حركتك (مشي، قيادة) في السجل</string>
+    <string name="settings_motion_detection_off">متوقف — اسمح بالوصول إلى النشاط البدني لتسميات حركة أدق</string>
+    <string name="settings_enable_motion_title">تفعيل اكتشاف الحركة</string>
+    <string name="settings_enable_motion_message">يتيح الوصول إلى النشاط البدني لـ LocaPeer التمييز بدقة أكبر بين المشي والقيادة والوقوف في سجلك. وهو متوقف حاليًا — يمكنك إعادة تفعيله من إعدادات النظام.</string>
+    <string name="settings_open_settings">فتح الإعدادات</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">وحدات السرعة</string>
+    <string name="settings_speed_imperial">إمبراطوري (ميل/س)</string>
+    <string name="settings_speed_metric">متري (كم/س)</string>
+    <string name="settings_elevation_units">وحدات الارتفاع</string>
+    <string name="settings_elevation_imperial">إمبراطوري (قدم)</string>
+    <string name="settings_elevation_metric">متري (متر)</string>
+    <string name="settings_distance_units">وحدات المسافة</string>
+    <string name="settings_distance_imperial">إمبراطوري (قدم/ميل)</string>
+    <string name="settings_distance_metric">متري (م/كم)</string>
+    <string name="settings_time_format">تنسيق الوقت</string>
+    <string name="settings_time_24h">24 ساعة (13:30)</string>
+    <string name="settings_time_12h">12 ساعة (1:30 م)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">بيانات الموقع</string>
+    <string name="settings_retention_location_subtitle">مدة الاحتفاظ ببيانات مواقع جهات الاتصال محليًا</string>
+    <string name="settings_clear_all_location">مسح جميع بيانات الموقع</string>
+    <string name="settings_retention_messages">الرسائل</string>
+    <string name="settings_retention_messages_subtitle">مدة الاحتفاظ بالرسائل المستلمة محليًا</string>
+    <string name="settings_clear_all_messages">مسح جميع الرسائل</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">تخصيص التنقل</string>
+    <string name="settings_customize_nav_subtitle">اختيار علامات التبويب السفلية وإعادة ترتيبها</string>
+    <string name="settings_start_page">صفحة البدء</string>
     <string name="settings_language">اللغة</string>
     <string name="settings_language_title">لغة التطبيق</string>
     <string name="settings_language_system">افتراضي النظام</string>
 
-    <string name="common_ok">موافق</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">تصدير نسخة احتياطية</string>
+    <string name="settings_export_backup_subtitle">احفظ مفتاحك الخاص وجهات اتصالك في ملف. احتفظ بهذا الملف في مكان آمن!</string>
+    <string name="settings_import_backup">استيراد نسخة احتياطية</string>
+    <string name="settings_import_backup_subtitle">الاستعادة من ملف سبق تصديره</string>
+    <string name="settings_view_private_key">عرض المفتاح الخاص</string>
+    <string name="settings_view_private_key_subtitle">عرض مفتاح هويتك السداسي العشري المكوَّن من 64 حرفًا</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">حول LocaPeer</string>
+    <string name="settings_about_subtitle">الإصدار، حالة المرحّلات، المصدر المفتوح</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">تعديل الاسم المعروض</string>
+    <string name="settings_display_name_label">الاسم المعروض</string>
+    <string name="settings_my_invite_qr">رمز QR لدعوتي</string>
+    <string name="settings_invite_qr_subtitle">يمكن للآخرين مسحه لبدء تتبّعك.</string>
+    <string name="settings_invite_qr_cd">رمز QR للدعوة</string>
+    <string name="settings_private_key_title">المفتاح الخاص</string>
+    <string name="settings_private_key_warning">احتفظ به في مكان آمن. يمكن لأي شخص يملك هذا المفتاح انتحال شخصيتك.</string>
+    <string name="settings_clear_location_title">مسح سجلّ المواقع؟</string>
+    <string name="settings_clear_location_message">ستُحذف جميع نقاط الموقع المخزّنة نهائيًا.</string>
+    <string name="settings_clear_messages_title">مسح سجلّ الرسائل؟</string>
+    <string name="settings_clear_messages_message">ستُحذف جميع الرسائل المخزّنة نهائيًا.</string>
+    <string name="settings_encrypted_backup_title">نسخة احتياطية مشفّرة</string>
+    <string name="settings_encrypted_backup_message">هذه النسخة الاحتياطية مشفّرة. يرجى إدخال كلمة المرور للمتابعة.</string>
+    <string name="settings_select_restore_title">اختر البيانات المراد استعادتها</string>
+    <string name="settings_select_export_title">اختر البيانات المراد تصديرها</string>
+    <string name="settings_export_password_hint">يمكنك اختياريًا تعيين كلمة مرور لتشفير ملف النسخة الاحتياطية.</string>
+    <string name="settings_backup_password_optional">كلمة مرور النسخة الاحتياطية (اختياري)</string>
+    <string name="settings_select_sections">اختر الأقسام المراد تضمينها:</string>
+    <string name="settings_choose_file_location">اختر موقع الملف</string>
+    <string name="settings_not_in_backup">غير موجود في هذه النسخة الاحتياطية</string>
+    <string name="settings_enable_supervised_title">تفعيل الوضع الخاضع للإشراف</string>
+    <string name="settings_enable_supervised_message">اختر جهة اتصال لتكون المشرف. يجب أن توافق على الوصول إلى الإعدادات من جهازها.</string>
+    <string name="settings_no_peers_found">لا توجد جهات اتصال. أضف جهة اتصال أولًا بمسح رمز QR الخاص بدعوتها.</string>
+    <string name="settings_disable_supervised_title">إيقاف الوضع الخاضع للإشراف؟</string>
+    <string name="settings_disable_supervised_message">ستصبح الإعدادات متاحة دون موافقة المشرف.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">إزالة</string>
+    <string name="common_name">الاسم</string>
+    <string name="common_search">بحث</string>
+    <string name="common_sort">ترتيب</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">رسالة</string>
+    <string name="cd_show_on_map">عرض على الخريطة</string>
+    <string name="cd_more_options">خيارات إضافية</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="zero">لم يُحدَّد شيء</item>
+        <item quantity="one">حُدد عنصر واحد</item>
+        <item quantity="two">حُدد عنصران</item>
+        <item quantity="few">حُددت %1$d عناصر</item>
+        <item quantity="many">حُدد %1$d عنصرًا</item>
+        <item quantity="other">حُدد %1$d عنصر</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">إلغاء التحديد</string>
+    <string name="contacts_cd_select_all">تحديد الكل</string>
+    <string name="contacts_cd_deselect_all">إلغاء تحديد الكل</string>
+    <string name="contacts_cd_qr_invite">QR / دعوة</string>
+    <string name="contacts_cd_pending_requests">الطلبات المعلّقة</string>
+    <string name="contacts_sort_last_seen">آخر ظهور</string>
+    <string name="contacts_search_placeholder">البحث في جهات الاتصال…</string>
+    <string name="contacts_empty_title">لا توجد جهات اتصال بعد</string>
+    <string name="contacts_empty_subtitle">امسح رمز QR للتواصل مع شخص ما وبدء مشاركة المواقع.</string>
+    <string name="contacts_scan_qr">مسح رمز QR</string>
+    <string name="contacts_bulk_delete_messages">حذف الرسائل</string>
+    <string name="contacts_bulk_delete_locations">حذف المواقع</string>
+    <string name="contacts_last_seen">آخر ظهور: %1$s</string>
+    <string name="contacts_no_location_yet">لا توجد بيانات موقع بعد</string>
+    <string name="contacts_view_sharing_settings">إعدادات المشاركة</string>
+    <string name="contacts_view_location_history">سجلّ المواقع</string>
+    <string name="contacts_rename_contact">إعادة تسمية جهة الاتصال</string>
+    <string name="contacts_on_contact_device">على جهاز جهة الاتصال</string>
+    <string name="contacts_delete_my_messages_title">حذف رسائلي</string>
+    <string name="contacts_delete_locations_title">حذف المواقع المشتركة</string>
+    <string name="contacts_remove_contact_title">إزالة جهة الاتصال</string>
+    <string name="contacts_leave_title">حذف جهة الاتصال والبيانات</string>
+    <string name="contacts_rename_title">إعادة تسمية جهة الاتصال</string>
+    <string name="contacts_remove_contact_body">إزالة %1$s من جهات اتصالك؟ سيُحذف سجل مواقعه محليًا أيضًا.</string>
+    <string name="contacts_leave_body">سيؤدي هذا إلى إزالتك من جهات اتصال %1$s وحذف جميع رسائلك وبيانات موقعك من جهازه. ستفقد أيضًا الوصول إلى موقعه.</string>
+    <string name="contacts_delete_my_messages_body">سيؤدي هذا إلى حذف جميع الرسائل التي أرسلتها من جهاز %1$s. لا يمكن التراجع عن ذلك.</string>
+    <string name="contacts_delete_locations_body">سيؤدي هذا إلى حذف جميع بيانات الموقع التي شاركتها من جهاز %1$s. لا يمكن التراجع عن ذلك.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="zero">إزالة جهات اتصال</item>
+        <item quantity="one">إزالة جهة اتصال</item>
+        <item quantity="two">إزالة جهتي اتصال</item>
+        <item quantity="few">إزالة %1$d جهات اتصال</item>
+        <item quantity="many">إزالة %1$d جهة اتصال</item>
+        <item quantity="other">إزالة %1$d جهة اتصال</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="zero">إزالة جهات الاتصال؟ سيُحذف سجل مواقعها محليًا أيضًا.</item>
+        <item quantity="one">إزالة جهة الاتصال هذه؟ سيُحذف سجل مواقعها محليًا أيضًا.</item>
+        <item quantity="two">إزالة جهتي الاتصال؟ سيُحذف سجل مواقعهما محليًا أيضًا.</item>
+        <item quantity="few">إزالة %1$d جهات اتصال؟ سيُحذف سجل مواقعها محليًا أيضًا.</item>
+        <item quantity="many">إزالة %1$d جهة اتصال؟ سيُحذف سجل مواقعها محليًا أيضًا.</item>
+        <item quantity="other">إزالة %1$d جهة اتصال؟ سيُحذف سجل مواقعها محليًا أيضًا.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="zero">حذف جميع الرسائل التي أرسلتها عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="one">حذف جميع الرسائل التي أرسلتها من جهاز جهة الاتصال هذه عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="two">حذف جميع الرسائل التي أرسلتها من جهازي جهتي الاتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="few">حذف جميع الرسائل التي أرسلتها من أجهزة %1$d جهات اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="many">حذف جميع الرسائل التي أرسلتها من أجهزة %1$d جهة اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="other">حذف جميع الرسائل التي أرسلتها من أجهزة %1$d جهة اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="zero">حذف كل سجل المواقع الذي شاركته عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="one">حذف كل سجل المواقع الذي شاركته من جهاز جهة الاتصال هذه عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="two">حذف كل سجل المواقع الذي شاركته من جهازي جهتي الاتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="few">حذف كل سجل المواقع الذي شاركته من أجهزة %1$d جهات اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="many">حذف كل سجل المواقع الذي شاركته من أجهزة %1$d جهة اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+        <item quantity="other">حذف كل سجل المواقع الذي شاركته من أجهزة %1$d جهة اتصال عن بُعد؟ لا يمكن التراجع عن ذلك.</item>
+    </plurals>
+
+    <string name="common_continue">متابعة</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">الاستعادة من نسخة احتياطية</string>
+    <string name="onboarding_restore_message">الصق مفتاحك الخاص السداسي العشري المكوَّن من 64 حرفًا لاستعادة هويتك وجهات اتصالك.</string>
+    <string name="onboarding_private_key_hex">المفتاح الخاص (سداسي عشري)</string>
+    <string name="onboarding_tagline">مشاركة خاصة للموقع مع جهات الاتصال.\nبدون حسابات. بدون خوادم احتكارية.</string>
+    <string name="onboarding_feature_e2e_title">تشفير من طرف إلى طرف</string>
+    <string name="onboarding_feature_e2e_subtitle">يُشفَّر موقعك على الجهاز</string>
+    <string name="onboarding_feature_servers_title">بدون خوادم احتكارية</string>
+    <string name="onboarding_feature_servers_subtitle">يستخدم مرحّلات Nostr المفتوحة كوسيلة نقل آمنة — تبقى بياناتك مشفّرة وخاصة</string>
+    <string name="onboarding_feature_phone_title">يبقى على هاتفك</string>
+    <string name="onboarding_feature_phone_subtitle">يبقى سجل مواقعك الكامل على جهازك. تتم مشاركة موقعك الحالي فقط مع جهات اتصال مختارة</string>
+    <string name="onboarding_name_prompt">بماذا تريد أن تناديك جهات اتصالك؟</string>
+    <string name="onboarding_name_placeholder">مثل: أمي، أبي، سارة…</string>
+    <string name="onboarding_get_started">ابدأ</string>
+    <string name="onboarding_restore_from_backup">الاستعادة من نسخة احتياطية</string>
+    <string name="onboarding_key_note">يُنشأ مفتاحك الخاص محليًا ولا يغادر هذا الجهاز أبدًا.</string>
+    <string name="onboarding_permissions_title">الأذونات</string>
+    <string name="onboarding_permissions_desc">يحتاج LocaPeer إلى إذن الموقع لمشاركة موضعك، وإذن الكاميرا لمسح رموز الدعوة، وإذن الإشعارات لحالة الخلفية. إذن النشاط البدني اختياري — يساعد على تسمية حركتك (مشي، قيادة) بدقة أكبر.</string>
+    <string name="onboarding_before_ask_title">قبل أن نطلب</string>
+    <string name="onboarding_before_ask_intro">سترى بعض مطالبات النظام تاليًا:</string>
+    <string name="onboarding_before_ask_location">• الموقع — مطلوب، لمشاركة موضعك.</string>
+    <string name="onboarding_before_ask_camera">• الكاميرا — لمسح رموز الدعوة.</string>
+    <string name="onboarding_before_ask_notifications">• الإشعارات — لحالة الخلفية.</string>
+    <string name="onboarding_before_ask_activity">• النشاط البدني — اختياري. يتيح لـ LocaPeer التمييز بدقة أكبر بين المشي والقيادة والوقوف. يمكنك تخطيه وتفعيله لاحقًا من الإعدادات.</string>
+    <string name="onboarding_grant_permissions">منح الأذونات</string>
+    <string name="onboarding_bg_location_title">الموقع في الخلفية</string>
+    <string name="onboarding_bg_location_desc">لإبقاء جهات اتصالك على اطلاع أثناء إغلاق التطبيق، يرجى اختيار \"السماح طوال الوقت\" في الشاشة التالية.</string>
+    <string name="onboarding_bg_location_error">الموقع في الخلفية مطلوب لتحديث جهات اتصالك عند إغلاق التطبيق. يرجى المحاولة مجددًا واختيار \"السماح طوال الوقت\".</string>
+    <string name="onboarding_configure_location">ضبط الموقع</string>
+    <string name="onboarding_battery_title">البطارية</string>
+    <string name="onboarding_battery_desc">قد يوقف Android تطبيق LocaPeer لتوفير البطارية. لضمان تحديثات موثوقة، يرجى استثناء LocaPeer من التحسينات.</string>
+    <string name="onboarding_disable_optimizations">إيقاف التحسينات</string>
+    <string name="onboarding_done_title">كل شيء جاهز!</string>
+    <string name="onboarding_done_desc">شبكة مواقعك الخاصة جاهزة.</string>
+    <string name="onboarding_start_using">ابدأ استخدام LocaPeer</string>
+
+    <string name="common_try_again">حاول مجددًا</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">مسح الدعوة</string>
+    <string name="scan_camera_needed">إذن الكاميرا مطلوب لمسح رموز QR.</string>
+    <string name="scan_grant_permission">منح الإذن</string>
+    <string name="scan_add_contact_title">إضافة جهة اتصال؟</string>
+    <string name="scan_add_contact_message">سيؤدي هذا إلى ربطك مع %1$s وبدء مشاركة الموقع بينكما.</string>
+    <string name="scan_add_share">إضافة ومشاركة</string>
+    <string name="scan_request_sent_title">أُرسل الطلب!</string>
+    <string name="scan_request_sent_message">أُرسل طلب إلى %1$s. سيتم الربط بينكما بمجرد قبوله.</string>
+    <string name="scan_failed">فشل المسح: %1$s</string>
+
     <string name="cd_back">رجوع</string>
+    <string name="common_review">مراجعة</string>
+    <string name="common_decline">رفض</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">إرسال/استقبال</string>
+    <string name="role_send">إرسال</string>
+    <string name="role_receive">استقبال</string>
+    <string name="role_none">بدون مشاركة</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">دعوتي</string>
+    <string name="invite_tab_add_contact">إضافة جهة اتصال</string>
+    <string name="invite_your_qr_title">رمز QR الخاص بك</string>
+    <string name="invite_your_qr_subtitle">دع شخصًا يمسحه لمتابعة موقعك</string>
+    <string name="invite_qr_cd">رمز QR الخاص بك</string>
+    <string name="invite_qr_error">خطأ في إنشاء رمز QR</string>
+    <string name="invite_share_link">مشاركة رابط الدعوة</string>
+    <string name="invite_encryption_note">سيُشفَّر موقعك خصيصًا لجهاز الشخص الذي يمسح الرمز.</string>
+    <string name="invite_camera_required_title">الوصول إلى الكاميرا مطلوب</string>
+    <string name="invite_camera_required_message">امنح إذن الكاميرا لمسح رمز QR.</string>
+    <string name="invite_point_camera">وجّه الكاميرا نحو رمز QR الخاص بـ LocaPeer</string>
+    <string name="invite_paste_title">أو الصق رابط الدعوة</string>
+    <string name="invite_process_link">معالجة الرابط</string>
+    <string name="invite_fallback_name">جهة اتصال</string>
+    <string name="invite_success_message">سيتم الربط بينك وبين %1$s بمجرد قبوله.</string>
+    <string name="invite_confirm_add_title">إضافة %1$s؟</string>
+    <string name="invite_confirm_add_message">إضافته إلى جهات اتصالك ومشاركة الموقع؟</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">لا توجد طلبات معلّقة</string>
+    <string name="pending_requesting">يطلب: %1$s · %2$s</string>
+    <string name="pending_role_change">طلب تغيير الدور · %1$s</string>
+    <string name="pending_new_request">طلب مشاركة جديد · %1$s</string>
+
+    <string name="common_save_changes">حفظ التغييرات</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">تحديث إعدادات المشاركة</string>
+    <string name="incoming_new_title">طلب جهة اتصال جديد</string>
+    <string name="incoming_update_subtitle">يريد %1$s تحديث طريقة مشاركتكما. راجع الإعدادات أدناه.</string>
+    <string name="incoming_new_subtitle">أضافك %1$s كجهة اتصال! يمكنك الآن اختيار ما تشاركه بالمقابل.</string>
+    <string name="incoming_section_location">الموقع</string>
+    <string name="incoming_share_my_location">مشاركة موقعي مع %1$s</string>
+    <string name="incoming_share_my_location_sub">سيتمكن من رؤية مكانك</string>
+    <string name="incoming_see_their_location">رؤية موقع %1$s</string>
+    <string name="incoming_see_their_location_sub">ستتمكن من رؤية مكانه</string>
+    <string name="incoming_section_messaging">المراسلة</string>
+    <string name="incoming_allow_messages">السماح بالرسائل</string>
+    <string name="incoming_allow_messages_sub">استقبال رسائل الدردشة من %1$s</string>
+
+    <string name="common_request">طلب</string>
+    <string name="common_edit">تعديل</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">إعدادات جهة الاتصال</string>
+    <string name="peer_section_roles">أدوار مشاركة الموقع</string>
+    <string name="peer_send_on">يمكن لـ %1$s رؤية موقعك</string>
+    <string name="peer_send_off">أنت لا تشارك موقعك مع %1$s</string>
+    <string name="peer_receive_title">استقبال موقع %1$s</string>
+    <string name="peer_receive_on">يمكنك رؤية موقع %1$s</string>
+    <string name="peer_receive_off">ليس لديك وصول إلى موقع %1$s</string>
+    <string name="peer_section_privacy">الخصوصية وعناصر التحكم بالمشاركة</string>
+    <string name="peer_pause_sharing">إيقاف المشاركة مؤقتًا</string>
+    <string name="peer_pause_sub">التوقف مؤقتًا عن إرسال موقعك إلى %1$s</string>
+    <string name="peer_precision">دقة الموقع</string>
+    <string name="peer_precision_exact_sub">إحداثيات GPS الدقيقة</string>
+    <string name="peer_precision_suburb_sub">موقع تقريبي (على مستوى الحي)</string>
+    <string name="peer_always_sharing">مشاركة دائمة</string>
+    <plurals name="peer_active_rules">
+        <item quantity="zero">لا قواعد مشاركة نشطة</item>
+        <item quantity="one">قاعدة مشاركة نشطة واحدة</item>
+        <item quantity="two">قاعدتا مشاركة نشطتان</item>
+        <item quantity="few">%1$d قواعد مشاركة نشطة</item>
+        <item quantity="many">%1$d قاعدة مشاركة نشطة</item>
+        <item quantity="other">%1$d قاعدة مشاركة نشطة</item>
+    </plurals>
+    <string name="peer_section_alerts">التنبيهات والمراقبة</string>
+    <string name="peer_sos_contact">جهة اتصال SOS</string>
+    <string name="peer_sos_sub">استقبال تنبيهات الطوارئ حتى لو كانت المشاركة متوقفة مؤقتًا</string>
+    <string name="peer_missed_alert">تنبيه فقدان الموقع</string>
+    <string name="peer_missed_on">أعلمني إذا توقف %1$s عن الإبلاغ عن موقعه</string>
+    <string name="peer_requires_access">يتطلب الوصول إلى موقع %1$s</string>
+    <string name="peer_proximity_alert">تنبيه القرب</string>
+    <string name="peer_proximity_sub">أعلمني عندما يكون %1$s قريبًا</string>
+    <string name="peer_alert_radius">نصف قطر التنبيه</string>
+    <string name="peer_alert_schedule">جدول التنبيهات</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="zero">لا قواعد نشطة</item>
+        <item quantity="one">قاعدة نشطة واحدة</item>
+        <item quantity="two">قاعدتان نشطتان</item>
+        <item quantity="few">%1$d قواعد نشطة</item>
+        <item quantity="many">%1$d قاعدة نشطة</item>
+        <item quantity="other">%1$d قاعدة نشطة</item>
+    </plurals>
+    <string name="peer_geofences_sub">إعداد مناطق الوصول والمغادرة لـ %1$s</string>
+    <string name="peer_supervise">الإشراف على هذا الجهاز</string>
+    <string name="peer_supervise_on">تستقبل وتوافق على طلبات إلغاء القفل من %1$s</string>
+    <string name="peer_supervise_off">السماح لـ %1$s بإرسال طلبات إلغاء قفل الوضع الخاضع للإشراف إليك</string>
+    <string name="peer_messaging_sub">تفعيل/إيقاف رسائل الدردشة من %1$s</string>
+    <string name="peer_section_history">سجلّ التنقّل</string>
+    <string name="peer_location_history">سجلّ المواقع</string>
+    <string name="peer_location_history_sub">عرض سجلّ التنقّل وتقرير الخريطة لـ %1$s</string>
+    <string name="peer_section_retention">الاحتفاظ بالبيانات عن بُعد</string>
+    <string name="peer_retention_location_sub">مدة احتفاظ %1$s بسجلّ مواقعك</string>
+    <string name="peer_purge_location">محو جميع بيانات الموقع من %1$s</string>
+    <string name="peer_retention_messages_sub">مدة احتفاظ %1$s بالرسائل التي أرسلتها</string>
+    <string name="peer_purge_messages">محو جميع الرسائل من %1$s</string>
+    <string name="peer_precision_exact">GPS دقيق</string>
+    <string name="peer_precision_exact_desc">إحداثيات دقيقة</string>
+    <string name="peer_precision_suburb">الحي (~1 كم)</string>
+    <string name="peer_precision_suburb_desc">على مستوى الحي فقط</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="zero">حذف المحادثات؟</item>
+        <item quantity="one">حذف محادثة واحدة؟</item>
+        <item quantity="two">حذف محادثتين؟</item>
+        <item quantity="few">حذف %1$d محادثات؟</item>
+        <item quantity="many">حذف %1$d محادثة؟</item>
+        <item quantity="other">حذف %1$d محادثة؟</item>
+    </plurals>
+    <string name="conv_delete_locally">حذف محليًا</string>
+    <string name="conv_delete_locally_sub">يزيل المحادثة من جهازك فقط.</string>
+    <string name="conv_delete_both">حذف محليًا/من جهة الاتصال</string>
+    <string name="conv_bulk_delete_both_sub">يحذف المحادثة محليًا ومن جهة اتصالك.</string>
+    <string name="conv_delete_both_sub">يحذف المحادثة محليًا ويرسل طلب حذف للمحادثة إلى جهاز جهة الاتصال.</string>
+    <string name="conv_cd_exit_selection">إنهاء التحديد</string>
+    <string name="conv_cd_select_all">تحديد الكل</string>
+    <string name="conv_cd_new_message">رسالة جديدة</string>
+    <string name="conv_sort_date">التاريخ</string>
+    <string name="conv_sort_unread">غير مقروءة</string>
+    <string name="conv_search_placeholder">البحث في المحادثات…</string>
+    <string name="conv_tab_chats">الدردشات</string>
+    <string name="conv_tab_archived">المؤرشفة</string>
+    <string name="conv_mark_read">وضع علامة مقروءة</string>
+    <string name="conv_archive">أرشفة</string>
+    <string name="conv_unarchive">إلغاء الأرشفة</string>
+    <string name="conv_empty_no_results">لا نتائج لـ \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">جرّب كلمة بحث مختلفة</string>
+    <string name="conv_empty_archived_title">لا توجد دردشات مؤرشفة</string>
+    <string name="conv_empty_archived_sub">أرشِف الدردشات لإبقاء بريدك الوارد مرتبًا</string>
+    <string name="conv_empty_title">لا توجد رسائل بعد</string>
+    <string name="conv_empty_sub">افتح الخريطة وانقر على شخص\nلبدء محادثة</string>
+    <string name="conv_delete_title">حذف المحادثة؟</string>
+    <string name="conv_delete_message">كيف تريد حذف هذه المحادثة مع %1$s؟</string>
+    <string name="conv_messages_blocked">الرسائل محظورة</string>
+    <string name="conv_preview_mine">أنت: %1$s</string>
+    <string name="conv_new_message_title">رسالة جديدة</string>
+    <string name="conv_picker_empty">لا توجد جهات اتصال بعد. امسح رمز QR لإضافة جهة اتصال.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">مسح سجلّ الدردشة؟</string>
+    <string name="chat_clear_message">كيف تريد مسح هذه المحادثة مع %1$s؟</string>
+    <string name="chat_clear_locally">مسح محليًا</string>
+    <string name="chat_clear_both">مسح محليًا/من جهة الاتصال</string>
+    <string name="chat_clear_both_sub">يمسح الدردشة محليًا ويرسل إلى %1$s طلب حذف للرسائل التي أرسلتها.</string>
+    <string name="chat_cd_options">خيارات</string>
+    <string name="chat_clear_history_menu">مسح سجلّ الدردشة</string>
+    <string name="chat_typing">%1$s يكتب…</string>
+    <string name="chat_blocked_banner">لقد حظرت الرسائل من %1$s. انتقل إلى جهات الاتصال لإلغاء الحظر.</string>
+    <string name="chat_delete_msg_title">حذف الرسالة؟</string>
+    <string name="chat_delete_msg_message">كيف تريد حذف هذه الرسالة؟</string>
+    <string name="chat_delete_from_contact">حذف من جهة الاتصال</string>
+    <string name="chat_delete_from_contact_sub">يحذف الدردشة من جهاز جهة الاتصال.</string>
+    <string name="chat_delete_both_sub">يزيل الدردشة محليًا ويحذفها تلقائيًا من جهاز جهة الاتصال.</string>
+    <string name="chat_cd_share_location">مشاركة الموقع</string>
+    <string name="chat_input_placeholder">رسالة…</string>
+    <string name="chat_cd_send">إرسال</string>
+
+    <string name="common_close">إغلاق</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">تفعيل SOS؟</string>
+    <string name="map_sos_deactivate_title">إيقاف SOS؟</string>
+    <string name="map_sos_activate_msg">سيبث هذا موقعك كل 15 ثانية إلى جهات اتصال SOS المحددة حتى يتم الإيقاف.</string>
+    <string name="map_sos_deactivate_msg">سيوقف هذا بث الموقع عالي الأولوية إلى جهات اتصال الطوارئ.</string>
+    <string name="map_activate">تفعيل</string>
+    <string name="map_deactivate">إيقاف</string>
+    <string name="map_cd_style">نمط الخريطة</string>
+    <string name="map_cd_show_geofences">إظهار الأسوار الجغرافية</string>
+    <string name="map_cd_hide_geofences">إخفاء الأسوار الجغرافية</string>
+    <string name="map_cd_follow">اتبعني</string>
+    <string name="map_cd_friends">الأصدقاء</string>
+    <string name="map_no_friends">لا يوجد من يُتتبَّع بعد</string>
+    <string name="map_you">أنت</string>
+    <string name="map_cd_go_my_location">الانتقال إلى موقعي</string>
+    <string name="map_sos_active">⚠ SOS مفعّل</string>
+    <string name="map_away">بعيد</string>
+    <string name="map_no_location_yet">لا يوجد موقع بعد</string>
+    <string name="map_cd_go_location">الانتقال إلى الموقع</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS مفعّل</string>
+    <string name="map_overdue">متأخر — لا يوجد تحديث حديث</string>
+    <string name="map_stat_last_seen">آخر ظهور</string>
+    <string name="map_stat_battery">البطارية</string>
+    <string name="map_stat_accuracy">الدقة</string>
+    <string name="map_stat_motion">الحركة</string>
+    <string name="map_stat_speed">السرعة</string>
+    <string name="map_stat_elevation">الارتفاع</string>
+
+    <string name="common_ok">موافق</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">السجل: %1$s</string>
+    <string name="history_select_person">اختيار شخص</string>
+    <string name="history_person_label">الشخص</string>
+    <string name="history_cd_prev_day">اليوم السابق</string>
+    <string name="history_cd_next_day">اليوم التالي</string>
+    <string name="history_time_filter">تصفية الوقت:</string>
+    <string name="history_cd_reset_time">إعادة تعيين الوقت</string>
+    <string name="history_tab_list">قائمة</string>
+    <string name="history_empty_title">لا يوجد سجل لهذا اليوم</string>
+    <string name="history_empty_sub">جرّب اختيار تاريخ آخر أو تحقق من اتصالك.</string>
+    <string name="history_start_time">وقت البدء</string>
+    <string name="history_end_time">وقت الانتهاء</string>
+    <string name="history_no_data_title">لا توجد بيانات موقع</string>
+    <string name="history_no_data_sub">لا توجد نقاط مسجلة لهذا اليوم أو النطاق الزمني.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="zero">لم تُسجَّل نقاط</item>
+        <item quantity="one">سُجلت نقطة واحدة</item>
+        <item quantity="two">سُجلت نقطتان</item>
+        <item quantity="few">سُجلت %1$d نقاط</item>
+        <item quantity="many">سُجلت %1$d نقطة</item>
+        <item quantity="other">سُجلت %1$d نقطة</item>
+    </plurals>
+    <string name="history_cd_dismiss">إغلاق</string>
+    <string name="history_accuracy_label">دقة ±%1$s</string>
+    <string name="history_emergency_sos">إشارة طوارئ SOS</string>
+    <string name="history_detail_location">الموقع</string>
+    <string name="history_detail_coordinates">الإحداثيات</string>
+    <string name="history_within">ضمن ±%1$s</string>
+    <string name="history_detail_movement">الحركة</string>
+    <string name="history_movement_desc">%1$s %2$s باتجاه %3$s</string>
+
+    <string name="common_create">إنشاء</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">إضافة منطقة سور جغرافي</string>
+    <string name="geo_cd_assign">تعيين سور جغرافي</string>
+    <string name="geo_unknown">غير معروف</string>
+    <string name="geo_empty_title">لا توجد أسوار جغرافية</string>
+    <string name="geo_empty_sub">انقر على + لإنشاء منطقة سور جغرافي، ثم عيّن لها جهات اتصال من إعدادات مشاركتها.</string>
+    <string name="geo_delete_title">حذف السور الجغرافي؟</string>
+    <string name="geo_delete_simple">حذف \"%1$s\"؟</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="zero">\"%1$s\" غير معيّن لأي جهة اتصال (%2$d).</item>
+        <item quantity="one">\"%1$s\" معيّن لجهة اتصال واحدة (%2$d). حذفه يزيل هذه التعيينات أيضًا.</item>
+        <item quantity="two">\"%1$s\" معيّن لجهتي اتصال (%2$d). حذفه يزيل هذه التعيينات أيضًا.</item>
+        <item quantity="few">\"%1$s\" معيّن لـ %2$d جهات اتصال. حذفه يزيل هذه التعيينات أيضًا.</item>
+        <item quantity="many">\"%1$s\" معيّن لـ %2$d جهة اتصال. حذفه يزيل هذه التعيينات أيضًا.</item>
+        <item quantity="other">\"%1$s\" معيّن لـ %2$d جهة اتصال. حذفه يزيل هذه التعيينات أيضًا.</item>
+    </plurals>
+    <string name="geo_for_contact">الأسوار الجغرافية لـ %1$s</string>
+    <string name="geo_empty_contact_title">لا توجد أسوار جغرافية لجهة الاتصال</string>
+    <string name="geo_empty_contact_sub">انقر على + لتعيين منطقة سور جغرافي واختيار التنبيه عند الوصول أو المغادرة أو كليهما.</string>
+    <string name="geo_no_areas_title">لا توجد أسوار جغرافية بعد</string>
+    <string name="geo_no_areas_msg">أنشئ منطقة سور جغرافي أولًا من شاشة الأسوار الجغرافية، ثم عيّنها هنا.</string>
+    <string name="geo_radius_label">نصف قطر %1$s</string>
+    <string name="geo_contacts_label">جهات الاتصال: %1$s</string>
+    <string name="geo_no_contacts_assigned">لا توجد جهات اتصال معيّنة</string>
+    <plurals name="geo_rules_count">
+        <item quantity="zero">لا قواعد</item>
+        <item quantity="one">قاعدة واحدة</item>
+        <item quantity="two">قاعدتان</item>
+        <item quantity="few">%1$d قواعد</item>
+        <item quantity="many">%1$d قاعدة</item>
+        <item quantity="other">%1$d قاعدة</item>
+    </plurals>
+    <string name="geo_trigger_enter">دخول</string>
+    <string name="geo_trigger_exit">خروج</string>
+    <string name="geo_trigger_both">كلاهما</string>
+    <string name="geo_edit_title">تعديل السور الجغرافي</string>
+    <string name="geo_new_title">سور جغرافي جديد</string>
+    <string name="geo_cd_my_location">موقعي</string>
+    <string name="geo_cd_radius_increase">زيادة نصف القطر</string>
+    <string name="geo_cd_radius_decrease">تقليل نصف القطر</string>
+    <string name="geo_hint_tap">انقر أو اضغط مطولًا على الخريطة للوضع</string>
+    <string name="geo_hint_move">قرّب بإصبعين للتكبير • اضغط مطولًا أو اسحب الدبوس للتحريك</string>
+    <string name="geo_basic_info">معلومات أساسية</string>
+    <string name="geo_search_title">البحث بالعنوان</string>
+    <string name="geo_search_label">العنوان أو المكان</string>
+    <string name="geo_search_placeholder">مثل: شارع الرئيسي 10، الرياض</string>
+    <string name="geo_search_no_results">لم يُعثر على عنوان مطابق</string>
+    <string name="geo_cd_search">بحث</string>
+    <string name="geo_name_placeholder">مثل: المنزل، العمل</string>
+    <string name="geo_name_required">الاسم مطلوب</string>
+    <string name="geo_latitude">خط العرض</string>
+    <string name="geo_longitude">خط الطول</string>
+    <string name="geo_lat_range">من -90 إلى 90</string>
+    <string name="geo_lng_range">من -180 إلى 180</string>
+    <string name="geo_radius">نصف القطر</string>
+    <string name="geo_radius_range">أدخل من %1$d إلى %2$d م</string>
+    <string name="geo_edit_assignment">تعديل التعيين</string>
+    <string name="geo_assign_title">تعيين سور جغرافي</string>
+    <string name="geo_select_area">اختيار منطقة السور الجغرافي</string>
+    <string name="geo_trigger_title">تشغيل الإشعار عند</string>
+    <string name="geo_add_rule">إضافة قاعدة</string>
+    <string name="geo_alerts_all_times">التنبيهات نشطة طوال الوقت. أضف قاعدة لتقييد أوقات إرسال التنبيهات.</string>
+    <string name="geo_assign_action">تعيين</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">تنبيهات القرب</string>
+    <string name="prox_empty_title">لا يوجد أشخاص مُتتبَّعون</string>
+    <string name="prox_empty_sub">امسح رمز QR لدعوة شخص ما من علامة تبويب المسح\nلبدء تتبّع موقعه</string>
+    <string name="prox_intro">احصل على إشعار عندما يقترب شخص مُتتبَّع منك ضمن مسافة تختارها.</string>
+    <string name="prox_alert_within">تنبيه عند الاقتراب ضمن %1$s</string>
+    <string name="prox_alerts_off">التنبيهات متوقفة</string>
+    <string name="prox_alert_radius">نصف قطر التنبيه</string>
+    <string name="prox_edit_schedule">تعديل الجدول</string>
+    <string name="prox_rules">القواعد</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">جدول %1$s</string>
+    <string name="schedule_cd_add_rule">إضافة قاعدة</string>
+    <string name="schedule_empty_title">لا توجد قواعد جدولة</string>
+    <string name="schedule_empty_global">يُشارَك الموقع طوال الوقت. أضف قاعدة لتقييد أوقات تفعيل المشاركة.</string>
+    <string name="schedule_empty_peer">يُشارَك الموقع دائمًا مع %1$s. أضف قاعدة لتقييد الأوقات.</string>
+    <string name="schedule_active_hint">نشط عندما تطابق أي قاعدة الوقت الحالي. فارغ = مفعّل دائمًا.</string>
+    <string name="schedule_all_day">طوال اليوم</string>
+    <string name="schedule_plus_one_day"> (+1 يوم)</string>
+    <string name="schedule_rule_number">القاعدة %1$d</string>
+    <string name="schedule_cd_delete_rule">حذف القاعدة</string>
+    <string name="schedule_edit_rule">تعديل القاعدة</string>
+    <string name="schedule_label_optional">تسمية (اختياري)</string>
+    <string name="schedule_label_placeholder">مثل: ساعات العمل، عطلات نهاية الأسبوع</string>
+    <string name="schedule_active_days">الأيام النشطة</string>
+    <string name="schedule_time_window">النافذة الزمنية</string>
+    <string name="schedule_start">البداية</string>
+    <string name="schedule_end">النهاية</string>
+    <string name="schedule_overnight">عبر الليل: نشط من %1$s حتى %2$s في اليوم التالي</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">الجهاز خاضع للإشراف</string>
+    <string name="gate_message">موافقة المشرف مطلوبة للوصول إلى الإعدادات.</string>
+    <string name="gate_request_access">طلب الوصول</string>
+    <string name="gate_waiting">في انتظار موافقة المشرف…</string>
+    <string name="gate_denied">رفض المشرف الوصول.</string>
+    <string name="gate_timed_out">انتهت مهلة الطلب. لم يستجب المشرف.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">للأبد</string>
+    <string name="retention_keep_for">الاحتفاظ لمدة: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="zero">لا أيام</item>
+        <item quantity="one">يوم واحد</item>
+        <item quantity="two">يومان</item>
+        <item quantity="few">%1$d أيام</item>
+        <item quantity="many">%1$d يومًا</item>
+        <item quantity="other">%1$d يوم</item>
+    </plurals>
+
+    <string name="common_select">اختيار</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">اختيار موقع ثابت</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">اختر علامات التبويب التي تظهر في الشريط السفلي وترتيبها. الخريطة مضمّنة دائمًا.</string>
+    <string name="customize_cd_move_up">نقل لأعلى</string>
+    <string name="customize_cd_move_down">نقل لأسفل</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">الإصدار %1$s (البنية %2$d)</string>
+    <string name="about_tagline">مشاركة خاصة للموقع مع من تثق بهم. بدون حسابات، بدون سحابة، بدون تتبّع من جانبنا.</string>
+    <string name="about_relay_connections">اتصالات المرحّلات</string>
+    <string name="about_connected">متصل</string>
+    <string name="about_disconnected">غير متصل</string>
+    <string name="about_open_source">مكتبات مفتوحة المصدر</string>
+    <string name="about_lib_osmdroid_desc">عرض الخرائط المعتمد على OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">نقل WebSocket لمرحّل Nostr</string>
+    <string name="about_lib_compose_desc">إطار عمل الواجهة</string>
+    <string name="about_lib_hilt_desc">حقن التبعيات</string>
+    <string name="about_lib_room_desc">قاعدة بيانات محلية</string>
+    <string name="about_map_attribution">بيانات الخريطة © مساهمو OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">قبول</string>
+    <string name="notif_someone">شخص ما</string>
+    <string name="notif_sos_title">SOS من %1$s!</string>
+    <string name="notif_sos_text">فعّل %1$s وضع SOS عند (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">يريد %1$s أن تكون مشرفه</string>
+    <string name="notif_supervisor_request_text">اقبل للسماح بطلبات الموافقة على إلغاء القفل من هذا الجهاز</string>
+    <string name="notif_supervisor_request_big">اقبل للسماح لـ %1$s بإرسال طلبات الموافقة على إلغاء القفل إليك عندما يكون الوضع الخاضع للإشراف مفعّلًا.</string>
+    <string name="notif_supervised_active_title">الوضع الخاضع للإشراف مفعّل</string>
+    <string name="notif_supervised_active_text">أكّد مشرفك — تم إعداد الوضع الخاضع للإشراف الآن</string>
+    <string name="notif_supervised_declined_title">رُفض الوضع الخاضع للإشراف</string>
+    <string name="notif_supervised_declined_text">رفض مشرفك الطلب — تم إيقاف الوضع الخاضع للإشراف</string>
+    <string name="notif_tracking_alert_title">تنبيه تتبّع</string>
+    <string name="notif_tracking_proximity">تلقّى %1$s تنبيه قرب يخصّك</string>
+    <string name="notif_tracking_geofence">تلقّى %1$s تنبيهًا بدخولك/خروجك من السور: %2$s</string>
+    <string name="notif_tracking_generic">%1$s يراقب موقعك</string>
+    <string name="notif_track_update_title">تحديث مشاركة من %1$s</string>
+    <string name="notif_track_new_title">جهة اتصال جديدة: %1$s</string>
+    <string name="notif_role_send_receive">إرسال/استقبال الموقع</string>
+    <string name="notif_role_send">إرسال الموقع</string>
+    <string name="notif_role_receive">استقبال الموقع</string>
+    <string name="notif_role_none">بدون مشاركة الموقع</string>
+    <string name="notif_track_requesting">يطلب %1$s: %2$s</string>
+    <string name="notif_track_update_body">يريد %1$s تحديث طريقة مشاركتكما للمواقع.</string>
+    <string name="notif_track_new_body">أضافك %1$s كجهة اتصال ويريد التواصل.</string>
+    <string name="notif_contact_connected_title">تم ربط جهة الاتصال</string>
+    <string name="notif_contact_connected_text">%1$s متصل بك الآن.</string>
+    <string name="notif_request_declined_title">رُفض الطلب</string>
+    <string name="notif_request_declined_text">رفض %1$s طلب مشاركة الموقع الخاص بك.</string>
+    <string name="notif_message_person">مراسلة %1$s</string>
+    <string name="notif_geofence_entered_title">دخل %1$s إلى %2$s</string>
+    <string name="notif_geofence_left_title">غادر %1$s %2$s</string>
+    <string name="notif_geofence_subtitle">عند %1$s · نصف قطر %2$s</string>
+    <string name="notif_person_nearby">%1$s قريب</string>
+    <string name="notif_distance_from_you">%1$s منك</string>
+    <string name="notif_missed_title">لا يوجد تحديث من %1$s</string>
+    <string name="notif_missed_text">آخر ظهور قبل %1$s د بالقرب من (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS مفعّل!</string>
+    <string name="notif_sos_active_text">جارٍ بث تنبيه الطوارئ إلى جهات اتصال SOS</string>
+    <string name="notif_messages_group_title">رسائل LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">رُفض طلب جهة الاتصال من %1$s</string>
+    <string name="toast_now_supervising">تشرف الآن على جهاز %1$s</string>
+    <string name="toast_declined_supervision">رُفض طلب الإشراف من %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">الآن</string>
+    <string name="time_minutes_ago">قبل %1$d د</string>
+    <string name="fallback_me">أنا</string>
+    <string name="fallback_unknown">غير معروف</string>
+    <string name="geo_unassigned">غير معيّن</string>
+    <string name="days_every_day">كل يوم</string>
+    <string name="days_weekdays">أيام الأسبوع</string>
+    <string name="days_weekends">عطلات نهاية الأسبوع</string>
+    <string name="days_none">لا أيام</string>
+    <string name="chat_my_location_message">موقعي الحالي: %1$s</string>
+    <string name="scan_error_bad_pubkey">دعوة غير صالحة: مفتاح عام خاطئ</string>
+    <string name="scan_error_key_mismatch">دعوة غير صالحة: المفاتيح غير متطابقة</string>
+    <string name="scan_error_unknown">خطأ غير معروف</string>
+    <string name="scan_error_invalid_link">رابط دعوة غير صالح</string>
+    <string name="scan_fallback_contact">جهة الاتصال هذه</string>
+    <string name="backup_saved">حُفظت النسخة الاحتياطية: %1$s</string>
+    <string name="backup_saved_encrypted">حُفظت النسخة الاحتياطية (مشفّرة): %1$s</string>
+    <string name="backup_failed">فشل النسخ الاحتياطي: %1$s</string>
+    <string name="backup_could_not_read_file">تعذّرت قراءة الملف</string>
+    <string name="backup_could_not_write_file">تعذّرت كتابة الملف</string>
+    <string name="backup_could_not_read">تعذّرت قراءة النسخة الاحتياطية: %1$s</string>
+    <string name="backup_incorrect_password">كلمة المرور غير صحيحة</string>
+    <string name="restore_result_restored">استُعيد: %1$s</string>
+    <string name="restore_result_failed">فشل: %1$s</string>
+    <string name="restore_nothing">لا يوجد شيء للاستعادة</string>
+    <string name="restore_failed">فشلت الاستعادة: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="zero">لا جهات اتصال</item>
+        <item quantity="one">جهة اتصال واحدة</item>
+        <item quantity="two">جهتا اتصال</item>
+        <item quantity="few">%1$d جهات اتصال</item>
+        <item quantity="many">%1$d جهة اتصال</item>
+        <item quantity="other">%1$d جهة اتصال</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="zero">لا أسوار جغرافية</item>
+        <item quantity="one">سور جغرافي واحد</item>
+        <item quantity="two">سوران جغرافيان</item>
+        <item quantity="few">%1$d أسوار جغرافية</item>
+        <item quantity="many">%1$d سورًا جغرافيًا</item>
+        <item quantity="other">%1$d سور جغرافي</item>
+    </plurals>
+    <string name="peer_role_change_sent">أُرسل طلب تغيير الدور إلى %1$s</string>
+    <string name="peer_not_found">جهة الاتصال غير موجودة</string>
+    <string name="peer_purge_location_sent">أُرسل أمر الحذف عن بُعد لجميع المواقع إلى %1$s</string>
+    <string name="peer_purge_messages_sent">أُرسل أمر الحذف عن بُعد لجميع الرسائل إلى %1$s</string>
+    <string name="onboarding_error_key_length">مفتاح غير صالح — يجب أن يتكون من 64 حرفًا سداسيًا عشريًا.</string>
+    <string name="onboarding_error_key_range">مفتاح خاص غير صالح — خارج نطاق المنحنى.</string>
+    <string name="onboarding_error_hex">تنسيق سداسي عشري غير صالح.</string>
+    <string name="onboarding_error_import_failed">فشل استيراد المفتاح: %1$s</string>
 </resources>

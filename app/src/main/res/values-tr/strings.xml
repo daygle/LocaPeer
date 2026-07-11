@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Bildirim Kanalları & Ön Plan Hizmeti ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Konum Yayını</string>
     <string name="channel_desc_heartbeat">Konumunuzu onaylanmış kişilerinize yayınlar</string>
     <string name="channel_name_alerts">Uyarılar</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer çalışıyor</string>
     <string name="notification_heartbeat_text">Konumunuzu başkalarıyla paylaşıyor</string>
 
-    <!-- ── Ortak Eylemler ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Kaydet</string>
     <string name="common_cancel">İptal</string>
     <string name="common_done">Bitti</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Onayla</string>
     <string name="common_deny">Reddet</string>
 
-    <!-- ── Navigasyon Sekmeleri ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">Harita</string>
     <string name="tab_messages">Mesajlar</string>
     <string name="tab_history">Geçmiş</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Ayarlar</string>
 
-    <!-- ── Hareket / Aktivite Durumları ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">Sabit</string>
     <string name="motion_walking">Yürüme</string>
     <string name="motion_running">Koşma</string>
     <string name="motion_cycling">Bisiklet</string>
     <string name="motion_driving">Sürüş</string>
 
-    <!-- ── Ayarlar ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Özel Anahtar</string>
+    <string name="backup_section_contacts">Kişiler</string>
+    <string name="backup_section_geofences">Coğrafi Çitler</string>
+    <string name="backup_section_settings">Ayarlar</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Denetim İsteği</string>
+    <string name="supervision_request_message">\"%1$s\" kendi ayarlarına erişim istiyor. İzin verilsin mi?</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">Ayarlar</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">Konum ve Gizlilik</string>
     <string name="settings_section_security">Güvenlik</string>
     <string name="settings_section_map">Harita</string>
@@ -54,15 +66,684 @@
     <string name="settings_section_backup_keys">Yedekleme ve Anahtarlar</string>
     <string name="settings_section_about">Hakkında</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">İsmi Düzenle</string>
     <string name="settings_my_qr">QR Kodum</string>
     <string name="settings_no_name_set">İsim ayarlanmadı</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">Konumumu Paylaş</string>
+    <string name="settings_broadcasting">Kişilerinize yayınlanıyor</string>
+    <string name="settings_not_broadcasting">Yayınlanmıyor</string>
+    <string name="settings_sharing_schedule">Paylaşım Programı</string>
+    <string name="settings_always_on">Her zaman açık</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d kural</item>
+        <item quantity="other">%1$d kural</item>
+    </plurals>
+    <string name="settings_geofences">Coğrafi Çitler</string>
+    <string name="settings_geofences_subtitle">Paylaşılan coğrafi çit alanlarını yönetin</string>
+    <string name="settings_notify_when_tracked">Takip Edildiğinde Bildir</string>
+    <string name="settings_notify_when_tracked_subtitle">Bir kişinin sizinle ilgili yakınlık veya coğrafi çit uyarısı tetiklendiğinde bildirim alın.</string>
+    <string name="settings_my_location_history">Konum Geçmişi</string>
+    <string name="settings_my_location_history_subtitle">Kendi konum zaman çizelgenize göz atın</string>
+    <string name="settings_lookup_addresses">Adresleri Ara</string>
+    <string name="settings_lookup_addresses_subtitle">Geçmiş noktaları ve dokunulan harita iğneleri için sokak adreslerini gösterin, coğrafi çit yerleştirirken adresle arama yapın. Bu koordinatlar veya yazdığınız arama, cihazınızın coğrafi kodlama hizmetine (genellikle Google) gönderilir.</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">Denetim Etkin</string>
+    <string name="settings_supervision_active_subtitle">Ayarlar için denetleyici onayı gerekir</string>
+    <string name="settings_disable_supervised">Denetimli Modu Kapat</string>
+    <string name="settings_supervised_mode">Denetimli Mod</string>
+    <string name="settings_supervised_mode_subtitle">Ayarlara erişim için denetleyici onayı iste</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Başlangıç Noktası</string>
+    <string name="settings_map_current_location">Mevcut Konum</string>
+    <string name="settings_map_all_contacts">Tüm Kişiler</string>
+    <string name="settings_map_fixed_location">Sabit Konum</string>
+    <string name="settings_map_last_position">Son Konum</string>
+    <string name="settings_map_starting_point_title">Harita Başlangıç Noktası</string>
+    <string name="settings_no_location_set">Konum ayarlanmadı</string>
+    <string name="settings_pick_location_on_map">Haritadan Konum Seç</string>
+    <string name="settings_default_zoom_level">Varsayılan Yakınlaştırma</string>
+    <string name="settings_map_pin_colour">Harita İğnesi Rengi</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">Güncelleme Sıklığı</string>
+    <string name="settings_update_cadence_subtitle">Konumunuzun ne sıklıkla yayınlanacağını ayarlayın</string>
+    <string name="settings_update_cadence_dialog_message">Konumunuzun etkinliğinize göre ne sıklıkla güncelleneceğini kontrol edin. Sık güncellemeler daha fazla pil kullanır.</string>
+    <string name="settings_update_cadence_reset">Varsayılanlara sıfırla</string>
+    <string name="settings_min_distance_filtering">Minimum Mesafe Filtresi</string>
+    <string name="settings_min_distance_filtering_subtitle">Yalnızca bir öncekinden en az bu kadar uzak olan noktaları göster.</string>
+    <string name="settings_discard_low_accuracy">Düşük Doğrulukları Yoksay</string>
+    <string name="settings_discard_low_accuracy_subtitle">Doğruluk yarıçapı bu değerden büyük olan kendi konumlarınızı yayınlamayın veya kaydetmeyin. SOS asla atlanmaz.</string>
+    <string name="settings_hide_low_accuracy">Düşük Doğruluklu Noktaları Gizle</string>
+    <string name="settings_hide_low_accuracy_subtitle">Doğruluk yarıçapı bu değerden büyük olan geçmiş noktalarını gizleyin. Hiçbir şey silinmez.</string>
+    <string name="settings_low_battery" formatted="false">Düşük Pil (&lt; %20)</string>
+    <string name="settings_minutes_short">%1$d dk</string>
+    <string name="settings_motion_detection">Hareket Algılama</string>
+    <string name="settings_motion_detection_on">Etkin — geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
+    <string name="settings_motion_detection_off">Kapalı — daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
+    <string name="settings_enable_motion_title">Hareket algılamayı etkinleştir</string>
+    <string name="settings_enable_motion_message">Fiziksel aktivite erişimi, LocaPeer\'in geçmişinizde yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Şu anda kapalı — sistem ayarlarından yeniden etkinleştirebilirsiniz.</string>
+    <string name="settings_open_settings">Ayarları Aç</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">Hız Birimleri</string>
+    <string name="settings_speed_imperial">İmparatorluk (mil/sa)</string>
+    <string name="settings_speed_metric">Metrik (km/sa)</string>
+    <string name="settings_elevation_units">Yükseklik Birimleri</string>
+    <string name="settings_elevation_imperial">İmparatorluk (fit)</string>
+    <string name="settings_elevation_metric">Metrik (metre)</string>
+    <string name="settings_distance_units">Mesafe Birimleri</string>
+    <string name="settings_distance_imperial">İmparatorluk (ft/mi)</string>
+    <string name="settings_distance_metric">Metrik (m/km)</string>
+    <string name="settings_time_format">Saat Biçimi</string>
+    <string name="settings_time_24h">24 saat (13:30)</string>
+    <string name="settings_time_12h">12 saat (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">Konum Verileri</string>
+    <string name="settings_retention_location_subtitle">Kişilerin konum verilerinin cihazda ne kadar süre tutulacağı</string>
+    <string name="settings_clear_all_location">Tüm Konum Verilerini Temizle</string>
+    <string name="settings_retention_messages">Mesajlar</string>
+    <string name="settings_retention_messages_subtitle">Alınan mesajların cihazda ne kadar süre tutulacağı</string>
+    <string name="settings_clear_all_messages">Tüm Mesajları Temizle</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">Gezinmeyi Özelleştir</string>
+    <string name="settings_customize_nav_subtitle">Alt sekmeleri seçin ve sıralayın</string>
+    <string name="settings_start_page">Başlangıç Sayfası</string>
     <string name="settings_language">Dil</string>
     <string name="settings_language_title">Uygulama Dili</string>
     <string name="settings_language_system">Sistem varsayılanı</string>
 
-    <string name="common_ok">Tamam</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">Yedeği Dışa Aktar</string>
+    <string name="settings_export_backup_subtitle">Özel anahtarınızı ve kişilerinizi bir dosyaya kaydedin. Bu dosyayı güvende tutun!</string>
+    <string name="settings_import_backup">Yedeği İçe Aktar</string>
+    <string name="settings_import_backup_subtitle">Daha önce dışa aktarılan bir dosyadan geri yükleyin</string>
+    <string name="settings_view_private_key">Özel Anahtarı Görüntüle</string>
+    <string name="settings_view_private_key_subtitle">64 karakterlik onaltılık kimlik anahtarınızı gösterin</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">LocaPeer Hakkında</string>
+    <string name="settings_about_subtitle">Sürüm, aktarıcı durumu, açık kaynak</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Görünen Adı Düzenle</string>
+    <string name="settings_display_name_label">Görünen Ad</string>
+    <string name="settings_my_invite_qr">Davet QR Kodum</string>
+    <string name="settings_invite_qr_subtitle">Başkaları bunu tarayarak sizi takip etmeye başlayabilir.</string>
+    <string name="settings_invite_qr_cd">Davet QR kodu</string>
+    <string name="settings_private_key_title">Özel Anahtar</string>
+    <string name="settings_private_key_warning">Bunu güvende tutun. Bu anahtara sahip herkes sizin kimliğinize bürünebilir.</string>
+    <string name="settings_clear_location_title">Konum geçmişi temizlensin mi?</string>
+    <string name="settings_clear_location_message">Depolanan tüm konum kayıtları kalıcı olarak silinecek.</string>
+    <string name="settings_clear_messages_title">Mesaj geçmişi temizlensin mi?</string>
+    <string name="settings_clear_messages_message">Depolanan tüm mesajlar kalıcı olarak silinecek.</string>
+    <string name="settings_encrypted_backup_title">Şifreli Yedek</string>
+    <string name="settings_encrypted_backup_message">Bu yedek şifreli. Devam etmek için parolayı girin.</string>
+    <string name="settings_select_restore_title">Geri Yüklenecek Verileri Seçin</string>
+    <string name="settings_select_export_title">Dışa Aktarılacak Verileri Seçin</string>
+    <string name="settings_export_password_hint">İsterseniz yedek dosyanızı şifrelemek için bir parola belirleyin.</string>
+    <string name="settings_backup_password_optional">Yedek Parolası (İsteğe Bağlı)</string>
+    <string name="settings_select_sections">Dahil edilecek bölümleri seçin:</string>
+    <string name="settings_choose_file_location">Dosya konumunu seçin</string>
+    <string name="settings_not_in_backup">Bu yedekte yok</string>
+    <string name="settings_enable_supervised_title">Denetimli Modu Etkinleştir</string>
+    <string name="settings_enable_supervised_message">Denetleyici olarak görev yapacak bir kişi seçin. Ayarlara erişimi kendi cihazından onaylaması gerekir.</string>
+    <string name="settings_no_peers_found">Kişi bulunamadı. Önce davet QR kodunu tarayarak bir kişi ekleyin.</string>
+    <string name="settings_disable_supervised_title">Denetimli mod kapatılsın mı?</string>
+    <string name="settings_disable_supervised_message">Ayarlara denetleyici onayı olmadan erişilebilecek.</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">Kaldır</string>
+    <string name="common_name">Ad</string>
+    <string name="common_search">Ara</string>
+    <string name="common_sort">Sırala</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">Mesaj</string>
+    <string name="cd_show_on_map">Haritada göster</string>
+    <string name="cd_more_options">Diğer seçenekler</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d seçildi</item>
+        <item quantity="other">%1$d seçildi</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Seçimi iptal et</string>
+    <string name="contacts_cd_select_all">Tümünü seç</string>
+    <string name="contacts_cd_deselect_all">Seçimi kaldır</string>
+    <string name="contacts_cd_qr_invite">QR / Davet</string>
+    <string name="contacts_cd_pending_requests">Bekleyen İstekler</string>
+    <string name="contacts_sort_last_seen">Son Görülme</string>
+    <string name="contacts_search_placeholder">Kişilerde ara…</string>
+    <string name="contacts_empty_title">Henüz kişi yok</string>
+    <string name="contacts_empty_subtitle">Biriyle bağlantı kurmak ve konum paylaşmaya başlamak için bir QR kodu tarayın.</string>
+    <string name="contacts_scan_qr">QR Kodu Tara</string>
+    <string name="contacts_bulk_delete_messages">Mesajları Sil</string>
+    <string name="contacts_bulk_delete_locations">Konumları Sil</string>
+    <string name="contacts_last_seen">Son görülme: %1$s</string>
+    <string name="contacts_no_location_yet">Henüz konum verisi yok</string>
+    <string name="contacts_view_sharing_settings">Paylaşım Ayarları</string>
+    <string name="contacts_view_location_history">Konum Geçmişi</string>
+    <string name="contacts_rename_contact">Kişiyi Yeniden Adlandır</string>
+    <string name="contacts_on_contact_device">Kişinin Cihazında</string>
+    <string name="contacts_delete_my_messages_title">Mesajlarımı Sil</string>
+    <string name="contacts_delete_locations_title">Paylaşılan Konumları Sil</string>
+    <string name="contacts_remove_contact_title">Kişiyi Kaldır</string>
+    <string name="contacts_leave_title">Kişiyi ve Verileri Sil</string>
+    <string name="contacts_rename_title">Kişiyi Yeniden Adlandır</string>
+    <string name="contacts_remove_contact_body">%1$s kişilerinizden kaldırılsın mı? Konum geçmişi de bu cihazdan silinecek.</string>
+    <string name="contacts_leave_body">Bu, sizi %1$s kişisinin rehberinden kaldırır ve tüm mesajlarınızı ve konum verilerinizi onun cihazından siler. Onun konumuna erişiminizi de kaybedersiniz.</string>
+    <string name="contacts_delete_my_messages_body">Bu, gönderdiğiniz tüm mesajları %1$s kişisinin cihazından siler. Bu işlem geri alınamaz.</string>
+    <string name="contacts_delete_locations_body">Bu, paylaştığınız tüm konum verilerini %1$s kişisinin cihazından siler. Bu işlem geri alınamaz.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Kişiyi Kaldır</item>
+        <item quantity="other">%1$d Kişiyi Kaldır</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Bu kişi kaldırılsın mı? Konum geçmişi de bu cihazdan silinecek.</item>
+        <item quantity="other">%1$d kişi kaldırılsın mı? Konum geçmişleri de bu cihazdan silinecek.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Gönderdiğiniz tüm mesajlar bu kişinin cihazından uzaktan silinsin mi? Bu işlem geri alınamaz.</item>
+        <item quantity="other">Gönderdiğiniz tüm mesajlar %1$d kişinin cihazlarından uzaktan silinsin mi? Bu işlem geri alınamaz.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Paylaştığınız tüm konum geçmişi bu kişinin cihazından uzaktan silinsin mi? Bu işlem geri alınamaz.</item>
+        <item quantity="other">Paylaştığınız tüm konum geçmişi %1$d kişinin cihazlarından uzaktan silinsin mi? Bu işlem geri alınamaz.</item>
+    </plurals>
+
+    <string name="common_continue">Devam</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Yedekten Geri Yükle</string>
+    <string name="onboarding_restore_message">Kimliğinizi ve kişilerinizi geri yüklemek için 64 karakterlik onaltılık özel anahtarınızı yapıştırın.</string>
+    <string name="onboarding_private_key_hex">Özel anahtar (onaltılık)</string>
+    <string name="onboarding_tagline">Kişilerle özel konum paylaşımı.\nHesap yok. Tescilli sunucu yok.</string>
+    <string name="onboarding_feature_e2e_title">Uçtan Uca Şifreli</string>
+    <string name="onboarding_feature_e2e_subtitle">Konumunuz cihazda şifrelenir</string>
+    <string name="onboarding_feature_servers_title">Tescilli Sunucu Yok</string>
+    <string name="onboarding_feature_servers_subtitle">Güvenli taşıma için açık Nostr aktarıcılarını kullanır — verileriniz şifreli ve gizli kalır</string>
+    <string name="onboarding_feature_phone_title">Telefonunuzda Kalır</string>
+    <string name="onboarding_feature_phone_subtitle">Tüm konum geçmişiniz cihazınızda kalır. Seçili kişilerle yalnızca mevcut konumunuz paylaşılır</string>
+    <string name="onboarding_name_prompt">Kişileriniz size nasıl hitap etsin?</string>
+    <string name="onboarding_name_placeholder">örn. Anne, Baba, Ayşe…</string>
+    <string name="onboarding_get_started">Başlayın</string>
+    <string name="onboarding_restore_from_backup">Yedekten Geri Yükle</string>
+    <string name="onboarding_key_note">Özel anahtarınız yerel olarak üretilir ve bu cihazdan asla çıkmaz.</string>
+    <string name="onboarding_permissions_title">İzinler</string>
+    <string name="onboarding_permissions_desc">LocaPeer\'in konumunuzu paylaşmak için konum erişimine, davet kodlarını taramak için kamera erişimine ve arka plan durumu için bildirim erişimine ihtiyacı var. Fiziksel aktivite erişimi isteğe bağlıdır — hareketinizi (yürüme, sürüş) daha doğru etiketlemeye yardımcı olur.</string>
+    <string name="onboarding_before_ask_title">Sormadan önce</string>
+    <string name="onboarding_before_ask_intro">Şimdi birkaç sistem istemi göreceksiniz:</string>
+    <string name="onboarding_before_ask_location">• Konum — konumunuzu paylaşmak için gereklidir.</string>
+    <string name="onboarding_before_ask_camera">• Kamera — davet kodlarını taramak için.</string>
+    <string name="onboarding_before_ask_notifications">• Bildirimler — arka plan durumu için.</string>
+    <string name="onboarding_before_ask_activity">• Fiziksel aktivite — isteğe bağlı. LocaPeer\'in yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Atlayıp daha sonra Ayarlar\'dan etkinleştirebilirsiniz.</string>
+    <string name="onboarding_grant_permissions">İzinleri Ver</string>
+    <string name="onboarding_bg_location_title">Arka Plan Konumu</string>
+    <string name="onboarding_bg_location_desc">Uygulama kapalıyken kişilerinizin güncel kalması için sonraki ekranda \"Her zaman izin ver\"i seçin.</string>
+    <string name="onboarding_bg_location_error">Uygulama kapalıyken kişilerinizi güncellemek için arka plan konumu gereklidir. Lütfen tekrar deneyin ve \"Her zaman izin ver\"i seçin.</string>
+    <string name="onboarding_configure_location">Konumu Yapılandır</string>
+    <string name="onboarding_battery_title">Pil</string>
+    <string name="onboarding_battery_desc">Android, pil tasarrufu için LocaPeer\'i durdurabilir. Güvenilir güncellemeler için LocaPeer\'i optimizasyonların dışında tutun.</string>
+    <string name="onboarding_disable_optimizations">Optimizasyonları Kapat</string>
+    <string name="onboarding_done_title">Her Şey Hazır!</string>
+    <string name="onboarding_done_desc">Özel konum ağınız hazır.</string>
+    <string name="onboarding_start_using">LocaPeer\'i Kullanmaya Başla</string>
+
+    <string name="common_try_again">Tekrar Dene</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Daveti Tara</string>
+    <string name="scan_camera_needed">QR kodlarını taramak için kamera izni gereklidir.</string>
+    <string name="scan_grant_permission">İzin Ver</string>
+    <string name="scan_add_contact_title">Kişi eklensin mi?</string>
+    <string name="scan_add_contact_message">Bu, sizi %1$s ile bağlar ve birbirinizle konum paylaşmaya başlarsınız.</string>
+    <string name="scan_add_share">Ekle ve Paylaş</string>
+    <string name="scan_request_sent_title">İstek Gönderildi!</string>
+    <string name="scan_request_sent_message">%1$s kişisine bir istek gönderildi. Kabul ettiğinde bağlanacaksınız.</string>
+    <string name="scan_failed">Tarama başarısız: %1$s</string>
+
     <string name="cd_back">Geri</string>
+    <string name="common_review">İncele</string>
+    <string name="common_decline">Reddet</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Gönder/Al</string>
+    <string name="role_send">Gönder</string>
+    <string name="role_receive">Al</string>
+    <string name="role_none">Paylaşım Yok</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Davetim</string>
+    <string name="invite_tab_add_contact">Kişi Ekle</string>
+    <string name="invite_your_qr_title">QR Kodunuz</string>
+    <string name="invite_your_qr_subtitle">Konumunuzu takip etmesi için birine bunu taratın</string>
+    <string name="invite_qr_cd">QR kodunuz</string>
+    <string name="invite_qr_error">QR oluşturulurken hata</string>
+    <string name="invite_share_link">Davet Bağlantısını Paylaş</string>
+    <string name="invite_encryption_note">Konumunuz özellikle tarayan kişinin cihazı için şifrelenecek.</string>
+    <string name="invite_camera_required_title">Kamera Erişimi Gerekli</string>
+    <string name="invite_camera_required_message">QR kodu taramak için kamera izni verin.</string>
+    <string name="invite_point_camera">Kamerayı bir LocaPeer QR koduna doğrultun</string>
+    <string name="invite_paste_title">Veya Davet Bağlantısını Yapıştırın</string>
+    <string name="invite_process_link">Bağlantıyı İşle</string>
+    <string name="invite_fallback_name">Kişi</string>
+    <string name="invite_success_message">%1$s kabul ettiğinde bağlanacaksınız.</string>
+    <string name="invite_confirm_add_title">%1$s eklensin mi?</string>
+    <string name="invite_confirm_add_message">Kişilerinize ekleyip konum paylaşılsın mı?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Bekleyen istek yok</string>
+    <string name="pending_requesting">İstenen: %1$s · %2$s</string>
+    <string name="pending_role_change">Rol değişikliği isteği · %1$s</string>
+    <string name="pending_new_request">Yeni paylaşım isteği · %1$s</string>
+
+    <string name="common_save_changes">Değişiklikleri Kaydet</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Paylaşım Ayarlarını Güncelle</string>
+    <string name="incoming_new_title">Yeni Kişi İsteği</string>
+    <string name="incoming_update_subtitle">%1$s paylaşım şeklinizi güncellemek istiyor. Aşağıdaki ayarları inceleyin.</string>
+    <string name="incoming_new_subtitle">%1$s sizi kişi olarak ekledi! Şimdi karşılığında ne paylaşacağınızı seçebilirsiniz.</string>
+    <string name="incoming_section_location">Konum</string>
+    <string name="incoming_share_my_location">Konumumu %1$s ile paylaş</string>
+    <string name="incoming_share_my_location_sub">Nerede olduğunuzu görebilecek</string>
+    <string name="incoming_see_their_location">%1$s kişisinin konumunu gör</string>
+    <string name="incoming_see_their_location_sub">Nerede olduğunu görebileceksiniz</string>
+    <string name="incoming_section_messaging">Mesajlaşma</string>
+    <string name="incoming_allow_messages">Mesajlara İzin Ver</string>
+    <string name="incoming_allow_messages_sub">%1$s kişisinden sohbet mesajları alın</string>
+
+    <string name="common_request">İste</string>
+    <string name="common_edit">Düzenle</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Kişi Ayarları</string>
+    <string name="peer_section_roles">Konum Paylaşım Rolleri</string>
+    <string name="peer_send_on">%1$s konumunuzu görebilir</string>
+    <string name="peer_send_off">Konumunuzu %1$s ile paylaşmıyorsunuz</string>
+    <string name="peer_receive_title">%1$s Konumunu Al</string>
+    <string name="peer_receive_on">%1$s kişisinin konumunu görebilirsiniz</string>
+    <string name="peer_receive_off">%1$s kişisinin konumuna erişiminiz yok</string>
+    <string name="peer_section_privacy">Gizlilik ve Paylaşım Denetimleri</string>
+    <string name="peer_pause_sharing">Paylaşımı Duraklat</string>
+    <string name="peer_pause_sub">Konumunuzu %1$s kişisine göndermeyi geçici olarak durdurun</string>
+    <string name="peer_precision">Konum Hassasiyeti</string>
+    <string name="peer_precision_exact_sub">Tam GPS koordinatları</string>
+    <string name="peer_precision_suburb_sub">Yaklaşık konum (semt düzeyi)</string>
+    <string name="peer_always_sharing">Her zaman paylaşılıyor</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d etkin paylaşım kuralı</item>
+        <item quantity="other">%1$d etkin paylaşım kuralı</item>
+    </plurals>
+    <string name="peer_section_alerts">Uyarılar ve İzleme</string>
+    <string name="peer_sos_contact">SOS Kişisi</string>
+    <string name="peer_sos_sub">Paylaşım duraklatılmış olsa bile acil durum uyarılarınızı alır</string>
+    <string name="peer_missed_alert">Kayıp Konum Uyarısı</string>
+    <string name="peer_missed_on">%1$s konum bildirmeyi bırakırsa beni uyar</string>
+    <string name="peer_requires_access">%1$s kişisinin konumuna erişim gerektirir</string>
+    <string name="peer_proximity_alert">Yakınlık Uyarısı</string>
+    <string name="peer_proximity_sub">%1$s yakında olduğunda beni uyar</string>
+    <string name="peer_alert_radius">Uyarı Yarıçapı</string>
+    <string name="peer_alert_schedule">Uyarı Programı</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d etkin kural</item>
+        <item quantity="other">%1$d etkin kural</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s için varış ve ayrılış bölgeleri ayarlayın</string>
+    <string name="peer_supervise">Bu Cihazı Denetle</string>
+    <string name="peer_supervise_on">%1$s kişisinden gelen kilit açma isteklerini alır ve onaylarsınız</string>
+    <string name="peer_supervise_off">%1$s kişisinin size denetimli mod kilit açma istekleri göndermesine izin verin</string>
+    <string name="peer_messaging_sub">%1$s kişisinden sohbet mesajlarını aç/kapat</string>
+    <string name="peer_section_history">Hareket Geçmişi</string>
+    <string name="peer_location_history">Konum Geçmişi</string>
+    <string name="peer_location_history_sub">%1$s için hareket geçmişini ve harita raporunu görüntüleyin</string>
+    <string name="peer_section_retention">Uzak Veri Saklama</string>
+    <string name="peer_retention_location_sub">%1$s konum geçmişinizi ne kadar süre tutuyor</string>
+    <string name="peer_purge_location">%1$s Cihazındaki Tüm Konum Verilerini Sil</string>
+    <string name="peer_retention_messages_sub">%1$s gönderdiğiniz mesajları ne kadar süre tutuyor</string>
+    <string name="peer_purge_messages">%1$s Cihazındaki Tüm Mesajları Sil</string>
+    <string name="peer_precision_exact">Tam GPS</string>
+    <string name="peer_precision_exact_desc">Kesin koordinatlar</string>
+    <string name="peer_precision_suburb">Semt (~1 km)</string>
+    <string name="peer_precision_suburb_desc">Yalnızca mahalle düzeyi</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d sohbet silinsin mi?</item>
+        <item quantity="other">%1$d sohbet silinsin mi?</item>
+    </plurals>
+    <string name="conv_delete_locally">Yerel Olarak Sil</string>
+    <string name="conv_delete_locally_sub">Sohbeti yalnızca cihazınızdan kaldırır.</string>
+    <string name="conv_delete_both">Yerelden/Kişiden Sil</string>
+    <string name="conv_bulk_delete_both_sub">Sohbeti hem yerel olarak hem de kişinizden siler.</string>
+    <string name="conv_delete_both_sub">Sohbeti yerel olarak siler ve kişinin cihazında bu sohbet için bir silme isteği tetikler.</string>
+    <string name="conv_cd_exit_selection">Seçimden çık</string>
+    <string name="conv_cd_select_all">Tümünü Seç</string>
+    <string name="conv_cd_new_message">Yeni mesaj</string>
+    <string name="conv_sort_date">Tarih</string>
+    <string name="conv_sort_unread">Okunmamış</string>
+    <string name="conv_search_placeholder">Sohbetlerde ara…</string>
+    <string name="conv_tab_chats">Sohbetler</string>
+    <string name="conv_tab_archived">Arşivlenmiş</string>
+    <string name="conv_mark_read">Okundu İşaretle</string>
+    <string name="conv_archive">Arşivle</string>
+    <string name="conv_unarchive">Arşivden Çıkar</string>
+    <string name="conv_empty_no_results">\"%1$s\" için sonuç yok</string>
+    <string name="conv_empty_no_results_sub">Farklı bir arama terimi deneyin</string>
+    <string name="conv_empty_archived_title">Arşivlenmiş sohbet yok</string>
+    <string name="conv_empty_archived_sub">Gelen kutunuzu düzenli tutmak için sohbetleri arşivleyin</string>
+    <string name="conv_empty_title">Henüz mesaj yok</string>
+    <string name="conv_empty_sub">Sohbet başlatmak için haritayı açın\nve bir kişiye dokunun</string>
+    <string name="conv_delete_title">Sohbet silinsin mi?</string>
+    <string name="conv_delete_message">%1$s ile bu sohbeti nasıl silmek istersiniz?</string>
+    <string name="conv_messages_blocked">Mesajlar engellendi</string>
+    <string name="conv_preview_mine">Siz: %1$s</string>
+    <string name="conv_new_message_title">Yeni Mesaj</string>
+    <string name="conv_picker_empty">Henüz kişi yok. Kişi eklemek için bir QR kodu tarayın.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Sohbet geçmişi temizlensin mi?</string>
+    <string name="chat_clear_message">%1$s ile bu sohbeti nasıl temizlemek istersiniz?</string>
+    <string name="chat_clear_locally">Yerel Olarak Temizle</string>
+    <string name="chat_clear_both">Yerelden/Kişiden Temizle</string>
+    <string name="chat_clear_both_sub">Sohbeti yerel olarak temizler ve gönderdiğiniz mesajlar için %1$s kişisine bir silme isteği gönderir.</string>
+    <string name="chat_cd_options">Seçenekler</string>
+    <string name="chat_clear_history_menu">Sohbet Geçmişini Temizle</string>
+    <string name="chat_typing">%1$s yazıyor…</string>
+    <string name="chat_blocked_banner">%1$s kişisinden gelen mesajları engellediniz. Engeli kaldırmak için Kişiler\'e gidin.</string>
+    <string name="chat_delete_msg_title">Mesaj silinsin mi?</string>
+    <string name="chat_delete_msg_message">Bu mesajı nasıl silmek istersiniz?</string>
+    <string name="chat_delete_from_contact">Kişiden sil</string>
+    <string name="chat_delete_from_contact_sub">Sohbeti kişinin cihazından siler.</string>
+    <string name="chat_delete_both_sub">Sohbeti yerel olarak kaldırır ve kişinin cihazından otomatik olarak siler.</string>
+    <string name="chat_cd_share_location">Konum Paylaş</string>
+    <string name="chat_input_placeholder">Mesaj…</string>
+    <string name="chat_cd_send">Gönder</string>
+
+    <string name="common_close">Kapat</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS etkinleştirilsin mi?</string>
+    <string name="map_sos_deactivate_title">SOS devre dışı bırakılsın mı?</string>
+    <string name="map_sos_activate_msg">Bu, devre dışı bırakılana kadar konumunuzu her 15 saniyede bir belirlenen SOS kişilerinize yayınlar.</string>
+    <string name="map_sos_deactivate_msg">Bu, acil durum kişilerinize yapılan yüksek öncelikli konum yayınını durdurur.</string>
+    <string name="map_activate">Etkinleştir</string>
+    <string name="map_deactivate">Devre Dışı Bırak</string>
+    <string name="map_cd_style">Harita Stili</string>
+    <string name="map_cd_show_geofences">Coğrafi çitleri göster</string>
+    <string name="map_cd_hide_geofences">Coğrafi çitleri gizle</string>
+    <string name="map_cd_follow">Beni Takip Et</string>
+    <string name="map_cd_friends">Arkadaşlar</string>
+    <string name="map_no_friends">Henüz takip edilen kimse yok</string>
+    <string name="map_you">Siz</string>
+    <string name="map_cd_go_my_location">Konumuma git</string>
+    <string name="map_sos_active">⚠ SOS ETKİN</string>
+    <string name="map_away">Uzakta</string>
+    <string name="map_no_location_yet">Henüz konum yok</string>
+    <string name="map_cd_go_location">Konuma git</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS AÇIK</string>
+    <string name="map_overdue">Gecikti — yakın zamanda güncelleme yok</string>
+    <string name="map_stat_last_seen">Son görülme</string>
+    <string name="map_stat_battery">Pil</string>
+    <string name="map_stat_accuracy">Doğruluk</string>
+    <string name="map_stat_motion">Hareket</string>
+    <string name="map_stat_speed">Hız</string>
+    <string name="map_stat_elevation">Yükseklik</string>
+
+    <string name="common_ok">Tamam</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Geçmiş: %1$s</string>
+    <string name="history_select_person">Kişi Seç</string>
+    <string name="history_person_label">Kişi</string>
+    <string name="history_cd_prev_day">Önceki Gün</string>
+    <string name="history_cd_next_day">Sonraki Gün</string>
+    <string name="history_time_filter">Zaman Filtresi:</string>
+    <string name="history_cd_reset_time">Zamanı Sıfırla</string>
+    <string name="history_tab_list">Liste</string>
+    <string name="history_empty_title">Bu güne ait geçmiş yok</string>
+    <string name="history_empty_sub">Farklı bir tarih seçmeyi veya bağlantınızı kontrol etmeyi deneyin.</string>
+    <string name="history_start_time">Başlangıç Saati</string>
+    <string name="history_end_time">Bitiş Saati</string>
+    <string name="history_no_data_title">Konum verisi yok</string>
+    <string name="history_no_data_sub">Bu gün veya zaman aralığı için kayıtlı nokta yok.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d nokta kaydedildi</item>
+        <item quantity="other">%1$d nokta kaydedildi</item>
+    </plurals>
+    <string name="history_cd_dismiss">Kapat</string>
+    <string name="history_accuracy_label">±%1$s doğruluk</string>
+    <string name="history_emergency_sos">Acil durum SOS sinyali</string>
+    <string name="history_detail_location">Konum</string>
+    <string name="history_detail_coordinates">Koordinatlar</string>
+    <string name="history_within">±%1$s içinde</string>
+    <string name="history_detail_movement">Hareket</string>
+    <string name="history_movement_desc">%1$s %2$s, yön %3$s</string>
+
+    <string name="common_create">Oluştur</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Coğrafi çit alanı ekle</string>
+    <string name="geo_cd_assign">Coğrafi çit ata</string>
+    <string name="geo_unknown">Bilinmiyor</string>
+    <string name="geo_empty_title">Coğrafi çit yok</string>
+    <string name="geo_empty_sub">Coğrafi çit alanı oluşturmak için +\'ya dokunun, ardından paylaşım ayarlarından kişileri buna atayın.</string>
+    <string name="geo_delete_title">Coğrafi çit silinsin mi?</string>
+    <string name="geo_delete_simple">\"%1$s\" silinsin mi?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d kişiye atanmış. Silinmesi bu atamaları da kaldırır.</item>
+        <item quantity="other">\"%1$s\" %2$d kişiye atanmış. Silinmesi bu atamaları da kaldırır.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s için coğrafi çitler</string>
+    <string name="geo_empty_contact_title">Kişi için coğrafi çit yok</string>
+    <string name="geo_empty_contact_sub">Coğrafi çit alanı atamak ve varışta, ayrılışta veya her ikisinde uyarı verilip verilmeyeceğini seçmek için +\'ya dokunun.</string>
+    <string name="geo_no_areas_title">Henüz coğrafi çit yok</string>
+    <string name="geo_no_areas_msg">Önce Coğrafi Çitler ekranından bir alan oluşturun, sonra burada atayın.</string>
+    <string name="geo_radius_label">%1$s yarıçap</string>
+    <string name="geo_contacts_label">Kişiler: %1$s</string>
+    <string name="geo_no_contacts_assigned">Atanmış kişi yok</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d kural</item>
+        <item quantity="other">%1$d kural</item>
+    </plurals>
+    <string name="geo_trigger_enter">Giriş</string>
+    <string name="geo_trigger_exit">Çıkış</string>
+    <string name="geo_trigger_both">Her İkisi</string>
+    <string name="geo_edit_title">Coğrafi Çiti Düzenle</string>
+    <string name="geo_new_title">Yeni Coğrafi Çit</string>
+    <string name="geo_cd_my_location">Konumum</string>
+    <string name="geo_cd_radius_increase">Yarıçapı artır</string>
+    <string name="geo_cd_radius_decrease">Yarıçapı azalt</string>
+    <string name="geo_hint_tap">Yerleştirmek için haritaya dokunun veya basılı tutun</string>
+    <string name="geo_hint_move">Yakınlaştırmak için sıkıştırın • Taşımak için iğneyi basılı tutun veya sürükleyin</string>
+    <string name="geo_basic_info">Temel Bilgiler</string>
+    <string name="geo_search_title">Adresle Bul</string>
+    <string name="geo_search_label">Adres veya yer</string>
+    <string name="geo_search_placeholder">örn. Ana Cadde 10, İstanbul</string>
+    <string name="geo_search_no_results">Eşleşen adres bulunamadı</string>
+    <string name="geo_cd_search">Ara</string>
+    <string name="geo_name_placeholder">örn. Ev, İş</string>
+    <string name="geo_name_required">Ad gereklidir</string>
+    <string name="geo_latitude">Enlem</string>
+    <string name="geo_longitude">Boylam</string>
+    <string name="geo_lat_range">-90 ile 90 arası</string>
+    <string name="geo_lng_range">-180 ile 180 arası</string>
+    <string name="geo_radius">Yarıçap</string>
+    <string name="geo_radius_range">%1$d ile %2$d m arası girin</string>
+    <string name="geo_edit_assignment">Atamayı Düzenle</string>
+    <string name="geo_assign_title">Coğrafi Çit Ata</string>
+    <string name="geo_select_area">Coğrafi Çit Alanı Seç</string>
+    <string name="geo_trigger_title">Bildirim Tetikleyicisi</string>
+    <string name="geo_add_rule">Kural Ekle</string>
+    <string name="geo_alerts_all_times">Uyarılar her zaman etkin. Uyarıların ne zaman gönderileceğini kısıtlamak için bir kural ekleyin.</string>
+    <string name="geo_assign_action">Ata</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Yakınlık Uyarıları</string>
+    <string name="prox_empty_title">Takip edilen kişi yok</string>
+    <string name="prox_empty_sub">Konumunu takip etmeye başlamak için\nTara sekmesinden birinin davet QR kodunu tarayın</string>
+    <string name="prox_intro">Takip edilen bir kişi size seçilen mesafeden daha yakına geldiğinde bildirim alın.</string>
+    <string name="prox_alert_within">%1$s içindeyken uyar</string>
+    <string name="prox_alerts_off">Uyarılar kapalı</string>
+    <string name="prox_alert_radius">Uyarı yarıçapı</string>
+    <string name="prox_edit_schedule">Programı Düzenle</string>
+    <string name="prox_rules">Kurallar</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s için Program</string>
+    <string name="schedule_cd_add_rule">Kural ekle</string>
+    <string name="schedule_empty_title">Program kuralı yok</string>
+    <string name="schedule_empty_global">Konum her zaman paylaşılıyor. Paylaşımın ne zaman etkin olacağını kısıtlamak için bir kural ekleyin.</string>
+    <string name="schedule_empty_peer">Konum her zaman %1$s ile paylaşılıyor. Zamanı kısıtlamak için bir kural ekleyin.</string>
+    <string name="schedule_active_hint">Herhangi bir kural geçerli zamanla eşleştiğinde etkindir. Boş = her zaman açık.</string>
+    <string name="schedule_all_day">Tüm gün</string>
+    <string name="schedule_plus_one_day"> (+1 gün)</string>
+    <string name="schedule_rule_number">Kural %1$d</string>
+    <string name="schedule_cd_delete_rule">Kuralı sil</string>
+    <string name="schedule_edit_rule">Kuralı Düzenle</string>
+    <string name="schedule_label_optional">Etiket (isteğe bağlı)</string>
+    <string name="schedule_label_placeholder">örn. Mesai saatleri, Hafta sonları</string>
+    <string name="schedule_active_days">Etkin Günler</string>
+    <string name="schedule_time_window">Zaman Aralığı</string>
+    <string name="schedule_start">Başlangıç</string>
+    <string name="schedule_end">Bitiş</string>
+    <string name="schedule_overnight">Gece boyu: %1$s\'ten ertesi gün %2$s\'e kadar etkin</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Cihaz Denetim Altında</string>
+    <string name="gate_message">Ayarlara erişmek için denetleyici onayı gereklidir.</string>
+    <string name="gate_request_access">Erişim İste</string>
+    <string name="gate_waiting">Denetleyici onayı bekleniyor…</string>
+    <string name="gate_denied">Erişim denetleyici tarafından reddedildi.</string>
+    <string name="gate_timed_out">İstek zaman aşımına uğradı. Denetleyici yanıt vermedi.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Süresiz</string>
+    <string name="retention_keep_for">Saklama süresi: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d gün</item>
+        <item quantity="other">%1$d gün</item>
+    </plurals>
+
+    <string name="common_select">Seç</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Sabit Konum Seç</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Alt çubukta hangi sekmelerin görüneceğini ve sırasını seçin. Harita her zaman dahildir.</string>
+    <string name="customize_cd_move_up">Yukarı taşı</string>
+    <string name="customize_cd_move_down">Aşağı taşı</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Sürüm %1$s (derleme %2$d)</string>
+    <string name="about_tagline">Güvendiğiniz kişilerle özel konum paylaşımı. Hesap yok, bulut yok, bizim tarafımızdan takip yok.</string>
+    <string name="about_relay_connections">Aktarıcı Bağlantıları</string>
+    <string name="about_connected">Bağlı</string>
+    <string name="about_disconnected">Bağlı değil</string>
+    <string name="about_open_source">Açık Kaynak Kitaplıklar</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap tabanlı harita görüntüleme</string>
+    <string name="about_lib_okhttp_desc">Nostr aktarıcısı için WebSocket taşıması</string>
+    <string name="about_lib_compose_desc">Arayüz çatısı</string>
+    <string name="about_lib_hilt_desc">Bağımlılık enjeksiyonu</string>
+    <string name="about_lib_room_desc">Yerel veritabanı</string>
+    <string name="about_map_attribution">Harita verileri © OpenStreetMap katkıda bulunanları</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Kabul Et</string>
+    <string name="notif_someone">Birisi</string>
+    <string name="notif_sos_title">%1$s kişisinden SOS!</string>
+    <string name="notif_sos_text">%1$s, (%2$s, %3$s) konumunda SOS etkinleştirdi</string>
+    <string name="notif_supervisor_request_title">%1$s denetleyicisi olmanızı istiyor</string>
+    <string name="notif_supervisor_request_text">Bu cihazdan kilit açma onay isteklerine izin vermek için kabul edin</string>
+    <string name="notif_supervisor_request_big">Denetimli mod etkinken %1$s kişisinin size kilit açma onay istekleri göndermesine izin vermek için kabul edin.</string>
+    <string name="notif_supervised_active_title">Denetimli mod etkin</string>
+    <string name="notif_supervised_active_text">Denetleyiciniz onayladı — denetimli mod artık kurulu</string>
+    <string name="notif_supervised_declined_title">Denetimli mod reddedildi</string>
+    <string name="notif_supervised_declined_text">Denetleyiciniz isteği reddetti — denetimli mod kapatıldı</string>
+    <string name="notif_tracking_alert_title">Takip Uyarısı</string>
+    <string name="notif_tracking_proximity">%1$s sizinle ilgili bir yakınlık uyarısı aldı</string>
+    <string name="notif_tracking_geofence">%1$s, %2$s çitine girdiğinize/çıktığınıza dair bir uyarı aldı</string>
+    <string name="notif_tracking_generic">%1$s konumunuzu izliyor</string>
+    <string name="notif_track_update_title">%1$s kişisinden paylaşım güncellemesi</string>
+    <string name="notif_track_new_title">Yeni Kişi: %1$s</string>
+    <string name="notif_role_send_receive">Konum Gönder/Al</string>
+    <string name="notif_role_send">Konum Gönder</string>
+    <string name="notif_role_receive">Konum Al</string>
+    <string name="notif_role_none">Konum Paylaşımı Yok</string>
+    <string name="notif_track_requesting">%1$s şunu istiyor: %2$s</string>
+    <string name="notif_track_update_body">%1$s konum paylaşım şeklinizi güncellemek istiyor.</string>
+    <string name="notif_track_new_body">%1$s sizi kişi olarak ekledi ve bağlanmak istiyor.</string>
+    <string name="notif_contact_connected_title">Kişi Bağlandı</string>
+    <string name="notif_contact_connected_text">%1$s artık sizinle bağlantılı.</string>
+    <string name="notif_request_declined_title">İstek Reddedildi</string>
+    <string name="notif_request_declined_text">%1$s konum paylaşım isteğinizi reddetti.</string>
+    <string name="notif_message_person">%1$s kişisine mesaj</string>
+    <string name="notif_geofence_entered_title">%1$s, %2$s alanına girdi</string>
+    <string name="notif_geofence_left_title">%1$s, %2$s alanından ayrıldı</string>
+    <string name="notif_geofence_subtitle">%1$s · %2$s yarıçap</string>
+    <string name="notif_person_nearby">%1$s yakınlarda</string>
+    <string name="notif_distance_from_you">Size %1$s uzaklıkta</string>
+    <string name="notif_missed_title">%1$s kişisinden güncelleme yok</string>
+    <string name="notif_missed_text">Son görülme %1$s dk önce, (%2$s, %3$s) yakınında</string>
+    <string name="notif_sos_active_title">SOS ETKİN!</string>
+    <string name="notif_sos_active_text">Acil durum uyarısı SOS kişilerine yayınlanıyor</string>
+    <string name="notif_messages_group_title">LocaPeer Mesajları</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s kişisinden gelen kişi isteği reddedildi</string>
+    <string name="toast_now_supervising">Artık %1$s cihazını denetliyorsunuz</string>
+    <string name="toast_declined_supervision">%1$s kişisinden gelen denetim isteği reddedildi</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Az önce</string>
+    <string name="time_minutes_ago">%1$d dk önce</string>
+    <string name="fallback_me">Ben</string>
+    <string name="fallback_unknown">Bilinmiyor</string>
+    <string name="geo_unassigned">Atanmamış</string>
+    <string name="days_every_day">Her gün</string>
+    <string name="days_weekdays">Hafta içi</string>
+    <string name="days_weekends">Hafta sonları</string>
+    <string name="days_none">Gün yok</string>
+    <string name="chat_my_location_message">Mevcut konumum: %1$s</string>
+    <string name="scan_error_bad_pubkey">Geçersiz davet: hatalı açık anahtar</string>
+    <string name="scan_error_key_mismatch">Geçersiz davet: anahtarlar uyuşmuyor</string>
+    <string name="scan_error_unknown">Bilinmeyen hata</string>
+    <string name="scan_error_invalid_link">Geçersiz davet bağlantısı</string>
+    <string name="scan_fallback_contact">bu kişi</string>
+    <string name="backup_saved">Yedek kaydedildi: %1$s</string>
+    <string name="backup_saved_encrypted">Yedek kaydedildi (şifreli): %1$s</string>
+    <string name="backup_failed">Yedekleme başarısız: %1$s</string>
+    <string name="backup_could_not_read_file">Dosya okunamadı</string>
+    <string name="backup_could_not_write_file">Dosya yazılamadı</string>
+    <string name="backup_could_not_read">Yedek okunamadı: %1$s</string>
+    <string name="backup_incorrect_password">Yanlış parola</string>
+    <string name="restore_result_restored">Geri yüklendi: %1$s</string>
+    <string name="restore_result_failed">Başarısız: %1$s</string>
+    <string name="restore_nothing">Geri yüklenecek bir şey yok</string>
+    <string name="restore_failed">Geri yükleme başarısız: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d kişi</item>
+        <item quantity="other">%1$d kişi</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d coğrafi çit</item>
+        <item quantity="other">%1$d coğrafi çit</item>
+    </plurals>
+    <string name="peer_role_change_sent">Rol değişikliği isteği %1$s kişisine gönderildi</string>
+    <string name="peer_not_found">Kişi bulunamadı</string>
+    <string name="peer_purge_location_sent">TÜM konumlar için uzaktan silme komutu %1$s kişisine gönderildi</string>
+    <string name="peer_purge_messages_sent">TÜM mesajlar için uzaktan silme komutu %1$s kişisine gönderildi</string>
+    <string name="onboarding_error_key_length">Geçersiz anahtar — 64 onaltılık karakter olmalıdır.</string>
+    <string name="onboarding_error_key_range">Geçersiz özel anahtar — eğri aralığının dışında.</string>
+    <string name="onboarding_error_hex">Geçersiz onaltılık biçim.</string>
+    <string name="onboarding_error_import_failed">Anahtar içe aktarılamadı: %1$s</string>
 </resources>

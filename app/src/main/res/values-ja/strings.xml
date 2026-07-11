@@ -704,12 +704,19 @@
     <string name="backup_saved_encrypted">バックアップを保存しました（暗号化済み）：%1$s</string>
     <string name="backup_failed">バックアップに失敗しました：%1$s</string>
     <string name="backup_could_not_read_file">ファイルを読み込めませんでした</string>
+    <string name="backup_could_not_write_file">ファイルに書き込めませんでした</string>
     <string name="backup_could_not_read">バックアップを読み込めませんでした：%1$s</string>
     <string name="backup_incorrect_password">パスワードが正しくありません</string>
     <string name="restore_result_restored">復元済み：%1$s</string>
     <string name="restore_result_failed">失敗：%1$s</string>
     <string name="restore_nothing">復元するものがありません</string>
     <string name="restore_failed">復元に失敗しました：%1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">%1$d件の連絡先</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">%1$d件のジオフェンス</item>
+    </plurals>
     <string name="onboarding_error_hex">16進数の形式が無効です。</string>
     <string name="onboarding_error_key_length">キーが無効です。64桁の16進数文字である必要があります。</string>
     <string name="onboarding_error_key_range">秘密鍵が無効です。曲線の範囲外です。</string>
