@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── ช่องทางการแจ้งเตือนและบริการเบื้องหน้า ─────────────────────── -->
+    <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">การแพร่สัญญาณตำแหน่ง</string>
     <string name="channel_desc_heartbeat">แพร่สัญญาณตำแหน่งของคุณไปยังผู้ติดต่อที่ได้รับการอนุมัติ</string>
     <string name="channel_name_alerts">การแจ้งเตือน</string>
@@ -12,7 +12,7 @@
     <string name="notification_heartbeat_title">LocaPeer กำลังทำงาน</string>
     <string name="notification_heartbeat_text">กำลังแชร์ตำแหน่งของคุณกับผู้อื่น</string>
 
-    <!-- ── การดำเนินการทั่วไป ──────────────────────────────────────── -->
+    <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">บันทึก</string>
     <string name="common_cancel">ยกเลิก</string>
     <string name="common_done">เสร็จสิ้น</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">อนุมัติ</string>
     <string name="common_deny">ปฏิเสธ</string>
 
-    <!-- ── แท็บการนำทาง ──────────────────────────────────────────── -->
+    <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
     <string name="tab_map">แผนที่</string>
     <string name="tab_messages">ข้อความ</string>
     <string name="tab_history">ประวัติ</string>
@@ -35,15 +35,27 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">ตั้งค่า</string>
 
-    <!-- ── การเคลื่อนไหว / สถานะกิจกรรม ───────────────────────────────────────── -->
+    <!-- ── Motion / activity states ───────────────────────────────────────── -->
     <string name="motion_stationary">อยู่กับที่</string>
     <string name="motion_walking">กำลังเดิน</string>
     <string name="motion_running">กำลังวิ่ง</string>
     <string name="motion_cycling">ปั่นจักรยาน</string>
     <string name="motion_driving">กำลังขับรถ</string>
 
-    <!-- ── การตั้งค่า ────────────────────────────────────────────────── -->
+    <!-- ── Backup sections ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">กุญแจส่วนตัว</string>
+    <string name="backup_section_contacts">รายชื่อผู้ติดต่อ</string>
+    <string name="backup_section_geofences">รั้วเสมือน</string>
+    <string name="backup_section_settings">การตั้งค่า</string>
+
+    <!-- ── Supervision request dialog (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">คำขอการกำกับดูแล</string>
+    <string name="supervision_request_message">\"%1$s\" ขอเข้าถึงการตั้งค่าของตนเอง อนุญาตหรือไม่</string>
+
+    <!-- ── Settings screen ────────────────────────────────────────────────── -->
     <string name="settings_title">ตั้งค่า</string>
+
+    <!-- Section labels -->
     <string name="settings_section_location_privacy">ตำแหน่งและความเป็นส่วนตัว</string>
     <string name="settings_section_security">ความปลอดภัย</string>
     <string name="settings_section_map">แผนที่</string>
@@ -54,15 +66,669 @@
     <string name="settings_section_backup_keys">การสำรองข้อมูลและคีย์</string>
     <string name="settings_section_about">เกี่ยวกับ</string>
 
+    <!-- Profile -->
     <string name="settings_edit_name">แก้ไขชื่อ</string>
     <string name="settings_my_qr">QR ของฉัน</string>
     <string name="settings_no_name_set">ยังไม่ได้ตั้งชื่อ</string>
 
+    <!-- Location &amp; Privacy -->
     <string name="settings_share_location">แชร์ตำแหน่งของฉัน</string>
+    <string name="settings_broadcasting">กำลังส่งไปยังผู้ติดต่อของคุณ</string>
+    <string name="settings_not_broadcasting">ไม่ได้ส่ง</string>
+    <string name="settings_sharing_schedule">กำหนดการแชร์</string>
+    <string name="settings_always_on">เปิดตลอดเวลา</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">%1$d กฎ</item>
+    </plurals>
+    <string name="settings_geofences">รั้วเสมือน</string>
+    <string name="settings_geofences_subtitle">จัดการพื้นที่รั้วเสมือนที่แชร์ร่วมกัน</string>
+    <string name="settings_notify_when_tracked">แจ้งเตือนเมื่อถูกติดตาม</string>
+    <string name="settings_notify_when_tracked_subtitle">รับการแจ้งเตือนเมื่อการเตือนระยะใกล้หรือรั้วเสมือนของผู้ติดต่อที่เกี่ยวกับคุณถูกเรียกใช้งาน</string>
+    <string name="settings_my_location_history">ประวัติตำแหน่ง</string>
+    <string name="settings_my_location_history_subtitle">เรียกดูไทม์ไลน์ตำแหน่งของคุณเอง</string>
+    <string name="settings_lookup_addresses">ค้นหาที่อยู่</string>
+    <string name="settings_lookup_addresses_subtitle">แสดงที่อยู่สำหรับจุดในประวัติและหมุดบนแผนที่ที่แตะ รวมทั้งค้นหาด้วยที่อยู่เมื่อวางรั้วเสมือน โดยจะส่งพิกัดหรือคำค้นของคุณไปยังบริการแปลงพิกัดของอุปกรณ์ (มักเป็น Google)</string>
+
+    <!-- Security -->
+    <string name="settings_supervision_active">การกำกับดูแลทำงานอยู่</string>
+    <string name="settings_supervision_active_subtitle">การตั้งค่าต้องได้รับการอนุมัติจากผู้ดูแล</string>
+    <string name="settings_disable_supervised">ปิดโหมดถูกกำกับดูแล</string>
+    <string name="settings_supervised_mode">โหมดถูกกำกับดูแล</string>
+    <string name="settings_supervised_mode_subtitle">ต้องได้รับการอนุมัติจากผู้ดูแลจึงจะเข้าถึงการตั้งค่าได้</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">จุดเริ่มต้น</string>
+    <string name="settings_map_current_location">ตำแหน่งปัจจุบัน</string>
+    <string name="settings_map_all_contacts">ผู้ติดต่อทั้งหมด</string>
+    <string name="settings_map_fixed_location">ตำแหน่งคงที่</string>
+    <string name="settings_map_last_position">ตำแหน่งล่าสุด</string>
+    <string name="settings_map_starting_point_title">จุดเริ่มต้นของแผนที่</string>
+    <string name="settings_no_location_set">ยังไม่ได้กำหนดตำแหน่ง</string>
+    <string name="settings_pick_location_on_map">เลือกตำแหน่งบนแผนที่</string>
+    <string name="settings_default_zoom_level">ระดับการซูมเริ่มต้น</string>
+    <string name="settings_map_pin_colour">สีหมุดแผนที่</string>
+
+    <!-- Battery &amp; Performance -->
+    <string name="settings_update_cadence">ความถี่ในการอัปเดต</string>
+    <string name="settings_update_cadence_subtitle">ปรับความถี่ที่ตำแหน่งของคุณจะถูกส่ง</string>
+    <string name="settings_update_cadence_dialog_message">ควบคุมความถี่ในการอัปเดตตำแหน่งตามกิจกรรมของคุณ การอัปเดตบ่อยจะใช้แบตเตอรี่มากขึ้น</string>
+    <string name="settings_update_cadence_reset">รีเซ็ตเป็นค่าเริ่มต้น</string>
+    <string name="settings_min_distance_filtering">การกรองระยะทางขั้นต่ำ</string>
+    <string name="settings_min_distance_filtering_subtitle">แสดงเฉพาะจุดที่อยู่ห่างจากจุดก่อนหน้าอย่างน้อยตามระยะนี้</string>
+    <string name="settings_discard_low_accuracy">ทิ้งพิกัดที่ความแม่นยำต่ำ</string>
+    <string name="settings_discard_low_accuracy_subtitle">ไม่ส่งหรือบันทึกพิกัดของคุณที่มีรัศมีความแม่นยำมากกว่าค่านี้ SOS จะไม่ถูกข้ามเด็ดขาด</string>
+    <string name="settings_hide_low_accuracy">ซ่อนจุดที่ความแม่นยำต่ำ</string>
+    <string name="settings_hide_low_accuracy_subtitle">ซ่อนจุดในประวัติที่มีรัศมีความแม่นยำมากกว่าค่านี้ จะไม่มีการลบข้อมูลใด ๆ</string>
+    <string name="settings_low_battery" formatted="false">แบตเตอรี่ต่ำ (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d นาที</string>
+    <string name="settings_motion_detection">การตรวจจับการเคลื่อนไหว</string>
+    <string name="settings_motion_detection_on">เปิด — ช่วยระบุประเภทการเคลื่อนไหว (เดิน ขับรถ) ในประวัติได้แม่นยำขึ้น</string>
+    <string name="settings_motion_detection_off">ปิด — อนุญาตการเข้าถึงกิจกรรมทางกายเพื่อป้ายกำกับการเคลื่อนไหวที่แม่นยำขึ้น</string>
+    <string name="settings_enable_motion_title">เปิดการตรวจจับการเคลื่อนไหว</string>
+    <string name="settings_enable_motion_message">การเข้าถึงกิจกรรมทางกายช่วยให้ LocaPeer แยกแยะการเดิน การขับรถ และการอยู่นิ่งในประวัติของคุณได้แม่นยำขึ้น ขณะนี้ปิดอยู่ — คุณสามารถเปิดใหม่ได้จากการตั้งค่าระบบ</string>
+    <string name="settings_open_settings">เปิดการตั้งค่า</string>
+
+    <!-- Units &amp; Display -->
+    <string name="settings_speed_units">หน่วยความเร็ว</string>
+    <string name="settings_speed_imperial">อิมพีเรียล (mph)</string>
+    <string name="settings_speed_metric">เมตริก (km/h)</string>
+    <string name="settings_elevation_units">หน่วยความสูง</string>
+    <string name="settings_elevation_imperial">อิมพีเรียล (ฟุต)</string>
+    <string name="settings_elevation_metric">เมตริก (เมตร)</string>
+    <string name="settings_distance_units">หน่วยระยะทาง</string>
+    <string name="settings_distance_imperial">อิมพีเรียล (ft/mi)</string>
+    <string name="settings_distance_metric">เมตริก (m/km)</string>
+    <string name="settings_time_format">รูปแบบเวลา</string>
+    <string name="settings_time_24h">24 ชั่วโมง (13:30)</string>
+    <string name="settings_time_12h">12 ชั่วโมง (1:30 PM)</string>
+
+    <!-- Retention -->
+    <string name="settings_retention_location">ข้อมูลตำแหน่ง</string>
+    <string name="settings_retention_location_subtitle">เก็บข้อมูลตำแหน่งของผู้ติดต่อไว้ในเครื่องนานเท่าใด</string>
+    <string name="settings_clear_all_location">ล้างข้อมูลตำแหน่งทั้งหมด</string>
+    <string name="settings_retention_messages">ข้อความ</string>
+    <string name="settings_retention_messages_subtitle">เก็บข้อความที่ได้รับไว้ในเครื่องนานเท่าใด</string>
+    <string name="settings_clear_all_messages">ล้างข้อความทั้งหมด</string>
+
+    <!-- Appearance -->
+    <string name="settings_customize_nav">ปรับแต่งการนำทาง</string>
+    <string name="settings_customize_nav_subtitle">เลือกและจัดลำดับแท็บด้านล่าง</string>
+    <string name="settings_start_page">หน้าเริ่มต้น</string>
     <string name="settings_language">ภาษา</string>
     <string name="settings_language_title">ภาษาของแอป</string>
     <string name="settings_language_system">ค่าเริ่มต้นของระบบ</string>
 
-    <string name="common_ok">ตกลง</string>
+    <!-- Backup &amp; Keys -->
+    <string name="settings_export_backup">ส่งออกข้อมูลสำรอง</string>
+    <string name="settings_export_backup_subtitle">บันทึกกุญแจส่วนตัวและรายชื่อผู้ติดต่อลงไฟล์ เก็บไฟล์นี้ให้ปลอดภัย!</string>
+    <string name="settings_import_backup">นำเข้าข้อมูลสำรอง</string>
+    <string name="settings_import_backup_subtitle">กู้คืนจากไฟล์ที่ส่งออกไว้ก่อนหน้า</string>
+    <string name="settings_view_private_key">ดูกุญแจส่วนตัว</string>
+    <string name="settings_view_private_key_subtitle">แสดงกุญแจประจำตัวแบบฐานสิบหก 64 อักขระของคุณ</string>
+
+    <!-- About -->
+    <string name="settings_about_locapeer">เกี่ยวกับ LocaPeer</string>
+    <string name="settings_about_subtitle">เวอร์ชัน สถานะรีเลย์ โอเพนซอร์ส</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">แก้ไขชื่อที่แสดง</string>
+    <string name="settings_display_name_label">ชื่อที่แสดง</string>
+    <string name="settings_my_invite_qr">QR คำเชิญของฉัน</string>
+    <string name="settings_invite_qr_subtitle">ผู้อื่นสามารถสแกนเพื่อเริ่มติดตามคุณได้</string>
+    <string name="settings_invite_qr_cd">QR คำเชิญ</string>
+    <string name="settings_private_key_title">กุญแจส่วนตัว</string>
+    <string name="settings_private_key_warning">เก็บไว้ให้ปลอดภัย ใครก็ตามที่มีกุญแจนี้สามารถปลอมตัวเป็นคุณได้</string>
+    <string name="settings_clear_location_title">ล้างประวัติตำแหน่ง?</string>
+    <string name="settings_clear_location_message">จุดตำแหน่งที่บันทึกไว้ทั้งหมดจะถูกลบอย่างถาวร</string>
+    <string name="settings_clear_messages_title">ล้างประวัติข้อความ?</string>
+    <string name="settings_clear_messages_message">ข้อความที่บันทึกไว้ทั้งหมดจะถูกลบอย่างถาวร</string>
+    <string name="settings_encrypted_backup_title">ข้อมูลสำรองที่เข้ารหัส</string>
+    <string name="settings_encrypted_backup_message">ข้อมูลสำรองนี้ถูกเข้ารหัส กรุณาป้อนรหัสผ่านเพื่อดำเนินการต่อ</string>
+    <string name="settings_select_restore_title">เลือกข้อมูลที่จะกู้คืน</string>
+    <string name="settings_select_export_title">เลือกข้อมูลที่จะส่งออก</string>
+    <string name="settings_export_password_hint">ตั้งรหัสผ่านเพื่อเข้ารหัสไฟล์สำรองของคุณ (ไม่บังคับ)</string>
+    <string name="settings_backup_password_optional">รหัสผ่านข้อมูลสำรอง (ไม่บังคับ)</string>
+    <string name="settings_select_sections">เลือกส่วนที่จะรวม:</string>
+    <string name="settings_choose_file_location">เลือกตำแหน่งไฟล์</string>
+    <string name="settings_not_in_backup">ไม่มีในข้อมูลสำรองนี้</string>
+    <string name="settings_enable_supervised_title">เปิดโหมดถูกกำกับดูแล</string>
+    <string name="settings_enable_supervised_message">เลือกผู้ติดต่อที่จะเป็นผู้ดูแล เขาต้องอนุมัติการเข้าถึงการตั้งค่าจากอุปกรณ์ของเขา</string>
+    <string name="settings_no_peers_found">ไม่พบผู้ติดต่อ เพิ่มผู้ติดต่อก่อนโดยสแกน QR คำเชิญของเขา</string>
+    <string name="settings_disable_supervised_title">ปิดโหมดถูกกำกับดูแล?</string>
+    <string name="settings_disable_supervised_message">จะเข้าถึงการตั้งค่าได้โดยไม่ต้องมีการอนุมัติจากผู้ดูแล</string>
+
+    <!-- ── More common / reusable ─────────────────────────────────────────── -->
+    <string name="common_remove">นำออก</string>
+    <string name="common_name">ชื่อ</string>
+    <string name="common_search">ค้นหา</string>
+    <string name="common_sort">จัดเรียง</string>
+
+    <!-- Content descriptions (shared) -->
+    <string name="cd_message">ข้อความ</string>
+    <string name="cd_show_on_map">แสดงบนแผนที่</string>
+    <string name="cd_more_options">ตัวเลือกเพิ่มเติม</string>
+
+    <!-- ── Contacts screen ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">เลือกแล้ว %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">ยกเลิกการเลือก</string>
+    <string name="contacts_cd_select_all">เลือกทั้งหมด</string>
+    <string name="contacts_cd_deselect_all">ยกเลิกเลือกทั้งหมด</string>
+    <string name="contacts_cd_qr_invite">QR / คำเชิญ</string>
+    <string name="contacts_cd_pending_requests">คำขอที่รอดำเนินการ</string>
+    <string name="contacts_sort_last_seen">เห็นล่าสุด</string>
+    <string name="contacts_search_placeholder">ค้นหาผู้ติดต่อ…</string>
+    <string name="contacts_empty_title">ยังไม่มีผู้ติดต่อ</string>
+    <string name="contacts_empty_subtitle">สแกนรหัส QR เพื่อเชื่อมต่อกับใครบางคนและเริ่มแชร์ตำแหน่ง</string>
+    <string name="contacts_scan_qr">สแกนรหัส QR</string>
+    <string name="contacts_bulk_delete_messages">ลบข้อความ</string>
+    <string name="contacts_bulk_delete_locations">ลบตำแหน่ง</string>
+    <string name="contacts_last_seen">เห็นล่าสุด: %1$s</string>
+    <string name="contacts_no_location_yet">ยังไม่มีข้อมูลตำแหน่ง</string>
+    <string name="contacts_view_sharing_settings">การตั้งค่าการแชร์</string>
+    <string name="contacts_view_location_history">ประวัติตำแหน่ง</string>
+    <string name="contacts_rename_contact">เปลี่ยนชื่อผู้ติดต่อ</string>
+    <string name="contacts_on_contact_device">บนอุปกรณ์ของผู้ติดต่อ</string>
+    <string name="contacts_delete_my_messages_title">ลบข้อความของฉัน</string>
+    <string name="contacts_delete_locations_title">ลบตำแหน่งที่แชร์</string>
+    <string name="contacts_remove_contact_title">นำผู้ติดต่อออก</string>
+    <string name="contacts_leave_title">ลบผู้ติดต่อและข้อมูล</string>
+    <string name="contacts_rename_title">เปลี่ยนชื่อผู้ติดต่อ</string>
+    <string name="contacts_remove_contact_body">นำ %1$s ออกจากรายชื่อผู้ติดต่อของคุณ? ประวัติตำแหน่งของเขาจะถูกลบออกจากเครื่องนี้ด้วย</string>
+    <string name="contacts_leave_body">การดำเนินการนี้จะนำคุณออกจากรายชื่อผู้ติดต่อของ %1$s และลบข้อความและข้อมูลตำแหน่งทั้งหมดของคุณออกจากอุปกรณ์ของเขา คุณจะไม่สามารถเห็นตำแหน่งของเขาอีกด้วย</string>
+    <string name="contacts_delete_my_messages_body">การดำเนินการนี้จะลบข้อความทั้งหมดที่คุณส่งออกจากอุปกรณ์ของ %1$s ไม่สามารถเลิกทำได้</string>
+    <string name="contacts_delete_locations_body">การดำเนินการนี้จะลบข้อมูลตำแหน่งทั้งหมดที่คุณแชร์ออกจากอุปกรณ์ของ %1$s ไม่สามารถเลิกทำได้</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">นำผู้ติดต่อ %1$d รายออก</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">นำผู้ติดต่อ %1$d รายออก? ประวัติตำแหน่งของพวกเขาจะถูกลบออกจากเครื่องนี้ด้วย</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">ลบข้อความทั้งหมดที่คุณส่งจากอุปกรณ์ของผู้ติดต่อ %1$d รายจากระยะไกล? ไม่สามารถเลิกทำได้</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">ลบประวัติตำแหน่งทั้งหมดที่คุณแชร์จากอุปกรณ์ของผู้ติดต่อ %1$d รายจากระยะไกล? ไม่สามารถเลิกทำได้</item>
+    </plurals>
+
+    <string name="common_continue">ดำเนินการต่อ</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">กู้คืนจากข้อมูลสำรอง</string>
+    <string name="onboarding_restore_message">วางกุญแจส่วนตัวแบบฐานสิบหก 64 อักขระของคุณเพื่อกู้คืนตัวตนและรายชื่อผู้ติดต่อ</string>
+    <string name="onboarding_private_key_hex">กุญแจส่วนตัว (ฐานสิบหก)</string>
+    <string name="onboarding_tagline">แชร์ตำแหน่งแบบส่วนตัวกับผู้ติดต่อ\nไม่มีบัญชี ไม่มีเซิร์ฟเวอร์ผูกขาด</string>
+    <string name="onboarding_feature_e2e_title">เข้ารหัสจากปลายถึงปลาย</string>
+    <string name="onboarding_feature_e2e_subtitle">ตำแหน่งของคุณถูกเข้ารหัสบนอุปกรณ์</string>
+    <string name="onboarding_feature_servers_title">ไม่มีเซิร์ฟเวอร์ผูกขาด</string>
+    <string name="onboarding_feature_servers_subtitle">ใช้รีเลย์ Nostr แบบเปิดเป็นช่องทางส่งข้อมูลที่ปลอดภัย — ข้อมูลของคุณยังคงถูกเข้ารหัสและเป็นส่วนตัว</string>
+    <string name="onboarding_feature_phone_title">อยู่บนโทรศัพท์ของคุณ</string>
+    <string name="onboarding_feature_phone_subtitle">ประวัติตำแหน่งทั้งหมดอยู่บนอุปกรณ์ของคุณ มีเพียงตำแหน่งปัจจุบันที่แชร์กับผู้ติดต่อที่เลือก</string>
+    <string name="onboarding_name_prompt">ให้ผู้ติดต่อเรียกคุณว่าอะไรดี?</string>
+    <string name="onboarding_name_placeholder">เช่น แม่ พ่อ ฝน…</string>
+    <string name="onboarding_get_started">เริ่มต้นใช้งาน</string>
+    <string name="onboarding_restore_from_backup">กู้คืนจากข้อมูลสำรอง</string>
+    <string name="onboarding_key_note">กุญแจส่วนตัวของคุณถูกสร้างในเครื่องและจะไม่ออกจากอุปกรณ์นี้</string>
+    <string name="onboarding_permissions_title">สิทธิ์</string>
+    <string name="onboarding_permissions_desc">LocaPeer ต้องการสิทธิ์ตำแหน่งเพื่อแชร์ตำแหน่งของคุณ สิทธิ์กล้องเพื่อสแกนรหัสคำเชิญ และสิทธิ์การแจ้งเตือนสำหรับสถานะเบื้องหลัง สิทธิ์กิจกรรมทางกายเป็นตัวเลือก — ช่วยป้ายกำกับการเคลื่อนไหว (เดิน ขับรถ) ได้แม่นยำขึ้น</string>
+    <string name="onboarding_before_ask_title">ก่อนที่เราจะขอ</string>
+    <string name="onboarding_before_ask_intro">คุณจะเห็นข้อความจากระบบสองสามรายการต่อจากนี้:</string>
+    <string name="onboarding_before_ask_location">• ตำแหน่ง — จำเป็น เพื่อแชร์ตำแหน่งของคุณ</string>
+    <string name="onboarding_before_ask_camera">• กล้อง — เพื่อสแกนรหัสคำเชิญ</string>
+    <string name="onboarding_before_ask_notifications">• การแจ้งเตือน — สำหรับสถานะเบื้องหลัง</string>
+    <string name="onboarding_before_ask_activity">• กิจกรรมทางกาย — ไม่บังคับ ช่วยให้ LocaPeer แยกแยะการเดิน การขับรถ และการอยู่นิ่งได้แม่นยำขึ้น ข้ามได้และเปิดภายหลังในการตั้งค่า</string>
+    <string name="onboarding_grant_permissions">ให้สิทธิ์</string>
+    <string name="onboarding_bg_location_title">ตำแหน่งเบื้องหลัง</string>
+    <string name="onboarding_bg_location_desc">เพื่อให้ผู้ติดต่อได้รับข้อมูลอัปเดตขณะปิดแอป กรุณาเลือก \"อนุญาตตลอดเวลา\" ในหน้าจอถัดไป</string>
+    <string name="onboarding_bg_location_error">ต้องใช้ตำแหน่งเบื้องหลังเพื่ออัปเดตผู้ติดต่อเมื่อปิดแอป กรุณาลองอีกครั้งและเลือก \"อนุญาตตลอดเวลา\"</string>
+    <string name="onboarding_configure_location">ตั้งค่าตำแหน่ง</string>
+    <string name="onboarding_battery_title">แบตเตอรี่</string>
+    <string name="onboarding_battery_desc">Android อาจหยุด LocaPeer เพื่อประหยัดแบตเตอรี่ เพื่อการอัปเดตที่เชื่อถือได้ กรุณายกเว้น LocaPeer จากการเพิ่มประสิทธิภาพ</string>
+    <string name="onboarding_disable_optimizations">ปิดการเพิ่มประสิทธิภาพ</string>
+    <string name="onboarding_done_title">พร้อมแล้ว!</string>
+    <string name="onboarding_done_desc">เครือข่ายตำแหน่งส่วนตัวของคุณพร้อมใช้งานแล้ว</string>
+    <string name="onboarding_start_using">เริ่มใช้ LocaPeer</string>
+
+    <string name="common_try_again">ลองอีกครั้ง</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">สแกนคำเชิญ</string>
+    <string name="scan_camera_needed">ต้องใช้สิทธิ์กล้องเพื่อสแกนรหัส QR</string>
+    <string name="scan_grant_permission">ให้สิทธิ์</string>
+    <string name="scan_add_contact_title">เพิ่มผู้ติดต่อ?</string>
+    <string name="scan_add_contact_message">การดำเนินการนี้จะเชื่อมต่อคุณกับ %1$s และเริ่มแชร์ตำแหน่งซึ่งกันและกัน</string>
+    <string name="scan_add_share">เพิ่มและแชร์</string>
+    <string name="scan_request_sent_title">ส่งคำขอแล้ว!</string>
+    <string name="scan_request_sent_message">ส่งคำขอไปยัง %1$s แล้ว คุณจะเชื่อมต่อกันเมื่อเขายอมรับ</string>
+    <string name="scan_failed">สแกนล้มเหลว: %1$s</string>
+
     <string name="cd_back">กลับ</string>
+    <string name="common_review">ตรวจสอบ</string>
+    <string name="common_decline">ปฏิเสธ</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">ส่ง/รับ</string>
+    <string name="role_send">ส่ง</string>
+    <string name="role_receive">รับ</string>
+    <string name="role_none">ไม่แชร์</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">คำเชิญของฉัน</string>
+    <string name="invite_tab_add_contact">เพิ่มผู้ติดต่อ</string>
+    <string name="invite_your_qr_title">รหัส QR ของคุณ</string>
+    <string name="invite_your_qr_subtitle">ให้ใครบางคนสแกนเพื่อติดตามตำแหน่งของคุณ</string>
+    <string name="invite_qr_cd">รหัส QR ของคุณ</string>
+    <string name="invite_qr_error">เกิดข้อผิดพลาดในการสร้าง QR</string>
+    <string name="invite_share_link">แชร์ลิงก์คำเชิญ</string>
+    <string name="invite_encryption_note">ตำแหน่งของคุณจะถูกเข้ารหัสเฉพาะสำหรับอุปกรณ์ของผู้สแกน</string>
+    <string name="invite_camera_required_title">ต้องการการเข้าถึงกล้อง</string>
+    <string name="invite_camera_required_message">ให้สิทธิ์กล้องเพื่อสแกนรหัส QR</string>
+    <string name="invite_point_camera">หันกล้องไปที่รหัส QR ของ LocaPeer</string>
+    <string name="invite_paste_title">หรือวางลิงก์คำเชิญ</string>
+    <string name="invite_process_link">ประมวลผลลิงก์</string>
+    <string name="invite_fallback_name">ผู้ติดต่อ</string>
+    <string name="invite_success_message">คุณจะเชื่อมต่อกับ %1$s เมื่อเขายอมรับ</string>
+    <string name="invite_confirm_add_title">เพิ่ม %1$s?</string>
+    <string name="invite_confirm_add_message">เพิ่มเขาในรายชื่อผู้ติดต่อและแชร์ตำแหน่ง?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">ไม่มีคำขอที่รอดำเนินการ</string>
+    <string name="pending_requesting">กำลังขอ: %1$s · %2$s</string>
+    <string name="pending_role_change">คำขอเปลี่ยนบทบาท · %1$s</string>
+    <string name="pending_new_request">คำขอแชร์ใหม่ · %1$s</string>
+
+    <string name="common_save_changes">บันทึกการเปลี่ยนแปลง</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">อัปเดตการตั้งค่าการแชร์</string>
+    <string name="incoming_new_title">คำขอผู้ติดต่อใหม่</string>
+    <string name="incoming_update_subtitle">%1$s ต้องการอัปเดตวิธีที่คุณแชร์ ตรวจสอบการตั้งค่าด้านล่าง</string>
+    <string name="incoming_new_subtitle">%1$s เพิ่มคุณเป็นผู้ติดต่อ! ตอนนี้คุณเลือกได้ว่าจะแชร์อะไรกลับ</string>
+    <string name="incoming_section_location">ตำแหน่ง</string>
+    <string name="incoming_share_my_location">แชร์ตำแหน่งของฉันกับ %1$s</string>
+    <string name="incoming_share_my_location_sub">เขาจะเห็นว่าคุณอยู่ที่ไหน</string>
+    <string name="incoming_see_their_location">ดูตำแหน่งของ %1$s</string>
+    <string name="incoming_see_their_location_sub">คุณจะเห็นว่าเขาอยู่ที่ไหน</string>
+    <string name="incoming_section_messaging">การส่งข้อความ</string>
+    <string name="incoming_allow_messages">อนุญาตข้อความ</string>
+    <string name="incoming_allow_messages_sub">รับข้อความแชทจาก %1$s</string>
+
+    <string name="common_request">ขอ</string>
+    <string name="common_edit">แก้ไข</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">การตั้งค่าผู้ติดต่อ</string>
+    <string name="peer_section_roles">บทบาทการแชร์ตำแหน่ง</string>
+    <string name="peer_send_on">%1$s เห็นตำแหน่งของคุณได้</string>
+    <string name="peer_send_off">คุณไม่ได้แชร์ตำแหน่งกับ %1$s</string>
+    <string name="peer_receive_title">รับตำแหน่งของ %1$s</string>
+    <string name="peer_receive_on">คุณเห็นตำแหน่งของ %1$s ได้</string>
+    <string name="peer_receive_off">คุณไม่มีสิทธิ์เห็นตำแหน่งของ %1$s</string>
+    <string name="peer_section_privacy">ความเป็นส่วนตัวและการควบคุมการแชร์</string>
+    <string name="peer_pause_sharing">หยุดแชร์ชั่วคราว</string>
+    <string name="peer_pause_sub">หยุดส่งตำแหน่งของคุณให้ %1$s ชั่วคราว</string>
+    <string name="peer_precision">ความแม่นยำของตำแหน่ง</string>
+    <string name="peer_precision_exact_sub">พิกัด GPS ที่แน่นอน</string>
+    <string name="peer_precision_suburb_sub">ตำแหน่งโดยประมาณ (ระดับย่าน)</string>
+    <string name="peer_always_sharing">แชร์ตลอดเวลา</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">%1$d กฎการแชร์ที่ทำงานอยู่</item>
+    </plurals>
+    <string name="peer_section_alerts">การเตือนและการเฝ้าดู</string>
+    <string name="peer_sos_contact">ผู้ติดต่อ SOS</string>
+    <string name="peer_sos_sub">รับการเตือนฉุกเฉินของคุณแม้การแชร์จะหยุดชั่วคราว</string>
+    <string name="peer_missed_alert">การเตือนตำแหน่งขาดหาย</string>
+    <string name="peer_missed_on">แจ้งฉันหาก %1$s หยุดรายงานตำแหน่ง</string>
+    <string name="peer_requires_access">ต้องมีสิทธิ์เข้าถึงตำแหน่งของ %1$s</string>
+    <string name="peer_proximity_alert">การเตือนระยะใกล้</string>
+    <string name="peer_proximity_sub">แจ้งฉันเมื่อ %1$s อยู่ใกล้</string>
+    <string name="peer_alert_radius">รัศมีการเตือน</string>
+    <string name="peer_alert_schedule">กำหนดการเตือน</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">%1$d กฎที่ทำงานอยู่</item>
+    </plurals>
+    <string name="peer_geofences_sub">ตั้งค่าโซนมาถึงและออกเดินทางสำหรับ %1$s</string>
+    <string name="peer_supervise">กำกับดูแลอุปกรณ์นี้</string>
+    <string name="peer_supervise_on">คุณรับและอนุมัติคำขอปลดล็อกจาก %1$s</string>
+    <string name="peer_supervise_off">อนุญาตให้ %1$s ส่งคำขอปลดล็อกโหมดถูกกำกับดูแลถึงคุณ</string>
+    <string name="peer_messaging_sub">เปิด/ปิดข้อความแชทจาก %1$s</string>
+    <string name="peer_section_history">ประวัติการเดินทาง</string>
+    <string name="peer_location_history">ประวัติตำแหน่ง</string>
+    <string name="peer_location_history_sub">ดูประวัติการเดินทางและรายงานแผนที่ของ %1$s</string>
+    <string name="peer_section_retention">การเก็บข้อมูลระยะไกล</string>
+    <string name="peer_retention_location_sub">%1$s เก็บประวัติตำแหน่งของคุณนานเท่าใด</string>
+    <string name="peer_purge_location">ล้างข้อมูลตำแหน่งทั้งหมดจาก %1$s</string>
+    <string name="peer_retention_messages_sub">%1$s เก็บข้อความที่คุณส่งนานเท่าใด</string>
+    <string name="peer_purge_messages">ล้างข้อความทั้งหมดจาก %1$s</string>
+    <string name="peer_precision_exact">GPS แน่นอน</string>
+    <string name="peer_precision_exact_desc">พิกัดแม่นยำ</string>
+    <string name="peer_precision_suburb">ย่าน (~1 กม.)</string>
+    <string name="peer_precision_suburb_desc">ระดับย่านเท่านั้น</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">ลบ %1$d บทสนทนา?</item>
+    </plurals>
+    <string name="conv_delete_locally">ลบในเครื่อง</string>
+    <string name="conv_delete_locally_sub">ลบบทสนทนาออกจากอุปกรณ์ของคุณเท่านั้น</string>
+    <string name="conv_delete_both">ลบในเครื่อง/จากผู้ติดต่อ</string>
+    <string name="conv_bulk_delete_both_sub">ลบบทสนทนาทั้งในเครื่องและจากผู้ติดต่อของคุณ</string>
+    <string name="conv_delete_both_sub">ลบบทสนทนาในเครื่องและส่งคำขอลบบทสนทนาไปยังอุปกรณ์ของผู้ติดต่อ</string>
+    <string name="conv_cd_exit_selection">ออกจากการเลือก</string>
+    <string name="conv_cd_select_all">เลือกทั้งหมด</string>
+    <string name="conv_cd_new_message">ข้อความใหม่</string>
+    <string name="conv_sort_date">วันที่</string>
+    <string name="conv_sort_unread">ยังไม่ได้อ่าน</string>
+    <string name="conv_search_placeholder">ค้นหาบทสนทนา…</string>
+    <string name="conv_tab_chats">แชท</string>
+    <string name="conv_tab_archived">เก็บถาวร</string>
+    <string name="conv_mark_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
+    <string name="conv_archive">เก็บถาวร</string>
+    <string name="conv_unarchive">เลิกเก็บถาวร</string>
+    <string name="conv_empty_no_results">ไม่มีผลลัพธ์สำหรับ \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">ลองใช้คำค้นอื่น</string>
+    <string name="conv_empty_archived_title">ไม่มีแชทที่เก็บถาวร</string>
+    <string name="conv_empty_archived_sub">เก็บถาวรแชทเพื่อให้กล่องขาเข้าเป็นระเบียบ</string>
+    <string name="conv_empty_title">ยังไม่มีข้อความ</string>
+    <string name="conv_empty_sub">เปิดแผนที่แล้วแตะที่บุคคล\nเพื่อเริ่มบทสนทนา</string>
+    <string name="conv_delete_title">ลบบทสนทนา?</string>
+    <string name="conv_delete_message">คุณต้องการลบบทสนทนากับ %1$s อย่างไร?</string>
+    <string name="conv_messages_blocked">ข้อความถูกบล็อก</string>
+    <string name="conv_preview_mine">คุณ: %1$s</string>
+    <string name="conv_new_message_title">ข้อความใหม่</string>
+    <string name="conv_picker_empty">ยังไม่มีผู้ติดต่อ สแกนรหัส QR เพื่อเพิ่มผู้ติดต่อ</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">ล้างประวัติแชท?</string>
+    <string name="chat_clear_message">คุณต้องการล้างบทสนทนากับ %1$s อย่างไร?</string>
+    <string name="chat_clear_locally">ล้างในเครื่อง</string>
+    <string name="chat_clear_both">ล้างในเครื่อง/จากผู้ติดต่อ</string>
+    <string name="chat_clear_both_sub">ล้างแชทในเครื่องและส่งคำขอลบข้อความที่คุณส่งไปยัง %1$s</string>
+    <string name="chat_cd_options">ตัวเลือก</string>
+    <string name="chat_clear_history_menu">ล้างประวัติแชท</string>
+    <string name="chat_typing">%1$s กำลังพิมพ์…</string>
+    <string name="chat_blocked_banner">คุณได้บล็อกข้อความจาก %1$s ไปที่ผู้ติดต่อเพื่อเลิกบล็อก</string>
+    <string name="chat_delete_msg_title">ลบข้อความ?</string>
+    <string name="chat_delete_msg_message">คุณต้องการลบข้อความนี้อย่างไร?</string>
+    <string name="chat_delete_from_contact">ลบจากผู้ติดต่อ</string>
+    <string name="chat_delete_from_contact_sub">ลบแชทออกจากอุปกรณ์ของผู้ติดต่อ</string>
+    <string name="chat_delete_both_sub">ลบแชทในเครื่องและลบออกจากอุปกรณ์ของผู้ติดต่อโดยอัตโนมัติ</string>
+    <string name="chat_cd_share_location">แชร์ตำแหน่ง</string>
+    <string name="chat_input_placeholder">ข้อความ…</string>
+    <string name="chat_cd_send">ส่ง</string>
+
+    <string name="common_close">ปิด</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">เปิดใช้งาน SOS?</string>
+    <string name="map_sos_deactivate_title">ปิดใช้งาน SOS?</string>
+    <string name="map_sos_activate_msg">จะส่งตำแหน่งของคุณทุก 15 วินาทีไปยังผู้ติดต่อ SOS ที่กำหนดจนกว่าจะปิดใช้งาน</string>
+    <string name="map_sos_deactivate_msg">จะหยุดการส่งตำแหน่งความสำคัญสูงไปยังผู้ติดต่อฉุกเฉินของคุณ</string>
+    <string name="map_activate">เปิดใช้งาน</string>
+    <string name="map_deactivate">ปิดใช้งาน</string>
+    <string name="map_cd_style">สไตล์แผนที่</string>
+    <string name="map_cd_show_geofences">แสดงรั้วเสมือน</string>
+    <string name="map_cd_hide_geofences">ซ่อนรั้วเสมือน</string>
+    <string name="map_cd_follow">ตามฉัน</string>
+    <string name="map_cd_friends">เพื่อน</string>
+    <string name="map_no_friends">ยังไม่มีการติดตามใคร</string>
+    <string name="map_you">คุณ</string>
+    <string name="map_cd_go_my_location">ไปยังตำแหน่งของฉัน</string>
+    <string name="map_sos_active">⚠ SOS ทำงานอยู่</string>
+    <string name="map_away">อยู่ไกล</string>
+    <string name="map_no_location_yet">ยังไม่มีตำแหน่ง</string>
+    <string name="map_cd_go_location">ไปยังตำแหน่ง</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS เปิด</string>
+    <string name="map_overdue">เกินกำหนด — ไม่มีการอัปเดตล่าสุด</string>
+    <string name="map_stat_last_seen">เห็นล่าสุด</string>
+    <string name="map_stat_battery">แบตเตอรี่</string>
+    <string name="map_stat_accuracy">ความแม่นยำ</string>
+    <string name="map_stat_motion">การเคลื่อนไหว</string>
+    <string name="map_stat_speed">ความเร็ว</string>
+    <string name="map_stat_elevation">ความสูง</string>
+
+    <string name="common_ok">ตกลง</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">ประวัติ: %1$s</string>
+    <string name="history_select_person">เลือกบุคคล</string>
+    <string name="history_person_label">บุคคล</string>
+    <string name="history_cd_prev_day">วันก่อนหน้า</string>
+    <string name="history_cd_next_day">วันถัดไป</string>
+    <string name="history_time_filter">ตัวกรองเวลา:</string>
+    <string name="history_cd_reset_time">รีเซ็ตเวลา</string>
+    <string name="history_tab_list">รายการ</string>
+    <string name="history_empty_title">ไม่มีประวัติสำหรับวันนี้</string>
+    <string name="history_empty_sub">ลองเลือกวันอื่นหรือตรวจสอบการเชื่อมต่อของคุณ</string>
+    <string name="history_start_time">เวลาเริ่มต้น</string>
+    <string name="history_end_time">เวลาสิ้นสุด</string>
+    <string name="history_no_data_title">ไม่มีข้อมูลตำแหน่ง</string>
+    <string name="history_no_data_sub">ไม่มีจุดที่บันทึกไว้สำหรับวันหรือช่วงเวลานี้</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">บันทึกแล้ว %1$d จุด</item>
+    </plurals>
+    <string name="history_cd_dismiss">ปิด</string>
+    <string name="history_accuracy_label">ความแม่นยำ ±%1$s</string>
+    <string name="history_emergency_sos">สัญญาณ SOS ฉุกเฉิน</string>
+    <string name="history_detail_location">ตำแหน่ง</string>
+    <string name="history_detail_coordinates">พิกัด</string>
+    <string name="history_within">ภายใน ±%1$s</string>
+    <string name="history_detail_movement">การเคลื่อนไหว</string>
+    <string name="history_movement_desc">%1$s %2$s มุ่งหน้า %3$s</string>
+
+    <string name="common_create">สร้าง</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">เพิ่มพื้นที่รั้วเสมือน</string>
+    <string name="geo_cd_assign">กำหนดรั้วเสมือน</string>
+    <string name="geo_unknown">ไม่ทราบ</string>
+    <string name="geo_empty_title">ไม่มีรั้วเสมือน</string>
+    <string name="geo_empty_sub">แตะ + เพื่อสร้างพื้นที่รั้วเสมือน แล้วกำหนดผู้ติดต่อให้กับพื้นที่จากการตั้งค่าการแชร์ของเขา</string>
+    <string name="geo_delete_title">ลบรั้วเสมือน?</string>
+    <string name="geo_delete_simple">ลบ \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">\"%1$s\" ถูกกำหนดให้ผู้ติดต่อ %2$d ราย การลบจะนำการกำหนดเหล่านั้นออกด้วย</item>
+    </plurals>
+    <string name="geo_for_contact">รั้วเสมือนสำหรับ %1$s</string>
+    <string name="geo_empty_contact_title">ไม่มีรั้วเสมือนสำหรับผู้ติดต่อ</string>
+    <string name="geo_empty_contact_sub">แตะ + เพื่อกำหนดพื้นที่รั้วเสมือน แล้วเลือกว่าจะเตือนเมื่อมาถึง ออกเดินทาง หรือทั้งสองอย่าง</string>
+    <string name="geo_no_areas_title">ยังไม่มีรั้วเสมือน</string>
+    <string name="geo_no_areas_msg">สร้างพื้นที่รั้วเสมือนก่อนจากหน้าจอรั้วเสมือน แล้วจึงกำหนดที่นี่</string>
+    <string name="geo_radius_label">รัศมี %1$s</string>
+    <string name="geo_contacts_label">ผู้ติดต่อ: %1$s</string>
+    <string name="geo_no_contacts_assigned">ไม่มีผู้ติดต่อที่กำหนด</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">%1$d กฎ</item>
+    </plurals>
+    <string name="geo_trigger_enter">เข้า</string>
+    <string name="geo_trigger_exit">ออก</string>
+    <string name="geo_trigger_both">ทั้งสอง</string>
+    <string name="geo_edit_title">แก้ไขรั้วเสมือน</string>
+    <string name="geo_new_title">รั้วเสมือนใหม่</string>
+    <string name="geo_cd_my_location">ตำแหน่งของฉัน</string>
+    <string name="geo_cd_radius_increase">เพิ่มรัศมี</string>
+    <string name="geo_cd_radius_decrease">ลดรัศมี</string>
+    <string name="geo_hint_tap">แตะหรือกดค้างที่แผนที่เพื่อวาง</string>
+    <string name="geo_hint_move">ถ่างนิ้วเพื่อซูม • กดค้างหรือลากหมุดเพื่อย้าย</string>
+    <string name="geo_basic_info">ข้อมูลพื้นฐาน</string>
+    <string name="geo_search_title">ค้นหาด้วยที่อยู่</string>
+    <string name="geo_search_label">ที่อยู่หรือสถานที่</string>
+    <string name="geo_search_placeholder">เช่น ถนนหลัก 10 กรุงเทพฯ</string>
+    <string name="geo_search_no_results">ไม่พบที่อยู่ที่ตรงกัน</string>
+    <string name="geo_cd_search">ค้นหา</string>
+    <string name="geo_name_placeholder">เช่น บ้าน ที่ทำงาน</string>
+    <string name="geo_name_required">ต้องระบุชื่อ</string>
+    <string name="geo_latitude">ละติจูด</string>
+    <string name="geo_longitude">ลองจิจูด</string>
+    <string name="geo_lat_range">-90 ถึง 90</string>
+    <string name="geo_lng_range">-180 ถึง 180</string>
+    <string name="geo_radius">รัศมี</string>
+    <string name="geo_radius_range">ป้อน %1$d ถึง %2$d ม.</string>
+    <string name="geo_edit_assignment">แก้ไขการกำหนด</string>
+    <string name="geo_assign_title">กำหนดรั้วเสมือน</string>
+    <string name="geo_select_area">เลือกพื้นที่รั้วเสมือน</string>
+    <string name="geo_trigger_title">เรียกการแจ้งเตือนเมื่อ</string>
+    <string name="geo_add_rule">เพิ่มกฎ</string>
+    <string name="geo_alerts_all_times">การเตือนทำงานตลอดเวลา เพิ่มกฎเพื่อจำกัดเวลาที่จะส่งการเตือน</string>
+    <string name="geo_assign_action">กำหนด</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">การเตือนระยะใกล้</string>
+    <string name="prox_empty_title">ไม่มีบุคคลที่ติดตาม</string>
+    <string name="prox_empty_sub">สแกน QR คำเชิญของใครบางคนจากแท็บสแกน\nเพื่อเริ่มติดตามตำแหน่งของเขา</string>
+    <string name="prox_intro">รับการแจ้งเตือนเมื่อบุคคลที่ติดตามเข้ามาในระยะที่คุณเลือก</string>
+    <string name="prox_alert_within">เตือนเมื่ออยู่ภายใน %1$s</string>
+    <string name="prox_alerts_off">ปิดการเตือน</string>
+    <string name="prox_alert_radius">รัศมีการเตือน</string>
+    <string name="prox_edit_schedule">แก้ไขกำหนดการ</string>
+    <string name="prox_rules">กฎ</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">กำหนดการสำหรับ %1$s</string>
+    <string name="schedule_cd_add_rule">เพิ่มกฎ</string>
+    <string name="schedule_empty_title">ไม่มีกฎกำหนดการ</string>
+    <string name="schedule_empty_global">ตำแหน่งถูกแชร์ตลอดเวลา เพิ่มกฎเพื่อจำกัดเวลาที่การแชร์ทำงาน</string>
+    <string name="schedule_empty_peer">ตำแหน่งถูกแชร์กับ %1$s ตลอดเวลา เพิ่มกฎเพื่อจำกัดเวลา</string>
+    <string name="schedule_active_hint">ทำงานเมื่อกฎใดก็ตามตรงกับเวลาปัจจุบัน ว่าง = เปิดตลอดเวลา</string>
+    <string name="schedule_all_day">ทั้งวัน</string>
+    <string name="schedule_plus_one_day"> (+1 วัน)</string>
+    <string name="schedule_rule_number">กฎ %1$d</string>
+    <string name="schedule_cd_delete_rule">ลบกฎ</string>
+    <string name="schedule_edit_rule">แก้ไขกฎ</string>
+    <string name="schedule_label_optional">ป้ายกำกับ (ไม่บังคับ)</string>
+    <string name="schedule_label_placeholder">เช่น เวลาทำงาน วันหยุดสุดสัปดาห์</string>
+    <string name="schedule_active_days">วันที่ทำงาน</string>
+    <string name="schedule_time_window">ช่วงเวลา</string>
+    <string name="schedule_start">เริ่ม</string>
+    <string name="schedule_end">สิ้นสุด</string>
+    <string name="schedule_overnight">ข้ามคืน: ทำงานตั้งแต่ %1$s ถึง %2$s ของวันถัดไป</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">อุปกรณ์ถูกกำกับดูแล</string>
+    <string name="gate_message">ต้องได้รับการอนุมัติจากผู้ดูแลจึงจะเข้าถึงการตั้งค่าได้</string>
+    <string name="gate_request_access">ขอสิทธิ์เข้าถึง</string>
+    <string name="gate_waiting">กำลังรอการอนุมัติจากผู้ดูแล…</string>
+    <string name="gate_denied">ผู้ดูแลปฏิเสธการเข้าถึง</string>
+    <string name="gate_timed_out">คำขอหมดเวลา ผู้ดูแลไม่ตอบสนอง</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">ตลอดไป</string>
+    <string name="retention_keep_for">เก็บไว้: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d วัน</item>
+    </plurals>
+
+    <string name="common_select">เลือก</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">เลือกตำแหน่งคงที่</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">เลือกแท็บที่จะแสดงในแถบด้านล่างและลำดับ แผนที่จะรวมอยู่เสมอ</string>
+    <string name="customize_cd_move_up">เลื่อนขึ้น</string>
+    <string name="customize_cd_move_down">เลื่อนลง</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">เวอร์ชัน %1$s (บิลด์ %2$d)</string>
+    <string name="about_tagline">แชร์ตำแหน่งแบบส่วนตัวกับคนที่คุณไว้ใจ ไม่มีบัญชี ไม่มีคลาวด์ เราไม่ติดตามคุณ</string>
+    <string name="about_relay_connections">การเชื่อมต่อรีเลย์</string>
+    <string name="about_connected">เชื่อมต่อแล้ว</string>
+    <string name="about_disconnected">ตัดการเชื่อมต่อ</string>
+    <string name="about_open_source">ไลบรารีโอเพนซอร์ส</string>
+    <string name="about_lib_osmdroid_desc">การแสดงแผนที่บนพื้นฐาน OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">การส่งข้อมูล WebSocket สำหรับรีเลย์ Nostr</string>
+    <string name="about_lib_compose_desc">เฟรมเวิร์ก UI</string>
+    <string name="about_lib_hilt_desc">การฉีดพึ่งพา</string>
+    <string name="about_lib_room_desc">ฐานข้อมูลในเครื่อง</string>
+    <string name="about_map_attribution">ข้อมูลแผนที่ © ผู้มีส่วนร่วม OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">ยอมรับ</string>
+    <string name="notif_someone">ใครบางคน</string>
+    <string name="notif_sos_title">SOS จาก %1$s!</string>
+    <string name="notif_sos_text">%1$s เปิดใช้งาน SOS ที่ (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s ต้องการให้คุณเป็นผู้ดูแลของเขา</string>
+    <string name="notif_supervisor_request_text">ยอมรับเพื่ออนุญาตคำขออนุมัติปลดล็อกจากอุปกรณ์นี้</string>
+    <string name="notif_supervisor_request_big">ยอมรับเพื่อให้ %1$s ส่งคำขออนุมัติปลดล็อกถึงคุณเมื่อโหมดถูกกำกับดูแลทำงาน</string>
+    <string name="notif_supervised_active_title">โหมดถูกกำกับดูแลทำงาน</string>
+    <string name="notif_supervised_active_text">ผู้ดูแลของคุณยืนยันแล้ว — โหมดถูกกำกับดูแลถูกตั้งค่าแล้ว</string>
+    <string name="notif_supervised_declined_title">โหมดถูกกำกับดูแลถูกปฏิเสธ</string>
+    <string name="notif_supervised_declined_text">ผู้ดูแลของคุณปฏิเสธคำขอ — โหมดถูกกำกับดูแลถูกปิด</string>
+    <string name="notif_tracking_alert_title">การเตือนการติดตาม</string>
+    <string name="notif_tracking_proximity">%1$s ได้รับการเตือนระยะใกล้เกี่ยวกับคุณ</string>
+    <string name="notif_tracking_geofence">%1$s ได้รับการเตือนว่าคุณเข้า/ออกรั้ว: %2$s</string>
+    <string name="notif_tracking_generic">%1$s กำลังเฝ้าดูตำแหน่งของคุณ</string>
+    <string name="notif_track_update_title">อัปเดตการแชร์จาก %1$s</string>
+    <string name="notif_track_new_title">ผู้ติดต่อใหม่: %1$s</string>
+    <string name="notif_role_send_receive">ส่ง/รับตำแหน่ง</string>
+    <string name="notif_role_send">ส่งตำแหน่ง</string>
+    <string name="notif_role_receive">รับตำแหน่ง</string>
+    <string name="notif_role_none">ไม่แชร์ตำแหน่ง</string>
+    <string name="notif_track_requesting">%1$s กำลังขอ: %2$s</string>
+    <string name="notif_track_update_body">%1$s ต้องการอัปเดตวิธีที่คุณแชร์ตำแหน่ง</string>
+    <string name="notif_track_new_body">%1$s เพิ่มคุณเป็นผู้ติดต่อและต้องการเชื่อมต่อ</string>
+    <string name="notif_contact_connected_title">ผู้ติดต่อเชื่อมต่อแล้ว</string>
+    <string name="notif_contact_connected_text">%1$s เชื่อมต่อกับคุณแล้ว</string>
+    <string name="notif_request_declined_title">คำขอถูกปฏิเสธ</string>
+    <string name="notif_request_declined_text">%1$s ปฏิเสธคำขอแชร์ตำแหน่งของคุณ</string>
+    <string name="notif_message_person">ส่งข้อความถึง %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s เข้าสู่ %2$s</string>
+    <string name="notif_geofence_left_title">%1$s ออกจาก %2$s</string>
+    <string name="notif_geofence_subtitle">ที่ %1$s · รัศมี %2$s</string>
+    <string name="notif_person_nearby">%1$s อยู่ใกล้ ๆ</string>
+    <string name="notif_distance_from_you">%1$s จากคุณ</string>
+    <string name="notif_missed_title">ไม่มีการอัปเดตจาก %1$s</string>
+    <string name="notif_missed_text">เห็นล่าสุด %1$s นาทีที่แล้วใกล้ (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS ทำงานอยู่!</string>
+    <string name="notif_sos_active_text">กำลังส่งการเตือนฉุกเฉินไปยังผู้ติดต่อ SOS</string>
+    <string name="notif_messages_group_title">ข้อความ LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">ปฏิเสธคำขอผู้ติดต่อจาก %1$s แล้ว</string>
+    <string name="toast_now_supervising">กำลังกำกับดูแลอุปกรณ์ของ %1$s</string>
+    <string name="toast_declined_supervision">ปฏิเสธคำขอการกำกับดูแลจาก %1$s แล้ว</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">เมื่อสักครู่</string>
+    <string name="time_minutes_ago">%1$d นาทีที่แล้ว</string>
+    <string name="fallback_me">ฉัน</string>
+    <string name="fallback_unknown">ไม่ทราบ</string>
+    <string name="geo_unassigned">ยังไม่ได้กำหนด</string>
+    <string name="days_every_day">ทุกวัน</string>
+    <string name="days_weekdays">วันธรรมดา</string>
+    <string name="days_weekends">สุดสัปดาห์</string>
+    <string name="days_none">ไม่มีวัน</string>
+    <string name="chat_my_location_message">ตำแหน่งปัจจุบันของฉัน: %1$s</string>
+    <string name="scan_error_bad_pubkey">คำเชิญไม่ถูกต้อง: กุญแจสาธารณะผิด</string>
+    <string name="scan_error_key_mismatch">คำเชิญไม่ถูกต้อง: กุญแจไม่ตรงกัน</string>
+    <string name="scan_error_unknown">ข้อผิดพลาดที่ไม่ทราบสาเหตุ</string>
+    <string name="scan_error_invalid_link">ลิงก์คำเชิญไม่ถูกต้อง</string>
+    <string name="scan_fallback_contact">ผู้ติดต่อรายนี้</string>
+    <string name="backup_saved">บันทึกข้อมูลสำรองแล้ว: %1$s</string>
+    <string name="backup_saved_encrypted">บันทึกข้อมูลสำรองแล้ว (เข้ารหัส): %1$s</string>
+    <string name="backup_failed">สำรองข้อมูลล้มเหลว: %1$s</string>
+    <string name="backup_could_not_read_file">อ่านไฟล์ไม่ได้</string>
+    <string name="backup_could_not_write_file">เขียนไฟล์ไม่ได้</string>
+    <string name="backup_could_not_read">อ่านข้อมูลสำรองไม่ได้: %1$s</string>
+    <string name="backup_incorrect_password">รหัสผ่านไม่ถูกต้อง</string>
+    <string name="restore_result_restored">กู้คืนแล้ว: %1$s</string>
+    <string name="restore_result_failed">ล้มเหลว: %1$s</string>
+    <string name="restore_nothing">ไม่มีอะไรให้กู้คืน</string>
+    <string name="restore_failed">กู้คืนล้มเหลว: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">%1$d ผู้ติดต่อ</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">%1$d รั้วเสมือน</item>
+    </plurals>
+    <string name="peer_role_change_sent">ส่งคำขอเปลี่ยนบทบาทไปยัง %1$s แล้ว</string>
+    <string name="peer_not_found">ไม่พบผู้ติดต่อ</string>
+    <string name="peer_purge_location_sent">ส่งคำสั่งลบตำแหน่งทั้งหมดจากระยะไกลไปยัง %1$s แล้ว</string>
+    <string name="peer_purge_messages_sent">ส่งคำสั่งลบข้อความทั้งหมดจากระยะไกลไปยัง %1$s แล้ว</string>
+    <string name="onboarding_error_key_length">กุญแจไม่ถูกต้อง — ต้องเป็นอักขระฐานสิบหก 64 ตัว</string>
+    <string name="onboarding_error_key_range">กุญแจส่วนตัวไม่ถูกต้อง — อยู่นอกช่วงของเส้นโค้ง</string>
+    <string name="onboarding_error_hex">รูปแบบฐานสิบหกไม่ถูกต้อง</string>
+    <string name="onboarding_error_import_failed">นำเข้ากุญแจล้มเหลว: %1$s</string>
 </resources>
