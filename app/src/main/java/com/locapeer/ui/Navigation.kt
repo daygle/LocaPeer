@@ -40,6 +40,7 @@ import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.PermissionsScreen
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.sharing.PeerSharingScreen
@@ -240,8 +241,18 @@ fun LocaPeerNavHost(
                     onNavigateToGeofences = { navController.navigate("geofences") },
                     onNavigateToMyHistory = { pubkeyHex ->
                         navController.navigate("history-report?peerId=$pubkeyHex")
-                    }
+                    },
+                    onNavigateToPermissions = { navController.navigate("permissions") }
                 )
+            }
+            composable(
+                "permissions",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                PermissionsScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 route = "chat/{peerId}/{peerName}",
