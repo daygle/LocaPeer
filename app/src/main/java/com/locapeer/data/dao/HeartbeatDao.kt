@@ -26,8 +26,8 @@ interface HeartbeatDao {
 
     @Query(
         "SELECT h.* FROM heartbeats h INNER JOIN (" +
-            "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats GROUP BY deviceId" +
-            ") latest ON h.deviceId = latest.deviceId AND h.timestamp = latest.maxTs"
+            "SELECT deviceId, MAX(receivedAt) AS maxReceivedAt FROM heartbeats GROUP BY deviceId" +
+            ") latest ON h.deviceId = latest.deviceId AND h.receivedAt = latest.maxReceivedAt"
     )
     fun getLatestHeartbeatPerDevice(): Flow<List<HeartbeatEntity>>
 
