@@ -74,7 +74,8 @@ class BackupSerializationTest {
             useImperialElevation = true,
             useImperialDistance = true,
             notifyOnTrackingAlerts = true,
-            reverseGeocodingEnabled = true
+            reverseGeocodingEnabled = true,
+            appLanguageTag = "fr"
         )
     )
 
@@ -189,5 +190,8 @@ class BackupSerializationTest {
         // silently enable filtering after a restore.
         assertEquals(0, settings.historyMaxAccuracyMeters)
         assertEquals(0, settings.sendMaxAccuracyMeters)
+        // Language predates this field: must stay null so a restore leaves the current
+        // app language untouched rather than resetting it to system default.
+        assertNull(settings.appLanguageTag)
     }
 }

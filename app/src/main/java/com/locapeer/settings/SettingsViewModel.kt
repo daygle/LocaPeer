@@ -129,7 +129,14 @@ data class SettingsBackup(
     val useImperialElevation: Boolean = false,
     val useImperialDistance: Boolean = false,
     val notifyOnTrackingAlerts: Boolean = false,
-    val reverseGeocodingEnabled: Boolean = false
+    val reverseGeocodingEnabled: Boolean = false,
+    /**
+     * Selected in-app language as a BCP-47 tag ("" = follow system). Null on backups
+     * made before this field existed, in which case the language is left unchanged on
+     * restore. The app locale lives outside AppSettings (AppCompatDelegate), so it is
+     * captured and reapplied explicitly here.
+     */
+    val appLanguageTag: String? = null
 )
 
 /** Outcome message shown in the Keys & Backup card; [isError] drives its colour. */
@@ -328,7 +335,8 @@ class SettingsViewModel @Inject constructor(
                             useImperialElevation = s.useImperialElevation,
                             useImperialDistance = s.useImperialDistance,
                             notifyOnTrackingAlerts = s.notifyOnTrackingAlerts,
-                            reverseGeocodingEnabled = s.reverseGeocodingEnabled
+                            reverseGeocodingEnabled = s.reverseGeocodingEnabled,
+                            appLanguageTag = AppLanguage.current().tag
                         ) else null
                 )
 
@@ -553,6 +561,12 @@ class SettingsViewModel @Inject constructor(
                         prefs.setUseImperialDistance(s.useImperialDistance)
                         prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
                         prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
+                        // Reapply the in-app language (stored outside AppSettings). Skip when
+                        // the backup predates this field so existing backups don't reset it.
+                        s.appLanguageTag?.let { tag ->
+                            val lang = AppLanguage.entries.firstOrNull { it.tag == tag } ?: AppLanguage.SYSTEM
+                            AppLanguage.apply(lang)
+                        }
                         settingsRestored = true
                         restored += context.getString(com.locapeer.R.string.backup_section_settings)
                     } catch (e: Exception) {
