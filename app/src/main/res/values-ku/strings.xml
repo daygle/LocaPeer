@@ -2,67 +2,768 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Kanalên agahdarkirinê & Karûbarê pêşîn ─────────────────────── -->
-    <string name="channel_name_heartbeat">Weşana Cih</string>
-    <string name="channel_desc_heartbeat">Cihê we ji têkiliyên we yên pejirandî re weşand dike</string>
+    <!-- ── Kanalên agahdarkirinê & karûbarê pêşîn ─────────────────────── -->
+    <string name="channel_name_heartbeat">Weşandina Cih</string>
+    <string name="channel_desc_heartbeat">Cihê we ji têkiliyên weyên pejirandî re diweşîne</string>
     <string name="channel_name_alerts">Hişyarî</string>
-    <string name="channel_desc_alerts">Hişyariyên sînyala winda û sînorên erdnîgarî</string>
+    <string name="channel_desc_alerts">Lêdana dilê winda û hişyariyên geofence</string>
     <string name="channel_name_messages">Peyam</string>
-    <string name="channel_desc_messages">Peyamên hatine</string>
+    <string name="channel_desc_messages">Peyamên hevalên tên</string>
     <string name="notification_heartbeat_title">LocaPeer dixebite</string>
-    <string name="notification_heartbeat_text">Cihê xwe bi kesên din re parve dike</string>
+    <string name="notification_heartbeat_text">Cihê xwe bi yên din re parve dikin</string>
 
     <!-- ── Çalakiyên hevpar ──────────────────────────────────────── -->
     <string name="common_save">Tomar bike</string>
     <string name="common_cancel">Betal bike</string>
     <string name="common_done">Temam</string>
-    <string name="common_delete">Rabe</string>
+    <string name="common_delete">Jê bibe</string>
     <string name="common_disable">Seqet bike</string>
     <string name="common_enable">Çalak bike</string>
     <string name="common_restore">Vegere</string>
-    <string name="common_unlock">Kilît veke</string>
+    <string name="common_unlock">Veke</string>
     <string name="common_password">Şîfre</string>
     <string name="common_not_now">Niha na</string>
     <string name="common_off">Girtî</string>
     <string name="common_approve">Biperizîne</string>
     <string name="common_deny">Red bike</string>
 
-    <!-- ── Navên tabloyan ──────────────────────────────────────────── -->
+    <!-- ── Etîketên tabê navîgasyonê ──────────────────────────────────────────── -->
     <string name="tab_map">Nexşe</string>
     <string name="tab_messages">Peyam</string>
     <string name="tab_history">Dîrok</string>
     <string name="tab_contacts">Têkilî</string>
     <string name="tab_qr">QR</string>
-    <string name="tab_settings">Sazkarî</string>
+    <string name="tab_settings">Sazkirin</string>
 
     <!-- ── Rewşên tevgerê ───────────────────────────────────────── -->
     <string name="motion_stationary">Rawestî</string>
-    <string name="motion_walking">Dimeşe</string>
-    <string name="motion_running">Dibezê</string>
+    <string name="motion_walking">Meşîn</string>
+    <string name="motion_running">Bezîn</string>
     <string name="motion_cycling">Bisiklêt</string>
-    <string name="motion_driving">Ajotini</string>
+    <string name="motion_driving">Ajotin</string>
 
-    <!-- ── Sazkarî ────────────────────────────────────────────────── -->
-    <string name="settings_title">Sazkarî</string>
-    <string name="settings_section_location_privacy">Cih û Taybetmendî</string>
+    <!-- ── Beşên backupê ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Mifteya Taybet</string>
+    <string name="backup_section_contacts">Têkilî</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Sazkirin</string>
+
+    <!-- ── Daxwaza çavdêriyê ──────────────────────── -->
+    <string name="supervision_request_title">Daxwaza Çavdêriyê</string>
+    <string name="supervision_request_message">\"%1$s\" daxwaza gihîştina sazkirinên xwe dike. Destûr bidin?</string>
+
+    <!-- ── Ekrana sazkirinê ────────────────────────────────────────────────── -->
+    <string name="settings_title">Sazkirin</string>
+
+    <!-- Etîketên beşê -->
+    <string name="settings_section_location_privacy">Cih &amp; Veşarî</string>
     <string name="settings_section_security">Ewlehî</string>
     <string name="settings_section_map">Nexşe</string>
-    <string name="settings_section_battery_performance">Pîl û Performans</string>
-    <string name="settings_section_units_display">Yekîne û Nîşandan</string>
-    <string name="settings_section_retention">Parastin (Ev Amûr)</string>
+    <string name="settings_section_battery_performance">Pîl &amp; Performans</string>
+    <string name="settings_section_units_display">Yekîne &amp; Nîşandan</string>
+    <string name="settings_section_retention">Girtin (Li ser vê amûrê)</string>
     <string name="settings_section_appearance">Xuyabûn</string>
-    <string name="settings_section_backup_keys">Piştevanî û Kilît</string>
-    <string name="settings_section_about">Der barê me de</string>
+    <string name="settings_section_backup_keys">Backup &amp; Mifte</string>
+    <string name="settings_section_about">Der barê</string>
 
-    <string name="settings_edit_name">Nav sererast bike</string>
-    <string name="settings_my_qr">QR-a min</string>
+    <!-- Profîl -->
+    <string name="settings_edit_name">Nav Biguhere</string>
+    <string name="settings_my_qr">QR-ya min</string>
     <string name="settings_no_name_set">Nav nehatiye danîn</string>
 
-    <string name="settings_share_location">Cihê xwe parve bike</string>
+    <!-- Cih &amp; Veşarî -->
+    <string name="settings_share_location">Cihê Min Parve Bike</string>
+    <string name="settings_broadcasting">Ji têkiliyên we re tê weşandin</string>
+    <string name="settings_not_broadcasting">Nayê weşandin</string>
+    <string name="settings_sharing_schedule">Bernameya Parvekirinê</string>
+    <string name="settings_always_on">Her tim vekirî</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d rêzik</item>
+        <item quantity="other">%1$d rêzik</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Herêmên geofence yên parvekirî birêve bibin</string>
+    <string name="settings_notify_when_tracked">Dema hatî şopandin agahdar bike</string>
+    <string name="settings_notify_when_tracked_subtitle">Dema ku nêzîkbûna têkiliyek an hişyariya geofence ji bo we tê xebitandin agahdariyek bistînin.</string>
+    <string name="settings_my_location_history">Dîroka Cih</string>
+    <string name="settings_my_location_history_subtitle">Dîroka cihê xwe bigerin</string>
+    <string name="settings_lookup_addresses">Navnîşan Bigere</string>
+    <string name="settings_lookup_addresses_subtitle">Ji bo xalên dîrokê û pînên nexşeya pêlkirî navnîşanên kolanan nîşan bide. Wan koordînatan ji karûbarê geocoding a amûra we re (bi gelemperî Google) dişîne.</string>
+
+    <!-- Ewlehî -->
+    <string name="settings_supervision_active">Çavdêrî Çalak e</string>
+    <string name="settings_supervision_active_subtitle">Sazkirin pejirandina çavdêr hewce dikin</string>
+    <string name="settings_disable_supervised">Moda Çavdêriyê Seqet Bike</string>
+    <string name="settings_supervised_mode">Moda Çavdêriyê</string>
+    <string name="settings_supervised_mode_subtitle">Ji bo gihîştina sazkirinê pejirandina çavdêr hewce ye</string>
+
+    <!-- Nexşe -->
+    <string name="settings_starting_point">Xala Destpêkê</string>
+    <string name="settings_map_current_location">Cihê Niha</string>
+    <string name="settings_map_all_contacts">Hemû Têkilî</string>
+    <string name="settings_map_fixed_location">Cihê Sabît</string>
+    <string name="settings_map_last_position">Pozîsyona Dawî</string>
+    <string name="settings_map_starting_point_title">Xala Destpêkê ya Nexşeya</string>
+    <string name="settings_no_location_set">Cih nehatiye danîn</string>
+    <string name="settings_pick_location_on_map">Li Nexşeya Cih Hilbijêre</string>
+    <string name="settings_default_zoom_level">Asta Zoomê ya Default</string>
+    <string name="settings_map_pin_colour">Rengê Pîna Nexşeya</string>
+
+    <!-- Pîl &amp; Performans -->
+    <string name="settings_update_cadence">Frekansa Nûvekirinê</string>
+    <string name="settings_update_cadence_subtitle">Binihêrin ku cihê we çend caran tê weşandin</string>
+    <string name="settings_update_cadence_dialog_message">Li gorî çalakiya xwe kontrol bikin ku cihê we çend caran tê nûvekirin. Nûvekirinên pir caran pîlê zêdetir dixwin.</string>
+    <string name="settings_update_cadence_reset">Vegerîne ser defaultan</string>
+    <string name="settings_min_distance_filtering">Parzûna Dûrahiya Kêmtirîn</string>
+    <string name="settings_min_distance_filtering_subtitle">Tenê xalên ku herî kêm vê dûrî ya berê ne nîşan bide.</string>
+    <string name="settings_discard_low_accuracy">Fîksên Rastiya Kêm Bavêje</string>
+    <string name="settings_discard_low_accuracy_subtitle">Fîksên xwe yên ku ji vê radyusa rastbûnê mezintir in neweşînin û tomar nekin. SOS qet nayê derbas kirin.</string>
+    <string name="settings_hide_low_accuracy">Xalên Rastiya Kêm Veşêre</string>
+    <string name="settings_hide_low_accuracy_subtitle">Xalên dîrokê yên ku ji vê radyusa rastbûnê mezintir in veşêrin. Tu tişt nayê jêbirin.</string>
+    <string name="settings_low_battery" formatted="false">Pîla Kêm (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d deqe</string>
+    <string name="settings_motion_detection">Tespîtkirina Tevgerê</string>
+    <string name="settings_motion_detection_on">Çalak e - cureyê tevgera we (meşîn, ajotin) di dîrokê de safî dike</string>
+    <string name="settings_motion_detection_off">Girtî - ji bo etîketên tevgerê yên rasttir destûrê bide gihîştina çalakiya laşî</string>
+    <string name="settings_enable_motion_title">Tespîtkirina tevgerê çalak bike</string>
+    <string name="settings_enable_motion_message">Gihîştina çalakiya laşî dihêle ku LocaPeer di dîroka we de meşîn, ajotin û sekinînê rasttir ji hev cuda bike. Heya niha girtî ye - hûn dikarin wê ji sazkirinên pergalê dîsa çalak bikin.</string>
+    <string name="settings_open_settings">Sazkirinan Veke</string>
+    <string name="settings_battery_optimization">Optimîzasyona Pîlê</string>
+    <string name="settings_battery_optimization_unrestricted">Bêsînorkirî — LocaPeer dikare di paşperdeyê de serbest bixebite</string>
+    <string name="settings_battery_optimization_restricted">Optimîzekirî — li sazkirinên pergalê bitikînin da ku bêsînorkirî bikin</string>
+
+    <!-- Destûr -->
+    <string name="settings_permissions">Destûr</string>
+    <string name="settings_permissions_subtitle">Gihîştina sepanê ya cih, kêmere û yên din binirxînin û sererast bikin</string>
+    <string name="permissions_intro">LocaPeer ji bo parvekirina cihê we, şopandina vexwendinan û xebata di paşperdeyê de hewcedarî bi van destûran heye. Li yê ku nehatî dayîn bitikînin da ku sererast bikin.</string>
+    <string name="perm_location_title">Cih</string>
+    <string name="perm_location_granted">Hat dayîn — cihê we dikare were parvekirin</string>
+    <string name="perm_location_denied">Nedayîn — ji bo destûra gihîştina cih bitikînin</string>
+    <string name="perm_background_location_title">Cihê Paşperdeyê</string>
+    <string name="perm_background_location_granted">Hat dayîn — gava sepan girtî be jî parvekirina cih berdewam dike</string>
+    <string name="perm_background_location_denied">Nedayîn — ji bo destûra \'Her tim\' li sazkirinê bitikînin</string>
+    <string name="perm_camera_title">Kêmere</string>
+    <string name="perm_camera_granted">Hat dayîn — ji bo şopandina kodên QR yên vexwendinê tê bikar anîn</string>
+    <string name="perm_camera_denied">Nedayîn — ji bo destûra kêmereyê bitikînin</string>
+    <string name="perm_notifications_title">Agahdarkirin</string>
+    <string name="perm_notifications_granted">Hat dayîn — hişyarî û nûvekirinên rewşê dikarin werin nîşandan</string>
+    <string name="perm_notifications_denied">Nedayîn — ji bo destûra agahdarkirinê bitikînin</string>
+
+    <!-- Yekîne &amp; Nîşandan -->
+    <string name="settings_speed_units">Yekîneyên Lezê</string>
+    <string name="settings_speed_imperial">Împeryal (mph)</string>
+    <string name="settings_speed_metric">Metrîk (km/h)</string>
+    <string name="settings_elevation_units">Yekîneyên Bilindbûnê</string>
+    <string name="settings_elevation_imperial">Împeryal (feet)</string>
+    <string name="settings_elevation_metric">Metrîk (metre)</string>
+    <string name="settings_distance_units">Yekîneyên Dûrahiyê</string>
+    <string name="settings_distance_imperial">Împeryal (ft/mi)</string>
+    <string name="settings_distance_metric">Metrîk (m/km)</string>
+    <string name="settings_time_format">Formata Demê</string>
+    <string name="settings_time_24h">24-Saet (13:30)</string>
+    <string name="settings_time_12h">12-Saet (1:30 PM)</string>
+
+    <!-- Girtin -->
+    <string name="settings_retention_location">Daneyên Cih</string>
+    <string name="settings_retention_location_subtitle">Daneyên cihê têkiliyan ji bo kengî bi herêmî werin girtin</string>
+    <string name="settings_clear_all_location">Hemû Daneyên Cih Paqij Bike</string>
+    <string name="settings_retention_messages">Peyam</string>
+    <string name="settings_retention_messages_subtitle">Peyamên hatî standin ji bo kengî bi herêmî werin girtin</string>
+    <string name="settings_clear_all_messages">Hemû Peyaman Paqij Bike</string>
+
+    <!-- Xuyabûn -->
+    <string name="settings_customize_nav">Navîgasyonê Kesane Bike</string>
+    <string name="settings_customize_nav_subtitle">Tabên jêrîn hilbijêrin û rêz bikin</string>
+    <string name="settings_start_page">Rûpela Destpêkê</string>
     <string name="settings_language">Ziman</string>
-    <string name="settings_language_title">Zimanê Bernameyê</string>
-    <string name="settings_language_system">Zimanê pergalê</string>
+    <string name="settings_language_title">Zimanê Sepanê</string>
+    <string name="settings_language_system">Sîstema default</string>
+
+    <!-- Backup &amp; Mifte -->
+    <string name="settings_export_backup">Backupê Hinarde Bike</string>
+    <string name="settings_export_backup_subtitle">Mifteya taybet û têkiliyên xwe di pelekê de hilînin. Vê pelê bi ewle bigirin!</string>
+    <string name="settings_import_backup">Backupê Hawirde Bike</string>
+    <string name="settings_import_backup_subtitle">Ji pelek hinardekirî ya berê vegere</string>
+    <string name="settings_view_private_key">Mifteya Taybet Bibîne</string>
+    <string name="settings_view_private_key_subtitle">Mifteya nasnameya xwe ya heks a 64-karakter nîşan bide</string>
+
+    <!-- Der barê -->
+    <string name="settings_about_locapeer">Der barê LocaPeer</string>
+    <string name="settings_about_subtitle">Guherto, rewşa relay, çavkaniya vekirî</string>
+
+    <!-- Diyalog -->
+    <string name="settings_edit_display_name">Navê Nîşandanê Biguhere</string>
+    <string name="settings_display_name_label">Navê Nîşandanê</string>
+    <string name="settings_my_invite_qr">QR-ya Vexwendina Min</string>
+    <string name="settings_invite_qr_subtitle">Yên din dikarin vê bişopînin da ku dest bi şopandina we bikin.</string>
+    <string name="settings_invite_qr_cd">QR-ya vexwendinê</string>
+    <string name="settings_private_key_title">Mifteya Taybet</string>
+    <string name="settings_private_key_warning">Vê bi ewle bigirin. Her kesê ku ev mifte hebe dikare xwe wekî we nîşan bide.</string>
+    <string name="settings_clear_location_title">Dîroka Cih Paqij Bike?</string>
+    <string name="settings_clear_location_message">Hemû pîngên cih ên tomarkirî dê bi domdarî werin jêbirin.</string>
+    <string name="settings_clear_messages_title">Dîroka Peyaman Paqij Bike?</string>
+    <string name="settings_clear_messages_message">Hemû peyamên tomarkirî dê bi domdarî werin jêbirin.</string>
+    <string name="settings_encrypted_backup_title">Backupê Şîfrekirî</string>
+    <string name="settings_encrypted_backup_message">Ev backup şîfrekirî ye. Ji bo berdewamkirinê şîfreyê binivîsin.</string>
+    <string name="settings_select_restore_title">Daneyên ji bo Vegerandinê Hilbijêre</string>
+    <string name="settings_select_export_title">Daneyên ji bo Hinardekirinê Hilbijêre</string>
+    <string name="settings_export_password_hint">Bi dilxwazî şîfreyek deynin da ku pela backupê şîfre bikin.</string>
+    <string name="settings_backup_password_optional">Şîfreya Backupê (Dilxwazî)</string>
+    <string name="settings_select_sections">Beşên ku werin girtin hilbijêrin:</string>
+    <string name="settings_choose_file_location">Cihê pelê hilbijêre</string>
+    <string name="settings_not_in_backup">Di vê backupê de tune</string>
+    <string name="settings_enable_supervised_title">Moda Çavdêriyê Çalak Bike</string>
+    <string name="settings_enable_supervised_message">Hevalek ku wekî çavdêr bixebite hilbijêrin. Divê ew gihîştina sazkirinê ji amûra xwe biperizînin.</string>
+    <string name="settings_no_peers_found">Heval nehatin dîtin. Pêşî hevalek zêde bikin bi xwendina koda wan a QR ya vexwendinê.</string>
+    <string name="settings_disable_supervised_title">Moda Çavdêriyê Seqet Bike?</string>
+    <string name="settings_disable_supervised_message">Sazkirin dê bêyî pejirandina çavdêr bigihîjin.</string>
+
+    <!-- ── Hevparên din ─────────────────────────────────────────── -->
+    <string name="common_remove">Rake</string>
+    <string name="common_name">Nav</string>
+    <string name="common_search">Bigere</string>
+    <string name="common_sort">Rêz bike</string>
+
+    <!-- دانասینی ناوەڕۆک (parvekirî) -->
+    <string name="cd_message">Peyam</string>
+    <string name="cd_show_on_map">Li nexşeyê nîşan bide</string>
+    <string name="cd_more_options">Vebijarkên din</string>
+
+    <!-- ── Ekrana têkiliyan ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d hat hilbijartin</item>
+        <item quantity="other">%1$d hatin hilbijartin</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Hilbijartinê betal bike</string>
+    <string name="contacts_cd_select_all">Hemûyan hilbijêre</string>
+    <string name="contacts_cd_deselect_all">Hemûyan nehildibijêre</string>
+    <string name="contacts_cd_qr_invite">QR / Vexwendin</string>
+    <string name="contacts_cd_pending_requests">Daxwazên Bendewar</string>
+    <string name="contacts_sort_last_seen">Cara Dawî Hat Dîtin</string>
+    <string name="contacts_search_placeholder">Li têkiliyan bigere…</string>
+    <string name="contacts_empty_title">Hîna têkilî tune</string>
+    <string name="contacts_empty_subtitle">Koda QR bixwînin da ku bi kesek re têkilî daynin û dest bi parvekirina cihan bikin.</string>
+    <string name="contacts_scan_qr">Koda QR Bixwîne</string>
+    <string name="contacts_bulk_delete_messages">Peyaman Jê Bibe</string>
+    <string name="contacts_bulk_delete_locations">Cihan Jê Bibe</string>
+    <string name="contacts_last_seen">Cara dawî hat dîtin: %1$s</string>
+    <string name="contacts_no_location_yet">Hîna daneyên cih tune</string>
+    <string name="contacts_view_sharing_settings">Sazkirinên Parvekirinê</string>
+    <string name="contacts_view_location_history">Dîroka Cih</string>
+    <string name="contacts_rename_contact">Têkiliyê Ji Nû Ve Nav Bike</string>
+    <string name="contacts_on_contact_device">Li Ser Amûra Têkiliyê</string>
+    <string name="contacts_delete_my_messages_title">Peyamên Min Jê Bibe</string>
+    <string name="contacts_delete_locations_title">Cihên Parvekirî Jê Bibe</string>
+    <string name="contacts_remove_contact_title">Têkiliyê Rake</string>
+    <string name="contacts_leave_title">Têkilî û Daneyan Jê Bibe</string>
+    <string name="contacts_rename_title">Têkiliyê ji nû ve nav bike</string>
+    <string name="contacts_remove_contact_body">Bila %1$s ji têkiliyên we were rakirin? Dîroka cihê wan dê herêmî jî were jêbirin.</string>
+    <string name="contacts_leave_body">Ev dê we ji têkiliyên %1$s rake û hemû peyam û daneyên cihê we ji amûra wan jê bibe. Hûn ê gihîştina cihê wan jî winda bikin.</string>
+    <string name="contacts_delete_my_messages_body">Ev dê hemû peyamên ku we ji amûra %1$s şandine jê bibe. Ev nayê vegerandin.</string>
+    <string name="contacts_delete_locations_body">Ev dê hemû daneyên cih ên ku we ji amûra %1$s parve kirine jê bibe. Ev nayê vegerandin.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Têkiliyê Rake</item>
+        <item quantity="other">%1$d Têkiliyan Rake</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Vê têkiliyê rake? Dîroka cihê wan dê herêmî jî were jêbirin.</item>
+        <item quantity="other">%1$d têkiliyan rake? Dîroka cihê wan dê herêmî jî were jêbirin.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Hemû peyamên ku we ji amûra vê têkiliyê şandine ji dûr ve jê bibe? Ev nayê vegerandin.</item>
+        <item quantity="other">Hemû peyamên ku we ji amûrên %1$d têkiliyan şandine ji dûr ve jê bibe? Ev nayê vegerandin.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Hemû dîroka cihê ku we ji amûra vê têkiliyê parve kiriye ji dûr ve jê bibe? Ev nayê vegerandin.</item>
+        <item quantity="other">Hemû dîroka cihê ku we ji amûrên %1$d têkiliyan parve kiriye ji dûr ve jê bibe? Ev nayê vegerandin.</item>
+    </plurals>
+
+    <string name="common_continue">Berdewam bike</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Ji Backupê Vegere</string>
+    <string name="onboarding_restore_message">Mifteya taybet a heks a 64-karakter binivîsin da ku nasname û têkiliyên xwe vegerînin.</string>
+    <string name="onboarding_private_key_hex">Mifteya taybet (heks)</string>
+    <string name="onboarding_tagline">Parvekirina cihê taybet bi têkiliyan re.\nBê hesab. Bê servîsên xwedan.</string>
+    <string name="onboarding_feature_e2e_title">End-to-End Şîfrekirî</string>
+    <string name="onboarding_feature_e2e_subtitle">Cihê we li ser amûrê tê şîfrekirin</string>
+    <string name="onboarding_feature_servers_title">Bê Servîsên Xwedan</string>
+    <string name="onboarding_feature_servers_subtitle">Wekî veguheztina ewle relayên Nostr ên vekirî bikar tîne - daneyên we şîfrekirî û taybet dimînin</string>
+    <string name="onboarding_feature_phone_title">Li Ser Telefona We Dimîne</string>
+    <string name="onboarding_feature_phone_subtitle">Dîroka cihê we ya tije li ser amûra we dimîne. Tenê pozîsyona weya niha bi têkiliyên hilbijartî re tê parvekirin</string>
+    <string name="onboarding_name_prompt">Bila têkiliyên we ji we re çi bibêjin?</string>
+    <string name="onboarding_name_placeholder">mînak Dê, Bav, Elî…</string>
+    <string name="onboarding_get_started">Dest Pê Bike</string>
+    <string name="onboarding_restore_from_backup">Ji Backupê Vegere</string>
+    <string name="onboarding_key_note">Mifteya weya taybet bi herêmî tê hilberandin û qet ji vê amûrê dernakeve.</string>
+    <string name="onboarding_permissions_title">Destûr</string>
+    <string name="onboarding_permissions_desc">LocaPeer ji bo parvekirina pozîsyona we hewceyî gihîştina cih, ji bo xwendina kodên vexwendinê gihîştina kêmereyê, û ji bo rewşa paşperdeyê hewceyî gihîştina agahdarkirinê ye. Gihîştina çalakiya laşî dilxwazî ye - ew alîkarî dike ku tevgera we (meşîn, ajotin) rasttir were nîşankirin.</string>
+    <string name="onboarding_before_ask_title">Beriya ku em bipirsin</string>
+    <string name="onboarding_before_ask_intro">Hûn ê li jêr çend hişyariyên pergalê bibînin:</string>
+    <string name="onboarding_before_ask_location">• Cih - hewce ye, ji bo parvekirina pozîsyona we.</string>
+    <string name="onboarding_before_ask_camera">• Kêmere - ji bo xwendina kodên vexwendinê.</string>
+    <string name="onboarding_before_ask_notifications">• Agahdarkirin - ji bo rewşa paşperdeyê.</string>
+    <string name="onboarding_before_ask_activity">• Çalakiya laşî - dilxwazî. Ew dihêle ku LocaPeer di dîroka we de meşîn, ajotin û sekinînê rasttir ji hev cuda bike. Hûn dikarin wê derbas bikin û paşê di Sazkirinan de çalak bikin.</string>
+    <string name="onboarding_grant_permissions">Destûran Bide</string>
+    <string name="onboarding_bg_location_title">Cihê Paşperdeyê</string>
+    <string name="onboarding_bg_location_desc">Ji bo ku dema sepan girtî be jî têkiliyên we werin nûvekirin, ji kerema xwe di ekrana din de \'Her tim destûr bide\' hilbijêrin.</string>
+    <string name="onboarding_bg_location_error">Gihîştina cihê paşperdeyê hewce ye da ku dema sepan girtî be têkiliyên we nûve bibin. Ji kerema xwe dîsa biceribînin û \'Her tim destûr bide\' hilbijêrin.</string>
+    <string name="onboarding_configure_location">Cih Mîheng Bike</string>
+    <string name="onboarding_battery_title">Pîl</string>
+    <string name="onboarding_battery_desc">Android dikare LocaPeer rawestîne da ku pîlê biparêze. Ji bo nûvekirinên ewle, ji kerema xwe LocaPeer ji optimîzasyonan derxin.</string>
+    <string name="onboarding_disable_optimizations">Optimîzasyonan Seqet Bike</string>
+    <string name="onboarding_done_title">Hemû Temam e!</string>
+    <string name="onboarding_done_desc">Tora weya cihê taybet amade ye.</string>
+    <string name="onboarding_start_using">Dest bi Bikaranîna LocaPeer Bike</string>
+
+    <string name="common_try_again">Dîsa Biceribîne</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Vexwendinê Bixwîne</string>
+    <string name="scan_camera_needed">Ji bo xwendina kodên QR destûra kêmereyê hewce ye.</string>
+    <string name="scan_grant_permission">Destûr Bide</string>
+    <string name="scan_add_contact_title">Têkilî zêde bike?</string>
+    <string name="scan_add_contact_message">Ev dê we bi %1$s re girê bide û dest bi parvekirina cihê we bi hev re bike.</string>
+    <string name="scan_add_share">Zêde Bike &amp; Parve Bike</string>
+    <string name="scan_request_sent_title">Daxwaz Hat Şandin!</string>
+    <string name="scan_request_sent_message">Daxwazek ji %1$s re hat şandin. Dema wan qebûl kir hûn ê werin girêdan.</string>
+    <string name="scan_failed">Xwendin bi ser neket: %1$s</string>
+
+    <string name="cd_back">Vegere</string>
+    <string name="common_review">Binirxîne</string>
+    <string name="common_decline">Red bike</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Şandin/Standin</string>
+    <string name="role_send">Şandin</string>
+    <string name="role_receive">Standin</string>
+    <string name="role_none">Parvekirin Tune</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Vexwendina Min</string>
+    <string name="invite_tab_add_contact">Têkilî Zêde Bike</string>
+    <string name="invite_your_qr_title">Koda We ya QR</string>
+    <string name="invite_your_qr_subtitle">Bila kesek vê bixwîne da ku cihê we bişopîne</string>
+    <string name="invite_qr_cd">Koda weya QR</string>
+    <string name="invite_qr_error">Di çêkirina QR de xeletî</string>
+    <string name="invite_share_link">Lînka Vexwendinê Parve Bike</string>
+    <string name="invite_encryption_note">Cihê we dê taybetî ji bo amûra xwendevan were şîfrekirin.</string>
+    <string name="invite_camera_required_title">Gihîştina Kêmereyê Hewce ye</string>
+    <string name="invite_camera_required_message">Ji bo xwendina koda QR destûra kêmereyê bide.</string>
+    <string name="invite_point_camera">Kêmereyê ber bi QR-ya LocaPeer ve bigirin</string>
+    <string name="invite_paste_title">An Lînka Vexwendinê Binivîsin</string>
+    <string name="invite_process_link">Lînkê Bişopîne</string>
+    <string name="invite_fallback_name">Têkilî</string>
+    <string name="invite_success_message">Dema wan qebûl kir hûn ê bi %1$s re werin girêdan.</string>
+    <string name="invite_confirm_add_title">%1$s zêde bike?</string>
+    <string name="invite_confirm_add_message">Wan li têkiliyên xwe zêde bikin û cih parve bikin?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Daxwaza bendewar tune</string>
+    <string name="pending_requesting">Tê xwestin: %1$s · %2$s</string>
+    <string name="pending_role_change">Daxwaza guhertina rolê · %1$s</string>
+    <string name="pending_new_request">Daxwaza parvekirina nû · %1$s</string>
+
+    <string name="common_save_changes">Guhertinan Tomar Bike</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Sazkirinên Parvekirinê Nûve Bike</string>
+    <string name="incoming_new_title">Daxwaza Têkiliya Nû</string>
+    <string name="incoming_update_subtitle">%1$s dixwaze parvekirina we nûve bike. Sazkirinên jêrîn binirxînin.</string>
+    <string name="incoming_new_subtitle">%1$s we wekî têkilî zêde kir! Hûn dikarin niha hilbijêrin ka hûn çi parve dikin.</string>
+    <string name="incoming_section_location">Cih</string>
+    <string name="incoming_share_my_location">Cihê min bi %1$s re parve bike</string>
+    <string name="incoming_share_my_location_sub">Ew dikarin bibînin hûn li ku ne</string>
+    <string name="incoming_see_their_location">Cihê %1$s bibîne</string>
+    <string name="incoming_see_their_location_sub">Hûn dikarin bibînin ew li ku ne</string>
+    <string name="incoming_section_messaging">Peyamşandin</string>
+    <string name="incoming_allow_messages">Destûr Bide Peyaman</string>
+    <string name="incoming_allow_messages_sub">Peyamên chatê ji %1$s bistîne</string>
+
+    <string name="common_request">Daxwaz Bike</string>
+    <string name="common_edit">Biguhere</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Sazkirinên Têkiliyê</string>
+    <string name="peer_section_roles">Rolên Parvekirina Cih</string>
+    <string name="peer_send_on">%1$s dikare cihê we bibîne</string>
+    <string name="peer_send_off">Hûn cihê xwe bi %1$s re parve nakin</string>
+    <string name="peer_receive_title">Cihê %1$s Bistîne</string>
+    <string name="peer_receive_on">Hûn dikarin cihê %1$s bibînin</string>
+    <string name="peer_receive_off">Gihîştina we ji bo cihê %1$s tune</string>
+    <string name="peer_section_privacy">Kontrolên Parvekirinê &amp; Veşariyê</string>
+    <string name="peer_pause_sharing">Parvekirinê Rawestîne</string>
+    <string name="peer_pause_sub">Ji bo demekê şandina cihê xwe ji %1$s re rawestîne</string>
+    <string name="peer_precision">Rastiya Cih</string>
+    <string name="peer_precision_exact_sub">Koordînatên GPS ên rast</string>
+    <string name="peer_precision_suburb_sub">Cihê texmînî (Asta taxê)</string>
+    <string name="peer_always_sharing">Her tim parve dike</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d rêzika parvekirinê ya çalak</item>
+        <item quantity="other">%1$d rêzikên parvekirinê yên çalak</item>
+    </plurals>
+    <string name="peer_section_alerts">Hişyarî &amp; Şopandin</string>
+    <string name="peer_sos_contact">Têkiliya SOS</string>
+    <string name="peer_sos_sub">Hişyariyên xwe yên acîl bistînin dema parvekirin rawestî be jî</string>
+    <string name="peer_missed_alert">Hişyariya Cihê Windabûyî</string>
+    <string name="peer_missed_on">Heke %1$s ragihandina cihê xwe rawestîne agahdar bike</string>
+    <string name="peer_requires_access">Hewcedarî bi gihîştina cihê %1$s heye</string>
+    <string name="peer_proximity_alert">Hişyariya Nêzîkbûnê</string>
+    <string name="peer_proximity_sub">Dema %1$s nêzîk be agahdar bike</string>
+    <string name="peer_alert_radius">Radyusa Hişyariyê</string>
+    <string name="peer_alert_schedule">Bernameya Hişyariyê</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d rêzika çalak</item>
+        <item quantity="other">%1$d rêzikên çalak</item>
+    </plurals>
+    <string name="peer_geofences_sub">Ji bo %1$s herêmên hatin û çûnê saz bikin</string>
+    <string name="peer_supervise">Vê Amûrê Bişopîne</string>
+    <string name="peer_supervise_on">Hûn daxwazên vekirinê ji %1$s distînin û dipejirînin</string>
+    <string name="peer_supervise_off">Bila %1$s daxwazên vekirina moda çavdêriyê ji we re bişîne</string>
+    <string name="peer_messaging_sub">Peyamên chatê yên ji %1$s çalak/seqet bike</string>
+    <string name="peer_section_history">Dîroka Tevgerê</string>
+    <string name="peer_location_history">Dîroka Cih</string>
+    <string name="peer_location_history_sub">Dîroka tevgerê û rapora nexşeyê ji bo %1$s bibîne</string>
+    <string name="peer_section_retention">Girtina Daneyan a Dûr</string>
+    <string name="peer_retention_location_sub">%1$s dîroka cihê we ji bo kengî digire</string>
+    <string name="peer_purge_location">Hemû Daneyên Cih ji %1$s Paqij Bike</string>
+    <string name="peer_retention_messages_sub">%1$s peyamên we şandine ji bo kengî digire</string>
+    <string name="peer_purge_messages">Hemû Peyaman ji %1$s Paqij Bike</string>
+    <string name="peer_precision_exact">GPS-a Rast</string>
+    <string name="peer_precision_exact_desc">Koordînatên rast</string>
+    <string name="peer_precision_suburb">Tax (~1km)</string>
+    <string name="peer_precision_suburb_desc">Tenê asta taxê</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d axaftinê jê bibim?</item>
+        <item quantity="other">%1$d axaftinan jê bibim?</item>
+    </plurals>
+    <string name="conv_delete_locally">Bi Herêmî Jê Bibe</string>
+    <string name="conv_delete_locally_sub">Axaftinê tenê ji amûra we radike.</string>
+    <string name="conv_delete_both">Ji Herêmî/Ji Têkiliyê Jê Bibe</string>
+    <string name="conv_bulk_delete_both_sub">Axaftinê bi herêmî û ji têkiliya we jê dibe.</string>
+    <string name="conv_delete_both_sub">Axaftinê bi herêmî radike û daxwazek jêbirinê li amûra têkiliyê dide destpêkirin.</string>
+    <string name="conv_cd_exit_selection">Ji hilbijartinê derkeve</string>
+    <string name="conv_cd_select_all">Hemûyan Hilbijêre</string>
+    <string name="conv_cd_new_message">Peyama nû</string>
+    <string name="conv_sort_date">Dîrok</string>
+    <string name="conv_sort_unread">Nexonwendî</string>
+    <string name="conv_search_placeholder">Li axaftinan bigere…</string>
+    <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_archived">Arşîvkirî</string>
+    <string name="conv_mark_read">Wekî Xwendî Nîşan Bike</string>
+    <string name="conv_archive">Arşîv Bike</string>
+    <string name="conv_unarchive">Ji Arşîvê Derxe</string>
+    <string name="conv_empty_no_results">Ji bo \"%1$s\" encam tune</string>
+    <string name="conv_empty_no_results_sub">Peyvek din a lêgerînê biceribînin</string>
+    <string name="conv_empty_archived_title">Chata arşîvkirî tune</string>
+    <string name="conv_empty_archived_sub">Ji bo paqijkirina qutiya peyamên xwe chatan arşîv bikin</string>
+    <string name="conv_empty_title">Hîna peyam tune</string>
+    <string name="conv_empty_sub">Nexşeyê vekin û li ser kesek bitikînin\nda ku axaftinek bidin destpêkirin</string>
+    <string name="conv_delete_title">Axaftinê jê bibe?</string>
+    <string name="conv_delete_message">Hûn dixwazin vê axaftina bi %1$s re çawa jê bibin?</string>
+    <string name="conv_messages_blocked">Peyam hatine astengkirin</string>
+    <string name="conv_preview_mine">Tu: %1$s</string>
+    <string name="conv_new_message_title">Peyama Nû</string>
+    <string name="conv_picker_empty">Hîna têkilî tune. Koda QR bixwînin da ku têkiliyek zêde bikin.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Dîroka chatê paqij bike?</string>
+    <string name="chat_clear_message">Hûn dixwazin vê axaftina bi %1$s re çawa paqij bikin?</string>
+    <string name="chat_clear_locally">Bi Herêmî Paqij Bike</string>
+    <string name="chat_clear_both">Ji Herêmî/Ji Têkiliyê Paqij Bike</string>
+    <string name="chat_clear_both_sub">Chatê bi herêmî paqij dike û daxwaza jêbirina peyamên ku we şandine ji %1$s re dişîne.</string>
+    <string name="chat_cd_options">Vebijark</string>
+    <string name="chat_clear_history_menu">Dîroka Chatê Paqij Bike</string>
+    <string name="chat_typing">%1$s dinivîse…</string>
+    <string name="chat_blocked_banner">We peyamên ji %1$s asteng kirine. Ji bo rakirina astengiyê herin Têkiliyan.</string>
+    <string name="chat_delete_msg_title">Peyamê jê bibe?</string>
+    <string name="chat_delete_msg_message">Hûn dixwazin vê peyamê çawa jê bibin?</string>
+    <string name="chat_delete_from_contact">Ji têkiliyê jê bibe</string>
+    <string name="chat_delete_from_contact_sub">Chatê ji amûra têkiliyê jê dibe.</string>
+    <string name="chat_delete_both_sub">Chatê bi herêmî radike û bixweber ji amûra têkiliyê jê dibe.</string>
+    <string name="chat_cd_share_location">Cih Parve Bike</string>
+    <string name="chat_input_placeholder">Peyam…</string>
+    <string name="chat_cd_send">Bişîne</string>
+
+    <string name="common_close">Bigire</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS Çalak Bikim?</string>
+    <string name="map_sos_deactivate_title">SOS Seqet Bikim?</string>
+    <string name="map_sos_activate_msg">Ev dê heya ku were seqetkirin her 15 saniyan cihê we ji têkiliyên weyên SOS ên diyarkirî re biweşîne.</string>
+    <string name="map_sos_deactivate_msg">Ev dê weşandina cihê ya bi pêşîniya bilind ji têkiliyên weyên acîl re rawestîne.</string>
+    <string name="map_activate">Çalak bike</string>
+    <string name="map_deactivate">Seqet bike</string>
+    <string name="map_cd_style">Şêweya Nexşeyê</string>
+    <string name="map_cd_show_geofences">Geofences nîşan bide</string>
+    <string name="map_cd_hide_geofences">Geofences veşêre</string>
+    <string name="map_cd_follow">Min Bişopîne</string>
+    <string name="map_cd_friends">Heval</string>
+    <string name="map_no_friends">Hîna heval nayێن şopandin</string>
+    <string name="map_you">Tu</string>
+    <string name="map_cd_go_my_location">Here cihê min</string>
+    <string name="map_sos_active">⚠ SOS ÇALAK E</string>
+    <string name="map_away">Dûr</string>
+    <string name="map_no_location_yet">Hîna cih tune</string>
+    <string name="map_cd_go_location">Here cih</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS VEKIRÎ</string>
+    <string name="map_overdue">Dereng mayî - nûvekirina dawî tune</string>
+    <string name="map_stat_last_seen">Cara dawî hat dîtin</string>
+    <string name="map_stat_battery">Pîl</string>
+    <string name="map_stat_accuracy">Rastî</string>
+    <string name="map_stat_motion">Tevger</string>
+    <string name="map_stat_speed">Lez</string>
+    <string name="map_stat_elevation">Bilindbûn</string>
 
     <string name="common_ok">Temam</string>
-    <string name="cd_back">Vegere</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Dîrok: %1$s</string>
+    <string name="history_select_person">Kesek Hilbijêre</string>
+    <string name="history_person_label">Kes</string>
+    <string name="history_cd_prev_day">Roja Berê</string>
+    <string name="history_cd_next_day">Roja Pişt re</string>
+    <string name="history_time_filter">Parzûna Demê:</string>
+    <string name="history_cd_reset_time">Demê Vegerîne</string>
+    <string name="history_tab_list">Lîste</string>
+    <string name="history_empty_title">Ji bo vê rojê dîrok tune</string>
+    <string name="history_empty_sub">Dîrokek din hilbijêrin an pêwendiya xwe kontrol bikin.</string>
+    <string name="history_start_time">Dema Destpêkê</string>
+    <string name="history_end_time">Dema Dawî</string>
+    <string name="history_no_data_title">Daneyên cih tune</string>
+    <string name="history_no_data_sub">Ji bo vê rojê an dema diyarkirî pîngên tomarkirî tune ne.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d pîng hat tomarkirin</item>
+        <item quantity="other">%1$d pîng hatin tomarkirin</item>
+    </plurals>
+    <string name="history_cd_dismiss">Rake</string>
+    <string name="history_accuracy_label">±%1$s rastî</string>
+    <string name="history_emergency_sos">Sînyala SOS a acîl</string>
+    <string name="history_detail_location">Cih</string>
+    <string name="history_detail_coordinates">Koordînat</string>
+    <string name="history_within">di nav ±%1$s de</string>
+    <string name="history_detail_movement">Tevger</string>
+    <string name="history_movement_desc">%1$s %2$s ber bi %3$s ve</string>
+
+    <string name="common_create">Çêbike</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Herêma geofence zêde bike</string>
+    <string name="geo_cd_assign">Geofence tayîn bike</string>
+    <string name="geo_unknown">Nenas</string>
+    <string name="geo_empty_title">Geofence tune</string>
+    <string name="geo_empty_sub">Ji bo çêkirina herêmek geofence li ser + bitikînin, paşê têkiliyan ji sazkirinên parvekirinê ji wê re tayîn bikin.</string>
+    <string name="geo_delete_title">Geofence jê bibe?</string>
+    <string name="geo_delete_simple">\"%1$s\" jê bibe?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" ji bo %2$d têkiliyê hatî tayîn kirin. Jêbirina wê dê wan tayînan jî rake.</item>
+        <item quantity="other">\"%1$s\" ji bo %2$d têkiliyan hatî tayîn kirin. Jêbirina wê dê wan tayînan jî rake.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences ji bo %1$s</string>
+    <string name="geo_empty_contact_title">Ji bo têkiliyê geofence tune</string>
+    <string name="geo_empty_contact_sub">Ji bo tayînkirina herêmek geofence li ser + bitikînin û hilbijêrin ka dê di dema hatin, çûn an her duyan de were hişyar kirin.</string>
+    <string name="geo_no_areas_title">Hîna geofence tune</string>
+    <string name="geo_no_areas_msg">Pêşî ji ekrana Geofences herêmek geofence çêbikin, paşê li vir tayîn bikin.</string>
+    <string name="geo_radius_label">radyusa %1$s</string>
+    <string name="geo_contacts_label">Têkilî: %1$s</string>
+    <string name="geo_no_contacts_assigned">Têkilî nehatine tayîn kirin</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d rêzik</item>
+        <item quantity="other">%1$d rêzik</item>
+    </plurals>
+    <string name="geo_trigger_enter">Hatin</string>
+    <string name="geo_trigger_exit">Çûn</string>
+    <string name="geo_trigger_both">Her du</string>
+    <string name="geo_edit_title">Geofence Biguhere</string>
+    <string name="geo_new_title">Geofence Nû</string>
+    <string name="geo_cd_my_location">Cihê min</string>
+    <string name="geo_cd_radius_increase">Radyusê zêde bike</string>
+    <string name="geo_cd_radius_decrease">Radyusê kêm bike</string>
+    <string name="geo_hint_tap">Ji bo danînê li nexşeyê bitikînin an bigirin</string>
+    <string name="geo_hint_move">Ji bo zoomê pînc bikin • Ji bo guhertinê pînê bigirin an bikişînin</string>
+    <string name="geo_basic_info">Zanyariya Bingehîn</string>
+    <string name="geo_search_title">Bi Navnîşan Bigere</string>
+    <string name="geo_search_label">Navnîşan an cih</string>
+    <string name="geo_search_placeholder">mînak 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">Navnîşanek guncan nehat dîtin</string>
+    <string name="geo_cd_search">Bigere</string>
+    <string name="geo_name_placeholder">mînak Mal, Kar</string>
+    <string name="geo_name_required">Nav hewce ye</string>
+    <string name="geo_latitude">Panî</string>
+    <string name="geo_longitude">Dirêjî</string>
+    <string name="geo_lat_range">-90 heya 90</string>
+    <string name="geo_lng_range">-180 heya 180</string>
+    <string name="geo_radius">Radyus</string>
+    <string name="geo_radius_range">%1$d heya %2$d m binivîsin</string>
+    <string name="geo_edit_assignment">Tayînê Biguhere</string>
+    <string name="geo_assign_title">Geofence Tayîn Bike</string>
+    <string name="geo_select_area">Herêma Geofence Hilbijêre</string>
+    <string name="geo_trigger_title">Agahdarkirinê Dest pê Bike Gava…</string>
+    <string name="geo_add_rule">Rêzik Zêde Bike</string>
+    <string name="geo_alerts_all_times">Hişyarî her tim çalak in. Rêzikek zêde bikin da ku dema şandina hişyariyan sînordar bikin.</string>
+    <string name="geo_assign_action">Tayîn Bike</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Hişyariyên Nêzîkbûnê</string>
+    <string name="prox_empty_title">Kesek nayê şopandin</string>
+    <string name="prox_empty_sub">Ji tabê Scanê koda QR ya kesekî bixwînin\nda ku dest bi şopandina cihê wan bikin</string>
+    <string name="prox_intro">Dema ku kesek tê şopandin nêzîkî we bibe (di dûrahiya hilbijartî de) agahdar bibin.</string>
+    <string name="prox_alert_within">Dema di nav %1$s de be hişyar bike</string>
+    <string name="prox_alerts_off">Hişyarî girtî ne</string>
+    <string name="prox_alert_radius">Radyusa hişyariyê</string>
+    <string name="prox_edit_schedule">Bernameyê Biguhere</string>
+    <string name="prox_rules">Rêzik</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Bername ji bo %1$s</string>
+    <string name="schedule_cd_add_rule">Rêzik zêde bike</string>
+    <string name="schedule_empty_title">Rêzika bernameyê tune</string>
+    <string name="schedule_empty_global">Cih her tim tê parvekirin. Rêzikek zêde bikin da ku dema parvekirin çalak be sînordar bikin.</string>
+    <string name="schedule_empty_peer">Cih her tim bi %1$s re tê parvekirin. Rêzikek zêde bikin da ku dema wê sînordar bikin.</string>
+    <string name="schedule_active_hint">Dema rêzikek bi dema niha re li hev bike çalak e. Vala = her tim vekirî.</string>
+    <string name="schedule_all_day">Hemû rojê</string>
+    <string name="schedule_plus_one_day"> (+1 roj)</string>
+    <string name="schedule_rule_number">Rêzik %1$d</string>
+    <string name="schedule_cd_delete_rule">Rêzikê jê bibe</string>
+    <string name="schedule_edit_rule">Rêzikê Biguhere</string>
+    <string name="schedule_label_optional">Etîket (dilxwazî)</string>
+    <string name="schedule_label_placeholder">mînak Saetên kar, Dawiya heftiyê</string>
+    <string name="schedule_active_days">Rojên Çalak</string>
+    <string name="schedule_time_window">Pencereya Demê</string>
+    <string name="schedule_start">Destpêk</string>
+    <string name="schedule_end">Dawî</string>
+    <string name="schedule_overnight">Bi şev: ji %1$s heya %2$s roja din çalak e</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Amûr Tê Şopandin</string>
+    <string name="gate_message">Ji bo gihîştina sazkirinê pejirandina çavdêr hewce ye.</string>
+    <string name="gate_request_access">Gihîştinê Bixwaze</string>
+    <string name="gate_waiting">Li benda pejirandina çavdêr e…</string>
+    <string name="gate_denied">Gihîştin ji hêla çavdêr ve hat redkirin.</string>
+    <string name="gate_timed_out">Dema daxwazê derbas bû. Çavdêr bersiv neda.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Her tim</string>
+    <string name="retention_keep_for">Bigire ji bo: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d roj</item>
+        <item quantity="other">%1$d roj</item>
+    </plurals>
+
+    <string name="common_select">Hilbijêre</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Cihê Sabît Hilbijêre</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Hilbijêrin ka kîjan tab di barê jêrîn de û bi çi rêzê xuya dibin. Nexşe her tim tê girtin.</string>
+    <string name="customize_cd_move_up">Ber bi jor ve bibe</string>
+    <string name="customize_cd_move_down">Ber bi jêr ve bibe</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Guherto %1$s (build %2$d)</string>
+    <string name="about_tagline">Parvekirina cihê taybet bi kesên ku hûn pê ewle ne. Bê hesab, bê ewran, bê şopandina ji hêla me ve.</string>
+    <string name="about_relay_connections">Girêdanên Relayê</string>
+    <string name="about_connected">Girêdayî</string>
+    <string name="about_disconnected">Girêdan qut bû</string>
+    <string name="about_open_source">Pirtûkxaneyên Çavkaniya Vekirî</string>
+    <string name="about_lib_osmdroid_desc">Renderkirina nexşeyê ya li ser bingeha OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Veguhestina WebSocket ji bo relay Nostr</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Danegira herêmî</string>
+    <string name="about_map_attribution">Daneyên nexşeyê © Beşdarên OpenStreetMap</string>
+
+    <!-- ── Agahdarkirin ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Qebûl bike</string>
+    <string name="notif_someone">Kesek</string>
+    <string name="notif_sos_title">SOS ji %1$s!</string>
+    <string name="notif_sos_text">%1$s li (%2$s, %3$s) SOS çalak kir</string>
+    <string name="notif_supervisor_request_title">%1$s dixwaze bibe çavdêrê we</string>
+    <string name="notif_supervisor_request_text">Ji bo ku destûr bidin daxwazên vekirinê ji vê amûrê, qebûl bikin</string>
+    <string name="notif_supervisor_request_big">Dema moda çavdêriyê çalak be qebûl bikin da ku bila %1$s daxwazên pejirandina vekirinê ji we re bişîne.</string>
+    <string name="notif_supervised_active_title">Moda çavdêriyê çalak e</string>
+    <string name="notif_supervised_active_text">Çavdêrê we pişrast kir - moda çavdêriyê niha hat sazkirin</string>
+    <string name="notif_supervised_declined_title">Moda çavdêriyê hat redkirin</string>
+    <string name="notif_supervised_declined_text">Çavdêrê we daxwaz red kir - moda çavdêriyê hat seqetkirin</string>
+    <string name="notif_tracking_alert_title">Hişyariya Şopandinê</string>
+    <string name="notif_tracking_proximity">%1$s hişyariyek nêzîkbûnê li ser we stand</string>
+    <string name="notif_tracking_geofence">%1$s hişyariyek stand ku hûn ketine/derketine ji fence: %2$s</string>
+    <string name="notif_tracking_generic">%1$s cihê we dişopîne</string>
+    <string name="notif_track_update_title">Nûvekirina parvekirinê ji %1$s</string>
+    <string name="notif_track_new_title">Têkiliya Nû: %1$s</string>
+    <string name="notif_role_send_receive">Cih Bişîne/Bistîne</string>
+    <string name="notif_role_send">Cih Bişîne</string>
+    <string name="notif_role_receive">Cih Bistîne</string>
+    <string name="notif_role_none">Parvekirina Cih Tune</string>
+    <string name="notif_track_requesting">%1$s dixwaze: %2$s</string>
+    <string name="notif_track_update_body">%1$s dixwaze nûve bike ka hûn cihan çawa parve dikin.</string>
+    <string name="notif_track_new_body">%1$s we wekî têkilî zêde kir û dixwaze girê bide.</string>
+    <string name="notif_contact_connected_title">Têkilî Girêda</string>
+    <string name="notif_contact_connected_text">%1$s niha bi we re girêdayî ye.</string>
+    <string name="notif_request_declined_title">Daxwaz Hat Redkirin</string>
+    <string name="notif_request_declined_text">%1$s daxwaza weya parvekirina cih red kir.</string>
+    <string name="notif_message_person">Peyam bide %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s ketiye %2$s</string>
+    <string name="notif_geofence_left_title">%1$s ji %2$s derketiye</string>
+    <string name="notif_geofence_subtitle">li %1$s · radyusa %2$s</string>
+    <string name="notif_person_nearby">%1$s nêzîk e</string>
+    <string name="notif_distance_from_you">%1$s dûrî we ye</string>
+    <string name="notif_missed_title">Nûvekirinek ji %1$s tune</string>
+    <string name="notif_missed_text">Cara dawî %1$sm berê li nêzî (%2$s, %3$s) hat dîtin</string>
+    <string name="notif_sos_active_title">SOS ÇALAK E!</string>
+    <string name="notif_sos_active_text">Hişyariya acîl ji têkiliyên SOS re tê weşandin</string>
+    <string name="notif_messages_group_title">Peyamên LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Daxwaza têkiliyê ji %1$s hat redkirin</string>
+    <string name="toast_now_supervising">Niha amûra %1$s tê şopandin</string>
+    <string name="toast_declined_supervision">Daxwaza çavdêriyê ji %1$s hat redkirin</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Niha</string>
+    <string name="time_minutes_ago">%1$dm berê</string>
+    <string name="fallback_me">Ez</string>
+    <string name="fallback_unknown">Nenas</string>
+    <string name="geo_unassigned">Tayîn nekirî</string>
+    <string name="days_every_day">Her roj</string>
+    <string name="days_weekdays">Rojên xebatê</string>
+    <string name="days_weekends">Dawiya heftiyê</string>
+    <string name="days_none">Tu roj</string>
+    <string name="chat_my_location_message">Cihê min ê niha: %1$s</string>
+    <string name="scan_error_bad_pubkey">Vexwendina nederbasdar: mifteya giştî ya xirab</string>
+    <string name="scan_error_key_mismatch">Vexwendina nederbasdar: mifte li hev nakin</string>
+    <string name="scan_error_unknown">Xeletiya nenas</string>
+    <string name="scan_error_invalid_link">Lînka vexwendinê ya nederbasdar</string>
+    <string name="scan_fallback_contact">vê têkiliyê</string>
+    <string name="backup_saved">Backup hat hilanîn: %1$s</string>
+    <string name="backup_saved_encrypted">Backup hat hilanîn (şîfrekirî): %1$s</string>
+    <string name="backup_failed">Backup bi ser neket: %1$s</string>
+    <string name="backup_could_not_read_file">Pel nehat xwendin</string>
+    <string name="backup_could_not_write_file">Pel nehat nivîsandin</string>
+    <string name="backup_could_not_read">Backup nehat xwendin: %1$s</string>
+    <string name="backup_incorrect_password">Şîfre xelet e</string>
+    <string name="restore_result_restored">Hat vegerandin: %1$s</string>
+    <string name="restore_result_failed">Bi ser neket: %1$s</string>
+    <string name="restore_nothing">Tu tişt tune ku were vegerandin</string>
+    <string name="restore_failed">Vegerandin bi ser neket: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d têkilî</item>
+        <item quantity="other">%1$d têkilî</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geofence</item>
+        <item quantity="other">%1$d geofence</item>
+    </plurals>
+    <string name="peer_role_change_sent">Daxwaza guhertina rolê ji %1$s re hat şandin</string>
+    <string name="peer_not_found">Heval nehat dîtin</string>
+    <string name="peer_purge_location_sent">Fermana jêbirina dûr ji bo HEMÛ cihan ji %1$s re hat şandin</string>
+    <string name="peer_purge_messages_sent">Fermana jêbirina dûr ji bo HEMÛ peyaman ji %1$s re hat şandin</string>
+    <string name="onboarding_error_key_length">Mifteya nederbasdar - divê 64 karakterên heks be.</string>
+    <string name="onboarding_error_key_range">Mifteya taybet a nederbasdar.</string>
+    <string name="onboarding_error_hex">Formata heks a nederbasdar.</string>
+    <string name="onboarding_error_import_failed">Hawirdekirina mifteyê bi ser neket: %1$s</string>
 </resources>

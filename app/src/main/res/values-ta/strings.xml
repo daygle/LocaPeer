@@ -2,15 +2,15 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── அறிவிப்பு சேனல்கள் மற்றும் முன்புற சேவை ─────────────────────── -->
+    <!-- ── அறிவிப்பு சேனல்கள் & முன் சேவை ─────────────────────── -->
     <string name="channel_name_heartbeat">இருப்பிட ஒளிபரப்பு</string>
-    <string name="channel_desc_heartbeat">உங்கள் இருப்பிடத்தை உங்கள் அங்கீகரிக்கப்பட்ட தொடர்புகளுக்கு ஒளிபரப்புகிறது</string>
+    <string name="channel_desc_heartbeat">அங்கீகரிக்கப்பட்ட தொடர்புகளுக்கு உங்கள் இருப்பிடத்தை ஒளிபரப்புகிறது</string>
     <string name="channel_name_alerts">எச்சரிக்கைகள்</string>
-    <string name="channel_desc_alerts">தவறிய ஹார்ட்பீட் மற்றும் ஜியோஃபென்ஸ் எச்சரிக்கைகள்</string>
+    <string name="channel_desc_alerts">தவறிய இதயத் துடிப்பு மற்றும் ஜியோஃபென்ஸ் எச்சரிக்கைகள்</string>
     <string name="channel_name_messages">செய்திகள்</string>
-    <string name="channel_desc_messages">உள்வரும் செய்திகள்</string>
+    <string name="channel_desc_messages">உள்வரும் சக செய்திகள்</string>
     <string name="notification_heartbeat_title">LocaPeer இயங்குகிறது</string>
-    <string name="notification_heartbeat_text">உங்கள் இருப்பிடத்தை மற்றவர்களுடன் பகிர்கிறது</string>
+    <string name="notification_heartbeat_text">உங்கள் இருப்பிடத்தை மற்றவர்களுடன் பகிர்ந்து கொள்கிறது</string>
 
     <!-- ── பொதுவான செயல்கள் ──────────────────────────────────────── -->
     <string name="common_save">சேமி</string>
@@ -23,11 +23,11 @@
     <string name="common_unlock">திற</string>
     <string name="common_password">கடவுச்சொல்</string>
     <string name="common_not_now">இப்போது வேண்டாம்</string>
-    <string name="common_off">முடக்கப்பட்டது</string>
+    <string name="common_off">அணை</string>
     <string name="common_approve">அங்கீகரி</string>
-    <string name="common_deny">மறு</string>
+    <string name="common_deny">மறுக்கவும்</string>
 
-    <!-- ── வழிசெலுத்தல் தாவல்கள் ──────────────────────────────────────────── -->
+    <!-- ── வழிசெலுத்தல் தாவல் லேபிள்கள் ──────────────────────────────────────────── -->
     <string name="tab_map">வரைபடம்</string>
     <string name="tab_messages">செய்திகள்</string>
     <string name="tab_history">வரலாறு</string>
@@ -39,30 +39,731 @@
     <string name="motion_stationary">நிலையானது</string>
     <string name="motion_walking">நடத்தல்</string>
     <string name="motion_running">ஓடுதல்</string>
-    <string name="motion_cycling">மிதிவண்டி</string>
+    <string name="motion_cycling">மிதிவண்டி ஓட்டுதல்</string>
     <string name="motion_driving">வாகனம் ஓட்டுதல்</string>
 
-    <!-- ── அமைப்புகள் ────────────────────────────────────────────────── -->
+    <!-- ── காப்புப் பிரிவுகள் ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">தனியார் விசை</string>
+    <string name="backup_section_contacts">தொடர்புகள்</string>
+    <string name="backup_section_geofences">ஜியோஃபென்ஸ்கள்</string>
+    <string name="backup_section_settings">அமைப்புகள்</string>
+
+    <!-- ── மேற்பார்வை கோரிக்கை ──────────────────────── -->
+    <string name="supervision_request_title">மேற்பார்வை கோரிக்கை</string>
+    <string name="supervision_request_message">\"%1$s\" அவர்கள் அமைப்புகளை அணுக அனுமதி கேட்கிறார். அனுமதிக்கவா?</string>
+
+    <!-- ── அமைப்புகள் திரை ────────────────────────────────────────────────── -->
     <string name="settings_title">அமைப்புகள்</string>
-    <string name="settings_section_location_privacy">இருப்பிடம் மற்றும் தனியுரிமை</string>
+
+    <!-- பிரிவு லேபிள்கள் -->
+    <string name="settings_section_location_privacy">இருப்பிடம் &amp; தனியுரிமை</string>
     <string name="settings_section_security">பாதுகாப்பு</string>
     <string name="settings_section_map">வரைபடம்</string>
-    <string name="settings_section_battery_performance">பேட்டரி மற்றும் செயல்திறன்</string>
-    <string name="settings_section_units_display">அலகுகள் மற்றும் காட்சி</string>
-    <string name="settings_section_retention">தக்கவைப்பு (இந்த சாதனம்)</string>
+    <string name="settings_section_battery_performance">பேட்டரி &amp; செயல்திறன்</string>
+    <string name="settings_section_units_display">அலகுகள் &amp; காட்சி</string>
+    <string name="settings_section_retention">தக்கவைப்பு (இந்தச் சாதனம்)</string>
     <string name="settings_section_appearance">தோற்றம்</string>
-    <string name="settings_section_backup_keys">காப்புப்பிரதி மற்றும் விசைகள்</string>
+    <string name="settings_section_backup_keys">காப்புப்பிரதி &amp; விசைகள்</string>
     <string name="settings_section_about">பற்றி</string>
 
-    <string name="settings_edit_name">பெயரைத் திருத்து</string>
+    <!-- சுயவிவரம் -->
+    <string name="settings_edit_name">பெயரைத் தொகு</string>
     <string name="settings_my_qr">எனது QR</string>
     <string name="settings_no_name_set">பெயர் அமைக்கப்படவில்லை</string>
 
+    <!-- இருப்பிடம் &amp; தனியுரிமை -->
     <string name="settings_share_location">எனது இருப்பிடத்தைப் பகிர்</string>
+    <string name="settings_broadcasting">உங்கள் தொடர்புகளுக்கு ஒளிபரப்பப்படுகிறது</string>
+    <string name="settings_not_broadcasting">ஒளிபரப்பப்படவில்லை</string>
+    <string name="settings_sharing_schedule">பகிர்வு அட்டவணை</string>
+    <string name="settings_always_on">எப்போதும் ஆன்</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d விதி</item>
+        <item quantity="other">%1$d விதிகள்</item>
+    </plurals>
+    <string name="settings_geofences">ஜியோஃபென்ஸ்கள்</string>
+    <string name="settings_geofences_subtitle">பகிரப்பட்ட ஜியோஃபென்ஸ் பகுதிகளை நிர்வகிக்கவும்</string>
+    <string name="settings_notify_when_tracked">கண்காணிக்கப்படும் போது அறிவிக்கவும்</string>
+    <string name="settings_notify_when_tracked_subtitle">ஒரு தொடர்பின் அருகாமை அல்லது உங்களுக்கான ஜியோஃபென்ஸ் எச்சரிக்கை தூண்டப்படும்போது அறிவிப்பைப் பெறுங்கள்.</string>
+    <string name="settings_my_location_history">இருப்பிட வரலாறு</string>
+    <string name="settings_my_location_history_subtitle">உங்கள் சொந்த இருப்பிட காலவரிசையை உலாவவும்</string>
+    <string name="settings_lookup_addresses">முகவரிகளைத் தேடு</string>
+    <string name="settings_lookup_addresses_subtitle">வரலாற்று புள்ளிகள் மற்றும் வரைபட ஊசிகளுக்கான தெரு முகவரிகளைக் காட்டு. அந்த ஆயத்தொலைவுகளை உங்கள் சாதனத்தின் ஜியோகோடிங் சேவைக்கு (பொதுவாக கூகுள்) அனுப்புகிறது.</string>
+
+    <!-- பாதுகாப்பு -->
+    <string name="settings_supervision_active">மேற்பார்வை செயலில் உள்ளது</string>
+    <string name="settings_supervision_active_subtitle">அமைப்புகளுக்கு மேற்பார்வையாளர் ஒப்புதல் தேவை</string>
+    <string name="settings_disable_supervised">மேற்பார்வை பயன்முறையை முடக்கு</string>
+    <string name="settings_supervised_mode">மேற்பார்வை பயன்முறை</string>
+    <string name="settings_supervised_mode_subtitle">அமைப்புகளை அணுக மேற்பார்வையாளர் ஒப்புதல் தேவை</string>
+
+    <!-- வரைபடம் -->
+    <string name="settings_starting_point">தொடக்கப் புள்ளி</string>
+    <string name="settings_map_current_location">தற்போதைய இருப்பிடம்</string>
+    <string name="settings_map_all_contacts">அனைத்து தொடர்புகள்</string>
+    <string name="settings_map_fixed_location">நிலையான இருப்பிடம்</string>
+    <string name="settings_map_last_position">கடைசி நிலை</string>
+    <string name="settings_map_starting_point_title">வரைபடத் தொடக்கப் புள்ளி</string>
+    <string name="settings_no_location_set">இருப்பிடம் அமைக்கப்படவில்லை</string>
+    <string name="settings_pick_location_on_map">வரைபடத்தில் இருப்பிடத்தைத் தேர்ந்தெடு</string>
+    <string name="settings_default_zoom_level">இயல்புநிலை பெரிதாக்க நிலை</string>
+    <string name="settings_map_pin_colour">வரைபட ஊசி நிறம்</string>
+
+    <!-- பேட்டரி &amp; செயல்திறன் -->
+    <string name="settings_update_cadence">புதுப்பிப்பு அதிவெண்</string>
+    <string name="settings_update_cadence_subtitle">உங்கள் இருப்பிடம் எவ்வளவு அடிக்கடி ஒளிபரப்பப்படுகிறது என்பதைச் சரிசெய்யவும்</string>
+    <string name="settings_update_cadence_dialog_message">உங்கள் செயல்பாட்டின் அடிப்படையில் உங்கள் இருப்பிடம் எவ்வளவு அடிக்கடி புதுப்பிக்கப்படுகிறது என்பதைக் கட்டுப்படுத்தவும். அடிக்கடி புதுப்பிப்பது அதிக பேட்டரியைப் பயன்படுத்தும்.</string>
+    <string name="settings_update_cadence_reset">இயல்புநிலைக்கு மீட்டமை</string>
+    <string name="settings_min_distance_filtering">குறைந்தபட்ச தூர வடிகட்டுதல்</string>
+    <string name="settings_min_distance_filtering_subtitle">முந்தைய புள்ளியிலிருந்து குறைந்தது இவ்வளவு தூரத்தில் உள்ள புள்ளிகளை மட்டும் காட்டு.</string>
+    <string name="settings_discard_low_accuracy">குறைந்த துல்லியமான திருத்தங்களைத் தவிர்</string>
+    <string name="settings_discard_low_accuracy_subtitle">இதைவிட அதிக துல்லிய ஆரம் கொண்ட உங்கள் சொந்த திருத்தங்களை ஒளிபரப்பவோ பதிவு செய்யவோ வேண்டாம். SOS ஒருபோதும் தவிர்க்கப்படாது.</string>
+    <string name="settings_hide_low_accuracy">குறைந்த துல்லியமான புள்ளிகளை மறை</string>
+    <string name="settings_hide_low_accuracy_subtitle">இதைவிட அதிக துல்லிய ஆரம் கொண்ட வரலாற்று புள்ளிகளை மறைக்கவும். எதுவும் நீக்கப்படாது.</string>
+    <string name="settings_low_battery" formatted="false">குறைந்த பேட்டரி (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d நிமி</string>
+    <string name="settings_motion_detection">இயக்கத்தைக் கண்டறிதல்</string>
+    <string name="settings_motion_detection_on">இயக்கப்பட்டது - வரலாற்றில் உங்கள் இயக்க வகையை (நடத்தல், வாகனம் ஓட்டுதல்) செம்மைப்படுத்துகிறது</string>
+    <string name="settings_motion_detection_off">அணை - துல்லியமான இயக்க லேபிள்களுக்கு உடல் செயல்பாட்டு அணுகலை அனுமதிக்கவும்</string>
+    <string name="settings_enable_motion_title">இயக்கத்தைக் கண்டறிதலை இயக்கு</string>
+    <string name="settings_enable_motion_message">உடல் செயல்பாட்டு அணுகல் LocaPeer உங்கள் வரலாற்றில் நடத்தல், வாகனம் ஓட்டுதல் மற்றும் அசையாமல் நிற்றல் ஆகியவற்றைத் துல்லியமாக வேறுபடுத்த அனுமதிக்கிறது. இது தற்போது அணைக்கப்பட்டுள்ளது - கணினி அமைப்புகளிலிருந்து மீண்டும் இயக்கலாம்.</string>
+    <string name="settings_open_settings">அமைப்புகளைத் திற</string>
+    <string name="settings_battery_optimization">பேட்டரி மேம்படுத்தல்</string>
+    <string name="settings_battery_optimization_unrestricted">கட்டுப்பாடற்றது — LocaPeer பின்னணியில் சுதந்திரமாக இயங்க முடியும்</string>
+    <string name="settings_battery_optimization_restricted">மேம்படுத்தப்பட்டது — கணினி அமைப்புகளில் கட்டுப்பாடற்றதாக அமைக்க தட்டவும்</string>
+
+    <!-- அனுமதிகள் -->
+    <string name="settings_permissions">அனுமதிகள்</string>
+    <string name="settings_permissions_subtitle">இருப்பிடம், கேமரா மற்றும் பலவற்றிற்கான பயன்பாட்டு அணுகலைச் சரிபார்த்து சரிசெய்யவும்</string>
+    <string name="permissions_intro">உங்கள் இருப்பிடத்தைப் பகிரவும், அழைப்புகளை ஸ்கேன் செய்யவும் மற்றும் பின்னணியில் தொடர்ந்து இயங்கவும் LocaPeer-க்கு இந்த அனுமதிகள் தேவை. வழங்கப்படாதவற்றைச் சரிசெய்ய அவற்றைத் தட்டவும்.</string>
+    <string name="perm_location_title">இருப்பிடம்</string>
+    <string name="perm_location_granted">வழங்கப்பட்டது — உங்கள் இருப்பிடத்தைப் பகிரலாம்</string>
+    <string name="perm_location_denied">வழங்கப்படவில்லை — இருப்பிட அணுகலை அனுமதிக்க தட்டவும்</string>
+    <string name="perm_background_location_title">பின்னணி இருப்பிடம்</string>
+    <string name="perm_background_location_granted">வழங்கப்பட்டது — பயன்பாடு மூடப்பட்டிருந்தாலும் இருப்பிடப் பகிர்வு தொடரும்</string>
+    <string name="perm_background_location_denied">வழங்கப்படவில்லை — அமைப்புகளில் \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="perm_camera_title">கேமரா</string>
+    <string name="perm_camera_granted">வழங்கப்பட்டது — அழைப்பு QR குறியீடுகளை ஸ்கேன் செய்யப் பயன்படுகிறது</string>
+    <string name="perm_camera_denied">வழங்கப்படவில்லை — கேமராவை அனுமதிக்க தட்டவும்</string>
+    <string name="perm_notifications_title">அறிவிப்புகள்</string>
+    <string name="perm_notifications_granted">வழங்கப்பட்டது — எச்சரிக்கைகள் மற்றும் நிலை புதுப்பிப்புகளைக் காட்டலாம்</string>
+    <string name="perm_notifications_denied">வழங்கப்படவில்லை — அறிவிப்புகளை அனுமதிக்க தட்டவும்</string>
+
+    <!-- அலகுகள் &amp; காட்சி -->
+    <string name="settings_speed_units">வேக அலகுகள்</string>
+    <string name="settings_speed_imperial">இம்பீரியல் (mph)</string>
+    <string name="settings_speed_metric">மெட்ரிக் (km/h)</string>
+    <string name="settings_elevation_units">உயர அலகுகள்</string>
+    <string name="settings_elevation_imperial">இம்பீரியல் (அடி)</string>
+    <string name="settings_elevation_metric">மெட்ரிக் (மீட்டர்)</string>
+    <string name="settings_distance_units">தூர அலகுகள்</string>
+    <string name="settings_distance_imperial">இம்பீரியல் (ft/mi)</string>
+    <string name="settings_distance_metric">மெட்ரிக் (m/km)</string>
+    <string name="settings_time_format">நேர வடிவம்</string>
+    <string name="settings_time_24h">24-மணிநேரம் (13:30)</string>
+    <string name="settings_time_12h">12-மணிநேரம் (1:30 PM)</string>
+
+    <!-- தக்கவைப்பு -->
+    <string name="settings_retention_location">இருப்பிடத் தரவு</string>
+    <string name="settings_retention_location_subtitle">தொடர்புகளின் இருப்பிடத் தரவை உள்நாட்டில் எவ்வளவு காலம் வைத்திருக்க வேண்டும்</string>
+    <string name="settings_clear_all_location">அனைத்து இருப்பிடத் தரவையும் அழி</string>
+    <string name="settings_retention_messages">செய்திகள்</string>
+    <string name="settings_retention_messages_subtitle">பெறப்பட்ட செய்திகளை உள்நாட்டில் எவ்வளவு காலம் வைத்திருக்க வேண்டும்</string>
+    <string name="settings_clear_all_messages">அனைத்து செய்திகளையும் அழி</string>
+
+    <!-- தோற்றம் -->
+    <string name="settings_customize_nav">வழிசெலுத்தலைத் தனிப்பயனாக்கு</string>
+    <string name="settings_customize_nav_subtitle">கீழ் தாவல்களைத் தேர்ந்தெடுத்து மறுவரிசைப்படுத்தவும்</string>
+    <string name="settings_start_page">தொடக்கப் பக்கம்</string>
     <string name="settings_language">மொழி</string>
     <string name="settings_language_title">பயன்பாட்டு மொழி</string>
     <string name="settings_language_system">கணினி இயல்புநிலை</string>
 
-    <string name="common_ok">சரி</string>
+    <!-- காப்புப்பிரதி &amp; விசைகள் -->
+    <string name="settings_export_backup">காப்புப்பிரதியை ஏற்றுமதி செய்</string>
+    <string name="settings_export_backup_subtitle">உங்கள் தனிப்பட்ட விசை மற்றும் தொடர்புகளை ஒரு கோப்பில் சேமிக்கவும். இந்தக் கோப்பைப் பாதுகாப்பாக வைத்திருங்கள்!</string>
+    <string name="settings_import_backup">காப்புப்பிரதியை இறக்குமதி செய்</string>
+    <string name="settings_import_backup_subtitle">முன்பு ஏற்றுமதி செய்யப்பட்ட கோப்பிலிருந்து மீட்டமைக்கவும்</string>
+    <string name="settings_view_private_key">தனியார் விசையைப் பார்</string>
+    <string name="settings_view_private_key_subtitle">உங்கள் 64-எழுத்து ஹெக்ஸ் அடையாள விசையைக் காட்டு</string>
+
+    <!-- பற்றி -->
+    <string name="settings_about_locapeer">LocaPeer பற்றி</string>
+    <string name="settings_about_subtitle">பதிப்பு, ரிலே நிலை, திறந்த மூல</string>
+
+    <!-- உரையாடல்கள் -->
+    <string name="settings_edit_display_name">காட்சிப் பெயரைத் தொகு</string>
+    <string name="settings_display_name_label">காட்சிப் பெயர்</string>
+    <string name="settings_my_invite_qr">எனது அழைப்பு QR</string>
+    <string name="settings_invite_qr_subtitle">உங்களைக் கண்காணிக்க மற்றவர்கள் இதை ஸ்கேன் செய்யலாம்.</string>
+    <string name="settings_invite_qr_cd">அழைப்பு QR</string>
+    <string name="settings_private_key_title">தனியார் விசை</string>
+    <string name="settings_private_key_warning">இதைப் பாதுகாப்பாக வைத்திருங்கள். இந்த விசை உள்ள எவரும் உங்களைப் போல ஆள்மாறாட்டம் செய்யலாம்.</string>
+    <string name="settings_clear_location_title">இருப்பிட வரலாற்றை அழிக்கவா?</string>
+    <string name="settings_clear_location_message">சேமிக்கப்பட்ட அனைத்து இருப்பிட பிங்குகளும் நிரந்தரமாக நீக்கப்படும்.</string>
+    <string name="settings_clear_messages_title">செய்தி வரலாற்றை அழிக்கவா?</string>
+    <string name="settings_clear_messages_message">சேமிக்கப்பட்ட அனைத்து செய்திகளும் நிரந்தரமாக நீக்கப்படும்.</string>
+    <string name="settings_encrypted_backup_title">மறைக்குறியிடப்பட்ட காப்புப்பிரதி</string>
+    <string name="settings_encrypted_backup_message">இந்த காப்புப்பிரதி மறைக்குறியிடப்பட்டது. தொடர கடவுச்சொல்லை உள்ளிடவும்.</string>
+    <string name="settings_select_restore_title">மீட்டமைக்க தரவைத் தேர்ந்தெடு</string>
+    <string name="settings_select_export_title">ஏற்றுமதி செய்ய தரவைத் தேர்ந்தெடு</string>
+    <string name="settings_export_password_hint">உங்கள் காப்புப்பிரதி கோப்பை மறைக்குறியிட விருப்பமாக கடவுச்சொல்லை அமைக்கவும்.</string>
+    <string name="settings_backup_password_optional">காப்புப்பிரதி கடவுச்சொல் (விருப்பமானது)</string>
+    <string name="settings_select_sections">சேர்க்க வேண்டிய பிரிவுகளைத் தேர்ந்தெடு:</string>
+    <string name="settings_choose_file_location">கோப்பு இருப்பிடத்தைத் தேர்ந்தெடு</string>
+    <string name="settings_not_in_backup">இந்தக் காப்புப்பிரதியில் இல்லை</string>
+    <string name="settings_enable_supervised_title">மேற்பார்வை பயன்முறையை இயக்கு</string>
+    <string name="settings_enable_supervised_message">மேற்பார்வையாளராகச் செயல்படும் ஒரு சகாவைத் தேர்ந்தெடுக்கவும். அவர்கள் தங்கள் சாதனத்திலிருந்து அமைப்புகளுக்கான அணுகலை அங்கீகரிக்க வேண்டும்.</string>
+    <string name="settings_no_peers_found">சக நண்பர்கள் யாரும் காணப்படவில்லை. முதலில் அவர்களின் அழைப்பு QR குறியீட்டை ஸ்கேன் செய்து சகாவைச் சேர்க்கவும்.</string>
+    <string name="settings_disable_supervised_title">மேற்பார்வை பயன்முறையை முடக்கவா?</string>
+    <string name="settings_disable_supervised_message">மேற்பார்வையாளர் ஒப்புதல் இல்லாமல் அமைப்புகளை அணுகலாம்.</string>
+
+    <!-- ── மேலும் பொதுவானவை ─────────────────────────────────────────── -->
+    <string name="common_remove">நீக்கு</string>
+    <string name="common_name">பெயர்</string>
+    <string name="common_search">தேடு</string>
+    <string name="common_sort">வரிசைப்படுத்து</string>
+
+    <!-- உள்ளடக்க விளக்கங்கள் (பகிரப்பட்டவை) -->
+    <string name="cd_message">செய்தி</string>
+    <string name="cd_show_on_map">வரைபடத்தில் காட்டு</string>
+    <string name="cd_more_options">கூடுதல் விருப்பங்கள்</string>
+
+    <!-- ── தொடர்புகள் திரை ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d தேர்ந்தெடுக்கப்பட்டது</item>
+        <item quantity="other">%1$d தேர்ந்தெடுக்கப்பட்டது</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">தேர்வை ரத்துசெய்</string>
+    <string name="contacts_cd_select_all">அனைத்தையும் தேர்ந்தெடு</string>
+    <string name="contacts_cd_deselect_all">அனைத்தையும் தேர்வு நீக்கு</string>
+    <string name="contacts_cd_qr_invite">QR / அழைப்பு</string>
+    <string name="contacts_cd_pending_requests">நிலுவையிலுள்ள கோரிக்கைகள்</string>
+    <string name="contacts_sort_last_seen">கடைசியாகப் பார்த்தது</string>
+    <string name="contacts_search_placeholder">தொடர்புகளைத் தேடு…</string>
+    <string name="contacts_empty_title">இன்னும் தொடர்புகள் இல்லை</string>
+    <string name="contacts_empty_subtitle">ஒருவருடன் இணையவும் இருப்பிடங்களைப் பகிரத் தொடங்கவும் QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
+    <string name="contacts_scan_qr">QR குறியீட்டை ஸ்கேன் செய்</string>
+    <string name="contacts_bulk_delete_messages">செய்திகளை நீக்கு</string>
+    <string name="contacts_bulk_delete_locations">இருப்பிடங்களை நீக்கு</string>
+    <string name="contacts_last_seen">கடைசியாகப் பார்த்தது: %1$s</string>
+    <string name="contacts_no_location_yet">இன்னும் இருப்பிடத் தரவு இல்லை</string>
+    <string name="contacts_view_sharing_settings">பகிர்வு அமைப்புகள்</string>
+    <string name="contacts_view_location_history">இருப்பிட வரலாறு</string>
+    <string name="contacts_rename_contact">தொடர்புக்கு மறுபெயரிடு</string>
+    <string name="contacts_on_contact_device">தொடர்பின் சாதனத்தில்</string>
+    <string name="contacts_delete_my_messages_title">எனது செய்திகளை நீக்கு</string>
+    <string name="contacts_delete_locations_title">பகிரப்பட்ட இருப்பிடங்களை நீக்கு</string>
+    <string name="contacts_remove_contact_title">தொடர்பை நீக்கு</string>
+    <string name="contacts_leave_title">தொடர்பு மற்றும் தரவை நீக்கு</string>
+    <string name="contacts_rename_title">தொடர்புக்கு மறுபெயரிடு</string>
+    <string name="contacts_remove_contact_body">உங்கள் தொடர்புகளிலிருந்து %1$s ஐ நீக்கவா? அவர்களின் இருப்பிட வரலாறும் உள்நாட்டில் நீக்கப்படும்.</string>
+    <string name="contacts_leave_body">இது %1$s இன் தொடர்புகளிலிருந்து உங்களை நீக்கி, அவர்களின் சாதனத்திலிருந்து உங்கள் செய்திகள் மற்றும் இருப்பிடத் தரவை அழிக்கும். அவர்களின் இருப்பிடத்திற்கான அணுகலையும் நீங்கள் இழப்பீர்கள்.</string>
+    <string name="contacts_delete_my_messages_body">%1$s இன் சாதனத்திலிருந்து நீங்கள் அனுப்பிய அனைத்து செய்திகளையும் இது நீக்கும். இதை மாற்ற முடியாது.</string>
+    <string name="contacts_delete_locations_body">%1$s இன் சாதனத்திலிருந்து நீங்கள் பகிர்ந்த அனைத்து இருப்பிடத் தரவையும் இது நீக்கும். இதை மாற்ற முடியாது.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">தொடர்பை நீக்கு</item>
+        <item quantity="other">%1$d தொடர்புகளை நீக்கு</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">இந்தத் தொடர்பை நீக்கவா? அவர்களின் இருப்பிட வரலாறும் உள்நாட்டில் நீக்கப்படும்.</item>
+        <item quantity="other">%1$d தொடர்புகளை நீக்கவா? அவர்களின் இருப்பிட வரலாறும் உள்நாட்டில் நீக்கப்படும்.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">இந்தத் தொடர்பின் சாதனத்திலிருந்து நீங்கள் அனுப்பிய அனைத்து செய்திகளையும் தொலைதூரத்தில் நீக்கவா? இதை மாற்ற முடியாது.</item>
+        <item quantity="other">%1$d தொடர்புகளின் சாதனங்களிலிருந்து நீங்கள் அனுப்பிய செய்திகளைத் தொலைதூரத்தில் நீக்கவா? இதை மாற்ற முடியாது.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">இந்தத் தொடர்பின் சாதனத்திலிருந்து நீங்கள் பகிர்ந்த அனைத்து இருப்பிட வரலாற்றையும் தொலைதூரத்தில் நீக்கவா? இதை மாற்ற முடியாது.</item>
+        <item quantity="other">%1$d தொடர்புகளின் சாதனங்களிலிருந்து நீங்கள் பகிர்ந்த இருப்பிட வரலாற்றைத் தொலைதூரத்தில் நீக்கவா? இதை மாற்ற முடியாது.</item>
+    </plurals>
+
+    <string name="common_continue">தொடரவும்</string>
+
+    <!-- ── ஆன்போர்டிங் ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">காப்புப்பிரதியிலிருந்து மீட்டமை</string>
+    <string name="onboarding_restore_message">உங்கள் அடையாளம் மற்றும் தொடர்புகளை மீட்டெடுக்க உங்கள் 64-எழுத்து ஹெக்ஸ் தனிப்பட்ட விசையை ஒட்டவும்.</string>
+    <string name="onboarding_private_key_hex">தனியார் விசை (hex)</string>
+    <string name="onboarding_tagline">தொடர்புகளுடன் தனிப்பட்ட இருப்பிடப் பகிர்வு.\nகணக்குகள் இல்லை. தனியுரிம சர்வர்கள் இல்லை.</string>
+    <string name="onboarding_feature_e2e_title">எண்ட்-டு-எண்ட் மறைக்குறியிடப்பட்டது</string>
+    <string name="onboarding_feature_e2e_subtitle">உங்கள் இருப்பிடம் சாதனத்திலேயே மறைக்குறியிடப்படுகிறது</string>
+    <string name="onboarding_feature_servers_title">தனியுரிம சர்வர்கள் இல்லை</string>
+    <string name="onboarding_feature_servers_subtitle">திறந்த Nostr ரிலேக்களைப் பாதுகாப்பான போக்குவரமாகப் பயன்படுத்துகிறது - உங்கள் தரவு மறைக்குறியிடப்பட்டு தனிப்பட்டதாக இருக்கும்</string>
+    <string name="onboarding_feature_phone_title">உங்கள் தொலைபேசியிலேயே இருக்கும்</string>
+    <string name="onboarding_feature_phone_subtitle">உங்கள் முழு இருப்பிட வரலாறு உங்கள் சாதனத்திலேயே இருக்கும். உங்கள் தற்போதைய நிலை மட்டுமே தேர்ந்தெடுக்கப்பட்ட தொடர்புகளுடன் பகிரப்படும்</string>
+    <string name="onboarding_name_prompt">உங்கள் தொடர்புகள் உங்களை எப்படி அழைக்க வேண்டும்?</string>
+    <string name="onboarding_name_placeholder">உதாரணமாக அம்மா, அப்பா, அகிலா…</string>
+    <string name="onboarding_get_started">தொடங்குங்கள்</string>
+    <string name="onboarding_restore_from_backup">காப்புப்பிரதியிலிருந்து மீட்டமை</string>
+    <string name="onboarding_key_note">உங்கள் தனிப்பட்ட விசை உள்நாட்டில் உருவாக்கப்பட்டது மற்றும் இந்த சாதனத்தை ஒருபோதும் விட்டு வெளியேறாது.</string>
+    <string name="onboarding_permissions_title">அனுமதிகள்</string>
+    <string name="onboarding_permissions_desc">உங்கள் நிலையைப் பகிர இருப்பிட அணுகல், அழைப்பு குறியீடுகளை ஸ்கேன் செய்ய கேமரா அணுகல் மற்றும் பின்னணி நிலைக்கான அறிவிப்பு அணுகல் LocaPeer-க்கு தேவை. உடல் செயல்பாட்டு அணுகல் விருப்பமானது - இது உங்கள் இயக்கத்தை (நடத்தல், வாகனம் ஓட்டுதல்) துல்லியமாக லேபிளிட உதவுகிறது.</string>
+    <string name="onboarding_before_ask_title">நாங்கள் கேட்பதற்கு முன்</string>
+    <string name="onboarding_before_ask_intro">அடுத்து சில கணினி அறிவுறுத்தல்களைக் காண்பீர்கள்:</string>
+    <string name="onboarding_before_ask_location">• இருப்பிடம் - அவசியம், உங்கள் நிலையைப் பகிர.</string>
+    <string name="onboarding_before_ask_camera">• கேமரா - அழைப்பு குறியீடுகளை ஸ்கேன் செய்ய.</string>
+    <string name="onboarding_before_ask_notifications">• அறிவிப்புகள் - பின்னணி நிலைக்கு.</string>
+    <string name="onboarding_before_ask_activity">• உடல் செயல்பாடு - விருப்பமானது. இது LocaPeer உங்கள் வரலாற்றில் நடத்தல், வாகனம் ஓட்டுதல் மற்றும் அசையாமல் நிற்றல் ஆகியவற்றைத் துல்லியமாக வேறுபடுத்த அனுமதிக்கிறது. நீங்கள் இதைத் தவிர்த்துப் பிறகு அமைப்புகளில் இயக்கலாம்.</string>
+    <string name="onboarding_grant_permissions">அனுமதிகளை வழங்கு</string>
+    <string name="onboarding_bg_location_title">பின்னணி இருப்பிடம்</string>
+    <string name="onboarding_bg_location_desc">பயன்பாடு மூடப்பட்டிருக்கும் போது உங்கள் தொடர்புகளைப் புதுப்பிக்க, அடுத்த திரையில் \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="onboarding_bg_location_error">பயன்பாடு மூடப்பட்டிருக்கும் போது உங்கள் தொடர்புகளைப் புதுப்பிக்க பின்னணி இருப்பிடம் தேவை. மீண்டும் முயற்சி செய்து \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="onboarding_configure_location">இருப்பிடத்தை உள்ளமைக்கவும்</string>
+    <string name="onboarding_battery_title">பேட்டரி</string>
+    <string name="onboarding_battery_desc">பேட்டரியைச் சேமிக்க ஆண்ட்ராய்டு LocaPeer-ஐ நிறுத்தலாம். நம்பகமான புதுப்பிப்புகளை உறுதிப்படுத்த, மேம்படுத்தல்களிலிருந்து LocaPeer-ஐ விலக்கவும்.</string>
+    <string name="onboarding_disable_optimizations">மேம்படுத்தல்களை முடக்கு</string>
+    <string name="onboarding_done_title">எல்லாம் தயார்!</string>
+    <string name="onboarding_done_desc">உங்கள் தனிப்பட்ட இருப்பிட நெட்வொர்க் தயாராக உள்ளது.</string>
+    <string name="onboarding_start_using">LocaPeer-ஐப் பயன்படுத்தத் தொடங்குங்கள்</string>
+
+    <string name="common_try_again">மீண்டும் முயற்சி செய்</string>
+
+    <!-- ── அழைப்பு ஸ்கேன் திரை ─────────────────────────────────────────────── -->
+    <string name="scan_title">அழைப்பை ஸ்கேன் செய்</string>
+    <string name="scan_camera_needed">QR குறியீடுகளை ஸ்கேன் செய்ய கேமரா அனுமதி தேவை.</string>
+    <string name="scan_grant_permission">அனுமதி வழங்கு</string>
+    <string name="scan_add_contact_title">தொடர்பைச் சேர்க்கவா?</string>
+    <string name="scan_add_contact_message">இது உங்களை %1$s உடன் இணைத்து இருப்பிடத்தை ஒருவருக்கொருவர் பகிரத் தொடங்கும்.</string>
+    <string name="scan_add_share">சேர்த்துப் பகிர்</string>
+    <string name="scan_request_sent_title">கோரிக்கை அனுப்பப்பட்டது!</string>
+    <string name="scan_request_sent_message">%1$s-க்கு கோரிக்கை அனுப்பப்பட்டுள்ளது. அவர்கள் ஏற்றவுடன் நீங்கள் இணைக்கப்படுவீர்கள்.</string>
+    <string name="scan_failed">ஸ்கேன் தோல்வியடைந்தது: %1$s</string>
+
     <string name="cd_back">பின்னால்</string>
+    <string name="common_review">மதிப்பாய்வு செய்</string>
+    <string name="common_decline">மறுக்கவும்</string>
+
+    <!-- பகிர்வு பங்கு லேபிள்கள் (பகிரப்பட்டவை) -->
+    <string name="role_send_receive">அனுப்பு/பெறு</string>
+    <string name="role_send">அனுப்பு</string>
+    <string name="role_receive">பெறு</string>
+    <string name="role_none">பகிர்வு இல்லை</string>
+
+    <!-- ── அழைப்பு திரை ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">எனது அழைப்பு</string>
+    <string name="invite_tab_add_contact">தொடர்பைச் சேர்</string>
+    <string name="invite_your_qr_title">உங்கள் QR குறியீடு</string>
+    <string name="invite_your_qr_subtitle">உங்கள் இருப்பிடத்தைப் பின்தொடர யாரையாவது இதை ஸ்கேன் செய்ய அனுமதிக்கவும்</string>
+    <string name="invite_qr_cd">உங்கள் QR குறியீடு</string>
+    <string name="invite_qr_error">QR உருவாக்குவதில் பிழை</string>
+    <string name="invite_share_link">அழைப்பு இணைப்பைப் பகிர்</string>
+    <string name="invite_encryption_note">உங்கள் இருப்பிடம் ஸ்கேனர் சாதனத்திற்காகத் தனித்தனியாக மறைக்குறியிடப்படும்.</string>
+    <string name="invite_camera_required_title">கேமரா அணுகல் தேவை</string>
+    <string name="invite_camera_required_message">QR குறியீட்டை ஸ்கேன் செய்ய கேமரா அனுமதியை வழங்கவும்.</string>
+    <string name="invite_point_camera">LocaPeer QR-ஐ நோக்கி கேமராவைத் திருப்பவும்</string>
+    <string name="invite_paste_title">அல்லது அழைப்பு இணைப்பை ஒட்டவும்</string>
+    <string name="invite_process_link">இணைப்பைச் செயலாக்கு</string>
+    <string name="invite_fallback_name">தொடர்பு</string>
+    <string name="invite_success_message">அவர்கள் ஏற்றவுடன் நீங்கள் %1$s உடன் இணைக்கப்படுவீர்கள்.</string>
+    <string name="invite_confirm_add_title">%1$s-ஐச் சேர்க்கவா?</string>
+    <string name="invite_confirm_add_message">அவர்களை உங்கள் தொடர்புகளில் சேர்த்து இருப்பிடத்தைப் பகிரவா?</string>
+
+    <!-- ── நிலுவையிலுள்ள கோரிக்கைகள் திரை ────────────────────────────────────────── -->
+    <string name="pending_empty">நிலுவையிலுள்ள கோரிக்கைகள் இல்லை</string>
+    <string name="pending_requesting">கோருகிறது: %1$s · %2$s</string>
+    <string name="pending_role_change">பங்கு மாற்றக் கோரிக்கை · %1$s</string>
+    <string name="pending_new_request">புதிய பகிர்வுக் கோரிக்கை · %1$s</string>
+
+    <string name="common_save_changes">மாற்றங்களைச் சேமி</string>
+
+    <!-- ── உள்வரும் பகிர்வுக் கோரிக்கை திரை ──────────────────────────────────── -->
+    <string name="incoming_update_title">பகிர்வு அமைப்புகளைப் புதுப்பி</string>
+    <string name="incoming_new_title">புதிய தொடர்புக் கோரிக்கை</string>
+    <string name="incoming_update_subtitle">நீங்கள் எப்படிப் பகிர்கிறீர்கள் என்பதைப் புதுப்பிக்க %1$s விரும்புகிறார். கீழே உள்ள அமைப்புகளை மதிப்பாய்வு செய்யவும்.</string>
+    <string name="incoming_new_subtitle">%1$s உங்களைத் தொடர்பில் சேர்த்துள்ளார்! நீங்கள் இப்போது எதைப் பகிர வேண்டும் என்பதைத் தேர்வு செய்யலாம்.</string>
+    <string name="incoming_section_location">இருப்பிடம்</string>
+    <string name="incoming_share_my_location">எனது இருப்பிடத்தை %1$s உடன் பகிர்</string>
+    <string name="incoming_share_my_location_sub">நீங்கள் எங்கே இருக்கிறீர்கள் என்பதை அவர்களால் பார்க்க முடியும்</string>
+    <string name="incoming_see_their_location">%1$s இன் இருப்பிடத்தைப் பார்</string>
+    <string name="incoming_see_their_location_sub">அவர்கள் எங்கே இருக்கிறார்கள் என்பதை உங்களால் பார்க்க முடியும்</string>
+    <string name="incoming_section_messaging">செய்தியிடல்</string>
+    <string name="incoming_allow_messages">செய்திகளை அனுமதி</string>
+    <string name="incoming_allow_messages_sub">%1$s இடமிருந்து சாட் செய்திகளைப் பெறுங்கள்</string>
+
+    <string name="common_request">கோரிக்கை</string>
+    <string name="common_edit">தொகு</string>
+
+    <!-- ── சக பகிர்வு (தொடர்பு அமைப்புகள்) திரை ─────────────────────────── -->
+    <string name="peer_title">தொடர்பு அமைப்புகள்</string>
+    <string name="peer_section_roles">இருப்பிடப் பகிர்வு பங்குகள்</string>
+    <string name="peer_send_on">%1$s உங்கள் இருப்பிடத்தைப் பார்க்க முடியும்</string>
+    <string name="peer_send_off">உங்கள் இருப்பிடத்தை %1$s உடன் பகிரவில்லை</string>
+    <string name="peer_receive_title">%1$s இன் இருப்பிடத்தைப் பெறு</string>
+    <string name="peer_receive_on">%1$s இன் இருப்பிடத்தை உங்களால் பார்க்க முடியும்</string>
+    <string name="peer_receive_off">%1$s இன் இருப்பிடத்திற்கான அணுகல் உங்களிடம் இல்லை</string>
+    <string name="peer_section_privacy">தனியுரிமை &amp; பகிர்வு கட்டுப்பாடுகள்</string>
+    <string name="peer_pause_sharing">பகிர்வை நிறுத்து</string>
+    <string name="peer_pause_sub">%1$s-க்கு உங்கள் இருப்பிடத்தை அனுப்புவதை தற்காலிகமாக நிறுத்துங்கள்</string>
+    <string name="peer_precision">இருப்பிடத் துல்லியம்</string>
+    <string name="peer_precision_exact_sub">துல்லியமான GPS ஆயத்தொலைவுகள்</string>
+    <string name="peer_precision_suburb_sub">தோராயமான இருப்பிடம் (நகர்ப்புற நிலை)</string>
+    <string name="peer_always_sharing">எப்போதும் பகிரப்படுகிறது</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d செயலில் உள்ள பகிர்வு விதி</item>
+        <item quantity="other">%1$d செயலில் உள்ள பகிர்வு விதிகள்</item>
+    </plurals>
+    <string name="peer_section_alerts">எச்சரிக்கைகள் &amp; கண்காணிப்பு</string>
+    <string name="peer_sos_contact">SOS தொடர்பு</string>
+    <string name="peer_sos_sub">பகிர்வு நிறுத்தப்பட்டிருந்தாலும் உங்கள் அவசர எச்சரிக்கைகளைப் பெறுங்கள்</string>
+    <string name="peer_missed_alert">தவறிய இருப்பிட எச்சரிக்கை</string>
+    <string name="peer_missed_on">%1$s தனது இருப்பிடத்தைப் புகாரளிப்பதை நிறுத்தினால் எனக்குத் தெரிவிக்கவும்</string>
+    <string name="peer_requires_access">%1$s இன் இருப்பிடத்திற்கான அணுகல் தேவை</string>
+    <string name="peer_proximity_alert">அருகாமை எச்சரிக்கை</string>
+    <string name="peer_proximity_sub">%1$s அருகில் வரும்போது எனக்குத் தெரிவிக்கவும்</string>
+    <string name="peer_alert_radius">எச்சரிக்கை ஆரம்</string>
+    <string name="peer_alert_schedule">எச்சரிக்கை அட்டவணை</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d செயலில் உள்ள விதி</item>
+        <item quantity="other">%1$d செயலில் உள்ள விதிகள்</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s-க்கான வருகை மற்றும் புறப்பாடு மண்டலங்களை அமைக்கவும்</string>
+    <string name="peer_supervise">இந்தச் சாதனத்தை மேற்பார்வையிடு</string>
+    <string name="peer_supervise_on">%1$s இடமிருந்து திறத்தல் கோரிக்கைகளைப் பெற்று அங்கீகரிக்கிறீர்கள்</string>
+    <string name="peer_supervise_off">மேற்பார்வை-பயன்முறை திறத்தல் கோரிக்கைகளை உங்களுக்கு அனுப்ப %1$s-ஐ அனுமதிக்கவும்</string>
+    <string name="peer_messaging_sub">%1$s இடமிருந்து சாட் செய்திகளை இயக்கு/முடக்கு</string>
+    <string name="peer_section_history">இயக்க வரலாறு</string>
+    <string name="peer_location_history">இருப்பிட வரலாறு</string>
+    <string name="peer_location_history_sub">%1$s க்கான இயக்க வரலாறு மற்றும் வரைபட அறிக்கையைப் பார்</string>
+    <string name="peer_section_retention">தொலைநிலை தரவு தக்கவைப்பு</string>
+    <string name="peer_retention_location_sub">%1$s உங்கள் இருப்பிட வரலாற்றை எவ்வளவு காலம் வைத்திருக்கிறார்</string>
+    <string name="peer_purge_location">%1$s இடமிருந்து அனைத்து இருப்பிடத் தரவையும் அழி</string>
+    <string name="peer_retention_messages_sub">நீங்கள் அனுப்பிய செய்திகளை %1$s எவ்வளவு காலம் வைத்திருக்கிறார்</string>
+    <string name="peer_purge_messages">%1$s இடமிருந்து அனைத்து செய்திகளையும் அழி</string>
+    <string name="peer_precision_exact">துல்லியமான GPS</string>
+    <string name="peer_precision_exact_desc">துல்லியமான ஆயத்தொலைவுகள்</string>
+    <string name="peer_precision_suburb">நகர்ப்புறம் (~1km)</string>
+    <string name="peer_precision_suburb_desc">அக்கம் பக்கத்து நிலை மட்டும்</string>
+
+    <!-- ── செய்திகள் பட்டியல் திரை ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d உரையாடலை நீக்கவா?</item>
+        <item quantity="other">%1$d உரையாடல்களை நீக்கவா?</item>
+    </plurals>
+    <string name="conv_delete_locally">உள்நாட்டில் நீக்கு</string>
+    <string name="conv_delete_locally_sub">உங்கள் சாதனத்திலிருந்து மட்டும் உரையாடலை நீக்குகிறது.</string>
+    <string name="conv_delete_both">இரு இடங்களிலும் நீக்கு</string>
+    <string name="conv_bulk_delete_both_sub">உங்கள் சாதனத்திலிருந்தும் தொடர்பின் சாதனத்திலிருந்தும் உரையாடலை நீக்குகிறது.</string>
+    <string name="conv_delete_both_sub">உரையாடலை உள்நாட்டில் நீக்கி, தொடர்பின் சாதனத்திலும் நீக்குவதற்கான கோரிக்கையைத் தூண்டுகிறது.</string>
+    <string name="conv_cd_exit_selection">தேர்விலிருந்து வெளியேறு</string>
+    <string name="conv_cd_select_all">அனைத்தையும் தேர்ந்தெடு</string>
+    <string name="conv_cd_new_message">புதிய செய்தி</string>
+    <string name="conv_sort_date">தேதி</string>
+    <string name="conv_sort_unread">படிக்காதவை</string>
+    <string name="conv_search_placeholder">உரையாடல்களைத் தேடு…</string>
+    <string name="conv_tab_chats">சாட்கள்</string>
+    <string name="conv_tab_archived">காப்பகப்படுத்தப்பட்டது</string>
+    <string name="conv_mark_read">படித்ததாகக் குறிக்கவும்</string>
+    <string name="conv_archive">காப்பகப்படுத்து</string>
+    <string name="conv_unarchive">காப்பகத்திலிருந்து எடு</string>
+    <string name="conv_empty_no_results">\"%1$s\" க்கான முடிவுகள் எதுவுமில்லை</string>
+    <string name="conv_empty_no_results_sub">வேறு தேடல் சொல்லை முயற்சிக்கவும்</string>
+    <string name="conv_empty_archived_title">காப்பகப்படுத்தப்பட்ட சாட்கள் இல்லை</string>
+    <string name="conv_empty_archived_sub">இன்பாக்ஸைச் சுத்தமாக வைத்திருக்க சாட்களைக் காப்பகப்படுத்தவும்</string>
+    <string name="conv_empty_title">இன்னும் செய்திகள் இல்லை</string>
+    <string name="conv_empty_sub">வரைபடத்தைத் திறந்து உரையாடலைத் தொடங்க\nஒரு நபரைத் தட்டவும்</string>
+    <string name="conv_delete_title">உரையாடலை நீக்கவா?</string>
+    <string name="conv_delete_message">%1$s உடனான இந்த உரையாடலை எப்படி நீக்க விரும்புகிறீர்கள்?</string>
+    <string name="conv_messages_blocked">செய்திகள் தடுக்கப்பட்டன</string>
+    <string name="conv_preview_mine">நீங்கள்: %1$s</string>
+    <string name="conv_new_message_title">புதிய செய்தி</string>
+    <string name="conv_picker_empty">இன்னும் தொடர்புகள் இல்லை. தொடர்பைச் சேர்க்க QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
+
+    <!-- ── சாட் திரை ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">சாட் வரலாற்றை அழிக்கவா?</string>
+    <string name="chat_clear_message">%1$s உடனான இந்த உரையாடலை எப்படி அழிக்க விரும்புகிறீர்கள்?</string>
+    <string name="chat_clear_locally">உள்நாட்டில் அழி</string>
+    <string name="chat_clear_both">இரு இடங்களிலும் அழி</string>
+    <string name="chat_clear_both_sub">சாட்டை உள்நாட்டில் அழித்து, நீங்கள் அனுப்பிய செய்திகளை நீக்குமாறு %1$s-க்கு கோரிக்கை அனுப்பும்.</string>
+    <string name="chat_cd_options">விருப்பங்கள்</string>
+    <string name="chat_clear_history_menu">சாட் வரலாற்றை அழி</string>
+    <string name="chat_typing">%1$s தட்டச்சு செய்கிறார்…</string>
+    <string name="chat_blocked_banner">%1$s இடமிருந்து வரும் செய்திகளைத் தடுத்துள்ளீர்கள். நீக்க தொடர்புகளுக்குச் செல்லவும்.</string>
+    <string name="chat_delete_msg_title">செய்தியை நீக்கவா?</string>
+    <string name="chat_delete_msg_message">இந்த செய்தியை எப்படி நீக்க விரும்புகிறீர்கள்?</string>
+    <string name="chat_delete_from_contact">தொடர்பிடமிருந்து நீக்கு</string>
+    <string name="chat_delete_from_contact_sub">தொடர்பின் சாதனத்திலிருந்து சாட்டை நீக்குகிறது.</string>
+    <string name="chat_delete_both_sub">சாட்டை உள்நாட்டில் அகற்றி, தொடர்பின் சாதனத்திலிருந்து தானாகவே நீக்குகிறது.</string>
+    <string name="chat_cd_share_location">இருப்பிடத்தைப் பகிர்</string>
+    <string name="chat_input_placeholder">செய்தி…</string>
+    <string name="chat_cd_send">அனுப்பு</string>
+
+    <string name="common_close">மூடு</string>
+
+    <!-- ── வரைபடத் திரை ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS-ஐச் செயல்படுத்தவா?</string>
+    <string name="map_sos_deactivate_title">SOS-ஐ முடக்கவா?</string>
+    <string name="map_sos_activate_msg">இது முடக்கப்படும் வரை உங்கள் இருப்பிடத்தை ஒவ்வொரு 15 வினாடிக்கும் உங்கள் நியமிக்கப்பட்ட SOS தொடர்புகளுக்கு ஒளிபரப்பும்.</string>
+    <string name="map_sos_deactivate_msg">இது உங்கள் அவசரத் தொடர்புகளுக்கான உயர் முன்னுரிமை இருப்பிட ஒளிபரப்பை நிறுத்தும்.</string>
+    <string name="map_activate">செயல்படுத்து</string>
+    <string name="map_deactivate">முடக்கு</string>
+    <string name="map_cd_style">வரைபட நடை</string>
+    <string name="map_cd_show_geofences">ஜியோஃபென்ஸ்களைக் காட்டு</string>
+    <string name="map_cd_hide_geofences">ஜியோஃபென்ஸ்களை மறை</string>
+    <string name="map_cd_follow">என்னைப் பின்தொடர்</string>
+    <string name="map_cd_friends">நண்பர்கள்</string>
+    <string name="map_no_friends">இன்னும் நண்பர்கள் யாரும் கண்காணிக்கப்படவில்லை</string>
+    <string name="map_you">நீங்கள்</string>
+    <string name="map_cd_go_my_location">எனது இருப்பிடத்திற்குச் செல்</string>
+    <string name="map_sos_active">⚠ SOS செயலில் உள்ளது</string>
+    <string name="map_away">வெளியே</string>
+    <string name="map_no_location_yet">இன்னும் இருப்பிடம் இல்லை</string>
+    <string name="map_cd_go_location">இருப்பிடத்திற்குச் செல்</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ஆன்</string>
+    <string name="map_overdue">தாமதமானது - சமீபத்திய புதுப்பிப்பு இல்லை</string>
+    <string name="map_stat_last_seen">கடைசியாகப் பார்த்தது</string>
+    <string name="map_stat_battery">பேட்டரி</string>
+    <string name="map_stat_accuracy">துல்லியம்</string>
+    <string name="map_stat_motion">இயக்கம்</string>
+    <string name="map_stat_speed">வேகம்</string>
+    <string name="map_stat_elevation">உயரம்</string>
+
+    <string name="common_ok">சரி</string>
+
+    <!-- ── வரலாற்று அறிக்கை திரை ──────────────────────────────────────────── -->
+    <string name="history_title_peer">வரலாறு: %1$s</string>
+    <string name="history_select_person">நபரைத் தேர்ந்தெடு</string>
+    <string name="history_person_label">நபர்</string>
+    <string name="history_cd_prev_day">முந்தைய நாள்</string>
+    <string name="history_cd_next_day">அடுத்த நாள்</string>
+    <string name="history_time_filter">நேர வடிகட்டி:</string>
+    <string name="history_cd_reset_time">நேரத்தை மீட்டமை</string>
+    <string name="history_tab_list">பட்டியல்</string>
+    <string name="history_empty_title">இந்த நாளுக்கான வரலாறு இல்லை</string>
+    <string name="history_empty_sub">வேறு தேதியைத் தேர்ந்தெடுக்க முயற்சிக்கவும் அல்லது உங்கள் இணைப்பைச் சரிபார்க்கவும்.</string>
+    <string name="history_start_time">தொடக்க நேரம்</string>
+    <string name="history_end_time">முடிவு நேரம்</string>
+    <string name="history_no_data_title">இருப்பிடத் தரவு இல்லை</string>
+    <string name="history_no_data_sub">இந்த நாள் அல்லது நேர வரம்பிற்கு பதிவு செய்யப்பட்ட பிங்குகள் எதுவும் இல்லை.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d பிங் பதிவு செய்யப்பட்டது</item>
+        <item quantity="other">%1$d பிங்குகள் பதிவு செய்யப்பட்டன</item>
+    </plurals>
+    <string name="history_cd_dismiss">நீக்கு</string>
+    <string name="history_accuracy_label">±%1$s துல்லியம்</string>
+    <string name="history_emergency_sos">அவசர SOS சமிக்ஞை</string>
+    <string name="history_detail_location">இருப்பிடம்</string>
+    <string name="history_detail_coordinates">ஆயத்தொலைவுகள்</string>
+    <string name="history_within">±%1$s-க்குள்</string>
+    <string name="history_detail_movement">இயக்கம்</string>
+    <string name="history_movement_desc">%1$s %2$s திசையில் %3$s</string>
+
+    <string name="common_create">உருவாக்கு</string>
+
+    <!-- ── ஜியோஃபென்ஸ் திரைகள் ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">ஜியோஃபென்ஸ் பகுதியைச் சேர்</string>
+    <string name="geo_cd_assign">ஜியோஃபென்ஸை ஒதுக்கு</string>
+    <string name="geo_unknown">தெரியவில்லை</string>
+    <string name="geo_empty_title">ஜியோஃபென்ஸ்கள் இல்லை</string>
+    <string name="geo_empty_sub">ஒரு ஜியோஃபென்ஸ் பகுதியை உருவாக்க + ஐத் தட்டவும், பின்னர் அவர்களின் பகிர்வு அமைப்புகளிலிருந்து தொடர்புகளை அதற்கு ஒதுக்கவும்.</string>
+    <string name="geo_delete_title">ஜியோஃபென்ஸை நீக்கவா?</string>
+    <string name="geo_delete_simple">\"%1$s\"-ஐ நீக்கவா?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d தொடர்புக்கு ஒதுக்கப்பட்டுள்ளது. அதை நீக்கினால் அந்த ஒதுக்கீடுகளும் நீக்கப்படும்.</item>
+        <item quantity="other">\"%1$s\" %2$d தொடர்புகளுக்கு ஒதுக்கப்பட்டுள்ளது. அதை நீக்கினால் அந்த ஒதுக்கீடுகளும் நீக்கப்படும்.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s-க்கான ஜியோஃபென்ஸ்கள்</string>
+    <string name="geo_empty_contact_title">தொடர்புக்கு ஜியோஃபென்ஸ்கள் இல்லை</string>
+    <string name="geo_empty_contact_sub">ஒரு ஜியோஃபென்ஸ் பகுதியை ஒதுக்க + ஐத் தட்டவும், வருகை, புறப்பாடு அல்லது இரண்டிலும் எச்சரிக்க வேண்டுமா என்பதைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="geo_no_areas_title">இன்னும் ஜியோஃபென்ஸ்கள் இல்லை</string>
+    <string name="geo_no_areas_msg">முதலில் ஜியோஃபென்ஸ் திரையில் இருந்து ஒரு ஜியோஃபென்ஸ் பகுதியை உருவாக்கவும், பின்னர் இங்கே ஒதுக்கவும்.</string>
+    <string name="geo_radius_label">%1$s ஆரம்</string>
+    <string name="geo_contacts_label">தொடர்புகள்: %1$s</string>
+    <string name="geo_no_contacts_assigned">தொடர்புகள் ஒதுக்கப்படவில்லை</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d விதி</item>
+        <item quantity="other">%1$d விதிகள்</item>
+    </plurals>
+    <string name="geo_trigger_enter">உள்நுழை</string>
+    <string name="geo_trigger_exit">வெளியேறு</string>
+    <string name="geo_trigger_both">இரண்டும்</string>
+    <string name="geo_edit_title">ஜியோஃபென்ஸைத் தொகு</string>
+    <string name="geo_new_title">புதிய ஜியோஃபென்ஸ்</string>
+    <string name="geo_cd_my_location">எனது இருப்பிடம்</string>
+    <string name="geo_cd_radius_increase">ஆரத்தை அதிகரி</string>
+    <string name="geo_cd_radius_decrease">ஆரத்தைக் குறை</string>
+    <string name="geo_hint_tap">வைக்க வரைபடத்தைத் தட்டவும் அல்லது அழுத்திப் பிடிக்கவும்</string>
+    <string name="geo_hint_move">பெரிதாக்க விரல்களால் சுருக்கவும் • நகர்த்த ஊசியை அழுத்திப் பிடிக்கவும் அல்லது இழுக்கவும்</string>
+    <string name="geo_basic_info">அடிப்படைத் தகவல்</string>
+    <string name="geo_search_title">முகவரி மூலம் தேடு</string>
+    <string name="geo_search_label">முகவரி அல்லது இடம்</string>
+    <string name="geo_search_placeholder">உதாரணமாக எண் 10, பிரதான சாலை, சென்னை</string>
+    <string name="geo_search_no_results">பொருந்தும் முகவரி எதுவும் கிடைக்கவில்லை</string>
+    <string name="geo_cd_search">தேடு</string>
+    <string name="geo_name_placeholder">உதாரணமாக வீடு, அலுவலகம்</string>
+    <string name="geo_name_required">பெயர் அவசியம்</string>
+    <string name="geo_latitude">அட்சரேகை</string>
+    <string name="geo_longitude">தீர்க்கரேகை</string>
+    <string name="geo_lat_range">-90 முதல் 90 வரை</string>
+    <string name="geo_lng_range">-180 முதல் 180 வரை</string>
+    <string name="geo_radius">ஆரம்</string>
+    <string name="geo_radius_range">%1$d முதல் %2$d மீ வரை உள்ளிடவும்</string>
+    <string name="geo_edit_assignment">ஒதுக்கீட்டைத் தொகு</string>
+    <string name="geo_assign_title">ஜியோஃபென்ஸை ஒதுக்கு</string>
+    <string name="geo_select_area">ஜியோஃபென்ஸ் பகுதியைத் தேர்ந்தெடு</string>
+    <string name="geo_trigger_title">அறிவிப்பைத் தூண்டு…</string>
+    <string name="geo_add_rule">விதியைச் சேர்</string>
+    <string name="geo_alerts_all_times">எச்சரிக்கைகள் எல்லா நேரத்திலும் செயலில் இருக்கும். எச்சரிக்கைகள் எப்போது அனுப்பப்படுகின்றன என்பதைக் கட்டுப்படுத்த ஒரு விதியைச் சேர்க்கவும்.</string>
+    <string name="geo_assign_action">ஒதுக்கு</string>
+
+    <!-- ── அருகாமை எச்சரிக்கைகள் திரை ────────────────────────────────────────── -->
+    <string name="prox_title">அருகாமை எச்சரிக்கைகள்</string>
+    <string name="prox_empty_title">கண்காணிக்கப்படும் நபர்கள் இல்லை</string>
+    <string name="prox_empty_sub">அவர்களின் இருப்பிடத்தைக் கண்காணிக்கத் தொடங்க ஸ்கேன் தாவலில் இருந்து\nஒருவரின் அழைப்பு QR-ஐ ஸ்கேன் செய்யவும்</string>
+    <string name="prox_intro">கண்காணிக்கப்படும் நபர் நீங்கள் தேர்ந்தெடுத்த தூரத்திற்குள் வரும்போது அறிவிப்பைப் பெறுங்கள்.</string>
+    <string name="prox_alert_within">%1$s-க்குள் வரும்போது எச்சரி</string>
+    <string name="prox_alerts_off">எச்சரிக்கைகள் அணைக்கப்பட்டுள்ளன</string>
+    <string name="prox_alert_radius">எச்சரிக்கை ஆரம்</string>
+    <string name="prox_edit_schedule">அட்டவணையைத் தொகு</string>
+    <string name="prox_rules">விதிகள்</string>
+
+    <!-- ── அட்டவணை திரை / விதி திருத்தி ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s க்கான அட்டவணை</string>
+    <string name="schedule_cd_add_rule">விதியைச் சேர்</string>
+    <string name="schedule_empty_title">அட்டவணை விதிகள் இல்லை</string>
+    <string name="schedule_empty_global">இருப்பிடம் எல்லா நேரத்திலும் பகிரப்படுகிறது. பகிர்வு எப்போது செயலில் இருக்கும் என்பதைக் கட்டுப்படுத்த ஒரு விதியைச் சேர்க்கவும்.</string>
+    <string name="schedule_empty_peer">இருப்பிடம் எப்போதும் %1$s உடன் பகிரப்படுகிறது. எப்போது என்பதைக் கட்டுப்படுத்த ஒரு விதியைச் சேர்க்கவும்.</string>
+    <string name="schedule_active_hint">ஏதேனும் ஒரு விதி தற்போதைய நேரத்துடன் பொருந்தும்போது செயலில் இருக்கும். காலியாக இருந்தால் = எப்போதும் ஆன்.</string>
+    <string name="schedule_all_day">நாள் முழுவதும்</string>
+    <string name="schedule_plus_one_day"> (+1 நாள்)</string>
+    <string name="schedule_rule_number">விதி %1$d</string>
+    <string name="schedule_cd_delete_rule">விதியை நீக்கு</string>
+    <string name="schedule_edit_rule">விதியைத் தொகு</string>
+    <string name="schedule_label_optional">லேபல் (விருப்பமானது)</string>
+    <string name="schedule_label_placeholder">உதாரணமாக அலுவலக நேரங்கள், வார இறுதி நாட்கள்</string>
+    <string name="schedule_active_days">செயலில் உள்ள நாட்கள்</string>
+    <string name="schedule_time_window">நேரச் சாளரம்</string>
+    <string name="schedule_start">தொடக்கம்</string>
+    <string name="schedule_end">முடிவு</string>
+    <string name="schedule_overnight">இரவு முழுவதும்: %1$s முதல் அடுத்த நாள் %2$s வரை செயலில் இருக்கும்</string>
+
+    <!-- ── மேற்பார்வை வாயில் ───────────────────────────────────────────────── -->
+    <string name="gate_title">சாதனம் மேற்பார்வையில் உள்ளது</string>
+    <string name="gate_message">அமைப்புகளை அணுக மேற்பார்வையாளர் ஒப்புதல் தேவை.</string>
+    <string name="gate_request_access">அணுகலைக் கோரு</string>
+    <string name="gate_waiting">மேற்பார்வையாளர் ஒப்புதலுக்காகக் காத்திருக்கிறது…</string>
+    <string name="gate_denied">மேற்பார்வையாளரால் அணுகல் மறுக்கப்பட்டது.</string>
+    <string name="gate_timed_out">கோரிக்கை காலாவதியானது. மேற்பார்வையாளர் பதிலளிக்கவில்லை.</string>
+
+    <!-- ── தக்கவைப்பு தேர்வி ─────────────────────────────────────────────── -->
+    <string name="retention_forever">எப்போதும்</string>
+    <string name="retention_keep_for">தக்கவைக்கும் காலம்: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d நாள்</item>
+        <item quantity="other">%1$d நாட்கள்</item>
+    </plurals>
+
+    <string name="common_select">தேர்ந்தெடு</string>
+
+    <!-- ── வரைபட இருப்பிடத் தேர்வி ────────────────────────────────────────────── -->
+    <string name="picker_title">நிலையான இருப்பிடத்தைத் தேர்ந்தெடு</string>
+
+    <!-- ── வழிசெலுத்தலைத் தனிப்பயனாக்கும் திரை ────────────────────────────────────── -->
+    <string name="customize_nav_intro">கீழ் பட்டியில் எந்தத் தாவல்கள் தோன்றும் மற்றும் அவற்றின் வரிசையைத் தேர்ந்தெடுக்கவும். வரைபடம் எப்போதும் சேர்க்கப்படும்.</string>
+    <string name="customize_cd_move_up">மேலே நகர்த்து</string>
+    <string name="customize_cd_move_down">கீழே நகர்த்து</string>
+
+    <!-- ── பற்றி திரை ───────────────────────────────────────────────────── -->
+    <string name="about_version">பதிப்பு %1$s (பில்ட் %2$d)</string>
+    <string name="about_tagline">நீங்கள் நம்பும் நபர்களுடன் தனிப்பட்ட இருப்பிடப் பகிர்வு. கணக்குகள் இல்லை, கிளவுட் இல்லை, எங்களால் கண்காணிப்பு இல்லை.</string>
+    <string name="about_relay_connections">ரிலே இணைப்புகள்</string>
+    <string name="about_connected">இணைக்கப்பட்டது</string>
+    <string name="about_disconnected">இணைப்பு துண்டிக்கப்பட்டது</string>
+    <string name="about_open_source">திறந்த மூல நூலகங்கள்</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap சார்ந்த வரைபட ரெண்டரிங்</string>
+    <string name="about_lib_okhttp_desc">Nostr ரிலேவுக்கான WebSocket போக்குவரத்து</string>
+    <string name="about_lib_compose_desc">UI கட்டமைப்பு</string>
+    <string name="about_lib_hilt_desc">சார்பு ஊசி</string>
+    <string name="about_lib_room_desc">உள்ளூர் தரவுத்தளம்</string>
+    <string name="about_map_attribution">வரைபடத் தரவு © OpenStreetMap பங்களிப்பாளர்கள்</string>
+
+    <!-- ── அறிவிப்புகள் ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">ஏற்றுக்கொள்</string>
+    <string name="notif_someone">யாரோ ஒருவர்</string>
+    <string name="notif_sos_title">%1$s இடமிருந்து SOS!</string>
+    <string name="notif_sos_text">%1$s (%2$s, %3$s) இல் SOS-ஐச் செயல்படுத்தியுள்ளார்</string>
+    <string name="notif_supervisor_request_title">%1$s உங்கள் மேற்பார்வையாளராக இருக்க விரும்புகிறார்</string>
+    <string name="notif_supervisor_request_text">இந்தச் சாதனத்திலிருந்து திறத்தல் ஒப்புதல் கோரிக்கைகளை அனுமதிக்க ஏற்றுக் கொள்ளவும்</string>
+    <string name="notif_supervisor_request_big">மேற்பார்வை பயன்முறை செயலில் இருக்கும்போது %1$s உங்களுக்குத் திறத்தல் ஒப்புதல் கோரிக்கைகளை அனுப்ப அனுமதிக்க ஏற்றுக் கொள்ளவும்.</string>
+    <string name="notif_supervised_active_title">மேற்பார்வை பயன்முறை செயலில் உள்ளது</string>
+    <string name="notif_supervised_active_text">உங்கள் மேற்பார்வையாளர் உறுதிப்படுத்தியுள்ளார் - மேற்பார்வை பயன்முறை இப்போது அமைக்கப்பட்டுள்ளது</string>
+    <string name="notif_supervised_declined_title">மேற்பார்வை பயன்முறை மறுக்கப்பட்டது</string>
+    <string name="notif_supervised_declined_text">உங்கள் மேற்பார்வையாளர் கோரிக்கையை நிராகரித்தார் - மேற்பார்வை பயன்முறை முடக்கப்பட்டுள்ளது</string>
+    <string name="notif_tracking_alert_title">கண்காணிப்பு எச்சரிக்கை</string>
+    <string name="notif_tracking_proximity">%1$s உங்களைப் பற்றிய அருகாமை எச்சரிக்கையைப் பெற்றார்</string>
+    <string name="notif_tracking_geofence">நீங்கள் வேலிக்குள் நுழைந்தீர்கள்/வெளியேறினீர்கள் என்று %1$s எச்சரிக்கையைப் பெற்றார்: %2$s</string>
+    <string name="notif_tracking_generic">%1$s உங்கள் இருப்பிடத்தைக் கண்காணிக்கிறார்</string>
+    <string name="notif_track_update_title">%1$s இடமிருந்து பகிர்வு புதுப்பிப்பு</string>
+    <string name="notif_track_new_title">புதிய தொடர்பு: %1$s</string>
+    <string name="notif_role_send_receive">இருப்பிடத்தை அனுப்பு/பெறு</string>
+    <string name="notif_role_send">இருப்பிடத்தை அனுப்பு</string>
+    <string name="notif_role_receive">இருப்பிடத்தைப் பெறு</string>
+    <string name="notif_role_none">இருப்பிடப் பகிர்வு இல்லை</string>
+    <string name="notif_track_requesting">%1$s கோருகிறார்: %2$s</string>
+    <string name="notif_track_update_body">நீங்கள் இருப்பிடங்களை எப்படிப் பகிர்கிறீர்கள் என்பதைப் புதுப்பிக்க %1$s விரும்புகிறார்.</string>
+    <string name="notif_track_new_body">%1$s உங்களைத் தொடர்பில் சேர்த்து இணைய விரும்புகிறார்.</string>
+    <string name="notif_contact_connected_title">தொடர்பு இணைக்கப்பட்டது</string>
+    <string name="notif_contact_connected_text">%1$s இப்போது உங்களுடன் இணைக்கப்பட்டுள்ளார்.</string>
+    <string name="notif_request_declined_title">கோரிக்கை மறுக்கப்பட்டது</string>
+    <string name="notif_request_declined_text">%1$s உங்கள் இருப்பிடப் பகிர்வுக் கோரிக்கையை நிராகரித்தார்.</string>
+    <string name="notif_message_person">%1$s-க்கு செய்தி அனுப்பு</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s-க்குள் நுழைந்தார்</string>
+    <string name="notif_geofence_left_title">%1$s %2$s-லிருந்து வெளியேறினார்</string>
+    <string name="notif_geofence_subtitle">%1$s இல் · %2$s ஆரம்</string>
+    <string name="notif_person_nearby">%1$s அருகில் இருக்கிறார்</string>
+    <string name="notif_distance_from_you">உங்களிடமிருந்து %1$s தூரத்தில்</string>
+    <string name="notif_missed_title">%1$s இடமிருந்து புதுப்பிப்பு இல்லை</string>
+    <string name="notif_missed_text">கடைசியாக %1$s நிமிடம் முன் (%2$s, %3$s) அருகில் பார்க்கப்பட்டது</string>
+    <string name="notif_sos_active_title">SOS செயலில் உள்ளது!</string>
+    <string name="notif_sos_active_text">SOS தொடர்புகளுக்கு அவசர எச்சரிக்கையை ஒளிபரப்புகிறது</string>
+    <string name="notif_messages_group_title">LocaPeer செய்திகள்</string>
+
+    <!-- ── டோஸ்ட்கள் ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s இடமிருந்து தொடர்புக் கோரிக்கை மறுக்கப்பட்டது</string>
+    <string name="toast_now_supervising">இப்போது %1$s இன் சாதனத்தை மேற்பார்வையிடுகிறீர்கள்</string>
+    <string name="toast_declined_supervision">%1$s இடமிருந்து மேற்பார்வை கோரிக்கை மறுக்கப்பட்டது</string>
+
+    <!-- ── நிரலாக்க சரங்கள் ─────────────── -->
+    <string name="time_just_now">இப்போதுதான்</string>
+    <string name="time_minutes_ago">%1$d நிமிடம் முன்</string>
+    <string name="fallback_me">நான்</string>
+    <string name="fallback_unknown">தெரியவில்லை</string>
+    <string name="geo_unassigned">ஒதுக்கப்படாதது</string>
+    <string name="days_every_day">ஒவ்வொரு நாளும்</string>
+    <string name="days_weekdays">வார நாட்கள்</string>
+    <string name="days_weekends">வார இறுதி நாட்கள்</string>
+    <string name="days_none">நாட்கள் இல்லை</string>
+    <string name="chat_my_location_message">எனது தற்போதைய இருப்பிடம்: %1$s</string>
+    <string name="scan_error_bad_pubkey">தவறான அழைப்பு: தவறான பொது விசை</string>
+    <string name="scan_error_key_mismatch">தவறான அழைப்பு: விசைகள் பொருந்தவில்லை</string>
+    <string name="scan_error_unknown">தெரியாத பிழை</string>
+    <string name="scan_error_invalid_link">தவறான அழைப்பு இணைப்பு</string>
+    <string name="scan_fallback_contact">இந்தத் தொடர்பு</string>
+    <string name="backup_saved">காப்புப்பிரதி சேமிக்கப்பட்டது: %1$s</string>
+    <string name="backup_saved_encrypted">காப்புப்பிரதி சேமிக்கப்பட்டது (மறைக்குறியிடப்பட்டது): %1$s</string>
+    <string name="backup_failed">காப்புப்பிரதி தோல்வியடைந்தது: %1$s</string>
+    <string name="backup_could_not_read_file">கோப்பைப் படிக்க முடியவில்லை</string>
+    <string name="backup_could_not_write_file">கோப்பை எழுத முடியவில்லை</string>
+    <string name="backup_could_not_read">காப்புப்பிரதியைப் படிக்க முடியவில்லை: %1$s</string>
+    <string name="backup_incorrect_password">தவறான கடவுச்சொல்</string>
+    <string name="restore_result_restored">மீட்டமைக்கப்பட்டது: %1$s</string>
+    <string name="restore_result_failed">தோல்வியடைந்தது: %1$s</string>
+    <string name="restore_nothing">மீட்டமைக்க எதுவும் இல்லை</string>
+    <string name="restore_failed">மீட்டமைப்பு தோல்வியடைந்தது: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d தொடர்பு</item>
+        <item quantity="other">%1$d தொடர்புகள்</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d ஜியோஃபென்ஸ்</item>
+        <item quantity="other">%1$d ஜியோஃபென்ஸ்கள்</item>
+    </plurals>
+    <string name="peer_role_change_sent">பங்கு மாற்றக் கோரிக்கை %1$s-க்கு அனுப்பப்பட்டது</string>
+    <string name="peer_not_found">சக நண்பர் காணப்படவில்லை</string>
+    <string name="peer_purge_location_sent">அனைத்து இருப்பிடங்களையும் நீக்கும் தொலைதூரக் கட்டளை %1$s-க்கு அனுப்பப்பட்டது</string>
+    <string name="peer_purge_messages_sent">அனைத்து செய்திகளையும் நீக்கும் தொலைதூரக் கட்டளை %1$s-க்கு அனுப்பப்பட்டது</string>
+    <string name="onboarding_error_key_length">தவறான விசை - 64 ஹெக்ஸ் எழுத்துக்களாக இருக்க வேண்டும்.</string>
+    <string name="onboarding_error_key_range">தவறான தனிப்பட்ட விசை.</string>
+    <string name="onboarding_error_hex">தவறான ஹெக்ஸ் வடிவம்.</string>
+    <string name="onboarding_error_import_failed">விசையை இறக்குமதி செய்ய முடியவில்லை: %1$s</string>
 </resources>

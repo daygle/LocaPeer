@@ -2,67 +2,753 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Ọwa ọkwa & Ọrụ ihu ─────────────────────── -->
+    <!-- ── Ọwa ọkwa & ọrụ ihu ─────────────────────── -->
     <string name="channel_name_heartbeat">Mgbasa Ozi Ebe</string>
-    <string name="channel_desc_heartbeat">Na-agbasa ebe ị nọ na kọntaktị gị akwadoro</string>
-    <string name="channel_name_alerts">Alerts</string>
-    <string name="channel_desc_alerts">Alerts maka heartbeat efu na geofence</string>
+    <string name="channel_desc_heartbeat">Na-agbasa ebe ị nọ nye ndị ị kọntaktị akwadoro</string>
+    <string name="channel_name_alerts">Mkpu</string>
+    <string name="channel_desc_alerts">Mkpu maka obi mgbawa na geofence furu efu</string>
     <string name="channel_name_messages">Ozi</string>
     <string name="channel_desc_messages">Ozi ndị ọgbọ na-abata</string>
-    <string name="notification_heartbeat_title">LocaPeer na-agba ọsọ</string>
-    <string name="notification_heartbeat_text">Na-ekerịta ebe ị nọ ndị ọzọ</string>
+    <string name="notification_heartbeat_title">LocaPeer na-arụ ọrụ</string>
+    <string name="notification_heartbeat_text">Gị na ndị ọzọ na-ekerịta ebe ị nọ</string>
 
-    <!-- ── Omume nkịtị ──────────────────────────────────────── -->
+    <!-- ── Omume ndị a na-emekarị ──────────────────────────────────────── -->
     <string name="common_save">Chekwaa</string>
     <string name="common_cancel">Kagbuo</string>
     <string name="common_done">Emela</string>
     <string name="common_delete">Hichapụ</string>
     <string name="common_disable">Gbanyụọ</string>
-    <string name="common_enable">Kwado</string>
+    <string name="common_enable">Gbanye</string>
     <string name="common_restore">Weghachi</string>
-    <string name="common_unlock">Kpọghe</string>
-    <string name="common_password">Paswọdu</string>
+    <string name="common_unlock">Kpọghee</string>
+    <string name="common_password">Paswọd</string>
     <string name="common_not_now">Ọ bụghị ugbu a</string>
     <string name="common_off">Gbanyụọ</string>
     <string name="common_approve">Kwado</string>
-    <string name="common_deny">Jụ</string>
+    <string name="common_deny">Jụọ</string>
 
-    <!-- ── Akara taabụ igodo ──────────────────────────────────────────── -->
-    <string name="tab_map">Maapụ</string>
+    <!-- ── Akara taabụ nnyagharị ──────────────────────────────────────────── -->
+    <string name="tab_map">Map</string>
     <string name="tab_messages">Ozi</string>
     <string name="tab_history">Akụkọ</string>
-    <string name="tab_contacts">Ndị kọntaktị</string>
+    <string name="tab_contacts">Kọntaktị</string>
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Ntọala</string>
 
-    <!-- ── Ọnọdụ mmegharị / ọrụ ───────────────────────────────────────── -->
-    <string name="motion_stationary">Kwụsịrị</string>
-    <string name="motion_walking">Na-eje ije</string>
+    <!-- ── steeti mmegharị / ọrụ ───────────────────────────────────────── -->
+    <string name="motion_stationary">Guzo otu ebe</string>
+    <string name="motion_walking">Na-aga ije</string>
     <string name="motion_running">Na-agba ọsọ</string>
-    <string name="motion_cycling">Na-agba ígwè</string>
-    <string name="motion_driving">Na-anya ụgbọ ala</string>
+    <string name="motion_cycling">Ịgba ígwè</string>
+    <string name="motion_driving">Ịkwọ ụgbọala</string>
 
-    <!-- ── Ntọala ────────────────────────────────────────────────── -->
+    <!-- ── Akụkụ nkwado ndabere ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Igodo Nzuzo</string>
+    <string name="backup_section_contacts">Kọntaktị</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Ntọala</string>
+
+    <!-- ── Arịrịọ nlekọta (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Arịrịọ Nlekọta</string>
+    <string name="supervision_request_message">\"%1$s\" na-arịọ ka ọ nweta ntọala ha. Kwe ka ọ bụrụ?</string>
+
+    <!-- ── Ntọala ihuenyo ────────────────────────────────────────────────── -->
     <string name="settings_title">Ntọala</string>
+
+    <!-- Akara ngalaba -->
     <string name="settings_section_location_privacy">Ebe &amp; Nzuzo</string>
     <string name="settings_section_security">Nchebe</string>
-    <string name="settings_section_map">Maapụ</string>
-    <string name="settings_section_battery_performance">Batrị &amp; Arụmọrụ</string>
+    <string name="settings_section_map">Map</string>
+    <string name="settings_section_battery_performance">Batrị &amp; Ọrụ</string>
     <string name="settings_section_units_display">Nkeji &amp; Ngosipụta</string>
     <string name="settings_section_retention">Njide (Ngwaọrụ a)</string>
     <string name="settings_section_appearance">Ọdịdị</string>
-    <string name="settings_section_backup_keys">Nkwado &amp; Igodo</string>
-    <string name="settings_section_about">Gbasara</string>
+    <string name="settings_section_backup_keys">Nkwado Ndabere &amp; Igodo</string>
+    <string name="settings_section_about">Maka</string>
 
+    <!-- Profaịlụ -->
     <string name="settings_edit_name">Dezie Aha</string>
     <string name="settings_my_qr">QR m</string>
-    <string name="settings_no_name_set">Edebeghị aha</string>
+    <string name="settings_no_name_set">Aha edetabeghị</string>
 
-    <string name="settings_share_location">Kọrọ ebe m nọ</string>
+    <!-- Ebe &amp; Nzuzo -->
+    <string name="settings_share_location">Kere Ebe m Nọ</string>
+    <string name="settings_broadcasting">Na-agbasa ozi nye kọntaktị gị</string>
+    <string name="settings_not_broadcasting">Anaghị agbasa ozi</string>
+    <string name="settings_sharing_schedule">Oge Nkekọrịta</string>
+    <string name="settings_always_on">Na-adị mgbe niile</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">Iwu %1$d</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Jikwaa ebe geofence ekerịtara</string>
+    <string name="settings_notify_when_tracked">Gwa m Mgbe a na-achọ m</string>
+    <string name="settings_notify_when_tracked_subtitle">Nweta ọkwa mgbe kọntaktị nọ nso ma ọ bụ geofence mkpu maka gị na-amalite.</string>
+    <string name="settings_my_location_history">Akụkọ Ebe</string>
+    <string name="settings_my_location_history_subtitle">Chọgharịa usoro oge ebe ị nọ</string>
+    <string name="settings_lookup_addresses">Chọọ Adreesị</string>
+    <string name="settings_lookup_addresses_subtitle">Gosi adreesị okporo ámá maka akụkọ ebe na map pins a pịrị, ma chọọ site na adreesị mgbe ị na-etinye geofences. Na-eziga nhazi ndị ahụ ma ọ bụ ọchụchọ ị pịrị na ọrụ geocoding nke ngwaọrụ gị (na-abụkarị Google).</string>
+
+    <!-- Nchebe -->
+    <string name="settings_supervision_active">Nlekọta na-arụ ọrụ</string>
+    <string name="settings_supervision_active_subtitle">Ntọala chọrọ nnabata onye nlekọta</string>
+    <string name="settings_disable_supervised">Gbanyụọ Ọnọdụ Nlekọta</string>
+    <string name="settings_supervised_mode">Ọnọdụ Nlekọta</string>
+    <string name="settings_supervised_mode_subtitle">Chọọ nnabata onye nlekọta iji nweta ntọala</string>
+
+    <!-- Map -->
+    <string name="settings_starting_point">Ebe mmalite</string>
+    <string name="settings_map_current_location">Ebe ị nọ ugbu a</string>
+    <string name="settings_map_all_contacts">Kọntaktị niile</string>
+    <string name="settings_map_fixed_location">Ebe a kapịrị ọnụ</string>
+    <string name="settings_map_last_position">Ọnọdụ ikpeazụ</string>
+    <string name="settings_map_starting_point_title">Ebe Mmalite Map</string>
+    <string name="settings_no_location_set">Ebe edetabeghị</string>
+    <string name="settings_pick_location_on_map">Họrọ Ebe na Map</string>
+    <string name="settings_default_zoom_level">Ọkwa mbugharị ndabere</string>
+    <string name="settings_map_pin_colour">Agba Pin Map</string>
+
+    <!-- Batrị &amp; Ọrụ -->
+    <string name="settings_update_cadence">Oge emelite</string>
+    <string name="settings_update_cadence_subtitle">Gbanwee ugboro ole a na-agbasa ebe ị nọ</string>
+    <string name="settings_update_cadence_dialog_message">Njikwa ugboro ole a na-emelite ebe ị nọ dabere na ọrụ gị. Emelite ugboro ugboro na-eji batrị karịa.</string>
+    <string name="settings_update_cadence_reset">Tọgharia na ndabere</string>
+    <string name="settings_min_distance_filtering">Nzacha anya kacha nta</string>
+    <string name="settings_min_distance_filtering_subtitle">Na-egosi naanị isi ihe dị anya na nke gara aga.</string>
+    <string name="settings_discard_low_accuracy">Tụfuo mmezi ezighi ezi</string>
+    <string name="settings_discard_low_accuracy_subtitle">Agbasala ma ọ bụ dekọọ mmezi nke gị nwere radius ziri ezi karịrị nke a. SOS anaghị amafe.</string>
+    <string name="settings_hide_low_accuracy">Zoo isi ihe ezighi ezi</string>
+    <string name="settings_hide_low_accuracy_subtitle">Zoo akụkọ ebe nwere radius ziri ezi karịrị nke a. Ọ dịghị ihe a hichapụrụ.</string>
+    <string name="settings_low_battery" formatted="false">Batrị dị ala (&lt; 20%)</string>
+    <string name="settings_minutes_short">Nkeji %1$d</string>
+    <string name="settings_motion_detection">Nchọpụta Mmegharị</string>
+    <string name="settings_motion_detection_on">Gbanyere - na-edozi ụdị mmegharị gị (ije ije, ịkwọ ụgbọala) na akụkọ</string>
+    <string name="settings_motion_detection_off">Gbanyụọ - kwe ka ịnweta ọrụ anụ ahụ maka akara mmegharị ziri ezi</string>
+    <string name="settings_enable_motion_title">Gbanye nchọpụta mmegharị</string>
+    <string name="settings_enable_motion_message">Ịnweta ọrụ anụ ahụ na-eme ka LocaPeer nwee ike ịmata ije ije, ịkwọ ụgbọala na iguzo otu ebe nke ọma na akụkọ gị. Agbanyụrụ ya ugbu a - ị nwere ike ịgbanye ya ọzọ na ntọala sistemụ.</string>
+    <string name="settings_open_settings">Mepee Ntọala</string>
+    <string name="settings_battery_optimization">Nkwalite Batrị</string>
+    <string name="settings_battery_optimization_unrestricted">Enweghị mgbochi — LocaPeer nwere ike na-agba n\'azụ n\'efu</string>
+    <string name="settings_battery_optimization_restricted">Emegharịrị — pịa ka ịtọọ Enweghị mgbochi na ntọala sistemụ</string>
+
+    <!-- Ikike -->
+    <string name="settings_permissions">Ikike</string>
+    <string name="settings_permissions_subtitle">Nyochaa ma dozie ohere ngwa na ebe, igwefoto na ndị ọzọ</string>
+    <string name="permissions_intro">LocaPeer chọrọ ikike ndị a iji kesaa ebe ị nọ, nyochaa òkù ma na-agba n\'azụ. Pịa nke ọ bụla na-enyeghị ka idozie ha.</string>
+    <string name="perm_location_title">Ebe</string>
+    <string name="perm_location_granted">Enyere — enwere ike ikesa ebe ị nọ</string>
+    <string name="perm_location_denied">Enyeghị — pịa ka ị kwe ka ohere ebe</string>
+    <string name="perm_background_location_title">Ebe n\'azụ</string>
+    <string name="perm_background_location_granted">Enyere — ebe na-aga n\'ihu na-ekerịta mgbe emechiri ngwa ahụ</string>
+    <string name="perm_background_location_denied">Enyeghị — pịa ka ị kwe ka ohere \'Kwe ka oge niile\' na ntọala</string>
+    <string name="perm_camera_title">Igwefoto</string>
+    <string name="perm_camera_granted">Enyere — eji nyochaa koodu QR òkù</string>
+    <string name="perm_camera_denied">Enyeghị — pịa ka ị kwe ka igwefoto</string>
+    <string name="perm_notifications_title">Ọkwa</string>
+    <string name="perm_notifications_granted">Enyere — mkpu na mmelite ọkwa nwere ike ịpụta</string>
+    <string name="perm_notifications_denied">Enyeghị — pịa ka ị kwe ka ọkwa</string>
+
+    <!-- Nkeji &amp; Ngosipụta -->
+    <string name="settings_speed_units">Nkeji Ọsọ</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metric (km/h)</string>
+    <string name="settings_elevation_units">Nkeji Elu</string>
+    <string name="settings_elevation_imperial">Imperial (feet)</string>
+    <string name="settings_elevation_metric">Metric (metres)</string>
+    <string name="settings_distance_units">Nkeji Anya</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metric (m/km)</string>
+    <string name="settings_time_format">Usoro Oge</string>
+    <string name="settings_time_24h">24-Hour (13:30)</string>
+    <string name="settings_time_12h">12-Hour (1:30 PM)</string>
+
+    <!-- Njide -->
+    <string name="settings_retention_location">Data Ebe</string>
+    <string name="settings_retention_location_subtitle">Ogologo oge ole ka a ga-edobe data ebe kọntaktị n\'ime ngwaọrụ</string>
+    <string name="settings_clear_all_location">Hichapụ Data Ebe Niile</string>
+    <string name="settings_retention_messages">Ozi</string>
+    <string name="settings_retention_messages_subtitle">Ogologo oge ole ka a ga-edobe ozi enwetara n\'ime ngwaọrụ</string>
+    <string name="settings_clear_all_messages">Hichapụ Ozi Niile</string>
+
+    <!-- Ọdịdị -->
+    <string name="settings_customize_nav">Hazie Nnyagharị</string>
+    <string name="settings_customize_nav_subtitle">Họrọ ma dozie taabụ ala</string>
+    <string name="settings_start_page">Ihuenyo Mmalite</string>
     <string name="settings_language">Asụsụ</string>
-    <string name="settings_language_title">Asụsụ ngwa</string>
-    <string name="settings_language_system">Sistemu ndabere</string>
+    <string name="settings_language_title">Asụsụ Ngwa</string>
+    <string name="settings_language_system">Ndabere sistemụ</string>
+
+    <!-- Nkwado Ndabere &amp; Igodo -->
+    <string name="settings_export_backup">Bupụ Nkwado Ndabere</string>
+    <string name="settings_export_backup_subtitle">Chekwaa igodo nzuzo gị na kọntaktị na faịlụ. Debe faịlụ a na nchekwa!</string>
+    <string name="settings_import_backup">Bubata Nkwado Ndabere</string>
+    <string name="settings_import_backup_subtitle">Weghachi site na faịlụ ebufere na mbụ</string>
+    <string name="settings_view_private_key">Lelee Igodo Nzuzo</string>
+    <string name="settings_view_private_key_subtitle">Gosi mkpụrụedemede 64 hex njirimara gị</string>
+
+    <!-- Maka -->
+    <string name="settings_about_locapeer">Maka LocaPeer</string>
+    <string name="settings_about_subtitle">Ụdị, ọkwa relay, isi mmalite</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Dezie Aha Ngosipụta</string>
+    <string name="settings_display_name_label">Aha Ngosipụta</string>
+    <string name="settings_my_invite_qr">QR Òkù m</string>
+    <string name="settings_invite_qr_subtitle">Ndị ọzọ nwere ike inyocha nke a ka ha malite ịchọ gị.</string>
+    <string name="settings_invite_qr_cd">QR Òkù</string>
+    <string name="settings_private_key_title">Igodo Nzuzo</string>
+    <string name="settings_private_key_warning">Debe nke a na nchekwa. Onye ọ bụla nwere igodo a nwere ike ịme ka ọ bụ gị.</string>
+    <string name="settings_clear_location_title">Hichapụ Akụkọ Ebe?</string>
+    <string name="settings_clear_location_message">A ga-ehichapụ pings ebe niile echekwara kpamkpam.</string>
+    <string name="settings_clear_messages_title">Hichapụ Akụkọ Ozi?</string>
+    <string name="settings_clear_messages_message">A ga-ehichapụ ozi niile echekwara kpamkpam.</string>
+    <string name="settings_encrypted_backup_title">Nkwado Ndabere Ezoro Ezo</string>
+    <string name="settings_encrypted_backup_message">E zoro nkwado ndabere a ezo. Biko tinye paswọd ka ịga n\'ihu.</string>
+    <string name="settings_select_restore_title">Họrọ Data ị ga-eweghachi</string>
+    <string name="settings_select_export_title">Họrọ Data ị ga-ebupụ</string>
+    <string name="settings_export_password_hint">Nhọrọ tọọ paswọd iji zoo faịlụ nkwado ndabere gị ezo.</string>
+    <string name="settings_backup_password_optional">Paswọd Nkwado Ndabere (Nhọrọ)</string>
+    <string name="settings_select_sections">Họrọ akụkụ ị ga-agụnye:</string>
+    <string name="settings_choose_file_location">Họrọ ebe faịlụ dị</string>
+    <string name="settings_not_in_backup">Ọ nọghị na nkwado ndabere a</string>
+    <string name="settings_enable_supervised_title">Gbanye Ọnọdụ Nlekọta</string>
+    <string name="settings_enable_supervised_message">Họrọ onye ọgbọ ga-abụ onye nlekọta. Ha ga-akwadoro ịnweta ntọala site na ngwaọrụ ha.</string>
+    <string name="settings_no_peers_found">Ahụghị ndị ọgbọ ọ bụla. Buru ụzọ tinye onye ọgbọ site n\'inyocha koodu QR òkù ha.</string>
+    <string name="settings_disable_supervised_title">Gbanyụọ Ọnọdụ Nlekọta?</string>
+    <string name="settings_disable_supervised_message">A ga-enweta ntọala n\'enweghị nnabata onye nlekọta.</string>
+
+    <!-- ── Ndị ọzọ na-emekarị ─────────────────────────────────────────── -->
+    <string name="common_remove">Wepụ</string>
+    <string name="common_name">Aha</string>
+    <string name="common_search">Chọọ</string>
+    <string name="common_sort">Hazie</string>
+
+    <!-- Nkọwa ọdịnaya (ekerịta) -->
+    <string name="cd_message">Ozi</string>
+    <string name="cd_show_on_map">Gosi na map</string>
+    <string name="cd_more_options">Nhọrọ ndị ọzọ</string>
+
+    <!-- ── Kọntaktị ihuenyo ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">ahọpụtara %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Kagbuo nhọrọ</string>
+    <string name="contacts_cd_select_all">Họrọ ha niile</string>
+    <string name="contacts_cd_deselect_all">Akwụsịla ịhọrọ ha niile</string>
+    <string name="contacts_cd_qr_invite">QR / Òkù</string>
+    <string name="contacts_cd_pending_requests">Arịrịọ na-echere</string>
+    <string name="contacts_sort_last_seen">Hụrụ Ikpeazụ</string>
+    <string name="contacts_search_placeholder">Chọọ kọntaktị…</string>
+    <string name="contacts_empty_title">Enweghị kọntaktị ugbu a</string>
+    <string name="contacts_empty_subtitle">Nyochaa koodu QR ka gị na onye ọzọ jikọọ wee malite ịkekọrịta ebe.</string>
+    <string name="contacts_scan_qr">Nyochaa Koodu QR</string>
+    <string name="contacts_bulk_delete_messages">Hichapụ Ozi</string>
+    <string name="contacts_bulk_delete_locations">Hichapụ Ebe</string>
+    <string name="contacts_last_seen">Hụrụ ikpeazụ: %1$s</string>
+    <string name="contacts_no_location_yet">Enweghị data ebe ugbu a</string>
+    <string name="contacts_view_sharing_settings">Ntọala Nkekọrịta</string>
+    <string name="contacts_view_location_history">Akụkọ Ebe</string>
+    <string name="contacts_rename_contact">Nye kọntaktị aha ọzọ</string>
+    <string name="contacts_on_contact_device">Na Ngwaọrụ Kọntaktị</string>
+    <string name="contacts_delete_my_messages_title">Hichapụ Ozi m</string>
+    <string name="contacts_delete_locations_title">Hichapụ Ebe Ekerịtara</string>
+    <string name="contacts_remove_contact_title">Wepụ Kọntaktị</string>
+    <string name="contacts_leave_title">Hichapụ Kọntaktị na Data</string>
+    <string name="contacts_rename_title">Nye kọntaktị aha ọzọ</string>
+    <string name="contacts_remove_contact_body">Wepụ %1$s na kọntaktị gị? A ga-ehichapụ akụkọ ebe ha n\'ime ngwaọrụ.</string>
+    <string name="contacts_leave_body">Nke a ga-ewepụ gị na kọntaktị %1$s wee hichapụ ozi gị niile na data ebe gị na ngwaọrụ ha. Ị ga-atụfu ohere ịnweta ebe ha nọ.</string>
+    <string name="contacts_delete_my_messages_body">Nke a ga-ehichapụ ozi niile ị siri na ngwaọrụ %1$s zipụ. Nke a enweghị ike ihichapụ ya.</string>
+    <string name="contacts_delete_locations_body">Nke a ga-ehichapụ data ebe niile ị kesara na ngwaọrụ %1$s. Nke a enweghị ike ihichapụ ya.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">Wepụ kọntaktị %1$d</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">Wepụ kọntaktị %1$d? A ga-ehichapụ akụkọ ebe ha n\'ime ngwaọrụ.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">Hichapụ ozi niile ị siri na ngwaọrụ kọntaktị %1$d zipụ n\'ebe dị anya? Nke a enweghị ike ihichapụ ya.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">Hichapụ akụkọ ebe niile ị kesara na ngwaọrụ kọntaktị %1$d zipụ n\'ebe dị anya? Nke a enweghị ike ihichapụ ya.</item>
+    </plurals>
+
+    <string name="common_continue">Gaa n\'ihu</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Weghachi site na Nkwado Ndabere</string>
+    <string name="onboarding_restore_message">Tapawa mkpụrụedemede 64 hex igodo nzuzo gị iji weghachi njirimara na kọntaktị gị.</string>
+    <string name="onboarding_private_key_hex">Igodo nzuzo (hex)</string>
+    <string name="onboarding_tagline">Ikekọrịta ebe nzuzo na kọntaktị.\nEnweghị akaụntụ. Enweghị sava nwe ya.</string>
+    <string name="onboarding_feature_e2e_title">Ezoro ezo na njedebe na njedebe</string>
+    <string name="onboarding_feature_e2e_subtitle">Ezoro ezo ebe ị nọ n\'ime ngwaọrụ</string>
+    <string name="onboarding_feature_servers_title">Enweghị sava nwe ya</string>
+    <string name="onboarding_feature_servers_subtitle">Na-eji relay Nostr mepere emepe dị ka njem nchekwa - data gị na-adị na nzuzo ma ezoro ezo</string>
+    <string name="onboarding_feature_phone_title">Na-adị na ekwentị gị</string>
+    <string name="onboarding_feature_phone_subtitle">Akụkọ ebe gị niile na-adị na ngwaọrụ gị. Naanị ọnọdụ gị ugbu a ka ekerịtara kọntaktị ahọpụtara</string>
+    <string name="onboarding_name_prompt">Gịnị ka kọntaktị gị ga na-akpọ gị?</string>
+    <string name="onboarding_name_placeholder">dịka ọmụmaatụ, Mama, Papa, Alice…</string>
+    <string name="onboarding_get_started">Malite</string>
+    <string name="onboarding_restore_from_backup">Weghachi site na Nkwado Ndabere</string>
+    <string name="onboarding_key_note">Emepụtara igodo nzuzo gị n\'ime ngwaọrụ ma ọ naghị ahapụ ngwaọrụ a.</string>
+    <string name="onboarding_permissions_title">Ikike</string>
+    <string name="onboarding_permissions_desc">LocaPeer chọrọ ohere ebe iji kesaa ọnọdụ gị, ohere igwefoto iji nyochaa koodu òkù, na ohere ọkwa maka ọkwa n\'azụ. Ịnweta ọrụ anụ ahụ bụ nhọrọ - ọ na-enyere aka ịkọ mmegharị gị (ije ije, ịkwọ ụgbọala) nke ọma.</string>
+    <string name="onboarding_before_ask_title">Tupu anyị ajụọ</string>
+    <string name="onboarding_before_ask_intro">Ị ga-ahụ mkpali sistemụ ole na ios n\'ekwentị gị:</string>
+    <string name="onboarding_before_ask_location">• Ebe - achọrọ, iji kesaa ọnọdụ gị.</string>
+    <string name="onboarding_before_ask_camera">• Igwefoto - iji nyochaa koodu òkù.</string>
+    <string name="onboarding_before_ask_notifications">• Ọkwa - maka ọkwa n\'azụ.</string>
+    <string name="onboarding_before_ask_activity">• Ọrụ anụ ahụ - nhọrọ. Ọ na-enye LocaPeer ohere ịmata ije ije, ịkwọ ụgbọala na iguzo otu ebe nke ọma. Ị nwere ike ịfefe ya wee gbanye ya ma emechaa na Ntọala.</string>
+    <string name="onboarding_grant_permissions">Nye Ikike</string>
+    <string name="onboarding_bg_location_title">Ebe n\'azụ</string>
+    <string name="onboarding_bg_location_desc">Iji mee ka kọntaktị gị mara mgbe emechiri ngwa ahụ, biko họrọ \'Kwe ka oge niile\' na ihuenyo na-esote.</string>
+    <string name="onboarding_bg_location_error">Achọrọ ebe n\'azụ iji melite kọntaktị gị mgbe emechiri ngwa ahụ. Biko gbalịa ọzọ wee họrọ \'Kwe ka oge niile\'.</string>
+    <string name="onboarding_configure_location">Hazie Ebe</string>
+    <string name="onboarding_battery_title">Batrị</string>
+    <string name="onboarding_battery_desc">Android nwere ike ịkwụsị LocaPeer iji chekwaa batrị. Iji hụ na emelitere ya nke ọma, biko wepụ LocaPeer na nkwalite.</string>
+    <string name="onboarding_disable_optimizations">Gbanyụọ Nkwalite</string>
+    <string name="onboarding_done_title">Edola Ihe Niile!</string>
+    <string name="onboarding_done_desc">Netwọk ebe nzuzo gị adịla njikere.</string>
+    <string name="onboarding_start_using">Malite iji LocaPeer</string>
+
+    <string name="common_try_again">Gbalịa Ọzọ</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Nyochaa Òkù</string>
+    <string name="scan_camera_needed">Achọrọ ikike igwefoto iji nyochaa koodu QR.</string>
+    <string name="scan_grant_permission">Nye Ikike</string>
+    <string name="scan_add_contact_title">Tinye kọntaktị?</string>
+    <string name="scan_add_contact_message">Nke a ga-ejikọta gị na %1$s wee malite ịkekọrịta ebe gị na ibe gị.</string>
+    <string name="scan_add_share">Tinye &amp; Kekọrịta</string>
+    <string name="scan_request_sent_title">Ezigara Arịrịọ!</string>
+    <string name="scan_request_sent_message">Ezigara %1$s arịrịọ. A ga-ejikọta gị ozugbo ha nabatara.</string>
+    <string name="scan_failed">Nyocha dara: %1$s</string>
+
+    <string name="cd_back">Laghachi azụ</string>
+    <string name="common_review">Nyochaa</string>
+    <string name="common_decline">Jụọ</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Zipụ/Nweta</string>
+    <string name="role_send">Zipụ</string>
+    <string name="role_receive">Nweta</string>
+    <string name="role_none">Enweghị Nkekọrịta</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Òkù m</string>
+    <string name="invite_tab_add_contact">Tinye Kọntaktị</string>
+    <string name="invite_your_qr_title">Koodu QR gị</string>
+    <string name="invite_your_qr_subtitle">Kwe ka mmadụ nyochaa nke a ka o soro ebe ị nọ</string>
+    <string name="invite_qr_cd">Koodu QR gị</string>
+    <string name="invite_qr_error">Njehie n\'iwepụta QR</string>
+    <string name="invite_share_link">Kesaa Link Òkù</string>
+    <string name="invite_encryption_note">A ga-ezobe ebe ị nọ ezo maka ngwaọrụ onye nyocha ahụ.</string>
+    <string name="invite_camera_required_title">Achọrọ ohere igwefoto</string>
+    <string name="invite_camera_required_message">Nye ikike igwefoto iji nyochaa koodu QR.</string>
+    <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
+    <string name="invite_paste_title">Ma ọ bụ Tapawa Link Òkù</string>
+    <string name="invite_process_link">Nhazi Link</string>
+    <string name="invite_fallback_name">Kọntaktị</string>
+    <string name="invite_success_message">A ga-ejikọta gị na %1$s ozugbo ha nabatara.</string>
+    <string name="invite_confirm_add_title">Tinye %1$s?</string>
+    <string name="invite_confirm_add_message">Tinye ha na kọntaktị gị wee kesaa ebe nọ?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Enweghị arịrịọ na-echere</string>
+    <string name="pending_requesting">Na-arịọ: %1$s · %2$s</string>
+    <string name="pending_role_change">Arịrịọ mgbanwe ọrụ · %1$s</string>
+    <string name="pending_new_request">Arịrịọ nkekọrịta ọhụrụ · %1$s</string>
+
+    <string name="common_save_changes">Chekwaa Mgbanwe</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Melite Ntọala Nkekọrịta</string>
+    <string name="incoming_new_title">Arịrịọ Kọntaktị Ọhụrụ</string>
+    <string name="incoming_update_subtitle">%1$s chọrọ imelite ka ị na-ekerịta. Nyochaa ntọala dị n\'okpuru.</string>
+    <string name="incoming_new_subtitle">%1$s tinyere gị dị ka kọntaktị! Ị nwere ike họrọ ihe ị ga-ekere ugbu a.</string>
+    <string name="incoming_section_location">Ebe</string>
+    <string name="incoming_share_my_location">Kere ebe m nọ na %1$s</string>
+    <string name="incoming_share_my_location_sub">Ha ga-enwe ike ịhụ ebe ị nọ</string>
+    <string name="incoming_see_their_location">Hụ ebe %1$s nọ</string>
+    <string name="incoming_see_their_location_sub">Ị ga-enwe ike ịhụ ebe ha nọ</string>
+    <string name="incoming_section_messaging">Ozi</string>
+    <string name="incoming_allow_messages">Kwe ka Ozi</string>
+    <string name="incoming_allow_messages_sub">Nweta ozi chat site na %1$s</string>
+
+    <string name="common_request">Arịrịọ</string>
+    <string name="common_edit">Dezie</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Ntọala Kọntaktị</string>
+    <string name="peer_section_roles">Ọrụ Nkekọrịta Ebe</string>
+    <string name="peer_send_on">%1$s nwere ike ịhụ ebe ị nọ</string>
+    <string name="peer_send_off">Ị naghị ekere ebe ị nọ na %1$s</string>
+    <string name="peer_receive_title">Nweta ebe %1$s nọ</string>
+    <string name="peer_receive_on">Ị nwere ike ịhụ ebe %1$s nọ</string>
+    <string name="peer_receive_off">Ị nweghị ohere ịhụ ebe %1$s nọ</string>
+    <string name="peer_section_privacy">Njikwa Nzuzo &amp; Nkekọrịta</string>
+    <string name="peer_pause_sharing">Kwụsịtụ Nkekọrịta</string>
+    <string name="peer_pause_sub">Kwụsị iziga ebe ị nọ na %1$s nwa oge</string>
+    <string name="peer_precision">Nkenke Ebe</string>
+    <string name="peer_precision_exact_sub">Kpọmkwem GPS nhazi</string>
+    <string name="peer_precision_suburb_sub">Ebe dị nso (ọkwa Suburb)</string>
+    <string name="peer_always_sharing">Na-ekere oge niile</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">Iwu nkekọrịta %1$d na-arụ ọrụ</item>
+    </plurals>
+    <string name="peer_section_alerts">Mkpu &amp; Nleba anya</string>
+    <string name="peer_sos_contact">Kọntaktị SOS</string>
+    <string name="peer_sos_sub">Nweta mkpu mberede gị ọbụlagodi ma ọ bụrụ na akwụsịla nkekọrịta</string>
+    <string name="peer_missed_alert">Mkpu Ebe Furu Efu</string>
+    <string name="peer_missed_on">Gwa m ma ọ bụrụ na %1$s akwụsị ịkọ ebe ọ nọ</string>
+    <string name="peer_requires_access">Chọrọ ịnweta ebe %1$s nọ</string>
+    <string name="peer_proximity_alert">Mkpu Ịnọ nso</string>
+    <string name="peer_proximity_sub">Gwa m mgbe %1$s nọ nso</string>
+    <string name="peer_alert_radius">Radius Mkpu</string>
+    <string name="peer_alert_schedule">Oge Mkpu</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">Iwu %1$d na-arụ ọrụ</item>
+    </plurals>
+    <string name="peer_geofences_sub">Tọọ mpaghara mbata na ọpụpụ maka %1$s</string>
+    <string name="peer_supervise">Leba anya na Ngwaọrụ a</string>
+    <string name="peer_supervise_on">Ị na-anata ma na-akwado arịrịọ mmeghe site na %1$s</string>
+    <string name="peer_supervise_off">Mruhusu %1$s akutumie ma ọ bụrụ na ị chọrọ imeghe ọnọdụ nlekọta</string>
+    <string name="peer_messaging_sub">Gbanye/Gbanyụọ ozi chat site na %1$s</string>
+    <string name="peer_section_history">Akụkọ Mmegharị</string>
+    <string name="peer_location_history">Akụkọ Ebe</string>
+    <string name="peer_location_history_sub">Lelee akụkọ mmegharị na akụkọ map maka %1$s</string>
+    <string name="peer_section_retention">Njide Data Dị Anya</string>
+    <string name="peer_retention_location_sub">Ogologo oge ole ka %1$s na-edebe akụkọ ebe gị</string>
+    <string name="peer_purge_location">Hichapụ Data Ebe Niile na %1$s</string>
+    <string name="peer_retention_messages_sub">Ogologo oge ole ka %1$s na-edebe ozi ị siri zipụ</string>
+    <string name="peer_purge_messages">Hichapụ Ozi Niile na %1$s</string>
+    <string name="peer_precision_exact">GPS Kpọmkwem</string>
+    <string name="peer_precision_exact_desc">Nhazi nke ọma</string>
+    <string name="peer_precision_suburb">Mpaghara (~1km)</string>
+    <string name="peer_precision_suburb_desc">Naanị ọkwa agbataobi</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">Hichapụ mkparịta ụka %1$d?</item>
+    </plurals>
+    <string name="conv_delete_locally">Hichapụ n\'ime Ngwaọrụ</string>
+    <string name="conv_delete_locally_sub">Na-ewepụ mkparịta ụka na ngwaọrụ gị naanị.</string>
+    <string name="conv_delete_both">Hichapụ n\'ime Ngwaọrụ/Site na Kọntaktị</string>
+    <string name="conv_bulk_delete_both_sub">Na-ehichapụ mkparịta ụka n\'ime ngwaọrụ na site na kọntaktị gị.</string>
+    <string name="conv_delete_both_sub">Na-ehichapụ mkparịta ụka n\'ime ngwaọrụ wee malite arịrịọ ihichapụ na ngwaọrụ kọntaktị maka mkparịta ụka ahụ.</string>
+    <string name="conv_cd_exit_selection">Pụọ na nhọrọ</string>
+    <string name="conv_cd_select_all">Họrọ Ha Niile</string>
+    <string name="conv_cd_new_message">Ozi ọhụrụ</string>
+    <string name="conv_sort_date">Tarehe</string>
+    <string name="conv_sort_unread">Anaghị agụ</string>
+    <string name="conv_search_placeholder">Chọọ mkparịta ụka…</string>
+    <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_archived">Echekwara</string>
+    <string name="conv_mark_read">Akara dị ka agụrụla</string>
+    <string name="conv_archive">Chekwaa</string>
+    <string name="conv_unarchive">Wepụ na nchekwa</string>
+    <string name="conv_empty_no_results">Enweghị nsonaazụ maka \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Gbalịa nọmba ọchụchọ ọzọ</string>
+    <string name="conv_empty_archived_title">Enweghị chat echekwara</string>
+    <string name="conv_empty_archived_sub">Chekwaa chat ka igbe ozi gị dị ọcha</string>
+    <string name="conv_empty_title">Enweghị ozi ugbu a</string>
+    <string name="conv_empty_sub">Mepee map ma pịa mmadụ\ni malite mkparịta ụka</string>
+    <string name="conv_delete_title">Hichapụ mkparịta ụka?</string>
+    <string name="conv_delete_message">Kedu ka ị chọrọ isi hichapụ mkparịta ụka a na %1$s?</string>
+    <string name="conv_messages_blocked">Emechiri ozi</string>
+    <string name="conv_preview_mine">Wewe: %1$s</string>
+    <string name="conv_new_message_title">Ozi Ọhụrụ</string>
+    <string name="conv_picker_empty">Enweghị kọntaktị ugbu a. Nyochaa koodu QR ka itinyekwuo kọntaktị.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Hichapụ akụkọ chat?</string>
+    <string name="chat_clear_message">Kedu ka ị chọrọ isi hichapụ mkparịta ụka a na %1$s?</string>
+    <string name="chat_clear_locally">Hichapụ n\'ime Ngwaọrụ</string>
+    <string name="chat_clear_both">Hichapụ n\'ime Ngwaọrụ/Site na Kọntaktị</string>
+    <string name="chat_clear_both_sub">Na-ehichapụ chat n\'ime ngwaọrụ wee malite arịrịọ ihichapụ gaa na %1$s maka ozi ị siri zipụ.</string>
+    <string name="chat_cd_options">Nhọrọ</string>
+    <string name="chat_clear_history_menu">Hichapụ Akụkọ Chat</string>
+    <string name="chat_typing">%1$s na-ede ozi…</string>
+    <string name="chat_blocked_banner">Ị mechiela ozi sitere na %1$s. Gaa na Kọntaktị ka ị kpọghee.</string>
+    <string name="chat_delete_msg_title">Hichapụ ozi?</string>
+    <string name="chat_delete_msg_message">Kedu ka ị chọrọ isi hichapụ ozi a?</string>
+    <string name="chat_delete_from_contact">Hichapụ na kọntaktị</string>
+    <string name="chat_delete_from_contact_sub">Na-ehichapụ chat na ngwaọrụ kọntaktị.</string>
+    <string name="chat_delete_both_sub">Na-ewepụ chat n\'ime ngwaọrụ wee hichapụ ya na ngwaọrụ kọntaktị na akpaghị aka.</string>
+    <string name="chat_cd_share_location">Kesa Ebe</string>
+    <string name="chat_input_placeholder">Ozi…</string>
+    <string name="chat_cd_send">Zipụ</string>
+
+    <string name="common_close">Mechie</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Gbanye SOS?</string>
+    <string name="map_sos_deactivate_title">Gbanyụọ SOS?</string>
+    <string name="map_sos_activate_msg">Nke a ga-agbasa ebe ị nọ kwa sekọnd 15 gaa na kọntaktị SOS gị a họpụtara ruo mgbe agbanyụrụ ya.</string>
+    <string name="map_sos_deactivate_msg">Nke a ga-akwụsị mgbasa ozi ebe kacha mkpa gaa na kọntaktị mberede gị.</string>
+    <string name="map_activate">Gbanye</string>
+    <string name="map_deactivate">Gbanyụọ</string>
+    <string name="map_cd_style">Ụdị Map</string>
+    <string name="map_cd_show_geofences">Gosi geofences</string>
+    <string name="map_cd_hide_geofences">Zoo geofences</string>
+    <string name="map_cd_follow">Soro m</string>
+    <string name="map_cd_friends">Ndị enyi</string>
+    <string name="map_no_friends">Enweghị ndị enyi a na-achọ ugbu a</string>
+    <string name="map_you">Gị</string>
+    <string name="map_cd_go_my_location">Gaa n\'ebe m nọ</string>
+    <string name="map_sos_active">⚠ SOS NA-ARỤ ỌRỤ</string>
+    <string name="map_away">Dị anya</string>
+    <string name="map_no_location_yet">Enweghị ebe ugbu a</string>
+    <string name="map_cd_go_location">Gaa n\'ebe ahụ</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS GBANYERE</string>
+    <string name="map_overdue">Agafela oge - enweghị mmelite ọhụrụ</string>
+    <string name="map_stat_last_seen">Hụrụ ikpeazụ</string>
+    <string name="map_stat_battery">Batrị</string>
+    <string name="map_stat_accuracy">Nkenke</string>
+    <string name="map_stat_motion">Mmegharị</string>
+    <string name="map_stat_speed">Ọsọ</string>
+    <string name="map_stat_elevation">Elu</string>
 
     <string name="common_ok">Ọ dị mma</string>
-    <string name="cd_back">Azu</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Akụkọ: %1$s</string>
+    <string name="history_select_person">Họrọ Mmadụ</string>
+    <string name="history_person_label">Mmadụ</string>
+    <string name="history_cd_prev_day">Ụbọchị Gara Aga</string>
+    <string name="history_cd_next_day">Ụbọchị Na-abịa</string>
+    <string name="history_time_filter">Nzacha Oge:</string>
+    <string name="history_cd_reset_time">Tọgharia Oge</string>
+    <string name="history_tab_list">Ndepụta</string>
+    <string name="history_empty_title">Enweghị akụkọ maka ụbọchị a</string>
+    <string name="history_empty_sub">Gbalịa họrọ ụbọchị ọzọ ma ọ bụ lelee njikọ gị.</string>
+    <string name="history_start_time">Oge Mmalite</string>
+    <string name="history_end_time">Oge Ngwụcha</string>
+    <string name="history_no_data_title">Enweghị data ebe</string>
+    <string name="history_no_data_sub">Enweghị pings edekọrọ maka ụbọchị a ma ọ bụ oge oge a.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">edekọrọ pings %1$d</item>
+    </plurals>
+    <string name="history_cd_dismiss">Wepụ</string>
+    <string name="history_accuracy_label">±%1$s nkenke</string>
+    <string name="history_emergency_sos">Mgbaàmà SOS mberede</string>
+    <string name="history_detail_location">Ebe</string>
+    <string name="history_detail_coordinates">Nhazi</string>
+    <string name="history_within">n\'ime ±%1$s</string>
+    <string name="history_detail_movement">Mmegharị</string>
+    <string name="history_movement_desc">%1$s %2$s na-aga %3$s</string>
+
+    <string name="common_create">Mepụta</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Tinye mpaghara geofence</string>
+    <string name="geo_cd_assign">Kenye geofence</string>
+    <string name="geo_unknown">Amaghị</string>
+    <string name="geo_empty_title">Enweghị geofences</string>
+    <string name="geo_empty_sub">Pịa + ka imepụta mpaghara geofence, wee kenye kọntaktị na ya site na ntọala nkekọrịta ha.</string>
+    <string name="geo_delete_title">Hichapụ geofence?</string>
+    <string name="geo_delete_simple">Hichapụ \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">Ekenyeela \"%1$s\" na kọntaktị %2$d. Ihichapụ ya na-ewepụkwa ọrụ ndị ahụ.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences maka %1$s</string>
+    <string name="geo_empty_contact_title">Enweghị geofences maka kọntaktị</string>
+    <string name="geo_empty_contact_sub">Pịa + ka ikenye mpaghara geofence ma họrọ ma ị ga-amụ anya mgbe ị bịarutere, mgbe ị na-apụ, ma ọ bụ ha abụọ.</string>
+    <string name="geo_no_areas_title">Enweghị geofences ugbu a</string>
+    <string name="geo_no_areas_msg">Buru ụzọ mepụta mpaghara geofence site na ihuenyo Geofences, wee kenye ya ebe a.</string>
+    <string name="geo_radius_label">radius %1$s</string>
+    <string name="geo_contacts_label">Kọntaktị: %1$s</string>
+    <string name="geo_no_contacts_assigned">Enyeghị kọntaktị ọ bụla</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">Iwu %1$d</item>
+    </plurals>
+    <string name="geo_trigger_enter">Banye</string>
+    <string name="geo_trigger_exit">Pụọ</string>
+    <string name="geo_trigger_both">Ha Abụọ</string>
+    <string name="geo_edit_title">Dezie Geofence</string>
+    <string name="geo_new_title">Geofence Ọhụrụ</string>
+    <string name="geo_cd_my_location">Ebe m nọ</string>
+    <string name="geo_cd_radius_increase">Mee ka radius bawanye</string>
+    <string name="geo_cd_radius_decrease">Mee ka radius belata</string>
+    <string name="geo_hint_tap">Pịa ma ọ bụ jide map ka idowe</string>
+    <string name="geo_hint_move">Pịa ka ịmubanye • Jide ma ọ bụ dọrọ pin ka ịkwaga ya</string>
+    <string name="geo_basic_info">Ozi Basic</string>
+    <string name="geo_search_title">Chọta site na Adreesị</string>
+    <string name="geo_search_label">Adreesị ma ọ bụ ebe</string>
+    <string name="geo_search_placeholder">dịka ọmụmaatụ, 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">Ahụghị adreesị kwekọrọ</string>
+    <string name="geo_cd_search">Chọọ</string>
+    <string name="geo_name_placeholder">dịka ọmụmaatụ, Ụlọ, Ọrụ</string>
+    <string name="geo_name_required">Aha dị mkpa</string>
+    <string name="geo_latitude">Latitude</string>
+    <string name="geo_longitude">Longitude</string>
+    <string name="geo_lat_range">-90 ruo 90</string>
+    <string name="geo_lng_range">-180 ruo 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Tinye %1$d ruo %2$d m</string>
+    <string name="geo_edit_assignment">Dezie Ọrụ</string>
+    <string name="geo_assign_title">Kenye Geofence</string>
+    <string name="geo_select_area">Họrọ Mpaghara Geofence</string>
+    <string name="geo_trigger_title">Gbalite Ọkwa na…</string>
+    <string name="geo_add_rule">Tinye Iwu</string>
+    <string name="geo_alerts_all_times">Mkpu na-arụ ọrụ oge niile. Tinye iwu ka amachibido mgbe a na-eziga mkpu.</string>
+    <string name="geo_assign_action">Kenye</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Mkpu Ịnọ Nso</string>
+    <string name="prox_empty_title">Enweghị ndị a na-achọ</string>
+    <string name="prox_empty_sub">Nyochaa QR òkù mmadụ site na taabụ nyocha\ni malite ịchọ ebe ha nọ</string>
+    <string name="prox_intro">Nweta ọkwa mgbe onye a na-achọ bịara n\'ebe dị anya ị họọrọ.</string>
+    <string name="prox_alert_within">Kpọtụrụ mgbe nọ n\'ime %1$s</string>
+    <string name="prox_alerts_off">Mkpu gbanyụrụ</string>
+    <string name="prox_alert_radius">Radius mkpu</string>
+    <string name="prox_edit_schedule">Dezie Oge</string>
+    <string name="prox_rules">Iwu</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Oge maka %1$s</string>
+    <string name="schedule_cd_add_rule">Tinye iwu</string>
+    <string name="schedule_empty_title">Enweghị iwu oge</string>
+    <string name="schedule_empty_global">A na-ekerịta ebe n\'oge niile. Tinye iwu ka amachibido mgbe nkekọrịta na-arụ ọrụ.</string>
+    <string name="schedule_empty_peer">A na-ekerịta ebe oge niile na %1$s. Tinye iwu ka amachibido mgbe.</string>
+    <string name="schedule_active_hint">Na-arụ ọrụ mgbe iwu ọ bụla kwekọrọ na oge ugbu a. efu = mgbe niile na.</string>
+    <string name="schedule_all_day">Ụbọchị niile</string>
+    <string name="schedule_plus_one_day"> (+ụbọchị 1)</string>
+    <string name="schedule_rule_number">Iwu %1$d</string>
+    <string name="schedule_cd_delete_rule">Hichapụ iwu</string>
+    <string name="schedule_edit_rule">Dezie Iwu</string>
+    <string name="schedule_label_optional">Akara (nhọrọ)</string>
+    <string name="schedule_label_placeholder">dịka ọmụmaatụ, awa ọrụ, ngwụcha izu</string>
+    <string name="schedule_active_days">Ụbọchị Na-arụ Ọrụ</string>
+    <string name="schedule_time_window">Window Oge</string>
+    <string name="schedule_start">Mmalite</string>
+    <string name="schedule_end">Ngwụcha</string>
+    <string name="schedule_overnight">N\'abalị niile: na-arụ ọrụ site na %1$s ruo %2$s ụbọchị na-abịa</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">A na-eleba anya na ngwaọrụ</string>
+    <string name="gate_message">Achọrọ nnabata onye nlekọta iji nweta ntọala.</string>
+    <string name="gate_request_access">Rịọ ka ị nweta ohere</string>
+    <string name="gate_waiting">Na-eche nnabata onye nlekọta…</string>
+    <string name="gate_denied">Onye nlekọta jụrụ ohere ahụ.</string>
+    <string name="gate_timed_out">Arịrịọ agafeela oge. Onye nlekọta azaghị.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Ebighị ebi</string>
+    <string name="retention_keep_for">Dobe maka: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">Ụbọchị %1$d</item>
+    </plurals>
+
+    <string name="common_select">Họrọ</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Họrọ Ebe a Kapịrị ọnụ</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Họrọ taabụ ndị pụtara na mmanya ala yana usoro ha. Agụnyere map mgbe niile.</string>
+    <string name="customize_cd_move_up">Gaa n\'elu</string>
+    <string name="customize_cd_move_down">Gaa n\'ala</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Ụdị %1$s (build %2$d)</string>
+    <string name="about_tagline">Ikekọrịta ebe nzuzo na ndị ị tụkwasịrị obi. Enweghị akaụntụ, enweghị igwe ojii, enweghị nleba anya site n\'aka anyị.</string>
+    <string name="about_relay_connections">Njikọ Relay</string>
+    <string name="about_connected">Ejikọrọ</string>
+    <string name="about_disconnected">Akwụsịla njikọ</string>
+    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_lib_osmdroid_desc">Ngosipụta map dabere na OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Ụgbọ njem WebSocket maka relay Nostr</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Ebe nchekwa data mpaghara</string>
+    <string name="about_map_attribution">Data map © ndị nyere aka na OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Nabata</string>
+    <string name="notif_someone">Mmadụ</string>
+    <string name="notif_sos_title">SOS sitere na %1$s!</string>
+    <string name="notif_sos_text">%1$s agbanyela SOS na (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s chọrọ ka ị bụrụ onye nlekọta ha</string>
+    <string name="notif_supervisor_request_text">Nabata ka ị kwe ka arịrịọ nnabata mmepe site na ngwaọrụ a</string>
+    <string name="notif_supervisor_request_big">Nabata ka ị kwe ka %1$s na-ezitere gị arịrịọ nnabata mmepe mgbe ọnọdụ nlekọta na-arụ ọrụ.</string>
+    <string name="notif_supervised_active_title">Ọnọdụ nlekọta na-arụ ọrụ</string>
+    <string name="notif_supervised_active_text">Onye nlekọta gị kwadoro - edobela ọnọdụ nlekọta ugbu a</string>
+    <string name="notif_supervised_declined_title">Ajụrụ ọnọdụ nlekọta</string>
+    <string name="notif_supervised_declined_text">Onye nlekọta gị jụrụ arịrịọ ahụ - agbanyụrụ ọnọdụ nlekọta</string>
+    <string name="notif_tracking_alert_title">Mkpu Nleba anya</string>
+    <string name="notif_tracking_proximity">%1$s nwetara mkpu nso gbasara gị</string>
+    <string name="notif_tracking_geofence">%1$s nwetara mkpu na ị banyere/pụọ na fence: %2$s</string>
+    <string name="notif_tracking_generic">%1$s na-eleba anya n\'ebe ị nọ</string>
+    <string name="notif_track_update_title">Mmelite nkekọrịta sitere na %1$s</string>
+    <string name="notif_track_new_title">Kọntaktị Ọhụrụ: %1$s</string>
+    <string name="notif_role_send_receive">Zipụ/Nweta Ebe</string>
+    <string name="notif_role_send">Zipụ Ebe</string>
+    <string name="notif_role_receive">Nweta Ebe</string>
+    <string name="notif_role_none">Enweghị Nkekọrịta Ebe</string>
+    <string name="notif_track_requesting">%1$s na-arịọ: %2$s</string>
+    <string name="notif_track_update_body">%1$s chọrọ imelite ka unu si ekerịta ebe.</string>
+    <string name="notif_track_new_body">%1$s tinyere gị dị ka kọntaktị ma chọọ ijikọ.</string>
+    <string name="notif_contact_connected_title">Ejikọrọ Kọntaktị</string>
+    <string name="notif_contact_connected_text">%1$s ejikọọla na gị ugbu a.</string>
+    <string name="notif_request_declined_title">Ajụrụ Arịrịọ</string>
+    <string name="notif_request_declined_text">%1$s ajụla arịrịọ nkekọrịta ebe gị.</string>
+    <string name="notif_message_person">Zipụ ozi %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s banyere %2$s</string>
+    <string name="notif_geofence_left_title">%1$s pụrụ na %2$s</string>
+    <string name="notif_geofence_subtitle">na %1$s · radius %2$s</string>
+    <string name="notif_person_nearby">%1$s nọ nso</string>
+    <string name="notif_distance_from_you">%1$s site na gị</string>
+    <string name="notif_missed_title">Enweghị mmelite sitere na %1$s</string>
+    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS NA-ARỤ ỌRỤ!</string>
+    <string name="notif_sos_active_text">Na-agbasa mkpu mberede gaa na kọntaktị SOS</string>
+    <string name="notif_messages_group_title">Ozi LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Ajụrụ arịrịọ kọntaktị sitere na %1$s</string>
+    <string name="toast_now_supervising">Na-eleba anya na ngwaọrụ %1$s ugbu a</string>
+    <string name="toast_declined_supervision">Ajụrụ arịrịọ nlekọta sitere na %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Ugbu a</string>
+    <string name="time_minutes_ago">%1$dm gara aga</string>
+    <string name="fallback_me">Mụ onwe m</string>
+    <string name="fallback_unknown">Amaghị</string>
+    <string name="geo_unassigned">Ekenyeghị</string>
+    <string name="days_every_day">Ụbọchị niile</string>
+    <string name="days_weekdays">Ụbọchị izu</string>
+    <string name="days_weekends">Ngwụcha izu</string>
+    <string name="days_none">Enweghị ụbọchị</string>
+    <string name="chat_my_location_message">Ebe m nọ ugbu a: %1$s</string>
+    <string name="scan_error_bad_pubkey">Òkù na-adịghị mma: igodo ọha adịghị mma</string>
+    <string name="scan_error_key_mismatch">Òkù na-adịghị mma: igodo adabaghị</string>
+    <string name="scan_error_unknown">Njehie a na-amaghị</string>
+    <string name="scan_error_invalid_link">Link òkù na-adịghị mma</string>
+    <string name="scan_fallback_contact">kọntaktị a</string>
+    <string name="backup_saved">Echekwara nkwado ndabere: %1$s</string>
+    <string name="backup_saved_encrypted">Echekwara nkwado ndabere (ezoro ezo): %1$s</string>
+    <string name="backup_failed">Nkwado ndabere dara: %1$s</string>
+    <string name="backup_could_not_read_file">Enweghị ike ịgụ faịlụ</string>
+    <string name="backup_could_not_write_file">Enweghị ike ide faịlụ</string>
+    <string name="backup_could_not_read">Enweghị ike ịgụ nkwado ndabere: %1$s</string>
+    <string name="backup_incorrect_password">Paswọd ezighi ezi</string>
+    <string name="restore_result_restored">Weghachiri: %1$s</string>
+    <string name="restore_result_failed">Dara: %1$s</string>
+    <string name="restore_nothing">Ọ dịghị ihe ị ga-eweghachi</string>
+    <string name="restore_failed">Nweghachi dara: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">kọntaktị %1$d</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">geofence %1$d</item>
+    </plurals>
+    <string name="peer_role_change_sent">Ezigara %1$s arịrịọ mgbanwe ọrụ</string>
+    <string name="peer_not_found">Ahụghị onye ọgbọ</string>
+    <string name="peer_purge_location_sent">Ezigara %1$s iwu ihichapụ ebe NIILE</string>
+    <string name="peer_purge_messages_sent">Ezigara %1$s iwu ihichapụ ozi NIILE</string>
+    <string name="onboarding_error_key_length">Igodo na-adịghị mma - ọ ga-abụ mkpụrụedemede 64 hex.</string>
+    <string name="onboarding_error_key_range">Igodo nzuzo na-adịghị mma - pụọ na oke curve.</string>
+    <string name="onboarding_error_hex">Usoro hex na-adịghị mma.</string>
+    <string name="onboarding_error_import_failed">Ịbubata igodo dara: %1$s</string>
 </resources>

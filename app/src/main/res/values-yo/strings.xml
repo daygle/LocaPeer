@@ -2,67 +2,753 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Awọn ikanni iwifunni & Iṣẹ iwaju ─────────────────────── -->
-    <string name="channel_name_heartbeat">Ikede Ipo</string>
-    <string name="channel_desc_heartbeat">N kede ipo rẹ si awọn olubasọrọ rẹ ti o fọwọsi</string>
-    <string name="channel_name_alerts">Awọn Itaniji</string>
-    <string name="channel_desc_alerts">Awọn itaniji fun lilu ọkan ti o padanu ati geofence</string>
+    <!-- ── Awọn ikanni iwifunni & iṣẹ iwaju ─────────────────────── -->
+    <string name="channel_name_heartbeat">Ìsọfúnni Ìpò</string>
+    <string name="channel_desc_heartbeat">Ń sọ ipò rẹ fún àwọn ojúlùmọ̀ rẹ tí o fọwọ́ sí</string>
+    <string name="channel_name_alerts">Ìkìlọ̀</string>
+    <string name="channel_desc_alerts">Ìkìlọ̀ nípa dídúró ìsọfúnni àti geofence</string>
     <string name="channel_name_messages">Awọn ifiranṣẹ</string>
-    <string name="channel_desc_messages">Awọn ifiranṣẹ ẹlẹgbẹ ti nwọle</string>
-    <string name="notification_heartbeat_title">LocaPeer nṣiṣẹ</string>
-    <string name="notification_heartbeat_text">Pinpin ipo rẹ pẹlu awọn miiran</string>
+    <string name="channel_desc_messages">Awọn ifiranṣẹ ti nwọle</string>
+    <string name="notification_heartbeat_title">LocaPeer ń ṣiṣẹ́ lọ́wọ́</string>
+    <string name="notification_heartbeat_text">Ń pín ipò rẹ pẹ̀lú àwọn ẹlòmíràn</string>
 
-    <!-- ── Awọn iṣe ti o wọpọ ──────────────────────────────────────── -->
+    <!-- ── Awọn iṣẹ ṣiṣe ti o wọpọ ──────────────────────────────────────── -->
     <string name="common_save">Fipamọ</string>
-    <string name="common_cancel">fagilee</string>
-    <string name="common_done">Ti ṣe</string>
-    <string name="common_delete">Pa rẹ</string>
-    <string name="common_disable">Pa a</string>
-    <string name="common_enable">Mu ṣiṣẹ</string>
-    <string name="common_restore">Pada sipo</string>
-    <string name="common_unlock">Ṣii silẹ</string>
-    <string name="common_password">Ọrọ igbaniwọle</string>
-    <string name="common_not_now">Kii ṣe bayi</string>
-    <string name="common_off">Paa</string>
-    <string name="common_approve">Fọwọsi</string>
-    <string name="common_deny">Kọ</string>
+    <string name="common_cancel">Fagilee</string>
+    <string name="common_done">Parí</string>
+    <string name="common_delete">Pa rẹ́</string>
+    <string name="common_disable">Mú kúrò</string>
+    <string name="common_enable">Mú ṣiṣẹ́</string>
+    <string name="common_restore">Mú padà bọ̀ sípò</string>
+    <string name="common_unlock">Ṣí i</string>
+    <string name="common_password">Ọ̀rọ̀ìṣọ́</string>
+    <string name="common_not_now">Kì í ṣe nísinsìnyí</string>
+    <string name="common_off">Pá</string>
+    <string name="common_approve">Fọwọ́ sí i</string>
+    <string name="common_deny">Kọ̀ ọ́</string>
 
     <!-- ── Awọn aami taabu lilọ kiri ──────────────────────────────────────────── -->
-    <string name="tab_map">Maapu</string>
+    <string name="tab_map">Máàpù</string>
     <string name="tab_messages">Awọn ifiranṣẹ</string>
-    <string name="tab_history">Itan</string>
-    <string name="tab_contacts">Awọn olubasọrọ</string>
+    <string name="tab_history">Ìtàn</string>
+    <string name="tab_contacts">Awọn ojúlùmọ̀</string>
     <string name="tab_qr">QR</string>
-    <string name="tab_settings">Eto</string>
+    <string name="tab_settings">Ètò</string>
 
-    <!-- ── Awọn ipo gbigbe / ṣiṣe ───────────────────────────────────────── -->
-    <string name="motion_stationary">Duro jẹ</string>
-    <string name="motion_walking">Nrin kiri</string>
-    <string name="motion_running">Nsare</string>
-    <string name="motion_cycling">Ngun kẹkẹ</string>
-    <string name="motion_driving">Nwakọ</string>
+    <!-- ── Iṣipopada / awọn ipinlẹ iṣẹ ───────────────────────────────────────── -->
+    <string name="motion_stationary">Dúró sójú kan</string>
+    <string name="motion_walking">Ń rìn</string>
+    <string name="motion_running">Ń sáré</string>
+    <string name="motion_cycling">Ń gun kẹ̀kẹ́</string>
+    <string name="motion_driving">Ń wakọ̀</string>
 
-    <!-- ── Eto ────────────────────────────────────────────────── -->
-    <string name="settings_title">Eto</string>
-    <string name="settings_section_location_privacy">Ipo &amp; Aṣiri</string>
-    <string name="settings_section_security">Aabo</string>
-    <string name="settings_section_map">Maapu</string>
-    <string name="settings_section_battery_performance">Batiri &amp; Iṣẹ</string>
-    <string name="settings_section_units_display">Awọn ẹya &amp; Ifihan</string>
-    <string name="settings_section_retention">Idaduro (Ẹrọ Yi)</string>
-    <string name="settings_section_appearance">Irisi</string>
-    <string name="settings_section_backup_keys">Afẹyinti &amp; Awọn bọtini</string>
-    <string name="settings_section_about">Nipa</string>
+    <!-- ── Awọn apakan afẹyinti ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Kókó Ìkọ̀kọ̀</string>
+    <string name="backup_section_contacts">Awọn ojúlùmọ̀</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Ètò</string>
 
+    <!-- ── Ibeere abojuto (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Ìbéèrè Ìbójútó</string>
+    <string name="supervision_request_message">\"%1$s\" ń béèrè fún àyè sí ètò wọn. Ǹjẹ́ o gba?</string>
+
+    <!-- ── Eto iboju ────────────────────────────────────────────────── -->
+    <string name="settings_title">Ètò</string>
+
+    <!-- Awọn aami apakan -->
+    <string name="settings_section_location_privacy">Ipò &amp; Àṣírí</string>
+    <string name="settings_section_security">Ààbò</string>
+    <string name="settings_section_map">Máàpù</string>
+    <string name="settings_section_battery_performance">Bátìrì &amp; Iṣẹ́</string>
+    <string name="settings_section_units_display">Ìwọ̀n &amp; Ìfarahàn</string>
+    <string name="settings_section_retention">Ìdádúró (Ẹ̀rọ yìí)</string>
+    <string name="settings_section_appearance">Ìfarahàn</string>
+    <string name="settings_section_backup_keys">Afẹyinti &amp; Àwọn Kókó</string>
+    <string name="settings_section_about">Nípa</string>
+
+    <!-- Profaili -->
     <string name="settings_edit_name">Ṣatunkọ Orukọ</string>
     <string name="settings_my_qr">QR mi</string>
-    <string name="settings_no_name_set">Ko si orukọ ti a ṣeto</string>
+    <string name="settings_no_name_set">Kò sí orúkọ kankan</string>
 
-    <string name="settings_share_location">Pin Ipo Mi</string>
-    <string name="settings_language">Ede</string>
-    <string name="settings_language_title">Ede Ohun elo</string>
-    <string name="settings_language_system">Aiyipada eto</string>
+    <!-- Ipò &amp; Àṣírí -->
+    <string name="settings_share_location">Pín Ipò mi</string>
+    <string name="settings_broadcasting">Ń sọ fún àwọn ojúlùmọ̀ rẹ</string>
+    <string name="settings_not_broadcasting">Kò sọ fún wọn</string>
+    <string name="settings_sharing_schedule">Ìṣètò Ìpínpín</string>
+    <string name="settings_always_on">Ní gbogbo ìgbà</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">Òfin %1$d</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Ṣàkóso àwọn agbègbè geofence tí o pín</string>
+    <string name="settings_notify_when_tracked">Sọ fún mi nígbà tí wọ́n bá ń tẹ̀lé mi</string>
+    <string name="settings_notify_when_tracked_subtitle">Gba ìsọfúnni nígbà tí ìkìlọ̀ ìsúnmọ́ ojúlùmọ̀ kan bá wáyé fún ọ.</string>
+    <string name="settings_my_location_history">Ìtàn Ipò</string>
+    <string name="settings_my_location_history_subtitle">Wò ìtàn ipò rẹ</string>
+    <string name="settings_lookup_addresses">Wá Àdírẹ́sì</string>
+    <string name="settings_lookup_addresses_subtitle">Fi àdírẹ́sì òpópónà hàn fún ìtàn ipò àti àwọn ibi tí o tẹ̀ lórí máàpù. Ń fi àwọn ìsọfúnni náà ránṣẹ́ sí iṣẹ́ geocoding ti ẹ̀rọ rẹ (lọ́pọ̀ ìgbà Google).</string>
 
-    <string name="common_ok">O dara</string>
-    <string name="cd_back">Pada</string>
+    <!-- Ààbò -->
+    <string name="settings_supervision_active">Ìbójútó Ń Ṣiṣẹ́</string>
+    <string name="settings_supervision_active_subtitle">Ètò nílò ìfọwọ́sí olùbójútó</string>
+    <string name="settings_disable_supervised">Pa Ìbójútó Rẹ́</string>
+    <string name="settings_supervised_mode">Ipo Ìbójútó</string>
+    <string name="settings_supervised_mode_subtitle">Nílò ìfọwọ́sí olùbójútó láti rí ètò</string>
+
+    <!-- Máàpù -->
+    <string name="settings_starting_point">Ojú Ìbẹ̀rẹ̀</string>
+    <string name="settings_map_current_location">Ipò Rẹ Lọ́wọ́lọ́wọ́</string>
+    <string name="settings_map_all_contacts">Gbogbo Ojúlùmọ̀</string>
+    <string name="settings_map_fixed_location">Ipò Pàtó Kan</string>
+    <string name="settings_map_last_position">Ipò Ìkẹyìn</string>
+    <string name="settings_map_starting_point_title">Máàpù Ojú Ìbẹ̀rẹ̀</string>
+    <string name="settings_no_location_set">Kò sí ipò kankan</string>
+    <string name="settings_pick_location_on_map">Mú Ipò lórí Máàpù</string>
+    <string name="settings_default_zoom_level">Ìwọ̀n Ìfihàn</string>
+    <string name="settings_map_pin_colour">Àwọ̀ Máàpù Pin</string>
+
+    <!-- Bátìrì &amp; Iṣẹ́ -->
+    <string name="settings_update_cadence">Ìgbà Ìsọfúnni</string>
+    <string name="settings_update_cadence_subtitle">Ṣàtúnṣe iye ìgbà tí ìsọfúnni ipò rẹ ń jáde</string>
+    <string name="settings_update_cadence_dialog_message">Ṣàkóso iye ìgbà tí ìsọfúnni rẹ ń sọ́ padà dábé iṣẹ́ rẹ. Ìsọfúnni ní gbogbo ìgbà ń jẹ bátìrì púpọ̀.</string>
+    <string name="settings_update_cadence_reset">Dá a padà sí ti àtẹ̀lẹ́</string>
+    <string name="settings_min_distance_filtering">Ìwọ̀n Ìjìnnà Kíkéré Jù</string>
+    <string name="settings_min_distance_filtering_subtitle">Fi àwọn ipò tí ó jìnnà tó ìwọ̀n yìí nìkan hàn.</string>
+    <string name="settings_discard_low_accuracy">Pa Àwọn Ipò Tí Kò Pé Rẹ́</string>
+    <string name="settings_discard_low_accuracy_subtitle">Má ṣe sọ tàbí kọ ìsọfúnni tí kò pé jù ìwọ̀n yìí lọ. SOS kì í já fò.</string>
+    <string name="settings_hide_low_accuracy">Fi Àwọn Ipò Tí Kò Pé Pamọ́</string>
+    <string name="settings_hide_low_accuracy_subtitle">Fi àwọn ipò ìtàn tí kò pé jù ìwọ̀n yìí lọ pamọ́. Kò sí ohun tí a óò pa rẹ́.</string>
+    <string name="settings_low_battery" formatted="false">Bátìrì Kéré (&lt; 20%)</string>
+    <string name="settings_minutes_short">Ìṣẹ́jú %1$d</string>
+    <string name="settings_motion_detection">Ìwárí Iṣipopada</string>
+    <string name="settings_motion_detection_on">Mú ṣiṣẹ́ - ń jẹ́ kí á mọ irú iṣẹ́ tí o ń ṣe (rìn, wakọ̀) nínú ìtàn rẹ</string>
+    <string name="settings_motion_detection_off">Pá - gba àyè fún iṣẹ́ ara fún ìsọfúnni iṣipopada tó pé</string>
+    <string name="settings_enable_motion_title">Mú ìwárí iṣipopada ṣiṣẹ́</string>
+    <string name="settings_enable_motion_message">Àyè fún iṣẹ́ ara ń jẹ́ kí LocaPeer mọ ìyàtọ̀ láàárín rìn, wakọ̀ àti dídúró jẹ́ẹ́ dunjú nínú ìtàn rẹ. O wà ní pípa nísinsìnyí - o le mú ṣiṣẹ́ padà nínú ètò ẹ̀rọ rẹ.</string>
+    <string name="settings_open_settings">Ṣí Ètò</string>
+    <string name="settings_battery_optimization">Ìmúgbòòrò Bátìrì</string>
+    <string name="settings_battery_optimization_unrestricted">Kò sí ìhámọ́ — LocaPeer le ṣiṣẹ́ nínú abẹ́lẹ̀ láìsí ìdíwọ́</string>
+    <string name="settings_battery_optimization_restricted">Mú dunjú — tẹ̀ ẹ́ láti tò ó sí Kò sí ìhámọ́ nínú ètò ẹ̀rọ</string>
+
+    <!-- Awọn igbanilaaye -->
+    <string name="settings_permissions">Ìgbàníláyè</string>
+    <string name="settings_permissions_subtitle">Wo àti ṣàtúnṣe àyè fún ipò, kámẹ́rà àti bẹ́ẹ̀ bẹ́ẹ̀ lọ</string>
+    <string name="permissions_intro">LocaPeer nílò àwọn ìgbàníláyè yìí láti pín ipò rẹ, ṣàyẹ̀wò ìpè àti láti máa ṣiṣẹ́ nínú abẹ́lẹ̀. Tẹ èyí tí o kò bá gba láti ṣàtúnṣe rẹ̀.</string>
+    <string name="perm_location_title">Ipò</string>
+    <string name="perm_location_granted">Gba — a le pín ipò rẹ</string>
+    <string name="perm_location_denied">Kò gba — tẹ̀ ẹ́ láti gba àyè fún ipò</string>
+    <string name="perm_background_location_title">Ipò Abẹ́lẹ̀</string>
+    <string name="perm_background_location_granted">Gba — ipò rẹ ń pín nìṣó bí o bá tiẹ ti ngba nínú ngwa náà</string>
+    <string name="perm_background_location_denied">Kò gba — tẹ̀ ẹ́ láti gba àyè fún \'Gba ní gbogbo ìgbà\' nínú ètò</string>
+    <string name="perm_camera_title">Kámẹ́rà</string>
+    <string name="perm_camera_granted">Gba — a ń lò ó láti ṣàyẹ̀wò koodu QR ìpè</string>
+    <string name="perm_camera_denied">Kò gba — tẹ̀ ẹ́ láti gba àyè fún kámẹ́rà</string>
+    <string name="perm_notifications_title">Ìsọfúnni</string>
+    <string name="perm_notifications_granted">Gba — ìkìlọ̀ àti ìsọfúnni ipò le hàn</string>
+    <string name="perm_notifications_denied">Kò gba — tẹ̀ ẹ́ láti gba àyè fún ìsọfúnni</string>
+
+    <!-- Ìwọ̀n &amp; Ìfarahàn -->
+    <string name="settings_speed_units">Ìwọ̀n Ọsọ</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metric (km/h)</string>
+    <string name="settings_elevation_units">Ìwọ̀n Gíga</string>
+    <string name="settings_elevation_imperial">Imperial (feet)</string>
+    <string name="settings_elevation_metric">Metric (metres)</string>
+    <string name="settings_distance_units">Ìwọ̀n Ìjìnnà</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metric (m/km)</string>
+    <string name="settings_time_format">Usoro Oge</string>
+    <string name="settings_time_24h">Sáà 24 (13:30)</string>
+    <string name="settings_time_12h">Sáà 12 (1:30 PM)</string>
+
+    <!-- Ìdádúró -->
+    <string name="settings_retention_location">Ìsọfúnni Ipò</string>
+    <string name="settings_retention_location_subtitle">Iye ìgbà tí a óò fi ìsọfúnni ipò àwọn ojúlùmọ̀ pa mọ́ sínú ẹ̀rọ yìí</string>
+    <string name="settings_clear_all_location">Pa Gbogbo Ìsọfúnni Ipò Rẹ́</string>
+    <string name="settings_retention_messages">Awọn ifiranṣẹ</string>
+    <string name="settings_retention_messages_subtitle">Iye ìgbà tí a óò fi àwọn ifiranṣẹ tí o gbà pa mọ́ sínú ẹ̀rọ yìí</string>
+    <string name="settings_clear_all_messages">Pa Gbogbo Ifiranṣẹ Rẹ́</string>
+
+    <!-- Ìfarahàn -->
+    <string name="settings_customize_nav">Ṣàtúnṣe Lilọ kiri</string>
+    <string name="settings_customize_nav_subtitle">Mú kí o sì ṣètò àwọn taabu abẹ́lẹ̀</string>
+    <string name="settings_start_page">Ojú Ewé Ìbẹ̀rẹ̀</string>
+    <string name="settings_language">Èdè</string>
+    <string name="settings_language_title">Èdè Ngwa</string>
+    <string name="settings_language_system">Ti ẹ̀rọ</string>
+
+    <!-- Afẹyinti &amp; Àwọn Kókó -->
+    <string name="settings_export_backup">Bupụ Afẹyinti</string>
+    <string name="settings_export_backup_subtitle">Fi kókó ìkọ̀kọ̀ àti àwọn ojúlùmọ̀ rẹ pamọ́ sínú faịlụ kan. Pa faịlụ yìí mọ́ dáadáa!</string>
+    <string name="settings_import_backup">Bubata Afẹyinti</string>
+    <string name="settings_import_backup_subtitle">Mú padà bọ̀ sípò láti inú faịlụ tí o ti bupụ tẹ́lẹ̀</string>
+    <string name="settings_view_private_key">Wo Kókó Ìkọ̀kọ̀</string>
+    <string name="settings_view_private_key_subtitle">Fi kókó ìdánimọ̀ rẹ tí ó jẹ́ herufi 64 hàn</string>
+
+    <!-- Nípa -->
+    <string name="settings_about_locapeer">Nípa LocaPeer</string>
+    <string name="settings_about_subtitle">Toleo, ọkwa relay, orisun ṣiṣi</string>
+
+    <!-- Dialogs -->
+    <string name="settings_edit_display_name">Ṣatunkọ Orukọ Ìfarahàn</string>
+    <string name="settings_display_name_label">Orukọ Ìfarahàn</string>
+    <string name="settings_my_invite_qr">QR Ìpè mi</string>
+    <string name="settings_invite_qr_subtitle">Àwọn ẹlòmíràn le ṣàyẹ̀wò èyí láti bẹ̀rẹ̀ sí ní tẹ̀lé ọ.</string>
+    <string name="settings_invite_qr_cd">QR Ìpè</string>
+    <string name="settings_private_key_title">Kókó Ìkọ̀kọ̀</string>
+    <string name="settings_private_key_warning">Pa èyí mọ́ dáadáa. Ẹnikẹ́ni tí ó bá ní kókó yìí le díbọ́n bí ẹni pé ìwọ ni.</string>
+    <string name="settings_clear_location_title">Pa Ìtàn Ipò Rẹ́?</string>
+    <string name="settings_clear_location_message">Gbogbo ìsọfúnni ipò tí a ti pa mọ́ yóò parẹ́ pátápátá.</string>
+    <string name="settings_clear_messages_title">Pa Ìtàn Ifiranṣẹ Rẹ́?</string>
+    <string name="settings_clear_messages_message">Gbogbo ifiranṣẹ tí a ti pa mọ́ yóò parẹ́ pátápátá.</string>
+    <string name="settings_encrypted_backup_title">Afẹyinti Tí A Zoro Ezo</string>
+    <string name="settings_encrypted_backup_message">A ti fi ọ̀rọ̀ìṣọ́ pa afẹyinti yìí mọ́. Biko tinye ọ̀rọ̀ìṣọ́ láti tẹ̀ síwájú.</string>
+    <string name="settings_select_restore_title">Họrọ Data ị ga-eweghachi</string>
+    <string name="settings_select_export_title">Họrọ Data ị ga-ebupụ</string>
+    <string name="settings_export_password_hint">O le tò ọ̀rọ̀ìṣọ́ kan láti pa faịlụ afẹyinti rẹ mọ́.</string>
+    <string name="settings_backup_password_optional">Ọ̀rọ̀ìṣọ́ Afẹyinti (Nhọrọ)</string>
+    <string name="settings_select_sections">Họrọ akụkụ ị ga-agụnye:</string>
+    <string name="settings_choose_file_location">Họrọ ebe faịlụ dị</string>
+    <string name="settings_not_in_backup">Kò sí nínú afẹyinti yìí</string>
+    <string name="settings_enable_supervised_title">Mú Ipo Ìbójútó Ṣiṣẹ́</string>
+    <string name="settings_enable_supervised_message">Mú ojúlùmọ̀ kan tí yóò jẹ́ olùbójútó rẹ. Wọ́n gbọ́dọ̀ fọwọ́ sí i láti inú ẹ̀rọ wọn láti rí ètò rẹ.</string>
+    <string name="settings_no_peers_found">A kò rí ojúlùmọ̀ kankan. Kọ́kọ́ fi ojúlùmọ̀ kan kún un nípa ṣàyẹ̀wò koodu QR ìpè wọn.</string>
+    <string name="settings_disable_supervised_title">Pa Ipo Ìbójútó Rẹ́?</string>
+    <string name="settings_disable_supervised_message">Wàá le rí ètò rẹ láìsí ìfọwọ́sí olùbójútó.</string>
+
+    <!-- ── Awọn iṣẹ ṣiṣe miiran ─────────────────────────────────────────── -->
+    <string name="common_remove">Yọ kúrò</string>
+    <string name="common_name">Orukọ</string>
+    <string name="common_search">Wá</string>
+    <string name="common_sort">Tò ó</string>
+
+    <!-- Nkọwa ọdịnaya (ekerịta) -->
+    <string name="cd_message">Ifiranṣẹ</string>
+    <string name="cd_show_on_map">Fi hàn lórí máàpù</string>
+    <string name="cd_more_options">Awọn aṣayan diẹ sii</string>
+
+    <!-- ── Ojúlùmọ̀ ihuenyo ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">ahọpụtara %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Kagbuo nhọrọ</string>
+    <string name="contacts_cd_select_all">Họrọ ha niile</string>
+    <string name="contacts_cd_deselect_all">Akwụsịla ịhọrọ ha niile</string>
+    <string name="contacts_cd_qr_invite">QR / Ìpè</string>
+    <string name="contacts_cd_pending_requests">Ìbéèrè Tí Ó Ń Dúró</string>
+    <string name="contacts_sort_last_seen">Ìgbà Ìkẹyìn Tí A Rí I</string>
+    <string name="contacts_search_placeholder">Wá àwọn ojúlùmọ̀…</string>
+    <string name="contacts_empty_title">Kò sí ojúlùmọ̀ kankan ugbu a</string>
+    <string name="contacts_empty_subtitle">Ṣàyẹ̀wò koodu QR láti jápọ̀ mọ́ ẹnì kan kí o sì bẹ̀rẹ̀ sí ní pín ipò rẹ.</string>
+    <string name="contacts_scan_qr">Ṣàyẹ̀wò Koodu QR</string>
+    <string name="contacts_bulk_delete_messages">Pa Ifiranṣẹ Rẹ́</string>
+    <string name="contacts_bulk_delete_locations">Pa Ipò Rẹ́</string>
+    <string name="contacts_last_seen">Ìgbà ìkẹyìn tí a rí i: %1$s</string>
+    <string name="contacts_no_location_yet">Kò sí ìsọfúnni ipò ugbu a</string>
+    <string name="contacts_view_sharing_settings">Ètò Ìpínpín</string>
+    <string name="contacts_view_location_history">Ìtàn Ipò</string>
+    <string name="contacts_rename_contact">Nye kọntaktị aha ọzọ</string>
+    <string name="contacts_on_contact_device">Lórí Ẹ̀rọ Ojúlùmọ̀</string>
+    <string name="contacts_delete_my_messages_title">Pa Ifiranṣẹ mi Rẹ́</string>
+    <string name="contacts_delete_locations_title">Pa Ipò Tí Mo Pín Rẹ́</string>
+    <string name="contacts_remove_contact_title">Yọ Ojúlùmọ̀ Kúrò</string>
+    <string name="contacts_leave_title">Pa Ojúlùmọ̀ àti Data Rẹ́</string>
+    <string name="contacts_rename_title">Nye kọntaktị aha ọzọ</string>
+    <string name="contacts_remove_contact_body">Yọ %1$s kúrò nínú àwọn ojúlùmọ̀ rẹ? Ìtàn ipò wọn yóò parẹ́ pátápátá sínú ẹ̀rọ yìí.</string>
+    <string name="contacts_leave_body">Èyí yóò yọ ọ́ kúrò nínú àwọn ojúlùmọ̀ %1$s yóò sì pa gbogbo ifiranṣẹ rẹ àti data ipò rẹ rẹ́ lórí ẹ̀rọ wọn. O kò ní le rí ipò wọn mọ́.</string>
+    <string name="contacts_delete_my_messages_body">Èyí yóò pa gbogbo ifiranṣẹ tí o ránṣẹ́ láti inú ẹ̀rọ %1$s rẹ́. Èyí kò ní le padà bọ̀.</string>
+    <string name="contacts_delete_locations_body">Èyí yóò pa gbogbo data ipò tí o pín láti inú ẹ̀rọ %1$s rẹ́. Èyí kò ní le padà bọ̀.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">Yọ àwọn ojúlùmọ̀ %1$d kúrò</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">Yọ àwọn ojúlùmọ̀ %1$d kúrò? Ìtàn ipò wọn yóò parẹ́ pátápátá sínú ẹ̀rọ yìí.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">Pa gbogbo ifiranṣẹ tí o ránṣẹ́ láti inú ẹ̀rọ àwọn ojúlùmọ̀ %1$d rẹ́? Èyí kò ní le padà bọ̀.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">Pa gbogbo ìtàn ipò tí o pín láti inú ẹ̀rọ àwọn ojúlùmọ̀ %1$d rẹ́? Èyí kò ní le padà bọ̀.</item>
+    </plurals>
+
+    <string name="common_continue">Tẹ̀ síwájú</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Mú Padà Láti Inú Afẹyinti</string>
+    <string name="onboarding_restore_message">Tapawa kókó ìkọ̀kọ̀ rẹ tí ó jẹ́ herufi 64 láti mú dánimọ̀ àti àwọn ojúlùmọ̀ rẹ padà.</string>
+    <string name="onboarding_private_key_hex">Kókó ìkọ̀kọ̀ (hex)</string>
+    <string name="onboarding_tagline">Ìpínpín ipò àṣírí pẹ̀lú àwọn ojúlùmọ̀.\nEnweghị akaụntụ. Enweghị sava nwe ya.</string>
+    <string name="onboarding_feature_e2e_title">A Zoro Ezo Pátápátá</string>
+    <string name="onboarding_feature_e2e_subtitle">A óò pa ìsọfúnni ipò rẹ mọ́ lórí ẹ̀rọ rẹ</string>
+    <string name="onboarding_feature_servers_title">Enweghị sava nwe ya</string>
+    <string name="onboarding_feature_servers_subtitle">Ń lo àwọn relay Nostr tí ó ṣí sílẹ̀ láti rán ìsọfúnni — data rẹ yóò wà ní àṣírí àti ní zizo ezo</string>
+    <string name="onboarding_feature_phone_title">Ó Ń Wà Lórí Ẹ̀rọ Rẹ</string>
+    <string name="onboarding_feature_phone_subtitle">Gbogbo ìtàn ipò rẹ yóò wà lórí ẹ̀rọ rẹ. Ipò rẹ lọ́wọ́lọ́wọ́ nìkan ni a óò pín pẹ̀lú àwọn ojúlùmọ̀ tí o yàn</string>
+    <string name="onboarding_name_prompt">Gịnị ka àwọn ojúlùmọ̀ rẹ yóò máa pè ọ́?</string>
+    <string name="onboarding_name_placeholder">dịka ọmụmaatụ, Mama, Papa, Alice…</string>
+    <string name="onboarding_get_started">Bẹ̀rẹ̀</string>
+    <string name="onboarding_restore_from_backup">Mú Padà Láti Inú Afẹyinti</string>
+    <string name="onboarding_key_note">Kókó ìkọ̀kọ̀ rẹ ni a óò ṣe sínú ẹ̀rọ rẹ, kò sì ní kúrò lórí ẹ̀rọ yìí.</string>
+    <string name="onboarding_permissions_title">Ìgbàníláyè</string>
+    <string name="onboarding_permissions_desc">LocaPeer nílò àyè fún ipò láti pín ipò rẹ, àyè fún kámẹ́rà láti ṣàyẹ̀wò koodu òkù, àti àyè fún ìsọfúnni fún iṣẹ́ abẹ́lẹ̀. Àyè fún iṣẹ́ ara jẹ́ àyànfẹ́ - ó ń jẹ́ kí á mọ irú iṣẹ́ tí o ń ṣe (rìn, wakọ̀) dunjú.</string>
+    <string name="onboarding_before_ask_title">Tupu á béèrè</string>
+    <string name="onboarding_before_ask_intro">Wàá rí àwọn ìbéèrè wọ̀nyí nínú ẹ̀rọ rẹ:</string>
+    <string name="onboarding_before_ask_location">• Ipò - ó pọn dandan, láti pín ipò rẹ.</string>
+    <string name="onboarding_before_ask_camera">• Kámẹ́rà - láti ṣàyẹ̀wò koodu òkù.</string>
+    <string name="onboarding_before_ask_notifications">• Ìsọfúnni - fún iṣẹ́ abẹ́lẹ̀.</string>
+    <string name="onboarding_before_ask_activity">• Iṣẹ́ ara - àyànfẹ́. Ó ń jẹ́ kí LocaPeer mọ ìyàtọ̀ láàárín rìn, wakọ̀ àti dídúró jẹ́ẹ́ dunjú. O le fo ó kí o sì mú ṣiṣẹ́ padà nínú Ètò.</string>
+    <string name="onboarding_grant_permissions">Gba Ìgbàníláyè</string>
+    <string name="onboarding_bg_location_title">Ipò Abẹ́lẹ̀</string>
+    <string name="onboarding_bg_location_desc">Láti mú kí àwọn ojúlùmọ̀ rẹ mọ̀ nígbà tí o kò bá lo ngwa náà, biko họrọ \'Gba ní gbogbo ìgbà\' nínú ihuenyo tó kàn.</string>
+    <string name="onboarding_bg_location_error">A nílò ipò abẹ́lẹ̀ láti sọ fún àwọn ojúlùmọ̀ rẹ nígbà tí o kò bá lo ngwa náà. Biko gbalịa ọzọ kí o sì yan \'Gba ní gbogbo ìgbà\'.</string>
+    <string name="onboarding_configure_location">Tò Ipò</string>
+    <string name="onboarding_battery_title">Bátìrì</string>
+    <string name="onboarding_battery_desc">Android le dá LocaPeer dúró láti dín bátìrì kù. Láti rí i pé ìsọfúnni ipò rẹ ń jáde dáadáa, biko yọ LocaPeer kúrò nínú ìmúgbòòrò bátìrì.</string>
+    <string name="onboarding_disable_optimizations">Pa Ìmúgbòòrò Rẹ́</string>
+    <string name="onboarding_done_title">Edola Ihe Niile!</string>
+    <string name="onboarding_done_desc">Máàpù ipò àṣírí rẹ ti dán mọ́rán.</string>
+    <string name="onboarding_start_using">Bẹ̀rẹ̀ sí ní lo LocaPeer</string>
+
+    <string name="common_try_again">Gbalịa Ọzọ</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Ṣàyẹ̀wò Ìpè</string>
+    <string name="scan_camera_needed">O nílò ìgbàníláyè kámẹ́rà láti ṣàyẹ̀wò koodu QR.</string>
+    <string name="scan_grant_permission">Gba Ìgbàníláyè</string>
+    <string name="scan_add_contact_title">Tinye ojúlùmọ̀?</string>
+    <string name="scan_add_contact_message">Nke a yóò jápọ̀ mọ́ %1$s ẹ ó sì bẹ̀rẹ̀ sí ní pín ipò yín fún ara yín.</string>
+    <string name="scan_add_share">Tinye &amp; Pín</string>
+    <string name="scan_request_sent_title">Ezigara Arịrịọ!</string>
+    <string name="scan_request_sent_message">Ezigara %1$s arịrịọ. Ẹ ó jápọ̀ ozugbo wọ́n bá gbà.</string>
+    <string name="scan_failed">Nyocha dara: %1$s</string>
+
+    <string name="cd_back">Laghachi azụ</string>
+    <string name="common_review">Nyochaa</string>
+    <string name="common_decline">Kọ̀ ọ́</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Zipụ/Nweta</string>
+    <string name="role_send">Zipụ</string>
+    <string name="role_receive">Nweta</string>
+    <string name="role_none">Enweghị Nkekọrịta</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Ìpè mi</string>
+    <string name="invite_tab_add_contact">Tinye Ojúlùmọ̀</string>
+    <string name="invite_your_qr_title">Koodu QR gị</string>
+    <string name="invite_your_qr_subtitle">Gba ẹlòmíràn láyè láti ṣàyẹ̀wò èyí kí ó le tẹ̀lé ipò rẹ</string>
+    <string name="invite_qr_cd">Koodu QR gị</string>
+    <string name="invite_qr_error">Njehie n\'iwepụta QR</string>
+    <string name="invite_share_link">Pín Link Ìpè</string>
+    <string name="invite_encryption_note">A óò pa ipò rẹ mọ́ ní àṣírí fún ẹ̀rọ ẹni tí ó ń ṣàyẹ̀wò rẹ̀.</string>
+    <string name="invite_camera_required_title">Achọrọ ohere kámẹ́rà</string>
+    <string name="invite_camera_required_message">Gba ìgbàníláyè kámẹ́rà láti ṣàyẹ̀wò koodu QR.</string>
+    <string name="invite_point_camera">Tuo kámẹ́rà sí QR LocaPeer</string>
+    <string name="invite_paste_title">Ma ọ bụ Tapawa Link Ìpè</string>
+    <string name="invite_process_link">Nhazi Link</string>
+    <string name="invite_fallback_name">Ojúlùmọ̀</string>
+    <string name="invite_success_message">Ẹ ó jápọ̀ mọ́ %1$s ozugbo wọ́n bá gbà.</string>
+    <string name="invite_confirm_add_title">Tinye %1$s?</string>
+    <string name="invite_confirm_add_message">Tinye wọn mọ́ àwọn ojúlùmọ̀ rẹ kí o sì pín ipò rẹ?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Enweghị arịrịọ na-echere</string>
+    <string name="pending_requesting">Na-arịọ: %1$s · %2$s</string>
+    <string name="pending_role_change">Arịrịọ mgbanwe ọrụ · %1$s</string>
+    <string name="pending_new_request">Arịrịọ nkekọrịta ọhụrụ · %1$s</string>
+
+    <string name="common_save_changes">Fipamọ Àtúnṣe</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Melite Ntọala Nkekọrịta</string>
+    <string name="incoming_new_title">Arịrịọ Ojúlùmọ̀ Ọhụrụ</string>
+    <string name="incoming_update_subtitle">%1$s chọrọ imelite ka o ṣe ń pín ipò rẹ̀ pẹ̀lú rẹ. Wo ètò rẹ̀ nísàlẹ̀.</string>
+    <string name="incoming_new_subtitle">%1$s tinyere gị dị ka ojúlùmọ̀! O le họrọ ohun tí o fẹ́ pín báyìí.</string>
+    <string name="incoming_section_location">Ipò</string>
+    <string name="incoming_share_my_location">Pín ipò mi pẹ̀lú %1$s</string>
+    <string name="incoming_share_my_location_sub">Wọn yóò le rí ibi tí o wà</string>
+    <string name="incoming_see_their_location">Wo ipò %1$s</string>
+    <string name="incoming_see_their_location_sub">Wàá le rí ibi tí wọ́n wà</string>
+    <string name="incoming_section_messaging">Ozi</string>
+    <string name="incoming_allow_messages">Gba Ozi Láyè</string>
+    <string name="incoming_allow_messages_sub">Gba ozi chat láti ọ̀dọ̀ %1$s</string>
+
+    <string name="common_request">Ìbéèrè</string>
+    <string name="common_edit">Ṣatunkọ</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Ntọala Ojúlùmọ̀</string>
+    <string name="peer_section_roles">Ìṣètò Ìpínpín Ipò</string>
+    <string name="peer_send_on">%1$s le rí ipò rẹ</string>
+    <string name="peer_send_off">O kò pín ipò rẹ pẹ̀lú %1$s</string>
+    <string name="peer_receive_title">Gba ipò %1$s</string>
+    <string name="peer_receive_on">O le rí ipò %1$s</string>
+    <string name="peer_receive_off">O kò ní àyè láti rí ipò %1$s</string>
+    <string name="peer_section_privacy">Njikwa Nzuzo &amp; Nkekọrịta</string>
+    <string name="peer_pause_sharing">Dá Ìpínpín Dúró</string>
+    <string name="peer_pause_sub">Dá ipò rẹ dúró fún ìgbà díẹ̀ fún %1$s</string>
+    <string name="peer_precision">Nkenke Ipò</string>
+    <string name="peer_precision_exact_sub">Ipò GPS dunjú</string>
+    <string name="peer_precision_suburb_sub">Ipò tí ó sún mọ́ ọn (ọkwa Suburb)</string>
+    <string name="peer_always_sharing">Ń pín ní gbogbo ìgbà</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">Òfin %1$d ń ṣiṣẹ́</item>
+    </plurals>
+    <string name="peer_section_alerts">Ìkìlọ̀ &amp; Nleba anya</string>
+    <string name="peer_sos_contact">Ojúlùmọ̀ SOS</string>
+    <string name="peer_sos_sub">Gba ìkìlọ̀ pàjáwìrì rẹ bí o bá tiẹ̀ dá ìpínpín dúró</string>
+    <string name="peer_missed_alert">Ìkìlọ̀ Ipò Tí Ó Fò</string>
+    <string name="peer_missed_on">Sọ fún mi bí %1$s kò bá sọ ipò rẹ̀ mọ́</string>
+    <string name="peer_requires_access">Chọrọ ịnweta ebe %1$s nọ</string>
+    <string name="peer_proximity_alert">Ìkìlọ̀ Ìsúnmọ́</string>
+    <string name="peer_proximity_sub">Sọ fún mi mgbe %1$s nọ nso</string>
+    <string name="peer_alert_radius">Radius Ìkìlọ̀</string>
+    <string name="peer_alert_schedule">Oge Ìkìlọ̀</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">Òfin %1$d ń ṣiṣẹ́</item>
+    </plurals>
+    <string name="peer_geofences_sub">Tò agbègbè mbata àti ọpụpụ fún %1$s</string>
+    <string name="peer_supervise">Leba anya na Ẹ̀rọ yìí</string>
+    <string name="peer_supervise_on">Wàá gba àti fọwọ́ sí ìbéèrè mmeghe sitere na %1$s</string>
+    <string name="peer_supervise_off">Gba %1$s láyè láti rán ìbéèrè mmeghe ipo ìbójútó sí ọ</string>
+    <string name="peer_messaging_sub">Gbanye/Gbanyụọ ozi chat site na %1$s</string>
+    <string name="peer_section_history">Ìtàn Mmegharị</string>
+    <string name="peer_location_history">Ìtàn Ipò</string>
+    <string name="peer_location_history_sub">Lelee akụkọ mmegharị na máàpù fún %1$s</string>
+    <string name="peer_section_retention">Njide Data Dị Anya</string>
+    <string name="peer_retention_location_sub">Ogologo oge ole ka %1$s yóò fi ìtàn ipò rẹ pa mọ́</string>
+    <string name="peer_purge_location">Pa Gbogbo Data Ipò Rẹ́ nínú %1$s</string>
+    <string name="peer_retention_messages_sub">Ogologo oge ole ka %1$s yóò fi ozi ị siri zipụ pa mọ́</string>
+    <string name="peer_purge_messages">Pa Gbogbo Ozi Rẹ́ nínú %1$s</string>
+    <string name="peer_precision_exact">GPS Dunjú</string>
+    <string name="peer_precision_exact_desc">Nhazi nke ọma</string>
+    <string name="peer_precision_suburb">Mpaghara (~1km)</string>
+    <string name="peer_precision_suburb_desc">Naanị ọkwa agbataobi</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">Pa mkparịta ụka %1$d rẹ́?</item>
+    </plurals>
+    <string name="conv_delete_locally">Pa rẹ́ sínú Ẹ̀rọ</string>
+    <string name="conv_delete_locally_sub">Yóò yọ mkparịta ụka kúrò lórí ẹ̀rọ rẹ nìkan.</string>
+    <string name="conv_delete_both">Pa rẹ́ sínú Ẹ̀rọ/Láti ọ̀dọ̀ Ojúlùmọ̀</string>
+    <string name="conv_bulk_delete_both_sub">Yóò pa mkparịta ụka rẹ́ lórí ẹ̀rọ rẹ àti lórí ẹ̀rọ ojúlùmọ̀ rẹ.</string>
+    <string name="conv_delete_both_sub">Yóò pa á rẹ́ nínú ẹ̀rọ rẹ yóò sì rán ìbéèrè láti pa á rẹ́ lórí ẹ̀rọ ojúlùmọ̀ náà.</string>
+    <string name="conv_cd_exit_selection">Pụọ na nhọrọ</string>
+    <string name="conv_cd_select_all">Họrọ Ha Niile</string>
+    <string name="conv_cd_new_message">Ozi ọhụrụ</string>
+    <string name="conv_sort_date">Ụbọchị</string>
+    <string name="conv_sort_unread">Anaghị agụ</string>
+    <string name="conv_search_placeholder">Chọọ mkparịta ụka…</string>
+    <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_archived">Echekwara</string>
+    <string name="conv_mark_read">Akara dị ka agụrụla</string>
+    <string name="conv_archive">Chekwaa</string>
+    <string name="conv_unarchive">Wepụ na nchekwa</string>
+    <string name="conv_empty_no_results">Enweghị nsonaazụ maka \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Gbalịa nọmba ọchụchọ ọzọ</string>
+    <string name="conv_empty_archived_title">Enweghị chat echekwara</string>
+    <string name="conv_empty_archived_sub">Chekwaa chat ka igbe ozi gị dị ọcha</string>
+    <string name="conv_empty_title">Enweghị ozi ugbu a</string>
+    <string name="conv_empty_sub">Mepee máàpù ma pịa mmadụ\ni malite mkparịta ụka</string>
+    <string name="conv_delete_title">Pa mkparịta ụka rẹ́?</string>
+    <string name="conv_delete_message">Kedu ka ị chọrọ isi pa mkparịta ụka a rẹ́ pẹ̀lú %1$s?</string>
+    <string name="conv_messages_blocked">Emechiri ozi</string>
+    <string name="conv_preview_mine">Gị: %1$s</string>
+    <string name="conv_new_message_title">Ozi Ọhụrụ</string>
+    <string name="conv_picker_empty">Enweghị ojúlùmọ̀ kankan ugbu a. Ṣàyẹ̀wò koodu QR láti tinye ojúlùmọ̀.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Pa ìtàn chat rẹ́?</string>
+    <string name="chat_clear_message">Kedu ka ị chọrọ isi pa mkparịta ụka a rẹ́ pẹ̀lú %1$s?</string>
+    <string name="chat_clear_locally">Pa rẹ́ sínú Ẹ̀rọ</string>
+    <string name="chat_clear_both">Pa rẹ́ sínú Ẹ̀rọ/Láti ọ̀dọ̀ Ojúlùmọ̀</string>
+    <string name="chat_clear_both_sub">Yóò pa chat rẹ́ nínú ẹ̀rọ rẹ yóò sì rán ìbéèrè láti pa ozi tí o sọ ránṣẹ́ rẹ́ sọ́dọ̀ %1$s.</string>
+    <string name="chat_cd_options">Nhọrọ</string>
+    <string name="chat_clear_history_menu">Pa Ìtàn Chat Rẹ́</string>
+    <string name="chat_typing">%1$s na-ede ozi…</string>
+    <string name="chat_blocked_banner">O ti mechi ozi láti ọ̀dọ̀ %1$s. Gaa na ojúlùmọ̀ láti ṣí i.</string>
+    <string name="chat_delete_msg_title">Pa ozi rẹ́?</string>
+    <string name="chat_delete_msg_message">Kedu ka ị chọrọ isi pa ozi a rẹ́?</string>
+    <string name="chat_delete_from_contact">Pa rẹ́ láti ọ̀dọ̀ ojúlùmọ̀</string>
+    <string name="chat_delete_from_contact_sub">Yóò pa chat rẹ́ lórí ẹ̀rọ ojúlùmọ̀.</string>
+    <string name="chat_delete_both_sub">Yóò pa chat rẹ́ nínú ẹ̀rọ rẹ yóò sì pa á rẹ́ lórí ẹ̀rọ ojúlùmọ̀ náà.</string>
+    <string name="chat_cd_share_location">Pín Ipò</string>
+    <string name="chat_input_placeholder">Ifiranṣẹ…</string>
+    <string name="chat_cd_send">Zipụ</string>
+
+    <string name="common_close">Mechie</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Gbanye SOS?</string>
+    <string name="map_sos_deactivate_title">Gbanyụọ SOS?</string>
+    <string name="map_sos_activate_msg">Èyí yóò sọ ipò rẹ ní gbogbo ìṣẹ́jú àáyá 15 sí àwọn ojúlùmọ̀ SOS rẹ títí tí wàá fi pa á.</string>
+    <string name="map_sos_deactivate_msg">Èyí yóò dá ìsọfúnni ipò pàjáwìrì sí àwọn ojúlùmọ̀ rẹ dúró.</string>
+    <string name="map_activate">Gbanye</string>
+    <string name="map_deactivate">Gbanyụọ</string>
+    <string name="map_cd_style">Ụdị Máàpù</string>
+    <string name="map_cd_show_geofences">Gosi geofences</string>
+    <string name="map_cd_hide_geofences">Zoo geofences</string>
+    <string name="map_cd_follow">Soro m</string>
+    <string name="map_cd_friends">Ndị enyi</string>
+    <string name="map_no_friends">Enweghị ndị enyi a na-achọ ugbu a</string>
+    <string name="map_you">Gị</string>
+    <string name="map_cd_go_my_location">Gaa n\'ebe m nọ</string>
+    <string name="map_sos_active">⚠ SOS NA-ARỤ ỌRỤ</string>
+    <string name="map_away">Dị anya</string>
+    <string name="map_no_location_yet">Enweghị ebe ugbu a</string>
+    <string name="map_cd_go_location">Gaa n\'ebe ahụ</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS GBANYERE</string>
+    <string name="map_overdue">Agafela oge - enweghị mmelite ọhụrụ</string>
+    <string name="map_stat_last_seen">Hụrụ ikpeazụ</string>
+    <string name="map_stat_battery">Bátìrì</string>
+    <string name="map_stat_accuracy">Nkenke</string>
+    <string name="map_stat_motion">Mmegharị</string>
+    <string name="map_stat_speed">Ọsọ</string>
+    <string name="map_stat_elevation">Elu</string>
+
+    <string name="common_ok">Ọ dị mma</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Akụkọ: %1$s</string>
+    <string name="history_select_person">Họrọ Mmadụ</string>
+    <string name="history_person_label">Mmadụ</string>
+    <string name="history_cd_prev_day">Ụbọchị Gara Aga</string>
+    <string name="history_cd_next_day">Ụbọchị Na-abịa</string>
+    <string name="history_time_filter">Nzacha Oge:</string>
+    <string name="history_cd_reset_time">Tọgharia Oge</string>
+    <string name="history_tab_list">Ndepụta</string>
+    <string name="history_empty_title">Enweghị akụkọ maka ụbọchị a</string>
+    <string name="history_empty_sub">Gbalịa họrọ ụbọchị ọzọ ma ọ bụ lelee njikọ gị.</string>
+    <string name="history_start_time">Oge Mmalite</string>
+    <string name="history_end_time">Oge Ngwụcha</string>
+    <string name="history_no_data_title">Enweghị data ebe</string>
+    <string name="history_no_data_sub">Enweghị pings edekọrọ maka ụbọchị a ma ọ bụ oge oge a.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">edekọrọ pings %1$d</item>
+    </plurals>
+    <string name="history_cd_dismiss">Wepụ</string>
+    <string name="history_accuracy_label">±%1$s nkenke</string>
+    <string name="history_emergency_sos">Mgbaàmà SOS pàjáwìrì</string>
+    <string name="history_detail_location">Ipò</string>
+    <string name="history_detail_coordinates">Nhazi</string>
+    <string name="history_within">n\'ime ±%1$s</string>
+    <string name="history_detail_movement">Mmegharị</string>
+    <string name="history_movement_desc">%1$s %2$s na-aga %3$s</string>
+
+    <string name="common_create">Mepụta</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Tinye mpaghara geofence</string>
+    <string name="geo_cd_assign">Kenye geofence</string>
+    <string name="geo_unknown">Amaghị</string>
+    <string name="geo_empty_title">Enweghị geofences</string>
+    <string name="geo_empty_sub">Pịa + ka imepụta mpaghara geofence, wee kenye àwọn ojúlùmọ̀ na ya sínú ètò ìpínpín wọn.</string>
+    <string name="geo_delete_title">Pa geofence rẹ́?</string>
+    <string name="geo_delete_simple">Pa \"%1$s\" rẹ́?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">O ti tò \"%1$s\" fún àwọn ojúlùmọ̀ %2$d. Ìpajẹ́ rẹ̀ yóò yọ àwọn ìtò náà kúrò pẹ̀lú.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences fún %1$s</string>
+    <string name="geo_empty_contact_title">Enweghị geofences fún ojúlùmọ̀ yìí</string>
+    <string name="geo_empty_contact_sub">Pịa + ka ikenye mpaghara geofence ma họrọ ma ị ga-amụ anya mgbe ị bịarutere, mgbe ị na-apụ, ma ọ bụ ha abụọ.</string>
+    <string name="geo_no_areas_title">Enweghị geofences ugbu a</string>
+    <string name="geo_no_areas_msg">Buru ụzọ mepụta mpaghara geofence sínú ihuenyo Geofences, wee kenye ya ebe a.</string>
+    <string name="geo_radius_label">radius %1$s</string>
+    <string name="geo_contacts_label">Ojúlùmọ̀: %1$s</string>
+    <string name="geo_no_contacts_assigned">Enyeghị ojúlùmọ̀ ọ bụla</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">Òfin %1$d</item>
+    </plurals>
+    <string name="geo_trigger_enter">Banye</string>
+    <string name="geo_trigger_exit">Pụọ</string>
+    <string name="geo_trigger_both">Ha Abụọ</string>
+    <string name="geo_edit_title">Ṣatunkọ Geofence</string>
+    <string name="geo_new_title">Geofence Ọhụrụ</string>
+    <string name="geo_cd_my_location">Ipò mi</string>
+    <string name="geo_cd_radius_increase">Mee ka radius bawanye</string>
+    <string name="geo_cd_radius_decrease">Mee ka radius belata</string>
+    <string name="geo_hint_tap">Tẹ máàpù náà láti tò ó síbẹ̀</string>
+    <string name="geo_hint_move">Pinch láti mú u dunjú • Jide pin náà láti gbé e kúrò</string>
+    <string name="geo_basic_info">Ìsọfúnni Pàtàkì</string>
+    <string name="geo_search_title">Wá site na Àdírẹ́sì</string>
+    <string name="geo_search_label">Àdírẹ́sì ma ọ bụ ebe</string>
+    <string name="geo_search_placeholder">dịka ọmụmaatụ, 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">A kò rí àdírẹ́sì kankan</string>
+    <string name="geo_cd_search">Wá</string>
+    <string name="geo_name_placeholder">dịka ọmụmaatụ, Ụlọ, Ọrụ</string>
+    <string name="geo_name_required">Aha dị mkpa</string>
+    <string name="geo_latitude">Latitude</string>
+    <string name="geo_longitude">Longitude</string>
+    <string name="geo_lat_range">-90 ruo 90</string>
+    <string name="geo_lng_range">-180 ruo 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Tinye %1$d ruo %2$d m</string>
+    <string name="geo_edit_assignment">Ṣatunkọ Ìtò</string>
+    <string name="geo_assign_title">Kenye Geofence</string>
+    <string name="geo_select_area">Họrọ Mpaghara Geofence</string>
+    <string name="geo_trigger_title">Ìsọfúnni Nígbà Tí…</string>
+    <string name="geo_add_rule">Tinye Òfin</string>
+    <string name="geo_alerts_all_times">Ìkìlọ̀ ń ṣiṣẹ́ ní gbogbo ìgbà. Tinye òfin láti mọ ìgbà tí ìkìlọ̀ yóò jáde.</string>
+    <string name="geo_assign_action">Tò ó</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Ìkìlọ̀ Ìsúnmọ́</string>
+    <string name="prox_empty_title">Enweghị ndị a na-achọ</string>
+    <string name="prox_empty_sub">Ṣàyẹ̀wò QR ìpè ẹnì kan láti kichapụ nyocha\ni malite ịchọ ebe ha nọ</string>
+    <string name="prox_intro">Gba ìsọfúnni nígbà tí ẹnì kan tí o ń tẹ̀lé bá sún mọ́ ọ tó ìwọ̀n tí o yàn.</string>
+    <string name="prox_alert_within">Kpọtụrụ mgbe nọ n\'ime %1$s</string>
+    <string name="prox_alerts_off">Ìkìlọ̀ ti pá</string>
+    <string name="prox_alert_radius">Radius ìkìlọ̀</string>
+    <string name="prox_edit_schedule">Ṣatunkọ Oge</string>
+    <string name="prox_rules">Òfin</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Oge fún %1$s</string>
+    <string name="schedule_cd_add_rule">Tinye òfin</string>
+    <string name="schedule_empty_title">Enweghị iwu oge</string>
+    <string name="schedule_empty_global">A ń pín ipò rẹ ní gbogbo ìgbà. Tinye òfin láti ṣètò ìgbà tí ó yóò máa ṣiṣẹ́.</string>
+    <string name="schedule_empty_peer">A ń pín ipò rẹ pẹ̀lú %1$s ní gbogbo ìgbà. Tinye òfin láti ṣètò ìgbà.</string>
+    <string name="schedule_active_hint">Yóò ṣiṣẹ́ bí òfin kan bá bá oge yìí mu. Efù = yóò máa ṣiṣẹ́ nìṣó.</string>
+    <string name="schedule_all_day">Gbogbo ọjọ́</string>
+    <string name="schedule_plus_one_day"> (+ọjọ́ 1)</string>
+    <string name="schedule_rule_number">Òfin %1$d</string>
+    <string name="schedule_cd_delete_rule">Pa òfin rẹ́</string>
+    <string name="schedule_edit_rule">Ṣatunkọ Òfin</string>
+    <string name="schedule_label_optional">Akara (nhọrọ)</string>
+    <string name="schedule_label_placeholder">dịka ọmụmaatụ, awa ọrụ, ngwụcha izu</string>
+    <string name="schedule_active_days">Ụbọchị Na-arụ Ọrụ</string>
+    <string name="schedule_time_window">Sáà Oge</string>
+    <string name="schedule_start">Mmalite</string>
+    <string name="schedule_end">Ngwụcha</string>
+    <string name="schedule_overnight">Ní gbogbo òru: na-arụ ọrụ site na %1$s ruo %2$s ụbọchị na-abịa</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">A ń bójútó ẹ̀rọ yìí</string>
+    <string name="gate_message">Ìfọwọ́sí olùbójútó pọn dandan láti rí ètò.</string>
+    <string name="gate_request_access">Béèrè fún àyè</string>
+    <string name="gate_waiting">Na-eche nnabata onye nlekọta…</string>
+    <string name="gate_denied">Olùbójútó kọ̀ fún ọ ní àyè.</string>
+    <string name="gate_timed_out">Àkókò ti kọjá. Olùbójútó kò dásì í.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Ebighị ebi</string>
+    <string name="retention_keep_for">Dobe maka: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">Ụbọchị %1$d</item>
+    </plurals>
+
+    <string name="common_select">Họrọ</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Họrọ Ipò Pàtó Kan</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Mú àwọn taabu tí yóò hàn ní abẹ́lẹ̀ àti bí wọn yóò ṣe tẹ̀ lé ara wọn. Máàpù yóò máa wà níbẹ̀ ní gbogbo ìgbà.</string>
+    <string name="customize_cd_move_up">Gaa n\'elu</string>
+    <string name="customize_cd_move_down">Gaa n\'ala</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Ụdị %1$s (build %2$d)</string>
+    <string name="about_tagline">Pínpín ipò àṣírí pẹ̀lú àwọn tí o fọwọ́ rọ̀ tì. Enweghị akaụntụ, enweghị igwe ojii, enweghị nleba anya site n\'aka anyị.</string>
+    <string name="about_relay_connections">Njikọ Relay</string>
+    <string name="about_connected">Ejikọrọ</string>
+    <string name="about_disconnected">Akwụsịla njikọ</string>
+    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_lib_osmdroid_desc">Máàpù OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">WebSocket fún Nostr relay</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Ebe nchekwa data mpaghara</string>
+    <string name="about_map_attribution">Data máàpù © ndị nyere aka na OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Nabata</string>
+    <string name="notif_someone">Mmadụ</string>
+    <string name="notif_sos_title">SOS láti ọ̀dọ̀ %1$s!</string>
+    <string name="notif_sos_text">%1$s ti mú SOS ṣiṣẹ́ ní (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s chọrọ láti jẹ́ olùbójútó rẹ</string>
+    <string name="notif_supervisor_request_text">Gba láti jẹ́ kí wọ́n fọwọ́ sí mmeghe ẹ̀rọ yìí fún ọ</string>
+    <string name="notif_supervisor_request_big">Gba láti jẹ́ kí %1$s rán ìbéèrè mmeghe sí ọ nígbà tí ipo ìbójútó bá ń ṣiṣẹ́.</string>
+    <string name="notif_supervised_active_title">Ipo ìbójútó ń ṣiṣẹ́</string>
+    <string name="notif_supervised_active_text">Olùbójútó rẹ ti fọwọ́ sí i - ipo ìbójútó ti ṣetán</string>
+    <string name="notif_supervised_declined_title">Ajụrụ ipo ìbójútó</string>
+    <string name="notif_supervised_declined_text">Olùbójútó rẹ kọ̀ - ipo ìbójútó ti pá</string>
+    <string name="notif_tracking_alert_title">Mkpu Nleba anya</string>
+    <string name="notif_tracking_proximity">%1$s nwetara mkpu nso gbasara gị</string>
+    <string name="notif_tracking_geofence">%1$s nwetara mkpu na ị banyere/pụọ na fence: %2$s</string>
+    <string name="notif_tracking_generic">%1$s ń bójútó ipò rẹ</string>
+    <string name="notif_track_update_title">Mmelite nkekọrịta sitere na %1$s</string>
+    <string name="notif_track_new_title">Ojúlùmọ̀ Ọhụrụ: %1$s</string>
+    <string name="notif_role_send_receive">Zipụ/Nweta Ipò</string>
+    <string name="notif_role_send">Zipụ Ipò</string>
+    <string name="notif_role_receive">Nweta Ipò</string>
+    <string name="notif_role_none">Enweghị Nkekọrịta Ipò</string>
+    <string name="notif_track_requesting">%1$s ń béèrè: %2$s</string>
+    <string name="notif_track_update_body">%1$s chọrọ imelite ka unu si ekerịta ipò.</string>
+    <string name="notif_track_new_body">%1$s tinyere gị dị ka ojúlùmọ̀ ó sì chọọ kí ẹ jápọ̀.</string>
+    <string name="notif_contact_connected_title">Ejikọrọ Ojúlùmọ̀</string>
+    <string name="notif_contact_connected_text">%1$s ti jápọ̀ mọ́ rẹ báyìí.</string>
+    <string name="notif_request_declined_title">Ajụrụ Ìbéèrè</string>
+    <string name="notif_request_declined_text">%1$s kọ̀ láti pín ipò rẹ̀ pẹ̀lú rẹ.</string>
+    <string name="notif_message_person">Ránṣẹ́ sí %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s banyere %2$s</string>
+    <string name="notif_geofence_left_title">%1$s pụrụ na %2$s</string>
+    <string name="notif_geofence_subtitle">na %1$s · radius %2$s</string>
+    <string name="notif_person_nearby">%1$s nọ nso</string>
+    <string name="notif_distance_from_you">%1$s site na gị</string>
+    <string name="notif_missed_title">Enweghị mmelite sitere na %1$s</string>
+    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS NA-ARỤ ỌRỤ!</string>
+    <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
+    <string name="notif_messages_group_title">Ozi LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Ajụrụ arịrịọ ojúlùmọ̀ sitere na %1$s</string>
+    <string name="toast_now_supervising">O ti ń bójútó ẹ̀rọ %1$s báyìí</string>
+    <string name="toast_declined_supervision">Ajụrụ arịrịọ nlekọta sitere na %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Nísinsìnyí</string>
+    <string name="time_minutes_ago">%1$dm gara aga</string>
+    <string name="fallback_me">Mụ onwe m</string>
+    <string name="fallback_unknown">Amaghị</string>
+    <string name="geo_unassigned">Ekenyeghị</string>
+    <string name="days_every_day">Ụbọchị niile</string>
+    <string name="days_weekdays">Ụbọchị izu</string>
+    <string name="days_weekends">Ngwücha izu</string>
+    <string name="days_none">Enweghị ụbọchị</string>
+    <string name="chat_my_location_message">Ipò mi lọ́wọ́lọ́wọ́: %1$s</string>
+    <string name="scan_error_bad_pubkey">Òkù kò dára: kókó ọha kò dára</string>
+    <string name="scan_error_key_mismatch">Òkù kò dára: kókó kò dọ́gba</string>
+    <string name="scan_error_unknown">Njehie a na-amaghị</string>
+    <string name="scan_error_invalid_link">Link ìpè kò dára</string>
+    <string name="scan_fallback_contact">ojúlùmọ̀ yìí</string>
+    <string name="backup_saved">Echekwara nkwado ndabere: %1$s</string>
+    <string name="backup_saved_encrypted">Echekwara nkwado ndabere (ezoro ezo): %1$s</string>
+    <string name="backup_failed">Nkwado ndabere dara: %1$s</string>
+    <string name="backup_could_not_read_file">Enweghị ike ịgụ faịlụ</string>
+    <string name="backup_could_not_write_file">Enweghị ike ide faịlụ</string>
+    <string name="backup_could_not_read">Enweghị ike ịgụ nkwado ndabere: %1$s</string>
+    <string name="backup_incorrect_password">Paswọd ezighi ezi</string>
+    <string name="restore_result_restored">Weghachiri: %1$s</string>
+    <string name="restore_result_failed">Dara: %1$s</string>
+    <string name="restore_nothing">Ọ dịghị ihe ị ga-eweghachi</string>
+    <string name="restore_failed">Nweghachi dara: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">ojúlùmọ̀ %1$d</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">geofence %1$d</item>
+    </plurals>
+    <string name="peer_role_change_sent">Ezigara %1$s arịrịọ mgbanwe ọrụ</string>
+    <string name="peer_not_found">A kò rí ojúlùmọ̀ náà</string>
+    <string name="peer_purge_location_sent">Ezigara %1$s iwu ihichapụ ipò NIILE</string>
+    <string name="peer_purge_messages_sent">Ezigara %1$s iwu ihichapụ ozi NIILE</string>
+    <string name="onboarding_error_key_length">Igodo kò dára - ọ gbọ́dọ̀ jẹ́ herufi 64 hex.</string>
+    <string name="onboarding_error_key_range">Kókó ìkọ̀kọ̀ kò dára.</string>
+    <string name="onboarding_error_hex">Usoro hex kò dára.</string>
+    <string name="onboarding_error_import_failed">Ịbubata igodo dara: %1$s</string>
 </resources>

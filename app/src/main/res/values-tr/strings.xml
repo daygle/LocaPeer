@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">Hareket algılamayı etkinleştir</string>
     <string name="settings_enable_motion_message">Fiziksel aktivite erişimi, LocaPeer\'in geçmişinizde yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Şu anda kapalı — sistem ayarlarından yeniden etkinleştirebilirsiniz.</string>
     <string name="settings_open_settings">Ayarları Aç</string>
+    <string name="settings_battery_optimization">Pil Optimizasyonu</string>
+    <string name="settings_battery_optimization_unrestricted">Kısıtlanmamış — LocaPeer arka planda serbestçe çalışabilir</string>
+    <string name="settings_battery_optimization_restricted">Optimize edildi — sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
+
+    <!-- İzinler -->
+    <string name="settings_permissions">İzinler</string>
+    <string name="settings_permissions_subtitle">Uygulamanın konuma, kameraya ve daha fazlasına erişimini inceleyin ve düzeltin</string>
+    <string name="permissions_intro">LocaPeer\'in konumunuzu paylaşması, davetleri taraması ve arka planda çalışmaya devam etmesi için bu izinlere ihtiyacı vardır. Verilmeyen izinleri düzeltmek için üzerine dokunun.</string>
+    <string name="perm_location_title">Konum</string>
+    <string name="perm_location_granted">Verildi — konumunuz paylaşılabilir</string>
+    <string name="perm_location_denied">Verilmedi — konum erişimine izin vermek için dokunun</string>
+    <string name="perm_background_location_title">Arka Plan Konumu</string>
+    <string name="perm_background_location_granted">Verildi — uygulama kapalıyken konum paylaşımı devam eder</string>
+    <string name="perm_background_location_denied">Verilmedi — ayarlarda \'Her zaman izin ver\' erişimine izin vermek için dokunun</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Verildi — davet QR kodlarını taramak için kullanılır</string>
+    <string name="perm_camera_denied">Verilmedi — kameraya izin vermek için dokunun</string>
+    <string name="perm_notifications_title">Bildirimler</string>
+    <string name="perm_notifications_granted">Verildi — uyarılar ve durum güncellemeleri gösterilebilir</string>
+    <string name="perm_notifications_denied">Verilmedi — bildirimlere izin vermek için dokunun</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hız Birimleri</string>

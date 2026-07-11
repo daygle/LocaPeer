@@ -2,32 +2,32 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Bildirishnoma kanallari va xizmat ─────────────────────── -->
+    <!-- ── Bildirishnoma kanallari va asosiy xizmat ─────────────────────── -->
     <string name="channel_name_heartbeat">Joylashuvni uzatish</string>
-    <string name="channel_desc_heartbeat">Joylashuvingizni tasdiqlangan kontaktlarga uzatadi</string>
+    <string name="channel_desc_heartbeat">Joylashuvingizni tasdiqlangan kontaktlaringizga uzatadi</string>
     <string name="channel_name_alerts">Ogohlantirishlar</string>
-    <string name="channel_desc_alerts">Yo\'qotilgan signal va geozona ogohlantirishlari</string>
+    <string name="channel_desc_alerts">O‘tkazib yuborilgan signallar va geozona ogohlantirishlari</string>
     <string name="channel_name_messages">Xabarlar</string>
     <string name="channel_desc_messages">Kiruvchi xabarlar</string>
     <string name="notification_heartbeat_title">LocaPeer ishlamoqda</string>
-    <string name="notification_heartbeat_text">Joylashuvingizni boshqalar bilan baham ko\'rmoqda</string>
+    <string name="notification_heartbeat_text">Joylashuvingizni boshqalar bilan baham ko‘rmoqdasiz</string>
 
     <!-- ── Umumiy harakatlar ──────────────────────────────────────── -->
     <string name="common_save">Saqlash</string>
     <string name="common_cancel">Bekor qilish</string>
     <string name="common_done">Tayyor</string>
-    <string name="common_delete">O\'chirish</string>
-    <string name="common_disable">O\'chirish</string>
+    <string name="common_delete">O‘chirish</string>
+    <string name="common_disable">O‘chirish</string>
     <string name="common_enable">Yoqish</string>
     <string name="common_restore">Tiklash</string>
     <string name="common_unlock">Qulfdan chiqarish</string>
     <string name="common_password">Parol</string>
     <string name="common_not_now">Hozir emas</string>
-    <string name="common_off">O\'chiq</string>
+    <string name="common_off">O‘chiq</string>
     <string name="common_approve">Tasdiqlash</string>
     <string name="common_deny">Rad etish</string>
 
-    <!-- ── Navigatsiya tablari ──────────────────────────────────────────── -->
+    <!-- ── Navigatsiya tablari yorliqlari ──────────────────────────────────────────── -->
     <string name="tab_map">Xarita</string>
     <string name="tab_messages">Xabarlar</string>
     <string name="tab_history">Tarix</string>
@@ -39,30 +39,731 @@
     <string name="motion_stationary">Harakatsiz</string>
     <string name="motion_walking">Yurish</string>
     <string name="motion_running">Yugurish</string>
-    <string name="motion_cycling">Velosiped</string>
-    <string name="motion_driving">Haydash</string>
+    <string name="motion_cycling">Velosipedda</string>
+    <string name="motion_driving">Mashinada</string>
 
-    <!-- ── Sozlamalar ────────────────────────────────────────────────── -->
+    <!-- ── Rezerv nusxa bo‘limlari ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Maxfiy kalit</string>
+    <string name="backup_section_contacts">Kontaktlar</string>
+    <string name="backup_section_geofences">Geozonalar</string>
+    <string name="backup_section_settings">Sozlamalar</string>
+
+    <!-- ── Nazorat so‘rovi ──────────────────────── -->
+    <string name="supervision_request_title">Nazorat so‘rovi</string>
+    <string name="supervision_request_message">\"%1$s\" o‘z sozlamalariga kirishga ruxsat so‘ramoqda. Ruxsat berasizmi?</string>
+
+    <!-- ── Sozlamalar ekrani ────────────────────────────────────────────────── -->
     <string name="settings_title">Sozlamalar</string>
+
+    <!-- Bo‘lim yorliqlari -->
     <string name="settings_section_location_privacy">Joylashuv va maxfiylik</string>
     <string name="settings_section_security">Xavfsizlik</string>
     <string name="settings_section_map">Xarita</string>
     <string name="settings_section_battery_performance">Batareya va unumdorlik</string>
-    <string name="settings_section_units_display">Birliklar va ko\'rinish</string>
-    <string name="settings_section_retention">Saqlash (Ushbu qurilma)</string>
-    <string name="settings_section_appearance">Ko\'rinish</string>
-    <string name="settings_section_backup_keys">Zaxira va kalitlar</string>
-    <string name="settings_section_about">Dastur haqida</string>
+    <string name="settings_section_units_display">Birliklar va displey</string>
+    <string name="settings_section_retention">Saqlash (ushbu qurilmada)</string>
+    <string name="settings_section_appearance">Ko‘rinish</string>
+    <string name="settings_section_backup_keys">Rezerv nusxa va kalitlar</string>
+    <string name="settings_section_about">Haqida</string>
 
-    <string name="settings_edit_name">Nomni tahrirlash</string>
-    <string name="settings_my_qr">Mening QR-kodim</string>
-    <string name="settings_no_name_set">Nom belgilanmagan</string>
+    <!-- Profil -->
+    <string name="settings_edit_name">Nomni o‘zgartirish</string>
+    <string name="settings_my_qr">Mening QR kodim</string>
+    <string name="settings_no_name_set">Ism o‘rnatilmagan</string>
 
-    <string name="settings_share_location">Joylashuvni baham ko\'rish</string>
+    <!-- Joylashuv va maxfiylik -->
+    <string name="settings_share_location">Joylashuvimni baham ko‘rish</string>
+    <string name="settings_broadcasting">Kontaktlaringizga ko‘rsatilmoqda</string>
+    <string name="settings_not_broadcasting">Ko‘rsatilmayapti</string>
+    <string name="settings_sharing_schedule">Baham ko‘rish jadvali</string>
+    <string name="settings_always_on">Har doim yoniq</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d qoida</item>
+        <item quantity="other">%1$d qoida</item>
+    </plurals>
+    <string name="settings_geofences">Geozonalar</string>
+    <string name="settings_geofences_subtitle">Baham ko‘rilgan geozonalarni boshqarish</string>
+    <string name="settings_notify_when_tracked">Kuzatilganda xabar berish</string>
+    <string name="settings_notify_when_tracked_subtitle">Kontaktning yaqinligi yoki siz uchun geozona ogohlantirishi ishga tushganda bildirishnoma oling.</string>
+    <string name="settings_my_location_history">Joylashuv tarixi</string>
+    <string name="settings_my_location_history_subtitle">O‘z joylashuv tarixingizni ko‘ring</string>
+    <string name="settings_lookup_addresses">Manzilni qidirish</string>
+    <string name="settings_lookup_addresses_subtitle">Tarix nuqtalari va xarita pinlari uchun ko‘cha manzillarini ko‘rsatish. Bu koordinatalarni qurilmangizning geokodlash xizmatiga (odatda Google) yuboradi.</string>
+
+    <!-- Xavfsizlik -->
+    <string name="settings_supervision_active">Nazorat faol</string>
+    <string name="settings_supervision_active_subtitle">Sozlamalar nazoratchi tasdig‘ini talab qiladi</string>
+    <string name="settings_disable_supervised">Nazorat rejimini o‘chirish</string>
+    <string name="settings_supervised_mode">Nazorat rejimi</string>
+    <string name="settings_supervised_mode_subtitle">Sozlamalarga kirish uchun nazoratchi tasdig‘i kerak</string>
+
+    <!-- Xarita -->
+    <string name="settings_starting_point">Boshlang‘ich nuqta</string>
+    <string name="settings_map_current_location">Joriy joylashuv</string>
+    <string name="settings_map_all_contacts">Barcha kontaktlar</string>
+    <string name="settings_map_fixed_location">Ruxsat etilgan joy</string>
+    <string name="settings_map_last_position">Oxirgi holat</string>
+    <string name="settings_map_starting_point_title">Xarita boshlang‘ich nuqtasi</string>
+    <string name="settings_no_location_set">Joy o‘rnatilmagan</string>
+    <string name="settings_pick_location_on_map">Xaritadan joy tanlash</string>
+    <string name="settings_default_zoom_level">Standart masshtab darajasi</string>
+    <string name="settings_map_pin_colour">Xarita pini rangi</string>
+
+    <!-- Batareya va unumdorlik -->
+    <string name="settings_update_cadence">Yangilanish chastotasi</string>
+    <string name="settings_update_cadence_subtitle">Joylashuv qanchalik tez-tez yuborilishini sozlang</string>
+    <string name="settings_update_cadence_dialog_message">Harakatingizga qarab joylashuv qanchalik tez-tez yangilanishini nazorat qiling. Tez-tez yangilanish batareyani ko‘proq sarflaydi.</string>
+    <string name="settings_update_cadence_reset">Dastlabki holatga qaytarish</string>
+    <string name="settings_min_distance_filtering">Minimal masofa filtri</string>
+    <string name="settings_min_distance_filtering_subtitle">Faqat oldingi nuqtadan kamida shu masofadagi nuqtalarni ko‘rsatish.</string>
+    <string name="settings_discard_low_accuracy">Past aniqlikdagi ma’lumotlarni rad etish</string>
+    <string name="settings_discard_low_accuracy_subtitle">Aniqlik radiusi shundan katta bo‘lgan shaxsiy ma’lumotlarni ko‘rsatmang va yozmang. SOS hech qachon o‘tkazib yuborilmaydi.</string>
+    <string name="settings_hide_low_accuracy">Past aniqlikdagi nuqtalarni yashirish</string>
+    <string name="settings_hide_low_accuracy_subtitle">Aniqlik radiusi shundan katta bo‘lgan tarix nuqtalarini yashirish. Hech narsa o‘chirilmaydi.</string>
+    <string name="settings_low_battery" formatted="false">Batareya quvvati past (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d daqiqa</string>
+    <string name="settings_motion_detection">Harakatni aniqlash</string>
+    <string name="settings_motion_detection_on">Yoqilgan — tarixdagi harakat turini (yurish, haydash) aniqlashtiradi</string>
+    <string name="settings_motion_detection_off">O‘chirilgan — harakat belgilarini aniqroq ko‘rsatish uchun jismoniy faollikka ruxsat bering</string>
+    <string name="settings_enable_motion_title">Harakatni aniqlashni yoqish</string>
+    <string name="settings_enable_motion_message">Jismoniy faollikka ruxsat berish LocaPeer-ga tarixingizda yurish, haydash va bir joyda turishni aniqroq farqlashga imkon beradi. U hozir o‘chirilgan — uni tizim sozlamalaridan qayta yoqishingiz mumkin.</string>
+    <string name="settings_open_settings">Sozlamalarni ochish</string>
+    <string name="settings_battery_optimization">Batareya optimallashtirish</string>
+    <string name="settings_battery_optimization_unrestricted">Cheklovsiz — LocaPeer fonda erkin ishlay oladi</string>
+    <string name="settings_battery_optimization_restricted">Optimallashtirilgan — tizim sozlamalarida cheklovsiz deb sozlash uchun bosing</string>
+
+    <!-- Ruxsatlar -->
+    <string name="settings_permissions">Ruxsatlar</string>
+    <string name="settings_permissions_subtitle">Ilovaning joylashuv, kamera va boshqalarga ruxsatlarini ko‘rib chiqish va tuzatish</string>
+    <string name="permissions_intro">LocaPeer-ga joylashuvni baham ko‘rish, takliflarni skanerlash va fonda ishlash uchun ushbu ruxsatlar kerak. Berilmagan ruxsatlarni tuzatish uchun bosing.</string>
+    <string name="perm_location_title">Joylashuv</string>
+    <string name="perm_location_granted">Berilgan — joylashuvingiz baham ko‘rilishi mumkin</string>
+    <string name="perm_location_denied">Berilmagan — joylashuvga ruxsat berish uchun bosing</string>
+    <string name="perm_background_location_title">Fon rejimidagi joylashuv</string>
+    <string name="perm_background_location_granted">Berilgan — ilova yopilganda ham joylashuvni baham ko‘rish davom etadi</string>
+    <string name="perm_background_location_denied">Berilmagan — sozlamalarda «Har doim ruxsat berish» rejimini tanlash uchun bosing</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Berilgan — taklif QR kodlarini skanerlash uchun ishlatiladi</string>
+    <string name="perm_camera_denied">Berilmagan — kameraga ruxsat berish uchun bosing</string>
+    <string name="perm_notifications_title">Bildirishnomalar</string>
+    <string name="perm_notifications_granted">Berilgan — ogohlantirishlar va holat yangilanishlari ko‘rsatilishi mumkin</string>
+    <string name="perm_notifications_denied">Berilmagan — bildirishnomalarga ruxsat berish uchun bosing</string>
+
+    <!-- Birliklar va displey -->
+    <string name="settings_speed_units">Tezlik birliklari</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metrik (km/soat)</string>
+    <string name="settings_elevation_units">Balandlik birliklari</string>
+    <string name="settings_elevation_imperial">Imperial (fut)</string>
+    <string name="settings_elevation_metric">Metrik (metr)</string>
+    <string name="settings_distance_units">Masofa birliklari</string>
+    <string name="settings_distance_imperial">Imperial (fut/mil)</string>
+    <string name="settings_distance_metric">Metrik (m/km)</string>
+    <string name="settings_time_format">Vaqt formati</string>
+    <string name="settings_time_24h">24-soatlik (13:30)</string>
+    <string name="settings_time_12h">12-soatlik (1:30 PM)</string>
+
+    <!-- Saqlash -->
+    <string name="settings_retention_location">Joylashuv ma’lumotlari</string>
+    <string name="settings_retention_location_subtitle">Kontaktlarning joylashuv ma’lumotlari qurilmada qancha vaqt saqlanadi</string>
+    <string name="settings_clear_all_location">Barcha joylashuv ma’lumotlarini tozalash</string>
+    <string name="settings_retention_messages">Xabarlar</string>
+    <string name="settings_retention_messages_subtitle">Olingan xabarlar qurilmada qancha vaqt saqlanadi</string>
+    <string name="settings_clear_all_messages">Barcha xabarlarni tozalash</string>
+
+    <!-- Ko‘rinish -->
+    <string name="settings_customize_nav">Navigatsiyani sozlash</string>
+    <string name="settings_customize_nav_subtitle">Pastki tablarni tanlang va tartibini o‘zgartiring</string>
+    <string name="settings_start_page">Boshlang‘ich sahifa</string>
     <string name="settings_language">Til</string>
-    <string name="settings_language_title">Dastur tili</string>
+    <string name="settings_language_title">Ilova tili</string>
     <string name="settings_language_system">Tizim tili</string>
 
-    <string name="common_ok">OK</string>
+    <!-- Rezerv nusxa va kalitlar -->
+    <string name="settings_export_backup">Rezerv nusxani eksport qilish</string>
+    <string name="settings_export_backup_subtitle">Maxfiy kalit va kontaktlaringizni faylga saqlang. Ushbu faylni xavfsiz joyda saqlang!</string>
+    <string name="settings_import_backup">Rezerv nusxani import qilish</string>
+    <string name="settings_import_backup_subtitle">Ilgari eksport qilingan fayldan tiklash</string>
+    <string name="settings_view_private_key">Maxfiy kalitni ko‘rish</string>
+    <string name="settings_view_private_key_subtitle">64 belgili heks identifikatsiya kalitingizni ko‘rsatish</string>
+
+    <!-- Haqida -->
+    <string name="settings_about_locapeer">LocaPeer haqida</string>
+    <string name="settings_about_subtitle">Versiya, rele holati, ochiq kodli</string>
+
+    <!-- Dialoglar -->
+    <string name="settings_edit_display_name">Nomni o‘zgartirish</string>
+    <string name="settings_display_name_label">Ko‘rsatiladigan ism</string>
+    <string name="settings_my_invite_qr">Mening taklif QR kodim</string>
+    <string name="settings_invite_qr_subtitle">Boshqalar sizni kuzatishni boshlash uchun buni skanerlashi mumkin.</string>
+    <string name="settings_invite_qr_cd">Taklif QR kodi</string>
+    <string name="settings_private_key_title">Maxfiy kalit</string>
+    <string name="settings_private_key_warning">Buni xavfsiz saqlang. Ushbu kalitga ega bo‘lgan har kim sizning nomingizdan harakat qilishi mumkin.</string>
+    <string name="settings_clear_location_title">Joylashuv tarixini tozalash kerakmi?</string>
+    <string name="settings_clear_location_message">Barcha saqlangan joylashuv ma’lumotlari butunlay o‘chiriladi.</string>
+    <string name="settings_clear_messages_title">Xabarlar tarixini tozalash kerakmi?</string>
+    <string name="settings_clear_messages_message">Barcha saqlangan xabarlar butunlay o‘chiriladi.</string>
+    <string name="settings_encrypted_backup_title">Shifrlangan rezerv nusxa</string>
+    <string name="settings_encrypted_backup_message">Ushbu rezerv nusxa shifrlangan. Davom etish uchun parolni kiriting.</string>
+    <string name="settings_select_restore_title">Tiklanadigan ma’lumotlarni tanlang</string>
+    <string name="settings_select_export_title">Eksport qilinadigan ma’lumotlarni tanlang</string>
+    <string name="settings_export_password_hint">Rezerv nusxa faylini shifrlash uchun ixtiyoriy parol o‘rnating.</string>
+    <string name="settings_backup_password_optional">Rezerv nusxa paroli (ixtiyoriy)</string>
+    <string name="settings_select_sections">Qo‘shiladigan bo‘limlarni tanlang:</string>
+    <string name="settings_choose_file_location">Fayl joylashuvini tanlang</string>
+    <string name="settings_not_in_backup">Ushbu rezerv nusxada yo‘q</string>
+    <string name="settings_enable_supervised_title">Nazorat rejimini yoqish</string>
+    <string name="settings_enable_supervised_message">Nazoratchi bo‘ladigan kontaktni tanlang. Ular o‘z qurilmasidan sozlamalarga kirishni tasdiqlashlari kerak.</string>
+    <string name="settings_no_peers_found">Kontaktlar topilmadi. Avval ularning taklif QR kodini skanerlash orqali kontakt qo‘shing.</string>
+    <string name="settings_disable_supervised_title">Nazorat rejimini o‘chirish kerakmi?</string>
+    <string name="settings_disable_supervised_message">Sozlamalar nazoratchi tasdig‘isiz ham mavjud bo‘ladi.</string>
+
+    <!-- ── Boshqa umumiy ─────────────────────────────────────────── -->
+    <string name="common_remove">Olib tashlash</string>
+    <string name="common_name">Nomi</string>
+    <string name="common_search">Qidirish</string>
+    <string name="common_sort">Saralash</string>
+
+    <!-- Mazmun tavsiflari (baham ko‘rilgan) -->
+    <string name="cd_message">Xabar</string>
+    <string name="cd_show_on_map">Xaritada ko‘rsatish</string>
+    <string name="cd_more_options">Qo‘shimcha imkoniyatlar</string>
+
+    <!-- ── Kontaktlar ekrani ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d tanlandi</item>
+        <item quantity="other">%1$d tanlandi</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Tanlashni bekor qilish</string>
+    <string name="contacts_cd_select_all">Barchasini tanlash</string>
+    <string name="contacts_cd_deselect_all">Barchasidan voz kechish</string>
+    <string name="contacts_cd_qr_invite">QR / Taklif</string>
+    <string name="contacts_cd_pending_requests">Kutilayotgan so‘rovlar</string>
+    <string name="contacts_sort_last_seen">Oxirgi marta ko‘rilgan</string>
+    <string name="contacts_search_placeholder">Kontaktlarni qidirish…</string>
+    <string name="contacts_empty_title">Kontaktlar hali yo‘q</string>
+    <string name="contacts_empty_subtitle">Kimdir bilan bog‘lanish va o‘zaro joylashuvni baham ko‘rishni boshlash uchun QR kodni skanerlang.</string>
+    <string name="contacts_scan_qr">QR kodni skanerlash</string>
+    <string name="contacts_bulk_delete_messages">Xabarlarni o‘chirish</string>
+    <string name="contacts_bulk_delete_locations">Joylashuvlarni o‘chirish</string>
+    <string name="contacts_last_seen">Oxirgi marta ko‘rilgan: %1$s</string>
+    <string name="contacts_no_location_yet">Joylashuv ma’lumotlari hali yo‘q</string>
+    <string name="contacts_view_sharing_settings">Baham ko‘rish sozlamalari</string>
+    <string name="contacts_view_location_history">Joylashuv tarixi</string>
+    <string name="contacts_rename_contact">Kontakt nomini o‘zgartirish</string>
+    <string name="contacts_on_contact_device">Kontakt qurilmasida</string>
+    <string name="contacts_delete_my_messages_title">Mening xabarlarimni o‘chirish</string>
+    <string name="contacts_delete_locations_title">Baham ko‘rilgan joylashuvlarni o‘chirish</string>
+    <string name="contacts_remove_contact_title">Kontaktni olib tashlash</string>
+    <string name="contacts_leave_title">Kontaktni va ma’lumotlarni o‘chirish</string>
+    <string name="contacts_rename_title">Kontakt nomini o‘zgartirish</string>
+    <string name="contacts_remove_contact_body">%1$s kontaktlardan olib tashlansinmi? Ularning joylashuv tarixi ham qurilmadan o‘chiriladi.</string>
+    <string name="contacts_leave_body">Bu sizni %1$s kontaktlaridan olib tashlaydi va ularning qurilmasidan barcha xabarlaringiz hamda joylashuv ma’lumotlaringizni o‘chiradi. Shuningdek, siz ham ularning joylashuvini ko‘ra olmaysiz.</string>
+    <string name="contacts_delete_my_messages_body">Bu siz %1$s qurilmasidan yuborgan barcha xabarlarni o‘chiradi. Bu amalni qaytarib bo‘lmaydi.</string>
+    <string name="contacts_delete_locations_body">Bu siz %1$s qurilmasidan baham ko‘rgan barcha joylashuv ma’lumotlarini o‘chiradi. Bu amalni qaytarib bo‘lmaydi.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Kontaktni olib tashlash</item>
+        <item quantity="other">%1$d kontaktni olib tashlash</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Ushbu kontakt olib tashlansinmi? Ularning joylashuv tarixi ham qurilmadan o‘chiriladi.</item>
+        <item quantity="other">%1$d kontakt olib tashlansinmi? Ularning joylashuv tarixi ham qurilmadan o‘chiriladi.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Ushbu kontakt qurilmasidan siz yuborgan barcha xabarlar masofadan o‘chirilsinmi? Bu amalni qaytarib bo‘lmaydi.</item>
+        <item quantity="other">%1$d kontakt qurilmasidan siz yuborgan barcha xabarlar masofadan o‘chirilsinmi? Bu amalni qaytarib bo‘lmaydi.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Ushbu kontakt qurilmasidan siz baham ko‘rgan barcha joylashuv tarixi masofadan o‘chirilsinmi? Bu amalni qaytarib bo‘lmaydi.</item>
+        <item quantity="other">%1$d kontakt qurilmasidan siz baham ko‘rgan barcha joylashuv tarixi masofadan o‘chirilsinmi? Bu amalni qaytarib bo‘lmaydi.</item>
+    </plurals>
+
+    <string name="common_continue">Davom etish</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Rezerv nusxadan tiklash</string>
+    <string name="onboarding_restore_message">Shaxsingizni va kontaktlaringizni tiklash uchun 64 belgili heks maxfiy kalitingizni o‘rnating.</string>
+    <string name="onboarding_private_key_hex">Maxfiy kalit (heks)</string>
+    <string name="onboarding_tagline">Kontaktlar bilan shaxsiy joylashuvni baham ko‘rish.\nAkkauntsiz. Shaxsiy serverlarsiz.</string>
+    <string name="onboarding_feature_e2e_title">Shifrlangan</string>
+    <string name="onboarding_feature_e2e_subtitle">Joylashuvingiz qurilmada shifrlanadi</string>
+    <string name="onboarding_feature_servers_title">Shaxsiy serverlarsiz</string>
+    <string name="onboarding_feature_servers_subtitle">Xavfsiz tashuvchi sifatida ochiq Nostr relelaridan foydalanadi — ma’lumotlaringiz shifrlangan va maxfiy bo‘lib qoladi</string>
+    <string name="onboarding_feature_phone_title">Telefoningizda qoladi</string>
+    <string name="onboarding_feature_phone_subtitle">To‘liq joylashuv tarixingiz qurilmangizda qoladi. Faqat joriy holatingiz tanlangan kontaktlar bilan baham ko‘riladi</string>
+    <string name="onboarding_name_prompt">Kontaktlaringiz sizni nima deb atashini xohlaysiz?</string>
+    <string name="onboarding_name_placeholder">masalan, Onam, Dadam, Aziz…</string>
+    <string name="onboarding_get_started">Boshlash</string>
+    <string name="onboarding_restore_from_backup">Rezerv nusxadan tiklash</string>
+    <string name="onboarding_key_note">Maxfiy kalitingiz mahalliy darajada yaratiladi va hech qachon ushbu qurilmani tark etmaydi.</string>
+    <string name="onboarding_permissions_title">Ruxsatlar</string>
+    <string name="onboarding_permissions_desc">LocaPeer-ga joylashuvingizni baham ko‘rish uchun joylashuvga ruxsat, taklif kodlarini skanerlash uchun kameraga ruxsat va fon rejimi holati uchun bildirishnomalar ruxsati kerak. Jismoniy faollikka ruxsat majburiy emas — u harakatingizni (yurish, haydash) aniqroq ko‘rsatishga yordam beradi.</string>
+    <string name="onboarding_before_ask_title">So‘rashimizdan oldin</string>
+    <string name="onboarding_before_ask_intro">Keyin quyidagi tizim so‘rovlarini ko‘rasiz:</string>
+    <string name="onboarding_before_ask_location">• Joylashuv - joylashuvingizni baham ko‘rish uchun kerak.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - taklif kodlarini skanerlash uchun.</string>
+    <string name="onboarding_before_ask_notifications">• Bildirishnomalar - fon rejimi holati uchun.</string>
+    <string name="onboarding_before_ask_activity">• Jismoniy faollik - ixtiyoriy. U LocaPeer-ga tarixingizda yurish, haydash va bir joyda turishni aniqroq farqlashga imkon beradi. Uni o‘tkazib yuborishingiz va keyinchalik Sozlamalardan yoqishingiz mumkin.</string>
+    <string name="onboarding_grant_permissions">Ruxsat berish</string>
+    <string name="onboarding_bg_location_title">Fon rejimidagi joylashuv</string>
+    <string name="onboarding_bg_location_desc">Ilova yopilganda ham kontaktlaringizni yangilab turish uchun keyingi ekranda «Har doim ruxsat berish» rejimini tanlang.</string>
+    <string name="onboarding_bg_location_error">Ilova yopilganda kontaktlaringizni yangilash uchun fon rejimidagi joylashuv kerak. Qayta urinib ko‘ring va «Har doim ruxsat berish» rejimini tanlang.</string>
+    <string name="onboarding_configure_location">Joylashuvni sozlash</string>
+    <string name="onboarding_battery_title">Batareya</string>
+    <string name="onboarding_battery_desc">Android batareya quvvatini tejash uchun LocaPeer-ni to‘xtatishi mumkin. Ishonchli yangilanishlarni ta’minlash uchun LocaPeer-ni optimallashtirishlardan chiqarib tashlang.</string>
+    <string name="onboarding_disable_optimizations">Optimallashtirishni o‘chirish</string>
+    <string name="onboarding_done_title">Hammasi tayyor!</string>
+    <string name="onboarding_done_desc">Shaxsiy joylashuv tarmog‘ingiz tayyor.</string>
+    <string name="onboarding_start_using">LocaPeer-dan foydalanishni boshlash</string>
+
+    <string name="common_try_again">Qayta urinish</string>
+
+    <!-- ── Taklifni skanerlash ekrani ─────────────────────────────────────────────── -->
+    <string name="scan_title">Taklifni skanerlash</string>
+    <string name="scan_camera_needed">QR kodlarini skanerlash uchun kameraga ruxsat kerak.</string>
+    <string name="scan_grant_permission">Ruxsat berish</string>
+    <string name="scan_add_contact_title">Kontakt qo‘shilsinmi?</string>
+    <string name="scan_add_contact_message">Bu sizni %1$s bilan bog‘laydi va o‘zaro joylashuvni baham ko‘rishni boshlaydi.</string>
+    <string name="scan_add_share">Qo‘shish va baham ko‘rish</string>
+    <string name="scan_request_sent_title">So‘rov yuborildi!</string>
+    <string name="scan_request_sent_message">%1$s-ga so‘rov yuborildi. Ular tasdiqlaganidan keyin bog‘lanasiz.</string>
+    <string name="scan_failed">Skanerlash muvaffaqiyatsiz tugadi: %1$s</string>
+
     <string name="cd_back">Orqaga</string>
+    <string name="common_review">Ko‘rib chiqish</string>
+    <string name="common_decline">Rad etish</string>
+
+    <!-- Baham ko‘rish roli yorliqlari (baham ko‘rilgan) -->
+    <string name="role_send_receive">Yuborish/Qabul qilish</string>
+    <string name="role_send">Yuborish</string>
+    <string name="role_receive">Qabul qilish</string>
+    <string name="role_none">Baham ko‘rishsiz</string>
+
+    <!-- ── Taklif ekrani ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Mening taklifim</string>
+    <string name="invite_tab_add_contact">Kontakt qo‘shish</string>
+    <string name="invite_your_qr_title">Sizning QR kodingiz</string>
+    <string name="invite_your_qr_subtitle">Boshqalar sizning joylashuvingizni kuzatishi uchun buni skanerlashlariga ruxsat bering</string>
+    <string name="invite_qr_cd">Sizning QR kodingiz</string>
+    <string name="invite_qr_error">QR yaratishda xatolik</string>
+    <string name="invite_share_link">Taklif havolasini baham ko‘rish</string>
+    <string name="invite_encryption_note">Joylashuvingiz skanerlayotgan qurilma uchun maxsus shifrlanadi.</string>
+    <string name="invite_camera_required_title">Kameraga ruxsat kerak</string>
+    <string name="invite_camera_required_message">QR kodni skanerlash uchun kameraga ruxsat bering.</string>
+    <string name="invite_point_camera">Kamerani LocaPeer QR-ga qarating</string>
+    <string name="invite_paste_title">Yoki taklif havolasini kiriting</string>
+    <string name="invite_process_link">Havolani qayta ishlash</string>
+    <string name="invite_fallback_name">Kontakt</string>
+    <string name="invite_success_message">Ular tasdiqlaganidan keyin %1$s bilan bog‘lanasiz.</string>
+    <string name="invite_confirm_add_title">%1$s qo‘shilsinmi?</string>
+    <string name="invite_confirm_add_message">Ularni kontaktlaringizga qo‘shish va joylashuvni baham ko‘rishni xohlaysizmi?</string>
+
+    <!-- ── Kutilayotgan so‘rovlar ekrani ────────────────────────────────────────── -->
+    <string name="pending_empty">Kutilayotgan so‘rovlar yo‘q</string>
+    <string name="pending_requesting">So‘rov yuborildi: %1$s · %2$s</string>
+    <string name="pending_role_change">Rolni o‘zgartirish so‘rovi · %1$s</string>
+    <string name="pending_new_request">Yangi baham ko‘rish so‘rovi · %1$s</string>
+
+    <string name="common_save_changes">O‘zgarishlarni saqlash</string>
+
+    <!-- ── Kiruvchi baham ko‘rish so‘rovi ekrani ──────────────────────────────────── -->
+    <string name="incoming_update_title">Baham ko‘rish sozlamalarini yangilash</string>
+    <string name="incoming_new_title">Yangi kontakt so‘rovi</string>
+    <string name="incoming_update_subtitle">%1$s sizning baham ko‘rish usulingizni yangilamoqchi. Quyidagi sozlamalarni ko‘rib chiqing.</string>
+    <string name="incoming_new_subtitle">%1$s sizni kontakt sifatida qo‘shdi! Endi siz nimalar bilan bo‘lishishingizni tanlashingiz mumkin.</string>
+    <string name="incoming_section_location">Joylashuv</string>
+    <string name="incoming_share_my_location">Joylashuvimni %1$s bilan baham ko‘rish</string>
+    <string name="incoming_share_my_location_sub">Ular sizning qayerda ekanligingizni ko‘ra olishadi</string>
+    <string name="incoming_see_their_location">%1$s-ning joylashuvini ko‘rish</string>
+    <string name="incoming_see_their_location_sub">Siz ularning qayerda ekanligini ko‘ra olasiz</string>
+    <string name="incoming_section_messaging">Xabarlar</string>
+    <string name="incoming_allow_messages">Xabarlarga ruxsat berish</string>
+    <string name="incoming_allow_messages_sub">%1$s-dan chat xabarlarini olish</string>
+
+    <string name="common_request">So‘rov</string>
+    <string name="common_edit">O‘zgartirish</string>
+
+    <!-- ── Kontakt sozlamalari ekrani ─────────────────────────── -->
+    <string name="peer_title">Kontakt sozlamalari</string>
+    <string name="peer_section_roles">Joylashuvni baham ko‘rish rollari</string>
+    <string name="peer_send_on">%1$s sizning joylashuvingizni ko‘ra oladi</string>
+    <string name="peer_send_off">Siz joylashuvingizni %1$s bilan baham ko‘rmayapsiz</string>
+    <string name="peer_receive_title">%1$s-ning joylashuvini olish</string>
+    <string name="peer_receive_on">Siz %1$s-ning joylashuvini ko‘ra olasiz</string>
+    <string name="peer_receive_off">Sizda %1$s-ning joylashuviga kirish ruxsati yo‘q</string>
+    <string name="peer_section_privacy">Maxfiylik va baham ko‘rishni boshqarish</string>
+    <string name="peer_pause_sharing">Baham ko‘rishni to‘xtatib turish</string>
+    <string name="peer_pause_sub">Joylashuvingizni %1$s-ga yuborishni vaqtincha to‘xtatish</string>
+    <string name="peer_precision">Joylashuv aniqligi</string>
+    <string name="peer_precision_exact_sub">Aniq GPS koordinatalari</string>
+    <string name="peer_precision_suburb_sub">Taxminiy joylashuv (tuman darajasi)</string>
+    <string name="peer_always_sharing">Har doim baham ko‘rilmoqda</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d faol baham ko‘rish qoidasi</item>
+        <item quantity="other">%1$d faol baham ko‘rish qoidasi</item>
+    </plurals>
+    <string name="peer_section_alerts">Ogohlantirishlar va nazorat</string>
+    <string name="peer_sos_contact">SOS kontakt</string>
+    <string name="peer_sos_sub">Baham ko‘rish to‘xtatilgan bo‘lsa ham, favqulodda ogohlantirishlarni olish</string>
+    <string name="peer_missed_alert">Joylashuvni o‘tkazib yuborish ogohlantirishi</string>
+    <string name="peer_missed_on">Agar %1$s o‘z joylashuvini yubormay qo‘ysa, menga xabar bering</string>
+    <string name="peer_requires_access">%1$s-ning joylashuviga kirish ruxsati kerak</string>
+    <string name="peer_proximity_alert">Yaqinlik ogohlantirishi</string>
+    <string name="peer_proximity_sub">%1$s yaqin joyda bo‘lganda menga xabar bering</string>
+    <string name="peer_alert_radius">Ogohlantirish radiusi</string>
+    <string name="peer_alert_schedule">Ogohlantirish jadvali</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d faol qoida</item>
+        <item quantity="other">%1$d faol qoida</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s uchun kelish va ketish hududlarini sozlang</string>
+    <string name="peer_supervise">Ushbu qurilmani nazorat qilish</string>
+    <string name="peer_supervise_on">Siz %1$s-dan qulfdan chiqarish so‘rovlarini olasiz va tasdiqlaysiz</string>
+    <string name="peer_supervise_off">%1$s-ga nazorat rejimida qulfdan chiqarish so‘rovlarini yuborishga ruxsat bering</string>
+    <string name="peer_messaging_sub">%1$s-dan keladigan chat xabarlarini yoqish/o‘chirish</string>
+    <string name="peer_section_history">Harakat tarixi</string>
+    <string name="peer_location_history">Joylashuv tarixi</string>
+    <string name="peer_location_history_sub">%1$s-ning harakat tarixi va xarita hisobotini ko‘rish</string>
+    <string name="peer_section_retention">Masofadan ma’lumotlarni saqlash</string>
+    <string name="peer_retention_location_sub">%1$s sizning joylashuv tarixingizni qancha vaqt saqlaydi</string>
+    <string name="peer_purge_location">%1$s-dan barcha joylashuv ma’lumotlarini o‘chirish</string>
+    <string name="peer_retention_messages_sub">%1$s siz yuborgan xabarlarni qancha vaqt saqlaydi</string>
+    <string name="peer_purge_messages">%1$s-dan barcha xabarlarni o‘chirish</string>
+    <string name="peer_precision_exact">Aniq GPS</string>
+    <string name="peer_precision_exact_desc">Aniq koordinatalar</string>
+    <string name="peer_precision_suburb">Tuman (~1km)</string>
+    <string name="peer_precision_suburb_desc">Faqat tuman darajasida</string>
+
+    <!-- ── Xabarlar ro‘yxati ekrani ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d suhbat o‘chirilsinmi?</item>
+        <item quantity="other">%1$d suhbat o‘chirilsinmi?</item>
+    </plurals>
+    <string name="conv_delete_locally">Qurilmadan o‘chirish</string>
+    <string name="conv_delete_locally_sub">Suhbatni faqat sizning qurilmangizdan olib tashlaydi.</string>
+    <string name="conv_delete_both">Ikki tomondan ham o‘chirish</string>
+    <string name="conv_bulk_delete_both_sub">Suhbatni qurilmangizdan va kontaktingizdan o‘chiradi.</string>
+    <string name="conv_delete_both_sub">Suhbatni qurilmangizdan o‘chiradi va kontaktning qurilmasida suhbatni o‘chirish so‘rovini yuboradi.</string>
+    <string name="conv_cd_exit_selection">Tanlashdan chiqish</string>
+    <string name="conv_cd_select_all">Barchasini tanlash</string>
+    <string name="conv_cd_new_message">Yangi xabar</string>
+    <string name="conv_sort_date">Sana</string>
+    <string name="conv_sort_unread">O‘qilmagan</string>
+    <string name="conv_search_placeholder">Suhbatlarni qidirish…</string>
+    <string name="conv_tab_chats">Chatlar</string>
+    <string name="conv_tab_archived">Arxivlangan</string>
+    <string name="conv_mark_read">O‘qilgan deb belgilash</string>
+    <string name="conv_archive">Arxivlash</string>
+    <string name="conv_unarchive">Arxivdan chiqarish</string>
+    <string name="conv_empty_no_results">\"%1$s\" uchun hech narsa topilmadi</string>
+    <string name="conv_empty_no_results_sub">Boshqa qidiruv so‘zini ishlatib ko‘ring</string>
+    <string name="conv_empty_archived_title">Arxivlangan chatlar yo‘q</string>
+    <string name="conv_empty_archived_sub">Kiruvchi xabarlar qutisini toza saqlash uchun chatlarni arxivlang</string>
+    <string name="conv_empty_title">Xabarlar hali yo‘q</string>
+    <string name="conv_empty_sub">Xaritani oching va suhbatni boshlash uchun\nbiron bir kishini tanlang</string>
+    <string name="conv_delete_title">Suhbat o‘chirilsinmi?</string>
+    <string name="conv_delete_message">%1$s bilan suhbatni qanday o‘chirmoqchisiz?</string>
+    <string name="conv_messages_blocked">Xabarlar bloklangan</string>
+    <string name="conv_preview_mine">Siz: %1$s</string>
+    <string name="conv_new_message_title">Yangi xabar</string>
+    <string name="conv_picker_empty">Kontaktlar hali yo‘q. Kontakt qo‘shish uchun QR kodni skanerlang.</string>
+
+    <!-- ── Chat ekrani ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Chat tarixini tozalash kerakmi?</string>
+    <string name="chat_clear_message">%1$s bilan suhbatni qanday tozalamoqchisiz?</string>
+    <string name="chat_clear_locally">Qurilmadan tozalash</string>
+    <string name="chat_clear_both">Ikki tomondan ham tozalash</string>
+    <string name="chat_clear_both_sub">Chatni qurilmangizdan tozalaydi va %1$s-ga siz yuborgan xabarlarni o‘chirish so‘rovini yuboradi.</string>
+    <string name="chat_cd_options">Imkoniyatlar</string>
+    <string name="chat_clear_history_menu">Chat tarixini tozalash</string>
+    <string name="chat_typing">%1$s yozmoqda…</string>
+    <string name="chat_blocked_banner">Siz %1$s-dan keladigan xabarlarni blokladingiz. Blokdan chiqarish uchun Kontaktlarga o‘ting.</string>
+    <string name="chat_delete_msg_title">Xabar o‘chirilsinmi?</string>
+    <string name="chat_delete_msg_message">Ushbu xabarni qanday o‘chirmoqchisiz?</string>
+    <string name="chat_delete_from_contact">Kontaktdan o‘chirish</string>
+    <string name="chat_delete_from_contact_sub">Chatni kontaktning qurilmasidan o‘chiradi.</string>
+    <string name="chat_delete_both_sub">Chatni qurilmangizdan olib tashlaydi va kontaktning qurilmasidan avtomatik ravishda o‘chiradi.</string>
+    <string name="chat_cd_share_location">Joylashuvni baham ko‘rish</string>
+    <string name="chat_input_placeholder">Xabar…</string>
+    <string name="chat_cd_send">Yuborish</string>
+
+    <string name="common_close">Yopish</string>
+
+    <!-- ── Xarita ekrani ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS yoqilsinmi?</string>
+    <string name="map_sos_deactivate_title">SOS o‘chirilsinmi?</string>
+    <string name="map_sos_activate_msg">Bu o‘chirilmaguncha joylashuvingizni har 15 soniyada tayinlangan SOS kontaktlaringizga yuboradi.</string>
+    <string name="map_sos_deactivate_msg">Bu favqulodda kontaktlaringizga yuqori ustuvorlikdagi joylashuv uzatishni to‘xtatadi.</string>
+    <string name="map_activate">Yoqish</string>
+    <string name="map_deactivate">O‘chirish</string>
+    <string name="map_cd_style">Xarita uslubi</string>
+    <string name="map_cd_show_geofences">Geozonalarni ko‘rsatish</string>
+    <string name="map_cd_hide_geofences">Geozonalarni yashirish</string>
+    <string name="map_cd_follow">Meni kuzatib boring</string>
+    <string name="map_cd_friends">Do‘stlar</string>
+    <string name="map_no_friends">Hali kuzatilayotgan do‘stlar yo‘q</string>
+    <string name="map_you">Siz</string>
+    <string name="map_cd_go_my_location">Mening joyimga o‘tish</string>
+    <string name="map_sos_active">⚠ SOS FAOL</string>
+    <string name="map_away">Uzoqda</string>
+    <string name="map_no_location_yet">Hali joylashuv yo‘q</string>
+    <string name="map_cd_go_location">Joylashuvga o‘tish</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS YOQILGAN</string>
+    <string name="map_overdue">Kechikkan — so‘nggi yangilanish yo‘q</string>
+    <string name="map_stat_last_seen">Oxirgi marta ko‘rilgan</string>
+    <string name="map_stat_battery">Batareya</string>
+    <string name="map_stat_accuracy">Aniqlik</string>
+    <string name="map_stat_motion">Harakat</string>
+    <string name="map_stat_speed">Tezlik</string>
+    <string name="map_stat_elevation">Balandlik</string>
+
+    <string name="common_ok">OK</string>
+
+    <!-- ── Tarix hisoboti ekrani ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Tarix: %1$s</string>
+    <string name="history_select_person">Shaxsni tanlash</string>
+    <string name="history_person_label">Shaxs</string>
+    <string name="history_cd_prev_day">Oldingi kun</string>
+    <string name="history_cd_next_day">Keyingi kun</string>
+    <string name="history_time_filter">Vaqt filtri:</string>
+    <string name="history_cd_reset_time">Vaqtni qaytarish</string>
+    <string name="history_tab_list">Ro‘yxat</string>
+    <string name="history_empty_title">Bu kun uchun tarix yo‘q</string>
+    <string name="history_empty_sub">Boshqa sanani tanlab ko‘ring yoki aloqani tekshiring.</string>
+    <string name="history_start_time">Boshlanish vaqti</string>
+    <string name="history_end_time">Tugash vaqti</string>
+    <string name="history_no_data_title">Joylashuv ma’lumotlari yo‘q</string>
+    <string name="history_no_data_sub">Ushbu kun yoki vaqt oralig‘i uchun yozilgan ma’lumotlar yo‘q.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d nuqta yozildi</item>
+        <item quantity="other">%1$d nuqta yozildi</item>
+    </plurals>
+    <string name="history_cd_dismiss">Olib tashlash</string>
+    <string name="history_accuracy_label">±%1$s aniqlik</string>
+    <string name="history_emergency_sos">Favqulodda SOS signali</string>
+    <string name="history_detail_location">Joylashuv</string>
+    <string name="history_detail_coordinates">Koordinatalar</string>
+    <string name="history_within">±%1$s ichida</string>
+    <string name="history_detail_movement">Harakat</string>
+    <string name="history_movement_desc">%1$s %2$s, yo‘nalishi %3$s</string>
+
+    <string name="common_create">Yaratish</string>
+
+    <!-- ── Geozona ekranlari ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Geozona hududini qo‘shish</string>
+    <string name="geo_cd_assign">Geozonani tayinlash</string>
+    <string name="geo_unknown">Noma’lum</string>
+    <string name="geo_empty_title">Geozonalar yo‘q</string>
+    <string name="geo_empty_sub">Geozona hududini yaratish uchun + tugmasini bosing, so‘ngra unga kontaktlarni baham ko‘rish sozlamalaridan tayinlang.</string>
+    <string name="geo_delete_title">Geozona o‘chirilsinmi?</string>
+    <string name="geo_delete_simple">\"%1$s\" o‘chirilsinmi?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d kontaktga tayinlangan. Uni o‘chirish shu tayinlovlarni ham olib tashlaydi.</item>
+        <item quantity="other">\"%1$s\" %2$d kontaktga tayinlangan. Uni o‘chirish shu tayinlovlarni ham olib tashlaydi.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s uchun geozonalar</string>
+    <string name="geo_empty_contact_title">Kontakt uchun geozonalar yo‘q</string>
+    <string name="geo_empty_contact_sub">Geozona hududini tayinlash uchun + tugmasini bosing va kelganida, ketganida yoki ikkala holatda ogohlantirishni tanlang.</string>
+    <string name="geo_no_areas_title">Geozonalar hali yo‘q</string>
+    <string name="geo_no_areas_msg">Avval Geozonalar ekranidan geozona hududini yarating, so‘ngra uni bu erda tayinlang.</string>
+    <string name="geo_radius_label">%1$s radiusi</string>
+    <string name="geo_contacts_label">Kontaktlar: %1$s</string>
+    <string name="geo_no_contacts_assigned">Kontaktlar tayinlanmagan</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d qoida</item>
+        <item quantity="other">%1$d qoida</item>
+    </plurals>
+    <string name="geo_trigger_enter">Kirish</string>
+    <string name="geo_trigger_exit">Chiqish</string>
+    <string name="geo_trigger_both">Ikkala holatda</string>
+    <string name="geo_edit_title">Geozonani o‘zgartirish</string>
+    <string name="geo_new_title">Yangi geozona</string>
+    <string name="geo_cd_my_location">Mening joyim</string>
+    <string name="geo_cd_radius_increase">Radiusni kattalashtirish</string>
+    <string name="geo_cd_radius_decrease">Radiusni kichiklashtirish</string>
+    <string name="geo_hint_tap">Joylashtirish uchun xaritani bosing yoki bosib turing</string>
+    <string name="geo_hint_move">Masshtablash uchun ikki barmoq bilan bosing • Siljitish uchun pinni bosib turing yoki sudrang</string>
+    <string name="geo_basic_info">Asosiy ma’lumotlar</string>
+    <string name="geo_search_title">Manzil bo‘yicha qidirish</string>
+    <string name="geo_search_label">Manzil yoki joy</string>
+    <string name="geo_search_placeholder">masalan, Toshkent, Mustaqillik maydoni</string>
+    <string name="geo_search_no_results">Mos manzil topilmadi</string>
+    <string name="geo_cd_search">Qidirish</string>
+    <string name="geo_name_placeholder">masalan, Uy, Ish</string>
+    <string name="geo_name_required">Nom kerak</string>
+    <string name="geo_latitude">Kenglik</string>
+    <string name="geo_longitude">Uzunlik</string>
+    <string name="geo_lat_range">-90 dan 90 gacha</string>
+    <string name="geo_lng_range">-180 dan 180 gacha</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">%1$d dan %2$d m gacha kiriting</string>
+    <string name="geo_edit_assignment">Tayinlovni o‘zgartirish</string>
+    <string name="geo_assign_title">Geozonani tayinlash</string>
+    <string name="geo_select_area">Geozona hududini tanlang</string>
+    <string name="geo_trigger_title">Bildirishnomani ishga tushirish:</string>
+    <string name="geo_add_rule">Qoida qo‘shish</string>
+    <string name="geo_alerts_all_times">Ogohlantirishlar har doim faol. Ogohlantirishlar yuboriladigan vaqtni cheklash uchun qoida qo‘shing.</string>
+    <string name="geo_assign_action">Tayinlash</string>
+
+    <!-- ── Yaqinlik ogohlantirishlari ekrani ────────────────────────────────────────── -->
+    <string name="prox_title">Yaqinlik ogohlantirishlari</string>
+    <string name="prox_empty_title">Kuzatiladigan shaxslar yo‘q</string>
+    <string name="prox_empty_sub">Biron bir kishining joylashuvini kuzatishni boshlash uchun\nskanerlash tabidan ularning taklif QR kodini skanerlang</string>
+    <string name="prox_intro">Kuzatilayotgan shaxs siz tanlagan masofaga yaqinlashganda bildirishnoma oling.</string>
+    <string name="prox_alert_within">%1$s ichida bo‘lganda ogohlantirish</string>
+    <string name="prox_alerts_off">Ogohlantirishlar o‘chirilgan</string>
+    <string name="prox_alert_radius">Ogohlantirish radiusi</string>
+    <string name="prox_edit_schedule">Jadvalni o‘zgartirish</string>
+    <string name="prox_rules">Qoidalar</string>
+
+    <!-- ── Jadval ekrani / qoida redaktori ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s uchun jadval</string>
+    <string name="schedule_cd_add_rule">Qoida qo‘shish</string>
+    <string name="schedule_empty_title">Jadval qoidalari yo‘q</string>
+    <string name="schedule_empty_global">Joylashuv har doim baham ko‘riladi. Baham ko‘rish faol bo‘ladigan vaqtni cheklash uchun qoida qo‘shing.</string>
+    <string name="schedule_empty_peer">Joylashuv har doim %1$s bilan baham ko‘riladi. Qachon ekanligini cheklash uchun qoida qo‘shing.</string>
+    <string name="schedule_active_hint">Har qanday qoida joriy vaqt bilan mos kelganda faol. Bo‘sh = har doim yoniq.</string>
+    <string name="schedule_all_day">Kun bo‘yi</string>
+    <string name="schedule_plus_one_day"> (+1 kun)</string>
+    <string name="schedule_rule_number">Qoida %1$d</string>
+    <string name="schedule_cd_delete_rule">Qoidani o‘chirish</string>
+    <string name="schedule_edit_rule">Qoidani o‘zgartirish</string>
+    <string name="schedule_label_optional">Belgi (ixtiyoriy)</string>
+    <string name="schedule_label_placeholder">masalan, Ish vaqti, Dam olish kunlari</string>
+    <string name="schedule_active_days">Faol kunlar</string>
+    <string name="schedule_time_window">Vaqt oralig‘i</string>
+    <string name="schedule_start">Boshlanishi</string>
+    <string name="schedule_end">Tugashi</string>
+    <string name="schedule_overnight">Tun bo‘yi: %1$s dan ertangi %2$s gacha faol</string>
+
+    <!-- ── Nazorat darvozasi ───────────────────────────────────────────────── -->
+    <string name="gate_title">Qurilma nazorat ostida</string>
+    <string name="gate_message">Sozlamalarga kirish uchun nazoratchi tasdig‘i kerak.</string>
+    <string name="gate_request_access">Kirish ruxsatini so‘rash</string>
+    <string name="gate_waiting">Nazoratchi tasdig‘i kutilmoqda…</string>
+    <string name="gate_denied">Nazoratchi ruxsat bermadi.</string>
+    <string name="gate_timed_out">So‘rov vaqti tugadi. Nazoratchi javob bermadi.</string>
+
+    <!-- ── Saqlash muddatini tanlash ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Abadiy</string>
+    <string name="retention_keep_for">Saqlash muddati: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d kun</item>
+        <item quantity="other">%1$d kun</item>
+    </plurals>
+
+    <string name="common_select">Tanlash</string>
+
+    <!-- ── Xaritadan joyni tanlash ────────────────────────────────────────────── -->
+    <string name="picker_title">Ruxsat etilgan joyni tanlash</string>
+
+    <!-- ── Navigatsiyani sozlash ekrani ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Pastki panelda qaysi tablar ko‘rinishi va ularning tartibini tanlang. Xarita har doim qo‘shiladi.</string>
+    <string name="customize_cd_move_up">Yuqoriga surish</string>
+    <string name="customize_cd_move_down">Pastga surish</string>
+
+    <!-- ── Haqida ekran ───────────────────────────────────────────────────── -->
+    <string name="about_version">Versiya %1$s (build %2$d)</string>
+    <string name="about_tagline">O‘zingiz ishonadigan odamlar bilan shaxsiy joylashuvni baham ko‘rish. Akkauntsiz, bulutsiz, biz tomonimizdan kuzatuvsiz.</string>
+    <string name="about_relay_connections">Releli ulanishlar</string>
+    <string name="about_connected">Ulandi</string>
+    <string name="about_disconnected">Ulanish uzildi</string>
+    <string name="about_open_source">Ochiq kodli kutubxonalar</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap-ga asoslangan xarita renderlash</string>
+    <string name="about_lib_okhttp_desc">Nostr relesi uchun WebSocket tashuvchisi</string>
+    <string name="about_lib_compose_desc">UI freymvorki</string>
+    <string name="about_lib_hilt_desc">Bog‘liqlik inyeksiyasi</string>
+    <string name="about_lib_room_desc">Mahalliy ma’lumotlar bazasi</string>
+    <string name="about_map_attribution">Xarita ma’lumotlari © OpenStreetMap hissa qo‘shuvchilari</string>
+
+    <!-- ── Bildirishnomalar ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Qabul qilish</string>
+    <string name="notif_someone">Kimdir</string>
+    <string name="notif_sos_title">%1$s-dan SOS!</string>
+    <string name="notif_sos_text">%1$s (%2$s, %3$s) nuqtasida SOS signalini yoqdi</string>
+    <string name="notif_supervisor_request_title">%1$s sizning nazoratchingiz bo‘lmoqchi</string>
+    <string name="notif_supervisor_request_text">Ushbu qurilmadan qulfdan chiqarish so‘rovlarini tasdiqlashga kelishish</string>
+    <string name="notif_supervisor_request_big">Nazorat rejimi faol bo‘lganda %1$s-ga qulfdan chiqarish so‘rovlarini yuborishga ruxsat berish uchun qabul qiling.</string>
+    <string name="notif_supervised_active_title">Nazorat rejimi faol</string>
+    <string name="notif_supervised_active_text">Nazoratchingiz tasdiqladi — nazorat rejimi endi sozlangan</string>
+    <string name="notif_supervised_declined_title">Nazorat rejimi rad etildi</string>
+    <string name="notif_supervised_declined_text">Nazoratchingiz so‘rovni qabul qilmadi — nazorat rejimi o‘chirildi</string>
+    <string name="notif_tracking_alert_title">Kuzatuv ogohlantirishi</string>
+    <string name="notif_tracking_proximity">%1$s siz haqingizda yaqinlik ogohlantirishi oldi</string>
+    <string name="notif_tracking_geofence">%1$s sizning hududga kirganingiz/chiqqaningiz haqida ogohlantirish oldi: %2$s</string>
+    <string name="notif_tracking_generic">%1$s sizning joylashuvingizni kuzatmoqda</string>
+    <string name="notif_track_update_title">%1$s-dan baham ko‘rish yangilanishi</string>
+    <string name="notif_track_new_title">Yangi kontakt: %1$s</string>
+    <string name="notif_role_send_receive">Joylashuvni yuborish/qabul qilish</string>
+    <string name="notif_role_send">Joylashuvni yuborish</string>
+    <string name="notif_role_receive">Joylashuvni qabul qilish</string>
+    <string name="notif_role_none">Joylashuvni baham ko‘rishsiz</string>
+    <string name="notif_track_requesting">%1$s so‘rov yubormoqda: %2$s</string>
+    <string name="notif_track_update_body">%1$s joylashuvni baham ko‘rish usulini yangilamoqchi.</string>
+    <string name="notif_track_new_body">%1$s sizni kontakt sifatida qo‘shdi va ulanishni xohlaydi.</string>
+    <string name="notif_contact_connected_title">Kontakt qo‘shildi</string>
+    <string name="notif_contact_connected_text">%1$s endi siz bilan aloqada.</string>
+    <string name="notif_request_declined_title">So‘rov rad etildi</string>
+    <string name="notif_request_declined_text">%1$s sizning joylashuvni baham ko‘rish so‘rovingizdan voz kechdi.</string>
+    <string name="notif_message_person">%1$s-ga xabar yuborish</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s hududiga kirdi</string>
+    <string name="notif_geofence_left_title">%1$s %2$s hududidan chiqdi</string>
+    <string name="notif_geofence_subtitle">%1$s nuqtasida · %2$s radiusi</string>
+    <string name="notif_person_nearby">%1$s yaqin joyda</string>
+    <string name="notif_distance_from_you">sizdan %1$s masofada</string>
+    <string name="notif_missed_title">%1$s-dan yangilanish yo‘q</string>
+    <string name="notif_missed_text">Oxirgi marta %1$s daqiqa oldin (%2$s, %3$s) yonida ko‘rildi</string>
+    <string name="notif_sos_active_title">SOS FAOL!</string>
+    <string name="notif_sos_active_text">SOS kontaktlariga favqulodda ogohlantirish yuborilmoqda</string>
+    <string name="notif_messages_group_title">LocaPeer xabarlari</string>
+
+    <!-- ── Toast xabarlar ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s-dan kontakt so‘rovi qabul qilinmadi</string>
+    <string name="toast_now_supervising">Endi %1$s qurilmasini nazorat qilyapsiz</string>
+    <string name="toast_declined_supervision">%1$s-dan nazorat so‘rovi qabul qilinmadi</string>
+
+    <!-- ── Dasturiy qatorlar ─────────────── -->
+    <string name="time_just_now">Hozirgina</string>
+    <string name="time_minutes_ago">%1$d daqiqa oldin</string>
+    <string name="fallback_me">Men</string>
+    <string name="fallback_unknown">Noma’lum</string>
+    <string name="geo_unassigned">Tayinlanmagan</string>
+    <string name="days_every_day">Har kuni</string>
+    <string name="days_weekdays">Ish kunlari</string>
+    <string name="days_weekends">Dam olish kunlari</string>
+    <string name="days_none">Kunlar yo‘q</string>
+    <string name="chat_my_location_message">Joriy joylashuvim: %1$s</string>
+    <string name="scan_error_bad_pubkey">Yaroqsiz taklif: noto‘g‘ri ochiq kalit</string>
+    <string name="scan_error_key_mismatch">Yaroqsiz taklif: kalitlar mos emas</string>
+    <string name="scan_error_unknown">Noma’lum xatolik</string>
+    <string name="scan_error_invalid_link">Yaroqsiz taklif havolasi</string>
+    <string name="scan_fallback_contact">ushbu kontakt</string>
+    <string name="backup_saved">Rezerv nusxa saqlandi: %1$s</string>
+    <string name="backup_saved_encrypted">Rezerv nusxa saqlandi (shifrlangan): %1$s</string>
+    <string name="backup_failed">Rezerv nusxa olish muvaffaqiyatsiz tugadi: %1$s</string>
+    <string name="backup_could_not_read_file">Faylni o‘qib bo‘lmadi</string>
+    <string name="backup_could_not_write_file">Faylga yozib bo‘lmadi</string>
+    <string name="backup_could_not_read">Rezerv nusxani o‘qib bo‘lmadi: %1$s</string>
+    <string name="backup_incorrect_password">Parol noto‘g‘ri</string>
+    <string name="restore_result_restored">Tiklandi: %1$s</string>
+    <string name="restore_result_failed">Muvaffaqiyatsiz tugadi: %1$s</string>
+    <string name="restore_nothing">Tiklanadigan hech narsa yo‘q</string>
+    <string name="restore_failed">Tiklash muvaffaqiyatsiz tugadi: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d kontakt</item>
+        <item quantity="other">%1$d kontakt</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d geozona</item>
+        <item quantity="other">%1$d geozona</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s-ga rolni o‘zgartirish so‘rovi yuborildi</string>
+    <string name="peer_not_found">Kontakt topilmadi</string>
+    <string name="peer_purge_location_sent">%1$s-ga BARCHA joylashuvlarni o‘chirish buyrug‘i yuborildi</string>
+    <string name="peer_purge_messages_sent">%1$s-ga BARCHA xabarlarni o‘chirish buyrug‘i yuborildi</string>
+    <string name="onboarding_error_key_length">Yaroqsiz kalit - 64 heks belgisi bo‘lishi kerak.</string>
+    <string name="onboarding_error_key_range">Yaroqsiz maxfiy kalit.</string>
+    <string name="onboarding_error_hex">Yaroqsiz heks formati.</string>
+    <string name="onboarding_error_import_failed">Kalitni import qilib bo‘lmadi: %1$s</string>
 </resources>

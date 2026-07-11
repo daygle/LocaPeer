@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">Bewegingsdetectie inschakelen</string>
     <string name="settings_enable_motion_message">Met toegang tot fysieke activiteit kan LocaPeer lopen, autorijden en stilstaan nauwkeuriger onderscheiden in je geschiedenis. Het staat nu uit — je kunt het opnieuw inschakelen via de systeeminstellingen.</string>
     <string name="settings_open_settings">Instellingen openen</string>
+    <string name="settings_battery_optimization">Batterijoptimalisatie</string>
+    <string name="settings_battery_optimization_unrestricted">Onbeperkt — LocaPeer kan vrij in de achtergrond draaien</string>
+    <string name="settings_battery_optimization_restricted">Geoptimaliseerd — tik om dit in te stellen op Onbeperkt in de systeeminstellingen</string>
+
+    <!-- Machtigingen -->
+    <string name="settings_permissions">Machtigingen</string>
+    <string name="settings_permissions_subtitle">App-toegang tot locatie, camera en meer bekijken en herstellen</string>
+    <string name="permissions_intro">LocaPeer heeft deze machtigingen nodig om je locatie te delen, uitnodigingen te scannen en op de achtergrond te blijven werken. Tik op een machtiging die niet is verleend om deze te herstellen.</string>
+    <string name="perm_location_title">Locatie</string>
+    <string name="perm_location_granted">Verleend — je locatie kan worden gedeeld</string>
+    <string name="perm_location_denied">Niet verleend — tik om locatietoegang toe te staan</string>
+    <string name="perm_background_location_title">Achtergrondlocatie</string>
+    <string name="perm_background_location_granted">Verleend — locatie blijft delen wanneer de app is gesloten</string>
+    <string name="perm_background_location_denied">Niet verleend — tik om toegang "Altijd toestaan" te verlenen in de instellingen</string>
+    <string name="perm_camera_title">Camera</string>
+    <string name="perm_camera_granted">Verleend — wordt gebruikt om QR-codes voor uitnodigingen te scannen</string>
+    <string name="perm_camera_denied">Niet verleend — tik om de camera toe te staan</string>
+    <string name="perm_notifications_title">Meldingen</string>
+    <string name="perm_notifications_granted">Verleend — waarschuwingen en statusupdates kunnen worden getoond</string>
+    <string name="perm_notifications_denied">Niet verleend — tik om meldingen toe te staan</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Snelheidseenheden</string>

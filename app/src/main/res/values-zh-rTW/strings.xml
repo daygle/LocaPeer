@@ -127,6 +127,26 @@
     <string name="settings_enable_motion_title">啟用動作偵測</string>
     <string name="settings_enable_motion_message">身體活動存取可讓 LocaPeer 在您的紀錄中更準確地區分步行、駕駛與靜止。目前已關閉 — 您可以在系統設定中重新啟用。</string>
     <string name="settings_open_settings">開啟設定</string>
+    <string name="settings_battery_optimization">電池最佳化</string>
+    <string name="settings_battery_optimization_unrestricted">不受限 — LocaPeer 可以在背景自由執行</string>
+    <string name="settings_battery_optimization_restricted">已最佳化 — 點擊以在系統設定中設為「不受限」</string>
+
+    <!-- 權限 -->
+    <string name="settings_permissions">權限</string>
+    <string name="settings_permissions_subtitle">查看並修復應用程式對位置、相機等的存取權限</string>
+    <string name="permissions_intro">LocaPeer 需要這些權限來分享您的位置、掃描邀請並保持背景執行。點擊任何未授予的權限進行修復。</string>
+    <string name="perm_location_title">位置</string>
+    <string name="perm_location_granted">已授予 — 可以分享您的位置</string>
+    <string name="perm_location_denied">未授予 — 點擊以允許存取位置資訊</string>
+    <string name="perm_background_location_title">背景位置</string>
+    <string name="perm_background_location_granted">已授予 — 應用程式關閉時仍持續分享位置</string>
+    <string name="perm_background_location_denied">未授予 — 點擊以在設定中允許「始終允許」存取</string>
+    <string name="perm_camera_title">相機</string>
+    <string name="perm_camera_granted">已授予 — 用於掃描邀請 QR 碼</string>
+    <string name="perm_camera_denied">未授予 — 點擊以允許使用相機</string>
+    <string name="perm_notifications_title">通知</string>
+    <string name="perm_notifications_granted">已授予 — 可以顯示警示和狀態更新</string>
+    <string name="perm_notifications_denied">未授予 — 點擊以允許通知</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">速度單位</string>

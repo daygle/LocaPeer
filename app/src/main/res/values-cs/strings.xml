@@ -130,6 +130,26 @@
     <string name="settings_enable_motion_title">Zapnout detekci pohybu</string>
     <string name="settings_enable_motion_message">Přístup k fyzické aktivitě umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání v historii. Momentálně je vypnutý — můžete jej znovu povolit v nastavení systému.</string>
     <string name="settings_open_settings">Otevřít nastavení</string>
+    <string name="settings_battery_optimization">Optimalizace baterie</string>
+    <string name="settings_battery_optimization_unrestricted">Bez omezení — LocaPeer může běžet volně na pozadí</string>
+    <string name="settings_battery_optimization_restricted">Optimalizováno — klepnutím nastavte Bez omezení v nastavení systému</string>
+
+    <!-- Oprávnění -->
+    <string name="settings_permissions">Oprávnění</string>
+    <string name="settings_permissions_subtitle">Kontrola a oprava přístupu aplikace k poloze, fotoaparátu a dalším</string>
+    <string name="permissions_intro">LocaPeer potřebuje tato oprávnění ke sdílení vaší polohy, skenování pozvánek a dalšímu běhu na pozadí. Klepnutím na jakékoli neudělené oprávnění jej opravíte.</string>
+    <string name="perm_location_title">Poloha</string>
+    <string name="perm_location_granted">Uděleno — vaše poloha může být sdílena</string>
+    <string name="perm_location_denied">Neuděleno — klepnutím povolte přístup k poloze</string>
+    <string name="perm_background_location_title">Poloha na pozadí</string>
+    <string name="perm_background_location_granted">Uděleno — poloha se sdílí i po zavření aplikace</string>
+    <string name="perm_background_location_denied">Neuděleno — klepnutím v nastavení povolte přístup „Povolit vždy“</string>
+    <string name="perm_camera_title">Fotoaparát</string>
+    <string name="perm_camera_granted">Uděleno — používá se ke skenování QR kódů pozvánek</string>
+    <string name="perm_camera_denied">Neuděleno — klepnutím povolte fotoaparát</string>
+    <string name="perm_notifications_title">Oznámení</string>
+    <string name="perm_notifications_granted">Uděleno — mohou být zobrazena upozornění a aktualizace stavu</string>
+    <string name="perm_notifications_denied">Neuděleno — klepnutím povolte oznámení</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Jednotky rychlosti</string>

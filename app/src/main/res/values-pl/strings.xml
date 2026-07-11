@@ -130,6 +130,26 @@
     <string name="settings_enable_motion_title">Włącz wykrywanie ruchu</string>
     <string name="settings_enable_motion_message">Dostęp do aktywności fizycznej pozwala LocaPeer dokładniej odróżniać chód, jazdę i postój w historii. Obecnie jest wyłączony — możesz włączyć go ponownie w ustawieniach systemu.</string>
     <string name="settings_open_settings">Otwórz ustawienia</string>
+    <string name="settings_battery_optimization">Optymalizacja baterii</string>
+    <string name="settings_battery_optimization_unrestricted">Bez ograniczeń — LocaPeer może działać swobodnie w tle</string>
+    <string name="settings_battery_optimization_restricted">Zoptymalizowano — dotknij, aby ustawić Bez ograniczeń w ustawieniach systemu</string>
+
+    <!-- Uprawnienia -->
+    <string name="settings_permissions">Uprawnienia</string>
+    <string name="settings_permissions_subtitle">Przeglądaj i poprawiaj dostęp aplikacji do lokalizacji, aparatu i innych</string>
+    <string name="permissions_intro">LocaPeer potrzebuje tych uprawnień, aby udostępniać Twoją lokalizację, skanować zaproszenia i działać w tle. Dotknij tych, które nie zostały przyznane, aby to naprawić.</string>
+    <string name="perm_location_title">Lokalizacja</string>
+    <string name="perm_location_granted">Przyznano — Twoja lokalizacja może być udostępniana</string>
+    <string name="perm_location_denied">Nie przyznano — dotknij, aby zezwolić na dostęp do lokalizacji</string>
+    <string name="perm_background_location_title">Lokalizacja w tle</string>
+    <string name="perm_background_location_granted">Przyznano — lokalizacja jest udostępniana nawet po zamknięciu aplikacji</string>
+    <string name="perm_background_location_denied">Nie przyznano — dotknij, aby zezwolić na dostęp „Zawsze” w ustawieniach</string>
+    <string name="perm_camera_title">Aparat</string>
+    <string name="perm_camera_granted">Przyznano — używany do skanowania kodów QR z zaproszeniami</string>
+    <string name="perm_camera_denied">Nie przyznano — dotknij, aby zezwolić na korzystanie z aparatu</string>
+    <string name="perm_notifications_title">Powiadomienia</string>
+    <string name="perm_notifications_granted">Przyznano — alerty i aktualizacje statusu mogą być wyświetlane</string>
+    <string name="perm_notifications_denied">Nie przyznano — dotknij, aby zezwolić na powiadomienia</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Jednostki prędkości</string>

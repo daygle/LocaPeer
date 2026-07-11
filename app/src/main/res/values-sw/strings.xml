@@ -42,8 +42,20 @@
     <string name="motion_cycling">Kuendesha baiskeli</string>
     <string name="motion_driving">Kuendesha gari</string>
 
-    <!-- ── Mipangilio ────────────────────────────────────────────────── -->
+    <!-- ── Sehemu za Hifadhi Nakala ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Ufunguo wa Kibinafsi</string>
+    <string name="backup_section_contacts">Anwani</string>
+    <string name="backup_section_geofences">Maeneo ya Kijiografia</string>
+    <string name="backup_section_settings">Mipangilio</string>
+
+    <!-- ── Ombi la usimamizi (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Ombi la Usimamizi</string>
+    <string name="supervision_request_message">\"%1$s\" anaomba ufikiaji wa mipangilio yao. Ruhusu?</string>
+
+    <!-- ── Skrini ya Mipangilio ────────────────────────────────────────────────── -->
     <string name="settings_title">Mipangilio</string>
+
+    <!-- Lebo za sehemu -->
     <string name="settings_section_location_privacy">Mahali &amp; Faragha</string>
     <string name="settings_section_security">Usalama</string>
     <string name="settings_section_map">Ramani</string>
@@ -54,15 +66,704 @@
     <string name="settings_section_backup_keys">Hifadhi Nakala &amp; Funguo</string>
     <string name="settings_section_about">Kuhusu</string>
 
+    <!-- Wasifu -->
     <string name="settings_edit_name">Hariri Jina</string>
     <string name="settings_my_qr">QR Yangu</string>
     <string name="settings_no_name_set">Jina halijawekwa</string>
 
+    <!-- Mahali &amp; Faragha -->
     <string name="settings_share_location">Shiriki Mahali Pangu</string>
+    <string name="settings_broadcasting">Inatangaza kwa anwani zako</string>
+    <string name="settings_not_broadcasting">Haitangazi</string>
+    <string name="settings_sharing_schedule">Ratiba ya Kushiriki</string>
+    <string name="settings_always_on">Wakati wote</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">Sheria %1$d</item>
+        <item quantity="other">Sheria %1$d</item>
+    </plurals>
+    <string name="settings_geofences">Maeneo ya Kijiografia</string>
+    <string name="settings_geofences_subtitle">Simamia maeneo ya kijiografia yaliyoshirikiwa</string>
+    <string name="settings_notify_when_tracked">Arifu Unapofuatiliwa</string>
+    <string name="settings_notify_when_tracked_subtitle">Pata arifa wakati ukaribu wa anwani au arifa ya eneo la kijiografia kwako inapoanzishwa.</string>
+    <string name="settings_my_location_history">Historia ya Mahali</string>
+    <string name="settings_my_location_history_subtitle">Vinjari kalenda yako ya maeneo</string>
+    <string name="settings_lookup_addresses">Tafuta Anwani</string>
+    <string name="settings_lookup_addresses_subtitle">Onyesha anwani za mitaani kwa pointi za historia na pini za ramani zilizoguswa, na utafute kwa anwani unapoweka maeneo ya kijiografia. Hutuma viwianishi hivyo au utafutaji wako kwa huduma ya kijiografia ya kifaa chako (kawaida Google).</string>
+
+    <!-- Usalama -->
+    <string name="settings_supervision_active">Usimamizi Umewashwa</string>
+    <string name="settings_supervision_active_subtitle">Mipangilio inahitaji idhini ya msimamizi</string>
+    <string name="settings_disable_supervised">Zima Njia ya Kusimamiwa</string>
+    <string name="settings_supervised_mode">Njia ya Kusimamiwa</string>
+    <string name="settings_supervised_mode_subtitle">Inahitaji idhini ya msimamizi ili kufikia mipangilio</string>
+
+    <!-- Ramani -->
+    <string name="settings_starting_point">Pointi ya Kuanzia</string>
+    <string name="settings_map_current_location">Mahali Ulipo</string>
+    <string name="settings_map_all_contacts">Anwani Zote</string>
+    <string name="settings_map_fixed_location">Mahali Maalum</string>
+    <string name="settings_map_last_position">Nafasi ya Mwisho</string>
+    <string name="settings_map_starting_point_title">Pointi ya Kuanzia Ramani</string>
+    <string name="settings_no_location_set">Hakuna mahali palipowekwa</string>
+    <string name="settings_pick_location_on_map">Chagua Mahali Kwenye Ramani</string>
+    <string name="settings_default_zoom_level">Kiwango cha Kukuza Chaguo-msingi</string>
+    <string name="settings_map_pin_colour">Rangi ya Pini ya Ramani</string>
+
+    <!-- Betri &amp; Utendaji -->
+    <string name="settings_update_cadence">Mzunguko wa Kusasisha</string>
+    <string name="settings_update_cadence_subtitle">Rekebisha mara ngapi eneo lako linatangazwa</string>
+    <string name="settings_update_cadence_dialog_message">Dhibiti jinsi eneo lako linavyosasishwa kulingana na shughuli yako. Sasisho za mara kwa mara hutumia betri zaidi.</string>
+    <string name="settings_update_cadence_reset">Rejesha kwa chaguo-msingi</string>
+    <string name="settings_min_distance_filtering">Uchuujaji wa Umbali wa Chini</string>
+    <string name="settings_min_distance_filtering_subtitle">Onyesha tu pointi ambazo ziko angalau umbali huu kutoka kwa iliyotangulia.</string>
+    <string name="settings_discard_low_accuracy">Tupa Masasisho ya Usahihi wa Chini</string>
+    <string name="settings_discard_low_accuracy_subtitle">Usitangaze au kurekodi masasisho yako mwenyewe yenye radius ya usahihi kubwa kuliko hii. SOS haikatwi kamwe.</string>
+    <string name="settings_hide_low_accuracy">Ficha Pointi za Usahihi wa Chini</string>
+    <string name="settings_hide_low_accuracy_subtitle">Ficha pointi za historia zenye radius ya usahihi kubwa kuliko hii. Hakuna kitu kinachofutwa.</string>
+    <string name="settings_low_battery" formatted="false">Betri ya Chini (&lt; 20%)</string>
+    <string name="settings_minutes_short">Dak %1$d</string>
+    <string name="settings_motion_detection">Ugunduzi wa Mwendo</string>
+    <string name="settings_motion_detection_on">Imewezeshwa - inaboresha aina ya harakati zako (kutembea, kuendesha gari) katika historia</string>
+    <string name="settings_motion_detection_off">Imezimwa - ruhusu ufikiaji wa shughuli za kimwili kwa lebo sahihi zaidi za mwendo</string>
+    <string name="settings_enable_motion_title">Wezesha ugunduzi wa mwendo</string>
+    <string name="settings_enable_motion_message">Ufikiaji wa shughuli za kimwili huruhusu LocaPeer kutofautisha kutembea, kuendesha gari na kusimama tuli kwa usahihi zaidi katika historia yako. Kwa sasa imezimwa - unaweza kuiwasha tena kutoka kwa mipangilio ya mfumo.</string>
+    <string name="settings_open_settings">Fungua Mipangilio</string>
+    <string name="settings_battery_optimization">Uboreshaji wa Betri</string>
+    <string name="settings_battery_optimization_unrestricted">Haina kikomo — LocaPeer inaweza kufanya kazi kwa uhuru chinichini</string>
+    <string name="settings_battery_optimization_restricted">Imeboreshwa — gusa ili uweke Haina kikomo katika mipangilio ya mfumo</string>
+
+    <!-- Ruhusa -->
+    <string name="settings_permissions">Ruhusa</string>
+    <string name="settings_permissions_subtitle">Kagua na urekebishe ufikiaji wa programu kwa mahali, kamera na zaidi</string>
+    <string name="permissions_intro">LocaPeer inahitaji ruhusa hizi ili kushiriki eneo lako, kuchanganua mialiko na kuendelea kufanya kazi chinichini. Gusa yoyote ambayo haijatolewa ili kuirekebisha.</string>
+    <string name="perm_location_title">Mahali</string>
+    <string name="perm_location_granted">Imetolewa — eneo lako linaweza kushirikiwa</string>
+    <string name="perm_location_denied">Haijatolewa — gusa ili uruhusu ufikiaji wa mahali</string>
+    <string name="perm_background_location_title">Mahali pa Chinichini</string>
+    <string name="perm_background_location_granted">Imetolewa — eneo linaendelea kushirikiwa wakati programu imefungwa</string>
+    <string name="perm_background_location_denied">Haijatolewa — gusa ili uruhusu ufikiaji wa kila wakati katika mipangilio</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Imetolewa — hutumika kuchanganua nambari za QR za mwaliko</string>
+    <string name="perm_camera_denied">Haijatolewa — gusa ili uruhusu kamera</string>
+    <string name="perm_notifications_title">Arifa</string>
+    <string name="perm_notifications_granted">Imetolewa — arifa na sasisho za hali zinaweza kuonyeshwa</string>
+    <string name="perm_notifications_denied">Haijatolewa — gusa ili uruhusu arifa</string>
+
+    <!-- Vitengo &amp; Maonyesho -->
+    <string name="settings_speed_units">Vitengo vya Kasi</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metriki (km/h)</string>
+    <string name="settings_elevation_units">Vitengo vya Kuinuka</string>
+    <string name="settings_elevation_imperial">Imperial (futi)</string>
+    <string name="settings_elevation_metric">Metriki (mita)</string>
+    <string name="settings_distance_units">Vitengo vya Umbali</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metriki (m/km)</string>
+    <string name="settings_time_format">Muundo wa Saa</string>
+    <string name="settings_time_24h">Saa 24 (13:30)</string>
+    <string name="settings_time_12h">Saa 12 (1:30 PM)</string>
+
+    <!-- Uhifadhi -->
+    <string name="settings_retention_location">Data ya Mahali</string>
+    <string name="settings_retention_location_subtitle">Muda wa kuweka data ya eneo la anwani ndani ya kifaa</string>
+    <string name="settings_clear_all_location">Futa Data Zote za Mahali</string>
+    <string name="settings_retention_messages">Ujumbe</string>
+    <string name="settings_retention_messages_subtitle">Muda wa kuweka ujumbe uliopokelewa ndani ya kifaa</string>
+    <string name="settings_clear_all_messages">Futa Ujumbe Wote</string>
+
+    <!-- Muonekano -->
+    <string name="settings_customize_nav">Badilisha Urambazaji</string>
+    <string name="settings_customize_nav_subtitle">Chagua na upange upya vichupo vya chini</string>
+    <string name="settings_start_page">Ukurasa wa Kuanza</string>
     <string name="settings_language">Lugha</string>
     <string name="settings_language_title">Lugha ya Programu</string>
     <string name="settings_language_system">Chaguo-msingi la mfumo</string>
 
-    <string name="common_ok">Sawa</string>
+    <!-- Hifadhi Nakala &amp; Funguo -->
+    <string name="settings_export_backup">Hamisha Hifadhi Nakala</string>
+    <string name="settings_export_backup_subtitle">Hifadhi ufunguo wako wa kibinafsi na anwani kwenye faili. Weka faili hii salama!</string>
+    <string name="settings_import_backup">Ingiza Hifadhi Nakala</string>
+    <string name="settings_import_backup_subtitle">Rejesha kutoka kwa faili iliyohamishwa hapo awali</string>
+    <string name="settings_view_private_key">Angalia Ufunguo wa Kibinafsi</string>
+    <string name="settings_view_private_key_subtitle">Onyesha ufunguo wako wa utambulisho wa hex wa herufi 64</string>
+
+    <!-- Kuhusu -->
+    <string name="settings_about_locapeer">Kuhusu LocaPeer</string>
+    <string name="settings_about_subtitle">Toleo, hali ya relay, chanzo wazi</string>
+
+    <!-- Mazungumzo -->
+    <string name="settings_edit_display_name">Hariri Jina la Maonyesho</string>
+    <string name="settings_display_name_label">Jina la Maonyesho</string>
+    <string name="settings_my_invite_qr">QR yangu ya Mwaliko</string>
+    <string name="settings_invite_qr_subtitle">Wengine wanaweza kuchanganua hii ili kuanza kukufuatilia.</string>
+    <string name="settings_invite_qr_cd">QR ya Mwaliko</string>
+    <string name="settings_private_key_title">Ufunguo wa Kibinafsi</string>
+    <string name="settings_private_key_warning">Weka hii salama. Mtu yeyote aliye na ufunguo huu anaweza kukuiga.</string>
+    <string name="settings_clear_location_title">Futa Historia ya Mahali?</string>
+    <string name="settings_clear_location_message">Pings zote za eneo zilizohifadhiwa zitafutwa kabisa.</string>
+    <string name="settings_clear_messages_title">Futa Historia ya Ujumbe?</string>
+    <string name="settings_clear_messages_message">Ujumbe wote uliohifadhiwa utafutwa kabisa.</string>
+    <string name="settings_encrypted_backup_title">Hifadhi Nakala Iliyosimbwa</string>
+    <string name="settings_encrypted_backup_message">Hifadhi nakala hii imesimbwa. Tafadhali ingiza nenosiri ili uendelee.</string>
+    <string name="settings_select_restore_title">Chagua Data ya Kurejesha</string>
+    <string name="settings_select_export_title">Chagua Data ya Kuhamisha</string>
+    <string name="settings_export_password_hint">Kwa hiari weka nenosiri ili kusimba faili yako ya hifadhi nakala.</string>
+    <string name="settings_backup_password_optional">Nenosiri la Hifadhi Nakala (Hiari)</string>
+    <string name="settings_select_sections">Chagua sehemu za kujumuisha:</string>
+    <string name="settings_choose_file_location">Chagua eneo la faili</string>
+    <string name="settings_not_in_backup">Haipo kwenye hifadhi nakala hii</string>
+    <string name="settings_enable_supervised_title">Wezesha Njia ya Kusimamiwa</string>
+    <string name="settings_enable_supervised_message">Chagua rika ambaye atafanya kama msimamizi. Lazima waidhinishe ufikiaji wa mipangilio kutoka kwa kifaa chao.</string>
+    <string name="settings_no_peers_found">Hakuna rika aliyepatikana. Ongeza rika kwanza kwa kuchanganua nambari yake ya QR ya mwaliko.</string>
+    <string name="settings_disable_supervised_title">Zima Njia ya Kusimamiwa?</string>
+    <string name="settings_disable_supervised_message">Mipangilio itapatikana bila idhini ya msimamizi.</string>
+
+    <!-- ── Kawaida zaidi ─────────────────────────────────────────── -->
+    <string name="common_remove">Ondoa</string>
+    <string name="common_name">Jina</string>
+    <string name="common_search">Tafuta</string>
+    <string name="common_sort">Panga</string>
+
+    <!-- Maelezo ya maudhui (yaliyoshirikiwa) -->
+    <string name="cd_message">Ujumbe</string>
+    <string name="cd_show_on_map">Onyesha kwenye ramani</string>
+    <string name="cd_more_options">Chaguzi zaidi</string>
+
+    <!-- ── Skrini ya anwani ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d imechaguliwa</item>
+        <item quantity="other">%1$d zimechaguliwa</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Ghairi uteuzi</string>
+    <string name="contacts_cd_select_all">Chagua zote</string>
+    <string name="contacts_cd_deselect_all">Acha kuchagua zote</string>
+    <string name="contacts_cd_qr_invite">QR / Mwaliko</string>
+    <string name="contacts_cd_pending_requests">Maombi Yanayosubiri</string>
+    <string name="contacts_sort_last_seen">Imeonekana Mara ya Mwisho</string>
+    <string name="contacts_search_placeholder">Tafuta anwani…</string>
+    <string name="contacts_empty_title">Bado hakuna anwani</string>
+    <string name="contacts_empty_subtitle">Changanua nambari ya QR ili uungane na mtu na uanze kushiriki maeneo.</string>
+    <string name="contacts_scan_qr">Changanua Nambari ya QR</string>
+    <string name="contacts_bulk_delete_messages">Futa Ujumbe</string>
+    <string name="contacts_bulk_delete_locations">Futa Maeneo</string>
+    <string name="contacts_last_seen">Imeonekana mara ya mwisho: %1$s</string>
+    <string name="contacts_no_location_yet">Bado hakuna data ya eneo</string>
+    <string name="contacts_view_sharing_settings">Mipangilio ya Kushiriki</string>
+    <string name="contacts_view_location_history">Historia ya Mahali</string>
+    <string name="contacts_rename_contact">Badilisha Jina la Anwani</string>
+    <string name="contacts_on_contact_device">Kwenye Kifaa cha Anwani</string>
+    <string name="contacts_delete_my_messages_title">Futa Ujumbe Wangu</string>
+    <string name="contacts_delete_locations_title">Futa Maeneo Yaliyoshirikiwa</string>
+    <string name="contacts_remove_contact_title">Ondoa Anwani</string>
+    <string name="contacts_leave_title">Futa Anwani na Data</string>
+    <string name="contacts_rename_title">Badilisha Jina la Anwani</string>
+    <string name="contacts_remove_contact_body">Je, unamwondoa %1$s kutoka kwa anwani zako? Historia yake ya eneo pia itafutwa ndani ya kifaa.</string>
+    <string name="contacts_leave_body">Hii itakuondoa kwenye anwani za %1$s na kufuta ujumbe wako wote na data ya eneo kutoka kwa kifaa chake. Pia utapoteza ufikiaji wa eneo lake.</string>
+    <string name="contacts_delete_my_messages_body">Hii itafuta ujumbe wote uliotuma kutoka kwa kifaa cha %1$s. Hii haiwezi kutenguliwa.</string>
+    <string name="contacts_delete_locations_body">Hii itafuta data yote ya eneo uliyoshiriki kutoka kwa kifaa cha %1$s. Hii haiwezi kutenguliwa.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Ondoa Anwani</item>
+        <item quantity="other">Ondoa Anwani %1$d</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Ondoa anwani hii? Historia yake ya eneo pia itafutwa ndani ya kifaa.</item>
+        <item quantity="other">Ondoa anwani %1$d? Historia zao za eneo pia zitafutwa ndani ya kifaa.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Futa kwa mbali ujumbe wote uliotuma kutoka kwa kifaa cha anwani hii? Hii haiwezi kutenguliwa.</item>
+        <item quantity="other">Futa kwa mbali ujumbe wote uliotuma kutoka kwa vifaa vya anwani %1$d? Hii haiwezi kutenguliwa.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Futa kwa mbali historia yote ya eneo uliyoshiriki kutoka kwa kifaa cha anwani hii? Hii haiwezi kutenguliwa.</item>
+        <item quantity="other">Futa kwa mbali historia yote ya eneo uliyoshiriki kutoka kwa vifaa vya anwani %1$d? Hii haiwezi kutenguliwa.</item>
+    </plurals>
+
+    <string name="common_continue">Endelea</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Rejesha kutoka kwa Hifadhi Nakala</string>
+    <string name="onboarding_restore_message">Bandika ufunguo wako wa kibinafsi wa hex wa herufi 64 ili kurejesha utambulisho na anwani zako.</string>
+    <string name="onboarding_private_key_hex">Ufunguo wa kibinafsi (hex)</string>
+    <string name="onboarding_tagline">Ushiriki wa eneo la faragha na anwani.\nHakuna akaunti. Hakuna seva za wamiliki.</string>
+    <string name="onboarding_feature_e2e_title">Imeandikwa Mwisho hadi Mwisho</string>
+    <string name="onboarding_feature_e2e_subtitle">Eneo lako limeandikwa kwenye kifaa</string>
+    <string name="onboarding_feature_servers_title">Hakuna Seva za Wamiliki</string>
+    <string name="onboarding_feature_servers_subtitle">Inatumia relay za Nostr zilizo wazi kama usafirishaji salama - data yako inakaa imesimbwa na faragha</string>
+    <string name="onboarding_feature_phone_title">Inakaa Kwenye Simu Yako</string>
+    <string name="onboarding_feature_phone_subtitle">Historia yako kamili ya eneo inakaa kwenye kifaa chako. Nafasi yako ya sasa pekee ndiyo inayoshirikiwa na anwani zilizochaguliwa</string>
+    <string name="onboarding_name_prompt">Anwani zako zikuite nani?</string>
+    <string name="onboarding_name_placeholder">kwa mfano, Mama, Baba, Alice…</string>
+    <string name="onboarding_get_started">Anza</string>
+    <string name="onboarding_restore_from_backup">Rejesha Kutoka kwa Hifadhi Nakala</string>
+    <string name="onboarding_key_note">Ufunguo wako wa kibinafsi hutolewa ndani ya kifaa na hauachi kifaa hiki.</string>
+    <string name="onboarding_permissions_title">Ruhusa</string>
+    <string name="onboarding_permissions_desc">LocaPeer inahitaji ufikiaji wa mahali ili kushiriki nafasi yako, ufikiaji wa kamera ili kuchanganua nambari za mwaliko, na ufikiaji wa arifa kwa hali ya chinichini. Ufikiaji wa shughuli za kimwili ni hiari - inasaidia kuweka lebo kwenye harakati zako (kutembea, kuendesha gari) kwa usahihi zaidi.</string>
+    <string name="onboarding_before_ask_title">Kabla hatujauliza</string>
+    <string name="onboarding_before_ask_intro">Utaona madokezo machache ya mfumo yafuatayo:</string>
+    <string name="onboarding_before_ask_location">• Mahali - inahitajika, kushiriki nafasi yako.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - kuchanganua nambari za mwaliko.</string>
+    <string name="onboarding_before_ask_notifications">• Arifa - kwa hali ya chinichini.</string>
+    <string name="onboarding_before_ask_activity">• Shughuli za kimwili - hiari. Inaruhusu LocaPeer kutofautisha kutembea, kuendesha gari na kusimama tuli kwa usahihi zaidi. Unaweza kuruka na kuiwasha baadaye katika Mipangilio.</string>
+    <string name="onboarding_grant_permissions">Toa Ruhusa</string>
+    <string name="onboarding_bg_location_title">Mahali pa Chinichini</string>
+    <string name="onboarding_bg_location_desc">Ili kuweka anwani zako zikiwa zimesasishwa wakati programu imefungwa, tafadhali chagua \'Ruhusu wakati wote\' katika skrini inayofuata.</string>
+    <string name="onboarding_bg_location_error">Mahali pa chinichini inahitajika ili kusasisha anwani zako wakati programu imefungwa. Tafadhali jaribu tena na uchague \'Ruhusu wakati wote\'.</string>
+    <string name="onboarding_configure_location">Sanidi Mahali</string>
+    <string name="onboarding_battery_title">Betri</string>
+    <string name="onboarding_battery_desc">Android inaweza kusitisha LocaPeer ili kuokoa betri. Ili kuhakikisha sasisho za kuaminika, tafadhali ondoa LocaPeer kwenye uboreshaji.</string>
+    <string name="onboarding_disable_optimizations">Zima Uboreshaji</string>
+    <string name="onboarding_done_title">Tayari!</string>
+    <string name="onboarding_done_desc">Mtandao wako wa faragha wa mahali uko tayari.</string>
+    <string name="onboarding_start_using">Anza Kutumia LocaPeer</string>
+
+    <string name="common_try_again">Jaribu Tena</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Changanua Mwaliko</string>
+    <string name="scan_camera_needed">Ruhusa ya kamera inahitajika ili kuchanganua nambari za QR.</string>
+    <string name="scan_grant_permission">Toa Ruhusa</string>
+    <string name="scan_add_contact_title">Ongeza anwani?</string>
+    <string name="scan_add_contact_message">Hii itakuunganisha na %1$s na kuanza kushiriki eneo lenu.</string>
+    <string name="scan_add_share">Ongeza &amp; Shiriki</string>
+    <string name="scan_request_sent_title">Ombi Limeitwa!</string>
+    <string name="scan_request_sent_message">Ombi limetumwa kwa %1$s. Mtaunganishwa pindi watakapokubali.</string>
+    <string name="scan_failed">Changanuo limefeli: %1$s</string>
+
     <string name="cd_back">Nyuma</string>
+    <string name="common_review">Kagua</string>
+    <string name="common_decline">Kataa</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Tuma/Pokea</string>
+    <string name="role_send">Tuma</string>
+    <string name="role_receive">Pokea</string>
+    <string name="role_none">Hakuna Kushiriki</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Mwaliko Wangu</string>
+    <string name="invite_tab_add_contact">Ongeza Anwani</string>
+    <string name="invite_your_qr_title">Nambari Yako ya QR</string>
+    <string name="invite_your_qr_subtitle">Mruhusu mtu achanganue hii ili afuatilie eneo lako</string>
+    <string name="invite_qr_cd">Nambari yako ya QR</string>
+    <string name="invite_qr_error">Hitilafu wakati wa kutengeneza QR</string>
+    <string name="invite_share_link">Shiriki Kiungo cha Mwaliko</string>
+    <string name="invite_encryption_note">Eneo lako litasimbwa haswa kwa kifaa cha anayeichanganua.</string>
+    <string name="invite_camera_required_title">Ufikiaji wa Kamera Unahitajika</string>
+    <string name="invite_camera_required_message">Toa ruhusa ya kamera ili kuchanganua nambari ya QR.</string>
+    <string name="invite_point_camera">Elekeza kamera kwenye QR ya LocaPeer</string>
+    <string name="invite_paste_title">Au Bandika Kiungo cha Mwaliko</string>
+    <string name="invite_process_link">Mchakato wa Kiungo</string>
+    <string name="invite_fallback_name">Anwani</string>
+    <string name="invite_success_message">Mtaunganishwa na %1$s mara watakapokubali.</string>
+    <string name="invite_confirm_add_title">Ongeza %1$s?</string>
+    <string name="invite_confirm_add_message">Waongeze kwenye anwani zako na ushiriki eneo?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Hakuna maombi yanayosubiri</string>
+    <string name="pending_requesting">Inaomba: %1$s · %2$s</string>
+    <string name="pending_role_change">Ombi la mabadiliko ya jukumu · %1$s</string>
+    <string name="pending_new_request">Ombi jipya la ushiriki · %1$s</string>
+
+    <string name="common_save_changes">Hifadhi Mabadiliko</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Sasisha Mipangilio ya Kushiriki</string>
+    <string name="incoming_new_title">Ombi Jipya la Anwani</string>
+    <string name="incoming_update_subtitle">%1$s anataka kusasisha jinsi unavyoshiriki. Kagua mipangilio hapa chini.</string>
+    <string name="incoming_new_subtitle">%1$s amekuongeza kama anwani! Sasa unaweza kuchagua nini cha kushiriki naye.</string>
+    <string name="incoming_section_location">Mahali</string>
+    <string name="incoming_share_my_location">Shiriki eneo langu na %1$s</string>
+    <string name="incoming_share_my_location_sub">Wataweza kuona mahali ulipo</string>
+    <string name="incoming_see_their_location">Angalia eneo la %1$s</string>
+    <string name="incoming_see_their_location_sub">Utaweza kuona mahali walipo</string>
+    <string name="incoming_section_messaging">Ujumbe</string>
+    <string name="incoming_allow_messages">Ruhusu Ujumbe</string>
+    <string name="incoming_allow_messages_sub">Pokea ujumbe wa gumzo kutoka kwa %1$s</string>
+
+    <string name="common_request">Omba</string>
+    <string name="common_edit">Hariri</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Mipangilio ya Anwani</string>
+    <string name="peer_section_roles">Majukumu ya Kushiriki Mahali</string>
+    <string name="peer_send_on">%1$s anaweza kuona eneo lako</string>
+    <string name="peer_send_off">Haushiriki eneo lako na %1$s</string>
+    <string name="peer_receive_title">Pokea Mahali pa %1$s</string>
+    <string name="peer_receive_on">Unaweza kuona eneo la %1$s</string>
+    <string name="peer_receive_off">Hauna ufikiaji wa eneo la %1$s</string>
+    <string name="peer_section_privacy">Udhibiti wa Faragha &amp; Kushiriki</string>
+    <string name="peer_pause_sharing">Sitisha Kushiriki</string>
+    <string name="peer_pause_sub">Acha kutuma eneo lako kwa %1$s kwa muda</string>
+    <string name="peer_precision">Usahihi wa Mahali</string>
+    <string name="peer_precision_exact_sub">Viwianishi vya GPS halisi</string>
+    <string name="peer_precision_suburb_sub">Mahali takriban (ngazi ya Mtaa)</string>
+    <string name="peer_always_sharing">Inashiriki wakati wote</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">Sheria %1$d ya kushiriki inayofanya kazi</item>
+        <item quantity="other">Sheria %1$d za kushiriki zinazofanya kazi</item>
+    </plurals>
+    <string name="peer_section_alerts">Arifa &amp; Ufuatiliaji</string>
+    <string name="peer_sos_contact">Anwani ya SOS</string>
+    <string name="peer_sos_sub">Pokea arifa zako za dharura hata kama ushiriki umesitishwa</string>
+    <string name="peer_missed_alert">Arifa ya Mahali Ilivyokosa</string>
+    <string name="peer_missed_on">Niarifu ikiwa %1$s ataacha kuripoti eneo lake</string>
+    <string name="peer_requires_access">Inahitaji ufikiaji wa eneo la %1$s</string>
+    <string name="peer_proximity_alert">Arifa ya Ukaribu</string>
+    <string name="peer_proximity_sub">Niarifu %1$s akiwa karibu</string>
+    <string name="peer_alert_radius">Radius ya Arifa</string>
+    <string name="peer_alert_schedule">Ratiba ya Arifa</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">Sheria %1$d inayofanya kazi</item>
+        <item quantity="other">Sheria %1$d zinazofanya kazi</item>
+    </plurals>
+    <string name="peer_geofences_sub">Sanidi kanda za kuwasili na kuondoka kwa %1$s</string>
+    <string name="peer_supervise">Simamia Kifaa Hiki</string>
+    <string name="peer_supervise_on">Unapokea na kuidhinisha maombi ya kufungua kutoka kwa %1$s</string>
+    <string name="peer_supervise_off">Mruhusu %1$s akutumie maombi ya kufungua njia iliyosimamiwa</string>
+    <string name="peer_messaging_sub">Washa/zima ujumbe wa gumzo kutoka kwa %1$s</string>
+    <string name="peer_section_history">Historia ya Mwendo</string>
+    <string name="peer_location_history">Historia ya Mahali</string>
+    <string name="peer_location_history_sub">Angalia historia ya mwendo na ripoti ya ramani kwa %1$s</string>
+    <string name="peer_section_retention">Uhifadhi wa Data ya Mbali</string>
+    <string name="peer_retention_location_sub">Muda gani %1$s anaweka historia yako ya eneo</string>
+    <string name="peer_purge_location">Futa Data Zote za Mahali kutoka kwa %1$s</string>
+    <string name="peer_retention_messages_sub">Muda gani %1$s anaweka ujumbe uliotuma</string>
+    <string name="peer_purge_messages">Futa Ujumbe Wote kutoka kwa %1$s</string>
+    <string name="peer_precision_exact">GPS Halisi</string>
+    <string name="peer_precision_exact_desc">Viwianishi sahihi</string>
+    <string name="peer_precision_suburb">Mtaa (~1km)</string>
+    <string name="peer_precision_suburb_desc">Ngazi ya jirani pekee</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Futa mazungumzo %1$d?</item>
+        <item quantity="other">Futa mazungumzo %1$d?</item>
+    </plurals>
+    <string name="conv_delete_locally">Futa Kwenye Kifaa</string>
+    <string name="conv_delete_locally_sub">Huondoa mazungumzo kutoka kwa kifaa chako pekee.</string>
+    <string name="conv_delete_both">Futa Kwenye Kifaa/Kutoka kwa Anwani</string>
+    <string name="conv_bulk_delete_both_sub">Hufuta mazungumzo kwenye kifaa na kutoka kwa anwani yako.</string>
+    <string name="conv_delete_both_sub">Hufuta mazungumzo kwenye kifaa na kuanzisha ombi la kufuta kwenye kifaa cha anwani kwa mazungumzo.</string>
+    <string name="conv_cd_exit_selection">Ondoka kwenye uteuzi</string>
+    <string name="conv_cd_select_all">Chagua Zote</string>
+    <string name="conv_cd_new_message">Ujumbe mpya</string>
+    <string name="conv_sort_date">Tarehe</string>
+    <string name="conv_sort_unread">Haijasomwa</string>
+    <string name="conv_search_placeholder">Tafuta mazungumzo…</string>
+    <string name="conv_tab_chats">Gumzo</string>
+    <string name="conv_tab_archived">Yaliyohifadhiwa</string>
+    <string name="conv_mark_read">Weka Kama Imesomwa</string>
+    <string name="conv_archive">Hifadhi</string>
+    <string name="conv_unarchive">Ondoa kwenye hifadhi</string>
+    <string name="conv_empty_no_results">Hakuna matokeo kwa \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Jaribu neno tofauti la utafutaji</string>
+    <string name="conv_empty_archived_title">Hakuna gumzo zilizohifadhiwa</string>
+    <string name="conv_empty_archived_sub">Hifadhi gumzo ili kuweka kikasha chako kikiwa safi</string>
+    <string name="conv_empty_title">Bado hakuna ujumbe</string>
+    <string name="conv_empty_sub">Fungua ramani na uguse mtu\nilianze mazungumzo</string>
+    <string name="conv_delete_title">Futa mazungumzo?</string>
+    <string name="conv_delete_message">Je, ungependa kufuta vipi mazungumzo haya na %1$s?</string>
+    <string name="conv_messages_blocked">Ujumbe umezuiwa</string>
+    <string name="conv_preview_mine">Wewe: %1$s</string>
+    <string name="conv_new_message_title">Ujumbe Mpya</string>
+    <string name="conv_picker_empty">Bado hakuna anwani. Changanua nambari ya QR ili uongeze anwani.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Futa historia ya gumzo?</string>
+    <string name="chat_clear_message">Je, ungependa kufuta vipi mazungumzo haya na %1$s?</string>
+    <string name="chat_clear_locally">Futa Kwenye Kifaa</string>
+    <string name="chat_clear_both">Futa Kwenye Kifaa/Kutoka kwa Anwani</string>
+    <string name="chat_clear_both_sub">Hufuta gumzo kwenye kifaa na kuanzisha ombi la kufuta kwa %1$s kwa ujumbe uliotuma.</string>
+    <string name="chat_cd_options">Chaguzi</string>
+    <string name="chat_clear_history_menu">Futa Historia ya Gumzo</string>
+    <string name="chat_typing">%1$s anaandika…</string>
+    <string name="chat_blocked_banner">Umeziba ujumbe kutoka kwa %1$s. Nenda kwa Anwani ili ufungue.</string>
+    <string name="chat_delete_msg_title">Futa ujumbe?</string>
+    <string name="chat_delete_msg_message">Je, ungependa kufuta vipi ujumbe huu?</string>
+    <string name="chat_delete_from_contact">Futa kutoka kwa anwani</string>
+    <string name="chat_delete_from_contact_sub">Hufuta gumzo kutoka kwa kifaa cha anwani.</string>
+    <string name="chat_delete_both_sub">Huondoa gumzo kwenye kifaa na kuifuta kiotomatiki kutoka kwa kifaa cha anwani.</string>
+    <string name="chat_cd_share_location">Shiriki Mahali</string>
+    <string name="chat_input_placeholder">Ujumbe…</string>
+    <string name="chat_cd_send">Tuma</string>
+
+    <string name="common_close">Funga</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Washa SOS?</string>
+    <string name="map_sos_deactivate_title">Zima SOS?</string>
+    <string name="map_sos_activate_msg">Hii itatangaza eneo lako kila baada ya sekunde 15 kwa anwani zako za SOS zilizoteuliwa hadi itakapozimwa.</string>
+    <string name="map_sos_deactivate_msg">Hii itasimamisha utangazaji wa eneo la kipaumbele cha juu kwa anwani zako za dharura.</string>
+    <string name="map_activate">Washa</string>
+    <string name="map_deactivate">Zima</string>
+    <string name="map_cd_style">Mtindo wa Ramani</string>
+    <string name="map_cd_show_geofences">Onyesha maeneo ya kijiografia</string>
+    <string name="map_cd_hide_geofences">Ficha maeneo ya kijiografia</string>
+    <string name="map_cd_follow">Nifuate</string>
+    <string name="map_cd_friends">Marafiki</string>
+    <string name="map_no_friends">Bado hakuna marafiki wanaofuatiliwa</string>
+    <string name="map_you">Wewe</string>
+    <string name="map_cd_go_my_location">Nenda mahali nilipo</string>
+    <string name="map_sos_active">⚠ SOS IMEWASHWA</string>
+    <string name="map_away">Mbali</string>
+    <string name="map_no_location_yet">Bado hakuna mahali</string>
+    <string name="map_cd_go_location">Nenda mahali</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS IMEWASHWA</string>
+    <string name="map_overdue">Imechelewa - hakuna sasisho la hivi karibuni</string>
+    <string name="map_stat_last_seen">Imeonekana mara ya mwisho</string>
+    <string name="map_stat_battery">Betri</string>
+    <string name="map_stat_accuracy">Usahihi</string>
+    <string name="map_stat_motion">Mwendo</string>
+    <string name="map_stat_speed">Kasi</string>
+    <string name="map_stat_elevation">Kuinuka</string>
+
+    <string name="common_ok">Sawa</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Historia: %1$s</string>
+    <string name="history_select_person">Chagua Mtu</string>
+    <string name="history_person_label">Mtu</string>
+    <string name="history_cd_prev_day">Siku Iliyotangulia</string>
+    <string name="history_cd_next_day">Siku Inayofuata</string>
+    <string name="history_time_filter">Kichujio cha Saa:</string>
+    <string name="history_cd_reset_time">Rejesha Saa</string>
+    <string name="history_tab_list">Orodha</string>
+    <string name="history_empty_title">Hakuna historia ya siku hii</string>
+    <string name="history_empty_sub">Jaribu kuchagua tarehe tofauti au uangalie muunganisho wako.</string>
+    <string name="history_start_time">Saa ya Kuanza</string>
+    <string name="history_end_time">Saa ya Kumaliza</string>
+    <string name="history_no_data_title">Hakuna data ya eneo</string>
+    <string name="history_no_data_sub">Hakuna pings zilizorekodiwa kwa siku hii au kipindi hiki.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">Ping %1$d imerekodiwa</item>
+        <item quantity="other">Pings %1$d zimerekodiwa</item>
+    </plurals>
+    <string name="history_cd_dismiss">Ondoa</string>
+    <string name="history_accuracy_label">±%1$s usahihi</string>
+    <string name="history_emergency_sos">Ishara ya dharura ya SOS</string>
+    <string name="history_detail_location">Mahali</string>
+    <string name="history_detail_coordinates">Viwianishi</string>
+    <string name="history_within">ndani ya ±%1$s</string>
+    <string name="history_detail_movement">Mwendo</string>
+    <string name="history_movement_desc">%1$s %2$s kuelekea %3$s</string>
+
+    <string name="common_create">Tengeneza</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Ongeza eneo la kijiografia</string>
+    <string name="geo_cd_assign">Panga eneo la kijiografia</string>
+    <string name="geo_unknown">Haijulikani</string>
+    <string name="geo_empty_title">Hakuna maeneo ya kijiografia</string>
+    <string name="geo_empty_sub">Gusa + ili utengeneze eneo la kijiografia, kisha panga anwani kwake kutoka kwa mipangilio yao ya kushiriki.</string>
+    <string name="geo_delete_title">Futa eneo la kijiografia?</string>
+    <string name="geo_delete_simple">Futa \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" imepangwa kwa anwani %2$d. Kuifuta kunaondoa mipango hiyo pia.</item>
+        <item quantity="other">\"%1$s\" imepangwa kwa anwani %2$d. Kuifuta kunaondoa mipango hiyo pia.</item>
+    </plurals>
+    <string name="geo_for_contact">Maeneo ya kijiografia kwa %1$s</string>
+    <string name="geo_empty_contact_title">Hakuna maeneo ya kijiografia ya anwani</string>
+    <string name="geo_empty_contact_sub">Gusa + ili upange eneo la kijiografia na uchague ikiwa utaarifu unapoingia, unapotoka, au yote mawili.</string>
+    <string name="geo_no_areas_title">Bado hakuna maeneo ya kijiografia</string>
+    <string name="geo_no_areas_msg">Tengeneza eneo la kijiografia kwanza kutoka kwa skrini ya Maeneo ya Kijiografia, kisha upange hapa.</string>
+    <string name="geo_radius_label">Radius ya %1$s</string>
+    <string name="geo_contacts_label">Anwani: %1$s</string>
+    <string name="geo_no_contacts_assigned">Hakuna anwani zilizopangwa</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">Sheria %1$d</item>
+        <item quantity="other">Sheria %1$d</item>
+    </plurals>
+    <string name="geo_trigger_enter">Ingia</string>
+    <string name="geo_trigger_exit">Toka</string>
+    <string name="geo_trigger_both">Zote mbili</string>
+    <string name="geo_edit_title">Hariri Eneo la Kijiografia</string>
+    <string name="geo_new_title">Eneo Jipya la Kijiografia</string>
+    <string name="geo_cd_my_location">Mahali nilipo</string>
+    <string name="geo_cd_radius_increase">Ongeza radius</string>
+    <string name="geo_cd_radius_decrease">Punguza radius</string>
+    <string name="geo_hint_tap">Gusa au ushikilie ramani ili uweke</string>
+    <string name="geo_hint_move">Finya ili kukuza • Shikilia au buruta pini ili kuisogeza</string>
+    <string name="geo_basic_info">Maelezo ya Msingi</string>
+    <string name="geo_search_title">Tafuta kwa Anwani</string>
+    <string name="geo_search_label">Anwani au mahali</string>
+    <string name="geo_search_placeholder">kwa mfano, 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">Hakuna anwani inayolingana iliyopatikana</string>
+    <string name="geo_cd_search">Tafuta</string>
+    <string name="geo_name_placeholder">kwa mfano, Nyumbani, Kazini</string>
+    <string name="geo_name_required">Jina linahitajika</string>
+    <string name="geo_latitude">Latitudo</string>
+    <string name="geo_longitude">Longitudo</string>
+    <string name="geo_lat_range">-90 hadi 90</string>
+    <string name="geo_lng_range">-180 hadi 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Ingiza %1$d hadi %2$d m</string>
+    <string name="geo_edit_assignment">Hariri Mpango</string>
+    <string name="geo_assign_title">Panga Eneo la Kijiografia</string>
+    <string name="geo_select_area">Chagua Eneo la Kijiografia</string>
+    <string name="geo_trigger_title">Anzisha Arifa Unapo…</string>
+    <string name="geo_add_rule">Ongeza Sheria</string>
+    <string name="geo_alerts_all_times">Arifa hufanya kazi wakati wote. Ongeza sheria ili kuzuia wakati arifa zinatumwa.</string>
+    <string name="geo_assign_action">Panga</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Arifa za Ukaribu</string>
+    <string name="prox_empty_title">Hakuna watu wanaofuatiliwa</string>
+    <string name="prox_empty_sub">Changanua mwaliko wa mtu wa QR kutoka kwa kichupo cha Changanua\nilianze kufuatilia eneo lao</string>
+    <string name="prox_intro">Pata arifa wakati mtu anayefuatiliwa anapofika umbali uliochaguliwa kutoka kwako.</string>
+    <string name="prox_alert_within">Arifu ukiwa ndani ya %1$s</string>
+    <string name="prox_alerts_off">Arifa zimezimwa</string>
+    <string name="prox_alert_radius">Radius ya arifa</string>
+    <string name="prox_edit_schedule">Hariri Ratiba</string>
+    <string name="prox_rules">Sheria</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Ratiba ya %1$s</string>
+    <string name="schedule_cd_add_rule">Ongeza sheria</string>
+    <string name="schedule_empty_title">Hakuna sheria za ratiba</string>
+    <string name="schedule_empty_global">Mahali panashirikiwa wakati wote. Ongeza sheria ili kuzuia wakati ushiriki unafanya kazi.</string>
+    <string name="schedule_empty_peer">Mahali hushirikiwa na %1$s wakati wote. Ongeza sheria ili kuzuia ni lini.</string>
+    <string name="schedule_active_hint">Inafanya kazi wakati sheria yoyote inalingana na wakati wa sasa. Tupu = inawaka wakati wote.</string>
+    <string name="schedule_all_day">Siku nzima</string>
+    <string name="schedule_plus_one_day"> (+siku 1)</string>
+    <string name="schedule_rule_number">Sheria %1$d</string>
+    <string name="schedule_cd_delete_rule">Futa sheria</string>
+    <string name="schedule_edit_rule">Hariri Sheria</string>
+    <string name="schedule_label_optional">Lebo (hiari)</string>
+    <string name="schedule_label_placeholder">kwa mfano, Saa za kazi, Wikendi</string>
+    <string name="schedule_active_days">Siku Zinazotumika</string>
+    <string name="schedule_time_window">Dirisha la Wakati</string>
+    <string name="schedule_start">Anza</string>
+    <string name="schedule_end">Mwisho</string>
+    <string name="schedule_overnight">Usiku kucha: inatumika kuanzia %1$s hadi %2$s siku inayofuata</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Kifaa Kinasimamiwa</string>
+    <string name="gate_message">Idhini ya msimamizi inahitajika ili kufikia mipangilio.</string>
+    <string name="gate_request_access">Omba Ufikiaji</string>
+    <string name="gate_waiting">Inasubiri idhini ya msimamizi…</string>
+    <string name="gate_denied">Ufikiaji umekataliwa na msimamizi.</string>
+    <string name="gate_timed_out">Ombi limeisha muda wake. Msimamizi hakujibu.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Milele</string>
+    <string name="retention_keep_for">Weka kwa: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">Siku %1$d</item>
+        <item quantity="other">Siku %1$d</item>
+    </plurals>
+
+    <string name="common_select">Chagua</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Chagua Mahali Maalum</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Chagua ni vichupo vipi vinaonekana kwenye upau wa chini na mpangilio wake. Ramani inajumuishwa kila wakati.</string>
+    <string name="customize_cd_move_up">Sogeza juu</string>
+    <string name="customize_cd_move_down">Sogeza chini</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Toleo %1$s (jengo %2$d)</string>
+    <string name="about_tagline">Ushiriki wa faragha wa mahali na watu unaowaamini. Hakuna akaunti, hakuna wingu, hakuna ufuatiliaji na sisi.</string>
+    <string name="about_relay_connections">Viunganisho vya Relay</string>
+    <string name="about_connected">Imeunganishwa</string>
+    <string name="about_disconnected">Imekatika</string>
+    <string name="about_open_source">Maktaba za Chanzo Wazi</string>
+    <string name="about_lib_osmdroid_desc">Utoaji wa ramani kulingana na OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Usafirishaji wa WebSocket kwa relay ya Nostr</string>
+    <string name="about_lib_compose_desc">Mfumo wa UI</string>
+    <string name="about_lib_hilt_desc">Uingizaji wa utegemezi</string>
+    <string name="about_lib_room_desc">Hifadhidata ya ndani</string>
+    <string name="about_map_attribution">Data ya ramani © wachangiaji wa OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Kubali</string>
+    <string name="notif_someone">Mtu</string>
+    <string name="notif_sos_title">SOS kutoka kwa %1$s!</string>
+    <string name="notif_sos_text">%1$s amewasha SOS saa (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s anataka kuwa msimamizi wako</string>
+    <string name="notif_supervisor_request_text">Kubali ili kuruhusu maombi ya idhini ya kufungua kutoka kwa kifaa hiki</string>
+    <string name="notif_supervisor_request_big">Kubali ili kumruhusu %1$s akutumie maombi ya idhini ya kufungua wakati hali ya kusimamiwa inapofanya kazi.</string>
+    <string name="notif_supervised_active_title">Njia ya kusimamiwa imewashwa</string>
+    <string name="notif_supervised_active_text">Msimamizi wako amethibitisha - hali ya kusimamiwa sasa imewekwa</string>
+    <string name="notif_supervised_declined_title">Njia ya kusimamiwa imekataliwa</string>
+    <string name="notif_supervised_declined_text">Msimamizi wako amekataa ombi - hali ya kusimamiwa imezimwa</string>
+    <string name="notif_tracking_alert_title">Arifa ya Ufuatiliaji</string>
+    <string name="notif_tracking_proximity">%1$s amepokea arifa ya ukaribu kukuhusu</string>
+    <string name="notif_tracking_geofence">%1$s amepokea arifa kwamba umeingia/umetoka kwenye eneo: %2$s</string>
+    <string name="notif_tracking_generic">%1$s anafuatilia eneo lako</string>
+    <string name="notif_track_update_title">Sasisho la kushiriki kutoka kwa %1$s</string>
+    <string name="notif_track_new_title">Anwani Mpya: %1$s</string>
+    <string name="notif_role_send_receive">Tuma/Pokea Mahali</string>
+    <string name="notif_role_send">Tuma Mahali</string>
+    <string name="notif_role_receive">Pokea Mahali</string>
+    <string name="notif_role_none">Hakuna Kushiriki Mahali</string>
+    <string name="notif_track_requesting">%1$s anaomba: %2$s</string>
+    <string name="notif_track_update_body">%1$s anataka kusasisha jinsi unavyoshiriki maeneo.</string>
+    <string name="notif_track_new_body">%1$s amekuongeza kama anwani na anataka kuungana.</string>
+    <string name="notif_contact_connected_title">Anwani Imeunganishwa</string>
+    <string name="notif_contact_connected_text">%1$s sasa ameunganishwa nawe.</string>
+    <string name="notif_request_declined_title">Ombi Limekataliwa</string>
+    <string name="notif_request_declined_text">%1$s amekataa ombi lako la kushiriki mahali.</string>
+    <string name="notif_message_person">Mtumie ujumbe %1$s</string>
+    <string name="notif_geofence_entered_title">%1$s ameingia %2$s</string>
+    <string name="notif_geofence_left_title">%1$s ametoka %2$s</string>
+    <string name="notif_geofence_subtitle">saa %1$s · radius ya %2$s</string>
+    <string name="notif_person_nearby">%1$s yuko karibu</string>
+    <string name="notif_distance_from_you">%1$s kutoka kwako</string>
+    <string name="notif_missed_title">Hakuna sasisho kutoka kwa %1$s</string>
+    <string name="notif_missed_text">Imeonekana mara ya mwisho %1$sm zilizopita karibu na (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS IMEWASHWA!</string>
+    <string name="notif_sos_active_text">Inatangaza arifa ya dharura kwa anwani za SOS</string>
+    <string name="notif_messages_group_title">Ujumbe wa LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Ombi la anwani limekataliwa kutoka kwa %1$s</string>
+    <string name="toast_now_supervising">Sasa unasimamia kifaa cha %1$s</string>
+    <string name="toast_declined_supervision">Ombi la usimamizi limekataliwa kutoka kwa %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Sasa hivi</string>
+    <string name="time_minutes_ago">Dakika %1$d zilizopita</string>
+    <string name="fallback_me">Mimi</string>
+    <string name="fallback_unknown">Haijulikani</string>
+    <string name="geo_unassigned">Haijapangwa</string>
+    <string name="days_every_day">Kila siku</string>
+    <string name="days_weekdays">Siku za kazi</string>
+    <string name="days_weekends">Wikendi</string>
+    <string name="days_none">Hakuna siku</string>
+    <string name="chat_my_location_message">Mahali nilipo sasa hivi: %1$s</string>
+    <string name="scan_error_bad_pubkey">Mwaliko batili: ufunguo wa umma mbaya</string>
+    <string name="scan_error_key_mismatch">Mwaliko batili: ufunguo haulingani</string>
+    <string name="scan_error_unknown">Hitilafu isiyojulikana</string>
+    <string name="scan_error_invalid_link">Kiungo cha mwaliko batili</string>
+    <string name="scan_fallback_contact">anwani hii</string>
+    <string name="backup_saved">Hifadhi nakala imehifadhiwa: %1$s</string>
+    <string name="backup_saved_encrypted">Hifadhi nakala imehifadhiwa (imesimbwa): %1$s</string>
+    <string name="backup_failed">Hifadhi nakala imefeli: %1$s</string>
+    <string name="backup_could_not_read_file">Imeshindwa kusoma faili</string>
+    <string name="backup_could_not_write_file">Imeshindwa kuandika faili</string>
+    <string name="backup_could_not_read">Imeshindwa kusoma hifadhi nakala: %1$s</string>
+    <string name="backup_incorrect_password">Nenosiri si sahihi</string>
+    <string name="restore_result_restored">Imerejeshwa: %1$s</string>
+    <string name="restore_result_failed">Imefeli: %1$s</string>
+    <string name="restore_nothing">Hakuna cha kurejesha</string>
+    <string name="restore_failed">Urejeshaji umefeli: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">Anwani %1$d</item>
+        <item quantity="other">Anwani %1$d</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">Eneo la kijiografia %1$d</item>
+        <item quantity="other">Maeneo ya kijiografia %1$d</item>
+    </plurals>
+    <string name="peer_role_change_sent">Ombi la mabadiliko ya jukumu limetumwa kwa %1$s</string>
+    <string name="peer_not_found">Rika hakupatikana</string>
+    <string name="peer_purge_location_sent">Amri ya kufuta mbali maeneo YOTE imetumwa kwa %1$s</string>
+    <string name="peer_purge_messages_sent">Amri ya kufuta mbali ujumbe WOTE imetumwa kwa %1$s</string>
+    <string name="onboarding_error_key_length">Ufunguo batili - lazima uwe na herufi 64 za hex.</string>
+    <string name="onboarding_error_key_range">Ufunguo wa kibinafsi batili - nje ya safu ya mkunjo.</string>
+    <string name="onboarding_error_hex">Muundo wa hex batili.</string>
+    <string name="onboarding_error_import_failed">Imeshindwa kuingiza ufunguo: %1$s</string>
 </resources>

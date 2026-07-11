@@ -127,6 +127,26 @@
     <string name="settings_enable_motion_title">Aktifkan deteksi gerakan</string>
     <string name="settings_enable_motion_message">Akses aktivitas fisik membantu LocaPeer membedakan berjalan, berkendara, dan diam dengan lebih akurat di riwayat Anda. Saat ini nonaktif — Anda dapat mengaktifkannya kembali dari setelan sistem.</string>
     <string name="settings_open_settings">Buka Setelan</string>
+    <string name="settings_battery_optimization">Optimalisasi Baterai</string>
+    <string name="settings_battery_optimization_unrestricted">Tidak dibatasi — LocaPeer dapat berjalan bebas di latar belakang</string>
+    <string name="settings_battery_optimization_restricted">Dioptimalkan — ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
+
+    <!-- Izin -->
+    <string name="settings_permissions">Izin</string>
+    <string name="settings_permissions_subtitle">Tinjau dan perbaiki akses aplikasi ke lokasi, kamera, dan lainnya</string>
+    <string name="permissions_intro">LocaPeer memerlukan izin ini untuk berbagi lokasi Anda, memindai undangan, dan terus berjalan di latar belakang. Ketuk apa pun yang tidak diberikan untuk memperbaikinya.</string>
+    <string name="perm_location_title">Lokasi</string>
+    <string name="perm_location_granted">Diberikan — lokasi Anda dapat dibagikan</string>
+    <string name="perm_location_denied">Tidak diberikan — ketuk untuk mengizinkan akses lokasi</string>
+    <string name="perm_background_location_title">Lokasi Latar Belakang</string>
+    <string name="perm_background_location_granted">Diberikan — lokasi terus dibagikan saat aplikasi ditutup</string>
+    <string name="perm_background_location_denied">Tidak diberikan — ketuk untuk mengizinkan akses \'Izinkan sepanjang waktu\' di setelan</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Diberikan — digunakan untuk memindai kode QR undangan</string>
+    <string name="perm_camera_denied">Tidak diberikan — ketuk untuk mengizinkan kamera</string>
+    <string name="perm_notifications_title">Notifikasi</string>
+    <string name="perm_notifications_granted">Diberikan — peringatan dan pembaruan status dapat ditampilkan</string>
+    <string name="perm_notifications_denied">Tidak diberikan — ketuk untuk mengizinkan notifikasi</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Satuan Kecepatan</string>

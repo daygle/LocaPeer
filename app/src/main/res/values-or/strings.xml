@@ -2,27 +2,27 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── ବିଜ୍ଞପ୍ତି ଚ୍ୟାନେଲ ଏବଂ ଫୋରଗ୍ରାଉଣ୍ଡ ସେବା ─────────────────────── -->
-    <string name="channel_name_heartbeat">ଅବସ୍ଥାନ ପ୍ରସାରଣ</string>
-    <string name="channel_desc_heartbeat">ଆପଣଙ୍କର ଅନୁମୋଦିତ ସମ୍ପର୍କଗୁଡିକ ପାଇଁ ଆପଣଙ୍କର ଅବସ୍ଥାନ ପ୍ରସାରଣ କରେ</string>
-    <string name="channel_name_alerts">ସତର୍କ ସୂଚନା</string>
-    <string name="channel_desc_alerts">ହଜିଯାଇଥିବା ସିଗନାଲ୍ ଏବଂ ଜିଓଫେନ୍ସ ସତର୍କତା</string>
+    <!-- ── ବିଜ୍ଞପ୍ତି ଚ୍ୟାନେଲ ଏବଂ ଅଗ୍ରଭାଗ ସେବା ─────────────────────── -->
+    <string name="channel_name_heartbeat">ସ୍ଥାନ ପ୍ରସାରଣ</string>
+    <string name="channel_desc_heartbeat">ଆପଣଙ୍କ ଅନୁମୋଦିତ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଆପଣଙ୍କ ସ୍ଥାନ ପ୍ରସାରଣ କରେ</string>
+    <string name="channel_name_alerts">ସତର୍କତା</string>
+    <string name="channel_desc_alerts">ହାର୍ଟବିଟ୍ ଏବଂ ଜିଓଫେନ୍ସ ସତର୍କତା</string>
     <string name="channel_name_messages">ବାର୍ତ୍ତା</string>
-    <string name="channel_desc_messages">ଆସୁଥିବା ବାର୍ତ୍ତା</string>
+    <string name="channel_desc_messages">ଆସୁଥିବା ପିଅର ବାର୍ତ୍ତା</string>
     <string name="notification_heartbeat_title">LocaPeer ଚାଲୁଛି</string>
-    <string name="notification_heartbeat_text">ଅନ୍ୟମାନଙ୍କ ସହିତ ଆପଣଙ୍କର ଅବସ୍ଥାନ ଅଂଶୀଦାର କରୁଛି</string>
+    <string name="notification_heartbeat_text">ଅନ୍ୟମାନଙ୍କ ସହିତ ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରୁଛି</string>
 
     <!-- ── ସାଧାରଣ କାର୍ଯ୍ୟ ──────────────────────────────────────── -->
-    <string name="common_save">ସଞ୍ଚୟ କରନ୍ତୁ</string>
-    <string name="common_cancel">ବାତିଲ କରନ୍ତୁ</string>
+    <string name="common_save">ସେଭ୍ କରନ୍ତୁ</string>
+    <string name="common_cancel">ବାତିଲ୍ କରନ୍ତୁ</string>
     <string name="common_done">ସମାପ୍ତ</string>
-    <string name="common_delete">ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="common_delete">ଡିଲିଟ୍ କରନ୍ତୁ</string>
     <string name="common_disable">ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="common_enable">ସକ୍ଷମ କରନ୍ତୁ</string>
     <string name="common_restore">ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
     <string name="common_unlock">ଅନଲକ୍ କରନ୍ତୁ</string>
     <string name="common_password">ପାସୱାର୍ଡ</string>
-    <string name="common_not_now">ବର୍ତ୍ତମାନ ନୁହେଁ</string>
+    <string name="common_not_now">ଏବେ ନୁହେଁ</string>
     <string name="common_off">ବନ୍ଦ</string>
     <string name="common_approve">ଅନୁମୋଦନ କରନ୍ତୁ</string>
     <string name="common_deny">ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
@@ -33,36 +33,737 @@
     <string name="tab_history">ଇତିହାସ</string>
     <string name="tab_contacts">ସମ୍ପର୍କ</string>
     <string name="tab_qr">QR</string>
-    <string name="tab_settings">ସେଟିଂସ</string>
+    <string name="tab_settings">ସେଟିଂସମୂହ</string>
 
     <!-- ── ଗତିବିଧି ସ୍ଥିତି ───────────────────────────────────────── -->
     <string name="motion_stationary">ସ୍ଥିର</string>
-    <string name="motion_walking">ଚାଲୁଛନ୍ତି</string>
-    <string name="motion_running">ଦୌଡୁଛନ୍ତି</string>
-    <string name="motion_cycling">ସାଇକେଲ ଚଳାଉଛନ୍ତି</string>
-    <string name="motion_driving">ଗାଡି ଚଳାଉଛନ୍ତି</string>
+    <string name="motion_walking">ଚାଲୁଛି</string>
+    <string name="motion_running">ଦୌଡ଼ୁଛି</string>
+    <string name="motion_cycling">ସାଇକେଲ ଚଳାଉଛି</string>
+    <string name="motion_driving">ଡ୍ରାଇଭିଂ କରୁଛି</string>
 
-    <!-- ── ସେଟିଂସ ────────────────────────────────────────────────── -->
-    <string name="settings_title">ସେଟିଂସ</string>
-    <string name="settings_section_location_privacy">ଅବସ୍ଥାନ ଏବଂ ଗୋପନୀୟତା</string>
+    <!-- ── ବ୍ୟାକଅପ୍ ବିଭାଗ ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">ବ୍ୟକ୍ତିଗତ କି</string>
+    <string name="backup_section_contacts">ସମ୍ପର୍କ</string>
+    <string name="backup_section_geofences">ଜିଓଫେନ୍ସ</string>
+    <string name="backup_section_settings">ସେଟିଂସମୂହ</string>
+
+    <!-- ── ତଦାରଖ ଅନୁରୋଧ ସଂଳାପ ──────────────────────── -->
+    <string name="supervision_request_title">ତଦାରଖ ଅନୁରୋଧ</string>
+    <string name="supervision_request_message">\"%1$s\" ସେମାନଙ୍କ ସେଟିଂସମୂହରେ ପ୍ରବେଶ ପାଇଁ ଅନୁରୋଧ କରୁଛନ୍ତି। ଅନୁମତି ଦେବେ?</string>
+
+    <!-- ── ସେଟିଂସମୂହ ସ୍କ୍ରିନ୍ ────────────────────────────────────────────────── -->
+    <string name="settings_title">ସେଟିଂସମୂହ</string>
+
+    <!-- ବିଭାଗ ଲେବଲ୍ -->
+    <string name="settings_section_location_privacy">ସ୍ଥାନ ଏବଂ ଗୋପନୀୟତା</string>
     <string name="settings_section_security">ସୁରକ୍ଷା</string>
     <string name="settings_section_map">ମାନଚିତ୍ର</string>
     <string name="settings_section_battery_performance">ବ୍ୟାଟେରୀ ଏବଂ ପ୍ରଦର୍ଶନ</string>
     <string name="settings_section_units_display">ୟୁନିଟ୍ ଏବଂ ପ୍ରଦର୍ଶନ</string>
-    <string name="settings_section_retention">ଧାରଣ (ଏହି ଡିଭାଇସ୍)</string>
+    <string name="settings_section_retention">ଧାରଣ (ଏହି ଡିଭାଇସରେ)</string>
     <string name="settings_section_appearance">ରୂପ</string>
     <string name="settings_section_backup_keys">ବ୍ୟାକଅପ୍ ଏବଂ କି</string>
     <string name="settings_section_about">ବିଷୟରେ</string>
 
-    <string name="settings_edit_name">ନାମ ସଂଶୋଧନ କରନ୍ତୁ</string>
+    <!-- ପ୍ରୋଫାଇଲ୍ -->
+    <string name="settings_edit_name">ନାମ ସଂପାଦନ କରନ୍ତୁ</string>
     <string name="settings_my_qr">ମୋର QR</string>
     <string name="settings_no_name_set">କୌଣସି ନାମ ସେଟ୍ ହୋଇନାହିଁ</string>
 
-    <string name="settings_share_location">ମୋର ଅବସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <!-- ସ୍ଥାନ ଏବଂ ଗୋପନୀୟତା -->
+    <string name="settings_share_location">ମୋର ସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="settings_broadcasting">ଆପଣଙ୍କ ସମ୍ପର୍କଗୁଡ଼ିକୁ ପ୍ରସାରଣ କରାଯାଉଛି</string>
+    <string name="settings_not_broadcasting">ପ୍ରସାରଣ କରାଯାଉ ନାହିଁ</string>
+    <string name="settings_sharing_schedule">ଅଂଶୀଦାର କାର୍ଯ୍ୟସୂଚୀ</string>
+    <string name="settings_always_on">ସର୍ବଦା ଚାଲୁ</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d ନିୟମ</item>
+        <item quantity="other">%1$d ନିୟମ</item>
+    </plurals>
+    <string name="settings_geofences">ଜିଓଫେନ୍ସ</string>
+    <string name="settings_geofences_subtitle">ଅଂଶୀଦାର ହୋଇଥିବା ଜିଓଫେନ୍ସ ଅଞ୍ଚଳଗୁଡ଼ିକୁ ପରିଚାଳନା କରନ୍ତୁ</string>
+    <string name="settings_notify_when_tracked">ଟ୍ରାକ ହେବା ପରେ ଜଣାନ୍ତୁ</string>
+    <string name="settings_notify_when_tracked_subtitle">ଯେତେବେଳେ ଜଣେ ସମ୍ପର୍କର ନିକଟତରତା କିମ୍ବା ଜିଓଫେନ୍ସ ସତର୍କତା ଆପଣଙ୍କ ପାଇଁ ଟ୍ରିଗର ହୁଏ, ସେତେବେଳେ ବିଜ୍ଞପ୍ତି ପାଆନ୍ତୁ ।</string>
+    <string name="settings_my_location_history">ସ୍ଥାନ ଇତିହାସ</string>
+    <string name="settings_my_location_history_subtitle">ଆପଣଙ୍କ ନିଜ ସ୍ଥାନ ଟାଇମଲାଇନ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
+    <string name="settings_lookup_addresses">ଠିକଣା ଖୋଜନ୍ତୁ</string>
+    <string name="settings_lookup_addresses_subtitle">ଇତିହାସ ବିନ୍ଦୁ ଏବଂ ମାନଚିତ୍ର ପିନ୍ ପାଇଁ ରାସ୍ତା ଠିକଣା ଦେଖାନ୍ତୁ । ସେହି ସଂଯୋଜକଗୁଡ଼ିକୁ ଆପଣଙ୍କ ଡିଭାଇସର ଜିଓକୋଡିଂ ସେବାକୁ (ସାଧାରଣତଃ Google) ପଠାଏ ।</string>
+
+    <!-- ସୁରକ୍ଷା -->
+    <string name="settings_supervision_active">ତଦାରଖ ସକ୍ରିୟ ଅଛି</string>
+    <string name="settings_supervision_active_subtitle">ସେଟିଂସମୂହ ପାଇଁ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ଆବଶ୍ୟକ</string>
+    <string name="settings_disable_supervised">ତଦାରଖ ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="settings_supervised_mode">ତଦାରଖ ମୋଡ୍</string>
+    <string name="settings_supervised_mode_subtitle">ସେଟିଂସମୂହରେ ପ୍ରବେଶ କରିବା ପାଇଁ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ଆବଶ୍ୟକ</string>
+
+    <!-- ମାନଚିତ୍ର -->
+    <string name="settings_starting_point">ଆରମ୍ଭ ବିନ୍ଦୁ</string>
+    <string name="settings_map_current_location">ସାମ୍ପ୍ରତିକ ସ୍ଥାନ</string>
+    <string name="settings_map_all_contacts">ସମସ୍ତ ସମ୍ପର୍କ</string>
+    <string name="settings_map_fixed_location">ସ୍ଥିର ସ୍ଥାନ</string>
+    <string name="settings_map_last_position">ଶେଷ ଅବସ୍ଥାନ</string>
+    <string name="settings_map_starting_point_title">ମାନଚିତ୍ର ଆରମ୍ଭ ବିନ୍ଦୁ</string>
+    <string name="settings_no_location_set">କୌଣସି ସ୍ଥାନ ସେଟ୍ ହୋଇନାହିଁ</string>
+    <string name="settings_pick_location_on_map">ମାନଚିତ୍ରରେ ସ୍ଥାନ ବାଛନ୍ତୁ</string>
+    <string name="settings_default_zoom_level">ଡିଫଲ୍ଟ ଜୁମ୍ ସ୍ତର</string>
+    <string name="settings_map_pin_colour">ମାନଚିତ୍ର ପିନ୍ ରଙ୍ଗ</string>
+
+    <!-- ବ୍ୟାଟେରୀ ଏବଂ ପ୍ରଦର୍ଶନ -->
+    <string name="settings_update_cadence">ଅପଡେଟ୍ ଆବୃତ୍ତି</string>
+    <string name="settings_update_cadence_subtitle">ଆପଣଙ୍କ ସ୍ଥାନ କେତେଥର ପ୍ରସାରଣ ହେଉଛି ତାହା ସଜାଡନ୍ତୁ</string>
+    <string name="settings_update_cadence_dialog_message">ଆପଣଙ୍କ କାର୍ଯ୍ୟକଳାପ ଆଧାରରେ ଆପଣଙ୍କ ସ୍ଥାନ କେତେଥର ଅପଡେଟ୍ ହେଉଛି ତାହା ନିୟନ୍ତ୍ରଣ କରନ୍ତୁ । ବାରମ୍ବାର ଅପଡେଟ୍ ଅଧିକ ବ୍ୟାଟେରୀ ବ୍ୟବହାର କରେ ।</string>
+    <string name="settings_update_cadence_reset">ଡିଫଲ୍ଟକୁ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="settings_min_distance_filtering">ସର୍ବନିମ୍ନ ଦୂରତା ଫିଲ୍ଟରିଂ</string>
+    <string name="settings_min_distance_filtering_subtitle">କେବଳ ପୂର୍ବ ବିନ୍ଦୁରୁ ଅତି କମରେ ଏତିକି ଦୂରରେ ଥିବା ବିନ୍ଦୁଗୁଡ଼ିକୁ ଦେଖାନ୍ତୁ ।</string>
+    <string name="settings_discard_low_accuracy">ନିମ୍ନ-ସଠିକତା ଫିକ୍ସଗୁଡ଼ିକୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
+    <string name="settings_discard_low_accuracy_subtitle">ଏହି ସଠିକତା ବ୍ୟାସାର୍ଦ୍ଧ ଅପେକ୍ଷା ବଡ଼ ଆପଣଙ୍କର ନିଜସ୍ୱ ଫିକ୍ସଗୁଡ଼ିକୁ ପ୍ରସାରଣ କିମ୍ବା ରେକର୍ଡ କରନ୍ତୁ ନାହିଁ । SOS କେବେ ବି ବାଦ୍ ଦିଆଯାଏ ନାହିଁ ।</string>
+    <string name="settings_hide_low_accuracy">ନିମ୍ନ-ସଠିକତା ବିନ୍ଦୁଗୁଡ଼ିକୁ ଲୁଚାନ୍ତୁ</string>
+    <string name="settings_hide_low_accuracy_subtitle">ଏହି ସଠିକତା ବ୍ୟାସାର୍ଦ୍ଧ ଅପେକ୍ଷା ବଡ଼ ଇତିହାସ ବିନ୍ଦୁଗୁଡ଼ିକୁ ଲୁଚାନ୍ତୁ । କିଛି ବି ଡିଲିଟ୍ ହୁଏ ନାହିଁ ।</string>
+    <string name="settings_low_battery" formatted="false">କମ୍ ବ୍ୟାଟେରୀ (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d ମିନିଟ୍</string>
+    <string name="settings_motion_detection">ଗତି ଚିହ୍ନଟ</string>
+    <string name="settings_motion_detection_on">ସକ୍ଷମ - ଇତିହାସରେ ଆପଣଙ୍କର ଗତିବିଧି ପ୍ରକାର (ଚାଲିବା, ଡ୍ରାଇଭିଂ) କୁ ପରିଷ୍କାର କରେ</string>
+    <string name="settings_motion_detection_off">ବନ୍ଦ - ଅଧିକ ସଠିକ୍ ଗତିବିଧି ଲେବଲ୍ ପାଇଁ ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="settings_enable_motion_title">ଗତି ଚିହ୍ନଟ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="settings_enable_motion_message">ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶ LocaPeer କୁ ଆପଣଙ୍କ ଇତିହାସରେ ଚାଲିବା, ଡ୍ରାଇଭିଂ ଏବଂ ସ୍ଥିର ରହିବାକୁ ଅଧିକ ସଠିକ୍ ଭାବରେ ପୃଥକ କରିବାକୁ ଦିଏ । ଏହା ବର୍ତ୍ତମାନ ବନ୍ଦ ଅଛି - ଆପଣ ଏହାକୁ ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରୁ ପୁଣି ସକ୍ଷମ କରିପାରିବେ ।</string>
+    <string name="settings_open_settings">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ</string>
+    <string name="settings_battery_optimization">ବ୍ୟାଟେରୀ ଅପ୍ଟିମାଇଜେସନ୍</string>
+    <string name="settings_battery_optimization_unrestricted">ଅପ୍ରତିବନ୍ଧିତ — LocaPeer ପୃଷ୍ଠଭୂମିରେ ମୁକ୍ତ ଭାବରେ ଚାଲିପାରିବ</string>
+    <string name="settings_battery_optimization_restricted">ଅପ୍ଟିମାଇଜ୍ ହୋଇଛି — ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରେ ଅପ୍ରତିବନ୍ଧିତ ସେଟ୍ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+
+    <!-- ଅନୁମତି -->
+    <string name="settings_permissions">ଅନୁମତି</string>
+    <string name="settings_permissions_subtitle">ସ୍ଥାନ, କ୍ୟାମେରା ଏବଂ ଅନ୍ୟାନ୍ୟ ପାଇଁ ଆପ୍ ପ୍ରବେଶର ସମୀକ୍ଷା ଏବଂ ସମାଧାନ କରନ୍ତୁ</string>
+    <string name="permissions_intro">ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରିବାକୁ, ନିମନ୍ତ୍ରଣ ସ୍କାନ କରିବାକୁ ଏବଂ ପୃଷ୍ଠଭୂମିରେ ଚାଲିବାକୁ LocaPeer କୁ ଏହି ଅନୁମତିଗୁଡ଼ିକ ଆବଶ୍ୟକ । ସେଗୁଡ଼ିକୁ ସମାଧାନ କରିବା ପାଇଁ ଯେକୌଣସି ପ୍ରଦାନ କରାଯାଇନଥିବା ଅନୁମତି ଉପରେ ଟ୍ୟାପ୍ କରନ୍ତୁ ।</string>
+    <string name="perm_location_title">ସ୍ଥାନ</string>
+    <string name="perm_location_granted">ପ୍ରଦାନ କରାଯାଇଛି — ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରାଯାଇପାରିବ</string>
+    <string name="perm_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ସ୍ଥାନ ପ୍ରବେଶକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_background_location_title">ପୃଷ୍ଠଭୂମି ସ୍ଥାନ</string>
+    <string name="perm_background_location_granted">ପ୍ରଦାନ କରାଯାଇଛି — ଆପ୍ ବନ୍ଦ ହେଲେ ମଧ୍ୟ ସ୍ଥାନ ଅଂଶୀଦାର ଜାରି ରହେ</string>
+    <string name="perm_background_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ସେଟିଂସମୂହରେ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_camera_title">କ୍ୟାମେରା</string>
+    <string name="perm_camera_granted">ପ୍ରଦାନ କରାଯାଇଛି — ନିମନ୍ତ୍ରଣ QR କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ</string>
+    <string name="perm_camera_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — କ୍ୟାମେରାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_notifications_title">ବିଜ୍ଞପ୍ତି</string>
+    <string name="perm_notifications_granted">ପ୍ରଦାନ କରାଯାଇଛି — ସତର୍କତା ଏବଂ ସ୍ଥିତି ଅପଡେଟ୍ ଦେଖାଯାଇପାରିବ</string>
+    <string name="perm_notifications_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ବିଜ୍ଞପ୍ତିକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+
+    <!-- ୟୁନିଟ୍ ଏବଂ ପ୍ରଦର୍ଶନ -->
+    <string name="settings_speed_units">ଗତି ୟୁନିଟ୍</string>
+    <string name="settings_speed_imperial">ଇମ୍ପେରିଆଲ୍ (mph)</string>
+    <string name="settings_speed_metric">ମେଟ୍ରିକ୍ (km/h)</string>
+    <string name="settings_elevation_units">ଉଚ୍ଚତା ୟୁନିଟ୍</string>
+    <string name="settings_elevation_imperial">ଇମ୍ପେରିଆଲ୍ (ଫୁଟ୍)</string>
+    <string name="settings_elevation_metric">ମେଟ୍ରିକ୍ (ମିଟର)</string>
+    <string name="settings_distance_units">ଦୂରତା ୟୁନିଟ୍</string>
+    <string name="settings_distance_imperial">ଇମ୍ପେରିଆଲ୍ (ft/mi)</string>
+    <string name="settings_distance_metric">ମେଟ୍ରିକ୍ (m/km)</string>
+    <string name="settings_time_format">ସମୟ ଫର୍ମାଟ୍</string>
+    <string name="settings_time_24h">୨୪-ଘଣ୍ଟା (13:30)</string>
+    <string name="settings_time_12h">୧୨-ଘଣ୍ଟା (1:30 PM)</string>
+
+    <!-- ଧାରଣ -->
+    <string name="settings_retention_location">ସ୍ଥାନ ଡାଟା</string>
+    <string name="settings_retention_location_subtitle">ସମ୍ପର୍କଗୁଡ଼ିକର ସ୍ଥାନ ଡାଟା କେତେ ସମୟ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥାନୀୟ ଭାବରେ ରଖିବାକୁ ହେବ</string>
+    <string name="settings_clear_all_location">ସମସ୍ତ ସ୍ଥାନ ଡାଟା ସଫା କରନ୍ତୁ</string>
+    <string name="settings_retention_messages">ବାର୍ତ୍ତା</string>
+    <string name="settings_retention_messages_subtitle">ପ୍ରାପ୍ତ ହୋଇଥିବା ବାର୍ତ୍ତାଗୁଡ଼ିକୁ କେତେ ସମୟ ପର୍ଯ୍ୟନ୍ତ ସ୍ଥାନୀୟ ଭାବରେ ରଖିବାକୁ ହେବ</string>
+    <string name="settings_clear_all_messages">ସମସ୍ତ ବାର୍ତ୍ତା ସଫା କରନ୍ତୁ</string>
+
+    <!-- ରୂପ -->
+    <string name="settings_customize_nav">ନେଭିଗେସନ୍ କଷ୍ଟମାଇଜ୍ କରନ୍ତୁ</string>
+    <string name="settings_customize_nav_subtitle">ତଳ ଟ୍ୟାବ୍ ବାଛନ୍ତୁ ଏବଂ ସେଗୁଡ଼ିକୁ ପୁନଃ କ୍ରମାଙ୍କିତ କରନ୍ତୁ</string>
+    <string name="settings_start_page">ଆରମ୍ଭ ପୃଷ୍ଠା</string>
     <string name="settings_language">ଭାଷା</string>
     <string name="settings_language_title">ଆପ୍ ଭାଷା</string>
     <string name="settings_language_system">ସିଷ୍ଟମ୍ ଡିଫଲ୍ଟ</string>
 
-    <string name="common_ok">ଠିକ୍ ଅଛି</string>
+    <!-- ବ୍ୟାକଅପ୍ ଏବଂ କି -->
+    <string name="settings_export_backup">ବ୍ୟାକଅପ୍ ରପ୍ତାନି କରନ୍ତୁ</string>
+    <string name="settings_export_backup_subtitle">ଆପଣଙ୍କର ବ୍ୟକ୍ତିଗତ କି ଏବଂ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଏକ ଫାଇଲରେ ସେଭ୍ କରନ୍ତୁ । ଏହି ଫାଇଲକୁ ସୁରକ୍ଷିତ ରଖନ୍ତୁ !</string>
+    <string name="settings_import_backup">ବ୍ୟାକଅପ୍ ଆମଦାନୀ କରନ୍ତୁ</string>
+    <string name="settings_import_backup_subtitle">ପୂର୍ବରୁ ରପ୍ତାନି ହୋଇଥିବା ଏକ ଫାଇଲରୁ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
+    <string name="settings_view_private_key">ବ୍ୟକ୍ତିଗତ କି ଦେଖନ୍ତୁ</string>
+    <string name="settings_view_private_key_subtitle">ଆପଣଙ୍କର ୬୪-ଅକ୍ଷର ବିଶିଷ୍ଟ ହେକ୍ସ ପରିଚୟ କି ଦେଖାନ୍ତୁ</string>
+
+    <!-- ବିଷୟରେ -->
+    <string name="settings_about_locapeer">LocaPeer ବିଷୟରେ</string>
+    <string name="settings_about_subtitle">ସଂସ୍କରଣ, ରିଲେ ସ୍ଥିତି, ମୁକ୍ତ ଉତ୍ସ</string>
+
+    <!-- ସଂଳାପ -->
+    <string name="settings_edit_display_name">ପ୍ରଦର୍ଶନ ନାମ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="settings_display_name_label">ପ୍ରଦର୍ଶନ ନାମ</string>
+    <string name="settings_my_invite_qr">ମୋର ନିମନ୍ତ୍ରଣ QR</string>
+    <string name="settings_invite_qr_subtitle">ଅନ୍ୟମାନେ ଆପଣଙ୍କୁ ଟ୍ରାକ୍ କରିବା ଆରମ୍ଭ କରିବା ପାଇଁ ଏହାକୁ ସ୍କାନ କରିପାରିବେ ।</string>
+    <string name="settings_invite_qr_cd">ନିମନ୍ତ୍ରଣ QR</string>
+    <string name="settings_private_key_title">ବ୍ୟକ୍ତିଗତ କି</string>
+    <string name="settings_private_key_warning">ଏହାକୁ ସୁରକ୍ଷିତ ରଖନ୍ତୁ । ଏହି କି ଥିବା କେହି ବି ଆପଣଙ୍କ ଭଳି ଅଭିନୟ କରିପାରିବେ ।</string>
+    <string name="settings_clear_location_title">ସ୍ଥାନ ଇତିହାସ ସଫା କରିବେ କି?</string>
+    <string name="settings_clear_location_message">ସମସ୍ତ ସଂରକ୍ଷିତ ସ୍ଥାନ ପିଙ୍ଗ୍ ସ୍ଥାୟୀ ଭାବରେ ଡିଲିଟ୍ ହୋଇଯିବ ।</string>
+    <string name="settings_clear_messages_title">ବାର୍ତ୍ତା ଇତିହାସ ସଫା କରିବେ କି?</string>
+    <string name="settings_clear_messages_message">ସମସ୍ତ ସଂରକ୍ଷିତ ବାର୍ତ୍ତା ସ୍ଥାୟୀ ଭାବରେ ଡିଲିଟ୍ ହୋଇଯିବ ।</string>
+    <string name="settings_encrypted_backup_title">ଏନକ୍ରିପ୍ଟ ହୋଇଥିବା ବ୍ୟାକଅପ୍</string>
+    <string name="settings_encrypted_backup_message">ଏହି ବ୍ୟାକଅପ୍ ଏନକ୍ରିପ୍ଟ ହୋଇଛି । ଦୟାକରି ଆଗକୁ ବଢିବା ପାଇଁ ପାସୱାର୍ଡ ପ୍ରବେଶ କରନ୍ତୁ ।</string>
+    <string name="settings_select_restore_title">ପୁନରୁଦ୍ଧାର ପାଇଁ ଡାଟା ବାଛନ୍ତୁ</string>
+    <string name="settings_select_export_title">ରପ୍ତାନି ପାଇଁ ଡାଟା ବାଛନ୍ତୁ</string>
+    <string name="settings_export_password_hint">ଆପଣଙ୍କର ବ୍ୟାକଅପ୍ ଫାଇଲକୁ ଏନକ୍ରିପ୍ଟ କରିବା ପାଇଁ ଇଚ୍ଛାଧୀନ ଭାବରେ ଏକ ପାସୱାର୍ଡ ସେଟ୍ କରନ୍ତୁ ।</string>
+    <string name="settings_backup_password_optional">ବ୍ୟାକଅପ୍ ପାସୱାର୍ଡ (ଇଚ୍ଛାଧୀନ)</string>
+    <string name="settings_select_sections">ଅନ୍ତର୍ଭୁକ୍ତ କରିବାକୁ ବିଭାଗଗୁଡ଼ିକ ବାଛନ୍ତୁ:</string>
+    <string name="settings_choose_file_location">ଫାଇଲ୍ ସ୍ଥାନ ବାଛନ୍ତୁ</string>
+    <string name="settings_not_in_backup">ଏହି ବ୍ୟାକଅପ୍‌ରେ ନାହିଁ</string>
+    <string name="settings_enable_supervised_title">ତଦାରଖ ମୋଡ୍ ସକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="settings_enable_supervised_message">ତଦାରଖକାରୀ ଭାବରେ କାର୍ଯ୍ୟ କରିବାକୁ ଥିବା ଜଣେ ବ୍ୟକ୍ତିଙ୍କୁ ବାଛନ୍ତୁ । ସେମାନେ ନିଜ ଡିଭାଇସରୁ ସେଟିଂସମୂହ ପ୍ରବେଶକୁ ଅନୁମୋଦନ କରିବା ଆବଶ୍ୟକ ।</string>
+    <string name="settings_no_peers_found">କୌଣସି ପିଅର ମିଳିଲା ନାହିଁ । ପ୍ରଥମେ ସେମାନଙ୍କର ନିମନ୍ତ୍ରଣ QR କୋଡ୍ ସ୍କାନ କରି ଜଣେ ପିଅର ଯୋଡନ୍ତୁ ।</string>
+    <string name="settings_disable_supervised_title">ତଦାରଖ ମୋଡ୍ ଅକ୍ଷମ କରିବେ କି?</string>
+    <string name="settings_disable_supervised_message">ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ବିନା ସେଟିଂସମୂହ ଉପଲବ୍ଧ ହେବ ।</string>
+
+    <!-- ── ଅଧିକ ସାଧାରଣ ─────────────────────────────────────────── -->
+    <string name="common_remove">ବାହାର କରନ୍ତୁ</string>
+    <string name="common_name">ନାମ</string>
+    <string name="common_search">ଖୋଜନ୍ତୁ</string>
+    <string name="common_sort">ସଜାନ୍ତୁ</string>
+
+    <!-- ବିଷୟବସ୍ତୁ ବର୍ଣ୍ଣନା (ଅଂଶୀଦାରିତ) -->
+    <string name="cd_message">ବାର୍ତ୍ତା</string>
+    <string name="cd_show_on_map">ମାନଚିତ୍ରରେ ଦେଖାନ୍ତୁ</string>
+    <string name="cd_more_options">ଅଧିକ ବିକଳ୍ପ</string>
+
+    <!-- ── ସମ୍ପର୍କ ସ୍କ୍ରିନ୍ ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d ଚୟନ କରାଯାଇଛି</item>
+        <item quantity="other">%1$d ଚୟନ କରାଯାଇଛି</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">ଚୟନ ବାତିଲ୍ କରନ୍ତୁ</string>
+    <string name="contacts_cd_select_all">ସବୁ ବାଛନ୍ତୁ</string>
+    <string name="contacts_cd_deselect_all">ସବୁ ଅପସାରଣ କରନ୍ତୁ</string>
+    <string name="contacts_cd_qr_invite">QR / ନିମନ୍ତ୍ରଣ</string>
+    <string name="contacts_cd_pending_requests">ବାକି ଥିବା ଅନୁରୋଧ</string>
+    <string name="contacts_sort_last_seen">ଶେଷ ଥର ଦେଖାଯାଇଥିଲା</string>
+    <string name="contacts_search_placeholder">ସମ୍ପର୍କ ଖୋଜନ୍ତୁ…</string>
+    <string name="contacts_empty_title">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସମ୍ପର୍କ ନାହିଁ</string>
+    <string name="contacts_empty_subtitle">କାହା ସହିତ ସଂଯୋଗ ହେବାକୁ ଏବଂ ସ୍ଥାନ ଅଂଶୀଦାର କରିବା ଆରମ୍ଭ କରିବାକୁ ଏକ QR କୋଡ୍ ସ୍କାନ କରନ୍ତୁ ।</string>
+    <string name="contacts_scan_qr">QR କୋଡ୍ ସ୍କାନ କରନ୍ତୁ</string>
+    <string name="contacts_bulk_delete_messages">ବାର୍ତ୍ତା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="contacts_bulk_delete_locations">ସ୍ଥାନ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="contacts_last_seen">ଶେଷ ଥର ଦେଖାଯାଇଥିଲା: %1$s</string>
+    <string name="contacts_no_location_yet">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସ୍ଥାନ ଡାଟା ନାହିଁ</string>
+    <string name="contacts_view_sharing_settings">ଅଂଶୀଦାର ସେଟିଂସମୂହ</string>
+    <string name="contacts_view_location_history">ସ୍ଥାନ ଇତିହାସ</string>
+    <string name="contacts_rename_contact">ସମ୍ପର୍କର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="contacts_on_contact_device">ସମ୍ପର୍କର ଡିଭାଇସରେ</string>
+    <string name="contacts_delete_my_messages_title">ମୋର ବାର୍ତ୍ତା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="contacts_delete_locations_title">ଅଂଶୀଦାର ହୋଇଥିବା ସ୍ଥାନଗୁଡ଼ିକୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="contacts_remove_contact_title">ସମ୍ପର୍କକୁ ବାହାର କରନ୍ତୁ</string>
+    <string name="contacts_leave_title">ସମ୍ପର୍କ ଏବଂ ଡାଟା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="contacts_rename_title">ସମ୍ପର୍କର ନାମ ବଦଳାନ୍ତୁ</string>
+    <string name="contacts_remove_contact_body">%1$s କୁ ଆପଣଙ୍କ ସମ୍ପର୍କରୁ ବାହାର କରିବେ କି? ସେମାନଙ୍କର ସ୍ଥାନ ଇତିହାସ ମଧ୍ୟ ସ୍ଥାନୀୟ ଭାବରେ ଡିଲିଟ୍ ହୋଇଯିବ ।</string>
+    <string name="contacts_leave_body">ଏହା ଆପଣଙ୍କୁ %1$s ସମ୍ପର୍କରୁ ବାହାର କରିଦେବ ଏବଂ ସେମାନଙ୍କ ଡିଭାଇସରୁ ଆପଣଙ୍କର ସମସ୍ତ ବାର୍ତ୍ତା ଏବଂ ସ୍ଥାନ ଡାଟା ଡିଲିଟ୍ କରିଦେବ । ଆପଣ ସେମାନଙ୍କ ସ୍ଥାନର ପ୍ରବେଶ ମଧ୍ୟ ହରାଇବେ ।</string>
+    <string name="contacts_delete_my_messages_body">ଏହା ଆପଣ %1$s ଡିଭାଇସରୁ ପଠାଇଥିବା ସମସ୍ତ ବାର୍ତ୍ତା ଡିଲିଟ୍ କରିଦେବ । ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</string>
+    <string name="contacts_delete_locations_body">ଏହା ଆପଣ %1$s ଡିଭାଇସରୁ ଅଂଶୀଦାର କରିଥିବା ସମସ୍ତ ସ୍ଥାନ ଡାଟା ଡିଲିଟ୍ କରିଦେବ । ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">ସମ୍ପର୍କକୁ ବାହାର କରନ୍ତୁ</item>
+        <item quantity="other">%1$d ସମ୍ପର୍କକୁ ବାହାର କରନ୍ତୁ</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">ଏହି ସମ୍ପର୍କକୁ ବାହାର କରିବେ କି? ସେମାନଙ୍କର ସ୍ଥାନ ଇତିହାସ ମଧ୍ୟ ସ୍ଥାନୀୟ ଭାବରେ ଡିଲିଟ୍ ହୋଇଯିବ ।</item>
+        <item quantity="other">%1$d ସମ୍ପର୍କକୁ ବାହାର କରିବେ କି? ସେମାନଙ୍କର ସ୍ଥାନ ଇତିହାସ ମଧ୍ୟ ସ୍ଥାନୀୟ ଭାବରେ ଡିଲିଟ୍ ହୋଇଯିବ ।</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">ଏହି ସମ୍ପର୍କର ଡିଭାଇସରୁ ଆପଣ ପଠାଇଥିବା ସମସ୍ତ ବାର୍ତ୍ତାକୁ ଦୂରରୁ ଡିଲିଟ୍ କରିବେ କି? ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</item>
+        <item quantity="other">%1$d ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ଆପଣ ପଠାଇଥିବା ସମସ୍ତ ବାର୍ତ୍ତାକୁ ଦୂରରୁ ଡିଲିଟ୍ କରିବେ କି? ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">ଏହି ସମ୍ପର୍କର ଡିଭାଇସରୁ ଆପଣ ଅଂଶୀଦାର କରିଥିବା ସମସ୍ତ ସ୍ଥାନ ଇତିହାସକୁ ଦୂରରୁ ଡିଲିଟ୍ କରିବେ କି? ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</item>
+        <item quantity="other">%1$d ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ଆପଣ ଅଂଶୀଦାର କରିଥିବା ସମସ୍ତ ସ୍ଥାନ ଇତିହାସକୁ ଦୂରରୁ ଡିଲିଟ୍ କରିବେ କି? ଏହାକୁ ପୂର୍ବବତ୍ କରାଯାଇପାରିବ ନାହିଁ ।</item>
+    </plurals>
+
+    <string name="common_continue">ଜାରି ରଖନ୍ତୁ</string>
+
+    <!-- ── ଅନବୋର୍ଡିଂ ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
+    <string name="onboarding_restore_message">ଆପଣଙ୍କର ପରିଚୟ ଏବଂ ସମ୍ପର୍କଗୁଡ଼ିକୁ ପୁନରୁଦ୍ଧାର କରିବା ପାଇଁ ଆପଣଙ୍କର ୬୪-ଅକ୍ଷର ବିଶିଷ୍ଟ ହେକ୍ସ ବ୍ୟକ୍ତିଗତ କି ଏଠାରେ ପେଷ୍ଟ କରନ୍ତୁ ।</string>
+    <string name="onboarding_private_key_hex">ବ୍ୟକ୍ତିଗତ କି (heks)</string>
+    <string name="onboarding_tagline">ସମ୍ପର୍କଗୁଡ଼ିକ ସହିତ ବ୍ୟକ୍ତିଗତ ସ୍ଥାନ ଅଂଶୀଦାର ।\nକୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ । କୌଣସି ମାଲିକାନା ସର୍ଭର୍ ନାହିଁ ।</string>
+    <string name="onboarding_feature_e2e_title">ଶେଷରୁ ଶେଷ ପର୍ଯ୍ୟନ୍ତ ଏନକ୍ରିପ୍ଟ ହୋଇଛି</string>
+    <string name="onboarding_feature_e2e_subtitle">ଆପଣଙ୍କ ସ୍ଥାନ ଡିଭାଇସରେ ଏନକ୍ରିପ୍ଟ ହୋଇଛି</string>
+    <string name="onboarding_feature_servers_title">କୌଣସି ମାଲିକାନା ସର୍ଭର୍ ନାହିଁ</string>
+    <string name="onboarding_feature_servers_subtitle">ସୁରକ୍ଷିତ ପରିବହନ ଭାବରେ ମୁକ୍ତ Nostr ରିଲେ ବ୍ୟବହାର କରେ - ଆପଣଙ୍କ ଡାଟା ଏନକ୍ରିପ୍ଟ ହୋଇ ରହେ ଏବଂ ବ୍ୟକ୍ତିଗତ ରହେ</string>
+    <string name="onboarding_feature_phone_title">ଆପଣଙ୍କ ଫୋନରେ ରହେ</string>
+    <string name="onboarding_feature_phone_subtitle">ଆପଣଙ୍କର ସମ୍ପୂର୍ଣ୍ଣ ସ୍ଥାନ ଇତିହାସ ଆପଣଙ୍କ ଡିଭାଇସରେ ରହେ । କେବଳ ଆପଣଙ୍କର ସାମ୍ପ୍ରତିକ ଅବସ୍ଥାନ ଚୟନ କରାଯାଇଥିବା ସମ୍ପର୍କଗୁଡ଼ିକ ସହିତ ଅଂଶୀଦାର କରାଯାଏ</string>
+    <string name="onboarding_name_prompt">ଆପଣଙ୍କ ସମ୍ପର୍କମାନେ ଆପଣଙ୍କୁ କ’ଣ ବୋଲି ଡାକିବେ?</string>
+    <string name="onboarding_name_placeholder">ଉଦାହରଣ ସ୍ୱରୂପ ମା, ବାପା, ଶିବା…</string>
+    <string name="onboarding_get_started">ଆରମ୍ଭ କରନ୍ତୁ</string>
+    <string name="onboarding_restore_from_backup">ବ୍ୟାକଅପ୍ ରୁ ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
+    <string name="onboarding_key_note">ଆପଣଙ୍କର ବ୍ୟକ୍ତିଗତ କି ସ୍ଥାନୀୟ ଭାବରେ ପ୍ରସ୍ତୁତ କରାଯାଇଛି ଏବଂ ଏହା କେବେ ବି ଏହି ଡିଭାଇସରୁ ବାହାରକୁ ଯାଏ ନାହିଁ ।</string>
+    <string name="onboarding_permissions_title">ଅନୁମତି</string>
+    <string name="onboarding_permissions_desc">ଆପଣଙ୍କର ସ୍ଥିତି ଅଂଶୀଦାର କରିବା ପାଇଁ LocaPeer କୁ ସ୍ଥାନ ପ୍ରବେଶ, ନିମନ୍ତ୍ରଣ କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ କ୍ୟାମେରା ପ୍ରବେଶ ଏବଂ ପୃଷ୍ଠଭୂମି ସ୍ଥିତି ପାଇଁ ବିଜ୍ଞପ୍ତି ପ୍ରବେଶ ଆବଶ୍ୟକ । ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶ ଇଚ୍ଛାଧୀନ - ଏହା ଆପଣଙ୍କର ଗତିବିଧି (ଚାଲିବା, ଡ୍ରାଇଭିଂ) କୁ ଅଧିକ ସଠିକ୍ ଭାବରେ ଲେବଲ୍ କରିବାରେ ସାହାଯ୍ୟ କରେ ।</string>
+    <string name="onboarding_before_ask_title">ଆମେ ପଚାରିବା ପୂର୍ବରୁ</string>
+    <string name="onboarding_before_ask_intro">ଆପଣ ଆଗକୁ କିଛି ସିଷ୍ଟମ୍ ପ୍ରମ୍ପ୍ଟ୍ ଦେଖିବେ:</string>
+    <string name="onboarding_before_ask_location">• ସ୍ଥାନ - ଆବଶ୍ୟକ, ଆପଣଙ୍କର ସ୍ଥିତି ଅଂଶୀଦାର କରିବାକୁ ।</string>
+    <string name="onboarding_before_ask_camera">• କ୍ୟାମେରା - ନିମନ୍ତ୍ରଣ କୋଡ୍ ସ୍କାନ କରିବାକୁ ।</string>
+    <string name="onboarding_before_ask_notifications">• ବିଜ୍ଞପ୍ତି - ପୃଷ୍ଠଭୂମି ସ୍ଥିତି ପାଇଁ ।</string>
+    <string name="onboarding_before_ask_activity">• ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ - ଇଚ୍ଛାଧୀନ । ଏହା LocaPeer କୁ ଆପଣଙ୍କ ଇତିହାସରେ ଚାଲିବା, ଡ୍ରାଇଭିଂ ଏବଂ ସ୍ଥିର ରହିବାକୁ ଅଧିକ ସଠିକ୍ ଭାବରେ ପୃଥକ କରିବାକୁ ଦିଏ । ଆପଣ ଏହାକୁ ଛାଡିପାରିବେ ଏବଂ ପରେ ସେଟିଂସମୂହରେ ସକ୍ଷମ କରିପାରିବେ ।</string>
+    <string name="onboarding_grant_permissions">ଅନୁମତି ପ୍ରଦାନ କରନ୍ତୁ</string>
+    <string name="onboarding_bg_location_title">ପୃଷ୍ଠଭୂମି ସ୍ଥାନ</string>
+    <string name="onboarding_bg_location_desc">ଆପ୍ ବନ୍ଦ ଥିବା ସମୟରେ ମଧ୍ୟ ଆପଣଙ୍କ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଅପଡେଟ୍ ରଖିବା ପାଇଁ, ଦୟାକରି ପରବର୍ତ୍ତୀ ସ୍କ୍ରିନରେ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରନ୍ତୁ ।</string>
+    <string name="onboarding_bg_location_error">ଆପ୍ ବନ୍ଦ ଥିବା ସମୟରେ ଆପଣଙ୍କ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଅପଡେଟ୍ କରିବା ପାଇଁ ପୃଷ୍ଠଭୂମି ସ୍ଥାନ ଆବଶ୍ୟକ । ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରନ୍ତୁ ।</string>
+    <string name="onboarding_configure_location">ସ୍ଥାନ ବିନ୍ୟାସ କରନ୍ତୁ</string>
+    <string name="onboarding_battery_title">ବ୍ୟାଟେରୀ</string>
+    <string name="onboarding_battery_desc">ବ୍ୟାଟେରୀ ସଞ୍ଚୟ କରିବାକୁ ଆଣ୍ଡ୍ରଏଡ୍ LocaPeer କୁ ବନ୍ଦ କରିପାରେ । ନିର୍ଭରଯୋଗ୍ୟ ଅପଡେଟ୍ ନିଶ୍ଚିତ କରିବାକୁ, ଦୟାକରି ଅପ୍ଟିମାଇଜେସନ୍ ରୁ LocaPeer କୁ ବାଦ୍ ଦିଅନ୍ତୁ ।</string>
+    <string name="onboarding_disable_optimizations">ଅପ୍ଟିମାଇଜେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="onboarding_done_title">ସବୁ ସରିଗଲା !</string>
+    <string name="onboarding_done_desc">ଆପଣଙ୍କର ବ୍ୟକ୍ତିଗତ ସ୍ଥାନ ନେଟୱର୍କ ପ୍ରସ୍ତୁତ ଅଛି ।</string>
+    <string name="onboarding_start_using">LocaPeer ବ୍ୟବହାର କରିବା ଆରମ୍ଭ କରନ୍ତୁ</string>
+
+    <string name="common_try_again">ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ</string>
+
+    <!-- ── ନିମନ୍ତ୍ରଣ ସ୍କାନ ସ୍କ୍ରିନ୍ ─────────────────────────────────────────────── -->
+    <string name="scan_title">ନିମନ୍ତ୍ରଣ ସ୍କାନ କରନ୍ତୁ</string>
+    <string name="scan_camera_needed">QR କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ କ୍ୟାମେରା ଅନୁମତି ଆବଶ୍ୟକ ।</string>
+    <string name="scan_grant_permission">ଅନୁମତି ପ୍ରଦାନ କରନ୍ତୁ</string>
+    <string name="scan_add_contact_title">ସମ୍ପର୍କ ଯୋଡିବେ କି?</string>
+    <string name="scan_add_contact_message">ଏହା ଆପଣଙ୍କୁ %1$s ସହିତ ସଂଯୋଗ କରିବ ଏବଂ ପରସ୍ପର ସହିତ ସ୍ଥାନ ଅଂଶୀଦାର କରିବା ଆରମ୍ଭ କରିବ ।</string>
+    <string name="scan_add_share">ଯୋଡନ୍ତୁ ଏବଂ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="scan_request_sent_title">ଅନୁରୋଧ ପଠାଗଲା !</string>
+    <string name="scan_request_sent_message">%1$s କୁ ଏକ ଅନୁରୋଧ ପଠାଯାଇଛି । ସେମାନେ ଗ୍ରହଣ କଲା ପରେ ଆପଣ ସଂଯୋଗ ହୋଇଯିବେ ।</string>
+    <string name="scan_failed">ସ୍କାନ ବିଫଳ ହୋଇଛି: %1$s</string>
+
     <string name="cd_back">ପଛକୁ</string>
+    <string name="common_review">ସମୀକ୍ଷା କରନ୍ତୁ</string>
+    <string name="common_decline">ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
+
+    <!-- ଅଂଶୀଦାର ଭୂମିକା ଲେବଲ୍ (ଅଂଶୀଦାରିତ) -->
+    <string name="role_send_receive">ପଠାନ୍ତୁ/ପାଆନ୍ତୁ</string>
+    <string name="role_send">ପଠାନ୍ତୁ</string>
+    <string name="role_receive">ପାଆନ୍ତୁ</string>
+    <string name="role_none">କୌଣସି ଅଂଶୀଦାର ନାହିଁ</string>
+
+    <!-- ── ନିମନ୍ତ୍ରଣ ସ୍କ୍ରିନ୍ ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">ମୋର ନିମନ୍ତ୍ରଣ</string>
+    <string name="invite_tab_add_contact">ସମ୍ପର୍କ ଯୋଡନ୍ତୁ</string>
+    <string name="invite_your_qr_title">ଆପଣଙ୍କର QR କୋଡ୍</string>
+    <string name="invite_your_qr_subtitle">ଆପଣଙ୍କ ସ୍ଥାନ ଅନୁସରଣ କରିବାକୁ କାହାକୁ ଏହାକୁ ସ୍କାନ କରିବାକୁ ଦିଅନ୍ତୁ</string>
+    <string name="invite_qr_cd">ଆପଣଙ୍କର QR କୋଡ୍</string>
+    <string name="invite_qr_error">QR ସୃଷ୍ଟି କରିବାରେ ତ୍ରୁଟି</string>
+    <string name="invite_share_link">ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="invite_encryption_note">ଆପଣଙ୍କ ସ୍ଥାନ ସ୍କାନର୍ ର ଡିଭାଇସ୍ ପାଇଁ ସ୍ୱତନ୍ତ୍ର ଭାବରେ ଏନକ୍ରିପ୍ଟ ହେବ ।</string>
+    <string name="invite_camera_required_title">କ୍ୟାମେରା ପ୍ରବେଶ ଆବଶ୍ୟକ</string>
+    <string name="invite_camera_required_message">QR କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ କ୍ୟାମେରା ଅନୁମତି ପ୍ରଦାନ କରନ୍ତୁ ।</string>
+    <string name="invite_point_camera">କ୍ୟାମେରାକୁ LocaPeer QR ଆଡକୁ ଦେଖାନ୍ତୁ</string>
+    <string name="invite_paste_title">କିମ୍ବା ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍ ପେଷ୍ଟ କରନ୍ତୁ</string>
+    <string name="invite_process_link">ଲିଙ୍କ୍ ପ୍ରକ୍ରିୟାକରଣ କରନ୍ତୁ</string>
+    <string name="invite_fallback_name">ସମ୍ପର୍କ</string>
+    <string name="invite_success_message">ସେମାନେ ଗ୍ରହଣ କଲା ପରେ ଆପଣ %1$s ସହିତ ସଂଯୋଗ ହୋଇଯିବେ ।</string>
+    <string name="invite_confirm_add_title">%1$s କୁ ଯୋଡିବେ କି?</string>
+    <string name="invite_confirm_add_message">ସେମାନଙ୍କୁ ଆପଣଙ୍କ ସମ୍ପର୍କରେ ଯୋଡିବେ ଏବଂ ସ୍ଥାନ ଅଂଶୀଦାର କରିବେ କି?</string>
+
+    <!-- ── ବାକି ଥିବା ଅନୁରୋଧ ସ୍କ୍ରିନ୍ ────────────────────────────────────────── -->
+    <string name="pending_empty">କୌଣସି ବାକି ଥିବା ଅନୁରୋଧ ନାହିଁ</string>
+    <string name="pending_requesting">ଅନୁରୋଧ କରାଯାଉଛି: %1$s · %2$s</string>
+    <string name="pending_role_change">ଭୂମିକା ପରିବର୍ତ୍ତନ ଅନୁରୋଧ · %1$s</string>
+    <string name="pending_new_request">ନୂତନ ଅଂଶୀଦାର ଅନୁରୋଧ · %1$s</string>
+
+    <string name="common_save_changes">ପରିବର୍ତ୍ତନଗୁଡ଼ିକ ସେଭ୍ କରନ୍ତୁ</string>
+
+    <!-- ── ଆସୁଥିବା ସେୟାର ଅନୁରୋଧ ସ୍କ୍ରିନ୍ ──────────────────────────────────── -->
+    <string name="incoming_update_title">ଅଂଶୀଦାର ସେଟିଂସମୂହ ଅପଡେଟ୍ କରନ୍ତୁ</string>
+    <string name="incoming_new_title">ନୂତନ ସମ୍ପର୍କ ଅନୁରୋଧ</string>
+    <string name="incoming_update_subtitle">%1$s ଆପଣ କିପରି ଅଂଶୀଦାର କରନ୍ତି ତାହା ଅପଡେଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି । ନିମ୍ନରେ ଥିବା ସେଟିଂସମୂହ ସମୀକ୍ଷା କରନ୍ତୁ ।</string>
+    <string name="incoming_new_subtitle">%1$s ଆପଣଙ୍କୁ ଜଣେ ସମ୍ପର୍କ ଭାବରେ ଯୋଡିଛନ୍ତି ! ଆପଣ ଏବେ ବଦଳରେ କ’ଣ ଅଂଶୀଦାର କରିବେ ତାହା ବାଛିପାରିବେ ।</string>
+    <string name="incoming_section_location">ସ୍ଥାନ</string>
+    <string name="incoming_share_my_location">%1$s ସହିତ ମୋର ସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="incoming_share_my_location_sub">ସେମାନେ ଆପଣ କେଉଁଠାରେ ଅଛନ୍ତି ତାହା ଦେଖିପାରିବେ</string>
+    <string name="incoming_see_their_location">%1$s ଙ୍କ ସ୍ଥାନ ଦେଖନ୍ତୁ</string>
+    <string name="incoming_see_their_location_sub">ସେମାନେ କେଉଁଠାରେ ଅଛନ୍ତି ଆପଣ ଦେଖିପାରିବେ</string>
+    <string name="incoming_section_messaging">ମେସେଜିଂ</string>
+    <string name="incoming_allow_messages">ବାର୍ତ୍ତାଗୁଡ଼ିକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="incoming_allow_messages_sub">%1$s ଙ୍କ ଠାରୁ ଚାଟ୍ ବାର୍ତ୍ତା ପ୍ରାପ୍ତ କରନ୍ତୁ</string>
+
+    <string name="common_request">ଅନୁରୋଧ କରନ୍ତୁ</string>
+    <string name="common_edit">ସଂପାଦନ କରନ୍ତୁ</string>
+
+    <!-- ── ପିଅର ସେୟାରିଂ (ସମ୍ପର୍କ ସେଟିଂସମୂହ) ସ୍କ୍ରିନ୍ ─────────────────────────── -->
+    <string name="peer_title">ସମ୍ପର୍କ ସେଟିଂସମୂହ</string>
+    <string name="peer_section_roles">ସ୍ଥାନ ଅଂଶୀଦାର ଭୂମିକା</string>
+    <string name="peer_send_on">%1$s ଆପଣଙ୍କ ସ୍ଥାନ ଦେଖିପାରିବେ</string>
+    <string name="peer_send_off">ଆପଣ %1$s ସହିତ ଆପଣଙ୍କର ସ୍ଥାନ ଅଂଶୀଦାର କରୁନାହାଁନ୍ତି</string>
+    <string name="peer_receive_title">%1$s ଙ୍କ ସ୍ଥାନ ପ୍ରାପ୍ତ କରନ୍ତୁ</string>
+    <string name="peer_receive_on">ଆପଣ %1$s ଙ୍କ ସ୍ଥାନ ଦେଖିପାରିବେ</string>
+    <string name="peer_receive_off">ଆପଣଙ୍କର %1$s ଙ୍କ ସ୍ଥାନର ପ୍ରବେଶ ନାହିଁ</string>
+    <string name="peer_section_privacy">ଗୋପନୀୟତା ଏବଂ ଅଂଶୀଦାର ନିୟନ୍ତ୍ରଣ</string>
+    <string name="peer_pause_sharing">ଅଂଶୀଦାର ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="peer_pause_sub">ସାମୟିକ ଭାବରେ %1$s କୁ ଆପଣଙ୍କର ସ୍ଥାନ ପଠାଇବା ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="peer_precision">ସ୍ଥାନ ସଠିକତା</string>
+    <string name="peer_precision_exact_sub">ସଠିକ୍ GPS ସଂଯୋଜକ</string>
+    <string name="peer_precision_suburb_sub">ଆନୁମାନିକ ସ୍ଥାନ (ସବ୍‌ଅର୍ବ ସ୍ତର)</string>
+    <string name="peer_always_sharing">ସର୍ବଦା ଅଂଶୀଦାର କରାଯାଉଛି</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d ସକ୍ରିୟ ଅଂଶୀଦାର ନିୟମ</item>
+        <item quantity="other">%1$d ସକ୍ରିୟ ଅଂଶୀଦାର ନିୟମ</item>
+    </plurals>
+    <string name="peer_section_alerts">ସତର୍କତା ଏବଂ ତଦାରଖ</string>
+    <string name="peer_sos_contact">SOS ସମ୍ପର୍କ</string>
+    <string name="peer_sos_sub">ଅଂଶୀଦାର ବନ୍ଦ ହୋଇଥିଲେ ମଧ୍ୟ ଆପଣଙ୍କର ଜରୁରୀକାଳୀନ ସତର୍କତା ପାଆନ୍ତୁ</string>
+    <string name="peer_missed_alert">ସ୍ଥାନ ହଜିଯାଇଥିବା ସତର୍କତା</string>
+    <string name="peer_missed_on">ଯଦି %1$s ସେମାନଙ୍କର ସ୍ଥାନ ରିପୋର୍ଟ କରିବା ବନ୍ଦ କରନ୍ତି ତେବେ ମୋତେ ଜଣାନ୍ତୁ</string>
+    <string name="peer_requires_access">%1$s ଙ୍କ ସ୍ଥାନର ପ୍ରବେଶ ଆବଶ୍ୟକ</string>
+    <string name="peer_proximity_alert">ନିକଟତରତା ସତର୍କତା</string>
+    <string name="peer_proximity_sub">ଯେତେବେଳେ %1$s ନିକଟରେ ଥାନ୍ତି ମୋତେ ଜଣାନ୍ତୁ</string>
+    <string name="peer_alert_radius">ସତର୍କତା ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="peer_alert_schedule">ସତର୍କତା କାର୍ଯ୍ୟସୂଚୀ</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d ସକ୍ରିୟ ନିୟମ</item>
+        <item quantity="other">%1$d ସକ୍ରିୟ ନିୟମ</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s ପାଇଁ ପହଞ୍ଚିବା ଏବଂ ବାହାରିବା ଜୋନ୍ ସେଟ୍ କରନ୍ତୁ</string>
+    <string name="peer_supervise">ଏହି ଡିଭାଇସକୁ ତଦାରଖ କରନ୍ତୁ</string>
+    <string name="peer_supervise_on">ଆପଣ %1$s ଙ୍କ ଠାରୁ ଅନଲକ୍ ଅନୁରୋଧ ଗ୍ରହଣ ଏବଂ ଅନୁମୋଦନ କରନ୍ତି</string>
+    <string name="peer_supervise_off">ତଦାରଖ ମୋଡ୍ ଅନଲକ୍ ଅନୁରୋଧ ପଠାଇବାକୁ %1$s କୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="peer_messaging_sub">%1$s ଙ୍କ ଠାରୁ ଚାଟ୍ ବାର୍ତ୍ତା ସକ୍ଷମ/ଅକ୍ଷମ କରନ୍ତୁ</string>
+    <string name="peer_section_history">ଗତିବିଧି ଇତିହାସ</string>
+    <string name="peer_location_history">ସ୍ଥାନ ଇତିହାସ</string>
+    <string name="peer_location_history_sub">%1$s ପାଇଁ ଗତିବିଧି ଇତିହାସ ଏବଂ ମାନଚିତ୍ର ରିପୋର୍ଟ ଦେଖନ୍ତୁ</string>
+    <string name="peer_section_retention">ଦୂରବର୍ତ୍ତୀ ଡାଟା ଧାରଣ</string>
+    <string name="peer_retention_location_sub">%1$s ଆପଣଙ୍କର ସ୍ଥାନ ଇତିହାସ କେତେ ସମୟ ପର୍ଯ୍ୟନ୍ତ ରଖନ୍ତି</string>
+    <string name="peer_purge_location">%1$s ରୁ ସମସ୍ତ ସ୍ଥାନ ଡାଟା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="peer_retention_messages_sub">%1$s ଆପଣ ପଠାଇଥିବା ବାର୍ତ୍ତା କେତେ ସମୟ ପର୍ଯ୍ୟନ୍ତ ରଖନ୍ତି</string>
+    <string name="peer_purge_messages">%1$s ରୁ ସମସ୍ତ ବାର୍ତ୍ତା ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="peer_precision_exact">ସଠିକ୍ GPS</string>
+    <string name="peer_precision_exact_desc">ସଠିକ୍ ସଂଯୋଜକ</string>
+    <string name="peer_precision_suburb">ସବ୍‌ଅର୍ବ (~୧ କିଲୋମିଟର)</string>
+    <string name="peer_precision_suburb_desc">କେବଳ ଅଞ୍ଚଳ ସ୍ତର</string>
+
+    <!-- ── ବାର୍ତ୍ତା ତାଲିକା ସ୍କ୍ରିନ୍ ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d କଥାବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବେ କି?</item>
+        <item quantity="other">%1$d କଥାବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବେ କି?</item>
+    </plurals>
+    <string name="conv_delete_locally">ସ୍ଥାନୀୟ ଭାବରେ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="conv_delete_locally_sub">କେବଳ ଆପଣଙ୍କ ଡିଭାଇସରୁ କଥାବାର୍ତ୍ତା ବାହାର କରିଦିଏ ।</string>
+    <string name="conv_delete_both">ଉଭୟ ସ୍ଥାନରୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="conv_bulk_delete_both_sub">ଆପଣଙ୍କ ଡିଭାଇସରୁ ଏବଂ ଆପଣଙ୍କ ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ କଥାବାର୍ତ୍ତା ଡିଲିଟ୍ କରେ ।</string>
+    <string name="conv_delete_both_sub">କଥାବାର୍ତ୍ତାକୁ ସ୍ଥାନୀୟ ଭାବରେ ଡିଲିଟ୍ କରେ ଏବଂ ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରେ କଥାବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବା ପାଇଁ ଅନୁରୋଧ ପଠାଏ ।</string>
+    <string name="conv_cd_exit_selection">ଚୟନରୁ ବାହାରନ୍ତୁ</string>
+    <string name="conv_cd_select_all">ସବୁ ବାଛନ୍ତୁ</string>
+    <string name="conv_cd_new_message">ନୂତନ ବାର୍ତ୍ତା</string>
+    <string name="conv_sort_date">ତାରିଖ</string>
+    <string name="conv_sort_unread">ଅପଠିତ</string>
+    <string name="conv_search_placeholder">କଥାବାର୍ତ୍ତା ଖୋଜନ୍ତୁ…</string>
+    <string name="conv_tab_chats">ଚାଟ୍</string>
+    <string name="conv_tab_archived">ଆର୍କାଇଭ୍ ହୋଇଛି</string>
+    <string name="conv_mark_read">ପଢାଯାଇଛି ବୋଲି ଚିହ୍ନିତ କରନ୍ତୁ</string>
+    <string name="conv_archive">ଆର୍କାଇଭ୍</string>
+    <string name="conv_unarchive">ଆର୍କାଇଭ୍ ରୁ ବାହାର କରନ୍ତୁ</string>
+    <string name="conv_empty_no_results">\"%1$s\" ପାଇଁ କୌଣସି ଫଳାଫଳ ମିଳିଲା ନାହିଁ</string>
+    <string name="conv_empty_no_results_sub">ଅନ୍ୟ ଏକ ସର୍ଚ୍ଚ ଶବ୍ଦ ବ୍ୟବହାର କରି ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="conv_empty_archived_title">କୌଣସି ଆର୍କାଇଭ୍ ଚାଟ୍ ନାହିଁ</string>
+    <string name="conv_empty_archived_sub">ଇନବକ୍ସକୁ ସଫା ରଖିବାକୁ ଚାଟ୍ ଆର୍କାଇଭ୍ କରନ୍ତୁ</string>
+    <string name="conv_empty_title">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ବାର୍ତ୍ତା ନାହିଁ</string>
+    <string name="conv_empty_sub">ମାନଚିତ୍ର ଖୋଲନ୍ତୁ ଏବଂ କଥାବାର୍ତ୍ତା ଆରମ୍ଭ କରିବାକୁ\nଜଣେ ବ୍ୟକ୍ତିଙ୍କ ଉପରେ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="conv_delete_title">କଥାବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବେ କି?</string>
+    <string name="conv_delete_message">%1$s ସହିତ ଏହି କଥାବାର୍ତ୍ତା ଆପଣ କିପରି ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
+    <string name="conv_messages_blocked">ବାର୍ତ୍ତା ବ୍ଲକ୍ କରାଯାଇଛି</string>
+    <string name="conv_preview_mine">ଆପଣ: %1$s</string>
+    <string name="conv_new_message_title">ନୂତନ ବାର୍ତ୍ତା</string>
+    <string name="conv_picker_empty">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସମ୍ପର୍କ ନାହିଁ । ସମ୍ପର୍କ ଯୋଡିବାକୁ ଏକ QR କୋଡ୍ ସ୍କାନ କରନ୍ତୁ ।</string>
+
+    <!-- ── ଚାଟ୍ ସ୍କ୍ରିନ୍ ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">ଚାଟ୍ ଇତିହାସ ସଫା କରିବେ କି?</string>
+    <string name="chat_clear_message">%1$s ସହିତ ଏହି କଥାବାର୍ତ୍ତା ଆପଣ କିପରି ସଫା କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
+    <string name="chat_clear_locally">ସ୍ଥାନୀୟ ଭାବରେ ସଫା କରନ୍ତୁ</string>
+    <string name="chat_clear_both">ଉଭୟ ସ୍ଥାନରୁ ସଫା କରନ୍ତୁ</string>
+    <string name="chat_clear_both_sub">ଚାଟ୍‌କୁ ସ୍ଥାନୀୟ ଭାବରେ ସଫା କରେ ଏବଂ ଆପଣ ପଠାଇଥିବା ବାର୍ତ୍ତାକୁ ଡିଲିଟ୍ କରିବାକୁ %1$s କୁ ଅନୁରୋଧ ପଠାଏ ।</string>
+    <string name="chat_cd_options">ବିକଳ୍ପ</string>
+    <string name="chat_clear_history_menu">ଚାଟ୍ ଇତିହାସ ସଫା କରନ୍ତୁ</string>
+    <string name="chat_typing">%1$s ଲେଖୁଛନ୍ତି…</string>
+    <string name="chat_blocked_banner">ଆପଣ %1$s ଙ୍କ ଠାରୁ ବାର୍ତ୍ତା ବ୍ଲକ୍ କରିଛନ୍ତି । ଅନବ୍ଲକ୍ କରିବାକୁ ସମ୍ପର୍କକୁ ଯାଆନ୍ତୁ ।</string>
+    <string name="chat_delete_msg_title">ବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବେ କି?</string>
+    <string name="chat_delete_msg_message">ଆପଣ ଏହି ବାର୍ତ୍ତା କିପରି ଡିଲିଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
+    <string name="chat_delete_from_contact">ସମ୍ପର୍କଙ୍କ ଠାରୁ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="chat_delete_from_contact_sub">ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ଚାଟ୍ ଡିଲିଟ୍ କରେ ।</string>
+    <string name="chat_delete_both_sub">ଚାଟ୍‌କୁ ସ୍ଥାନୀୟ ଭାବରେ ବାହାର କରିଦିଏ ଏବଂ ସମ୍ପର୍କଙ୍କ ଡିଭାଇସରୁ ସ୍ୱୟଂଚାଳିତ ଭାବରେ ଡିଲିଟ୍ କରେ ।</string>
+    <string name="chat_cd_share_location">ସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="chat_input_placeholder">ବାର୍ତ୍ତା…</string>
+    <string name="chat_cd_send">ପଠାନ୍ତୁ</string>
+
+    <string name="common_close">ବନ୍ଦ କରନ୍ତୁ</string>
+
+    <!-- ── ମାନଚିତ୍ର ସ୍କ୍ରିନ୍ ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS ସକ୍ରିୟ କରିବେ କି?</string>
+    <string name="map_sos_deactivate_title">SOS ବନ୍ଦ କରିବେ କି?</string>
+    <string name="map_sos_activate_msg">ଏହା ବନ୍ଦ ନ ହେବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କର ନିର୍ଦ୍ଧାରିତ SOS ସମ୍ପର୍କମାନଙ୍କୁ ପ୍ରତି ୧୫ ସେକେଣ୍ଡରେ ଆପଣଙ୍କର ସ୍ଥାନ ପ୍ରସାରଣ କରିବ ।</string>
+    <string name="map_sos_deactivate_msg">ଏହା ଆପଣଙ୍କ ଜରୁରୀକାଳୀନ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଉଚ୍ଚ-ପ୍ରାଥମିକତା ସ୍ଥାନ ପ୍ରସାରଣ ବନ୍ଦ କରିଦେବ ।</string>
+    <string name="map_activate">ସକ୍ରିୟ କରନ୍ତୁ</string>
+    <string name="map_deactivate">ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="map_cd_style">ମାନଚିତ୍ର ଶୈଳୀ</string>
+    <string name="map_cd_show_geofences">ଜିଓଫେନ୍ସ ଦେଖାନ୍ତୁ</string>
+    <string name="map_cd_hide_geofences">ଜିଓଫେନ୍ସ ଲୁଚାନ୍ତୁ</string>
+    <string name="map_cd_follow">ମୋତେ ଅନୁସରଣ କରନ୍ତୁ</string>
+    <string name="map_cd_friends">ବନ୍ଧୁମାନେ</string>
+    <string name="map_no_friends">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ବନ୍ଧୁ ଟ୍ରାକ୍ ହୋଇନାହାଁନ୍ତି</string>
+    <string name="map_you">ଆପଣ</string>
+    <string name="map_cd_go_my_location">ମୋ ସ୍ଥାନକୁ ଯାଆନ୍ତୁ</string>
+    <string name="map_sos_active">⚠ SOS ସକ୍ରିୟ ଅଛି</string>
+    <string name="map_away">ଦୂରରେ</string>
+    <string name="map_no_location_yet">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସ୍ଥାନ ମିଳିନାହିଁ</string>
+    <string name="map_cd_go_location">ସ୍ଥାନକୁ ଯାଆନ୍ତୁ</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ଚାଲୁ ଅଛି</string>
+    <string name="map_overdue">ବିଳମ୍ବିତ — କୌଣସି ସାମ୍ପ୍ରତିକ ଅପଡେଟ୍ ନାହିଁ</string>
+    <string name="map_stat_last_seen">ଶେଷ ଥର ଦେଖାଯାଇଥିଲା</string>
+    <string name="map_stat_battery">ବ୍ୟାଟେରୀ</string>
+    <string name="map_stat_accuracy">ସଠିକତା</string>
+    <string name="map_stat_motion">ଗତିବିଧି</string>
+    <string name="map_stat_speed">ଗତି</string>
+    <string name="map_stat_elevation">ଉଚ୍ଚତା</string>
+
+    <string name="common_ok">ଠିକ୍ ଅଛି</string>
+
+    <!-- ── ଇତିହାସ ରିପୋର୍ଟ ସ୍କ୍ରିନ୍ ──────────────────────────────────────────── -->
+    <string name="history_title_peer">ଇତିହାସ: %1$s</string>
+    <string name="history_select_person">ଜଣେ ବ୍ୟକ୍ତିଙ୍କୁ ବାଛନ୍ତୁ</string>
+    <string name="history_person_label">ବ୍ୟକ୍ତି</string>
+    <string name="history_cd_prev_day">ପୂର୍ବ ଦିନ</string>
+    <string name="history_cd_next_day">ପର ଦିନ</string>
+    <string name="history_time_filter">ସମୟ ଫିଲ୍ଟର୍:</string>
+    <string name="history_cd_reset_time">ସମୟ ପୁନଃସେଟ୍ କରନ୍ତୁ</string>
+    <string name="history_tab_list">ତାଲିକା</string>
+    <string name="history_empty_title">ଏହି ଦିନ ପାଇଁ କୌଣସି ଇତିହାସ ନାହିଁ</string>
+    <string name="history_empty_sub">ଅନ୍ୟ ଏକ ତାରିଖ ବାଛିବାକୁ ଚେଷ୍ଟା କରନ୍ତୁ କିମ୍ବା ଆପଣଙ୍କର ସଂଯୋଗ ଯାଞ୍ଚ କରନ୍ତୁ ।</string>
+    <string name="history_start_time">ଆରମ୍ଭ ସମୟ</string>
+    <string name="history_end_time">ଶେଷ ସମୟ</string>
+    <string name="history_no_data_title">କୌଣସି ସ୍ଥାନ ଡାଟା ନାହିଁ</string>
+    <string name="history_no_data_sub">ଏହି ଦିନ କିମ୍ବା ସମୟ ଅବଧି ପାଇଁ କୌଣସି ରେକର୍ଡ ହୋଇଥିବା ପିଙ୍ଗ୍ ନାହିଁ ।</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d ଟି ପିଙ୍ଗ୍ ରେକର୍ଡ କରାଯାଇଛି</item>
+        <item quantity="other">%1$d ଟି ପିଙ୍ଗ୍ ରେକର୍ଡ କରାଯାଇଛି</item>
+    </plurals>
+    <string name="history_cd_dismiss">ବାହାର କରନ୍ତୁ</string>
+    <string name="history_accuracy_label">±%1$s ସଠିକତା</string>
+    <string name="history_emergency_sos">ଜରୁରୀକାଳୀନ SOS ସଙ୍କେତ</string>
+    <string name="history_detail_location">ସ୍ଥାନ</string>
+    <string name="history_detail_coordinates">ସଂଯୋଜକ</string>
+    <string name="history_within">±%1$s ମଧ୍ୟରେ</string>
+    <string name="history_detail_movement">ଗତିବିଧି</string>
+    <string name="history_movement_desc">%1$s %2$s ଅଭିମୁଖେ %3$s</string>
+
+    <string name="common_create">ତିଆରି କରନ୍ତୁ</string>
+
+    <!-- ── ଜିଓଫେନ୍ସ ସ୍କ୍ରିନ୍ ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">ଜିଓଫେନ୍ସ ଅଞ୍ଚଳ ଯୋଡନ୍ତୁ</string>
+    <string name="geo_cd_assign">ଜିଓଫେନ୍ସ ଧାର୍ଯ୍ୟ କରନ୍ତୁ</string>
+    <string name="geo_unknown">ଅଜଣା</string>
+    <string name="geo_empty_title">କୌଣସି ଜିଓଫେନ୍ସ ନାହିଁ</string>
+    <string name="geo_empty_sub">ଏକ ଜିଓଫେନ୍ସ ଅଞ୍ଚଳ ସୃଷ୍ଟି କରିବା ପାଇଁ + ଟ୍ୟାପ୍ କରନ୍ତୁ, ତା’ପରେ ସେମାନଙ୍କର ଅଂଶୀଦାର ସେଟିଂସମୂହରୁ ସମ୍ପର୍କଗୁଡ଼ିକୁ ସେଠାରେ ଧାର୍ଯ୍ୟ କରନ୍ତୁ ।</string>
+    <string name="geo_delete_title">ଜିଓଫେନ୍ସ ଡିଲିଟ୍ କରିବେ କି?</string>
+    <string name="geo_delete_simple">\"%1$s\" ଡିଲିଟ୍ କରିବେ କି?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" ଜଣେ ସମ୍ପର୍କଙ୍କୁ ଧାର୍ଯ୍ୟ କରାଯାଇଛି । ଏହାକୁ ଡିଲିଟ୍ କଲେ ସେହି ଧାର୍ଯ୍ୟ ମଧ୍ୟ ବାହାରିଯିବ ।</item>
+        <item quantity="other">\"%1$s\" %2$d ଜଣ ସମ୍ପର୍କଙ୍କୁ ଧାର୍ଯ୍ୟ କରାଯାଇଛି । ଏହାକୁ ଡିଲିଟ୍ କଲେ ସେହି ଧାର୍ଯ୍ୟ ମଧ୍ୟ ବାହାରିଯିବ ।</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s ପାଇଁ ଜିଓଫେନ୍ସ</string>
+    <string name="geo_empty_contact_title">ସମ୍ପର୍କ ପାଇଁ କୌଣସି ଜିଓଫେନ୍ସ ନାହିଁ</string>
+    <string name="geo_empty_contact_sub">ଏକ ଜିଓଫେନ୍ସ ଅଞ୍ଚଳ ଧାର୍ଯ୍ୟ କରିବା ପାଇଁ + ଟ୍ୟାପ୍ କରନ୍ତୁ ଏବଂ ପହଞ୍ଚିବା, ବାହାରିବା କିମ୍ବା ଉଭୟ ସମୟରେ ସତର୍କ କରାଯିବା ଉଚିତ କି ନାହିଁ ତାହା ବାଛନ୍ତୁ ।</string>
+    <string name="geo_no_areas_title">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ଜିଓଫେନ୍ସ ନାହିଁ</string>
+    <string name="geo_no_areas_msg">ପ୍ରଥମେ ଜିଓଫେନ୍ସ ସ୍କ୍ରିନରୁ ଏକ ଜିଓଫେନ୍ସ ଅଞ୍ଚଳ ସୃଷ୍ଟି କରନ୍ତୁ, ତା’ପରେ ଏଠାରେ ଧାର୍ଯ୍ୟ କରନ୍ତୁ ।</string>
+    <string name="geo_radius_label">%1$s ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="geo_contacts_label">ସମ୍ପର୍କ: %1$s</string>
+    <string name="geo_no_contacts_assigned">କୌଣସି ସମ୍ପର୍କ ଧାର୍ଯ୍ୟ ହୋଇନାହାଁନ୍ତି</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d ନିୟମ</item>
+        <item quantity="other">%1$d ନିୟମ</item>
+    </plurals>
+    <string name="geo_trigger_enter">ପ୍ରବେଶ</string>
+    <string name="geo_trigger_exit">ବାହାରକୁ ଯିବା</string>
+    <string name="geo_trigger_both">ଉଭୟ</string>
+    <string name="geo_edit_title">ଜିଓଫେନ୍ସ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="geo_new_title">ନୂତନ ଜିଓଫେନ୍ସ</string>
+    <string name="geo_cd_my_location">ମୋ ସ୍ଥାନ</string>
+    <string name="geo_cd_radius_increase">ବ୍ୟାସାର୍ଦ୍ଧ ବଢାନ୍ତୁ</string>
+    <string name="geo_cd_radius_decrease">ବ୍ୟାସାର୍ଦ୍ଧ କମାନ୍ତୁ</string>
+    <string name="geo_hint_tap">ରଖିବା ପାଇଁ ମାନଚିତ୍ରକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ କିମ୍ବା ଧରି ରଖନ୍ତୁ</string>
+    <string name="geo_hint_move">ଜୁମ୍ କରିବା ପାଇଁ ପିଞ୍ଚ କରନ୍ତୁ • ଘୁଞ୍ଚାଇବା ପାଇଁ ପିନ୍ କୁ ଧରି ରଖନ୍ତୁ କିମ୍ବା ଟାଣନ୍ତୁ</string>
+    <string name="geo_basic_info">ମୌଳିକ ସୂଚନା</string>
+    <string name="geo_search_title">ଠିକଣା ଅନୁଯାୟୀ ଖୋଜନ୍ତୁ</string>
+    <string name="geo_search_label">ଠିକଣା କିମ୍ବା ସ୍ଥାନ</string>
+    <string name="geo_search_placeholder">ଉଦାହରଣ ସ୍ୱରୂପ ୧୦ ମେନ୍ ସ୍ଟ୍ରିଟ୍, ଭୁବନେଶ୍ୱର</string>
+    <string name="geo_search_no_results">କୌଣସି ମେଳ ଖାଉଥିବା ଠିକଣା ମିଳିଲା ନାହିଁ</string>
+    <string name="geo_cd_search">ଖୋଜନ୍ତୁ</string>
+    <string name="geo_name_placeholder">ଉଦାହରଣ ସ୍ୱରୂପ ଘର, କାମ</string>
+    <string name="geo_name_required">ନାମ ଆବଶ୍ୟକ</string>
+    <string name="geo_latitude">ଅକ୍ଷାଂଶ</string>
+    <string name="geo_longitude">ଦ୍ରାଘିମା</string>
+    <string name="geo_lat_range">-୯୦ ରୁ ୯୦</string>
+    <string name="geo_lng_range">-୧୮୦ ରୁ ୧୮୦</string>
+    <string name="geo_radius">ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="geo_radius_range">%1$d ରୁ %2$d ମିଟର ମଧ୍ୟରେ ପ୍ରବେଶ କରନ୍ତୁ</string>
+    <string name="geo_edit_assignment">ଧାର୍ଯ୍ୟକୁ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="geo_assign_title">ଜିଓଫେନ୍ସ ଧାର୍ଯ୍ୟ କରନ୍ତୁ</string>
+    <string name="geo_select_area">ଜିଓଫେନ୍ସ ଅଞ୍ଚଳ ବାଛନ୍ତୁ</string>
+    <string name="geo_trigger_title">ଏହି ସମୟରେ ସୂଚନା ଦିଅନ୍ତୁ:</string>
+    <string name="geo_add_rule">ନିୟମ ଯୋଡନ୍ତୁ</string>
+    <string name="geo_alerts_all_times">ସତର୍କତା ସବୁବେଳେ ସକ୍ରିୟ ଥାଏ । ସତର୍କତା କେତେବେଳେ ପଠାଯିବ ତାହା ସୀମିତ କରିବାକୁ ଏକ ନିୟମ ଯୋଡନ୍ତୁ ।</string>
+    <string name="geo_assign_action">ଧାର୍ଯ୍ୟ କରନ୍ତୁ</string>
+
+    <!-- ── ନିକଟତରତା ସତର୍କତା ସ୍କ୍ରିନ୍ ────────────────────────────────────────── -->
+    <string name="prox_title">ନିକଟତରତା ସତର୍କତା</string>
+    <string name="prox_empty_title">କୌଣସି ଟ୍ରାକିଂ ହେଉଥିବା ବ୍ୟକ୍ତି ନାହାଁନ୍ତି</string>
+    <string name="prox_empty_sub">କାହାର ସ୍ଥାନ ଟ୍ରାକ୍ କରିବା ଆରମ୍ଭ କରିବା ପାଇଁ ସ୍କାନ ଟ୍ୟାବରୁ\nଜଣଙ୍କର ନିମନ୍ତ୍ରଣ QR ସ୍କାନ କରନ୍ତୁ</string>
+    <string name="prox_intro">ଟ୍ରାକ୍ କରାଯାଉଥିବା ବ୍ୟକ୍ତି ଆପଣଙ୍କର ମନୋନୀତ ଦୂରତା ମଧ୍ୟକୁ ଆସିଲେ ବିଜ୍ଞପ୍ତି ପାଆନ୍ତୁ ।</string>
+    <string name="prox_alert_within">%1$s ମଧ୍ୟରେ ଥିବା ବେଳେ ସତର୍କ କରନ୍ତୁ</string>
+    <string name="prox_alerts_off">ସତର୍କତା ବନ୍ଦ ଅଛି</string>
+    <string name="prox_alert_radius">ସତର୍କତା ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="prox_edit_schedule">କାର୍ଯ୍ୟସୂଚୀ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="prox_rules">ନିୟମଗୁଡ଼ିକ</string>
+
+    <!-- ── କାର୍ଯ୍ୟସୂଚୀ ସ୍କ୍ରିନ୍ / ନିୟମ ସଂପାଦକ ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s ପାଇଁ କାର୍ଯ୍ୟସୂଚୀ</string>
+    <string name="schedule_cd_add_rule">ନିୟମ ଯୋଡନ୍ତୁ</string>
+    <string name="schedule_empty_title">କୌଣସି କାର୍ଯ୍ୟସୂଚୀ ନିୟମ ନାହିଁ</string>
+    <string name="schedule_empty_global">ସ୍ଥାନ ସବୁବେଳେ ଅଂଶୀଦାର କରାଯାଏ । ଅଂଶୀଦାର କେତେବେଳେ ସକ୍ରିୟ ରହିବ ତାହା ସୀମିତ କରିବାକୁ ଏକ ନିୟମ ଯୋଡନ୍ତୁ ।</string>
+    <string name="schedule_empty_peer">ସ୍ଥାନ ସବୁବେଳେ %1$s ସହିତ ଅଂଶୀଦାର କରାଯାଏ । କେତେବେଳେ ତାହା ସୀମିତ କରିବାକୁ ଏକ ନିୟମ ଯୋଡନ୍ତୁ ।</string>
+    <string name="schedule_active_hint">ଯେକୌଣସି ନିୟମ ସାମ୍ପ୍ରତିକ ସମୟ ସହିତ ମେଳ ଖାଇଲେ ସକ୍ରିୟ । ଖାଲି = ସବୁବେଳେ ଚାଲୁ ।</string>
+    <string name="schedule_all_day">ସାରା ଦିନ</string>
+    <string name="schedule_plus_one_day"> (+୧ ଦିନ)</string>
+    <string name="schedule_rule_number">ନିୟମ %1$d</string>
+    <string name="schedule_cd_delete_rule">ନିୟମ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="schedule_edit_rule">ନିୟମ ସଂପାଦନ କରନ୍ତୁ</string>
+    <string name="schedule_label_optional">ଲେବଲ୍ (ଇଚ୍ଛାଧୀନ)</string>
+    <string name="schedule_label_placeholder">ଉଦାହରଣ ସ୍ୱରୂପ କାର୍ଯ୍ୟ ସମୟ, ସପ୍ତାହନ୍ତ</string>
+    <string name="schedule_active_days">ସକ୍ରିୟ ଦିନ</string>
+    <string name="schedule_time_window">ସମୟ ଅବଧି</string>
+    <string name="schedule_start">ଆରମ୍ଭ</string>
+    <string name="schedule_end">ଶେଷ</string>
+    <string name="schedule_overnight">ରାତି ସାରା: %1$s ରୁ ପରଦିନ %2$s ପର୍ଯ୍ୟନ୍ତ ସକ୍ରିୟ</string>
+
+    <!-- ── ତଦାରଖ ଗେଟ୍ ───────────────────────────────────────────────── -->
+    <string name="gate_title">ଡିଭାଇସ୍ ତଦାରଖରେ ଅଛି</string>
+    <string name="gate_message">ସେଟିଂସମୂହ ପ୍ରବେଶ କରିବା ପାଇଁ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ଆବଶ୍ୟକ ।</string>
+    <string name="gate_request_access">ପ୍ରବେଶ ଅନୁରୋଧ କରନ୍ତୁ</string>
+    <string name="gate_waiting">ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ପାଇଁ ଅପେକ୍ଷା କରାଯାଇଛି…</string>
+    <string name="gate_denied">ପର୍ଯ୍ୟବେକ୍ଷକଙ୍କ ଦ୍ୱାରା ପ୍ରବେଶ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି ।</string>
+    <string name="gate_timed_out">ଅନୁରୋଧ ସମୟ ସମାପ୍ତ ହୋଇଛି । ପର୍ଯ୍ୟବେକ୍ଷକ ପ୍ରତିକ୍ରିୟା ଦେଇନାହାଁନ୍ତି ।</string>
+
+    <!-- ── ଧାରଣ ଚୟନକାରୀ ─────────────────────────────────────────────── -->
+    <string name="retention_forever">ସବୁଦିନ ପାଇଁ</string>
+    <string name="retention_keep_for">ଏଥିପାଇଁ ରଖନ୍ତୁ: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d ଦିନ</item>
+        <item quantity="other">%1$d ଦିନ</item>
+    </plurals>
+
+    <string name="common_select">ବାଛନ୍ତୁ</string>
+
+    <!-- ── ମାନଚିତ୍ର ସ୍ଥାନ ଚୟନକାରୀ ────────────────────────────────────────────── -->
+    <string name="picker_title">ସ୍ଥିର ସ୍ଥାନ ବାଛନ୍ତୁ</string>
+
+    <!-- ── ନେଭିଗେସନ୍ କଷ୍ଟମାଇଜ୍ ସ୍କ୍ରିନ୍ ────────────────────────────────────── -->
+    <string name="customize_nav_intro">ତଳ ବାରରେ କେଉଁ ଟ୍ୟାବ୍ ଦେଖାଯିବ ଏବଂ ସେଗୁଡ଼ିକର କ୍ରମ ବାଛନ୍ତୁ । ମାନଚିତ୍ର ସବୁବେଳେ ଅନ୍ତର୍ଭୁକ୍ତ ହୋଇଥାଏ ।</string>
+    <string name="customize_cd_move_up">ଉପରକୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
+    <string name="customize_cd_move_down">ତଳକୁ ଘୁଞ୍ଚାନ୍ତୁ</string>
+
+    <!-- ── ବିଷୟରେ ସ୍କ୍ରିନ୍ ───────────────────────────────────────────────────── -->
+    <string name="about_version">ସଂସ୍କରଣ %1$s (ବିଲ୍ଡ %2$d)</string>
+    <string name="about_tagline">ଆପଣ ବିଶ୍ୱାସ କରୁଥିବା ଲୋକଙ୍କ ସହିତ ବ୍ୟକ୍ତିଗତ ସ୍ଥାନ ଅଂଶୀଦାର । କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ, କୌଣସି କ୍ଲାଉଡ୍ ନାହିଁ, ଆମ ଦ୍ୱାରା କୌଣସି ଟ୍ରାକିଂ ନାହିଁ ।</string>
+    <string name="about_relay_connections">ରିଲେ ସଂଯୋଗ</string>
+    <string name="about_connected">ସଂଯୋଜିତ</string>
+    <string name="about_disconnected">ସଂଯୋଗ ବିଚ୍ଛିନ୍ନ</string>
+    <string name="about_open_source">ମୁକ୍ତ ଉତ୍ସ ଲାଇବ୍ରେରୀ</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap ଆଧାରିତ ମାନଚିତ୍ର ରେଣ୍ଡରିଂ</string>
+    <string name="about_lib_okhttp_desc">Nostr ରିଲେ ପାଇଁ WebSocket ପରିବହନ</string>
+    <string name="about_lib_compose_desc">UI ଫ୍ରେମୱାର୍କ</string>
+    <string name="about_lib_hilt_desc">ଡିପେଣ୍ଡେନ୍ସି ଇଞ୍ଜେକ୍ସନ୍</string>
+    <string name="about_lib_room_desc">ସ୍ଥାନୀୟ ଡାଟାବେସ୍</string>
+    <string name="about_map_attribution">ମାନଚିତ୍ର ଡାଟା © OpenStreetMap ଅବଦାନକାରୀ</string>
+
+    <!-- ── ବିଜ୍ଞପ୍ତି ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">ଗ୍ରହଣ କରନ୍ତୁ</string>
+    <string name="notif_someone">କେହି ଜଣେ</string>
+    <string name="notif_sos_title">%1$s ଙ୍କ ଠାରୁ SOS !</string>
+    <string name="notif_sos_text">%1$s (%2$s, %3$s) ରେ SOS ସକ୍ରିୟ କରିଛନ୍ତି</string>
+    <string name="notif_supervisor_request_title">%1$s ଆପଣଙ୍କର ପର୍ଯ୍ୟବେକ୍ଷକ ହେବାକୁ ଚାହୁଁଛନ୍ତି</string>
+    <string name="notif_supervisor_request_text">ଏହି ଡିଭାଇସରୁ ଅନଲକ୍ ଅନୁମୋଦନ ଅନୁରୋଧକୁ ଅନୁମତି ଦେବା ପାଇଁ ଗ୍ରହଣ କରନ୍ତୁ</string>
+    <string name="notif_supervisor_request_big">ତଦାରଖ ମୋଡ୍ ସକ୍ରିୟ ଥିବା ବେଳେ %1$s ଆପଣଙ୍କୁ ଅନଲକ୍ ଅନୁମୋଦନ ଅନୁରୋଧ ପଠାଇବାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଗ୍ରହଣ କରନ୍ତୁ ।</string>
+    <string name="notif_supervised_active_title">ତଦାରଖ ମୋଡ୍ ସକ୍ରିୟ ଅଛି</string>
+    <string name="notif_supervised_active_text">ଆପଣଙ୍କ ପର୍ଯ୍ୟବେକ୍ଷକ ନିଶ୍ଚିତ କରିଛନ୍ତି - ତଦାରଖ ମୋଡ୍ ଏବେ ସେଟ୍ ହୋଇଛି</string>
+    <string name="notif_supervised_declined_title">ତଦାରଖ ମୋଡ୍ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>
+    <string name="notif_supervised_declined_text">ଆପଣଙ୍କ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ କରିଛନ୍ତି - ତଦାରଖ ମୋଡ୍ ଅକ୍ଷମ ହୋଇଛି</string>
+    <string name="notif_tracking_alert_title">ଟ୍ରାକିଂ ସତର୍କତା</string>
+    <string name="notif_tracking_proximity">%1$s ଆପଣଙ୍କ ବିଷୟରେ ଏକ ନିକଟତରତା ସତର୍କତା ପାଇଛନ୍ତି</string>
+    <string name="notif_tracking_geofence">ଆପଣ ଘେର ଭିତରକୁ ପ୍ରବେଶ କରିଛନ୍ତି/ବାହାରି ଯାଇଛନ୍ତି ବୋଲି %1$s ଏକ ସତର୍କତା ପାଇଛନ୍ତି: %2$s</string>
+    <string name="notif_tracking_generic">%1$s ଆପଣଙ୍କ ସ୍ଥାନ ତଦାରଖ କରୁଛନ୍ତି</string>
+    <string name="notif_track_update_title">%1$s ଙ୍କ ଠାରୁ ଅଂଶୀଦାର ଅପଡେଟ୍</string>
+    <string name="notif_track_new_title">ନୂତନ ସମ୍ପର୍କ: %1$s</string>
+    <string name="notif_role_send_receive">ସ୍ଥାନ ପଠାନ୍ତୁ/ପାଆନ୍ତୁ</string>
+    <string name="notif_role_send">ସ୍ଥାନ ପଠାନ୍ତୁ</string>
+    <string name="notif_role_receive">ସ୍ଥାନ ପାଆନ୍ତୁ</string>
+    <string name="notif_role_none">କୌଣସି ସ୍ଥାନ ଅଂଶୀଦାର ନାହିଁ</string>
+    <string name="notif_track_requesting">%1$s ଅନୁରୋଧ କରୁଛନ୍ତି: %2$s</string>
+    <string name="notif_track_update_body">%1$s ଆପଣ କିପରି ସ୍ଥାନ ଅଂଶୀଦାର କରନ୍ତି ତାହା ଅପଡେଟ୍ କରିବାକୁ ଚାହୁଁଛନ୍ତି ।</string>
+    <string name="notif_track_new_body">%1$s ଆପଣଙ୍କୁ ଜଣେ ସମ୍ପର୍କ ଭାବରେ ଯୋଡିଛନ୍ତି ଏବଂ ସଂଯୋଗ ହେବାକୁ ଚାହୁଁଛନ୍ତି ।</string>
+    <string name="notif_contact_connected_title">ସମ୍ପର୍କ ସଂଯୋଜିତ ହୋଇଛି</string>
+    <string name="notif_contact_connected_text">%1$s ଏବେ ଆପଣଙ୍କ ସହିତ ସଂଯୋଜିତ ।</string>
+    <string name="notif_request_declined_title">ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>
+    <string name="notif_request_declined_text">%1$s ଆପଣଙ୍କର ସ୍ଥାନ ଅଂଶୀଦାର ଅନୁରୋଧକୁ ପ୍ରତ୍ୟାଖ୍ୟାନ କରିଛନ୍ତି ।</string>
+    <string name="notif_message_person">%1$s କୁ ବାର୍ତ୍ତା ପଠାନ୍ତୁ</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s ରେ ପ୍ରବେଶ କଲେ</string>
+    <string name="notif_geofence_left_title">%1$s %2$s ରୁ ବାହାରି ଗଲେ</string>
+    <string name="notif_geofence_subtitle">%1$s ରେ · %2$s ବ୍ୟାସାର୍ଦ୍ଧ</string>
+    <string name="notif_person_nearby">%1$s ନିକଟରେ ଅଛନ୍ତି</string>
+    <string name="notif_distance_from_you">ଆପଣଙ୍କ ଠାରୁ %1$s ଦୂରରେ</string>
+    <string name="notif_missed_title">%1$s ଙ୍କ ଠାରୁ କୌଣସି ଅପଡେଟ୍ ନାହିଁ</string>
+    <string name="notif_missed_text">ଶେଷ ଥର %1$s ମିନିଟ୍ ପୂର୍ବରୁ (%2$s, %3$s) ନିକଟରେ ଦେଖାଯାଇଥିଲା</string>
+    <string name="notif_sos_active_title">SOS ସକ୍ରିୟ ଅଛି !</string>
+    <string name="notif_sos_active_text">SOS ସମ୍ପର୍କମାନଙ୍କୁ ଜରୁରୀକାଳୀନ ସତର୍କତା ପ୍ରସାରଣ କରୁଛି</string>
+    <string name="notif_messages_group_title">LocaPeer ବାର୍ତ୍ତା</string>
+
+    <!-- ── ଟୋଷ୍ଟ ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s ଙ୍କ ଠାରୁ ସମ୍ପର୍କ ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>
+    <string name="toast_now_supervising">ଏବେ %1$s ଙ୍କ ଡିଭାଇସ୍ ତଦାରଖ କରୁଛନ୍ତି</string>
+    <string name="toast_declined_supervision">%1$s ଙ୍କ ଠାରୁ ତଦାରଖ ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>
+
+    <!-- ── ପ୍ରୋଗ୍ରାମାଟିକ୍ ଷ୍ଟ୍ରିଙ୍ଗ୍ ─────────────── -->
+    <string name="time_just_now">ବର୍ତ୍ତମାନ</string>
+    <string name="time_minutes_ago">%1$d ମିନିଟ୍ ପୂର୍ବରୁ</string>
+    <string name="fallback_me">ମୁଁ</string>
+    <string name="fallback_unknown">ଅଜଣା</string>
+    <string name="geo_unassigned">ଧାର୍ଯ୍ୟ ହୋଇନାହିଁ</string>
+    <string name="days_every_day">ପ୍ରତିଦିନ</string>
+    <string name="days_weekdays">କାର୍ଯ୍ୟ ଦିବସ</string>
+    <string name="days_weekends">ସପ୍ତାହନ୍ତ</string>
+    <string name="days_none">ଦିନ ନାହିଁ</string>
+    <string name="chat_my_location_message">ମୋର ସାମ୍ପ୍ରତିକ ସ୍ଥାନ: %1$s</string>
+    <string name="scan_error_bad_pubkey">ଅବୈଧ ନିମନ୍ତ୍ରଣ: ଖରାପ ପବ୍ଲିକ୍ କି</string>
+    <string name="scan_error_key_mismatch">ଅବୈଧ ନିମନ୍ତ୍ରଣ: କି ମେଳ ଖାଉନାହିଁ</string>
+    <string name="scan_error_unknown">ଅଜ୍ଞାତ ତ୍ରୁଟି</string>
+    <string name="scan_error_invalid_link">ଅବୈଧ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍</string>
+    <string name="scan_fallback_contact">ଏହି ସମ୍ପର୍କ</string>
+    <string name="backup_saved">ବ୍ୟାକଅପ୍ ସେଭ୍ ହୋଇଛି: %1$s</string>
+    <string name="backup_saved_encrypted">ବ୍ୟାକଅପ୍ ସେଭ୍ ହୋଇଛି (ଏନକ୍ରିପ୍ଟ ହୋଇଛି): %1$s</string>
+    <string name="backup_failed">ବ୍ୟାକଅପ୍ ବିଫଳ ହୋଇଛି: %1$s</string>
+    <string name="backup_could_not_read_file">ଫାଇଲ୍ ପଢି ହେଲା ନାହିଁ</string>
+    <string name="backup_could_not_write_file">ଫାଇଲ୍ ଲେଖି ହେଲା ନାହିଁ</string>
+    <string name="backup_could_not_read">ବ୍ୟାକଅପ୍ ପଢି ହେଲା ନାହିଁ: %1$s</string>
+    <string name="backup_incorrect_password">ଭୁଲ୍ ପାସୱାର୍ଡ</string>
+    <string name="restore_result_restored">ପୁନରୁଦ୍ଧାର ହୋଇଛି: %1$s</string>
+    <string name="restore_result_failed">ବିଫଳ ହୋଇଛି: %1$s</string>
+    <string name="restore_nothing">ପୁନରୁଦ୍ଧାର କରିବାକୁ କିଛି ନାହିଁ</string>
+    <string name="restore_failed">ପୁନରୁଦ୍ଧାର ବିଫଳ ହୋଇଛି: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d ସମ୍ପର୍କ</item>
+        <item quantity="other">%1$d ସମ୍ପର୍କ</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d ଜିଓଫେନ୍ସ</item>
+        <item quantity="other">%1$d ଜିଓଫେନ୍ସ</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s କୁ ଭୂମିକା ପରିବର୍ତ୍ତନ ଅନୁରୋଧ ପଠାଯାଇଛି</string>
+    <string name="peer_not_found">ପିଅର ମିଳିଲା ନାହିଁ</string>
+    <string name="peer_purge_location_sent">%1$s କୁ ସମସ୍ତ ସ୍ଥାନ ଡିଲିଟ୍ କରିବା ପାଇଁ ରିମୋଟ୍ କମାଣ୍ଡ ପଠାଯାଇଛି</string>
+    <string name="peer_purge_messages_sent">%1$s କୁ ସମସ୍ତ ବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବା ପାଇଁ ରିମୋଟ୍ କମାଣ୍ଡ ପଠାଯାଇଛି</string>
+    <string name="onboarding_error_key_length">ଅବୈଧ କି - ୬୪ ହେକ୍ସ ଅକ୍ଷର ହେବା ଆବଶ୍ୟକ ।</string>
+    <string name="onboarding_error_key_range">ଅବୈଧ ବ୍ୟକ୍ତିଗତ କି ।</string>
+    <string name="onboarding_error_hex">ଅବୈଧ ହେକ୍ସ ଫର୍ମାଟ୍ ।</string>
+    <string name="onboarding_error_import_failed">କି ଆମଦାନୀ କରିବାରେ ବିଫଳ: %1$s</string>
 </resources>

@@ -3,23 +3,23 @@
     <string name="app_name">LocaPeer</string>
 
     <!-- ── Tashoshin sanarwa & sabis na gaba ─────────────────────── -->
-    <string name="channel_name_heartbeat">Watsa Wuri</string>
-    <string name="channel_desc_heartbeat">Yana watsa wurin ku ga lambobinku da aka amince da su</string>
+    <string name="channel_name_heartbeat">Yada Wuri</string>
+    <string name="channel_desc_heartbeat">Yana yada wurin ku ga lambobinku da aka amince da su</string>
     <string name="channel_name_alerts">Gargaɗi</string>
-    <string name="channel_desc_alerts">Gargaɗi game da bugun zuciya da aka rasa da shingen ƙasa</string>
+    <string name="channel_desc_alerts">Gargaɗin rashin bugun zuciya da geofence</string>
     <string name="channel_name_messages">Saƙonni</string>
     <string name="channel_desc_messages">Saƙonni masu shigowa</string>
-    <string name="notification_heartbeat_title">LocaPeer yana aiki</string>
-    <string name="notification_heartbeat_text">Raba wurin ku da wasu</string>
+    <string name="notification_heartbeat_title">LocaPeer tana aiki</string>
+    <string name="notification_heartbeat_text">Yana raba wurin ku da wasu</string>
 
-    <!-- ── Ayyuka na gama gari ──────────────────────────────────────── -->
+    <!-- ── Ayyukan yau da kullun ──────────────────────────────────────── -->
     <string name="common_save">Ajiye</string>
     <string name="common_cancel">Soke</string>
     <string name="common_done">An gama</string>
-    <string name="common_delete">Goge</string>
+    <string name="common_delete">Share</string>
     <string name="common_disable">Kashe</string>
     <string name="common_enable">Kunna</string>
-    <string name="common_restore">Maido</string>
+    <string name="common_restore">Mayar</string>
     <string name="common_unlock">Buɗe</string>
     <string name="common_password">Kalmar sirri</string>
     <string name="common_not_now">Ba yanzu ba</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">Amince</string>
     <string name="common_deny">Ƙi</string>
 
-    <!-- ── Alamun shafin kewayawa ──────────────────────────────────────────── -->
+    <!-- ── Alamar shafin kewayawa ──────────────────────────────────────────── -->
     <string name="tab_map">Taswira</string>
     <string name="tab_messages">Saƙonni</string>
     <string name="tab_history">Tarihi</string>
@@ -35,34 +35,735 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">Saituna</string>
 
-    <!-- ── Yanayin motsi / aiki ───────────────────────────────────────── -->
+    <!-- ── Matsayin motsi / aiki ───────────────────────────────────────── -->
     <string name="motion_stationary">Ba ya motsi</string>
-    <string name="motion_walking">Yana tafiya</string>
-    <string name="motion_running">Yana gudu</string>
-    <string name="motion_cycling">Yana koyon keke</string>
-    <string name="motion_driving">Yana tuki</string>
+    <string name="motion_walking">Tafiya</string>
+    <string name="motion_running">Gudu</string>
+    <string name="motion_cycling">Hawan keke</string>
+    <string name="motion_driving">Tuki</string>
 
-    <!-- ── Saituna ────────────────────────────────────────────────── -->
+    <!-- ── Bangaren hifadi ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Maɓallin Sirri</string>
+    <string name="backup_section_contacts">Lambobi</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Saituna</string>
+
+    <!-- ── Neman sa ido (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">Neman Sa Ido</string>
+    <string name="supervision_request_message">\"%1$s\" yana neman izinin shiga saitunansu. Kyale?</string>
+
+    <!-- ── Saitunan allo ────────────────────────────────────────────────── -->
     <string name="settings_title">Saituna</string>
+
+    <!-- Alamomin sashe -->
     <string name="settings_section_location_privacy">Wuri &amp; Sirri</string>
     <string name="settings_section_security">Tsaro</string>
     <string name="settings_section_map">Taswira</string>
     <string name="settings_section_battery_performance">Baturi &amp; Aiki</string>
-    <string name="settings_section_units_display">Raka\'a &amp; Nuni</string>
-    <string name="settings_section_retention">Riƙewa (Wannan Na\'urar)</string>
+    <string name="settings_section_units_display">Raka\'a &amp; Nunawa</string>
+    <string name="settings_section_retention">Riƙewa (Wannan Na'urar)</string>
     <string name="settings_section_appearance">Kamanni</string>
-    <string name="settings_section_backup_keys">Ajiye &amp; Maɓallai</string>
+    <string name="settings_section_backup_keys">Hifadi &amp; Maɓalla</string>
     <string name="settings_section_about">Game da</string>
 
-    <string name="settings_edit_name">Gyara Suna</string>
-    <string name="settings_my_qr">QR nawa</string>
-    <string name="settings_no_name_set">Ba a sa suna ba</string>
+    <!-- Bayanan martaba -->
+    <string name="settings_edit_name">Shirya Suna</string>
+    <string name="settings_my_qr">QR tawa</string>
+    <string name="settings_no_name_set">Babu suna da aka saita</string>
 
+    <!-- Wuri &amp; Sirri -->
     <string name="settings_share_location">Raba Wurina</string>
+    <string name="settings_broadcasting">Yana yada wa lambobinku</string>
+    <string name="settings_not_broadcasting">Ba ya yada wa</string>
+    <string name="settings_sharing_schedule">Tsarin Rabawa</string>
+    <string name="settings_always_on">A kowane lokaci</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">Dokar %1$d</item>
+        <item quantity="other">Dokoki %1$d</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Sarrafa wuraren geofence da aka raba</string>
+    <string name="settings_notify_when_tracked">Sanar da ni lokacin da ake bibiyata</string>
+    <string name="settings_notify_when_tracked_subtitle">Sami sanarwa lokacin da kusancin lamba ko gargaɗin geofence ya tashi a kanku.</string>
+    <string name="settings_my_location_history">Tarihin Wuri</string>
+    <string name="settings_my_location_history_subtitle">Bincika lokutan wurarenku</string>
+    <string name="settings_lookup_addresses">Nemo Adireshi</string>
+    <string name="settings_lookup_addresses_subtitle">Nuna adireshin tituna don tarihin wurare da pini na taswira, sannan a nemo ta adireshi lokacin sanya geofences. Yana aika waɗannan haɗin gwiwar ko bincikenku zuwa sabis na geocoding na na'urarku (yawanci Google).</string>
+
+    <!-- Tsaro -->
+    <string name="settings_supervision_active">Sa Ido Na Aiki</string>
+    <string name="settings_supervision_active_subtitle">Saituna suna buƙatar amincewar mai sa ido</string>
+    <string name="settings_disable_supervised">Kashe Yanayin Sa Ido</string>
+    <string name="settings_supervised_mode">Yanayin Sa Ido</string>
+    <string name="settings_supervised_mode_subtitle">Ana buƙatar amincewar mai sa ido don shiga saituna</string>
+
+    <!-- Taswira -->
+    <string name="settings_starting_point">Wurin Farawa</string>
+    <string name="settings_map_current_location">Wurin Da Kake Yanzu</string>
+    <string name="settings_map_all_contacts">Dukkan Lambobi</string>
+    <string name="settings_map_fixed_location">Wuri Da Aka Sanya</string>
+    <string name="settings_map_last_position">Matsayi Na Ƙarshe</string>
+    <string name="settings_map_starting_point_title">Wurin Farawa Na Taswira</string>
+    <string name="settings_no_location_set">Babu wurin da aka saita</string>
+    <string name="settings_pick_location_on_map">Zabi Wuri A Taswira</string>
+    <string name="settings_default_zoom_level">Matsayin Zuƙowa</string>
+    <string name="settings_map_pin_colour">Launin Pin Na Taswira</string>
+
+    <!-- Baturi &amp; Aiki -->
+    <string name="settings_update_cadence">Tsawon Lokacin Sabuntawa</string>
+    <string name="settings_update_cadence_subtitle">Daidaita sau nawa ake yada wurin ku</string>
+    <string name="settings_update_cadence_dialog_message">Sarrafa sau nawa ake sabunta wurin ku dangane da aikinku. Sabuntawa akai-akai yana amfani da ƙarin baturi.</string>
+    <string name="settings_update_cadence_reset">Sake saita zuwa asali</string>
+    <string name="settings_min_distance_filtering">Tacewar Matsakaicin Nisa</string>
+    <string name="settings_min_distance_filtering_subtitle">Nuna kawai wuraren da suke aƙalla wannan nisan daga na baya.</string>
+    <string name="settings_discard_low_accuracy">Yasar Da Sabuntawa Marasa Inganci</string>
+    <string name="settings_discard_low_accuracy_subtitle">Kada ku yada ko kurekodi sabuntawarku mai radius na inganci mafi girma fiye da wannan. Ba a taɓa tsallake SOS ba.</string>
+    <string name="settings_hide_low_accuracy">Ɓoye Wurare Marasa Inganci</string>
+    <string name="settings_hide_low_accuracy_subtitle">Ɓoye wuraren tarihi tare da radius na inganci mafi girma fiye da wannan. Babu abin da za a share.</string>
+    <string name="settings_low_battery" formatted="false">Baturi Ya Yi Ƙasa (&lt; 20%)</string>
+    <string name="settings_minutes_short">Minti %1$d</string>
+    <string name="settings_motion_detection">Gano Motsi</string>
+    <string name="settings_motion_detection_on">An kunna - yana tace nau'in motsin ku (tafiya, tuki) a tarihi</string>
+    <string name="settings_motion_detection_off">A kashe - ba da damar shiga ayyukan jiki don ingantaccen lakabin motsi</string>
+    <string name="settings_enable_motion_title">Kunna gano motsi</string>
+    <string name="settings_enable_motion_message">Izinin ayyukan jiki yana bawa LocaPeer damar bambance tafiya, tuki da tsayawa cak mafi inganci a cikin tarihin ku. A halin yanzu yana kashe - zaku iya sake kunna shi daga saitunan tsarin.</string>
+    <string name="settings_open_settings">Buɗe Saituna</string>
+    <string name="settings_battery_optimization">Inganta Baturi</string>
+    <string name="settings_battery_optimization_unrestricted">Ba shi da iyaka — LocaPeer na iya yin aiki a bango kyauta</string>
+    <string name="settings_battery_optimization_restricted">An inganta — danna don saita zuwa Ba shi da iyaka a saitunan tsarin</string>
+
+    <!-- Izini -->
+    <string name="settings_permissions">Izini</string>
+    <string name="settings_permissions_subtitle">Dubawa da gyara damar app na shiga wuri, kamara da sauransu</string>
+    <string name="permissions_intro">LocaPeer tana buƙatar waɗannan izini don raba wurin ku, bincika gayyata da ci gaba da aiki a bango. Danna duk wanda ba a bayar ba don gyara su.</string>
+    <string name="perm_location_title">Wuri</string>
+    <string name="perm_location_granted">An bayar — za a iya raba wurin ku</string>
+    <string name="perm_location_denied">Ba a bayar ba — danna don ba da damar shiga wuri</string>
+    <string name="perm_background_location_title">Wurin Bango</string>
+    <string name="perm_background_location_granted">An bayar — rabon wuri yana ci gaba lokacin da app ɗin yake a rufe</string>
+    <string name="perm_background_location_denied">Ba a bayar ba — danna don ba da damar shiga \'A kowane lokaci\' a saituna</string>
+    <string name="perm_camera_title">Kamara</string>
+    <string name="perm_camera_granted">An bayar — ana amfani da shi don duba lambobin QR na gayyata</string>
+    <string name="perm_camera_denied">Ba a bayar ba — danna don ba da damar kamara</string>
+    <string name="perm_notifications_title">Sanarwa</string>
+    <string name="perm_notifications_granted">An bayar — ana iya nuna gargaɗi da sabunta matsayi</string>
+    <string name="perm_notifications_denied">Ba a bayar ba — danna don ba da damar sanarwa</string>
+
+    <!-- Raka'a &amp; Nunawa -->
+    <string name="settings_speed_units">Raka\'ar Sauri</string>
+    <string name="settings_speed_imperial">Imperial (mph)</string>
+    <string name="settings_speed_metric">Metric (km/h)</string>
+    <string name="settings_elevation_units">Raka\'ar Tsawo</string>
+    <string name="settings_elevation_imperial">Imperial (feet)</string>
+    <string name="settings_elevation_metric">Metric (metres)</string>
+    <string name="settings_distance_units">Raka\'ar Nisa</string>
+    <string name="settings_distance_imperial">Imperial (ft/mi)</string>
+    <string name="settings_distance_metric">Metric (m/km)</string>
+    <string name="settings_time_format">Tsarin Lokaci</string>
+    <string name="settings_time_24h">Saa 24 (13:30)</string>
+    <string name="settings_time_12h">Saa 12 (1:30 PM)</string>
+
+    <!-- Riƙewa -->
+    <string name="settings_retention_location">Bayanin Wuri</string>
+    <string name="settings_retention_location_subtitle">Tsayon lokacin da za a riƙe bayanan wurin lambobi a cikin na'urar</string>
+    <string name="settings_clear_all_location">Share Dukkan Bayanan Wuri</string>
+    <string name="settings_retention_messages">Saƙonni</string>
+    <string name="settings_retention_messages_subtitle">Tsayon lokacin da za a riƙe saƙonnin da aka karɓa a cikin na'urar</string>
+    <string name="settings_clear_all_messages">Share Dukkan Saƙonni</string>
+
+    <!-- Kamanni -->
+    <string name="settings_customize_nav">Canza Kewayawa</string>
+    <string name="settings_customize_nav_subtitle">Zaɓi kuma tsara alamun shafukan ƙasa</string>
+    <string name="settings_start_page">Shafin Farko</string>
     <string name="settings_language">Harshe</string>
     <string name="settings_language_title">Harshen App</string>
-    <string name="settings_language_system">Tsohuwar tsarin</string>
+    <string name="settings_language_system">Harshen na'ura</string>
 
-    <string name="common_ok">KO</string>
-    <string name="cd_back">Baya</string>
+    <!-- Hifadi &amp; Maɓalla -->
+    <string name="settings_export_backup">Fitar Da Hifadi</string>
+    <string name="settings_export_backup_subtitle">Ajiye maɓallin sirri da lambobinku a cikin fayil. Kiyaye wannan fayil ɗin!</string>
+    <string name="settings_import_backup">Shigo Da Hifadi</string>
+    <string name="settings_import_backup_subtitle">Mayar daga fayil ɗin da aka fitar a baya</string>
+    <string name="settings_view_private_key">Duba Maɓallin Sirri</string>
+    <string name="settings_view_private_key_subtitle">Nuna maɓallin asalin ku na hex mai haruffa 64</string>
+
+    <!-- Game da -->
+    <string name="settings_about_locapeer">Game da LocaPeer</string>
+    <string name="settings_about_subtitle">Sigar, matsayin relay, asalin buɗe ido</string>
+
+    <!-- Hirarraki -->
+    <string name="settings_edit_display_name">Shirya Sunan Nunawa</string>
+    <string name="settings_display_name_label">Sunan Nunawa</string>
+    <string name="settings_my_invite_qr">QR Na Gayyata Tawa</string>
+    <string name="settings_invite_qr_subtitle">Wasu na iya duba wannan don fara bin wurin ku.</string>
+    <string name="settings_invite_qr_cd">QR Na Gayyata</string>
+    <string name="settings_private_key_title">Maɓallin Sirri</string>
+    <string name="settings_private_key_warning">Kiyaye wannan cikin aminci. Duk wanda ke da wannan maɓallin na iya bayyana a matsayin ku.</string>
+    <string name="settings_clear_location_title">Share Tarihin Wuri?</string>
+    <string name="settings_clear_location_message">Dukkan tarihin wuraren da aka ajiye za a share su gaba ɗaya.</string>
+    <string name="settings_clear_messages_title">Share Tarihin Saƙonni?</string>
+    <string name="settings_clear_messages_message">Dukkan saƙonnin da aka ajiye za a share su gaba ɗaya.</string>
+    <string name="settings_encrypted_backup_title">Hifadi Mai Kalmar Sirri</string>
+    <string name="settings_encrypted_backup_message">Wannan hifadi yana da kalmar sirri. Da fatan za a shigar da kalmar sirri don ci gaba.</string>
+    <string name="settings_select_restore_title">Zaɓi Bayanan Da Za A Mayar</string>
+    <string name="settings_select_export_title">Zaɓi Bayanan Da Za A Fitar</string>
+    <string name="settings_export_password_hint">Zaku iya saita kalmar sirri don rufa fayil ɗin hifadi naku.</string>
+    <string name="settings_backup_password_optional">Kalmar Sirrin Hifadi (Na Zaɓi)</string>
+    <string name="settings_select_sections">Zaɓi sassan da za a haɗa:</string>
+    <string name="settings_choose_file_location">Zabi wurin fayil</string>
+    <string name="settings_not_in_backup">Ba ya cikin wannan hifadin</string>
+    <string name="settings_enable_supervised_title">Kunna Yanayin Sa Ido</string>
+    <string name="settings_enable_supervised_message">Zabi lamba wacce za ta zama mai sa ido. Dole ne su amince da shiga saituna daga na'urarsu.</string>
+    <string name="settings_no_peers_found">Ba a sami lamba ba. Da farko a ƙara lamba ta hanyar duba lambar QR ta gayyatarsu.</string>
+    <string name="settings_disable_supervised_title">Kashe Yanayin Sa Ido?</string>
+    <string name="settings_disable_supervised_message">Saituna za su kasance masu sauƙin shiga ba tare da amincewar mai sa ido ba.</string>
+
+    <!-- ── Wasu ayyuka ─────────────────────────────────────────── -->
+    <string name="common_remove">Cire</string>
+    <string name="common_name">Suna</string>
+    <string name="common_search">Bincika</string>
+    <string name="common_sort">Tsara</string>
+
+    <!-- Bayanin abun ciki (an raba) -->
+    <string name="cd_message">Saƙo</string>
+    <string name="cd_show_on_map">Nuna a taswira</string>
+    <string name="cd_more_options">Ƙarin zaɓuɓɓuka</string>
+
+    <!-- ── Lambobi allo ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">an zaɓi %1$d</item>
+        <item quantity="other">an zaɓi %1$d</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Soke zaɓi</string>
+    <string name="contacts_cd_select_all">Zaɓi duka</string>
+    <string name="contacts_cd_deselect_all">Cire zaɓin duka</string>
+    <string name="contacts_cd_qr_invite">QR / Gayyata</string>
+    <string name="contacts_cd_pending_requests">Buƙatun Da Ke Jira</string>
+    <string name="contacts_sort_last_seen">Lokaci Na Ƙarshe Da Aka Gani</string>
+    <string name="contacts_search_placeholder">Bincika lambobi…</string>
+    <string name="contacts_empty_title">Babu lambobi tukuna</string>
+    <string name="contacts_empty_subtitle">Duba lambar QR don haɗawa da wani kuma fara raba wurare.</string>
+    <string name="contacts_scan_qr">Duba Lambar QR</string>
+    <string name="contacts_bulk_delete_messages">Share Saƙonni</string>
+    <string name="contacts_bulk_delete_locations">Share Wurare</string>
+    <string name="contacts_last_seen">Lokaci na ƙarshe da aka gani: %1$s</string>
+    <string name="contacts_no_location_yet">Babu bayanan wuri tukuna</string>
+    <string name="contacts_view_sharing_settings">Saitunan Rabawa</string>
+    <string name="contacts_view_location_history">Tarihin Wuri</string>
+    <string name="contacts_rename_contact">Canza Sunan Lamba</string>
+    <string name="contacts_on_contact_device">A Kan Na'urar Lamba</string>
+    <string name="contacts_delete_my_messages_title">Share Saƙonnina</string>
+    <string name="contacts_delete_locations_title">Share Wuraren Da Aka Raba</string>
+    <string name="contacts_remove_contact_title">Ondoa Anwani</string>
+    <string name="contacts_leave_title">Share Lamba Da Bayanai</string>
+    <string name="contacts_rename_title">Canza Sunan Lamba</string>
+    <string name="contacts_remove_contact_body">Shin kuna cire %1$s daga lambobinku? Tarihinsa na wuri kuma za a share shi a cikin na'urar.</string>
+    <string name="contacts_leave_body">Wannan zai cire ku daga lambobin %1$s kuma zai share dukkan saƙonku da bayanan wurinku daga na'urarsa. Haka kuma ba za ku sake samun damar shiga wurinsa ba.</string>
+    <string name="contacts_delete_my_messages_body">Wannan zai share dukkan saƙon da kuka aika daga na'urar %1$s. Wannan ba za a iya soke shi ba.</string>
+    <string name="contacts_delete_locations_body">Wannan zai share dukkan bayanan wurin da kuka raba daga na'urar %1$s. Wannan ba za a iya soke shi ba.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Cire Lamba</item>
+        <item quantity="other">Cire Lambobi %1$d</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Cire wannan lamba? Tarihinsa na wuri kuma za a share shi a cikin na'urar.</item>
+        <item quantity="other">Cire lambobi %1$d? Tarihinsu na wuri kuma za a share su a cikin na'urar.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Share dukkan saƙon da kuka aika daga na'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="other">Share dukkan saƙon da kuka aika daga na'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Share dukkan tarihin wurin da kuka raba daga na'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="other">Share dukkan tarihin wurin da kuka raba daga na'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
+    </plurals>
+
+    <string name="common_continue">Ci gaba</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Mayar Daga Hifadi</string>
+    <string name="onboarding_restore_message">Manna maɓallin sirri na haruffa 64 hex don mayar da asalin ku da lambobinku.</string>
+    <string name="onboarding_private_key_hex">Maɓallin sirri (hex)</string>
+    <string name="onboarding_tagline">Raba wurin zama na sirri tare da lambobi.\nBabu asusu. Babu manyan sabobin.</string>
+    <string name="onboarding_feature_e2e_title">Rufaffen Lokaci Zuwa Lokaci</string>
+    <string name="onboarding_feature_e2e_subtitle">Wurin ku yana rufaffen a kan na'ura</string>
+    <string name="onboarding_feature_servers_title">Babu manyan sabobin</string>
+    <string name="onboarding_feature_servers_subtitle">Yana amfani da relay Nostr masu buɗe ido a matsayin sufuri mai aminci - bayanan ku suna kasancewa a rufaffen kuma na sirri</string>
+    <string name="onboarding_feature_phone_title">Yana Zama A Wayarku</string>
+    <string name="onboarding_feature_phone_subtitle">Cikakken tarihin wurin ku yana zama a kan na'urar ku. Matsayinku na yanzu kawai ake raba wa lambobi da aka zaɓa</string>
+    <string name="onboarding_name_prompt">Yaya ya kamata lambobinku su kira ku?</string>
+    <string name="onboarding_name_placeholder">misali, Mama, Baba, Alice…</string>
+    <string name="onboarding_get_started">Fara</string>
+    <string name="onboarding_restore_from_backup">Mayar Daga Hifadi</string>
+    <string name="onboarding_key_note">Maɓallin sirrin ku ana samar da shi ne a cikin na'urar kuma ba ya barin wannan na'urar.</string>
+    <string name="onboarding_permissions_title">Izini</string>
+    <string name="onboarding_permissions_desc">LocaPeer tana buƙatar shiga wuri don raba matsayinku, shiga kamara don duba lambobin gayyata, da shiga sanarwa don matsayin bango. Shiga ayyukan jiki na zaɓi ne - yana taimakawa lakabin motsin ku (tafiya, tuki) mafi inganci.</string>
+    <string name="onboarding_before_ask_title">Kafin mu tambaya</string>
+    <string name="onboarding_before_ask_intro">Zaku ga wasu bukatu na tsarin kamar haka:</string>
+    <string name="onboarding_before_ask_location">• Wuri - ana buƙata, don raba matsayinku.</string>
+    <string name="onboarding_before_ask_camera">• Kamara - don duba lambobin gayyata.</string>
+    <string name="onboarding_before_ask_notifications">• Sanarwa - don matsayin bango.</string>
+    <string name="onboarding_before_ask_activity">• Ayyukan jiki - na zaɓi. Yana bawa LocaPeer damar bambance tafiya, tuki da tsayawa cak mafi inganci. Kuna iya tsallake shi kuma ku kunna shi daga baya a Saituna.</string>
+    <string name="onboarding_grant_permissions">Ba Da Izini</string>
+    <string name="onboarding_bg_location_title">Wurin Bango</string>
+    <string name="onboarding_bg_location_desc">Don sanya lambobinku zama da sabon bayani lokacin da app ɗin yake a rufe, da fatan za a zaɓi \'A kowane lokaci\' a allon na gaba.</string>
+    <string name="onboarding_bg_location_error">Ana buƙatar wurin bango don sabunta lambobinku lokacin da app ɗin yake a rufe. Da fatan za a sake gwadawa kuma zaɓi \'A kowane lokaci\'.</string>
+    <string name="onboarding_configure_location">Sanya Wuri</string>
+    <string name="onboarding_battery_title">Baturi</string>
+    <string name="onboarding_battery_desc">Android tana iya dakatar da LocaPeer don adana baturi. Don tabbatar da ingantaccen sabuntawa, da fatan za a cire LocaPeer daga ingantawa.</string>
+    <string name="onboarding_disable_optimizations">Kashe Ingantawa</string>
+    <string name="onboarding_done_title">An Gama Komai!</string>
+    <string name="onboarding_done_desc">Cibiyar sadarwar wurin ku na sirri tana shirye.</string>
+    <string name="onboarding_start_using">Fara Amfani da LocaPeer</string>
+
+    <string name="common_try_again">Sake Gwada</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Duba Gayyata</string>
+    <string name="scan_camera_needed">Ana buƙatar izinin kamara don duba lambobin QR.</string>
+    <string name="scan_grant_permission">Ba Da Izini</string>
+    <string name="scan_add_contact_title">Ƙara lamba?</string>
+    <string name="scan_add_contact_message">Wannan zai haɗa ku da %1$s kuma ku fara raba wurinku ga juna.</string>
+    <string name="scan_add_share">Ƙara &amp; Raba</string>
+    <string name="scan_request_sent_title">An Aika Buƙata!</string>
+    <string name="scan_request_sent_message">An aika wa %1$s buƙata. Za a haɗa ku da zaran sun amince.</string>
+    <string name="scan_failed">Duba ya gaza: %1$s</string>
+
+    <string name="cd_back">Koma baya</string>
+    <string name="common_review">Dubawa</string>
+    <string name="common_decline">Ƙi</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Aika/Karɓa</string>
+    <string name="role_send">Aika</string>
+    <string name="role_receive">Karɓa</string>
+    <string name="role_none">Babu Rabawa</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Gayyata Tawa</string>
+    <string name="invite_tab_add_contact">Ƙara Lamba</string>
+    <string name="invite_your_qr_title">Lambar QR Taka</string>
+    <string name="invite_your_qr_subtitle">Bada wani damar duba wannan don bin wurin ku</string>
+    <string name="invite_qr_cd">Lambar QR taka</string>
+    <string name="invite_qr_error">Kuskure lokacin ƙirƙirar QR</string>
+    <string name="invite_share_link">Raba Hanyar Gayyata</string>
+    <string name="invite_encryption_note">Za a rufa wurin ku ne musamman don na'urar mai dubawa.</string>
+    <string name="invite_camera_required_title">Ana Buƙatar Damar Kamara</string>
+    <string name="invite_camera_required_message">Ba da izinin kamara don duba lambar QR.</string>
+    <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
+    <string name="invite_paste_title">Ko Manna Hanyar Gayyata</string>
+    <string name="invite_process_link">Gudanar Da Hanya</string>
+    <string name="invite_fallback_name">Lamba</string>
+    <string name="invite_success_message">Za a haɗa ku da %1$s da zaran sun amince.</string>
+    <string name="invite_confirm_add_title">Ƙara %1$s?</string>
+    <string name="invite_confirm_add_message">Ƙara su cikin lambobinku sannan a raba wurin zama?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Babu buƙatun da ke jira</string>
+    <string name="pending_requesting">Neman: %1$s · %2$s</string>
+    <string name="pending_role_change">Neman canjin matsayi · %1$s</string>
+    <string name="pending_new_request">Sabuwar buƙatar rabawa · %1$s</string>
+
+    <string name="common_save_changes">Ajiye Canje-canje</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Sabunta Saitunan Rabawa</string>
+    <string name="incoming_new_title">Sabuwar Buƙatar Lamba</string>
+    <string name="incoming_update_subtitle">%1$s yana son sabunta yadda kuke rabawa. Duba saitunan da ke ƙasa.</string>
+    <string name="incoming_new_subtitle">%1$s ya ƙara ku a matsayin lamba! Yanzu zaku iya zaɓar abin da zaku raba da shi.</string>
+    <string name="incoming_section_location">Wuri</string>
+    <string name="incoming_share_my_location">Raba wurina da %1$s</string>
+    <string name="incoming_share_my_location_sub">Za su iya ganin inda kake</string>
+    <string name="incoming_see_their_location">Duba wurin %1$s</string>
+    <string name="incoming_see_their_location_sub">Zaku iya ganin inda suke</string>
+    <string name="incoming_section_messaging">Saƙonni</string>
+    <string name="incoming_allow_messages">Bada Damar Saƙonni</string>
+    <string name="incoming_allow_messages_sub">Karɓi saƙonnin hira daga %1$s</string>
+
+    <string name="common_request">Neman</string>
+    <string name="common_edit">Shirya</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Saitunan Lamba</string>
+    <string name="peer_section_roles">Matsayin Rabon Wuri</string>
+    <string name="peer_send_on">%1$s na iya ganin wurin ku</string>
+    <string name="peer_send_off">Ba kwa raba wurin ku da %1$s</string>
+    <string name="peer_receive_title">Karɓi Wurin %1$s</string>
+    <string name="peer_receive_on">Zaku iya ganin wurin %1$s</string>
+    <string name="peer_receive_off">Ba kwa samun damar shiga wurin %1$s</string>
+    <string name="peer_section_privacy">Ikon Sirri &amp; Rabawa</string>
+    <string name="peer_pause_sharing">Dakatar Da Rabawa</string>
+    <string name="peer_pause_sub">Dakatar da aika wurin ku zuwa ga %1$s na ɗan lokaci</string>
+    <string name="peer_precision">Ingancin Wuri</string>
+    <string name="peer_precision_exact_sub">Madaidaicin wurin GPS</string>
+    <string name="peer_precision_suburb_sub">Wurin da ke kusa (matsayin Suburb)</string>
+    <string name="peer_always_sharing">Yana rabawa a kowane lokaci</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">Dokar rabawa %1$d tana aiki</item>
+        <item quantity="other">Dokokin rabawa %1$d suna aiki</item>
+    </plurals>
+    <string name="peer_section_alerts">Gargaɗi &amp; Sa Ido</string>
+    <string name="peer_sos_contact">Lambobin SOS</string>
+    <string name="peer_sos_sub">Karɓi gargaɗin gaggawa koda an dakatar da rabawa</string>
+    <string name="peer_missed_alert">Gargaɗin Rashin Wuri</string>
+    <string name="peer_missed_on">Sanar da ni idan %1$s ya daina bayar da rahoton wurinsa</string>
+    <string name="peer_requires_access">Chọrọ ịnweta ebe %1$s nọ</string>
+    <string name="peer_proximity_alert">Gargaɗin Kusanci</string>
+    <string name="peer_proximity_sub">Sanar da ni lokacin da %1$s yake kusa</string>
+    <string name="peer_alert_radius">Radius Na Gargaɗi</string>
+    <string name="peer_alert_schedule">Tsarin Gargaɗi</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">Doka %1$d tana aiki</item>
+        <item quantity="other">Dokoki %1$d suna aiki</item>
+    </plurals>
+    <string name="peer_geofences_sub">Saita wuraren isowa da tashi don %1$s</string>
+    <string name="peer_supervise">Sa Ido Kan Wannan Na'urar</string>
+    <string name="peer_supervise_on">Kuna karɓa da amincewa da buƙatun buɗewa daga %1$s</string>
+    <string name="peer_supervise_off">Bada izinin %1$s ya aiko muku da buƙatun buɗewa a yanayin sa ido</string>
+    <string name="peer_messaging_sub">Kunna/kashe saƙonnin hira daga %1$s</string>
+    <string name="peer_section_history">Tarihin Motsi</string>
+    <string name="peer_location_history">Tarihin Wuri</string>
+    <string name="peer_location_history_sub">Duba tarihin motsi da rahoton taswira na %1$s</string>
+    <string name="peer_section_retention">Riƙewar Bayanan Nesa</string>
+    <string name="peer_retention_location_sub">Tsayon lokacin da %1$s zai riƙe tarihin wurinku</string>
+    <string name="peer_purge_location">Share Dukkan Bayanan Wuri Daga %1$s</string>
+    <string name="peer_retention_messages_sub">Tsayon lokacin da %1$s zai riƙe saƙonnin da kuka aika</string>
+    <string name="peer_purge_messages">Share Dukkan Saƙonni Daga %1$s</string>
+    <string name="peer_precision_exact">GPS Madaidaici</string>
+    <string name="peer_precision_exact_desc">Madaidaicin haɗin gwiwa</string>
+    <string name="peer_precision_suburb">Suburb (~1km)</string>
+    <string name="peer_precision_suburb_desc">Matsayin maƙwabta kawai</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Share hira %1$d?</item>
+        <item quantity="other">Share hirarraki %1$d?</item>
+    </plurals>
+    <string name="conv_delete_locally">Share A Cikin Na'urar</string>
+    <string name="conv_delete_locally_sub">Yana cire hira daga na'urarku kawai.</string>
+    <string name="conv_delete_both">Share A Cikin Na'urar/Daga Lamba</string>
+    <string name="conv_bulk_delete_both_sub">Yana share hira a cikin na'ura da kuma daga lambarku.</string>
+    <string name="conv_delete_both_sub">Yana share hira a cikin na'ura kuma yana aika buƙatar sharewa zuwa na'urar lamba don hira.</string>
+    <string name="conv_cd_exit_selection">Fita daga zaɓi</string>
+    <string name="conv_cd_select_all">Zaɓi Duka</string>
+    <string name="conv_cd_new_message">Sabuwar saƙo</string>
+    <string name="conv_sort_date">Kwanan wata</string>
+    <string name="conv_sort_unread">Wanda ba a karanta ba</string>
+    <string name="conv_search_placeholder">Bincika hirarraki…</string>
+    <string name="conv_tab_chats">Hira</string>
+    <string name="conv_tab_archived">Wanda aka ajiye</string>
+    <string name="conv_mark_read">Saka A Matsayin Wanda Aka Karanta</string>
+    <string name="conv_archive">Ajiye</string>
+    <string name="conv_unarchive">Cire daga ajiya</string>
+    <string name="conv_empty_no_results">Babu sakamako don \"%1$s\"</string>
+    <string name="conv_empty_no_results_sub">Jaribu namba ọchụchọ ọzọ</string>
+    <string name="conv_empty_archived_title">Babu hira da aka ajiye</string>
+    <string name="conv_empty_archived_sub">Ajiye hira don kiyaye akwatin saƙonku ya zama da tsabta</string>
+    <string name="conv_empty_title">Babu saƙonni tukuna</string>
+    <string name="conv_empty_sub">Buɗe taswira kuma danna mutum\ndon fara hira</string>
+    <string name="conv_delete_title">Share hira?</string>
+    <string name="conv_delete_message">Kedu yadda kuke son share wannan hira da %1$s?</string>
+    <string name="conv_messages_blocked">An toshe saƙonni</string>
+    <string name="conv_preview_mine">Kai: %1$s</string>
+    <string name="conv_new_message_title">Sabuwar Saƙo</string>
+    <string name="conv_picker_empty">Babu lambobi tukuna. Duba lambar QR don ƙara lamba.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Share tarihin hira?</string>
+    <string name="chat_clear_message">Kedu yadda kuke son share wannan hira da %1$s?</string>
+    <string name="chat_clear_locally">Share A Cikin Na'urar</string>
+    <string name="chat_clear_both">Share A Cikin Na'urar/Daga Lamba</string>
+    <string name="chat_clear_both_sub">Yana share hira a cikin na'ura kuma yana aika buƙatar sharewa zuwa ga %1$s don saƙon da kuka aika.</string>
+    <string name="chat_cd_options">Zaɓuɓɓuka</string>
+    <string name="chat_clear_history_menu">Share Tarihin Hira</string>
+    <string name="chat_typing">%1$s na rubutu…</string>
+    <string name="chat_blocked_banner">Kun toshe saƙonni daga %1$s. Jeka Lambobi don buɗewa.</string>
+    <string name="chat_delete_msg_title">Share saƙo?</string>
+    <string name="chat_delete_msg_message">Kedu yadda kuke son share wannan saƙon?</string>
+    <string name="chat_delete_from_contact">Share daga lamba</string>
+    <string name="chat_delete_from_contact_sub">Yana share hira daga na'urar lamba.</string>
+    <string name="chat_delete_both_sub">Yana cire hira a cikin na'ura kuma yana share ta kai tsaye daga na'urar lamba.</string>
+    <string name="chat_cd_share_location">Raba Wuri</string>
+    <string name="chat_input_placeholder">Saƙo…</string>
+    <string name="chat_cd_send">Aika</string>
+
+    <string name="common_close">Rufe</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">Kunna SOS?</string>
+    <string name="map_sos_deactivate_title">Kashe SOS?</string>
+    <string name="map_sos_activate_msg">Wannan zai yada wurin ku kowane bayan daƙiƙa 15 ga lambobinku na SOS da aka zaɓa har sai an kashe shi.</string>
+    <string name="map_sos_deactivate_msg">Wannan zai dakatar da yada wurin zama mai mahimmanci ga lambobinku na gaggawa.</string>
+    <string name="map_activate">Kunna</string>
+    <string name="map_deactivate">Kashe</string>
+    <string name="map_cd_style">Nau'in Taswira</string>
+    <string name="map_cd_show_geofences">Nuna geofences</string>
+    <string name="map_cd_hide_geofences">Ɓoye geofences</string>
+    <string name="map_cd_follow">Bi ni</string>
+    <string name="map_cd_friends">Abokai</string>
+    <string name="map_no_friends">Babu abokan da ake bibiya tukuna</string>
+    <string name="map_you">Kai</string>
+    <string name="map_cd_go_my_location">Jeka wurina</string>
+    <string name="map_sos_active">⚠ SOS NA AIKI</string>
+    <string name="map_away">Nesa</string>
+    <string name="map_no_location_yet">Babu wuri tukuna</string>
+    <string name="map_cd_go_location">Jeka wurin</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS A KUNNE</string>
+    <string name="map_overdue">Ya wuce lokaci - babu sabon bayani</string>
+    <string name="map_stat_last_seen">Lokaci na ƙarshe da aka gani</string>
+    <string name="map_stat_battery">Baturi</string>
+    <string name="map_stat_accuracy">Inganci</string>
+    <string name="map_stat_motion">Motsi</string>
+    <string name="map_stat_speed">Sauri</string>
+    <string name="map_stat_elevation">Tsawo</string>
+
+    <string name="common_ok">To</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Tarihi: %1$s</string>
+    <string name="history_select_person">Zaɓi Mutum</string>
+    <string name="history_person_label">Mutum</string>
+    <string name="history_cd_prev_day">Ranar Baya</string>
+    <string name="history_cd_next_day">Ranar Gaba</string>
+    <string name="history_time_filter">Tacewar Lokaci:</string>
+    <string name="history_cd_reset_time">Sake Saita Lokaci</string>
+    <string name="history_tab_list">Jerin</string>
+    <string name="history_empty_title">Babu tarihi na wannan ranar</string>
+    <string name="history_empty_sub">Jaribu họrọ ụbọchị ọzọ ma ọ bụ lelee njikọ gị.</string>
+    <string name="history_start_time">Lokacin Farawa</string>
+    <string name="history_end_time">Lokacin Gamawa</string>
+    <string name="history_no_data_title">Babu bayanan wuri</string>
+    <string name="history_no_data_sub">Babu wuraren da aka kurekodi na wannan ranar ko lokacin.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">an kurekodi wurin %1$d</item>
+        <item quantity="other">an kurekodi wurare %1$d</item>
+    </plurals>
+    <string name="history_cd_dismiss">Cire</string>
+    <string name="history_accuracy_label">Ingancin ±%1$s</string>
+    <string name="history_emergency_sos">Mishan gaggawa na SOS</string>
+    <string name="history_detail_location">Wuri</string>
+    <string name="history_detail_coordinates">Haɗin gwiwa</string>
+    <string name="history_within">a cikin ±%1$s</string>
+    <string name="history_detail_movement">Motsi</string>
+    <string name="history_movement_desc">%1$s %2$s na tafiya %3$s</string>
+
+    <string name="common_create">Ƙirƙira</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Ƙara wurin geofence</string>
+    <string name="geo_cd_assign">Sanya geofence</string>
+    <string name="geo_unknown">Ba a sani ba</string>
+    <string name="geo_empty_title">Babu geofences</string>
+    <string name="geo_empty_sub">Danna + don ƙirƙirar wurin geofence, sannan ka sanya lambobi a kai daga saitunansu na rabawa.</string>
+    <string name="geo_delete_title">Share geofence?</string>
+    <string name="geo_delete_simple">Share \"%1$s\"?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">An sanya \"%1$s\" ga lamba %2$d. Share shi yana cire waɗancan sanya ɗin ma.</item>
+        <item quantity="other">An sanya \"%1$s\" ga lambobi %2$d. Share shi yana cire waɗancan sanya ɗin ma.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences na %1$s</string>
+    <string name="geo_empty_contact_title">Babu geofences na lamba</string>
+    <string name="geo_empty_contact_sub">Danna + don sanya wurin geofence kuma zaɓi ko za a ba da gargaɗi lokacin isowa, lokacin tashi, ko duka biyun.</string>
+    <string name="geo_no_areas_title">Babu geofences tukuna</string>
+    <string name="geo_no_areas_msg">Buru ụzọ mepụta mpaghara geofence site na ihuenyo Geofences, wee kenye ya ebe a.</string>
+    <string name="geo_radius_label">radius %1$s</string>
+    <string name="geo_contacts_label">Lambobi: %1$s</string>
+    <string name="geo_no_contacts_assigned">Babu lambobin da aka sanya</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">Doka %1$d</item>
+        <item quantity="other">Dokoki %1$d</item>
+    </plurals>
+    <string name="geo_trigger_enter">Shiga</string>
+    <string name="geo_trigger_exit">Fita</string>
+    <string name="geo_trigger_both">Duka biyun</string>
+    <string name="geo_edit_title">Shirya Geofence</string>
+    <string name="geo_new_title">Sabuwar Geofence</string>
+    <string name="geo_cd_my_location">Wurina</string>
+    <string name="geo_cd_radius_increase">Ƙara radius</string>
+    <string name="geo_cd_radius_decrease">Rage radius</string>
+    <string name="geo_hint_tap">Danna ko ka riƙe taswira don sanyawa</string>
+    <string name="geo_hint_move">Pinch láti mú u dunjú • Jide ko ka ja pin don matsar da shi</string>
+    <string name="geo_basic_info">Bayanan Gaskiya</string>
+    <string name="geo_search_title">Nemo ta Adireshin</string>
+    <string name="geo_search_label">Adireshin ko wuri</string>
+    <string name="geo_search_placeholder">misali, 10 Main St, Springfield</string>
+    <string name="geo_search_no_results">Ba a sami adireshin da ya dace ba</string>
+    <string name="geo_cd_search">Bincika</string>
+    <string name="geo_name_placeholder">misali, Gida, Aiki</string>
+    <string name="geo_name_required">Suna ana buƙata</string>
+    <string name="geo_latitude">Latitude</string>
+    <string name="geo_longitude">Longitude</string>
+    <string name="geo_lat_range">-90 zuwa 90</string>
+    <string name="geo_lng_range">-180 zuwa 180</string>
+    <string name="geo_radius">Radius</string>
+    <string name="geo_radius_range">Shigar da %1$d zuwa %2$d m</string>
+    <string name="geo_edit_assignment">Shirya Sanya</string>
+    <string name="geo_assign_title">Sanya Geofence</string>
+    <string name="geo_select_area">Zabi Wurin Geofence</string>
+    <string name="geo_trigger_title">Fara Gargaɗi Kan…</string>
+    <string name="geo_add_rule">Ƙara Doka</string>
+    <string name="geo_alerts_all_times">Gargaɗi na aiki a kowane lokaci. Ƙara doka don taƙaita lokacin da ake aika gargaɗi.</string>
+    <string name="geo_assign_action">Sanya</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Gargaɗin Kusanci</string>
+    <string name="prox_empty_title">Babu mutanen da ake bibiya</string>
+    <string name="prox_empty_sub">Duba QR na gayyatar wani daga shafin duba\ndon fara bibiyar wurinsa</string>
+    <string name="prox_intro">Sami sanarwa lokacin da mutumin da ake bibiya ya zo tsakanin nisan da kuka zaɓa.</string>
+    <string name="prox_alert_within">Yi gargaɗi lokacin nesa a cikin %1$s</string>
+    <string name="prox_alerts_off">Gargaɗi a kashe</string>
+    <string name="prox_alert_radius">Radius na gargaɗi</string>
+    <string name="prox_edit_schedule">Shirya Lokaci</string>
+    <string name="prox_rules">Dokoki</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Lokaci na %1$s</string>
+    <string name="schedule_cd_add_rule">Ƙara doka</string>
+    <string name="schedule_empty_title">Babu dokokin lokaci</string>
+    <string name="schedule_empty_global">Ana raba wuri a kowane lokaci. Ƙara doka don taƙaita lokacin da rabawa yake aiki.</string>
+    <string name="schedule_empty_peer">Ana raba wuri tare da %1$s a kowane lokaci. Ƙara doka don taƙaita lokacin.</string>
+    <string name="schedule_active_hint">Yana aiki lokacin da kowace doka ta dace da lokacin yanzu. wofi = a kowane lokaci.</string>
+    <string name="schedule_all_day">Dukkan rana</string>
+    <string name="schedule_plus_one_day"> (+rana 1)</string>
+    <string name="schedule_rule_number">Doka %1$d</string>
+    <string name="schedule_cd_delete_rule">Share doka</string>
+    <string name="schedule_edit_rule">Shirya Doka</string>
+    <string name="schedule_label_optional">Lakabi (na zaɓi)</string>
+    <string name="schedule_label_placeholder">misali, Lokacin aiki, Ranar hutu</string>
+    <string name="schedule_active_days">Ranaku Masu Aiki</string>
+    <string name="schedule_time_window">Lokacin Sáà</string>
+    <string name="schedule_start">Mmalite</string>
+    <string name="schedule_end">Ngwụcha</string>
+    <string name="schedule_overnight">Dukkan dare: na aiki daga %1$s zuwa %2$s rana ta gaba</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Ana Sa Ido Kan Na'urar</string>
+    <string name="gate_message">Amincewar mai sa ido ana buƙata don shiga saituna.</string>
+    <string name="gate_request_access">Nemi Samun Dama</string>
+    <string name="gate_waiting">Ana jiran amincewar mai sa ido…</string>
+    <string name="gate_denied">Mai sa ido ya ƙi samun dama.</string>
+    <string name="gate_timed_out">Lokacin buƙata ya ƙare. Mai sa ido bai amsa ba.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Har abada</string>
+    <string name="retention_keep_for">Dobe maka: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">Rana %1$d</item>
+        <item quantity="other">Ranaku %1$d</item>
+    </plurals>
+
+    <string name="common_select">Họrọ</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Zabi Wuri Da Aka Sanya</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Zaɓi waɗanne alamun shafukan da za su bayyana a kasan da kuma tsarin su. Taswira tana nan a kowane lokaci.</string>
+    <string name="customize_cd_move_up">Gaa n\'elu</string>
+    <string name="customize_cd_move_down">Gaa n\'ala</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Sigar %1$s (build %2$d)</string>
+    <string name="about_tagline">Raba wurin zama na sirri tare da mutanen da kuka amince da su. Babu asusu, babu girgije, babu sa ido daga gare mu.</string>
+    <string name="about_relay_connections">Haɗin Relay</string>
+    <string name="about_connected">An haɗa</string>
+    <string name="about_disconnected">An cire haɗin</string>
+    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_lib_osmdroid_desc">Nunin taswira dangane da OpenStreetMap</string>
+    <string name="about_lib_okhttp_desc">Sufurin WebSocket don relay Nostr</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Ebe nchekwa data mpaghara</string>
+    <string name="about_map_attribution">Bayanin taswira © masu ba da gudummawa ga OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Amince</string>
+    <string name="notif_someone">Wani</string>
+    <string name="notif_sos_title">SOS daga %1$s!</string>
+    <string name="notif_sos_text">%1$s ya kunna SOS a (%2$s, %3$s)</string>
+    <string name="notif_supervisor_request_title">%1$s yana son ya zama mai sa idon ku</string>
+    <string name="notif_supervisor_request_text">Amince don ba da damar buƙatun amincewar buɗewa daga wannan na'urar</string>
+    <string name="notif_supervisor_request_big">Amince don ba da damar %1$s ya aiko muku da buƙatun amincewar buɗewa lokacin da yanayin sa ido yake aiki.</string>
+    <string name="notif_supervised_active_title">Yanayin sa ido na aiki</string>
+    <string name="notif_supervised_active_text">Mai sa idon ku ya tabbatar - yanayin sa ido ya riga ya riga ya riga ya tashi</string>
+    <string name="notif_supervised_declined_title">An ƙi yanayin sa ido</string>
+    <string name="notif_supervised_declined_text">Mai sa idon ku ya ƙi buƙatar - an kashe yanayin sa ido</string>
+    <string name="notif_tracking_alert_title">Gargaɗin Sa Ido</string>
+    <string name="notif_tracking_proximity">%1$s ya sami gargaɗin kusanci gamshe ku</string>
+    <string name="notif_tracking_geofence">%1$s ya sami gargaɗin cewa kun shiga/fita fence: %2$s</string>
+    <string name="notif_tracking_generic">%1$s yana sa ido kan wurin ku</string>
+    <string name="notif_track_update_title">Sabunta rabawa daga %1$s</string>
+    <string name="notif_track_new_title">Sabuwar Lamba: %1$s</string>
+    <string name="notif_role_send_receive">Aika/Karɓi Wuri</string>
+    <string name="notif_role_send">Aika Wuri</string>
+    <string name="notif_role_receive">Karɓi Wuri</string>
+    <string name="notif_role_none">Babu Rabon Wuri</string>
+    <string name="notif_track_requesting">%1$s yana neman: %2$s</string>
+    <string name="notif_track_update_body">%1$s yana son sabunta yadda kuke raba wurare.</string>
+    <string name="notif_track_new_body">%1$s ya ƙara ku a matsayin lamba kuma yana son ya haɗa.</string>
+    <string name="notif_contact_connected_title">An Haɗa Lamba</string>
+    <string name="notif_contact_connected_text">%1$s yanzu an haɗa shi da ku.</string>
+    <string name="notif_request_declined_title">An Ƙi Buƙata</string>
+    <string name="notif_request_declined_text">%1$s ya ƙi buƙatar rabon wurin ku.</string>
+    <string name="notif_message_person">Aika wa %1$s saƙo</string>
+    <string name="notif_geofence_entered_title">%1$s ya shiga %2$s</string>
+    <string name="notif_geofence_left_title">%1$s ya fita daga %2$s</string>
+    <string name="notif_geofence_subtitle">a %1$s · radius %2$s</string>
+    <string name="notif_person_nearby">%1$s yana kusa</string>
+    <string name="notif_distance_from_you">%1$s daga gare ku</string>
+    <string name="notif_missed_title">Babu sabuntawa daga %1$s</string>
+    <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
+    <string name="notif_sos_active_title">SOS NA AIKI!</string>
+    <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
+    <string name="notif_messages_group_title">Saƙonnin LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Ajụrụ arịrịọ ojúlùmọ̀ sitere na %1$s</string>
+    <string name="toast_now_supervising">Kun fara sa ido kan na'urar %1$s yanzu</string>
+    <string name="toast_declined_supervision">Ajụrụ arịrịọ nlekọta sitere na %1$s</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Yanzu</string>
+    <string name="time_minutes_ago">Minti %1$d da suka wuce</string>
+    <string name="fallback_me">Mụ onwe m</string>
+    <string name="fallback_unknown">Amaghị</string>
+    <string name="geo_unassigned">Ba a sanya ba</string>
+    <string name="days_every_day">Kowace rana</string>
+    <string name="days_weekdays">Ranakun mako</string>
+    <string name="days_weekends">Ranaku ƙarshen mako</string>
+    <string name="days_none">Babu ranaku</string>
+    <string name="chat_my_location_message">Wurina na yanzu: %1$s</string>
+    <string name="scan_error_bad_pubkey">Òkù kò dára: kókó ọha kò dára</string>
+    <string name="scan_error_key_mismatch">Òkù kò dára: kókó kò dọ́gba</string>
+    <string name="scan_error_unknown">Njehie a na-amaghị</string>
+    <string name="scan_error_invalid_link">Link ìpè kò dára</string>
+    <string name="scan_fallback_contact">wannan lambar</string>
+    <string name="backup_saved">An ajiye hifadi: %1$s</string>
+    <string name="backup_saved_encrypted">An ajiye hifadi (mai kalmar sirri): %1$s</string>
+    <string name="backup_failed">Hifadi ya gaza: %1$s</string>
+    <string name="backup_could_not_read_file">Enweghị ike ịgụ faịlụ</string>
+    <string name="backup_could_not_write_file">Enweghị ike ide faịlụ</string>
+    <string name="backup_could_not_read">Enweghị ike ịgụ nkwado ndabere: %1$s</string>
+    <string name="backup_incorrect_password">Kalmar sirri ba daidai ba</string>
+    <string name="restore_result_restored">An mayar: %1$s</string>
+    <string name="restore_result_failed">Ya gaza: %1$s</string>
+    <string name="restore_nothing">Babu abin da za a mayar</string>
+    <string name="restore_failed">Mayarwa ya gaza: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">Lamba %1$d</item>
+        <item quantity="other">Lambobi %1$d</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">Geofence %1$d</item>
+        <item quantity="other">Geofences %1$d</item>
+    </plurals>
+    <string name="peer_role_change_sent">Ezigara %1$s arịrịọ mgbanwe ọrụ</string>
+    <string name="peer_not_found">Ba a sami lamba ba</string>
+    <string name="peer_purge_location_sent">Ezigara %1$s iwu ihichapụ ipò NIILE</string>
+    <string name="peer_purge_messages_sent">Ezigara %1$s iwu ihichapụ ozi NIILE</string>
+    <string name="onboarding_error_key_length">Maɓalli ba daidai ba - dole ne ya zama haruffa 64 hex.</string>
+    <string name="onboarding_error_key_range">Maɓallin sirri ba daidai ba.</string>
+    <string name="onboarding_error_hex">Usoro hex kò dára.</string>
+    <string name="onboarding_error_import_failed">Mayar da maɓalli ya gaza: %1$s</string>
 </resources>

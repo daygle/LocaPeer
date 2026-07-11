@@ -129,6 +129,26 @@
     <string name="settings_enable_motion_title">Activer la détection de mouvement</string>
     <string name="settings_enable_motion_message">L\'accès à l\'activité physique permet à LocaPeer de distinguer plus précisément la marche, la conduite et l\'immobilisme dans votre historique. Il est actuellement désactivé - vous pouvez le réactiver dans les paramètres du système.</string>
     <string name="settings_open_settings">Ouvrir les paramètres</string>
+    <string name="settings_battery_optimization">Optimisation de la batterie</string>
+    <string name="settings_battery_optimization_unrestricted">Non restreinte — LocaPeer peut fonctionner librement en arrière-plan</string>
+    <string name="settings_battery_optimization_restricted">Optimisée — appuyez pour définir sur Non restreinte dans les paramètres du système</string>
+
+    <!-- Autorisations -->
+    <string name="settings_permissions">Autorisations</string>
+    <string name="settings_permissions_subtitle">Examiner et corriger l\'accès de l\'application à la position, à la caméra et plus encore</string>
+    <string name="permissions_intro">LocaPeer a besoin de ces autorisations pour partager votre position, scanner les invitations et continuer à fonctionner en arrière-plan. Appuyez sur celles qui ne sont pas accordées pour les corriger.</string>
+    <string name="perm_location_title">Position</string>
+    <string name="perm_location_granted">Accordée — votre position peut être partagée</string>
+    <string name="perm_location_denied">Non accordée — appuyez pour autoriser l\'accès à la position</string>
+    <string name="perm_background_location_title">Position en arrière-plan</string>
+    <string name="perm_background_location_granted">Accordée — la position continue d\'être partagée lorsque l\'application est fermée</string>
+    <string name="perm_background_location_denied">Non accordée — appuyez pour autoriser l\'accès "Toujours" dans les paramètres</string>
+    <string name="perm_camera_title">Caméra</string>
+    <string name="perm_camera_granted">Accordée — utilisée pour scanner les codes QR d\'invitation</string>
+    <string name="perm_camera_denied">Non accordée — appuyez pour autoriser la caméra</string>
+    <string name="perm_notifications_title">Notifications</string>
+    <string name="perm_notifications_granted">Accordée — les alertes et les mises à jour de statut peuvent être affichées</string>
+    <string name="perm_notifications_denied">Non accordée — appuyez pour autoriser les notifications</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Unités de vitesse</string>

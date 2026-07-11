@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">فعال‌کردن تشخیص حرکت</string>
     <string name="settings_enable_motion_message">دسترسی به فعالیت بدنی به LocaPeer کمک می‌کند پیاده‌روی، رانندگی و سکون را در تاریخچه شما دقیق‌تر تشخیص دهد. اکنون غیرفعال است — می‌توانید آن را از تنظیمات سیستم دوباره فعال کنید.</string>
     <string name="settings_open_settings">بازکردن تنظیمات</string>
+    <string name="settings_battery_optimization">بهینه‌سازی باتری</string>
+    <string name="settings_battery_optimization_unrestricted">بدون محدودیت — LocaPeer می‌تواند آزادانه در پس‌زمینه اجرا شود</string>
+    <string name="settings_battery_optimization_restricted">بهینه‌شده — برای تنظیم روی بدون محدودیت در تنظیمات سیستم ضربه بزنید</string>
+
+    <!-- مجوزها -->
+    <string name="settings_permissions">مجوزها</string>
+    <string name="settings_permissions_subtitle">بررسی و اصلاح دسترسی برنامه به مکان، دوربین و موارد دیگر</string>
+    <string name="permissions_intro">LocaPeer برای اشتراک‌گذاری مکان شما، اسکن دعوت‌نامه‌ها و ادامه فعالیت در پس‌زمینه به این مجوزها نیاز دارد. برای اصلاح، روی هر موردی که مجاز نیست ضربه بزنید.</string>
+    <string name="perm_location_title">مکان</string>
+    <string name="perm_location_granted">مجاز — مکان شما می‌تواند به اشتراک گذاشته شود</string>
+    <string name="perm_location_denied">غیرمجاز — برای اجازه دسترسی به مکان ضربه بزنید</string>
+    <string name="perm_background_location_title">مکان در پس‌زمینه</string>
+    <string name="perm_background_location_granted">مجاز — اشتراک‌گذاری مکان هنگام بسته بودن برنامه ادامه می‌یابد</string>
+    <string name="perm_background_location_denied">غیرمجاز — برای اجازه دسترسی «همیشه اجازه بده» در تنظیمات ضربه بزنید</string>
+    <string name="perm_camera_title">دوربین</string>
+    <string name="perm_camera_granted">مجاز — برای اسکن کدهای QR دعوت استفاده می‌شود</string>
+    <string name="perm_camera_denied">غیرمجاز — برای اجازه دسترسی به دوربین ضربه بزنید</string>
+    <string name="perm_notifications_title">اعلان‌ها</string>
+    <string name="perm_notifications_granted">مجاز — هشدارها و به‌روزرسانی‌های وضعیت می‌توانند نمایش داده شوند</string>
+    <string name="perm_notifications_denied">غیرمجاز — برای اجازه اعلان‌ها ضربه بزنید</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">واحد سرعت</string>

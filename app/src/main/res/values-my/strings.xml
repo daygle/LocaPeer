@@ -2,32 +2,32 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── အကြောင်းကြားချက် ချန်နယ်များနှင့် ရှေ့တန်းဝန်ဆောင်မှု ─────────────────────── -->
+    <!-- ── အသိပေးချက် ချန်နယ်များနှင့် ရှေ့တန်းဝန်ဆောင်မှု ─────────────────────── -->
     <string name="channel_name_heartbeat">တည်နေရာ ထုတ်လွှင့်မှု</string>
-    <string name="channel_desc_heartbeat">သင်၏ အတည်ပြုပြီးသား အဆက်အသွယ်များထံ သင်၏တည်နေရာကို ထုတ်လွှင့်ပေးသည်</string>
+    <string name="channel_desc_heartbeat">သင်အတည်ပြုထားသော အဆက်အသွယ်များထံ သင့်တည်နေရာကို ထုတ်လွှင့်ပေးသည်</string>
     <string name="channel_name_alerts">သတိပေးချက်များ</string>
-    <string name="channel_desc_alerts">လွဲချော်သွားသော အချက်ပြမှုနှင့် ဧရိယာသတ်မှတ်ချက် သတိပေးချက်များ</string>
+    <string name="channel_desc_alerts">လွတ်သွားသော အချက်ပြမှုများနှင့် ဂျီအိုခြံစည်းရိုး သတိပေးချက်များ</string>
     <string name="channel_name_messages">မက်ဆေ့ဂျ်များ</string>
     <string name="channel_desc_messages">ဝင်လာသော မက်ဆေ့ဂျ်များ</string>
     <string name="notification_heartbeat_title">LocaPeer အလုပ်လုပ်နေသည်</string>
-    <string name="notification_heartbeat_text">သင်၏တည်နေရာကို အခြားသူများနှင့် မျှဝေနေသည်</string>
+    <string name="notification_heartbeat_text">သင့်တည်နေရာကို အခြားသူများနှင့် မျှဝေနေသည်</string>
 
     <!-- ── အသုံးများသော လုပ်ဆောင်ချက်များ ──────────────────────────────────────── -->
     <string name="common_save">သိမ်းဆည်းရန်</string>
     <string name="common_cancel">ပယ်ဖျက်ရန်</string>
-    <string name="common_done">ပြီးပါပြီ</string>
+    <string name="common_done">ပြီးပြီ</string>
     <string name="common_delete">ဖျက်ရန်</string>
     <string name="common_disable">ပိတ်ရန်</string>
     <string name="common_enable">ဖွင့်ရန်</string>
     <string name="common_restore">ပြန်လည်ရယူရန်</string>
-    <string name="common_unlock">လော့ခ်ဖွင့်ရန်</string>
+    <string name="common_unlock">သော့ဖွင့်ရန်</string>
     <string name="common_password">စကားဝှက်</string>
-    <string name="common_not_now">ယခုမဟုတ်သေးပါ</string>
+    <string name="common_not_now">အခု မဟုတ်သေးပါ</string>
     <string name="common_off">ပိတ်ထားသည်</string>
     <string name="common_approve">အတည်ပြုရန်</string>
     <string name="common_deny">ငြင်းပယ်ရန်</string>
 
-    <!-- ── လမ်းညွှန် တက်ဘ် အမည်များ ──────────────────────────────────────────── -->
+    <!-- ── လမ်းညွှန် တက်ဘ် အညွှန်းများ ──────────────────────────────────────────── -->
     <string name="tab_map">မြေပုံ</string>
     <string name="tab_messages">မက်ဆေ့ဂျ်များ</string>
     <string name="tab_history">မှတ်တမ်း</string>
@@ -42,27 +42,713 @@
     <string name="motion_cycling">စက်ဘီးစီးနေသည်</string>
     <string name="motion_driving">ကားမောင်းနေသည်</string>
 
-    <!-- ── ဆက်တင်များ ────────────────────────────────────────────────── -->
+    <!-- ── အရန်သိမ်းဆည်းမှု ကဏ္ဍများ ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">ကိုယ်ပိုင်ကီး</string>
+    <string name="backup_section_contacts">အဆက်အသွယ်များ</string>
+    <string name="backup_section_geofences">ဂျီအိုခြံစည်းရိုးများ</string>
+    <string name="backup_section_settings">ဆက်တင်များ</string>
+
+    <!-- ── ကြီးကြပ်မှု တောင်းဆိုချက် ဒိုင်ယာလော့ဂ် ──────────────────────── -->
+    <string name="supervision_request_title">ကြီးကြပ်မှု တောင်းဆိုချက်</string>
+    <string name="supervision_request_message">\"%1$s\" က သူတို့ရဲ့ ဆက်တင်တွေကို ဝင်ရောက်ဖို့ ခွင့်ပြုချက် တောင်းနေပါတယ်။ ခွင့်ပြုမလား။</string>
+
+    <!-- ── ဆက်တင်များ မျက်နှာပြင် ────────────────────────────────────────────────── -->
     <string name="settings_title">ဆက်တင်များ</string>
-    <string name="settings_section_location_privacy">တည်နေရာနှင့် ကိုယ်ရေးကိုယ်တာ</string>
+
+    <!-- ကဏ္ဍ အညွှန်းများ -->
+    <string name="settings_section_location_privacy">တည်နေရာနှင့် ကိုယ်ရေးလုံခြုံမှု</string>
     <string name="settings_section_security">လုံခြုံရေး</string>
     <string name="settings_section_map">မြေပုံ</string>
     <string name="settings_section_battery_performance">ဘက်ထရီနှင့် စွမ်းဆောင်ရည်</string>
-    <string name="settings_section_units_display">ယူနစ်နှင့် ပြသမှု</string>
-    <string name="settings_section_retention">ဒေတာသိမ်းဆည်းမှု (ဤစက်ပစ္စည်း)</string>
+    <string name="settings_section_units_display">ယူနစ်များနှင့် ပြသမှု</string>
+    <string name="settings_section_retention">ဒေတာ ထိန်းသိမ်းမှု (ဤစက်ပစ္စည်းပေါ်တွင်)</string>
     <string name="settings_section_appearance">အသွင်အပြင်</string>
-    <string name="settings_section_backup_keys">မိတ္တူနှင့် သော့များ</string>
+    <string name="settings_section_backup_keys">အရန်သိမ်းဆည်းမှုနှင့် ကီးများ</string>
     <string name="settings_section_about">အကြောင်း</string>
 
-    <string name="settings_edit_name">အမည်ပြင်ရန်</string>
+    <!-- ပရိုဖိုင် -->
+    <string name="settings_edit_name">အမည်ပြင်ဆင်ရန်</string>
     <string name="settings_my_qr">ကျွန်ုပ်၏ QR</string>
-    <string name="settings_no_name_set">အမည်မပေးရသေးပါ</string>
+    <string name="settings_no_name_set">အမည် သတ်မှတ်ထားခြင်း မရှိပါ</string>
 
-    <string name="settings_share_location">ကျွန်ုပ်၏တည်နေရာကို မျှဝေရန်</string>
+    <!-- တည်နေရာနှင့် ကိုယ်ရေးလုံခြုံမှု -->
+    <string name="settings_share_location">ကျွန်ုပ်၏ တည်နေရာကို မျှဝေပါ</string>
+    <string name="settings_broadcasting">သင့်အဆက်အသွယ်များထံ ထုတ်လွှင့်နေသည်</string>
+    <string name="settings_not_broadcasting">ထုတ်လွှင့်ခြင်း မရှိပါ</string>
+    <string name="settings_sharing_schedule">မျှဝေမှု အချိန်ဇယား</string>
+    <string name="settings_always_on">အမြဲတမ်း ဖွင့်ထားသည်</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="other">စည်းမျဉ်း %1$d ခု</item>
+    </plurals>
+    <string name="settings_geofences">ဂျီအိုခြံစည်းရိုးများ</string>
+    <string name="settings_geofences_subtitle">မျှဝေထားသော ဂျီအိုခြံစည်းရိုး ဧရိယာများကို စီမံခန့်ခွဲပါ</string>
+    <string name="settings_notify_when_tracked">ခြေရာခံခံရပါက အသိပေးရန်</string>
+    <string name="settings_notify_when_tracked_subtitle">အဆက်အသွယ်တစ်ခု၏ နီးကပ်မှု သို့မဟုတ် ဂျီအိုခြံစည်းရိုး သတိပေးချက် သင့်အတွက် အလုပ်လုပ်သောအခါ အသိပေးချက် ရယူပါ။</string>
+    <string name="settings_my_location_history">တည်နေရာ မှတ်တမ်း</string>
+    <string name="settings_my_location_history_subtitle">သင့်ကိုယ်ပိုင် တည်နေရာ မှတ်တမ်းကို ကြည့်ရှုပါ</string>
+    <string name="settings_lookup_addresses">လိပ်စာများ ရှာဖွေပါ</string>
+    <string name="settings_lookup_addresses_subtitle">မှတ်တမ်းအမှတ်များနှင့် မြေပုံပင်များအတွက် လမ်းလိပ်စာများကို ပြသပါ။ ၎င်းကို သင့်စက်၏ တည်နေရာ ဝန်ဆောင်မှု (များသောအားဖြင့် Google) ထံ ပေးပို့ပါသည်။</string>
+
+    <!-- လုံခြုံရေး -->
+    <string name="settings_supervision_active">ကြီးကြပ်မှု အလုပ်လုပ်နေသည်</string>
+    <string name="settings_supervision_active_subtitle">ဆက်တင်များအတွက် ကြီးကြပ်သူ၏ အတည်ပြုချက် လိုအပ်သည်</string>
+    <string name="settings_disable_supervised">ကြီးကြပ်မှုမုဒ်ကို ပိတ်ရန်</string>
+    <string name="settings_supervised_mode">ကြီးကြပ်မှုမုဒ်</string>
+    <string name="settings_supervised_mode_subtitle">ဆက်တင်များ ဝင်ရောက်ရန် ကြီးကြပ်သူ၏ အတည်ပြုချက် လိုအပ်သည်</string>
+
+    <!-- မြေပုံ -->
+    <string name="settings_starting_point">စတင်ရာ အမှတ်</string>
+    <string name="settings_map_current_location">လက်ရှိ တည်နေရာ</string>
+    <string name="settings_map_all_contacts">အဆက်အသွယ် အားလုံး</string>
+    <string name="settings_map_fixed_location">သတ်မှတ်ထားသော တည်နေရာ</string>
+    <string name="settings_map_last_position">နောက်ဆုံး တည်နေရာ</string>
+    <string name="settings_map_starting_point_title">မြေပုံ စတင်ရာ အမှတ်</string>
+    <string name="settings_no_location_set">တည်နေရာ သတ်မှတ်ထားခြင်း မရှိပါ</string>
+    <string name="settings_pick_location_on_map">မြေပုံပေါ်တွင် တည်နေရာ ရွေးချယ်ပါ</string>
+    <string name="settings_default_zoom_level">ပုံသေ ချဲ့ကြည့်မှု အဆင့်</string>
+    <string name="settings_map_pin_colour">မြေပုံပင် အရောင်</string>
+
+    <!-- ဘက်ထရီနှင့် စွမ်းဆောင်ရည် -->
+    <string name="settings_update_cadence">အပ်ဒိတ် အကြိမ်အရေအတွက်</string>
+    <string name="settings_update_cadence_subtitle">သင့်တည်နေရာကို မည်မျှကြာတိုင်း ထုတ်လွှင့်မည်ကို ညှိပါ</string>
+    <string name="settings_update_cadence_dialog_message">သင့်လှုပ်ရှားမှုအပေါ် မူတည်ပြီး သင့်တည်နေရာကို မည်မျှကြာတိုင်း အပ်ဒိတ်လုပ်မည်ကို ထိန်းချုပ်ပါ။ ခဏခဏ အပ်ဒိတ်လုပ်ခြင်းသည် ဘက်ထရီ ပိုကုန်စေပါသည်။</string>
+    <string name="settings_update_cadence_reset">မူလအတိုင်း ပြန်သတ်မှတ်ရန်</string>
+    <string name="settings_min_distance_filtering">အနည်းဆုံး အကွာအဝေး စစ်ထုတ်မှု</string>
+    <string name="settings_min_distance_filtering_subtitle">ယခင်အမှတ်မှ အနည်းဆုံး ဤမျှဝေးသော အမှတ်များကိုသာ ပြသပါ။</string>
+    <string name="settings_discard_low_accuracy">တိကျမှုနည်းသော အချက်အလက်များကို ဖယ်ထုတ်ပါ</string>
+    <string name="settings_discard_low_accuracy_subtitle">ဤတိကျမှု အချင်းဝက်ထက် ကြီးသော သင့်ကိုယ်ပိုင် အချက်အလက်များကို ထုတ်လွှင့်ခြင်း သို့မဟုတ် မှတ်တမ်းတင်ခြင်း မပြုပါနှင့်။ SOS ကို ဘယ်တော့မှ ကျော်သွားမည် မဟုတ်ပါ။</string>
+    <string name="settings_hide_low_accuracy">တိကျမှုနည်းသော အမှတ်များကို ဖျောက်ထားပါ</string>
+    <string name="settings_hide_low_accuracy_subtitle">ဤတိကျမှု အချင်းဝက်ထက် ကြီးသော မှတ်တမ်းအမှတ်များကို ဖျောက်ထားပါ။ မည်သည့်ဒေတာကိုမျှ ဖျက်ပစ်မည် မဟုတ်ပါ။</string>
+    <string name="settings_low_battery" formatted="false">ဘက်ထရီ အားနည်းနေသည် (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d မိနစ်</string>
+    <string name="settings_motion_detection">လှုပ်ရှားမှု ရှာဖွေတွေ့ရှိမှု</string>
+    <string name="settings_motion_detection_on">ဖွင့်ထားသည် - မှတ်တမ်းတွင် သင့်လှုပ်ရှားမှု အမျိုးအစား (လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်း) ကို ပိုမိုတိကျစေသည်</string>
+    <string name="settings_motion_detection_off">ပိတ်ထားသည် - ပိုမိုတိကျသော လှုပ်ရှားမှု အညွှန်းများအတွက် ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်ကို ပေးပါ</string>
+    <string name="settings_enable_motion_title">လှုပ်ရှားမှု ရှာဖွေတွေ့ရှိမှုကို ဖွင့်ပါ</string>
+    <string name="settings_enable_motion_message">ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်သည် LocaPeer ကို သင့်မှတ်တမ်းတွင် လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်းနှင့် ရပ်နေခြင်းတို့ကို ပိုမိုတိကျစွာ ခွဲခြားနိုင်စေပါသည်။ ၎င်းကို လက်ရှိတွင် ပိတ်ထားသည် - စနစ်ဆက်တင်များမှ ပြန်လည်ဖွင့်နိုင်ပါသည်။</string>
+    <string name="settings_open_settings">ဆက်တင်များကို ဖွင့်ရန်</string>
+    <string name="settings_battery_optimization">ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင် လုပ်ဆောင်ခြင်း</string>
+    <string name="settings_battery_optimization_unrestricted">ကန့်သတ်ချက်မရှိ — LocaPeer သည် နောက်ကွယ်တွင် လွတ်လပ်စွာ အလုပ်လုပ်နိုင်သည်</string>
+    <string name="settings_battery_optimization_restricted">အကောင်းဆုံးဖြစ်အောင် လုပ်ထားသည် — စနစ်ဆက်တင်များတွင် ကန့်သတ်ချက်မရှိဟု သတ်မှတ်ရန် နှိပ်ပါ</string>
+
+    <!-- ခွင့်ပြုချက်များ -->
+    <string name="settings_permissions">ခွင့်ပြုချက်များ</string>
+    <string name="settings_permissions_subtitle">တည်နေရာ၊ ကင်မရာနှင့် အခြားအရာများအတွက် ဝင်ရောက်ခွင့်များကို ပြန်လည်သုံးသပ်ပြီး ပြင်ဆင်ပါ</string>
+    <string name="permissions_intro">သင့်တည်နေရာကို မျှဝေရန်၊ ဖိတ်ကြားချက်များကို စကင်န်ဖတ်ရန်နှင့် နောက်ကွယ်တွင် ဆက်လက်အလုပ်လုပ်ရန် LocaPeer သည် ဤခွင့်ပြုချက်များ လိုအပ်သည်။ ခွင့်ပြုချက်မပေးရသေးသော မည်သည့်အရာကိုမဆို ပြင်ဆင်ရန် နှိပ်ပါ။</string>
+    <string name="perm_location_title">တည်နေရာ</string>
+    <string name="perm_location_granted">ခွင့်ပြုပြီး — သင့်တည်နေရာကို မျှဝေနိုင်သည်</string>
+    <string name="perm_location_denied">ခွင့်ပြုချက်မရ — တည်နေရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
+    <string name="perm_background_location_title">နောက်ကွယ် တည်နေရာ</string>
+    <string name="perm_background_location_granted">ခွင့်ပြုပြီး — မျက်နှာပြင်ပိတ်ထားချိန်တွင်လည်း တည်နေရာမျှဝေမှု ဆက်လက်လုပ်ဆောင်သည်</string>
+    <string name="perm_background_location_denied">ခွင့်ပြုချက်မရ — ဆက်တင်တွင် \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးရန် နှိပ်ပါ</string>
+    <string name="perm_camera_title">ကင်မရာ</string>
+    <string name="perm_camera_granted">ခွင့်ပြုပြီး — ဖိတ်ကြားချက် QR ကုဒ်များကို စကင်န်ဖတ်ရန် အသုံးပြုသည်</string>
+    <string name="perm_camera_denied">ခွင့်ပြုချက်မရ — ကင်မရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
+    <string name="perm_notifications_title">အသိပေးချက်များ</string>
+    <string name="perm_notifications_granted">ခွင့်ပြုပြီး — သတိပေးချက်များနှင့် အခြေအနေ အပ်ဒိတ်များကို ပြသနိုင်သည်</string>
+    <string name="perm_notifications_denied">ခွင့်ပြုချက်မရ — အသိပေးချက်များ ခွင့်ပြုရန် နှိပ်ပါ</string>
+
+    <!-- ယူနစ်များနှင့် ပြသမှု -->
+    <string name="settings_speed_units">အရှိန် ယူနစ်များ</string>
+    <string name="settings_speed_imperial">အင်ပီးရီးယယ် (mph)</string>
+    <string name="settings_speed_metric">မက်ထရစ် (km/h)</string>
+    <string name="settings_elevation_units">အမြင့် ယူနစ်များ</string>
+    <string name="settings_elevation_imperial">အင်ပီးရီးယယ် (ပေ)</string>
+    <string name="settings_elevation_metric">မက်ထရစ် (မီတာ)</string>
+    <string name="settings_distance_units">အကွာအဝေး ယူနစ်များ</string>
+    <string name="settings_distance_imperial">အင်ပီးရီးယယ် (ပေ/မိုင်)</string>
+    <string name="settings_distance_metric">မက်ထရစ် (မီတာ/ကီလိုမီတာ)</string>
+    <string name="settings_time_format">အချိန် ပုံစံ</string>
+    <string name="settings_time_24h">၂၄ နာရီ ပုံစံ (13:30)</string>
+    <string name="settings_time_12h">၁၂ နာရီ ပုံစံ (1:30 PM)</string>
+
+    <!-- ထိန်းသိမ်းမှု -->
+    <string name="settings_retention_location">တည်နေရာ ဒေတာ</string>
+    <string name="settings_retention_location_subtitle">အဆက်အသွယ်များ၏ တည်နေရာဒေတာကို စက်တွင် မည်မျှကြာအောင် သိမ်းဆည်းမည်နည်း</string>
+    <string name="settings_clear_all_location">တည်နေရာ ဒေတာအားလုံးကို ဖျက်ရန်</string>
+    <string name="settings_retention_messages">မက်ဆေ့ဂျ်များ</string>
+    <string name="settings_retention_messages_subtitle">လက်ခံရရှိထားသော မက်ဆေ့ဂျ်များကို စက်တွင် မည်မျှကြာအောင် သိမ်းဆည်းမည်နည်း</string>
+    <string name="settings_clear_all_messages">မက်ဆေ့ဂျ် အားလုံးကို ဖျက်ရန်</string>
+
+    <!-- အသွင်အပြင် -->
+    <string name="settings_customize_nav">လမ်းညွှန်မှုကို စိတ်ကြိုက်ပြင်ဆင်ပါ</string>
+    <string name="settings_customize_nav_subtitle">အောက်ခြေတက်ဘ်များကို ရွေးချယ်ပြီး အစီအစဉ်ပြောင်းပါ</string>
+    <string name="settings_start_page">စတင်သည့် စာမျက်နှာ</string>
     <string name="settings_language">ဘာသာစကား</string>
     <string name="settings_language_title">အက်ပ် ဘာသာစကား</string>
-    <string name="settings_language_system">စနစ်သုံး မူရင်းအတိုင်း</string>
+    <string name="settings_language_system">စနစ်သုံး ဘာသာစကား</string>
+
+    <!-- အရန်သိမ်းဆည်းမှုနှင့် ကီးများ -->
+    <string name="settings_export_backup">အရန်သိမ်းဆည်းမှုကို ထုတ်ယူရန်</string>
+    <string name="settings_export_backup_subtitle">သင့်ကိုယ်ပိုင်ကီးနှင့် အဆက်အသွယ်များကို ဖိုင်တစ်ခုထဲတွင် သိမ်းဆည်းပါ။ ဤဖိုင်ကို လုံခြုံစွာ ထားရှိပါ!</string>
+    <string name="settings_import_backup">အရန်သိမ်းဆည်းမှုကို ထည့်သွင်းရန်</string>
+    <string name="settings_import_backup_subtitle">ယခင်က ထုတ်ယူထားသော ဖိုင်မှ ပြန်လည်ရယူပါ</string>
+    <string name="settings_view_private_key">ကိုယ်ပိုင်ကီးကို ကြည့်ရှုရန်</string>
+    <string name="settings_view_private_key_subtitle">သင့် ၆၄ လုံးပါသော ဟက်စ် (hex) အမှတ်အသားကီးကို ပြပါ</string>
+
+    <!-- အကြောင်း -->
+    <string name="settings_about_locapeer">LocaPeer အကြောင်း</string>
+    <string name="settings_about_subtitle">ဗားရှင်း၊ ရီလေး အခြေအနေ၊ ပွင့်လင်းရင်းမြစ်</string>
+
+    <!-- ဒိုင်ယာလော့ဂ်များ -->
+    <string name="settings_edit_display_name">အမည်ကို ပြင်ဆင်ရန်</string>
+    <string name="settings_display_name_label">ပြသမည့် အမည်</string>
+    <string name="settings_my_invite_qr">ကျွန်ုပ်၏ ဖိတ်ကြားချက် QR</string>
+    <string name="settings_invite_qr_subtitle">အခြားသူများ သင့်ကို ခြေရာခံနိုင်ရန် ဤအရာကို စကင်န်ဖတ်နိုင်သည်။</string>
+    <string name="settings_invite_qr_cd">ဖိတ်ကြားချက် QR</string>
+    <string name="settings_private_key_title">ကိုယ်ပိုင်ကီး</string>
+    <string name="settings_private_key_warning">ဒါကို လုံခြုံအောင် ထားပါ။ ဒီကီးရှိတဲ့ ဘယ်သူမဆို သင့်အဖြစ် ဟန်ဆောင်နိုင်ပါတယ်။</string>
+    <string name="settings_clear_location_title">တည်နေရာ မှတ်တမ်းကို ဖျက်မလား။</string>
+    <string name="settings_clear_location_message">သိမ်းဆည်းထားသော တည်နေရာအမှတ်များ အားလုံးကို အပြီးတိုင် ဖျက်ပစ်ပါမည်။</string>
+    <string name="settings_clear_messages_title">မက်ဆေ့ဂျ် မှတ်တမ်းကို ဖျက်မလား။</string>
+    <string name="settings_clear_messages_message">သိမ်းဆည်းထားသော မက်ဆေ့ဂျ်များ အားလုံးကို အပြီးတိုင် ဖျက်ပစ်ပါမည်။</string>
+    <string name="settings_encrypted_backup_title">စာဝှက်ထားသော အရန်သိမ်းဆည်းမှု</string>
+    <string name="settings_encrypted_backup_message">ဤအရန်သိမ်းဆည်းမှုကို စာဝှက်ထားသည်။ ဆက်လက်ဆောင်ရွက်ရန် စကားဝှက်ကို ထည့်ပါ။</string>
+    <string name="settings_select_restore_title">ပြန်လည်ရယူရန် ဒေတာကို ရွေးချယ်ပါ</string>
+    <string name="settings_select_export_title">ထုတ်ယူရန် ဒေတာကို ရွေးချယ်ပါ</string>
+    <string name="settings_export_password_hint">သင့်အရန်သိမ်းဆည်းမှုဖိုင်ကို စာဝှက်ရန် စကားဝှက်တစ်ခု ထည့်နိုင်သည်။</string>
+    <string name="settings_backup_password_optional">အရန်သိမ်းဆည်းမှု စကားဝှက် (မဖြစ်မနေ မဟုတ်ပါ)</string>
+    <string name="settings_select_sections">ပါဝင်မည့် ကဏ္ဍများကို ရွေးချယ်ပါ-</string>
+    <string name="settings_choose_file_location">ဖိုင်တည်နေရာကို ရွေးချယ်ပါ</string>
+    <string name="settings_not_in_backup">ဤအရန်သိမ်းဆည်းမှုတွင် မရှိပါ</string>
+    <string name="settings_enable_supervised_title">ကြီးကြပ်မှုမုဒ်ကို ဖွင့်ရန်</string>
+    <string name="settings_enable_supervised_message">ကြီးကြပ်သူအဖြစ် ဆောင်ရွက်မည့် အဆက်အသွယ်တစ်ခုကို ရွေးချယ်ပါ။ သူတို့၏ စက်ပစ္စည်းမှ ဆက်တင်များ ဝင်ရောက်ခွင့်ကို အတည်ပြုပေးရပါမည်။</string>
+    <string name="settings_no_peers_found">မည်သည့် အဆက်အသွယ်မျှ မတွေ့ပါ။ သူတို့၏ ဖိတ်ကြားချက် QR ကုဒ်ကို အရင်စကင်န်ဖတ်ပြီး အဆက်အသွယ် ထည့်ပါ။</string>
+    <string name="settings_disable_supervised_title">ကြီးကြပ်မှုမုဒ်ကို ပိတ်မလား။</string>
+    <string name="settings_disable_supervised_message">ကြီးကြပ်သူ၏ အတည်ပြုချက်မလိုဘဲ ဆက်တင်များကို ဝင်ရောက်နိုင်ပါမည်။</string>
+
+    <!-- ── နောက်ထပ် အသုံးများသော ─────────────────────────────────────────── -->
+    <string name="common_remove">ဖယ်ရှားရန်</string>
+    <string name="common_name">အမည်</string>
+    <string name="common_search">ရှာဖွေရန်</string>
+    <string name="common_sort">စီရန်</string>
+
+    <!-- အကြောင်းအရာ ဖော်ပြချက်များ (မျှဝေထားသည်) -->
+    <string name="cd_message">မက်ဆေ့ဂျ်</string>
+    <string name="cd_show_on_map">မြေပုံပေါ်တွင် ပြရန်</string>
+    <string name="cd_more_options">နောက်ထပ် ရွေးချယ်စရာများ</string>
+
+    <!-- ── အဆက်အသွယ်များ မျက်နှာပြင် ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="other">%1$d ခု ရွေးချယ်ထားသည်</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">ရွေးချယ်မှုကို ပယ်ဖျက်ရန်</string>
+    <string name="contacts_cd_select_all">အားလုံး ရွေးချယ်ရန်</string>
+    <string name="contacts_cd_deselect_all">အားလုံး ပြန်ဖြုတ်ရန်</string>
+    <string name="contacts_cd_qr_invite">QR / ဖိတ်ကြားချက်</string>
+    <string name="contacts_cd_pending_requests">စောင့်ဆိုင်းဆဲ တောင်းဆိုချက်များ</string>
+    <string name="contacts_sort_last_seen">နောက်ဆုံးတွေ့ရှိမှု</string>
+    <string name="contacts_search_placeholder">အဆက်အသွယ်များ ရှာဖွေရန်…</string>
+    <string name="contacts_empty_title">အဆက်အသွယ်များ မရှိသေးပါ</string>
+    <string name="contacts_empty_subtitle">တစ်ဦးတစ်ယောက်နှင့် ဆက်သွယ်ရန်နှင့် တည်နေရာမျှဝေရန် QR ကုဒ်ကို စကင်န်ဖတ်ပါ။</string>
+    <string name="contacts_scan_qr">QR ကုဒ်ကို စကင်န်ဖတ်ပါ</string>
+    <string name="contacts_bulk_delete_messages">မက်ဆေ့ဂျ်များ ဖျက်ရန်</string>
+    <string name="contacts_bulk_delete_locations">တည်နေရာများ ဖျက်ရန်</string>
+    <string name="contacts_last_seen">နောက်ဆုံးတွေ့ရှိမှု- %1$s</string>
+    <string name="contacts_no_location_yet">တည်နေရာဒေတာ မရှိသေးပါ</string>
+    <string name="contacts_view_sharing_settings">မျှဝေမှု ဆက်တင်များ</string>
+    <string name="contacts_view_location_history">တည်နေရာ မှတ်တမ်း</string>
+    <string name="contacts_rename_contact">အမည်ပြောင်းရန်</string>
+    <string name="contacts_on_contact_device">တစ်ဖက်လူ၏ စက်ပစ္စည်းပေါ်တွင်</string>
+    <string name="contacts_delete_my_messages_title">ကျွန်ုပ်၏ မက်ဆေ့ဂျ်များကို ဖျက်ရန်</string>
+    <string name="contacts_delete_locations_title">မျှဝေထားသော တည်နေရာများကို ဖျက်ရန်</string>
+    <string name="contacts_remove_contact_title">အဆက်အသွယ်ကို ဖယ်ရှားရန်</string>
+    <string name="contacts_leave_title">အဆက်အသွယ်နှင့် ဒေတာကို ဖျက်ရန်</string>
+    <string name="contacts_rename_title">အမည်ပြောင်းရန်</string>
+    <string name="contacts_remove_contact_body">%1$s ကို သင့်အဆက်အသွယ်များမှ ဖယ်ရှားမလား။ သူတို့၏ တည်နေရာမှတ်တမ်းကိုလည်း စက်ထဲမှ ဖျက်ပစ်ပါမည်။</string>
+    <string name="contacts_leave_body">၎င်းသည် သင့်ကို %1$s ၏ အဆက်အသွယ်များမှ ဖယ်ရှားမည်ဖြစ်ပြီး သင့်မက်ဆေ့ဂျ်များနှင့် တည်နေရာဒေတာ အားလုံးကို သူတို့၏စက်မှ ဖျက်ပစ်ပါမည်။ သင်လည်း သူတို့၏ တည်နေရာကို မြင်ရတော့မည် မဟုတ်ပါ။</string>
+    <string name="contacts_delete_my_messages_body">%1$s ၏ စက်ပစ္စည်းမှ သင်ပေးပို့ထားသော မက်ဆေ့ဂျ်များ အားလုံးကို ဖျက်ပစ်ပါမည်။ ၎င်းကို ပြန်ပြင်၍ မရပါ။</string>
+    <string name="contacts_delete_locations_body">%1$s ၏ စက်ပစ္စည်းသို့ သင်မျှဝေထားသော တည်နေရာဒေတာ အားလုံးကို ဖျက်ပစ်ပါမည်။ ၎င်းကို ပြန်ပြင်၍ မရပါ။</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="other">အဆက်အသွယ် %1$d ခုကို ဖယ်ရှားရန်</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="other">ဤအဆက်အသွယ် %1$d ခုကို ဖယ်ရှားမလား။ သူတို့၏ တည်နေရာမှတ်တမ်းကိုလည်း စက်ထဲမှ ဖျက်ပစ်ပါမည်။</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="other">ဤအဆက်အသွယ် %1$d ဦး၏ စက်ပစ္စည်းများမှ သင်ပေးပို့ထားသော မက်ဆေ့ဂျ်များ အားလုံးကို ဖျက်ပစ်မလား။ ၎င်းကို ပြန်ပြင်၍ မရပါ။</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="other">ဤအဆက်အသွယ် %1$d ဦး၏ စက်ပစ္စည်းများသို့ သင်မျှဝေထားသော တည်နေရာမှတ်တမ်း အားလုံးကို ဖျက်ပစ်မလား။ ၎င်းကို ပြန်ပြင်၍ မရပါ။</item>
+    </plurals>
+
+    <string name="common_continue">ရှေ့သို့</string>
+
+    <!-- ── စတင်အသုံးပြုခြင်း (Onboarding) ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">အရန်သိမ်းဆည်းမှုမှ ပြန်လည်ရယူရန်</string>
+    <string name="onboarding_restore_message">သင့်အမှတ်အသားနှင့် အဆက်အသွယ်များကို ပြန်လည်ရယူရန် သင့် ၆၄ လုံးပါ ကိုယ်ပိုင်ကီးကို ဤနေရာတွင် ထည့်ပါ။</string>
+    <string name="onboarding_private_key_hex">ကိုယ်ပိုင်ကီး (hex)</string>
+    <string name="onboarding_tagline">အဆက်အသွယ်များနှင့် တည်နေရာကို သီးသန့်မျှဝေပါ။\nအကောင့်မလို။ ကိုယ်ပိုင်ဆာဗာ မရှိ။</string>
+    <string name="onboarding_feature_e2e_title">စာဝှက်စနစ် သုံးထားသည်</string>
+    <string name="onboarding_feature_e2e_subtitle">သင့်တည်နေရာကို စက်ထဲတွင်ပင် စာဝှက်ထားသည်</string>
+    <string name="onboarding_feature_servers_title">ကိုယ်ပိုင်ဆာဗာများ မရှိပါ</string>
+    <string name="onboarding_feature_servers_subtitle">လုံခြုံစိတ်ချရသော သယ်ယူပို့ဆောင်ရေးအဖြစ် အများသုံး Nostr ရီလေးများကို အသုံးပြုသည် - သင့်ဒေတာများသည် သီးသန့်ဖြစ်ပြီး စာဝှက်ထားဆဲဖြစ်သည်</string>
+    <string name="onboarding_feature_phone_title">သင့်ဖုန်းထဲမှာပဲ ရှိနေမည်</string>
+    <string name="onboarding_feature_phone_subtitle">သင့်တည်နေရာ မှတ်တမ်းအပြည့်အစုံမှာ သင့်စက်ထဲတွင်သာ ရှိနေမည်။ သင်ရွေးချယ်ထားသော အဆက်အသွယ်များသာ သင့်လက်ရှိနေရာကို မြင်ရမည်</string>
+    <string name="onboarding_name_prompt">သင့်အဆက်အသွယ်များက သင့်ကို ဘယ်လိုခေါ်ရမလဲ။</string>
+    <string name="onboarding_name_placeholder">ဥပမာ- အမေ၊ အဖေ၊ အောင်အောင်…</string>
+    <string name="onboarding_get_started">စတင်ရန်</string>
+    <string name="onboarding_restore_from_backup">အရန်သိမ်းဆည်းမှုမှ ပြန်လည်ရယူရန်</string>
+    <string name="onboarding_key_note">သင့်ကိုယ်ပိုင်ကီးကို စက်ထဲတွင်သာ ဖန်တီးပြီး မည်သည့်အခါမျှ စက်ပြင်ပသို့ ရောက်ရှိမည် မဟုတ်ပါ။</string>
+    <string name="onboarding_permissions_title">ခွင့်ပြုချက်များ</string>
+    <string name="onboarding_permissions_desc">LocaPeer သည် သင့်နေရာကို မျှဝေရန် တည်နေရာ ခွင့်ပြုချက်၊ ဖိတ်ကြားချက်ကုဒ်များ စကင်န်ဖတ်ရန် ကင်မရာ ခွင့်ပြုချက်နှင့် နောက်ကွယ်တွင် အလုပ်လုပ်ရန် အသိပေးချက် ခွင့်ပြုချက်တို့ လိုအပ်သည်။ ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်မှာ ရွေးချယ်နိုင်သည် - ၎င်းသည် သင့်လှုပ်ရှားမှု (လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်း) ကို ပိုမိုတိကျစွာ သိရှိရန် ကူညီပေးသည်။</string>
+    <string name="onboarding_before_ask_title">မမေးခင် သိထားရန်</string>
+    <string name="onboarding_before_ask_intro">အောက်ပါ စနစ်တောင်းဆိုချက်များကို သင်တွေ့ရပါမည်-</string>
+    <string name="onboarding_before_ask_location">• တည်နေရာ - မဖြစ်မနေ လိုအပ်သည်၊ သင့်နေရာကို မျှဝေရန်။</string>
+    <string name="onboarding_before_ask_camera">• ကင်မရာ - ဖိတ်ကြားချက်ကုဒ်များကို စကင်န်ဖတ်ရန်။</string>
+    <string name="onboarding_before_ask_notifications">• အသိပေးချက် - နောက်ကွယ်တွင် အလုပ်လုပ်ရန်။</string>
+    <string name="onboarding_before_ask_activity">• ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု - ရွေးချယ်နိုင်သည်။ ၎င်းသည် LocaPeer ကို သင့်မှတ်တမ်းတွင် လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်းနှင့် ရပ်နေခြင်းတို့ကို ပိုမိုတိကျစွာ သိရှိစေသည်။ ၎င်းကို ကျော်သွားနိုင်ပြီး နောက်မှ ဆက်တင်တွင် ပြန်ဖွင့်နိုင်သည်။</string>
+    <string name="onboarding_grant_permissions">ခွင့်ပြုချက်ပေးရန်</string>
+    <string name="onboarding_bg_location_title">နောက်ကွယ် တည်နေရာ</string>
+    <string name="onboarding_bg_location_desc">အက်ပ်ကို ပိတ်ထားချိန်တွင်လည်း သင့်အဆက်အသွယ်များကို အပ်ဒိတ်ပေးနိုင်ရန် နောက်မျက်နှာပြင်တွင် \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးချယ်ပေးပါ။</string>
+    <string name="onboarding_bg_location_error">အက်ပ်ကို ပိတ်ထားချိန်တွင် သင့်အဆက်အသွယ်များကို အပ်ဒိတ်ပေးရန် နောက်ကွယ် တည်နေရာ ခွင့်ပြုချက် လိုအပ်သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပြီး \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးချယ်ပါ။</string>
+    <string name="onboarding_configure_location">တည်နေရာကို သတ်မှတ်ရန်</string>
+    <string name="onboarding_battery_title">ဘက်ထရီ</string>
+    <string name="onboarding_battery_desc">ဘက်ထရီ ချွေတာရန်အတွက် Android က LocaPeer ကို ရပ်တန့်နိုင်ပါသည်။ စိတ်ချရသော အပ်ဒိတ်များ ရရှိရန်အတွက် LocaPeer ကို ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင် လုပ်ဆောင်ခြင်းမှ ချန်လှပ်ထားပါ။</string>
+    <string name="onboarding_disable_optimizations">အကောင်းဆုံးဖြစ်အောင် လုပ်ခြင်းကို ပိတ်ပါ</string>
+    <string name="onboarding_done_title">အားလုံး အဆင်သင့်ဖြစ်ပါပြီ။</string>
+    <string name="onboarding_done_desc">သင့်ကိုယ်ပိုင် တည်နေရာကွန်ရက် အဆင်သင့်ဖြစ်ပါပြီ။</string>
+    <string name="onboarding_start_using">LocaPeer ကို စတင်အသုံးပြုရန်</string>
+
+    <string name="common_try_again">ထပ်မံကြိုးစားပါ</string>
+
+    <!-- ── ဖိတ်ကြားချက် စကင်န်ဖတ်ခြင်း မျက်နှာပြင် ─────────────────────────────────────────────── -->
+    <string name="scan_title">ဖိတ်ကြားချက် စကင်န်ဖတ်ရန်</string>
+    <string name="scan_camera_needed">QR ကုဒ်များကို စကင်န်ဖတ်ရန် ကင်မရာ ခွင့်ပြုချက် လိုအပ်ပါသည်။</string>
+    <string name="scan_grant_permission">ခွင့်ပြုချက်ပေးရန်</string>
+    <string name="scan_add_contact_title">အဆက်အသွယ် ထည့်မလား။</string>
+    <string name="scan_add_contact_message">၎င်းသည် သင့်ကို %1$s နှင့် ဆက်သွယ်ပေးမည်ဖြစ်ပြီး အပြန်အလှန် တည်နေရာမျှဝေခြင်းကို စတင်ပါမည်။</string>
+    <string name="scan_add_share">ထည့်သွင်း၍ မျှဝေရန်</string>
+    <string name="scan_request_sent_title">တောင်းဆိုချက် ပို့ပြီးပါပြီ။</string>
+    <string name="scan_request_sent_message">%1$s ထံသို့ တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ သူတို့ လက်ခံပြီးသည်နှင့် ချိတ်ဆက်မိပါလိမ့်မည်။</string>
+    <string name="scan_failed">စကင်န်ဖတ်ခြင်း မအောင်မြင်ပါ- %1$s</string>
+
+    <string name="cd_back">နောက်သို့</string>
+    <string name="common_review">ပြန်လည်သုံးသပ်ရန်</string>
+    <string name="common_decline">ငြင်းပယ်ရန်</string>
+
+    <!-- မျှဝေမှု အခန်းကဏ္ဍ အညွှန်းများ (မျှဝေထားသည်) -->
+    <string name="role_send_receive">ပေးပို့/လက်ခံ</string>
+    <string name="role_send">ပေးပို့</string>
+    <string name="role_receive">လက်ခံ</string>
+    <string name="role_none">မျှဝေခြင်း မရှိပါ</string>
+
+    <!-- ── ဖိတ်ကြားချက် မျက်နှာပြင် ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">ကျွန်ုပ်၏ ဖိတ်ကြားချက်</string>
+    <string name="invite_tab_add_contact">အဆက်အသွယ် ထည့်ရန်</string>
+    <string name="invite_your_qr_title">သင့် QR ကုဒ်</string>
+    <string name="invite_your_qr_subtitle">သင့်တည်နေရာကို ခြေရာခံနိုင်ရန် တစ်ဦးတစ်ယောက်အား ဤအရာကို စကင်န်ဖတ်ခိုင်းပါ</string>
+    <string name="invite_qr_cd">သင့် QR ကုဒ်</string>
+    <string name="invite_qr_error">QR ကုဒ် ဖန်တီးရာတွင် အမှားရှိသည်</string>
+    <string name="invite_share_link">ဖိတ်ကြားချက်လင့်ခ်ကို မျှဝေရန်</string>
+    <string name="invite_encryption_note">သင့်တည်နေရာကို စကင်န်ဖတ်သူ၏ စက်ပစ္စည်းအတွက်သာ သီးသန့် စာဝှက်ထားပါမည်။</string>
+    <string name="invite_camera_required_title">ကင်မရာ ဝင်ရောက်ခွင့် လိုအပ်သည်</string>
+    <string name="invite_camera_required_message">QR ကုဒ် စကင်န်ဖတ်ရန် ကင်မရာ ခွင့်ပြုချက် ပေးပါ။</string>
+    <string name="invite_point_camera">ကင်မရာကို LocaPeer QR ဆီသို့ ချိန်ပါ</string>
+    <string name="invite_paste_title">သို့မဟုတ် ဖိတ်ကြားချက်လင့်ခ်ကို ထည့်ပါ</string>
+    <string name="invite_process_link">လင့်ခ်ကို စစ်ဆေးရန်</string>
+    <string name="invite_fallback_name">အဆက်အသွယ်</string>
+    <string name="invite_success_message">သူတို့ လက်ခံပြီးသည်နှင့် သင်သည် %1$s နှင့် ချိတ်ဆက်မိပါလိမ့်မည်။</string>
+    <string name="invite_confirm_add_title">%1$s ကို ထည့်မလား။</string>
+    <string name="invite_confirm_add_message">သူတို့ကို သင့်အဆက်အသွယ်ထဲ ထည့်ပြီး တည်နေရာ မျှဝေမလား။</string>
+
+    <!-- ── စောင့်ဆိုင်းဆဲ တောင်းဆိုချက်များ မျက်နှာပြင် ────────────────────────── -->
+    <string name="pending_empty">စောင့်ဆိုင်းဆဲ တောင်းဆိုချက်များ မရှိပါ</string>
+    <string name="pending_requesting">တောင်းဆိုနေသည်- %1$s · %2$s</string>
+    <string name="pending_role_change">အခန်းကဏ္ဍ ပြောင်းလဲမှု တောင်းဆိုချက် · %1$s</string>
+    <string name="pending_new_request">မျှဝေမှု တောင်းဆိုချက် အသစ် · %1$s</string>
+
+    <string name="common_save_changes">ပြောင်းလဲမှုများကို သိမ်းရန်</string>
+
+    <!-- ── ဝင်လာသော မျှဝေမှု တောင်းဆိုချက် မျက်နှာပြင် ──────────────────────────────────── -->
+    <string name="incoming_update_title">မျှဝေမှု ဆက်တင်များကို အပ်ဒိတ်လုပ်ရန်</string>
+    <string name="incoming_new_title">အဆက်အသွယ် တောင်းဆိုချက် အသစ်</string>
+    <string name="incoming_update_subtitle">%1$s က သင်မျှဝေသည့် ပုံစံကို အပ်ဒိတ်လုပ်လိုသည်။ အောက်ပါ ဆက်တင်များကို ပြန်လည်သုံးသပ်ပါ။</string>
+    <string name="incoming_new_subtitle">%1$s က သင့်ကို အဆက်အသွယ်အဖြစ် ထည့်လိုက်ပါပြီ။ သင်လည်း ဘာတွေ ပြန်မျှဝေမလဲဆိုတာကို အခု ရွေးချယ်နိုင်ပါပြီ။</string>
+    <string name="incoming_section_location">တည်နေရာ</string>
+    <string name="incoming_share_my_location">ကျွန်ုပ်၏ တည်နေရာကို %1$s နှင့် မျှဝေရန်</string>
+    <string name="incoming_share_my_location_sub">သင် ဘယ်မှာရှိလဲဆိုတာကို သူတို့ မြင်နိုင်ပါလိမ့်မည်</string>
+    <string name="incoming_see_their_location">%1$s ၏ တည်နေရာကို မြင်ရရန်</string>
+    <string name="incoming_see_their_location_sub">သူတို့ ဘယ်မှာရှိလဲဆိုတာကို သင် မြင်နိုင်ပါလိမ့်မည်</string>
+    <string name="incoming_section_messaging">မက်ဆေ့ဂျ် ပို့ခြင်း</string>
+    <string name="incoming_allow_messages">မက်ဆေ့ဂျ်များကို ခွင့်ပြုရန်</string>
+    <string name="incoming_allow_messages_sub">%1$s ထံမှ ချတ်မက်ဆေ့ဂျ်များကို လက်ခံရန်</string>
+
+    <string name="common_request">တောင်းဆိုရန်</string>
+    <string name="common_edit">ပြင်ဆင်ရန်</string>
+
+    <!-- ── အဆက်အသွယ် ဆက်တင်များ မျက်နှာပြင် ─────────────────────────── -->
+    <string name="peer_title">အဆက်အသွယ် ဆက်တင်များ</string>
+    <string name="peer_section_roles">တည်နေရာ မျှဝေမှု အခန်းကဏ္ဍများ</string>
+    <string name="peer_send_on">%1$s က သင့်တည်နေရာကို မြင်နိုင်သည်</string>
+    <string name="peer_send_off">သင်သည် သင့်တည်နေရာကို %1$s နှင့် မျှဝေမထားပါ</string>
+    <string name="peer_receive_title">%1$s ၏ တည်နေရာကို လက်ခံရန်</string>
+    <string name="peer_receive_on">သင်သည် %1$s ၏ တည်နေရာကို မြင်နိုင်သည်</string>
+    <string name="peer_receive_off">သင်သည် %1$s ၏ တည်နေရာကို မြင်ခွင့်မရှိပါ</string>
+    <string name="peer_section_privacy">ကိုယ်ရေးလုံခြုံမှုနှင့် မျှဝေမှု ထိန်းချုပ်ချက်များ</string>
+    <string name="peer_pause_sharing">မျှဝေခြင်းကို ခေတ္တရပ်ရန်</string>
+    <string name="peer_pause_sub">%1$s ထံသို့ သင့်တည်နေရာ ပေးပို့ခြင်းကို ခေတ္တရပ်ထားရန်</string>
+    <string name="peer_precision">တည်နေရာ တိကျမှု</string>
+    <string name="peer_precision_exact_sub">တိကျသော GPS ကိုဩဒိနိတ်များ</string>
+    <string name="peer_precision_suburb_sub">အနီးစပ်ဆုံး တည်နေရာ (ရပ်ကွက် အဆင့်)</string>
+    <string name="peer_always_sharing">အမြဲတမ်း မျှဝေနေသည်</string>
+    <plurals name="peer_active_rules">
+        <item quantity="other">အလုပ်လုပ်နေသော မျှဝေမှု စည်းမျဉ်း %1$d ခု</item>
+    </plurals>
+    <string name="peer_section_alerts">သတိပေးချက်များနှင့် စောင့်ကြည့်ခြင်း</string>
+    <string name="peer_sos_contact">SOS အဆက်အသွယ်</string>
+    <string name="peer_sos_sub">မျှဝေခြင်း ခေတ္တရပ်ထားလျှင်တောင်မှ သင့်အရေးပေါ် သတိပေးချက်များကို လက်ခံရရှိမည်</string>
+    <string name="peer_missed_alert">တည်နေရာ မရရှိတော့သည့် သတိပေးချက်</string>
+    <string name="peer_missed_on">%1$s က တည်နေရာ ပေးပို့ခြင်း ရပ်ဆိုင်းသွားပါက အသိပေးရန်</string>
+    <string name="peer_requires_access">%1$s ၏ တည်နေရာကို ဝင်ရောက်ခွင့် လိုအပ်သည်</string>
+    <string name="peer_proximity_alert">အနီးအနားရှိခြင်း သတိပေးချက်</string>
+    <string name="peer_proximity_sub">%1$s အနီးအနားသို့ ရောက်ရှိလာပါက အသိပေးရန်</string>
+    <string name="peer_alert_radius">သတိပေးချက် အချင်းဝက်</string>
+    <string name="peer_alert_schedule">သတိပေးချက် အချိန်ဇယား</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="other">အလုပ်လုပ်နေသော စည်းမျဉ်း %1$d ခု</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s အတွက် ရောက်ရှိမှုနှင့် ထွက်ခွာမှု ဧရိယာများ သတ်မှတ်ရန်</string>
+    <string name="peer_supervise">ဤစက်ပစ္စည်းကို ကြီးကြပ်ရန်</string>
+    <string name="peer_supervise_on">သင်သည် %1$s ထံမှ သော့ဖွင့်ခွင့် တောင်းဆိုချက်များကို လက်ခံရရှိပြီး အတည်ပြုပေးရပါမည်</string>
+    <string name="peer_supervise_off">ကြီးကြပ်မှုမုဒ် သော့ဖွင့်ခွင့် တောင်းဆိုချက်များ ပေးပို့ရန် %1$s အား ခွင့်ပြုပါ</string>
+    <string name="peer_messaging_sub">%1$s ထံမှ ချတ်မက်ဆေ့ဂျ်များကို ဖွင့်ရန်/ပိတ်ရန်</string>
+    <string name="peer_section_history">လှုပ်ရှားမှု မှတ်တမ်း</string>
+    <string name="peer_location_history">တည်နေရာ မှတ်တမ်း</string>
+    <string name="peer_location_history_sub">%1$s ၏ လှုပ်ရှားမှုမှတ်တမ်းနှင့် မြေပုံကို ကြည့်ရန်</string>
+    <string name="peer_section_retention">အဝေးမှ ဒေတာ ထိန်းသိမ်းမှု</string>
+    <string name="peer_retention_location_sub">%1$s က သင့်တည်နေရာမှတ်တမ်းကို မည်မျှကြာအောင် သိမ်းဆည်းထားသနည်း</string>
+    <string name="peer_purge_location">%1$s ဆီမှ တည်နေရာဒေတာ အားလုံးကို ဖျက်ရန်</string>
+    <string name="peer_retention_messages_sub">%1$s က သင်ပေးပို့ထားသော မက်ဆေ့ဂျ်များကို မည်မျှကြာအောင် သိမ်းဆည်းထားသနည်း</string>
+    <string name="peer_purge_messages">%1$s ဆီမှ မက်ဆေ့ဂျ် အားလုံးကို ဖျက်ရန်</string>
+    <string name="peer_precision_exact">တိကျသော GPS</string>
+    <string name="peer_precision_exact_desc">တိကျသော ကိုဩဒိနိတ်များ</string>
+    <string name="peer_precision_suburb">ရပ်ကွက် (၁ ကီလိုမီတာခန့်)</string>
+    <string name="peer_precision_suburb_desc">ရပ်ကွက်အဆင့်သာ</string>
+
+    <!-- ── စကားဝိုင်းစာရင်း (မက်ဆေ့ဂျ်များ) မျက်နှာပြင် ──────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="other">စကားဝိုင်း %1$d ခုကို ဖျက်မလား။</item>
+    </plurals>
+    <string name="conv_delete_locally">စက်ထဲမှသာ ဖျက်ရန်</string>
+    <string name="conv_delete_locally_sub">သင့်စက်မှသာ စကားဝိုင်းကို ဖယ်ရှားပါမည်။</string>
+    <string name="conv_delete_both">နှစ်ဖက်လုံးမှ ဖျက်ရန်</string>
+    <string name="conv_bulk_delete_both_sub">သင့်စက်နှင့် တစ်ဖက်လူ၏စက် နှစ်ဖက်လုံးမှ စကားဝိုင်းကို ဖျက်ပစ်ပါမည်။</string>
+    <string name="conv_delete_both_sub">သင့်စက်မှ ဖျက်ပစ်ပြီး တစ်ဖက်လူ၏ စက်ပစ္စည်းမှလည်း စကားဝိုင်းကို ဖျက်ရန် တောင်းဆိုချက် ပို့ပါမည်။</string>
+    <string name="conv_cd_exit_selection">ရွေးချယ်မှုမှ ထွက်ရန်</string>
+    <string name="conv_cd_select_all">အားလုံး ရွေးချယ်ရန်</string>
+    <string name="conv_cd_new_message">မက်ဆေ့ဂျ် အသစ်</string>
+    <string name="conv_sort_date">ရက်စွဲ</string>
+    <string name="conv_sort_unread">မဖတ်ရသေးသော</string>
+    <string name="conv_search_placeholder">စကားဝိုင်းများ ရှာဖွေရန်…</string>
+    <string name="conv_tab_chats">ချတ်များ</string>
+    <string name="conv_tab_archived">သိမ်းဆည်းထားသော</string>
+    <string name="conv_mark_read">ဖတ်ပြီးအဖြစ် မှတ်သားရန်</string>
+    <string name="conv_archive">သိမ်းဆည်းရန်</string>
+    <string name="conv_unarchive">ပြန်ထုတ်ရန်</string>
+    <string name="conv_empty_no_results">\"%1$s\" အတွက် ရလဒ်မရှိပါ</string>
+    <string name="conv_empty_no_results_sub">အခြားရှာဖွေမှုစကားလုံးကို စမ်းကြည့်ပါ</string>
+    <string name="conv_empty_archived_title">သိမ်းဆည်းထားသော ချတ်များ မရှိပါ</string>
+    <string name="conv_empty_archived_sub">သင့်စာပုံးကို သန့်ရှင်းအောင်ထားရန် ချတ်များကို သိမ်းဆည်းထားပါ</string>
+    <string name="conv_empty_title">မက်ဆေ့ဂျ်များ မရှိသေးပါ</string>
+    <string name="conv_empty_sub">မြေပုံကိုဖွင့်ပြီး စကားပြောရန်အတွက်\nတစ်ဦးတစ်ယောက်ကို နှိပ်ပါ</string>
+    <string name="conv_delete_title">စကားဝိုင်းကို ဖျက်မလား။</string>
+    <string name="conv_delete_message">%1$s နှင့် စကားဝိုင်းကို သင်ဘယ်လို ဖျက်ချင်သလဲ။</string>
+    <string name="conv_messages_blocked">မက်ဆေ့ဂျ်များကို ပိတ်ပင်ထားသည်</string>
+    <string name="conv_preview_mine">သင်- %1$s</string>
+    <string name="conv_new_message_title">မက်ဆေ့ဂျ် အသစ်</string>
+    <string name="conv_picker_empty">အဆက်အသွယ်များ မရှိသေးပါ။ အဆက်အသွယ်ထည့်ရန် QR ကုဒ်ကို စကင်န်ဖတ်ပါ။</string>
+
+    <!-- ── ချတ် မျက်နှာပြင် ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">ချတ်မှတ်တမ်းကို ဖျက်မလား။</string>
+    <string name="chat_clear_message">%1$s နှင့် စကားဝိုင်းကို သင်ဘယ်လို ဖျက်ချင်သလဲ။</string>
+    <string name="chat_clear_locally">စက်ထဲမှသာ ဖျက်ရန်</string>
+    <string name="chat_clear_both">နှစ်ဖက်လုံးမှ ဖျက်ရန်</string>
+    <string name="chat_clear_both_sub">သင့်စက်မှ ချတ်ကို ဖျက်ပစ်ပြီး သင်ပို့ထားသော မက်ဆေ့ဂျ်များကို ဖျက်ရန် %1$s ထံ တောင်းဆိုချက် ပို့ပါမည်။</string>
+    <string name="chat_cd_options">ရွေးချယ်စရာများ</string>
+    <string name="chat_clear_history_menu">ချတ်မှတ်တမ်းကို ဖျက်ရန်</string>
+    <string name="chat_typing">%1$s က စာရိုက်နေသည်…</string>
+    <string name="chat_blocked_banner">%1$s ထံမှ မက်ဆေ့ဂျ်များကို သင်ပိတ်ပင်ထားသည်။ ပြန်ဖွင့်ရန် အဆက်အသွယ်များသို့ သွားပါ။</string>
+    <string name="chat_delete_msg_title">မက်ဆေ့ဂျ်ကို ဖျက်မလား။</string>
+    <string name="chat_delete_msg_message">ဤမက်ဆေ့ဂျ်ကို သင်ဘယ်လို ဖျက်ချင်သလဲ။</string>
+    <string name="chat_delete_from_contact">တစ်ဖက်လူ၏ စက်မှ ဖျက်ရန်</string>
+    <string name="chat_delete_from_contact_sub">သူတို့၏ စက်ပစ္စည်းမှ မက်ဆေ့ဂျ်ကို ဖျက်ရန် တောင်းဆိုချက် ပို့ပါမည်။</string>
+    <string name="chat_delete_both_sub">သင့်စက်မှ ဖျက်ပစ်ပြီး တစ်ဖက်လူ၏ စက်မှလည်း အလိုအလျောက် ဖျက်ပေးပါမည်။</string>
+    <string name="chat_cd_share_location">တည်နေရာ မျှဝေရန်</string>
+    <string name="chat_input_placeholder">မက်ဆေ့ဂျ်…</string>
+    <string name="chat_cd_send">ပို့ရန်</string>
+
+    <string name="common_close">ပိတ်ရန်</string>
+
+    <!-- ── မြေပုံ မျက်နှာပြင် ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS ကို ဖွင့်မလား။</string>
+    <string name="map_sos_deactivate_title">SOS ကို ပိတ်မလား။</string>
+    <string name="map_sos_activate_msg">၎င်းသည် သင်ပြန်မပိတ်မချင်း ၁၅ စက္ကန့်တိုင်းတွင် သင်သတ်မှတ်ထားသော SOS အဆက်အသွယ်များထံ သင့်တည်နေရာကို ထုတ်လွှင့်ပေးပါမည်။</string>
+    <string name="map_sos_deactivate_msg">၎င်းသည် အရေးပေါ် အဆက်အသွယ်များထံ တည်နေရာ ထုတ်လွှင့်မှုကို ရပ်တန့်ပါမည်။</string>
+    <string name="map_activate">ဖွင့်ရန်</string>
+    <string name="map_deactivate">ပိတ်ရန်</string>
+    <string name="map_cd_style">မြေပုံ စတိုင်</string>
+    <string name="map_cd_show_geofences">ဂျီအိုခြံစည်းရိုးများ ပြရန်</string>
+    <string name="map_cd_hide_geofences">ဂျီအိုခြံစည်းရိုးများ ဖျောက်ရန်</string>
+    <string name="map_cd_follow">ကျွန်ုပ်နောက်သို့ လိုက်ပါ</string>
+    <string name="map_cd_friends">သူငယ်ချင်းများ</string>
+    <string name="map_no_friends">ခြေရာခံထားသော သူငယ်ချင်းများ မရှိသေးပါ</string>
+    <string name="map_you">သင်</string>
+    <string name="map_cd_go_my_location">ကျွန်ုပ်နေရာသို့ သွားရန်</string>
+    <string name="map_sos_active">⚠ SOS အလုပ်လုပ်နေသည်</string>
+    <string name="map_away">အပြင်ရောက်နေသည်</string>
+    <string name="map_no_location_yet">တည်နေရာ မရှိသေးပါ</string>
+    <string name="map_cd_go_location">တည်နေရာသို့ သွားရန်</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ဖွင့်ထားသည်</string>
+    <string name="map_overdue">အချိန်လွန်နေသည် - အပ်ဒိတ် မရှိပါ</string>
+    <string name="map_stat_last_seen">နောက်ဆုံးတွေ့ရှိမှု</string>
+    <string name="map_stat_battery">ဘက်ထရီ</string>
+    <string name="map_stat_accuracy">တိကျမှု</string>
+    <string name="map_stat_motion">လှုပ်ရှားမှု</string>
+    <string name="map_stat_speed">အရှိန်</string>
+    <string name="map_stat_elevation">အမြင့်</string>
 
     <string name="common_ok">အိုကေ</string>
-    <string name="cd_back">နောက်သို့</string>
+
+    <!-- ── မှတ်တမ်း မျက်နှာပြင် ──────────────────────────────────────────── -->
+    <string name="history_title_peer">မှတ်တမ်း- %1$s</string>
+    <string name="history_select_person">တစ်ဦးတစ်ယောက်ကို ရွေးချယ်ပါ</string>
+    <string name="history_person_label">ပုဂ္ဂိုလ်</string>
+    <string name="history_cd_prev_day">ယခင်ရက်</string>
+    <string name="history_cd_next_day">နောက်ရက်</string>
+    <string name="history_time_filter">အချိန် စစ်ထုတ်မှု-</string>
+    <string name="history_cd_reset_time">အချိန် ပြန်သတ်မှတ်ရန်</string>
+    <string name="history_tab_list">စာရင်း</string>
+    <string name="history_empty_title">ဤရက်အတွက် မှတ်တမ်းမရှိပါ</string>
+    <string name="history_empty_sub">အခြားရက်စွဲကို ရွေးကြည့်ပါ သို့မဟုတ် သင့်အင်တာနက်ကို စစ်ဆေးပါ။</string>
+    <string name="history_start_time">စတင်ချိန်</string>
+    <string name="history_end_time">ပြီးဆုံးချိန်</string>
+    <string name="history_no_data_title">တည်နေရာဒေတာ မရှိပါ</string>
+    <string name="history_no_data_sub">ဤရက်စွဲ သို့မဟုတ် အချိန်အပိုင်းအခြားအတွက် မှတ်တမ်းတင်ထားသော တည်နေရာများ မရှိပါ။</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="other">တည်နေရာ %1$d ခု မှတ်တမ်းတင်ထားသည်</item>
+    </plurals>
+    <string name="history_cd_dismiss">ဖယ်ရှားရန်</string>
+    <string name="history_accuracy_label">±%1$s တိကျမှု</string>
+    <string name="history_emergency_sos">အရေးပေါ် SOS အချက်ပြမှု</string>
+    <string name="history_detail_location">တည်နေရာ</string>
+    <string name="history_detail_coordinates">ကိုဩဒိနိတ်များ</string>
+    <string name="history_within">±%1$s အတွင်း</string>
+    <string name="history_detail_movement">လှုပ်ရှားမှု</string>
+    <string name="history_movement_desc">%1$s %2$s၊ ဦးတည်ချက် %3$s</string>
+
+    <string name="common_create">ဖန်တီးရန်</string>
+
+    <!-- ── ဂျီအိုခြံစည်းရိုး မျက်နှာပြင်များ ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">ဂျီအိုခြံစည်းရိုး ဧရိယာ ထည့်ရန်</string>
+    <string name="geo_cd_assign">ဂျီအိုခြံစည်းရိုး သတ်မှတ်ရန်</string>
+    <string name="geo_unknown">အမည်မသိ</string>
+    <string name="geo_empty_title">ဂျီအိုခြံစည်းရိုးများ မရှိပါ</string>
+    <string name="geo_empty_sub">+ ကိုနှိပ်ပြီး ဂျီအိုခြံစည်းရိုး ဧရိယာတစ်ခု ဖန်တီးပါ၊ ထို့နောက် သူတို့၏ မျှဝေမှုဆက်တင်မှ အဆက်အသွယ်များကို သတ်မှတ်ပါ။</string>
+    <string name="geo_delete_title">ဂျီအိုခြံစည်းရိုးကို ဖျက်မလား။</string>
+    <string name="geo_delete_simple">\"%1$s\" ကို ဖျက်မလား။</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="other">\"%1$s\" ကို အဆက်အသွယ် %2$d ဦးတွင် သတ်မှတ်ထားသည်။ ၎င်းကို ဖျက်ခြင်းဖြင့် ထိုသတ်မှတ်ချက်များကိုလည်း ဖယ်ရှားပါမည်။</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s အတွက် ဂျီအိုခြံစည်းရိုးများ</string>
+    <string name="geo_empty_contact_title">အဆက်အသွယ်အတွက် ဂျီအိုခြံစည်းရိုး မရှိပါ</string>
+    <string name="geo_empty_contact_sub">+ ကိုနှိပ်ပြီး ဂျီအိုခြံစည်းရိုး ဧရိယာတစ်ခု သတ်မှတ်ပါ၊ ရောက်ရှိချိန်၊ ထွက်ခွာချိန် သို့မဟုတ် နှစ်ခုလုံးတွင် သတိပေးရန် ရွေးချယ်ပါ။</string>
+    <string name="geo_no_areas_title">ဂျီအိုခြံစည်းရိုးများ မရှိသေးပါ</string>
+    <string name="geo_no_areas_msg">ဂျီအိုခြံစည်းရိုး မျက်နှာပြင်မှ ဧရိယာတစ်ခုကို အရင်ဖန်တီးပါ၊ ထို့နောက် ဤနေရာတွင် သတ်မှတ်ပါ။</string>
+    <string name="geo_radius_label">အချင်းဝက် %1$s</string>
+    <string name="geo_contacts_label">အဆက်အသွယ်များ- %1$s</string>
+    <string name="geo_no_contacts_assigned">အဆက်အသွယ်များ သတ်မှတ်ထားခြင်း မရှိပါ</string>
+    <plurals name="geo_rules_count">
+        <item quantity="other">စည်းမျဉ်း %1$d ခု</item>
+    </plurals>
+    <string name="geo_trigger_enter">အဝင်</string>
+    <string name="geo_trigger_exit">အထွက်</string>
+    <string name="geo_trigger_both">နှစ်ခုလုံး</string>
+    <string name="geo_edit_title">ဂျီအိုခြံစည်းရိုး ပြင်ဆင်ရန်</string>
+    <string name="geo_new_title">ဂျီအိုခြံစည်းရိုး အသစ်</string>
+    <string name="geo_cd_my_location">ကျွန်ုပ်နေရာ</string>
+    <string name="geo_cd_radius_increase">အချင်းဝက် တိုးရန်</string>
+    <string name="geo_cd_radius_decrease">အချင်းဝက် လျှော့ရန်</string>
+    <string name="geo_hint_tap">မြေပုံပေါ်တွင် တည်နေရာချရန် နှိပ်ပါ သို့မဟုတ် ဖိထားပါ</string>
+    <string name="geo_hint_move">ချဲ့ရန် လက်နှစ်ချောင်းသုံးပါ • ရွှေ့ရန် ပင်ကို ဖိထားပါ သို့မဟုတ် ဆွဲယူပါ</string>
+    <string name="geo_basic_info">အခြေခံ အချက်အလက်</string>
+    <string name="geo_search_title">လိပ်စာဖြင့် ရှာဖွေရန်</string>
+    <string name="geo_search_label">လိပ်စာ သို့မဟုတ် နေရာ</string>
+    <string name="geo_search_placeholder">ဥပမာ- ပြည်လမ်း၊ ရန်ကုန်</string>
+    <string name="geo_search_no_results">ကိုက်ညီသော လိပ်စာ မတွေ့ပါ</string>
+    <string name="geo_cd_search">ရှာဖွေရန်</string>
+    <string name="geo_name_placeholder">ဥပမာ- အိမ်၊ ရုံး</string>
+    <string name="geo_name_required">အမည် လိုအပ်ပါသည်</string>
+    <string name="geo_latitude">လတ္တီတွဒ်</string>
+    <string name="geo_longitude">လောင်ဂျီတွဒ်</string>
+    <string name="geo_lat_range">-၉၀ မှ ၉၀ အထိ</string>
+    <string name="geo_lng_range">-၁၈၀ မှ ၁၈၀ အထိ</string>
+    <string name="geo_radius">အချင်းဝက်</string>
+    <string name="geo_radius_range">%1$d မှ %2$d မီတာ အထိ ထည့်ပါ</string>
+    <string name="geo_edit_assignment">သတ်မှတ်ချက်ကို ပြင်ဆင်ရန်</string>
+    <string name="geo_assign_title">ဂျီအိုခြံစည်းရိုး သတ်မှတ်ရန်</string>
+    <string name="geo_select_area">ဂျီအိုခြံစည်းရိုး ဧရိယာ ရွေးချယ်ပါ</string>
+    <string name="geo_trigger_title">မည်သည့်အချိန်တွင် အသိပေးမလဲ-</string>
+    <string name="geo_add_rule">စည်းမျဉ်း ထည့်ရန်</string>
+    <string name="geo_alerts_all_times">သတိပေးချက်များမှာ အမြဲတမ်း အလုပ်လုပ်နေသည်။ သတိပေးချက်များ ပို့မည့်အချိန်ကို ကန့်သတ်ရန် စည်းမျဉ်းတစ်ခု ထည့်ပါ။</string>
+    <string name="geo_assign_action">သတ်မှတ်ရန်</string>
+
+    <!-- ── အနီးအနားရှိခြင်း သတိပေးချက်များ မျက်နှာပြင် ────────────────────────────────────────── -->
+    <string name="prox_title">အနီးအနားရှိခြင်း သတိပေးချက်များ</string>
+    <string name="prox_empty_title">ခြေရာခံထားသူ မရှိပါ</string>
+    <string name="prox_empty_sub">တစ်ဦးတစ်ယောက်၏ တည်နေရာကို ခြေရာခံရန်\nစကင်န်တက်ဘ်မှ သူတို့၏ ဖိတ်ကြားချက် QR ကို စကင်န်ဖတ်ပါ</string>
+    <string name="prox_intro">ခြေရာခံထားသူတစ်ဦး သင်ရွေးချယ်ထားသော အကွာအဝေးအတွင်း ရောက်ရှိလာပါက အသိပေးချက် ရယူပါ။</string>
+    <string name="prox_alert_within">%1$s အတွင်းရှိပါက သတိပေးရန်</string>
+    <string name="prox_alerts_off">သတိပေးချက်များ ပိတ်ထားသည်</string>
+    <string name="prox_alert_radius">သတိပေးချက် အချင်းဝက်</string>
+    <string name="prox_edit_schedule">အချိန်ဇယား ပြင်ဆင်ရန်</string>
+    <string name="prox_rules">စည်းမျဉ်းများ</string>
+
+    <!-- ── အချိန်ဇယား မျက်နှာပြင် / စည်းမျဉ်း တည်းဖြတ်သူ ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s အတွက် အချိန်ဇယား</string>
+    <string name="schedule_cd_add_rule">စည်းမျဉ်း ထည့်ရန်</string>
+    <string name="schedule_empty_title">အချိန်ဇယား စည်းမျဉ်းများ မရှိပါ</string>
+    <string name="schedule_empty_global">တည်နေရာကို အမြဲတမ်း မျှဝေနေသည်။ မျှဝေမှု အလုပ်လုပ်မည့်အချိန်ကို ကန့်သတ်ရန် စည်းမျဉ်းတစ်ခု ထည့်ပါ။</string>
+    <string name="schedule_empty_peer">တည်နေရာကို %1$s နှင့် အမြဲတမ်း မျှဝေနေသည်။ မည်သည့်အချိန်တွင် မျှဝေမည်ကို ကန့်သတ်ရန် စည်းမျဉ်းတစ်ခု ထည့်ပါ။</string>
+    <string name="schedule_active_hint">လက်ရှိအချိန်နှင့် စည်းမျဉ်းတစ်ခုခု ကိုက်ညီပါက အလုပ်လုပ်ပါမည်။ မရှိပါက = အမြဲတမ်း ပွင့်နေမည်။</string>
+    <string name="schedule_all_day">တစ်နေ့လုံး</string>
+    <string name="schedule_plus_one_day"> (+၁ ရက်)</string>
+    <string name="schedule_rule_number">စည်းမျဉ်း %1$d</string>
+    <string name="schedule_cd_delete_rule">စည်းမျဉ်းကို ဖျက်ရန်</string>
+    <string name="schedule_edit_rule">စည်းမျဉ်းကို ပြင်ဆင်ရန်</string>
+    <string name="schedule_label_optional">အညွှန်း (ထည့်ချင်မှ ထည့်ပါ)</string>
+    <string name="schedule_label_placeholder">ဥပမာ- အလုပ်ချိန်၊ ရုံးပိတ်ရက်</string>
+    <string name="schedule_active_days">အလုပ်လုပ်မည့် ရက်များ</string>
+    <string name="schedule_time_window">အချိန် အပိုင်းအခြား</string>
+    <string name="schedule_start">စတင်ချိန်</string>
+    <string name="schedule_end">ပြီးဆုံးချိန်</string>
+    <string name="schedule_overnight">တစ်ညလုံး- %1$s မှ နောက်ရက် %2$s အထိ အလုပ်လုပ်မည်</string>
+
+    <!-- ── ကြီးကြပ်မှု တံခါးပေါက် ───────────────────────────────────────────────── -->
+    <string name="gate_title">စက်ပစ္စည်းကို ကြီးကြပ်နေသည်</string>
+    <string name="gate_message">ဆက်တင်များ ဝင်ရောက်ရန် ကြီးကြပ်သူ၏ အတည်ပြုချက် လိုအပ်သည်။</string>
+    <string name="gate_request_access">ဝင်ရောက်ခွင့် တောင်းဆိုရန်</string>
+    <string name="gate_waiting">ကြီးကြပ်သူ၏ အတည်ပြုချက်ကို စောင့်ဆိုင်းနေပါသည်…</string>
+    <string name="gate_denied">ကြီးကြပ်သူက ဝင်ရောက်ခွင့် ငြင်းပယ်လိုက်သည်။</string>
+    <string name="gate_timed_out">တောင်းဆိုမှု အချိန်ကုန်သွားပါပြီ။ ကြီးကြပ်သူ ပြန်လည်ဖြေကြားခြင်း မရှိပါ။</string>
+
+    <!-- ── ဒေတာ ထိန်းသိမ်းမှု ရွေးချယ်မှု ─────────────────────────────────────────────── -->
+    <string name="retention_forever">အမြဲတမ်း</string>
+    <string name="retention_keep_for">ထိန်းသိမ်းမည့် ကာလ- %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="other">%1$d ရက်</item>
+    </plurals>
+
+    <string name="common_select">ရွေးချယ်ရန်</string>
+
+    <!-- ── မြေပုံ တည်နေရာ ရွေးချယ်မှု ────────────────────────────────────────────── -->
+    <string name="picker_title">သတ်မှတ်ထားသော တည်နေရာကို ရွေးပါ</string>
+
+    <!-- ── လမ်းညွှန်မှု စိတ်ကြိုက်ပြင်ဆင်ခြင်း မျက်နှာပြင် ────────────────────────────────────── -->
+    <string name="customize_nav_intro">အောက်ခြေဘားတွင် မည်သည့်တက်ဘ်များ ပြမည်နှင့် ၎င်းတို့၏ အစီအစဉ်ကို ရွေးချယ်ပါ။ မြေပုံမှာ အမြဲတမ်း ပါဝင်နေပါမည်။</string>
+    <string name="customize_cd_move_up">အပေါ်သို့ ရွှေ့ရန်</string>
+    <string name="customize_cd_move_down">အောက်သို့ ရွှေ့ရန်</string>
+
+    <!-- ── အကြောင်း မျက်နှာပြင် ───────────────────────────────────────────────────── -->
+    <string name="about_version">ဗားရှင်း %1$s (build %2$d)</string>
+    <string name="about_tagline">သင်ယုံကြည်ရသူများနှင့် တည်နေရာကို သီးသန့်မျှဝေပါ။ အကောင့်များ၊ ကလောက်ဒ်များနှင့် ကျွန်ုပ်တို့၏ ခြေရာခံခြင်းများ မရှိပါ။</string>
+    <string name="about_relay_connections">ရီလေး ချိတ်ဆက်မှုများ</string>
+    <string name="about_connected">ချိတ်ဆက်ပြီး</string>
+    <string name="about_disconnected">ချိတ်ဆက်မှု ပြတ်တောက်သွားသည်</string>
+    <string name="about_open_source">ပွင့်လင်းရင်းမြစ် လိုင်ဘရီများ</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap အခြေခံ မြေပုံ ရေးဆွဲခြင်း</string>
+    <string name="about_lib_okhttp_desc">Nostr ရီလေးအတွက် WebSocket သယ်ယူပို့ဆောင်ရေး</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">စက်တွင်း ဒေတာဘေ့စ်</string>
+    <string name="about_map_attribution">မြေပုံဒေတာ © OpenStreetMap ပါဝင်ကူညီသူများ</string>
+
+    <!-- ── အသိပေးချက်များ ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">လက်ခံရန်</string>
+    <string name="notif_someone">တစ်စုံတစ်ယောက်</string>
+    <string name="notif_sos_title">%1$s ထံမှ SOS!</string>
+    <string name="notif_sos_text">%1$s က (%2$s, %3$s) တွင် SOS ဖွင့်လိုက်ပါပြီ</string>
+    <string name="notif_supervisor_request_title">%1$s က သင့်ကို သူတို့ရဲ့ ကြီးကြပ်သူ ဖြစ်စေချင်ပါတယ်</string>
+    <string name="notif_supervisor_request_text">ဤစက်ပစ္စည်းမှ သော့ဖွင့်ခွင့် တောင်းဆိုချက်များကို အတည်ပြုပေးရန် လက်ခံပါ</string>
+    <string name="notif_supervisor_request_big">ကြီးကြပ်မှုမုဒ် အလုပ်လုပ်နေချိန်တွင် %1$s က သင့်ထံသို့ သော့ဖွင့်ခွင့် တောင်းဆိုချက်များ ပေးပို့ခွင့်ရရန် လက်ခံပါ။</string>
+    <string name="notif_supervised_active_title">ကြီးကြပ်မှုမုဒ် အလုပ်လုပ်နေသည်</string>
+    <string name="notif_supervised_active_text">သင့်ကြီးကြပ်သူက အတည်ပြုလိုက်ပါပြီ - ကြီးကြပ်မှုမုဒ်ကို ယခု သတ်မှတ်လိုက်ပါပြီ</string>
+    <string name="notif_supervised_declined_title">ကြီးကြပ်မှုမုဒ်ကို ငြင်းပယ်လိုက်သည်</string>
+    <string name="notif_supervised_declined_text">သင့်ကြီးကြပ်သူက တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်ပါသည် - ကြီးကြပ်မှုမုဒ်ကို ပိတ်လိုက်ပါပြီ</string>
+    <string name="notif_tracking_alert_title">ခြေရာခံမှု သတိပေးချက်</string>
+    <string name="notif_tracking_proximity">%1$s က သင့်အနီးအနားသို့ ရောက်ရှိခြင်း သတိပေးချက် ရရှိသည်</string>
+    <string name="notif_tracking_geofence">%1$s က သင် ဂျီအိုခြံစည်းရိုးထဲသို့ ဝင်ရောက်ခြင်း/ထွက်ခွာခြင်း သတိပေးချက် ရရှိသည်- %2$s</string>
+    <string name="notif_tracking_generic">%1$s က သင့်တည်နေရာကို စောင့်ကြည့်နေသည်</string>
+    <string name="notif_track_update_title">%1$s ထံမှ မျှဝေမှု အပ်ဒိတ်</string>
+    <string name="notif_track_new_title">အဆက်အသွယ် အသစ်- %1$s</string>
+    <string name="notif_role_send_receive">တည်နေရာ ပေးပို့/လက်ခံရန်</string>
+    <string name="notif_role_send">တည်နေရာ ပေးပို့ရန်</string>
+    <string name="notif_role_receive">တည်နေရာ လက်ခံရန်</string>
+    <string name="notif_role_none">တည်နေရာ မျှဝေခြင်း မရှိပါ</string>
+    <string name="notif_track_requesting">%1$s က တောင်းဆိုနေသည်- %2$s</string>
+    <string name="notif_track_update_body">%1$s က သင်တည်နေရာ မျှဝေသည့် ပုံစံကို အပ်ဒိတ်လုပ်လိုသည်။</string>
+    <string name="notif_track_new_body">%1$s က သင့်ကို အဆက်အသွယ်အဖြစ် ထည့်ထားပြီး ချိတ်ဆက်လိုသည်။</string>
+    <string name="notif_contact_connected_title">အဆက်အသွယ် ချိတ်ဆက်ပြီးပါပြီ</string>
+    <string name="notif_contact_connected_text">%1$s သည် ယခု သင့်နှင့် ချိတ်ဆက်မိပါပြီ။</string>
+    <string name="notif_request_declined_title">တောင်းဆိုချက် ငြင်းပယ်ခံရသည်</string>
+    <string name="notif_request_declined_text">%1$s က သင့်တည်နေရာ မျှဝေမှု တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်သည်။</string>
+    <string name="notif_message_person">%1$s ထံ မက်ဆေ့ဂျ် ပို့ရန်</string>
+    <string name="notif_geofence_entered_title">%1$s က %2$s ထဲသို့ ဝင်ရောက်လာသည်</string>
+    <string name="notif_geofence_left_title">%1$s က %2$s ထဲမှ ထွက်ခွာသွားသည်</string>
+    <string name="notif_geofence_subtitle">%1$s တွင် · အချင်းဝက် %2$s</string>
+    <string name="notif_person_nearby">%1$s အနီးအနားတွင် ရှိသည်</string>
+    <string name="notif_distance_from_you">သင့်ထံမှ %1$s အကွာတွင်</string>
+    <string name="notif_missed_title">%1$s ထံမှ အပ်ဒိတ် မရှိပါ</string>
+    <string name="notif_missed_text">နောက်ဆုံးတွေ့ရှိမှု- %1$s မိနစ်ခန့်က (%2$s, %3$s) အနီး</string>
+    <string name="notif_sos_active_title">SOS အလုပ်လုပ်နေသည်!</string>
+    <string name="notif_sos_active_text">SOS အဆက်အသွယ်များထံ အရေးပေါ် သတိပေးချက် ထုတ်လွှင့်နေသည်</string>
+    <string name="notif_messages_group_title">LocaPeer မက်ဆေ့ဂျ်များ</string>
+
+    <!-- ── တိုစ့် မက်ဆေ့ဂျ်များ ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s ထံမှ အဆက်အသွယ် တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်သည်</string>
+    <string name="toast_now_supervising">%1$s ၏ စက်ပစ္စည်းကို ယခု ကြီးကြပ်နေပါသည်</string>
+    <string name="toast_declined_supervision">%1$s ထံမှ ကြီးကြပ်မှု တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်သည်</string>
+
+    <!-- ── ပရိုဂရမ်အတွင်းသုံး စာသားများ ─────────────── -->
+    <string name="time_just_now">ခုနလေးတင်</string>
+    <string name="time_minutes_ago">%1$d မိနစ်ခန့်က</string>
+    <string name="fallback_me">ကျွန်ုပ်</string>
+    <string name="fallback_unknown">အမည်မသိ</string>
+    <string name="geo_unassigned">သတ်မှတ်ထားခြင်း မရှိပါ</string>
+    <string name="days_every_day">နေ့တိုင်း</string>
+    <string name="days_weekdays">အလုပ်ရက်များ</string>
+    <string name="days_weekends">ရုံးပိတ်ရက်များ</string>
+    <string name="days_none">ရက်မရှိပါ</string>
+    <string name="chat_my_location_message">ကျွန်ုပ်၏ လက်ရှိနေရာ- %1$s</string>
+    <string name="scan_error_bad_pubkey">ဖိတ်ကြားချက် မမှန်ကန်ပါ- အများသုံးကီး မှားယွင်းနေသည်</string>
+    <string name="scan_error_key_mismatch">ဖိတ်ကြားချက် မမှန်ကန်ပါ- ကီးချင်း မကိုက်ညီပါ</string>
+    <string name="scan_error_unknown">အမည်မသိ အမှား</string>
+    <string name="scan_error_invalid_link">ဖိတ်ကြားချက်လင့်ခ် မမှန်ကန်ပါ</string>
+    <string name="scan_fallback_contact">ဤအဆက်အသွယ်</string>
+    <string name="backup_saved">အရန်သိမ်းဆည်းပြီးပါပြီ- %1$s</string>
+    <string name="backup_saved_encrypted">အရန်သိမ်းဆည်းပြီးပါပြီ (စာဝှက်ဖြင့်)- %1$s</string>
+    <string name="backup_failed">အရန်သိမ်းဆည်းခြင်း မအောင်မြင်ပါ- %1$s</string>
+    <string name="backup_could_not_read_file">ဖိုင်ကို ဖတ်၍ မရပါ</string>
+    <string name="backup_could_not_write_file">ဖိုင်ကို ရေး၍ မရပါ</string>
+    <string name="backup_could_not_read">အရန်သိမ်းဆည်းမှုကို ဖတ်၍ မရပါ- %1$s</string>
+    <string name="backup_incorrect_password">စကားဝှက် မှားယွင်းနေသည်</string>
+    <string name="restore_result_restored">ပြန်လည်ရရှိပြီး- %1$s</string>
+    <string name="restore_result_failed">မအောင်မြင်ပါ- %1$s</string>
+    <string name="restore_nothing">ပြန်လည်ရယူရန် ဘာမှမရှိပါ</string>
+    <string name="restore_failed">ပြန်လည်ရယူခြင်း မအောင်မြင်ပါ- %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="other">အဆက်အသွယ် %1$d ခု</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="other">ဂျီအိုခြံစည်းရိုး %1$d ခု</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s ထံသို့ အခန်းကဏ္ဍ ပြောင်းလဲမှု တောင်းဆိုချက် ပို့ပြီးပါပြီ</string>
+    <string name="peer_not_found">အဆက်အသွယ် မတွေ့ပါ</string>
+    <string name="peer_purge_location_sent">%1$s ဆီမှ တည်နေရာအားလုံး ဖျက်ရန် အမိန့်ပေးချက် ပို့ပြီးပါပြီ</string>
+    <string name="peer_purge_messages_sent">%1$s ဆီမှ မက်ဆေ့ဂျ်အားလုံး ဖျက်ရန် အမိန့်ပေးချက် ပို့ပြီးပါပြီ</string>
+    <string name="onboarding_error_key_length">ကီး မမှန်ကန်ပါ - ၆၄ လုံးပါသော ဟက်စ် (hex) ဖြစ်ရပါမည်။</string>
+    <string name="onboarding_error_key_range">ကိုယ်ပိုင်ကီး မမှန်ကန်ပါ။</string>
+    <string name="onboarding_error_hex">ဟက်စ် (hex) ပုံစံ မမှန်ကန်ပါ။</string>
+    <string name="onboarding_error_import_failed">ကီးကို ထည့်သွင်းခြင်း မအောင်မြင်ပါ- %1$s</string>
 </resources>

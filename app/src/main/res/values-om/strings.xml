@@ -2,67 +2,768 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Buufata Beeksisaa & Tajaajila Fuulduraa ─────────────────────── -->
-    <string name="channel_name_heartbeat">Tamsaasa Bakkaa</string>
-    <string name="channel_desc_heartbeat">Bakka keessan namoota quunnamtii mirkanaa’anitti tamsaasa</string>
-    <string name="channel_name_alerts">Akeekkachiisa</string>
-    <string name="channel_desc_alerts">Akeekkachiisa mallattoo dhabamee fi daangaa kallaattii</string>
-    <string name="channel_name_messages">Ergaa</string>
-    <string name="channel_desc_messages">Ergaawwan seenan</string>
+    <!-- ── Tajaajila beeksisaa fi duubaa ─────────────────────── -->
+    <string name="channel_name_heartbeat">Tamsaasa Bakka Jiranii</string>
+    <string name="channel_desc_heartbeat">Bakka jirtan quunnamtiiwwan keessan mirkanaayanitti tamsaasa</string>
+    <string name="channel_name_alerts">Akeekkachiisota</string>
+    <string name="channel_desc_alerts">Akeekkachiisota dhahannaa onnee darbanii fi geofence</string>
+    <string name="channel_name_messages">Ergaawwan</string>
+    <string name="channel_desc_messages">Ergaawwan hiriyoota irraa dhufan</string>
     <string name="notification_heartbeat_title">LocaPeer hojjechaa jira</string>
-    <string name="notification_heartbeat_text">Bakka keessan warra kaan waliin qoodachaa jirtu</string>
+    <string name="notification_heartbeat_text">Bakka jirtan warra kaan waliin qoodachaa jirtu</string>
 
-    <!-- ── Gochaalee Beekamoo ──────────────────────────────────────── -->
-    <string name="common_save">Olkaa’i</string>
+    <!-- ── Gochaalee baraman ──────────────────────────────────────── -->
+    <string name="common_save">Olkaa\'i</string>
     <string name="common_cancel">Haqi</string>
     <string name="common_done">Xumurameera</string>
     <string name="common_delete">Haqi</string>
     <string name="common_disable">Dhaabi</string>
-    <string name="common_enable">Hundeessi</string>
+    <string name="common_enable">Hojiirra oolchi</string>
     <string name="common_restore">Deebisi</string>
     <string name="common_unlock">Bani</string>
-    <string name="common_password">Jecha icciitii</string>
+    <string name="common_password">Jecha iccitii</string>
     <string name="common_not_now">Amma miti</string>
     <string name="common_off">Cufameera</string>
-    <string name="common_approve">Hayyami</string>
+    <string name="common_approve">Mirkanessi</string>
     <string name="common_deny">Didu</string>
 
-    <!-- ── Maqaa Tabii Navigeshinii ──────────────────────────────────────────── -->
+    <!-- ── Mallattoo taabii naannawaa ──────────────────────────────────────────── -->
     <string name="tab_map">Kaartaa</string>
-    <string name="tab_messages">Ergaa</string>
+    <string name="tab_messages">Ergaawwan</string>
     <string name="tab_history">Seenaa</string>
-    <string name="tab_contacts">Quunnamtii</string>
+    <string name="tab_contacts">Quunnamtiiwwan</string>
     <string name="tab_qr">QR</string>
-    <string name="tab_settings">Sajoo</string>
+    <string name="tab_settings">Sajataawwan</string>
 
-    <!-- ── Haala sochii ───────────────────────────────────────── -->
-    <string name="motion_stationary">Dhaabbataa</string>
+    <!-- ── Haalawwan sochi / hojii ───────────────────────────────────────── -->
+    <string name="motion_stationary">Kan hin sochoone</string>
     <string name="motion_walking">Deemaa jira</string>
     <string name="motion_running">Fiigaa jira</string>
-    <string name="motion_cycling">Saayikilii oofaa jira</string>
+    <string name="motion_cycling">Biskileetii oofaa jira</string>
     <string name="motion_driving">Konkolaataa oofaa jira</string>
 
-    <!-- ── Sajoo ────────────────────────────────────────────────── -->
-    <string name="settings_title">Sajoo</string>
-    <string name="settings_section_location_privacy">Bakkaa fi Icciitii</string>
+    <!-- ── Kutaa backup ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Kiyya dhuunfaa</string>
+    <string name="backup_section_contacts">Quunnamtiiwwan</string>
+    <string name="backup_section_geofences">Geofences</string>
+    <string name="backup_section_settings">Sajataawwan</string>
+
+    <!-- ── Gaaffii to\'annoo ──────────────────────── -->
+    <string name="supervision_request_title">Gaaffii To\'annoo</string>
+    <string name="supervision_request_message">\"%1$s\" sajataawwan isaanii seenuf hayyama gaafachaa jiru. Hayyamtaaf?</string>
+
+    <!-- ── Ibsa sajataawwan ────────────────────────────────────────────────── -->
+    <string name="settings_title">Sajataawwan</string>
+
+    <!-- Mallattoo kutaa -->
+    <string name="settings_section_location_privacy">Bakka &amp; Iccitii</string>
     <string name="settings_section_security">Nageenya</string>
     <string name="settings_section_map">Kaartaa</string>
     <string name="settings_section_battery_performance">Baatiri &amp; Hojii</string>
-    <string name="settings_section_units_display">Yuunitii &amp; Agarsiisa</string>
-    <string name="settings_section_retention">Turti (Meeshaa kana irratti)</string>
-    <string name="settings_section_appearance">Bifaa</string>
-    <string name="settings_section_backup_keys">Baak-appii &amp; Kiidhan</string>
-    <string name="settings_section_about">Waa’ee</string>
+    <string name="settings_section_units_display">Yuunitiiwwan &amp; Mul\'ata</string>
+    <string name="settings_section_retention">Tursiisuu (Meeshaa Kanarratti)</string>
+    <string name="settings_section_appearance">Bifoota</string>
+    <string name="settings_section_backup_keys">Backup &amp; Kiiwwan</string>
+    <string name="settings_section_about">Waa\'ee</string>
 
-    <string name="settings_edit_name">Maqaa sirreessi</string>
+    <!-- Piroofayila -->
+    <string name="settings_edit_name">Maqaa Giddu-galeessaa</string>
     <string name="settings_my_qr">QR koo</string>
-    <string name="settings_no_name_set">Maqaan hin dhangayamne</string>
+    <string name="settings_no_name_set">Maqaan hin dhufe</string>
 
+    <!-- Bakka &amp; Iccitii -->
     <string name="settings_share_location">Bakka koo qoodi</string>
+    <string name="settings_broadcasting">Quunnamtiiwwan keessaniif tamsaasaa jirtu</string>
+    <string name="settings_not_broadcasting">Tamsaasaa hin jiru</string>
+    <string name="settings_sharing_schedule">Sagantaa Qoodiinsaa</string>
+    <string name="settings_always_on">Yeroo hunda banaa</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">Seera %1$d</item>
+        <item quantity="other">Seera %1$d</item>
+    </plurals>
+    <string name="settings_geofences">Geofences</string>
+    <string name="settings_geofences_subtitle">Naannoo geofence qoodame bulchi</string>
+    <string name="settings_notify_when_tracked">Yeroo hordofame na beeksisi</string>
+    <string name="settings_notify_when_tracked_subtitle">Yeroo dhiheenyi quunnamtii tokkoo ykn akeekkachiisni geofence siif kaka\'u beeksisa argadhu.</string>
+    <string name="settings_my_location_history">Seenaa Bakka Jiranii</string>
+    <string name="settings_my_location_history_subtitle">Tartiba yeroo bakka jirtanii keessan ilaalaa</string>
+    <string name="settings_lookup_addresses">Teessoo barbaaduu</string>
+    <string name="settings_lookup_addresses_subtitle">Bakka seenaa fi piinii kaartaa tuqamaniif teessoo karaa agarsiisi. Qunnamtiiwwan sun ykn barbaadii keessan gara tajaajila geocoding meeshaa keessanii (yeroo baay\'ee Google) erga.</string>
+
+    <!-- Nageenya -->
+    <string name="settings_supervision_active">To\'annoon hojjechaa jira</string>
+    <string name="settings_supervision_active_subtitle">Sajataawwan hayyama to\'ata findu</string>
+    <string name="settings_disable_supervised">Modii To\'annoo Dhaabi</string>
+    <string name="settings_supervised_mode">Modii To\'annoo</string>
+    <string name="settings_supervised_mode_subtitle">Sajataawwan seenuuf hayyama to\'ataa gaafata</string>
+
+    <!-- Kaartaa -->
+    <string name="settings_starting_point">Bakka Jalqabaa</string>
+    <string name="settings_map_current_location">Bakka Amma Jirru</string>
+    <string name="settings_map_all_contacts">Quunnamtiiwwan Hunda</string>
+    <string name="settings_map_fixed_location">Bakka Murtaa\'aa</string>
+    <string name="settings_map_last_position">Bakka Dhumaa</string>
+    <string name="settings_map_starting_point_title">Kaartaa Bakka Jalqabaa</string>
+    <string name="settings_no_location_set">Bakki hin dhufe</string>
+    <string name="settings_pick_location_on_map">Kaartaa irraa bakka filadhu</string>
+    <string name="settings_default_zoom_level">Sadarkaa Zuumi Default</string>
+    <string name="settings_map_pin_colour">Halluu Piinii Kaartaa</string>
+
+    <!-- Baatiri &amp; Hojii -->
+    <string name="settings_update_cadence">Irra-deddeebii Haaromsaa</string>
+    <string name="settings_update_cadence_subtitle">Bakki keessan hagamitti akka tamsaasamu sirreessaa</string>
+    <string name="settings_update_cadence_dialog_message">Hojii keessan irratti hundaa\'uun bakki keessan hammamitti akka haaromfamu to\'adhaa. Haaromsi yeroo baay\'ee baatirii baay\'ee fixa.</string>
+    <string name="settings_update_cadence_reset">Gara default-itti deebisi</string>
+    <string name="settings_min_distance_filtering">Filtarii Fageenya Diqqaa</string>
+    <string name="settings_min_distance_filtering_subtitle">Bakka isa duraa irraa yoo xiqqaate fageenya kanaan fagaatan qofa agarsiisi.</string>
+    <string name="settings_discard_low_accuracy">Haaromsawwan Sirrummaa Diqqaa Gati</string>
+    <string name="settings_discard_low_accuracy_subtitle">Haaromsawwan keessan kan raadiyasiin sirrummaa isaanii kanarra guddaa ta\'e hin tamsaasinaa ykn hin galmeessinaa. SOS madda kiyya hin darbu.</string>
+    <string name="settings_hide_low_accuracy">Bakka Sirrummaa Diqqaa dhoksi</string>
+    <string name="settings_hide_low_accuracy_subtitle">Bakka seenaa kan raadiyasiin sirrummaa isaanii kanarra guddaa ta\'e dhoksi. Homtuu hin haqamu.</string>
+    <string name="settings_low_battery" formatted="false">Baatirii Diqqaa (&lt; 20%)</string>
+    <string name="settings_minutes_short">Daq %1$d</string>
+    <string name="settings_motion_detection">Sochii madda kiyya</string>
+    <string name="settings_motion_detection_on">Hojiirra ooleera - gosa sochii keessanii (deemuu, oofuu) seenaa keessatti sirreessa</string>
+    <string name="settings_motion_detection_off">Cufameera - qindaa\'ina sochii sirrii ta\'eef hayyama sochii qaamaa kennaa</string>
+    <string name="settings_enable_motion_title">Sochii madda kiyya hojiirra oolchi</string>
+    <string name="settings_enable_motion_message">Hayyamni sochii qaamaa LocaPeer seenaa keessan keessatti deemuu, oofuu fi dhaabbachuu gidduu adda baasee akka beeku taasisa. Amma cufameera - sajataawwan sirnaa irraa deebistanii banuu dandeessu.</string>
+    <string name="settings_open_settings">Sajataawwan Bani</string>
+    <string name="settings_battery_optimization">Optimayizeeshinii Baatiri</string>
+    <string name="settings_battery_optimization_unrestricted">Hin daangeffamne — LocaPeer duubatti bilisaan hojjechu danda\'a</string>
+    <string name="settings_battery_optimization_restricted">Optimayizeeshinii — gara Hin daangeffamneetti jijjiiruuf tuqi</string>
+
+    <!-- Hayyamawwan -->
+    <string name="settings_permissions">Hayyamawwan</string>
+    <string name="settings_permissions_subtitle">Hayyamawwan bakka, kämeree fi k.k.f. sephanichaa sakatta\'aa fi sirreessaa</string>
+    <string name="permissions_intro">LocaPeer bakka keessan qooduuf, afeerrawwan sakatta\'uuf fi duubatti hojjechuuf hayyamawwan kanneen barbaada. Kan hin kennamne kamiyyuu sirreessuuf tuqi.</string>
+    <string name="perm_location_title">Bakka</string>
+    <string name="perm_location_granted">Kennameera — bakka keessan qoodu dandeessu</string>
+    <string name="perm_location_denied">Hin kennamne — hayyama bakkaa kennuuf tuqi</string>
+    <string name="perm_background_location_title">Bakka Duubaa</string>
+    <string name="perm_background_location_granted">Kennameera — sephanichi yoo cufameeyyuu bakki qoodamaa jira</string>
+    <string name="perm_background_location_denied">Hin kennamne — sajataawwan keessatti \'Yeroo hunda hayyami\' filachuuf tuqi</string>
+    <string name="perm_camera_title">Kämeree</string>
+    <string name="perm_camera_granted">Kennameera — koodii QR afeerraa sakatta\'uuf tajaajila</string>
+    <string name="perm_camera_denied">Hin kennamne — kämeree hayyamuuf tuqi</string>
+    <string name="perm_notifications_title">Beeksisawwan</string>
+    <string name="perm_notifications_granted">Kennameera — akeekkachiisni fi haaromsi haalaa mul\'achuu danda\'u</string>
+    <string name="perm_notifications_denied">Hin kennamne — beeksisawwan hayyamuuf tuqi</string>
+
+    <!-- Yuunitiiwwan &amp; Mul\'ata -->
+    <string name="settings_speed_units">Yuunitii Saffisaa</string>
+    <string name="settings_speed_imperial">Impeeriyaal (mph)</string>
+    <string name="settings_speed_metric">Meetriik (km/h)</string>
+    <string name="settings_elevation_units">Yuunitii Olka\'iinsaa</string>
+    <string name="settings_elevation_imperial">Impeeriyaal (feet)</string>
+    <string name="settings_elevation_metric">Meetriik (metres)</string>
+    <string name="settings_distance_units">Yuunitii Fageenyaa</string>
+    <string name="settings_distance_imperial">Impeeriyaal (ft/mi)</string>
+    <string name="settings_distance_metric">Meetriik (m/km)</string>
+    <string name="settings_time_format">Bifa Yeroo</string>
+    <string name="settings_time_24h">Saa\'atii 24 (13:30)</string>
+    <string name="settings_time_12h">Saa\'atii 12 (1:30 PM)</string>
+
+    <!-- Tursiisuu -->
+    <string name="settings_retention_location">Data Bakka Jiranii</string>
+    <string name="settings_retention_location_subtitle">Data bakka jiranii quunnamtiiwwanii hagamitti meeshaa keessa turuu akka qabu</string>
+    <string name="settings_clear_all_location">Data Bakka Jiranii Hunda Haqi</string>
+    <string name="settings_retention_messages">Ergaawwan</string>
+    <string name="settings_retention_messages_subtitle">Ergaawwan dhufan hagamitti meeshaa keessa turuu akka qabu</string>
+    <string name="settings_clear_all_messages">Ergaawwan Hunda Haqi</string>
+
+    <!-- Bifoota -->
+    <string name="settings_customize_nav">Naannawaa dhuunfatti tolchi</string>
+    <string name="settings_customize_nav_subtitle">Taabiiwwan jalaa filadhuu fi tartibeessi</string>
+    <string name="settings_start_page">Fuula Jalqabaa</string>
     <string name="settings_language">Afaan</string>
-    <string name="settings_language_title">Afaan Appii</string>
-    <string name="settings_language_system">Kan sirnaa</string>
+    <string name="settings_language_title">Afaan Sephanichaa</string>
+    <string name="settings_language_system">Default sirnaa</string>
+
+    <!-- Backup &amp; Kiiwwan -->
+    <string name="settings_export_backup">Backup ergi</string>
+    <string name="settings_export_backup_subtitle">Kii dhuunfaa fi quunnamtiiwwan keessan faayilii keessatti olkaa\'aa. Faayilii kana of-eeggannoon qabadhaa!</string>
+    <string name="settings_import_backup">Backup galchi</string>
+    <string name="settings_import_backup_subtitle">Faayilii kanaan dura ergame irraa deebisi</string>
+    <string name="settings_view_private_key">Kii Dhuunfaa Ilaali</string>
+    <string name="settings_view_private_key_subtitle">Kii eenyummaa keessanii kan herufii 64 qabu agarsiisi</string>
+
+    <!-- Waa\'ee -->
+    <string name="settings_about_locapeer">Waa\'ee LocaPeer</string>
+    <string name="settings_about_subtitle">Varsiinii, haala relay, madda banaa</string>
+
+    <!-- Diyalogoota -->
+    <string name="settings_edit_display_name">Maqaa mul\'atu sirreessi</string>
+    <string name="settings_display_name_label">Maqaa mul\'atu</string>
+    <string name="settings_my_invite_qr">QR Afeerraa koo</string>
+    <string name="settings_invite_qr_subtitle">Warri kaan si hordofuu jalqabuuf kana sakatta\'uu danda\'u.</string>
+    <string name="settings_invite_qr_cd">QR Afeerraa</string>
+    <string name="settings_private_key_title">Kii Dhuunfaa</string>
+    <string name="settings_private_key_warning">Kana of-eeggannoon qabadhaa. Namni kii kana qabu kamiyyuu akka siitti of-dhiyeessu danda\'a.</string>
+    <string name="settings_clear_location_title">Seenaa Bakka Jiranii Haquu?</string>
+    <string name="settings_clear_location_message">Galmeewwan bakka jiranii hundi ni haqamu.</string>
+    <string name="settings_clear_messages_title">Seenaa Ergaawwan Haquu?</string>
+    <string name="settings_clear_messages_message">Ergaawwan olkaa\'aman hundi ni haqamu.</string>
+    <string name="settings_encrypted_backup_title">Backup Icciteeffame</string>
+    <string name="settings_encrypted_backup_message">Backupiin kun icciteeffameera. Itti fufuuf jecha iccitii galchaa.</string>
+    <string name="settings_select_restore_title">Data deebifamu filadhaa</string>
+    <string name="settings_select_export_title">Data ergamu filadhaa</string>
+    <string name="settings_export_password_hint">Akka barbaachisummaa isaatti faayilii backup keessan icciteessuuf jecha iccitii turaa.</string>
+    <string name="settings_backup_password_optional">Jecha Iccitii Backup (Optional)</string>
+    <string name="settings_select_sections">Kutaawwan dabalatan filadhaa:</string>
+    <string name="settings_choose_file_location">Iddoo faayilii filadhaa</string>
+    <string name="settings_not_in_backup">Backup kana keessa hin jiru</string>
+    <string name="settings_enable_supervised_title">Modii To\'annoo Hojiirra Oolchi</string>
+    <string name="settings_enable_supervised_message">Quunnamtii akka to\'ataatti hojjetu filadhaa. Isaan meeshaa isaanii irraa sajataawwan seenuuf hayyamuu qabu.</string>
+    <string name="settings_no_peers_found">Quunnamtiin hin argamne. Dura koodii QR afeerraa isaanii sakatta\'uun quunnamtii dabaladhaa.</string>
+    <string name="settings_disable_supervised_title">Modii To\'annoo Dhaabuu?</string>
+    <string name="settings_disable_supervised_message">Sajataawwan hayyama to\'ataa malee ni argamu.</string>
+
+    <!-- ── Common dabalataa ─────────────────────────────────────────── -->
+    <string name="common_remove">Baqsi</string>
+    <string name="common_name">Maqaa</string>
+    <string name="common_search">Barbaadi</string>
+    <string name="common_sort">Tartibeessi</string>
+
+    <!-- Ibsa qabiyyee (qoodame) -->
+    <string name="cd_message">Ergaa</string>
+    <string name="cd_show_on_map">Kaartaa irratti agarsiisi</string>
+    <string name="cd_more_options">Filannoo dabalataa</string>
+
+    <!-- ── Quunnamtiiwwan ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d filatameera</item>
+        <item quantity="other">%1$d filatamaniiru</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Filannoo haqichi</string>
+    <string name="contacts_cd_select_all">Hunda filadhu</string>
+    <string name="contacts_cd_deselect_all">Hunda filannoo irraa haqichi</string>
+    <string name="contacts_cd_qr_invite">QR / Afeerraa</string>
+    <string name="contacts_cd_pending_requests">Gaaffiiwwan Eeggannoo Irratti Jiran</string>
+    <string name="contacts_sort_last_seen">Yeroo Dhumaa Argaman</string>
+    <string name="contacts_search_placeholder">Quunnamtiiwwan barbaadi…</string>
+    <string name="contacts_empty_title">Quunnamtiin hin jiru</string>
+    <string name="contacts_empty_subtitle">Nama tokko waliin wal-quunnamuu fi bakka jirru qooduuf koodii QR sakatta\'aa.</string>
+    <string name="contacts_scan_qr">Koodii QR Sakatta\'aa</string>
+    <string name="contacts_bulk_delete_messages">Ergaawwan Haqi</string>
+    <string name="contacts_bulk_delete_locations">Bakkoota Haqi</string>
+    <string name="contacts_last_seen">Yeroo dhumaa argaman: %1$s</string>
+    <string name="contacts_no_location_yet">Data bakka jiranii hin argamne</string>
+    <string name="contacts_view_sharing_settings">Sajataawwan Qoodiinsaa</string>
+    <string name="contacts_view_location_history">Seenaa Bakka Jiranii</string>
+    <string name="contacts_rename_contact">Maqaa Quunnamtii Jijjiiri</string>
+    <string name="contacts_on_contact_device">Meeshaa Quunnamtichaa Irratti</string>
+    <string name="contacts_delete_my_messages_title">Ergaawwan Koo Haqi</string>
+    <string name="contacts_delete_locations_title">Bakkoota Qoodaman Haqi</string>
+    <string name="contacts_remove_contact_title">Quunnamtii Baqsi</string>
+    <string name="contacts_leave_title">Quunnamtii fi Data Haqi</string>
+    <string name="contacts_rename_title">Maqaa quunnamtii jijjiiri</string>
+    <string name="contacts_remove_contact_body">%1$s quunnamtii keessan irraa baqsuu? Seenaan bakka jiranii isaaniis ni haqama.</string>
+    <string name="contacts_leave_body">Kun quunnamtii %1$s irraa si baqsa, ergaawwan kee fi data bakka jiranii kee hunda meeshaa isaanii irraa ni haqsa. Bakka isaan jiran ilaaluu hin dandeessu.</string>
+    <string name="contacts_delete_my_messages_body">Kun ergaawwan ati meeshaa %1$s irraa ergan hunda ni haqsa. Kun deebi\'uu hin danda\'u.</string>
+    <string name="contacts_delete_locations_body">Kun data bakka jiranii ati meeshaa %1$s irraa qooddan hunda ni haqsa. Kun deebi\'uu hin danda\'u.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Quunnamtii Baqsi</item>
+        <item quantity="other">Quunnamtiiwwan %1$d Baqsi</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Quunnamtii kana baqsuu? Seenaan bakka jiranii isaanii ni haqama.</item>
+        <item quantity="other">Quunnamtiiwwan %1$d baqsuu? Seenaan bakka jiranii isaanii ni haqama.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Ergaawwan ati meeshaa quunnamtii kanaa irraa ergan hunda ni haqsuu? Kun deebi\'uu hin danda\'u.</item>
+        <item quantity="other">Ergaawwan ati meeshaa quunnamtiiwwan %1$d irraa ergan hunda ni haqsuu? Kun deebi\'uu hin danda\'u.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Seenaa bakka jiranii ati meeshaa quunnamtii kanaa irratti qooddan hunda ni haqsuu? Kun deebi\'uu hin danda\'u.</item>
+        <item quantity="other">Seenaa bakka jiranii ati meeshaa quunnamtiiwwan %1$d irratti qooddan hunda ni haqsuu? Kun deebi\'uu hin danda\'u.</item>
+    </plurals>
+
+    <string name="common_continue">Itti fufi</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Backup Irraa Deebisi</string>
+    <string name="onboarding_restore_message">Eenyummaa fi quunnamtii keessan deebisuuf kii dhuunfaa keessan kan herufii 64 qabu asitti galchaa.</string>
+    <string name="onboarding_private_key_hex">Kii dhuunfaa (hex)</string>
+    <string name="onboarding_tagline">Qoodiinsa bakka jiranii iccitii quunnamtiiwwan waliin.\nAkkauntii malee. Seeraraa dhuunfaa malee.</string>
+    <string name="onboarding_feature_e2e_title">End-to-End Icciteeffame</string>
+    <string name="onboarding_feature_e2e_subtitle">Bakki keessan meeshaa keessanirratti icciteeffameera</string>
+    <string name="onboarding_feature_servers_title">Seeraraa dhuunfaa malee</string>
+    <string name="onboarding_feature_servers_subtitle">Relay Nostr banaa akka geejjiba amansiisaatti tajaajila - data keessan iccitii fi icciteeffamaa ta\'ee hafa</string>
+    <string name="onboarding_feature_phone_title">Bilbila Keessan Irratti Hafa</string>
+    <string name="onboarding_feature_phone_subtitle">Seenaan bakka jiranii keessan hundi meeshaa keessanirratti hafa. Bakki keessan inni amma jirtan qofatu quunnamtiiwwan filataman waliin qoodama</string>
+    <string name="onboarding_name_prompt">Quunnamtiiwwan keessan eenyu siin haa jedhan?</string>
+    <string name="onboarding_name_placeholder">m.f. Harmee, Abbaa, Almaz…</string>
+    <string name="onboarding_get_started">Eegali</string>
+    <string name="onboarding_restore_from_backup">Backup Irraa Deebisi</string>
+    <string name="onboarding_key_note">Kiin dhuunfaa keessanii meeshaa keessanirratti uumama, meeshaa kana gadi dhiisee hin deemu.</string>
+    <string name="onboarding_permissions_title">Hayyamawwan</string>
+    <string name="onboarding_permissions_desc">LocaPeer bakka keessan qooduuf hayyama bakkaa, koodii afeerraa sakatta\'uuf hayyama kämeree, fi haala duubaa beeksisuuf hayyama beeksisaa barbaada. Hayyamni sochii qaamaa filannoo keeti - sochii keessan (deemuu, oofuu) dunjú madda kiyya beekuuf si gargaara.</string>
+    <string name="onboarding_before_ask_title">Beriya nuyi gaafannu</string>
+    <string name="onboarding_before_ask_intro">Gaaffiiwwan sirnaa kanneen ni argitu:</string>
+    <string name="onboarding_before_ask_location">• Bakka - pardan danda, bakka keessan qooduuf.</string>
+    <string name="onboarding_before_ask_camera">• Kämeree - koodii afeerraa sakatta\'uuf.</string>
+    <string name="onboarding_before_ask_notifications">• Beeksisa - hojii duubaatiif.</string>
+    <string name="onboarding_before_ask_activity">• Sochii qaamaa - filannoo dha. LocaPeer seenaa keessan keessatti deemuu, oofuu fi dhaabbachuu gidduu adda baasee akka beeku taasisa. Otoo hin kennin bira darbuu ni dandeessu, boodas Sajataawwan keessatti banuu dandeessu.</string>
+    <string name="onboarding_grant_permissions">Hayyama Kenni</string>
+    <string name="onboarding_bg_location_title">Bakka Duubaa</string>
+    <string name="onboarding_bg_location_desc">Yeroo sephanichi cufameeyyuu quunnamtiiwwan keessan akka haaromsamaniif, fuula itti aanu irratti \'Yeroo hunda hayyami\' filadhaa.</string>
+    <string name="onboarding_bg_location_error">Yeroo sephanichi cufame quunnamtiiwwan keessan haaromsuuf bakki duubaa ni barbaachisa. Maaloo deebisaatii yaalaa fuula itti aanu irratti \'Yeroo hunda hayyami\' filadhaa.</string>
+    <string name="onboarding_configure_location">Bakka Mîhengi</string>
+    <string name="onboarding_battery_title">Baatiri</string>
+    <string name="onboarding_battery_desc">Android baatiriif jecha LocaPeer dhaabuu danda\'a. Haaromsi amansiisaa akka ta\'uuf, maaloo LocaPeer optimayizeeshinii baatirii irraa baqsaa.</string>
+    <string name="onboarding_disable_optimizations">Optimayizeeshinii Dhaabi</string>
+    <string name="onboarding_done_title">Hundi Qophii Dha!</string>
+    <string name="onboarding_done_desc">Tora bakka jiranii iccitii keessanii qophii dha.</string>
+    <string name="onboarding_start_using">LocaPeer Fayyadamuu Jalqabi</string>
+
+    <string name="common_try_again">Dîbisii Yaali</string>
+
+    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
+    <string name="scan_title">Afeerraa Sakatta\'aa</string>
+    <string name="scan_camera_needed">Koodii QR sakatta\'uuf hayyamni kämeree ni barbaachisa.</string>
+    <string name="scan_grant_permission">Hayyama Kenni</string>
+    <string name="scan_add_contact_title">Quunnamtii dabalachuu?</string>
+    <string name="scan_add_contact_message">Kun si fi %1$s wal-quunnamsiisee bakka jirtan waliin qoodachuu jalqabsiisa.</string>
+    <string name="scan_add_share">Dabaladhu &amp; Qoodi</string>
+    <string name="scan_request_sent_title">Gaaffiin Ergameera!</string>
+    <string name="scan_request_sent_message">Gaaffiin gara %1$s ergameera. Isaan yoo simatan wal-quunnamtu.</string>
+    <string name="scan_failed">Sakatta\'iinsi hin milkoofne: %1$s</string>
+
+    <string name="cd_back">Gara duubaa</string>
+    <string name="common_review">Ilaali</string>
+    <string name="common_decline">Didu</string>
+
+    <!-- Sharing role labels (shared) -->
+    <string name="role_send_receive">Ergi/Findi</string>
+    <string name="role_send">Ergi</string>
+    <string name="role_receive">Findi</string>
+    <string name="role_none">Qoodiinsi Hin Jiru</string>
+
+    <!-- ── Invite screen ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Afeerraa koo</string>
+    <string name="invite_tab_add_contact">Quunnamtii Dabaladhu</string>
+    <string name="invite_your_qr_title">Koodii QR keessan</string>
+    <string name="invite_your_qr_subtitle">Bakka jirtan hordofuuf namni tokko kana akka sakatta\'u hayyamaa</string>
+    <string name="invite_qr_cd">Koodii QR keessan</string>
+    <string name="invite_qr_error">QR uumuu irratti dogoggora</string>
+    <string name="invite_share_link">Liinkii Afeerraa Qoodi</string>
+    <string name="invite_encryption_note">Bakki keessan meeshaa nama sakatta\'uuf jedhamee icciteeffama.</string>
+    <string name="invite_camera_required_title">Gihîştina Kämeree Hewce ye</string>
+    <string name="invite_camera_required_message">Koodii QR sakatta\'uuf hayyama kämeree kennaa.</string>
+    <string name="invite_point_camera">Kämeree gara QR LocaPeer qabaa</string>
+    <string name="invite_paste_title">Ykn Liinkii Afeerraa Galchaa</string>
+    <string name="invite_process_link">Liinkii Hojjedhu</string>
+    <string name="invite_fallback_name">Quunnamtii</string>
+    <string name="invite_success_message">Isaan yoo simatan %1$s waliin wal-quunnamtu.</string>
+    <string name="invite_confirm_add_title">%1$s dabalachuu?</string>
+    <string name="invite_confirm_add_message">Isaan quunnamtii keessanitti dabalanii bakka jirtan qoodachuu?</string>
+
+    <!-- ── Pending requests screen ────────────────────────────────────────── -->
+    <string name="pending_empty">Gaaffiin eeggannoo irratti jiru hin jiru</string>
+    <string name="pending_requesting">Gaafatamaa jira: %1$s · %2$s</string>
+    <string name="pending_role_change">Gaaffii jijjiirraa shooraa · %1$s</string>
+    <string name="pending_new_request">Gaaffii qoodiinsaa haaraa · %1$s</string>
+
+    <string name="common_save_changes">Jijjiirraa Olkaa\'i</string>
+
+    <!-- ── Incoming share request screen ──────────────────────────────────── -->
+    <string name="incoming_update_title">Sajataawwan Qoodiinsaa Haaromsi</string>
+    <string name="incoming_new_title">Gaaffii Quunnamtii Haaraa</string>
+    <string name="incoming_update_subtitle">%1$s akkataa ati qooddu haaromsuu barbaada. Sajataawwan jalaa ilaali.</string>
+    <string name="incoming_new_subtitle">%1$s quunnamtii dabalateera! Atis maal akka qooddu amma filachuu dandeessa.</string>
+    <string name="incoming_section_location">Bakka</string>
+    <string name="incoming_share_my_location">Bakka koo %1$s waliin qoodi</string>
+    <string name="incoming_share_my_location_sub">Isaan bakka ati jirtu ilaaluu danda\'u</string>
+    <string name="incoming_see_their_location">Bakka %1$s ilaali</string>
+    <string name="incoming_see_their_location_sub">Ati bakka isaan jiran ilaaluu dandeessa</string>
+    <string name="incoming_section_messaging">Ergaawwan</string>
+    <string name="incoming_allow_messages">Ergaawwan Hayyami</string>
+    <string name="incoming_allow_messages_sub">%1$s irraa ergaawwan chat-ii findi</string>
+
+    <string name="common_request">Gaafadhu</string>
+    <string name="common_edit">Sirreessi</string>
+
+    <!-- ── Peer sharing (contact settings) screen ─────────────────────────── -->
+    <string name="peer_title">Sajataawwan Quunnamtii</string>
+    <string name="peer_section_roles">Shooraa Qoodiinsaa Bakka Jiranii</string>
+    <string name="peer_send_on">%1$s bakka ati jirtu ilaaluu danda\'a</string>
+    <string name="peer_send_off">Ati bakka jirtu %1$s waliin qoodachaa hin jirtu</string>
+    <string name="peer_receive_title">Bakka %1$s Findi</string>
+    <string name="peer_receive_on">Ati bakka %1$s ilaaluu dandeessa</string>
+    <string name="peer_receive_off">Bakka %1$s seenuuf hayyama hin qabdu</string>
+    <string name="peer_section_privacy">Iccitii &amp; To\'annoo Qoodiinsaa</string>
+    <string name="peer_pause_sharing">Qoodiinsa Dhaabi</string>
+    <string name="peer_pause_sub">Bakka jirtu %1$s-f erguu yeroof dhaabi</string>
+    <string name="peer_precision">Sirrummaa Bakka Jiranii</string>
+    <string name="peer_precision_exact_sub">Qunnamtiiwwan GPS dunjú</string>
+    <string name="peer_precision_suburb_sub">Bakka dhihoo (sadarkaa Suburb)</string>
+    <string name="peer_always_sharing">Yeroo hunda qoodamaa jira</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">Seera qoodiinsaa %1$d hojjetaa jira</item>
+        <item quantity="other">Seera qoodiinsaa %1$d hojjetaa jira</item>
+    </plurals>
+    <string name="peer_section_alerts">Akeekkachiisota &amp; To\'annoo</string>
+    <string name="peer_sos_contact">Quunnamtii SOS</string>
+    <string name="peer_sos_sub">Qoodiinsi yoo dhaabbateeyyuu akeekkachiisota keessan findu</string>
+    <string name="peer_missed_alert">Akeekkachiisa Bakka Darbee</string>
+    <string name="peer_missed_on">Yoo %1$s bakka isaa beeksisuu dhaabe na beeksisi</string>
+    <string name="peer_requires_access">Bakka %1$s seenuuf hayyama barbaachisa</string>
+    <string name="peer_proximity_alert">Akeekkachiisa Dhiheenyaa</string>
+    <string name="peer_proximity_sub">Yeroo %1$s dhihoo jiru na beeksisi</string>
+    <string name="peer_alert_radius">Raadiyasii Akeekkachiisaa</string>
+    <string name="peer_alert_schedule">Sagantaa Akeekkachiisaa</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">Seera %1$d hojjetaa jira</item>
+        <item quantity="other">Seera %1$d hojjetaa jira</item>
+    </plurals>
+    <string name="peer_geofences_sub">Naannoo mbata àti ọpụpụ fún %1$s tò ó</string>
+    <string name="peer_supervise">Meeshaa Kana To\'adhu</string>
+    <string name="peer_supervise_on">Ati gaaffiiwwan baninsaa %1$s irraa dhufan ni fudhatta, ni mirkanessitas</string>
+    <string name="peer_supervise_off">Bila %1$s daxwazên vekirina moda çavdêriyê ji we re bişîne</string>
+    <string name="peer_messaging_sub">Ergaawwan chat-ii %1$s irraa dhufan ban/cufi</string>
+    <string name="peer_section_history">Seenaa Sochii</string>
+    <string name="peer_location_history">Seenaa Bakka Jiranii</string>
+    <string name="peer_location_history_sub">Seenaa sochii fi rapora kaartaa %1$s ilaali</string>
+    <string name="peer_section_retention">Data Duubaa Tursiisuu</string>
+    <string name="peer_retention_location_sub">%1$s seenaa bakka jiranii kee hagam akka tursiisu</string>
+    <string name="peer_purge_location">Data Bakka Jiranii hunda %1$s irraa haqi</string>
+    <string name="peer_retention_messages_sub">%1$s ergaawwan ati ergan hagam akka tursiisu</string>
+    <string name="peer_purge_messages">Ergaawwan hunda %1$s irraa haqi</string>
+    <string name="peer_precision_exact">GPS Dunjú</string>
+    <string name="peer_precision_exact_desc">Qunnamtiiwwan dunjú</string>
+    <string name="peer_precision_suburb">Mpaghara (~1km)</string>
+    <string name="peer_precision_suburb_desc">Naanị ọkwa agbataobi</string>
+
+    <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">Haasawa %1$d haquu?</item>
+        <item quantity="other">Haasawa %1$d haquu?</item>
+    </plurals>
+    <string name="conv_delete_locally">Meeshaa keessaa haqi</string>
+    <string name="conv_delete_locally_sub">Haasawa meeshaa keessan irraa qofa haqsa.</string>
+    <string name="conv_delete_both">Meeshaa koo fi quunnamtii irraa haqi</string>
+    <string name="conv_bulk_delete_both_sub">Haasawa meeshaa keessan irraa fi quunnamtii keessan irraa ni haqsa.</string>
+    <string name="conv_delete_both_sub">Haasawa meeshaa keessan irraa haqee meeshaa quunnamtichaa irratti gaaffii haquu kakaasa.</string>
+    <string name="conv_cd_exit_selection">Filannoo irraa ba\'i</string>
+    <string name="conv_cd_select_all">Hunda filadhu</string>
+    <string name="conv_cd_new_message">Ergaa haaraa</string>
+    <string name="conv_sort_date">Guyyaa</string>
+    <string name="conv_sort_unread">Kan hin dubbisamne</string>
+    <string name="conv_search_placeholder">Haasawa barbaadi…</string>
+    <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_archived">Olkaa\'aman</string>
+    <string name="conv_mark_read">Akka dubbisametti mallattoo itti godhi</string>
+    <string name="conv_archive">Olkaa\'i</string>
+    <string name="conv_unarchive">Olkaa\'amaa baqsi</string>
+    <string name="conv_empty_no_results">\"%1$s\"-f bu\'aan hin argamne</string>
+    <string name="conv_empty_no_results_sub">Peyvek din a lêgerînê biceribînin</string>
+    <string name="conv_empty_archived_title">Chat olkaa\'ame hin jiru</string>
+    <string name="conv_empty_archived_sub">Sanduqa ergaa keessan qulqulleessuuf chat olkaa\'aa</string>
+    <string name="conv_empty_title">Ergaan hin jiru</string>
+    <string name="conv_empty_sub">Kaartaa bananii nama tokko tuquun\nhaasawa jalqabaa</string>
+    <string name="conv_delete_title">Haasawa haquu?</string>
+    <string name="conv_delete_message">Haasawa %1$s waliin qabdu akkamitti haquu barbaadda?</string>
+    <string name="conv_messages_blocked">Ergaan cufameera</string>
+    <string name="conv_preview_mine">Si: %1$s</string>
+    <string name="conv_new_message_title">Ergaa Haaraa</string>
+    <string name="conv_picker_empty">Quunnamtiin hin jiru. Koodii QR sakatta\'uun quunnamtii dabaladhaa.</string>
+
+    <!-- ── Chat screen ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Seenaa chat-ii haquu?</string>
+    <string name="chat_clear_message">Haasawa %1$s waliin qabdu akkamitti haquu barbaadda?</string>
+    <string name="chat_clear_locally">Meeshaa keessaa haqi</string>
+    <string name="chat_clear_both">Meeshaa koo fi quunnamtii irraa haqi</string>
+    <string name="chat_clear_both_sub">Chat meeshaa keessan irraa haqee ergaawwan ati ergan %1$s irraa akka haqaman gaafata.</string>
+    <string name="chat_cd_options">Filannoo</string>
+    <string name="chat_clear_history_menu">Seenaa Chat-ii Haqi</string>
+    <string name="chat_typing">%1$s ergaa barreessaa jira…</string>
+    <string name="chat_blocked_banner">Ati ergaawwan %1$s irraa dhufan cufteetta. Sajataawwan quunnamtii irraa bani.</string>
+    <string name="chat_delete_msg_title">Ergaa haquu?</string>
+    <string name="chat_delete_msg_message">Ergaa kana akkamitti haquu barbaadda?</string>
+    <string name="chat_delete_from_contact">Quunnamtii irraa haqi</string>
+    <string name="chat_delete_from_contact_sub">Chat meeshaa quunnamtichaa irraa haqsa.</string>
+    <string name="chat_delete_both_sub">Chat meeshaa keessan irraa haqee bifa otomaatikiin meeshaa quunnamtichaa irraas ni haqsa.</string>
+    <string name="chat_cd_share_location">Bakka Qoodi</string>
+    <string name="chat_input_placeholder">Ergaa…</string>
+    <string name="chat_cd_send">Ergi</string>
+
+    <string name="common_close">Cufi</string>
+
+    <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS Banu?</string>
+    <string name="map_sos_deactivate_title">SOS Cufuu?</string>
+    <string name="map_sos_activate_msg">Kun hamma ati cufutti bakka jirtu hunda isaa daqiiqaa 15 gidduutti quunnamtiiwwan SOS keetiif ni tamsaasa.</string>
+    <string name="map_sos_deactivate_msg">Kun tamsaasa bakka jiranii kan dursa argatu quunnamtiiwwan hatattamaa keetiif dhaaba.</string>
+    <string name="map_activate">Bani</string>
+    <string name="map_deactivate">Cufi</string>
+    <string name="map_cd_style">Bifa Kaartaa</string>
+    <string name="map_cd_show_geofences">Geofences agarsiisi</string>
+    <string name="map_cd_hide_geofences">Geofences dhoksi</string>
+    <string name="map_cd_follow">Na hordofi</string>
+    <string name="map_cd_friends">Hiriyoota</string>
+    <string name="map_no_friends">Hiriyoonni hordofaman hin jiran</string>
+    <string name="map_you">Si</string>
+    <string name="map_cd_go_my_location">Bakka koo deem</string>
+    <string name="map_sos_active">⚠ SOS HOJJETAA JIRA</string>
+    <string name="map_away">Dîboo</string>
+    <string name="map_no_location_yet">Bakki hin argamne</string>
+    <string name="map_cd_go_location">Bakka sana deem</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS BANAMEERA</string>
+    <string name="map_overdue">Dereng mayî - nûvekirina dawî tune</string>
+    <string name="map_stat_last_seen">Yeroo dhumaa argaman</string>
+    <string name="map_stat_battery">Baatiri</string>
+    <string name="map_stat_accuracy">Sirrummaa</string>
+    <string name="map_stat_motion">Sochii</string>
+    <string name="map_stat_speed">Saffisa</string>
+    <string name="map_stat_elevation">Olka\'iinsa</string>
 
     <string name="common_ok">Tole</string>
-    <string name="cd_back">Duubatti</string>
+
+    <!-- ── History report screen ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Seenaa: %1$s</string>
+    <string name="history_select_person">Nama Filadhaa</string>
+    <string name="history_person_label">Nama</string>
+    <string name="history_cd_prev_day">Guyyaa Berê</string>
+    <string name="history_cd_next_day">Guyyaa Pişt re</string>
+    <string name="history_time_filter">Filtarii Yeroo:</string>
+    <string name="history_cd_reset_time">Yeroo Haaromsi</string>
+    <string name="history_tab_list">Lista</string>
+    <string name="history_empty_title">Guyyaa kanaaf seenaan hin jiru</string>
+    <string name="history_empty_sub">Dîrokek din hilbijêrin an pêwendiya xwe kontrol bikin.</string>
+    <string name="history_start_time">Yeroo Jalqabaa</string>
+    <string name="history_end_time">Yeroo Dhumaa</string>
+    <string name="history_no_data_title">Data bakka jiranii hin jiru</string>
+    <string name="history_no_data_sub">Guyyaa kanaaf ykn yeroo kanaaf pîngii galmaa\'e hin jiru.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">pîngiin %1$d galmaa\'eera</item>
+        <item quantity="other">pîngiin %1$d galmaa\'eera</item>
+    </plurals>
+    <string name="history_cd_dismiss">Haqichi</string>
+    <string name="history_accuracy_label">±%1$s sirrummaa</string>
+    <string name="history_emergency_sos">Mallattoo SOS hatattamaa</string>
+    <string name="history_detail_location">Bakka</string>
+    <string name="history_detail_coordinates">Qunnamtiiwwan</string>
+    <string name="history_within">±%1$s gidduutti</string>
+    <string name="history_detail_movement">Sochii</string>
+    <string name="history_movement_desc">%1$s %2$s ber bi %3$s ve</string>
+
+    <string name="common_create">Uumi</string>
+
+    <!-- ── Geofence screens ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Naannoo geofence dabaladhu</string>
+    <string name="geo_cd_assign">Geofence tayîni</string>
+    <string name="geo_unknown">Amaghị</string>
+    <string name="geo_empty_title">Geofences hin jiran</string>
+    <string name="geo_empty_sub">Naannoo geofence uumuuf + tuqi, booda sajataawwan qoodiinsaa irraa quunnamtiiwwan itti tayînir.</string>
+    <string name="geo_delete_title">Geofence haquu?</string>
+    <string name="geo_delete_simple">\"%1$s\" haquu?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" quunnamtii %2$d-f tayînameera. Haquun tayînawwan sanaas ni haqsa.</item>
+        <item quantity="other">\"%1$s\" quunnamtii %2$d-f tayînameera. Haquun tayînawwan sanaas ni haqsa.</item>
+    </plurals>
+    <string name="geo_for_contact">Geofences %1$s-f</string>
+    <string name="geo_empty_contact_title">Quunnamtii kanaaf geofence hin jiru</string>
+    <string name="geo_empty_contact_sub">Naannoo geofence tayînuuf + tuqi, yeroo dhufan, deeman ykn lachuu akeekkachiisuun akka hojjetu filadhu.</string>
+    <string name="geo_no_areas_title">Geofences hîna hin jiran</string>
+    <string name="geo_no_areas_msg">Dura ihuenyo Geofences irraa naannoo geofence uumaa, booda asitti tayînaa.</string>
+    <string name="geo_radius_label">raadiyasiin %1$s</string>
+    <string name="geo_contacts_label">Quunnamtii: %1$s</string>
+    <string name="geo_no_contacts_assigned">Quunnamtiin hin tayînamne</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">Seera %1$d</item>
+        <item quantity="other">Seera %1$d</item>
+    </plurals>
+    <string name="geo_trigger_enter">Banye</string>
+    <string name="geo_trigger_exit">Pụọ</string>
+    <string name="geo_trigger_both">Lachuu</string>
+    <string name="geo_edit_title">Geofence Sirreessi</string>
+    <string name="geo_new_title">Geofence Haaraa</string>
+    <string name="geo_cd_my_location">Bakka koo</string>
+    <string name="geo_cd_radius_increase">Raadiyasii guddisi</string>
+    <string name="geo_cd_radius_decrease">Raadiyasii xiinnessi</string>
+    <string name="geo_hint_tap">Kaartaa irratti tuquun ykn qabuun bakka uumi</string>
+    <string name="geo_hint_move">Pinch-uun zuumi guddisi • Piinii qabuun ykn sudriraa bakka jijjiiri</string>
+    <string name="geo_basic_info">Ibsa Bu\'uraa</string>
+    <string name="geo_search_title">Teessoon Barbaadi</string>
+    <string name="geo_search_label">Teessoo ykn bakka</string>
+    <string name="geo_search_placeholder">m.f. 10 Main St, Addis Ababa</string>
+    <string name="geo_search_no_results">Teessoon madaalu hin argamne</string>
+    <string name="geo_cd_search">Barbaadi</string>
+    <string name="geo_name_placeholder">m.f. Mana, Kar</string>
+    <string name="geo_name_required">Maqaan ni barbaachisa</string>
+    <string name="geo_latitude">Panî</string>
+    <string name="geo_longitude">Dirêjî</string>
+    <string name="geo_lat_range">-90 heya 90</string>
+    <string name="geo_lng_range">-180 heya 180</string>
+    <string name="geo_radius">Raadiyasii</string>
+    <string name="geo_radius_range">%1$d heya %2$d m galchaa</string>
+    <string name="geo_edit_assignment">Tayîna Sirreessi</string>
+    <string name="geo_assign_title">Geofence Tayîni</string>
+    <string name="geo_select_area">Naannoo Geofence Filadhaa</string>
+    <string name="geo_trigger_title">Beeksisa itti jalqabi…</string>
+    <string name="geo_add_rule">Seera Dabaladhu</string>
+    <string name="geo_alerts_all_times">Akeekkachiisni yeroo hunda ni hojjeta. Seera dabalachuun yeroo beeksisni itti ergu sirreessaa.</string>
+    <string name="geo_assign_action">Tayîni</string>
+
+    <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
+    <string name="prox_title">Akeekkachiisa Dhiheenyaa</string>
+    <string name="prox_empty_title">Namni hordofamu hin jiru</string>
+    <string name="prox_empty_sub">Nama hordofuu jalqabuuf koodii QR afeerraa isaanii sakatta\'aa</string>
+    <string name="prox_intro">Namni ati hordoftu fageenya ati filattetti yoo dhufe si beeksisa.</string>
+    <string name="prox_alert_within">Yeroo %1$s keessa jiru beeksisi</string>
+    <string name="prox_alerts_off">Akeekkachiisni cufameera</string>
+    <string name="prox_alert_radius">Raadiyasii akeekkachiisaa</string>
+    <string name="prox_edit_schedule">Sagantaa Sirreessi</string>
+    <string name="prox_rules">Seera</string>
+
+    <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
+    <string name="schedule_for_peer">Sagantaa %1$s-f</string>
+    <string name="schedule_cd_add_rule">Seera dabaladhu</string>
+    <string name="schedule_empty_title">Seerri sagantaa hin jiru</string>
+    <string name="schedule_empty_global">Bakki hunda yeroo hunda ni qoodama. Seera dabalachuun yeroo qoodiinsaa murteessaa.</string>
+    <string name="schedule_empty_peer">Bakki %1$s waliin yeroo hunda ni qoodama. Seera dabalachuun qoodiinsa murteessaa.</string>
+    <string name="schedule_active_hint">Seerri tokko yeroo kanaan yoo madaale ni hojjeta. Duwwaa = yeroo hunda banaa.</string>
+    <string name="schedule_all_day">Guyyaa guutuu</string>
+    <string name="schedule_plus_one_day"> (+guyyaa 1)</string>
+    <string name="schedule_rule_number">Seera %1$d</string>
+    <string name="schedule_cd_delete_rule">Seera haqi</string>
+    <string name="schedule_edit_rule">Seera Sirreessi</string>
+    <string name="schedule_label_optional">Akara (nhọrọ)</string>
+    <string name="schedule_label_placeholder">m.f. Sa\'aatii hojii, Wikendi</string>
+    <string name="schedule_active_days">Guyyoota Hojjetaa</string>
+    <string name="schedule_time_window">Pencereya Demê</string>
+    <string name="schedule_start">Jalqaba</string>
+    <string name="schedule_end">Dhuma</string>
+    <string name="schedule_overnight">Halkaan guutuu: %1$s irraa eegalee %2$s guyyaa itti aanuutti hojjeta</string>
+
+    <!-- ── Supervision gate ───────────────────────────────────────────────── -->
+    <string name="gate_title">Meeshaan To\'annoo Irra Jira</string>
+    <string name="gate_message">Sajataawwan seenuuf hayyama to\'ataa ni barbaachisa.</string>
+    <string name="gate_request_access">Hayyama Gaafadhu</string>
+    <string name="gate_waiting">Hayyama to\'ataa eeggachaa jira…</string>
+    <string name="gate_denied">Hayyamni to\'ataadhaan kinfameera.</string>
+    <string name="gate_timed_out">Yeroon itti darbeera. To\'ataan deebii hin kennine.</string>
+
+    <!-- ── Retention selector ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Ebighị ebi</string>
+    <string name="retention_keep_for">Dobe maka: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">Guyyaa %1$d</item>
+        <item quantity="other">Guyyaa %1$d</item>
+    </plurals>
+
+    <string name="common_select">Filadhaa</string>
+
+    <!-- ── Map location picker ────────────────────────────────────────────── -->
+    <string name="picker_title">Bakka Murtaa\'aa Filadhaa</string>
+
+    <!-- ── Customize navigation screen ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Taabiiwwan jalaan mul\'atanii fi tartiba isaanii filadhaa. Kaartaan yeroo hunda ni jiraata.</string>
+    <string name="customize_cd_move_up">Gara jubbatti</string>
+    <string name="customize_cd_move_down">Gara jalaatti</string>
+
+    <!-- ── About screen ───────────────────────────────────────────────────── -->
+    <string name="about_version">Varsiinii %1$s (build %2$d)</string>
+    <string name="about_tagline">Qoodiinsa bakka jiranii iccitii namoota ati amantu waliin. Akkauntii malee, claud malee, to\'annoo keenya malee.</string>
+    <string name="about_relay_connections">Njikọ Relay</string>
+    <string name="about_connected">Wal-quunnamaniiru</string>
+    <string name="about_disconnected">Wal-quunnamtiin citeera</string>
+    <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap kaartaadhaaf</string>
+    <string name="about_lib_okhttp_desc">WebSocket tajaajila Nostr-f</string>
+    <string name="about_lib_compose_desc">UI framework</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">Data base meeshaa kanaa</string>
+    <string name="about_map_attribution">Data kaartaa © gumaachitoota OpenStreetMap</string>
+
+    <!-- ── Notifications ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Simadhu</string>
+    <string name="notif_someone">Nama tokko</string>
+    <string name="notif_sos_title">SOS %1$s irraa!</string>
+    <string name="notif_sos_text">%1$s bakka (%2$s, %3$s) irratti SOS baneera</string>
+    <string name="notif_supervisor_request_title">%1$s to\'ataa kee ta\'uu barbaada</string>
+    <string name="notif_supervisor_request_text">Gaaffiiwwan baninsaa meeshaa kana irraa dhufan hayyamuuf simadhu</string>
+    <string name="notif_supervisor_request_big">Yeroo modiin to\'annoo hojjetutti %1$s akka siif gaaffii baninsaa ergu hayyamuuf simadhu.</string>
+    <string name="notif_supervised_active_title">Modiin to\'annoo hojjetaa jira</string>
+    <string name="notif_supervised_active_text">To\'ataan kee mirkanesseera - modiin to\'annoo amma hojiirra ooleera</string>
+    <string name="notif_supervised_declined_title">Modiin to\'annoo didameera</string>
+    <string name="notif_supervised_declined_text">To\'ataan kee gaaffii diddeera - modiin to\'annoo cufameera</string>
+    <string name="notif_tracking_alert_title">Akeekkachiisa Hordoffii</string>
+    <string name="notif_tracking_proximity">%1$s akeekkachiisa dhiheenyaa waa\'ee kee argateera</string>
+    <string name="notif_tracking_geofence">%1$s akeekkachiisa ati fence seente/baate argateera: %2$s</string>
+    <string name="notif_tracking_generic">%1$s bakka ati jirtu to\'achaa jira</string>
+    <string name="notif_track_update_title">Haaromsa qoodiinsaa %1$s irraa</string>
+    <string name="notif_track_new_title">Quunnamtii Haaraa: %1$s</string>
+    <string name="notif_role_send_receive">Bakka Ergi/Findi</string>
+    <string name="notif_role_send">Bakka Ergi</string>
+    <string name="notif_role_receive">Bakka Findi</string>
+    <string name="notif_role_none">Qoodiinsa Bakkaa Hin Jiru</string>
+    <string name="notif_track_requesting">%1$s gaafachaa jira: %2$s</string>
+    <string name="notif_track_update_body">%1$s akkataa ati bakka qooddu haaromsuu barbaada.</string>
+    <string name="notif_track_new_body">%1$s quunnamtii dabalateera, wal-quunnamuu barbaada.</string>
+    <string name="notif_contact_connected_title">Quunnamtiin Wal-quunnameera</string>
+    <string name="notif_contact_connected_text">%1$s amma si waliin wal-quunnameera.</string>
+    <string name="notif_request_declined_title">Gaaffiin Didameera</string>
+    <string name="notif_request_declined_text">%1$s gaaffii bakka qoodachuu kee diddeera.</string>
+    <string name="notif_message_person">Ergaa %1$s-f</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s seeneera</string>
+    <string name="notif_geofence_left_title">%1$s %2$s ba\'eera</string>
+    <string name="notif_geofence_subtitle">Guyyaa %1$s irratti · raadiyasii %2$s</string>
+    <string name="notif_person_nearby">%1$s dhihoo jira</string>
+    <string name="notif_distance_from_you">%1$s si irraa</string>
+    <string name="notif_missed_title">Haaromsi %1$s irraa hin jiru</string>
+    <string name="notif_missed_text">Yeroo dhumaa daqiiqaa %1$s dura (%2$s, %3$s) dhihootti argame</string>
+    <string name="notif_sos_active_title">SOS HOJJETAA JIRA!</string>
+    <string name="notif_sos_active_text">Akeekkachiisa hatattamaa quunnamtii SOS-f tamsaasaa jira</string>
+    <string name="notif_messages_group_title">Ergaawwan LocaPeer</string>
+
+    <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">Gaaffiin quunnamtii %1$s irraa dhufe didameera</string>
+    <string name="toast_now_supervising">Amma meeshaa %1$s to\'achaa jirta</string>
+    <string name="toast_declined_supervision">Gaaffiin to\'annoo %1$s irraa dhufe didameera</string>
+
+    <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->
+    <string name="time_just_now">Amma</string>
+    <string name="time_minutes_ago">daq %1$d dura</string>
+    <string name="fallback_me">Si</string>
+    <string name="fallback_unknown">Nenas</string>
+    <string name="geo_unassigned">Tayîn nekirî</string>
+    <string name="days_every_day">Guyyaa hunda</string>
+    <string name="days_weekdays">Guyyoota hojii</string>
+    <string name="days_weekends">Wikendi</string>
+    <string name="days_none">Guyyaan hin jiru</string>
+    <string name="chat_my_location_message">Bakki koo inni amma: %1$s</string>
+    <string name="scan_error_bad_pubkey">Afeerraa dogoggoraa: kii uummataa dogoggoraa</string>
+    <string name="scan_error_key_mismatch">Afeerraa dogoggoraa: kiin wal hin madaalle</string>
+    <string name="scan_error_unknown">Dogoggora hin beekamne</string>
+    <string name="scan_error_invalid_link">Liinkii afeerraa dogoggoraa</string>
+    <string name="scan_fallback_contact">quunnamtii kana</string>
+    <string name="backup_saved">Backupiib olkaa\'ameera: %1$s</string>
+    <string name="backup_saved_encrypted">Backupiib olkaa\'ameera (icciteeffame): %1$s</string>
+    <string name="backup_failed">Backupiin hin milkoofne: %1$s</string>
+    <string name="backup_could_not_read_file">Faayilii dubbisuu hin dandeenye</string>
+    <string name="backup_could_not_write_file">Faayilii barreessuu hin dandeenye</string>
+    <string name="backup_could_not_read">Backup dubbisuu hin dandeenye: %1$s</string>
+    <string name="backup_incorrect_password">Jechi iccitii dogoggora</string>
+    <string name="restore_result_restored">Deebifameera: %1$s</string>
+    <string name="restore_result_failed">Hin milkoofne: %1$s</string>
+    <string name="restore_nothing">Homtuu deebifamu hin jiru</string>
+    <string name="restore_failed">Deebisuun hin milkoofne: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">quunnamtii %1$d</item>
+        <item quantity="other">quunnamtii %1$d</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">geofence %1$d</item>
+        <item quantity="other">geofence %1$d</item>
+    </plurals>
+    <string name="peer_role_change_sent">Gaaffiin jijjiirraa shooraa gara %1$s ergameera</string>
+    <string name="peer_not_found">Quunnamtiin hin argamne</string>
+    <string name="peer_purge_location_sent">Itti-gaafatamni haquu Bakkoota HUNDAA gara %1$s ergameera</string>
+    <string name="peer_purge_messages_sent">Itti-gaafatamni haquu Ergaawwan HUNDAA gara %1$s ergameera</string>
+    <string name="onboarding_error_key_length">Kiin dogoggora - herufii 64 hex qabaachuu qaba.</string>
+    <string name="onboarding_error_key_range">Kii dhuunfaa dogoggora.</string>
+    <string name="onboarding_error_hex">Bifa hex dogoggora.</string>
+    <string name="onboarding_error_import_failed">Kii galchuun hin milkoofne: %1$s</string>
 </resources>

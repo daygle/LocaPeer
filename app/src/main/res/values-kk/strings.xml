@@ -2,11 +2,11 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Хабарландыру арналары және алдыңғы қатарлы қызмет ─────────────────────── -->
+    <!-- ── Хабарландыру арналары және негізгі қызмет ─────────────────────── -->
     <string name="channel_name_heartbeat">Орналасқан жерді көрсету</string>
-    <string name="channel_desc_heartbeat">Орналасқан жеріңізді мақұлданған контактілерге көрсетеді</string>
+    <string name="channel_desc_heartbeat">Мақұлданған контактілеріңізге орналасқан жеріңізді көрсетеді</string>
     <string name="channel_name_alerts">Ескертулер</string>
-    <string name="channel_desc_alerts">Жоғалған сигнал және геозона ескертулері</string>
+    <string name="channel_desc_alerts">Жіберіп алынған сигналдар мен геоқоршау ескертулері</string>
     <string name="channel_name_messages">Хабарламалар</string>
     <string name="channel_desc_messages">Кіріс хабарламалар</string>
     <string name="notification_heartbeat_title">LocaPeer жұмыс істеп тұр</string>
@@ -27,42 +27,743 @@
     <string name="common_approve">Мақұлдау</string>
     <string name="common_deny">Бас тарту</string>
 
-    <!-- ── Навигациялық қойындылар ──────────────────────────────────────────── -->
+    <!-- ── Навигациялық қойындылар белгілері ──────────────────────────────────────────── -->
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Хабарламалар</string>
     <string name="tab_history">Тарих</string>
     <string name="tab_contacts">Контактілер</string>
     <string name="tab_qr">QR</string>
-    <string name="tab_settings">Баптаулар</string>
+    <string name="tab_settings">Параметрлер</string>
 
     <!-- ── Қозғалыс күйлері ───────────────────────────────────────── -->
     <string name="motion_stationary">Қозғалыссыз</string>
-    <string name="motion_walking">Жүру</string>
+    <string name="motion_walking">Жаяу жүру</string>
     <string name="motion_running">Жүгіру</string>
     <string name="motion_cycling">Велосипед</string>
-    <string name="motion_driving">Көлік жүргізу</string>
+    <string name="motion_driving">Көлік айдау</string>
 
-    <!-- ── Баптаулар ────────────────────────────────────────────────── -->
-    <string name="settings_title">Баптаулар</string>
-    <string name="settings_section_location_privacy">Орналасқан жер және құпиялылық</string>
+    <!-- ── Резервтік көшірме бөлімдері ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">Жеке кілт</string>
+    <string name="backup_section_contacts">Контактілер</string>
+    <string name="backup_section_geofences">Геоқоршаулар</string>
+    <string name="backup_section_settings">Параметрлер</string>
+
+    <!-- ── Бақылау сұрауы ──────────────────────── -->
+    <string name="supervision_request_title">Бақылау сұрауы</string>
+    <string name="supervision_request_message">\"%1$s\" өз параметрлеріне кіруге рұқсат сұрайды. Рұқсат бересіз бе?</string>
+
+    <!-- ── Параметрлер экраны ────────────────────────────────────────────────── -->
+    <string name="settings_title">Параметрлер</string>
+
+    <!-- Бөлім белгілері -->
+    <string name="settings_section_location_privacy">Орын және құпиялылық</string>
     <string name="settings_section_security">Қауіпсіздік</string>
     <string name="settings_section_map">Карта</string>
     <string name="settings_section_battery_performance">Батарея және өнімділік</string>
     <string name="settings_section_units_display">Бірліктер және дисплей</string>
-    <string name="settings_section_retention">Сақтау мерзімі (Бұл құрылғы)</string>
+    <string name="settings_section_retention">Сақтау (осы құрылғыда)</string>
     <string name="settings_section_appearance">Сыртқы түрі</string>
     <string name="settings_section_backup_keys">Резервтік көшірме және кілттер</string>
-    <string name="settings_section_about">Қосымша туралы</string>
+    <string name="settings_section_about">Туралы</string>
 
+    <!-- Профиль -->
     <string name="settings_edit_name">Атын өзгерту</string>
-    <string name="settings_my_qr">Менің QR-кодым</string>
-    <string name="settings_no_name_set">Аты көрсетілмеген</string>
+    <string name="settings_my_qr">Менің QR-ым</string>
+    <string name="settings_no_name_set">Аты орнатылмаған</string>
 
+    <!-- Орын және құпиялылық -->
     <string name="settings_share_location">Орналасқан жерімді бөлісу</string>
+    <string name="settings_broadcasting">Контактілеріңізге көрсетілуде</string>
+    <string name="settings_not_broadcasting">Көрсетілмейді</string>
+    <string name="settings_sharing_schedule">Бөлісу кестесі</string>
+    <string name="settings_always_on">Әрқашан қосулы</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d ереже</item>
+        <item quantity="other">%1$d ереже</item>
+    </plurals>
+    <string name="settings_geofences">Геоқоршаулар</string>
+    <string name="settings_geofences_subtitle">Бөлісілген геоқоршау аймақтарын басқару</string>
+    <string name="settings_notify_when_tracked">Бақыланған кезде хабарлау</string>
+    <string name="settings_notify_when_tracked_subtitle">Контактінің жақындығы немесе сіз үшін геоқоршау ескертуі іске қосылғанда хабарландыру алыңыз.</string>
+    <string name="settings_my_location_history">Орын тарихы</string>
+    <string name="settings_my_location_history_subtitle">Өз орналасу тарихыңызды қараңыз</string>
+    <string name="settings_lookup_addresses">Мекенжайларды іздеу</string>
+    <string name="settings_lookup_addresses_subtitle">Тарих нүктелері мен карта пиндері үшін көше мекенжайларын көрсету. Бұл координаттарды құрылғыңыздың геокодтау қызметіне (әдетте Google) жібереді.</string>
+
+    <!-- Қауіпсіздік -->
+    <string name="settings_supervision_active">Бақылау белсенді</string>
+    <string name="settings_supervision_active_subtitle">Параметрлер бақылаушының мақұлдауын талап етеді</string>
+    <string name="settings_disable_supervised">Бақылау режимін өшіру</string>
+    <string name="settings_supervised_mode">Бақылау режимі</string>
+    <string name="settings_supervised_mode_subtitle">Параметрлерге кіру үшін бақылаушының мақұлдауы қажет</string>
+
+    <!-- Карта -->
+    <string name="settings_starting_point">Бастапқы нүкте</string>
+    <string name="settings_map_current_location">Ағымдағы орын</string>
+    <string name="settings_map_all_contacts">Барлық контактілер</string>
+    <string name="settings_map_fixed_location">Бекітілген орын</string>
+    <string name="settings_map_last_position">Соңғы орын</string>
+    <string name="settings_map_starting_point_title">Картаның бастапқы нүктесі</string>
+    <string name="settings_no_location_set">Орын орнатылмаған</string>
+    <string name="settings_pick_location_on_map">Картадан орынды таңдау</string>
+    <string name="settings_default_zoom_level">Әдепкі масштаб деңгейі</string>
+    <string name="settings_map_pin_colour">Карта пинінің түсі</string>
+
+    <!-- Батарея және өнімділік -->
+    <string name="settings_update_cadence">Жаңарту жиілігі</string>
+    <string name="settings_update_cadence_subtitle">Орналасқан жеріңіздің қаншалықты жиі көрсетілетінін реттеңіз</string>
+    <string name="settings_update_cadence_dialog_message">Әрекетіңізге байланысты орналасқан жеріңіздің қаншалықты жиі жаңартылатынын бақылаңыз. Жиі жаңартулар батареяны көбірек тұтынады.</string>
+    <string name="settings_update_cadence_reset">Әдепкі параметрлерге қайтару</string>
+    <string name="settings_min_distance_filtering">Минималды қашықтық сүзгісі</string>
+    <string name="settings_min_distance_filtering_subtitle">Тек алдыңғы нүктеден кемінде осы қашықтықта орналасқан нүктелерді көрсету.</string>
+    <string name="settings_discard_low_accuracy">Дәлдігі төмен деректерді қабылдамау</string>
+    <string name="settings_discard_low_accuracy_subtitle">Дәлдік радиусы осыдан үлкен деректерді көрсетпеңіз немесе жазбаңыз. SOS әрқашан жіберіледі.</string>
+    <string name="settings_hide_low_accuracy">Дәлдігі төмен нүктелерді жасыру</string>
+    <string name="settings_hide_low_accuracy_subtitle">Дәлдік радиусы осыдан үлкен тарих нүктелерін жасыру. Ештеңе жойылмайды.</string>
+    <string name="settings_low_battery" formatted="false">Төмен батарея (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d мин</string>
+    <string name="settings_motion_detection">Қозғалысты анықтау</string>
+    <string name="settings_motion_detection_on">Қосулы — тарихтағы қозғалыс түрін (жаяу жүру, көлік жүргізу) нақтылайды</string>
+    <string name="settings_motion_detection_off">Өшірулі — қозғалыс белгілерін дәлірек анықтау үшін дене белсенділігіне рұқсат беріңіз</string>
+    <string name="settings_enable_motion_title">Қозғалысты анықтауды қосу</string>
+    <string name="settings_enable_motion_message">Дене белсенділігіне рұқсат беру LocaPeer-ге тарихыңыздағы жаяу жүруді, көлік жүргізуді және бір орында тұруды дәлірек ажыратуға мүмкіндік береді. Ол қазір өшірулі — оны жүйелік параметрлерден қайта қосуға болады.</string>
+    <string name="settings_open_settings">Параметрлерді ашу</string>
+    <string name="settings_battery_optimization">Батареяны оңтайландыру</string>
+    <string name="settings_battery_optimization_unrestricted">Шектеусіз — LocaPeer фонда еркін жұмыс істей алады</string>
+    <string name="settings_battery_optimization_restricted">Оңтайландырылған — жүйелік параметрлерде шектеусіз деп орнату үшін түртіңіз</string>
+
+    <!-- Рұқсаттар -->
+    <string name="settings_permissions">Рұқсаттар</string>
+    <string name="settings_permissions_subtitle">Қолданбаның орынға, камераға және т.б. рұқсаттарын қарап шығу және түзету</string>
+    <string name="permissions_intro">LocaPeer-ге орынды бөлісу, шақыруларды сканерлеу және фонда жұмысын жалғастыру үшін осы рұқсаттар қажет. Берілмеген рұқсаттарды түзету үшін түртіңіз.</string>
+    <string name="perm_location_title">Орын</string>
+    <string name="perm_location_granted">Берілді — орналасқан жеріңізді бөлісуге болады</string>
+    <string name="perm_location_denied">Берілмеді — орынға рұқсат беру үшін түртіңіз</string>
+    <string name="perm_background_location_title">Фондық орын</string>
+    <string name="perm_background_location_granted">Берілді — қолданба жабылғанда да орынды бөлісу жалғасады</string>
+    <string name="perm_background_location_denied">Берілмеді — параметрлерде «Әрқашан рұқсат беру» опциясын таңдау үшін түртіңіз</string>
+    <string name="perm_camera_title">Камера</string>
+    <string name="perm_camera_granted">Берілді — шақыру QR кодтарын сканерлеу үшін қолданылады</string>
+    <string name="perm_camera_denied">Берілмеді — камераға рұқсат беру үшін түртіңіз</string>
+    <string name="perm_notifications_title">Хабарландырулар</string>
+    <string name="perm_notifications_granted">Берілді — ескертулер мен күй жаңартулары көрсетілуі мүмкін</string>
+    <string name="perm_notifications_denied">Берілмеді — хабарландыруларға рұқсат беру үшін түртіңіз</string>
+
+    <!-- Бірліктер және дисплей -->
+    <string name="settings_speed_units">Жылдамдық бірліктері</string>
+    <string name="settings_speed_imperial">Империялық (миль/сағ)</string>
+    <string name="settings_speed_metric">Метрикалық (км/сағ)</string>
+    <string name="settings_elevation_units">Биіктік бірліктері</string>
+    <string name="settings_elevation_imperial">Империялық (фут)</string>
+    <string name="settings_elevation_metric">Метрикалық (метр)</string>
+    <string name="settings_distance_units">Қашықтық бірліктері</string>
+    <string name="settings_distance_imperial">Империялық (фут/миль)</string>
+    <string name="settings_distance_metric">Метрикалық (м/км)</string>
+    <string name="settings_time_format">Уақыт форматы</string>
+    <string name="settings_time_24h">24-сағаттық (13:30)</string>
+    <string name="settings_time_12h">12-сағаттық (1:30 PM)</string>
+
+    <!-- Сақтау -->
+    <string name="settings_retention_location">Орын деректері</string>
+    <string name="settings_retention_location_subtitle">Контактілердің орын деректері құрылғыда қанша уақыт сақталады</string>
+    <string name="settings_clear_all_location">Барлық орын деректерін тазалау</string>
+    <string name="settings_retention_messages">Хабарламалар</string>
+    <string name="settings_retention_messages_subtitle">Алынған хабарламалар құрылғыда қанша уақыт сақталады</string>
+    <string name="settings_clear_all_messages">Барлық хабарламаларды тазалау</string>
+
+    <!-- Сыртқы түрі -->
+    <string name="settings_customize_nav">Навигацияны реттеу</string>
+    <string name="settings_customize_nav_subtitle">Төменгі қойындыларды таңдап, ретін өзгертіңіз</string>
+    <string name="settings_start_page">Бастапқы бет</string>
     <string name="settings_language">Тіл</string>
-    <string name="settings_language_title">Қосымша тілі</string>
-    <string name="settings_language_system">Жүйелік тіл</string>
+    <string name="settings_language_title">Қолданба тілі</string>
+    <string name="settings_language_system">Жүйе әдепкі бойынша</string>
+
+    <!-- Резервтік көшірме және кілттер -->
+    <string name="settings_export_backup">Резервтік көшірмені экспорттау</string>
+    <string name="settings_export_backup_subtitle">Жеке кілтіңіз бен контактілеріңізді файлға сақтаңыз. Бұл файлды қауіпсіз жерде сақтаңыз!</string>
+    <string name="settings_import_backup">Резервтік көшірмені импорттау</string>
+    <string name="settings_import_backup_subtitle">Бұрын экспортталған файлдан қалпына келтіру</string>
+    <string name="settings_view_private_key">Жеке кілтті көру</string>
+    <string name="settings_view_private_key_subtitle">64 таңбалы хекс сәйкестендіру кілтін көрсету</string>
+
+    <!-- Туралы -->
+    <string name="settings_about_locapeer">LocaPeer туралы</string>
+    <string name="settings_about_subtitle">Нұсқасы, реле күйі, ашық бастапқы код</string>
+
+    <!-- Диалогтар -->
+    <string name="settings_edit_display_name">Көрсетілетін атын өзгерту</string>
+    <string name="settings_display_name_label">Көрсетілетін аты</string>
+    <string name="settings_my_invite_qr">Менің шақыру QR-ым</string>
+    <string name="settings_invite_qr_subtitle">Басқалар сізді бақылай бастау үшін мұны сканерлей алады.</string>
+    <string name="settings_invite_qr_cd">Шақыру QR-ы</string>
+    <string name="settings_private_key_title">Жеке кілт</string>
+    <string name="settings_private_key_warning">Мұны қауіпсіз сақтаңыз. Бұл кілті бар кез келген адам сіздің атыңыздан әрекет ете алады.</string>
+    <string name="settings_clear_location_title">Орын тарихын тазалау керек пе?</string>
+    <string name="settings_clear_location_message">Барлық сақталған орын деректері біржола жойылады.</string>
+    <string name="settings_clear_messages_title">Хабарламалар тарихын тазалау керек пе?</string>
+    <string name="settings_clear_messages_message">Барлық сақталған хабарламалар біржола жойылады.</string>
+    <string name="settings_encrypted_backup_title">Шифрланған резервтік көшірме</string>
+    <string name="settings_encrypted_backup_message">Бұл резервтік көшірме шифрланған. Жалғастыру үшін құпия сөзді енгізіңіз.</string>
+    <string name="settings_select_restore_title">Қалпына келтірілетін деректерді таңдаңыз</string>
+    <string name="settings_select_export_title">Экспортталатын деректерді таңдаңыз</string>
+    <string name="settings_export_password_hint">Резервтік көшірме файлын шифрлау үшін қосымша құпия сөз орнатыңыз.</string>
+    <string name="settings_backup_password_optional">Резервтік көшірме құпия сөзі (міндетті емес)</string>
+    <string name="settings_select_sections">Қосылатын бөлімдерді таңдаңыз:</string>
+    <string name="settings_choose_file_location">Файл орнын таңдаңыз</string>
+    <string name="settings_not_in_backup">Бұл резервтік көшірмеде жоқ</string>
+    <string name="settings_enable_supervised_title">Бақылау режимін қосу</string>
+    <string name="settings_enable_supervised_message">Бақылаушы болатын досыңызды таңдаңыз. Олар өз құрылғысынан параметрлерге кіруді мақұлдауы керек.</string>
+    <string name="settings_no_peers_found">Достар табылмады. Алдымен олардың шақыру QR кодын сканерлеу арқылы дос қосыңыз.</string>
+    <string name="settings_disable_supervised_title">Бақылау режимін өшіру керек пе?</string>
+    <string name="settings_disable_supervised_message">Параметрлер бақылаушының мақұлдауынсыз қолжетімді болады.</string>
+
+    <!-- ── Басқа жалпы ─────────────────────────────────────────── -->
+    <string name="common_remove">Алып тастау</string>
+    <string name="common_name">Аты</string>
+    <string name="common_search">Іздеу</string>
+    <string name="common_sort">Сұрыптау</string>
+
+    <!-- Мазмұн сипаттамалары (бөлісілген) -->
+    <string name="cd_message">Хабарлама</string>
+    <string name="cd_show_on_map">Картада көрсету</string>
+    <string name="cd_more_options">Қосымша опциялар</string>
+
+    <!-- ── Контактілер экраны ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d таңдалды</item>
+        <item quantity="other">%1$d таңдалды</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">Таңдаудан бас тарту</string>
+    <string name="contacts_cd_select_all">Барлығын таңдау</string>
+    <string name="contacts_cd_deselect_all">Барлығынан бас тарту</string>
+    <string name="contacts_cd_qr_invite">QR / Шақыру</string>
+    <string name="contacts_cd_pending_requests">Күтудегі сұраулар</string>
+    <string name="contacts_sort_last_seen">Соңғы рет қашан көрінді</string>
+    <string name="contacts_search_placeholder">Контактілерді іздеу…</string>
+    <string name="contacts_empty_title">Контактілер әлі жоқ</string>
+    <string name="contacts_empty_subtitle">Біреумен байланысу және орын бөлісуді бастау үшін QR кодын сканерлеңіз.</string>
+    <string name="contacts_scan_qr">QR кодын сканерлеу</string>
+    <string name="contacts_bulk_delete_messages">Хабарламаларды жою</string>
+    <string name="contacts_bulk_delete_locations">Орындарды жою</string>
+    <string name="contacts_last_seen">Соңғы рет көрінді: %1$s</string>
+    <string name="contacts_no_location_yet">Орын деректері әлі жоқ</string>
+    <string name="contacts_view_sharing_settings">Бөлісу параметрлері</string>
+    <string name="contacts_view_location_history">Орын тарихы</string>
+    <string name="contacts_rename_contact">Контакт атын өзгерту</string>
+    <string name="contacts_on_contact_device">Контакт құрылғысында</string>
+    <string name="contacts_delete_my_messages_title">Менің хабарламаларымды жою</string>
+    <string name="contacts_delete_locations_title">Бөлісілген орындарды жою</string>
+    <string name="contacts_remove_contact_title">Контактіні алып тастау</string>
+    <string name="contacts_leave_title">Контактіні және деректерді жою</string>
+    <string name="contacts_rename_title">Контакт атын өзгерту</string>
+    <string name="contacts_remove_contact_body">%1$s контактілерден алып тастау керек пе? Олардың орын тарихы да құрылғыдан жойылады.</string>
+    <string name="contacts_leave_body">Бұл сізді %1$s контактілерінен алып тастайды және олардың құрылғысынан барлық хабарламаларыңыз бен орын деректеріңізді жояды. Сондай-ақ сіз олардың орналасқан жерін көре алмайсыз.</string>
+    <string name="contacts_delete_my_messages_body">Бұл сіз %1$s құрылғысынан жіберген барлық хабарламаларды жояды. Бұл әрекетті қайтару мүмкін емес.</string>
+    <string name="contacts_delete_locations_body">Бұл сіз %1$s құрылғысынан бөліскен барлық орын деректерін жояды. Бұл әрекетті қайтару мүмкін емес.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">Контактіні алып тастау</item>
+        <item quantity="other">%1$d контактіні алып тастау</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">Бұл контактіні алып тастау керек пе? Олардың орын тарихы да құрылғыдан жойылады.</item>
+        <item quantity="other">%1$d контактіні алып тастау керек пе? Олардың орын тарихы да құрылғыдан жойылады.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">Осы контакт құрылғысынан сіз жіберген барлық хабарламаларды қашықтан жою керек пе? Бұл әрекетті қайтару мүмкін емес.</item>
+        <item quantity="other">%1$d контакт құрылғысынан сіз жіберген барлық хабарламаларды қашықтан жою керек пе? Бұл әрекетті қайтару мүмкін емес.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">Осы контакт құрылғысынан сіз бөліскен барлық орын тарихын қашықтан жою керек пе? Бұл әрекетті қайтару мүмкін емес.</item>
+        <item quantity="other">%1$d контакт құрылғысынан сіз бөліскен барлық орын тарихын қашықтан жою керек пе? Бұл әрекетті қайтару мүмкін емес.</item>
+    </plurals>
+
+    <string name="common_continue">Жалғастыру</string>
+
+    <!-- ── Отыру (Onboarding) ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">Резервтік көшірмеден қалпына келтіру</string>
+    <string name="onboarding_restore_message">Жеке басыңызды және контактілеріңізді қалпына келтіру үшін 64 таңбалы хекс жеке кілтіңізді осында қойыңыз.</string>
+    <string name="onboarding_private_key_hex">Жеке кілт (хекс)</string>
+    <string name="onboarding_tagline">Контактілермен жеке орын бөлісу.\nАккаунтсыз. Жеке меншік серверлерсіз.</string>
+    <string name="onboarding_feature_e2e_title">Шеттен-шетке шифрланған</string>
+    <string name="onboarding_feature_e2e_subtitle">Орналасқан жеріңіз құрылғыда шифрланады</string>
+    <string name="onboarding_feature_servers_title">Жеке меншік серверлерсіз</string>
+    <string name="onboarding_feature_servers_subtitle">Қауіпсіз тасымалдау ретінде ашық Nostr релелерін пайдаланады - деректеріңіз шифрланған және құпия болып қалады</string>
+    <string name="onboarding_feature_phone_title">Телефоныңызда қалады</string>
+    <string name="onboarding_feature_phone_subtitle">Толық орын тарихыңыз құрылғыңызда қалады. Тек ағымдағы орныңыз таңдалған контактілермен бөлісіледі</string>
+    <string name="onboarding_name_prompt">Контактілеріңіз сізді қалай атағанын қалайсыз?</string>
+    <string name="onboarding_name_placeholder">мысалы, Анам, Әкем, Арман…</string>
+    <string name="onboarding_get_started">Бастау</string>
+    <string name="onboarding_restore_from_backup">Резервтік көшірмеден қалпына келтіру</string>
+    <string name="onboarding_key_note">Жеке кілтіңіз жергілікті жерде жасалады және ешқашан осы құрылғыдан шықпайды.</string>
+    <string name="onboarding_permissions_title">Рұқсаттар</string>
+    <string name="onboarding_permissions_desc">LocaPeer-ге орныңызды бөлісу үшін орынға рұқсат, шақыру кодтарын сканерлеу үшін камераға рұқсат және фондық күй үшін хабарландыру рұқсаты қажет. Дене белсенділігіне рұқсат міндетті емес - ол сіздің қозғалысыңызды (жаяу жүру, көлік жүргізу) дәлірек анықтауға көмектеседі.</string>
+    <string name="onboarding_before_ask_title">Сұрамас бұрын</string>
+    <string name="onboarding_before_ask_intro">Келесі жүйелік сұрауларды көресіз:</string>
+    <string name="onboarding_before_ask_location">• Орын - орныңызды бөлісу үшін қажет.</string>
+    <string name="onboarding_before_ask_camera">• Камера - шақыру кодтарын сканерлеу үшін.</string>
+    <string name="onboarding_before_ask_notifications">• Хабарландырулар - фондық күй үшін.</string>
+    <string name="onboarding_before_ask_activity">• Дене белсенділігі - міндетті емес. Ол LocaPeer-ге тарихыңыздағы жаяу жүруді, көлік жүргізуді және бір орында тұруды дәлірек ажыратуға мүмкіндік береді. Оны өткізіп жіберіп, кейінірек Параметрлерде қосуға болады.</string>
+    <string name="onboarding_grant_permissions">Рұқсат беру</string>
+    <string name="onboarding_bg_location_title">Фондық орын</string>
+    <string name="onboarding_bg_location_desc">Қолданба жабылған кезде де контактілеріңізді жаңартып отыру үшін келесі экранда «Әрқашан рұқсат беру» опциясын таңдаңыз.</string>
+    <string name="onboarding_bg_location_error">Қолданба жабылған кезде контактілеріңізді жаңарту үшін фондық орын қажет. Қайта байқап көріңіз және «Әрқашан рұқсат беру» опциясын таңдаңыз.</string>
+    <string name="onboarding_configure_location">Орынды реттеу</string>
+    <string name="onboarding_battery_title">Батарея</string>
+    <string name="onboarding_battery_desc">Android батареяны үнемдеу үшін LocaPeer-ді тоқтатуы мүмкін. Сенімді жаңартуларды қамтамасыз ету үшін LocaPeer-ді оңтайландырулардан алып тастаңыз.</string>
+    <string name="onboarding_disable_optimizations">Оңтайландыруды өшіру</string>
+    <string name="onboarding_done_title">Бәрі дайын!</string>
+    <string name="onboarding_done_desc">Жеке орын желісі дайын.</string>
+    <string name="onboarding_start_using">LocaPeer пайдалануды бастау</string>
+
+    <string name="common_try_again">Қайта байқап көру</string>
+
+    <!-- ── Шақыруды сканерлеу экраны ─────────────────────────────────────────────── -->
+    <string name="scan_title">Шақыруды сканерлеу</string>
+    <string name="scan_camera_needed">QR кодтарын сканерлеу үшін камераға рұқсат қажет.</string>
+    <string name="scan_grant_permission">Рұқсат беру</string>
+    <string name="scan_add_contact_title">Контакт қосу керек пе?</string>
+    <string name="scan_add_contact_message">Бұл сізді %1$s-мен байланыстырады және орналасқан жеріңізді бір-біріңізбен бөлісуді бастайды.</string>
+    <string name="scan_add_share">Қосу және бөлісу</string>
+    <string name="scan_request_sent_title">Сұрау жіберілді!</string>
+    <string name="scan_request_sent_message">%1$s-ге сұрау жіберілді. Олар мақұлдағаннан кейін қосыласыз.</string>
+    <string name="scan_failed">Сканерлеу сәтсіз аяқталды: %1$s</string>
+
+    <string name="cd_back">Артқа</string>
+    <string name="common_review">Қарап шығу</string>
+    <string name="common_decline">Бас тарту</string>
+
+    <!-- Бөлісу рөлінің белгілері (бөлісілген) -->
+    <string name="role_send_receive">Жіберу/Алу</string>
+    <string name="role_send">Жіберу</string>
+    <string name="role_receive">Алу</string>
+    <string name="role_none">Бөлісусіз</string>
+
+    <!-- ── Шақыру экраны ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">Менің шақыруым</string>
+    <string name="invite_tab_add_contact">Контакт қосу</string>
+    <string name="invite_your_qr_title">Сіздің QR кодыңыз</string>
+    <string name="invite_your_qr_subtitle">Орналасқан жеріңізді бақылау үшін біреуге мұны сканерлеуге рұқсат беріңіз</string>
+    <string name="invite_qr_cd">Сіздің QR кодыңыз</string>
+    <string name="invite_qr_error">QR жасау кезіндегі қате</string>
+    <string name="invite_share_link">Шақыру сілтемесін бөлісу</string>
+    <string name="invite_encryption_note">Орналасқан жеріңіз сканерлеуші құрылғы үшін арнайы шифрланады.</string>
+    <string name="invite_camera_required_title">Камераға рұқсат қажет</string>
+    <string name="invite_camera_required_message">QR кодын сканерлеу үшін камераға рұқсат беріңіз.</string>
+    <string name="invite_point_camera">Камераны LocaPeer QR-ына бағыттаңыз</string>
+    <string name="invite_paste_title">Немесе шақыру сілтемесін қойыңыз</string>
+    <string name="invite_process_link">Сілтемені өңдеу</string>
+    <string name="invite_fallback_name">Контакт</string>
+    <string name="invite_success_message">Олар мақұлдағаннан кейін %1$s-мен байланысасыз.</string>
+    <string name="invite_confirm_add_title">%1$s қосу керек пе?</string>
+    <string name="invite_confirm_add_message">Оларды контактілеріңізге қосып, орналасқан жеріңізді бөлісесіз бе?</string>
+
+    <!-- ── Күтудегі сұраулар экраны ────────────────────────────────────────── -->
+    <string name="pending_empty">Күтудегі сұраулар жоқ</string>
+    <string name="pending_requesting">Сұрау жіберілді: %1$s · %2$s</string>
+    <string name="pending_role_change">Рөлді өзгерту сұрауы · %1$s</string>
+    <string name="pending_new_request">Жаңа бөлісу сұрауы · %1$s</string>
+
+    <string name="common_save_changes">Өзгерістерді сақтау</string>
+
+    <!-- ── Кіріс бөлісу сұрауы экраны ──────────────────────────────────── -->
+    <string name="incoming_update_title">Бөлісу параметрлерін жаңарту</string>
+    <string name="incoming_new_title">Жаңа контакт сұрауы</string>
+    <string name="incoming_update_subtitle">%1$s сіздің бөлісу тәсіліңізді жаңартқысы келеді. Төмендегі параметрлерді қарап шығыңыз.</string>
+    <string name="incoming_new_subtitle">%1$s сізді контакт ретінде қосты! Енді сіз немен бөлісетініңізді таңдай аласыз.</string>
+    <string name="incoming_section_location">Орын</string>
+    <string name="incoming_share_my_location">Орналасқан жерімді %1$s-мен бөлісу</string>
+    <string name="incoming_share_my_location_sub">Олар сіздің қайда екеніңізді көре алады</string>
+    <string name="incoming_see_their_location">%1$s орналасқан жерін көру</string>
+    <string name="incoming_see_their_location_sub">Сіз олардың қайда екенін көре аласыз</string>
+    <string name="incoming_section_messaging">Хабарламалар</string>
+    <string name="incoming_allow_messages">Хабарламаларға рұқсат беру</string>
+    <string name="incoming_allow_messages_sub">%1$s-ден чат хабарламаларын алу</string>
+
+    <string name="common_request">Сұрау</string>
+    <string name="common_edit">Өзгерту</string>
+
+    <!-- ── Контакт параметрлері экраны ─────────────────────────── -->
+    <string name="peer_title">Контакт параметрлері</string>
+    <string name="peer_section_roles">Орын бөлісу рөлдері</string>
+    <string name="peer_send_on">%1$s сіздің орналасқан жеріңізді көре алады</string>
+    <string name="peer_send_off">Сіз орналасқан жеріңізді %1$s-мен бөліспейсіз</string>
+    <string name="peer_receive_title">%1$s орналасқан жерін алу</string>
+    <string name="peer_receive_on">Сіз %1$s орналасқан жерін көре аласыз</string>
+    <string name="peer_receive_off">Сізде %1$s орналасқан жеріне кіру рұқсаты жоқ</string>
+    <string name="peer_section_privacy">Құпиялылық және бөлісуді басқару</string>
+    <string name="peer_pause_sharing">Бөлісуді тоқтата тұру</string>
+    <string name="peer_pause_sub">Орналасқан жеріңізді %1$s-ге жіберуді уақытша тоқтату</string>
+    <string name="peer_precision">Орын дәлдігі</string>
+    <string name="peer_precision_exact_sub">Нақты GPS координаттары</string>
+    <string name="peer_precision_suburb_sub">Жуықтап алғандағы орын (аудан деңгейі)</string>
+    <string name="peer_always_sharing">Әрқашан бөлісуде</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d белсенді бөлісу ережесі</item>
+        <item quantity="other">%1$d белсенді бөлісу ережесі</item>
+    </plurals>
+    <string name="peer_section_alerts">Ескертулер және бақылау</string>
+    <string name="peer_sos_contact">SOS контактісі</string>
+    <string name="peer_sos_sub">Бөлісу тоқтатылған болса да, төтенше жағдай ескертулерін алу</string>
+    <string name="peer_missed_alert">Орынды жіберіп алу ескертуі</string>
+    <string name="peer_missed_on">Егер %1$s өз орнын хабарлауды тоқтатса, маған хабарлаңыз</string>
+    <string name="peer_requires_access">%1$s орналасқан жеріне кіру рұқсаты қажет</string>
+    <string name="peer_proximity_alert">Жақындық ескертуі</string>
+    <string name="peer_proximity_sub">%1$s жақын болғанда маған хабарлаңыз</string>
+    <string name="peer_alert_radius">Ескерту радиусы</string>
+    <string name="peer_alert_schedule">Ескерту кестесі</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d белсенді ереже</item>
+        <item quantity="other">%1$d белсенді ереже</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s үшін келу және кету аймақтарын орнату</string>
+    <string name="peer_supervise">Осы құрылғыны бақылау</string>
+    <string name="peer_supervise_on">Сіз %1$s-ден құлыпты ашу сұрауларын аласыз және мақұлдайсыз</string>
+    <string name="peer_supervise_off">%1$s-ге бақылау режимінде құлыпты ашу сұрауларын жіберуге рұқсат беріңіз</string>
+    <string name="peer_messaging_sub">%1$s-ден келетін чат хабарламаларын қосу/өшіру</string>
+    <string name="peer_section_history">Қозғалыс тарихы</string>
+    <string name="peer_location_history">Орын тарихы</string>
+    <string name="peer_location_history_sub">%1$s үшін қозғалыс тарихын және карта есебін көру</string>
+    <string name="peer_section_retention">Қашықтан деректерді сақтау</string>
+    <string name="peer_retention_location_sub">%1$s сіздің орын тарихыңызды қанша уақыт сақтайды</string>
+    <string name="peer_purge_location">%1$s-ден барлық орын деректерін жою</string>
+    <string name="peer_retention_messages_sub">%1$s сіз жіберген хабарламаларды қанша уақыт сақтайды</string>
+    <string name="peer_purge_messages">%1$s-ден барлық хабарламаларды жою</string>
+    <string name="peer_precision_exact">Нақты GPS</string>
+    <string name="peer_precision_exact_desc">Нақты координаттар</string>
+    <string name="peer_precision_suburb">Аудан (~1км)</string>
+    <string name="peer_precision_suburb_desc">Тек аудан деңгейінде</string>
+
+    <!-- ── Хабарламалар тізімі экраны ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d сөйлесуді жою керек пе?</item>
+        <item quantity="other">%1$d сөйлесуді жою керек пе?</item>
+    </plurals>
+    <string name="conv_delete_locally">Құрылғыдан жою</string>
+    <string name="conv_delete_locally_sub">Сөйлесуді тек сіздің құрылғыңыздан жояды.</string>
+    <string name="conv_delete_both">Екі жақтан да жою</string>
+    <string name="conv_bulk_delete_both_sub">Сөйлесуді құрылғыдан және контактіңізден жояды.</string>
+    <string name="conv_delete_both_sub">Сөйлесуді құрылғыдан жояды және контактінің құрылғысында сөйлесуді жою сұрауын жібереді.</string>
+    <string name="conv_cd_exit_selection">Таңдаудан шығу</string>
+    <string name="conv_cd_select_all">Барлығын таңдау</string>
+    <string name="conv_cd_new_message">Жаңа хабарлама</string>
+    <string name="conv_sort_date">Күні</string>
+    <string name="conv_sort_unread">Оқылмаған</string>
+    <string name="conv_search_placeholder">Сөйлесулерді іздеу…</string>
+    <string name="conv_tab_chats">Чаттар</string>
+    <string name="conv_tab_archived">Мұрағатталған</string>
+    <string name="conv_mark_read">Оқылды деп белгілеу</string>
+    <string name="conv_archive">Мұрағаттау</string>
+    <string name="conv_unarchive">Мұрағаттан шығару</string>
+    <string name="conv_empty_no_results">\"%1$s\" үшін ештеңе табылмады</string>
+    <string name="conv_empty_no_results_sub">Басқа іздеу сөзін қолданып көріңіз</string>
+    <string name="conv_empty_archived_title">Мұрағатталған чаттар жоқ</string>
+    <string name="conv_empty_archived_sub">Кіріс жәшігін таза ұстау үшін чаттарды мұрағаттаңыз</string>
+    <string name="conv_empty_title">Хабарламалар әлі жоқ</string>
+    <string name="conv_empty_sub">Картаны ашып, сөйлесуді бастау үшін\nадамды түртіңіз</string>
+    <string name="conv_delete_title">Сөйлесуді жою керек пе?</string>
+    <string name="conv_delete_message">%1$s-мен сөйлесуді қалай жойғыңыз келеді?</string>
+    <string name="conv_messages_blocked">Хабарламалар бұғатталған</string>
+    <string name="conv_preview_mine">Сіз: %1$s</string>
+    <string name="conv_new_message_title">Жаңа хабарлама</string>
+    <string name="conv_picker_empty">Контактілер әлі жоқ. Контакт қосу үшін QR кодын сканерлеңіз.</string>
+
+    <!-- ── Чат экраны ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">Чат тарихын тазалау керек пе?</string>
+    <string name="chat_clear_message">%1$s-мен сөйлесуді қалай тазалағыңыз келеді?</string>
+    <string name="chat_clear_locally">Құрылғыдан тазалау</string>
+    <string name="chat_clear_both">Екі жақтан да тазалау</string>
+    <string name="chat_clear_both_sub">Чатты құрылғыдан тазалайды және %1$s-ге сіз жіберген хабарламаларды жою сұрауын жібереді.</string>
+    <string name="chat_cd_options">Опциялар</string>
+    <string name="chat_clear_history_menu">Чат тарихын тазалау</string>
+    <string name="chat_typing">%1$s жазып жатыр…</string>
+    <string name="chat_blocked_banner">Сіз %1$s-ден келетін хабарламаларды бұғаттадыңыз. Бұғаттан шығару үшін контактілерге өтіңіз.</string>
+    <string name="chat_delete_msg_title">Хабарламаны жою керек пе?</string>
+    <string name="chat_delete_msg_message">Бұл хабарламаны қалай жойғыңыз келеді?</string>
+    <string name="chat_delete_from_contact">Контактіден жою</string>
+    <string name="chat_delete_from_contact_sub">Чатты контактінің құрылғысынан жояды.</string>
+    <string name="chat_delete_both_sub">Чатты құрылғыдан алып тастайды және контактінің құрылғысынан автоматты түрде жояды.</string>
+    <string name="chat_cd_share_location">Орынды бөлісу</string>
+    <string name="chat_input_placeholder">Хабарлама…</string>
+    <string name="chat_cd_send">Жіберу</string>
+
+    <string name="common_close">Жабу</string>
+
+    <!-- ── Карта экраны ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS-ті қосу керек пе?</string>
+    <string name="map_sos_deactivate_title">SOS-ті өшіру керек пе?</string>
+    <string name="map_sos_activate_msg">Бұл өшірілгенге дейін орналасқан жеріңізді әр 15 секунд сайын тағайындалған SOS контактілеріне көрсетеді.</string>
+    <string name="map_sos_deactivate_msg">Бұл төтенше жағдай контактілеріне жоғары басымдықты орын көрсетуді тоқтатады.</string>
+    <string name="map_activate">Қосу</string>
+    <string name="map_deactivate">Өшіру</string>
+    <string name="map_cd_style">Карта стилі</string>
+    <string name="map_cd_show_geofences">Геоқоршауларды көрсету</string>
+    <string name="map_cd_hide_geofences">Геоқоршауларды жасыру</string>
+    <string name="map_cd_follow">Маған еріңіз</string>
+    <string name="map_cd_friends">Достар</string>
+    <string name="map_no_friends">Әлі бақыланатын достар жоқ</string>
+    <string name="map_you">Сіз</string>
+    <string name="map_cd_go_my_location">Менің орныма өту</string>
+    <string name="map_sos_active">⚠ SOS БЕЛСЕНДІ</string>
+    <string name="map_away">Алыста</string>
+    <string name="map_no_location_yet">Орын әлі жоқ</string>
+    <string name="map_cd_go_location">Орынға өту</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ҚОСУЛЫ</string>
+    <string name="map_overdue">Кешіктірілген — соңғы жаңарту жоқ</string>
+    <string name="map_stat_last_seen">Соңғы рет қашан көрінді</string>
+    <string name="map_stat_battery">Батарея</string>
+    <string name="map_stat_accuracy">Дәлдік</string>
+    <string name="map_stat_motion">Қозғалыс</string>
+    <string name="map_stat_speed">Жылдамдық</string>
+    <string name="map_stat_elevation">Биіктік</string>
 
     <string name="common_ok">ОК</string>
-    <string name="cd_back">Артқа</string>
+
+    <!-- ── Тарих есебі экраны ──────────────────────────────────────────── -->
+    <string name="history_title_peer">Тарих: %1$s</string>
+    <string name="history_select_person">Адамды таңдау</string>
+    <string name="history_person_label">Адам</string>
+    <string name="history_cd_prev_day">Алдыңғы күн</string>
+    <string name="history_cd_next_day">Келесі күн</string>
+    <string name="history_time_filter">Уақыт сүзгісі:</string>
+    <string name="history_cd_reset_time">Уақытты қайтару</string>
+    <string name="history_tab_list">Тізім</string>
+    <string name="history_empty_title">Бұл күн үшін тарих жоқ</string>
+    <string name="history_empty_sub">Басқа күнді таңдап көріңіз немесе байланысты тексеріңіз.</string>
+    <string name="history_start_time">Басталу уақыты</string>
+    <string name="history_end_time">Аяқталу уақыты</string>
+    <string name="history_no_data_title">Орын деректері жоқ</string>
+    <string name="history_no_data_sub">Бұл күн немесе уақыт аралығы үшін жазылған деректер жоқ.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d нүкте жазылды</item>
+        <item quantity="other">%1$d нүкте жазылды</item>
+    </plurals>
+    <string name="history_cd_dismiss">Алып тастау</string>
+    <string name="history_accuracy_label">±%1$s дәлдік</string>
+    <string name="history_emergency_sos">Төтенше SOS сигналы</string>
+    <string name="history_detail_location">Орын</string>
+    <string name="history_detail_coordinates">Координаттар</string>
+    <string name="history_within">±%1$s ішінде</string>
+    <string name="history_detail_movement">Қозғалыс</string>
+    <string name="history_movement_desc">%1$s %2$s, бағыты %3$s</string>
+
+    <string name="common_create">Жасау</string>
+
+    <!-- ── Геоқоршау экрандары ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">Геоқоршау аймағын қосу</string>
+    <string name="geo_cd_assign">Геоқоршауды тағайындау</string>
+    <string name="geo_unknown">Белгісіз</string>
+    <string name="geo_empty_title">Геоқоршаулар жоқ</string>
+    <string name="geo_empty_sub">Геоқоршау аймағын жасау үшін + түймесін түртіңіз, содан кейін оған контактілерді бөлісу параметрлерінен тағайындаңыз.</string>
+    <string name="geo_delete_title">Геоқоршауды жою керек пе?</string>
+    <string name="geo_delete_simple">\"%1$s\" жою керек пе?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d контактіге тағайындалған. Оны жою сол тағайындауларды да алып тастайды.</item>
+        <item quantity="other">\"%1$s\" %2$d контактіге тағайындалған. Оны жою сол тағайындауларды да алып тастайды.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s үшін геоқоршаулар</string>
+    <string name="geo_empty_contact_title">Контакт үшін геоқоршаулар жоқ</string>
+    <string name="geo_empty_contact_sub">Геоқоршау аймағын тағайындау үшін + түймесін түртіңіз және келгенде, кеткенде немесе екеуінде де ескертуді таңдаңыз.</string>
+    <string name="geo_no_areas_title">Геоқоршаулар әлі жоқ</string>
+    <string name="geo_no_areas_msg">Алдымен Геоқоршаулар экранынан геоқоршау аймағын жасаңыз, содан кейін оны осында тағайындаңыз.</string>
+    <string name="geo_radius_label">%1$s радиусы</string>
+    <string name="geo_contacts_label">Контактілер: %1$s</string>
+    <string name="geo_no_contacts_assigned">Контактілер тағайындалмаған</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d ереже</item>
+        <item quantity="other">%1$d ереже</item>
+    </plurals>
+    <string name="geo_trigger_enter">Кіру</string>
+    <string name="geo_trigger_exit">Шығу</string>
+    <string name="geo_trigger_both">Екеуі де</string>
+    <string name="geo_edit_title">Геоқоршауды өзгерту</string>
+    <string name="geo_new_title">Жаңа геоқоршау</string>
+    <string name="geo_cd_my_location">Менің орным</string>
+    <string name="geo_cd_radius_increase">Радиусты үлкейту</string>
+    <string name="geo_cd_radius_decrease">Радиусты кішірейту</string>
+    <string name="geo_hint_tap">Орналастыру үшін картаны түртіңіз немесе басып тұрыңыз</string>
+    <string name="geo_hint_move">Масштабтау үшін екі саусақпен басыңыз • Жылжыту үшін пинді басып тұрыңыз немесе сүйреңіз</string>
+    <string name="geo_basic_info">Негізгі ақпарат</string>
+    <string name="geo_search_title">Мекенжай бойынша іздеу</string>
+    <string name="geo_search_label">Мекенжай немесе орын</string>
+    <string name="geo_search_placeholder">мысалы, Абай көшесі 10, Алматы</string>
+    <string name="geo_search_no_results">Сәйкес мекенжай табылмады</string>
+    <string name="geo_cd_search">Іздеу</string>
+    <string name="geo_name_placeholder">мысалы, Үй, Жұмыс</string>
+    <string name="geo_name_required">Аты қажет</string>
+    <string name="geo_latitude">Ендік</string>
+    <string name="geo_longitude">Бойлық</string>
+    <string name="geo_lat_range">-90-нан 90-ға дейін</string>
+    <string name="geo_lng_range">-180-ден 180-ге дейін</string>
+    <string name="geo_radius">Радиус</string>
+    <string name="geo_radius_range">%1$d-ден %2$d м-ге дейін енгізіңіз</string>
+    <string name="geo_edit_assignment">Тағайындауды өзгерту</string>
+    <string name="geo_assign_title">Геоқоршауды тағайындау</string>
+    <string name="geo_select_area">Геоқоршау аймағын таңдаңыз</string>
+    <string name="geo_trigger_title">Хабарландыруды іске қосу:</string>
+    <string name="geo_add_rule">Ереже қосу</string>
+    <string name="geo_alerts_all_times">Ескертулер әрқашан белсенді. Ескертулер жіберілетін уақытты шектеу үшін ереже қосыңыз.</string>
+    <string name="geo_assign_action">Тағайындау</string>
+
+    <!-- ── Жақындық ескертулері экраны ────────────────────────────────────────── -->
+    <string name="prox_title">Жақындық ескертулері</string>
+    <string name="prox_empty_title">Бақыланатын адамдар жоқ</string>
+    <string name="prox_empty_sub">Біреудің орналасқан жерін бақылауды бастау үшін\nсканерлеу қойындысынан олардың шақыру QR-ын сканерлеңіз</string>
+    <string name="prox_intro">Бақыланатын адам сіз таңдаған қашықтыққа жақындағанда хабарландыру алыңыз.</string>
+    <string name="prox_alert_within">%1$s ішінде болғанда ескерту</string>
+    <string name="prox_alerts_off">Ескертулер өшірулі</string>
+    <string name="prox_alert_radius">Ескерту радиусы</string>
+    <string name="prox_edit_schedule">Кестені өзгерту</string>
+    <string name="prox_rules">Ережелер</string>
+
+    <!-- ── Кесте экраны / ереже редакторы ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s үшін кесте</string>
+    <string name="schedule_cd_add_rule">Ереже қосу</string>
+    <string name="schedule_empty_title">Кесте ережелері жоқ</string>
+    <string name="schedule_empty_global">Орын әрқашан бөлісіледі. Бөлісу белсенді болатын уақытты шектеу үшін ереже қосыңыз.</string>
+    <string name="schedule_empty_peer">Орын әрқашан %1$s-мен бөлісіледі. Қашан екенін шектеу үшін ереже қосыңыз.</string>
+    <string name="schedule_active_hint">Кез келген ереже ағымдағы уақытпен сәйкес келгенде белсенді. Бос = әрқашан қосулы.</string>
+    <string name="schedule_all_day">Күні бойы</string>
+    <string name="schedule_plus_one_day"> (+1 күн)</string>
+    <string name="schedule_rule_number">Ереже %1$d</string>
+    <string name="schedule_cd_delete_rule">Ережені жою</string>
+    <string name="schedule_edit_rule">Ережені өзгерту</string>
+    <string name="schedule_label_optional">Белгі (қосымша)</string>
+    <string name="schedule_label_placeholder">мысалы, Жұмыс уақыты, Демалыс күндері</string>
+    <string name="schedule_active_days">Белсенді күндер</string>
+    <string name="schedule_time_window">Уақыт аралығы</string>
+    <string name="schedule_start">Басталуы</string>
+    <string name="schedule_end">Аяқталуы</string>
+    <string name="schedule_overnight">Түні бойы: %1$s-ден ертеңгі %2$s-ге дейін белсенді</string>
+
+    <!-- ── Бақылау қақпасы ───────────────────────────────────────────────── -->
+    <string name="gate_title">Құрылғы бақылауда</string>
+    <string name="gate_message">Параметрлерге кіру үшін бақылаушының мақұлдауы қажет.</string>
+    <string name="gate_request_access">Кіруге рұқсат сұрау</string>
+    <string name="gate_waiting">Бақылаушының мақұлдауын күтуде…</string>
+    <string name="gate_denied">Бақылаушы рұқсат бермеді.</string>
+    <string name="gate_timed_out">Сұрау уақыты аяқталды. Бақылаушы жауап бермеді.</string>
+
+    <!-- ── Сақтау мерзімін таңдау ─────────────────────────────────────────────── -->
+    <string name="retention_forever">Мәңгі</string>
+    <string name="retention_keep_for">Сақтау мерзімі: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d күн</item>
+        <item quantity="other">%1$d күн</item>
+    </plurals>
+
+    <string name="common_select">Таңдау</string>
+
+    <!-- ── Картадан орынды таңдау ────────────────────────────────────────────── -->
+    <string name="picker_title">Бекітілген орынды таңдау</string>
+
+    <!-- ── Навигацияны реттеу экраны ────────────────────────────────────── -->
+    <string name="customize_nav_intro">Төменгі амоледе қай қойындылар көрінетінін және олардың ретін таңдаңыз. Карта әрқашан қосылады.</string>
+    <string name="customize_cd_move_up">Жоғары жылжыту</string>
+    <string name="customize_cd_move_down">Төмен жылжыту</string>
+
+    <!-- ── Туралы экран ───────────────────────────────────────────────────── -->
+    <string name="about_version">Нұсқасы %1$s (build %2$d)</string>
+    <string name="about_tagline">Өзіңіз сенетін адамдармен жеке орын бөлісу. Аккаунтсыз, бұлтсыз, біздің тарапымыздан бақылаусыз.</string>
+    <string name="about_relay_connections">Релелік қосылымдар</string>
+    <string name="about_connected">Қосылды</string>
+    <string name="about_disconnected">Ажыратылды</string>
+    <string name="about_open_source">Ашық бастапқы кітапханалар</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap негізіндегі карта рендерингі</string>
+    <string name="about_lib_okhttp_desc">Nostr релесіне арналған WebSocket тасымалдауы</string>
+    <string name="about_lib_compose_desc">UI фреймворкі</string>
+    <string name="about_lib_hilt_desc">Тәуелділік инъекциясы</string>
+    <string name="about_lib_room_desc">Жергілікті деректер қоры</string>
+    <string name="about_map_attribution">Карта деректері © OpenStreetMap үлес қосушылары</string>
+
+    <!-- ── Хабарландырулар ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">Қабылдау</string>
+    <string name="notif_someone">Біреу</string>
+    <string name="notif_sos_title">%1$s-ден SOS!</string>
+    <string name="notif_sos_text">%1$s (%2$s, %3$s) нүктесінде SOS сигналын қосты</string>
+    <string name="notif_supervisor_request_title">%1$s сіздің бақылаушыңыз болғысы келеді</string>
+    <string name="notif_supervisor_request_text">Осы құрылғыдан құлыпты ашу сұрауларын мақұлдауға келісу</string>
+    <string name="notif_supervisor_request_big">Бақылау режимі белсенді болғанда %1$s-ге құлыпты ашу сұрауларын жіберуге рұқсат беру үшін қабылдаңыз.</string>
+    <string name="notif_supervised_active_title">Бақылау режимі белсенді</string>
+    <string name="notif_supervised_active_text">Бақылаушыңыз растады - бақылау режимі енді реттелді</string>
+    <string name="notif_supervised_declined_title">Бақылау режимінен бас тартылды</string>
+    <string name="notif_supervised_declined_text">Бақылаушыңыз сұрауды қабылдамады - бақылау режимі өшірілді</string>
+    <string name="notif_tracking_alert_title">Бақылау ескертуі</string>
+    <string name="notif_tracking_proximity">%1$s сіз туралы жақындық ескертуін алды</string>
+    <string name="notif_tracking_geofence">%1$s сіздің қоршауға кіргеніңіз/шыққаныңыз туралы ескерту алды: %2$s</string>
+    <string name="notif_tracking_generic">%1$s сіздің орныңызды бақылауда</string>
+    <string name="notif_track_update_title">%1$s-ден бөлісу жаңартуы</string>
+    <string name="notif_track_new_title">Жаңа контакт: %1$s</string>
+    <string name="notif_role_send_receive">Орынды жіберу/алу</string>
+    <string name="notif_role_send">Орынды жіберу</string>
+    <string name="notif_role_receive">Орынды алу</string>
+    <string name="notif_role_none">Орын бөлісусіз</string>
+    <string name="notif_track_requesting">%1$s сұрауда: %2$s</string>
+    <string name="notif_track_update_body">%1$s орын бөлісу тәсілін жаңартқысы келеді.</string>
+    <string name="notif_track_new_body">%1$s сізді контакт ретінде қосты және байланысқысы келеді.</string>
+    <string name="notif_contact_connected_title">Контакт қосылды</string>
+    <string name="notif_contact_connected_text">%1$s енді сізбен байланыста.</string>
+    <string name="notif_request_declined_title">Сұрау қабылданбады</string>
+    <string name="notif_request_declined_text">%1$s сіздің орын бөлісу сұрауыңыздан бас тартты.</string>
+    <string name="notif_message_person">%1$s-ге хабарлама жіберу</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s аймағына кірді</string>
+    <string name="notif_geofence_left_title">%1$s %2$s аймағынан шықты</string>
+    <string name="notif_geofence_subtitle">%1$s нүктесінде · %2$s радиусы</string>
+    <string name="notif_person_nearby">%1$s жақын жерде</string>
+    <string name="notif_distance_from_you">сізден %1$s қашықтықта</string>
+    <string name="notif_missed_title">%1$s-ден жаңарту жоқ</string>
+    <string name="notif_missed_text">Соңғы рет %1$s мин бұрын (%2$s, %3$s) жанында көрінді</string>
+    <string name="notif_sos_active_title">SOS БЕЛСЕНДІ!</string>
+    <string name="notif_sos_active_text">SOS контактілеріне төтенше жағдай ескертуі жіберілуде</string>
+    <string name="notif_messages_group_title">LocaPeer хабарламалары</string>
+
+    <!-- ── Тостар ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s-ден контакт сұрауы қабылданбады</string>
+    <string name="toast_now_supervising">Енді %1$s құрылғысын бақылап отырсыз</string>
+    <string name="toast_declined_supervision">%1$s-ден бақылау сұрауы қабылданбады</string>
+
+    <!-- ── Бағдарламалық жолдар ─────────────── -->
+    <string name="time_just_now">Жаңа ғана</string>
+    <string name="time_minutes_ago">%1$d мин бұрын</string>
+    <string name="fallback_me">Мен</string>
+    <string name="fallback_unknown">Белгісіз</string>
+    <string name="geo_unassigned">Тағайындалмаған</string>
+    <string name="days_every_day">Күн сайын</string>
+    <string name="days_weekdays">Жұмыс күндері</string>
+    <string name="days_weekends">Демалыс күндері</string>
+    <string name="days_none">Күндер жоқ</string>
+    <string name="chat_my_location_message">Ағымдағы орным: %1$s</string>
+    <string name="scan_error_bad_pubkey">Жарамсыз шақыру: дұрыс емес ашық кілт</string>
+    <string name="scan_error_key_mismatch">Жарамсыз шақыру: кілттер сәйкес келмейді</string>
+    <string name="scan_error_unknown">Белгісіз қате</string>
+    <string name="scan_error_invalid_link">Жарамсыз шақыру сілтемесі</string>
+    <string name="scan_fallback_contact">бұл контакт</string>
+    <string name="backup_saved">Резервтік көшірме сақталды: %1$s</string>
+    <string name="backup_saved_encrypted">Резервтік көшірме сақталды (шифрланған): %1$s</string>
+    <string name="backup_failed">Резервтік көшірме сәтсіз аяқталды: %1$s</string>
+    <string name="backup_could_not_read_file">Файлды оқу мүмкін болмады</string>
+    <string name="backup_could_not_write_file">Файлды жазу мүмкін болмады</string>
+    <string name="backup_could_not_read">Резервтік көшірмені оқу мүмкін болмады: %1$s</string>
+    <string name="backup_incorrect_password">Құпия сөз қате</string>
+    <string name="restore_result_restored">Қалпына келтірілді: %1$s</string>
+    <string name="restore_result_failed">Сәтсіз аяқталды: %1$s</string>
+    <string name="restore_nothing">Қалпына келтіретін ештеңе жоқ</string>
+    <string name="restore_failed">Қалпына келтіру сәтсіз аяқталды: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d контакт</item>
+        <item quantity="other">%1$d контакт</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d геоқоршау</item>
+        <item quantity="other">%1$d геоқоршау</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s-ге рөлді өзгерту сұрауы жіберілді</string>
+    <string name="peer_not_found">Дос табылмады</string>
+    <string name="peer_purge_location_sent">%1$s-ге БАРЛЫҚ орындарды жою командасы жіберілді</string>
+    <string name="peer_purge_messages_sent">%1$s-ге БАРЛЫҚ хабарламаларды жою командасы жіберілді</string>
+    <string name="onboarding_error_key_length">Жарамсыз кілт - 64 хекс таңбасы болуы керек.</string>
+    <string name="onboarding_error_key_range">Жарамсыз жеке кілт.</string>
+    <string name="onboarding_error_hex">Жарамсыз хекс форматы.</string>
+    <string name="onboarding_error_import_failed">Кілтті импорттау мүмкін болмады: %1$s</string>
 </resources>

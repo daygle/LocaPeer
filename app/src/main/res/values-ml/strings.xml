@@ -2,24 +2,24 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── അറിയിപ്പ് ചാനലുകളും മുൻനിര സേവനവും ─────────────────────── -->
-    <string name="channel_name_heartbeat">ലൊക്കേഷൻ ബ്രോഡ്കാസ്റ്റ്</string>
-    <string name="channel_desc_heartbeat">നിങ്ങളുടെ അംഗീകൃത കോൺടാക്റ്റുകളിലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ ബ്രോഡ്കാസ്റ്റ് ചെയ്യുന്നു</string>
+    <!-- ── വിജ്ഞാപന ചാനലുകളും ഫോർഗ്രൗണ്ട് സേവനവും ─────────────────────── -->
+    <string name="channel_name_heartbeat">ലൊക്കേഷൻ പ്രക്ഷേപണം</string>
+    <string name="channel_desc_heartbeat">നിങ്ങളുടെ അംഗീകൃത കോൺടാക്റ്റുകളിലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ പ്രക്ഷേപണം ചെയ്യുന്നു</string>
     <string name="channel_name_alerts">അലേർട്ടുകൾ</string>
     <string name="channel_desc_alerts">മിസ്ഡ് ഹാർട്ട്ബീറ്റ്, ജിയോഫെൻസ് അലേർട്ടുകൾ</string>
     <string name="channel_name_messages">സന്ദേശങ്ങൾ</string>
-    <string name="channel_desc_messages">വരുന്ന സന്ദേശങ്ങൾ</string>
+    <string name="channel_desc_messages">വരുന്ന പിയർ സന്ദേശങ്ങൾ</string>
     <string name="notification_heartbeat_title">LocaPeer പ്രവർത്തിക്കുന്നു</string>
     <string name="notification_heartbeat_text">നിങ്ങളുടെ ലൊക്കേഷൻ മറ്റുള്ളവരുമായി പങ്കിടുന്നു</string>
 
-    <!-- ── സാധാരണ പ്രവർത്തനങ്ങൾ ──────────────────────────────────────── -->
-    <string name="common_save">സേവ് ചെയ്യുക</string>
+    <!-- ── പൊതുവായ പ്രവർത്തനങ്ങൾ ──────────────────────────────────────── -->
+    <string name="common_save">സംരക്ഷിക്കുക</string>
     <string name="common_cancel">റദ്ദാക്കുക</string>
     <string name="common_done">പൂർത്തിയായി</string>
-    <string name="common_delete">ഡിലീറ്റ് ചെയ്യുക</string>
-    <string name="common_disable">പ്രവർത്തനരഹിതമാക്കുക</string>
-    <string name="common_enable">പ്രവർത്തനസജ്ജമാക്കുക</string>
-    <string name="common_restore">പുനഃസ്ഥാപിക്കുക</string>
+    <string name="common_delete">ഇല്ലാതാക്കുക</string>
+    <string name="common_disable">അപ്രാപ്തമാക്കുക</string>
+    <string name="common_enable">പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="common_restore">വീണ്ടെടുക്കുക</string>
     <string name="common_unlock">അൺലോക്ക് ചെയ്യുക</string>
     <string name="common_password">പാസ്‌വേഡ്</string>
     <string name="common_not_now">ഇപ്പോൾ വേണ്ട</string>
@@ -35,34 +35,735 @@
     <string name="tab_qr">QR</string>
     <string name="tab_settings">ക്രമീകരണങ്ങൾ</string>
 
-    <!-- ── ചലന / പ്രവർത്തന നിലകൾ ───────────────────────────────────────── -->
+    <!-- ── ചലന / പ്രവർത്തന അവസ്ഥകൾ ───────────────────────────────────────── -->
     <string name="motion_stationary">നിശ്ചലം</string>
     <string name="motion_walking">നടക്കുന്നു</string>
     <string name="motion_running">ഓടുന്നു</string>
     <string name="motion_cycling">സൈക്ലിംഗ്</string>
-    <string name="motion_driving">ഡ്രൈവിംഗ്</string>
+    <string name="motion_driving">വാഹനം ഓടിക്കുന്നു</string>
 
-    <!-- ── ക്രമീകരണങ്ങൾ ────────────────────────────────────────────────── -->
+    <!-- ── ബാക്കപ്പ് വിഭാഗങ്ങൾ ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">സ്വകാര്യ കീ</string>
+    <string name="backup_section_contacts">കോൺടാക്റ്റുകൾ</string>
+    <string name="backup_section_geofences">ജിയോഫെൻസുകൾ</string>
+    <string name="backup_section_settings">ക്രമീകരണങ്ങൾ</string>
+
+    <!-- ── മേൽനോട്ട അഭ്യർത്ഥന ഡയലോഗ് ──────────────────────── -->
+    <string name="supervision_request_title">മേൽനോട്ട അഭ്യർത്ഥന</string>
+    <string name="supervision_request_message">\"%1$s\" അവരുടെ ക്രമീകരണങ്ങളിലേക്ക് പ്രവേശനം അഭ്യർത്ഥിക്കുന്നു. അനുവദിക്കണോ?</string>
+
+    <!-- ── ക്രമീകരണ സ്ക്രീൻ ────────────────────────────────────────────────── -->
     <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
+
+    <!-- വിഭാഗം ലേബലുകൾ -->
     <string name="settings_section_location_privacy">ലൊക്കേഷനും സ്വകാര്യതയും</string>
     <string name="settings_section_security">സുരക്ഷ</string>
     <string name="settings_section_map">മാപ്പ്</string>
     <string name="settings_section_battery_performance">ബാറ്ററിയും പ്രകടനവും</string>
-    <string name="settings_section_units_display">യൂണിറ്റുകളും ഡിസ്‌പ്ലേയും</string>
-    <string name="settings_section_retention">സൂക്ഷിക്കൽ (ഈ ഉപകരണം)</string>
+    <string name="settings_section_units_display">യൂണിറ്റുകളും പ്രദർശനവും</string>
+    <string name="settings_section_retention">നിലനിർത്തൽ (ഈ ഉപകരണത്തിൽ)</string>
     <string name="settings_section_appearance">രൂപഭാവം</string>
     <string name="settings_section_backup_keys">ബാക്കപ്പും കീകളും</string>
-    <string name="settings_section_about">വിവരം</string>
+    <string name="settings_section_about">വിവരങ്ങൾ</string>
 
+    <!-- പ്രൊഫൈൽ -->
     <string name="settings_edit_name">പേര് മാറ്റുക</string>
     <string name="settings_my_qr">എന്റെ QR</string>
     <string name="settings_no_name_set">പേര് നൽകിയിട്ടില്ല</string>
 
+    <!-- ലൊക്കേഷനും സ്വകാര്യതയും -->
     <string name="settings_share_location">എന്റെ ലൊക്കേഷൻ പങ്കിടുക</string>
+    <string name="settings_broadcasting">നിങ്ങളുടെ കോൺടാക്റ്റുകളിലേക്ക് പ്രക്ഷേപണം ചെയ്യുന്നു</string>
+    <string name="settings_not_broadcasting">പ്രക്ഷേപണം ചെയ്യുന്നില്ല</string>
+    <string name="settings_sharing_schedule">പങ്കിടൽ ഷെഡ്യൂൾ</string>
+    <string name="settings_always_on">എപ്പോഴും ഓൺ</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d നിയമം</item>
+        <item quantity="other">%1$d നിയമങ്ങൾ</item>
+    </plurals>
+    <string name="settings_geofences">ജിയോഫെൻസുകൾ</string>
+    <string name="settings_geofences_subtitle">പങ്കിട്ട ജിയോഫെൻസ് ഏരിയകൾ കൈകാര്യം ചെയ്യുക</string>
+    <string name="settings_notify_when_tracked">ട്രാക്ക് ചെയ്യപ്പെടുമ്പോൾ അറിയിക്കുക</string>
+    <string name="settings_notify_when_tracked_subtitle">ഒരു കോൺടാക്റ്റിന്റെ സാമീപ്യം അല്ലെങ്കിൽ ജിയോഫെൻസ് അലേർട്ട് നിങ്ങൾക്കായി ട്രിഗർ ചെയ്യുമ്പോൾ അറിയിപ്പ് നേടുക.</string>
+    <string name="settings_my_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
+    <string name="settings_my_location_history_subtitle">നിങ്ങളുടെ സ്വന്തം ലൊക്കേഷൻ ടൈംലൈൻ ബ്രൗസ് ചെയ്യുക</string>
+    <string name="settings_lookup_addresses">വിലാസങ്ങൾ തിരയുക</string>
+    <string name="settings_lookup_addresses_subtitle">ഹിസ്റ്ററി പോയിന്റുകൾക്കും ടാപ്പ് ചെയ്ത മാപ്പ് പിന്നുകൾക്കും തെരുവ് വിലാസങ്ങൾ കാണിക്കുക. ആ കോർഡിനേറ്റുകൾ നിങ്ങളുടെ ഉപകരണത്തിന്റെ ജിയോകോഡിംഗ് സേവനത്തിലേക്ക് (സാധാരണയായി ഗൂഗിൾ) അയയ്ക്കുന്നു.</string>
+
+    <!-- സുരക്ഷ -->
+    <string name="settings_supervision_active">മേൽനോട്ടം സജീവമാണ്</string>
+    <string name="settings_supervision_active_subtitle">ക്രമീകരണങ്ങൾക്ക് മേൽനോട്ടക്കാരന്റെ അംഗീകാരം ആവശ്യമാണ്</string>
+    <string name="settings_disable_supervised">മേൽനോട്ട മോഡ് അപ്രാപ്തമാക്കുക</string>
+    <string name="settings_supervised_mode">മേൽനോട്ട മോഡ്</string>
+    <string name="settings_supervised_mode_subtitle">ക്രമീകരണങ്ങൾ ആക്സസ് ചെയ്യുന്നതിന് മേൽനോട്ടക്കാരന്റെ അംഗീകാരം ആവശ്യമാണ്</string>
+
+    <!-- മാപ്പ് -->
+    <string name="settings_starting_point">തുടക്ക പോയിന്റ്</string>
+    <string name="settings_map_current_location">നിലവിലെ ലൊക്കേഷൻ</string>
+    <string name="settings_map_all_contacts">എല്ലാ കോൺടാക്റ്റുകളും</string>
+    <string name="settings_map_fixed_location">നിശ്ചിത ലൊക്കേഷൻ</string>
+    <string name="settings_map_last_position">അവസാന സ്ഥാനം</string>
+    <string name="settings_map_starting_point_title">മാപ്പ് തുടക്ക പോയിന്റ്</string>
+    <string name="settings_no_location_set">ലൊക്കേഷൻ നൽകിയിട്ടില്ല</string>
+    <string name="settings_pick_location_on_map">മാപ്പിൽ ലൊക്കേഷൻ തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_default_zoom_level">ഡിഫോൾട്ട് സൂം നില</string>
+    <string name="settings_map_pin_colour">മാപ്പ് പിൻ നിറം</string>
+
+    <!-- ബാറ്ററിയും പ്രകടനവും -->
+    <string name="settings_update_cadence">അപ്‌ഡേറ്റ് ഫ്രീക്വൻസി</string>
+    <string name="settings_update_cadence_subtitle">നിങ്ങളുടെ ലൊക്കേഷൻ എത്ര തവണ പ്രക്ഷേപണം ചെയ്യുന്നു എന്ന് ക്രമീകരിക്കുക</string>
+    <string name="settings_update_cadence_dialog_message">നിങ്ങളുടെ പ്രവർത്തനത്തെ അടിസ്ഥാനമാക്കി നിങ്ങളുടെ ലൊക്കേഷൻ എത്ര തവണ അപ്‌ഡേറ്റ് ചെയ്യപ്പെടുന്നു എന്ന് നിയന്ത്രിക്കുക. ഇടയ്ക്കിടെയുള്ള അപ്‌ഡേറ്റുകൾ കൂടുതൽ ബാറ്ററി ഉപയോഗിക്കുന്നു.</string>
+    <string name="settings_update_cadence_reset">ഡിഫോൾട്ടുകളിലേക്ക് പുനഃക്രമീകരിക്കുക</string>
+    <string name="settings_min_distance_filtering">ഏറ്റവും കുറഞ്ഞ ദൂര ഫിൽട്ടറിംഗ്</string>
+    <string name="settings_min_distance_filtering_subtitle">മുമ്പത്തേതിൽ നിന്ന് കുറഞ്ഞത് ഇത്രയും അകലെയുള്ള പോയിന്റുകൾ മാത്രം കാണിക്കുക.</string>
+    <string name="settings_discard_low_accuracy">കുറഞ്ഞ കൃത്യതയുള്ള ഫിക്സുകൾ ഒഴിവാക്കുക</string>
+    <string name="settings_discard_low_accuracy_subtitle">ഇതിനേക്കാൾ വലിയ കൃത്യതയുള്ള ആരം ഉള്ള നിങ്ങളുടെ സ്വന്തം ഫിക്സുകൾ പ്രക്ഷേപണം ചെയ്യുകയോ റെക്കോർഡ് ചെയ്യുകയോ ചെയ്യരുത്. SOS ഒരിക്കലും ഒഴിവാക്കില്ല.</string>
+    <string name="settings_hide_low_accuracy">കുറഞ്ഞ കൃത്യതയുള്ള പോയിന്റുകൾ മറയ്ക്കുക</string>
+    <string name="settings_hide_low_accuracy_subtitle">ഇതിനേക്കാൾ വലിയ കൃത്യതയുള്ള ആരം ഉള്ള ഹിസ്റ്ററി പോയിന്റുകൾ മറയ്ക്കുക. ഒന്നും ഇല്ലാതാക്കില്ല.</string>
+    <string name="settings_low_battery" formatted="false">കുറഞ്ഞ ബാറ്ററി (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d മിനിറ്റ്</string>
+    <string name="settings_motion_detection">ചലനം കണ്ടെത്തൽ</string>
+    <string name="settings_motion_detection_on">പ്രവർത്തനക്ഷമമാക്കി - ചരിത്രത്തിലെ നിങ്ങളുടെ ചലന തരം (നടത്തം, ഡ്രൈവിംഗ്) പരിഷ്കരിക്കുന്നു</string>
+    <string name="settings_motion_detection_off">ഓഫ് - കൂടുതൽ കൃത്യമായ ചലന ലേബലുകൾക്കായി ശാരീരിക പ്രവർത്തന ആക്സസ് അനുവദിക്കുക</string>
+    <string name="settings_enable_motion_title">ചലനം കണ്ടെത്തൽ പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="settings_enable_motion_message">ശാരീരിക പ്രവർത്തന ആക്സസ് LocaPeer-നെ നിങ്ങളുടെ ചരിത്രത്തിൽ നടത്തം, ഡ്രൈവിംഗ്, നിശ്ചലമായി നിൽക്കൽ എന്നിവ കൂടുതൽ കൃത്യമായി വേർതിരിച്ചറിയാൻ അനുവദിക്കുന്നു. ഇത് നിലവിൽ ഓഫാണ് - സിസ്റ്റം ക്രമീകരണങ്ങളിൽ നിന്ന് നിങ്ങൾക്ക് ഇത് വീണ്ടും പ്രവർത്തനക്ഷമമാക്കാം.</string>
+    <string name="settings_open_settings">ക്രമീകരണങ്ങൾ തുറക്കുക</string>
+    <string name="settings_battery_optimization">ബാറ്ററി ഒപ്റ്റിമൈസേഷൻ</string>
+    <string name="settings_battery_optimization_unrestricted">നിയന്ത്രണമില്ലാത്തത് — LocaPeer-ന് പശ്ചാത്തലത്തിൽ സ്വതന്ത്രമായി പ്രവർത്തിക്കാൻ കഴിയും</string>
+    <string name="settings_battery_optimization_restricted">ഒപ്റ്റിമൈസ് ചെയ്തത് — സിസ്റ്റം ക്രമീകരണങ്ങളിൽ നിയന്ത്രണമില്ലാത്തതാക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+
+    <!-- അനുമതികൾ -->
+    <string name="settings_permissions">അനുമതികൾ</string>
+    <string name="settings_permissions_subtitle">ലൊക്കേഷൻ, ക്യാമറ എന്നിവയിലേക്കുള്ള ആപ്പ് ആക്സസ് അവലോകനം ചെയ്യുകയും ശരിയാക്കുകയും ചെയ്യുക</string>
+    <string name="permissions_intro">നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടാനും ക്ഷണങ്ങൾ സ്കാൻ ചെയ്യാനും പശ്ചാത്തലത്തിൽ പ്രവർത്തിക്കാനും LocaPeer-ന് ഈ അനുമതികൾ ആവശ്യമാണ്. നൽകിയിട്ടില്ലാത്തവ ശരിയാക്കാൻ ടാപ്പ് ചെയ്യുക.</string>
+    <string name="perm_location_title">ലൊക്കേഷൻ</string>
+    <string name="perm_location_granted">നൽകി — നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടാം</string>
+    <string name="perm_location_denied">നൽകിയിട്ടില്ല — ലൊക്കേഷൻ ആക്സസ് അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_background_location_title">പശ്ചാത്തല ലൊക്കേഷൻ</string>
+    <string name="perm_background_location_granted">നൽകി — ആപ്പ് അടച്ചിരിക്കുമ്പോഴും ലൊക്കേഷൻ പങ്കിടൽ തുടരും</string>
+    <string name="perm_background_location_denied">നൽകിയിട്ടില്ല — ക്രമീകരണങ്ങളിൽ \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' തിരഞ്ഞെടുക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_camera_title">ക്യാമറ</string>
+    <string name="perm_camera_granted">നൽകി — ക്ഷണ QR കോഡുകൾ സ്കാൻ ചെയ്യാൻ ഉപയോഗിക്കുന്നു</string>
+    <string name="perm_camera_denied">നൽകിയിട്ടില്ല — ക്യാമറ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_notifications_title">അറിയിപ്പുകൾ</string>
+    <string name="perm_notifications_granted">നൽകി — അലേർട്ടുകളും സ്റ്റാറ്റസ് അപ്‌ഡേറ്റുകളും കാണിക്കാനാകും</string>
+    <string name="perm_notifications_denied">നൽകിയിട്ടില്ല — അറിയിപ്പുകൾ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+
+    <!-- യൂണിറ്റുകളും പ്രദർശനവും -->
+    <string name="settings_speed_units">വേഗതയുടെ യൂണിറ്റുകൾ</string>
+    <string name="settings_speed_imperial">ഇമ്പീരിയൽ (mph)</string>
+    <string name="settings_speed_metric">മെട്രിക് (km/h)</string>
+    <string name="settings_elevation_units">ഉയരത്തിന്റെ യൂണിറ്റുകൾ</string>
+    <string name="settings_elevation_imperial">ഇമ്പീരിയൽ (അടി)</string>
+    <string name="settings_elevation_metric">മെട്രിക് (മീറ്റർ)</string>
+    <string name="settings_distance_units">ദൂരത്തിന്റെ യൂണിറ്റുകൾ</string>
+    <string name="settings_distance_imperial">ഇമ്പീരിയൽ (ft/mi)</string>
+    <string name="settings_distance_metric">മെട്രിക് (m/km)</string>
+    <string name="settings_time_format">സമയ ഫോർമാറ്റ്</string>
+    <string name="settings_time_24h">24-മണിക്കൂർ (13:30)</string>
+    <string name="settings_time_12h">12-മണിക്കൂർ (1:30 PM)</string>
+
+    <!-- നിലനിർത്തൽ -->
+    <string name="settings_retention_location">ലൊക്കേഷൻ ഡാറ്റ</string>
+    <string name="settings_retention_location_subtitle">കോൺടാക്റ്റുകളുടെ ലൊക്കേഷൻ ഡാറ്റ എത്രകാലം ലോക്കലായി സൂക്ഷിക്കണം</string>
+    <string name="settings_clear_all_location">എല്ലാ ലൊക്കേഷൻ ഡാറ്റയും മായ്ക്കുക</string>
+    <string name="settings_retention_messages">സന്ദേശങ്ങൾ</string>
+    <string name="settings_retention_messages_subtitle">ലഭിച്ച സന്ദേശങ്ങൾ എത്രകാലം ലോക്കലായി സൂക്ഷിക്കണം</string>
+    <string name="settings_clear_all_messages">എല്ലാ സന്ദേശങ്ങളും മായ്ക്കുക</string>
+
+    <!-- രൂപഭാവം -->
+    <string name="settings_customize_nav">നാവിഗേഷൻ ഇച്ഛാനുസൃതമാക്കുക</string>
+    <string name="settings_customize_nav_subtitle">താഴെയുള്ള ടാബുകൾ തിരഞ്ഞെടുക്കുകയും പുനഃക്രമീകരിക്കുകയും ചെയ്യുക</string>
+    <string name="settings_start_page">തുടക്ക പേജ്</string>
     <string name="settings_language">ഭാഷ</string>
     <string name="settings_language_title">ആപ്പ് ഭാഷ</string>
     <string name="settings_language_system">സിസ്റ്റം ഡിഫോൾട്ട്</string>
 
-    <string name="common_ok">ശരി</string>
+    <!-- ബാക്കപ്പും കീകളും -->
+    <string name="settings_export_backup">ബാക്കപ്പ് കയറ്റുമതി ചെയ്യുക</string>
+    <string name="settings_export_backup_subtitle">നിങ്ങളുടെ സ്വകാര്യ കീയും കോൺടാക്റ്റുകളും ഒരു ഫയലിലേക്ക് സംരക്ഷിക്കുക. ഈ ഫയൽ സുരക്ഷിതമായി സൂക്ഷിക്കുക!</string>
+    <string name="settings_import_backup">ബാക്കപ്പ് ഇറക്കുമതി ചെയ്യുക</string>
+    <string name="settings_import_backup_subtitle">മുമ്പ് കയറ്റുമതി ചെയ്ത ഫയലിൽ നിന്ന് വീണ്ടെടുക്കുക</string>
+    <string name="settings_view_private_key">സ്വകാര്യ കീ കാണുക</string>
+    <string name="settings_view_private_key_subtitle">നിങ്ങളുടെ 64-അക്ഷര ഹെക്സ് ഐഡന്റിറ്റി കീ കാണിക്കുക</string>
+
+    <!-- വിവരങ്ങൾ -->
+    <string name="settings_about_locapeer">LocaPeer-നെ കുറിച്ച്</string>
+    <string name="settings_about_subtitle">പതിപ്പ്, റിലേ സ്റ്റാറ്റസ്, ഓപ്പൺ സോഴ്സ്</string>
+
+    <!-- ഡയലോഗുകൾ -->
+    <string name="settings_edit_display_name">പ്രദർശന നാമം മാറ്റുക</string>
+    <string name="settings_display_name_label">പ്രദർശന നാമം</string>
+    <string name="settings_my_invite_qr">എന്റെ ക്ഷണം QR</string>
+    <string name="settings_invite_qr_subtitle">നിങ്ങളെ ട്രാക്ക് ചെയ്യാൻ തുടങ്ങുന്നതിനായി മറ്റുള്ളവർക്ക് ഇത് സ്കാൻ ചെയ്യാം.</string>
+    <string name="settings_invite_qr_cd">ക്ഷണം QR</string>
+    <string name="settings_private_key_title">സ്വകാര്യ കീ</string>
+    <string name="settings_private_key_warning">ഇത് സുരക്ഷിതമായി സൂക്ഷിക്കുക. ഈ കീ ഉള്ള ആർക്കും നിങ്ങളെപ്പോലെ ആൾമാറാട്ടം നടത്താം.</string>
+    <string name="settings_clear_location_title">ലൊക്കേഷൻ ചരിത്രം മായ്ക്കണോ?</string>
+    <string name="settings_clear_location_message">സംരക്ഷിച്ച എല്ലാ ലൊക്കേഷൻ പിംഗുകളും ശാശ്വതമായി ഇല്ലാതാക്കപ്പെടും.</string>
+    <string name="settings_clear_messages_title">സന്ദേശ ചരിത്രം മായ്ക്കണോ?</string>
+    <string name="settings_clear_messages_message">സംരക്ഷിച്ച എല്ലാ സന്ദേശങ്ങളും ശാശ്വതമായി ഇല്ലാതാക്കപ്പെടും.</string>
+    <string name="settings_encrypted_backup_title">എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ്</string>
+    <string name="settings_encrypted_backup_message">ഈ ബാക്കപ്പ് എൻക്രിപ്റ്റ് ചെയ്തിരിക്കുന്നു. തുടരാൻ പാസ്‌വേഡ് നൽകുക.</string>
+    <string name="settings_select_restore_title">വീണ്ടെടുക്കാനുള്ള ഡാറ്റ തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_select_export_title">കയറ്റുമതി ചെയ്യാനുള്ള ഡാറ്റ തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_export_password_hint">നിങ്ങളുടെ ബാക്കപ്പ് ഫയൽ എൻക്രിപ്റ്റ് ചെയ്യാൻ പാസ്‌വേഡ് സജ്ജമാക്കുക.</string>
+    <string name="settings_backup_password_optional">ബാക്കപ്പ് പാസ്‌വേഡ് (ഐച്ഛികം)</string>
+    <string name="settings_select_sections">ഉൾപ്പെടുത്തേണ്ട വിഭാഗങ്ങൾ തിരഞ്ഞെടുക്കുക:</string>
+    <string name="settings_choose_file_location">ഫയൽ സ്ഥാനം തിരഞ്ഞെടുക്കുക</string>
+    <string name="settings_not_in_backup">ഈ ബാക്കപ്പിൽ ഇല്ല</string>
+    <string name="settings_enable_supervised_title">മേൽനോട്ട മോഡ് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="settings_enable_supervised_message">മേൽനോട്ടക്കാരനായി പ്രവർത്തിക്കുന്ന ഒരു സുഹൃത്തിനെ തിരഞ്ഞെടുക്കുക. അവർ അവരുടെ ഉപകരണത്തിൽ നിന്ന് ക്രമീകരണങ്ങൾ ആക്സസ് ചെയ്യുന്നത് അംഗീകരിക്കണം.</string>
+    <string name="settings_no_peers_found">സുഹൃത്തുക്കളെ ആരെയും കണ്ടെത്തിയില്ല. ആദ്യം അവരുടെ ക്ഷണം QR കോഡ് സ്കാൻ ചെയ്ത് ഒരു സുഹൃത്തിനെ ചേർക്കുക.</string>
+    <string name="settings_disable_supervised_title">മേൽനോട്ട മോഡ് അപ്രാപ്തമാക്കണോ?</string>
+    <string name="settings_disable_supervised_message">മേൽനോട്ടക്കാരന്റെ അംഗീകാരമില്ലാതെ ക്രമീകരണങ്ങൾ ആക്സസ് ചെയ്യാൻ കഴിയും.</string>
+
+    <!-- ── കൂടുതൽ പൊതുവായവ ─────────────────────────────────────────── -->
+    <string name="common_remove">നീക്കം ചെയ്യുക</string>
+    <string name="common_name">പേര്</string>
+    <string name="common_search">തിരയുക</string>
+    <string name="common_sort">ക്രമീകരിക്കുക</string>
+
+    <!-- ഉള്ളടക്ക വിവരണങ്ങൾ (പങ്കിട്ടവ) -->
+    <string name="cd_message">സന്ദേശം</string>
+    <string name="cd_show_on_map">മാപ്പിൽ കാണിക്കുക</string>
+    <string name="cd_more_options">കൂടുതൽ ഓപ്ഷനുകൾ</string>
+
+    <!-- ── കോൺടാക്റ്റുകൾ സ്ക്രീൻ ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d തിരഞ്ഞെടുത്തു</item>
+        <item quantity="other">%1$d തിരഞ്ഞെടുത്തു</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">തിരഞ്ഞെടുക്കൽ റദ്ദാക്കുക</string>
+    <string name="contacts_cd_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
+    <string name="contacts_cd_deselect_all">ഒന്നും തിരഞ്ഞെടുക്കാതിരിക്കുക</string>
+    <string name="contacts_cd_qr_invite">QR / ക്ഷണം</string>
+    <string name="contacts_cd_pending_requests">തീർപ്പാക്കാത്ത അഭ്യർത്ഥനകൾ</string>
+    <string name="contacts_sort_last_seen">അവസാനമായി കണ്ടത്</string>
+    <string name="contacts_search_placeholder">കോൺടാക്റ്റുകളെ തിരയുക…</string>
+    <string name="contacts_empty_title">കോൺടാക്റ്റുകൾ ഒന്നുമില്ല</string>
+    <string name="contacts_empty_subtitle">ഒരാളുമായി കണക്റ്റ് ചെയ്യാനും ലൊക്കേഷൻ പങ്കിടാനും തുടങ്ങാനായി ഒരു QR കോഡ് സ്കാൻ ചെയ്യുക.</string>
+    <string name="contacts_scan_qr">QR കോഡ് സ്കാൻ ചെയ്യുക</string>
+    <string name="contacts_bulk_delete_messages">സന്ദേശങ്ങൾ ഇല്ലാതാക്കുക</string>
+    <string name="contacts_bulk_delete_locations">ലൊക്കേഷനുകൾ ഇല്ലാതാക്കുക</string>
+    <string name="contacts_last_seen">അവസാനമായി കണ്ടത്: %1$s</string>
+    <string name="contacts_no_location_yet">ലൊക്കേഷൻ ഡാറ്റ ലഭ്യമല്ല</string>
+    <string name="contacts_view_sharing_settings">പങ്കിടൽ ക്രമീകരണങ്ങൾ</string>
+    <string name="contacts_view_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
+    <string name="contacts_rename_contact">പേര് മാറ്റുക</string>
+    <string name="contacts_on_contact_device">കോൺടാക്റ്റിന്റെ ഉപകരണത്തിൽ</string>
+    <string name="contacts_delete_my_messages_title">എന്റെ സന്ദേശങ്ങൾ ഇല്ലാതാക്കുക</string>
+    <string name="contacts_delete_locations_title">പങ്കിട്ട ലൊക്കേഷനുകൾ ഇല്ലാതാക്കുക</string>
+    <string name="contacts_remove_contact_title">കോൺടാക്റ്റിനെ നീക്കം ചെയ്യുക</string>
+    <string name="contacts_leave_title">കോൺടാക്റ്റും ഡാറ്റയും ഇല്ലാതാക്കുക</string>
+    <string name="contacts_rename_title">പേര് മാറ്റുക</string>
+    <string name="contacts_remove_contact_body">നിങ്ങളുടെ കോൺടാക്റ്റുകളിൽ നിന്ന് %1$s-നെ നീക്കം ചെയ്യണോ? അവരുടെ ലൊക്കേഷൻ ചരിത്രവും ലോക്കലായി ഇല്ലാതാക്കപ്പെടും.</string>
+    <string name="contacts_leave_body">ഇത് %1$s-ന്റെ കോൺടാക്റ്റുകളിൽ നിന്ന് നിങ്ങളെ നീക്കം ചെയ്യുകയും അവരുടെ ഉപകരണത്തിൽ നിന്നുള്ള നിങ്ങളുടെ എല്ലാ സന്ദേശങ്ങളും ലൊക്കേഷൻ ഡാറ്റയും ഇല്ലാതാക്കുകയും ചെയ്യും. നിങ്ങൾക്ക് അവരുടെ ലൊക്കേഷൻ കാണാനും കഴിയില്ല.</string>
+    <string name="contacts_delete_my_messages_body">%1$s-ന്റെ ഉപകരണത്തിൽ നിന്ന് നിങ്ങൾ അയച്ച എല്ലാ സന്ദേശങ്ങളും ഇത് ഇല്ലാതാക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+    <string name="contacts_delete_locations_body">%1$s-ന്റെ ഉപകരണത്തിൽ നിന്ന് നിങ്ങൾ പങ്കിട്ട എല്ലാ ലൊക്കേഷൻ ഡാറ്റയും ഇത് ഇല്ലാതാക്കും. ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">കോൺടാക്റ്റിനെ നീക്കം ചെയ്യുക</item>
+        <item quantity="other">%1$d കോൺടാക്റ്റുകളെ നീക്കം ചെയ്യുക</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">ഈ കോൺടാക്റ്റിനെ നീക്കം ചെയ്യണോ? അവരുടെ ലൊക്കേഷൻ ചരിത്രവും ലോക്കലായി ഇല്ലാതാക്കപ്പെടും.</item>
+        <item quantity="other">%1$d കോൺടാക്റ്റുകളെ നീക്കം ചെയ്യണോ? അവരുടെ ലൊക്കേഷൻ ചരിത്രവും ലോക്കലായി ഇല്ലാതാക്കപ്പെടും.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">ഈ കോൺടാക്റ്റിന്റെ ഉപകരണത്തിൽ നിന്ന് നിങ്ങൾ അയച്ച എല്ലാ സന്ദേശങ്ങളും റിമോട്ട് ആയി ഇല്ലാതാക്കണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</item>
+        <item quantity="other">%1$d കോൺടാക്റ്റുകളുടെ ഉപകരണങ്ങളിൽ നിന്ന് നിങ്ങൾ അയച്ച എല്ലാ സന്ദേശങ്ങളും റിമോട്ട് ആയി ഇല്ലാതാക്കണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">ഈ കോൺടാക്റ്റിന്റെ ഉപകരണത്തിൽ നിന്ന് നിങ്ങൾ പങ്കിട്ട എല്ലാ ലൊക്കേഷൻ ചരിത്രവും റിമോട്ട് ആയി ഇല്ലാതാക്കണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</item>
+        <item quantity="other">%1$d കോൺടാക്റ്റുകളുടെ ഉപകരണങ്ങളിൽ നിന്ന് നിങ്ങൾ പങ്കിട്ട എല്ലാ ലൊക്കേഷൻ ചരിത്രവും റിമോട്ട് ആയി ഇല്ലാതാക്കണോ? ഇത് പഴയപടിയാക്കാൻ കഴിയില്ല.</item>
+    </plurals>
+
+    <string name="common_continue">തുടരുക</string>
+
+    <!-- ── ഓൺബോർഡിംഗ് ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">ബാക്കപ്പിൽ നിന്ന് വീണ്ടെടുക്കുക</string>
+    <string name="onboarding_restore_message">നിങ്ങളുടെ ഐഡന്റിറ്റിയും കോൺടാക്റ്റുകളും വീണ്ടെടുക്കാൻ നിങ്ങളുടെ 64-അക്ഷര ഹെക്സ് സ്വകാര്യ കീ ഒട്ടിക്കുക.</string>
+    <string name="onboarding_private_key_hex">സ്വകാര്യ കീ (ഹെക്സ്)</string>
+    <string name="onboarding_tagline">കോൺടാക്റ്റുകളുമായുള്ള സ്വകാര്യ ലൊക്കേഷൻ പങ്കിടൽ.\nഅക്കൗണ്ടുകളില്ല. കുത്തക സെർവറുകളില്ല.</string>
+    <string name="onboarding_feature_e2e_title">എൻഡ്-ടു-എൻഡ് എൻക്രിപ്റ്റ് ചെയ്തത്</string>
+    <string name="onboarding_feature_e2e_subtitle">നിങ്ങളുടെ ലൊക്കേഷൻ ഉപകരണത്തിൽ എൻക്രിപ്റ്റ് ചെയ്തിരിക്കുന്നു</string>
+    <string name="onboarding_feature_servers_title">കുത്തക സെർവറുകളില്ല</string>
+    <string name="onboarding_feature_servers_subtitle">സുരക്ഷിത ഗതാഗതമായി ഓപ്പൺ Nostr റിലേകൾ ഉപയോഗിക്കുന്നു - നിങ്ങളുടെ ഡാറ്റ എൻക്രിപ്റ്റ് ചെയ്തതും സ്വകാര്യവുമായിരിക്കും</string>
+    <string name="onboarding_feature_phone_title">നിങ്ങളുടെ ഫോണിൽ തന്നെ ഇരിക്കുന്നു</string>
+    <string name="onboarding_feature_phone_subtitle">നിങ്ങളുടെ പൂർണ്ണ ലൊക്കേഷൻ ചരിത്രം നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ നിലനിൽക്കും. നിങ്ങളുടെ നിലവിലെ സ്ഥാനം മാത്രമേ തിരഞ്ഞെടുത്ത കോൺടാക്റ്റുകളുമായി പങ്കിടുകയുള്ളൂ</string>
+    <string name="onboarding_name_prompt">നിങ്ങളുടെ കോൺടാക്റ്റുകൾ നിങ്ങളെ എന്ത് വിളിക്കണം?</string>
+    <string name="onboarding_name_placeholder">ഉദാ. അമ്മ, അച്ഛൻ, ആനന്ദ്…</string>
+    <string name="onboarding_get_started">ആരംഭിക്കുക</string>
+    <string name="onboarding_restore_from_backup">ബാക്കപ്പിൽ നിന്ന് വീണ്ടെടുക്കുക</string>
+    <string name="onboarding_key_note">നിങ്ങളുടെ സ്വകാര്യ കീ ലോക്കലായി സൃഷ്ടിച്ചതാണ്, അത് ഈ ഉപകരണത്തിൽ നിന്ന് പുറത്തുപോകില്ല.</string>
+    <string name="onboarding_permissions_title">അനുമതികൾ</string>
+    <string name="onboarding_permissions_desc">നിങ്ങളുടെ സ്ഥാനം പങ്കിടാൻ ലൊക്കേഷൻ ആക്സസ്, ക്ഷണം കോഡുകൾ സ്കാൻ ചെയ്യാൻ ക്യാമറ ആക്സസ്, പശ്ചാത്തല നിലയ്ക്കായി അറിയിപ്പ് ആക്സസ് എന്നിവ LocaPeer-ന് ആവശ്യമാണ്. ശാരീരിക പ്രവർത്തന ആക്സസ് ഐച്ഛികമാണ് - ഇത് നിങ്ങളുടെ ചലനങ്ങളെ (നടത്തം, ഡ്രൈവിംഗ്) കൂടുതൽ കൃത്യമായി ലേബൽ ചെയ്യാൻ സഹായിക്കുന്നു.</string>
+    <string name="onboarding_before_ask_title">ഞങ്ങൾ ചോദിക്കുന്നതിന് മുമ്പ്</string>
+    <string name="onboarding_before_ask_intro">അടുത്തതായി ചില സിസ്റ്റം നിർദ്ദേശങ്ങൾ നിങ്ങൾ കാണും:</string>
+    <string name="onboarding_before_ask_location">• ലൊക്കേഷൻ - ആവശ്യമാണ്, നിങ്ങളുടെ സ്ഥാനം പങ്കിടാൻ.</string>
+    <string name="onboarding_before_ask_camera">• ക്യാമറ - ക്ഷണം കോഡുകൾ സ്കാൻ ചെയ്യാൻ.</string>
+    <string name="onboarding_before_ask_notifications">• അറിയിപ്പുകൾ - പശ്ചാത്തല നിലയ്ക്കായി.</string>
+    <string name="onboarding_before_ask_activity">• ശാരീരിക പ്രവർത്തനം - ഐച്ഛികം. ഇത് LocaPeer-നെ നിങ്ങളുടെ ചരിത്രത്തിൽ നടത്തം, ഡ്രൈവിംഗ്, നിശ്ചലമായി നിൽക്കൽ എന്നിവ കൂടുതൽ കൃത്യമായി വേർതിരിച്ചറിയാൻ അനുവദിക്കുന്നു. നിങ്ങൾക്ക് ഇത് ഒഴിവാക്കി പിന്നീട് ക്രമീകരണങ്ങളിൽ പ്രവർത്തനക്ഷമമാക്കാം.</string>
+    <string name="onboarding_grant_permissions">അനുമതികൾ നൽകുക</string>
+    <string name="onboarding_bg_location_title">പശ്ചാത്തല ലൊക്കേഷൻ</string>
+    <string name="onboarding_bg_location_desc">ആപ്പ് അടച്ചിരിക്കുമ്പോഴും നിങ്ങളുടെ കോൺടാക്റ്റുകളെ അപ്‌ഡേറ്റ് ചെയ്യാൻ, അടുത്ത സ്ക്രീനിൽ \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' എന്നത് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="onboarding_bg_location_error">ആപ്പ് അടച്ചിരിക്കുമ്പോൾ നിങ്ങളുടെ കോൺടാക്റ്റുകളെ അപ്‌ഡേറ്റ് ചെയ്യാൻ പശ്ചാത്തല ലൊക്കേഷൻ ആവശ്യമാണ്. ദയവായി വീണ്ടും ശ്രമിച്ച് \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' എന്നത് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="onboarding_configure_location">ലൊക്കേഷൻ കോൺഫിഗർ ചെയ്യുക</string>
+    <string name="onboarding_battery_title">ബാറ്ററി</string>
+    <string name="onboarding_battery_desc">ബാറ്ററി ലാഭിക്കാൻ ആൻഡ്രോയിഡ് LocaPeer-നെ നിർത്തിയേക്കാം. വിശ്വസനീയമായ അപ്‌ഡേറ്റുകൾ ഉറപ്പാക്കാൻ, ദയവായി ഒപ്റ്റിമൈസേഷനുകളിൽ നിന്ന് LocaPeer-നെ ഒഴിവാക്കുക.</string>
+    <string name="onboarding_disable_optimizations">ഒപ്റ്റിമൈസേഷൻ അപ്രാപ്തമാക്കുക</string>
+    <string name="onboarding_done_title">എല്ലാം തയ്യാർ!</string>
+    <string name="onboarding_done_desc">നിങ്ങളുടെ സ്വകാര്യ ലൊക്കേഷൻ നെറ്റ്‌വർക്ക് തയ്യാറാണ്.</string>
+    <string name="onboarding_start_using">LocaPeer ഉപയോഗിക്കാൻ തുടങ്ങുക</string>
+
+    <string name="common_try_again">വീണ്ടും ശ്രമിക്കുക</string>
+
+    <!-- ── ക്ഷണം സ്കാൻ സ്ക്രീൻ ─────────────────────────────────────────────── -->
+    <string name="scan_title">ക്ഷണം സ്കാൻ ചെയ്യുക</string>
+    <string name="scan_camera_needed">QR കോഡുകൾ സ്കാൻ ചെയ്യാൻ ക്യാമറ അനുമതി ആവശ്യമാണ്.</string>
+    <string name="scan_grant_permission">അനുമതി നൽകുക</string>
+    <string name="scan_add_contact_title">കോൺടാക്റ്റിനെ ചേർക്കണോ?</string>
+    <string name="scan_add_contact_message">ഇത് നിങ്ങളെ %1$s-മായി കണക്റ്റ് ചെയ്യുകയും ലൊക്കേഷൻ പരസ്പരം പങ്കിടാൻ തുടങ്ങുകയും ചെയ്യും.</string>
+    <string name="scan_add_share">ചേർക്കുക &amp; പങ്കിടുക</string>
+    <string name="scan_request_sent_title">അഭ്യർത്ഥന അയച്ചു!</string>
+    <string name="scan_request_sent_message">%1$s-ലേക്ക് അഭ്യർത്ഥന അയച്ചിട്ടുണ്ട്. അവർ സ്വീകരിച്ചാലുടൻ നിങ്ങൾ കണക്റ്റ് ചെയ്യപ്പെടും.</string>
+    <string name="scan_failed">സ്കാൻ പരാജയപ്പെട്ടു: %1$s</string>
+
     <string name="cd_back">പിന്നിലേക്ക്</string>
+    <string name="common_review">അവലോകനം ചെയ്യുക</string>
+    <string name="common_decline">നിരസിക്കുക</string>
+
+    <!-- പങ്കിടൽ റോൾ ലേബലുകൾ (പങ്കിട്ടവ) -->
+    <string name="role_send_receive">അയയ്ക്കുക/സ്വീകരിക്കുക</string>
+    <string name="role_send">അയയ്ക്കുക</string>
+    <string name="role_receive">സ്വീകരിക്കുക</string>
+    <string name="role_none">പങ്കിടൽ ഇല്ല</string>
+
+    <!-- ── ക്ഷണം സ്ക്രീൻ ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">എന്റെ ക്ഷണം</string>
+    <string name="invite_tab_add_contact">കോൺടാക്റ്റിനെ ചേർക്കുക</string>
+    <string name="invite_your_qr_title">നിങ്ങളുടെ QR കോഡ്</string>
+    <string name="invite_your_qr_subtitle">നിങ്ങളുടെ ലൊക്കേഷൻ പിന്തുടരാൻ ആരെങ്കിലും ഇത് സ്കാൻ ചെയ്യാൻ അനുവദിക്കുക</string>
+    <string name="invite_qr_cd">നിങ്ങളുടെ QR കോഡ്</string>
+    <string name="invite_qr_error">QR സൃഷ്ടിക്കുന്നതിൽ പിശക്</string>
+    <string name="invite_share_link">ക്ഷണ ലിങ്ക് പങ്കിടുക</string>
+    <string name="invite_encryption_note">നിങ്ങളുടെ ലൊക്കേഷൻ സ്കാനറിന്റെ ഉപകരണത്തിനായി പ്രത്യേകം എൻക്രിപ്റ്റ് ചെയ്യും.</string>
+    <string name="invite_camera_required_title">ക്യാമറ ആക്സസ് ആവശ്യമാണ്</string>
+    <string name="invite_camera_required_message">QR കോഡ് സ്കാൻ ചെയ്യാൻ ക്യാമറ അനുമതി നൽകുക.</string>
+    <string name="invite_point_camera">ക്യാമറ LocaPeer QR-ലേക്ക് തിരിക്കുക</string>
+    <string name="invite_paste_title">അല്ലെങ്കിൽ ക്ഷണ ലിങ്ക് ഒട്ടിക്കുക</string>
+    <string name="invite_process_link">ലിങ്ക് പ്രോസസ്സ് ചെയ്യുക</string>
+    <string name="invite_fallback_name">കോൺടാക്റ്റ്</string>
+    <string name="invite_success_message">അവർ സ്വീകരിച്ചാലുടൻ നിങ്ങൾ %1$s-മായി കണക്റ്റ് ചെയ്യപ്പെടും.</string>
+    <string name="invite_confirm_add_title">%1$s-നെ ചേർക്കണോ?</string>
+    <string name="invite_confirm_add_message">അവരെ നിങ്ങളുടെ കോൺടാക്റ്റുകളിൽ ചേർത്ത് ലൊക്കേഷൻ പങ്കിടണോ?</string>
+
+    <!-- ── തീർപ്പാക്കാത്ത അഭ്യർത്ഥനകളുടെ സ്ക്രീൻ ────────────────────────────────────────── -->
+    <string name="pending_empty">തീർപ്പാക്കാത്ത അഭ്യർത്ഥനകളൊന്നുമില്ല</string>
+    <string name="pending_requesting">അഭ്യർത്ഥിക്കുന്നു: %1$s · %2$s</string>
+    <string name="pending_role_change">റോൾ മാറ്റ അഭ്യർത്ഥന · %1$s</string>
+    <string name="pending_new_request">പുതിയ പങ്കിടൽ അഭ്യർത്ഥന · %1$s</string>
+
+    <string name="common_save_changes">മാറ്റങ്ങൾ സംരക്ഷിക്കുക</string>
+
+    <!-- ── വരുന്ന പങ്കിടൽ അഭ്യർത്ഥന സ്ക്രീൻ ──────────────────────────────────── -->
+    <string name="incoming_update_title">പങ്കിടൽ ക്രമീകരണങ്ങൾ അപ്‌ഡേറ്റ് ചെയ്യുക</string>
+    <string name="incoming_new_title">പുതിയ കോൺടാക്റ്റ് അഭ്യർത്ഥന</string>
+    <string name="incoming_update_subtitle">നിങ്ങൾ എങ്ങനെ പങ്കിടുന്നു എന്ന് അപ്‌ഡേറ്റ് ചെയ്യാൻ %1$s ആഗ്രഹിക്കുന്നു. താഴെയുള്ള ക്രമീകരണങ്ങൾ അവലോകനം ചെയ്യുക.</string>
+    <string name="incoming_new_subtitle">%1$s നിങ്ങളെ ഒരു കോൺടാക്റ്റായി ചേർത്തു! നിങ്ങൾക്ക് ഇപ്പോൾ തിരിച്ച് എന്ത് പങ്കിടണമെന്ന് തിരഞ്ഞെടുക്കാം.</string>
+    <string name="incoming_section_location">ലൊക്കേഷൻ</string>
+    <string name="incoming_share_my_location">എന്റെ ലൊക്കേഷൻ %1$s-മായി പങ്കിടുക</string>
+    <string name="incoming_share_my_location_sub">നിങ്ങൾ എവിടെയാണെന്ന് അവർക്ക് കാണാൻ കഴിയും</string>
+    <string name="incoming_see_their_location">%1$s-ന്റെ ലൊക്കേഷൻ കാണുക</string>
+    <string name="incoming_see_their_location_sub">അവർ എവിടെയാണെന്ന് നിങ്ങൾക്ക് കാണാൻ കഴിയും</string>
+    <string name="incoming_section_messaging">മെസേജിംഗ്</string>
+    <string name="incoming_allow_messages">സന്ദേശങ്ങൾ അനുവദിക്കുക</string>
+    <string name="incoming_allow_messages_sub">%1$s-ൽ നിന്ന് ചാറ്റ് സന്ദേശങ്ങൾ സ്വീകരിക്കുക</string>
+
+    <string name="common_request">അഭ്യർത്ഥിക്കുക</string>
+    <string name="common_edit">മാറ്റുക</string>
+
+    <!-- ── പിയർ ഷെയറിംഗ് (കോൺടാക്റ്റ് ക്രമീകരണങ്ങൾ) സ്ക്രീൻ ─────────────────────────── -->
+    <string name="peer_title">കോൺടാക്റ്റ് ക്രമീകരണങ്ങൾ</string>
+    <string name="peer_section_roles">ലൊക്കേഷൻ പങ്കിടൽ റോളുകൾ</string>
+    <string name="peer_send_on">%1$s-ന് നിങ്ങളുടെ ലൊക്കേഷൻ കാണാൻ കഴിയും</string>
+    <string name="peer_send_off">നിങ്ങൾ നിങ്ങളുടെ ലൊക്കേഷൻ %1$s-മായി പങ്കിടുന്നില്ല</string>
+    <string name="peer_receive_title">%1$s-ന്റെ ലൊക്കേഷൻ സ്വീകരിക്കുക</string>
+    <string name="peer_receive_on">നിങ്ങൾക്ക് %1$s-ന്റെ ലൊക്കേഷൻ കാണാൻ കഴിയും</string>
+    <string name="peer_receive_off">നിങ്ങൾക്ക് %1$s-ന്റെ ലൊക്കേഷനിലേക്ക് ആക്സസ് ഇല്ല</string>
+    <string name="peer_section_privacy">സ്വകാര്യത &amp; പങ്കിടൽ നിയന്ത്രണങ്ങൾ</string>
+    <string name="peer_pause_sharing">പങ്കിടൽ താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="peer_pause_sub">%1$s-ലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ അയയ്ക്കുന്നത് താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="peer_precision">ലൊക്കേഷൻ കൃത്യത</string>
+    <string name="peer_precision_exact_sub">കൃത്യമായ GPS കോർഡിനേറ്റുകൾ</string>
+    <string name="peer_precision_suburb_sub">ഏകദേശ ലൊക്കേഷൻ (സബർബ് നില)</string>
+    <string name="peer_always_sharing">എപ്പോഴും പങ്കിടുന്നു</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d സജീവ പങ്കിടൽ നിയമം</item>
+        <item quantity="other">%1$d സജീവ പങ്കിടൽ നിയമങ്ങൾ</item>
+    </plurals>
+    <string name="peer_section_alerts">അലേർട്ടുകളും മേൽനോട്ടവും</string>
+    <string name="peer_sos_contact">SOS കോൺടാക്റ്റ്</string>
+    <string name="peer_sos_sub">പങ്കിടൽ നിർത്തിവച്ചാലും നിങ്ങളുടെ അടിയന്തര അലേർട്ടുകൾ സ്വീകരിക്കുക</string>
+    <string name="peer_missed_alert">മിസ്ഡ് ലൊക്കേഷൻ അലേർട്ട്</string>
+    <string name="peer_missed_on">%1$s അവരുടെ ലൊക്കേഷൻ റിപ്പോർട്ട് ചെയ്യുന്നത് നിർത്തിയാൽ എന്നെ അറിയിക്കുക</string>
+    <string name="peer_requires_access">%1$s-ന്റെ ലൊക്കേഷനിലേക്ക് ആക്സസ് ആവശ്യമാണ്</string>
+    <string name="peer_proximity_alert">സാമീപ്യ അലേർട്ട്</string>
+    <string name="peer_proximity_sub">%1$s അടുത്തുവരുമ്പോൾ എന്നെ അറിയിക്കുക</string>
+    <string name="peer_alert_radius">അലേർട്ട് ആരം</string>
+    <string name="peer_alert_schedule">അലേർട്ട് ഷെഡ്യൂൾ</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d സജീവ നിയമം</item>
+        <item quantity="other">%1$d സജീവ നിയമങ്ങൾ</item>
+    </plurals>
+    <string name="peer_geofences_sub">%1$s-നായി വരവ്, പോക്ക് സോണുകൾ സജ്ജമാക്കുക</string>
+    <string name="peer_supervise">ഈ ഉപകരണത്തെ മേൽനോട്ടം ചെയ്യുക</string>
+    <string name="peer_supervise_on">നിങ്ങൾ %1$s-ൽ നിന്ന് അൺലോക്ക് അഭ്യർത്ഥനകൾ സ്വീകരിക്കുകയും അംഗീകരിക്കുകയും ചെയ്യുന്നു</string>
+    <string name="peer_supervise_off">മേൽനോട്ട-മോഡ് അൺലോക്ക് അഭ്യർത്ഥനകൾ നിങ്ങൾക്ക് അയയ്ക്കാൻ %1$s-നെ അനുവദിക്കുക</string>
+    <string name="peer_messaging_sub">%1$s-ൽ നിന്നുള്ള ചാറ്റ് സന്ദേശങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക/അപ്രാപ്തമാക്കുക</string>
+    <string name="peer_section_history">ചലന ചരിത്രം</string>
+    <string name="peer_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
+    <string name="peer_location_history_sub">%1$s-ന്റെ ചലന ചരിത്രവും മാപ്പ് റിപ്പോർട്ടും കാണുക</string>
+    <string name="peer_section_retention">റിമോട്ട് ഡാറ്റ നിലനിർത്തൽ</string>
+    <string name="peer_retention_location_sub">%1$s നിങ്ങളുടെ ലൊക്കേഷൻ ചരിത്രം എത്രകാലം സൂക്ഷിക്കുന്നു</string>
+    <string name="peer_purge_location">%1$s-ൽ നിന്ന് എല്ലാ ലൊക്കേഷൻ ഡാറ്റയും മായ്ക്കുക</string>
+    <string name="peer_retention_messages_sub">നിങ്ങൾ അയച്ച സന്ദേശങ്ങൾ %1$s എത്രകാലം സൂക്ഷിക്കുന്നു</string>
+    <string name="peer_purge_messages">%1$s-ൽ നിന്ന് എല്ലാ സന്ദേശങ്ങളും മായ്ക്കുക</string>
+    <string name="peer_precision_exact">കൃത്യമായ GPS</string>
+    <string name="peer_precision_exact_desc">കൃത്യമായ കോർഡിനേറ്റുകൾ</string>
+    <string name="peer_precision_suburb">സബർബ് (~1km)</string>
+    <string name="peer_precision_suburb_desc">പ്രദേശ നില മാത്രം</string>
+
+    <!-- ── സംഭാഷണ പട്ടിക (സന്ദേശങ്ങൾ) സ്ക്രീൻ ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d സംഭാഷണം ഇല്ലാതാക്കണോ?</item>
+        <item quantity="other">%1$d സംഭാഷണങ്ങൾ ഇല്ലാതാക്കണോ?</item>
+    </plurals>
+    <string name="conv_delete_locally">ലോക്കലായി ഇല്ലാതാക്കുക</string>
+    <string name="conv_delete_locally_sub">നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് മാത്രം സംഭാഷണം നീക്കംചെയ്യുന്നു.</string>
+    <string name="conv_delete_both">ലോക്കലായി/കോൺടാക്റ്റിൽ നിന്ന് ഇല്ലാതാക്കുക</string>
+    <string name="conv_bulk_delete_both_sub">നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്നും കോൺടാക്റ്റിൽ നിന്നും സംഭാഷണം ഇല്ലാതാക്കുന്നു.</string>
+    <string name="conv_delete_both_sub">സംഭാഷണം ലോക്കലായി ഇല്ലാതാക്കുകയും കോൺടാക്റ്റ് ഉപകരണത്തിൽ സംഭാഷണം ഇല്ലാതാക്കാനുള്ള അഭ്യർത്ഥന ട്രിഗർ ചെയ്യുകയും ചെയ്യുന്നു.</string>
+    <string name="conv_cd_exit_selection">തിരഞ്ഞെടുക്കലിൽ നിന്ന് പുറത്തുകടക്കുക</string>
+    <string name="conv_cd_select_all">എല്ലാം തിരഞ്ഞെടുക്കുക</string>
+    <string name="conv_cd_new_message">പുതിയ സന്ദേശം</string>
+    <string name="conv_sort_date">തീയതി</string>
+    <string name="conv_sort_unread">വായിക്കാത്തവ</string>
+    <string name="conv_search_placeholder">സംഭാഷണങ്ങൾ തിരയുക…</string>
+    <string name="conv_tab_chats">ചാറ്റുകൾ</string>
+    <string name="conv_tab_archived">ആർക്കൈവ് ചെയ്തവ</string>
+    <string name="conv_mark_read">വായിച്ചതായി അടയാളപ്പെടുത്തുക</string>
+    <string name="conv_archive">ആർക്കൈവ് ചെയ്യുക</string>
+    <string name="conv_unarchive">ആർക്കൈവിൽ നിന്ന് മാറ്റുക</string>
+    <string name="conv_empty_no_results">\"%1$s\"-ന് ഫലങ്ങളൊന്നുമില്ല</string>
+    <string name="conv_empty_no_results_sub">മറ്റൊരു തിരയൽ പദം പരീക്ഷിക്കുക</string>
+    <string name="conv_empty_archived_title">ആർക്കൈവ് ചെയ്ത ചാറ്റുകളൊന്നുമില്ല</string>
+    <string name="conv_empty_archived_sub">നിങ്ങളുടെ ഇൻബോക്സ് വൃത്തിയായി സൂക്ഷിക്കാൻ ചാറ്റുകൾ ആർക്കൈവ് ചെയ്യുക</string>
+    <string name="conv_empty_title">സന്ദേശങ്ങളൊന്നുമില്ല</string>
+    <string name="conv_empty_sub">ഒരു സംഭാഷണം തുടങ്ങാനായി മാപ്പ് തുറന്ന്\nഒരാളെ ടാപ്പ് ചെയ്യുക</string>
+    <string name="conv_delete_title">സംഭാഷണം ഇല്ലാതാക്കണോ?</string>
+    <string name="conv_delete_message">%1$s-യുമായുള്ള ഈ സംഭാഷണം എങ്ങനെ ഇല്ലാതാക്കണം?</string>
+    <string name="conv_messages_blocked">സന്ദേശങ്ങൾ തടഞ്ഞു</string>
+    <string name="conv_preview_mine">നിങ്ങൾ: %1$s</string>
+    <string name="conv_new_message_title">പുതിയ സന്ദേശം</string>
+    <string name="conv_picker_empty">കോൺടാക്റ്റുകൾ ഒന്നുമില്ല. ഒരു കോൺടാക്റ്റിനെ ചേർക്കാൻ QR കോഡ് സ്കാൻ ചെയ്യുക.</string>
+
+    <!-- ── ചാറ്റ് സ്ക്രീൻ ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">ചാറ്റ് ചരിത്രം മായ്ക്കണോ?</string>
+    <string name="chat_clear_message">%1$s-യുമായുള്ള ഈ സംഭാഷണം എങ്ങനെ മായ്ക്കണം?</string>
+    <string name="chat_clear_locally">ലോക്കലായി മായ്ക്കുക</string>
+    <string name="chat_clear_both">ലോക്കലായി/കോൺടാക്റ്റിൽ നിന്ന് മായ്ക്കുക</string>
+    <string name="chat_clear_both_sub">ചാറ്റ് ലോക്കലായി മായ്ക്കുകയും നിങ്ങൾ അയച്ച സന്ദേശങ്ങൾ ഇല്ലാതാക്കാൻ %1$s-ലേക്ക് അഭ്യർത്ഥന അയയ്ക്കുകയും ചെയ്യുന്നു.</string>
+    <string name="chat_cd_options">ഓപ്ഷനുകൾ</string>
+    <string name="chat_clear_history_menu">ചാറ്റ് ചരിത്രം മായ്ക്കുക</string>
+    <string name="chat_typing">%1$s ടൈപ്പ് ചെയ്യുന്നു…</string>
+    <string name="chat_blocked_banner">നിങ്ങൾ %1$s-ൽ നിന്നുള്ള സന്ദേശങ്ങൾ തടഞ്ഞു. അൺബ്ലോക്ക് ചെയ്യാൻ കോൺടാക്റ്റുകളിലേക്ക് പോകുക.</string>
+    <string name="chat_delete_msg_title">സന്ദേശം ഇല്ലാതാക്കണോ?</string>
+    <string name="chat_delete_msg_message">ഈ സന്ദേശം എങ്ങനെ ഇല്ലാതാക്കണം?</string>
+    <string name="chat_delete_from_contact">കോൺടാക്റ്റിൽ നിന്ന് ഇല്ലാതാക്കുക</string>
+    <string name="chat_delete_from_contact_sub">കോൺടാക്റ്റിന്റെ ഉപകരണത്തിൽ നിന്ന് ചാറ്റ് ഇല്ലാതാക്കുന്നു.</string>
+    <string name="chat_delete_both_sub">ചാറ്റ് ലോക്കലായി നീക്കം ചെയ്യുകയും കോൺടാക്റ്റിന്റെ ഉപകരണത്തിൽ നിന്ന് സ്വയമേവ ഇല്ലാതാക്കുകയും ചെയ്യുന്നു.</string>
+    <string name="chat_cd_share_location">ലൊക്കേഷൻ പങ്കിടുക</string>
+    <string name="chat_input_placeholder">സന്ദേശം…</string>
+    <string name="chat_cd_send">അയയ്ക്കുക</string>
+
+    <string name="common_close">അടയ്ക്കുക</string>
+
+    <!-- ── മാപ്പ് സ്ക്രീൻ ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS പ്രവർത്തനക്ഷമമാക്കണോ?</string>
+    <string name="map_sos_deactivate_title">SOS അപ്രാപ്തമാക്കണോ?</string>
+    <string name="map_sos_activate_msg">അപ്രാപ്തമാക്കുന്നത് വരെ ഇത് ഓരോ 15 സെക്കൻഡിലും നിങ്ങളുടെ നിയുക്ത SOS കോൺടാക്റ്റുകളിലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ പ്രക്ഷേപണം ചെയ്യും.</string>
+    <string name="map_sos_deactivate_msg">ഇത് നിങ്ങളുടെ അടിയന്തര കോൺടാക്റ്റുകളിലേക്കുള്ള ഉയർന്ന മുൻഗണനയുള്ള ലൊക്കേഷൻ പ്രക്ഷേപണം നിർത്തും.</string>
+    <string name="map_activate">പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="map_deactivate">അപ്രാപ്തമാക്കുക</string>
+    <string name="map_cd_style">മാപ്പ് ശൈലി</string>
+    <string name="map_cd_show_geofences">ജിയോഫെൻസുകൾ കാണിക്കുക</string>
+    <string name="map_cd_hide_geofences">ജിയോഫെൻസുകൾ മറയ്ക്കുക</string>
+    <string name="map_cd_follow">എന്നെ പിന്തുടരുക</string>
+    <string name="map_cd_friends">സുഹൃത്തുക്കൾ</string>
+    <string name="map_no_friends">സുഹൃത്തുക്കളെയൊന്നും ട്രാക്ക് ചെയ്യുന്നില്ല</string>
+    <string name="map_you">നിങ്ങൾ</string>
+    <string name="map_cd_go_my_location">എന്റെ ലൊക്കേഷനിലേക്ക് പോകുക</string>
+    <string name="map_sos_active">⚠ SOS സജീവമാണ്</string>
+    <string name="map_away">അകലെയാണ്</string>
+    <string name="map_no_location_yet">ലൊക്കേഷൻ ലഭ്യമല്ല</string>
+    <string name="map_cd_go_location">ലൊക്കേഷനിലേക്ക് പോകുക</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS ഓൺ ആണ്</string>
+    <string name="map_overdue">വൈകി - പുതിയ അപ്‌ഡേറ്റൊന്നുമില്ല</string>
+    <string name="map_stat_last_seen">അവസാനമായി കണ്ടത്</string>
+    <string name="map_stat_battery">ബാറ്ററി</string>
+    <string name="map_stat_accuracy">കൃത്യത</string>
+    <string name="map_stat_motion">ചലനം</string>
+    <string name="map_stat_speed">വേഗത</string>
+    <string name="map_stat_elevation">ഉയരം</string>
+
+    <string name="common_ok">ശരി</string>
+
+    <!-- ── ചരിത്ര റിപ്പോർട്ട് സ്ക്രീൻ ──────────────────────────────────────────── -->
+    <string name="history_title_peer">ചരിത്രം: %1$s</string>
+    <string name="history_select_person">ആളെ തിരഞ്ഞെടുക്കുക</string>
+    <string name="history_person_label">ആൾ</string>
+    <string name="history_cd_prev_day">മുമ്പത്തെ ദിവസം</string>
+    <string name="history_cd_next_day">അടുത്ത ദിവസം</string>
+    <string name="history_time_filter">സമയ ഫിൽട്ടർ:</string>
+    <string name="history_cd_reset_time">സമയം പുനഃക്രമീകരിക്കുക</string>
+    <string name="history_tab_list">പട്ടിക</string>
+    <string name="history_empty_title">ഈ ദിവസത്തെ ചരിത്രമില്ല</string>
+    <string name="history_empty_sub">മറ്റൊരു തീയതി തിരഞ്ഞെടുക്കാനോ കണക്ഷൻ പരിശോധിക്കാനോ ശ്രമിക്കുക.</string>
+    <string name="history_start_time">തുടക്ക സമയം</string>
+    <string name="history_end_time">അവസാന സമയം</string>
+    <string name="history_no_data_title">ലൊക്കേഷൻ ഡാറ്റ ലഭ്യമല്ല</string>
+    <string name="history_no_data_sub">ഈ ദിവസത്തേക്കോ സമയ പരിധിയിലേക്കോ റെക്കോർഡ് ചെയ്ത പിംഗുകളൊന്നുമില്ല.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d പിംഗ് റെക്കോർഡ് ചെയ്തു</item>
+        <item quantity="other">%1$d പിംഗുകൾ റെക്കോർഡ് ചെയ്തു</item>
+    </plurals>
+    <string name="history_cd_dismiss">ഒഴിവാക്കുക</string>
+    <string name="history_accuracy_label">±%1$s കൃത്യത</string>
+    <string name="history_emergency_sos">അടിയന്തര SOS സിഗ്നൽ</string>
+    <string name="history_detail_location">ലൊക്കേഷൻ</string>
+    <string name="history_detail_coordinates">കോർഡിനേറ്റുകൾ</string>
+    <string name="history_within">±%1$s ഉള്ളിൽ</string>
+    <string name="history_detail_movement">ചലനം</string>
+    <string name="history_movement_desc">%1$s %2$s ദിശയിൽ %3$s</string>
+
+    <string name="common_create">സൃഷ്ടിക്കുക</string>
+
+    <!-- ── ജിയോഫെൻസ് സ്ക്രീനുകൾ ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">ജിയോഫെൻസ് ഏരിയ ചേർക്കുക</string>
+    <string name="geo_cd_assign">ജിയോഫെൻസ് നിശ്ചയിക്കുക</string>
+    <string name="geo_unknown">അജ്ഞാതം</string>
+    <string name="geo_empty_title">ജിയോഫെൻസുകളൊന്നുമില്ല</string>
+    <string name="geo_empty_sub">ഒരു ജിയോഫെൻസ് ഏരിയ സൃഷ്ടിക്കാൻ + ടാപ്പ് ചെയ്യുക, തുടർന്ന് അവരുടെ പങ്കിടൽ ക്രമീകരണങ്ങളിൽ നിന്ന് കോൺടാക്റ്റുകളെ അതിലേക്ക് നിശ്ചയിക്കുക.</string>
+    <string name="geo_delete_title">ജിയോഫെൻസ് ഇല്ലാതാക്കണോ?</string>
+    <string name="geo_delete_simple">\"%1$s\" ഇല്ലാതാക്കണോ?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d കോൺടാക്റ്റിനായി നിശ്ചയിച്ചിട്ടുണ്ട്. ഇത് ഇല്ലാതാക്കുന്നത് ആ നിശ്ചയങ്ങളും നീക്കംചെയ്യും.</item>
+        <item quantity="other">\"%1$s\" %2$d കോൺടാക്റ്റുകൾക്കായി നിശ്ചയിച്ചിട്ടുണ്ട്. ഇത് ഇല്ലാതാക്കുന്നത് ആ നിശ്ചയങ്ങളും നീക്കംചെയ്യും.</item>
+    </plurals>
+    <string name="geo_for_contact">%1$s-നുള്ള ജിയോഫെൻസുകൾ</string>
+    <string name="geo_empty_contact_title">കോൺടാക്റ്റിന് ജിയോഫെൻസുകളൊന്നുമില്ല</string>
+    <string name="geo_empty_contact_sub">ഒരു ജിയോഫെൻസ് ഏരിയ നിശ്ചയിക്കാൻ + ടാപ്പ് ചെയ്യുക, എത്തുമ്പോഴോ പോകുമ്പോഴോ അതോ രണ്ടിലും അലേർട്ട് വേണോ എന്ന് തിരഞ്ഞെടുക്കുക.</string>
+    <string name="geo_no_areas_title">ജിയോഫെൻസുകളൊന്നുമില്ല</string>
+    <string name="geo_no_areas_msg">ആദ്യം ജിയോഫെൻസുകൾ സ്ക്രീനിൽ നിന്ന് ഒരു ജിയോഫെൻസ് ഏരിയ സൃഷ്ടിക്കുക, തുടർന്ന് ഇവിടെ നിശ്ചയിക്കുക.</string>
+    <string name="geo_radius_label">%1$s ആരം</string>
+    <string name="geo_contacts_label">കോൺടാക്റ്റുകൾ: %1$s</string>
+    <string name="geo_no_contacts_assigned">കോൺടാക്റ്റുകളൊന്നും നിശ്ചയിച്ചിട്ടില്ല</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d നിയമം</item>
+        <item quantity="other">%1$d നിയമങ്ങൾ</item>
+    </plurals>
+    <string name="geo_trigger_enter">പ്രവേശിക്കുക</string>
+    <string name="geo_trigger_exit">പുറത്തുപോവുക</string>
+    <string name="geo_trigger_both">രണ്ടും</string>
+    <string name="geo_edit_title">ജിയോഫെൻസ് എഡിറ്റ് ചെയ്യുക</string>
+    <string name="geo_new_title">പുതിയ ജിയോഫെൻസ്</string>
+    <string name="geo_cd_my_location">എന്റെ ലൊക്കേഷൻ</string>
+    <string name="geo_cd_radius_increase">ആരം കൂട്ടുക</string>
+    <string name="geo_cd_radius_decrease">ആരം കുറയ്ക്കുക</string>
+    <string name="geo_hint_tap">സ്ഥാപിക്കാൻ മാപ്പിൽ ടാപ്പ് ചെയ്യുക അല്ലെങ്കിൽ അമർത്തിപ്പിടിക്കുക</string>
+    <string name="geo_hint_move">സൂം ചെയ്യാൻ പിഞ്ച് ചെയ്യുക • നീക്കാൻ പിൻ അമർത്തിപ്പിടിക്കുക അല്ലെങ്കിൽ വലിക്കുക</string>
+    <string name="geo_basic_info">അടിസ്ഥാന വിവരങ്ങൾ</string>
+    <string name="geo_search_title">വിലാസം വഴി തിരയുക</string>
+    <string name="geo_search_label">വിലാസമോ സ്ഥലമോ</string>
+    <string name="geo_search_placeholder">ഉദാ. മെയിൻ സ്ട്രീറ്റ്, കൊച്ചി</string>
+    <string name="geo_search_no_results">യോജിച്ച വിലാസമൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="geo_cd_search">തിരയുക</string>
+    <string name="geo_name_placeholder">ഉദാ. വീട്, ജോലിസ്ഥലം</string>
+    <string name="geo_name_required">പേര് ആവശ്യമാണ്</string>
+    <string name="geo_latitude">അക്ഷാംശം</string>
+    <string name="geo_longitude">രേഖാംശം</string>
+    <string name="geo_lat_range">-90 മുതൽ 90 വരെ</string>
+    <string name="geo_lng_range">-180 മുതൽ 180 വരെ</string>
+    <string name="geo_radius">ആരം</string>
+    <string name="geo_radius_range">%1$d മുതൽ %2$d മീറ്റർ വരെ നൽകുക</string>
+    <string name="geo_edit_assignment">നിശ്ചയിച്ചത് എഡിറ്റ് ചെയ്യുക</string>
+    <string name="geo_assign_title">ജിയോഫെൻസ് നിശ്ചയിക്കുക</string>
+    <string name="geo_select_area">ജിയോഫെൻസ് ഏരിയ തിരഞ്ഞെടുക്കുക</string>
+    <string name="geo_trigger_title">അറിയിപ്പ് നൽകേണ്ടത്:</string>
+    <string name="geo_add_rule">നിയമം ചേർക്കുക</string>
+    <string name="geo_alerts_all_times">അലേർട്ടുകൾ എപ്പോഴും സജീവമാണ്. അലേർട്ടുകൾ അയയ്ക്കുമ്പോൾ നിയന്ത്രിക്കാൻ ഒരു നിയമം ചേർക്കുക.</string>
+    <string name="geo_assign_action">നിശ്ചയിക്കുക</string>
+
+    <!-- ── സാമീപ്യ അലേർട്ടുകൾ സ്ക്രീൻ ────────────────────────────────────────── -->
+    <string name="prox_title">സാമീപ്യ അലേർട്ടുകൾ</string>
+    <string name="prox_empty_title">ട്രാക്ക് ചെയ്യുന്ന ആരുമില്ല</string>
+    <string name="prox_empty_sub">ഒരാളുടെ ലൊക്കേഷൻ ട്രാക്ക് ചെയ്യാൻ തുടങ്ങുന്നതിനായി സ്കാൻ ടാബിൽ നിന്ന്\nഅവരുടെ ക്ഷണ QR സ്കാൻ ചെയ്യുക</string>
+    <string name="prox_intro">ട്രാക്ക് ചെയ്യുന്ന ഒരാൾ നിങ്ങൾ തിരഞ്ഞെടുത്ത ദൂരത്തിനുള്ളിൽ വരുമ്പോൾ അറിയിപ്പ് നേടുക.</string>
+    <string name="prox_alert_within">%1$s ദൂരത്തിനുള്ളിൽ വരുമ്പോൾ അറിയിക്കുക</string>
+    <string name="prox_alerts_off">അലേർട്ടുകൾ ഓഫാണ്</string>
+    <string name="prox_alert_radius">അലേർട്ട് ആരം</string>
+    <string name="prox_edit_schedule">ഷെഡ്യൂൾ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="prox_rules">നിയമങ്ങൾ</string>
+
+    <!-- ── ഷെഡ്യൂൾ സ്ക്രീൻ / നിയമ എഡിറ്റർ ──────────────────────────────────── -->
+    <string name="schedule_for_peer">%1$s-നുള്ള ഷെഡ്യൂൾ</string>
+    <string name="schedule_cd_add_rule">നിയമം ചേർക്കുക</string>
+    <string name="schedule_empty_title">ഷെഡ്യൂൾ നിയമങ്ങളൊന്നുമില്ല</string>
+    <string name="schedule_empty_global">ലൊക്കേഷൻ എപ്പോഴും പങ്കിടുന്നു. പങ്കിടൽ എപ്പോൾ സജീവമാകണമെന്ന് നിയന്ത്രിക്കാൻ ഒരു നിയമം ചേർക്കുക.</string>
+    <string name="schedule_empty_peer">ലൊക്കേഷൻ എപ്പോഴും %1$s-മായി പങ്കിടുന്നു. എപ്പോൾ എന്ന് നിയന്ത്രിക്കാൻ ഒരു നിയമം ചേർക്കുക.</string>
+    <string name="schedule_active_hint">ഏതെങ്കിലും നിയമം നിലവിലെ സമയവുമായി പൊരുത്തപ്പെടുമ്പോൾ സജീവം. ശൂന്യമെങ്കിൽ = എപ്പോഴും ഓൺ.</string>
+    <string name="schedule_all_day">മുഴുവൻ ദിവസവും</string>
+    <string name="schedule_plus_one_day"> (+1 ദിവസം)</string>
+    <string name="schedule_rule_number">നിയമം %1$d</string>
+    <string name="schedule_cd_delete_rule">നിയമം ഇല്ലാതാക്കുക</string>
+    <string name="schedule_edit_rule">നിയമം എഡിറ്റ് ചെയ്യുക</string>
+    <string name="schedule_label_optional">ലേബൽ (ഓപ്ഷണൽ)</string>
+    <string name="schedule_label_placeholder">ഉദാ. ജോലി സമയം, വാരാന്ത്യങ്ങൾ</string>
+    <string name="schedule_active_days">സജീവ ദിവസങ്ങൾ</string>
+    <string name="schedule_time_window">സമയ പരിധി</string>
+    <string name="schedule_start">തുടക്കം</string>
+    <string name="schedule_end">അവസാനം</string>
+    <string name="schedule_overnight">രാത്രി മുഴുവൻ: %1$s മുതൽ അടുത്ത ദിവസം %2$s വരെ സജീവം</string>
+
+    <!-- ── മേൽനോട്ട ഗേറ്റ് ───────────────────────────────────────────────── -->
+    <string name="gate_title">ഉപകരണം മേൽനോട്ടത്തിലാണ്</string>
+    <string name="gate_message">ക്രമീകരണങ്ങൾ ആക്സസ് ചെയ്യുന്നതിന് മേൽനോട്ടക്കാരന്റെ അംഗീകാരം ആവശ്യമാണ്.</string>
+    <string name="gate_request_access">ആക്സസ് അഭ്യർത്ഥിക്കുക</string>
+    <string name="gate_waiting">മേൽനോട്ടക്കാരന്റെ അംഗീകാരത്തിനായി കാത്തിരിക്കുന്നു…</string>
+    <string name="gate_denied">മേൽനോട്ടക്കാരൻ ആക്സസ് നിരസിച്ചു.</string>
+    <string name="gate_timed_out">അഭ്യർത്ഥനയുടെ കാലാവധി കഴിഞ്ഞു. മേൽനോട്ടക്കാരൻ പ്രതികരിച്ചില്ല.</string>
+
+    <!-- ── നിലനിർത്തൽ തിരഞ്ഞെടുപ്പ് ─────────────────────────────────────────────── -->
+    <string name="retention_forever">എപ്പോഴും</string>
+    <string name="retention_keep_for">സൂക്ഷിക്കേണ്ടത്: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d ദിവസം</item>
+        <item quantity="other">%1$d ദിവസങ്ങൾ</item>
+    </plurals>
+
+    <string name="common_select">തിരഞ്ഞെടുക്കുക</string>
+
+    <!-- ── മാപ്പ് ലൊക്കേഷൻ സെലക്ടർ ────────────────────────────────────────────── -->
+    <string name="picker_title">നിശ്ചിത ലൊക്കേഷൻ തിരഞ്ഞെടുക്കുക</string>
+
+    <!-- ── നാവിഗേഷൻ ഇച്ഛാനുസൃതമാക്കൽ സ്ക്രീൻ ────────────────────────────────────── -->
+    <string name="customize_nav_intro">താഴെയുള്ള ബാറിൽ ഏതൊക്കെ ടാബുകൾ വരണമെന്നും അവയുടെ ക്രമവും തിരഞ്ഞെടുക്കുക. മാപ്പ് എപ്പോഴും ഉൾപ്പെടുത്തും.</string>
+    <string name="customize_cd_move_up">മുകളിലേക്ക് നീക്കുക</string>
+    <string name="customize_cd_move_down">താഴേക്ക് നീക്കുക</string>
+
+    <!-- ── വിവരങ്ങൾ സ്ക്രീൻ ───────────────────────────────────────────────────── -->
+    <string name="about_version">പതിപ്പ് %1$s (ബിൽഡ് %2$d)</string>
+    <string name="about_tagline">നിങ്ങൾ വിശ്വസിക്കുന്ന ആളുകളുമായി സ്വകാര്യ ലൊക്കേഷൻ പങ്കിടൽ. അക്കൗണ്ടുകളില്ല, ക്ലൗഡില്ല, ഞങ്ങൾ ട്രാക്ക് ചെയ്യുന്നില്ല.</string>
+    <string name="about_relay_connections">റിലേ കണക്ഷനുകൾ</string>
+    <string name="about_connected">ബന്ധിപ്പിച്ചു</string>
+    <string name="about_disconnected">ബന്ധം വേർപെട്ടു</string>
+    <string name="about_open_source">ഓപ്പൺ സോഴ്സ് ലൈബ്രറികൾ</string>
+    <string name="about_lib_osmdroid_desc">OpenStreetMap അധിഷ്ഠിത മാപ്പ് റെൻഡറിംഗ്</string>
+    <string name="about_lib_okhttp_desc">Nostr റിലേയ്ക്കുള്ള WebSocket ട്രാൻസ്പോർട്ട്</string>
+    <string name="about_lib_compose_desc">UI ഫ്രെയിംവർക്ക്</string>
+    <string name="about_lib_hilt_desc">ഡിപെൻഡൻസി ഇഞ്ചക്ഷൻ</string>
+    <string name="about_lib_room_desc">ലോക്കൽ ഡാറ്റാബേസ്</string>
+    <string name="about_map_attribution">മാപ്പ് ഡാറ്റ © OpenStreetMap സംഭാവന ചെയ്തവർ</string>
+
+    <!-- ── അറിയിപ്പുകൾ ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">അംഗീകരിക്കുക</string>
+    <string name="notif_someone">ഒരാൾ</string>
+    <string name="notif_sos_title">%1$s-ൽ നിന്നുള്ള SOS!</string>
+    <string name="notif_sos_text">%1$s (%2$s, %3$s)-ൽ SOS സജീവമാക്കി</string>
+    <string name="notif_supervisor_request_title">%1$s നിങ്ങളുടെ മേൽനോട്ടക്കാരനാകാൻ ആഗ്രഹിക്കുന്നു</string>
+    <string name="notif_supervisor_request_text">ഈ ഉപകരണത്തിൽ നിന്നുള്ള അൺലോക്ക് അംഗീകാര അഭ്യർത്ഥനകൾ അനുവദിക്കാൻ അംഗീകരിക്കുക</string>
+    <string name="notif_supervisor_request_big">മേൽനോട്ട മോഡ് സജീവമായിരിക്കുമ്പോൾ %1$s-ന് നിങ്ങൾക്ക് അൺലോക്ക് അംഗീകാര അഭ്യർത്ഥനകൾ അയയ്ക്കാൻ അനുവദിക്കുന്നതിന് അംഗീകരിക്കുക.</string>
+    <string name="notif_supervised_active_title">മേൽനോട്ട മോഡ് സജീവമാണ്</string>
+    <string name="notif_supervised_active_text">നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ സ്ഥിരീകരിച്ചു - മേൽനോട്ട മോഡ് ഇപ്പോൾ സജ്ജമായി</string>
+    <string name="notif_supervised_declined_title">മേൽനോട്ട മോഡ് നിരസിച്ചു</string>
+    <string name="notif_supervised_declined_text">നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ അഭ്യർത്ഥന നിരസിച്ചു - മേൽനോട്ട മോഡ് അപ്രാപ്തമാക്കി</string>
+    <string name="notif_tracking_alert_title">ട്രാക്കിംഗ് അലേർട്ട്</string>
+    <string name="notif_tracking_proximity">നിങ്ങളെക്കുറിച്ച് %1$s-ന് ഒരു സാമീപ്യ അലേർട്ട് ലഭിച്ചു</string>
+    <string name="notif_tracking_geofence">നിങ്ങൾ ഫെൻസിൽ പ്രവേശിച്ചു/പുറത്തുപോയി എന്ന് %1$s-ന് ഒരു അറിയിപ്പ് ലഭിച്ചു: %2$s</string>
+    <string name="notif_tracking_generic">%1$s നിങ്ങളുടെ ലൊക്കേഷൻ നിരീക്ഷിക്കുന്നു</string>
+    <string name="notif_track_update_title">%1$s-ൽ നിന്നുള്ള പങ്കിടൽ അപ്‌ഡേറ്റ്</string>
+    <string name="notif_track_new_title">പുതിയ കോൺടാക്റ്റ്: %1$s</string>
+    <string name="notif_role_send_receive">ലൊക്കേഷൻ അയയ്ക്കുക/സ്വീകരിക്കുക</string>
+    <string name="notif_role_send">ലൊക്കേഷൻ അയയ്ക്കുക</string>
+    <string name="notif_role_receive">ലൊക്കേഷൻ സ്വീകരിക്കുക</string>
+    <string name="notif_role_none">ലൊക്കേഷൻ പങ്കിടൽ ഇല്ല</string>
+    <string name="notif_track_requesting">%1$s അഭ്യർത്ഥിക്കുന്നു: %2$s</string>
+    <string name="notif_track_update_body">നിങ്ങൾ എങ്ങനെ ലൊക്കേഷൻ പങ്കിടുന്നു എന്ന് അപ്‌ഡേറ്റ് ചെയ്യാൻ %1$s ആഗ്രഹിക്കുന്നു.</string>
+    <string name="notif_track_new_body">%1$s നിങ്ങളെ ഒരു കോൺടാക്റ്റായി ചേർത്തു, കണക്റ്റ് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു.</string>
+    <string name="notif_contact_connected_title">കോൺടാക്റ്റ് കണക്റ്റ് ചെയ്തു</string>
+    <string name="notif_contact_connected_text">%1$s ഇപ്പോൾ നിങ്ങളുമായി കണക്റ്റ് ചെയ്തിരിക്കുന്നു.</string>
+    <string name="notif_request_declined_title">അഭ്യർത്ഥന നിരസിച്ചു</string>
+    <string name="notif_request_declined_text">%1$s നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടൽ അഭ്യർത്ഥന നിരസിച്ചു.</string>
+    <string name="notif_message_person">%1$s-ന് സന്ദേശം അയയ്ക്കുക</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s-ൽ പ്രവേശിച്ചു</string>
+    <string name="notif_geofence_left_title">%1$s %2$s-ൽ നിന്ന് പുറത്തുപോയി</string>
+    <string name="notif_geofence_subtitle">%1$s-ൽ · %2$s ആരം</string>
+    <string name="notif_person_nearby">%1$s അടുത്തുണ്ട്</string>
+    <string name="notif_distance_from_you">നിങ്ങളിൽ നിന്ന് %1$s അകലെ</string>
+    <string name="notif_missed_title">%1$s-ൽ നിന്ന് പുതിയ വിവരമൊന്നുമില്ല</string>
+    <string name="notif_missed_text">അവസാനമായി കണ്ടത് %1$s മിനിറ്റ് മുമ്പ് (%2$s, %3$s) സമീപം</string>
+    <string name="notif_sos_active_title">SOS സജീവമാണ്!</string>
+    <string name="notif_sos_active_text">SOS കോൺടാക്റ്റുകളിലേക്ക് അടിയന്തര അലേർട്ട് പ്രക്ഷേപണം ചെയ്യുന്നു</string>
+    <string name="notif_messages_group_title">LocaPeer സന്ദേശങ്ങൾ</string>
+
+    <!-- ── ടോസ്റ്റുകൾ ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">%1$s-ൽ നിന്നുള്ള കോൺടാക്റ്റ് അഭ്യർത്ഥന നിരസിച്ചു</string>
+    <string name="toast_now_supervising">ഇപ്പോൾ %1$s-ന്റെ ഉപകരണത്തെ മേൽനോട്ടം വഹിക്കുന്നു</string>
+    <string name="toast_declined_supervision">%1$s-ൽ നിന്നുള്ള മേൽനോട്ട അഭ്യർത്ഥന നിരസിച്ചു</string>
+
+    <!-- ── പ്രോഗ്രാമാറ്റിക് സ്ട്രിംഗുകൾ ─────────────── -->
+    <string name="time_just_now">ഇപ്പോൾ</string>
+    <string name="time_minutes_ago">%1$d മിനിറ്റ് മുമ്പ്</string>
+    <string name="fallback_me">ഞാൻ</string>
+    <string name="fallback_unknown">അജ്ഞാതം</string>
+    <string name="geo_unassigned">നിശ്ചയിച്ചിട്ടില്ല</string>
+    <string name="days_every_day">എല്ലാ ദിവസവും</string>
+    <string name="days_weekdays">പ്രവൃത്തിദിവസങ്ങൾ</string>
+    <string name="days_weekends">വാരാന്ത്യങ്ങൾ</string>
+    <string name="days_none">ദിവസങ്ങളില്ല</string>
+    <string name="chat_my_location_message">എന്റെ നിലവിലെ ലൊക്കേഷൻ: %1$s</string>
+    <string name="scan_error_bad_pubkey">അസാധുവായ ക്ഷണം: തെറ്റായ പബ്ലിക് കീ</string>
+    <string name="scan_error_key_mismatch">അസാധുവായ ക്ഷണം: കീകൾ പൊരുത്തപ്പെടുന്നില്ല</string>
+    <string name="scan_error_unknown">അജ്ഞാത പിശക്</string>
+    <string name="scan_error_invalid_link">അസാധുവായ ക്ഷണ ലിങ്ക്</string>
+    <string name="scan_fallback_contact">ഈ കോൺടാക്റ്റ്</string>
+    <string name="backup_saved">ബാക്കപ്പ് സംരക്ഷിച്ചു: %1$s</string>
+    <string name="backup_saved_encrypted">ബാക്കപ്പ് സംരക്ഷിച്ചു (എൻക്രിപ്റ്റ് ചെയ്തത്): %1$s</string>
+    <string name="backup_failed">ബാക്കപ്പ് പരാജയപ്പെട്ടു: %1$s</string>
+    <string name="backup_could_not_read_file">ഫയൽ വായിക്കാൻ കഴിഞ്ഞില്ല</string>
+    <string name="backup_could_not_write_file">ഫയൽ എഴുതാൻ കഴിഞ്ഞില്ല</string>
+    <string name="backup_could_not_read">ബാക്കപ്പ് വായിക്കാൻ കഴിഞ്ഞില്ല: %1$s</string>
+    <string name="backup_incorrect_password">തെറ്റായ പാസ്‌വേഡ്</string>
+    <string name="restore_result_restored">വീണ്ടെടുത്തു: %1$s</string>
+    <string name="restore_result_failed">പരാജയപ്പെട്ടു: %1$s</string>
+    <string name="restore_nothing">വീണ്ടെടുക്കാൻ ഒന്നുമില്ല</string>
+    <string name="restore_failed">വീണ്ടെടുക്കൽ പരാജയപ്പെട്ടു: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d കോൺടാക്റ്റ്</item>
+        <item quantity="other">%1$d കോൺടാക്റ്റുകൾ</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d ജിയോഫെൻസ്</item>
+        <item quantity="other">%1$d ജിയോഫെൻസുകൾ</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s-ലേക്ക് റോൾ മാറ്റ അഭ്യർത്ഥന അയച്ചു</string>
+    <string name="peer_not_found">കോൺടാക്റ്റിനെ കണ്ടെത്തിയില്ല</string>
+    <string name="peer_purge_location_sent">എല്ലാ ലൊക്കേഷനുകളും ഇല്ലാതാക്കാനുള്ള റിമോട്ട് കമാൻഡ് %1$s-ലേക്ക് അയച്ചു</string>
+    <string name="peer_purge_messages_sent">എല്ലാ സന്ദേശങ്ങളും ഇല്ലാതാക്കാനുള്ള റിമോട്ട് കമാൻഡ് %1$s-ലേക്ക് അയച്ചു</string>
+    <string name="onboarding_error_key_length">അസാധുവായ കീ - 64 ഹെക്സ് അക്ഷരങ്ങൾ വേണം.</string>
+    <string name="onboarding_error_key_range">അസാധുവായ സ്വകാര്യ കീ.</string>
+    <string name="onboarding_error_hex">അസാധുവായ ഹെക്സ് ഫോർമാറ്റ്.</string>
+    <string name="onboarding_error_import_failed">കീ ഇറക്കുമതി ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു: %1$s</string>
 </resources>

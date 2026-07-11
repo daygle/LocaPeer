@@ -127,6 +127,26 @@
     <string name="settings_enable_motion_title">Hidupkan pengesanan gerakan</string>
     <string name="settings_enable_motion_message">Akses aktiviti fizikal membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat dalam sejarah anda. Ia kini dimatikan — anda boleh menghidupkannya semula daripada tetapan sistem.</string>
     <string name="settings_open_settings">Buka Tetapan</string>
+    <string name="settings_battery_optimization">Pengoptimuman Bateri</string>
+    <string name="settings_battery_optimization_unrestricted">Tanpa had — LocaPeer boleh berjalan bebas di latar belakang</string>
+    <string name="settings_battery_optimization_restricted">Dioptimumkan — ketik untuk tetapkan Tanpa had dalam tetapan sistem</string>
+
+    <!-- Keizinan -->
+    <string name="settings_permissions">Keizinan</string>
+    <string name="settings_permissions_subtitle">Semak dan baiki akses apl kepada lokasi, kamera dan banyak lagi</string>
+    <string name="permissions_intro">LocaPeer memerlukan keizinan ini untuk berkongsi lokasi anda, mengimbas jemputan dan terus berjalan di latar belakang. Ketik mana-mana yang tidak diberikan untuk membaikinya.</string>
+    <string name="perm_location_title">Lokasi</string>
+    <string name="perm_location_granted">Diberikan — lokasi anda boleh dikongsi</string>
+    <string name="perm_location_denied">Tidak diberikan — ketik untuk membenarkan akses lokasi</string>
+    <string name="perm_background_location_title">Lokasi Latar Belakang</string>
+    <string name="perm_background_location_granted">Diberikan — lokasi terus dikongsi apabila apl ditutup</string>
+    <string name="perm_background_location_denied">Tidak diberikan — ketik untuk membenarkan akses \'Benarkan sepanjang masa\' dalam tetapan</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Diberikan — digunakan untuk mengimbas kod QR jemputan</string>
+    <string name="perm_camera_denied">Tidak diberikan — ketik untuk membenarkan kamera</string>
+    <string name="perm_notifications_title">Pemberitahuan</string>
+    <string name="perm_notifications_granted">Diberikan — amaran dan kemas kini status boleh ditunjukkan</string>
+    <string name="perm_notifications_denied">Tidak diberikan — ketik untuk membenarkan pemberitahuan</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Unit Kelajuan</string>

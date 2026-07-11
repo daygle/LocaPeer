@@ -2,15 +2,15 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── د خبرتیا چینلونه او مخکښ خدمت ─────────────────────── -->
+    <!-- ── د خبرتیا چینلونه او مخکینۍ خدمت ─────────────────────── -->
     <string name="channel_name_heartbeat">د ځای خپرول</string>
-    <string name="channel_desc_heartbeat">ستاسو ځای ستاسو تایید شوي اړیکو ته خپروي</string>
+    <string name="channel_desc_heartbeat">ستاسو ځای ستاسو منل شوي اړیکو ته خپروي</string>
     <string name="channel_name_alerts">خبرتیاوې</string>
-    <string name="channel_desc_alerts">د ورک شوي سیګنال او جیو فینس خبرتیاوې</string>
+    <string name="channel_desc_alerts">د زړه ټکان ورک شوي او د جیو فینس خبرتیاوې</string>
     <string name="channel_name_messages">پیغامونه</string>
-    <string name="channel_desc_messages">راتلونکي پیغامونه</string>
+    <string name="channel_desc_messages">راتلونکي ملګري پیغامونه</string>
     <string name="notification_heartbeat_title">LocaPeer روان دی</string>
-    <string name="notification_heartbeat_text">خپل ځای له نورو سره شریک کړئ</string>
+    <string name="notification_heartbeat_text">خپل ځای له نورو سره شریکوئ</string>
 
     <!-- ── عام فعالیتونه ──────────────────────────────────────── -->
     <string name="common_save">خوندي کول</string>
@@ -20,49 +20,750 @@
     <string name="common_disable">غیر فعال کول</string>
     <string name="common_enable">فعالول</string>
     <string name="common_restore">بیا رغول</string>
-    <string name="common_unlock">قفل خلاصول</string>
+    <string name="common_unlock">خلاصول</string>
     <string name="common_password">پټ نوم</string>
     <string name="common_not_now">اوس نه</string>
     <string name="common_off">بند</string>
-    <string name="common_approve">تایید</string>
+    <string name="common_approve">منل</string>
     <string name="common_deny">ردول</string>
 
     <!-- ── د نیویګیشن ټب لیبلونه ──────────────────────────────────────────── -->
     <string name="tab_map">نقشه</string>
     <string name="tab_messages">پیغامونه</string>
-    <string name="tab_history">تاریخ</string>
+    <string name="tab_history">تاریخچه</string>
     <string name="tab_contacts">اړیکې</string>
     <string name="tab_qr">QR</string>
     <string name="tab_settings">ترتیبات</string>
 
     <!-- ── د حرکت حالتونه ───────────────────────────────────────── -->
     <string name="motion_stationary">ثابت</string>
-    <string name="motion_walking">روان</string>
-    <string name="motion_running">ځغاسته</string>
+    <string name="motion_walking">روان دی</string>
+    <string name="motion_running">ځغلي</string>
     <string name="motion_cycling">سایکل چلول</string>
     <string name="motion_driving">موټر چلول</string>
 
-    <!-- ── ترتیبات ────────────────────────────────────────────────── -->
+    <!-- ── د بیک اپ برخې ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">شخصي کیلي</string>
+    <string name="backup_section_contacts">اړیکې</string>
+    <string name="backup_section_geofences">جیو فینسونه</string>
+    <string name="backup_section_settings">ترتیبات</string>
+
+    <!-- ── د څارنې غوښتنې ډیالوګ ──────────────────────── -->
+    <string name="supervision_request_title">د څارنې غوښتنه</string>
+    <string name="supervision_request_message">\"%1$s\" خپلو ترتیباتو ته د لاسرسي غوښتنه کوي. اجازه ورکوئ؟</string>
+
+    <!-- ── د ترتیباتو سکرین ────────────────────────────────────────────────── -->
     <string name="settings_title">ترتیبات</string>
+
+    <!-- د برخې لیبلونه -->
     <string name="settings_section_location_privacy">ځای او محرمیت</string>
     <string name="settings_section_security">امنیت</string>
     <string name="settings_section_map">نقشه</string>
     <string name="settings_section_battery_performance">بیټرۍ او فعالیت</string>
-    <string name="settings_section_units_display">واحدونه او ننداره</string>
-    <string name="settings_section_retention">ساتل (دا وسیله)</string>
+    <string name="settings_section_units_display">واحدونه او ښودنه</string>
+    <string name="settings_section_retention">ساتل (په دې وسیله کې)</string>
     <string name="settings_section_appearance">بڼه</string>
-    <string name="settings_section_backup_keys">بیک اپ او کیلي</string>
+    <string name="settings_section_backup_keys">بیک اپ او کیليګانې</string>
     <string name="settings_section_about">په اړه</string>
 
+    <!-- پروفایل -->
     <string name="settings_edit_name">نوم بدلول</string>
     <string name="settings_my_qr">زما QR</string>
     <string name="settings_no_name_set">نوم نه دی ټاکل شوی</string>
 
-    <string name="settings_share_location">خپل ځای شریک کړئ</string>
+    <!-- ځای او محرمیت -->
+    <string name="settings_share_location">زما ځای شریک کړئ</string>
+    <string name="settings_broadcasting">ستاسو اړیکو ته خپریږي</string>
+    <string name="settings_not_broadcasting">نه خپریږي</string>
+    <string name="settings_sharing_schedule">د شریکولو مهالویش</string>
+    <string name="settings_always_on">تل فعال</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d قاعده</item>
+        <item quantity="other">%1$d قواعد</item>
+    </plurals>
+    <string name="settings_geofences">جیو فینسونه</string>
+    <string name="settings_geofences_subtitle">شریک شوي جیو فینس سیمې اداره کړئ</string>
+    <string name="settings_notify_when_tracked">کله چې تعقیب شي خبر ورکړئ</string>
+    <string name="settings_notify_when_tracked_subtitle">کله چې ستاسو لپاره د یوې اړیکې نږدېوالی یا جیو فینس خبرتیا پیل شي نو خبرتیا ترلاسه کړئ.</string>
+    <string name="settings_my_location_history">د ځای تاریخچه</string>
+    <string name="settings_my_location_history_subtitle">خپل د ځای مهال ویش وګورئ</string>
+    <string name="settings_lookup_addresses">پتې ولټوئ</string>
+    <string name="settings_lookup_addresses_subtitle">د تاریخچې نقطو او د نقشې پینونو لپاره د سړک پتې وښایاست. دا همغږي ستاسو د وسیلې جیو کوډینګ خدمت (معمولا ګوګل) ته لیږي.</string>
+
+    <!-- امنیت -->
+    <string name="settings_supervision_active">څارنه فعاله ده</string>
+    <string name="settings_supervision_active_subtitle">ترتیبات د څارونکي تصویب ته اړتیا لري</string>
+    <string name="settings_disable_supervised">د څارنې حالت بند کړئ</string>
+    <string name="settings_supervised_mode">د څارنې حالت</string>
+    <string name="settings_supervised_mode_subtitle">ترتیباتو ته د لاسرسي لپاره د څارونکي تصویب ته اړتیا ده</string>
+
+    <!-- نقشه -->
+    <string name="settings_starting_point">پیل ټکی</string>
+    <string name="settings_map_current_location">اوسنی ځای</string>
+    <string name="settings_map_all_contacts">ټولې اړیکې</string>
+    <string name="settings_map_fixed_location">ثابت ځای</string>
+    <string name="settings_map_last_position">وروستی موقعیت</string>
+    <string name="settings_map_starting_point_title">د نقشې پیل ټکی</string>
+    <string name="settings_no_location_set">ځای نه دی ټاکل شوی</string>
+    <string name="settings_pick_location_on_map">په نقشه کې ځای غوره کړئ</string>
+    <string name="settings_default_zoom_level">د زوم ډیفالټ کچه</string>
+    <string name="settings_map_pin_colour">د نقشې پین رنګ</string>
+
+    <!-- بیټرۍ او فعالیت -->
+    <string name="settings_update_cadence">د تازه کولو فریکونسۍ</string>
+    <string name="settings_update_cadence_subtitle">ستاسو ځای څو ځله خپریږي تنظیم کړئ</string>
+    <string name="settings_update_cadence_dialog_message">د خپل فعالیت په اساس کنټرول کړئ چې ستاسو ځای څو ځله تازه کیږي. پرله پسې تازه معلومات ډیره بیټرۍ کاروي.</string>
+    <string name="settings_update_cadence_reset">ډیفالټ ته بیرته راګرځول</string>
+    <string name="settings_min_distance_filtering">د لږترلږه واټن فلټر کول</string>
+    <string name="settings_min_distance_filtering_subtitle">یوازې هغه ټکي وښایاست چې له مخکیني څخه لږ تر لږه دا واټن ولري.</string>
+    <string name="settings_discard_low_accuracy">د ټیټ دقت ځایونه له پامه وغورځوئ</string>
+    <string name="settings_discard_low_accuracy_subtitle">خپل هغه ځایونه مه خپروئ یا مه ثبتوئ چې د دقت وړانګې یې له دې څخه لویه وي. SOS هیڅکله نه پریښودل کیږي.</string>
+    <string name="settings_hide_low_accuracy">د ټیټ دقت ټکي پټ کړئ</string>
+    <string name="settings_hide_low_accuracy_subtitle">د تاریخچې هغه ټکي پټ کړئ چې د دقت وړانګې یې له دې څخه لویه وي. هیڅ شی نه پاکیږي.</string>
+    <string name="settings_low_battery" formatted="false">ټیټه بیټرۍ (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d دقیقې</string>
+    <string name="settings_motion_detection">د حرکت کشف</string>
+    <string name="settings_motion_detection_on">فعال — ستاسو د حرکت ډول (روان، موټر چلول) په تاریخچه کې روښانه کوي</string>
+    <string name="settings_motion_detection_off">بند — د ډیر دقیق حرکت لیبلونو لپاره فزیکي فعالیت ته د لاسرسي اجازه ورکړئ</string>
+    <string name="settings_enable_motion_title">د حرکت کشف فعال کړئ</string>
+    <string name="settings_enable_motion_message">فزیکي فعالیت ته لاسرسی LocaPeer ته اجازه ورکوي چې ستاسو په تاریخچه کې تلل، موټر چلول او ولاړ پاتې کیدل په دقیق ډول وپیژني. دا اوس بند دی — تاسو کولی شئ دا د سیسټم ترتیباتو څخه بیا فعال کړئ.</string>
+    <string name="settings_open_settings">ترتیبات خلاص کړئ</string>
+    <string name="settings_battery_optimization">د بیټرۍ اصلاح کول</string>
+    <string name="settings_battery_optimization_unrestricted">بې حده — LocaPeer کولی شي په شالید کې په آزاده توګه کار وکړي</string>
+    <string name="settings_battery_optimization_restricted">اصلاح شوی — په سیسټم ترتیباتو کې بې حده ته د ټاکلو لپاره کلیک وکړئ</string>
+
+    <!-- اجازې -->
+    <string name="settings_permissions">اجازې</string>
+    <string name="settings_permissions_subtitle">ځای، کمرې او نورو ته د اپلیکیشن لاسرسی بیاکتنه او سم کړئ</string>
+    <string name="permissions_intro">LocaPeer ستاسو د ځای شریکولو، بلنو سکین کولو او په شالید کې د فعالیت دوام لپاره دې اجازو ته اړتیا لري. د هرې هغې اجازې سمولو لپاره چې نه وي ورکړل شوي، کلیک وکړئ.</string>
+    <string name="perm_location_title">ځای</string>
+    <string name="perm_location_granted">ورکړل شوه — ستاسو ځای شریک کیدی شي</string>
+    <string name="perm_location_denied">نه ده ورکړل شوې — د ځای اجازه ورکولو لپاره کلیک وکړئ</string>
+    <string name="perm_background_location_title">شالید ځای</string>
+    <string name="perm_background_location_granted">ورکړل شوه — کله چې اپلیکیشن بند وي نو ځای شریکول دوام لري</string>
+    <string name="perm_background_location_denied">نه ده ورکړل شوې — په ترتیباتو کې د \'تل اجازه ورکړئ\' غوره کولو لپاره کلیک وکړئ</string>
+    <string name="perm_camera_title">کمره</string>
+    <string name="perm_camera_granted">ورکړل شوه — د بلنې QR کوډونو سکین کولو لپاره کارول کیږي</string>
+    <string name="perm_camera_denied">نه ده ورکړل شوې — کمرې ته د اجازې ورکولو لپاره کلیک وکړئ</string>
+    <string name="perm_notifications_title">خبرتیاوې</string>
+    <string name="perm_notifications_granted">ورکړل شوه — خبرتیاوې او حالت تازه معلومات ښودل کیدی شي</string>
+    <string name="perm_notifications_denied">نه ده ورکړل شوې — خبرتیاو ته د اجازې ورکولو لپاره کلیک وکړئ</string>
+
+    <!-- واحدونه او ښودنه -->
+    <string name="settings_speed_units">د سرعت واحدونه</string>
+    <string name="settings_speed_imperial">امپیریل (mph)</string>
+    <string name="settings_speed_metric">میټریک (km/h)</string>
+    <string name="settings_elevation_units">د لوړوالي واحدونه</string>
+    <string name="settings_elevation_imperial">امپیریل (فټ)</string>
+    <string name="settings_elevation_metric">میټریک (میټر)</string>
+    <string name="settings_distance_units">د واټن واحدونه</string>
+    <string name="settings_distance_imperial">امپیریل (ft/mi)</string>
+    <string name="settings_distance_metric">میټریک (m/km)</string>
+    <string name="settings_time_format">د وخت بڼه</string>
+    <string name="settings_time_24h">۲۴ ساعته (13:30)</string>
+    <string name="settings_time_12h">۱۲ ساعته (1:30 PM)</string>
+
+    <!-- ساتل -->
+    <string name="settings_retention_location">د ځای ډاټا</string>
+    <string name="settings_retention_location_subtitle">د اړیکو د ځای ډاټا څومره وخت په وسیله کې وساتل شي</string>
+    <string name="settings_clear_all_location">د ځای ټول ډاټا پاک کړئ</string>
+    <string name="settings_retention_messages">پیغامونه</string>
+    <string name="settings_retention_messages_subtitle">ترلاسه شوي پیغامونه څومره وخت په وسیله کې وساتل شي</string>
+    <string name="settings_clear_all_messages">ټول پیغامونه پاک کړئ</string>
+
+    <!-- بڼه -->
+    <string name="settings_customize_nav">نیویګیشن تنظیم کړئ</string>
+    <string name="settings_customize_nav_subtitle">لاندې ټبونه غوره کړئ او ترتیب یې بدل کړئ</string>
+    <string name="settings_start_page">د پیل پاڼه</string>
     <string name="settings_language">ژبه</string>
     <string name="settings_language_title">د اپلیکیشن ژبه</string>
     <string name="settings_language_system">د سیسټم ډیفالټ</string>
 
-    <string name="common_ok">سمه ده</string>
+    <!-- بیک اپ او کیليګانې -->
+    <string name="settings_export_backup">بیک اپ صادر کړئ</string>
+    <string name="settings_export_backup_subtitle">خپله شخصي کیلي او اړیکې په یو فایل کې خوندي کړئ. دا فایل په خوندي ځای کې وساتئ!</string>
+    <string name="settings_import_backup">بیک اپ وارد کړئ</string>
+    <string name="settings_import_backup_subtitle">د پخوا صادر شوي فایل څخه بیا رغونه</string>
+    <string name="settings_view_private_key">شخصي کیلي وګورئ</string>
+    <string name="settings_view_private_key_subtitle">خپل د ۶۴ کرکټرونو هیکس شناختي کیلي وښایاست</string>
+
+    <!-- په اړه -->
+    <string name="settings_about_locapeer">د LocaPeer په اړه</string>
+    <string name="settings_about_subtitle">نسخه، د ریلی حالت، خلاص سرچینه</string>
+
+    <!-- ډیالوګونه -->
+    <string name="settings_edit_display_name">نوم بدلول</string>
+    <string name="settings_display_name_label">ښودل شوی نوم</string>
+    <string name="settings_my_invite_qr">زما د بلنې QR</string>
+    <string name="settings_invite_qr_subtitle">نور کولی شي دا سکین کړي ترڅو ستاسو تعقیب پیل کړي.</string>
+    <string name="settings_invite_qr_cd">د بلنې QR</string>
+    <string name="settings_private_key_title">شخصي کیلي</string>
+    <string name="settings_private_key_warning">دا په خوندي ډول وساتئ. هرڅوک چې دا کیلي ولري کولی شي ځان ستاسو په څیر څرګند کړي.</string>
+    <string name="settings_clear_location_title">د ځای تاریخچه پاکه کړو؟</string>
+    <string name="settings_clear_location_message">ټول خوندي شوي د ځای معلومات به د تل لپاره پاک شي.</string>
+    <string name="settings_clear_messages_title">د پیغامونو تاریخچه پاکه کړو؟</string>
+    <string name="settings_clear_messages_message">ټول خوندي شوي پیغامونه به د تل لپاره پاک شي.</string>
+    <string name="settings_encrypted_backup_title">شفر شوی بیک اپ</string>
+    <string name="settings_encrypted_backup_message">دا بیک اپ شفر شوی دی. د دوام لپاره مهرباني وکړئ پټ نوم داخل کړئ.</string>
+    <string name="settings_select_restore_title">هغه معلومات غوره کړئ چې بیا رغول کیږي</string>
+    <string name="settings_select_export_title">هغه معلومات غوره کړئ چې صادریږي</string>
+    <string name="settings_export_password_hint">د خپل بیک اپ فایل شفر کولو لپاره په اختیاري ډول یو پټ نوم وټاکئ.</string>
+    <string name="settings_backup_password_optional">د بیک اپ پټ نوم (اختیاري)</string>
+    <string name="settings_select_sections">هغه برخې غوره کړئ چې پکې شامل وي:</string>
+    <string name="settings_choose_file_location">د فایل ځای غوره کړئ</string>
+    <string name="settings_not_in_backup">په دې بیک اپ کې نشته</string>
+    <string name="settings_enable_supervised_title">د څارنې حالت فعال کړئ</string>
+    <string name="settings_enable_supervised_message">یو ملګری غوره کړئ چې د څارونکي په توګه کار وکړي. دوی باید له خپلې وسیلې څخه ترتیباتو ته لاسرسی ومني.</string>
+    <string name="settings_no_peers_found">هیڅ ملګري ونه موندل شول. لومړی د هغوی د بلنې QR کوډ په سکین کولو سره یو ملګری اضافه کړئ.</string>
+    <string name="settings_disable_supervised_title">د څارنې حالت بند کړو؟</string>
+    <string name="settings_disable_supervised_message">ترتیبات به د څارونکي له تصویب پرته د لاسرسي وړ وي.</string>
+
+    <!-- ── نور عام ─────────────────────────────────────────── -->
+    <string name="common_remove">لیرې کول</string>
+    <string name="common_name">نوم</string>
+    <string name="common_search">لټون</string>
+    <string name="common_sort">ترتیب</string>
+
+    <!-- محتوا تفصيل (شریک شوي) -->
+    <string name="cd_message">پیغام</string>
+    <string name="cd_show_on_map">په نقشه کې ښودل</string>
+    <string name="cd_more_options">نور انتخابونه</string>
+
+    <!-- ── د اړیکو سکرین ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d غوره شوی</item>
+        <item quantity="other">%1$d غوره شوي</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">انتخاب لغوه کړئ</string>
+    <string name="contacts_cd_select_all">ټول غوره کړئ</string>
+    <string name="contacts_cd_deselect_all">ټول لغوه کړئ</string>
+    <string name="contacts_cd_qr_invite">QR / بلنه</string>
+    <string name="contacts_cd_pending_requests">انتظار غوښتنې</string>
+    <string name="contacts_sort_last_seen">وروستی ځل لیدل شوی</string>
+    <string name="contacts_search_placeholder">د اړیکو لټون…</string>
+    <string name="contacts_empty_title">لا تر اوسه اړیکې نشته</string>
+    <string name="contacts_empty_subtitle">د بل چا سره د وصل کیدو او د ځای شریکولو پیل لپاره یو QR کوډ سکین کړئ.</string>
+    <string name="contacts_scan_qr">QR کوډ سکین کړئ</string>
+    <string name="contacts_bulk_delete_messages">پیغامونه پاک کړئ</string>
+    <string name="contacts_bulk_delete_locations">ځایونه پاک کړئ</string>
+    <string name="contacts_last_seen">وروستی ځل لیدل شوی: %1$s</string>
+    <string name="contacts_no_location_yet">لا تر اوسه د ځای معلومات نشته</string>
+    <string name="contacts_view_sharing_settings">د شریکولو ترتیبات</string>
+    <string name="contacts_view_location_history">د ځای تاریخچه</string>
+    <string name="contacts_rename_contact">د اړیکې نوم بدلول</string>
+    <string name="contacts_on_contact_device">د اړیکې په وسیله کې</string>
+    <string name="contacts_delete_my_messages_title">زما پیغامونه پاک کړئ</string>
+    <string name="contacts_delete_locations_title">شریک شوي ځایونه پاک کړئ</string>
+    <string name="contacts_remove_contact_title">اړیکه لیرې کړئ</string>
+    <string name="contacts_leave_title">اړیکه او معلومات پاک کړئ</string>
+    <string name="contacts_rename_title">د اړیکې نوم بدلول</string>
+    <string name="contacts_remove_contact_body">ایا %1$s له خپلو اړیکو لیرې کړئ؟ د دوی د ځای تاریخچه به هم په وسیله کې پاکه شي.</string>
+    <string name="contacts_leave_body">دا به تاسو د %1$s له اړیکو لیرې کړي او ستاسو ټول پیغامونه او د ځای معلومات به د هغوی له وسیلې پاک کړي. تاسو به د هغوی ځای ته لاسرسی هم له لاسه ورکړئ.</string>
+    <string name="contacts_delete_my_messages_body">دا به ستاسو ټول هغه پیغامونه پاک کړي چې تاسو د %1$s له وسیلې لیږلي دي. دا عمل نه شي بیرته کیدلی.</string>
+    <string name="contacts_delete_locations_body">دا به ستاسو د ځای ټول معلومات پاک کړي چې تاسو د %1$s له وسیلې شریک کړي دي. دا عمل نه شي بیرته کیدلی.</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">اړیکه لیرې کړئ</item>
+        <item quantity="other">%1$d اړیکې لیرې کړئ</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">دا اړیکه لیرې کړئ؟ د هغوی د ځای تاریخچه به هم په وسیله کې پاکه شي.</item>
+        <item quantity="other">%1$d اړیکې لیرې کړئ؟ د هغوی د ځای تاریخچه به هم په وسیله کې پاکه شي.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">د دې اړیکې له وسیلې ستاسو ټول لیږل شوي پیغامونه له لرې څخه پاک کړئ؟ دا عمل نه شي بیرته کیدلی.</item>
+        <item quantity="other">د %1$d اړیکو له وسیلو ستاسو ټول لیږل شوي پیغامونه له لرې څخه پاک کړئ؟ دا عمل نه شي بیرته کیدلی.</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">د دې اړیکې له وسیلې ستاسو ټول شریک شوي د ځای معلومات له لرې څخه پاک کړئ؟ دا عمل نه شي بیرته کیدلی.</item>
+        <item quantity="other">د %1$d اړیکو له وسیلو ستاسو ټول شریک شوي د ځای معلومات له لرې څخه پاک کړئ؟ دا عمل نه شي بیرته کیدلی.</item>
+    </plurals>
+
+    <string name="common_continue">دوام ورکړئ</string>
+
+    <!-- ── د کار پیل (Onboarding) ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">له بیک اپ څخه بیا رغول</string>
+    <string name="onboarding_restore_message">خپل ۶۴ کرکټرونو هیکس شخصي کیلي دلته واچوئ ترڅو خپل شناخت او اړیکې بیا ترلاسه کړئ.</string>
+    <string name="onboarding_private_key_hex">شخصي کیلي (هیکس)</string>
+    <string name="onboarding_tagline">له اړیکو سره د ځای شخصي شریکول.\nبې اکاونټه. بې شخصي سرورونو.</string>
+    <string name="onboarding_feature_e2e_title">له پیل څخه تر پایه شفر شوی</string>
+    <string name="onboarding_feature_e2e_subtitle">ستاسو ځای په وسیله کې شفر کیږي</string>
+    <string name="onboarding_feature_servers_title">بې شخصي سرورونو</string>
+    <string name="onboarding_feature_servers_subtitle">د خوندي لیږد په توګه خلاص Nostr ریلیز کاروي - ستاسو معلومات شفر شوي او محرم پاتې کیږي</string>
+    <string name="onboarding_feature_phone_title">ستاسو په تلیفون کې پاتې کیږي</string>
+    <string name="onboarding_feature_phone_subtitle">ستاسو د ځای پوره تاریخچه ستاسو په وسیله کې پاتې کیږي. یوازې ستاسو اوسنی موقعیت له غوره شوو اړیکو سره شریکیږي</string>
+    <string name="onboarding_name_prompt">اړیکې مو باید په کوم نوم ووبولي؟</string>
+    <string name="onboarding_name_placeholder">مثلاً مور، پلار، احمد…</string>
+    <string name="onboarding_get_started">پیل کول</string>
+    <string name="onboarding_restore_from_backup">له بیک اپ څخه بیا رغول</string>
+    <string name="onboarding_key_note">ستاسو شخصي کیلي په وسیله کې جوړیږي او هیڅکله دا وسیله نه پریږدي.</string>
+    <string name="onboarding_permissions_title">اجازې</string>
+    <string name="onboarding_permissions_desc">LocaPeer ستاسو د ځای شریکولو لپاره د ځای لاسرسي، د بلنې کوډونو سکین کولو لپاره د کمرې لاسرسي، او د شالید حالت لپاره د خبرتیا لاسرسي ته اړتیا لري. فزیکي فعالیت ته لاسرسی اختیاري دی - دا ستاسو د حرکتونو (روان، موټر چلول) په دقیق ډول پیژندلو کې مرسته کوي.</string>
+    <string name="onboarding_before_ask_title">مخکې له دې چې پوښتنه وکړو</string>
+    <string name="onboarding_before_ask_intro">تاسو به وروسته د سیسټم ځینې غوښتنې وګورئ:</string>
+    <string name="onboarding_before_ask_location">• ځای - اړین دی، ستاسو د موقعیت شریکولو لپاره.</string>
+    <string name="onboarding_before_ask_camera">• کمره - د بلنې کوډونو سکین کولو لپاره.</string>
+    <string name="onboarding_before_ask_notifications">• خبرتیاوې - د شالید حالت لپاره.</string>
+    <string name="onboarding_before_ask_activity">• فزیکي فعالیت - اختیاري. دا LocaPeer ته اجازه ورکوي چې ستاسو په تاریخچه کې روان، موټر چلول او ولاړ پاتې کیدل په دقیق ډول وپیژني. تاسو کولی شئ دا پریږدئ او وروسته یې په ترتیباتو کې فعال کړئ.</string>
+    <string name="onboarding_grant_permissions">اجازه ورکړئ</string>
+    <string name="onboarding_bg_location_title">شالید ځای</string>
+    <string name="onboarding_bg_location_desc">ترڅو اپلیکیشن بند وي هم ستاسو اړیکې تازه پاتې شي، مهرباني وکړئ په راتلونکي سکرین کې \'تل اجازه ورکړئ\' غوره کړئ.</string>
+    <string name="onboarding_bg_location_error">د اپلیکیشن بندیدو پرمهال ستاسو د اړیکو تازه کولو لپاره شالید ځای ته اړتیا ده. مهرباني وکړئ بیا هڅه وکړئ او \'تل اجازه ورکړئ\' غوره کړئ.</string>
+    <string name="onboarding_configure_location">ځای تنظیم کړئ</string>
+    <string name="onboarding_battery_title">بیټرۍ</string>
+    <string name="onboarding_battery_desc">Android ممکن د بیټرۍ خوندي کولو لپاره LocaPeer ودروي. د باوري تازه معلوماتو لپاره، مهرباني وکړئ LocaPeer له اصلاح کولو (optimizations) څخه وباسئ.</string>
+    <string name="onboarding_disable_optimizations">اصلاح کول بند کړئ</string>
+    <string name="onboarding_done_title">بشپړ شو!</string>
+    <string name="onboarding_done_desc">ستاسو د ځای شخصي شبکه چمتو ده.</string>
+    <string name="onboarding_start_using">د LocaPeer کارول پیل کړئ</string>
+
+    <string name="common_try_again">بیا هڅه وکړئ</string>
+
+    <!-- ── د بلنې سکین سکرین ─────────────────────────────────────────────── -->
+    <string name="scan_title">بلنه سکین کړئ</string>
+    <string name="scan_camera_needed">د QR کوډونو سکین کولو لپاره د کمرې اجازې ته اړتیا ده.</string>
+    <string name="scan_grant_permission">اجازه ورکړئ</string>
+    <string name="scan_add_contact_title">اړیکه اضافه کړو؟</string>
+    <string name="scan_add_contact_message">دا به تاسو له %1$s سره وصل کړي او ستاسو ترمنځ د ځای شریکول به پیل کړي.</string>
+    <string name="scan_add_share">اضافه او شریک کړئ</string>
+    <string name="scan_request_sent_title">غوښتنه واستول شوه!</string>
+    <string name="scan_request_sent_message">%1$s ته غوښتنه واستول شوه. کله چې هغوی ومني نو وصل به شئ.</string>
+    <string name="scan_failed">سکین ناکام شو: %1$s</string>
+
     <string name="cd_back">شاته</string>
+    <string name="common_review">بیاکتنه</string>
+    <string name="common_decline">ردول</string>
+
+    <!-- د شریکولو رول لیبلونه (شریک شوي) -->
+    <string name="role_send_receive">لیږل/ترلاسه کول</string>
+    <string name="role_send">لیږل</string>
+    <string name="role_receive">ترلاسه کول</string>
+    <string name="role_none">شریکول نشته</string>
+
+    <!-- ── د بلنې سکرین ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">زما بلنه</string>
+    <string name="invite_tab_add_contact">اړیکه اضافه کړئ</string>
+    <string name="invite_your_qr_title">ستاسو QR کوډ</string>
+    <string name="invite_your_qr_subtitle">اجازه ورکړئ څوک دا سکین کړي ترڅو ستاسو ځای تعقیب کړي</string>
+    <string name="invite_qr_cd">ستاسو QR کوډ</string>
+    <string name="invite_qr_error">د QR په جوړولو کې تېروتنه</string>
+    <string name="invite_share_link">د بلنې لینک شریک کړئ</string>
+    <string name="invite_encryption_note">ستاسو ځای به په ځانګړي ډول د سکین کونکي وسیلې لپاره شفر شي.</string>
+    <string name="invite_camera_required_title">کمرې ته لاسرسی اړین دی</string>
+    <string name="invite_camera_required_message">د QR کوډ سکین کولو لپاره د کمرې اجازه ورکړئ.</string>
+    <string name="invite_point_camera">کمره د LocaPeer QR په لور ونیسئ</string>
+    <string name="invite_paste_title">یا د بلنې لینک واچوئ</string>
+    <string name="invite_process_link">لینک پروسس کړئ</string>
+    <string name="invite_fallback_name">اړیکه</string>
+    <string name="invite_success_message">کله چې هغوی ومني نو له %1$s سره به وصل شئ.</string>
+    <string name="invite_confirm_add_title">%1$s اضافه کړو؟</string>
+    <string name="invite_confirm_add_message">هغوی خپلو اړیکو ته اضافه کړئ او ځای شریک کړئ؟</string>
+
+    <!-- ── د پاتې غوښتنو سکرین ────────────────────────────────────────── -->
+    <string name="pending_empty">هیڅ پاتې غوښتنې نشته</string>
+    <string name="pending_requesting">غوښتنه لیږل شوې: %1$s · %2$s</string>
+    <string name="pending_role_change">د رول بدلولو غوښتنه · %1$s</string>
+    <string name="pending_new_request">د شریکولو نوې غوښتنه · %1$s</string>
+
+    <string name="common_save_changes">بدلونونه خوندي کړئ</string>
+
+    <!-- ── د راتلونکي شریکولو غوښتنې سکرین ──────────────────────────────────── -->
+    <string name="incoming_update_title">د شریکولو ترتیبات تازه کړئ</string>
+    <string name="incoming_new_title">د نوې اړیکې غوښتنه</string>
+    <string name="incoming_update_subtitle">%1$s غواړي ستاسو د شریکولو طریقه تازه کړي. لاندې ترتیبات وګورئ.</string>
+    <string name="incoming_new_subtitle">%1$s تاسو د یوې اړیکې په توګه اضافه کړی! اوس تاسو کولی شئ وټاکئ چې په ځواب کې څه شریک کړئ.</string>
+    <string name="incoming_section_location">ځای</string>
+    <string name="incoming_share_my_location">خپل ځای له %1$s سره شریک کړئ</string>
+    <string name="incoming_share_my_location_sub">هغوی به وکولی شي وګوري چې تاسو چیرته یاست</string>
+    <string name="incoming_see_their_location">د %1$s ځای وګورئ</string>
+    <string name="incoming_see_their_location_sub">تاسو به وکولی شئ وګورئ چې هغوی چیرته دي</string>
+    <string name="incoming_section_messaging">پیغام رسول</string>
+    <string name="incoming_allow_messages">پیغامونو ته اجازه ورکړئ</string>
+    <string name="incoming_allow_messages_sub">له %1$s څخه د چاټ پیغامونه ترلاسه کړئ</string>
+
+    <string name="common_request">غوښتنه</string>
+    <string name="common_edit">بدلول</string>
+
+    <!-- ── د اړیکې ترتیباتو سکرین ─────────────────────────── -->
+    <string name="peer_title">د اړیکې ترتیبات</string>
+    <string name="peer_section_roles">د ځای شریکولو رولونه</string>
+    <string name="peer_send_on">%1$s ستاسو ځای لیدلی شي</string>
+    <string name="peer_send_off">تاسو خپل ځای له %1$s سره نه شریکوئ</string>
+    <string name="peer_receive_title">د %1$s ځای ترلاسه کړئ</string>
+    <string name="peer_receive_on">تاسو د %1$s ځای لیدلی شئ</string>
+    <string name="peer_receive_off">تاسو د %1$s ځای ته لاسرسی نه لرئ</string>
+    <string name="peer_section_privacy">د محرمیت او شریکولو کنټرولونه</string>
+    <string name="peer_pause_sharing">شریکول ودروئ</string>
+    <string name="peer_pause_sub">د لږ وخت لپاره له %1$s سره د ځای شریکول بند کړئ</string>
+    <string name="peer_precision">د ځای دقیقیت</string>
+    <string name="peer_precision_exact_sub">دقیق GPS همغږي</string>
+    <string name="peer_precision_suburb_sub">تقریبي ځای (د سیمې په کچه)</string>
+    <string name="peer_always_sharing">تل شریکیږي</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d د شریکولو فعاله قاعده</item>
+        <item quantity="other">%1$d د شریکولو فعالې قواعد</item>
+    </plurals>
+    <string name="peer_section_alerts">خبرتیاوې او څارنه</string>
+    <string name="peer_sos_contact">د SOS اړیکه</string>
+    <string name="peer_sos_sub">که شریکول بند هم وي ستاسو د بیړني حالت خبرتیاوې ترلاسه کړي</string>
+    <string name="peer_missed_alert">د ځای نه ورکولو خبرتیا</string>
+    <string name="peer_missed_on">که %1$s خپل ځای ښودل بند کړي نو ماته خبر راکړئ</string>
+    <string name="peer_requires_access">د %1$s ځای ته لاسرسي ته اړتیا لري</string>
+    <string name="peer_proximity_alert">د نږدېوالي خبرتیا</string>
+    <string name="peer_proximity_sub">کله چې %1$s نږدې وي خبر راکړئ</string>
+    <string name="peer_alert_radius">د خبرتیا وړانګه</string>
+    <string name="peer_alert_schedule">د خبرتیا مهالویش</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d فعاله قاعده</item>
+        <item quantity="other">%1$d فعالې قواعد</item>
+    </plurals>
+    <string name="peer_geofences_sub">د %1$s لپاره د رسیدو او وتلو سیمې تنظیم کړئ</string>
+    <string name="peer_supervise">دا وسیله وڅارئ</string>
+    <string name="peer_supervise_on">تاسو له %1$s څخه د خلاصولو غوښتنې ترلاسه کوئ او منئ یې</string>
+    <string name="peer_supervise_off">اجازه ورکړئ چې %1$s تاسو ته د څارنې حالت د خلاصولو غوښتنې واستوي</string>
+    <string name="peer_messaging_sub">له %1$s څخه د چاټ پیغامونه فعال/بند کړئ</string>
+    <string name="peer_section_history">د حرکت تاریخچه</string>
+    <string name="peer_location_history">د ځای تاریخچه</string>
+    <string name="peer_location_history_sub">د %1$s د حرکت تاریخچه او د نقشې راپور وګورئ</string>
+    <string name="peer_section_retention">د معلوماتو د لیرې ساتلو موده</string>
+    <string name="peer_retention_location_sub">%1$s ستاسو د ځای تاریخچه څومره وخت ساتي</string>
+    <string name="peer_purge_location">د %1$s څخه د ځای ټول معلومات پاک کړئ</string>
+    <string name="peer_retention_messages_sub">%1$s ستاسو لیږل شوي پیغامونه څومره وخت ساتي</string>
+    <string name="peer_purge_messages">د %1$s څخه ټول پیغامونه پاک کړئ</string>
+    <string name="peer_precision_exact">دقیق GPS</string>
+    <string name="peer_precision_exact_desc">دقیق همغږي</string>
+    <string name="peer_precision_suburb">سیمه (~1km)</string>
+    <string name="peer_precision_suburb_desc">یوازې د سیمې په کچه</string>
+
+    <!-- ── د خبرو اترو لیست (پیغامونه) سکرین ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d خبرې اترې پاکې کړو؟</item>
+        <item quantity="other">%1$d خبرې اترې پاکې کړو؟</item>
+    </plurals>
+    <string name="conv_delete_locally">په وسیله کې پاک کړئ</string>
+    <string name="conv_delete_locally_sub">خبرې اترې یوازې ستاسو له وسیلې لیرې کوي.</string>
+    <string name="conv_delete_both">په وسیله او له اړیکې څخه پاک کړئ</string>
+    <string name="conv_bulk_delete_both_sub">خبرې اترې په وسیله او د اړیکې له وسیلې پاکوي.</string>
+    <string name="conv_delete_both_sub">خبرې اترې په وسیله کې پاکوي او د اړیکې په وسیله کې د خبرو اترو د پاکولو غوښتنه لیږي.</string>
+    <string name="conv_cd_exit_selection">له انتخاب څخه وتل</string>
+    <string name="conv_cd_select_all">ټول وټاکئ</string>
+    <string name="conv_cd_new_message">نوی پیغام</string>
+    <string name="conv_sort_date">نیټه</string>
+    <string name="conv_sort_unread">نا لوستل شوي</string>
+    <string name="conv_search_placeholder">د خبرو اترو لټون…</string>
+    <string name="conv_tab_chats">چاټونه</string>
+    <string name="conv_tab_archived">ارشیف شوي</string>
+    <string name="conv_mark_read">د لوستل شوي په توګه نښه کړئ</string>
+    <string name="conv_archive">ارشیف کول</string>
+    <string name="conv_unarchive">له ارشیف څخه ایستل</string>
+    <string name="conv_empty_no_results">د \"%1$s\" لپاره پایله ونه موندل شوه</string>
+    <string name="conv_empty_no_results_sub">بله لټون کلمه وکاروئ</string>
+    <string name="conv_empty_archived_title">هیڅ ارشیف شوي چاټونه نشته</string>
+    <string name="conv_empty_archived_sub">خپل ان باکس پاک ساتلو لپاره چاټونه ارشیف کړئ</string>
+    <string name="conv_empty_title">لا تر اوسه پیغامونه نشته</string>
+    <string name="conv_empty_sub">نقشه خلاصه کړئ او د خبرو اترو\nپیل لپاره یو کس وټاکئ</string>
+    <string name="conv_delete_title">خبرې اترې پاکې کړو؟</string>
+    <string name="conv_delete_message">تاسو څنګه غواړئ له %1$s سره دا خبرې اترې پاکې کړئ؟</string>
+    <string name="conv_messages_blocked">پیغامونه بند شوي دي</string>
+    <string name="conv_preview_mine">تاسو: %1$s</string>
+    <string name="conv_new_message_title">نوی پیغام</string>
+    <string name="conv_picker_empty">لا تر اوسه اړیکې نشته. د اړیکې اضافه کولو لپاره یو QR کوډ سکین کړئ.</string>
+
+    <!-- ── د چاټ سکرین ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">د چاټ تاریخچه پاکه کړو؟</string>
+    <string name="chat_clear_message">تاسو څنګه غواړئ له %1$s سره دا خبرې اترې پاکې کړئ؟</string>
+    <string name="chat_clear_locally">په وسیله کې پاک کړئ</string>
+    <string name="chat_clear_both">په وسیله او له اړیکې څخه پاک کړئ</string>
+    <string name="chat_clear_both_sub">چاټ په وسیله کې پاکوي او %1$s ته ستاسو د لیږل شوو پیغامونو د پاکولو غوښتنه لیږي.</string>
+    <string name="chat_cd_options">انتخابونه</string>
+    <string name="chat_clear_history_menu">د چاټ تاریخچه پاک کړئ</string>
+    <string name="chat_typing">%1$s د پیغام لیکلو په حال کې دی…</string>
+    <string name="chat_blocked_banner">تاسو له %1$s څخه پیغامونه بند کړي دي. د خلاصولو لپاره اړیکو ته لاړ شئ.</string>
+    <string name="chat_delete_msg_title">پیغام پاک کړو؟</string>
+    <string name="chat_delete_msg_message">تاسو څنګه غواړئ دا پیغام پاک کړئ؟</string>
+    <string name="chat_delete_from_contact">له اړیکې څخه پاک کړئ</string>
+    <string name="chat_delete_from_contact_sub">چاټ د اړیکې له وسیلې پاکوي.</string>
+    <string name="chat_delete_both_sub">چاټ په وسیله کې لیرې کوي او په اتومات ډول یې د اړیکې له وسیلې پاکوي.</string>
+    <string name="chat_cd_share_location">ځای شریک کړئ</string>
+    <string name="chat_input_placeholder">پیغام…</string>
+    <string name="chat_cd_send">لیږل</string>
+
+    <string name="common_close">بندول</string>
+
+    <!-- ── د نقشې سکرین ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS فعال کړو؟</string>
+    <string name="map_sos_deactivate_title">SOS بند کړو؟</string>
+    <string name="map_sos_activate_msg">دا به ستاسو د بندولو تر وخته ستاسو ځای په هرو ۱۵ ثانیو کې ستاسو ټاکل شوو SOS اړیکو ته واستوي.</string>
+    <string name="map_sos_deactivate_msg">دا به ستاسو بیړنیو اړیکو ته د لوړ لومړیتوب د ځای لیږل بند کړي.</string>
+    <string name="map_activate">فعالول</string>
+    <string name="map_deactivate">بندول</string>
+    <string name="map_cd_style">د نقشې ډول</string>
+    <string name="map_cd_show_geofences">جیو فینسونه وښایاست</string>
+    <string name="map_cd_hide_geofences">جیو فینسونه پټ کړئ</string>
+    <string name="map_cd_follow">زما پسې راځه</string>
+    <string name="map_cd_friends">ملګري</string>
+    <string name="map_no_friends">لا تر اوسه هیڅ ملګری نه تعقیبیږي</string>
+    <string name="map_you">تاسو</string>
+    <string name="map_cd_go_my_location">زما ځای ته لاړ شه</string>
+    <string name="map_sos_active">⚠ SOS فعال دی</string>
+    <string name="map_away">لیرې</string>
+    <string name="map_no_location_yet">لا تر اوسه ځای نشته</string>
+    <string name="map_cd_go_location">ځای ته لاړ شه</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS فعال دی</string>
+    <string name="map_overdue">ځنډ شوی — تازه معلومات نشته</string>
+    <string name="map_stat_last_seen">وروستی ځل لیدل شوی</string>
+    <string name="map_stat_battery">بیټرۍ</string>
+    <string name="map_stat_accuracy">دقت</string>
+    <string name="map_stat_motion">حرکت</string>
+    <string name="map_stat_speed">سرعت</string>
+    <string name="map_stat_elevation">لوړوالی</string>
+
+    <string name="common_ok">ښه ده</string>
+
+    <!-- ── د تاریخچې راپور سکرین ──────────────────────────────────────────── -->
+    <string name="history_title_peer">تاریخچه: %1$s</string>
+    <string name="history_select_person">یو کس وټاکئ</string>
+    <string name="history_person_label">کس</string>
+    <string name="history_cd_prev_day">مخکینۍ ورځ</string>
+    <string name="history_cd_next_day">بله ورځ</string>
+    <string name="history_time_filter">د وخت فلټر:</string>
+    <string name="history_cd_reset_time">وخت بیا تنظیم کړئ</string>
+    <string name="history_tab_list">لیست</string>
+    <string name="history_empty_title">د دې ورځې لپاره تاریخچه نشته</string>
+    <string name="history_empty_sub">بله نیټه غوره کړئ یا خپل کینکشین وګورئ.</string>
+    <string name="history_start_time">پیل وخت</string>
+    <string name="history_end_time">پای وخت</string>
+    <string name="history_no_data_title">د ځای معلومات نشته</string>
+    <string name="history_no_data_sub">د دې ورځې یا وخت لپاره هیڅ ثبت شوي معلومات نشته.</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d ځای ثبت شو</item>
+        <item quantity="other">%1$d ځایونه ثبت شول</item>
+    </plurals>
+    <string name="history_cd_dismiss">لیرې کول</string>
+    <string name="history_accuracy_label">±%1$s دقت</string>
+    <string name="history_emergency_sos">د SOS بیړنۍ نښه</string>
+    <string name="history_detail_location">ځای</string>
+    <string name="history_detail_coordinates">همغږي</string>
+    <string name="history_within">په ±%1$s کې</string>
+    <string name="history_detail_movement">حرکت</string>
+    <string name="history_movement_desc">%1$s %2$s د %3$s په لور</string>
+
+    <string name="common_create">جوړول</string>
+
+    <!-- ── د جیو فینس سکرینونه ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">د جیو فینس سیمه اضافه کړئ</string>
+    <string name="geo_cd_assign">جیو فینس وټاکئ</string>
+    <string name="geo_unknown">نامعلوم</string>
+    <string name="geo_empty_title">هیڅ جیو فینس نشته</string>
+    <string name="geo_empty_sub">د جیو فینس سیمې جوړولو لپاره + وټاکئ، بیا د خپلو اړیکو له ترتیباتو هغوی ته دا سیمه وټاکئ.</string>
+    <string name="geo_delete_title">جیو فینس پاک کړو؟</string>
+    <string name="geo_delete_simple">\"%1$s\" پاک کړو؟</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" %2$d اړیکې ته ټاکل شوی. د دې پاکول به هغه ټاکنې هم لیرې کړي.</item>
+        <item quantity="other">\"%1$s\" %2$d اړیکو ته ټاکل شوی. د دې پاکول به هغه ټاکنې هم لیرې کړي.</item>
+    </plurals>
+    <string name="geo_for_contact">د %1$s لپاره جیو فینسونه</string>
+    <string name="geo_empty_contact_title">د اړیکې لپاره هیڅ جیو فینس نشته</string>
+    <string name="geo_empty_contact_sub">د جیو فینس سیمې ټاکلو لپاره + وټاکئ او غوره کړئ چې په رسیدو، وتلو یا دواړو کې خبرتیا درکړل شي.</string>
+    <string name="geo_no_areas_title">لا تر اوسه جیو فینس نشته</string>
+    <string name="geo_no_areas_msg">لومړی د جیو فینس له سکرین څخه یوه سیمه جوړه کړئ، بیا یې دلته وټاکئ.</string>
+    <string name="geo_radius_label">د %1$s وړانګه</string>
+    <string name="geo_contacts_label">اړیکې: %1$s</string>
+    <string name="geo_no_contacts_assigned">هیڅ اړیکه نه ده ټاکل شوې</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d قاعده</item>
+        <item quantity="other">%1$d قواعد</item>
+    </plurals>
+    <string name="geo_trigger_enter">ننوتل</string>
+    <string name="geo_trigger_exit">وتل</string>
+    <string name="geo_trigger_both">دواړه</string>
+    <string name="geo_edit_title">جیو فینس بدل کړئ</string>
+    <string name="geo_new_title">نوی جیو فینس</string>
+    <string name="geo_cd_my_location">زما ځای</string>
+    <string name="geo_cd_radius_increase">وړانګه زیاته کړئ</string>
+    <string name="geo_cd_radius_decrease">وړانګه کمه کړئ</string>
+    <string name="geo_hint_tap">د ځای پر ځای کولو لپاره په نقشه کلیک وکړئ یا یې ونیسئ</string>
+    <string name="geo_hint_move">د زوم لپاره دوه ګوتې وکاروئ • د پین د بدلولو لپاره یې ونیسئ یا یې کش کړئ</string>
+    <string name="geo_basic_info">بنسټیز معلومات</string>
+    <string name="geo_search_title">د پتې له لارې لټون</string>
+    <string name="geo_search_label">پته یا ځای</string>
+    <string name="geo_search_placeholder">مثلاً ۱۰ مین سټریټ، کابل</string>
+    <string name="geo_search_no_results">کومه ورته پته ونه موندل شوه</string>
+    <string name="geo_cd_search">لټون</string>
+    <string name="geo_name_placeholder">مثلاً کور، کار</string>
+    <string name="geo_name_required">نوم اړین دی</string>
+    <string name="geo_latitude">پلنوالی</string>
+    <string name="geo_longitude">اوږدوالی</string>
+    <string name="geo_lat_range">-۹۰ تر ۹۰</string>
+    <string name="geo_lng_range">-۱۸۰ تر ۱۸۰</string>
+    <string name="geo_radius">وړانګه</string>
+    <string name="geo_radius_range">له %1$d تر %2$d م داخل کړئ</string>
+    <string name="geo_edit_assignment">ټاکنه بدل کړئ</string>
+    <string name="geo_assign_title">جیو فینس وټاکئ</string>
+    <string name="geo_select_area">د جیو فینس سیمه غوره کړئ</string>
+    <string name="geo_trigger_title">خبرتیا پیل کړئ کله چې:</string>
+    <string name="geo_add_rule">قاعده اضافه کړئ</string>
+    <string name="geo_alerts_all_times">خبرتیاوې تل فعالې دي. د خبرتیاو د لیږلو وخت محدودولو لپاره یوه قاعده اضافه کړئ.</string>
+    <string name="geo_assign_action">ټاکل</string>
+
+    <!-- ── د نږدېوالي خبرتیاو سکرین ────────────────────────────────────────── -->
+    <string name="prox_title">د نږدېوالي خبرتیاوې</string>
+    <string name="prox_empty_title">هیڅ تعقیب شوي کسان نشته</string>
+    <string name="prox_empty_sub">د چا د ځای تعقیب پیل کولو لپاره له سکین ټب څخه\nد هغوی د بلنې QR سکین کړئ</string>
+    <string name="prox_intro">کله چې تعقیب شوی کس ستاسو ټاکل شوي واټن ته راشي نو خبرتیا ترلاسه کړئ.</string>
+    <string name="prox_alert_within">خبر راکړئ کله چې په %1$s کې وي</string>
+    <string name="prox_alerts_off">خبرتیاوې بندې دي</string>
+    <string name="prox_alert_radius">د خبرتیا وړانګه</string>
+    <string name="prox_edit_schedule">مهالویش بدل کړئ</string>
+    <string name="prox_rules">قواعد</string>
+
+    <!-- ── د مهالویش سکرین / د قاعدې ایډیټر ──────────────────────────────────── -->
+    <string name="schedule_for_peer">د %1$s لپاره مهالویش</string>
+    <string name="schedule_cd_add_rule">قاعده اضافه کړئ</string>
+    <string name="schedule_empty_title">د مهالویش قواعد نشته</string>
+    <string name="schedule_empty_global">ځای هر وخت شریکیږي. د شریکولو د فعالیت وخت محدودولو لپاره یوه قاعده اضافه کړئ.</string>
+    <string name="schedule_empty_peer">ځای تل له %1$s سره شریکیږي. د وخت محدودولو لپاره یوه قاعده اضافه کړئ.</string>
+    <string name="schedule_active_hint">کله چې هره قاعده له اوسني وخت سره سمه وي فعاله ده. خالي = تل فعال.</string>
+    <string name="schedule_all_day">ټوله ورځ</string>
+    <string name="schedule_plus_one_day"> (+۱ ورځ)</string>
+    <string name="schedule_rule_number">قاعده %1$d</string>
+    <string name="schedule_cd_delete_rule">قاعده پاکه کړئ</string>
+    <string name="schedule_edit_rule">قاعده بدله کړئ</string>
+    <string name="schedule_label_optional">لیبل (اختیاري)</string>
+    <string name="schedule_label_placeholder">مثلاً د کار وخت، د رخصتۍ ورځې</string>
+    <string name="schedule_active_days">فعالې ورځې</string>
+    <string name="schedule_time_window">د وخت دوره</string>
+    <string name="schedule_start">پیل</string>
+    <string name="schedule_end">پای</string>
+    <string name="schedule_overnight">ټوله شپه: له %1$s تر بلې ورځې %2$s پورې فعاله وي</string>
+
+    <!-- ── د څارنې دروازه ───────────────────────────────────────────────── -->
+    <string name="gate_title">وسیله تر څارنې لاندې ده</string>
+    <string name="gate_message">ترتیباتو ته د لاسرسي لپاره د څارونکي تصویب اړین دی.</string>
+    <string name="gate_request_access">د لاسرسي غوښتنه وکړئ</string>
+    <string name="gate_waiting">د څارونکي تصویب ته په تمه دی…</string>
+    <string name="gate_denied">د څارونکي لخوا لاسرسی رد شو.</string>
+    <string name="gate_timed_out">د غوښتنې وخت پای ته ورسید. څارونکي ځواب ورنکړ.</string>
+
+    <!-- ── د ساتلو موده غوره کړئ ─────────────────────────────────────────────── -->
+    <string name="retention_forever">تل لپاره</string>
+    <string name="retention_keep_for">د دې مودې لپاره وساتئ: %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d ورځ</item>
+        <item quantity="other">%1$d ورځې</item>
+    </plurals>
+
+    <string name="common_select">غوره کول</string>
+
+    <!-- ── د نقشې ځای غوره کونکی ────────────────────────────────────────────── -->
+    <string name="picker_title">ثابت ځای غوره کړئ</string>
+
+    <!-- ── د نیویګیشن تنظیم کولو سکرین ────────────────────────────────────── -->
+    <string name="customize_nav_intro">غوره کړئ چې په لاندې بار کې کوم ټبونه او په کوم ترتیب څرګند شي. نقشه تل شامله وي.</string>
+    <string name="customize_cd_move_up">پورته یې کړه</string>
+    <string name="customize_cd_move_down">ښکته یې کړه</string>
+
+    <!-- ── په اړه سکرین ───────────────────────────────────────────────────── -->
+    <string name="about_version">نسخه %1$s (build %2$d)</string>
+    <string name="about_tagline">له هغو خلکو سره د ځای شخصي شریکول چې تاسو پرې باور لرئ. بې اکاونټه، بې کلاوډه، زموږ لخوا بې تعقیبه.</string>
+    <string name="about_relay_connections">د ریلی اړیکې</string>
+    <string name="about_connected">وصل شو</string>
+    <string name="about_disconnected">قطع شو</string>
+    <string name="about_open_source">د خلاصې سرچینې کتابتونونه</string>
+    <string name="about_lib_osmdroid_desc">د نقشې رینډرینګ د OpenStreetMap پر بنسټ</string>
+    <string name="about_lib_okhttp_desc">د Nostr ریلی لپاره د WebSocket لیږد</string>
+    <string name="about_lib_compose_desc">UI چوکاټ</string>
+    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_room_desc">محلي ډیټابیس</string>
+    <string name="about_map_attribution">د نقشې ډاټا © د OpenStreetMap مرسته کونکي</string>
+
+    <!-- ── خبرتیاوې ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">منل</string>
+    <string name="notif_someone">څوک</string>
+    <string name="notif_sos_title">له %1$s څخه SOS!</string>
+    <string name="notif_sos_text">%1$s په (%2$s, %3$s) کې SOS فعال کړی دی</string>
+    <string name="notif_supervisor_request_title">%1$s غواړي ستاسو څارونکی وي</string>
+    <string name="notif_supervisor_request_text">د دې وسیلې د خلاصولو غوښتنو منلو ته غاړه کیږدئ</string>
+    <string name="notif_supervisor_request_big">کله چې د څارنې حالت فعال وي، اجازه ورکړئ چې %1$s تاسو ته د خلاصولو غوښتنې واستوي.</string>
+    <string name="notif_supervised_active_title">د څارنې حالت فعال دی</string>
+    <string name="notif_supervised_active_text">ستاسو څارونکي تایید کړه — د څارنې حالت اوس تنظیم شوی</string>
+    <string name="notif_supervised_declined_title">د څارنې حالت رد شو</string>
+    <string name="notif_supervised_declined_text">ستاسو څارونکي غوښتنه رد کړه — د څارنې حالت بند شو</string>
+    <string name="notif_tracking_alert_title">د تعقیب خبرتیا</string>
+    <string name="notif_tracking_proximity">%1$s ستاسو په اړه د نږدېوالي خبرتیا ترلاسه کړه</string>
+    <string name="notif_tracking_geofence">%1$s خبرتیا ترلاسه کړه چې تاسو سیمې ته ننوتی/ووتل: %2$s</string>
+    <string name="notif_tracking_generic">%1$s ستاسو ځای څاري</string>
+    <string name="notif_track_update_title">له %1$s څخه د شریکولو تازه معلومات</string>
+    <string name="notif_track_new_title">نوې اړیکه: %1$s</string>
+    <string name="notif_role_send_receive">د ځای لیږل/ترلاسه کول</string>
+    <string name="notif_role_send">د ځای لیږل</string>
+    <string name="notif_role_receive">د ځای ترلاسه کول</string>
+    <string name="notif_role_none">د ځای شریکول نشته</string>
+    <string name="notif_track_requesting">%1$s غوښتنه کوي: %2$s</string>
+    <string name="notif_track_update_body">%1$s غواړي ستاسو د ځای شریکولو طریقه تازه کړي.</string>
+    <string name="notif_track_new_body">%1$s تاسو د یوې اړیکې په توګه اضافه کړی او غواړي وصل شي.</string>
+    <string name="notif_contact_connected_title">اړیکه وصل شوه</string>
+    <string name="notif_contact_connected_text">%1$s اوس له تاسو سره وصل دی.</string>
+    <string name="notif_request_declined_title">غوښتنه رد شوه</string>
+    <string name="notif_request_declined_text">%1$s ستاسو د ځای شریکولو غوښتنه رد کړه.</string>
+    <string name="notif_message_person">%1$s ته پیغام واستوئ</string>
+    <string name="notif_geofence_entered_title">%1$s %2$s ته ننوتل</string>
+    <string name="notif_geofence_left_title">%1$s له %2$s څخه ووتل</string>
+    <string name="notif_geofence_subtitle">په %1$s کې · %2$s وړانګه</string>
+    <string name="notif_person_nearby">%1$s نږدې دی</string>
+    <string name="notif_distance_from_you">له تاسو څخه د %1$s په واټن کې</string>
+    <string name="notif_missed_title">له %1$s څخه تازه معلومات نشته</string>
+    <string name="notif_missed_text">وروستی ځل %1$s دقیقې وړاندې (%2$s, %3$s) ته نږدې لیدل شوی</string>
+    <string name="notif_sos_active_title">SOS فعال دی!</string>
+    <string name="notif_sos_active_text">د SOS اړیکو ته بیړنۍ خبرتیا لیږل کیږي</string>
+    <string name="notif_messages_group_title">د LocaPeer پیغامونه</string>
+
+    <!-- ── ټوسټ پیغامونه ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">له %1$s څخه د اړیکې غوښتنه ونه منل شوه</string>
+    <string name="toast_now_supervising">اوس د %1$s وسیله څارئ</string>
+    <string name="toast_declined_supervision">له %1$s څخه د څارنې غوښتنه ونه منل شوه</string>
+
+    <!-- ── پروګرامي متنونه ─────────────── -->
+    <string name="time_just_now">همدا اوس</string>
+    <string name="time_minutes_ago">%1$d دقیقې وړاندې</string>
+    <string name="fallback_me">زه</string>
+    <string name="fallback_unknown">نامعلوم</string>
+    <string name="geo_unassigned">نه دی ټاکل شوی</string>
+    <string name="days_every_day">هره ورځ</string>
+    <string name="days_weekdays">د کار ورځې</string>
+    <string name="days_weekends">د رخصتۍ ورځې</string>
+    <string name="days_none">هیڅ ورځې نه</string>
+    <string name="chat_my_location_message">زما اوسنی ځای: %1$s</string>
+    <string name="scan_error_bad_pubkey">بې اعتباره بلنه: ناسمه عامه کیلي</string>
+    <string name="scan_error_key_mismatch">بې اعتباره بلنه: کیليګانې سره سمون نه خوري</string>
+    <string name="scan_error_unknown">نامعلومه تېروتنه</string>
+    <string name="scan_error_invalid_link">بې اعتباره د بلنې لینک</string>
+    <string name="scan_fallback_contact">دا اړیکه</string>
+    <string name="backup_saved">بیک اپ خوندي شو: %1$s</string>
+    <string name="backup_saved_encrypted">بیک اپ خوندي شو (شفر شوی): %1$s</string>
+    <string name="backup_failed">بیک اپ ناکام شو: %1$s</string>
+    <string name="backup_could_not_read_file">فایل ونه لوستل شو</string>
+    <string name="backup_could_not_write_file">فایل ونه لیکل شو</string>
+    <string name="backup_could_not_read">بیک اپ ونه لوستل شو: %1$s</string>
+    <string name="backup_incorrect_password">ناسم پټ نوم</string>
+    <string name="restore_result_restored">بیا ورغول شو: %1$s</string>
+    <string name="restore_result_failed">ناکام شو: %1$s</string>
+    <string name="restore_nothing">د بیا رغولو لپاره هیڅ نشته</string>
+    <string name="restore_failed">بیا رغول ناکام شول: %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d اړیکه</item>
+        <item quantity="other">%1$d اړیکې</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d جیو فینس</item>
+        <item quantity="other">%1$d جیو فینسونه</item>
+    </plurals>
+    <string name="peer_role_change_sent">%1$s ته د رول بدلولو غوښتنه واستول شوه</string>
+    <string name="peer_not_found">اړیکه ونه موندل شوه</string>
+    <string name="peer_purge_location_sent">%1$s ته د ټولو ځایونو پاکولو کمانډ واستول شو</string>
+    <string name="peer_purge_messages_sent">%1$s ته د ټولو پیغامونو پاکولو کمانډ واستول شو</string>
+    <string name="onboarding_error_key_length">بې اعتباره کیلي - باید ۶۴ هیکس کرکټرونه وي.</string>
+    <string name="onboarding_error_key_range">بې اعتباره شخصي کیلي.</string>
+    <string name="onboarding_error_hex">بې اعتباره هیکس بڼه.</string>
+    <string name="onboarding_error_import_failed">د کیلي واردول ناکام شول: %1$s</string>
 </resources>

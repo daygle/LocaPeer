@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">Abilita rilevamento movimento</string>
     <string name="settings_enable_motion_message">L\'accesso all\'attività fisica consente a LocaPeer di distinguere meglio tra camminata, guida e sosta nella cronologia. Al momento è disattivato: puoi riattivarlo dalle impostazioni di sistema.</string>
     <string name="settings_open_settings">Apri Impostazioni</string>
+    <string name="settings_battery_optimization">Ottimizzazione batteria</string>
+    <string name="settings_battery_optimization_unrestricted">Senza restrizioni — LocaPeer può essere eseguito liberamente in background</string>
+    <string name="settings_battery_optimization_restricted">Ottimizzato — tocca per impostare Senza restrizioni nelle impostazioni di sistema</string>
+
+    <!-- Autorizzazioni -->
+    <string name="settings_permissions">Autorizzazioni</string>
+    <string name="settings_permissions_subtitle">Rivedi e correggi l\'accesso dell\'app a posizione, fotocamera e altro</string>
+    <string name="permissions_intro">LocaPeer ha bisogno di queste autorizzazioni per condividere la tua posizione, scansionare gli inviti e continuare a funzionare in background. Tocca quelle non concesse per correggerle. </string>
+    <string name="perm_location_title">Posizione</string>
+    <string name="perm_location_granted">Concesso — la tua posizione può essere condivisa</string>
+    <string name="perm_location_denied">Non concesso — tocca per consentire l\'accesso alla posizione</string>
+    <string name="perm_background_location_title">Posizione in background</string>
+    <string name="perm_background_location_granted">Concesso — la condivisione della posizione continua quando l\'app è chiusa</string>
+    <string name="perm_background_location_denied">Non concesso — tocca per consentire l\'accesso "Sempre" nelle impostazioni</string>
+    <string name="perm_camera_title">Fotocamera</string>
+    <string name="perm_camera_granted">Concesso — utilizzata per scansionare i codici QR di invito</string>
+    <string name="perm_camera_denied">Non concesso — tocca per consentire la fotocamera</string>
+    <string name="perm_notifications_title">Notifiche</string>
+    <string name="perm_notifications_granted">Concesso — possono essere mostrati avvisi e aggiornamenti di stato</string>
+    <string name="perm_notifications_denied">Non concesso — tocca per consentire le notifiche</string>
 
     <!-- Unità e Visualizzazione -->
     <string name="settings_speed_units">Unità di velocità</string>

@@ -4,18 +4,18 @@
 
     <!-- ── የማሳወቂያ ቻናሎች እና የፊት አገልግሎት ─────────────────────── -->
     <string name="channel_name_heartbeat">የአካባቢ ስርጭት</string>
-    <string name="channel_desc_heartbeat">አካባቢዎን ለተፈቀደላቸው እውቂያዎች ያስተላልፋል</string>
-    <string name="channel_name_alerts">ማንቂያዎች</string>
-    <string name="channel_desc_alerts">ያመለጡ የልብ ምት እና የጂኦፌንስ ማንቂያዎች</string>
+    <string name="channel_desc_heartbeat">አካባቢዎን ለተፈቀዱ እውቂያዎችዎ ያስተላልፋል</string>
+    <string name="channel_name_alerts">ማስጠንቀቂያዎች</string>
+    <string name="channel_desc_alerts">የልብ ትርታ ያመለጡ እና የጂኦፌንስ ማስጠንቀቂያዎች</string>
     <string name="channel_name_messages">መልእክቶች</string>
-    <string name="channel_desc_messages">ገቢ መልእክቶች</string>
+    <string name="channel_desc_messages">ገቢ የጓደኛ መልእክቶች</string>
     <string name="notification_heartbeat_title">LocaPeer እየሰራ ነው</string>
     <string name="notification_heartbeat_text">አካባቢዎን ለሌሎች እያጋሩ ነው</string>
 
-    <!-- ── የተለመዱ ድርጊቶች ──────────────────────────────────────── -->
+    <!-- ── የተለመዱ እርምጃዎች ──────────────────────────────────────── -->
     <string name="common_save">አስቀምጥ</string>
     <string name="common_cancel">ሰርዝ</string>
-    <string name="common_done">ተጠናቅቋል</string>
+    <string name="common_done">ተጠናቋል</string>
     <string name="common_delete">አጥፋ</string>
     <string name="common_disable">አቦዝን</string>
     <string name="common_enable">አንቃ</string>
@@ -27,7 +27,7 @@
     <string name="common_approve">ፍቀድ</string>
     <string name="common_deny">ከልክል</string>
 
-    <!-- ── የአሰሳ ታብ ስሞች ──────────────────────────────────────────── -->
+    <!-- ── የአሰሳ ታብ መሰየሚያዎች ──────────────────────────────────────────── -->
     <string name="tab_map">ካርታ</string>
     <string name="tab_messages">መልእክቶች</string>
     <string name="tab_history">ታሪክ</string>
@@ -36,33 +36,734 @@
     <string name="tab_settings">ቅንብሮች</string>
 
     <!-- ── የእንቅስቃሴ ሁኔታዎች ───────────────────────────────────────── -->
-    <string name="motion_stationary">ቆሟል</string>
-    <string name="motion_walking">እየተራመደ ነው</string>
-    <string name="motion_running">እየሮጠ ነው</string>
-    <string name="motion_cycling">ብስክሌት እየነዳ ነው</string>
-    <string name="motion_driving">መኪና እየነዳ ነው</string>
+    <string name="motion_stationary">የማይንቀሳቀስ</string>
+    <string name="motion_walking">እየተራመደ</string>
+    <string name="motion_running">እየሮጠ</string>
+    <string name="motion_cycling">ሳይክል እየነዳ</string>
+    <string name="motion_driving">እየነዳ</string>
 
-    <!-- ── ቅንብሮች ────────────────────────────────────────────────── -->
+    <!-- ── የመጠባበቂያ ክፍሎች ────────────────────────────────────────────────── -->
+    <string name="backup_section_private_key">የግል ቁልፍ</string>
+    <string name="backup_section_contacts">እውቂያዎች</string>
+    <string name="backup_section_geofences">ጂኦፌንሶች</string>
+    <string name="backup_section_settings">ቅንብሮች</string>
+
+    <!-- ── የቁጥጥር ጥያቄ (MainActivity) ──────────────────────── -->
+    <string name="supervision_request_title">የቁጥጥር ጥያቄ</string>
+    <string name="supervision_request_message">\"%1$s\" ወደ ቅንብሮቻቸው ለመግባት ፍቃድ እየጠየቁ ነው። ይፈቀድ?</string>
+
+    <!-- ── የቅንብሮች ማያ ገጽ ────────────────────────────────────────────────── -->
     <string name="settings_title">ቅንብሮች</string>
+
+    <!-- የክፍል መሰየሚያዎች -->
     <string name="settings_section_location_privacy">አካባቢ እና ግላዊነት</string>
     <string name="settings_section_security">ደህንነት</string>
     <string name="settings_section_map">ካርታ</string>
     <string name="settings_section_battery_performance">ባትሪ እና አፈጻጸም</string>
     <string name="settings_section_units_display">ዩኒቶች እና ማሳያ</string>
-    <string name="settings_section_retention">የውሂብ ቆይታ (በዚህ መሣሪያ)</string>
+    <string name="settings_section_retention">ማቆያ (በዚህ መሣሪያ ላይ)</string>
     <string name="settings_section_appearance">መልክ</string>
     <string name="settings_section_backup_keys">መጠባበቂያ እና ቁልፎች</string>
     <string name="settings_section_about">ስለ</string>
 
-    <string name="settings_edit_name">ስም አርም</string>
+    <!-- ፕሮፋይል -->
+    <string name="settings_edit_name">ስም ቀይር</string>
     <string name="settings_my_qr">የእኔ QR</string>
-    <string name="settings_no_name_set">ስም አልተሰጠም</string>
+    <string name="settings_no_name_set">ምንም ስም አልተቀመጠም</string>
 
+    <!-- አካባቢ እና ግላዊነት -->
     <string name="settings_share_location">አካባቢዬን አጋራ</string>
+    <string name="settings_broadcasting">ለእውቂያዎችዎ እያስተላለፉ ነው</string>
+    <string name="settings_not_broadcasting">አያስተላልፉም</string>
+    <string name="settings_sharing_schedule">የማጋሪያ መርሃ ግብር</string>
+    <string name="settings_always_on">ሁልጊዜ በርቷል</string>
+    <plurals name="settings_schedule_rule_count">
+        <item quantity="one">%1$d ደንብ</item>
+        <item quantity="other">%1$d ደንቦች</item>
+    </plurals>
+    <string name="settings_geofences">ጂኦፌንሶች</string>
+    <string name="settings_geofences_subtitle">የተጋሩ የጂኦፌንስ ቦታዎችን ያስተዳድሩ</string>
+    <string name="settings_notify_when_tracked">ክትትል ሲደረግብኝ አሳውቀኝ</string>
+    <string name="settings_notify_when_tracked_subtitle">የእውቂያ ቅርበት ወይም የጂኦፌንስ ማስጠንቀቂያ ለእርስዎ ሲቀሰቀስ ማሳወቂያ ያግኙ።</string>
+    <string name="settings_my_location_history">የአካባቢ ታሪክ</string>
+    <string name="settings_my_location_history_subtitle">የራስዎን የአካባቢ የጊዜ መስመር ያስሱ</string>
+    <string name="settings_lookup_addresses">አድራሻዎችን ፈልግ</string>
+    <string name="settings_lookup_addresses_subtitle">ለታሪክ ነጥቦች እና ለተነኩ የካርታ ፒኖች የጎዳና አድራሻዎችን ያሳዩ። እነዚያን መጋጠሚያዎች ወደ መሣሪያዎ የጂኦኮዲንግ አገልግሎት (ብዙውን ጊዜ ጎግል) ይልካል።</string>
+
+    <!-- ደህንነት -->
+    <string name="settings_supervision_active">ቁጥጥር ንቁ ነው</string>
+    <string name="settings_supervision_active_subtitle">ቅንብሮች ተቆጣጣሪ ፈቃድ ያስፈልጋቸዋል</string>
+    <string name="settings_disable_supervised">የቁጥጥር ሁነታን አጥፋ</string>
+    <string name="settings_supervised_mode">የቁጥጥር ሁነታ</string>
+    <string name="settings_supervised_mode_subtitle">ወደ ቅንብሮች ለመግባት የተቆጣጣሪ ፈቃድ ያስፈልጋል</string>
+
+    <!-- ካርታ -->
+    <string name="settings_starting_point">መነሻ ነጥብ</string>
+    <string name="settings_map_current_location">የአሁኑ አካባቢ</string>
+    <string name="settings_map_all_contacts">ሁሉም እውቂያዎች</string>
+    <string name="settings_map_fixed_location">የተወሰነ አካባቢ</string>
+    <string name="settings_map_last_position">የመጨረሻ ቦታ</string>
+    <string name="settings_map_starting_point_title">የካርታ መነሻ ነጥብ</string>
+    <string name="settings_no_location_set">ምንም አካባቢ አልተቀመጠም</string>
+    <string name="settings_pick_location_on_map">በካርታ ላይ ቦታ ይምረጡ</string>
+    <string name="settings_default_zoom_level">ነባሪ የማጉላት ደረጃ</string>
+    <string name="settings_map_pin_colour">የካርታ ፒን ቀለም</string>
+
+    <!-- ባትሪ እና አፈጻጸም -->
+    <string name="settings_update_cadence">የዝመና ድግግሞሽ</string>
+    <string name="settings_update_cadence_subtitle">አካባቢዎ ምን ያህል ጊዜ እንደሚተላለፍ ያስተካክሉ</string>
+    <string name="settings_update_cadence_dialog_message">በእንቅስቃሴዎ ላይ በመመስረት አካባቢዎ ምን ያህል ጊዜ እንደሚዘምን ይቆጣጠሩ። ተደጋጋሚ ዝመናዎች ብዙ ባትሪ ይጠቀማሉ።</string>
+    <string name="settings_update_cadence_reset">ወደ ነባሪ መልስ</string>
+    <string name="settings_min_distance_filtering">ዝቅተኛው የርቀት ማጣሪያ</string>
+    <string name="settings_min_distance_filtering_subtitle">ከቀዳሚው ቢያንስ ይህን ያህል የራቁ ነጥቦችን ብቻ አሳይ።</string>
+    <string name="settings_discard_low_accuracy">ዝቅተኛ ትክክለኛነት ያላቸውን ያስወግዱ</string>
+    <string name="settings_discard_low_accuracy_subtitle">ከዚህ በላይ የሆነ የትክክለኛነት ራዲየስ ያላቸውን የራስዎን ቦታዎች አያስተላልፉ ወይም አይመዝግቡ። SOS መቼም አይታለፍም።</string>
+    <string name="settings_hide_low_accuracy">ዝቅተኛ ትክክለኛነት ነጥቦችን ደብቅ</string>
+    <string name="settings_hide_low_accuracy_subtitle">ከዚህ በላይ የሆነ የትክክለኛነት ራዲየስ ያላቸውን የታሪክ ነጥቦች ደብቅ። ምንም ነገር አይጠፋም።</string>
+    <string name="settings_low_battery" formatted="false">ዝቅተኛ ባትሪ (&lt; 20%)</string>
+    <string name="settings_minutes_short">%1$d ደቂቃ</string>
+    <string name="settings_motion_detection">እንቅስቃሴን መለየት</string>
+    <string name="settings_motion_detection_on">ነቅቷል - የእንቅስቃሴ አይነትዎን (መራመድ፣ መንዳት) በታሪክ ውስጥ ያጣራል</string>
+    <string name="settings_motion_detection_off">ጠፍቷል - ይበልጥ ትክክለኛ ለሆኑ የእንቅስቃሴ መሰየሚያዎች የአካል ብቃት እንቅስቃሴ መረጃን ይፍቀዱ</string>
+    <string name="settings_enable_motion_title">እንቅስቃሴን መለየትን አንቃ</string>
+    <string name="settings_enable_motion_message">የአካል ብቃት እንቅስቃሴ መረጃ LocaPeer መራመድን፣ መንዳትን እና መቆምን በታሪክዎ ውስጥ ይበልጥ በትክክል እንዲለይ ያስችለዋል። በአሁኑ ጊዜ ጠፍቷል - ከስርዓት ቅንብሮች እንደገና ሊያነቁት ይችላሉ።</string>
+    <string name="settings_open_settings">ቅንብሮችን ክፈት</string>
+    <string name="settings_battery_optimization">የባትሪ ማመቻቸት</string>
+    <string name="settings_battery_optimization_unrestricted">ያልተገደበ — LocaPeer ከበስተጀርባ በነፃነት ሊሠራ ይችላል</string>
+    <string name="settings_battery_optimization_restricted">የተመቻቸ — በስርዓት ቅንብሮች ውስጥ ወደ ያልተገደበ ለመቀየር ይንኩ</string>
+
+    <!-- ፈቃዶች -->
+    <string name="settings_permissions">ፈቃዶች</string>
+    <string name="settings_permissions_subtitle">የመተግበሪያውን የአካባቢ፣ የካሜራ እና ሌሎች ፈቃዶችን ይገምግሙ</string>
+    <string name="permissions_intro">LocaPeer አካባቢዎን ለማጋራት፣ ግብዣዎችን ለመፈተሽ እና ከበስተጀርባ መስራቱን ለመቀጠል እነዚህ ፈቃዶች ያስፈልገዋል። ያልተሰጡትን ለማስተካከል የፈለጉትን ይንኩ።</string>
+    <string name="perm_location_title">አካባቢ</string>
+    <string name="perm_location_granted">ተሰጥቷል — አካባቢዎ ሊጋራ ይችላል</string>
+    <string name="perm_location_denied">አልተሰጠም — የአካባቢ ፈቃድ ለመስጠት ይንኩ</string>
+    <string name="perm_background_location_title">የበስተጀርባ አካባቢ</string>
+    <string name="perm_background_location_granted">ተሰጥቷል — መተግበሪያው ሲዘጋም አካባቢ ማጋራት ይቀጥላል</string>
+    <string name="perm_background_location_denied">አልተሰጠም — በቅንብሮች ውስጥ \'ሁልጊዜ ፍቀድ\' የሚለውን ለመምረጥ ይንኩ</string>
+    <string name="perm_camera_title">ካሜራ</string>
+    <string name="perm_camera_granted">ተሰጥቷል — የግብዣ QR ኮዶችን ለመፈተሽ ያገለግላል</string>
+    <string name="perm_camera_denied">አልተሰጠም — ካሜራውን ለመፍቀድ ይንኩ</string>
+    <string name="perm_notifications_title">ማሳወቂያዎች</string>
+    <string name="perm_notifications_granted">ተሰጥቷል — ማስጠንቀቂያዎች እና የሁኔታ ዝመናዎች ሊታዩ ይችላሉ</string>
+    <string name="perm_notifications_denied">አልተሰጠም — ማሳወቂያዎችን ለመፍቀድ ይንኩ</string>
+
+    <!-- ዩኒቶች እና ማሳያ -->
+    <string name="settings_speed_units">የፍጥነት ዩኒቶች</string>
+    <string name="settings_speed_imperial">ኢምፔሪያል (mph)</string>
+    <string name="settings_speed_metric">ሜትሪክ (km/h)</string>
+    <string name="settings_elevation_units">የከፍታ ዩኒቶች</string>
+    <string name="settings_elevation_imperial">ኢምፔሪያል (feet)</string>
+    <string name="settings_elevation_metric">ሜትሪክ (metres)</string>
+    <string name="settings_distance_units">የርቀት ዩኒቶች</string>
+    <string name="settings_distance_imperial">ኢምፔሪያል (ft/mi)</string>
+    <string name="settings_distance_metric">ሜትሪክ (m/km)</string>
+    <string name="settings_time_format">የጊዜ ቅርጸት</string>
+    <string name="settings_time_24h">24-ሰዓት (13:30)</string>
+    <string name="settings_time_12h">12-ሰዓት (1:30 PM)</string>
+
+    <!-- ማቆያ -->
+    <string name="settings_retention_location">የአካባቢ ውሂብ</string>
+    <string name="settings_retention_location_subtitle">የእውቂያዎች አካባቢ ውሂብ ለምን ያህል ጊዜ በመሣሪያው ውስጥ ይቆይ</string>
+    <string name="settings_clear_all_location">ሁሉንም የአካባቢ ውሂብ አጥፋ</string>
+    <string name="settings_retention_messages">መልእክቶች</string>
+    <string name="settings_retention_messages_subtitle">የደረሱ መልእክቶች ለምን ያህል ጊዜ በመሣሪያው ውስጥ ይቆዩ</string>
+    <string name="settings_clear_all_messages">ሁሉንም መልእክቶች አጥፋ</string>
+
+    <!-- መልክ -->
+    <string name="settings_customize_nav">አሰሳን አስተካክል</string>
+    <string name="settings_customize_nav_subtitle">የታችኛውን ታቦች ይምረጡ እና ቅደም ተከተላቸውን ያስተካክሉ</string>
+    <string name="settings_start_page">መጀመሪያ ገጽ</string>
     <string name="settings_language">ቋንቋ</string>
     <string name="settings_language_title">የመተግበሪያ ቋንቋ</string>
     <string name="settings_language_system">የስርዓት ነባሪ</string>
 
-    <string name="common_ok">እሺ</string>
+    <!-- መጠባበቂያ እና ቁልፎች -->
+    <string name="settings_export_backup">መጠባበቂያ ላክ</string>
+    <string name="settings_export_backup_subtitle">የግል ቁልፍዎን እና እውቂያዎችዎን በፋይል ያስቀምጡ። ይህንን ፋይል በጥንቃቄ ያስቀምጡ!</string>
+    <string name="settings_import_backup">መጠባበቂያ አስገባ</string>
+    <string name="settings_import_backup_subtitle">ቀደም ሲል ከተላከ ፋይል ወደ ነበረበት መልስ</string>
+    <string name="settings_view_private_key">የግል ቁልፍን ይመልከቱ</string>
+    <string name="settings_view_private_key_subtitle">የ64-ቁምፊ ሄክስ መለያ ቁልፍዎን ያሳዩ</string>
+
+    <!-- ስለ -->
+    <string name="settings_about_locapeer">ስለ LocaPeer</string>
+    <string name="settings_about_subtitle">ስሪት፣ የሪሌይ ሁኔታ፣ ክፍት ምንጭ</string>
+
+    <!-- ንግግሮች -->
+    <string name="settings_edit_display_name">የሚታይ ስም ቀይር</string>
+    <string name="settings_display_name_label">የሚታይ ስም</string>
+    <string name="settings_my_invite_qr">የእኔ የግብዣ QR</string>
+    <string name="settings_invite_qr_subtitle">ሌሎች እርስዎን መከታተል ለመጀመር ይህንን መፈተሽ ይችላሉ።</string>
+    <string name="settings_invite_qr_cd">የግብዣ QR</string>
+    <string name="settings_private_key_title">የግል ቁልፍ</string>
+    <string name="settings_private_key_warning">ይህንን በሰላም ያስቀምጡ። ይህ ቁልፍ ያለው ማንኛውም ሰው የእርስዎን ማንነት ሊጠቀም ይችላል።</string>
+    <string name="settings_clear_location_title">የአካባቢ ታሪክ ይጥፋ?</string>
+    <string name="settings_clear_location_message">ሁሉም የተቀመጡ የአካባቢ ታሪኮች በቋሚነት ይጠፋሉ።</string>
+    <string name="settings_clear_messages_title">የመልእክት ታሪክ ይጥፋ?</string>
+    <string name="settings_clear_messages_message">ሁሉም የተቀመጡ መልእክቶች በቋሚነት ይጠፋሉ።</string>
+    <string name="settings_encrypted_backup_title">የተመሰጠረ መጠባበቂያ</string>
+    <string name="settings_encrypted_backup_message">ይህ መጠባበቂያ የተመሰጠረ ነው። ለመቀጠል እባክዎ የይለፍ ቃሉን ያስገቡ።</string>
+    <string name="settings_select_restore_title">ወደ ነበረበት የሚመለስ ውሂብ ይምረጡ</string>
+    <string name="settings_select_export_title">የሚላክ ውሂብ ይምረጡ</string>
+    <string name="settings_export_password_hint">እንደ አማራጭ የመጠባበቂያ ፋይልዎን ለመመስጠር የይለፍ ቃል ያስቀምጡ።</string>
+    <string name="settings_backup_password_optional">የመጠባበቂያ ይለፍ ቃል (አማራጭ)</string>
+    <string name="settings_select_sections">የሚካተቱ ክፍሎችን ይምረጡ፡</string>
+    <string name="settings_choose_file_location">የፋይል ቦታ ይምረጡ</string>
+    <string name="settings_not_in_backup">በዚህ መጠባበቂያ ውስጥ የለም</string>
+    <string name="settings_enable_supervised_title">የቁጥጥር ሁነታን አብራ</string>
+    <string name="settings_enable_supervised_message">ተቆጣጣሪ ሆኖ የሚሰራ ጓደኛ ይምረጡ። ከመሣሪያቸው ሆነው ወደ ቅንብሮች መግባትን መፍቀድ አለባቸው።</string>
+    <string name="settings_no_peers_found">ምንም ጓደኛ አልተገኘም። መጀመሪያ የግብዣ QR ኮዳቸውን በመፈተሽ ጓደኛ ያክሉ።</string>
+    <string name="settings_disable_supervised_title">የቁጥጥር ሁነታ ይጥፋ?</string>
+    <string name="settings_disable_supervised_message">ቅንብሮች ያለ ተቆጣጣሪ ፈቃድ ተደራሽ ይሆናሉ።</string>
+
+    <!-- ── ተጨማሪ የተለመዱ ─────────────────────────────────────────── -->
+    <string name="common_remove">አስወግድ</string>
+    <string name="common_name">ስም</string>
+    <string name="common_search">ፈልግ</string>
+    <string name="common_sort">ደርድር</string>
+
+    <!-- የይዘት መግለጫዎች (የተጋሩ) -->
+    <string name="cd_message">መልእክት</string>
+    <string name="cd_show_on_map">በካርታ ላይ አሳይ</string>
+    <string name="cd_more_options">ተጨማሪ አማራጮች</string>
+
+    <!-- ── የእውቂያዎች ማያ ገጽ ────────────────────────────────────────────────── -->
+    <plurals name="contacts_selected_count">
+        <item quantity="one">%1$d ተመርጧል</item>
+        <item quantity="other">%1$d ተመርጠዋል</item>
+    </plurals>
+    <string name="contacts_cd_cancel_selection">ምርጫን ሰርዝ</string>
+    <string name="contacts_cd_select_all">ሁሉንም ምረጥ</string>
+    <string name="contacts_cd_deselect_all">ሁሉንም ምርጫ ሰርዝ</string>
+    <string name="contacts_cd_qr_invite">QR / ግብዣ</string>
+    <string name="contacts_cd_pending_requests">በመጠባበቅ ላይ ያሉ ጥያቄዎች</string>
+    <string name="contacts_sort_last_seen">ለመጨረሻ ጊዜ የታየው</string>
+    <string name="contacts_search_placeholder">እውቂያዎችን ይፈልጉ…</string>
+    <string name="contacts_empty_title">እስካሁን ምንም እውቂያዎች የሉም</string>
+    <string name="contacts_empty_subtitle">ከአንድ ሰው ጋር ለመገናኘት እና አካባቢን ማጋራት ለመጀመር QR ኮድ ይፈትሹ።</string>
+    <string name="contacts_scan_qr">QR ኮድ ይፈትሹ</string>
+    <string name="contacts_bulk_delete_messages">መልእክቶችን አጥፋ</string>
+    <string name="contacts_bulk_delete_locations">ቦታዎችን አጥፋ</string>
+    <string name="contacts_last_seen">ለመጨረሻ ጊዜ የታየው፡ %1$s</string>
+    <string name="contacts_no_location_yet">እስካሁን ምንም የአካባቢ ውሂብ የለም</string>
+    <string name="contacts_view_sharing_settings">የማጋሪያ ቅንብሮች</string>
+    <string name="contacts_view_location_history">የአካባቢ ታሪክ</string>
+    <string name="contacts_rename_contact">እውቂያውን እንደገና ይሰይሙ</string>
+    <string name="contacts_on_contact_device">በእውቂያ መሣሪያ ላይ</string>
+    <string name="contacts_delete_my_messages_title">መልእክቶቼን አጥፋ</string>
+    <string name="contacts_delete_locations_title">የተጋሩ ቦታዎችን አጥፋ</string>
+    <string name="contacts_remove_contact_title">እውቂያውን ያስወግዱ</string>
+    <string name="contacts_leave_title">እውቂያን እና ውሂብን አጥፋ</string>
+    <string name="contacts_rename_title">እውቂያውን እንደገና ይሰይሙ</string>
+    <string name="contacts_remove_contact_body">%1$sን ከእውቂያዎችዎ ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</string>
+    <string name="contacts_leave_body">ይህ እርስዎን ከ%1$s እውቂያዎች ያስወግዳል እና ሁሉንም መልእክቶችዎን እና የአካባቢ ውሂብዎን ከመሣሪያቸው ያጠፋል። እንዲሁም አካባቢያቸውን ማየት አይችሉም።</string>
+    <string name="contacts_delete_my_messages_body">ይህ ከ%1$s መሣሪያ የላኳቸውን ሁሉንም መልእክቶች ያጠፋል። ይህ ሊመለስ አይችልም።</string>
+    <string name="contacts_delete_locations_body">ይህ ከ%1$s መሣሪያ ያጋሯቸውን ሁሉንም የአካባቢ ውሂብ ያጠፋል። ይህ ሊመለስ አይችልም።</string>
+    <plurals name="contacts_bulk_remove_title">
+        <item quantity="one">%1$d እውቂያን ያስወግዱ</item>
+        <item quantity="other">%1$d እውቂያዎችን ያስወግዱ</item>
+    </plurals>
+    <plurals name="contacts_bulk_remove_body">
+        <item quantity="one">ይህን እውቂያ ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</item>
+        <item quantity="other">%1$d እውቂያዎችን ያስወግዱ? የአካባቢ ታሪካቸውም በመሣሪያው ውስጥ ይጠፋል።</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_messages_body">
+        <item quantity="one">ከዚህ እውቂያ መሣሪያ የላኳቸውን መልእክቶች በሙሉ በርቀት ያጥፉ? ይህ ሊመለስ አይችልም።</item>
+        <item quantity="other">ከ%1$d እውቂያዎች መሣሪያ የላኳቸውን መልእክቶች በሙሉ በርቀት ያጥፉ? ይህ ሊመለስ አይችልም።</item>
+    </plurals>
+    <plurals name="contacts_bulk_delete_locations_body">
+        <item quantity="one">ለዚህ እውቂያ ያጋሩትን የአካባቢ ታሪክ በሙሉ በርቀት ያጥፉ? ይህ ሊመለስ አይችልም።</item>
+        <item quantity="other">ለ%1$d እውቂያዎች ያጋሩትን የአካባቢ ታሪክ በሙሉ በርቀት ያጥፉ? ይህ ሊመለስ አይችልም።</item>
+    </plurals>
+
+    <string name="common_continue">ቀጥል</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_restore_title">ከመጠባበቂያ ወደ ነበረበት መልስ</string>
+    <string name="onboarding_restore_message">ማንነትዎን እና እውቂያዎችዎን ወደ ነበረበት ለመመለስ የ64-ቁምፊ ሄክስ የግል ቁልፍዎን ይለጥፉ።</string>
+    <string name="onboarding_private_key_hex">የግል ቁልፍ (ሄክስ)</string>
+    <string name="onboarding_tagline">የግል አካባቢን ከእውቂያዎች ጋር ማጋራት።\nምንም መለያ የለም። ምንም የባለቤትነት አገልጋዮች የሉም።</string>
+    <string name="onboarding_feature_e2e_title">ከጫፍ-እስከ-ጫፍ የተመሰጠረ</string>
+    <string name="onboarding_feature_e2e_subtitle">አካባቢዎ በመሣሪያው ላይ የተመሰጠረ ነው</string>
+    <string name="onboarding_feature_servers_title">ምንም የባለቤትነት አገልጋዮች የሉም</string>
+    <string name="onboarding_feature_servers_subtitle">ክፍት የNostr ሪሌይዎችን እንደ አስተማማኝ ማጓጓዣ ይጠቀማል - ውሂብዎ በምስጢር እና በግል ይቆያል</string>
+    <string name="onboarding_feature_phone_title">በስልክዎ ላይ ይቆያል</string>
+    <string name="onboarding_feature_phone_subtitle">ሙሉ የአካባቢ ታሪክዎ በመሣሪያዎ ላይ ይቆያል። የአሁኑ ቦታዎ ብቻ ለተመረጡ እውቂያዎች ይጋራል</string>
+    <string name="onboarding_name_prompt">እውቂያዎችዎ ማን ብለው ቢጠሩዎት ይመርጣሉ?</string>
+    <string name="onboarding_name_placeholder">ለምሳሌ እማዬ፣ አባዬ፣ አሊስ…</string>
+    <string name="onboarding_get_started">ጀምር</string>
+    <string name="onboarding_restore_from_backup">ከመጠባበቂያ ወደ ነበረበት መልስ</string>
+    <string name="onboarding_key_note">የግል ቁልፍዎ በመሣሪያዎ ውስጥ የተፈጠረ ነው እና መቼም ይህንን መሣሪያ አይለቅም።</string>
+    <string name="onboarding_permissions_title">ፈቃዶች</string>
+    <string name="onboarding_permissions_desc">LocaPeer አካባቢዎን ለማጋራት የአካባቢ ፈቃድ፣ የግብዣ ኮዶችን ለመፈተሽ የካሜራ ፈቃድ፣ እና ለበስተጀርባ ሁኔታ የማሳወቂያ ፈቃድ ያስፈልገዋል። የአካል ብቃት እንቅስቃሴ ፈቃድ አማራጭ ነው - እንቅስቃሴዎን (መራመድ፣ መንዳት) ይበልጥ በትክክል ለመሰየም ይረዳል።</string>
+    <string name="onboarding_before_ask_title">ከመጠየቃችን በፊት</string>
+    <string name="onboarding_before_ask_intro">ቀጥሎ ጥቂት የስርዓት መጠየቂያዎችን ያያሉ፡</string>
+    <string name="onboarding_before_ask_location">• አካባቢ - አካባቢዎን ለማጋራት ያስፈልጋል።</string>
+    <string name="onboarding_before_ask_camera">• ካሜራ - የግብዣ ኮዶችን ለመፈተሽ።</string>
+    <string name="onboarding_before_ask_notifications">• ማሳወቂያዎች - ለበስተጀርባ ሁኔታ።</string>
+    <string name="onboarding_before_ask_activity">• የአካል ብቃት እንቅስቃሴ - አማራጭ። LocaPeer መራመድን፣ መንዳትን እና መቆምን በታሪክዎ ውስጥ ይበልጥ በትክክል እንዲለይ ያስችለዋል። አሁን ዘልለውት በኋላ በቅንብሮች ውስጥ ሊያነቁት ይችላሉ።</string>
+    <string name="onboarding_grant_permissions">ፈቃድ ስጥ</string>
+    <string name="onboarding_bg_location_title">የበስተጀርባ አካባቢ</string>
+    <string name="onboarding_bg_location_desc">መተግበሪያው በሚዘጋበት ጊዜም እውቂያዎችዎን እንዲዘመኑ ለማድረግ፣ እባክዎ በሚቀጥለው ማያ ገጽ ላይ \'ሁልጊዜ ፍቀድ\' የሚለውን ይምረጡ።</string>
+    <string name="onboarding_bg_location_error">መተግበሪያው በሚዘጋበት ጊዜ እውቂያዎችዎን ለማዘመን የበስተጀርባ አካባቢ ያስፈልጋል። እባክዎ እንደገና ይሞክሩ እና \'ሁልጊዜ ፍቀድ\' የሚለውን ይምረጡ።</string>
+    <string name="onboarding_configure_location">አካባቢን ያዋቅሩ</string>
+    <string name="onboarding_battery_title">ባትሪ</string>
+    <string name="onboarding_battery_desc">አንድሮይድ ባትሪ ለመቆጠብ LocaPeerን ሊያቆመው ይችላል። አስተማማኝ ዝመናዎችን ለማረጋገጥ እባክዎ LocaPeerን ከባትሪ ማመቻቻዎች ያስወግዱ።</string>
+    <string name="onboarding_disable_optimizations">ማመቻቻዎችን አጥፋ</string>
+    <string name="onboarding_done_title">ሁሉንም አዘጋጅተናል!</string>
+    <string name="onboarding_done_desc">የግል የአካባቢ አውታረ መረብዎ ዝግጁ ነው።</string>
+    <string name="onboarding_start_using">LocaPeerን መጠቀም ጀምር</string>
+
+    <string name="common_try_again">እንደገና ሞክር</string>
+
+    <!-- ── የግብዣ መፈተሻ ማያ ገጽ ─────────────────────────────────────────────── -->
+    <string name="scan_title">ግብዣ ፈትሽ</string>
+    <string name="scan_camera_needed">QR ኮዶችን ለመፈተሽ የካሜራ ፈቃድ ያስፈልጋል።</string>
+    <string name="scan_grant_permission">ፈቃድ ስጥ</string>
+    <string name="scan_add_contact_title">እውቂያ ይታከል?</string>
+    <string name="scan_add_contact_message">ይህ ከ%1$s ጋር ያገናኝዎታል እና አካባቢያችሁን እርስ በእርስ ማጋራት ትጀምራላችሁ።</string>
+    <string name="scan_add_share">አክል እና አጋራ</string>
+    <string name="scan_request_sent_title">ጥያቄ ተልኳል!</string>
+    <string name="scan_request_sent_message">ጥያቄ ለ%1$s ተልኳል። አንዴ ሲቀበሉ ይገናኛሉ።</string>
+    <string name="scan_failed">መፈተሽ አልተሳካም፡ %1$s</string>
+
     <string name="cd_back">ተመለስ</string>
+    <string name="common_review">ገምግም</string>
+    <string name="common_decline">ከልክል</string>
+
+    <!-- የማጋሪያ ሚና መሰየሚያዎች (የተጋሩ) -->
+    <string name="role_send_receive">ላክ/ተቀበል</string>
+    <string name="role_send">ላክ</string>
+    <string name="role_receive">ተቀበል</string>
+    <string name="role_none">አጋራ የለም</string>
+
+    <!-- ── የግብዣ ማያ ገጽ ──────────────────────────────────────────────────── -->
+    <string name="invite_tab_my_invite">የእኔ ግብዣ</string>
+    <string name="invite_tab_add_contact">እውቂያ አክል</string>
+    <string name="invite_your_qr_title">የእርስዎ QR ኮድ</string>
+    <string name="invite_your_qr_subtitle">አካባቢዎን እንዲከታተል ለአንድ ሰው ይህንን እንዲፈትሽ ይፍቀዱለት</string>
+    <string name="invite_qr_cd">የእርስዎ QR ኮድ</string>
+    <string name="invite_qr_error">QR በመፍጠር ላይ ስህተት ተከስቷል</string>
+    <string name="invite_share_link">የግብዣ ሊንክ አጋራ</string>
+    <string name="invite_encryption_note">አካባቢዎ በተለይ ለፈታሹ መሣሪያ ይመሰጠራል።</string>
+    <string name="invite_camera_required_title">የካሜራ ፈቃድ ያስፈልጋል</string>
+    <string name="invite_camera_required_message">QR ኮድ ለመፈተሽ የካሜራ ፈቃድ ይስጡ።</string>
+    <string name="invite_point_camera">ካሜራውን ወደ LocaPeer QR ያዙሩት</string>
+    <string name="invite_paste_title">ወይም የግብዣ ሊንክ ይለጥፉ</string>
+    <string name="invite_process_link">ሊንክን አከናውን</string>
+    <string name="invite_fallback_name">እውቂያ</string>
+    <string name="invite_success_message">አንዴ ሲቀበሉ ከ%1$s ጋር ይገናኛሉ።</string>
+    <string name="invite_confirm_add_title">%1$s ይታከል?</string>
+    <string name="invite_confirm_add_message">ወደ እውቂያዎችዎ ይታከሉ እና አካባቢ ይጋሩ?</string>
+
+    <!-- ── በመጠባበቅ ላይ ያሉ ጥያቄዎች ማያ ገጽ ────────────────────────────────────────── -->
+    <string name="pending_empty">ምንም በመጠባበቅ ላይ ያሉ ጥያቄዎች የሉም</string>
+    <string name="pending_requesting">እየጠየቁ ያሉት፡ %1$s · %2$s</string>
+    <string name="pending_role_change">ሚና የመቀየር ጥያቄ · %1$s</string>
+    <string name="pending_new_request">አዲስ የማጋሪያ ጥያቄ · %1$s</string>
+
+    <string name="common_save_changes">ለውጦችን አስቀምጥ</string>
+
+    <!-- ── ገቢ የማጋሪያ ጥያቄ ማያ ገጽ ──────────────────────────────────── -->
+    <string name="incoming_update_title">የማጋሪያ ቅንብሮችን ያዘምኑ</string>
+    <string name="incoming_new_title">አዲስ የእውቂያ ጥያቄ</string>
+    <string name="incoming_update_subtitle">%1$s እንዴት እንደሚያጋሩ ማዘመን ይፈልጋሉ። ከታች ያሉትን ቅንብሮች ይገምግሙ።</string>
+    <string name="incoming_new_subtitle">%1$s እንደ እውቂያ አክለውዎታል! አሁን መልሰው ምን እንደሚያጋሩ መምረጥ ይችላሉ።</string>
+    <string name="incoming_section_location">አካባቢ</string>
+    <string name="incoming_share_my_location">አካባቢዬን ለ%1$s አጋራ</string>
+    <string name="incoming_share_my_location_sub">እርስዎ ያሉበትን ማየት ይችላሉ</string>
+    <string name="incoming_see_their_location">የ%1$sን አካባቢ ይመልከቱ</string>
+    <string name="incoming_see_their_location_sub">እነሱ ያሉበትን ማየት ይችላሉ</string>
+    <string name="incoming_section_messaging">መልእክት</string>
+    <string name="incoming_allow_messages">መልእክቶችን ፍቀድ</string>
+    <string name="incoming_allow_messages_sub">ከ%1$s የቻት መልእክቶችን ተቀበል</string>
+
+    <string name="common_request">ጥያቄ</string>
+    <string name="common_edit">ቀይር</string>
+
+    <!-- ── የጓደኛ ማጋራት (እውቂያ ቅንብሮች) ማያ ገጽ ─────────────────────────── -->
+    <string name="peer_title">የእውቂያ ቅንብሮች</string>
+    <string name="peer_section_roles">የአካባቢ ማጋሪያ ሚናዎች</string>
+    <string name="peer_send_on">%1$s አካባቢዎን ማየት ይችላሉ</string>
+    <string name="peer_send_off">አካባቢዎን ለ%1$s እያጋሩ አይደሉም</string>
+    <string name="peer_receive_title">የ%1$sን አካባቢ ተቀበል</string>
+    <string name="peer_receive_on">የ%1$sን አካባቢ ማየት ይችላሉ</string>
+    <string name="peer_receive_off">የ%1$sን አካባቢ ማየት አይችሉም</string>
+    <string name="peer_section_privacy">የግላዊነት እና የማጋሪያ መቆጣጠሪያዎች</string>
+    <string name="peer_pause_sharing">ማጋራትን አቁም</string>
+    <string name="peer_pause_sub">ለጊዜው አካባቢዎን ለ%1$s መላክ ያቁሙ</string>
+    <string name="peer_precision">የአካባቢ ትክክለኛነት</string>
+    <string name="peer_precision_exact_sub">ትክክለኛ የጂፒኤስ መጋጠሚያዎች</string>
+    <string name="peer_precision_suburb_sub">ግምታዊ አካባቢ (ቀበሌ ደረጃ)</string>
+    <string name="peer_always_sharing">ሁልጊዜ እያጋሩ ነው</string>
+    <plurals name="peer_active_rules">
+        <item quantity="one">%1$d ንቁ የማጋሪያ ደንብ</item>
+        <item quantity="other">%1$d ንቁ የማጋሪያ ደንቦች</item>
+    </plurals>
+    <string name="peer_section_alerts">ማስጠንቀቂያዎች እና ክትትል</string>
+    <string name="peer_sos_contact">የSOS እውቂያ</string>
+    <string name="peer_sos_sub">ማጋራት ቢቆምም እንኳ የአደጋ ጊዜ ማስጠንቀቂያዎችዎን ይቀበሉ</string>
+    <string name="peer_missed_alert">የአካባቢ መጥፋት ማስጠንቀቂያ</string>
+    <string name="peer_missed_on">%1$s አካባቢያቸውን ሪፖርት ማድረግ ካቆሙ አሳውቀኝ</string>
+    <string name="peer_requires_access">ወደ %1$s አካባቢ መድረስን ይጠይቃል</string>
+    <string name="peer_proximity_alert">የቅርበት ማስጠንቀቂያ</string>
+    <string name="peer_proximity_sub">%1$s በአቅራቢያ ሲሆኑ አሳውቀኝ</string>
+    <string name="peer_alert_radius">የማስጠንቀቂያ ራዲየስ</string>
+    <string name="peer_alert_schedule">የማስጠንቀቂያ መርሃ ግብር</string>
+    <plurals name="peer_proximity_rules">
+        <item quantity="one">%1$d ንቁ ደንብ</item>
+        <item quantity="other">%1$d ንቁ ደንቦች</item>
+    </plurals>
+    <string name="peer_geofences_sub">ለ%1$s የመድረሻ እና የመነሻ ዞኖችን ያዘጋጁ</string>
+    <string name="peer_supervise">ይህንን መሣሪያ ተቆጣጠር</string>
+    <string name="peer_supervise_on">ከ%1$s የመክፈቻ ጥያቄዎችን ይቀበላሉ እና ያጸድቃሉ</string>
+    <string name="peer_supervise_off">%1$s የቁጥጥር ሁነታ የመክፈቻ ጥያቄዎችን እንዲልክልዎ ይፍቀዱ</string>
+    <string name="peer_messaging_sub">ከ%1$s የሚላኩ የቻት መልእክቶችን አንቃ/አጥፋ</string>
+    <string name="peer_section_history">የእንቅስቃሴ ታሪክ</string>
+    <string name="peer_location_history">የአካባቢ ታሪክ</string>
+    <string name="peer_location_history_sub">የ%1$sን የእንቅስቃሴ ታሪክ እና የካርታ ሪፖርት ይመልከቱ</string>
+    <string name="peer_section_retention">የርቀት ውሂብ ማቆያ</string>
+    <string name="peer_retention_location_sub">%1$s የአካባቢ ታሪክዎን ለምን ያህል ጊዜ እንደሚያቆይ</string>
+    <string name="peer_purge_location">ሁሉንም የአካባቢ ውሂብ ከ%1$s ላይ አጥፋ</string>
+    <string name="peer_retention_messages_sub">%1$s የላኳቸውን መልእክቶች ለምን ያህል ጊዜ እንደሚያቆይ</string>
+    <string name="peer_purge_messages">ሁሉንም መልእክቶች ከ%1$s ላይ አጥፋ</string>
+    <string name="peer_precision_exact">ትክክለኛ ጂፒኤስ</string>
+    <string name="peer_precision_exact_desc">ትክክለኛ መጋጠሚያዎች</string>
+    <string name="peer_precision_suburb">ቀበሌ (~1km)</string>
+    <string name="peer_precision_suburb_desc">የአካባቢ ደረጃ ብቻ</string>
+
+    <!-- ── የንግግሮች ዝርዝር (መልእክቶች) ማያ ገጽ ────────────────────────────── -->
+    <plurals name="conv_delete_count">
+        <item quantity="one">%1$d ንግግር ይጥፋ?</item>
+        <item quantity="other">%1$d ንግግሮች ይጥፉ?</item>
+    </plurals>
+    <string name="conv_delete_locally">በመሣሪያው ላይ ብቻ አጥፋ</string>
+    <string name="conv_delete_locally_sub">ንግግሩን ከመሣሪያዎ ላይ ብቻ ያስወግዳል።</string>
+    <string name="conv_delete_both">ከሁለቱም አጥፋ</string>
+    <string name="conv_bulk_delete_both_sub">ንግግሩን በመሣሪያዎ እና በእውቂያዎ ዘንድ ያጠፋል።</string>
+    <string name="conv_delete_both_sub">ንግግሩን በመሣሪያዎ ላይ ያጠፋል እና በእውቂያዎ መሣሪያ ላይ የንግግር መጥፋት ጥያቄን ያነሳሳል።</string>
+    <string name="conv_cd_exit_selection">ከምርጫ ውጣ</string>
+    <string name="conv_cd_select_all">ሁሉንም ምረጥ</string>
+    <string name="conv_cd_new_message">አዲስ መልእክት</string>
+    <string name="conv_sort_date">ቀን</string>
+    <string name="conv_sort_unread">ያልተነበበ</string>
+    <string name="conv_search_placeholder">ንግግሮችን ይፈልጉ…</string>
+    <string name="conv_tab_chats">ቻቶች</string>
+    <string name="conv_tab_archived">የተቀመጡ</string>
+    <string name="conv_mark_read">እንደተነበበ ምልክት አድርግ</string>
+    <string name="conv_archive">አስቀምጥ</string>
+    <string name="conv_unarchive">አውጣ</string>
+    <string name="conv_empty_no_results">ለ\"%1$s\" ምንም ውጤት አልተገኘም</string>
+    <string name="conv_empty_no_results_sub">ሌላ የፍለጋ ቃል ይሞክሩ</string>
+    <string name="conv_empty_archived_title">ምንም የተቀመጡ ቻቶች የሉም</string>
+    <string name="conv_empty_archived_sub">መልእክት ሳጥንዎን በንጽህና ለመጠበቅ ቻቶችን ያስቀምጡ</string>
+    <string name="conv_empty_title">እስካሁን ምንም መልእክቶች የሉም</string>
+    <string name="conv_empty_sub">ካርታውን ይክፈቱ እና ንግግር ለመጀመር\nአንድ ሰው ይንኩ</string>
+    <string name="conv_delete_title">ንግግር ይጥፋ?</string>
+    <string name="conv_delete_message">ከ%1$s ጋር ያለውን ንግግር እንዴት ማጥፋት ይፈልጋሉ?</string>
+    <string name="conv_messages_blocked">መልእክቶች ታግደዋል</string>
+    <string name="conv_preview_mine">እርስዎ፡ %1$s</string>
+    <string name="conv_new_message_title">አዲስ መልእክት</string>
+    <string name="conv_picker_empty">እስካሁን ምንም እውቂያዎች የሉም። እውቂያ ለመጨመር QR ኮድ ይፈትሹ።</string>
+
+    <!-- ── የቻት ማያ ገጽ ────────────────────────────────────────────────────── -->
+    <string name="chat_clear_title">የቻት ታሪክ ይጥፋ?</string>
+    <string name="chat_clear_message">ከ%1$s ጋር ያለውን ንግግር እንዴት ማጽዳት ይፈልጋሉ?</string>
+    <string name="chat_clear_locally">በመሣሪያው ላይ ብቻ አጽዳ</string>
+    <string name="chat_clear_both">ከሁለቱም አጽዳ</string>
+    <string name="chat_clear_both_sub">ቻቱን በመሣሪያዎ ላይ ያጸዳል እና የላኳቸውን መልእክቶች እንዲጠፉ ለ%1$s ጥያቄ ይልካል።</string>
+    <string name="chat_cd_options">አማራጮች</string>
+    <string name="chat_clear_history_menu">የቻት ታሪክን አጽዳ</string>
+    <string name="chat_typing">%1$s እየጻፈ ነው…</string>
+    <string name="chat_blocked_banner">ከ%1$s የሚላኩ መልእክቶችን አግደዋል። እገዳውን ለማንሳት ወደ እውቂያዎች ይሂዱ።</string>
+    <string name="chat_delete_msg_title">መልእክት ይጥፋ?</string>
+    <string name="chat_delete_msg_message">ይህንን መልእክት እንዴት ማጥፋት ይፈልጋሉ?</string>
+    <string name="chat_delete_from_contact">ከእውቂያው ዘንድ አጥፋ</string>
+    <string name="chat_delete_from_contact_sub">መልእክቱን ከእውቂያው መሣሪያ ላይ ለማጥፋት ጥያቄ ይልካል።</string>
+    <string name="chat_delete_both_sub">ቻቱን በመሣሪያዎ ላይ ያስወግዳል እና ከእውቂያው መሣሪያ ላይ በራስ-ሰር ያጠፋል።</string>
+    <string name="chat_cd_share_location">አካባቢን አጋራ</string>
+    <string name="chat_input_placeholder">መልእክት…</string>
+    <string name="chat_cd_send">ላክ</string>
+
+    <string name="common_close">ዝጋ</string>
+
+    <!-- ── የካርታ ማያ ገጽ ─────────────────────────────────────────────────────── -->
+    <string name="map_sos_activate_title">SOS ይበራ?</string>
+    <string name="map_sos_deactivate_title">SOS ይጠፋ?</string>
+    <string name="map_sos_activate_msg">ይህ እስኪጠፋ ድረስ አካባቢዎን በየ15 ሰከንዱ ለተመረጡት የSOS እውቂያዎችዎ ያስተላልፋል።</string>
+    <string name="map_sos_deactivate_msg">ይህ ከፍተኛ ቅድሚያ የሚሰጠውን የአካባቢ ስርጭት ለአደጋ ጊዜ እውቂያዎችዎ ያቆማል።</string>
+    <string name="map_activate">አብራ</string>
+    <string name="map_deactivate">አጥፋ</string>
+    <string name="map_cd_style">የካርታ አይነት</string>
+    <string name="map_cd_show_geofences">ጂኦፌንሶችን አሳይ</string>
+    <string name="map_cd_hide_geofences">ጂኦፌንሶችን ደብቅ</string>
+    <string name="map_cd_follow">ተከተለኝ</string>
+    <string name="map_cd_friends">ጓደኞች</string>
+    <string name="map_no_friends">እስካሁን ምንም ጓደኞች እየተከታተሉ አይደሉም</string>
+    <string name="map_you">እርስዎ</string>
+    <string name="map_cd_go_my_location">ወደ እኔ አካባቢ ሂድ</string>
+    <string name="map_sos_active">⚠ SOS ንቁ ነው</string>
+    <string name="map_away">ሩቅ</string>
+    <string name="map_no_location_yet">እስካሁን ምንም አካባቢ የለም</string>
+    <string name="map_cd_go_location">ወደ ቦታው ሂድ</string>
+    <string name="map_sos">SOS</string>
+    <string name="map_sos_on">SOS በርቷል</string>
+    <string name="map_overdue">ጊዜ አልፎበታል - የቅርብ ጊዜ ዝመና የለም</string>
+    <string name="map_stat_last_seen">ለመጨረሻ ጊዜ የታየው</string>
+    <string name="map_stat_battery">ባትሪ</string>
+    <string name="map_stat_accuracy">ትክክለኛነት</string>
+    <string name="map_stat_motion">እንቅስቃሴ</string>
+    <string name="map_stat_speed">ፍጥነት</string>
+    <string name="map_stat_elevation">ከፍታ</string>
+
+    <string name="common_ok">እሺ</string>
+
+    <!-- ── የታሪክ ሪፖርት ማያ ገጽ ──────────────────────────────────────────── -->
+    <string name="history_title_peer">ታሪክ፡ %1$s</string>
+    <string name="history_select_person">ሰው ይምረጡ</string>
+    <string name="history_person_label">ሰው</string>
+    <string name="history_cd_prev_day">ያለፈው ቀን</string>
+    <string name="history_cd_next_day">ቀጣዩ ቀን</string>
+    <string name="history_time_filter">የጊዜ ማጣሪያ፡</string>
+    <string name="history_cd_reset_time">ጊዜን መልስ</string>
+    <string name="history_tab_list">ዝርዝር</string>
+    <string name="history_empty_title">ለዚህ ቀን ምንም ታሪክ የለም</string>
+    <string name="history_empty_sub">ሌላ ቀን ለመምረጥ ይሞክሩ ወይም ግንኙነትዎን ያረጋግጡ።</string>
+    <string name="history_start_time">የመጀመሪያ ሰዓት</string>
+    <string name="history_end_time">የመጨረሻ ሰዓት</string>
+    <string name="history_no_data_title">ምንም የአካባቢ ውሂብ የለም</string>
+    <string name="history_no_data_sub">ለዚህ ቀን ወይም ሰዓት የተመዘገበ ምንም የአካባቢ ምልክት የለም።</string>
+    <plurals name="history_pings_recorded">
+        <item quantity="one">%1$d ምልክት ተመዝግቧል</item>
+        <item quantity="other">%1$d ምልክቶች ተመዝግበዋል</item>
+    </plurals>
+    <string name="history_cd_dismiss">አስወግድ</string>
+    <string name="history_accuracy_label">±%1$s ትክክለኛነት</string>
+    <string name="history_emergency_sos">የአደጋ ጊዜ SOS ምልክት</string>
+    <string name="history_detail_location">አካባቢ</string>
+    <string name="history_detail_coordinates">መጋጠሚያዎች</string>
+    <string name="history_within">በ ±%1$s ውስጥ</string>
+    <string name="history_detail_movement">እንቅስቃሴ</string>
+    <string name="history_movement_desc">%1$s %2$s ወደ %3$s እየሄደ</string>
+
+    <string name="common_create">ፍጠር</string>
+
+    <!-- ── የጂኦፌንስ ማያ ገጾች ───────────────────────────────────────────────── -->
+    <string name="geo_cd_add_area">የጂኦፌንስ ቦታ አክል</string>
+    <string name="geo_cd_assign">ጂኦፌንስ መድብ</string>
+    <string name="geo_unknown">ያልታወቀ</string>
+    <string name="geo_empty_title">ምንም ጂኦፌንሶች የሉም</string>
+    <string name="geo_empty_sub">የጂኦፌንስ ቦታ ለመፍጠር + ይንኩ፣ ከዚያ ከማጋሪያ ቅንብሮቻቸው እውቂያዎችን ይመድቡላቸው።</string>
+    <string name="geo_delete_title">ጂኦፌንስ ይጥፋ?</string>
+    <string name="geo_delete_simple">\"%1$s\" ይጥፋ?</string>
+    <plurals name="geo_delete_assigned">
+        <item quantity="one">\"%1$s\" ለ%2$d እውቂያ ተመድቧል። ማጥፋት እነዚያንም ምደባዎች ያስወግዳል።</item>
+        <item quantity="other">\"%1$s\" ለ%2$d እውቂያዎች ተመድቧል። ማጥፋት እነዚያንም ምደባዎች ያስወግዳል።</item>
+    </plurals>
+    <string name="geo_for_contact">ጂኦፌንሶች ለ%1$s</string>
+    <string name="geo_empty_contact_title">ለእውቂያው ምንም ጂኦፌንሶች የሉም</string>
+    <string name="geo_empty_contact_sub">የጂኦፌንስ ቦታ ለመመደብ + ይንኩ እና በመድረሻ፣ በመነሻ ወይም በሁለቱም ጊዜ ማስጠንቀቂያ እንዲሰጥ ይምረጡ።</string>
+    <string name="geo_no_areas_title">እስካሁን ምንም ጂኦፌንሶች የሉም</string>
+    <string name="geo_no_areas_msg">መጀመሪያ ከጂኦፌንሶች ማያ ገጽ የጂኦፌንስ ቦታ ይፍጠሩ፣ ከዚያ እዚህ ይመድቡ።</string>
+    <string name="geo_radius_label">%1$s ራዲየስ</string>
+    <string name="geo_contacts_label">እውቂያዎች፡ %1$s</string>
+    <string name="geo_no_contacts_assigned">ምንም እውቂያዎች አልተመደቡም</string>
+    <plurals name="geo_rules_count">
+        <item quantity="one">%1$d ደንብ</item>
+        <item quantity="other">%1$d ደንቦች</item>
+    </plurals>
+    <string name="geo_trigger_enter">መግባት</string>
+    <string name="geo_trigger_exit">መውጣት</string>
+    <string name="geo_trigger_both">ሁለቱም</string>
+    <string name="geo_edit_title">ጂኦፌንስን ይቀይሩ</string>
+    <string name="geo_new_title">አዲስ ጂኦፌንስ</string>
+    <string name="geo_cd_my_location">የእኔ አካባቢ</string>
+    <string name="geo_cd_radius_increase">ራዲየስ ጨምር</string>
+    <string name="geo_cd_radius_decrease">ራዲየስ ቀንስ</string>
+    <string name="geo_hint_tap">ለማስቀመጥ ካርታውን ይንኩ ወይም ይጫኑ</string>
+    <string name="geo_hint_move">ለማጉላት በሁለት ጣት ይጫኑ • ፒኑን ለማንቀሳቀስ ይጫኑ ወይም ይጎትቱ</string>
+    <string name="geo_basic_info">መሰረታዊ መረጃ</string>
+    <string name="geo_search_title">በአድራሻ ፈልግ</string>
+    <string name="geo_search_label">አድራሻ ወይም ቦታ</string>
+    <string name="geo_search_placeholder">ለምሳሌ፡ አዲስ አበባ፣ ሜክሲኮ</string>
+    <string name="geo_search_no_results">ምንም ተዛማጅ አድራሻ አልተገኘም</string>
+    <string name="geo_cd_search">ፈልግ</string>
+    <string name="geo_name_placeholder">ለምሳሌ፡ ቤት፣ ስራ</string>
+    <string name="geo_name_required">ስም ያስፈልጋል</string>
+    <string name="geo_latitude">ላቲቲውድ</string>
+    <string name="geo_longitude">ሎንግቲውድ</string>
+    <string name="geo_lat_range">-90 እስከ 90</string>
+    <string name="geo_lng_range">-180 እስከ 180</string>
+    <string name="geo_radius">ራዲየስ</string>
+    <string name="geo_radius_range">ከ%1$d እስከ %2$d ሜትር ያስገቡ</string>
+    <string name="geo_edit_assignment">ምደባን ይቀይሩ</string>
+    <string name="geo_assign_title">ጂኦፌንስ መድብ</string>
+    <string name="geo_select_area">የጂኦፌንስ ቦታ ይምረጡ</string>
+    <string name="geo_trigger_title">ማሳወቂያ የሚቀሰቀስበት፡</string>
+    <string name="geo_add_rule">ደንብ አክል</string>
+    <string name="geo_alerts_all_times">ማስጠንቀቂያዎች ሁልጊዜ ንቁ ናቸው። ማስጠንቀቂያዎች የሚላኩበትን ጊዜ ለመገደብ ደንብ ያክሉ።</string>
+    <string name="geo_assign_action">መድብ</string>
+
+    <!-- ── የቅርበት ማስጠንቀቂያዎች ማያ ገጽ ────────────────────────────────────────── -->
+    <string name="prox_title">የቅርበት ማስጠንቀቂያዎች</string>
+    <string name="prox_empty_title">ምንም የሚከታተሉት ሰው የለም</string>
+    <string name="prox_empty_sub">የአንድን ሰው የግብዣ QR በመፈተሽ\nአካባቢያቸውን መከታተል ይጀምሩ</string>
+    <string name="prox_intro">የሚከታተሉት ሰው እርስዎ ወደመረጡት ርቀት ሲመጣ ማሳወቂያ ያግኙ።</string>
+    <string name="prox_alert_within">በ%1$s ውስጥ ሲሆኑ አሳውቀኝ</string>
+    <string name="prox_alerts_off">ማስጠንቀቂያዎች ጠፍተዋል</string>
+    <string name="prox_alert_radius">የማስጠንቀቂያ ራዲየስ</string>
+    <string name="prox_edit_schedule">መርሃ ግብር ይቀይሩ</string>
+    <string name="prox_rules">ደንቦች</string>
+
+    <!-- ── የመርሃ ግብር ማያ ገጽ / የደንብ አርታዒ ──────────────────────────────────── -->
+    <string name="schedule_for_peer">ለ%1$s መርሃ ግብር</string>
+    <string name="schedule_cd_add_rule">ደንብ አክል</string>
+    <string name="schedule_empty_title">ምንም የመርሃ ግብር ደንቦች የሉም</string>
+    <string name="schedule_empty_global">አካባቢ ሁልጊዜ ይጋራል። ማጋራት ንቁ የሚሆንበትን ጊዜ ለመገደብ ደንብ ያክሉ።</string>
+    <string name="schedule_empty_peer">አካባቢ ሁልጊዜ ለ%1$s ይጋራል። መቼ እንደሚጋራ ለመገደብ ደንብ ያክሉ።</string>
+    <string name="schedule_active_hint">ማንኛውም ደንብ ከአሁኑ ሰዓት ጋር ሲዛመድ ንቁ ይሆናል። ባዶ = ሁልጊዜ በርቷል።</string>
+    <string name="schedule_all_day">ሙሉ ቀን</string>
+    <string name="schedule_plus_one_day"> (+1 ቀን)</string>
+    <string name="schedule_rule_number">ደንብ %1$d</string>
+    <string name="schedule_cd_delete_rule">ደንብ አጥፋ</string>
+    <string name="schedule_edit_rule">ደንብ ይቀይሩ</string>
+    <string name="schedule_label_optional">መሰየሚያ (አማራጭ)</string>
+    <string name="schedule_label_placeholder">ለምሳሌ የስራ ሰዓት፣ የእረፍት ቀናት</string>
+    <string name="schedule_active_days">ንቁ ቀናት</string>
+    <string name="schedule_time_window">የሰዓት መስኮት</string>
+    <string name="schedule_start">መጀመሪያ</string>
+    <string name="schedule_end">መጨረሻ</string>
+    <string name="schedule_overnight">ሌሊቱን ሙሉ፡ ከ%1$s እስከ ነገ %2$s ድረስ ንቁ</string>
+
+    <!-- ── የቁጥጥር በር ───────────────────────────────────────────────── -->
+    <string name="gate_title">መሣሪያው በቁጥጥር ስር ነው</string>
+    <string name="gate_message">ወደ ቅንብሮች ለመግባት የተቆጣጣሪ ፈቃድ ያስፈልጋል።</string>
+    <string name="gate_request_access">ፍቃድ ይጠይቁ</string>
+    <string name="gate_waiting">የተቆጣጣሪ ፈቃድ በመጠባበቅ ላይ…</string>
+    <string name="gate_denied">ፍቃድ በተቆጣጣሪው ተከልክሏል።</string>
+    <string name="gate_timed_out">የጥያቄው ጊዜ አልፎበታል። ተቆጣጣሪው ምላሽ አልሰጠም።</string>
+
+    <!-- ── ማቆያ መራጭ ─────────────────────────────────────────────── -->
+    <string name="retention_forever">ለዘላለም</string>
+    <string name="retention_keep_for">ለዚህ ያህል አቆይ፡ %1$s</string>
+    <plurals name="retention_days">
+        <item quantity="one">%1$d ቀን</item>
+        <item quantity="other">%1$d ቀናት</item>
+    </plurals>
+
+    <string name="common_select">ምረጥ</string>
+
+    <!-- ── የካርታ ቦታ መራጭ ────────────────────────────────────────────── -->
+    <string name="picker_title">የተወሰነ ቦታ ይምረጡ</string>
+
+    <!-- ── አሰሳን የማስተካከያ ማያ ገጽ ────────────────────────────────────── -->
+    <string name="customize_nav_intro">በታችኛው አሞሌ ላይ የትኞቹ ታቦች እንደሚታዩ እና ቅደም ተከተላቸውን ይምረጡ። ካርታ ሁልጊዜ ይካተታል።</string>
+    <string name="customize_cd_move_up">ወደ ላይ ወስድ</string>
+    <string name="customize_cd_move_down">ወደ ታች ወስድ</string>
+
+    <!-- ── ስለ ማያ ገጽ ───────────────────────────────────────────────────── -->
+    <string name="about_version">ስሪት %1$s (build %2$d)</string>
+    <string name="about_tagline">የግል አካባቢን ከሚያምኗቸው ሰዎች ጋር ማጋራት። ምንም መለያ የለም፣ ምንም ክላውድ የለም፣ በእኛ ክትትል የለም።</string>
+    <string name="about_relay_connections">የሪሌይ ግንኙነቶች</string>
+    <string name="about_connected">ተገናኝቷል</string>
+    <string name="about_disconnected">ተቋርጧል</string>
+    <string name="about_open_source">ክፍት ምንጭ ላይብረሪዎች</string>
+    <string name="about_lib_osmdroid_desc">በOpenStreetMap ላይ የተመሰረተ የካርታ አቀራረብ</string>
+    <string name="about_lib_okhttp_desc">ለNostr ሪሌይ የWebSocket ማጓጓዣ</string>
+    <string name="about_lib_compose_desc">የUI መዋቅር</string>
+    <string name="about_lib_hilt_desc">የጥገኝነት መርፌ</string>
+    <string name="about_lib_room_desc">የአካባቢ የውሂብ ጎታ</string>
+    <string name="about_map_attribution">የካርታ ውሂብ © OpenStreetMap አስተዋጽዖ አድራጊዎች</string>
+
+    <!-- ── ማሳወቂያዎች ──────────────────────────────────────────────────── -->
+    <string name="notif_action_accept">ተቀበል</string>
+    <string name="notif_someone">አንድ ሰው</string>
+    <string name="notif_sos_title">SOS ከ%1$s!</string>
+    <string name="notif_sos_text">%1$s በ(%2$s, %3$s) SOS አብርተዋል</string>
+    <string name="notif_supervisor_request_title">%1$s የእርስዎ ተቆጣጣሪ መሆን ይፈልጋሉ</string>
+    <string name="notif_supervisor_request_text">ከዚህ መሣሪያ የመክፈቻ ጥያቄዎችን ለመፍቀድ ይቀበሉ</string>
+    <string name="notif_supervisor_request_big">የቁጥጥር ሁነታ ንቁ ሲሆን %1$s የመክፈቻ ጥያቄዎችን እንዲልክልዎ ለመፍቀድ ይቀበሉ።</string>
+    <string name="notif_supervised_active_title">የቁጥጥር ሁነታ ንቁ ነው</string>
+    <string name="notif_supervised_active_text">ተቆጣጣሪዎ አረጋግጠዋል - የቁጥጥር ሁነታ አሁን ተዋቅሯል</string>
+    <string name="notif_supervised_declined_title">የቁጥጥር ሁነታ ተከልክሏል</string>
+    <string name="notif_supervised_declined_text">ተቆጣጣሪዎ ጥያቄውን ውድቅ አድርገዋል - የቁጥጥር ሁነታ ጠፍቷል</string>
+    <string name="notif_tracking_alert_title">የክትትል ማስጠንቀቂያ</string>
+    <string name="notif_tracking_proximity">%1$s ስለ እርስዎ የቅርበት ማስጠንቀቂያ ደርሷቸዋል</string>
+    <string name="notif_tracking_geofence">%1$s አጥር ውስጥ እንደገቡ/እንደወጡ ማስጠንቀቂያ ደርሷቸዋል፡ %2$s</string>
+    <string name="notif_tracking_generic">%1$s አካባቢዎን እየተከታተሉ ነው</string>
+    <string name="notif_track_update_title">ከ%1$s የማጋሪያ ዝመና</string>
+    <string name="notif_track_new_title">አዲስ እውቂያ፡ %1$s</string>
+    <string name="notif_role_send_receive">አካባቢ ላክ/ተቀበል</string>
+    <string name="notif_role_send">አካባቢ ላክ</string>
+    <string name="notif_role_receive">አካባቢ ተቀበል</string>
+    <string name="notif_role_none">አካባቢ ማጋራት የለም</string>
+    <string name="notif_track_requesting">%1$s እየጠየቁ ነው፡ %2$s</string>
+    <string name="notif_track_update_body">%1$s እንዴት አካባቢ እንደሚያጋሩ ማዘመን ይፈልጋሉ።</string>
+    <string name="notif_track_new_body">%1$s እንደ እውቂያ አክለውዎታል እና መገናኘት ይፈልጋሉ።</string>
+    <string name="notif_contact_connected_title">እውቂያ ተገናኝቷል</string>
+    <string name="notif_contact_connected_text">%1$s አሁን ከእርስዎ ጋር ተገናኝተዋል።</string>
+    <string name="notif_request_declined_title">ጥያቄ ተከልክሏል</string>
+    <string name="notif_request_declined_text">%1$s የአካባቢ ማጋሪያ ጥያቄዎን ውድቅ አድርገዋል።</string>
+    <string name="notif_message_person">ለ%1$s መልእክት ላክ</string>
+    <string name="notif_geofence_entered_title">%1$s ወደ %2$s ገብተዋል</string>
+    <string name="notif_geofence_left_title">%1$s ከ%2$s ወጥተዋል</string>
+    <string name="notif_geofence_subtitle">በ%1$s · %2$s ራዲየስ</string>
+    <string name="notif_person_nearby">%1$s በአቅራቢያ ናቸው</string>
+    <string name="notif_distance_from_you">ከእርስዎ %1$s ርቀት ላይ</string>
+    <string name="notif_missed_title">ከ%1$s ምንም ዝመና የለም</string>
+    <string name="notif_missed_text">ለመጨረሻ ጊዜ የታዩት ከ%1$s ደቂቃ በፊት በ(%2$s, %3$s) አቅራቢያ</string>
+    <string name="notif_sos_active_title">SOS ንቁ ነው!</string>
+    <string name="notif_sos_active_text">ለSOS እውቂያዎች የአደጋ ጊዜ ማስጠንቀቂያ እያስተላለፈ ነው</string>
+    <string name="notif_messages_group_title">የLocaPeer መልእክቶች</string>
+
+    <!-- ── ቶስቶች ─────────────────────────────────────────────────────────── -->
+    <string name="toast_declined_contact">ከ%1$s የቀረበ የእውቂያ ጥያቄ ተከልክሏል</string>
+    <string name="toast_now_supervising">አሁን የ%1$sን መሣሪያ እየተቆጣጠሩ ነው</string>
+    <string name="toast_declined_supervision">ከ%1$s የቀረበ የቁጥጥር ጥያቄ ተከልክሏል</string>
+
+    <!-- ── ፕሮግራማዊ ሕብረቁምፊዎች ─────────────── -->
+    <string name="time_just_now">አሁን</string>
+    <string name="time_minutes_ago">ከ%1$d ደቂቃ በፊት</string>
+    <string name="fallback_me">እኔ</string>
+    <string name="fallback_unknown">ያልታወቀ</string>
+    <string name="geo_unassigned">ያልተመደበ</string>
+    <string name="days_every_day">በየቀኑ</string>
+    <string name="days_weekdays">የስራ ቀናት</string>
+    <string name="days_weekends">የእረፍት ቀናት</string>
+    <string name="days_none">ምንም ቀናት የሉም</string>
+    <string name="chat_my_location_message">የአሁኑ አካባቢዬ፡ %1$s</string>
+    <string name="scan_error_bad_pubkey">ልክ ያልሆነ ግብዣ፡ መጥፎ የህዝብ ቁልፍ</string>
+    <string name="scan_error_key_mismatch">ልክ ያልሆነ ግብዣ፡ ቁልፎቹ አይዛመዱም</string>
+    <string name="scan_error_unknown">ያልታወቀ ስህተት</string>
+    <string name="scan_error_invalid_link">ልክ ያልሆነ የግብዣ ሊንክ</string>
+    <string name="scan_fallback_contact">ይህ እውቂያ</string>
+    <string name="backup_saved">መጠባበቂያ ተቀምጧል፡ %1$s</string>
+    <string name="backup_saved_encrypted">መጠባበቂያ ተቀምጧል (የተመሰጠረ)፡ %1$s</string>
+    <string name="backup_failed">መጠባበቂያ አልተሳካም፡ %1$s</string>
+    <string name="backup_could_not_read_file">ፋይሉን ማንበብ አልተቻለም</string>
+    <string name="backup_could_not_write_file">ፋይሉን መጻፍ አልተቻለም</string>
+    <string name="backup_could_not_read">መጠባበቂያውን ማንበብ አልተቻለም፡ %1$s</string>
+    <string name="backup_incorrect_password">የይለፍ ቃል የተሳሳተ ነው</string>
+    <string name="restore_result_restored">ተመልሷል፡ %1$s</string>
+    <string name="restore_result_failed">አልተሳካም፡ %1$s</string>
+    <string name="restore_nothing">ወደ ነበረበት የሚመለስ ምንም ነገር የለም</string>
+    <string name="restore_failed">ወደ ነበረበት መመለስ አልተሳካም፡ %1$s</string>
+    <plurals name="restore_contacts_count">
+        <item quantity="one">%1$d እውቂያ</item>
+        <item quantity="other">%1$d እውቂያዎች</item>
+    </plurals>
+    <plurals name="restore_geofences_count">
+        <item quantity="one">%1$d ጂኦፌንስ</item>
+        <item quantity="other">%1$d ጂኦፌንሶች</item>
+    </plurals>
+    <string name="peer_role_change_sent">የሚና የመቀየር ጥያቄ ለ%1$s ተልኳል</string>
+    <string name="peer_not_found">ጓደኛው አልተገኘም</string>
+    <string name="peer_purge_location_sent">ሁሉንም አካባቢዎች የማጥፋት ትዕዛዝ ለ%1$s ተልኳል</string>
+    <string name="peer_purge_messages_sent">ሁሉንም መልእክቶች የማጥፋት ትዕዛዝ ለ%1$s ተልኳል</string>
+    <string name="onboarding_error_key_length">ልክ ያልሆነ ቁልፍ - 64 ሄክስ ቁምፊዎች መሆን አለበት።</string>
+    <string name="onboarding_error_key_range">ልክ ያልሆነ የግል ቁልፍ።</string>
+    <string name="onboarding_error_hex">ልክ ያልሆነ የሄክስ ቅርጸት።</string>
+    <string name="onboarding_error_import_failed">ቁልፍ ማስገባት አልተሳካም፡ %1$s</string>
 </resources>

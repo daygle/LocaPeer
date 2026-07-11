@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">Mozgásérzékelés bekapcsolása</string>
     <string name="settings_enable_motion_message">A testmozgás-hozzáférés révén a LocaPeer pontosabban megkülönbözteti a gyaloglást, a vezetést és az egy helyben állást az előzményekben. Jelenleg ki van kapcsolva — a rendszerbeállításokban újra engedélyezheti.</string>
     <string name="settings_open_settings">Beállítások megnyitása</string>
+    <string name="settings_battery_optimization">Akkumulátor-optimalizálás</string>
+    <string name="settings_battery_optimization_unrestricted">Korlátozás nélküli — a LocaPeer szabadon futhat a háttérben</string>
+    <string name="settings_battery_optimization_restricted">Optimalizált — érintse meg a Korlátozás nélküli beállításhoz a rendszerbeállításokban</string>
+
+    <!-- Engedélyek -->
+    <string name="settings_permissions">Engedélyek</string>
+    <string name="settings_permissions_subtitle">Az alkalmazás helyadatokhoz, kamerához és egyebekhez való hozzáférésének áttekintése és javítása</string>
+    <string name="permissions_intro">A LocaPeer-nek szüksége van ezekre az engedélyekre a helyzet megosztásához, a meghívók beolvasásához és a háttérben való működéshez. Érintse meg a meg nem adott engedélyeket a javításhoz.</string>
+    <string name="perm_location_title">Helyszín</string>
+    <string name="perm_location_granted">Megadva — a tartózkodási helye megosztható</string>
+    <string name="perm_location_denied">Nincs megadva — érintse meg a helyhozzáférés engedélyezéséhez</string>
+    <string name="perm_background_location_title">Háttérben lévő helyszín</string>
+    <string name="perm_background_location_granted">Megadva — a helymegosztás az alkalmazás bezárása után is folytatódik</string>
+    <string name="perm_background_location_denied">Nincs megadva — érintse meg a „Mindig engedélyezve” hozzáférés megadásához a beállításokban</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Megadva — a meghívó QR-kódok beolvasására szolgál</string>
+    <string name="perm_camera_denied">Nincs megadva — érintse meg a kamera engedélyezéséhez</string>
+    <string name="perm_notifications_title">Értesítések</string>
+    <string name="perm_notifications_granted">Megadva — a riasztások és állapotfrissítések megjeleníthetők</string>
+    <string name="perm_notifications_denied">Nincs megadva — érintse meg az értesítések engedélyezéséhez</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Sebesség mértékegysége</string>

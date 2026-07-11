@@ -127,6 +127,26 @@
     <string name="settings_enable_motion_title">Bật phát hiện chuyển động</string>
     <string name="settings_enable_motion_message">Quyền truy cập hoạt động thể chất giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên trong lịch sử của bạn. Hiện đang tắt — bạn có thể bật lại trong cài đặt hệ thống.</string>
     <string name="settings_open_settings">Mở cài đặt</string>
+    <string name="settings_battery_optimization">Tối ưu hóa pin</string>
+    <string name="settings_battery_optimization_unrestricted">Không hạn chế — LocaPeer có thể chạy tự do trong nền</string>
+    <string name="settings_battery_optimization_restricted">Đã tối ưu hóa — nhấn để đặt Không hạn chế trong cài đặt hệ thống</string>
+
+    <!-- Quyền hạn -->
+    <string name="settings_permissions">Quyền hạn</string>
+    <string name="settings_permissions_subtitle">Xem xét và khắc phục quyền truy cập của ứng dụng vào vị trí, máy ảnh và hơn thế nữa</string>
+    <string name="permissions_intro">LocaPeer cần các quyền này để chia sẻ vị trí của bạn, quét lời mời và tiếp tục chạy trong nền. Nhấn vào bất kỳ quyền nào chưa được cấp để khắc phục.</string>
+    <string name="perm_location_title">Vị trí</string>
+    <string name="perm_location_granted">Đã cấp — vị trí của bạn có thể được chia sẻ</string>
+    <string name="perm_location_denied">Chưa cấp — nhấn để cho phép truy cập vị trí</string>
+    <string name="perm_background_location_title">Vị trí trong nền</string>
+    <string name="perm_background_location_granted">Đã cấp — vị trí tiếp tục được chia sẻ khi ứng dụng bị đóng</string>
+    <string name="perm_background_location_denied">Chưa cấp — nhấn để cho phép truy cập \'Luôn cho phép\' trong cài đặt</string>
+    <string name="perm_camera_title">Máy ảnh</string>
+    <string name="perm_camera_granted">Đã cấp — được sử dụng để quét mã QR mời</string>
+    <string name="perm_camera_denied">Chưa cấp — nhấn để cho phép máy ảnh</string>
+    <string name="perm_notifications_title">Thông báo</string>
+    <string name="perm_notifications_granted">Đã cấp — có thể hiển thị cảnh báo và cập nhật trạng thái</string>
+    <string name="perm_notifications_denied">Chưa cấp — nhấn để cho phép thông báo</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Đơn vị tốc độ</string>

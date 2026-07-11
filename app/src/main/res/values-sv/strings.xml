@@ -128,6 +128,26 @@
     <string name="settings_enable_motion_title">Aktivera rörelsedetektering</string>
     <string name="settings_enable_motion_message">Åtkomst till fysisk aktivitet låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt i din historik. Den är för närvarande avstängd — du kan aktivera den igen i systeminställningarna.</string>
     <string name="settings_open_settings">Öppna inställningar</string>
+    <string name="settings_battery_optimization">Batterioptimering</string>
+    <string name="settings_battery_optimization_unrestricted">Obegränsad — LocaPeer kan köras fritt i bakgrunden</string>
+    <string name="settings_battery_optimization_restricted">Optimerad — tryck för att ställa in Obegränsad i systeminställningarna</string>
+
+    <!-- Behörigheter -->
+    <string name="settings_permissions">Behörigheter</string>
+    <string name="settings_permissions_subtitle">Granska och åtgärda appens åtkomst till plats, kamera med mera</string>
+    <string name="permissions_intro">LocaPeer behöver dessa behörigheter för att dela din plats, skanna inbjudningar och fortsätta köras i bakgrunden. Tryck på de som inte har beviljats för att åtgärda dem.</string>
+    <string name="perm_location_title">Plats</string>
+    <string name="perm_location_granted">Beviljad — din plats kan delas</string>
+    <string name="perm_location_denied">Inte beviljad — tryck för att tillåta platsåtkomst</string>
+    <string name="perm_background_location_title">Bakgrundsplats</string>
+    <string name="perm_background_location_granted">Beviljad — platsen fortsätter att delas när appen är stängd</string>
+    <string name="perm_background_location_denied">Inte beviljad — tryck för att tillåta åtkomst \"Tillåt alltid\" i inställningarna</string>
+    <string name="perm_camera_title">Kamera</string>
+    <string name="perm_camera_granted">Beviljad — används för att skanna QR-koder för inbjudningar</string>
+    <string name="perm_camera_denied">Inte beviljad — tryck för att tillåta kameran</string>
+    <string name="perm_notifications_title">Aviseringar</string>
+    <string name="perm_notifications_granted">Beviljad — varningar och statusuppdateringar kan visas</string>
+    <string name="perm_notifications_denied">Inte beviljad — tryck för att tillåta aviseringar</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hastighetsenheter</string>
