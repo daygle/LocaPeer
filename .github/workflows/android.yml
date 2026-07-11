@@ -10,7 +10,8 @@ permissions:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Cancel superseded PR runs, but let every push to main build to completion.
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -28,8 +29,20 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build and run unit tests
-        run: ./gradlew assembleDebug test
+      - name: Build, lint, and run unit tests
+        # testDebugUnitTest only (plain `test` also runs the release variant,
+        # recompiling it for no extra coverage since these are JVM unit tests).
+        run: ./gradlew assembleDebug lintDebug testDebugUnitTest
+
+      - name: Upload lint report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-report
+          path: |
+            app/build/reports/lint-results-debug.html
+            app/build/reports/lint-results-debug.xml
+          if-no-files-found: ignore
 
       # Room exports a JSON snapshot per schema version (app/schemas). Hand the
       # generated files to the commit-schemas job rather than pushing from here,
