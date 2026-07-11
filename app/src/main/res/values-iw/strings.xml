@@ -79,7 +79,6 @@
     <plurals name="settings_schedule_rule_count">
         <item quantity="one">כלל %1$d</item>
         <item quantity="two">%1$d כללים</item>
-        <item quantity="many">%1$d כללים</item>
         <item quantity="other">%1$d כללים</item>
     </plurals>
     <string name="settings_geofences">גדרות גאוגרפיות</string>
@@ -231,7 +230,6 @@
     <plurals name="contacts_selected_count">
         <item quantity="one">%1$d נבחר</item>
         <item quantity="two">%1$d נבחרו</item>
-        <item quantity="many">%1$d נבחרו</item>
         <item quantity="other">%1$d נבחרו</item>
     </plurals>
     <string name="contacts_cd_cancel_selection">בטל בחירה</string>
@@ -264,25 +262,21 @@
     <plurals name="contacts_bulk_remove_title">
         <item quantity="one">הסר איש קשר</item>
         <item quantity="two">הסר %1$d אנשי קשר</item>
-        <item quantity="many">הסר %1$d אנשי קשר</item>
         <item quantity="other">הסר %1$d אנשי קשר</item>
     </plurals>
     <plurals name="contacts_bulk_remove_body">
         <item quantity="one">להסיר את איש הקשר הזה? היסטוריית המיקום שלו תימחק גם מקומית.</item>
         <item quantity="two">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
-        <item quantity="many">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
         <item quantity="other">להסיר %1$d אנשי קשר? היסטוריית המיקום שלהם תימחק גם מקומית.</item>
     </plurals>
     <plurals name="contacts_bulk_delete_messages_body">
         <item quantity="one">למחוק מרחוק את כל ההודעות ששלחת מהמכשיר של איש הקשר הזה? לא ניתן לבטל.</item>
         <item quantity="two">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
-        <item quantity="many">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
         <item quantity="other">למחוק מרחוק את כל ההודעות ששלחת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
     </plurals>
     <plurals name="contacts_bulk_delete_locations_body">
         <item quantity="one">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשיר של איש הקשר הזה? לא ניתן לבטל.</item>
         <item quantity="two">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
-        <item quantity="many">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
         <item quantity="other">למחוק מרחוק את כל היסטוריית המיקום ששיתפת מהמכשירים של %1$d אנשי קשר? לא ניתן לבטל.</item>
     </plurals>
 
@@ -409,7 +403,6 @@
     <plurals name="peer_active_rules">
         <item quantity="one">כלל שיתוף פעיל %1$d</item>
         <item quantity="two">%1$d כללי שיתוף פעילים</item>
-        <item quantity="many">%1$d כללי שיתוף פעילים</item>
         <item quantity="other">%1$d כללי שיתוף פעילים</item>
     </plurals>
     <string name="peer_section_alerts">התראות וניטור</string>
@@ -425,7 +418,6 @@
     <plurals name="peer_proximity_rules">
         <item quantity="one">כלל פעיל %1$d</item>
         <item quantity="two">%1$d כללים פעילים</item>
-        <item quantity="many">%1$d כללים פעילים</item>
         <item quantity="other">%1$d כללים פעילים</item>
     </plurals>
     <string name="peer_geofences_sub">הגדר אזורי הגעה ועזיבה עבור %1$s</string>
@@ -450,7 +442,6 @@
     <plurals name="conv_delete_count">
         <item quantity="one">למחוק שיחה %1$d?</item>
         <item quantity="two">למחוק %1$d שיחות?</item>
-        <item quantity="many">למחוק %1$d שיחות?</item>
         <item quantity="other">למחוק %1$d שיחות?</item>
     </plurals>
     <string name="conv_delete_locally">מחק מקומית</string>
@@ -552,7 +543,6 @@
     <plurals name="history_pings_recorded">
         <item quantity="one">נקודה %1$d תועדה</item>
         <item quantity="two">%1$d נקודות תועדו</item>
-        <item quantity="many">%1$d נקודות תועדו</item>
         <item quantity="other">%1$d נקודות תועדו</item>
     </plurals>
     <string name="history_cd_dismiss">סגור</string>
@@ -577,7 +567,6 @@
     <plurals name="geo_delete_assigned">
         <item quantity="one">\"%1$s\" משויך לאיש קשר %2$d. מחיקתו תסיר גם את השיוכים האלה.</item>
         <item quantity="two">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
-        <item quantity="many">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
         <item quantity="other">\"%1$s\" משויך ל-%2$d אנשי קשר. מחיקתו תסיר גם את השיוכים האלה.</item>
     </plurals>
     <string name="geo_for_contact">גדרות גאוגרפיות עבור %1$s</string>
@@ -591,7 +580,6 @@
     <plurals name="geo_rules_count">
         <item quantity="one">כלל %1$d</item>
         <item quantity="two">%1$d כללים</item>
-        <item quantity="many">%1$d כללים</item>
         <item quantity="other">%1$d כללים</item>
     </plurals>
     <string name="geo_trigger_enter">כניסה</string>
@@ -671,7 +659,6 @@
     <plurals name="retention_days">
         <item quantity="one">יום %1$d</item>
         <item quantity="two">%1$d ימים</item>
-        <item quantity="many">%1$d ימים</item>
         <item quantity="other">%1$d ימים</item>
     </plurals>
 
@@ -774,13 +761,11 @@
     <plurals name="restore_contacts_count">
         <item quantity="one">איש קשר %1$d</item>
         <item quantity="two">%1$d אנשי קשר</item>
-        <item quantity="many">%1$d אנשי קשר</item>
         <item quantity="other">%1$d אנשי קשר</item>
     </plurals>
     <plurals name="restore_geofences_count">
         <item quantity="one">גדר גאוגרפית %1$d</item>
         <item quantity="two">%1$d גדרות גאוגרפיות</item>
-        <item quantity="many">%1$d גדרות גאוגרפיות</item>
         <item quantity="other">%1$d גדרות גאוגרפיות</item>
     </plurals>
     <string name="peer_role_change_sent">בקשת שינוי תפקיד נשלחה ל-%1$s</string>

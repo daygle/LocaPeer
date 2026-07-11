@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
 import com.locapeer.R
@@ -165,7 +166,7 @@ class GeofenceEngine @Inject constructor(
         // notification's extras, routing its tap to the wrong fence/person.
         val openMapIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            data = Uri.parse("locapeer-notif://geofence/${fence.id}/$personDeviceId/map")
+            data = "locapeer-notif://geofence/${fence.id}/$personDeviceId/map".toUri()
             putExtra("navigateTo", "map")
             putExtra("highlightPeer", personDeviceId)
         }
@@ -176,7 +177,7 @@ class GeofenceEngine @Inject constructor(
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            data = Uri.parse("locapeer-notif://geofence/${fence.id}/$personDeviceId/chat")
+            data = "locapeer-notif://geofence/${fence.id}/$personDeviceId/chat".toUri()
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
             putExtra("peerName", personName)

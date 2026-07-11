@@ -218,13 +218,13 @@ fun HistoryReportScreen(
                                 TextButton(onClick = { showStartTimePicker = true }) {
                                     val hour = (startTimeOffset / 3_600_000).toInt()
                                     val minute = ((startTimeOffset % 3_600_000) / 60_000).toInt()
-                                    Text(String.format("%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
+                                    Text(String.format(Locale.US, "%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
                                 }
                                 Text("-", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                 TextButton(onClick = { showEndTimePicker = true }) {
                                     val hour = (endTimeOffset / 3_600_000).toInt()
                                     val minute = ((endTimeOffset % 3_600_000) / 60_000).toInt()
-                                    Text(String.format("%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
+                                    Text(String.format(Locale.US, "%02d:%02d", hour, minute), style = MaterialTheme.typography.labelLarge)
                                 }
                             }
 
@@ -806,7 +806,7 @@ private fun DetailRow(label: String, value: String) {
 private fun motionDescription(motionState: String, speed: Float, bearing: Float, movingFormat: String): String {
     val activity = motionLabel(motionState)
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
-        String.format(movingFormat, activity, DisplayFormat.speedValue(speed), DisplayFormat.bearingToCardinal(bearing))
+        String.format(Locale.getDefault(), movingFormat, activity, DisplayFormat.speedValue(speed), DisplayFormat.bearingToCardinal(bearing))
     } else {
         activity
     }

@@ -227,10 +227,7 @@ class SettingsViewModel @Inject constructor(
             prefs.setHeartbeatEnabled(enabled)
             if (enabled) {
                 val intent = Intent(context, HeartbeatService::class.java)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                    context.startForegroundService(intent)
-                else
-                    context.startService(intent)
+                context.startForegroundService(intent)
             } else {
                 context.startService(Intent(context, HeartbeatService::class.java).apply {
                     action = ACTION_STOP

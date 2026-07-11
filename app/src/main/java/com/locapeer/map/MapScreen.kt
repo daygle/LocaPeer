@@ -408,22 +408,22 @@ private fun OsmdroidMapView(
     pins: List<PinData>,
     geofences: List<GeofenceOnMap>,
     userLocation: GeoPoint?,
-    myPinColor: String = "",
-    isSosActive: Boolean = false,
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     centerOnPin: GeoPoint?,
     isDark: Boolean,
-    mapStartZoom: Double = 16.0,
-    mapStartingPoint: String = "OWN_PIN",
-    mapFixedLat: Double = 0.0,
-    mapFixedLng: Double = 0.0,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    myPinColor: String = "",
+    isSosActive: Boolean = false,
+    mapStartZoom: Double = 16.0,
+    mapStartingPoint: String = "OWN_PIN",
+    mapFixedLat: Double = 0.0,
+    mapFixedLng: Double = 0.0
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     var mapViewRef by remember { mutableStateOf<MapView?>(null) }

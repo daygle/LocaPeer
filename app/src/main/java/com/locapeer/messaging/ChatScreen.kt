@@ -44,7 +44,7 @@ import com.locapeer.R
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import android.content.Intent
-import android.net.Uri
+import androidx.core.net.toUri
 import android.util.Patterns
 import java.util.Date
 
@@ -443,7 +443,7 @@ private fun LinkifiedText(
                 val url = text.substring(matcher.start(), matcher.end())
                 
                 val linkInteractionListener = { _: LinkAnnotation ->
-                    val uri = Uri.parse(url)
+                    val uri = url.toUri()
                     val mlat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
                     val mlon = uri.getQueryParameter("mlon")?.toDoubleOrNull()
                     

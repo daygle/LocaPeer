@@ -366,7 +366,6 @@ class MessagingViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        super.onCleared()
         myListeningPubkey?.let { pubkey ->
             relayClient.unsubscribe("lp-dm-${pubkey.take(16)}")
         }

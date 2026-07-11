@@ -32,11 +32,7 @@ class BootReceiver : BroadcastReceiver() {
                     
                     if (hasLocation) {
                         val serviceIntent = Intent(context, HeartbeatService::class.java)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            context.startForegroundService(serviceIntent)
-                        } else {
-                            context.startService(serviceIntent)
-                        }
+                        context.startForegroundService(serviceIntent)
                     }
                 }
             } finally {

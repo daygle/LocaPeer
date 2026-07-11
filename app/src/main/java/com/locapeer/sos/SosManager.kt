@@ -2,7 +2,6 @@ package com.locapeer.sos
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import com.locapeer.beacon.ACTION_SOS_OFF
 import com.locapeer.beacon.ACTION_SOS_ON
 import com.locapeer.beacon.HeartbeatService
@@ -54,10 +53,6 @@ class SosManager @Inject constructor(
     }
 
     private fun startService(intent: Intent) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(intent)
-        } else {
-            context.startService(intent)
-        }
+        context.startForegroundService(intent)
     }
 }
