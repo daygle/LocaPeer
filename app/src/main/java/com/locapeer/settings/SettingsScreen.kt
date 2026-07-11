@@ -35,11 +35,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.locapeer.R
+import com.locapeer.onboarding.PermissionManager
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.MapLocationPicker
@@ -101,6 +105,17 @@ fun SettingsScreen(
         rememberPermissionState(Manifest.permission.ACTIVITY_RECOGNITION) else null
     var motionAsked by remember { mutableStateOf(false) }
     var showMotionRationale by remember { mutableStateOf(false) }
+    var batteryOptimizationIgnored by remember { mutableStateOf(PermissionManager.isIgnoringBatteryOptimizations(context)) }
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                batteryOptimizationIgnored = PermissionManager.isIgnoringBatteryOptimizations(context)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
     var exportPassword by remember { mutableStateOf("") }
     val exportLauncher = rememberLauncherForActivityResult(
@@ -433,6 +448,11 @@ fun SettingsScreen(
                         subtitle = stringResource(R.string.settings_hide_low_accuracy_subtitle),
                         valueMeters = settings.historyMaxAccuracyMeters,
                         onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    BatteryOptimizationRow(
+                        ignored = batteryOptimizationIgnored,
+                        onClick = { PermissionManager.requestBatteryOptimizationExemption(context) }
                     )
                     if (motionPermission != null) {
                         HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
@@ -1132,6 +1152,36 @@ private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
             }
         },
         modifier = if (granted) Modifier else Modifier.clickable(onClick = onClick),
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+    )
+}
+
+/**
+ * Battery optimisation status row. Shows a green checkmark when the app is set to
+ * Unrestricted (i.e. exempted from battery optimisation); otherwise it is tappable to
+ * launch the system battery optimisation settings for this app.
+ */
+@Composable
+private fun BatteryOptimizationRow(ignored: Boolean, onClick: () -> Unit) {
+    ListItem(
+        headlineContent = { Text(stringResource(R.string.settings_battery_optimization)) },
+        supportingContent = {
+            Text(
+                if (ignored) stringResource(R.string.settings_battery_optimization_unrestricted)
+                else stringResource(R.string.settings_battery_optimization_restricted),
+                color = if (ignored) MaterialTheme.colorScheme.onSurfaceVariant
+                        else MaterialTheme.colorScheme.error
+            )
+        },
+        leadingContent = { Icon(Icons.Default.BatteryChargingFull, contentDescription = null) },
+        trailingContent = {
+            if (ignored) {
+                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            } else {
+                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+        modifier = if (ignored) Modifier else Modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
 }
