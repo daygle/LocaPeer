@@ -16,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "LocaPeerApplication"
@@ -47,29 +48,34 @@ class LocaPeerApplication : Application(), Configuration.Provider {
                 DisplayFormat.useImperialDistance = it.useImperialDistance
             }
             .launchIn(appScope)
-        org.osmdroid.config.Configuration.getInstance().apply {
-            userAgentValue = packageName
-            osmdroidBasePath = filesDir
-            osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
-            // Load configuration from shared preferences (recommended by OSMDroid)
-            load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
-        }
-        try {
-            heartbeatReceiver.start()
-            
-            val workManager = try {
-                WorkManager.getInstance(this)
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to get WorkManager instance", e)
-                null
-            }
 
-            workManager?.let { wm ->
-                MissedHeartbeatWorker.schedule(wm)
-                RetentionEnforcementWorker.schedule(wm)
+        // Offload heavy initialization (disk I/O, networking setup, WorkManager) to background
+        appScope.launch(Dispatchers.IO) {
+            try {
+                org.osmdroid.config.Configuration.getInstance().apply {
+                    userAgentValue = packageName
+                    osmdroidBasePath = filesDir
+                    osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
+                    // Load configuration from shared preferences (recommended by OSMDroid)
+                    load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
+                }
+
+                heartbeatReceiver.start()
+
+                val workManager = try {
+                    WorkManager.getInstance(this@LocaPeerApplication)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to get WorkManager instance", e)
+                    null
+                }
+
+                workManager?.let { wm ->
+                    MissedHeartbeatWorker.schedule(wm)
+                    RetentionEnforcementWorker.schedule(wm)
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Background initialization failure", e)
             }
-        } catch (e: Exception) {
-            Log.e(TAG, "Critical failure during Application.onCreate", e)
         }
     }
 }
