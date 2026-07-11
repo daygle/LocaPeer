@@ -6,7 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
+import androidx.core.net.toUri
 import android.os.Build
 import android.os.SystemClock
 import android.util.Log
@@ -73,7 +73,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 // (Intent.filterEquals), so without it a requestCode hash collision
                 // between two peers would silently share one PendingIntent.
                 val intent = Intent(applicationContext, MainActivity::class.java)
-                    .setData(Uri.parse("locapeer-notif://missed/${peer.deviceId}"))
+                    .setData("locapeer-notif://missed/${peer.deviceId}".toUri())
                 val pi = PendingIntent.getActivity(
                     applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
                 )

@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId = "com.locapeer"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = providers.gradleProperty("appVersionCode").getOrElse("1").toInt()
         versionName = providers.gradleProperty("appVersionName").getOrElse("1.0")
 

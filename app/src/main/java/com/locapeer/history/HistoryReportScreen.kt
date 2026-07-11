@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.graphics.toColorInt
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -439,8 +440,12 @@ private fun HistoryMapTab(
                             android.view.MotionEvent.ACTION_MOVE ->
                                 v.parent?.requestDisallowInterceptTouchEvent(true)
                             android.view.MotionEvent.ACTION_UP,
-                            android.view.MotionEvent.ACTION_CANCEL ->
+                            android.view.MotionEvent.ACTION_CANCEL -> {
                                 v.parent?.requestDisallowInterceptTouchEvent(false)
+                                if (event.action == android.view.MotionEvent.ACTION_UP) {
+                                    v.performClick()
+                                }
+                            }
                         }
                         false
                     }
@@ -460,7 +465,7 @@ private fun HistoryMapTab(
 
                 val pinColor = heartbeats.last().pinColor
                 val lineArgb = if (pinColor.isNotEmpty())
-                    android.graphics.Color.parseColor(pinColor).let {
+                    pinColor.toColorInt().let {
                         android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
                     }
                 else android.graphics.Color.argb(200, 66, 133, 244)

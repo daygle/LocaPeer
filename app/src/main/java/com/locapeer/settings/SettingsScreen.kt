@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.graphics.toColorInt
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
@@ -117,7 +118,7 @@ fun SettingsScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     val avatarColor = if (settings.pinColor.isNotEmpty())
-                        Color(android.graphics.Color.parseColor(settings.pinColor))
+                        Color(settings.pinColor.toColorInt())
                     else MaterialTheme.colorScheme.primaryContainer
                     Box(
                         modifier = Modifier
@@ -359,7 +360,7 @@ fun SettingsScreen(
                                         horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
                                         rowColors.forEach { hex ->
-                                            val color = Color(android.graphics.Color.parseColor(hex))
+                                            val color = Color(hex.toColorInt())
                                             val isSelected = hex == settings.pinColor
                                             Box(
                                                 modifier = Modifier
