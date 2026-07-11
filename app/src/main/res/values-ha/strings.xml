@@ -61,7 +61,7 @@
     <string name="settings_section_map">Taswira</string>
     <string name="settings_section_battery_performance">Baturi &amp; Aiki</string>
     <string name="settings_section_units_display">Raka\'a &amp; Nunawa</string>
-    <string name="settings_section_retention">Riƙewa (Wannan Na'urar)</string>
+    <string name="settings_section_retention">Riƙewa (Wannan Na\'urar)</string>
     <string name="settings_section_appearance">Kamanni</string>
     <string name="settings_section_backup_keys">Hifadi &amp; Maɓalla</string>
     <string name="settings_section_about">Game da</string>
@@ -88,7 +88,7 @@
     <string name="settings_my_location_history">Tarihin Wuri</string>
     <string name="settings_my_location_history_subtitle">Bincika lokutan wurarenku</string>
     <string name="settings_lookup_addresses">Nemo Adireshi</string>
-    <string name="settings_lookup_addresses_subtitle">Nuna adireshin tituna don tarihin wurare da pini na taswira, sannan a nemo ta adireshi lokacin sanya geofences. Yana aika waɗannan haɗin gwiwar ko bincikenku zuwa sabis na geocoding na na'urarku (yawanci Google).</string>
+    <string name="settings_lookup_addresses_subtitle">Nuna adireshin tituna don tarihin wurare da pini na taswira, sannan a nemo ta adireshi lokacin sanya geofences. Yana aika waɗannan haɗin gwiwar ko bincikenku zuwa sabis na geocoding na na\'urarku (yawanci Google).</string>
 
     <!-- Tsaro -->
     <string name="settings_supervision_active">Sa Ido Na Aiki</string>
@@ -123,7 +123,7 @@
     <string name="settings_low_battery" formatted="false">Baturi Ya Yi Ƙasa (&lt; 20%)</string>
     <string name="settings_minutes_short">Minti %1$d</string>
     <string name="settings_motion_detection">Gano Motsi</string>
-    <string name="settings_motion_detection_on">An kunna - yana tace nau'in motsin ku (tafiya, tuki) a tarihi</string>
+    <string name="settings_motion_detection_on">An kunna - yana tace nau\'in motsin ku (tafiya, tuki) a tarihi</string>
     <string name="settings_motion_detection_off">A kashe - ba da damar shiga ayyukan jiki don ingantaccen lakabin motsi</string>
     <string name="settings_enable_motion_title">Kunna gano motsi</string>
     <string name="settings_enable_motion_message">Izinin ayyukan jiki yana bawa LocaPeer damar bambance tafiya, tuki da tsayawa cak mafi inganci a cikin tarihin ku. A halin yanzu yana kashe - zaku iya sake kunna shi daga saitunan tsarin.</string>
@@ -165,10 +165,10 @@
 
     <!-- Riƙewa -->
     <string name="settings_retention_location">Bayanin Wuri</string>
-    <string name="settings_retention_location_subtitle">Tsayon lokacin da za a riƙe bayanan wurin lambobi a cikin na'urar</string>
+    <string name="settings_retention_location_subtitle">Tsayon lokacin da za a riƙe bayanan wurin lambobi a cikin na\'urar</string>
     <string name="settings_clear_all_location">Share Dukkan Bayanan Wuri</string>
     <string name="settings_retention_messages">Saƙonni</string>
-    <string name="settings_retention_messages_subtitle">Tsayon lokacin da za a riƙe saƙonnin da aka karɓa a cikin na'urar</string>
+    <string name="settings_retention_messages_subtitle">Tsayon lokacin da za a riƙe saƙonnin da aka karɓa a cikin na\'urar</string>
     <string name="settings_clear_all_messages">Share Dukkan Saƙonni</string>
 
     <!-- Kamanni -->
@@ -177,7 +177,7 @@
     <string name="settings_start_page">Shafin Farko</string>
     <string name="settings_language">Harshe</string>
     <string name="settings_language_title">Harshen App</string>
-    <string name="settings_language_system">Harshen na'ura</string>
+    <string name="settings_language_system">Harshen na\'ura</string>
 
     <!-- Hifadi &amp; Maɓalla -->
     <string name="settings_export_backup">Fitar Da Hifadi</string>
@@ -213,7 +213,7 @@
     <string name="settings_choose_file_location">Zabi wurin fayil</string>
     <string name="settings_not_in_backup">Ba ya cikin wannan hifadin</string>
     <string name="settings_enable_supervised_title">Kunna Yanayin Sa Ido</string>
-    <string name="settings_enable_supervised_message">Zabi lamba wacce za ta zama mai sa ido. Dole ne su amince da shiga saituna daga na'urarsu.</string>
+    <string name="settings_enable_supervised_message">Zabi lamba wacce za ta zama mai sa ido. Dole ne su amince da shiga saituna daga na\'urarsu.</string>
     <string name="settings_no_peers_found">Ba a sami lamba ba. Da farko a ƙara lamba ta hanyar duba lambar QR ta gayyatarsu.</string>
     <string name="settings_disable_supervised_title">Kashe Yanayin Sa Ido?</string>
     <string name="settings_disable_supervised_message">Saituna za su kasance masu sauƙin shiga ba tare da amincewar mai sa ido ba.</string>
@@ -251,31 +251,31 @@
     <string name="contacts_view_sharing_settings">Saitunan Rabawa</string>
     <string name="contacts_view_location_history">Tarihin Wuri</string>
     <string name="contacts_rename_contact">Canza Sunan Lamba</string>
-    <string name="contacts_on_contact_device">A Kan Na'urar Lamba</string>
+    <string name="contacts_on_contact_device">A Kan Na\'urar Lamba</string>
     <string name="contacts_delete_my_messages_title">Share Saƙonnina</string>
     <string name="contacts_delete_locations_title">Share Wuraren Da Aka Raba</string>
     <string name="contacts_remove_contact_title">Ondoa Anwani</string>
     <string name="contacts_leave_title">Share Lamba Da Bayanai</string>
     <string name="contacts_rename_title">Canza Sunan Lamba</string>
-    <string name="contacts_remove_contact_body">Shin kuna cire %1$s daga lambobinku? Tarihinsa na wuri kuma za a share shi a cikin na'urar.</string>
-    <string name="contacts_leave_body">Wannan zai cire ku daga lambobin %1$s kuma zai share dukkan saƙonku da bayanan wurinku daga na'urarsa. Haka kuma ba za ku sake samun damar shiga wurinsa ba.</string>
-    <string name="contacts_delete_my_messages_body">Wannan zai share dukkan saƙon da kuka aika daga na'urar %1$s. Wannan ba za a iya soke shi ba.</string>
-    <string name="contacts_delete_locations_body">Wannan zai share dukkan bayanan wurin da kuka raba daga na'urar %1$s. Wannan ba za a iya soke shi ba.</string>
+    <string name="contacts_remove_contact_body">Shin kuna cire %1$s daga lambobinku? Tarihinsa na wuri kuma za a share shi a cikin na\'urar.</string>
+    <string name="contacts_leave_body">Wannan zai cire ku daga lambobin %1$s kuma zai share dukkan saƙonku da bayanan wurinku daga na\'urarsa. Haka kuma ba za ku sake samun damar shiga wurinsa ba.</string>
+    <string name="contacts_delete_my_messages_body">Wannan zai share dukkan saƙon da kuka aika daga na\'urar %1$s. Wannan ba za a iya soke shi ba.</string>
+    <string name="contacts_delete_locations_body">Wannan zai share dukkan bayanan wurin da kuka raba daga na\'urar %1$s. Wannan ba za a iya soke shi ba.</string>
     <plurals name="contacts_bulk_remove_title">
         <item quantity="one">Cire Lamba</item>
         <item quantity="other">Cire Lambobi %1$d</item>
     </plurals>
     <plurals name="contacts_bulk_remove_body">
-        <item quantity="one">Cire wannan lamba? Tarihinsa na wuri kuma za a share shi a cikin na'urar.</item>
-        <item quantity="other">Cire lambobi %1$d? Tarihinsu na wuri kuma za a share su a cikin na'urar.</item>
+        <item quantity="one">Cire wannan lamba? Tarihinsa na wuri kuma za a share shi a cikin na\'urar.</item>
+        <item quantity="other">Cire lambobi %1$d? Tarihinsu na wuri kuma za a share su a cikin na\'urar.</item>
     </plurals>
     <plurals name="contacts_bulk_delete_messages_body">
-        <item quantity="one">Share dukkan saƙon da kuka aika daga na'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
-        <item quantity="other">Share dukkan saƙon da kuka aika daga na'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="one">Share dukkan saƙon da kuka aika daga na\'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="other">Share dukkan saƙon da kuka aika daga na\'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
     </plurals>
     <plurals name="contacts_bulk_delete_locations_body">
-        <item quantity="one">Share dukkan tarihin wurin da kuka raba daga na'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
-        <item quantity="other">Share dukkan tarihin wurin da kuka raba daga na'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="one">Share dukkan tarihin wurin da kuka raba daga na\'urar wannan lamba daga nesa? Wannan ba za a iya soke shi ba.</item>
+        <item quantity="other">Share dukkan tarihin wurin da kuka raba daga na\'urorin lambobi %1$d daga nesa? Wannan ba za a iya soke shi ba.</item>
     </plurals>
 
     <string name="common_continue">Ci gaba</string>
@@ -286,16 +286,16 @@
     <string name="onboarding_private_key_hex">Maɓallin sirri (hex)</string>
     <string name="onboarding_tagline">Raba wurin zama na sirri tare da lambobi.\nBabu asusu. Babu manyan sabobin.</string>
     <string name="onboarding_feature_e2e_title">Rufaffen Lokaci Zuwa Lokaci</string>
-    <string name="onboarding_feature_e2e_subtitle">Wurin ku yana rufaffen a kan na'ura</string>
+    <string name="onboarding_feature_e2e_subtitle">Wurin ku yana rufaffen a kan na\'ura</string>
     <string name="onboarding_feature_servers_title">Babu manyan sabobin</string>
     <string name="onboarding_feature_servers_subtitle">Yana amfani da relay Nostr masu buɗe ido a matsayin sufuri mai aminci - bayanan ku suna kasancewa a rufaffen kuma na sirri</string>
     <string name="onboarding_feature_phone_title">Yana Zama A Wayarku</string>
-    <string name="onboarding_feature_phone_subtitle">Cikakken tarihin wurin ku yana zama a kan na'urar ku. Matsayinku na yanzu kawai ake raba wa lambobi da aka zaɓa</string>
+    <string name="onboarding_feature_phone_subtitle">Cikakken tarihin wurin ku yana zama a kan na\'urar ku. Matsayinku na yanzu kawai ake raba wa lambobi da aka zaɓa</string>
     <string name="onboarding_name_prompt">Yaya ya kamata lambobinku su kira ku?</string>
     <string name="onboarding_name_placeholder">misali, Mama, Baba, Alice…</string>
     <string name="onboarding_get_started">Fara</string>
     <string name="onboarding_restore_from_backup">Mayar Daga Hifadi</string>
-    <string name="onboarding_key_note">Maɓallin sirrin ku ana samar da shi ne a cikin na'urar kuma ba ya barin wannan na'urar.</string>
+    <string name="onboarding_key_note">Maɓallin sirrin ku ana samar da shi ne a cikin na\'urar kuma ba ya barin wannan na\'urar.</string>
     <string name="onboarding_permissions_title">Izini</string>
     <string name="onboarding_permissions_desc">LocaPeer tana buƙatar shiga wuri don raba matsayinku, shiga kamara don duba lambobin gayyata, da shiga sanarwa don matsayin bango. Shiga ayyukan jiki na zaɓi ne - yana taimakawa lakabin motsin ku (tafiya, tuki) mafi inganci.</string>
     <string name="onboarding_before_ask_title">Kafin mu tambaya</string>
@@ -347,7 +347,7 @@
     <string name="invite_qr_cd">Lambar QR taka</string>
     <string name="invite_qr_error">Kuskure lokacin ƙirƙirar QR</string>
     <string name="invite_share_link">Raba Hanyar Gayyata</string>
-    <string name="invite_encryption_note">Za a rufa wurin ku ne musamman don na'urar mai dubawa.</string>
+    <string name="invite_encryption_note">Za a rufa wurin ku ne musamman don na\'urar mai dubawa.</string>
     <string name="invite_camera_required_title">Ana Buƙatar Damar Kamara</string>
     <string name="invite_camera_required_message">Ba da izinin kamara don duba lambar QR.</string>
     <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
@@ -417,7 +417,7 @@
         <item quantity="other">Dokoki %1$d suna aiki</item>
     </plurals>
     <string name="peer_geofences_sub">Saita wuraren isowa da tashi don %1$s</string>
-    <string name="peer_supervise">Sa Ido Kan Wannan Na'urar</string>
+    <string name="peer_supervise">Sa Ido Kan Wannan Na\'urar</string>
     <string name="peer_supervise_on">Kuna karɓa da amincewa da buƙatun buɗewa daga %1$s</string>
     <string name="peer_supervise_off">Bada izinin %1$s ya aiko muku da buƙatun buɗewa a yanayin sa ido</string>
     <string name="peer_messaging_sub">Kunna/kashe saƙonnin hira daga %1$s</string>
@@ -439,11 +439,11 @@
         <item quantity="one">Share hira %1$d?</item>
         <item quantity="other">Share hirarraki %1$d?</item>
     </plurals>
-    <string name="conv_delete_locally">Share A Cikin Na'urar</string>
-    <string name="conv_delete_locally_sub">Yana cire hira daga na'urarku kawai.</string>
-    <string name="conv_delete_both">Share A Cikin Na'urar/Daga Lamba</string>
-    <string name="conv_bulk_delete_both_sub">Yana share hira a cikin na'ura da kuma daga lambarku.</string>
-    <string name="conv_delete_both_sub">Yana share hira a cikin na'ura kuma yana aika buƙatar sharewa zuwa na'urar lamba don hira.</string>
+    <string name="conv_delete_locally">Share A Cikin Na\'urar</string>
+    <string name="conv_delete_locally_sub">Yana cire hira daga na\'urarku kawai.</string>
+    <string name="conv_delete_both">Share A Cikin Na\'urar/Daga Lamba</string>
+    <string name="conv_bulk_delete_both_sub">Yana share hira a cikin na\'ura da kuma daga lambarku.</string>
+    <string name="conv_delete_both_sub">Yana share hira a cikin na\'ura kuma yana aika buƙatar sharewa zuwa na\'urar lamba don hira.</string>
     <string name="conv_cd_exit_selection">Fita daga zaɓi</string>
     <string name="conv_cd_select_all">Zaɓi Duka</string>
     <string name="conv_cd_new_message">Sabuwar saƙo</string>
@@ -471,9 +471,9 @@
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
     <string name="chat_clear_title">Share tarihin hira?</string>
     <string name="chat_clear_message">Kedu yadda kuke son share wannan hira da %1$s?</string>
-    <string name="chat_clear_locally">Share A Cikin Na'urar</string>
-    <string name="chat_clear_both">Share A Cikin Na'urar/Daga Lamba</string>
-    <string name="chat_clear_both_sub">Yana share hira a cikin na'ura kuma yana aika buƙatar sharewa zuwa ga %1$s don saƙon da kuka aika.</string>
+    <string name="chat_clear_locally">Share A Cikin Na\'urar</string>
+    <string name="chat_clear_both">Share A Cikin Na\'urar/Daga Lamba</string>
+    <string name="chat_clear_both_sub">Yana share hira a cikin na\'ura kuma yana aika buƙatar sharewa zuwa ga %1$s don saƙon da kuka aika.</string>
     <string name="chat_cd_options">Zaɓuɓɓuka</string>
     <string name="chat_clear_history_menu">Share Tarihin Hira</string>
     <string name="chat_typing">%1$s na rubutu…</string>
@@ -481,8 +481,8 @@
     <string name="chat_delete_msg_title">Share saƙo?</string>
     <string name="chat_delete_msg_message">Kedu yadda kuke son share wannan saƙon?</string>
     <string name="chat_delete_from_contact">Share daga lamba</string>
-    <string name="chat_delete_from_contact_sub">Yana share hira daga na'urar lamba.</string>
-    <string name="chat_delete_both_sub">Yana cire hira a cikin na'ura kuma yana share ta kai tsaye daga na'urar lamba.</string>
+    <string name="chat_delete_from_contact_sub">Yana share hira daga na\'urar lamba.</string>
+    <string name="chat_delete_both_sub">Yana cire hira a cikin na\'ura kuma yana share ta kai tsaye daga na\'urar lamba.</string>
     <string name="chat_cd_share_location">Raba Wuri</string>
     <string name="chat_input_placeholder">Saƙo…</string>
     <string name="chat_cd_send">Aika</string>
@@ -496,7 +496,7 @@
     <string name="map_sos_deactivate_msg">Wannan zai dakatar da yada wurin zama mai mahimmanci ga lambobinku na gaggawa.</string>
     <string name="map_activate">Kunna</string>
     <string name="map_deactivate">Kashe</string>
-    <string name="map_cd_style">Nau'in Taswira</string>
+    <string name="map_cd_style">Nau\'in Taswira</string>
     <string name="map_cd_show_geofences">Nuna geofences</string>
     <string name="map_cd_hide_geofences">Ɓoye geofences</string>
     <string name="map_cd_follow">Bi ni</string>
@@ -638,7 +638,7 @@
     <string name="schedule_overnight">Dukkan dare: na aiki daga %1$s zuwa %2$s rana ta gaba</string>
 
     <!-- ── Supervision gate ───────────────────────────────────────────────── -->
-    <string name="gate_title">Ana Sa Ido Kan Na'urar</string>
+    <string name="gate_title">Ana Sa Ido Kan Na\'urar</string>
     <string name="gate_message">Amincewar mai sa ido ana buƙata don shiga saituna.</string>
     <string name="gate_request_access">Nemi Samun Dama</string>
     <string name="gate_waiting">Ana jiran amincewar mai sa ido…</string>
@@ -683,7 +683,7 @@
     <string name="notif_sos_title">SOS daga %1$s!</string>
     <string name="notif_sos_text">%1$s ya kunna SOS a (%2$s, %3$s)</string>
     <string name="notif_supervisor_request_title">%1$s yana son ya zama mai sa idon ku</string>
-    <string name="notif_supervisor_request_text">Amince don ba da damar buƙatun amincewar buɗewa daga wannan na'urar</string>
+    <string name="notif_supervisor_request_text">Amince don ba da damar buƙatun amincewar buɗewa daga wannan na\'urar</string>
     <string name="notif_supervisor_request_big">Amince don ba da damar %1$s ya aiko muku da buƙatun amincewar buɗewa lokacin da yanayin sa ido yake aiki.</string>
     <string name="notif_supervised_active_title">Yanayin sa ido na aiki</string>
     <string name="notif_supervised_active_text">Mai sa idon ku ya tabbatar - yanayin sa ido ya riga ya riga ya riga ya tashi</string>
@@ -720,7 +720,7 @@
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Ajụrụ arịrịọ ojúlùmọ̀ sitere na %1$s</string>
-    <string name="toast_now_supervising">Kun fara sa ido kan na'urar %1$s yanzu</string>
+    <string name="toast_now_supervising">Kun fara sa ido kan na\'urar %1$s yanzu</string>
     <string name="toast_declined_supervision">Ajụrụ arịrịọ nlekọta sitere na %1$s</string>
 
     <!-- ── Programmatic strings (built in ViewModels/helpers) ─────────────── -->

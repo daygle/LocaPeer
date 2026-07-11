@@ -135,12 +135,12 @@
     <!-- ਪਰਮਿਸ਼ਨਾਂ -->
     <string name="settings_permissions">ਪਰਮਿਸ਼ਨਾਂ</string>
     <string name="settings_permissions_subtitle">ਟਿਕਾਣਾ, ਕੈਮਰਾ ਅਤੇ ਹੋਰ ਚੀਜ਼ਾਂ ਤੱਕ ਐਪ ਪਹੁੰਚ ਦੀ ਸਮੀਖਿਆ ਕਰੋ ਅਤੇ ਸਹੀ ਕਰੋ</string>
-    <string name="permissions_intro">ਆਪਣਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨ, ਸੱਦਿਆਂ ਨੂੰ ਸਕੈਨ ਕਰਨ ਅਤੇ ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਚੱਲਦੇ ਰਹਿਣ ਲਈ LocaPeer ਨੂੰ ਇਹਨਾਂ ਪਰਮਿਸ਼ਨਾਂ ਦੀ ਲੋੜ ਹੈ। ਕਿਸੇ ਵੀ ਅਜਿਹੀ ਪਰਮਿਸ਼ਨ 'ਤੇ ਟੈਪ ਕਰੋ ਜੋ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ ਤਾਂ ਜੋ ਇਸਨੂੰ ਸਹੀ ਕੀਤਾ ਜਾ ਸਕੇ।</string>
+    <string name="permissions_intro">ਆਪਣਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨ, ਸੱਦਿਆਂ ਨੂੰ ਸਕੈਨ ਕਰਨ ਅਤੇ ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਚੱਲਦੇ ਰਹਿਣ ਲਈ LocaPeer ਨੂੰ ਇਹਨਾਂ ਪਰਮਿਸ਼ਨਾਂ ਦੀ ਲੋੜ ਹੈ। ਕਿਸੇ ਵੀ ਅਜਿਹੀ ਪਰਮਿਸ਼ਨ \'ਤੇ ਟੈਪ ਕਰੋ ਜੋ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ ਤਾਂ ਜੋ ਇਸਨੂੰ ਸਹੀ ਕੀਤਾ ਜਾ ਸਕੇ।</string>
     <string name="perm_location_title">ਟਿਕਾਣਾ</string>
     <string name="perm_location_granted">ਦਿੱਤੀ ਗਈ — ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
     <string name="perm_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਟਿਕਾਣਾ ਪਹੁੰਚ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="perm_background_location_title">ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣਾ</string>
-    <string name="perm_background_location_granted">ਦਿੱਤੀ ਗਈ — ਐਪ ਬੰਦ ਹੋਣ 'ਤੇ ਵੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਾਰੀ ਰਹਿੰਦਾ ਹੈ</string>
+    <string name="perm_background_location_granted">ਦਿੱਤੀ ਗਈ — ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਵੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਾਰੀ ਰਹਿੰਦਾ ਹੈ</string>
     <string name="perm_background_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਸੈਟਿੰਗਾਂ ਵਿੱਚ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣਨ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="perm_camera_title">ਕੈਮਰਾ</string>
     <string name="perm_camera_granted">ਦਿੱਤੀ ਗਈ — ਸੱਦੇ ਦੇ QR ਕੋਡ ਸਕੈਨ ਕਰਨ ਲਈ ਵਰਤੀ ਜਾਂਦੀ ਹੈ</string>
@@ -226,7 +226,7 @@
 
     <!-- ਸਮੱਗਰੀ ਵਰਣਨ (ਸਾਂਝੇ ਕੀਤੇ ਗਏ) -->
     <string name="cd_message">ਸੁਨੇਹਾ</string>
-    <string name="cd_show_on_map">ਨਕਸ਼ੇ 'ਤੇ ਦਿਖਾਓ</string>
+    <string name="cd_show_on_map">ਨਕਸ਼ੇ \'ਤੇ ਦਿਖਾਓ</string>
     <string name="cd_more_options">ਹੋਰ ਵਿਕਲਪ</string>
 
     <!-- ── ਸੰਪਰਕ ਸਕ੍ਰੀਨ ────────────────────────────────────────────────── -->
@@ -286,11 +286,11 @@
     <string name="onboarding_private_key_hex">ਪ੍ਰਾਈਵੇਟ ਕੀ (hex)</string>
     <string name="onboarding_tagline">ਸੰਪਰਕਾਂ ਨਾਲ ਨਿੱਜੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ।\nਕੋਈ ਖਾਤਾ ਨਹੀਂ। ਕੋਈ ਮਲਕੀਅਤ ਵਾਲੇ ਸਰਵਰ ਨਹੀਂ।</string>
     <string name="onboarding_feature_e2e_title">ਐਂਡ-ਟੂ-ਐਂਡ ਏਨਕ੍ਰਿਪਟਡ</string>
-    <string name="onboarding_feature_e2e_subtitle">ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਡਿਵਾਈਸ 'ਤੇ ਹੀ ਏਨਕ੍ਰਿਪਟ ਕੀਤਾ ਗਿਆ ਹੈ</string>
+    <string name="onboarding_feature_e2e_subtitle">ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਡਿਵਾਈਸ \'ਤੇ ਹੀ ਏਨਕ੍ਰਿਪਟ ਕੀਤਾ ਗਿਆ ਹੈ</string>
     <string name="onboarding_feature_servers_title">ਕੋਈ ਮਲਕੀਅਤ ਵਾਲੇ ਸਰਵਰ ਨਹੀਂ</string>
     <string name="onboarding_feature_servers_subtitle">ਸੁਰੱਖਿਅਤ ਆਵਾਜਾਈ ਲਈ ਓਪਨ Nostr ਰੀਲੇਅ ਦੀ ਵਰਤੋਂ ਕਰਦਾ ਹੈ - ਤੁਹਾਡਾ ਡਾਟਾ ਏਨਕ੍ਰਿਪਟਡ ਅਤੇ ਨਿੱਜੀ ਰਹਿੰਦਾ ਹੈ</string>
-    <string name="onboarding_feature_phone_title">ਤੁਹਾਡੇ ਫ਼ੋਨ 'ਤੇ ਹੀ ਰਹਿੰਦਾ ਹੈ</string>
-    <string name="onboarding_feature_phone_subtitle">ਤੁਹਾਡਾ ਪੂਰਾ ਟਿਕਾਣਾ ਇਤਿਹਾਸ ਤੁਹਾਡੀ ਡਿਵਾਈਸ 'ਤੇ ਹੀ ਰਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਮੌਜੂਦਾ ਸਥਿਤੀ ਸਿਰਫ ਚੁਣੇ ਹੋਏ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝੀ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
+    <string name="onboarding_feature_phone_title">ਤੁਹਾਡੇ ਫ਼ੋਨ \'ਤੇ ਹੀ ਰਹਿੰਦਾ ਹੈ</string>
+    <string name="onboarding_feature_phone_subtitle">ਤੁਹਾਡਾ ਪੂਰਾ ਟਿਕਾਣਾ ਇਤਿਹਾਸ ਤੁਹਾਡੀ ਡਿਵਾਈਸ \'ਤੇ ਹੀ ਰਹਿੰਦਾ ਹੈ। ਤੁਹਾਡੀ ਮੌਜੂਦਾ ਸਥਿਤੀ ਸਿਰਫ ਚੁਣੇ ਹੋਏ ਸੰਪਰਕਾਂ ਨਾਲ ਸਾਂਝੀ ਕੀਤੀ ਜਾਂਦੀ ਹੈ</string>
     <string name="onboarding_name_prompt">ਤੁਹਾਡੇ ਸੰਪਰਕ ਤੁਹਾਨੂੰ ਕੀ ਕਹਿ ਕੇ ਬੁਲਾਉਣਗੇ?</string>
     <string name="onboarding_name_placeholder">ਉਦਾਹਰਨ ਲਈ ਮੰਮੀ, ਪਾਪਾ, ਅਮਨ…</string>
     <string name="onboarding_get_started">ਸ਼ੁਰੂ ਕਰੋ</string>
@@ -306,8 +306,8 @@
     <string name="onboarding_before_ask_activity">• ਸਰੀਰਕ ਗਤੀਵਿਧੀ - ਵਿਕਲਪਿਕ। ਇਹ LocaPeer ਨੂੰ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਪੈਦਲ ਚੱਲਣ, ਡਰਾਈਵਿੰਗ ਕਰਨ ਅਤੇ ਸਥਿਰ ਰਹਿਣ ਦੇ ਵਿਚਕਾਰ ਵਧੇਰੇ ਸਹੀ ਢੰਗ ਨਾਲ ਫਰਕ ਕਰਨ ਦਿੰਦੀ ਹੈ। ਤੁਸੀਂ ਇਸਨੂੰ ਛੱਡ ਸਕਦੇ ਹੋ ਅਤੇ ਬਾਅਦ ਵਿੱਚ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਚਾਲੂ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <string name="onboarding_grant_permissions">ਪਰਮਿਸ਼ਨਾਂ ਦਿਓ</string>
     <string name="onboarding_bg_location_title">ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣਾ</string>
-    <string name="onboarding_bg_location_desc">ਐਪ ਬੰਦ ਹੋਣ 'ਤੇ ਵੀ ਆਪਣੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਰੱਖਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਅਗਲੀ ਸਕ੍ਰੀਨ 'ਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
-    <string name="onboarding_bg_location_error">ਐਪ ਬੰਦ ਹੋਣ 'ਤੇ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣੇ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਅਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
+    <string name="onboarding_bg_location_desc">ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਵੀ ਆਪਣੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਰੱਖਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਅਗਲੀ ਸਕ੍ਰੀਨ \'ਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
+    <string name="onboarding_bg_location_error">ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣੇ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਅਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
     <string name="onboarding_configure_location">ਟਿਕਾਣਾ ਕੌਂਫਿਗਰ ਕਰੋ</string>
     <string name="onboarding_battery_title">ਬੈਟਰੀ</string>
     <string name="onboarding_battery_desc">ਬੈਟਰੀ ਬਚਾਉਣ ਲਈ ਐਂਡਰਾਇਡ LocaPeer ਨੂੰ ਰੋਕ ਸਕਦਾ ਹੈ। ਭਰੋਸੇਯੋਗ ਅੱਪਡੇਟ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ LocaPeer ਨੂੰ ਅਨੁਕੂਲਨ (optimizations) ਤੋਂ ਬਾਹਰ ਰੱਖੋ।</string>
@@ -404,7 +404,7 @@
     </plurals>
     <string name="peer_section_alerts">ਅਲਰਟ ਅਤੇ ਨਿਗਰਾਨੀ</string>
     <string name="peer_sos_contact">SOS ਸੰਪਰਕ</string>
-    <string name="peer_sos_sub">ਸਾਂਝਾਕਰਨ ਰੁਕਿਆ ਹੋਣ 'ਤੇ ਵੀ ਆਪਣੇ ਐਮਰਜੈਂਸੀ ਅਲਰਟ ਪ੍ਰਾਪਤ ਕਰੋ</string>
+    <string name="peer_sos_sub">ਸਾਂਝਾਕਰਨ ਰੁਕਿਆ ਹੋਣ \'ਤੇ ਵੀ ਆਪਣੇ ਐਮਰਜੈਂਸੀ ਅਲਰਟ ਪ੍ਰਾਪਤ ਕਰੋ</string>
     <string name="peer_missed_alert">ਮਿਸਡ ਲੋਕੇਸ਼ਨ ਅਲਰਟ</string>
     <string name="peer_missed_on">ਜੇਕਰ %1$s ਆਪਣਾ ਟਿਕਾਣਾ ਦੱਸਣਾ ਬੰਦ ਕਰ ਦਿੰਦਾ ਹੈ ਤਾਂ ਮੈਨੂੰ ਸੂਚਿਤ ਕਰੋ</string>
     <string name="peer_requires_access">%1$s ਦੇ ਟਿਕਾਣੇ ਤੱਕ ਪਹੁੰਚ ਦੀ ਲੋੜ ਹੈ</string>
@@ -443,7 +443,7 @@
     <string name="conv_delete_locally_sub">ਸਿਰਫ ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਤੋਂ ਸੰਵਾਦ ਹਟਾਉਂਦਾ ਹੈ।</string>
     <string name="conv_delete_both">ਦੋਵਾਂ ਥਾਵਾਂ ਤੋਂ ਮਿਟਾਓ</string>
     <string name="conv_bulk_delete_both_sub">ਤੁਹਾਡੀ ਡਿਵਾਈਸ ਅਤੇ ਤੁਹਾਡੇ ਸੰਪਰਕ ਦੀ ਡਿਵਾਈਸ ਤੋਂ ਸੰਵਾਦ ਮਿਟਾਉਂਦਾ ਹੈ।</string>
-    <string name="conv_delete_both_sub">ਸੰਵਾਦ ਨੂੰ ਸਥਾਨਕ ਤੌਰ ਤੇ ਮਿਟਾਉਂਦਾ ਹੈ ਅਤੇ ਸੰਪਰਕ ਦੀ ਡਿਵਾਈਸ 'ਤੇ ਸੰਵਾਦ ਮਿਟਾਉਣ ਦੀ ਬੇਨਤੀ ਭੇਜਦਾ ਹੈ।</string>
+    <string name="conv_delete_both_sub">ਸੰਵਾਦ ਨੂੰ ਸਥਾਨਕ ਤੌਰ ਤੇ ਮਿਟਾਉਂਦਾ ਹੈ ਅਤੇ ਸੰਪਰਕ ਦੀ ਡਿਵਾਈਸ \'ਤੇ ਸੰਵਾਦ ਮਿਟਾਉਣ ਦੀ ਬੇਨਤੀ ਭੇਜਦਾ ਹੈ।</string>
     <string name="conv_cd_exit_selection">ਚੋਣ ਤੋਂ ਬਾਹਰ ਆਓ</string>
     <string name="conv_cd_select_all">ਸਭ ਚੁਣੋ</string>
     <string name="conv_cd_new_message">ਨਵਾਂ ਸੁਨੇਹਾ</string>
@@ -460,7 +460,7 @@
     <string name="conv_empty_archived_title">ਕੋਈ ਆਰਕਾਈਵ ਕੀਤੀ ਚੈਟ ਨਹੀਂ ਹੈ</string>
     <string name="conv_empty_archived_sub">ਆਪਣੇ ਇਨਬਾਕਸ ਨੂੰ ਸਾਫ਼ ਰੱਖਣ ਲਈ ਚੈਟਾਂ ਨੂੰ ਆਰਕਾਈਵ ਕਰੋ</string>
     <string name="conv_empty_title">ਅਜੇ ਤੱਕ ਕੋਈ ਸੁਨੇਹਾ ਨਹੀਂ ਹੈ</string>
-    <string name="conv_empty_sub">ਨਕਸ਼ਾ ਖੋਲ੍ਹੋ ਅਤੇ ਸੰਵਾਦ ਸ਼ੁਰੂ ਕਰਨ ਲਈ\nਕਿਸੇ ਵਿਅਕਤੀ 'ਤੇ ਟੈਪ ਕਰੋ</string>
+    <string name="conv_empty_sub">ਨਕਸ਼ਾ ਖੋਲ੍ਹੋ ਅਤੇ ਸੰਵਾਦ ਸ਼ੁਰੂ ਕਰਨ ਲਈ\nਕਿਸੇ ਵਿਅਕਤੀ \'ਤੇ ਟੈਪ ਕਰੋ</string>
     <string name="conv_delete_title">ਸੰਵਾਦ ਮਿਟਾਈਏ?</string>
     <string name="conv_delete_message">%1$s ਨਾਲ ਇਹ ਸੰਵਾਦ ਤੁਸੀਂ ਕਿਵੇਂ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="conv_messages_blocked">ਸੁਨੇਹੇ ਰੋਕੇ ਗਏ ਹਨ</string>
@@ -477,7 +477,7 @@
     <string name="chat_cd_options">ਵਿਕਲਪ</string>
     <string name="chat_clear_history_menu">ਚੈਟ ਇਤਿਹਾਸ ਸਾਫ਼ ਕਰੋ</string>
     <string name="chat_typing">%1$s ਟਾਈਪ ਕਰ ਰਿਹਾ ਹੈ…</string>
-    <string name="chat_blocked_banner">ਤੁਸੀਂ %1$s ਤੋਂ ਸੁਨੇਹੇ ਰੋਕੇ ਹੋਏ ਹਨ। ਅਣ-ਬਲੌਕ ਕਰਨ ਲਈ ਸੰਪਰਕਾਂ 'ਤੇ ਜਾਓ।</string>
+    <string name="chat_blocked_banner">ਤੁਸੀਂ %1$s ਤੋਂ ਸੁਨੇਹੇ ਰੋਕੇ ਹੋਏ ਹਨ। ਅਣ-ਬਲੌਕ ਕਰਨ ਲਈ ਸੰਪਰਕਾਂ \'ਤੇ ਜਾਓ।</string>
     <string name="chat_delete_msg_title">ਸੁਨੇਹਾ ਮਿਟਾਈਏ?</string>
     <string name="chat_delete_msg_message">ਤੁਸੀਂ ਇਸ ਸੁਨੇਹੇ ਨੂੰ ਕਿਵੇਂ ਮਿਟਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
     <string name="chat_delete_from_contact">ਸੰਪਰਕ ਤੋਂ ਮਿਟਾਓ</string>
@@ -555,7 +555,7 @@
     <string name="geo_cd_assign">ਜੀਓਫੈਂਸ ਨਿਰਧਾਰਤ ਕਰੋ</string>
     <string name="geo_unknown">ਅਣਜਾਣ</string>
     <string name="geo_empty_title">ਕੋਈ ਜੀਓਫੈਂਸ ਨਹੀਂ ਹੈ</string>
-    <string name="geo_empty_sub">ਜੀਓਫੈਂਸ ਖੇਤਰ ਬਣਾਉਣ ਲਈ + 'ਤੇ ਟੈਪ ਕਰੋ, ਫਿਰ ਉਹਨਾਂ ਦੀਆਂ ਸਾਂਝਾ ਕਰਨ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਤੋਂ ਸੰਪਰਕ ਨਿਰਧਾਰਤ ਕਰੋ।</string>
+    <string name="geo_empty_sub">ਜੀਓਫੈਂਸ ਖੇਤਰ ਬਣਾਉਣ ਲਈ + \'ਤੇ ਟੈਪ ਕਰੋ, ਫਿਰ ਉਹਨਾਂ ਦੀਆਂ ਸਾਂਝਾ ਕਰਨ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਤੋਂ ਸੰਪਰਕ ਨਿਰਧਾਰਤ ਕਰੋ।</string>
     <string name="geo_delete_title">ਜੀਓਫੈਂਸ ਮਿਟਾਈਏ?</string>
     <string name="geo_delete_simple">\"%1$s\" ਮਿਟਾਈਏ?</string>
     <plurals name="geo_delete_assigned">
@@ -564,7 +564,7 @@
     </plurals>
     <string name="geo_for_contact">%1$s ਲਈ ਜੀਓਫੈਂਸ</string>
     <string name="geo_empty_contact_title">ਸੰਪਰਕ ਲਈ ਕੋਈ ਜੀਓਫੈਂਸ ਨਹੀਂ ਹੈ</string>
-    <string name="geo_empty_contact_sub">+ 'ਤੇ ਟੈਪ ਕਰੋ ਅਤੇ ਜੀਓਫੈਂਸ ਖੇਤਰ ਨਿਰਧਾਰਤ ਕਰੋ ਅਤੇ ਚੁਣੋ ਕਿ ਪਹੁੰਚਣ 'ਤੇ, ਜਾਣ 'ਤੇ ਜਾਂ ਦੋਵਾਂ 'ਤੇ ਅਲਰਟ ਕਰਨਾ ਹੈ।</string>
+    <string name="geo_empty_contact_sub">+ \'ਤੇ ਟੈਪ ਕਰੋ ਅਤੇ ਜੀਓਫੈਂਸ ਖੇਤਰ ਨਿਰਧਾਰਤ ਕਰੋ ਅਤੇ ਚੁਣੋ ਕਿ ਪਹੁੰਚਣ \'ਤੇ, ਜਾਣ \'ਤੇ ਜਾਂ ਦੋਵਾਂ \'ਤੇ ਅਲਰਟ ਕਰਨਾ ਹੈ।</string>
     <string name="geo_no_areas_title">ਅਜੇ ਤੱਕ ਕੋਈ ਜੀਓਫੈਂਸ ਨਹੀਂ ਹੈ</string>
     <string name="geo_no_areas_msg">ਪਹਿਲਾਂ ਜੀਓਫੈਂਸ ਸਕ੍ਰੀਨ ਤੋਂ ਇੱਕ ਜੀਓਫੈਂਸ ਖੇਤਰ ਬਣਾਓ, ਫਿਰ ਇੱਥੇ ਨਿਰਧਾਰਤ ਕਰੋ।</string>
     <string name="geo_radius_label">%1$s ਘੇਰਾ</string>
@@ -582,7 +582,7 @@
     <string name="geo_cd_my_location">ਮੇਰਾ ਟਿਕਾਣਾ</string>
     <string name="geo_cd_radius_increase">ਘੇਰਾ ਵਧਾਓ</string>
     <string name="geo_cd_radius_decrease">ਘੇਰਾ ਘਟਾਓ</string>
-    <string name="geo_hint_tap">ਰੱਖਣ ਲਈ ਨਕਸ਼ੇ 'ਤੇ ਟੈਪ ਕਰੋ ਜਾਂ ਦਬਾ ਕੇ ਰੱਖੋ</string>
+    <string name="geo_hint_tap">ਰੱਖਣ ਲਈ ਨਕਸ਼ੇ \'ਤੇ ਟੈਪ ਕਰੋ ਜਾਂ ਦਬਾ ਕੇ ਰੱਖੋ</string>
     <string name="geo_hint_move">ਜ਼ੂਮ ਕਰਨ ਲਈ ਪਿੰਚ ਕਰੋ • ਹਿਲਾਉਣ ਲਈ ਪਿੰਨ ਨੂੰ ਦਬਾ ਕੇ ਰੱਖੋ ਜਾਂ ਖਿੱਚੋ</string>
     <string name="geo_basic_info">ਮੁੱਢਲੀ ਜਾਣਕਾਰੀ</string>
     <string name="geo_search_title">ਪਤੇ ਦੁਆਰਾ ਲੱਭੋ</string>
@@ -665,7 +665,7 @@
 
     <!-- ── ਬਾਰੇ ਸਕ੍ਰੀਨ ───────────────────────────────────────────────────── -->
     <string name="about_version">ਵਰਜਨ %1$s (ਬਿਲਡ %2$d)</string>
-    <string name="about_tagline">ਉਹਨਾਂ ਲੋਕਾਂ ਨਾਲ ਨਿੱਜੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਿਨ੍ਹਾਂ 'ਤੇ ਤੁਸੀਂ ਭਰੋਸਾ ਕਰਦੇ ਹੋ। ਕੋਈ ਖਾਤਾ ਨਹੀਂ, ਕੋਈ ਕਲਾਉਡ ਨਹੀਂ, ਸਾਡੇ ਦੁਆਰਾ ਕੋਈ ਟਰੈਕਿੰਗ ਨਹੀਂ।</string>
+    <string name="about_tagline">ਉਹਨਾਂ ਲੋਕਾਂ ਨਾਲ ਨਿੱਜੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਿਨ੍ਹਾਂ \'ਤੇ ਤੁਸੀਂ ਭਰੋਸਾ ਕਰਦੇ ਹੋ। ਕੋਈ ਖਾਤਾ ਨਹੀਂ, ਕੋਈ ਕਲਾਉਡ ਨਹੀਂ, ਸਾਡੇ ਦੁਆਰਾ ਕੋਈ ਟਰੈਕਿੰਗ ਨਹੀਂ।</string>
     <string name="about_relay_connections">ਰੀਲੇਅ ਕਨੈਕਸ਼ਨ</string>
     <string name="about_connected">ਜੁੜਿਆ ਹੋਇਆ</string>
     <string name="about_disconnected">ਡਿਸਕਨੈਕਟ ਹੋ ਗਿਆ</string>
@@ -681,7 +681,7 @@
     <string name="notif_action_accept">ਸਵੀਕਾਰ ਕਰੋ</string>
     <string name="notif_someone">ਕੋਈ</string>
     <string name="notif_sos_title">%1$s ਤੋਂ SOS!</string>
-    <string name="notif_sos_text">%1$s ਨੇ (%2$s, %3$s) 'ਤੇ SOS ਚਾਲੂ ਕਰ ਦਿੱਤਾ ਹੈ</string>
+    <string name="notif_sos_text">%1$s ਨੇ (%2$s, %3$s) \'ਤੇ SOS ਚਾਲੂ ਕਰ ਦਿੱਤਾ ਹੈ</string>
     <string name="notif_supervisor_request_title">%1$s ਤੁਹਾਨੂੰ ਆਪਣਾ ਨਿਗਰਾਨ ਬਣਾਉਣਾ ਚਾਹੁੰਦਾ ਹੈ</string>
     <string name="notif_supervisor_request_text">ਇਸ ਡਿਵਾਈਸ ਤੋਂ ਅਨਲੌਕ ਪ੍ਰਵਾਨਗੀ ਬੇਨਤੀਆਂ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਸਵੀਕਾਰ ਕਰੋ</string>
     <string name="notif_supervisor_request_big">ਜਦੋਂ ਨਿਗਰਾਨੀ ਮੋਡ ਸਰਗਰਮ ਹੋਵੇ ਤਾਂ %1$s ਨੂੰ ਤੁਹਾਨੂੰ ਅਨਲੌਕ ਪ੍ਰਵਾਨਗੀ ਬੇਨਤੀਆਂ ਭੇਜਣ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਸਵੀਕਾਰ ਕਰੋ।</string>
@@ -709,9 +709,9 @@
     <string name="notif_message_person">%1$s ਨੂੰ ਸੁਨੇਹਾ ਭੇਜੋ</string>
     <string name="notif_geofence_entered_title">%1$s %2$s ਵਿੱਚ ਦਾਖਲ ਹੋਇਆ</string>
     <string name="notif_geofence_left_title">%1$s %2$s ਤੋਂ ਬਾਹਰ ਚਲਾ ਗਿਆ</string>
-    <string name="notif_geofence_subtitle">%1$s 'ਤੇ · %2$s ਘੇਰਾ</string>
+    <string name="notif_geofence_subtitle">%1$s \'ਤੇ · %2$s ਘੇਰਾ</string>
     <string name="notif_person_nearby">%1$s ਨੇੜੇ ਹੈ</string>
-    <string name="notif_distance_from_you">ਤੁਹਾਡੇ ਤੋਂ %1$s ਦੀ ਦੂਰੀ 'ਤੇ</string>
+    <string name="notif_distance_from_you">ਤੁਹਾਡੇ ਤੋਂ %1$s ਦੀ ਦੂਰੀ \'ਤੇ</string>
     <string name="notif_missed_title">%1$s ਤੋਂ ਕੋਈ ਅੱਪਡੇਟ ਨਹੀਂ</string>
     <string name="notif_missed_text">ਆਖਰੀ ਵਾਰ %1$s ਮਿੰਟ ਪਹਿਲਾਂ (%2$s, %3$s) ਦੇ ਨੇੜੇ ਦੇਖਿਆ ਗਿਆ ਸੀ</string>
     <string name="notif_sos_active_title">SOS ਸਰਗਰਮ ਹੈ!</string>
