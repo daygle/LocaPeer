@@ -64,7 +64,9 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             // SOS-rate (15s) senders from alerting on mere relay jitter - combined
             // with the ×2 threshold below that means 2 min of silence.
             val expected = (latest.expectedIntervalSeconds * 1000L).coerceAtLeast(60_000L)
-            val elapsed = now - latest.timestamp
+            // Use receivedAt (stamped by the receiver's own clock at insertion) rather than
+            // timestamp (the sender's clock) to avoid false alerts from inter-device clock skew.
+            val elapsed = now - latest.receivedAt
             if (elapsed > expected * 2) {
                 val minutesAgo = elapsed / 60_000
                 // Unique data URI: extras don't participate in PendingIntent matching

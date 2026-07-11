@@ -21,6 +21,8 @@ import com.locapeer.sos.SosManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -211,28 +213,57 @@ class MapViewModel @Inject constructor(
         if (sosManager.isSosActive.value) sosManager.deactivateSos() else sosManager.activateSos()
     }
 
+    /**
+     * Emits [Unit] once per minute so [uiState] re-evaluates overdue flags even when
+     * no new heartbeats arrive (the DB-backed flows only emit on row changes).
+     */
+    private val tickerFlow: Flow<Unit> = flow {
+        while (true) {
+            emit(Unit)
+            delay(60_000L)
+        }
+    }
+
+    // Holds the latest raw data from the five DB/key flows so the ticker can combine
+    // with it without nesting six incompatible types in a single combine call.
+    private data class UiSnapshot(
+        val peers: List<PeerEntity>,
+        val heartbeats: List<HeartbeatEntity>,
+        val fences: List<GeofenceEntity>,
+        val assignments: List<com.locapeer.data.entity.GeofenceAssignmentEntity>,
+        val myPubkey: String
+    )
+
     val uiState: StateFlow<MapUiState> = combine(
-        peerDao.getReceiveContacts(),
-        heartbeatDao.getLatestHeartbeatPerDevice(),
-        geofenceDao.getAllGeofences(),
-        geofenceAssignmentDao.observeAll(),
-        // Cached public-key flow instead of ensureKeypair() so a new heartbeat doesn't
-        // trigger an Android Keystore decrypt on every emission just to filter own pin.
-        keyManager.publicKeyHexFlow
-    ) { peers, heartbeats, fences, assignments, myPubkey ->
-        val heartbeatMap = heartbeats.associateBy { it.deviceId }
+        combine(
+            peerDao.getReceiveContacts(),
+            heartbeatDao.getLatestHeartbeatPerDevice(),
+            geofenceDao.getAllGeofences(),
+            geofenceAssignmentDao.observeAll(),
+            // Cached public-key flow instead of ensureKeypair() so a new heartbeat doesn't
+            // trigger an Android Keystore decrypt on every emission just to filter own pin.
+            keyManager.publicKeyHexFlow
+        ) { peers, heartbeats, fences, assignments, myPubkey ->
+            UiSnapshot(peers, heartbeats, fences, assignments, myPubkey)
+        },
+        tickerFlow
+    ) { snapshot, _ ->
+        val heartbeatMap = snapshot.heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
-        val pins = peers.filter { it.deviceId != myPubkey }.map { peer ->
+        val pins = snapshot.peers.filter { it.deviceId != snapshot.myPubkey }.map { peer ->
             val hb = heartbeatMap[peer.deviceId]
             val intervalSec = hb?.expectedIntervalSeconds ?: 900L
-            val overdue = hb != null && (now - hb.timestamp) > (intervalSec * 1000L * 2).coerceAtLeast(120_000L)
+            // Use receivedAt (stamped by the receiver's own clock at insertion) rather than
+            // timestamp (the sender's device clock) to avoid false overdue flags caused by
+            // inter-device clock skew.
+            val overdue = hb != null && (now - hb.receivedAt) > (intervalSec * 1000L * 2).coerceAtLeast(120_000L)
             PinData(peer, hb, overdue)
         }
-        val nameByDevice = peers.associate { it.deviceId to it.displayName }
-        val assignmentsByFence = assignments.groupBy { it.geofenceId }
+        val nameByDevice = snapshot.peers.associate { it.deviceId to it.displayName }
+        val assignmentsByFence = snapshot.assignments.groupBy { it.geofenceId }
         val unknownLabel = appContext.getString(com.locapeer.R.string.geo_unknown)
         val unassignedLabel = appContext.getString(com.locapeer.R.string.geo_unassigned)
-        val fencesOnMap = fences.map { fence ->
+        val fencesOnMap = snapshot.fences.map { fence ->
             val names = assignmentsByFence[fence.id].orEmpty()
                 .map { nameByDevice[it.trackedDeviceId] ?: unknownLabel }
                 .distinct()
