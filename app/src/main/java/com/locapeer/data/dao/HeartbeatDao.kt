@@ -32,10 +32,15 @@ interface HeartbeatDao {
     @Query("SELECT COUNT(*) FROM heartbeats WHERE deviceId = :deviceId AND timestamp = :timestamp")
     suspend fun countByDeviceAndTimestamp(deviceId: String, timestamp: Long): Int
 
+    // Keyed on MAX(timestamp) (the sender's fix time, unique per device-ping) rather than
+    // receivedAt: during a catch-up burst a relay replays stored pings out of order, so the
+    // last-inserted row (max receivedAt) can be an older location. timestamp always picks the
+    // newest actual fix and can't tie, so the join never returns duplicate rows per device.
+    // The chosen row still carries its own receivedAt for the clock-skew-safe overdue check.
     @Query(
         "SELECT h.* FROM heartbeats h INNER JOIN (" +
-            "SELECT deviceId, MAX(receivedAt) AS maxReceivedAt FROM heartbeats GROUP BY deviceId" +
-            ") latest ON h.deviceId = latest.deviceId AND h.receivedAt = latest.maxReceivedAt"
+            "SELECT deviceId, MAX(timestamp) AS maxTs FROM heartbeats GROUP BY deviceId" +
+            ") latest ON h.deviceId = latest.deviceId AND h.timestamp = latest.maxTs"
     )
     fun getLatestHeartbeatPerDevice(): Flow<List<HeartbeatEntity>>
 

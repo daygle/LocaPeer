@@ -430,7 +430,9 @@ class HeartbeatReceiver @Inject constructor(
             if (retention.isNotEmpty()) {
                 val now = System.currentTimeMillis()
                 retention.forEach { (deviceId, days) ->
-                    heartbeatDao.deleteOlderThanForDevice(deviceId, now - days * 24 * 3600 * 1000L)
+                    // days.toLong() first: days * 24 * 3600 would overflow Int for large,
+                    // peer-supplied retention values before the trailing 1000L widened it.
+                    heartbeatDao.deleteOlderThanForDevice(deviceId, now - days.toLong() * 24 * 3600 * 1000)
                 }
             }
         } catch (e: Exception) {
