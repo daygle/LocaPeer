@@ -155,7 +155,7 @@ class HeartbeatReceiver @Inject constructor(
     private val batchMutex = Mutex()
     private val pendingHeartbeats = mutableListOf<HeartbeatEntity>()
     private val pendingKeys = HashSet<String>()
-    private val pendingRetentionDays = HashMap<String, Long>()
+    private val pendingRetentionDays = HashMap<String, Int>()
     private var flushJob: Job? = null
 
     fun start() {
@@ -391,7 +391,7 @@ class HeartbeatReceiver @Inject constructor(
      * [isDuplicateHeartbeat] first. retentionDays (>0) records the sender's retention so
      * the flush can prune old history for that device in the same transaction window.
      */
-    private suspend fun enqueueHeartbeat(entity: HeartbeatEntity, retentionDays: Long) {
+    private suspend fun enqueueHeartbeat(entity: HeartbeatEntity, retentionDays: Int) {
         val flushNow = batchMutex.withLock {
             pendingHeartbeats.add(entity)
             pendingKeys.add(hbKey(entity.deviceId, entity.timestamp))
@@ -414,7 +414,7 @@ class HeartbeatReceiver @Inject constructor(
      */
     private suspend fun flushBatch(fromTimer: Boolean) {
         val batch: List<HeartbeatEntity>
-        val retention: Map<String, Long>
+        val retention: Map<String, Int>
         batchMutex.withLock {
             if (!fromTimer) flushJob?.cancel()
             flushJob = null
