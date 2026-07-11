@@ -60,6 +60,7 @@ object PermissionManager {
         return pm.isIgnoringBatteryOptimizations(context.packageName)
     }
 
+    @android.annotation.SuppressLint("BatteryLife")
     fun requestBatteryOptimizationExemption(context: Context) {
         val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
             data = "package:${context.packageName}".toUri()
