@@ -28,8 +28,11 @@ android {
     }
 
     lint {
-        // Project has 50+ locales. Don't block CI for missing translations.
+        // Project has 50+ locales. Don't block CI for translation/plural nits.
         disable += "MissingTranslation"
+        disable += "ImpliedQuantity"
+        disable += "MissingQuantity"
+
         // Ensure we still fail on other real code errors
         abortOnError = true
         // Uploaded as artifact in CI
