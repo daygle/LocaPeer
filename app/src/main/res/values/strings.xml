@@ -563,6 +563,8 @@
     <string name="geo_empty_contact_sub">Tap + to assign a geofence area and choose whether to alert on arrival, departure, or both.</string>
     <string name="geo_no_areas_title">No geofences yet</string>
     <string name="geo_no_areas_msg">Create a geofence area first from the Geofences screen, then assign it here.</string>
+    <string name="geo_section_areas">Shared areas</string>
+    <string name="geo_section_assignments">Assigned geofences</string>
     <string name="geo_radius_label">%1$s radius</string>
     <string name="geo_contacts_label">Contacts: %1$s</string>
     <string name="geo_no_contacts_assigned">No contacts assigned</string>

@@ -2,9 +2,9 @@ package com.locapeer.geofence
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardActions
@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Fence
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
@@ -27,7 +28,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -54,6 +55,8 @@ import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.newScheduleRule
 import com.locapeer.sharing.toScheduleRules
 import com.locapeer.ui.components.EmptyState
+import com.locapeer.ui.components.SectionLabel
+import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
 import com.locapeer.ui.theme.GeofenceExit
@@ -138,20 +141,9 @@ private fun GlobalGeofencesScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(padding),
+            contentPadding = PaddingValues(bottom = 96.dp)
         ) {
-            items(areas, key = { it.id }) { area ->
-                val unknownName = stringResource(R.string.geo_unknown)
-                val names = assignmentsByFence[area.id].orEmpty()
-                    .map { nameByDevice[it.trackedDeviceId] ?: unknownName }
-                    .distinct()
-                GeofenceAreaCard(
-                    area = area,
-                    assignedNames = names,
-                    onEdit = { editingArea = area },
-                    onDelete = { pendingDelete = area }
-                )
-            }
             if (areas.isEmpty()) {
                 item {
                     EmptyState(
@@ -160,6 +152,27 @@ private fun GlobalGeofencesScreen(
                         subtitle = stringResource(R.string.geo_empty_sub),
                         modifier = Modifier.fillParentMaxSize()
                     )
+                }
+            } else {
+                item { SectionLabel(stringResource(R.string.geo_section_areas)) }
+                item {
+                    val unknownName = stringResource(R.string.geo_unknown)
+                    SettingsCard {
+                        areas.forEachIndexed { index, area ->
+                            val names = assignmentsByFence[area.id].orEmpty()
+                                .map { nameByDevice[it.trackedDeviceId] ?: unknownName }
+                                .distinct()
+                            GeofenceAreaRow(
+                                area = area,
+                                assignedNames = names,
+                                onEdit = { editingArea = area },
+                                onDelete = { pendingDelete = area }
+                            )
+                            if (index < areas.lastIndex) {
+                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -222,6 +235,7 @@ private fun ContactGeofencesScreen(
 
     var showAssignDialog by remember { mutableStateOf(false) }
     var editingAssignment by remember { mutableStateOf<AssignmentWithArea?>(null) }
+    var pendingDelete by remember { mutableStateOf<AssignmentWithArea?>(null) }
     var showNoAreas by remember { mutableStateOf(false) }
 
     Scaffold(
@@ -244,16 +258,9 @@ private fun ContactGeofencesScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(padding),
+            contentPadding = PaddingValues(bottom = 96.dp)
         ) {
-            items(assignments, key = { it.assignmentId }) { assignment ->
-                AssignmentCard(
-                    assignment = assignment,
-                    onToggle = { vm.setAssignmentActive(assignment.assignmentId, it) },
-                    onEdit = { editingAssignment = assignment },
-                    onDelete = { vm.removeAssignment(assignment.assignmentId) }
-                )
-            }
             if (assignments.isEmpty()) {
                 item {
                     EmptyState(
@@ -263,8 +270,40 @@ private fun ContactGeofencesScreen(
                         modifier = Modifier.fillParentMaxSize()
                     )
                 }
+            } else {
+                item { SectionLabel(stringResource(R.string.geo_section_assignments)) }
+                item {
+                    SettingsCard {
+                        assignments.forEachIndexed { index, assignment ->
+                            AssignmentRow(
+                                assignment = assignment,
+                                onToggle = { vm.setAssignmentActive(assignment.assignmentId, it) },
+                                onEdit = { editingAssignment = assignment },
+                                onDelete = { pendingDelete = assignment }
+                            )
+                            if (index < assignments.lastIndex) {
+                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                            }
+                        }
+                    }
+                }
             }
         }
+    }
+
+    pendingDelete?.let { assignment ->
+        AlertDialog(
+            onDismissRequest = { pendingDelete = null },
+            title = { Text(stringResource(R.string.geo_delete_title)) },
+            text = { Text(stringResource(R.string.geo_delete_simple, assignment.name)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    vm.removeAssignment(assignment.assignmentId)
+                    pendingDelete = null
+                }) { Text(stringResource(R.string.common_remove)) }
+            },
+            dismissButton = { TextButton(onClick = { pendingDelete = null }) { Text(stringResource(R.string.common_cancel)) } }
+        )
     }
 
     if (showAssignDialog || editingAssignment != null) {
@@ -296,39 +335,22 @@ private fun ContactGeofencesScreen(
 }
 
 @Composable
-private fun GeofenceAreaCard(
+private fun GeofenceAreaRow(
     area: GeofenceEntity,
     assignedNames: List<String>,
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Surface(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier.size(48.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        Icons.Default.Fence,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-            }
-            Spacer(Modifier.width(16.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+    ListItem(
+        modifier = Modifier.clickable(onClick = onEdit),
+        leadingContent = {
+            Icon(Icons.Default.Fence, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+        },
+        headlineContent = {
+            Text(area.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+        },
+        supportingContent = {
+            Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                 Text(
                     stringResource(R.string.geo_radius_label, com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble())),
                     style = MaterialTheme.typography.bodySmall,
@@ -348,18 +370,16 @@ private fun GeofenceAreaCard(
                     )
                 }
             }
-            IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.common_edit))
-            }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.common_delete), tint = MaterialTheme.colorScheme.error)
-            }
-        }
-    }
+        },
+        trailingContent = {
+            RowOverflowMenu(onEdit = onEdit, onDelete = onDelete, deleteLabel = stringResource(R.string.common_delete))
+        },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+    )
 }
 
 @Composable
-private fun AssignmentCard(
+private fun AssignmentRow(
     assignment: AssignmentWithArea,
     onToggle: (Boolean) -> Unit,
     onEdit: () -> Unit,
@@ -378,58 +398,81 @@ private fun AssignmentCard(
     val rules = remember(assignment.scheduleRules) { assignment.scheduleRules.toScheduleRules() }
     val hasSchedule = rules.isNotEmpty()
 
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 6.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(12.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Surface(
-                        color = triggerColor.copy(alpha = 0.2f),
-                        shape = MaterialTheme.shapes.extraSmall,
-                        modifier = Modifier.padding(vertical = 2.dp)
-                    ) {
-                        Text(
-                            triggerLabel,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = triggerColor,
-                            modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
-                        )
-                    }
-                    if (hasSchedule) {
-                        Icon(Icons.Default.Schedule, null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.primary)
-                        Text(
-                            pluralStringResource(R.plurals.geo_rules_count, rules.size, rules.size),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+    ListItem(
+        modifier = Modifier.clickable(onClick = onEdit),
+        leadingContent = {
+            Icon(Icons.Default.Fence, contentDescription = null, tint = triggerColor)
+        },
+        headlineContent = {
+            Text(assignment.name, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
+        },
+        supportingContent = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 2.dp)
+            ) {
+                Surface(
+                    color = triggerColor.copy(alpha = 0.2f),
+                    shape = MaterialTheme.shapes.extraSmall
+                ) {
                     Text(
-                        com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        triggerLabel,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = triggerColor,
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp)
                     )
                 }
+                if (hasSchedule) {
+                    Icon(Icons.Default.Schedule, null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.primary)
+                    Text(
+                        pluralStringResource(R.plurals.geo_rules_count, rules.size, rules.size),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                Text(
+                    com.locapeer.util.DisplayFormat.distanceValue(assignment.radiusMetres.toDouble()),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
-            Switch(
-                checked = assignment.active,
-                onCheckedChange = onToggle,
-                modifier = Modifier.scale(0.8f)
+        },
+        trailingContent = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Switch(checked = assignment.active, onCheckedChange = onToggle)
+                RowOverflowMenu(onEdit = onEdit, onDelete = onDelete, deleteLabel = stringResource(R.string.common_remove))
+            }
+        },
+        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+    )
+}
+
+/** Overflow (⋮) menu offering Edit + a destructive Delete/Remove, matching the app-wide row idiom. */
+@Composable
+private fun RowOverflowMenu(
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    deleteLabel: String
+) {
+    var expanded by remember { mutableStateOf(false) }
+    Box {
+        IconButton(onClick = { expanded = true }) {
+            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.cd_more_options))
+        }
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+            DropdownMenuItem(
+                text = { Text(stringResource(R.string.common_edit)) },
+                leadingIcon = { Icon(Icons.Default.Edit, null, Modifier.size(18.dp)) },
+                onClick = { expanded = false; onEdit() }
             )
-            IconButton(onClick = onEdit) {
-                Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.common_edit))
-            }
-            IconButton(onClick = onDelete) {
-                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.common_remove), tint = MaterialTheme.colorScheme.error)
-            }
+            DropdownMenuItem(
+                text = { Text(deleteLabel, color = MaterialTheme.colorScheme.error) },
+                leadingIcon = {
+                    Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error, modifier = Modifier.size(18.dp))
+                },
+                onClick = { expanded = false; onDelete() }
+            )
         }
     }
 }
@@ -788,6 +831,7 @@ private fun GeofenceAreaDialog(
 }
 
 /** Assign a shared geofence area to the current contact and pick its enter/exit trigger. */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AssignmentDialog(
     existing: AssignmentWithArea?,
@@ -806,131 +850,156 @@ private fun AssignmentDialog(
     var editingRule by remember { mutableStateOf<ScheduleRule?>(null) }
     var isNewRule by remember { mutableStateOf(false) }
 
-    AlertDialog(
+    Dialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (existing != null) stringResource(R.string.geo_edit_assignment) else stringResource(R.string.geo_assign_title)) },
-        text = {
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = { Text(if (existing != null) stringResource(R.string.geo_edit_assignment) else stringResource(R.string.geo_assign_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = onDismiss) {
+                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_cancel))
+                        }
+                    },
+                    actions = {
+                        Button(
+                            onClick = {
+                                if (selectedGeofenceId.isNotEmpty()) {
+                                    val rulesJson = Json.encodeToString(scheduleRules)
+                                    onSave(selectedGeofenceId, triggerOn, rulesJson)
+                                }
+                            },
+                            enabled = selectedGeofenceId.isNotEmpty(),
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Text(if (existing != null) stringResource(R.string.common_save) else stringResource(R.string.geo_assign_action))
+                        }
+                    }
+                )
+            }
+        ) { padding ->
             Column(
                 modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
                     .verticalScroll(rememberScrollState())
-                    .selectableGroup(),
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    .selectableGroup()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                Text(stringResource(R.string.geo_select_area), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                areas.forEach { area ->
-                    Surface(
-                        onClick = { selectedGeofenceId = area.id },
-                        shape = MaterialTheme.shapes.medium,
-                        color = if (selectedGeofenceId == area.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
-                        border = if (selectedGeofenceId == area.id) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = selectedGeofenceId == area.id,
-                                onClick = null // Handled by Surface onClick
-                            )
-                            Spacer(Modifier.width(12.dp))
-                            Column {
-                                Text(area.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
-                                Text(
-                                    com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            }
-                        }
-                    }
-                }
-
-                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-
-                Text(stringResource(R.string.geo_trigger_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    listOf("ENTER", "EXIT", "BOTH").forEach { t ->
-                        val chipLabel = when (t) {
-                            "ENTER" -> stringResource(R.string.geo_trigger_enter)
-                            "EXIT" -> stringResource(R.string.geo_trigger_exit)
-                            else -> stringResource(R.string.geo_trigger_both)
-                        }
-                        FilterChip(
-                            selected = triggerOn == t,
-                            onClick = { triggerOn = t },
-                            label = { Text(chipLabel) },
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
-
-                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(stringResource(R.string.peer_alert_schedule), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-                    TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
-                        Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
-                        Spacer(Modifier.width(4.dp))
-                        Text(stringResource(R.string.geo_add_rule))
-                    }
-                }
-
-                if (scheduleRules.isEmpty()) {
-                    Text(
-                        stringResource(R.string.geo_alerts_all_times),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                } else {
-                    scheduleRules.forEach { rule ->
-                        Card(
-                            onClick = { editingRule = rule; isNewRule = false },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.geo_select_area), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    areas.forEach { area ->
+                        Surface(
+                            onClick = { selectedGeofenceId = area.id },
+                            shape = MaterialTheme.shapes.medium,
+                            color = if (selectedGeofenceId == area.id) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface,
+                            border = if (selectedGeofenceId == area.id) null else BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
-                                modifier = Modifier.padding(8.dp),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Column(modifier = Modifier.weight(1f)) {
-                                    if (rule.label.isNotBlank()) {
-                                        Text(rule.label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
-                                    }
+                                RadioButton(
+                                    selected = selectedGeofenceId == area.id,
+                                    onClick = null // Handled by Surface onClick
+                                )
+                                Spacer(Modifier.width(12.dp))
+                                Column {
+                                    Text(area.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
                                     Text(
-                                        "${SharingSchedule.formatDays(rule.days)} • ${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}",
-                                        style = MaterialTheme.typography.labelSmall
+                                        com.locapeer.util.DisplayFormat.distanceValue(area.radiusMetres.toDouble()),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
-                                IconButton(onClick = { scheduleRules = scheduleRules.filter { it.id != rule.id } }) {
-                                    Icon(Icons.Default.Delete, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.error)
+                            }
+                        }
+                    }
+                }
+
+                HorizontalDivider(thickness = 0.5.dp)
+
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.geo_trigger_title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("ENTER", "EXIT", "BOTH").forEach { t ->
+                            val chipLabel = when (t) {
+                                "ENTER" -> stringResource(R.string.geo_trigger_enter)
+                                "EXIT" -> stringResource(R.string.geo_trigger_exit)
+                                else -> stringResource(R.string.geo_trigger_both)
+                            }
+                            FilterChip(
+                                selected = triggerOn == t,
+                                onClick = { triggerOn = t },
+                                label = { Text(chipLabel) },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+
+                HorizontalDivider(thickness = 0.5.dp)
+
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(stringResource(R.string.peer_alert_schedule), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+                        TextButton(onClick = { editingRule = newScheduleRule(); isNewRule = true }) {
+                            Icon(Icons.Default.Add, null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(4.dp))
+                            Text(stringResource(R.string.geo_add_rule))
+                        }
+                    }
+
+                    if (scheduleRules.isEmpty()) {
+                        Text(
+                            stringResource(R.string.geo_alerts_all_times),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        scheduleRules.forEach { rule ->
+                            Card(
+                                onClick = { editingRule = rule; isNewRule = false },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Column(modifier = Modifier.weight(1f)) {
+                                        if (rule.label.isNotBlank()) {
+                                            Text(rule.label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                                        }
+                                        Text(
+                                            "${SharingSchedule.formatDays(rule.days)} • ${SharingSchedule.formatTime(rule.startMinute)} - ${SharingSchedule.formatTime(rule.endMinute)}",
+                                            style = MaterialTheme.typography.labelSmall
+                                        )
+                                    }
+                                    IconButton(onClick = { scheduleRules = scheduleRules.filter { it.id != rule.id } }) {
+                                        Icon(Icons.Default.Delete, null, modifier = Modifier.size(18.dp), tint = MaterialTheme.colorScheme.error)
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
-        },
-        confirmButton = {
-            Button(onClick = {
-                if (selectedGeofenceId.isNotEmpty()) {
-                    val rulesJson = Json.encodeToString(scheduleRules)
-                    onSave(selectedGeofenceId, triggerOn, rulesJson)
-                }
-            }) {
-                Text(if (existing != null) stringResource(R.string.common_save) else stringResource(R.string.geo_assign_action))
-            }
-        },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
-    )
+        }
+    }
 
     editingRule?.let { rule ->
         RuleEditDialog(
