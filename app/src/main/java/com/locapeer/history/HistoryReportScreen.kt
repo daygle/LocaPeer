@@ -425,6 +425,16 @@ private fun HistoryMapTab(
         }
     }
 
+    // Recenter the map on the tapped ping so its location is brought into view
+    // (the bottom detail card covers the lower part of the map, so nudge the
+    // target upward slightly to keep the pin clear of the card).
+    LaunchedEffect(selectedPing, mapViewRef) {
+        val ping = selectedPing ?: return@LaunchedEffect
+        val mapView = mapViewRef ?: return@LaunchedEffect
+        val latOffset = mapView.boundingBox.latitudeSpan * 0.2
+        mapView.controller.animateTo(GeoPoint(ping.lat - latOffset, ping.lng))
+    }
+
     Box(modifier = modifier.clipToBounds()) {
         AndroidView(
             factory = { ctx ->
