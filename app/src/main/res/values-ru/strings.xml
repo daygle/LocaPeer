@@ -22,7 +22,6 @@
     <string name="common_restore">Восстановить</string>
     <string name="common_unlock">Разблокировать</string>
     <string name="common_password">Пароль</string>
-    <string name="common_not_now">Не сейчас</string>
     <string name="common_off">Выкл.</string>
     <string name="common_approve">Одобрить</string>
     <string name="common_deny">Отклонить</string>
@@ -127,9 +126,6 @@
     <string name="settings_motion_detection">Распознавание движения</string>
     <string name="settings_motion_detection_on">Включено — уточняет тип движения (ходьба, вождение) в истории</string>
     <string name="settings_motion_detection_off">Выключено — разрешите доступ к физической активности для более точных меток движения</string>
-    <string name="settings_enable_motion_title">Включить распознавание движения</string>
-    <string name="settings_enable_motion_message">Доступ к физической активности помогает LocaPeer точнее различать ходьбу, вождение и неподвижность в вашей истории. Сейчас он выключен — его можно снова включить в настройках системы.</string>
-    <string name="settings_open_settings">Открыть настройки</string>
     <string name="settings_battery_optimization">Оптимизация батареи</string>
     <string name="settings_battery_optimization_unrestricted">Не ограничено — LocaPeer может свободно работать в фоновом режиме</string>
     <string name="settings_battery_optimization_restricted">Оптимизировано — нажмите, чтобы установить «Не ограничено» в системных настройках</string>
@@ -742,7 +738,6 @@
     <string name="notif_missed_text">Последний сигнал %1$s мин назад возле (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS АКТИВЕН!</string>
     <string name="notif_sos_active_text">Экстренное оповещение передаётся SOS-контактам</string>
-    <string name="notif_messages_group_title">Сообщения LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Запрос на контакт от %1$s отклонён</string>

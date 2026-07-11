@@ -22,7 +22,6 @@
     <string name="common_restore">ወደ ነበረበት መልስ</string>
     <string name="common_unlock">ክፈት</string>
     <string name="common_password">የይለፍ ቃል</string>
-    <string name="common_not_now">አሁን አይደለም</string>
     <string name="common_off">ጠፍቷል</string>
     <string name="common_approve">ፍቀድ</string>
     <string name="common_deny">ከልክል</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">እንቅስቃሴን መለየት</string>
     <string name="settings_motion_detection_on">ነቅቷል - የእንቅስቃሴ አይነትዎን (መራመድ፣ መንዳት) በታሪክ ውስጥ ያጣራል</string>
     <string name="settings_motion_detection_off">ጠፍቷል - ይበልጥ ትክክለኛ ለሆኑ የእንቅስቃሴ መሰየሚያዎች የአካል ብቃት እንቅስቃሴ መረጃን ይፍቀዱ</string>
-    <string name="settings_enable_motion_title">እንቅስቃሴን መለየትን አንቃ</string>
-    <string name="settings_enable_motion_message">የአካል ብቃት እንቅስቃሴ መረጃ LocaPeer መራመድን፣ መንዳትን እና መቆምን በታሪክዎ ውስጥ ይበልጥ በትክክል እንዲለይ ያስችለዋል። በአሁኑ ጊዜ ጠፍቷል - ከስርዓት ቅንብሮች እንደገና ሊያነቁት ይችላሉ።</string>
-    <string name="settings_open_settings">ቅንብሮችን ክፈት</string>
     <string name="settings_battery_optimization">የባትሪ ማመቻቸት</string>
     <string name="settings_battery_optimization_unrestricted">ያልተገደበ — LocaPeer ከበስተጀርባ በነፃነት ሊሠራ ይችላል</string>
     <string name="settings_battery_optimization_restricted">የተመቻቸ — በስርዓት ቅንብሮች ውስጥ ወደ ያልተገደበ ለመቀየር ይንኩ</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">ለመጨረሻ ጊዜ የታዩት ከ%1$s ደቂቃ በፊት በ(%2$s, %3$s) አቅራቢያ</string>
     <string name="notif_sos_active_title">SOS ንቁ ነው!</string>
     <string name="notif_sos_active_text">ለSOS እውቂያዎች የአደጋ ጊዜ ማስጠንቀቂያ እያስተላለፈ ነው</string>
-    <string name="notif_messages_group_title">የLocaPeer መልእክቶች</string>
 
     <!-- ── ቶስቶች ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">ከ%1$s የቀረበ የእውቂያ ጥያቄ ተከልክሏል</string>

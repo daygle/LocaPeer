@@ -22,7 +22,6 @@
     <string name="common_restore">ਬਹਾਲ ਕਰੋ</string>
     <string name="common_unlock">ਅਨਲੌਕ ਕਰੋ</string>
     <string name="common_password">ਪਾਸਵਰਡ</string>
-    <string name="common_not_now">ਹੁਣ ਨਹੀਂ</string>
     <string name="common_off">ਬੰਦ</string>
     <string name="common_approve">ਪ੍ਰਵਾਨਗੀ ਦਿਓ</string>
     <string name="common_deny">ਇਨਕਾਰ ਕਰੋ</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">ਗਤੀ ਪਛਾਣ</string>
     <string name="settings_motion_detection_on">ਸਮਰੱਥ - ਇਤਿਹਾਸ ਵਿੱਚ ਤੁਹਾਡੀ ਗਤੀ ਦੀ ਕਿਸਮ (ਪੈਦਲ, ਡਰਾਈਵਿੰਗ) ਨੂੰ ਸਹੀ ਕਰਦਾ ਹੈ</string>
     <string name="settings_motion_detection_off">ਬੰਦ - ਵਧੇਰੇ ਸਹੀ ਗਤੀ ਲੇਬਲਾਂ ਲਈ ਸਰੀਰਕ ਗਤੀਵਿਧੀ ਪਹੁੰਚ ਦੀ ਆਗਿਆ ਦਿਓ</string>
-    <string name="settings_enable_motion_title">ਗਤੀ ਪਛਾਣ ਸਮਰੱਥ ਕਰੋ</string>
-    <string name="settings_enable_motion_message">ਸਰੀਰਕ ਗਤੀਵਿਧੀ ਪਹੁੰਚ LocaPeer ਨੂੰ ਤੁਹਾਡੇ ਇਤਿਹਾਸ ਵਿੱਚ ਪੈਦਲ ਚੱਲਣ, ਡਰਾਈਵਿੰਗ ਕਰਨ ਅਤੇ ਸਥਿਰ ਰਹਿਣ ਦੇ ਵਿਚਕਾਰ ਵਧੇਰੇ ਸਹੀ ਢੰਗ ਨਾਲ ਫਰਕ ਕਰਨ ਦਿੰਦੀ ਹੈ। ਇਹ ਵਰਤਮਾਨ ਵਿੱਚ ਬੰਦ ਹੈ - ਤੁਸੀਂ ਇਸਨੂੰ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਤੋਂ ਦੁਬਾਰਾ ਚਾਲੂ ਕਰ ਸਕਦੇ ਹੋ।</string>
-    <string name="settings_open_settings">ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ</string>
     <string name="settings_battery_optimization">ਬੈਟਰੀ ਅਨੁਕੂਲਨ</string>
     <string name="settings_battery_optimization_unrestricted">ਬਿਨਾਂ ਰੋਕ-ਟੋਕ — LocaPeer ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਖੁੱਲ੍ਹ ਕੇ ਚੱਲ ਸਕਦਾ ਹੈ</string>
     <string name="settings_battery_optimization_restricted">ਅਨੁਕੂਲਿਤ — ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬਿਨਾਂ ਰੋਕ-ਟੋਕ ਤੇ ਸੈੱਟ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">ਆਖਰੀ ਵਾਰ %1$s ਮਿੰਟ ਪਹਿਲਾਂ (%2$s, %3$s) ਦੇ ਨੇੜੇ ਦੇਖਿਆ ਗਿਆ ਸੀ</string>
     <string name="notif_sos_active_title">SOS ਸਰਗਰਮ ਹੈ!</string>
     <string name="notif_sos_active_text">SOS ਸੰਪਰਕਾਂ ਨੂੰ ਐਮਰਜੈਂਸੀ ਅਲਰਟ ਪ੍ਰਸਾਰਿਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
-    <string name="notif_messages_group_title">LocaPeer ਸੁਨੇਹੇ</string>
 
     <!-- ── ਟੋਸਟ ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s ਤੋਂ ਸੰਪਰਕ ਬੇਨਤੀ ਅਸਵੀਕਾਰ ਕੀਤੀ ਗਈ</string>

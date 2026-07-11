@@ -22,7 +22,6 @@
     <string name="common_restore">Επαναφορά</string>
     <string name="common_unlock">Ξεκλείδωμα</string>
     <string name="common_password">Κωδικός πρόσβασης</string>
-    <string name="common_not_now">Όχι τώρα</string>
     <string name="common_off">Ανενεργό</string>
     <string name="common_approve">Έγκριση</string>
     <string name="common_deny">Απόρριψη</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Ανίχνευση κίνησης</string>
     <string name="settings_motion_detection_on">Ενεργή — βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
     <string name="settings_motion_detection_off">Ανενεργή — επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
-    <string name="settings_enable_motion_title">Ενεργοποίηση ανίχνευσης κίνησης</string>
-    <string name="settings_enable_motion_message">Η πρόσβαση στη σωματική δραστηριότητα επιτρέπει στο LocaPeer να ξεχωρίζει ακριβέστερα το περπάτημα, την οδήγηση και τη στάση στο ιστορικό σας. Είναι απενεργοποιημένη — μπορείτε να την ενεργοποιήσετε ξανά από τις ρυθμίσεις συστήματος.</string>
-    <string name="settings_open_settings">Άνοιγμα ρυθμίσεων</string>
     <string name="settings_battery_optimization">Βελτιστοποίηση μπαταρίας</string>
     <string name="settings_battery_optimization_unrestricted">Χωρίς περιορισμούς — το LocaPeer μπορεί να εκτελείται ελεύθερα στο παρασκήνιο</string>
     <string name="settings_battery_optimization_restricted">Βελτιστοποιημένη — πατήστε για να ορίσετε Χωρίς περιορισμούς στις ρυθμίσεις συστήματος</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Τελευταία εμφάνιση πριν από %1$s λεπ. κοντά στο (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ΕΝΕΡΓΟ!</string>
     <string name="notif_sos_active_text">Μετάδοση ειδοποίησης έκτακτης ανάγκης στις επαφές SOS</string>
-    <string name="notif_messages_group_title">Μηνύματα LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Το αίτημα επαφής από τον/την %1$s απορρίφθηκε</string>

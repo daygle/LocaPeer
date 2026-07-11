@@ -22,7 +22,6 @@
     <string name="common_restore">పునరుద్ధరించు</string>
     <string name="common_unlock">అన్‌లాక్ చేయి</string>
     <string name="common_password">పాస్‌వర్డ్</string>
-    <string name="common_not_now">ఇప్పుడు కాదు</string>
     <string name="common_off">ఆఫ్</string>
     <string name="common_approve">ఆమోదించు</string>
     <string name="common_deny">తిరస్కరించు</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">చలనాన్ని గుర్తించడం</string>
     <string name="settings_motion_detection_on">ప్రారంభించబడింది - చరిత్రలో మీ కదలిక రకాన్ని (నడక, డ్రైవింగ్) మెరుగుపరుస్తుంది</string>
     <string name="settings_motion_detection_off">ఆఫ్ - మరింత ఖచ్చితమైన కదలిక లేబుల్‌ల కోసం భౌతిక కార్యాచరణ ప్రాప్యతను అనుమతించండి</string>
-    <string name="settings_enable_motion_title">చలనాన్ని గుర్తించడాన్ని ప్రారంభించండి</string>
-    <string name="settings_enable_motion_message">భౌతిక కార్యాచరణ ప్రాప్యత LocaPeer చరిత్రలో నడక, డ్రైవింగ్ మరియు నిలబడటాన్ని మరింత ఖచ్చితంగా గుర్తించడానికి అనుమతిస్తుంది. ఇది ప్రస్తుతం ఆఫ్ చేయబడింది - మీరు సిస్టమ్ సెట్టింగ్‌ల నుండి మళ్ళీ ప్రారంభించవచ్చు.</string>
-    <string name="settings_open_settings">సెట్టింగ్‌లను తెరువు</string>
     <string name="settings_battery_optimization">బ్యాటరీ ఆప్టిమైజేషన్</string>
     <string name="settings_battery_optimization_unrestricted">నియంత్రణ లేని — LocaPeer బ్యాక్‌గ్రౌండ్‌లో స్వేచ్ఛగా రన్ చేయగలదు</string>
     <string name="settings_battery_optimization_restricted">ఆప్టిమైజ్ చేయబడింది — సిస్టమ్ సెట్టింగ్‌లలో నియంత్రణ లేని విధంగా సెట్ చేయడానికి ట్యాప్ చేయండి</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">చివరిగా %1$s నిమిషాల క్రితం (%2$s, %3$s) సమీపంలో కనిపించారు</string>
     <string name="notif_sos_active_title">SOS సక్రియంగా ఉంది!</string>
     <string name="notif_sos_active_text">SOS పరిచయాలకు అత్యవసర హెచ్చరికను ప్రసారం చేస్తోంది</string>
-    <string name="notif_messages_group_title">LocaPeer సందేశాలు</string>
 
     <!-- ── టోస్ట్‌లు ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s నుండి పరిచయ అభ్యర్థన తిరస్కరించబడింది</string>

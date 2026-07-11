@@ -22,7 +22,6 @@
     <string name="common_restore">Vegere</string>
     <string name="common_unlock">Veke</string>
     <string name="common_password">Şîfre</string>
-    <string name="common_not_now">Niha na</string>
     <string name="common_off">Girtî</string>
     <string name="common_approve">Biperizîne</string>
     <string name="common_deny">Red bike</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Tespîtkirina Tevgerê</string>
     <string name="settings_motion_detection_on">Çalak e - cureyê tevgera we (meşîn, ajotin) di dîrokê de safî dike</string>
     <string name="settings_motion_detection_off">Girtî - ji bo etîketên tevgerê yên rasttir destûrê bide gihîştina çalakiya laşî</string>
-    <string name="settings_enable_motion_title">Tespîtkirina tevgerê çalak bike</string>
-    <string name="settings_enable_motion_message">Gihîştina çalakiya laşî dihêle ku LocaPeer di dîroka we de meşîn, ajotin û sekinînê rasttir ji hev cuda bike. Heya niha girtî ye - hûn dikarin wê ji sazkirinên pergalê dîsa çalak bikin.</string>
-    <string name="settings_open_settings">Sazkirinan Veke</string>
     <string name="settings_battery_optimization">Optimîzasyona Pîlê</string>
     <string name="settings_battery_optimization_unrestricted">Bêsînorkirî — LocaPeer dikare di paşperdeyê de serbest bixebite</string>
     <string name="settings_battery_optimization_restricted">Optimîzekirî — li sazkirinên pergalê bitikînin da ku bêsînorkirî bikin</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Cara dawî %1$sm berê li nêzî (%2$s, %3$s) hat dîtin</string>
     <string name="notif_sos_active_title">SOS ÇALAK E!</string>
     <string name="notif_sos_active_text">Hişyariya acîl ji têkiliyên SOS re tê weşandin</string>
-    <string name="notif_messages_group_title">Peyamên LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Daxwaza têkiliyê ji %1$s hat redkirin</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">Відновити</string>
     <string name="common_unlock">Розблокувати</string>
     <string name="common_password">Пароль</string>
-    <string name="common_not_now">Не зараз</string>
     <string name="common_off">Вимк.</string>
     <string name="common_approve">Схвалити</string>
     <string name="common_deny">Відхилити</string>
@@ -127,9 +126,6 @@
     <string name="settings_motion_detection">Розпізнавання руху</string>
     <string name="settings_motion_detection_on">Увімкнено — уточнює тип руху (ходьба, керування авто) в історії</string>
     <string name="settings_motion_detection_off">Вимкнено — надайте доступ до фізичної активності для точніших міток руху</string>
-    <string name="settings_enable_motion_title">Увімкнути розпізнавання руху</string>
-    <string name="settings_enable_motion_message">Доступ до фізичної активності допомагає LocaPeer точніше розрізняти ходьбу, керування авто та нерухомість у вашій історії. Зараз він вимкнений — його можна знову ввімкнути в системних налаштуваннях.</string>
-    <string name="settings_open_settings">Відкрити налаштування</string>
     <string name="settings_battery_optimization">Оптимізація заряду</string>
     <string name="settings_battery_optimization_unrestricted">Без обмежень — LocaPeer може вільно працювати у фоновому режимі</string>
     <string name="settings_battery_optimization_restricted">Оптимізовано — натисніть, щоб встановити «Без обмежень» у системних налаштуваннях</string>
@@ -742,7 +738,6 @@
     <string name="notif_missed_text">Останній сигнал %1$s хв тому біля (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS АКТИВНИЙ!</string>
     <string name="notif_sos_active_text">Екстрене оповіщення передається SOS-контактам</string>
-    <string name="notif_messages_group_title">Повідомлення LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Запит на контакт від %1$s відхилено</string>

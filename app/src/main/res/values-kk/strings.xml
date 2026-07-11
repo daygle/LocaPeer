@@ -22,7 +22,6 @@
     <string name="common_restore">Қалпына келтіру</string>
     <string name="common_unlock">Құлыптан босату</string>
     <string name="common_password">Құпия сөз</string>
-    <string name="common_not_now">Қазір емес</string>
     <string name="common_off">Өшірулі</string>
     <string name="common_approve">Мақұлдау</string>
     <string name="common_deny">Бас тарту</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Қозғалысты анықтау</string>
     <string name="settings_motion_detection_on">Қосулы — тарихтағы қозғалыс түрін (жаяу жүру, көлік жүргізу) нақтылайды</string>
     <string name="settings_motion_detection_off">Өшірулі — қозғалыс белгілерін дәлірек анықтау үшін дене белсенділігіне рұқсат беріңіз</string>
-    <string name="settings_enable_motion_title">Қозғалысты анықтауды қосу</string>
-    <string name="settings_enable_motion_message">Дене белсенділігіне рұқсат беру LocaPeer-ге тарихыңыздағы жаяу жүруді, көлік жүргізуді және бір орында тұруды дәлірек ажыратуға мүмкіндік береді. Ол қазір өшірулі — оны жүйелік параметрлерден қайта қосуға болады.</string>
-    <string name="settings_open_settings">Параметрлерді ашу</string>
     <string name="settings_battery_optimization">Батареяны оңтайландыру</string>
     <string name="settings_battery_optimization_unrestricted">Шектеусіз — LocaPeer фонда еркін жұмыс істей алады</string>
     <string name="settings_battery_optimization_restricted">Оңтайландырылған — жүйелік параметрлерде шектеусіз деп орнату үшін түртіңіз</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Соңғы рет %1$s мин бұрын (%2$s, %3$s) жанында көрінді</string>
     <string name="notif_sos_active_title">SOS БЕЛСЕНДІ!</string>
     <string name="notif_sos_active_text">SOS контактілеріне төтенше жағдай ескертуі жіберілуде</string>
-    <string name="notif_messages_group_title">LocaPeer хабарламалары</string>
 
     <!-- ── Тостар ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s-ден контакт сұрауы қабылданбады</string>

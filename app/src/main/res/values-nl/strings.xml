@@ -22,7 +22,6 @@
     <string name="common_restore">Herstellen</string>
     <string name="common_unlock">Ontgrendelen</string>
     <string name="common_password">Wachtwoord</string>
-    <string name="common_not_now">Niet nu</string>
     <string name="common_off">Uit</string>
     <string name="common_approve">Goedkeuren</string>
     <string name="common_deny">Weigeren</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Bewegingsdetectie</string>
     <string name="settings_motion_detection_on">Ingeschakeld — verfijnt je bewegingstype (lopen, autorijden) in de geschiedenis</string>
     <string name="settings_motion_detection_off">Uit — sta toegang tot fysieke activiteit toe voor nauwkeurigere bewegingslabels</string>
-    <string name="settings_enable_motion_title">Bewegingsdetectie inschakelen</string>
-    <string name="settings_enable_motion_message">Met toegang tot fysieke activiteit kan LocaPeer lopen, autorijden en stilstaan nauwkeuriger onderscheiden in je geschiedenis. Het staat nu uit — je kunt het opnieuw inschakelen via de systeeminstellingen.</string>
-    <string name="settings_open_settings">Instellingen openen</string>
     <string name="settings_battery_optimization">Batterijoptimalisatie</string>
     <string name="settings_battery_optimization_unrestricted">Onbeperkt — LocaPeer kan vrij in de achtergrond draaien</string>
     <string name="settings_battery_optimization_restricted">Geoptimaliseerd — tik om dit in te stellen op Onbeperkt in de systeeminstellingen</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Laatst gezien %1$s min geleden nabij (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ACTIEF!</string>
     <string name="notif_sos_active_text">Noodmelding wordt uitgezonden naar SOS-contacten</string>
-    <string name="notif_messages_group_title">LocaPeer-berichten</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Contactverzoek van %1$s geweigerd</string>

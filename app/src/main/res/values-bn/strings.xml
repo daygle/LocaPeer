@@ -22,7 +22,6 @@
     <string name="common_restore">পুনরুদ্ধার করুন</string>
     <string name="common_unlock">আনলক করুন</string>
     <string name="common_password">পাসওয়ার্ড</string>
-    <string name="common_not_now">এখন নয়</string>
     <string name="common_off">বন্ধ</string>
     <string name="common_approve">অনুমোদন দিন</string>
     <string name="common_deny">প্রত্যাখ্যান করুন</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">গতি শনাক্তকরণ</string>
     <string name="settings_motion_detection_on">চালু — ইতিহাসে আপনার গতির ধরন (হাঁটা, গাড়ি চালানো) পরিশীলিত করে</string>
     <string name="settings_motion_detection_off">বন্ধ — আরও নির্ভুল গতির লেবেলের জন্য শারীরিক কার্যকলাপে অ্যাক্সেস অনুমতি দিন</string>
-    <string name="settings_enable_motion_title">গতি শনাক্তকরণ চালু করুন</string>
-    <string name="settings_enable_motion_message">শারীরিক কার্যকলাপে অ্যাক্সেস LocaPeer-কে আপনার ইতিহাসে হাঁটা, গাড়ি চালানো এবং স্থির থাকা আরও নির্ভুলভাবে আলাদা করতে সাহায্য করে। এটি এখন বন্ধ — সিস্টেম সেটিংস থেকে আবার চালু করতে পারেন।</string>
-    <string name="settings_open_settings">সেটিংস খুলুন</string>
     <string name="settings_battery_optimization">ব্যাটারি অপ্টিমাইজেশন</string>
     <string name="settings_battery_optimization_unrestricted">অনিয়ন্ত্রিত — LocaPeer ব্যাকগ্রাউন্ডে অবাধে চলতে পারে</string>
     <string name="settings_battery_optimization_restricted">অপ্টিমাইজ করা হয়েছে — সিস্টেম সেটিংসে অনিয়ন্ত্রিত সেট করতে ট্যাপ করুন</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">সর্বশেষ %1$s মিনিট আগে (%2$s, %3$s)-এর কাছে দেখা গেছে</string>
     <string name="notif_sos_active_title">SOS সক্রিয়!</string>
     <string name="notif_sos_active_text">SOS পরিচিতিদের কাছে জরুরি সতর্কতা সম্প্রচার হচ্ছে</string>
-    <string name="notif_messages_group_title">LocaPeer বার্তা</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s থেকে পরিচিতির অনুরোধ প্রত্যাখ্যাত</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">Mú padà bọ̀ sípò</string>
     <string name="common_unlock">Ṣí i</string>
     <string name="common_password">Ọ̀rọ̀ìṣọ́</string>
-    <string name="common_not_now">Kì í ṣe nísinsìnyí</string>
     <string name="common_off">Pá</string>
     <string name="common_approve">Fọwọ́ sí i</string>
     <string name="common_deny">Kọ̀ ọ́</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">Ìwárí Iṣipopada</string>
     <string name="settings_motion_detection_on">Mú ṣiṣẹ́ - ń jẹ́ kí á mọ irú iṣẹ́ tí o ń ṣe (rìn, wakọ̀) nínú ìtàn rẹ</string>
     <string name="settings_motion_detection_off">Pá - gba àyè fún iṣẹ́ ara fún ìsọfúnni iṣipopada tó pé</string>
-    <string name="settings_enable_motion_title">Mú ìwárí iṣipopada ṣiṣẹ́</string>
-    <string name="settings_enable_motion_message">Àyè fún iṣẹ́ ara ń jẹ́ kí LocaPeer mọ ìyàtọ̀ láàárín rìn, wakọ̀ àti dídúró jẹ́ẹ́ dunjú nínú ìtàn rẹ. O wà ní pípa nísinsìnyí - o le mú ṣiṣẹ́ padà nínú ètò ẹ̀rọ rẹ.</string>
-    <string name="settings_open_settings">Ṣí Ètò</string>
     <string name="settings_battery_optimization">Ìmúgbòòrò Bátìrì</string>
     <string name="settings_battery_optimization_unrestricted">Kò sí ìhámọ́ — LocaPeer le ṣiṣẹ́ nínú abẹ́lẹ̀ láìsí ìdíwọ́</string>
     <string name="settings_battery_optimization_restricted">Mú dunjú — tẹ̀ ẹ́ láti tò ó sí Kò sí ìhámọ́ nínú ètò ẹ̀rọ</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS NA-ARỤ ỌRỤ!</string>
     <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
-    <string name="notif_messages_group_title">Ozi LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Ajụrụ arịrịọ ojúlùmọ̀ sitere na %1$s</string>

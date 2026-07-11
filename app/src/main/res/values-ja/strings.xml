@@ -22,7 +22,6 @@
     <string name="common_restore">復元</string>
     <string name="common_unlock">ロック解除</string>
     <string name="common_password">パスワード</string>
-    <string name="common_not_now">後で</string>
     <string name="common_off">オフ</string>
     <string name="common_approve">承認</string>
     <string name="common_deny">拒否</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">動作検出</string>
     <string name="settings_motion_detection_on">有効 - 履歴内の移動タイプ（歩行、運転）を精緻化します</string>
     <string name="settings_motion_detection_off">オフ - より正確な移動ラベルのために身体活動へのアクセスを許可してください</string>
-    <string name="settings_enable_motion_title">動作検出を有効にする</string>
-    <string name="settings_enable_motion_message">身体活動へのアクセスを許可すると、LocaPeerは履歴内で歩行、運転、静止をより正確に区別できるようになります。現在はオフになっています。システム設定から再度有効にできます。</string>
-    <string name="settings_open_settings">設定を開く</string>
     <string name="settings_battery_optimization">バッテリーの最適化</string>
     <string name="settings_battery_optimization_unrestricted">制限なし — LocaPeer はバックグラウンドで自由に実行できます</string>
     <string name="settings_battery_optimization_restricted">最適化済み — タップしてシステム設定で「制限なし」に設定してください</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">%1$s分前に（%2$s、 %3$s）の近くで確認されました</string>
     <string name="notif_sos_active_title">SOS発信中！</string>
     <string name="notif_sos_active_text">SOS連絡先に緊急アラートを配信しています</string>
-    <string name="notif_messages_group_title">LocaPeerメッセージ</string>
 
     <!-- ── トースト ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$sからの連絡先リクエストを拒否しました</string>

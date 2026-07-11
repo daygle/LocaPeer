@@ -22,7 +22,6 @@
     <string name="common_restore">ပြန်လည်ရယူရန်</string>
     <string name="common_unlock">သော့ဖွင့်ရန်</string>
     <string name="common_password">စကားဝှက်</string>
-    <string name="common_not_now">အခု မဟုတ်သေးပါ</string>
     <string name="common_off">ပိတ်ထားသည်</string>
     <string name="common_approve">အတည်ပြုရန်</string>
     <string name="common_deny">ငြင်းပယ်ရန်</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">လှုပ်ရှားမှု ရှာဖွေတွေ့ရှိမှု</string>
     <string name="settings_motion_detection_on">ဖွင့်ထားသည် - မှတ်တမ်းတွင် သင့်လှုပ်ရှားမှု အမျိုးအစား (လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်း) ကို ပိုမိုတိကျစေသည်</string>
     <string name="settings_motion_detection_off">ပိတ်ထားသည် - ပိုမိုတိကျသော လှုပ်ရှားမှု အညွှန်းများအတွက် ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်ကို ပေးပါ</string>
-    <string name="settings_enable_motion_title">လှုပ်ရှားမှု ရှာဖွေတွေ့ရှိမှုကို ဖွင့်ပါ</string>
-    <string name="settings_enable_motion_message">ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်သည် LocaPeer ကို သင့်မှတ်တမ်းတွင် လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်းနှင့် ရပ်နေခြင်းတို့ကို ပိုမိုတိကျစွာ ခွဲခြားနိုင်စေပါသည်။ ၎င်းကို လက်ရှိတွင် ပိတ်ထားသည် - စနစ်ဆက်တင်များမှ ပြန်လည်ဖွင့်နိုင်ပါသည်။</string>
-    <string name="settings_open_settings">ဆက်တင်များကို ဖွင့်ရန်</string>
     <string name="settings_battery_optimization">ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင် လုပ်ဆောင်ခြင်း</string>
     <string name="settings_battery_optimization_unrestricted">ကန့်သတ်ချက်မရှိ — LocaPeer သည် နောက်ကွယ်တွင် လွတ်လပ်စွာ အလုပ်လုပ်နိုင်သည်</string>
     <string name="settings_battery_optimization_restricted">အကောင်းဆုံးဖြစ်အောင် လုပ်ထားသည် — စနစ်ဆက်တင်များတွင် ကန့်သတ်ချက်မရှိဟု သတ်မှတ်ရန် နှိပ်ပါ</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">နောက်ဆုံးတွေ့ရှိမှု- %1$s မိနစ်ခန့်က (%2$s, %3$s) အနီး</string>
     <string name="notif_sos_active_title">SOS အလုပ်လုပ်နေသည်!</string>
     <string name="notif_sos_active_text">SOS အဆက်အသွယ်များထံ အရေးပေါ် သတိပေးချက် ထုတ်လွှင့်နေသည်</string>
-    <string name="notif_messages_group_title">LocaPeer မက်ဆေ့ဂျ်များ</string>
 
     <!-- ── တိုစ့် မက်ဆေ့ဂျ်များ ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s ထံမှ အဆက်အသွယ် တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်သည်</string>

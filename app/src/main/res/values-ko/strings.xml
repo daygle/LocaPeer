@@ -22,7 +22,6 @@
     <string name="common_restore">복원</string>
     <string name="common_unlock">잠금 해제</string>
     <string name="common_password">비밀번호</string>
-    <string name="common_not_now">나중에</string>
     <string name="common_off">꺼짐</string>
     <string name="common_approve">승인</string>
     <string name="common_deny">거부</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">동작 감지</string>
     <string name="settings_motion_detection_on">켜짐 — 기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
     <string name="settings_motion_detection_off">꺼짐 — 더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
-    <string name="settings_enable_motion_title">동작 감지 켜기</string>
-    <string name="settings_enable_motion_message">신체 활동 접근을 허용하면 LocaPeer가 기록에서 걷기, 운전, 정지 상태를 더 정확하게 구분할 수 있습니다. 현재 꺼져 있으며 시스템 설정에서 다시 켤 수 있습니다.</string>
-    <string name="settings_open_settings">설정 열기</string>
     <string name="settings_battery_optimization">배터리 최적화</string>
     <string name="settings_battery_optimization_unrestricted">제한 없음 — LocaPeer가 백그라운드에서 자유롭게 실행될 수 있습니다</string>
     <string name="settings_battery_optimization_restricted">최적화됨 — 시스템 설정에서 \'제한 없음\'으로 설정하려면 탭하세요</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">%1$s분 전에 (%2$s, %3$s) 근처에서 마지막으로 확인됨</string>
     <string name="notif_sos_active_title">SOS 활성화됨!</string>
     <string name="notif_sos_active_text">SOS 연락처에 긴급 알림 전송 중</string>
-    <string name="notif_messages_group_title">LocaPeer 메시지</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s 님의 연락처 요청을 거절했습니다</string>

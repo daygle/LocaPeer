@@ -22,7 +22,6 @@
     <string name="common_restore">恢复</string>
     <string name="common_unlock">解锁</string>
     <string name="common_password">密码</string>
-    <string name="common_not_now">以后再说</string>
     <string name="common_off">关闭</string>
     <string name="common_approve">批准</string>
     <string name="common_deny">拒绝</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">运动检测</string>
     <string name="settings_motion_detection_on">已启用 - 优化历史记录中的运动类型 (步行, 驾车)</string>
     <string name="settings_motion_detection_off">关闭 - 允许访问身体活动以获得更准确的运动标签</string>
-    <string name="settings_enable_motion_title">启用运动检测</string>
-    <string name="settings_enable_motion_message">身体活动访问允许 LocaPeer 在您的历史记录中更准确地识别步行、驾车和静止。目前已关闭 - 您可以从系统设置中重新启用它。</string>
-    <string name="settings_open_settings">打开设置</string>
     <string name="settings_battery_optimization">电池优化</string>
     <string name="settings_battery_optimization_unrestricted">无限制 — LocaPeer 可以在后台自由运行</string>
     <string name="settings_battery_optimization_restricted">已优化 — 点击在系统设置中设为“无限制”</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">%1$s 分钟前在 (%2$s, %3$s) 附近最后上线</string>
     <string name="notif_sos_active_title">SOS 已激活！</string>
     <string name="notif_sos_active_text">正在向 SOS 联系人广播紧急警报</string>
-    <string name="notif_messages_group_title">LocaPeer 消息</string>
 
     <!-- ── 吐司通知 ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">已拒绝来自 %1$s 的联系人请求</string>

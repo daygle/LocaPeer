@@ -22,7 +22,6 @@
     <string name="common_restore">Khôi phục</string>
     <string name="common_unlock">Mở khóa</string>
     <string name="common_password">Mật khẩu</string>
-    <string name="common_not_now">Để sau</string>
     <string name="common_off">Tắt</string>
     <string name="common_approve">Phê duyệt</string>
     <string name="common_deny">Từ chối</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">Phát hiện chuyển động</string>
     <string name="settings_motion_detection_on">Đang bật — tinh chỉnh loại chuyển động (đi bộ, lái xe) trong lịch sử</string>
     <string name="settings_motion_detection_off">Tắt — cho phép truy cập hoạt động thể chất để có nhãn chuyển động chính xác hơn</string>
-    <string name="settings_enable_motion_title">Bật phát hiện chuyển động</string>
-    <string name="settings_enable_motion_message">Quyền truy cập hoạt động thể chất giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên trong lịch sử của bạn. Hiện đang tắt — bạn có thể bật lại trong cài đặt hệ thống.</string>
-    <string name="settings_open_settings">Mở cài đặt</string>
     <string name="settings_battery_optimization">Tối ưu hóa pin</string>
     <string name="settings_battery_optimization_unrestricted">Không hạn chế — LocaPeer có thể chạy tự do trong nền</string>
     <string name="settings_battery_optimization_restricted">Đã tối ưu hóa — nhấn để đặt Không hạn chế trong cài đặt hệ thống</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">Hoạt động gần nhất %1$s phút trước gần (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ĐANG BẬT!</string>
     <string name="notif_sos_active_text">Đang phát cảnh báo khẩn cấp tới các liên hệ SOS</string>
-    <string name="notif_messages_group_title">Tin nhắn LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Đã từ chối yêu cầu liên hệ từ %1$s</string>

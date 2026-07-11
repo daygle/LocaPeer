@@ -22,7 +22,6 @@
     <string name="common_restore">กู้คืน</string>
     <string name="common_unlock">ปลดล็อก</string>
     <string name="common_password">รหัสผ่าน</string>
-    <string name="common_not_now">ไว้ทีหลัง</string>
     <string name="common_off">ปิด</string>
     <string name="common_approve">อนุมัติ</string>
     <string name="common_deny">ปฏิเสธ</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">การตรวจจับการเคลื่อนไหว</string>
     <string name="settings_motion_detection_on">เปิด — ช่วยระบุประเภทการเคลื่อนไหว (เดิน ขับรถ) ในประวัติได้แม่นยำขึ้น</string>
     <string name="settings_motion_detection_off">ปิด — อนุญาตการเข้าถึงกิจกรรมทางกายเพื่อป้ายกำกับการเคลื่อนไหวที่แม่นยำขึ้น</string>
-    <string name="settings_enable_motion_title">เปิดการตรวจจับการเคลื่อนไหว</string>
-    <string name="settings_enable_motion_message">การเข้าถึงกิจกรรมทางกายช่วยให้ LocaPeer แยกแยะการเดิน การขับรถ และการอยู่นิ่งในประวัติของคุณได้แม่นยำขึ้น ขณะนี้ปิดอยู่ — คุณสามารถเปิดใหม่ได้จากการตั้งค่าระบบ</string>
-    <string name="settings_open_settings">เปิดการตั้งค่า</string>
     <string name="settings_battery_optimization">การเพิ่มประสิทธิภาพแบตเตอรี่</string>
     <string name="settings_battery_optimization_unrestricted">ไม่จำกัด — LocaPeer สามารถทำงานได้อย่างอิสระในเบื้องหลัง</string>
     <string name="settings_battery_optimization_restricted">เพิ่มประสิทธิภาพแล้ว — แตะเพื่อตั้งเป็นไม่จำกัดในการตั้งค่าระบบ</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">เห็นล่าสุด %1$s นาทีที่แล้วใกล้ (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ทำงานอยู่!</string>
     <string name="notif_sos_active_text">กำลังส่งการเตือนฉุกเฉินไปยังผู้ติดต่อ SOS</string>
-    <string name="notif_messages_group_title">ข้อความ LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">ปฏิเสธคำขอผู้ติดต่อจาก %1$s แล้ว</string>

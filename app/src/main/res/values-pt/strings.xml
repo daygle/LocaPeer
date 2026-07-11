@@ -23,7 +23,6 @@
     <string name="common_restore">Restaurar</string>
     <string name="common_unlock">Desbloquear</string>
     <string name="common_password">Senha</string>
-    <string name="common_not_now">Agora não</string>
     <string name="common_off">Desligado</string>
     <string name="common_approve">Aprovar</string>
     <string name="common_deny">Recusar</string>
@@ -126,9 +125,6 @@
     <string name="settings_motion_detection">Detecção de Movimento</string>
     <string name="settings_motion_detection_on">Ativado - refina seu tipo de movimento (caminhada, condução) no histórico</string>
     <string name="settings_motion_detection_off">Desativado - permite acesso à atividade física para rótulos de movimento mais precisos</string>
-    <string name="settings_enable_motion_title">Ativar detecção de movimento</string>
-    <string name="settings_enable_motion_message">O acesso à atividade física permite que o LocaPeer diferencie melhor entre caminhar, dirigir e estar parado em seu histórico. Atualmente está desativado - você pode reativá-lo nas configurações do sistema.</string>
-    <string name="settings_open_settings">Abrir Configurações</string>
     <string name="settings_battery_optimization">Otimização de Bateria</string>
     <string name="settings_battery_optimization_unrestricted">Irrestrito — LocaPeer pode rodar livremente em segundo plano</string>
     <string name="settings_battery_optimization_restricted">Otimizado — toque para definir Irrestrito nas configurações do sistema</string>
@@ -715,7 +711,6 @@
     <string name="notif_missed_text">Visto pela última vez há %1$sm perto de (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ATIVO!</string>
     <string name="notif_sos_active_text">Transmitindo alerta de emergência para contatos de SOS</string>
-    <string name="notif_messages_group_title">Mensagens do LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Solicitação de contato de %1$s recusada</string>

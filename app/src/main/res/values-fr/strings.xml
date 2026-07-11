@@ -22,7 +22,6 @@
     <string name="common_restore">Restaurer</string>
     <string name="common_unlock">Déverrouiller</string>
     <string name="common_password">Mot de passe</string>
-    <string name="common_not_now">Pas maintenant</string>
     <string name="common_off">Désactivé</string>
     <string name="common_approve">Approuver</string>
     <string name="common_deny">Refuser</string>
@@ -126,9 +125,6 @@
     <string name="settings_motion_detection">Détection de mouvement</string>
     <string name="settings_motion_detection_on">Activé - affine votre type de mouvement (marche, conduite) dans l\'historique</string>
     <string name="settings_motion_detection_off">Désactivé - autoriser l\'accès à l\'activité physique pour des étiquettes de mouvement plus précises</string>
-    <string name="settings_enable_motion_title">Activer la détection de mouvement</string>
-    <string name="settings_enable_motion_message">L\'accès à l\'activité physique permet à LocaPeer de distinguer plus précisément la marche, la conduite et l\'immobilisme dans votre historique. Il est actuellement désactivé - vous pouvez le réactiver dans les paramètres du système.</string>
-    <string name="settings_open_settings">Ouvrir les paramètres</string>
     <string name="settings_battery_optimization">Optimisation de la batterie</string>
     <string name="settings_battery_optimization_unrestricted">Non restreinte — LocaPeer peut fonctionner librement en arrière-plan</string>
     <string name="settings_battery_optimization_restricted">Optimisée — appuyez pour définir sur Non restreinte dans les paramètres du système</string>
@@ -717,7 +713,6 @@
     <string name="notif_missed_text">Vu pour la dernière fois il y a %1$sm près de (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ACTIF !</string>
     <string name="notif_sos_active_text">Diffusion d\'une alerte d\'urgence aux contacts SOS</string>
-    <string name="notif_messages_group_title">Messages LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Demande de contact de %1$s refusée</string>

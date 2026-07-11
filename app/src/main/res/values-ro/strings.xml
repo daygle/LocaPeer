@@ -22,7 +22,6 @@
     <string name="common_restore">Restaurare</string>
     <string name="common_unlock">Deblocare</string>
     <string name="common_password">Parolă</string>
-    <string name="common_not_now">Nu acum</string>
     <string name="common_off">Oprit</string>
     <string name="common_approve">Aprobare</string>
     <string name="common_deny">Refuz</string>
@@ -126,9 +125,6 @@
     <string name="settings_motion_detection">Detectarea mișcării</string>
     <string name="settings_motion_detection_on">Activată — rafinează tipul de mișcare (mers, condus) din istoric</string>
     <string name="settings_motion_detection_off">Dezactivată — permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
-    <string name="settings_enable_motion_title">Activați detectarea mișcării</string>
-    <string name="settings_enable_motion_message">Accesul la activitatea fizică permite LocaPeer să distingă mai precis mersul, condusul și staționarea în istoricul dvs. Momentan este dezactivat — îl puteți reactiva din setările sistemului.</string>
-    <string name="settings_open_settings">Deschideți setările</string>
     <string name="settings_battery_optimization">Optimizarea bateriei</string>
     <string name="settings_battery_optimization_unrestricted">Nerestricționat — LocaPeer poate rula liber în fundal</string>
     <string name="settings_battery_optimization_restricted">Optimizat — atingeți pentru a seta Nerestricționat în setările sistemului</string>
@@ -729,7 +725,6 @@
     <string name="notif_missed_text">Văzut ultima dată acum %1$s min lângă (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ACTIV!</string>
     <string name="notif_sos_active_text">Se transmite alerta de urgență către contactele SOS</string>
-    <string name="notif_messages_group_title">Mesaje LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Cerere de contact de la %1$s refuzată</string>

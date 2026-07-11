@@ -22,7 +22,6 @@
     <string name="common_restore">Wiederherstellen</string>
     <string name="common_unlock">Entsperren</string>
     <string name="common_password">Passwort</string>
-    <string name="common_not_now">Nicht jetzt</string>
     <string name="common_off">Aus</string>
     <string name="common_approve">Genehmigen</string>
     <string name="common_deny">Ablehnen</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Bewegungserkennung</string>
     <string name="settings_motion_detection_on">Aktiviert - verfeinert Ihren Bewegungstyp (Gehen, Fahren) im Verlauf</string>
     <string name="settings_motion_detection_off">Aus - Zugriff auf körperliche Aktivität für genauere Bewegungsbezeichnungen erlauben</string>
-    <string name="settings_enable_motion_title">Bewegungserkennung aktivieren</string>
-    <string name="settings_enable_motion_message">Der Zugriff auf körperliche Aktivität ermöglicht es LocaPeer, Gehen, Fahren und Stehenbleiben in Ihrem Verlauf genauer zu unterscheiden. Er ist derzeit ausgeschaltet - Sie können ihn in den Systemeinstellungen wieder aktivieren.</string>
-    <string name="settings_open_settings">Einstellungen öffnen</string>
     <string name="settings_battery_optimization">Akku-Optimierung</string>
     <string name="settings_battery_optimization_unrestricted">Uneingeschränkt — LocaPeer kann frei im Hintergrund ausgeführt werden</string>
     <string name="settings_battery_optimization_restricted">Optimiert — tippen, um in den Systemeinstellungen auf Uneingeschränkt zu setzen</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Zuletzt gesehen vor %1$sm nahe (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTIV!</string>
     <string name="notif_sos_active_text">Notfallwarnung an SOS-Kontakte übertragen</string>
-    <string name="notif_messages_group_title">LocaPeer-Nachrichten</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Kontaktanfrage von %1$s abgelehnt</string>

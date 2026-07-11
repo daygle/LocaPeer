@@ -22,7 +22,6 @@
     <string name="common_restore">Obnovit</string>
     <string name="common_unlock">Odemknout</string>
     <string name="common_password">Heslo</string>
-    <string name="common_not_now">Teď ne</string>
     <string name="common_off">Vypnuto</string>
     <string name="common_approve">Schválit</string>
     <string name="common_deny">Odmítnout</string>
@@ -127,9 +126,6 @@
     <string name="settings_motion_detection">Detekce pohybu</string>
     <string name="settings_motion_detection_on">Zapnuto — zpřesňuje typ pohybu (chůze, jízda) v historii</string>
     <string name="settings_motion_detection_off">Vypnuto — povolte přístup k fyzické aktivitě pro přesnější štítky pohybu</string>
-    <string name="settings_enable_motion_title">Zapnout detekci pohybu</string>
-    <string name="settings_enable_motion_message">Přístup k fyzické aktivitě umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání v historii. Momentálně je vypnutý — můžete jej znovu povolit v nastavení systému.</string>
-    <string name="settings_open_settings">Otevřít nastavení</string>
     <string name="settings_battery_optimization">Optimalizace baterie</string>
     <string name="settings_battery_optimization_unrestricted">Bez omezení — LocaPeer může běžet volně na pozadí</string>
     <string name="settings_battery_optimization_restricted">Optimalizováno — klepnutím nastavte Bez omezení v nastavení systému</string>
@@ -742,7 +738,6 @@
     <string name="notif_missed_text">Naposledy online před %1$s min poblíž (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTIVNÍ!</string>
     <string name="notif_sos_active_text">Vysílá se nouzové upozornění SOS kontaktům</string>
-    <string name="notif_messages_group_title">Zprávy LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Žádost o kontakt od %1$s odmítnuta</string>

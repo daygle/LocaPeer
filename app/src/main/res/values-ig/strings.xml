@@ -22,7 +22,6 @@
     <string name="common_restore">Weghachi</string>
     <string name="common_unlock">Kpọghee</string>
     <string name="common_password">Paswọd</string>
-    <string name="common_not_now">Ọ bụghị ugbu a</string>
     <string name="common_off">Gbanyụọ</string>
     <string name="common_approve">Kwado</string>
     <string name="common_deny">Jụọ</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">Nchọpụta Mmegharị</string>
     <string name="settings_motion_detection_on">Gbanyere - na-edozi ụdị mmegharị gị (ije ije, ịkwọ ụgbọala) na akụkọ</string>
     <string name="settings_motion_detection_off">Gbanyụọ - kwe ka ịnweta ọrụ anụ ahụ maka akara mmegharị ziri ezi</string>
-    <string name="settings_enable_motion_title">Gbanye nchọpụta mmegharị</string>
-    <string name="settings_enable_motion_message">Ịnweta ọrụ anụ ahụ na-eme ka LocaPeer nwee ike ịmata ije ije, ịkwọ ụgbọala na iguzo otu ebe nke ọma na akụkọ gị. Agbanyụrụ ya ugbu a - ị nwere ike ịgbanye ya ọzọ na ntọala sistemụ.</string>
-    <string name="settings_open_settings">Mepee Ntọala</string>
     <string name="settings_battery_optimization">Nkwalite Batrị</string>
     <string name="settings_battery_optimization_unrestricted">Enweghị mgbochi — LocaPeer nwere ike na-agba n\'azụ n\'efu</string>
     <string name="settings_battery_optimization_restricted">Emegharịrị — pịa ka ịtọọ Enweghị mgbochi na ntọala sistemụ</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS NA-ARỤ ỌRỤ!</string>
     <string name="notif_sos_active_text">Na-agbasa mkpu mberede gaa na kọntaktị SOS</string>
-    <string name="notif_messages_group_title">Ozi LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Ajụrụ arịrịọ kọntaktị sitere na %1$s</string>

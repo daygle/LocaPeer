@@ -22,7 +22,6 @@
     <string name="common_restore">Mayar</string>
     <string name="common_unlock">Buɗe</string>
     <string name="common_password">Kalmar sirri</string>
-    <string name="common_not_now">Ba yanzu ba</string>
     <string name="common_off">A kashe</string>
     <string name="common_approve">Amince</string>
     <string name="common_deny">Ƙi</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Gano Motsi</string>
     <string name="settings_motion_detection_on">An kunna - yana tace nau\'in motsin ku (tafiya, tuki) a tarihi</string>
     <string name="settings_motion_detection_off">A kashe - ba da damar shiga ayyukan jiki don ingantaccen lakabin motsi</string>
-    <string name="settings_enable_motion_title">Kunna gano motsi</string>
-    <string name="settings_enable_motion_message">Izinin ayyukan jiki yana bawa LocaPeer damar bambance tafiya, tuki da tsayawa cak mafi inganci a cikin tarihin ku. A halin yanzu yana kashe - zaku iya sake kunna shi daga saitunan tsarin.</string>
-    <string name="settings_open_settings">Buɗe Saituna</string>
     <string name="settings_battery_optimization">Inganta Baturi</string>
     <string name="settings_battery_optimization_unrestricted">Ba shi da iyaka — LocaPeer na iya yin aiki a bango kyauta</string>
     <string name="settings_battery_optimization_restricted">An inganta — danna don saita zuwa Ba shi da iyaka a saitunan tsarin</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Hụrụ ikpeazụ %1$sm gara aga nso (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS NA AIKI!</string>
     <string name="notif_sos_active_text">Ń rán ìkìlọ̀ pàjáwìrì sí àwọn ojúlùmọ̀ SOS</string>
-    <string name="notif_messages_group_title">Saƙonnin LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Ajụrụ arịrịọ ojúlùmọ̀ sitere na %1$s</string>

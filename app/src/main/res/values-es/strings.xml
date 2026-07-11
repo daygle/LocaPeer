@@ -22,7 +22,6 @@
     <string name="common_restore">Restaurar</string>
     <string name="common_unlock">Desbloquear</string>
     <string name="common_password">Contraseña</string>
-    <string name="common_not_now">Ahora no</string>
     <string name="common_off">Apagado</string>
     <string name="common_approve">Aprobar</string>
     <string name="common_deny">Denegar</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Detección de movimiento</string>
     <string name="settings_motion_detection_on">Activado - refina su tipo de movimiento (caminar, conducir) en el historial</string>
     <string name="settings_motion_detection_off">Desactivado - permitir acceso a la actividad física para etiquetas de movimiento más precisas</string>
-    <string name="settings_enable_motion_title">Activar detección de movimiento</string>
-    <string name="settings_enable_motion_message">El acceso a la actividad física permite a LocaPeer distinguir mejor entre caminar, conducir y estar parado en su historial. Actualmente está desactivado; puede volver a activarlo desde los ajustes del sistema.</string>
-    <string name="settings_open_settings">Abrir ajustes</string>
     <string name="settings_battery_optimization">Optimización de batería</string>
     <string name="settings_battery_optimization_unrestricted">Sin restricciones — LocaPeer puede ejecutarse libremente en segundo plano</string>
     <string name="settings_battery_optimization_restricted">Optimizado — toca para configurar Sin restricciones en los ajustes del sistema</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Visto por última vez hace %1$sm cerca de (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">¡SOS ACTIVO!</string>
     <string name="notif_sos_active_text">Transmitiendo alerta de emergencia a los contactos SOS</string>
-    <string name="notif_messages_group_title">Mensajes de LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Solicitud de contacto rechazada de %1$s</string>

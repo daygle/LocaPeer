@@ -22,7 +22,6 @@
     <string name="common_restore">還原</string>
     <string name="common_unlock">解鎖</string>
     <string name="common_password">密碼</string>
-    <string name="common_not_now">稍後再說</string>
     <string name="common_off">關閉</string>
     <string name="common_approve">核准</string>
     <string name="common_deny">拒絕</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">動作偵測</string>
     <string name="settings_motion_detection_on">已啟用 — 精確判斷紀錄中的移動類型（步行、駕駛）</string>
     <string name="settings_motion_detection_off">關閉 — 允許身體活動存取以取得更準確的移動標籤</string>
-    <string name="settings_enable_motion_title">啟用動作偵測</string>
-    <string name="settings_enable_motion_message">身體活動存取可讓 LocaPeer 在您的紀錄中更準確地區分步行、駕駛與靜止。目前已關閉 — 您可以在系統設定中重新啟用。</string>
-    <string name="settings_open_settings">開啟設定</string>
     <string name="settings_battery_optimization">電池最佳化</string>
     <string name="settings_battery_optimization_unrestricted">不受限 — LocaPeer 可以在背景自由執行</string>
     <string name="settings_battery_optimization_restricted">已最佳化 — 點擊以在系統設定中設為「不受限」</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">上次上線於 %1$s 分鐘前，靠近 (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS 啟動中！</string>
     <string name="notif_sos_active_text">正在向 SOS 聯絡人廣播緊急警示</string>
-    <string name="notif_messages_group_title">LocaPeer 訊息</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">已拒絕來自 %1$s 的聯絡人要求</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">மீட்டமை</string>
     <string name="common_unlock">திற</string>
     <string name="common_password">கடவுச்சொல்</string>
-    <string name="common_not_now">இப்போது வேண்டாம்</string>
     <string name="common_off">அணை</string>
     <string name="common_approve">அங்கீகரி</string>
     <string name="common_deny">மறுக்கவும்</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">இயக்கத்தைக் கண்டறிதல்</string>
     <string name="settings_motion_detection_on">இயக்கப்பட்டது - வரலாற்றில் உங்கள் இயக்க வகையை (நடத்தல், வாகனம் ஓட்டுதல்) செம்மைப்படுத்துகிறது</string>
     <string name="settings_motion_detection_off">அணை - துல்லியமான இயக்க லேபிள்களுக்கு உடல் செயல்பாட்டு அணுகலை அனுமதிக்கவும்</string>
-    <string name="settings_enable_motion_title">இயக்கத்தைக் கண்டறிதலை இயக்கு</string>
-    <string name="settings_enable_motion_message">உடல் செயல்பாட்டு அணுகல் LocaPeer உங்கள் வரலாற்றில் நடத்தல், வாகனம் ஓட்டுதல் மற்றும் அசையாமல் நிற்றல் ஆகியவற்றைத் துல்லியமாக வேறுபடுத்த அனுமதிக்கிறது. இது தற்போது அணைக்கப்பட்டுள்ளது - கணினி அமைப்புகளிலிருந்து மீண்டும் இயக்கலாம்.</string>
-    <string name="settings_open_settings">அமைப்புகளைத் திற</string>
     <string name="settings_battery_optimization">பேட்டரி மேம்படுத்தல்</string>
     <string name="settings_battery_optimization_unrestricted">கட்டுப்பாடற்றது — LocaPeer பின்னணியில் சுதந்திரமாக இயங்க முடியும்</string>
     <string name="settings_battery_optimization_restricted">மேம்படுத்தப்பட்டது — கணினி அமைப்புகளில் கட்டுப்பாடற்றதாக அமைக்க தட்டவும்</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">கடைசியாக %1$s நிமிடம் முன் (%2$s, %3$s) அருகில் பார்க்கப்பட்டது</string>
     <string name="notif_sos_active_title">SOS செயலில் உள்ளது!</string>
     <string name="notif_sos_active_text">SOS தொடர்புகளுக்கு அவசர எச்சரிக்கையை ஒளிபரப்புகிறது</string>
-    <string name="notif_messages_group_title">LocaPeer செய்திகள்</string>
 
     <!-- ── டோஸ்ட்கள் ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s இடமிருந்து தொடர்புக் கோரிக்கை மறுக்கப்பட்டது</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">Geri Yükle</string>
     <string name="common_unlock">Kilidi Aç</string>
     <string name="common_password">Şifre</string>
-    <string name="common_not_now">Şimdi Değil</string>
     <string name="common_off">Kapalı</string>
     <string name="common_approve">Onayla</string>
     <string name="common_deny">Reddet</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Hareket Algılama</string>
     <string name="settings_motion_detection_on">Etkin — geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
     <string name="settings_motion_detection_off">Kapalı — daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
-    <string name="settings_enable_motion_title">Hareket algılamayı etkinleştir</string>
-    <string name="settings_enable_motion_message">Fiziksel aktivite erişimi, LocaPeer\'in geçmişinizde yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Şu anda kapalı — sistem ayarlarından yeniden etkinleştirebilirsiniz.</string>
-    <string name="settings_open_settings">Ayarları Aç</string>
     <string name="settings_battery_optimization">Pil Optimizasyonu</string>
     <string name="settings_battery_optimization_unrestricted">Kısıtlanmamış — LocaPeer arka planda serbestçe çalışabilir</string>
     <string name="settings_battery_optimization_restricted">Optimize edildi — sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Son görülme %1$s dk önce, (%2$s, %3$s) yakınında</string>
     <string name="notif_sos_active_title">SOS ETKİN!</string>
     <string name="notif_sos_active_text">Acil durum uyarısı SOS kişilerine yayınlanıyor</string>
-    <string name="notif_messages_group_title">LocaPeer Mesajları</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s kişisinden gelen kişi isteği reddedildi</string>

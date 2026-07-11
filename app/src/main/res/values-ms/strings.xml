@@ -22,7 +22,6 @@
     <string name="common_restore">Pulihkan</string>
     <string name="common_unlock">Buka Kunci</string>
     <string name="common_password">Kata Laluan</string>
-    <string name="common_not_now">Bukan sekarang</string>
     <string name="common_off">Mati</string>
     <string name="common_approve">Lulus</string>
     <string name="common_deny">Nafi</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">Pengesanan Gerakan</string>
     <string name="settings_motion_detection_on">Dihidupkan — memperhalusi jenis pergerakan anda (berjalan, memandu) dalam sejarah</string>
     <string name="settings_motion_detection_off">Dimatikan — benarkan akses aktiviti fizikal untuk label pergerakan yang lebih tepat</string>
-    <string name="settings_enable_motion_title">Hidupkan pengesanan gerakan</string>
-    <string name="settings_enable_motion_message">Akses aktiviti fizikal membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat dalam sejarah anda. Ia kini dimatikan — anda boleh menghidupkannya semula daripada tetapan sistem.</string>
-    <string name="settings_open_settings">Buka Tetapan</string>
     <string name="settings_battery_optimization">Pengoptimuman Bateri</string>
     <string name="settings_battery_optimization_unrestricted">Tanpa had — LocaPeer boleh berjalan bebas di latar belakang</string>
     <string name="settings_battery_optimization_restricted">Dioptimumkan — ketik untuk tetapkan Tanpa had dalam tetapan sistem</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">Kali terakhir dilihat %1$s min lalu berhampiran (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTIF!</string>
     <string name="notif_sos_active_text">Menyiarkan amaran kecemasan kepada kenalan SOS</string>
-    <string name="notif_messages_group_title">Mesej LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Permintaan kenalan daripada %1$s ditolak</string>

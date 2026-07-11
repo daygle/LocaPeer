@@ -22,7 +22,6 @@
     <string name="common_restore">بحرال کریں</string>
     <string name="common_unlock">غیر مقفل کریں</string>
     <string name="common_password">پاس ورڈ</string>
-    <string name="common_not_now">ابھی نہیں</string>
     <string name="common_off">بند</string>
     <string name="common_approve">منظور کریں</string>
     <string name="common_deny">انکار کریں</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">حرکت کا پتہ لگانا</string>
     <string name="settings_motion_detection_on">آن — تاریخ میں آپ کی حرکت کی قسم (پیدل، ڈرائیونگ) کو بہتر بناتا ہے</string>
     <string name="settings_motion_detection_off">بند — زیادہ درست حرکت لیبلز کے لیے جسمانی سرگرمی تک رسائی کی اجازت دیں</string>
-    <string name="settings_enable_motion_title">حرکت کا پتہ لگانا آن کریں</string>
-    <string name="settings_enable_motion_message">جسمانی سرگرمی تک رسائی LocaPeer کو آپ کی تاریخ میں پیدل چلنے، ڈرائیونگ اور ساکن رہنے میں زیادہ درست فرق کرنے دیتی ہے۔ یہ فی الحال بند ہے — آپ اسے سسٹم کی ترتیبات سے دوبارہ آن کر سکتے ہیں۔</string>
-    <string name="settings_open_settings">ترتیبات کھولیں</string>
     <string name="settings_battery_optimization">بیٹری آپٹیمائزیشن</string>
     <string name="settings_battery_optimization_unrestricted">غیر محدود — LocaPeer پس منظر میں آزادانہ طور پر چل سکتا ہے</string>
     <string name="settings_battery_optimization_restricted">آپٹیمائزڈ — سسٹم کی ترتیبات میں غیر محدود پر سیٹ کرنے کے لیے تھپتھپائیں</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">آخری بار %1$s منٹ پہلے (%2$s, %3$s) کے قریب دیکھا گیا</string>
     <string name="notif_sos_active_title">SOS فعال!</string>
     <string name="notif_sos_active_text">SOS رابطوں کو ہنگامی الرٹ نشر کیا جا رہا ہے</string>
-    <string name="notif_messages_group_title">LocaPeer پیغامات</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s کی طرف سے رابطہ درخواست مسترد</string>

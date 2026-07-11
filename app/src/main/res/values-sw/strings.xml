@@ -22,7 +22,6 @@
     <string name="common_restore">Rejesha</string>
     <string name="common_unlock">Fungua</string>
     <string name="common_password">Nenosiri</string>
-    <string name="common_not_now">Si sasa</string>
     <string name="common_off">Zimwa</string>
     <string name="common_approve">Idhinisha</string>
     <string name="common_deny">Kataa</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Ugunduzi wa Mwendo</string>
     <string name="settings_motion_detection_on">Imewezeshwa - inaboresha aina ya harakati zako (kutembea, kuendesha gari) katika historia</string>
     <string name="settings_motion_detection_off">Imezimwa - ruhusu ufikiaji wa shughuli za kimwili kwa lebo sahihi zaidi za mwendo</string>
-    <string name="settings_enable_motion_title">Wezesha ugunduzi wa mwendo</string>
-    <string name="settings_enable_motion_message">Ufikiaji wa shughuli za kimwili huruhusu LocaPeer kutofautisha kutembea, kuendesha gari na kusimama tuli kwa usahihi zaidi katika historia yako. Kwa sasa imezimwa - unaweza kuiwasha tena kutoka kwa mipangilio ya mfumo.</string>
-    <string name="settings_open_settings">Fungua Mipangilio</string>
     <string name="settings_battery_optimization">Uboreshaji wa Betri</string>
     <string name="settings_battery_optimization_unrestricted">Haina kikomo — LocaPeer inaweza kufanya kazi kwa uhuru chinichini</string>
     <string name="settings_battery_optimization_restricted">Imeboreshwa — gusa ili uweke Haina kikomo katika mipangilio ya mfumo</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Imeonekana mara ya mwisho %1$sm zilizopita karibu na (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS IMEWASHWA!</string>
     <string name="notif_sos_active_text">Inatangaza arifa ya dharura kwa anwani za SOS</string>
-    <string name="notif_messages_group_title">Ujumbe wa LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Ombi la anwani limekataliwa kutoka kwa %1$s</string>

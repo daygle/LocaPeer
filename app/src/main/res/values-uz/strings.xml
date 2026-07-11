@@ -22,7 +22,6 @@
     <string name="common_restore">Tiklash</string>
     <string name="common_unlock">Qulfdan chiqarish</string>
     <string name="common_password">Parol</string>
-    <string name="common_not_now">Hozir emas</string>
     <string name="common_off">O‘chiq</string>
     <string name="common_approve">Tasdiqlash</string>
     <string name="common_deny">Rad etish</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Harakatni aniqlash</string>
     <string name="settings_motion_detection_on">Yoqilgan — tarixdagi harakat turini (yurish, haydash) aniqlashtiradi</string>
     <string name="settings_motion_detection_off">O‘chirilgan — harakat belgilarini aniqroq ko‘rsatish uchun jismoniy faollikka ruxsat bering</string>
-    <string name="settings_enable_motion_title">Harakatni aniqlashni yoqish</string>
-    <string name="settings_enable_motion_message">Jismoniy faollikka ruxsat berish LocaPeer-ga tarixingizda yurish, haydash va bir joyda turishni aniqroq farqlashga imkon beradi. U hozir o‘chirilgan — uni tizim sozlamalaridan qayta yoqishingiz mumkin.</string>
-    <string name="settings_open_settings">Sozlamalarni ochish</string>
     <string name="settings_battery_optimization">Batareya optimallashtirish</string>
     <string name="settings_battery_optimization_unrestricted">Cheklovsiz — LocaPeer fonda erkin ishlay oladi</string>
     <string name="settings_battery_optimization_restricted">Optimallashtirilgan — tizim sozlamalarida cheklovsiz deb sozlash uchun bosing</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Oxirgi marta %1$s daqiqa oldin (%2$s, %3$s) yonida ko‘rildi</string>
     <string name="notif_sos_active_title">SOS FAOL!</string>
     <string name="notif_sos_active_text">SOS kontaktlariga favqulodda ogohlantirish yuborilmoqda</string>
-    <string name="notif_messages_group_title">LocaPeer xabarlari</string>
 
     <!-- ── Toast xabarlar ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s-dan kontakt so‘rovi qabul qilinmadi</string>

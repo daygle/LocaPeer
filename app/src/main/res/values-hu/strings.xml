@@ -22,7 +22,6 @@
     <string name="common_restore">Visszaállítás</string>
     <string name="common_unlock">Feloldás</string>
     <string name="common_password">Jelszó</string>
-    <string name="common_not_now">Most ne</string>
     <string name="common_off">Ki</string>
     <string name="common_approve">Jóváhagyás</string>
     <string name="common_deny">Elutasítás</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Mozgásérzékelés</string>
     <string name="settings_motion_detection_on">Bekapcsolva — pontosítja a mozgástípust (gyaloglás, vezetés) az előzményekben</string>
     <string name="settings_motion_detection_off">Kikapcsolva — engedélyezze a testmozgás-hozzáférést a pontosabb mozgáscímkékhez</string>
-    <string name="settings_enable_motion_title">Mozgásérzékelés bekapcsolása</string>
-    <string name="settings_enable_motion_message">A testmozgás-hozzáférés révén a LocaPeer pontosabban megkülönbözteti a gyaloglást, a vezetést és az egy helyben állást az előzményekben. Jelenleg ki van kapcsolva — a rendszerbeállításokban újra engedélyezheti.</string>
-    <string name="settings_open_settings">Beállítások megnyitása</string>
     <string name="settings_battery_optimization">Akkumulátor-optimalizálás</string>
     <string name="settings_battery_optimization_unrestricted">Korlátozás nélküli — a LocaPeer szabadon futhat a háttérben</string>
     <string name="settings_battery_optimization_restricted">Optimalizált — érintse meg a Korlátozás nélküli beállításhoz a rendszerbeállításokban</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Utoljára látva %1$s perce, itt: (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTÍV!</string>
     <string name="notif_sos_active_text">Vészjelzés sugárzása az SOS-partnereknek</string>
-    <string name="notif_messages_group_title">LocaPeer üzenetek</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s kapcsolatfelvételi kérelme elutasítva</string>

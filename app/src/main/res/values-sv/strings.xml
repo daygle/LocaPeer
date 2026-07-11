@@ -22,7 +22,6 @@
     <string name="common_restore">Återställ</string>
     <string name="common_unlock">Lås upp</string>
     <string name="common_password">Lösenord</string>
-    <string name="common_not_now">Inte nu</string>
     <string name="common_off">Av</string>
     <string name="common_approve">Godkänn</string>
     <string name="common_deny">Neka</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Rörelsedetektering</string>
     <string name="settings_motion_detection_on">Aktiverad — förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
     <string name="settings_motion_detection_off">Av — tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
-    <string name="settings_enable_motion_title">Aktivera rörelsedetektering</string>
-    <string name="settings_enable_motion_message">Åtkomst till fysisk aktivitet låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt i din historik. Den är för närvarande avstängd — du kan aktivera den igen i systeminställningarna.</string>
-    <string name="settings_open_settings">Öppna inställningar</string>
     <string name="settings_battery_optimization">Batterioptimering</string>
     <string name="settings_battery_optimization_unrestricted">Obegränsad — LocaPeer kan köras fritt i bakgrunden</string>
     <string name="settings_battery_optimization_restricted">Optimerad — tryck för att ställa in Obegränsad i systeminställningarna</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Senast sedd för %1$s min sedan nära (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTIVT!</string>
     <string name="notif_sos_active_text">Sänder nödlarm till SOS-kontakter</string>
-    <string name="notif_messages_group_title">LocaPeer-meddelanden</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Kontaktförfrågan från %1$s avböjd</string>

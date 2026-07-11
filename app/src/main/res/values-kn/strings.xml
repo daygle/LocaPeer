@@ -22,7 +22,6 @@
     <string name="common_restore">ಮರುಸ್ಥಾಪಿಸಿ</string>
     <string name="common_unlock">ಅನ್ಲಾಕ್ ಮಾಡಿ</string>
     <string name="common_password">ಪಾಸ್ವರ್ಡ್</string>
-    <string name="common_not_now">ಈಗ ಬೇಡ</string>
     <string name="common_off">ಆಫ್</string>
     <string name="common_approve">ಅನುಮೋದಿಸಿ</string>
     <string name="common_deny">ನಿರಾಕರಿಸಿ</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">ಚಲನೆ ಪತ್ತೆಹಚ್ಚುವಿಕೆ</string>
     <string name="settings_motion_detection_on">ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ - ಇತಿಹಾಸದಲ್ಲಿ ನಿಮ್ಮ ಚಲನೆಯ ಪ್ರಕಾರವನ್ನು (ನಡಿಗೆ, ಚಾಲನೆ) ಪರಿಷ್ಕರಿಸುತ್ತದೆ</string>
     <string name="settings_motion_detection_off">ಆಫ್ - ಹೆಚ್ಚು ನಿಖರವಾದ ಚಲನೆಯ ಲೇಬಲ್‌ಗಳಿಗಾಗಿ ದೈಹಿಕ ಚಟುವಟಿಕೆಯ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ</string>
-    <string name="settings_enable_motion_title">ಚಲನೆ ಪತ್ತೆಹಚ್ಚುವಿಕೆಯನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="settings_enable_motion_message">ದೈಹಿಕ ಚಟುವಟಿಕೆಯ ಪ್ರವೇಶವು LocaPeer ಗೆ ನಿಮ್ಮ ಇತಿಹಾಸದಲ್ಲಿ ನಡಿಗೆ, ಚಾಲನೆ ಮತ್ತು ಸ್ಥಿರವಾಗಿ ನಿಲ್ಲುವುದನ್ನು ಹೆಚ್ಚು ನಿಖರವಾಗಿ ಪ್ರತ್ಯೇಕಿಸಲು ಅನುವು ಮಾಡಿಕೊಡುತ್ತದೆ. ಇದನ್ನು ಪ್ರಸ್ತುತ ಆಫ್ ಮಾಡಲಾಗಿದೆ - ನೀವು ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಅದನ್ನು ಮರು-ಸಕ್ರಿಯಗೊಳಿಸಬಹುದು.</string>
-    <string name="settings_open_settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
     <string name="settings_battery_optimization">ಬ್ಯಾಟರಿ ಆಪ್ಟಿಮೈಸೇಶನ್</string>
     <string name="settings_battery_optimization_unrestricted">ನಿರ್ಬಂಧವಿಲ್ಲದ — LocaPeer ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಮುಕ್ತವಾಗಿ ರನ್ ಮಾಡಬಹುದು</string>
     <string name="settings_battery_optimization_restricted">ಆಪ್ಟಿಮೈಸ್ ಮಾಡಲಾಗಿದೆ — ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಿರ್ಬಂಧವಿಲ್ಲದ ಎಂದು ಹೊಂದಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">ಕೊನೆಯದಾಗಿ %1$s ನಿಮಿಷಗಳ ಹಿಂದೆ (%2$s, %3$s) ಹತ್ತಿರ ಕಂಡುಬಂದಿದೆ</string>
     <string name="notif_sos_active_title">SOS ಸಕ್ರಿಯವಾಗಿದೆ!</string>
     <string name="notif_sos_active_text">SOS ಸಂಪರ್ಕಗಳಿಗೆ ತುರ್ತು ಎಚ್ಚರಿಕೆಯನ್ನು ಪ್ರಸಾರ ಮಾಡಲಾಗುತ್ತಿದೆ</string>
-    <string name="notif_messages_group_title">LocaPeer ಸಂದೇಶಗಳು</string>
 
     <!-- ── ಟೋಸ್ಟ್‌ಗಳು ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s ರಿಂದ ಸಂಪರ್ಕ ವಿನಂತಿಯನ್ನು ನಿರಾಕರಿಸಲಾಗಿದೆ</string>

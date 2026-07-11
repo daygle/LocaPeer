@@ -22,7 +22,6 @@
     <string name="common_restore">पुनर्संचयित करा</string>
     <string name="common_unlock">अनलॉक करा</string>
     <string name="common_password">पासवर्ड</string>
-    <string name="common_not_now">आता नको</string>
     <string name="common_off">बंद</string>
     <string name="common_approve">मंजूर करा</string>
     <string name="common_deny">नकार द्या</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">हालचाल ओळखणे</string>
     <string name="settings_motion_detection_on">सक्षम - इतिहासामध्ये तुमच्या हालचालीचा प्रकार (चालणे, ड्रायव्हिंग) अचूकपणे दाखवते</string>
     <string name="settings_motion_detection_off">बंद - अधिक अचूक हालचाल लेबलांसाठी शारीरिक क्रियाकलाप प्रवेशास अनुमती द्या</string>
-    <string name="settings_enable_motion_title">हालचाल ओळखणे सक्षम करा</string>
-    <string name="settings_enable_motion_message">शारीरिक क्रियाकलाप प्रवेशामुळे LocaPeer तुमच्या इतिहासामध्ये चालणे, ड्रायव्हिंग आणि उभे राहणे यामधील फरक अधिक अचूकपणे ओळखू शकते. हे सध्या बंद आहे - तुम्ही ते सिस्टम सेटिंग्जमधून पुन्हा सक्षम करू शकता.</string>
-    <string name="settings_open_settings">सेटिंग्ज उघडा</string>
     <string name="settings_battery_optimization">बॅटरी ऑप्टिमायझेशन</string>
     <string name="settings_battery_optimization_unrestricted">अनिर्बंध — LocaPeer बॅकग्राउंडमध्ये मुक्तपणे चालू शकते</string>
     <string name="settings_battery_optimization_restricted">ऑप्टिमाइझ केलेले — सिस्टम सेटिंग्जमध्ये अनिर्बंध सेट करण्यासाठी टॅप करा</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">शेवटचे %1$s मिनिटांपूर्वी (%2$s, %3$s) जवळ पाहिले</string>
     <string name="notif_sos_active_title">SOS सक्रिय आहे!</string>
     <string name="notif_sos_active_text">SOS संपर्कांना आणीबाणीचा अलर्ट प्रसारित करत आहे</string>
-    <string name="notif_messages_group_title">LocaPeer संदेश</string>
 
     <!-- ── टोस्ट्स ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s कडून संपर्क विनंती नाकारली</string>

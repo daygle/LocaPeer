@@ -22,7 +22,6 @@
     <string name="common_restore">بازیابی</string>
     <string name="common_unlock">باز کردن قفل</string>
     <string name="common_password">رمز عبور</string>
-    <string name="common_not_now">الان نه</string>
     <string name="common_off">خاموش</string>
     <string name="common_approve">تایید</string>
     <string name="common_deny">رد کردن</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">تشخیص حرکت</string>
     <string name="settings_motion_detection_on">فعال — نوع حرکت شما (پیاده‌روی، رانندگی) را در تاریخچه دقیق‌تر می‌کند</string>
     <string name="settings_motion_detection_off">غیرفعال — برای برچسب‌های حرکتی دقیق‌تر، دسترسی به فعالیت بدنی را مجاز کنید</string>
-    <string name="settings_enable_motion_title">فعال‌کردن تشخیص حرکت</string>
-    <string name="settings_enable_motion_message">دسترسی به فعالیت بدنی به LocaPeer کمک می‌کند پیاده‌روی، رانندگی و سکون را در تاریخچه شما دقیق‌تر تشخیص دهد. اکنون غیرفعال است — می‌توانید آن را از تنظیمات سیستم دوباره فعال کنید.</string>
-    <string name="settings_open_settings">بازکردن تنظیمات</string>
     <string name="settings_battery_optimization">بهینه‌سازی باتری</string>
     <string name="settings_battery_optimization_unrestricted">بدون محدودیت — LocaPeer می‌تواند آزادانه در پس‌زمینه اجرا شود</string>
     <string name="settings_battery_optimization_restricted">بهینه‌شده — برای تنظیم روی بدون محدودیت در تنظیمات سیستم ضربه بزنید</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">آخرین بازدید %1$s دقیقه پیش نزدیک (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS فعال!</string>
     <string name="notif_sos_active_text">در حال ارسال هشدار اضطراری به مخاطبین SOS</string>
-    <string name="notif_messages_group_title">پیام‌های LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">درخواست مخاطب از %1$s رد شد</string>

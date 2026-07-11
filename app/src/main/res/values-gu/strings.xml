@@ -22,7 +22,6 @@
     <string name="common_restore">પુનઃસ્થાપિત કરો</string>
     <string name="common_unlock">અનલોક કરો</string>
     <string name="common_password">પાસવર્ડ</string>
-    <string name="common_not_now">ત્યારે નહીં</string>
     <string name="common_off">બંધ</string>
     <string name="common_approve">મંજૂર કરો</string>
     <string name="common_deny">નકારવું</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">ગતિ શોધન</string>
     <string name="settings_motion_detection_on">સક્ષમ - ઇતિહાસમાં તમારી હિલચાલનો પ્રકાર (ચાલવું, ડ્રાઇવિંગ) ચોક્કસ રીતે બતાવે છે</string>
     <string name="settings_motion_detection_off">બંધ - વધુ સચોટ હિલચાલ લેબલ્સ માટે શારીરિક પ્રવૃત્તિ ઍક્સેસની મંજૂરી આપો</string>
-    <string name="settings_enable_motion_title">ગતિ શોધન સક્ષમ કરો</string>
-    <string name="settings_enable_motion_message">શારીરિક પ્રવૃત્તિ ઍક્સેસ LocaPeer ને તમારા ઇતિહાસમાં ચાલવા, ડ્રાઇવિંગ અને ઉભા રહેવા વચ્ચે વધુ સચોટ રીતે તફાવત કરવા દે છે. તે હાલમાં બંધ છે - તમે તેને સિસ્ટમ સેટિંગ્સમાંથી ફરીથી સક્ષમ કરી શકો છો.</string>
-    <string name="settings_open_settings">સેટિંગ્સ ખોલો</string>
     <string name="settings_battery_optimization">બેટરી ઓપ્ટિમાઇઝેશન</string>
     <string name="settings_battery_optimization_unrestricted">અનિયંત્રિત — LocaPeer બેકગ્રાઉન્ડમાં મુક્તપણે ચાલી શકે છે</string>
     <string name="settings_battery_optimization_restricted">ઓપ્ટિમાઇઝ કરેલ — સિસ્ટમ સેટિંગ્સમાં અનિયંત્રિત સેટ કરવા માટે ટેપ કરો</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">છેલ્લે %1$s મિનિટ પહેલાં (%2$s, %3$s) નજીક જોયા હતા</string>
     <string name="notif_sos_active_title">SOS સક્રિય છે!</string>
     <string name="notif_sos_active_text">SOS સંપર્કોને કટોકટીની ચેતવણી પ્રસારિત કરી રહ્યા છીએ</string>
-    <string name="notif_messages_group_title">LocaPeer સંદેશાઓ</string>
 
     <!-- ── ટોસ્ટ્સ ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s તરફથી સંપર્ક વિનંતી નકારવામાં આવી</string>

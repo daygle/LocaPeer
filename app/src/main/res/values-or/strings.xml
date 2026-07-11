@@ -22,7 +22,6 @@
     <string name="common_restore">ପୁନରୁଦ୍ଧାର କରନ୍ତୁ</string>
     <string name="common_unlock">ଅନଲକ୍ କରନ୍ତୁ</string>
     <string name="common_password">ପାସୱାର୍ଡ</string>
-    <string name="common_not_now">ଏବେ ନୁହେଁ</string>
     <string name="common_off">ବନ୍ଦ</string>
     <string name="common_approve">ଅନୁମୋଦନ କରନ୍ତୁ</string>
     <string name="common_deny">ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">ଗତି ଚିହ୍ନଟ</string>
     <string name="settings_motion_detection_on">ସକ୍ଷମ - ଇତିହାସରେ ଆପଣଙ୍କର ଗତିବିଧି ପ୍ରକାର (ଚାଲିବା, ଡ୍ରାଇଭିଂ) କୁ ପରିଷ୍କାର କରେ</string>
     <string name="settings_motion_detection_off">ବନ୍ଦ - ଅଧିକ ସଠିକ୍ ଗତିବିଧି ଲେବଲ୍ ପାଇଁ ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
-    <string name="settings_enable_motion_title">ଗତି ଚିହ୍ନଟ ସକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="settings_enable_motion_message">ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶ LocaPeer କୁ ଆପଣଙ୍କ ଇତିହାସରେ ଚାଲିବା, ଡ୍ରାଇଭିଂ ଏବଂ ସ୍ଥିର ରହିବାକୁ ଅଧିକ ସଠିକ୍ ଭାବରେ ପୃଥକ କରିବାକୁ ଦିଏ । ଏହା ବର୍ତ୍ତମାନ ବନ୍ଦ ଅଛି - ଆପଣ ଏହାକୁ ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରୁ ପୁଣି ସକ୍ଷମ କରିପାରିବେ ।</string>
-    <string name="settings_open_settings">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ</string>
     <string name="settings_battery_optimization">ବ୍ୟାଟେରୀ ଅପ୍ଟିମାଇଜେସନ୍</string>
     <string name="settings_battery_optimization_unrestricted">ଅପ୍ରତିବନ୍ଧିତ — LocaPeer ପୃଷ୍ଠଭୂମିରେ ମୁକ୍ତ ଭାବରେ ଚାଲିପାରିବ</string>
     <string name="settings_battery_optimization_restricted">ଅପ୍ଟିମାଇଜ୍ ହୋଇଛି — ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରେ ଅପ୍ରତିବନ୍ଧିତ ସେଟ୍ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">ଶେଷ ଥର %1$s ମିନିଟ୍ ପୂର୍ବରୁ (%2$s, %3$s) ନିକଟରେ ଦେଖାଯାଇଥିଲା</string>
     <string name="notif_sos_active_title">SOS ସକ୍ରିୟ ଅଛି !</string>
     <string name="notif_sos_active_text">SOS ସମ୍ପର୍କମାନଙ୍କୁ ଜରୁରୀକାଳୀନ ସତର୍କତା ପ୍ରସାରଣ କରୁଛି</string>
-    <string name="notif_messages_group_title">LocaPeer ବାର୍ତ୍ତା</string>
 
     <!-- ── ଟୋଷ୍ଟ ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">%1$s ଙ୍କ ଠାରୁ ସମ୍ପର୍କ ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>

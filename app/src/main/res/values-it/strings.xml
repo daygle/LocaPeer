@@ -22,7 +22,6 @@
     <string name="common_restore">Ripristina</string>
     <string name="common_unlock">Sblocca</string>
     <string name="common_password">Password</string>
-    <string name="common_not_now">Non ora</string>
     <string name="common_off">Off</string>
     <string name="common_approve">Approva</string>
     <string name="common_deny">Rifiuta</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Rilevamento movimento</string>
     <string name="settings_motion_detection_on">Abilitato - perfeziona il tipo di movimento (camminata, guida) nella cronologia</string>
     <string name="settings_motion_detection_off">Off - consenti l\'accesso all\'attività fisica per etichette di movimento più precise</string>
-    <string name="settings_enable_motion_title">Abilita rilevamento movimento</string>
-    <string name="settings_enable_motion_message">L\'accesso all\'attività fisica consente a LocaPeer di distinguere meglio tra camminata, guida e sosta nella cronologia. Al momento è disattivato: puoi riattivarlo dalle impostazioni di sistema.</string>
-    <string name="settings_open_settings">Apri Impostazioni</string>
     <string name="settings_battery_optimization">Ottimizzazione batteria</string>
     <string name="settings_battery_optimization_unrestricted">Senza restrizioni — LocaPeer può essere eseguito liberamente in background</string>
     <string name="settings_battery_optimization_restricted">Ottimizzato — tocca per impostare Senza restrizioni nelle impostazioni di sistema</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Ultimo avvistamento %1$sm fa nei pressi di (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ATTIVO!</string>
     <string name="notif_sos_active_text">Trasmissione avviso di emergenza ai contatti SOS</string>
-    <string name="notif_messages_group_title">Messaggi LocaPeer</string>
 
     <!-- ── Toast ──────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Richiesta di contatto rifiutata da %1$s</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">Restore</string>
     <string name="common_unlock">Unlock</string>
     <string name="common_password">Password</string>
-    <string name="common_not_now">Not Now</string>
     <string name="common_off">Off</string>
     <string name="common_approve">Approve</string>
     <string name="common_deny">Deny</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Motion Detection</string>
     <string name="settings_motion_detection_on">Enabled - refines your movement type (walking, driving) in history</string>
     <string name="settings_motion_detection_off">Off - allow physical activity access for more accurate movement labels</string>
-    <string name="settings_enable_motion_title">Enable motion detection</string>
-    <string name="settings_enable_motion_message">Physical activity access lets LocaPeer tell walking, driving and standing still apart more accurately in your history. It\'s currently turned off - you can re-enable it from system settings.</string>
-    <string name="settings_open_settings">Open Settings</string>
     <string name="settings_battery_optimization">Battery Optimization</string>
     <string name="settings_battery_optimization_unrestricted">Unrestricted — LocaPeer can run freely in the background</string>
     <string name="settings_battery_optimization_restricted">Optimized — tap to set Unrestricted in system settings</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Last seen %1$sm ago near (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS ACTIVE!</string>
     <string name="notif_sos_active_text">Broadcasting emergency alert to SOS contacts</string>
-    <string name="notif_messages_group_title">LocaPeer Messages</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Declined contact request from %1$s</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">I-restore</string>
     <string name="common_unlock">I-unlock</string>
     <string name="common_password">Password</string>
-    <string name="common_not_now">Huwag muna</string>
     <string name="common_off">Off</string>
     <string name="common_approve">Aprubahan</string>
     <string name="common_deny">Tanggihan</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Pagtukoy ng Galaw</string>
     <string name="settings_motion_detection_on">Naka-on — pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
     <string name="settings_motion_detection_off">Naka-off — payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
-    <string name="settings_enable_motion_title">I-enable ang pagtukoy ng galaw</string>
-    <string name="settings_enable_motion_message">Tinutulungan ng access sa pisikal na aktibidad ang LocaPeer na mas tumpak na matukoy ang paglalakad, pagmamaneho at pananatiling nakatigil sa iyong kasaysayan. Naka-off ito sa kasalukuyan — maaari mong i-on ulit mula sa mga setting ng system.</string>
-    <string name="settings_open_settings">Buksan ang mga Setting</string>
     <string name="settings_battery_optimization">Optimization ng Baterya</string>
     <string name="settings_battery_optimization_unrestricted">Walang limitasyon — maaaring malayang tumakbo ang LocaPeer sa background</string>
     <string name="settings_battery_optimization_restricted">Na-optimize — i-tap para i-set sa Walang limitasyon sa mga setting ng system</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Huling nakita %1$s min ang nakalipas malapit sa (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">AKTIBO ANG SOS!</string>
     <string name="notif_sos_active_text">Nagbo-broadcast ng emergency alert sa mga SOS contact</string>
-    <string name="notif_messages_group_title">Mga Mensahe ng LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Tinanggihan ang kahilingan sa contact mula kay %1$s</string>

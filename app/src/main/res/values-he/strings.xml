@@ -22,7 +22,6 @@
     <string name="common_restore">שחזר</string>
     <string name="common_unlock">שחרר נעילה</string>
     <string name="common_password">סיסמה</string>
-    <string name="common_not_now">לא עכשיו</string>
     <string name="common_off">כבוי</string>
     <string name="common_approve">אשר</string>
     <string name="common_deny">דחה</string>
@@ -127,9 +126,6 @@
     <string name="settings_motion_detection">זיהוי תנועה</string>
     <string name="settings_motion_detection_on">מופעל — מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
     <string name="settings_motion_detection_off">כבוי — אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
-    <string name="settings_enable_motion_title">הפעל זיהוי תנועה</string>
-    <string name="settings_enable_motion_message">גישה לפעילות גופנית מאפשרת ל-LocaPeer להבחין בדיוק רב יותר בין הליכה, נהיגה ועמידה במקום בהיסטוריה שלך. כרגע היא כבויה — אפשר להפעילה מחדש מהגדרות המערכת.</string>
-    <string name="settings_open_settings">פתח הגדרות</string>
     <string name="settings_battery_optimization">אופטימיזציית סוללה</string>
     <string name="settings_battery_optimization_unrestricted">ללא הגבלה — LocaPeer יכולה לפעול בחופשיות ברקע</string>
     <string name="settings_battery_optimization_restricted">מותאם — הקש כדי להגדיר כ"ללא הגבלה" בהגדרות המערכת</string>
@@ -742,7 +738,6 @@
     <string name="notif_missed_text">נראה לאחרונה לפני %1$s דק׳ ליד (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">‏SOS פעיל!</string>
     <string name="notif_sos_active_text">משדר התראת חירום לאנשי הקשר של SOS</string>
-    <string name="notif_messages_group_title">הודעות LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">בקשת איש קשר מ-%1$s נדחתה</string>

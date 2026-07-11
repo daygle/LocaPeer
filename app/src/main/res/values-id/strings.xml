@@ -22,7 +22,6 @@
     <string name="common_restore">Pulihkan</string>
     <string name="common_unlock">Buka Kunci</string>
     <string name="common_password">Kata Sandi</string>
-    <string name="common_not_now">Nanti Saja</string>
     <string name="common_off">Mati</string>
     <string name="common_approve">Setujui</string>
     <string name="common_deny">Tolak</string>
@@ -124,9 +123,6 @@
     <string name="settings_motion_detection">Deteksi Gerakan</string>
     <string name="settings_motion_detection_on">Aktif — menyempurnakan jenis gerakan Anda (berjalan, berkendara) di riwayat</string>
     <string name="settings_motion_detection_off">Nonaktif — izinkan akses aktivitas fisik untuk label gerakan yang lebih akurat</string>
-    <string name="settings_enable_motion_title">Aktifkan deteksi gerakan</string>
-    <string name="settings_enable_motion_message">Akses aktivitas fisik membantu LocaPeer membedakan berjalan, berkendara, dan diam dengan lebih akurat di riwayat Anda. Saat ini nonaktif — Anda dapat mengaktifkannya kembali dari setelan sistem.</string>
-    <string name="settings_open_settings">Buka Setelan</string>
     <string name="settings_battery_optimization">Optimalisasi Baterai</string>
     <string name="settings_battery_optimization_unrestricted">Tidak dibatasi — LocaPeer dapat berjalan bebas di latar belakang</string>
     <string name="settings_battery_optimization_restricted">Dioptimalkan — ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
@@ -703,7 +699,6 @@
     <string name="notif_missed_text">Terakhir terlihat %1$s mnt lalu di dekat (%2$s, %3$s)</string>
     <string name="notif_sos_active_title">SOS AKTIF!</string>
     <string name="notif_sos_active_text">Menyiarkan peringatan darurat ke kontak SOS</string>
-    <string name="notif_messages_group_title">Pesan LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Permintaan kontak dari %1$s ditolak</string>

@@ -22,7 +22,6 @@
     <string name="common_restore">Deebisi</string>
     <string name="common_unlock">Bani</string>
     <string name="common_password">Jecha iccitii</string>
-    <string name="common_not_now">Amma miti</string>
     <string name="common_off">Cufameera</string>
     <string name="common_approve">Mirkanessi</string>
     <string name="common_deny">Didu</string>
@@ -125,9 +124,6 @@
     <string name="settings_motion_detection">Sochii madda kiyya</string>
     <string name="settings_motion_detection_on">Hojiirra ooleera - gosa sochii keessanii (deemuu, oofuu) seenaa keessatti sirreessa</string>
     <string name="settings_motion_detection_off">Cufameera - qindaa\'ina sochii sirrii ta\'eef hayyama sochii qaamaa kennaa</string>
-    <string name="settings_enable_motion_title">Sochii madda kiyya hojiirra oolchi</string>
-    <string name="settings_enable_motion_message">Hayyamni sochii qaamaa LocaPeer seenaa keessan keessatti deemuu, oofuu fi dhaabbachuu gidduu adda baasee akka beeku taasisa. Amma cufameera - sajataawwan sirnaa irraa deebistanii banuu dandeessu.</string>
-    <string name="settings_open_settings">Sajataawwan Bani</string>
     <string name="settings_battery_optimization">Optimayizeeshinii Baatiri</string>
     <string name="settings_battery_optimization_unrestricted">Hin daangeffamne — LocaPeer duubatti bilisaan hojjechu danda\'a</string>
     <string name="settings_battery_optimization_restricted">Optimayizeeshinii — gara Hin daangeffamneetti jijjiiruuf tuqi</string>
@@ -716,7 +712,6 @@
     <string name="notif_missed_text">Yeroo dhumaa daqiiqaa %1$s dura (%2$s, %3$s) dhihootti argame</string>
     <string name="notif_sos_active_title">SOS HOJJETAA JIRA!</string>
     <string name="notif_sos_active_text">Akeekkachiisa hatattamaa quunnamtii SOS-f tamsaasaa jira</string>
-    <string name="notif_messages_group_title">Ergaawwan LocaPeer</string>
 
     <!-- ── Toasts ─────────────────────────────────────────────────────────── -->
     <string name="toast_declined_contact">Gaaffiin quunnamtii %1$s irraa dhufe didameera</string>
