@@ -34,9 +34,9 @@ jobs:
         # testDebugUnitTest avoids recompiling for release since these are JVM tests.
         run: ./gradlew lintDebug testDebugUnitTest assembleDebug
 
-      # Upload reports if build fails, so you can see exactly what went wrong.
+      # Upload reports so you can see results even if the build fails.
       - name: Upload Test/Lint Reports
-        if: failure()
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: reports
