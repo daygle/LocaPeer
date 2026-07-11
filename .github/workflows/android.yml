@@ -29,14 +29,21 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build and run unit tests
-        # testDebugUnitTest only (plain `test` also runs the release variant,
-        # recompiling it for no extra coverage since these are JVM unit tests).
-        run: ./gradlew assembleDebug testDebugUnitTest
+      - name: Run Lint and Unit Tests
+        # Added lintDebug to catch issues early.
+        # testDebugUnitTest avoids recompiling for release since these are JVM tests.
+        run: ./gradlew lintDebug testDebugUnitTest assembleDebug
 
-      # Room exports a JSON snapshot per schema version (app/schemas). Hand the
-      # generated files to the commit-schemas job rather than pushing from here,
-      # so the build job never needs a write token.
+      # Upload reports if build fails, so you can see exactly what went wrong.
+      - name: Upload Test/Lint Reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            app/build/reports/
+            app/build/test-results/
+
       - name: Upload Room schema snapshots
         uses: actions/upload-artifact@v4
         with:
@@ -48,6 +55,7 @@ jobs:
         with:
           name: app-debug
           path: app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 7 # Optimized: Don't keep debug APKs forever
 
   # Schema snapshots must live in the repo, but local builds aren't always
   # possible, so commit any new snapshot back to the PR branch. Same-repo PRs
@@ -64,6 +72,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          fetch-depth: 0 # Better for pushing back to the branch
 
       - name: Download Room schema snapshots
         uses: actions/download-artifact@v4
@@ -79,4 +88,6 @@ jobs:
             git add app/schemas
             git commit -m "Add generated Room schema snapshots"
             git push origin "HEAD:${{ github.head_ref }}"
+          else
+            echo "No schema changes detected."
           fi
