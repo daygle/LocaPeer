@@ -1157,9 +1157,9 @@ private fun MotionDetectionRow(granted: Boolean, onClick: () -> Unit) {
 }
 
 /**
- * Battery optimisation status row. Shows a green checkmark when the app is set to
- * Unrestricted (i.e. exempted from battery optimisation); otherwise it is tappable to
- * launch the system battery optimisation settings for this app.
+ * Battery optimization status row. Shows a green checkmark when the app is set to
+ * Unrestricted (i.e. exempted from battery optimization); otherwise it is tappable to
+ * launch the system battery optimization settings for this app.
  */
 @Composable
 private fun BatteryOptimizationRow(ignored: Boolean, onClick: () -> Unit) {
