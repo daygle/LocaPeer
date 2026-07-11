@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    British/Australian English spelling overrides. Only the handful of strings
+    whose spelling differs from the default (en) locale live here; everything
+    else falls back to res/values/strings.xml. Keep this list minimal.
+-->
+<resources>
+    <string name="settings_battery_optimization">Battery Optimisation</string>
+    <string name="settings_battery_optimization_restricted">Optimised — tap to set Unrestricted in system settings</string>
+    <string name="settings_customize_nav">Customise Navigation</string>
+    <string name="onboarding_battery_desc">Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimisations.</string>
+    <string name="onboarding_disable_optimizations">Disable Optimisations</string>
+</resources>

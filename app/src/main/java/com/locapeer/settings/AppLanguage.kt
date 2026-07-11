@@ -21,6 +21,8 @@ import androidx.core.os.LocaleListCompat
 enum class AppLanguage(val tag: String, val nativeName: String?) {
     SYSTEM("", null),
     ENGLISH("en", "English"),
+    ENGLISH_UK("en-GB", "English (UK)"),
+    ENGLISH_AUSTRALIA("en-AU", "English (Australia)"),
     SPANISH("es", "Español"),
     SPANISH_MEXICO("es-MX", "Español (México)"),
     FRENCH("fr", "Français"),
