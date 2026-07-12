@@ -4,28 +4,38 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 /**
- * Wire format for image / voice messages. Like [GroupWire], a media message is an ordinary NIP-44
- * encrypted DM (kind ENCRYPTED_DM) whose decrypted plaintext is this envelope, distinguished from
- * plain text by a leading control-character [MAGIC]. Plain text messages stay raw, so older clients
- * and the location-pin detection keep working untouched.
+ * Wire format for image / voice / file messages. Like [GroupWire], a media message is an ordinary
+ * NIP-44 encrypted DM (kind ENCRYPTED_DM) whose decrypted plaintext is this envelope, distinguished
+ * from plain text by a leading control-character [MAGIC]. Plain text messages stay raw, so older
+ * clients and the location-pin detection keep working untouched.
  *
  * The media bytes travel Base64-encoded inside [data] - aggressively downscaled/compressed and
  * size-capped before sending (see MediaUtils), so the payload stays within relay limits and the
  * zero-server E2E model is preserved (each recipient gets their own individually encrypted copy).
+ * Files are NOT transcodable, so they are simply rejected above [MediaUtils.MAX_FILE_BYTES] rather
+ * than downscaled - only genuinely small attachments (a contact card, a short note, a tiny PDF)
+ * fit the per-recipient relay budget. Video is intentionally unsupported: any clip small enough to
+ * inline would be unusably short/low-res, and the only alternative is out-of-band hosting, which
+ * would break the zero-server model.
  */
 @Serializable
 data class MediaMessage(
-    /** [MediaKind.IMAGE] or [MediaKind.AUDIO]. */
+    /** [MediaKind.IMAGE], [MediaKind.AUDIO], or [MediaKind.FILE]. */
     val kind: String,
-    /** Base64 (NO_WRAP) of the compressed media bytes: JPEG for images, AAC/m4a for audio. */
+    /** Base64 (NO_WRAP) of the media bytes: JPEG for images, AAC/m4a for audio, raw bytes for files. */
     val data: String,
     /** Audio only: recording length in milliseconds. */
-    val durationMs: Long? = null
+    val durationMs: Long? = null,
+    /** File only: original display name (e.g. "notes.pdf"), used for the bubble label and on open. */
+    val filename: String? = null,
+    /** File only: MIME type (e.g. "application/pdf"), used to launch the right viewer on open. */
+    val mimeType: String? = null
 )
 
 object MediaKind {
     const val IMAGE = "image"
     const val AUDIO = "audio"
+    const val FILE = "file"
 }
 
 object MediaWire {

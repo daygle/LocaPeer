@@ -36,13 +36,16 @@ import com.locapeer.R
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.MessageType
 import com.locapeer.messaging.ChatInputBar
+import com.locapeer.messaging.FileMessageContent
 import com.locapeer.messaging.ImageMessageContent
 import com.locapeer.messaging.ImageViewerDialog
 import com.locapeer.messaging.LocationPinCard
+import com.locapeer.messaging.MediaUtils
 import com.locapeer.messaging.MessagingViewModel
 import com.locapeer.messaging.RecordTarget
 import com.locapeer.messaging.VoiceMessageContent
 import com.locapeer.messaging.detectLocationPin
+import android.widget.Toast
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,6 +87,17 @@ fun GroupChatScreen(
     val imagePicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri -> if (uri != null) vm.sendGroupImage(circleId, uri) }
+
+    // Any-type document picker: fan the capped file out to the circle. Same size-cap/reject
+    // handling as 1:1 chat lives in the ViewModel.
+    val filePicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri -> if (uri != null) vm.sendGroupFile(circleId, uri) }
+
+    // ViewModel emits already-localized strings, so no LocalContext resource read happens here.
+    LaunchedEffect(Unit) {
+        vm.mediaError.collect { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
+    }
 
     // Mic permission gate - circles follow the same 1:1 pattern: probe at the moment of the
     // tap (not at first message) so the prompt only shows if the user explicitly opts in.
@@ -290,6 +304,7 @@ fun GroupChatScreen(
                             )
                         )
                     },
+                    onAttachFile = { filePicker.launch(arrayOf("*/*")) },
                     isRecording = isRecording,
                     onStartRecording = onStartRecording,
                     onStopSendRecording = { vm.stopRecordingAndSend() },
@@ -324,6 +339,7 @@ fun GroupChatScreen(
                     isPlaying = playingMessageId == msg.id,
                     onToggleAudio = { b64 -> vm.toggleAudioPlayback(msg.id, b64) },
                     onViewImage = { b64 -> fullscreenImage = b64 },
+                    onOpenFile = { vm.openFile(msg) },
                 )
             }
         }
@@ -352,6 +368,7 @@ private fun GroupMessageBubble(
     isPlaying: Boolean,
     onToggleAudio: (String) -> Unit,
     onViewImage: (String) -> Unit,
+    onOpenFile: () -> Unit,
 ) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
     val bubbleColor = if (msg.isMine)
@@ -416,6 +433,12 @@ private fun GroupMessageBubble(
                             )
                         } ?: Text(msg.content, color = contentColor)
                     }
+                    MessageType.FILE -> FileMessageContent(
+                        filename = msg.mediaFilename,
+                        sizeBytes = msg.mediaBase64?.let { MediaUtils.approxDecodedSize(it) },
+                        contentColor = contentColor,
+                        onOpen = onOpenFile,
+                    )
                     else -> {
                         val pin = remember(msg.content) { detectLocationPin(msg.content) }
                         if (pin != null) {
@@ -495,7 +518,8 @@ private fun SwipeToDeleteGroupMessage(
     onNavigateToMap: (Double, Double) -> Unit,
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
-    onViewImage: (String) -> Unit = {}
+    onViewImage: (String) -> Unit = {},
+    onOpenFile: () -> Unit = {}
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -550,7 +574,8 @@ private fun SwipeToDeleteGroupMessage(
                 onNavigateToMap = onNavigateToMap,
                 isPlaying = isPlaying,
                 onToggleAudio = onToggleAudio,
-                onViewImage = onViewImage
+                onViewImage = onViewImage,
+                onOpenFile = onOpenFile
             )
         }
     }

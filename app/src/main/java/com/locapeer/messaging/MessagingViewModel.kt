@@ -1,7 +1,9 @@
 package com.locapeer.messaging
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
@@ -27,6 +29,7 @@ import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
 import com.locapeer.nostr.NostrRelayClient
+import androidx.core.content.FileProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -359,6 +362,8 @@ class MessagingViewModel @Inject constructor(
                         contentType = contentType,
                         mediaBase64 = media.data,
                         mediaDurationMs = media.durationMs,
+                        mediaFilename = media.filename,
+                        mediaMimeType = media.mimeType,
                         nostrEventIdsByMember = idsByMember.joinToString(","),
                     )
                 )
@@ -538,6 +543,16 @@ class MessagingViewModel @Inject constructor(
     /** Id of the audio message currently playing, or null. Drives the play/pause bubble state. */
     val playingMessageId: StateFlow<String?> = _playingMessageId
 
+    /**
+     * One-shot user-facing errors from the file-attachment path, carried as an already-resolved
+     * localized string so the screen can Toast it directly. Resolved here off the application
+     * [context] rather than via the composable's LocalContext, which lint flags for resource reads.
+     * A [SharedFlow] (not StateFlow) so the same error fires every time - re-picking an oversize file
+     * must re-toast, not be swallowed as "no change".
+     */
+    private val _mediaError = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val mediaError: SharedFlow<String> = _mediaError
+
     private var recorder: MediaRecorder? = null
     private var recordFile: File? = null
     private var recordStartMs: Long = 0L
@@ -571,6 +586,54 @@ class MessagingViewModel @Inject constructor(
             )
         }
     }
+
+    /**
+     * Reads a picked file, enforces the [MediaUtils.MAX_FILE_BYTES] cap, and sends it inline as a
+     * FILE message to a 1:1 peer. Oversize/unreadable files emit a [mediaError] instead of sending -
+     * files can't be transcoded down like images, so there is no fallback but to reject them.
+     */
+    fun sendFile(peerId: String, uri: Uri) {
+        viewModelScope.launch {
+            val media = readFileOrEmitError(uri) ?: return@launch
+            sendMediaMessage(peerId, media, MessageType.FILE, filePreview(media.filename))
+        }
+    }
+
+    /** Circle counterpart of [sendFile]: fans the capped file out to every non-self member. */
+    fun sendGroupFile(circleId: String, uri: Uri) {
+        viewModelScope.launch {
+            val media = readFileOrEmitError(uri) ?: return@launch
+            sendGroupMedia(circleId, media, MessageType.FILE, filePreview(media.filename))
+        }
+    }
+
+    /**
+     * Reads [uri] off the main thread and builds a FILE [MediaMessage], or emits the matching
+     * [mediaError] string and returns null when the file is too large or can't be read.
+     */
+    private suspend fun readFileOrEmitError(uri: Uri): MediaMessage? {
+        return when (val result = withContext(Dispatchers.IO) { MediaUtils.readFileCapped(context, uri) }) {
+            is MediaUtils.FileReadResult.Ok -> MediaMessage(
+                kind = MediaKind.FILE,
+                data = MediaUtils.encodeBase64(result.bytes),
+                filename = result.name,
+                mimeType = result.mimeType,
+            )
+            MediaUtils.FileReadResult.TooLarge -> {
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_too_large))
+                null
+            }
+            MediaUtils.FileReadResult.Error -> {
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
+                null
+            }
+        }
+    }
+
+    /** Conversation-list / bubble preview for a file row: "📎 filename" (or a generic label). */
+    private fun filePreview(filename: String?): String =
+        if (filename.isNullOrBlank()) context.getString(com.locapeer.R.string.chat_preview_file)
+        else context.getString(com.locapeer.R.string.chat_preview_file_named, filename)
 
     /** Starts a voice-note recording for the given destination (1:1 or circle). The
      *  destination is stamped once at start so [stopRecordingAndSend] can route correctly
@@ -705,6 +768,57 @@ class MessagingViewModel @Inject constructor(
         _playingMessageId.value = null
     }
 
+    /**
+     * Decodes a received FILE row to a private cache file and hands it to the system viewer via a
+     * FileProvider content Uri + ACTION_VIEW. The stored [MessageEntity.mediaFilename] comes from a
+     * remote sender, so it is sanitized to a bare, safe basename before it touches the filesystem -
+     * a crafted "../" name must never escape the attachments cache dir. Emits [mediaError] when the
+     * bytes are missing/corrupt or no installed app can open the type.
+     */
+    fun openFile(msg: MessageEntity) {
+        val base64 = msg.mediaBase64
+        if (base64.isNullOrBlank()) {
+            _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
+            return
+        }
+        viewModelScope.launch {
+            try {
+                val bytes = MediaUtils.decodeBase64(base64)
+                if (bytes == null) {
+                    _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
+                    return@launch
+                }
+                val safeName = sanitizeFilename(msg.mediaFilename)
+                val file = withContext(Dispatchers.IO) {
+                    val dir = File(context.cacheDir, "attachments").apply { mkdirs() }
+                    File(dir, safeName).apply { writeBytes(bytes) }
+                }
+                val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+                val mime = msg.mediaMimeType?.takeIf { it.isNotBlank() } ?: "application/octet-stream"
+                val intent = Intent(Intent.ACTION_VIEW).apply {
+                    setDataAndType(uri, mime)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                try {
+                    context.startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_no_app))
+                }
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "openFile failed", e)
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
+            }
+        }
+    }
+
+    /** Reduces a possibly-hostile remote filename to a safe basename for the attachments cache. */
+    private fun sanitizeFilename(name: String?): String {
+        val base = name?.substringAfterLast('/')?.substringAfterLast('\\')?.trim().orEmpty()
+        // Keep only characters that are safe in a filename; collapse everything else to '_'.
+        val cleaned = base.replace(Regex("[^A-Za-z0-9._-]"), "_").trim('.', '_')
+        return cleaned.ifBlank { "attachment" }.take(120)
+    }
+
     private fun sendMediaMessage(peerId: String, media: MediaMessage, contentType: String, previewText: String) {
         viewModelScope.launch {
             try {
@@ -737,7 +851,9 @@ class MessagingViewModel @Inject constructor(
                         nostrEventId = event.id,
                         contentType = contentType,
                         mediaBase64 = media.data,
-                        mediaDurationMs = media.durationMs
+                        mediaDurationMs = media.durationMs,
+                        mediaFilename = media.filename,
+                        mediaMimeType = media.mimeType
                     )
                 )
             } catch (e: Exception) {

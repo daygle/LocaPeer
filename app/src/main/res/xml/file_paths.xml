@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paths exposed through the app's FileProvider. Only the decoded-attachment cache
+     subdirectory is shared, so opening a received file hands out a scoped content:// Uri
+     for that single file and nothing else in the app's storage is reachable. -->
+<paths>
+    <cache-path name="attachments" path="attachments/" />
+</paths>

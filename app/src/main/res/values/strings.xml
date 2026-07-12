@@ -799,6 +799,16 @@
     <!-- Inline media messages (image / voice) -->
     <string name="chat_preview_photo">📷 Photo</string>
     <string name="chat_preview_voice">🎤 Voice message</string>
+    <string name="chat_preview_media_unavailable">📎 Media unavailable</string>
+    <!-- Inline file attachments -->
+    <string name="chat_preview_file">📎 File</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Attachment</string>
+    <string name="chat_cd_attach_file">Attach file</string>
+    <string name="chat_file_tap_to_open">Tap to open</string>
+    <string name="chat_file_too_large">File is too large (max 100 KB)</string>
+    <string name="chat_file_unreadable">Couldn\'t read that file</string>
+    <string name="chat_file_no_app">No app can open this file</string>
     <string name="chat_cd_attach_image">Attach photo</string>
     <string name="chat_cd_record_voice">Record voice message</string>
     <string name="chat_cd_stop_send_recording">Stop and send</string>
