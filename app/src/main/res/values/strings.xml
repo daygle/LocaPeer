@@ -513,6 +513,7 @@
     <string name="conv_tab_circles">Circles</string>
     <string name="conv_tab_archived">Archived</string>
     <string name="conv_mark_read">Mark Read</string>
+    <string name="conv_mark_unread">Mark Unread</string>
     <string name="conv_archive">Archive</string>
     <string name="conv_unarchive">Unarchive</string>
     <string name="conv_empty_no_results">No results for \"%1$s\"</string>

@@ -462,6 +462,17 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Re-flags the given conversations as unread from the conversation list. Like [markReadMultiple]
+     * this is a local-only housekeeping gesture: it flips only the latest received message back to
+     * unread and emits nothing to the sender.
+     */
+    fun markUnreadMultiple(peerIds: List<String>) {
+        viewModelScope.launch {
+            peerIds.forEach { messageDao.markLatestUnreadForPeer(it) }
+        }
+    }
+
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
