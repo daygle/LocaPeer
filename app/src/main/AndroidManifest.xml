@@ -42,6 +42,9 @@
 
     <!-- Camera for QR scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Microphone for recording voice-note messages -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <!-- Receive boot completed to restart services -->

@@ -499,6 +499,39 @@ class HeartbeatReceiver @Inject constructor(
             return
         }
 
+        // Inline media (image / voice): store the Base64 payload on the row so retention/purge/
+        // backup handle it unchanged, mirroring the 1:1 text path (blocked rows stored hidden).
+        val media = com.locapeer.messaging.MediaWire.decode(plaintext)
+        if (media != null) {
+            val contentType = if (media.kind == com.locapeer.messaging.MediaKind.IMAGE)
+                com.locapeer.data.entity.MessageType.IMAGE else com.locapeer.data.entity.MessageType.AUDIO
+            val preview = if (media.kind == com.locapeer.messaging.MediaKind.IMAGE)
+                context.getString(R.string.chat_preview_photo) else context.getString(R.string.chat_preview_voice)
+            val mediaMsg = MessageEntity(
+                id = event.id,
+                peerId = event.pubkey,
+                senderPublicKeyHex = event.pubkey,
+                content = preview,
+                timestamp = event.createdAt * 1000L,
+                isMine = false,
+                deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
+                nostrEventId = event.id,
+                isBlocked = isBlocked,
+                contentType = contentType,
+                mediaBase64 = media.data,
+                mediaDurationMs = media.durationMs
+            )
+            if (!sender.isArchived || mediaMsg.timestamp > sender.archivedAt) {
+                peerDao.unarchive(event.pubkey)
+            }
+            messageDao.insert(mediaMsg)
+            if (!isBlocked) {
+                sendBackgroundMessageNotification(sender.displayName, preview, event.pubkey)
+                sendDeliveryAck(event.pubkey, event.id)
+            }
+            return
+        }
+
         val msg = MessageEntity(
             id = event.id,
             peerId = event.pubkey,

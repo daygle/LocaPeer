@@ -1,6 +1,9 @@
 package com.locapeer.messaging
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -21,8 +24,13 @@ import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
@@ -32,7 +40,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import com.locapeer.data.entity.MessageType
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -71,6 +84,31 @@ fun ChatScreen(
     val listState = rememberLazyListState()
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showClearChatDialog by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val isRecording by vm.isRecording.collectAsState()
+    val playingMessageId by vm.playingMessageId.collectAsState()
+    var fullscreenImage by remember { mutableStateOf<String?>(null) }
+
+    val imagePicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.PickVisualMedia()
+    ) { uri -> if (uri != null) vm.sendImage(peerId, uri) }
+
+    val micPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted -> if (granted) vm.startRecording(peerId) }
+
+    val onStartRecording: () -> Unit = {
+        val granted = androidx.core.content.ContextCompat.checkSelfPermission(
+            context, android.Manifest.permission.RECORD_AUDIO
+        ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        if (granted) vm.startRecording(peerId)
+        else micPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
+    }
+
+    fullscreenImage?.let { b64 ->
+        ImageViewerDialog(base64 = b64, onDismiss = { fullscreenImage = null })
+    }
 
     LaunchedEffect(peerId) { vm.markRead(peerId) }
     LaunchedEffect(messages.size) {
@@ -230,7 +268,18 @@ fun ChatScreen(
                             inputText = ""
                         }
                     },
-                    onLocationShare = { vm.sendLocation(peerId) }
+                    onLocationShare = { vm.sendLocation(peerId) },
+                    onAttachImage = {
+                        imagePicker.launch(
+                            androidx.activity.result.PickVisualMediaRequest(
+                                ActivityResultContracts.PickVisualMedia.ImageOnly
+                            )
+                        )
+                    },
+                    isRecording = isRecording,
+                    onStartRecording = onStartRecording,
+                    onStopSendRecording = { vm.stopRecordingAndSend() },
+                    onCancelRecording = { vm.cancelRecording() }
                 )
             }
         }
@@ -249,7 +298,10 @@ fun ChatScreen(
                     msg = msg,
                     onDeleteLocal = { vm.deleteMessage(msg) },
                     onDeleteRemote = { vm.deleteMessageFromRemote(msg) },
-                    onNavigateToMap = onNavigateToMap
+                    onNavigateToMap = onNavigateToMap,
+                    isPlaying = playingMessageId == msg.id,
+                    onToggleAudio = { b64 -> vm.toggleAudioPlayback(msg.id, b64) },
+                    onViewImage = { b64 -> fullscreenImage = b64 }
                 )
             }
         }
@@ -262,7 +314,10 @@ private fun SwipeToDeleteMessage(
     msg: MessageEntity,
     onDeleteLocal: () -> Unit,
     onDeleteRemote: () -> Unit,
-    onNavigateToMap: (Double, Double) -> Unit
+    onNavigateToMap: (Double, Double) -> Unit,
+    isPlaying: Boolean = false,
+    onToggleAudio: (String) -> Unit = {},
+    onViewImage: (String) -> Unit = {}
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -347,14 +402,28 @@ private fun SwipeToDeleteMessage(
         }
     ) {
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
-            MessageBubble(msg, onLongClick = { showDeleteDialog = true }, onNavigateToMap = onNavigateToMap)
+            MessageBubble(
+                msg,
+                onLongClick = { showDeleteDialog = true },
+                onNavigateToMap = onNavigateToMap,
+                isPlaying = isPlaying,
+                onToggleAudio = onToggleAudio,
+                onViewImage = onViewImage
+            )
         }
     }
 }
 
 @OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
-private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNavigateToMap: (Double, Double) -> Unit = { _, _ -> }) {
+private fun MessageBubble(
+    msg: MessageEntity,
+    onLongClick: () -> Unit = {},
+    onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
+    isPlaying: Boolean = false,
+    onToggleAudio: (String) -> Unit = {},
+    onViewImage: (String) -> Unit = {}
+) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
     val bubbleColor = if (msg.isMine)
         MaterialTheme.colorScheme.primaryContainer
@@ -381,22 +450,37 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNa
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
             Column {
-                val pin = remember(msg.content) { detectLocationPin(msg.content) }
                 val contentColor = if (msg.isMine) MaterialTheme.colorScheme.onPrimaryContainer
                     else MaterialTheme.colorScheme.onSurfaceVariant
-                if (pin != null) {
-                    LocationPinCard(
-                        lat = pin.first,
-                        lng = pin.second,
+                when (msg.contentType) {
+                    MessageType.IMAGE -> ImageMessageContent(
+                        base64 = msg.mediaBase64,
+                        onView = { msg.mediaBase64?.let(onViewImage) }
+                    )
+                    MessageType.AUDIO -> VoiceMessageContent(
+                        base64 = msg.mediaBase64,
+                        durationMs = msg.mediaDurationMs,
+                        isPlaying = isPlaying,
                         contentColor = contentColor,
-                        onClick = { onNavigateToMap(pin.first, pin.second) }
+                        onToggle = { msg.mediaBase64?.let(onToggleAudio) }
                     )
-                } else {
-                    LinkifiedText(
-                        text = msg.content,
-                        style = MaterialTheme.typography.bodyMedium.copy(color = contentColor),
-                        onNavigateToMap = onNavigateToMap
-                    )
+                    else -> {
+                        val pin = remember(msg.content) { detectLocationPin(msg.content) }
+                        if (pin != null) {
+                            LocationPinCard(
+                                lat = pin.first,
+                                lng = pin.second,
+                                contentColor = contentColor,
+                                onClick = { onNavigateToMap(pin.first, pin.second) }
+                            )
+                        } else {
+                            LinkifiedText(
+                                text = msg.content,
+                                style = MaterialTheme.typography.bodyMedium.copy(color = contentColor),
+                                onNavigateToMap = onNavigateToMap
+                            )
+                        }
+                    }
                 }
                 if (msg.isMine) {
                     var deliverySheetOpen by remember { mutableStateOf(false) }
@@ -511,38 +595,174 @@ private fun ChatInputBar(
     value: String,
     onValueChange: (String) -> Unit,
     onSend: () -> Unit,
-    onLocationShare: () -> Unit
+    onLocationShare: () -> Unit,
+    onAttachImage: () -> Unit,
+    isRecording: Boolean,
+    onStartRecording: () -> Unit,
+    onStopSendRecording: () -> Unit,
+    onCancelRecording: () -> Unit
 ) {
     Surface(shadowElevation = 4.dp) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp, vertical = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onLocationShare) {
-                Icon(
-                    Icons.Default.MyLocation,
-                    contentDescription = stringResource(R.string.chat_cd_share_location),
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-            OutlinedTextField(
-                value = value,
-                onValueChange = onValueChange,
-                placeholder = { Text(stringResource(R.string.chat_input_placeholder)) },
-                modifier = Modifier.weight(1f),
-                maxLines = 4
-            )
-            Spacer(Modifier.width(8.dp))
-            IconButton(
-                onClick = onSend,
-                enabled = value.isNotBlank()
+        if (isRecording) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.chat_cd_send))
+                IconButton(onClick = onCancelRecording) {
+                    Icon(
+                        Icons.Default.Close,
+                        contentDescription = stringResource(R.string.chat_cd_cancel_recording),
+                        tint = MaterialTheme.colorScheme.error
+                    )
+                }
+                Row(
+                    modifier = Modifier.weight(1f),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(10.dp)
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.error)
+                    )
+                    Text(stringResource(R.string.chat_recording), style = MaterialTheme.typography.bodyMedium)
+                }
+                IconButton(onClick = onStopSendRecording) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.Send,
+                        contentDescription = stringResource(R.string.chat_cd_stop_send_recording),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        } else {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onLocationShare) {
+                    Icon(
+                        Icons.Default.MyLocation,
+                        contentDescription = stringResource(R.string.chat_cd_share_location),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                IconButton(onClick = onAttachImage) {
+                    Icon(
+                        Icons.Default.Image,
+                        contentDescription = stringResource(R.string.chat_cd_attach_image),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                OutlinedTextField(
+                    value = value,
+                    onValueChange = onValueChange,
+                    placeholder = { Text(stringResource(R.string.chat_input_placeholder)) },
+                    modifier = Modifier.weight(1f),
+                    maxLines = 4
+                )
+                Spacer(Modifier.width(8.dp))
+                if (value.isBlank()) {
+                    IconButton(onClick = onStartRecording) {
+                        Icon(
+                            Icons.Default.Mic,
+                            contentDescription = stringResource(R.string.chat_cd_record_voice),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                } else {
+                    IconButton(onClick = onSend) {
+                        Icon(Icons.AutoMirrored.Filled.Send, contentDescription = stringResource(R.string.chat_cd_send))
+                    }
+                }
             }
         }
     }
+}
+
+/** Inline image thumbnail; tap to open the full-screen viewer. */
+@Composable
+private fun ImageMessageContent(base64: String?, onView: () -> Unit) {
+    val bitmap = remember(base64) { base64?.let { MediaUtils.decodeBase64ToBitmap(it) } }
+    if (bitmap == null) {
+        Text(stringResource(R.string.chat_preview_photo), style = MaterialTheme.typography.bodyMedium)
+        return
+    }
+    Image(
+        bitmap = bitmap.asImageBitmap(),
+        contentDescription = stringResource(R.string.chat_cd_view_image),
+        contentScale = ContentScale.Fit,
+        modifier = Modifier
+            .sizeIn(maxWidth = 240.dp, maxHeight = 320.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .clickable(onClick = onView)
+    )
+}
+
+/** Voice-note bubble: play/pause toggle plus duration. */
+@Composable
+private fun VoiceMessageContent(
+    base64: String?,
+    durationMs: Long?,
+    isPlaying: Boolean,
+    contentColor: Color,
+    onToggle: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.clickable(enabled = base64 != null, onClick = onToggle)
+    ) {
+        Icon(
+            if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+            contentDescription = stringResource(
+                if (isPlaying) R.string.chat_cd_pause_voice else R.string.chat_cd_play_voice
+            ),
+            tint = contentColor
+        )
+        Icon(Icons.Default.Mic, contentDescription = null, modifier = Modifier.size(16.dp), tint = contentColor)
+        Text(formatDuration(durationMs ?: 0L), style = MaterialTheme.typography.bodyMedium, color = contentColor)
+    }
+}
+
+/** Full-screen image viewer shown when a photo message is tapped. */
+@Composable
+private fun ImageViewerDialog(base64: String, onDismiss: () -> Unit) {
+    val bitmap = remember(base64) { MediaUtils.decodeBase64ToBitmap(base64) }
+    Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.92f))
+                .clickable(onClick = onDismiss),
+            contentAlignment = Alignment.Center
+        ) {
+            if (bitmap != null) {
+                Image(
+                    bitmap = bitmap.asImageBitmap(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.fillMaxSize().padding(16.dp)
+                )
+            }
+            IconButton(
+                onClick = onDismiss,
+                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp)
+            ) {
+                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.chat_cd_close_image), tint = Color.White)
+            }
+        }
+    }
+}
+
+private fun formatDuration(ms: Long): String {
+    val totalSec = (ms / 1000).toInt()
+    return "%d:%02d".format(totalSec / 60, totalSec % 60)
 }
 
 private fun formatTime(millis: Long): String =

@@ -2,7 +2,13 @@ package com.locapeer.messaging
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.media.MediaPlayer
+import android.media.MediaRecorder
+import android.net.Uri
+import android.os.Build
 import android.util.Log
+import com.locapeer.data.entity.MessageType
+import java.io.File
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
@@ -365,6 +371,191 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
+    // ----- Inline media messages (image / voice) -----
+
+    private val _isRecording = MutableStateFlow(false)
+    val isRecording: StateFlow<Boolean> = _isRecording
+
+    private val _playingMessageId = MutableStateFlow<String?>(null)
+    /** Id of the audio message currently playing, or null. Drives the play/pause bubble state. */
+    val playingMessageId: StateFlow<String?> = _playingMessageId
+
+    private var recorder: MediaRecorder? = null
+    private var recordFile: File? = null
+    private var recordStartMs: Long = 0L
+    private var recordPeerId: String? = null
+    private var recordTimeoutJob: Job? = null
+    private var player: MediaPlayer? = null
+
+    /** Compresses and sends an image picked from the gallery as an inline IMAGE message. */
+    fun sendImage(peerId: String, uri: Uri) {
+        viewModelScope.launch {
+            val base64 = withContext(Dispatchers.Default) { MediaUtils.compressImageToBase64(context, uri) }
+            if (base64 == null) {
+                Log.w("MessagingViewModel", "sendImage: could not read/compress image")
+                return@launch
+            }
+            sendMediaMessage(
+                peerId,
+                MediaMessage(kind = MediaKind.IMAGE, data = base64),
+                MessageType.IMAGE,
+                context.getString(com.locapeer.R.string.chat_preview_photo)
+            )
+        }
+    }
+
+    fun startRecording(peerId: String) {
+        if (_isRecording.value) return
+        try {
+            val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
+            val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
+                else @Suppress("DEPRECATION") MediaRecorder()
+            rec.setAudioSource(MediaRecorder.AudioSource.MIC)
+            rec.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+            rec.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
+            rec.setAudioEncodingBitRate(24000)
+            rec.setAudioSamplingRate(22050)
+            rec.setOutputFile(file.absolutePath)
+            rec.prepare()
+            rec.start()
+            recorder = rec
+            recordFile = file
+            recordStartMs = System.currentTimeMillis()
+            recordPeerId = peerId
+            _isRecording.value = true
+            // Auto-stop-and-send at the cap so a forgotten recording can't produce a giant payload.
+            recordTimeoutJob = viewModelScope.launch {
+                delay(MediaUtils.MAX_AUDIO_MS)
+                if (_isRecording.value) stopRecordingAndSend()
+            }
+        } catch (e: Exception) {
+            Log.e("MessagingViewModel", "startRecording failed", e)
+            releaseRecorder()
+            _isRecording.value = false
+        }
+    }
+
+    /** Stops recording and sends the voice note to the peer the recording was started for. */
+    fun stopRecordingAndSend() {
+        if (!_isRecording.value) return
+        val file = recordFile
+        val peerId = recordPeerId
+        val durationMs = System.currentTimeMillis() - recordStartMs
+        recordTimeoutJob?.cancel()
+        var ok = true
+        try { recorder?.stop() } catch (e: Exception) { ok = false }
+        releaseRecorder()
+        _isRecording.value = false
+        if (!ok || file == null || peerId == null || !file.exists() || durationMs < 500) {
+            file?.delete()
+            return
+        }
+        viewModelScope.launch {
+            val bytes = withContext(Dispatchers.IO) { runCatching { file.readBytes() }.getOrNull() }
+            file.delete()
+            if (bytes == null) return@launch
+            sendMediaMessage(
+                peerId,
+                MediaMessage(kind = MediaKind.AUDIO, data = MediaUtils.encodeBase64(bytes), durationMs = durationMs),
+                MessageType.AUDIO,
+                context.getString(com.locapeer.R.string.chat_preview_voice)
+            )
+        }
+    }
+
+    fun cancelRecording() {
+        if (!_isRecording.value) return
+        recordTimeoutJob?.cancel()
+        try { recorder?.stop() } catch (_: Exception) {}
+        releaseRecorder()
+        _isRecording.value = false
+        recordFile?.delete()
+        recordFile = null
+        recordPeerId = null
+    }
+
+    private fun releaseRecorder() {
+        try { recorder?.release() } catch (_: Exception) {}
+        recorder = null
+    }
+
+    /** Decodes an inline voice note to a temp file and plays it; a second call stops playback. */
+    fun toggleAudioPlayback(messageId: String, base64: String) {
+        if (_playingMessageId.value == messageId) {
+            stopAudio()
+            return
+        }
+        stopAudio()
+        viewModelScope.launch {
+            try {
+                val bytes = MediaUtils.decodeBase64(base64) ?: return@launch
+                val file = withContext(Dispatchers.IO) {
+                    File(context.cacheDir, "play.m4a").apply { writeBytes(bytes) }
+                }
+                val mp = MediaPlayer()
+                mp.setDataSource(file.absolutePath)
+                mp.setOnCompletionListener { stopAudio() }
+                mp.prepare()
+                mp.start()
+                player = mp
+                _playingMessageId.value = messageId
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "audio playback failed", e)
+                stopAudio()
+            }
+        }
+    }
+
+    fun stopAudio() {
+        try {
+            player?.stop()
+            player?.release()
+        } catch (_: Exception) {}
+        player = null
+        _playingMessageId.value = null
+    }
+
+    private fun sendMediaMessage(peerId: String, media: MediaMessage, contentType: String, previewText: String) {
+        viewModelScope.launch {
+            try {
+                val peer = peerDao.getPeer(peerId) ?: return@launch
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val privBytes = crypto.hexToBytes(privHex)
+                val plaintext = MediaWire.encode(media)
+                val event = withContext(Dispatchers.Default) {
+                    val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, plaintext)
+                    NostrEvent.build(
+                        privKeyHex = privHex,
+                        pubKeyHex = pubHex,
+                        kind = NostrEventKind.ENCRYPTED_DM,
+                        content = encrypted,
+                        tags = listOf(listOf("p", peer.publicKeyHex)),
+                        crypto = crypto
+                    )
+                }
+                relayClient.publishEvent(event)
+                peerDao.unarchive(peerId)
+                messageDao.insert(
+                    MessageEntity(
+                        id = event.id,
+                        peerId = peerId,
+                        senderPublicKeyHex = pubHex,
+                        content = previewText,
+                        timestamp = System.currentTimeMillis(),
+                        isMine = true,
+                        deliveryState = DeliveryState.SENDING.name,
+                        nostrEventId = event.id,
+                        contentType = contentType,
+                        mediaBase64 = media.data,
+                        mediaDurationMs = media.durationMs
+                    )
+                )
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "sendMediaMessage failed", e)
+            }
+        }
+    }
+
     fun startListening(myPubHex: String) {
         if (myListeningPubkey == myPubHex && eventsJob?.isActive == true) return
         myListeningPubkey = myPubHex
@@ -489,6 +680,9 @@ class MessagingViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        recordTimeoutJob?.cancel()
+        releaseRecorder()
+        stopAudio()
         myListeningPubkey?.let { pubkey ->
             relayClient.unsubscribe("lp-dm-${pubkey.take(16)}")
         }

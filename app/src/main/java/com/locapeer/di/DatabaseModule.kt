@@ -177,7 +177,19 @@ object DatabaseModule {
         }
     }
 
-    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
+    /**
+     * v8: inline media messages (image/voice). Adds contentType (defaults to 'TEXT' for every
+     * existing row) plus nullable mediaBase64 and mediaDurationMs to messages. All additive.
+     */
+    private val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE messages ADD COLUMN contentType TEXT NOT NULL DEFAULT 'TEXT'")
+            db.execSQL("ALTER TABLE messages ADD COLUMN mediaBase64 TEXT DEFAULT NULL")
+            db.execSQL("ALTER TABLE messages ADD COLUMN mediaDurationMs INTEGER DEFAULT NULL")
+        }
+    }
+
+    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
 
     @Provides
     @Singleton
