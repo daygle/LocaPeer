@@ -523,7 +523,6 @@ private fun OsmdroidMapView(
                         controller.setZoom(mapStartZoom)
                         controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
                     }
-                    mapStartingPoint == "OWN_PIN" -> controller.setZoom(mapStartZoom)
                     lastMapCenter != null -> {
                         val (lat, lng, zoom) = lastMapCenter
                         controller.setZoom(zoom)
@@ -543,7 +542,7 @@ private fun OsmdroidMapView(
 
             // Only rebuild markers/geofences if the underlying data has actually changed.
             // This prevents the 3.8s "Davey" lag during high-frequency heartbeat catch-up.
-            val dataHash = pins.hashCode() xor geofences.hashCode() xor userLocation.hashCode() xor isSosActive.hashCode() xor myPinColor.hashCode()
+            val dataHash = listOf(pins, geofences, userLocation, isSosActive, myPinColor).hashCode()
             if (mapView.getTag(R.id.map_data_hash) == dataHash) {
                 // Same data, just invalidate to ensure correct orientation/compass rendering
                 mapView.invalidate()

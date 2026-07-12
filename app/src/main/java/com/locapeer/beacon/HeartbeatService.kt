@@ -942,6 +942,11 @@ class HeartbeatService : LifecycleService() {
                             // is sanity-checked against this cached position.
                             locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)
                             Log.d(TAG, "Pre-seeded location from lastLocation cache: $lastLat, $lastLng")
+                            // If we just seeded the first location, trigger a pulse immediately 
+                            // so the user sees their pin on the map without waiting for the first scheduled tick.
+                            if (isStarted && lastPulseElapsedMs == 0L) {
+                                pulseNow()
+                            }
                         }
                     } catch (e: Exception) {
                         Log.d(TAG, "Could not pre-seed location: ${e.message}")

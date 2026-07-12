@@ -25,6 +25,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -117,14 +118,13 @@ class MapViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val userLocation: StateFlow<GeoPoint?> = flow {
-        val (_, pubHex) = keyManager.ensureKeypair()
-        emit(pubHex)
-    }.flatMapLatest { myPubkey ->
-        heartbeatDao.getLatestHeartbeatPerDevice().map { heartbeats ->
-            heartbeats.find { it.deviceId == myPubkey }?.let { GeoPoint(it.lat, it.lng) }
-        }
-    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+    val userLocation: StateFlow<GeoPoint?> = keyManager.publicKeyHexFlow
+        .flatMapLatest { myPubkey ->
+            if (myPubkey == null) flowOf(null)
+            else heartbeatDao.observeLatestHeartbeat(myPubkey).map { hb ->
+                hb?.let { GeoPoint(it.lat, it.lng) }
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
     val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
