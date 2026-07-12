@@ -3,6 +3,7 @@ package com.locapeer.subscriber
 import android.content.Context
 import android.util.Log
 import androidx.hilt.work.HiltWorker
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -140,11 +141,23 @@ class RetentionEnforcementWorker @AssistedInject constructor(
         private const val WORK_NAME = "retention_enforcement"
 
         fun schedule(workManager: WorkManager) {
-            val request = PeriodicWorkRequestBuilder<RetentionEnforcementWorker>(1, TimeUnit.DAYS)
+            // Retention cleanup is background housekeeping, not time-critical: deleting
+            // history that is already days old can wait a few hours for the battery to
+            // recover. Deferring it while the battery is low avoids a daily DB scan plus
+            // per-peer crypto and relay publishes exactly when power is scarcest, with no
+            // user-visible change to the (day-granularity) retention windows.
+            val constraints = Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
                 .build()
+            val request = PeriodicWorkRequestBuilder<RetentionEnforcementWorker>(1, TimeUnit.DAYS)
+                .setConstraints(constraints)
+                .build()
+            // UPDATE (not KEEP) so existing installs adopt the battery-not-low constraint
+            // on the next launch; UPDATE keeps the current periodic schedule and run
+            // history, it only re-applies the (now constrained) work spec.
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 request
             )
         }
