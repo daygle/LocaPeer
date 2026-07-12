@@ -407,24 +407,34 @@ private fun HistoryMapTab(
         SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
     }
 
+    // This effect restarts whenever mapViewRef changes (the factory below sets it after the
+    // first composition), so its dispose block must NOT detach the map - it would tear down
+    // the tile provider of the freshly created MapView and the background would never load.
     DisposableEffect(lifecycleOwner, mapViewRef) {
+        val mapView = mapViewRef
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
-                Lifecycle.Event.ON_PAUSE -> mapViewRef?.onPause()
+                Lifecycle.Event.ON_RESUME -> mapView?.onResume()
+                Lifecycle.Event.ON_PAUSE -> mapView?.onPause()
                 else -> {}
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
-        
+
         // If the activity is already resumed when we create the MapView (e.g. switching tabs),
         // we must manually call onResume() to start tile loading.
         if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            mapViewRef?.onResume()
+            mapView?.onResume()
         }
 
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
+    // Detach the MapView only when the tab actually leaves the composition.
+    DisposableEffect(Unit) {
+        onDispose {
             mapViewRef?.onPause()
             mapViewRef?.onDetach()
             mapViewRef = null
