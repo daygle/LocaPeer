@@ -81,6 +81,7 @@ fun ConversationListScreen(
     val conversations by vm.conversations.collectAsState()
     val archivedConversations by vm.archivedConversations.collectAsState()
     val groupConversations by vm.groupConversations.collectAsState()
+    val archivedGroupConversations by vm.archivedGroupConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
     val searchQuery by vm.searchQuery.collectAsState()
@@ -123,6 +124,11 @@ fun ConversationListScreen(
             currentGroups.isEmpty() -> LoadState.EMPTY
             else -> LoadState.CONTENT
         }
+        MessagesTab.ARCHIVED -> when {
+            displayList == null -> LoadState.LOADING
+            displayList.isEmpty() && archivedGroupConversations.isEmpty() -> LoadState.EMPTY
+            else -> LoadState.CONTENT
+        }
         else -> when {
             displayList == null -> LoadState.LOADING
             displayList.isEmpty() -> LoadState.EMPTY
@@ -134,12 +140,26 @@ fun ConversationListScreen(
     val safeGroups = currentGroups ?: emptyList()
 
     val isSelectionMode = selectedIds.isNotEmpty()
-    val allCurrentIds = safeList.map { it.peer.deviceId }.toSet()
+    // Selection can hold peer device ids (Chats / Archived rows) and circle ids (Circles tab and
+    // the circle section of the Archived tab). Bulk actions dispatch per id kind through this set;
+    // selection is cleared on tab switch so the two id spaces never mix on the single-type tabs.
+    val circleIdSet = (safeGroups.map { it.circle.id } + archivedGroupConversations.map { it.circle.id }).toSet()
+    val selectedCircleIds = selectedIds.filter { it in circleIdSet }
+    val selectedPeerIds = selectedIds.filterNot { it in circleIdSet }
+    val allCurrentIds = when (currentTab) {
+        MessagesTab.CHATS -> safeList.map { it.peer.deviceId }.toSet()
+        MessagesTab.CIRCLES -> safeGroups.map { it.circle.id }.toSet()
+        MessagesTab.ARCHIVED ->
+            safeList.map { it.peer.deviceId }.toSet() + archivedGroupConversations.map { it.circle.id }
+    }
     val allSelected = allCurrentIds.isNotEmpty() && selectedIds.containsAll(allCurrentIds)
-    val archivingToArchive = currentTab == MessagesTab.CHATS
+    val archivingToArchive = currentTab != MessagesTab.ARCHIVED
     // When every selected conversation is already read, the bulk mark-read action would be a no-op,
     // so the button flips to "Mark unread" (re-flag) instead. A mixed selection keeps "Mark read".
-    val selectedAllRead = selectedIds.isNotEmpty() && selectedIds.all { (unreadCounts[it] ?: 0) == 0 }
+    // Circle unread counts live on the group summaries rather than the per-peer map.
+    val groupUnreadById = (safeGroups + archivedGroupConversations).associate { it.circle.id to it.unread }
+    val selectedAllRead = selectedIds.isNotEmpty() &&
+        selectedIds.all { (unreadCounts[it] ?: groupUnreadById[it] ?: 0) == 0 }
 
     if (showContactPicker) {
         ContactPickerDialog(
@@ -164,25 +184,32 @@ fun ConversationListScreen(
                         headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
                         supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
                         modifier = Modifier.clickable {
-                            selectedIds.forEach { vm.deleteConversation(it) }
+                            selectedPeerIds.forEach { vm.deleteConversation(it) }
+                            selectedCircleIds.forEach { vm.deleteCircleAndConversation(it) }
                             showBulkDeleteDialog = false
                             selectedIds = emptySet()
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
-                        supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
-                        modifier = Modifier.clickable {
-                            selectedIds.forEach {
-                                vm.deleteConversation(it)
-                                vm.deleteConversationFromRemote(it)
-                            }
-                            showBulkDeleteDialog = false
-                            selectedIds = emptySet()
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                    // Remote purge only exists for 1:1 conversations - a circle is a client-side
+                    // grouping with no remote conversation object - so hide "delete both" when the
+                    // selection is circles only (the Circles tab always is).
+                    if (selectedPeerIds.isNotEmpty()) {
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                            supportingContent = { Text(stringResource(R.string.conv_bulk_delete_both_sub)) },
+                            modifier = Modifier.clickable {
+                                selectedPeerIds.forEach {
+                                    vm.deleteConversation(it)
+                                    vm.deleteConversationFromRemote(it)
+                                }
+                                selectedCircleIds.forEach { vm.deleteCircleAndConversation(it) }
+                                showBulkDeleteDialog = false
+                                selectedIds = emptySet()
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        )
+                    }
                 }
             },
             confirmButton = {},
@@ -224,44 +251,48 @@ fun ConversationListScreen(
                                     contentDescription = stringResource(R.string.conv_cd_select_all)
                                 )
                             }
-                        } else if (currentTab != MessagesTab.CIRCLES) {
-                            // Search / Sort / Select-all are 1:1-chat features and have no
-                            // backing implementation for circle conversations, so they are
-                            // intentionally hidden on the Circles sub-tab.
-                            IconButton(onClick = {
-                                showSearch = !showSearch
-                                if (!showSearch) vm.setSearchQuery("")
-                            }) {
-                                Icon(
-                                    Icons.Default.Search,
-                                    contentDescription = stringResource(R.string.common_search),
-                                    tint = if (showSearch) MaterialTheme.colorScheme.primary
-                                           else LocalContentColor.current
-                                )
-                            }
-                            Box {
-                                IconButton(onClick = { showSortMenu = true }) {
-                                    Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = stringResource(R.string.common_sort))
+                        } else {
+                            // Search / Sort are 1:1-chat features and have no backing
+                            // implementation for circle conversations, so they are
+                            // intentionally hidden on the Circles sub-tab. Select-all
+                            // (below) works everywhere now that circle rows support the
+                            // same selection mode as chat rows.
+                            if (currentTab != MessagesTab.CIRCLES) {
+                                IconButton(onClick = {
+                                    showSearch = !showSearch
+                                    if (!showSearch) vm.setSearchQuery("")
+                                }) {
+                                    Icon(
+                                        Icons.Default.Search,
+                                        contentDescription = stringResource(R.string.common_search),
+                                        tint = if (showSearch) MaterialTheme.colorScheme.primary
+                                               else LocalContentColor.current
+                                    )
                                 }
-                                DropdownMenu(
-                                    expanded = showSortMenu,
-                                    onDismissRequest = { showSortMenu = false }
-                                ) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.conv_sort_date)) },
-                                        onClick = { vm.setSortOrder(SortOrder.DATE); showSortMenu = false },
-                                        leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
-                                    )
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.common_name)) },
-                                        onClick = { vm.setSortOrder(SortOrder.NAME); showSortMenu = false },
-                                        leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
-                                    )
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(R.string.conv_sort_unread)) },
-                                        onClick = { vm.setSortOrder(SortOrder.UNREAD); showSortMenu = false },
-                                        leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
-                                    )
+                                Box {
+                                    IconButton(onClick = { showSortMenu = true }) {
+                                        Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = stringResource(R.string.common_sort))
+                                    }
+                                    DropdownMenu(
+                                        expanded = showSortMenu,
+                                        onDismissRequest = { showSortMenu = false }
+                                    ) {
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(R.string.conv_sort_date)) },
+                                            onClick = { vm.setSortOrder(SortOrder.DATE); showSortMenu = false },
+                                            leadingIcon = { if (sortOrder == SortOrder.DATE) Icon(Icons.Default.Check, null) }
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(R.string.common_name)) },
+                                            onClick = { vm.setSortOrder(SortOrder.NAME); showSortMenu = false },
+                                            leadingIcon = { if (sortOrder == SortOrder.NAME) Icon(Icons.Default.Check, null) }
+                                        )
+                                        DropdownMenuItem(
+                                            text = { Text(stringResource(R.string.conv_sort_unread)) },
+                                            onClick = { vm.setSortOrder(SortOrder.UNREAD); showSortMenu = false },
+                                            leadingIcon = { if (sortOrder == SortOrder.UNREAD) Icon(Icons.Default.Check, null) }
+                                        )
+                                    }
                                 }
                             }
                             IconButton(onClick = { selectedIds = allCurrentIds }) {
@@ -320,6 +351,8 @@ fun ConversationListScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+                        // Read/unread queries key on `peerId`, which for circle rows holds the
+                        // circle id (the thread key), so mixed selections pass through unchanged.
                         if (selectedAllRead) {
                             BulkActionButton(
                                 icon = { Icon(Icons.Default.MarkChatUnread, contentDescription = null) },
@@ -348,7 +381,8 @@ fun ConversationListScreen(
                             },
                             label = if (archivingToArchive) stringResource(R.string.conv_archive) else stringResource(R.string.conv_unarchive),
                             onClick = {
-                                selectedIds.forEach { vm.archiveConversation(it, archivingToArchive) }
+                                selectedPeerIds.forEach { vm.archiveConversation(it, archivingToArchive) }
+                                selectedCircleIds.forEach { vm.archiveCircle(it, archivingToArchive) }
                                 selectedIds = emptySet()
                             }
                         )
@@ -425,10 +459,22 @@ fun ConversationListScreen(
                     if (currentTab == MessagesTab.CIRCLES) {
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
                             items(safeGroups, key = { it.circle.id }) { group ->
+                                val isSelected = group.circle.id in selectedIds
                                 CircleRow(
                                     group = group,
+                                    isSelected = isSelected,
+                                    isSelectionMode = isSelectionMode,
                                     onClick = { onOpenGroup(group.circle.id) },
-                                    onEdit = { onEditCircle(group.circle.id) }
+                                    onEdit = { onEditCircle(group.circle.id) },
+                                    onToggleSelect = {
+                                        selectedIds = if (isSelected)
+                                            selectedIds - group.circle.id
+                                        else
+                                            selectedIds + group.circle.id
+                                    },
+                                    onEnterSelectionMode = {
+                                        selectedIds = setOf(group.circle.id)
+                                    }
                                 )
                                 HorizontalDivider(
                                     modifier = Modifier.padding(start = 72.dp),
@@ -464,6 +510,34 @@ fun ConversationListScreen(
                                     color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
                                 )
                             }
+                            // Archived circles share the Archived tab with archived 1:1 chats.
+                            // Same row + selection affordances as the Circles tab; unarchive and
+                            // delete run through the bulk-action bar like archived chats do.
+                            if (currentTab == MessagesTab.ARCHIVED) {
+                                items(archivedGroupConversations, key = { it.circle.id }) { group ->
+                                    val isSelected = group.circle.id in selectedIds
+                                    CircleRow(
+                                        group = group,
+                                        isSelected = isSelected,
+                                        isSelectionMode = isSelectionMode,
+                                        onClick = { onOpenGroup(group.circle.id) },
+                                        onEdit = { onEditCircle(group.circle.id) },
+                                        onToggleSelect = {
+                                            selectedIds = if (isSelected)
+                                                selectedIds - group.circle.id
+                                            else
+                                                selectedIds + group.circle.id
+                                        },
+                                        onEnterSelectionMode = {
+                                            selectedIds = setOf(group.circle.id)
+                                        }
+                                    )
+                                    HorizontalDivider(
+                                        modifier = Modifier.padding(start = 72.dp),
+                                        color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -488,60 +562,81 @@ private fun BulkActionButton(
 }
 
 /** Mirrors the row layout of `CircleListScreen` so the icon, preview, edit button and
- *  unread badge look consistent across the two surfaces. Selection / swipe-to-archive is
- *  intentionally NOT exposed for circles - those affordances are 1:1-chat specific. */
+ *  unread badge look consistent across the two surfaces. Long-press enters the same
+ *  selection mode as chat rows (mark read / archive / delete via the bulk-action bar);
+ *  editing stays on the explicit Edit button. */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CircleRow(
     group: GroupConversationSummary,
+    isSelected: Boolean = false,
+    isSelectionMode: Boolean = false,
     onClick: () -> Unit,
-    onEdit: () -> Unit
+    onEdit: () -> Unit,
+    onToggleSelect: () -> Unit = {},
+    onEnterSelectionMode: () -> Unit = {}
 ) {
     val haptic = LocalHapticFeedback.current
-    ListItem(
-        headlineContent = { Text(group.circle.name, fontWeight = FontWeight.Medium) },
-        supportingContent = {
-            val preview = group.lastMessage?.content
-            Text(
-                preview ?: stringResource(R.string.circles_member_count, group.memberCount),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        },
-        leadingContent = {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    Icons.Default.Group,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onTertiaryContainer
+    Surface(
+        color = if (isSelected) MaterialTheme.colorScheme.primaryContainer
+                else MaterialTheme.colorScheme.surface,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        ListItem(
+            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+            headlineContent = { Text(group.circle.name, fontWeight = FontWeight.Medium) },
+            supportingContent = {
+                val preview = group.lastMessage?.content
+                Text(
+                    preview ?: stringResource(R.string.circles_member_count, group.memberCount),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-            }
-        },
-        trailingContent = {
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (group.unread > 0) {
-                    Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("${group.unread}") }
+            },
+            leadingContent = {
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (isSelected) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.tertiaryContainer
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        if (isSelected) Icons.Default.Check else Icons.Default.Group,
+                        contentDescription = null,
+                        tint = if (isSelected) MaterialTheme.colorScheme.onPrimary
+                               else MaterialTheme.colorScheme.onTertiaryContainer
+                    )
                 }
-                TextButton(onClick = onEdit) {
-                    Text(stringResource(R.string.circles_edit))
+            },
+            trailingContent = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    if (group.unread > 0) {
+                        Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("${group.unread}") }
+                    }
+                    // Hidden while selecting so a stray tap can't yank the user into the
+                    // edit screen mid-selection - the same reason chat rows swap all their
+                    // tap targets for select-toggles in selection mode.
+                    if (!isSelectionMode) {
+                        TextButton(onClick = onEdit) {
+                            Text(stringResource(R.string.circles_edit))
+                        }
+                    }
                 }
-            }
-        },
-        modifier = Modifier.combinedClickable(
-            onClick = onClick,
-            onLongClick = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-                onEdit()
-            }
+            },
+            modifier = Modifier.combinedClickable(
+                onClick = { if (isSelectionMode) onToggleSelect() else onClick() },
+                onLongClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    if (isSelectionMode) onToggleSelect() else onEnterSelectionMode()
+                }
+            )
         )
-    )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

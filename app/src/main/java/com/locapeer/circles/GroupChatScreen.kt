@@ -15,12 +15,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -270,6 +272,18 @@ fun GroupChatScreen(
                                 text = { Text(stringResource(R.string.circles_share_location)) },
                                 leadingIcon = { Icon(Icons.Default.Share, null) },
                                 onClick = { showMenu = false; showShareSheet = true }
+                            )
+                            // Archive/unarchive parity with ChatScreen's 1:1 options menu. The
+                            // circle drops off (or returns to) the Circles tab; archived circles
+                            // live on the Archived tab of the Messages screen.
+                            val isCircleArchived = circle?.isArchived ?: false
+                            DropdownMenuItem(
+                                text = { Text(if (isCircleArchived) stringResource(R.string.conv_unarchive) else stringResource(R.string.conv_archive)) },
+                                leadingIcon = { Icon(if (isCircleArchived) Icons.Default.Unarchive else Icons.Default.Archive, null) },
+                                onClick = {
+                                    showMenu = false
+                                    vm.archiveCircle(circleId, !isCircleArchived)
+                                }
                             )
                             HorizontalDivider()
                             DropdownMenuItem(

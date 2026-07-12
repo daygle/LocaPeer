@@ -154,7 +154,7 @@ class MessagingViewModel @Inject constructor(
 
     // ----- Circles (client-side groups) -----
 
-    /** Group conversation rows, one per circle, newest activity first.
+    /** Group conversation rows, one per non-archived circle, newest activity first.
      *  Nullable so callers can distinguish LOADING (Room has not emitted yet) from
      *  EMPTY (no circles exist yet). See [com.locapeer.messaging.ConversationListScreen]. */
     val groupConversations: StateFlow<List<GroupConversationSummary>?> =
@@ -166,7 +166,7 @@ class MessagingViewModel @Inject constructor(
         ) { circles, lastMsgs, counts, unread ->
             val lastByGid = lastMsgs.associateBy { it.groupId }
             val countByGid = counts.associate { it.circleId to it.cnt }
-            circles.map { c ->
+            circles.filterNot { it.isArchived }.map { c ->
                 GroupConversationSummary(
                     circle = c,
                     lastMessage = lastByGid[c.id],
@@ -175,6 +175,41 @@ class MessagingViewModel @Inject constructor(
                 )
             }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
         }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations. */
+    val archivedGroupConversations: StateFlow<List<GroupConversationSummary>> =
+        combine(
+            circleDao.observeCircles(),
+            messageDao.getGroupConversationSummaries(),
+            circleDao.observeMemberCounts(),
+            messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
+        ) { circles, lastMsgs, counts, unread ->
+            val lastByGid = lastMsgs.associateBy { it.groupId }
+            val countByGid = counts.associate { it.circleId to it.cnt }
+            circles.filter { it.isArchived }.map { c ->
+                GroupConversationSummary(
+                    circle = c,
+                    lastMessage = lastByGid[c.id],
+                    memberCount = countByGid[c.id] ?: 0,
+                    unread = unread[c.id] ?: 0
+                )
+            }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    /** Archive/unarchive a circle - the group counterpart of [archiveConversation]. */
+    fun archiveCircle(circleId: String, archived: Boolean) {
+        viewModelScope.launch { circleDao.setArchived(circleId, archived, System.currentTimeMillis()) }
+    }
+
+    /** Deletes a circle, its membership and its whole message thread (local only - a circle is a
+     *  client-side grouping, so there is no remote circle object to delete). */
+    fun deleteCircleAndConversation(circleId: String) {
+        viewModelScope.launch {
+            messageDao.deleteAllForGroup(circleId)
+            circleDao.clearMembers(circleId)
+            circleDao.deleteCircle(circleId)
+        }
+    }
 
     /** Group messages share the 1:1 thread query because peerId holds the circle id. */
     fun getGroupMessages(circleId: String) = messageDao.getMessagesForPeer(circleId)

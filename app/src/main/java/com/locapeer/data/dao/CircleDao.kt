@@ -34,6 +34,15 @@ interface CircleDao {
     @Query("UPDATE circles SET name = :name WHERE id = :circleId")
     suspend fun renameCircle(circleId: String, name: String)
 
+    @Query(
+        "UPDATE circles SET isArchived = :archived, " +
+            "archivedAt = CASE WHEN :archived = 1 THEN :now ELSE archivedAt END " +
+            "WHERE id = :circleId"
+    )
+    suspend fun setArchived(circleId: String, archived: Boolean, now: Long)
+
+    suspend fun unarchive(circleId: String) = setArchived(circleId, false, 0)
+
     @Query("SELECT memberPubkey FROM circle_members WHERE circleId = :circleId")
     fun observeMemberPubkeys(circleId: String): Flow<List<String>>
 

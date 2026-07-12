@@ -215,9 +215,21 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v11: circle archiving. Mirrors the per-peer isArchived/archivedAt pair so circles can be
+     * archived from the Messages screen exactly like 1:1 conversations. Defaults keep every
+     * existing circle visible.
+     */
+    private val MIGRATION_10_11 = object : Migration(10, 11) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE circles ADD COLUMN isArchived INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE circles ADD COLUMN archivedAt INTEGER NOT NULL DEFAULT 0")
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
-        MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10
+        MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11
     )
 
     @Provides
