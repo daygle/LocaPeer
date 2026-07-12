@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">फोटो पहा</string>
     <string name="chat_delivery_details_title">संदेश स्थिती</string>
     <string name="chat_delivery_state_delivered">प्राप्तकर्त्याच्या डिव्हाइसवर पोहोचले</string>
-    <string name="chat_delivery_state_failed">अयशस्वी — संदेश रांगेत अडकला</string>
+    <string name="chat_delivery_state_failed">अयशस्वी - संदेश रांगेत अडकला</string>
     <string name="chat_delivery_state_read">प्राप्तकर्त्याने वाचले</string>
     <string name="chat_delivery_state_sending">पाठवत आहे…</string>
     <string name="chat_delivery_state_sent">पाठवले (रिलेने स्वीकारले)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">सुरू ठेवा</string>
     <string name="onboarding_backup_copied">की क्लिपबोर्डवर कॉपी केली</string>
     <string name="onboarding_backup_copy">की कॉपी करा</string>
-    <string name="onboarding_backup_desc">तुमची ओळख ही फक्त या डिव्हाइसवर साठवलेली एक खाजगी की आहे. खाते नाही आणि पासवर्ड रीसेट नाही — बॅकअपशिवाय हा फोन हरवल्यास, तुमची ओळख आणि संपर्क कायमचे नष्ट होतील.</string>
+    <string name="onboarding_backup_desc">तुमची ओळख ही फक्त या डिव्हाइसवर साठवलेली एक खाजगी की आहे. खाते नाही आणि पासवर्ड रीसेट नाही - बॅकअपशिवाय हा फोन हरवल्यास, तुमची ओळख आणि संपर्क कायमचे नष्ट होतील.</string>
     <string name="onboarding_backup_later">मी नंतर बॅकअप घेईन</string>
     <string name="onboarding_backup_note">तुम्ही सेटिंग्ज → बॅकअप आणि की येथून कधीही एन्क्रिप्ट केलेला बॅकअप निर्यात करू शकता.</string>
     <string name="onboarding_backup_reveal">माझी खाजगी की दाखवा</string>
     <string name="onboarding_backup_title">तुमच्या ओळखीचा बॅकअप घ्या</string>
-    <string name="onboarding_backup_warning">ही की असलेला कोणीही तुमची तोतयागिरी करू शकतो आणि तुमचे संदेश वाचू शकतो. ती खाजगी ठिकाणी ठेवा — स्क्रीनशॉटमध्ये नाही, पासवर्ड व्यवस्थापकात.</string>
+    <string name="onboarding_backup_warning">ही की असलेला कोणीही तुमची तोतयागिरी करू शकतो आणि तुमचे संदेश वाचू शकतो. ती खाजगी ठिकाणी ठेवा - स्क्रीनशॉटमध्ये नाही, पासवर्ड व्यवस्थापकात.</string>
     <string name="peer_temp_share_active_label">%1$s सोबत %2$s पर्यंत शेअर करत आहे</string>
     <string name="peer_temp_share_active_time_left">%1$s सोबत आणखी %2$s शेअर करत आहे</string>
     <string name="peer_temp_share_chip_12h">12 तास</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ਫੋਟੋ ਵੇਖੋ</string>
     <string name="chat_delivery_details_title">ਸੁਨੇਹਾ ਸਥਿਤੀ</string>
     <string name="chat_delivery_state_delivered">ਪ੍ਰਾਪਤਕਰਤਾ ਦੇ ਡਿਵਾਈਸ \'ਤੇ ਪਹੁੰਚਿਆ</string>
-    <string name="chat_delivery_state_failed">ਅਸਫਲ — ਸੁਨੇਹਾ ਕਤਾਰ ਵਿੱਚ ਫਸ ਗਿਆ</string>
+    <string name="chat_delivery_state_failed">ਅਸਫਲ - ਸੁਨੇਹਾ ਕਤਾਰ ਵਿੱਚ ਫਸ ਗਿਆ</string>
     <string name="chat_delivery_state_read">ਪ੍ਰਾਪਤਕਰਤਾ ਨੇ ਪੜ੍ਹਿਆ</string>
     <string name="chat_delivery_state_sending">ਭੇਜ ਰਿਹਾ ਹੈ…</string>
     <string name="chat_delivery_state_sent">ਭੇਜਿਆ (ਰਿਲੇ ਨੇ ਸਵੀਕਾਰ ਕੀਤਾ)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ਜਾਰੀ ਰੱਖੋ</string>
     <string name="onboarding_backup_copied">ਕੁੰਜੀ ਕਲਿੱਪਬੋਰਡ \'ਤੇ ਕਾਪੀ ਹੋਈ</string>
     <string name="onboarding_backup_copy">ਕੁੰਜੀ ਕਾਪੀ ਕਰੋ</string>
-    <string name="onboarding_backup_desc">ਤੁਹਾਡੀ ਪਛਾਣ ਸਿਰਫ਼ ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਸਟੋਰ ਕੀਤੀ ਇੱਕ ਨਿੱਜੀ ਕੁੰਜੀ ਹੈ। ਕੋਈ ਖਾਤਾ ਜਾਂ ਪਾਸਵਰਡ ਰੀਸੈੱਟ ਨਹੀਂ — ਬੈਕਅੱਪ ਤੋਂ ਬਿਨਾਂ ਇਹ ਫੋਨ ਗੁਆਚ ਗਿਆ ਤਾਂ ਤੁਹਾਡੀ ਪਛਾਣ ਅਤੇ ਸੰਪਰਕ ਹਮੇਸ਼ਾ ਲਈ ਖਤਮ ਹੋ ਜਾਣਗੇ।</string>
+    <string name="onboarding_backup_desc">ਤੁਹਾਡੀ ਪਛਾਣ ਸਿਰਫ਼ ਇਸ ਡਿਵਾਈਸ \'ਤੇ ਸਟੋਰ ਕੀਤੀ ਇੱਕ ਨਿੱਜੀ ਕੁੰਜੀ ਹੈ। ਕੋਈ ਖਾਤਾ ਜਾਂ ਪਾਸਵਰਡ ਰੀਸੈੱਟ ਨਹੀਂ - ਬੈਕਅੱਪ ਤੋਂ ਬਿਨਾਂ ਇਹ ਫੋਨ ਗੁਆਚ ਗਿਆ ਤਾਂ ਤੁਹਾਡੀ ਪਛਾਣ ਅਤੇ ਸੰਪਰਕ ਹਮੇਸ਼ਾ ਲਈ ਖਤਮ ਹੋ ਜਾਣਗੇ।</string>
     <string name="onboarding_backup_later">ਮੈਂ ਬਾਅਦ ਵਿੱਚ ਬੈਕਅੱਪ ਲਵਾਂਗਾ</string>
     <string name="onboarding_backup_note">ਤੁਸੀਂ ਸੈਟਿੰਗਾਂ → ਬੈਕਅੱਪ ਅਤੇ ਕੁੰਜੀਆਂ ਤੋਂ ਕਿਸੇ ਵੀ ਸਮੇਂ ਇਨਕ੍ਰਿਪਟ ਕੀਤਾ ਬੈਕਅੱਪ ਨਿਰਯਾਤ ਕਰ ਸਕਦੇ ਹੋ।</string>
     <string name="onboarding_backup_reveal">ਮੇਰੀ ਨਿੱਜੀ ਕੁੰਜੀ ਵਿਖਾਓ</string>
     <string name="onboarding_backup_title">ਆਪਣੀ ਪਛਾਣ ਦਾ ਬੈਕਅੱਪ ਲਓ</string>
-    <string name="onboarding_backup_warning">ਇਸ ਕੁੰਜੀ ਵਾਲਾ ਕੋਈ ਵੀ ਤੁਹਾਡੀ ਨਕਲ ਕਰ ਸਕਦਾ ਹੈ ਅਤੇ ਤੁਹਾਡੇ ਸੁਨੇਹੇ ਪੜ੍ਹ ਸਕਦਾ ਹੈ। ਇਸ ਨੂੰ ਨਿੱਜੀ ਥਾਂ \'ਤੇ ਰੱਖੋ — ਸਕ੍ਰੀਨਸ਼ਾਟ ਵਿੱਚ ਨਹੀਂ, ਪਾਸਵਰਡ ਮੈਨੇਜਰ ਵਿੱਚ।</string>
+    <string name="onboarding_backup_warning">ਇਸ ਕੁੰਜੀ ਵਾਲਾ ਕੋਈ ਵੀ ਤੁਹਾਡੀ ਨਕਲ ਕਰ ਸਕਦਾ ਹੈ ਅਤੇ ਤੁਹਾਡੇ ਸੁਨੇਹੇ ਪੜ੍ਹ ਸਕਦਾ ਹੈ। ਇਸ ਨੂੰ ਨਿੱਜੀ ਥਾਂ \'ਤੇ ਰੱਖੋ - ਸਕ੍ਰੀਨਸ਼ਾਟ ਵਿੱਚ ਨਹੀਂ, ਪਾਸਵਰਡ ਮੈਨੇਜਰ ਵਿੱਚ।</string>
     <string name="peer_temp_share_active_label">%1$s ਨਾਲ %2$s ਤੱਕ ਸਾਂਝਾ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="peer_temp_share_active_time_left">%1$s ਨਾਲ ਹੋਰ %2$s ਸਾਂਝਾ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</string>
     <string name="peer_temp_share_chip_12h">12 ਘੰਟੇ</string>

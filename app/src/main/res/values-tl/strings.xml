@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Tingnan ang larawan</string>
     <string name="chat_delivery_details_title">Status ng mensahe</string>
     <string name="chat_delivery_state_delivered">Naihatid sa device ng tatanggap</string>
-    <string name="chat_delivery_state_failed">Nabigo — naipit sa queue ang mensahe</string>
+    <string name="chat_delivery_state_failed">Nabigo - naipit sa queue ang mensahe</string>
     <string name="chat_delivery_state_read">Nabasa ng tatanggap</string>
     <string name="chat_delivery_state_sending">Ipinapadala…</string>
     <string name="chat_delivery_state_sent">Naipadala (tinanggap ng relay)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Magpatuloy</string>
     <string name="onboarding_backup_copied">Nakopya ang key sa clipboard</string>
     <string name="onboarding_backup_copy">Kopyahin ang key</string>
-    <string name="onboarding_backup_desc">Ang iyong pagkakakilanlan ay isang private key na nakaimbak lang sa device na ito. Walang account at walang pag-reset ng password — kung mawala ang teleponong ito nang walang backup, tuluyang mawawala ang iyong pagkakakilanlan at mga contact.</string>
+    <string name="onboarding_backup_desc">Ang iyong pagkakakilanlan ay isang private key na nakaimbak lang sa device na ito. Walang account at walang pag-reset ng password - kung mawala ang teleponong ito nang walang backup, tuluyang mawawala ang iyong pagkakakilanlan at mga contact.</string>
     <string name="onboarding_backup_later">Maba-backup ko na lang mamaya</string>
     <string name="onboarding_backup_note">Puwede kang mag-export ng naka-encrypt na backup anumang oras sa Mga Setting → Backup at Mga Key.</string>
     <string name="onboarding_backup_reveal">Ipakita ang aking private key</string>
     <string name="onboarding_backup_title">I-backup ang iyong pagkakakilanlan</string>
-    <string name="onboarding_backup_warning">Kahit sino na may ganitong key ay puwedeng magpanggap na ikaw at basahin ang iyong mga mensahe. Itago ito sa pribadong lugar — sa isang password manager, hindi sa screenshot.</string>
+    <string name="onboarding_backup_warning">Kahit sino na may ganitong key ay puwedeng magpanggap na ikaw at basahin ang iyong mga mensahe. Itago ito sa pribadong lugar - sa isang password manager, hindi sa screenshot.</string>
     <string name="peer_temp_share_active_label">Nagbabahagi kay %1$s hanggang %2$s</string>
     <string name="peer_temp_share_active_time_left">Nagbabahagi kay %1$s nang %2$s pa</string>
     <string name="peer_temp_share_chip_12h">12 oras</string>

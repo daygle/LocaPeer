@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ଫଟୋ ଦେଖନ୍ତୁ</string>
     <string name="chat_delivery_details_title">ବାର୍ତ୍ତା ସ୍ଥିତି</string>
     <string name="chat_delivery_state_delivered">ପ୍ରାପକଙ୍କ ଡିଭାଇସକୁ ପହଞ୍ଚିଲା</string>
-    <string name="chat_delivery_state_failed">ବିଫଳ — ବାର୍ତ୍ତା ଧାଡ଼ିରେ ଅଟକି ଯାଇଛି</string>
+    <string name="chat_delivery_state_failed">ବିଫଳ - ବାର୍ତ୍ତା ଧାଡ଼ିରେ ଅଟକି ଯାଇଛି</string>
     <string name="chat_delivery_state_read">ପ୍ରାପକ ପଢ଼ିଲେ</string>
     <string name="chat_delivery_state_sending">ପଠାଉଛି…</string>
     <string name="chat_delivery_state_sent">ପଠାଗଲା (ରିଲେ ଗ୍ରହଣ କଲା)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ଜାରି ରଖନ୍ତୁ</string>
     <string name="onboarding_backup_copied">କି କ୍ଲିପବୋର୍ଡକୁ କପି ହେଲା</string>
     <string name="onboarding_backup_copy">କି କପି କରନ୍ତୁ</string>
-    <string name="onboarding_backup_desc">ଆପଣଙ୍କ ପରିଚୟ କେବଳ ଏହି ଡିଭାଇସରେ ସଞ୍ଚିତ ଏକ ବ୍ୟକ୍ତିଗତ କି। କୌଣସି ଆକାଉଣ୍ଟ କିମ୍ବା ପାସୱାର୍ଡ ରିସେଟ୍ ନାହିଁ — ବ୍ୟାକଅପ୍ ବିନା ଏହି ଫୋନ୍ ହଜିଗଲେ, ଆପଣଙ୍କ ପରିଚୟ ଏବଂ ଯୋଗାଯୋଗ ଚିରକାଳ ପାଇଁ ହଜିଯିବ।</string>
+    <string name="onboarding_backup_desc">ଆପଣଙ୍କ ପରିଚୟ କେବଳ ଏହି ଡିଭାଇସରେ ସଞ୍ଚିତ ଏକ ବ୍ୟକ୍ତିଗତ କି। କୌଣସି ଆକାଉଣ୍ଟ କିମ୍ବା ପାସୱାର୍ଡ ରିସେଟ୍ ନାହିଁ - ବ୍ୟାକଅପ୍ ବିନା ଏହି ଫୋନ୍ ହଜିଗଲେ, ଆପଣଙ୍କ ପରିଚୟ ଏବଂ ଯୋଗାଯୋଗ ଚିରକାଳ ପାଇଁ ହଜିଯିବ।</string>
     <string name="onboarding_backup_later">ମୁଁ ପରେ ବ୍ୟାକଅପ୍ ନେବି</string>
     <string name="onboarding_backup_note">ଆପଣ ଯେକୌଣସି ସମୟରେ ସେଟିଂସ୍ → ବ୍ୟାକଅପ୍ ଏବଂ କି ରୁ ଏକ ଏନକ୍ରିପ୍ଟେଡ୍ ବ୍ୟାକଅପ୍ ରପ୍ତାନି କରିପାରିବେ।</string>
     <string name="onboarding_backup_reveal">ମୋର ବ୍ୟକ୍ତିଗତ କି ଦେଖାନ୍ତୁ</string>
     <string name="onboarding_backup_title">ଆପଣଙ୍କ ପରିଚୟ ବ୍ୟାକଅପ୍ କରନ୍ତୁ</string>
-    <string name="onboarding_backup_warning">ଏହି କି ଥିବା ଯେକେହି ଆପଣଙ୍କ ପରି ଛଦ୍ମ ବେଶ ଧରି ଆପଣଙ୍କ ବାର୍ତ୍ତା ପଢ଼ିପାରନ୍ତି। ଏହାକୁ ଏକ ବ୍ୟକ୍ତିଗତ ସ୍ଥାନରେ ରଖନ୍ତୁ — ସ୍କ୍ରିନସଟ୍‌ରେ ନୁହେଁ, ପାସୱାର୍ଡ ମ୍ୟାନେଜରରେ।</string>
+    <string name="onboarding_backup_warning">ଏହି କି ଥିବା ଯେକେହି ଆପଣଙ୍କ ପରି ଛଦ୍ମ ବେଶ ଧରି ଆପଣଙ୍କ ବାର୍ତ୍ତା ପଢ଼ିପାରନ୍ତି। ଏହାକୁ ଏକ ବ୍ୟକ୍ତିଗତ ସ୍ଥାନରେ ରଖନ୍ତୁ - ସ୍କ୍ରିନସଟ୍‌ରେ ନୁହେଁ, ପାସୱାର୍ଡ ମ୍ୟାନେଜରରେ।</string>
     <string name="peer_temp_share_active_label">%1$s ସହ %2$s ପର୍ଯ୍ୟନ୍ତ ସେୟାର୍ ହେଉଛି</string>
     <string name="peer_temp_share_active_time_left">%1$s ସହ ଆଉ %2$s ସେୟାର୍ ହେଉଛି</string>
     <string name="peer_temp_share_chip_12h">12 ଘଣ୍ଟା</string>

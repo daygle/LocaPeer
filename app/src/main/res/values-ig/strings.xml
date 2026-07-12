@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">Lee foto</string>
     <string name="chat_delivery_details_title">Ọnọdụ ozi</string>
     <string name="chat_delivery_state_delivered">Ebugara na ngwaọrụ onye nnata</string>
-    <string name="chat_delivery_state_failed">Ọ dara — ozi rapaara n\'ahịrị</string>
+    <string name="chat_delivery_state_failed">Ọ dara - ozi rapaara n\'ahịrị</string>
     <string name="chat_delivery_state_read">Onye nnata gụrụ ya</string>
     <string name="chat_delivery_state_sending">Na-eziga…</string>
     <string name="chat_delivery_state_sent">Ezigara (relay nabatara)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">Gaa n\'ihu</string>
     <string name="onboarding_backup_copied">Edepụtala igodo na clipboard</string>
     <string name="onboarding_backup_copy">Depụta igodo</string>
-    <string name="onboarding_backup_desc">Njirimara gị bụ igodo nzuzo echekwara naanị na ngwaọrụ a. Enweghị akaụntụ na enweghị ntọgharị okwuntughe — ọ bụrụ na ị tụfuo ekwentị a n\'enweghị ndabere, njirimara gị na kọntaktị gị ga-efu ruo mgbe ebighị ebi.</string>
+    <string name="onboarding_backup_desc">Njirimara gị bụ igodo nzuzo echekwara naanị na ngwaọrụ a. Enweghị akaụntụ na enweghị ntọgharị okwuntughe - ọ bụrụ na ị tụfuo ekwentị a n\'enweghị ndabere, njirimara gị na kọntaktị gị ga-efu ruo mgbe ebighị ebi.</string>
     <string name="onboarding_backup_later">Aga m eme ndabere ma emesịa</string>
     <string name="onboarding_backup_note">Ị nwere ike ịbupụ ndabere ezoro ezo oge ọ bụla na Ntọala → Ndabere na Igodo.</string>
     <string name="onboarding_backup_reveal">Gosi igodo nzuzo m</string>
     <string name="onboarding_backup_title">Mee ndabere nke njirimara gị</string>
-    <string name="onboarding_backup_warning">Onye ọ bụla nwere igodo a nwere ike ime ka ọ bụ gị wee gụọ ozi gị. Chekwaa ya n\'ebe nzuzo — na njikwa okwuntughe, ọ bụghị na foto ihuenyo.</string>
+    <string name="onboarding_backup_warning">Onye ọ bụla nwere igodo a nwere ike ime ka ọ bụ gị wee gụọ ozi gị. Chekwaa ya n\'ebe nzuzo - na njikwa okwuntughe, ọ bụghị na foto ihuenyo.</string>
     <string name="peer_temp_share_active_label">Na-ekekọrịta na %1$s ruo %2$s</string>
     <string name="peer_temp_share_active_time_left">Na-ekekọrịta na %1$s ruo %2$s ọzọ</string>
     <string name="peer_temp_share_chip_12h">Awa 12</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Fénykép megtekintése</string>
     <string name="chat_delivery_details_title">Üzenet állapota</string>
     <string name="chat_delivery_state_delivered">Kézbesítve a címzett eszközére</string>
-    <string name="chat_delivery_state_failed">Sikertelen — az üzenet elakadt a sorban</string>
+    <string name="chat_delivery_state_failed">Sikertelen - az üzenet elakadt a sorban</string>
     <string name="chat_delivery_state_read">A címzett elolvasta</string>
     <string name="chat_delivery_state_sending">Küldés…</string>
     <string name="chat_delivery_state_sent">Elküldve (a relé elfogadta)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Tovább</string>
     <string name="onboarding_backup_copied">Kulcs a vágólapra másolva</string>
     <string name="onboarding_backup_copy">Kulcs másolása</string>
-    <string name="onboarding_backup_desc">A személyazonosságod egy csak ezen az eszközön tárolt privát kulcs. Nincs fiók és nincs jelszó-visszaállítás — ha biztonsági mentés nélkül elveszíted ezt a telefont, a személyazonosságod és a névjegyeid örökre elvesznek.</string>
+    <string name="onboarding_backup_desc">A személyazonosságod egy csak ezen az eszközön tárolt privát kulcs. Nincs fiók és nincs jelszó-visszaállítás - ha biztonsági mentés nélkül elveszíted ezt a telefont, a személyazonosságod és a névjegyeid örökre elvesznek.</string>
     <string name="onboarding_backup_later">Később készítek mentést</string>
     <string name="onboarding_backup_note">Bármikor exportálhatsz titkosított biztonsági mentést a Beállítások → Biztonsági mentés és kulcsok menüben.</string>
     <string name="onboarding_backup_reveal">Privát kulcsom megjelenítése</string>
     <string name="onboarding_backup_title">Mentsd el a személyazonosságodat</string>
-    <string name="onboarding_backup_warning">Aki birtokolja ezt a kulcsot, kiadhatja magát neked, és elolvashatja az üzeneteidet. Tárold biztonságos helyen — jelszókezelőben, ne képernyőképen.</string>
+    <string name="onboarding_backup_warning">Aki birtokolja ezt a kulcsot, kiadhatja magát neked, és elolvashatja az üzeneteidet. Tárold biztonságos helyen - jelszókezelőben, ne képernyőképen.</string>
     <string name="peer_temp_share_active_label">Megosztás vele: %1$s eddig: %2$s</string>
     <string name="peer_temp_share_active_time_left">Megosztás vele: %1$s még %2$s</string>
     <string name="peer_temp_share_chip_12h">12 óra</string>

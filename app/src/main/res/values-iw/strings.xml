@@ -795,7 +795,7 @@
     <string name="chat_cd_view_image">הצג תמונה</string>
     <string name="chat_delivery_details_title">סטטוס ההודעה</string>
     <string name="chat_delivery_state_delivered">נמסר למכשיר הנמען</string>
-    <string name="chat_delivery_state_failed">נכשל — ההודעה נתקעה בתור</string>
+    <string name="chat_delivery_state_failed">נכשל - ההודעה נתקעה בתור</string>
     <string name="chat_delivery_state_read">נקרא על ידי הנמען</string>
     <string name="chat_delivery_state_sending">שולח…</string>
     <string name="chat_delivery_state_sent">נשלח (הממסר קיבל)</string>
@@ -829,12 +829,12 @@
     <string name="onboarding_backup_continue">המשך</string>
     <string name="onboarding_backup_copied">המפתח הועתק ללוח</string>
     <string name="onboarding_backup_copy">העתק מפתח</string>
-    <string name="onboarding_backup_desc">הזהות שלך היא מפתח פרטי המאוחסן במכשיר זה בלבד. אין חשבון ואין איפוס סיסמה — אם תאבד את הטלפון הזה ללא גיבוי, הזהות ואנשי הקשר שלך יאבדו לתמיד.</string>
+    <string name="onboarding_backup_desc">הזהות שלך היא מפתח פרטי המאוחסן במכשיר זה בלבד. אין חשבון ואין איפוס סיסמה - אם תאבד את הטלפון הזה ללא גיבוי, הזהות ואנשי הקשר שלך יאבדו לתמיד.</string>
     <string name="onboarding_backup_later">אגבה מאוחר יותר</string>
     <string name="onboarding_backup_note">תוכל לייצא גיבוי מוצפן בכל עת דרך הגדרות ← גיבוי ומפתחות.</string>
     <string name="onboarding_backup_reveal">הצג את המפתח הפרטי שלי</string>
     <string name="onboarding_backup_title">גבה את הזהות שלך</string>
-    <string name="onboarding_backup_warning">כל מי שיש לו מפתח זה יכול להתחזות אליך ולקרוא את ההודעות שלך. שמור אותו במקום פרטי — במנהל סיסמאות, לא בצילום מסך.</string>
+    <string name="onboarding_backup_warning">כל מי שיש לו מפתח זה יכול להתחזות אליך ולקרוא את ההודעות שלך. שמור אותו במקום פרטי - במנהל סיסמאות, לא בצילום מסך.</string>
     <string name="peer_temp_share_active_label">משתף עם %1$s עד %2$s</string>
     <string name="peer_temp_share_active_time_left">משתף עם %1$s למשך %2$s נוספות</string>
     <string name="peer_temp_share_chip_12h">12 שעות</string>

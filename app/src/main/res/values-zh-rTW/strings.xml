@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">檢視相片</string>
     <string name="chat_delivery_details_title">訊息狀態</string>
     <string name="chat_delivery_state_delivered">已送達收件人的裝置</string>
-    <string name="chat_delivery_state_failed">失敗 — 訊息卡在佇列中</string>
+    <string name="chat_delivery_state_failed">失敗 - 訊息卡在佇列中</string>
     <string name="chat_delivery_state_read">收件人已讀</string>
     <string name="chat_delivery_state_sending">正在傳送…</string>
     <string name="chat_delivery_state_sent">已傳送（中繼已接受）</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">繼續</string>
     <string name="onboarding_backup_copied">金鑰已複製到剪貼簿</string>
     <string name="onboarding_backup_copy">複製金鑰</string>
-    <string name="onboarding_backup_desc">您的身分是僅儲存在此裝置上的私鑰。沒有帳號，也無法重設密碼 — 如果您在沒有備份的情況下遺失此手機，您的身分和聯絡人將永久遺失。</string>
+    <string name="onboarding_backup_desc">您的身分是僅儲存在此裝置上的私鑰。沒有帳號，也無法重設密碼 - 如果您在沒有備份的情況下遺失此手機，您的身分和聯絡人將永久遺失。</string>
     <string name="onboarding_backup_later">稍後再備份</string>
     <string name="onboarding_backup_note">您可以隨時在「設定 → 備份與金鑰」中匯出加密備份。</string>
     <string name="onboarding_backup_reveal">顯示我的私鑰</string>
     <string name="onboarding_backup_title">備份您的身分</string>
-    <string name="onboarding_backup_warning">任何擁有此金鑰的人都能冒充您並閱讀您的訊息。請將其保存在私密的地方 — 密碼管理器中，而不是截圖裡。</string>
+    <string name="onboarding_backup_warning">任何擁有此金鑰的人都能冒充您並閱讀您的訊息。請將其保存在私密的地方 - 密碼管理器中，而不是截圖裡。</string>
     <string name="peer_temp_share_active_label">正在與 %1$s 分享，直到 %2$s</string>
     <string name="peer_temp_share_active_time_left">正在與 %1$s 分享，還剩 %2$s</string>
     <string name="peer_temp_share_chip_12h">12 小時</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Suuraa ilaali</string>
     <string name="chat_delivery_details_title">Haala ergaa</string>
     <string name="chat_delivery_state_delivered">Meeshaa fudhataatti geeffameera</string>
-    <string name="chat_delivery_state_failed">Kufe — ergaan sarara keessatti qabame</string>
+    <string name="chat_delivery_state_failed">Kufe - ergaan sarara keessatti qabame</string>
     <string name="chat_delivery_state_read">Fudhataan dubbiseera</string>
     <string name="chat_delivery_state_sending">Ergaa jira…</string>
     <string name="chat_delivery_state_sent">Ergameera (relay fudhate)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Itti fufi</string>
     <string name="onboarding_backup_copied">Furtuun gabatee waraabbiitti garagalfameera</string>
     <string name="onboarding_backup_copy">Furtuu garagalchi</string>
-    <string name="onboarding_backup_desc">Eenyummaan kee furtuu dhuunfaa meeshaa kana qofa irratti kuufamedha. Herregni hin jiru, jijjiirraan jecha darbii hin jiru — bilbila kana utuu kuusaa hin qabaatin yoo dhabde, eenyummaan kee fi quunnamtiin kee bara baraan bada.</string>
+    <string name="onboarding_backup_desc">Eenyummaan kee furtuu dhuunfaa meeshaa kana qofa irratti kuufamedha. Herregni hin jiru, jijjiirraan jecha darbii hin jiru - bilbila kana utuu kuusaa hin qabaatin yoo dhabde, eenyummaan kee fi quunnamtiin kee bara baraan bada.</string>
     <string name="onboarding_backup_later">Booda nan kuusa</string>
     <string name="onboarding_backup_note">Yeroo kamiyyuu Qindaa\'ina → Kuusaa fi Furtuuwwan keessaa kuusaa iccitiin eegame baasuu dandeessa.</string>
     <string name="onboarding_backup_reveal">Furtuu dhuunfaa koo agarsiisi</string>
     <string name="onboarding_backup_title">Eenyummaa kee kuusi</string>
-    <string name="onboarding_backup_warning">Namni furtuu kana qabu kamiyyuu akka kee fakkaachuu fi ergaawwan kee dubbisuu danda\'a. Bakka dhuunfaatti kaa\'i — bulchaa jecha darbii keessatti malee suuraa iskiriinii keessatti miti.</string>
+    <string name="onboarding_backup_warning">Namni furtuu kana qabu kamiyyuu akka kee fakkaachuu fi ergaawwan kee dubbisuu danda\'a. Bakka dhuunfaatti kaa\'i - bulchaa jecha darbii keessatti malee suuraa iskiriinii keessatti miti.</string>
     <string name="peer_temp_share_active_label">%1$s waliin hanga %2$s qoodaa jira</string>
     <string name="peer_temp_share_active_time_left">%1$s waliin %2$s dabalataaf qoodaa jira</string>
     <string name="peer_temp_share_chip_12h">Sa\'aatii 12</string>

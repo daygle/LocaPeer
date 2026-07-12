@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Προβολή φωτογραφίας</string>
     <string name="chat_delivery_details_title">Κατάσταση μηνύματος</string>
     <string name="chat_delivery_state_delivered">Παραδόθηκε στη συσκευή του παραλήπτη</string>
-    <string name="chat_delivery_state_failed">Απέτυχε — το μήνυμα κόλλησε στην ουρά</string>
+    <string name="chat_delivery_state_failed">Απέτυχε - το μήνυμα κόλλησε στην ουρά</string>
     <string name="chat_delivery_state_read">Διαβάστηκε από τον παραλήπτη</string>
     <string name="chat_delivery_state_sending">Αποστολή…</string>
     <string name="chat_delivery_state_sent">Στάλθηκε (έγινε αποδεκτό από τον αναμεταδότη)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Συνέχεια</string>
     <string name="onboarding_backup_copied">Το κλειδί αντιγράφηκε στο πρόχειρο</string>
     <string name="onboarding_backup_copy">Αντιγραφή κλειδιού</string>
-    <string name="onboarding_backup_desc">Η ταυτότητά σας είναι ένα ιδιωτικό κλειδί που αποθηκεύεται μόνο σε αυτή τη συσκευή. Δεν υπάρχει λογαριασμός ούτε επαναφορά κωδικού — αν χάσετε αυτό το τηλέφωνο χωρίς αντίγραφο ασφαλείας, η ταυτότητα και οι επαφές σας χάνονται οριστικά.</string>
+    <string name="onboarding_backup_desc">Η ταυτότητά σας είναι ένα ιδιωτικό κλειδί που αποθηκεύεται μόνο σε αυτή τη συσκευή. Δεν υπάρχει λογαριασμός ούτε επαναφορά κωδικού - αν χάσετε αυτό το τηλέφωνο χωρίς αντίγραφο ασφαλείας, η ταυτότητα και οι επαφές σας χάνονται οριστικά.</string>
     <string name="onboarding_backup_later">Θα κρατήσω αντίγραφο αργότερα</string>
     <string name="onboarding_backup_note">Μπορείτε να εξαγάγετε ένα κρυπτογραφημένο αντίγραφο ασφαλείας οποιαδήποτε στιγμή από Ρυθμίσεις → Αντίγραφο ασφαλείας και κλειδιά.</string>
     <string name="onboarding_backup_reveal">Εμφάνιση του ιδιωτικού μου κλειδιού</string>
     <string name="onboarding_backup_title">Κρατήστε αντίγραφο της ταυτότητάς σας</string>
-    <string name="onboarding_backup_warning">Οποιοσδήποτε έχει αυτό το κλειδί μπορεί να προσποιηθεί εσάς και να διαβάσει τα μηνύματά σας. Φυλάξτε το σε ιδιωτικό μέρος — σε διαχειριστή κωδικών, όχι σε στιγμιότυπο οθόνης.</string>
+    <string name="onboarding_backup_warning">Οποιοσδήποτε έχει αυτό το κλειδί μπορεί να προσποιηθεί εσάς και να διαβάσει τα μηνύματά σας. Φυλάξτε το σε ιδιωτικό μέρος - σε διαχειριστή κωδικών, όχι σε στιγμιότυπο οθόνης.</string>
     <string name="peer_temp_share_active_label">Κοινοποίηση με %1$s έως %2$s</string>
     <string name="peer_temp_share_active_time_left">Κοινοποίηση με %1$s για %2$s ακόμη</string>
     <string name="peer_temp_share_chip_12h">12 ώρες</string>

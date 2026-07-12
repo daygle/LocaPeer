@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">Lihat foto</string>
     <string name="chat_delivery_details_title">Status pesan</string>
     <string name="chat_delivery_state_delivered">Terkirim ke perangkat penerima</string>
-    <string name="chat_delivery_state_failed">Gagal — pesan tersangkut di antrean</string>
+    <string name="chat_delivery_state_failed">Gagal - pesan tersangkut di antrean</string>
     <string name="chat_delivery_state_read">Dibaca oleh penerima</string>
     <string name="chat_delivery_state_sending">Mengirim…</string>
     <string name="chat_delivery_state_sent">Terkirim (relai menerima)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">Lanjutkan</string>
     <string name="onboarding_backup_copied">Kunci disalin ke papan klip</string>
     <string name="onboarding_backup_copy">Salin kunci</string>
-    <string name="onboarding_backup_desc">Identitas Anda adalah kunci privat yang hanya disimpan di perangkat ini. Tidak ada akun dan tidak ada penyetelan ulang kata sandi — jika Anda kehilangan ponsel ini tanpa cadangan, identitas dan kontak Anda hilang selamanya.</string>
+    <string name="onboarding_backup_desc">Identitas Anda adalah kunci privat yang hanya disimpan di perangkat ini. Tidak ada akun dan tidak ada penyetelan ulang kata sandi - jika Anda kehilangan ponsel ini tanpa cadangan, identitas dan kontak Anda hilang selamanya.</string>
     <string name="onboarding_backup_later">Saya akan mencadangkan nanti</string>
     <string name="onboarding_backup_note">Anda dapat mengekspor cadangan terenkripsi kapan saja di Setelan → Cadangan dan Kunci.</string>
     <string name="onboarding_backup_reveal">Tampilkan kunci privat saya</string>
     <string name="onboarding_backup_title">Cadangkan identitas Anda</string>
-    <string name="onboarding_backup_warning">Siapa pun yang memiliki kunci ini dapat menyamar sebagai Anda dan membaca pesan Anda. Simpan di tempat pribadi — di pengelola kata sandi, bukan tangkapan layar.</string>
+    <string name="onboarding_backup_warning">Siapa pun yang memiliki kunci ini dapat menyamar sebagai Anda dan membaca pesan Anda. Simpan di tempat pribadi - di pengelola kata sandi, bukan tangkapan layar.</string>
     <string name="peer_temp_share_active_label">Berbagi dengan %1$s hingga %2$s</string>
     <string name="peer_temp_share_active_time_left">Berbagi dengan %1$s selama %2$s lagi</string>
     <string name="peer_temp_share_chip_12h">12 jam</string>

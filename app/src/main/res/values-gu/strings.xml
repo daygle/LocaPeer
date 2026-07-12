@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ફોટો જુઓ</string>
     <string name="chat_delivery_details_title">સંદેશ સ્થિતિ</string>
     <string name="chat_delivery_state_delivered">પ્રાપ્તકર્તાના ડિવાઇસ પર પહોંચ્યો</string>
-    <string name="chat_delivery_state_failed">નિષ્ફળ — સંદેશ કતારમાં અટવાયો</string>
+    <string name="chat_delivery_state_failed">નિષ્ફળ - સંદેશ કતારમાં અટવાયો</string>
     <string name="chat_delivery_state_read">પ્રાપ્તકર્તાએ વાંચ્યો</string>
     <string name="chat_delivery_state_sending">મોકલી રહ્યું છે…</string>
     <string name="chat_delivery_state_sent">મોકલ્યો (રિલેએ સ્વીકાર્યો)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ચાલુ રાખો</string>
     <string name="onboarding_backup_copied">કી ક્લિપબોર્ડ પર કૉપિ થઈ</string>
     <string name="onboarding_backup_copy">કી કૉપિ કરો</string>
-    <string name="onboarding_backup_desc">તમારી ઓળખ એ ફક્ત આ ડિવાઇસ પર સંગ્રહિત ખાનગી કી છે. કોઈ એકાઉન્ટ કે પાસવર્ડ રીસેટ નથી — બેકઅપ વિના આ ફોન ખોવાઈ જાય તો તમારી ઓળખ અને સંપર્કો કાયમ માટે ખોવાઈ જશે.</string>
+    <string name="onboarding_backup_desc">તમારી ઓળખ એ ફક્ત આ ડિવાઇસ પર સંગ્રહિત ખાનગી કી છે. કોઈ એકાઉન્ટ કે પાસવર્ડ રીસેટ નથી - બેકઅપ વિના આ ફોન ખોવાઈ જાય તો તમારી ઓળખ અને સંપર્કો કાયમ માટે ખોવાઈ જશે.</string>
     <string name="onboarding_backup_later">હું પછી બેકઅપ લઈશ</string>
     <string name="onboarding_backup_note">તમે સેટિંગ્સ → બેકઅપ અને કીઓ માંથી કોઈપણ સમયે એન્ક્રિપ્ટેડ બેકઅપ નિકાસ કરી શકો છો.</string>
     <string name="onboarding_backup_reveal">મારી ખાનગી કી બતાવો</string>
     <string name="onboarding_backup_title">તમારી ઓળખનું બેકઅપ લો</string>
-    <string name="onboarding_backup_warning">આ કી ધરાવનાર કોઈપણ તમારો ઢોંગ કરી શકે અને તમારા સંદેશા વાંચી શકે. તેને ખાનગી જગ્યાએ રાખો — સ્ક્રીનશોટમાં નહીં, પાસવર્ડ મેનેજરમાં.</string>
+    <string name="onboarding_backup_warning">આ કી ધરાવનાર કોઈપણ તમારો ઢોંગ કરી શકે અને તમારા સંદેશા વાંચી શકે. તેને ખાનગી જગ્યાએ રાખો - સ્ક્રીનશોટમાં નહીં, પાસવર્ડ મેનેજરમાં.</string>
     <string name="peer_temp_share_active_label">%1$s સાથે %2$s સુધી શેર થઈ રહ્યું છે</string>
     <string name="peer_temp_share_active_time_left">%1$s સાથે વધુ %2$s શેર થઈ રહ્યું છે</string>
     <string name="peer_temp_share_chip_12h">12 કલાક</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ছবি দেখুন</string>
     <string name="chat_delivery_details_title">বার্তার অবস্থা</string>
     <string name="chat_delivery_state_delivered">প্রাপকের ডিভাইসে পৌঁছেছে</string>
-    <string name="chat_delivery_state_failed">ব্যর্থ — বার্তা সারিতে আটকে আছে</string>
+    <string name="chat_delivery_state_failed">ব্যর্থ - বার্তা সারিতে আটকে আছে</string>
     <string name="chat_delivery_state_read">প্রাপক পড়েছেন</string>
     <string name="chat_delivery_state_sending">পাঠানো হচ্ছে…</string>
     <string name="chat_delivery_state_sent">পাঠানো হয়েছে (রিলে গ্রহণ করেছে)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">চালিয়ে যান</string>
     <string name="onboarding_backup_copied">কী ক্লিপবোর্ডে কপি হয়েছে</string>
     <string name="onboarding_backup_copy">কী কপি করুন</string>
-    <string name="onboarding_backup_desc">আপনার পরিচয় হলো একটি ব্যক্তিগত কী যা কেবল এই ডিভাইসে সংরক্ষিত। কোনো অ্যাকাউন্ট বা পাসওয়ার্ড রিসেট নেই — ব্যাকআপ ছাড়া এই ফোন হারালে আপনার পরিচয় ও পরিচিতি চিরতরে হারিয়ে যাবে।</string>
+    <string name="onboarding_backup_desc">আপনার পরিচয় হলো একটি ব্যক্তিগত কী যা কেবল এই ডিভাইসে সংরক্ষিত। কোনো অ্যাকাউন্ট বা পাসওয়ার্ড রিসেট নেই - ব্যাকআপ ছাড়া এই ফোন হারালে আপনার পরিচয় ও পরিচিতি চিরতরে হারিয়ে যাবে।</string>
     <string name="onboarding_backup_later">পরে ব্যাকআপ নেব</string>
     <string name="onboarding_backup_note">আপনি যেকোনো সময় সেটিংস → ব্যাকআপ ও কী থেকে একটি এনক্রিপ্ট করা ব্যাকআপ রপ্তানি করতে পারেন।</string>
     <string name="onboarding_backup_reveal">আমার ব্যক্তিগত কী দেখান</string>
     <string name="onboarding_backup_title">আপনার পরিচয় ব্যাকআপ করুন</string>
-    <string name="onboarding_backup_warning">এই কী থাকা যেকেউ আপনার ছদ্মবেশ ধরতে এবং আপনার বার্তা পড়তে পারে। এটি একটি ব্যক্তিগত জায়গায় রাখুন — একটি পাসওয়ার্ড ম্যানেজারে, স্ক্রিনশটে নয়।</string>
+    <string name="onboarding_backup_warning">এই কী থাকা যেকেউ আপনার ছদ্মবেশ ধরতে এবং আপনার বার্তা পড়তে পারে। এটি একটি ব্যক্তিগত জায়গায় রাখুন - একটি পাসওয়ার্ড ম্যানেজারে, স্ক্রিনশটে নয়।</string>
     <string name="peer_temp_share_active_label">%1$s-এর সঙ্গে %2$s পর্যন্ত শেয়ার করা হচ্ছে</string>
     <string name="peer_temp_share_active_time_left">%1$s-এর সঙ্গে আরও %2$s শেয়ার করা হচ্ছে</string>
     <string name="peer_temp_share_chip_12h">১২ ঘণ্টা</string>

@@ -9,7 +9,7 @@ import kotlinx.serialization.json.Json
  * plain text by a leading control-character [MAGIC]. Plain text messages stay raw, so older clients
  * and the location-pin detection keep working untouched.
  *
- * The media bytes travel Base64-encoded inside [data] — aggressively downscaled/compressed and
+ * The media bytes travel Base64-encoded inside [data] - aggressively downscaled/compressed and
  * size-capped before sending (see MediaUtils), so the payload stays within relay limits and the
  * zero-server E2E model is preserved (each recipient gets their own individually encrypted copy).
  */

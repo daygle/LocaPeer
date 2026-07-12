@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Tazama picha</string>
     <string name="chat_delivery_details_title">Hali ya ujumbe</string>
     <string name="chat_delivery_state_delivered">Umefikishwa kwenye kifaa cha mpokeaji</string>
-    <string name="chat_delivery_state_failed">Imeshindwa — ujumbe umekwama kwenye foleni</string>
+    <string name="chat_delivery_state_failed">Imeshindwa - ujumbe umekwama kwenye foleni</string>
     <string name="chat_delivery_state_read">Umesomwa na mpokeaji</string>
     <string name="chat_delivery_state_sending">Inatuma…</string>
     <string name="chat_delivery_state_sent">Umetumwa (relay imekubali)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Endelea</string>
     <string name="onboarding_backup_copied">Ufunguo umenakiliwa kwenye ubao wa kunakili</string>
     <string name="onboarding_backup_copy">Nakili ufunguo</string>
-    <string name="onboarding_backup_desc">Utambulisho wako ni ufunguo wa faragha uliohifadhiwa kwenye kifaa hiki pekee. Hakuna akaunti wala kuweka upya nenosiri — ukipoteza simu hii bila nakala rudufu, utambulisho na anwani zako zitapotea milele.</string>
+    <string name="onboarding_backup_desc">Utambulisho wako ni ufunguo wa faragha uliohifadhiwa kwenye kifaa hiki pekee. Hakuna akaunti wala kuweka upya nenosiri - ukipoteza simu hii bila nakala rudufu, utambulisho na anwani zako zitapotea milele.</string>
     <string name="onboarding_backup_later">Nitachukua nakala rudufu baadaye</string>
     <string name="onboarding_backup_note">Unaweza kuhamisha nakala rudufu iliyosimbwa wakati wowote katika Mipangilio → Nakala Rudufu na Funguo.</string>
     <string name="onboarding_backup_reveal">Onyesha ufunguo wangu wa faragha</string>
     <string name="onboarding_backup_title">Hifadhi nakala ya utambulisho wako</string>
-    <string name="onboarding_backup_warning">Yeyote mwenye ufunguo huu anaweza kujifanya wewe na kusoma ujumbe wako. Uhifadhi mahali pa faragha — katika kidhibiti cha manenosiri, si picha ya skrini.</string>
+    <string name="onboarding_backup_warning">Yeyote mwenye ufunguo huu anaweza kujifanya wewe na kusoma ujumbe wako. Uhifadhi mahali pa faragha - katika kidhibiti cha manenosiri, si picha ya skrini.</string>
     <string name="peer_temp_share_active_label">Inashiriki na %1$s hadi %2$s</string>
     <string name="peer_temp_share_active_time_left">Inashiriki na %1$s kwa %2$s zaidi</string>
     <string name="peer_temp_share_chip_12h">Saa 12</string>

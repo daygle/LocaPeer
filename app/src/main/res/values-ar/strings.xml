@@ -840,7 +840,7 @@
     <string name="chat_cd_view_image">عرض الصورة</string>
     <string name="chat_delivery_details_title">حالة الرسالة</string>
     <string name="chat_delivery_state_delivered">تم التسليم إلى جهاز المستلم</string>
-    <string name="chat_delivery_state_failed">فشل — الرسالة عالقة في قائمة الانتظار</string>
+    <string name="chat_delivery_state_failed">فشل - الرسالة عالقة في قائمة الانتظار</string>
     <string name="chat_delivery_state_read">قرأها المستلم</string>
     <string name="chat_delivery_state_sending">جارٍ الإرسال…</string>
     <string name="chat_delivery_state_sent">تم الإرسال (قبله المُرحِّل)</string>
@@ -874,12 +874,12 @@
     <string name="onboarding_backup_continue">متابعة</string>
     <string name="onboarding_backup_copied">تم نسخ المفتاح إلى الحافظة</string>
     <string name="onboarding_backup_copy">نسخ المفتاح</string>
-    <string name="onboarding_backup_desc">هويتك هي مفتاح خاص مخزَّن على هذا الجهاز فقط. لا يوجد حساب ولا إعادة تعيين لكلمة المرور — إذا فقدت هذا الهاتف بدون نسخة احتياطية، ستضيع هويتك وجهات اتصالك إلى الأبد.</string>
+    <string name="onboarding_backup_desc">هويتك هي مفتاح خاص مخزَّن على هذا الجهاز فقط. لا يوجد حساب ولا إعادة تعيين لكلمة المرور - إذا فقدت هذا الهاتف بدون نسخة احتياطية، ستضيع هويتك وجهات اتصالك إلى الأبد.</string>
     <string name="onboarding_backup_later">سأقوم بالنسخ الاحتياطي لاحقًا</string>
     <string name="onboarding_backup_note">يمكنك تصدير نسخة احتياطية مشفّرة في أي وقت من الإعدادات ← النسخ الاحتياطي والمفاتيح.</string>
     <string name="onboarding_backup_reveal">إظهار مفتاحي الخاص</string>
     <string name="onboarding_backup_title">انسخ هويتك احتياطيًا</string>
-    <string name="onboarding_backup_warning">أي شخص يملك هذا المفتاح يمكنه انتحال شخصيتك وقراءة رسائلك. احفظه في مكان خاص — في مدير كلمات مرور، وليس في لقطة شاشة.</string>
+    <string name="onboarding_backup_warning">أي شخص يملك هذا المفتاح يمكنه انتحال شخصيتك وقراءة رسائلك. احفظه في مكان خاص - في مدير كلمات مرور، وليس في لقطة شاشة.</string>
     <string name="peer_temp_share_active_label">تتم المشاركة مع %1$s حتى %2$s</string>
     <string name="peer_temp_share_active_time_left">تتم المشاركة مع %1$s لمدة %2$s أخرى</string>
     <string name="peer_temp_share_chip_12h">12 ساعة</string>

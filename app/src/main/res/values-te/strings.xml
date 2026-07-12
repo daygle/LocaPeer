@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ఫోటోను చూడండి</string>
     <string name="chat_delivery_details_title">సందేశ స్థితి</string>
     <string name="chat_delivery_state_delivered">గ్రహీత పరికరానికి చేరవేయబడింది</string>
-    <string name="chat_delivery_state_failed">విఫలమైంది — సందేశం క్యూలో ఇరుక్కుపోయింది</string>
+    <string name="chat_delivery_state_failed">విఫలమైంది - సందేశం క్యూలో ఇరుక్కుపోయింది</string>
     <string name="chat_delivery_state_read">గ్రహీత చదివారు</string>
     <string name="chat_delivery_state_sending">పంపుతోంది…</string>
     <string name="chat_delivery_state_sent">పంపబడింది (రిలే ఆమోదించింది)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">కొనసాగించండి</string>
     <string name="onboarding_backup_copied">కీ క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది</string>
     <string name="onboarding_backup_copy">కీని కాపీ చేయండి</string>
-    <string name="onboarding_backup_desc">మీ గుర్తింపు ఈ పరికరంలో మాత్రమే నిల్వ చేయబడిన ప్రైవేట్ కీ. ఖాతా లేదా పాస్‌వర్డ్ రీసెట్ లేదు — బ్యాకప్ లేకుండా ఈ ఫోన్‌ను కోల్పోతే, మీ గుర్తింపు, పరిచయాలు శాశ్వతంగా పోతాయి.</string>
+    <string name="onboarding_backup_desc">మీ గుర్తింపు ఈ పరికరంలో మాత్రమే నిల్వ చేయబడిన ప్రైవేట్ కీ. ఖాతా లేదా పాస్‌వర్డ్ రీసెట్ లేదు - బ్యాకప్ లేకుండా ఈ ఫోన్‌ను కోల్పోతే, మీ గుర్తింపు, పరిచయాలు శాశ్వతంగా పోతాయి.</string>
     <string name="onboarding_backup_later">తర్వాత బ్యాకప్ చేస్తాను</string>
     <string name="onboarding_backup_note">ఎన్‌క్రిప్ట్ చేసిన బ్యాకప్‌ను ఎప్పుడైనా సెట్టింగ్‌లు → బ్యాకప్ మరియు కీలు నుండి ఎగుమతి చేయవచ్చు.</string>
     <string name="onboarding_backup_reveal">నా ప్రైవేట్ కీని చూపించండి</string>
     <string name="onboarding_backup_title">మీ గుర్తింపును బ్యాకప్ చేయండి</string>
-    <string name="onboarding_backup_warning">ఈ కీ ఉన్న ఎవరైనా మీలా నటించి మీ సందేశాలను చదవగలరు. దాన్ని ప్రైవేట్ స్థలంలో ఉంచండి — స్క్రీన్‌షాట్‌లో కాదు, పాస్‌వర్డ్ మేనేజర్‌లో.</string>
+    <string name="onboarding_backup_warning">ఈ కీ ఉన్న ఎవరైనా మీలా నటించి మీ సందేశాలను చదవగలరు. దాన్ని ప్రైవేట్ స్థలంలో ఉంచండి - స్క్రీన్‌షాట్‌లో కాదు, పాస్‌వర్డ్ మేనేజర్‌లో.</string>
     <string name="peer_temp_share_active_label">%1$sతో %2$s వరకు భాగస్వామ్యం చేస్తోంది</string>
     <string name="peer_temp_share_active_time_left">%1$sతో మరో %2$s భాగస్వామ్యం చేస్తోంది</string>
     <string name="peer_temp_share_chip_12h">12 గంటలు</string>

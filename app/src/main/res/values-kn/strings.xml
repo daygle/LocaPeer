@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ಫೋಟೋ ವೀಕ್ಷಿಸಿ</string>
     <string name="chat_delivery_details_title">ಸಂದೇಶ ಸ್ಥಿತಿ</string>
     <string name="chat_delivery_state_delivered">ಸ್ವೀಕರಿಸುವವರ ಸಾಧನಕ್ಕೆ ತಲುಪಿದೆ</string>
-    <string name="chat_delivery_state_failed">ವಿಫಲವಾಗಿದೆ — ಸಂದೇಶ ಸಾಲಿನಲ್ಲಿ ಸಿಲುಕಿದೆ</string>
+    <string name="chat_delivery_state_failed">ವಿಫಲವಾಗಿದೆ - ಸಂದೇಶ ಸಾಲಿನಲ್ಲಿ ಸಿಲುಕಿದೆ</string>
     <string name="chat_delivery_state_read">ಸ್ವೀಕರಿಸುವವರು ಓದಿದ್ದಾರೆ</string>
     <string name="chat_delivery_state_sending">ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ…</string>
     <string name="chat_delivery_state_sent">ಕಳುಹಿಸಲಾಗಿದೆ (ರಿಲೇ ಸ್ವೀಕರಿಸಿದೆ)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ಮುಂದುವರಿಸಿ</string>
     <string name="onboarding_backup_copied">ಕೀ ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸಲಾಗಿದೆ</string>
     <string name="onboarding_backup_copy">ಕೀ ನಕಲಿಸಿ</string>
-    <string name="onboarding_backup_desc">ನಿಮ್ಮ ಗುರುತು ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ ಸಂಗ್ರಹಿಸಲಾದ ಖಾಸಗಿ ಕೀ. ಖಾತೆ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ಮರುಹೊಂದಿಕೆ ಇಲ್ಲ — ಬ್ಯಾಕಪ್ ಇಲ್ಲದೆ ಈ ಫೋನ್ ಕಳೆದುಕೊಂಡರೆ, ನಿಮ್ಮ ಗುರುತು ಮತ್ತು ಸಂಪರ್ಕಗಳು ಶಾಶ್ವತವಾಗಿ ಕಳೆದುಹೋಗುತ್ತವೆ.</string>
+    <string name="onboarding_backup_desc">ನಿಮ್ಮ ಗುರುತು ಈ ಸಾಧನದಲ್ಲಿ ಮಾತ್ರ ಸಂಗ್ರಹಿಸಲಾದ ಖಾಸಗಿ ಕೀ. ಖಾತೆ ಅಥವಾ ಪಾಸ್‌ವರ್ಡ್ ಮರುಹೊಂದಿಕೆ ಇಲ್ಲ - ಬ್ಯಾಕಪ್ ಇಲ್ಲದೆ ಈ ಫೋನ್ ಕಳೆದುಕೊಂಡರೆ, ನಿಮ್ಮ ಗುರುತು ಮತ್ತು ಸಂಪರ್ಕಗಳು ಶಾಶ್ವತವಾಗಿ ಕಳೆದುಹೋಗುತ್ತವೆ.</string>
     <string name="onboarding_backup_later">ನಂತರ ಬ್ಯಾಕಪ್ ಮಾಡುತ್ತೇನೆ</string>
     <string name="onboarding_backup_note">ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿದ ಬ್ಯಾಕಪ್ ಅನ್ನು ಸೆಟ್ಟಿಂಗ್‌ಗಳು → ಬ್ಯಾಕಪ್ ಮತ್ತು ಕೀಗಳು ನಿಂದ ಯಾವಾಗ ಬೇಕಾದರೂ ರಫ್ತು ಮಾಡಬಹುದು.</string>
     <string name="onboarding_backup_reveal">ನನ್ನ ಖಾಸಗಿ ಕೀ ತೋರಿಸಿ</string>
     <string name="onboarding_backup_title">ನಿಮ್ಮ ಗುರುತನ್ನು ಬ್ಯಾಕಪ್ ಮಾಡಿ</string>
-    <string name="onboarding_backup_warning">ಈ ಕೀ ಹೊಂದಿರುವ ಯಾರಾದರೂ ನಿಮ್ಮಂತೆ ನಟಿಸಿ ನಿಮ್ಮ ಸಂದೇಶಗಳನ್ನು ಓದಬಹುದು. ಅದನ್ನು ಖಾಸಗಿ ಸ್ಥಳದಲ್ಲಿ ಇರಿಸಿ — ಸ್ಕ್ರೀನ್‌ಶಾಟ್‌ನಲ್ಲಿ ಅಲ್ಲ, ಪಾಸ್‌ವರ್ಡ್ ಮ್ಯಾನೇಜರ್‌ನಲ್ಲಿ.</string>
+    <string name="onboarding_backup_warning">ಈ ಕೀ ಹೊಂದಿರುವ ಯಾರಾದರೂ ನಿಮ್ಮಂತೆ ನಟಿಸಿ ನಿಮ್ಮ ಸಂದೇಶಗಳನ್ನು ಓದಬಹುದು. ಅದನ್ನು ಖಾಸಗಿ ಸ್ಥಳದಲ್ಲಿ ಇರಿಸಿ - ಸ್ಕ್ರೀನ್‌ಶಾಟ್‌ನಲ್ಲಿ ಅಲ್ಲ, ಪಾಸ್‌ವರ್ಡ್ ಮ್ಯಾನೇಜರ್‌ನಲ್ಲಿ.</string>
     <string name="peer_temp_share_active_label">%1$s ಜೊತೆ %2$s ವರೆಗೆ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ</string>
     <string name="peer_temp_share_active_time_left">%1$s ಜೊತೆ ಇನ್ನೂ %2$s ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ</string>
     <string name="peer_temp_share_chip_12h">12 ಗಂಟೆ</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Фотоны көру</string>
     <string name="chat_delivery_details_title">Хабар күйі</string>
     <string name="chat_delivery_state_delivered">Алушының құрылғысына жеткізілді</string>
-    <string name="chat_delivery_state_failed">Сәтсіз — хабар кезекте тұрып қалды</string>
+    <string name="chat_delivery_state_failed">Сәтсіз - хабар кезекте тұрып қалды</string>
     <string name="chat_delivery_state_read">Алушы оқыды</string>
     <string name="chat_delivery_state_sending">Жіберілуде…</string>
     <string name="chat_delivery_state_sent">Жіберілді (реле қабылдады)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Жалғастыру</string>
     <string name="onboarding_backup_copied">Кілт аралық сақтағышқа көшірілді</string>
     <string name="onboarding_backup_copy">Кілтті көшіру</string>
-    <string name="onboarding_backup_desc">Сіздің жеке басыңыз — тек осы құрылғыда сақталатын жеке кілт. Есептік жазба да, құпия сөзді қалпына келтіру де жоқ — егер осы телефонды сақтық көшірмесіз жоғалтсаңыз, жеке басыңыз бен контактілеріңіз біржола жоғалады.</string>
+    <string name="onboarding_backup_desc">Сіздің жеке басыңыз - тек осы құрылғыда сақталатын жеке кілт. Есептік жазба да, құпия сөзді қалпына келтіру де жоқ - егер осы телефонды сақтық көшірмесіз жоғалтсаңыз, жеке басыңыз бен контактілеріңіз біржола жоғалады.</string>
     <string name="onboarding_backup_later">Кейінірек сақтық көшірме жасаймын</string>
     <string name="onboarding_backup_note">Шифрланған сақтық көшірмені кез келген уақытта Параметрлер ← Сақтық көшірме және кілттер бөлімінен экспорттауға болады.</string>
     <string name="onboarding_backup_reveal">Жеке кілтімді көрсету</string>
     <string name="onboarding_backup_title">Жеке басыңыздың сақтық көшірмесін жасаңыз</string>
-    <string name="onboarding_backup_warning">Осы кілті бар кез келген адам сіз болып көрініп, хабарларыңызды оқи алады. Оны жеке жерде сақтаңыз — құпия сөз менеджерінде, скриншотта емес.</string>
+    <string name="onboarding_backup_warning">Осы кілті бар кез келген адам сіз болып көрініп, хабарларыңызды оқи алады. Оны жеке жерде сақтаңыз - құпия сөз менеджерінде, скриншотта емес.</string>
     <string name="peer_temp_share_active_label">%1$s дегенмен %2$s дейін бөлісілуде</string>
     <string name="peer_temp_share_active_time_left">%1$s дегенмен тағы %2$s бөлісілуде</string>
     <string name="peer_temp_share_chip_12h">12 сағат</string>

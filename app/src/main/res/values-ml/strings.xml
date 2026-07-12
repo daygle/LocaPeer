@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ഫോട്ടോ കാണുക</string>
     <string name="chat_delivery_details_title">സന്ദേശ നില</string>
     <string name="chat_delivery_state_delivered">സ്വീകർത്താവിന്റെ ഉപകരണത്തിൽ എത്തി</string>
-    <string name="chat_delivery_state_failed">പരാജയപ്പെട്ടു — സന്ദേശം ക്യൂവിൽ കുടുങ്ങി</string>
+    <string name="chat_delivery_state_failed">പരാജയപ്പെട്ടു - സന്ദേശം ക്യൂവിൽ കുടുങ്ങി</string>
     <string name="chat_delivery_state_read">സ്വീകർത്താവ് വായിച്ചു</string>
     <string name="chat_delivery_state_sending">അയയ്ക്കുന്നു…</string>
     <string name="chat_delivery_state_sent">അയച്ചു (റിലേ സ്വീകരിച്ചു)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">തുടരുക</string>
     <string name="onboarding_backup_copied">കീ ക്ലിപ്പ്ബോർഡിലേക്ക് പകർത്തി</string>
     <string name="onboarding_backup_copy">കീ പകർത്തുക</string>
-    <string name="onboarding_backup_desc">നിങ്ങളുടെ ഐഡന്റിറ്റി ഈ ഉപകരണത്തിൽ മാത്രം സംഭരിച്ച ഒരു സ്വകാര്യ കീയാണ്. അക്കൗണ്ടോ പാസ്‌വേഡ് പുനഃസജ്ജീകരണമോ ഇല്ല — ബാക്കപ്പ് ഇല്ലാതെ ഈ ഫോൺ നഷ്ടപ്പെട്ടാൽ, നിങ്ങളുടെ ഐഡന്റിറ്റിയും കോൺടാക്റ്റുകളും എന്നെന്നേക്കുമായി നഷ്ടപ്പെടും.</string>
+    <string name="onboarding_backup_desc">നിങ്ങളുടെ ഐഡന്റിറ്റി ഈ ഉപകരണത്തിൽ മാത്രം സംഭരിച്ച ഒരു സ്വകാര്യ കീയാണ്. അക്കൗണ്ടോ പാസ്‌വേഡ് പുനഃസജ്ജീകരണമോ ഇല്ല - ബാക്കപ്പ് ഇല്ലാതെ ഈ ഫോൺ നഷ്ടപ്പെട്ടാൽ, നിങ്ങളുടെ ഐഡന്റിറ്റിയും കോൺടാക്റ്റുകളും എന്നെന്നേക്കുമായി നഷ്ടപ്പെടും.</string>
     <string name="onboarding_backup_later">പിന്നീട് ബാക്കപ്പ് ചെയ്യാം</string>
     <string name="onboarding_backup_note">ക്രമീകരണങ്ങൾ → ബാക്കപ്പും കീകളും എന്നതിൽ നിന്ന് എപ്പോൾ വേണമെങ്കിലും എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ് കയറ്റുമതി ചെയ്യാം.</string>
     <string name="onboarding_backup_reveal">എന്റെ സ്വകാര്യ കീ കാണിക്കുക</string>
     <string name="onboarding_backup_title">നിങ്ങളുടെ ഐഡന്റിറ്റി ബാക്കപ്പ് ചെയ്യുക</string>
-    <string name="onboarding_backup_warning">ഈ കീ ഉള്ള ആർക്കും നിങ്ങളായി ആൾമാറാട്ടം നടത്താനും നിങ്ങളുടെ സന്ദേശങ്ങൾ വായിക്കാനും കഴിയും. അത് ഒരു സ്വകാര്യ സ്ഥലത്ത് സൂക്ഷിക്കുക — സ്ക്രീൻഷോട്ടിലല്ല, പാസ്‌വേഡ് മാനേജറിൽ.</string>
+    <string name="onboarding_backup_warning">ഈ കീ ഉള്ള ആർക്കും നിങ്ങളായി ആൾമാറാട്ടം നടത്താനും നിങ്ങളുടെ സന്ദേശങ്ങൾ വായിക്കാനും കഴിയും. അത് ഒരു സ്വകാര്യ സ്ഥലത്ത് സൂക്ഷിക്കുക - സ്ക്രീൻഷോട്ടിലല്ല, പാസ്‌വേഡ് മാനേജറിൽ.</string>
     <string name="peer_temp_share_active_label">%1$s-മായി %2$s വരെ പങ്കിടുന്നു</string>
     <string name="peer_temp_share_active_time_left">%1$s-മായി %2$s കൂടി പങ്കിടുന്നു</string>
     <string name="peer_temp_share_chip_12h">12 മണിക്കൂർ</string>

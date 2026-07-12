@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Duba hoto</string>
     <string name="chat_delivery_details_title">Matsayin saƙo</string>
     <string name="chat_delivery_state_delivered">An kai wa na\'urar mai karɓa</string>
-    <string name="chat_delivery_state_failed">Ya kasa — saƙo ya makale a layi</string>
+    <string name="chat_delivery_state_failed">Ya kasa - saƙo ya makale a layi</string>
     <string name="chat_delivery_state_read">Mai karɓa ya karanta</string>
     <string name="chat_delivery_state_sending">Ana aikawa…</string>
     <string name="chat_delivery_state_sent">An aika (relay ya karɓa)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Ci gaba</string>
     <string name="onboarding_backup_copied">An kwafi maɓalli zuwa allo</string>
     <string name="onboarding_backup_copy">Kwafi maɓalli</string>
-    <string name="onboarding_backup_desc">Shaidar ka maɓallin sirri ne da ake ajiye a wannan na\'ura kawai. Babu asusu kuma babu sake saita kalmar sirri — idan ka rasa wannan wayar ba tare da ajiyayye ba, shaidar ka da lambobin sadarwa za su ɓace har abada.</string>
+    <string name="onboarding_backup_desc">Shaidar ka maɓallin sirri ne da ake ajiye a wannan na\'ura kawai. Babu asusu kuma babu sake saita kalmar sirri - idan ka rasa wannan wayar ba tare da ajiyayye ba, shaidar ka da lambobin sadarwa za su ɓace har abada.</string>
     <string name="onboarding_backup_later">Zan yi ajiya daga baya</string>
     <string name="onboarding_backup_note">Kana iya fitar da ajiyayyen da aka ɓoye a kowane lokaci a cikin Saituna → Ajiya da Maɓallai.</string>
     <string name="onboarding_backup_reveal">Nuna maɓallin sirri na</string>
     <string name="onboarding_backup_title">Yi ajiyar shaidar ka</string>
-    <string name="onboarding_backup_warning">Duk wanda ke da wannan maɓalli zai iya ɗaukar kamanninka ya karanta saƙonninka. Ajiye shi a wuri na sirri — a mai sarrafa kalmar sirri, ba a hoton allo ba.</string>
+    <string name="onboarding_backup_warning">Duk wanda ke da wannan maɓalli zai iya ɗaukar kamanninka ya karanta saƙonninka. Ajiye shi a wuri na sirri - a mai sarrafa kalmar sirri, ba a hoton allo ba.</string>
     <string name="peer_temp_share_active_label">Ana rabawa da %1$s har %2$s</string>
     <string name="peer_temp_share_active_time_left">Ana rabawa da %1$s na ƙarin %2$s</string>
     <string name="peer_temp_share_chip_12h">Awa 12</string>

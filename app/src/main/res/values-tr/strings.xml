@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Fotoğrafı görüntüle</string>
     <string name="chat_delivery_details_title">Mesaj durumu</string>
     <string name="chat_delivery_state_delivered">Alıcının cihazına iletildi</string>
-    <string name="chat_delivery_state_failed">Başarısız — mesaj sırada takıldı</string>
+    <string name="chat_delivery_state_failed">Başarısız - mesaj sırada takıldı</string>
     <string name="chat_delivery_state_read">Alıcı tarafından okundu</string>
     <string name="chat_delivery_state_sending">Gönderiliyor…</string>
     <string name="chat_delivery_state_sent">Gönderildi (röle kabul etti)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Devam et</string>
     <string name="onboarding_backup_copied">Anahtar panoya kopyalandı</string>
     <string name="onboarding_backup_copy">Anahtarı kopyala</string>
-    <string name="onboarding_backup_desc">Kimliğiniz yalnızca bu cihazda saklanan özel bir anahtardır. Hesap veya parola sıfırlama yoktur — bu telefonu yedek almadan kaybederseniz kimliğiniz ve kişileriniz kalıcı olarak kaybolur.</string>
+    <string name="onboarding_backup_desc">Kimliğiniz yalnızca bu cihazda saklanan özel bir anahtardır. Hesap veya parola sıfırlama yoktur - bu telefonu yedek almadan kaybederseniz kimliğiniz ve kişileriniz kalıcı olarak kaybolur.</string>
     <string name="onboarding_backup_later">Daha sonra yedeklerim</string>
     <string name="onboarding_backup_note">Şifreli bir yedeği istediğiniz zaman Ayarlar → Yedekleme ve Anahtarlar\'dan dışa aktarabilirsiniz.</string>
     <string name="onboarding_backup_reveal">Özel anahtarımı göster</string>
     <string name="onboarding_backup_title">Kimliğinizi yedekleyin</string>
-    <string name="onboarding_backup_warning">Bu anahtara sahip olan herkes sizi taklit edebilir ve mesajlarınızı okuyabilir. Onu özel bir yerde saklayın — ekran görüntüsünde değil, bir parola yöneticisinde.</string>
+    <string name="onboarding_backup_warning">Bu anahtara sahip olan herkes sizi taklit edebilir ve mesajlarınızı okuyabilir. Onu özel bir yerde saklayın - ekran görüntüsünde değil, bir parola yöneticisinde.</string>
     <string name="peer_temp_share_active_label">%1$s ile %2$s saatine kadar paylaşılıyor</string>
     <string name="peer_temp_share_active_time_left">%1$s ile %2$s daha paylaşılıyor</string>
     <string name="peer_temp_share_chip_12h">12 saat</string>

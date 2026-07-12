@@ -294,8 +294,8 @@
     <string name="onboarding_key_note">Your private key is generated locally and never leaves this device.</string>
     <!-- Onboarding: proactive identity backup -->
     <string name="onboarding_backup_title">Back up your identity</string>
-    <string name="onboarding_backup_desc">Your identity is a private key stored only on this device. There is no account and no password reset — if you lose this phone without a backup, your identity and contacts are gone for good.</string>
-    <string name="onboarding_backup_warning">Anyone with this key can impersonate you and read your messages. Store it somewhere private — a password manager, not a screenshot.</string>
+    <string name="onboarding_backup_desc">Your identity is a private key stored only on this device. There is no account and no password reset - if you lose this phone without a backup, your identity and contacts are gone for good.</string>
+    <string name="onboarding_backup_warning">Anyone with this key can impersonate you and read your messages. Store it somewhere private - a password manager, not a screenshot.</string>
     <string name="onboarding_backup_reveal">Reveal my private key</string>
     <string name="onboarding_backup_copy">Copy key</string>
     <string name="onboarding_backup_copied">Key copied to clipboard</string>
@@ -458,7 +458,7 @@
     <string name="chat_delivery_state_sent">Sent (relay accepted)</string>
     <string name="chat_delivery_state_delivered">Delivered to recipient\'s device</string>
     <string name="chat_delivery_state_read">Read by recipient</string>
-    <string name="chat_delivery_state_failed">Failed — message stuck in queue</string>
+    <string name="chat_delivery_state_failed">Failed - message stuck in queue</string>
     <string name="chat_delivery_details_title">Message status</string>
 
     <!-- App lock -->

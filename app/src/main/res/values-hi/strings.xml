@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">फ़ोटो देखें</string>
     <string name="chat_delivery_details_title">संदेश की स्थिति</string>
     <string name="chat_delivery_state_delivered">प्राप्तकर्ता के डिवाइस पर पहुँचा</string>
-    <string name="chat_delivery_state_failed">विफल — संदेश कतार में अटका है</string>
+    <string name="chat_delivery_state_failed">विफल - संदेश कतार में अटका है</string>
     <string name="chat_delivery_state_read">प्राप्तकर्ता ने पढ़ा</string>
     <string name="chat_delivery_state_sending">भेजा जा रहा है…</string>
     <string name="chat_delivery_state_sent">भेजा गया (रिले ने स्वीकार किया)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">जारी रखें</string>
     <string name="onboarding_backup_copied">कुंजी क्लिपबोर्ड पर कॉपी की गई</string>
     <string name="onboarding_backup_copy">कुंजी कॉपी करें</string>
-    <string name="onboarding_backup_desc">आपकी पहचान एक निजी कुंजी है जो केवल इसी डिवाइस पर संग्रहीत है। कोई खाता या पासवर्ड रीसेट नहीं है — यदि आप इस फ़ोन को बैकअप के बिना खो देते हैं, तो आपकी पहचान और संपर्क हमेशा के लिए चले जाएँगे।</string>
+    <string name="onboarding_backup_desc">आपकी पहचान एक निजी कुंजी है जो केवल इसी डिवाइस पर संग्रहीत है। कोई खाता या पासवर्ड रीसेट नहीं है - यदि आप इस फ़ोन को बैकअप के बिना खो देते हैं, तो आपकी पहचान और संपर्क हमेशा के लिए चले जाएँगे।</string>
     <string name="onboarding_backup_later">मैं बाद में बैकअप लूँगा</string>
     <string name="onboarding_backup_note">आप कभी भी सेटिंग्स → बैकअप और कुंजियाँ से एन्क्रिप्टेड बैकअप निर्यात कर सकते हैं।</string>
     <string name="onboarding_backup_reveal">मेरी निजी कुंजी दिखाएँ</string>
     <string name="onboarding_backup_title">अपनी पहचान का बैकअप लें</string>
-    <string name="onboarding_backup_warning">इस कुंजी वाला कोई भी व्यक्ति आपका रूप धारण कर सकता है और आपके संदेश पढ़ सकता है। इसे किसी निजी जगह रखें — पासवर्ड मैनेजर में, स्क्रीनशॉट में नहीं।</string>
+    <string name="onboarding_backup_warning">इस कुंजी वाला कोई भी व्यक्ति आपका रूप धारण कर सकता है और आपके संदेश पढ़ सकता है। इसे किसी निजी जगह रखें - पासवर्ड मैनेजर में, स्क्रीनशॉट में नहीं।</string>
     <string name="peer_temp_share_active_label">%1$s के साथ %2$s तक साझा किया जा रहा है</string>
     <string name="peer_temp_share_active_time_left">%1$s के साथ %2$s और साझा किया जा रहा है</string>
     <string name="peer_temp_share_chip_12h">12 घंटे</string>

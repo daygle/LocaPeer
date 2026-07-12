@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">ดูรูปภาพ</string>
     <string name="chat_delivery_details_title">สถานะข้อความ</string>
     <string name="chat_delivery_state_delivered">ส่งถึงอุปกรณ์ของผู้รับแล้ว</string>
-    <string name="chat_delivery_state_failed">ล้มเหลว — ข้อความค้างอยู่ในคิว</string>
+    <string name="chat_delivery_state_failed">ล้มเหลว - ข้อความค้างอยู่ในคิว</string>
     <string name="chat_delivery_state_read">ผู้รับอ่านแล้ว</string>
     <string name="chat_delivery_state_sending">กำลังส่ง…</string>
     <string name="chat_delivery_state_sent">ส่งแล้ว (รีเลย์ยอมรับ)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">ดำเนินการต่อ</string>
     <string name="onboarding_backup_copied">คัดลอกกุญแจไปยังคลิปบอร์ดแล้ว</string>
     <string name="onboarding_backup_copy">คัดลอกกุญแจ</string>
-    <string name="onboarding_backup_desc">ตัวตนของคุณคือกุญแจส่วนตัวที่จัดเก็บไว้ในอุปกรณ์นี้เท่านั้น ไม่มีบัญชีและไม่มีการรีเซ็ตรหัสผ่าน — หากคุณทำโทรศัพท์นี้หายโดยไม่มีข้อมูลสำรอง ตัวตนและผู้ติดต่อของคุณจะสูญหายไปตลอดกาล</string>
+    <string name="onboarding_backup_desc">ตัวตนของคุณคือกุญแจส่วนตัวที่จัดเก็บไว้ในอุปกรณ์นี้เท่านั้น ไม่มีบัญชีและไม่มีการรีเซ็ตรหัสผ่าน - หากคุณทำโทรศัพท์นี้หายโดยไม่มีข้อมูลสำรอง ตัวตนและผู้ติดต่อของคุณจะสูญหายไปตลอดกาล</string>
     <string name="onboarding_backup_later">ไว้สำรองข้อมูลภายหลัง</string>
     <string name="onboarding_backup_note">คุณสามารถส่งออกข้อมูลสำรองที่เข้ารหัสได้ทุกเมื่อใน การตั้งค่า → ข้อมูลสำรองและกุญแจ</string>
     <string name="onboarding_backup_reveal">แสดงกุญแจส่วนตัวของฉัน</string>
     <string name="onboarding_backup_title">สำรองข้อมูลตัวตนของคุณ</string>
-    <string name="onboarding_backup_warning">ใครก็ตามที่มีกุญแจนี้สามารถปลอมเป็นคุณและอ่านข้อความของคุณได้ เก็บไว้ในที่ส่วนตัว — ในโปรแกรมจัดการรหัสผ่าน ไม่ใช่ภาพหน้าจอ</string>
+    <string name="onboarding_backup_warning">ใครก็ตามที่มีกุญแจนี้สามารถปลอมเป็นคุณและอ่านข้อความของคุณได้ เก็บไว้ในที่ส่วนตัว - ในโปรแกรมจัดการรหัสผ่าน ไม่ใช่ภาพหน้าจอ</string>
     <string name="peer_temp_share_active_label">กำลังแชร์กับ %1$s จนถึง %2$s</string>
     <string name="peer_temp_share_active_time_left">กำลังแชร์กับ %1$s อีก %2$s</string>
     <string name="peer_temp_share_chip_12h">12 ชั่วโมง</string>

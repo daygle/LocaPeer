@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">ፎቶ ተመልከት</string>
     <string name="chat_delivery_details_title">የመልእክት ሁኔታ</string>
     <string name="chat_delivery_state_delivered">ወደ ተቀባዩ መሣሪያ ደርሷል</string>
-    <string name="chat_delivery_state_failed">አልተሳካም — መልእክቱ በወረፋ ውስጥ ተጣብቋል</string>
+    <string name="chat_delivery_state_failed">አልተሳካም - መልእክቱ በወረፋ ውስጥ ተጣብቋል</string>
     <string name="chat_delivery_state_read">ተቀባዩ አንብቧል</string>
     <string name="chat_delivery_state_sending">በመላክ ላይ…</string>
     <string name="chat_delivery_state_sent">ተልኳል (ማስተላለፊያው ተቀብሏል)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ቀጥል</string>
     <string name="onboarding_backup_copied">ቁልፉ ወደ ቅንጥብ ሰሌዳ ተቀድቷል</string>
     <string name="onboarding_backup_copy">ቁልፍ ቅዳ</string>
-    <string name="onboarding_backup_desc">ማንነትዎ በዚህ መሣሪያ ላይ ብቻ የተከማቸ የግል ቁልፍ ነው። መለያ የለም፣ የይለፍ ቃል ዳግም ማስጀመርም የለም — ይህን ስልክ ያለ ምትኬ ካጡ ማንነትዎ እና እውቂያዎችዎ ለዘላለም ይጠፋሉ።</string>
+    <string name="onboarding_backup_desc">ማንነትዎ በዚህ መሣሪያ ላይ ብቻ የተከማቸ የግል ቁልፍ ነው። መለያ የለም፣ የይለፍ ቃል ዳግም ማስጀመርም የለም - ይህን ስልክ ያለ ምትኬ ካጡ ማንነትዎ እና እውቂያዎችዎ ለዘላለም ይጠፋሉ።</string>
     <string name="onboarding_backup_later">በኋላ ምትኬ አስቀምጣለሁ</string>
     <string name="onboarding_backup_note">በማንኛውም ጊዜ በቅንብሮች → ምትኬ እና ቁልፎች ውስጥ የተመሰጠረ ምትኬ ወደ ውጭ መላክ ይችላሉ።</string>
     <string name="onboarding_backup_reveal">የግል ቁልፌን አሳይ</string>
     <string name="onboarding_backup_title">ማንነትዎን ምትኬ ያስቀምጡ</string>
-    <string name="onboarding_backup_warning">ይህ ቁልፍ ያለው ማንኛውም ሰው እርስዎን መስሎ መልእክቶችዎን ማንበብ ይችላል። በግል ቦታ ያስቀምጡት — በይለፍ ቃል አስተዳዳሪ ውስጥ እንጂ በቅጽበታዊ ገጽ እይታ ላይ አይደለም።</string>
+    <string name="onboarding_backup_warning">ይህ ቁልፍ ያለው ማንኛውም ሰው እርስዎን መስሎ መልእክቶችዎን ማንበብ ይችላል። በግል ቦታ ያስቀምጡት - በይለፍ ቃል አስተዳዳሪ ውስጥ እንጂ በቅጽበታዊ ገጽ እይታ ላይ አይደለም።</string>
     <string name="peer_temp_share_active_label">ከ%1$s ጋር እስከ %2$s በማጋራት ላይ</string>
     <string name="peer_temp_share_active_time_left">ከ%1$s ጋር ለተጨማሪ %2$s በማጋራት ላይ</string>
     <string name="peer_temp_share_chip_12h">12 ሰዓት</string>

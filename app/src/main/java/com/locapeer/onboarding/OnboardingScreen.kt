@@ -264,8 +264,8 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
 
 /**
  * Proactive "back up your identity" step for a freshly generated key (skipped for users who
- * restored an existing key). Reveals the private key on demand — the same value Settings → View
- * Private Key shows, under the app-wide FLAG_SECURE — so the user can copy and store it before
+ * restored an existing key). Reveals the private key on demand - the same value Settings -> View
+ * Private Key shows, under the app-wide FLAG_SECURE - so the user can copy and store it before
  * they have anything to lose. Non-blocking: "back up later" always proceeds.
  */
 @Composable

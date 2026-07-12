@@ -810,7 +810,7 @@
     <string name="chat_cd_view_image">Посмотреть фото</string>
     <string name="chat_delivery_details_title">Статус сообщения</string>
     <string name="chat_delivery_state_delivered">Доставлено на устройство получателя</string>
-    <string name="chat_delivery_state_failed">Ошибка — сообщение застряло в очереди</string>
+    <string name="chat_delivery_state_failed">Ошибка - сообщение застряло в очереди</string>
     <string name="chat_delivery_state_read">Прочитано получателем</string>
     <string name="chat_delivery_state_sending">Отправка…</string>
     <string name="chat_delivery_state_sent">Отправлено (принято реле)</string>
@@ -844,12 +844,12 @@
     <string name="onboarding_backup_continue">Продолжить</string>
     <string name="onboarding_backup_copied">Ключ скопирован в буфер обмена</string>
     <string name="onboarding_backup_copy">Копировать ключ</string>
-    <string name="onboarding_backup_desc">Ваша личность — это приватный ключ, хранящийся только на этом устройстве. Нет ни аккаунта, ни сброса пароля: если вы потеряете этот телефон без резервной копии, ваша личность и контакты будут потеряны навсегда.</string>
+    <string name="onboarding_backup_desc">Ваша личность - это приватный ключ, хранящийся только на этом устройстве. Нет ни аккаунта, ни сброса пароля: если вы потеряете этот телефон без резервной копии, ваша личность и контакты будут потеряны навсегда.</string>
     <string name="onboarding_backup_later">Сделаю резервную копию позже</string>
     <string name="onboarding_backup_note">Вы можете в любой момент экспортировать зашифрованную резервную копию в Настройках → Резервная копия и ключи.</string>
     <string name="onboarding_backup_reveal">Показать мой приватный ключ</string>
     <string name="onboarding_backup_title">Сделайте резервную копию личности</string>
-    <string name="onboarding_backup_warning">Любой, у кого есть этот ключ, может выдать себя за вас и читать ваши сообщения. Храните его в приватном месте — в менеджере паролей, а не на скриншоте.</string>
+    <string name="onboarding_backup_warning">Любой, у кого есть этот ключ, может выдать себя за вас и читать ваши сообщения. Храните его в приватном месте - в менеджере паролей, а не на скриншоте.</string>
     <string name="peer_temp_share_active_label">Делитесь с %1$s до %2$s</string>
     <string name="peer_temp_share_active_time_left">Делитесь с %1$s ещё %2$s</string>
     <string name="peer_temp_share_chip_12h">12 часов</string>

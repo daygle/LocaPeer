@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Wêne bibîne</string>
     <string name="chat_delivery_details_title">Rewşa peyamê</string>
     <string name="chat_delivery_state_delivered">Gihişt cîhaza wergir</string>
-    <string name="chat_delivery_state_failed">Bi ser neket — peyam di rêzê de asê ma</string>
+    <string name="chat_delivery_state_failed">Bi ser neket - peyam di rêzê de asê ma</string>
     <string name="chat_delivery_state_read">Ji hêla wergir ve hate xwendin</string>
     <string name="chat_delivery_state_sending">Tê şandin…</string>
     <string name="chat_delivery_state_sent">Hate şandin (releyê qebûl kir)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Bidomîne</string>
     <string name="onboarding_backup_copied">Mifte li panoyê hate kopîkirin</string>
     <string name="onboarding_backup_copy">Mifteyê kopî bike</string>
-    <string name="onboarding_backup_desc">Nasnameya te mifteyeke taybet e ku tenê li ser vê cîhazê tê hilanîn. Ne hesab û ne jî sifirkirina şîfreyê heye — heke tu vê telefonê bêyî paşekek winda bikî, nasname û têkiliyên te her û her winda dibin.</string>
+    <string name="onboarding_backup_desc">Nasnameya te mifteyeke taybet e ku tenê li ser vê cîhazê tê hilanîn. Ne hesab û ne jî sifirkirina şîfreyê heye - heke tu vê telefonê bêyî paşekek winda bikî, nasname û têkiliyên te her û her winda dibin.</string>
     <string name="onboarding_backup_later">Ez ê paşê paşek çêkim</string>
     <string name="onboarding_backup_note">Tu dikarî her dem ji Mîheng ← Paşek û Mifte paşekek şîfrekirî derxînî.</string>
     <string name="onboarding_backup_reveal">Mifteya min a taybet nîşan bide</string>
     <string name="onboarding_backup_title">Nasnameya xwe paşek bike</string>
-    <string name="onboarding_backup_warning">Her kesê ku vê mifteyê hebe dikare xwe wek te nîşan bide û peyamên te bixwîne. Wê li cîhek taybet bihêle — di rêvebirê şîfreyan de, ne di dîmenê ekranê de.</string>
+    <string name="onboarding_backup_warning">Her kesê ku vê mifteyê hebe dikare xwe wek te nîşan bide û peyamên te bixwîne. Wê li cîhek taybet bihêle - di rêvebirê şîfreyan de, ne di dîmenê ekranê de.</string>
     <string name="peer_temp_share_active_label">Bi %1$s re heta %2$s tê parvekirin</string>
     <string name="peer_temp_share_active_time_left">Bi %1$s re bo %2$s din tê parvekirin</string>
     <string name="peer_temp_share_chip_12h">12 saet</string>

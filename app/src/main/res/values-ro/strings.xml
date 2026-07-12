@@ -795,7 +795,7 @@
     <string name="chat_cd_view_image">Vezi fotografia</string>
     <string name="chat_delivery_details_title">Starea mesajului</string>
     <string name="chat_delivery_state_delivered">Livrat pe dispozitivul destinatarului</string>
-    <string name="chat_delivery_state_failed">Eșuat — mesajul a rămas blocat în coadă</string>
+    <string name="chat_delivery_state_failed">Eșuat - mesajul a rămas blocat în coadă</string>
     <string name="chat_delivery_state_read">Citit de destinatar</string>
     <string name="chat_delivery_state_sending">Se trimite…</string>
     <string name="chat_delivery_state_sent">Trimis (acceptat de releu)</string>
@@ -829,12 +829,12 @@
     <string name="onboarding_backup_continue">Continuă</string>
     <string name="onboarding_backup_copied">Cheie copiată în clipboard</string>
     <string name="onboarding_backup_copy">Copiază cheia</string>
-    <string name="onboarding_backup_desc">Identitatea ta este o cheie privată stocată doar pe acest dispozitiv. Nu există cont și nici resetare a parolei — dacă pierzi acest telefon fără o copie de rezervă, identitatea și contactele tale se pierd definitiv.</string>
+    <string name="onboarding_backup_desc">Identitatea ta este o cheie privată stocată doar pe acest dispozitiv. Nu există cont și nici resetare a parolei - dacă pierzi acest telefon fără o copie de rezervă, identitatea și contactele tale se pierd definitiv.</string>
     <string name="onboarding_backup_later">Fac copia mai târziu</string>
     <string name="onboarding_backup_note">Poți exporta oricând o copie de rezervă criptată din Setări → Copie de rezervă și chei.</string>
     <string name="onboarding_backup_reveal">Afișează cheia mea privată</string>
     <string name="onboarding_backup_title">Fă o copie de rezervă a identității</string>
-    <string name="onboarding_backup_warning">Oricine are această cheie se poate da drept tine și îți poate citi mesajele. Păstreaz-o într-un loc privat — un manager de parole, nu o captură de ecran.</string>
+    <string name="onboarding_backup_warning">Oricine are această cheie se poate da drept tine și îți poate citi mesajele. Păstreaz-o într-un loc privat - un manager de parole, nu o captură de ecran.</string>
     <string name="peer_temp_share_active_label">Partajezi cu %1$s până la %2$s</string>
     <string name="peer_temp_share_active_time_left">Partajezi cu %1$s încă %2$s</string>
     <string name="peer_temp_share_chip_12h">12 ore</string>

@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">Wo fọ́tò</string>
     <string name="chat_delivery_details_title">Ipò ìránṣẹ́</string>
     <string name="chat_delivery_state_delivered">Ti dé ẹ̀rọ olùgbà</string>
-    <string name="chat_delivery_state_failed">Kùnà — ìránṣẹ́ dì ní ìlà</string>
+    <string name="chat_delivery_state_failed">Kùnà - ìránṣẹ́ dì ní ìlà</string>
     <string name="chat_delivery_state_read">Olùgbà ti kà á</string>
     <string name="chat_delivery_state_sending">Ń fi ránṣẹ́…</string>
     <string name="chat_delivery_state_sent">A ti firánṣẹ́ (relay gbà)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">Tẹ̀síwájú</string>
     <string name="onboarding_backup_copied">A ti da kọ́kọ́rọ́ kọ sí àwọ̀n</string>
     <string name="onboarding_backup_copy">Da kọ́kọ́rọ́ kọ</string>
-    <string name="onboarding_backup_desc">Ìdánimọ̀ rẹ jẹ́ kọ́kọ́rọ́ àṣírí tí a fi pamọ́ sórí ẹ̀rọ yìí nìkan. Kò sí àkàǹtì tàbí àtúnṣe ọ̀rọ̀ ìbọ̀wọ̀lù — bí o bá pàdánù fóònù yìí láìsí ẹ̀dà, ìdánimọ̀ àti àwọn ọ̀rẹ́ rẹ máa sọnù pátápátá.</string>
+    <string name="onboarding_backup_desc">Ìdánimọ̀ rẹ jẹ́ kọ́kọ́rọ́ àṣírí tí a fi pamọ́ sórí ẹ̀rọ yìí nìkan. Kò sí àkàǹtì tàbí àtúnṣe ọ̀rọ̀ ìbọ̀wọ̀lù - bí o bá pàdánù fóònù yìí láìsí ẹ̀dà, ìdánimọ̀ àti àwọn ọ̀rẹ́ rẹ máa sọnù pátápátá.</string>
     <string name="onboarding_backup_later">Màá ṣe ẹ̀dà nígbà mìíràn</string>
     <string name="onboarding_backup_note">O lè ké ẹ̀dà tí a fi ìsọ̀rọ̀ pamọ́ jáde nígbàkúgbà nínú Ètò → Ẹ̀dà àti Àwọn Kọ́kọ́rọ́.</string>
     <string name="onboarding_backup_reveal">Fi kọ́kọ́rọ́ àṣírí mi hàn</string>
     <string name="onboarding_backup_title">Ṣe ẹ̀dà ìdánimọ̀ rẹ</string>
-    <string name="onboarding_backup_warning">Ẹnikẹ́ni tó bá ní kọ́kọ́rọ́ yìí lè díbọ́n bíi ìwọ kí ó sì ka àwọn ìránṣẹ́ rẹ. Fi pamọ́ sí ibi àṣírí — nínú olùṣàkóso ọ̀rọ̀ ìbọ̀wọ̀lù, kìí ṣe ojú ìhòhò.</string>
+    <string name="onboarding_backup_warning">Ẹnikẹ́ni tó bá ní kọ́kọ́rọ́ yìí lè díbọ́n bíi ìwọ kí ó sì ka àwọn ìránṣẹ́ rẹ. Fi pamọ́ sí ibi àṣírí - nínú olùṣàkóso ọ̀rọ̀ ìbọ̀wọ̀lù, kìí ṣe ojú ìhòhò.</string>
     <string name="peer_temp_share_active_label">Ń pín pẹ̀lú %1$s títí di %2$s</string>
     <string name="peer_temp_share_active_time_left">Ń pín pẹ̀lú %1$s fún %2$s síi</string>
     <string name="peer_temp_share_chip_12h">Wákàtí 12</string>

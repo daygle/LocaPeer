@@ -764,7 +764,7 @@
     <string name="chat_cd_view_image">写真を表示</string>
     <string name="chat_delivery_details_title">メッセージの状態</string>
     <string name="chat_delivery_state_delivered">受信者のデバイスに配信済み</string>
-    <string name="chat_delivery_state_failed">失敗 — メッセージがキューで停止しています</string>
+    <string name="chat_delivery_state_failed">失敗 - メッセージがキューで停止しています</string>
     <string name="chat_delivery_state_read">受信者が既読</string>
     <string name="chat_delivery_state_sending">送信中…</string>
     <string name="chat_delivery_state_sent">送信済み（リレーが受理）</string>

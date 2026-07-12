@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">مشاهده عکس</string>
     <string name="chat_delivery_details_title">وضعیت پیام</string>
     <string name="chat_delivery_state_delivered">به دستگاه گیرنده تحویل شد</string>
-    <string name="chat_delivery_state_failed">ناموفق — پیام در صف گیر کرده است</string>
+    <string name="chat_delivery_state_failed">ناموفق - پیام در صف گیر کرده است</string>
     <string name="chat_delivery_state_read">توسط گیرنده خوانده شد</string>
     <string name="chat_delivery_state_sending">در حال ارسال…</string>
     <string name="chat_delivery_state_sent">ارسال شد (رله پذیرفت)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">ادامه</string>
     <string name="onboarding_backup_copied">کلید در کلیپ‌بورد کپی شد</string>
     <string name="onboarding_backup_copy">کپی کلید</string>
-    <string name="onboarding_backup_desc">هویت شما یک کلید خصوصی است که فقط روی این دستگاه ذخیره شده است. هیچ حساب و بازنشانی رمز عبوری وجود ندارد — اگر این تلفن را بدون نسخه پشتیبان از دست بدهید، هویت و مخاطبان شما برای همیشه از بین می‌روند.</string>
+    <string name="onboarding_backup_desc">هویت شما یک کلید خصوصی است که فقط روی این دستگاه ذخیره شده است. هیچ حساب و بازنشانی رمز عبوری وجود ندارد - اگر این تلفن را بدون نسخه پشتیبان از دست بدهید، هویت و مخاطبان شما برای همیشه از بین می‌روند.</string>
     <string name="onboarding_backup_later">بعداً پشتیبان می‌گیرم</string>
     <string name="onboarding_backup_note">هر زمان می‌توانید یک نسخه پشتیبان رمزگذاری‌شده را از تنظیمات ← پشتیبان‌گیری و کلیدها صادر کنید.</string>
     <string name="onboarding_backup_reveal">نمایش کلید خصوصی‌ام</string>
     <string name="onboarding_backup_title">از هویت خود پشتیبان بگیرید</string>
-    <string name="onboarding_backup_warning">هر کسی که این کلید را داشته باشد می‌تواند خود را جای شما جا بزند و پیام‌هایتان را بخواند. آن را در جایی خصوصی نگه دارید — در یک مدیر رمز عبور، نه در یک اسکرین‌شات.</string>
+    <string name="onboarding_backup_warning">هر کسی که این کلید را داشته باشد می‌تواند خود را جای شما جا بزند و پیام‌هایتان را بخواند. آن را در جایی خصوصی نگه دارید - در یک مدیر رمز عبور، نه در یک اسکرین‌شات.</string>
     <string name="peer_temp_share_active_label">در حال اشتراک با %1$s تا %2$s</string>
     <string name="peer_temp_share_active_time_left">در حال اشتراک با %1$s برای %2$s دیگر</string>
     <string name="peer_temp_share_chip_12h">۱۲ ساعت</string>

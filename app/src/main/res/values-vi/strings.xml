@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">Xem ảnh</string>
     <string name="chat_delivery_details_title">Trạng thái tin nhắn</string>
     <string name="chat_delivery_state_delivered">Đã gửi đến thiết bị của người nhận</string>
-    <string name="chat_delivery_state_failed">Thất bại — tin nhắn bị kẹt trong hàng đợi</string>
+    <string name="chat_delivery_state_failed">Thất bại - tin nhắn bị kẹt trong hàng đợi</string>
     <string name="chat_delivery_state_read">Người nhận đã đọc</string>
     <string name="chat_delivery_state_sending">Đang gửi…</string>
     <string name="chat_delivery_state_sent">Đã gửi (relay đã chấp nhận)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">Tiếp tục</string>
     <string name="onboarding_backup_copied">Đã sao chép khóa vào bộ nhớ tạm</string>
     <string name="onboarding_backup_copy">Sao chép khóa</string>
-    <string name="onboarding_backup_desc">Danh tính của bạn là một khóa riêng tư chỉ được lưu trên thiết bị này. Không có tài khoản và không có đặt lại mật khẩu — nếu bạn mất chiếc điện thoại này mà không có bản sao lưu, danh tính và danh bạ của bạn sẽ mất vĩnh viễn.</string>
+    <string name="onboarding_backup_desc">Danh tính của bạn là một khóa riêng tư chỉ được lưu trên thiết bị này. Không có tài khoản và không có đặt lại mật khẩu - nếu bạn mất chiếc điện thoại này mà không có bản sao lưu, danh tính và danh bạ của bạn sẽ mất vĩnh viễn.</string>
     <string name="onboarding_backup_later">Để sao lưu sau</string>
     <string name="onboarding_backup_note">Bạn có thể xuất bản sao lưu đã mã hóa bất cứ lúc nào trong Cài đặt → Sao lưu và khóa.</string>
     <string name="onboarding_backup_reveal">Hiện khóa riêng tư của tôi</string>
     <string name="onboarding_backup_title">Sao lưu danh tính của bạn</string>
-    <string name="onboarding_backup_warning">Bất kỳ ai có khóa này đều có thể mạo danh bạn và đọc tin nhắn của bạn. Hãy lưu nó ở nơi riêng tư — trong trình quản lý mật khẩu, không phải ảnh chụp màn hình.</string>
+    <string name="onboarding_backup_warning">Bất kỳ ai có khóa này đều có thể mạo danh bạn và đọc tin nhắn của bạn. Hãy lưu nó ở nơi riêng tư - trong trình quản lý mật khẩu, không phải ảnh chụp màn hình.</string>
     <string name="peer_temp_share_active_label">Đang chia sẻ với %1$s đến %2$s</string>
     <string name="peer_temp_share_active_time_left">Đang chia sẻ với %1$s thêm %2$s nữa</string>
     <string name="peer_temp_share_chip_12h">12 giờ</string>

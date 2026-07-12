@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">ဓာတ်ပုံ ကြည့်ရန်</string>
     <string name="chat_delivery_details_title">မက်ဆေ့ချ် အခြေအနေ</string>
     <string name="chat_delivery_state_delivered">လက်ခံသူ၏ စက်သို့ ပို့ဆောင်ပြီး</string>
-    <string name="chat_delivery_state_failed">မအောင်မြင်ပါ — မက်ဆေ့ချ် တန်းစီတွင် ပိတ်မိနေသည်</string>
+    <string name="chat_delivery_state_failed">မအောင်မြင်ပါ - မက်ဆေ့ချ် တန်းစီတွင် ပိတ်မိနေသည်</string>
     <string name="chat_delivery_state_read">လက်ခံသူ ဖတ်ပြီး</string>
     <string name="chat_delivery_state_sending">ပို့နေသည်…</string>
     <string name="chat_delivery_state_sent">ပို့ပြီး (relay က လက်ခံသည်)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">ဆက်လက်လုပ်ဆောင်ရန်</string>
     <string name="onboarding_backup_copied">သော့ကို ကလစ်ဘုတ်သို့ ကူးယူပြီး</string>
     <string name="onboarding_backup_copy">သော့ ကူးယူရန်</string>
-    <string name="onboarding_backup_desc">သင့်အထောက်အထားသည် ဤစက်တွင်သာ သိမ်းဆည်းထားသော သီးသန့်သော့ဖြစ်သည်။ အကောင့်မရှိ၊ စကားဝှက် ပြန်လည်သတ်မှတ်ခြင်းလည်း မရှိ — အရန်သိမ်းဆည်းမှုမပါဘဲ ဤဖုန်းပျောက်ဆုံးပါက သင့်အထောက်အထားနှင့် အဆက်အသွယ်များ အမြဲတမ်း ပျောက်ဆုံးမည်။</string>
+    <string name="onboarding_backup_desc">သင့်အထောက်အထားသည် ဤစက်တွင်သာ သိမ်းဆည်းထားသော သီးသန့်သော့ဖြစ်သည်။ အကောင့်မရှိ၊ စကားဝှက် ပြန်လည်သတ်မှတ်ခြင်းလည်း မရှိ - အရန်သိမ်းဆည်းမှုမပါဘဲ ဤဖုန်းပျောက်ဆုံးပါက သင့်အထောက်အထားနှင့် အဆက်အသွယ်များ အမြဲတမ်း ပျောက်ဆုံးမည်။</string>
     <string name="onboarding_backup_later">နောက်မှ အရန်သိမ်းမည်</string>
     <string name="onboarding_backup_note">ကုဒ်ဝှက်ထားသော အရန်ကို ဆက်တင်များ → အရန်နှင့် သော့များ တွင် အချိန်မရွေး ထုတ်ယူနိုင်သည်။</string>
     <string name="onboarding_backup_reveal">ကျွန်ုပ်၏ သီးသန့်သော့ ပြရန်</string>
     <string name="onboarding_backup_title">သင့်အထောက်အထားကို အရန်သိမ်းပါ</string>
-    <string name="onboarding_backup_warning">ဤသော့ရှိသူ မည်သူမဆို သင့်အယောင်ဆောင်ပြီး သင့်မက်ဆေ့ချ်များကို ဖတ်နိုင်သည်။ ၎င်းကို သီးသန့်နေရာတွင် သိမ်းပါ — ဖန်သားပြင်ဓာတ်ပုံတွင်မဟုတ်ဘဲ စကားဝှက်မန်နေဂျာတွင်။</string>
+    <string name="onboarding_backup_warning">ဤသော့ရှိသူ မည်သူမဆို သင့်အယောင်ဆောင်ပြီး သင့်မက်ဆေ့ချ်များကို ဖတ်နိုင်သည်။ ၎င်းကို သီးသန့်နေရာတွင် သိမ်းပါ - ဖန်သားပြင်ဓာတ်ပုံတွင်မဟုတ်ဘဲ စကားဝှက်မန်နေဂျာတွင်။</string>
     <string name="peer_temp_share_active_label">%1$s နှင့် %2$s အထိ မျှဝေနေသည်</string>
     <string name="peer_temp_share_active_time_left">%1$s နှင့် %2$s ထပ်၍ မျှဝေနေသည်</string>
     <string name="peer_temp_share_chip_12h">12 နာရီ</string>

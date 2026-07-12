@@ -810,7 +810,7 @@
     <string name="chat_cd_view_image">Zobrazit fotku</string>
     <string name="chat_delivery_details_title">Stav zprávy</string>
     <string name="chat_delivery_state_delivered">Doručeno do zařízení příjemce</string>
-    <string name="chat_delivery_state_failed">Chyba — zpráva uvízla ve frontě</string>
+    <string name="chat_delivery_state_failed">Chyba - zpráva uvízla ve frontě</string>
     <string name="chat_delivery_state_read">Přečteno příjemcem</string>
     <string name="chat_delivery_state_sending">Odesílání…</string>
     <string name="chat_delivery_state_sent">Odesláno (přijato relé)</string>
@@ -844,12 +844,12 @@
     <string name="onboarding_backup_continue">Pokračovat</string>
     <string name="onboarding_backup_copied">Klíč zkopírován do schránky</string>
     <string name="onboarding_backup_copy">Kopírovat klíč</string>
-    <string name="onboarding_backup_desc">Vaše identita je soukromý klíč uložený pouze v tomto zařízení. Neexistuje žádný účet ani obnovení hesla — pokud tento telefon ztratíte bez zálohy, vaše identita i kontakty jsou navždy pryč.</string>
+    <string name="onboarding_backup_desc">Vaše identita je soukromý klíč uložený pouze v tomto zařízení. Neexistuje žádný účet ani obnovení hesla - pokud tento telefon ztratíte bez zálohy, vaše identita i kontakty jsou navždy pryč.</string>
     <string name="onboarding_backup_later">Zálohuji později</string>
     <string name="onboarding_backup_note">Zašifrovanou zálohu můžete kdykoli exportovat v Nastavení → Záloha a klíče.</string>
     <string name="onboarding_backup_reveal">Zobrazit můj soukromý klíč</string>
     <string name="onboarding_backup_title">Zálohujte svou identitu</string>
-    <string name="onboarding_backup_warning">Kdokoli s tímto klíčem se za vás může vydávat a číst vaše zprávy. Uchovávejte jej na soukromém místě — ve správci hesel, ne na snímku obrazovky.</string>
+    <string name="onboarding_backup_warning">Kdokoli s tímto klíčem se za vás může vydávat a číst vaše zprávy. Uchovávejte jej na soukromém místě - ve správci hesel, ne na snímku obrazovky.</string>
     <string name="peer_temp_share_active_label">Sdílení s %1$s do %2$s</string>
     <string name="peer_temp_share_active_time_left">Sdílení s %1$s ještě %2$s</string>
     <string name="peer_temp_share_chip_12h">12 hodin</string>

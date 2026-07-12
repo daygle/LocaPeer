@@ -810,7 +810,7 @@
     <string name="chat_cd_view_image">Zobacz zdjęcie</string>
     <string name="chat_delivery_details_title">Status wiadomości</string>
     <string name="chat_delivery_state_delivered">Dostarczono na urządzenie odbiorcy</string>
-    <string name="chat_delivery_state_failed">Błąd — wiadomość utknęła w kolejce</string>
+    <string name="chat_delivery_state_failed">Błąd - wiadomość utknęła w kolejce</string>
     <string name="chat_delivery_state_read">Przeczytane przez odbiorcę</string>
     <string name="chat_delivery_state_sending">Wysyłanie…</string>
     <string name="chat_delivery_state_sent">Wysłano (zaakceptowane przez przekaźnik)</string>
@@ -844,12 +844,12 @@
     <string name="onboarding_backup_continue">Kontynuuj</string>
     <string name="onboarding_backup_copied">Klucz skopiowany do schowka</string>
     <string name="onboarding_backup_copy">Kopiuj klucz</string>
-    <string name="onboarding_backup_desc">Twoja tożsamość to klucz prywatny przechowywany tylko na tym urządzeniu. Nie ma konta ani resetowania hasła — jeśli zgubisz ten telefon bez kopii zapasowej, Twoja tożsamość i kontakty przepadną na zawsze.</string>
+    <string name="onboarding_backup_desc">Twoja tożsamość to klucz prywatny przechowywany tylko na tym urządzeniu. Nie ma konta ani resetowania hasła - jeśli zgubisz ten telefon bez kopii zapasowej, Twoja tożsamość i kontakty przepadną na zawsze.</string>
     <string name="onboarding_backup_later">Zrobię kopię później</string>
     <string name="onboarding_backup_note">W każdej chwili możesz wyeksportować zaszyfrowaną kopię zapasową w Ustawieniach → Kopia zapasowa i klucze.</string>
     <string name="onboarding_backup_reveal">Pokaż mój klucz prywatny</string>
     <string name="onboarding_backup_title">Utwórz kopię zapasową tożsamości</string>
-    <string name="onboarding_backup_warning">Każdy, kto ma ten klucz, może podszyć się pod Ciebie i czytać Twoje wiadomości. Przechowuj go w prywatnym miejscu — w menedżerze haseł, nie na zrzucie ekranu.</string>
+    <string name="onboarding_backup_warning">Każdy, kto ma ten klucz, może podszyć się pod Ciebie i czytać Twoje wiadomości. Przechowuj go w prywatnym miejscu - w menedżerze haseł, nie na zrzucie ekranu.</string>
     <string name="peer_temp_share_active_label">Udostępnianie %1$s do %2$s</string>
     <string name="peer_temp_share_active_time_left">Udostępnianie %1$s jeszcze przez %2$s</string>
     <string name="peer_temp_share_chip_12h">12 godzin</string>

@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Rasmni ko\'rish</string>
     <string name="chat_delivery_details_title">Xabar holati</string>
     <string name="chat_delivery_state_delivered">Qabul qiluvchining qurilmasiga yetkazildi</string>
-    <string name="chat_delivery_state_failed">Xatolik — xabar navbatda qoldi</string>
+    <string name="chat_delivery_state_failed">Xatolik - xabar navbatda qoldi</string>
     <string name="chat_delivery_state_read">Qabul qiluvchi o\'qidi</string>
     <string name="chat_delivery_state_sending">Yuborilmoqda…</string>
     <string name="chat_delivery_state_sent">Yuborildi (rele qabul qildi)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Davom etish</string>
     <string name="onboarding_backup_copied">Kalit vaqtinchalik xotiraga nusxalandi</string>
     <string name="onboarding_backup_copy">Kalitni nusxalash</string>
-    <string name="onboarding_backup_desc">Identifikatoringiz faqat ushbu qurilmada saqlanadigan maxfiy kalitdir. Hisob ham, parolni tiklash ham yo\'q — agar bu telefonni zaxira nusxasisiz yo\'qotsangiz, identifikatoringiz va kontaktlaringiz butunlay yo\'qoladi.</string>
+    <string name="onboarding_backup_desc">Identifikatoringiz faqat ushbu qurilmada saqlanadigan maxfiy kalitdir. Hisob ham, parolni tiklash ham yo\'q - agar bu telefonni zaxira nusxasisiz yo\'qotsangiz, identifikatoringiz va kontaktlaringiz butunlay yo\'qoladi.</string>
     <string name="onboarding_backup_later">Keyinroq zaxira olaman</string>
     <string name="onboarding_backup_note">Shifrlangan zaxira nusxasini istalgan vaqtda Sozlamalar ← Zaxira va kalitlar orqali eksport qilishingiz mumkin.</string>
     <string name="onboarding_backup_reveal">Maxfiy kalitimni ko\'rsatish</string>
     <string name="onboarding_backup_title">Identifikatoringizni zaxiralang</string>
-    <string name="onboarding_backup_warning">Bu kalitga ega bo\'lgan har kim o\'zini siz sifatida ko\'rsatishi va xabarlaringizni o\'qishi mumkin. Uni maxfiy joyda saqlang — parol menejerida, skrinshotда emas.</string>
+    <string name="onboarding_backup_warning">Bu kalitga ega bo\'lgan har kim o\'zini siz sifatida ko\'rsatishi va xabarlaringizni o\'qishi mumkin. Uni maxfiy joyda saqlang - parol menejerida, skrinshotда emas.</string>
     <string name="peer_temp_share_active_label">%1$s bilan %2$s gacha ulashilmoqda</string>
     <string name="peer_temp_share_active_time_left">%1$s bilan yana %2$s ulashilmoqda</string>
     <string name="peer_temp_share_chip_12h">12 soat</string>

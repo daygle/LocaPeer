@@ -608,7 +608,7 @@ private fun formatEpochSecondsAsLocalTime(epochSec: Long): String {
 
 /** "47m" / "2h 5m" / "1d 3h" type human-readable duration from seconds remaining. */
 private fun humanizeRemaining(secsLeft: Long): String {
-    if (secsLeft <= 0) return "—"
+    if (secsLeft <= 0) return "-"
     val totalMin = secsLeft / 60
     val days = totalMin / (24 * 60)
     val hours = (totalMin % (24 * 60)) / 60

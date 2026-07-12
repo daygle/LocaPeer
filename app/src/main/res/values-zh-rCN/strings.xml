@@ -733,8 +733,8 @@
         <item quantity="other">%1$d 个地理围栏</item>
     </plurals>
     <string name="onboarding_error_hex">十六进制格式无效。</string>
-    <string name="onboarding_error_key_length">密钥无效—必须为 64 个十六进制字符。</string>
-    <string name="onboarding_error_key_range">私钥无效—超出曲线范围。</string>
+    <string name="onboarding_error_key_length">密钥无效-必须为 64 个十六进制字符。</string>
+    <string name="onboarding_error_key_range">私钥无效-超出曲线范围。</string>
     <string name="onboarding_error_import_failed">导入密钥失败：%1$s</string>
     <string name="scan_error_invalid_link">邀请链接无效</string>
     <string name="scan_error_bad_pubkey">邀请无效：公钥错误</string>
@@ -764,7 +764,7 @@
     <string name="chat_cd_view_image">查看照片</string>
     <string name="chat_delivery_details_title">消息状态</string>
     <string name="chat_delivery_state_delivered">已送达收件人的设备</string>
-    <string name="chat_delivery_state_failed">失败 — 消息卡在队列中</string>
+    <string name="chat_delivery_state_failed">失败 - 消息卡在队列中</string>
     <string name="chat_delivery_state_read">收件人已读</string>
     <string name="chat_delivery_state_sending">正在发送…</string>
     <string name="chat_delivery_state_sent">已发送（中继已接受）</string>
@@ -798,12 +798,12 @@
     <string name="onboarding_backup_continue">继续</string>
     <string name="onboarding_backup_copied">密钥已复制到剪贴板</string>
     <string name="onboarding_backup_copy">复制密钥</string>
-    <string name="onboarding_backup_desc">您的身份是仅存储在此设备上的私钥。没有账户，也无法重置密码 — 如果您在没有备份的情况下丢失此手机，您的身份和联系人将永远丢失。</string>
+    <string name="onboarding_backup_desc">您的身份是仅存储在此设备上的私钥。没有账户，也无法重置密码 - 如果您在没有备份的情况下丢失此手机，您的身份和联系人将永远丢失。</string>
     <string name="onboarding_backup_later">稍后再备份</string>
     <string name="onboarding_backup_note">您可以随时在“设置 → 备份与密钥”中导出加密备份。</string>
     <string name="onboarding_backup_reveal">显示我的私钥</string>
     <string name="onboarding_backup_title">备份您的身份</string>
-    <string name="onboarding_backup_warning">任何拥有此密钥的人都可以冒充您并阅读您的消息。请将其保存在私密的地方 — 密码管理器中，而不是截图里。</string>
+    <string name="onboarding_backup_warning">任何拥有此密钥的人都可以冒充您并阅读您的消息。请将其保存在私密的地方 - 密码管理器中，而不是截图里。</string>
     <string name="peer_temp_share_active_label">正在与 %1$s 共享，直到 %2$s</string>
     <string name="peer_temp_share_active_time_left">正在与 %1$s 共享，还剩 %2$s</string>
     <string name="peer_temp_share_chip_12h">12 小时</string>

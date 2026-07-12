@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">படத்தைப் பார்</string>
     <string name="chat_delivery_details_title">செய்தி நிலை</string>
     <string name="chat_delivery_state_delivered">பெறுநரின் சாதனத்திற்கு வழங்கப்பட்டது</string>
-    <string name="chat_delivery_state_failed">தோல்வி — செய்தி வரிசையில் சிக்கியுள்ளது</string>
+    <string name="chat_delivery_state_failed">தோல்வி - செய்தி வரிசையில் சிக்கியுள்ளது</string>
     <string name="chat_delivery_state_read">பெறுநர் படித்தார்</string>
     <string name="chat_delivery_state_sending">அனுப்புகிறது…</string>
     <string name="chat_delivery_state_sent">அனுப்பப்பட்டது (ரிலே ஏற்றுக்கொண்டது)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">தொடர்</string>
     <string name="onboarding_backup_copied">விசை கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது</string>
     <string name="onboarding_backup_copy">விசையை நகலெடு</string>
-    <string name="onboarding_backup_desc">உங்கள் அடையாளம் இந்தச் சாதனத்தில் மட்டுமே சேமிக்கப்பட்ட தனிப்பட்ட விசை. கணக்கு இல்லை, கடவுச்சொல் மீட்டமைப்பும் இல்லை — காப்புப்பிரதி இல்லாமல் இந்த ஃபோனை இழந்தால், உங்கள் அடையாளமும் தொடர்புகளும் நிரந்தரமாக இழக்கப்படும்.</string>
+    <string name="onboarding_backup_desc">உங்கள் அடையாளம் இந்தச் சாதனத்தில் மட்டுமே சேமிக்கப்பட்ட தனிப்பட்ட விசை. கணக்கு இல்லை, கடவுச்சொல் மீட்டமைப்பும் இல்லை - காப்புப்பிரதி இல்லாமல் இந்த ஃபோனை இழந்தால், உங்கள் அடையாளமும் தொடர்புகளும் நிரந்தரமாக இழக்கப்படும்.</string>
     <string name="onboarding_backup_later">பிறகு காப்புப்பிரதி எடுக்கிறேன்</string>
     <string name="onboarding_backup_note">அமைப்புகள் → காப்புப்பிரதி மற்றும் விசைகள் என்பதில் எப்போது வேண்டுமானாலும் மறையாக்கப்பட்ட காப்புப்பிரதியை ஏற்றுமதி செய்யலாம்.</string>
     <string name="onboarding_backup_reveal">எனது தனிப்பட்ட விசையைக் காட்டு</string>
     <string name="onboarding_backup_title">உங்கள் அடையாளத்தைக் காப்புப்பிரதி எடுக்கவும்</string>
-    <string name="onboarding_backup_warning">இந்த விசை உள்ள எவரும் உங்களாக ஆள்மாறாட்டம் செய்து உங்கள் செய்திகளைப் படிக்கலாம். அதை ஒரு தனிப்பட்ட இடத்தில் வைக்கவும் — ஸ்கிரீன்ஷாட்டில் அல்ல, கடவுச்சொல் மேலாளரில்.</string>
+    <string name="onboarding_backup_warning">இந்த விசை உள்ள எவரும் உங்களாக ஆள்மாறாட்டம் செய்து உங்கள் செய்திகளைப் படிக்கலாம். அதை ஒரு தனிப்பட்ட இடத்தில் வைக்கவும் - ஸ்கிரீன்ஷாட்டில் அல்ல, கடவுச்சொல் மேலாளரில்.</string>
     <string name="peer_temp_share_active_label">%1$s உடன் %2$s வரை பகிரப்படுகிறது</string>
     <string name="peer_temp_share_active_time_left">%1$s உடன் மேலும் %2$s பகிரப்படுகிறது</string>
     <string name="peer_temp_share_chip_12h">12 மணி</string>

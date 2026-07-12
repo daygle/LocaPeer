@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">تصویر دیکھیں</string>
     <string name="chat_delivery_details_title">پیغام کی حیثیت</string>
     <string name="chat_delivery_state_delivered">وصول کنندہ کے آلے تک پہنچا دیا گیا</string>
-    <string name="chat_delivery_state_failed">ناکام — پیغام قطار میں پھنس گیا</string>
+    <string name="chat_delivery_state_failed">ناکام - پیغام قطار میں پھنس گیا</string>
     <string name="chat_delivery_state_read">وصول کنندہ نے پڑھ لیا</string>
     <string name="chat_delivery_state_sending">بھیجا جا رہا ہے…</string>
     <string name="chat_delivery_state_sent">بھیج دیا گیا (ریلے نے قبول کیا)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">جاری رکھیں</string>
     <string name="onboarding_backup_copied">کلید کلپ بورڈ پر کاپی ہو گئی</string>
     <string name="onboarding_backup_copy">کلید کاپی کریں</string>
-    <string name="onboarding_backup_desc">آپ کی شناخت ایک نجی کلید ہے جو صرف اسی آلے پر محفوظ ہے۔ کوئی اکاؤنٹ یا پاس ورڈ ری سیٹ نہیں ہے — اگر آپ یہ فون بغیر بیک اپ کے کھو دیتے ہیں تو آپ کی شناخت اور رابطے ہمیشہ کے لیے ختم ہو جائیں گے۔</string>
+    <string name="onboarding_backup_desc">آپ کی شناخت ایک نجی کلید ہے جو صرف اسی آلے پر محفوظ ہے۔ کوئی اکاؤنٹ یا پاس ورڈ ری سیٹ نہیں ہے - اگر آپ یہ فون بغیر بیک اپ کے کھو دیتے ہیں تو آپ کی شناخت اور رابطے ہمیشہ کے لیے ختم ہو جائیں گے۔</string>
     <string name="onboarding_backup_later">میں بعد میں بیک اپ لوں گا</string>
     <string name="onboarding_backup_note">آپ کسی بھی وقت ترتیبات ← بیک اپ اور کلیدیں سے ایک خفیہ کردہ بیک اپ برآمد کر سکتے ہیں۔</string>
     <string name="onboarding_backup_reveal">میری نجی کلید ظاہر کریں</string>
     <string name="onboarding_backup_title">اپنی شناخت کا بیک اپ لیں</string>
-    <string name="onboarding_backup_warning">جس کے پاس بھی یہ کلید ہو وہ آپ کا روپ دھار سکتا ہے اور آپ کے پیغامات پڑھ سکتا ہے۔ اسے کسی نجی جگہ رکھیں — پاس ورڈ مینیجر میں، اسکرین شاٹ میں نہیں۔</string>
+    <string name="onboarding_backup_warning">جس کے پاس بھی یہ کلید ہو وہ آپ کا روپ دھار سکتا ہے اور آپ کے پیغامات پڑھ سکتا ہے۔ اسے کسی نجی جگہ رکھیں - پاس ورڈ مینیجر میں، اسکرین شاٹ میں نہیں۔</string>
     <string name="peer_temp_share_active_label">%1$s کے ساتھ %2$s تک شیئر کیا جا رہا ہے</string>
     <string name="peer_temp_share_active_time_left">%1$s کے ساتھ مزید %2$s کے لیے شیئر کیا جا رہا ہے</string>
     <string name="peer_temp_share_chip_12h">12 گھنٹے</string>

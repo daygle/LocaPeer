@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">Lihat foto</string>
     <string name="chat_delivery_details_title">Status pesan</string>
     <string name="chat_delivery_state_delivered">Dihantar ke peranti penerima</string>
-    <string name="chat_delivery_state_failed">Gagal — mesej tersekat dalam baris gilir</string>
+    <string name="chat_delivery_state_failed">Gagal - mesej tersekat dalam baris gilir</string>
     <string name="chat_delivery_state_read">Dibaca oleh penerima</string>
     <string name="chat_delivery_state_sending">Menghantar…</string>
     <string name="chat_delivery_state_sent">Dihantar (geganti menerima)</string>
@@ -799,12 +799,12 @@
     <string name="onboarding_backup_continue">Lanjutkan</string>
     <string name="onboarding_backup_copied">Kunci disalin ke papan keratan</string>
     <string name="onboarding_backup_copy">Salin kunci</string>
-    <string name="onboarding_backup_desc">Identiti anda ialah kunci peribadi yang disimpan hanya pada peranti ini. Tiada akaun dan tiada tetapan semula kata laluan — jika anda kehilangan telefon ini tanpa sandaran, identiti dan kenalan anda hilang selama-lamanya.</string>
+    <string name="onboarding_backup_desc">Identiti anda ialah kunci peribadi yang disimpan hanya pada peranti ini. Tiada akaun dan tiada tetapan semula kata laluan - jika anda kehilangan telefon ini tanpa sandaran, identiti dan kenalan anda hilang selama-lamanya.</string>
     <string name="onboarding_backup_later">Saya akan sandarkan kemudian</string>
     <string name="onboarding_backup_note">Anda boleh mengeksport sandaran tersulit pada bila-bila masa di Tetapan → Sandaran dan Kunci.</string>
     <string name="onboarding_backup_reveal">Tunjukkan kunci peribadi saya</string>
     <string name="onboarding_backup_title">Sandarkan identiti anda</string>
-    <string name="onboarding_backup_warning">Sesiapa yang memiliki kunci ini boleh menyamar sebagai anda dan membaca mesej anda. Simpan di tempat peribadi — dalam pengurus kata laluan, bukan tangkapan skrin.</string>
+    <string name="onboarding_backup_warning">Sesiapa yang memiliki kunci ini boleh menyamar sebagai anda dan membaca mesej anda. Simpan di tempat peribadi - dalam pengurus kata laluan, bukan tangkapan skrin.</string>
     <string name="peer_temp_share_active_label">Berkongsi dengan %1$s sehingga %2$s</string>
     <string name="peer_temp_share_active_time_left">Berkongsi dengan %1$s selama %2$s lagi</string>
     <string name="peer_temp_share_chip_12h">12 jam</string>

@@ -765,7 +765,7 @@
     <string name="chat_cd_view_image">사진 보기</string>
     <string name="chat_delivery_details_title">메시지 상태</string>
     <string name="chat_delivery_state_delivered">수신자 기기에 전달됨</string>
-    <string name="chat_delivery_state_failed">실패 — 메시지가 대기열에 멈춤</string>
+    <string name="chat_delivery_state_failed">실패 - 메시지가 대기열에 멈춤</string>
     <string name="chat_delivery_state_read">수신자가 읽음</string>
     <string name="chat_delivery_state_sending">보내는 중…</string>
     <string name="chat_delivery_state_sent">전송됨(릴레이가 수락)</string>

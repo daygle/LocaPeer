@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Visa foto</string>
     <string name="chat_delivery_details_title">Meddelandestatus</string>
     <string name="chat_delivery_state_delivered">Levererat till mottagarens enhet</string>
-    <string name="chat_delivery_state_failed">Misslyckades — meddelandet fastnade i kön</string>
+    <string name="chat_delivery_state_failed">Misslyckades - meddelandet fastnade i kön</string>
     <string name="chat_delivery_state_read">Läst av mottagaren</string>
     <string name="chat_delivery_state_sending">Skickar…</string>
     <string name="chat_delivery_state_sent">Skickat (accepterat av relä)</string>
@@ -814,12 +814,12 @@
     <string name="onboarding_backup_continue">Fortsätt</string>
     <string name="onboarding_backup_copied">Nyckel kopierad till urklipp</string>
     <string name="onboarding_backup_copy">Kopiera nyckel</string>
-    <string name="onboarding_backup_desc">Din identitet är en privat nyckel som endast lagras på den här enheten. Det finns inget konto och ingen lösenordsåterställning — om du tappar telefonen utan en säkerhetskopia är din identitet och dina kontakter borta för gott.</string>
+    <string name="onboarding_backup_desc">Din identitet är en privat nyckel som endast lagras på den här enheten. Det finns inget konto och ingen lösenordsåterställning - om du tappar telefonen utan en säkerhetskopia är din identitet och dina kontakter borta för gott.</string>
     <string name="onboarding_backup_later">Jag säkerhetskopierar senare</string>
     <string name="onboarding_backup_note">Du kan när som helst exportera en krypterad säkerhetskopia i Inställningar → Säkerhetskopiering och nycklar.</string>
     <string name="onboarding_backup_reveal">Visa min privata nyckel</string>
     <string name="onboarding_backup_title">Säkerhetskopiera din identitet</string>
-    <string name="onboarding_backup_warning">Alla med den här nyckeln kan utge sig för att vara du och läsa dina meddelanden. Förvara den på ett privat ställe — en lösenordshanterare, inte en skärmdump.</string>
+    <string name="onboarding_backup_warning">Alla med den här nyckeln kan utge sig för att vara du och läsa dina meddelanden. Förvara den på ett privat ställe - en lösenordshanterare, inte en skärmdump.</string>
     <string name="peer_temp_share_active_label">Delar med %1$s till %2$s</string>
     <string name="peer_temp_share_active_time_left">Delar med %1$s i %2$s till</string>
     <string name="peer_temp_share_chip_12h">12 timmar</string>

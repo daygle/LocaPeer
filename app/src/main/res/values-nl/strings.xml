@@ -780,7 +780,7 @@
     <string name="chat_cd_view_image">Foto bekijken</string>
     <string name="chat_delivery_details_title">Berichtstatus</string>
     <string name="chat_delivery_state_delivered">Bezorgd op apparaat van ontvanger</string>
-    <string name="chat_delivery_state_failed">Mislukt — bericht vast in wachtrij</string>
+    <string name="chat_delivery_state_failed">Mislukt - bericht vast in wachtrij</string>
     <string name="chat_delivery_state_read">Gelezen door ontvanger</string>
     <string name="chat_delivery_state_sending">Verzenden…</string>
     <string name="chat_delivery_state_sent">Verzonden (relay geaccepteerd)</string>
@@ -819,7 +819,7 @@
     <string name="onboarding_backup_note">Je kunt op elk moment een versleutelde back-up exporteren via Instellingen → Back-up en sleutels.</string>
     <string name="onboarding_backup_reveal">Mijn privésleutel tonen</string>
     <string name="onboarding_backup_title">Maak een back-up van je identiteit</string>
-    <string name="onboarding_backup_warning">Iedereen met deze sleutel kan zich als jou voordoen en je berichten lezen. Bewaar hem op een privéplek — een wachtwoordmanager, geen screenshot.</string>
+    <string name="onboarding_backup_warning">Iedereen met deze sleutel kan zich als jou voordoen en je berichten lezen. Bewaar hem op een privéplek - een wachtwoordmanager, geen screenshot.</string>
     <string name="peer_temp_share_active_label">Delen met %1$s tot %2$s</string>
     <string name="peer_temp_share_active_time_left">Delen met %1$s voor nog %2$s</string>
     <string name="peer_temp_share_chip_12h">12 uur</string>
