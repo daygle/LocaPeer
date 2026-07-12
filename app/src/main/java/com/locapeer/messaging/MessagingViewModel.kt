@@ -679,7 +679,6 @@ class MessagingViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        super.onCleared()
         recordTimeoutJob?.cancel()
         releaseRecorder()
         stopAudio()

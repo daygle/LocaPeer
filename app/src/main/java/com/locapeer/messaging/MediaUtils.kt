@@ -2,6 +2,7 @@ package com.locapeer.messaging
 
 import android.content.Context
 import android.graphics.Bitmap
+import androidx.core.graphics.scale
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
@@ -47,8 +48,10 @@ object MediaUtils {
         val longest = maxOf(bmp.width, bmp.height)
         if (longest > MAX_IMAGE_DIM) {
             val scale = MAX_IMAGE_DIM.toFloat() / longest
-            val scaled = Bitmap.createScaledBitmap(
-                bmp, (bmp.width * scale).toInt().coerceAtLeast(1), (bmp.height * scale).toInt().coerceAtLeast(1), true
+            val scaled = bmp.scale(
+                (bmp.width * scale).toInt().coerceAtLeast(1),
+                (bmp.height * scale).toInt().coerceAtLeast(1),
+                true
             )
             if (scaled !== bmp) bmp.recycle()
             bmp = scaled

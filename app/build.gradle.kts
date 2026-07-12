@@ -134,7 +134,7 @@ dependencies {
     implementation("androidx.biometric:biometric:1.1.0")
     // ProcessLifecycleOwner for "app actually backgrounded" events (vs. per-Activity
     // ON_STOP, which fires on rotation and transient system dialogs)
-    implementation("androidx.lifecycle:lifecycle-process:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-process:2.11.0")
 
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.60.1")
@@ -165,7 +165,7 @@ dependencies {
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
     // published CVEs. Only the low-level crypto.* primitives (SHA-256, ChaCha20, HKDF,
     // HMAC) are used here, and their API is stable across these versions.
-    implementation("org.bouncycastle:bcprov-jdk18on:1.84")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.85")
 
     // QR Code
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
@@ -197,7 +197,7 @@ dependencies {
     // Mockito for limited mocked-AppPreferences coverage of AppLockManager (only the
     // unlocked StateFlow default + setUnlocked() flip is meaningful without a real
     // DataStore; lifecycle observer and pref-driven coroutines stay covered by inspection).
-    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-core:5.23.0")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.room:room-testing:2.8.4")

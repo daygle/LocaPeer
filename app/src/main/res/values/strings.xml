@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">LocaPeer</string>
 
     <!-- ── Notification channels & foreground service ─────────────────────── -->
@@ -442,7 +442,6 @@
     <string name="peer_precision_suburb_desc">Neighbourhood-level only</string>
 
     <!-- Temporary share (one-off, auto-expires) -->
-    <string name="peer_temp_share_title">Quick Share</string>
     <string name="peer_temp_share_subtitle">Share for a limited time, then auto-stop.</string>
     <string name="peer_temp_share_active_label">Sharing with %1$s until %2$s</string>
     <string name="peer_temp_share_active_time_left">Sharing with %1$s for %2$s more</string>
@@ -452,10 +451,7 @@
     <string name="peer_temp_share_chip_6h">6 hours</string>
     <string name="peer_temp_share_chip_12h">12 hours</string>
     <string name="peer_temp_share_chip_until_tomorrow">Until tomorrow 8am</string>
-    <string name="peer_temp_share_chip_custom">Custom…</string>
     <string name="peer_temp_share_stop">Stop now</string>
-    <string name="peer_temp_share_custom_picker_title">Share for how long?</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minutes</string>
 
     <!-- Chat delivery state tooltip / sheet -->
     <string name="chat_delivery_state_sending">Sending…</string>
@@ -485,14 +481,13 @@
     <string name="settings_theme_system">Follow system</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
-    <string name="settings_dynamic_color">Material You colours</string>
+    <string name="settings_dynamic_color">Material You Colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
 
     <!-- About diagnostics -->
     <string name="about_diagnostics">Network</string>
     <string name="about_pending_messages">Queued messages</string>
     <string name="about_no_pending">No queued messages</string>
-    <string name="about_pending_one">1 queued message</string>
     <plurals name="about_pending_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
@@ -811,7 +806,6 @@
     <string name="chat_cd_pause_voice">Pause voice message</string>
     <string name="chat_cd_view_image">View photo</string>
     <string name="chat_cd_close_image">Close</string>
-    <string name="chat_mic_permission_needed">Microphone permission is needed to record voice messages.</string>
     <!-- Location pin card -->
     <string name="chat_shared_location">Shared location</string>
     <string name="chat_tap_to_open_map">Tap to open map</string>
@@ -823,7 +817,7 @@
     <string name="circles_edit_title">Edit circle</string>
     <string name="circles_name_label">Circle name</string>
     <string name="circles_members_header">Members (%1$d)</string>
-    <string name="circles_member_count">%1$d members</string>
+    <string name="circles_member_count" tools:ignore="PluralsCandidate">%1$d members</string>
     <string name="circles_no_contacts">Add contacts first, then group them into a circle.</string>
     <string name="circles_empty_title">No circles yet</string>
     <string name="circles_empty_body">Create a circle to message a group of contacts and share your location with all of them at once.</string>
