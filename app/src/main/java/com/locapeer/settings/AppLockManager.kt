@@ -33,7 +33,11 @@ class AppLockManager @Inject constructor(
     /** False means the AppLockScreen should be shown over the rest of the UI. */
     val unlocked: StateFlow<Boolean> = _unlocked.asStateFlow()
 
-    private var backgroundedAtMs: Long = 0L
+    // Written and read from coroutines dispatched off the two ProcessLifecycleOwner
+    // callbacks (ON_STOP/ON_START), which run on different Dispatchers.Default threads.
+    // @Volatile guarantees each foreground read sees the timestamp the last background
+    // write published.
+    @Volatile private var backgroundedAtMs: Long = 0L
     private var observerInstalled = false
 
     /**
@@ -83,15 +87,16 @@ class AppLockManager @Inject constructor(
     private fun onProcessForeground() {
         scope.launch {
             val current = prefs.settings.first()
-            val timeoutMs = current.appLockTimeoutSeconds * 1000L
-            val wasBackgroundedFor =
-                if (backgroundedAtMs == 0L) 0L
-                else System.currentTimeMillis() - backgroundedAtMs
+            // Capture the recorded background timestamp before clearing it: the guard
+            // below needs to distinguish "no background was recorded" from "just came
+            // back", and that state lives in this field, not in the reset value.
+            val backgroundedAt = backgroundedAtMs
             backgroundedAtMs = 0L
             // No recorded background time means the process never went away (cold
             // start handled by [onAppStart]). Don't auto-relock.
-            if (!current.appLockEnabled || backgroundedAtMs == 0L) return@launch
-            if (wasBackgroundedFor >= timeoutMs) _unlocked.value = false
+            if (!current.appLockEnabled || backgroundedAt == 0L) return@launch
+            val timeoutMs = current.appLockTimeoutSeconds * 1000L
+            if (System.currentTimeMillis() - backgroundedAt >= timeoutMs) _unlocked.value = false
         }
     }
 
