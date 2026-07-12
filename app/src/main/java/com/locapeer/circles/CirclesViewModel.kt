@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.CircleDao
+import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.CircleEntity
@@ -27,6 +28,7 @@ import javax.inject.Inject
 class CirclesViewModel @Inject constructor(
     private val circleDao: CircleDao,
     private val peerDao: PeerDao,
+    private val messageDao: MessageDao,
     private val configDao: PeerSharingConfigDao,
     private val keyManager: KeyManager,
     private val workManager: WorkManager
@@ -64,26 +66,37 @@ class CirclesViewModel @Inject constructor(
         viewModelScope.launch {
             circleDao.clearMembers(circleId)
             circleDao.deleteCircle(circleId)
+            // The thread must go with the circle: orphaned rows would be invisible in the UI
+            // (group lists join on the circles table) yet keep message content on disk.
+            messageDao.deleteAllForGroup(circleId)
         }
     }
 
     /**
      * Share live location with every member of a circle for [durationMinutes]. Reuses the per-peer
-     * temporary-share mechanism: enables sharing and sets an expiry window on each member's config,
-     * scheduling the same [TempShareExpiryWorker] that clears it. Members you already share location
-     * with (SEND / SEND_RECEIVE role) start broadcasting immediately; others are unaffected until
-     * such a relationship exists.
+     * temporary-share mechanism: sets an expiry window on each member's config, scheduling the same
+     * [TempShareExpiryWorker] that clears it. Members you already share location with
+     * (SEND / SEND_RECEIVE role) start broadcasting immediately; others are unaffected until such a
+     * relationship exists. A member whose sharing the user has explicitly paused
+     * ([PeerSharingConfig.sharingEnabled] = false) is skipped entirely: the pause is the
+     * authoritative per-peer gate, and a circle share must not silently (and, because the expiry
+     * worker only clears the window, permanently) undo it.
      */
     fun shareLocationWithCircle(circleId: String, durationMinutes: Int) {
         viewModelScope.launch {
             val members = circleDao.getMemberPubkeys(circleId)
             val endsAtSec = System.currentTimeMillis() / 1000L + durationMinutes.coerceAtLeast(1) * 60L
             members.forEach { memberPub ->
-                // Ensure a config row exists so the UPDATE-based setters below take effect.
-                if (configDao.getForPeer(memberPub) == null) {
+                // Circles materialised from a remote creator can contain pubkeys that are not
+                // local contacts; the heartbeat broadcaster only ever sends to contacts, so
+                // don't create orphan config rows for them.
+                if (peerDao.getPeer(memberPub) == null) return@forEach
+                val existingConfig = configDao.getForPeer(memberPub)
+                if (existingConfig != null && !existingConfig.sharingEnabled) return@forEach
+                // Ensure a config row exists so the UPDATE-based setter below takes effect.
+                if (existingConfig == null) {
                     configDao.upsert(PeerSharingConfig(peerDeviceId = memberPub))
                 }
-                configDao.setSharingEnabled(memberPub, true)
                 configDao.setTemporaryShareEndsAt(memberPub, endsAtSec)
                 val request = OneTimeWorkRequestBuilder<TempShareExpiryWorker>()
                     .setInitialDelay(durationMinutes.coerceAtLeast(1) * 60L, TimeUnit.SECONDS)

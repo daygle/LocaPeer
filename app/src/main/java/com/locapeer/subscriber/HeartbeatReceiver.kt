@@ -481,12 +481,28 @@ class HeartbeatReceiver @Inject constructor(
             val (_, myPubHex) = keyManager.ensureKeypair()
             // Drop our own fan-out copy echoed back by a relay, and ignore a group we're not in.
             if (event.pubkey == myPubHex || !group.members.contains(myPubHex)) return
+            // For a circle we already know, only the recorded creator or a locally-known member
+            // may post into the thread. The envelope's member list is sender-controlled, so
+            // without this gate a member the creator has since removed (who still knows the gid)
+            // could keep injecting messages into a thread the user believes is circle-private.
+            // Circles that predate the creator field (blank creator) keep the old open behaviour.
+            val knownCircle = circleDao.getCircle(group.gid)
+            if (knownCircle != null && knownCircle.creatorPubkey.isNotBlank() &&
+                event.pubkey != knownCircle.creatorPubkey &&
+                !circleDao.getMemberPubkeys(group.gid).contains(event.pubkey)
+            ) {
+                Log.w(TAG, "Dropping circle message for ${group.gid} from non-member ${event.pubkey}")
+                return
+            }
             circleDao.materialiseFromRemote(
                 circleId = group.gid,
                 name = group.gname,
                 creatorPubkey = group.creator,
                 senderPubkey = event.pubkey,
-                memberPubkeys = group.members
+                // Never store our own pubkey as a member row: locally created circles keep only
+                // the OTHER participants, so counts and the edit screen stay consistent across
+                // created and materialised circles. Send-side fan-out re-appends self on the wire.
+                memberPubkeys = group.members.filter { it != myPubHex }
             )
             val innerMedia = com.locapeer.messaging.MediaWire.decode(group.text)
             // Validate `kind` against the recognised union before consuming the media branch.
@@ -522,10 +538,9 @@ class HeartbeatReceiver @Inject constructor(
             }
             // Safety net: never persist raw magic-prefixed bytes (corrupted or unsupported media
             // envelope that decode() rejected) as plain text - the conversation list would render
-            // garbled \u0001LPM1{...} headings. Render a photo-preview placeholder instead, which
-            // matches the most common case and is distinguishable enough for a tap-to-attempt-
-            // recovery.
-            val content = if (group.text.startsWith("\u0001"))
+            // a garbled LPM1{...} JSON blob as the message body. Render a photo-preview
+            // placeholder instead, which matches the most common case.
+            val content = if (com.locapeer.messaging.MediaWire.isEnvelope(group.text))
                 context.getString(R.string.chat_preview_photo)
             else group.text
             messageDao.insert(

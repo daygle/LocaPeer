@@ -182,10 +182,6 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { messageDao.markAllReadForGroup(circleId) }
     }
 
-    fun deleteGroupConversation(circleId: String) {
-        viewModelScope.launch { messageDao.deleteAllForGroup(circleId) }
-    }
-
     /**
      * Fan a message out to every circle member as an individually NIP-44-encrypted DM, then store
      * one local row in the circle thread. There is no shared group key: each member gets their own
@@ -616,6 +612,10 @@ class MessagingViewModel @Inject constructor(
         if (!_isRecording.value) return
         val file = recordFile
         val target = recordTarget
+        // Clear synchronously, before the send coroutine below runs: if the user starts a new
+        // recording immediately, the async clear that used to live at the end of that coroutine
+        // could null out the NEW recording's freshly-stamped target and silently drop its send.
+        recordTarget = null
         val durationMs = System.currentTimeMillis() - recordStartMs
         recordTimeoutJob?.cancel()
         recordTimeoutJob = null
@@ -643,9 +643,6 @@ class MessagingViewModel @Inject constructor(
                 is RecordTarget.Peer -> sendMediaMessage(target.id, media, MessageType.AUDIO, preview)
                 is RecordTarget.Circle -> sendGroupMedia(target.id, media, MessageType.AUDIO, preview)
             }
-            // Clear once both dispatch and buffer-handling finishes; keeps the lifecycle tight
-            // so a subsequent startRecording can't accidentally inherit a stale target.
-            recordTarget = null
         }
     }
 
