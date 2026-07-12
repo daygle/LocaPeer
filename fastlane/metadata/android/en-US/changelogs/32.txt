@@ -1,0 +1,8 @@
+• Faster app startup and smoother maps
+• Improved map contact popup layout
+• History map now centres on the tapped location
+• Refreshed geofence pages; edit screen fits the geofence in view
+• Fixed duplicate/stale location updates and history retention
+• Added British and Australian English; fixed translations in several languages
+• App language now included in backup and restore
+• UI polish and bug fixes
