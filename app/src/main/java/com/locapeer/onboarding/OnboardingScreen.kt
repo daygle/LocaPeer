@@ -259,6 +259,9 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
 @Composable
 private fun BackupStep(state: OnboardingState, vm: OnboardingViewModel) {
     val context = LocalContext.current
+    // Resolve at composition time: lint forbids Context.getString() from inside a click lambda
+    // because a config change wouldn't invalidate it.
+    val copiedMessage = stringResource(R.string.onboarding_backup_copied)
     var confirmed by remember { mutableStateOf(false) }
     val key = state.privateKeyHex
 
@@ -320,7 +323,7 @@ private fun BackupStep(state: OnboardingState, vm: OnboardingViewModel) {
                     as android.content.ClipboardManager
                 clipboard.setPrimaryClip(android.content.ClipData.newPlainText("LocaPeer private key", key))
                 android.widget.Toast.makeText(
-                    context, context.getString(R.string.onboarding_backup_copied), android.widget.Toast.LENGTH_SHORT
+                    context, copiedMessage, android.widget.Toast.LENGTH_SHORT
                 ).show()
             },
             modifier = Modifier.fillMaxWidth()
