@@ -163,15 +163,12 @@ fun GroupChatScreen(
                     )
 
                     // Remote / NIP-09 deletion is sender-only - we can only ask the recipient(s)
-                    // to drop a message we originally signed. Hidden when no relay event id was
-                    // ever tracked on the row, which happens for (a) pre-v9 circle messages sent
-                    // before this build shipped, where neither field is populated, and (b) a
-                    // self-only circle where the fanout loop had zero non-self targets. In both
-                    // cases the underlying [vm.deleteMessageFromRemote] would no-op, so surfacing
-                    // a non-functional "Delete from contact" / "Delete both" would be a lie. The
-                    // 1:1 path (msg.nostrEventId set) and post-v9 circles (nostrEventIdsByMember
-                    // populated) still surface the items normally.
-                    if (msg.isMine && (msg.nostrEventId.isNotEmpty() || msg.nostrEventIdsByMember.isNotEmpty())) {
+                    // to drop a message we originally signed. Gated on `isMine` alone so the menu
+                    // is identical to ChatScreen's 1:1 long-press menu. Rows with no tracked relay
+                    // event id (pre-v9 circle messages, or a self-only circle whose fanout had
+                    // zero non-self targets) fall through to [vm.deleteMessageFromRemote]'s
+                    // defensive no-op, same as a 1:1 row whose nostrEventId never got stamped.
+                    if (msg.isMine) {
                         ListItem(
                             headlineContent = { Text(stringResource(R.string.chat_delete_from_contact)) },
                             supportingContent = { Text(stringResource(R.string.chat_delete_from_contact_sub)) },
