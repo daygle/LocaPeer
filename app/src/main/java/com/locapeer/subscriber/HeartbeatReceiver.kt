@@ -522,6 +522,14 @@ class HeartbeatReceiver @Inject constructor(
                 // created and materialised circles. Send-side fan-out re-appends self on the wire.
                 memberPubkeys = group.members.filter { it != myPubHex }
             )
+            // Auto-unarchive on receive, mirroring the 1:1 peer path: a fresh message pulls the
+            // circle back onto the Circles tab, but a late-arriving/queued message that predates
+            // an explicit archive action doesn't silently undo it.
+            circleDao.getCircle(group.gid)?.let { circleRow ->
+                if (!circleRow.isArchived || event.createdAt * 1000L > circleRow.archivedAt) {
+                    circleDao.unarchive(group.gid)
+                }
+            }
             val innerMedia = com.locapeer.messaging.MediaWire.decode(group.text)
             // Validate `kind` against the recognised union before consuming the media branch.
             // An unknown kind (a future type, hand-crafted garbage, etc.) returns null here and

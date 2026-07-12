@@ -17,7 +17,14 @@ contributors should look first to see what is about to ship.
 
 ## [Unreleased]
 
-_Placeholder for the next batch of work landing on `main`._
+### Added
+- **Circle archiving and bulk actions** - Long-pressing a circle on the
+  Messages screen now enters the same selection mode as chats, with mark
+  read/unread, archive and delete in the bulk-action bar (editing stays on
+  the row's Edit button). Circles can also be archived from the group chat's
+  options menu; archived circles live on the Archived tab and pop back to
+  the Circles tab when a new message arrives, exactly like archived 1:1
+  conversations.
 
 ## [1.1.29] - 2026-07-13
 

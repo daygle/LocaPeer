@@ -24,5 +24,11 @@ data class CircleEntity(
      * is still shown but cannot silently rewrite who is in the circle. Empty for circles created
      * before this field existed.
      */
-    val creatorPubkey: String = ""
+    val creatorPubkey: String = "",
+    /** Mirrors [PeerEntity.isArchived]: archived circles move to the Archived tab of the
+     *  Messages screen and are hidden from the Circles tab / circles list. */
+    val isArchived: Boolean = false,
+    /** When the circle was last archived (ms). Used to keep a late-arriving message that
+     *  predates an explicit archive action from silently un-archiving the circle. */
+    val archivedAt: Long = 0
 )
