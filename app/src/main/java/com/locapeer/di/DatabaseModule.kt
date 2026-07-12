@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
+import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
@@ -152,7 +153,30 @@ object DatabaseModule {
         }
     }
 
-    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
+    /**
+     * v7: client-side circles (groups). Adds a nullable groupId marker to messages (thread key
+     * stays in peerId) and two new tables holding circles and their membership. All additive and
+     * non-destructive: existing 1:1 messages have groupId = NULL.
+     */
+    private val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE messages ADD COLUMN groupId TEXT DEFAULT NULL")
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_groupId ON messages (groupId)")
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS circles (" +
+                    "id TEXT NOT NULL, name TEXT NOT NULL, createdAt INTEGER NOT NULL, PRIMARY KEY(id))"
+            )
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS circle_members (" +
+                    "circleId TEXT NOT NULL, memberPubkey TEXT NOT NULL, " +
+                    "PRIMARY KEY(circleId, memberPubkey))"
+            )
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_circle_members_circleId ON circle_members (circleId)")
+            db.execSQL("CREATE INDEX IF NOT EXISTS index_circle_members_memberPubkey ON circle_members (memberPubkey)")
+        }
+    }
+
+    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7)
 
     @Provides
     @Singleton
@@ -179,4 +203,5 @@ object DatabaseModule {
     @Provides fun providePeerSharingConfigDao(db: AppDatabase): PeerSharingConfigDao = db.peerSharingConfigDao()
     @Provides fun providePendingMessageDao(db: AppDatabase): PendingMessageDao = db.pendingMessageDao()
     @Provides fun providePendingRequestDao(db: AppDatabase): PendingRequestDao = db.pendingRequestDao()
+    @Provides fun provideCircleDao(db: AppDatabase): CircleDao = db.circleDao()
 }

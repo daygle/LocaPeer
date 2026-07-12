@@ -43,6 +43,9 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.PermissionsScreen
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
+import com.locapeer.circles.CircleEditScreen
+import com.locapeer.circles.CircleListScreen
+import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
 import com.locapeer.sharing.ScheduleScreen
 import javax.inject.Inject
@@ -190,9 +193,12 @@ fun LocaPeerNavHost(
                 )
             }
             composable(Screen.Messages.route) {
-                ConversationListScreen(onOpenChat = { peerId, peerName ->
-                    navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
-                })
+                ConversationListScreen(
+                    onOpenChat = { peerId, peerName ->
+                        navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
+                    },
+                    onOpenCircles = { navController.navigate("circles") }
+                )
             }
             composable(Screen.Contacts.route) {
                 ContactsScreen(
@@ -276,6 +282,54 @@ fun LocaPeerNavHost(
                             restoreState = true
                         }
                     }
+                )
+            }
+            composable(
+                "circles",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                CircleListScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onOpenGroup = { circleId -> navController.navigate("groupchat/$circleId") },
+                    onCreate = { navController.navigate("circle-edit") },
+                    onEdit = { circleId -> navController.navigate("circle-edit?circleId=$circleId") }
+                )
+            }
+            composable(
+                route = "circle-edit?circleId={circleId}",
+                arguments = listOf(navArgument("circleId") { type = NavType.StringType; nullable = true; defaultValue = null }),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                CircleEditScreen(
+                    circleId = entry.arguments?.getString("circleId"),
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = "groupchat/{circleId}",
+                arguments = listOf(navArgument("circleId") { type = NavType.StringType }),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                GroupChatScreen(
+                    circleId = entry.arguments?.getString("circleId") ?: "",
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToMap = { lat, lng ->
+                        navController.navigate("${Screen.Map.route}?lat=$lat&lng=$lng") {
+                            popUpTo(startDestination) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    onManageMembers = { circleId -> navController.navigate("circle-edit?circleId=$circleId") }
                 )
             }
             composable(

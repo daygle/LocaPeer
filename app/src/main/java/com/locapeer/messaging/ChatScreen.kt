@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
@@ -380,13 +381,23 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNa
                 .padding(horizontal = 12.dp, vertical = 8.dp)
         ) {
             Column {
-                LinkifiedText(
-                    text = msg.content,
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = if (msg.isMine) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
-                    ),
-                    onNavigateToMap = onNavigateToMap
-                )
+                val pin = remember(msg.content) { detectLocationPin(msg.content) }
+                val contentColor = if (msg.isMine) MaterialTheme.colorScheme.onPrimaryContainer
+                    else MaterialTheme.colorScheme.onSurfaceVariant
+                if (pin != null) {
+                    LocationPinCard(
+                        lat = pin.first,
+                        lng = pin.second,
+                        contentColor = contentColor,
+                        onClick = { onNavigateToMap(pin.first, pin.second) }
+                    )
+                } else {
+                    LinkifiedText(
+                        text = msg.content,
+                        style = MaterialTheme.typography.bodyMedium.copy(color = contentColor),
+                        onNavigateToMap = onNavigateToMap
+                    )
+                }
                 if (msg.isMine) {
                     var deliverySheetOpen by remember { mutableStateOf(false) }
                     Row(
@@ -536,6 +547,74 @@ private fun ChatInputBar(
 
 private fun formatTime(millis: Long): String =
     com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
+
+/**
+ * Detects a shared-location message by finding the first OpenStreetMap URL carrying mlat/mlon
+ * query params (the format [MessagingViewModel.sendLocation] / sendGroupLocation produce). Returns
+ * the (lat, lng) pair, or null for an ordinary text message. Rendering a card off this keeps the
+ * pin backward-compatible: older clients still see a tappable link, newer ones see a card.
+ */
+internal fun detectLocationPin(content: String): Pair<Double, Double>? {
+    val matcher = Patterns.WEB_URL.matcher(content)
+    while (matcher.find()) {
+        val url = content.substring(matcher.start(), matcher.end())
+        val uri = try { url.toUri() } catch (e: Exception) { continue }
+        val lat = uri.getQueryParameter("mlat")?.toDoubleOrNull()
+        val lng = uri.getQueryParameter("mlon")?.toDoubleOrNull()
+        if (lat != null && lng != null) return lat to lng
+    }
+    return null
+}
+
+/** Compact tappable "shared location" card used for location-pin messages in 1:1 and group chats. */
+@Composable
+internal fun LocationPinCard(
+    lat: Double,
+    lng: Double,
+    contentColor: Color,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .clickable(onClick = onClick)
+            .padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(contentColor.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                Icons.Default.Place,
+                contentDescription = null,
+                tint = contentColor
+            )
+        }
+        Column {
+            Text(
+                stringResource(R.string.chat_shared_location),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = contentColor
+            )
+            Text(
+                String.format(java.util.Locale.US, "%.5f, %.5f", lat, lng),
+                style = MaterialTheme.typography.labelSmall,
+                color = contentColor.copy(alpha = 0.7f)
+            )
+            Text(
+                stringResource(R.string.chat_tap_to_open_map),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+    }
+}
 
 /**
  * Bottom-sheet shown on long-press of a sent message's delivery row. Surfaces the
