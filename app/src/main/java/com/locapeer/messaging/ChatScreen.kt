@@ -87,6 +87,7 @@ fun ChatScreen(
     val listState = rememberLazyListState()
     var showOptionsMenu by remember { mutableStateOf(false) }
     var showClearChatDialog by remember { mutableStateOf(false) }
+    var showDeleteConversationDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val isRecording by vm.isRecording.collectAsState()
@@ -171,6 +172,46 @@ fun ChatScreen(
         )
     }
 
+    if (showDeleteConversationDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConversationDialog = false },
+            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+            title = { Text(stringResource(R.string.conv_delete_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.conv_delete_message, peerName))
+
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.conv_delete_locally)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
+                        modifier = Modifier.clickable {
+                            vm.deleteConversation(peerId)
+                            showDeleteConversationDialog = false
+                            onNavigateBack()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.conv_delete_both)) },
+                        supportingContent = { Text(stringResource(R.string.conv_delete_both_sub)) },
+                        modifier = Modifier.clickable {
+                            vm.deleteConversation(peerId)
+                            vm.deleteConversationFromRemote(peerId)
+                            showDeleteConversationDialog = false
+                            onNavigateBack()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showDeleteConversationDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            }
+        )
+    }
+
     Scaffold(
         modifier = Modifier.imePadding(),
         topBar = {
@@ -228,7 +269,15 @@ fun ChatScreen(
                                     showClearChatDialog = true
                                 }
                             )
-                        }
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error) },
+                                leadingIcon = { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error) },
+                                onClick = {
+                                    showOptionsMenu = false
+                                    showDeleteConversationDialog = true
+                                }
+                            )
+}
                     }
                 }
             )
