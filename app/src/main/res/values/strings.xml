@@ -799,6 +799,19 @@
     <string name="days_weekends">Weekends</string>
     <string name="days_none">No days</string>
     <string name="chat_my_location_message">My current location: %1$s</string>
+    <!-- Inline media messages (image / voice) -->
+    <string name="chat_preview_photo">📷 Photo</string>
+    <string name="chat_preview_voice">🎤 Voice message</string>
+    <string name="chat_cd_attach_image">Attach photo</string>
+    <string name="chat_cd_record_voice">Record voice message</string>
+    <string name="chat_cd_stop_send_recording">Stop and send</string>
+    <string name="chat_cd_cancel_recording">Cancel recording</string>
+    <string name="chat_recording">Recording…</string>
+    <string name="chat_cd_play_voice">Play voice message</string>
+    <string name="chat_cd_pause_voice">Pause voice message</string>
+    <string name="chat_cd_view_image">View photo</string>
+    <string name="chat_cd_close_image">Close</string>
+    <string name="chat_mic_permission_needed">Microphone permission is needed to record voice messages.</string>
     <!-- Location pin card -->
     <string name="chat_shared_location">Shared location</string>
     <string name="chat_tap_to_open_map">Tap to open map</string>
