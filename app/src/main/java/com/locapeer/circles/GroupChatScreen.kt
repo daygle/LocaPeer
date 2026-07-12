@@ -94,8 +94,9 @@ fun GroupChatScreen(
         ActivityResultContracts.OpenDocument()
     ) { uri -> if (uri != null) vm.sendGroupFile(circleId, uri) }
 
+    // ViewModel emits already-localized strings, so no LocalContext resource read happens here.
     LaunchedEffect(Unit) {
-        vm.mediaError.collect { resId -> Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show() }
+        vm.mediaError.collect { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
     }
 
     // Mic permission gate - circles follow the same 1:1 pattern: probe at the moment of the

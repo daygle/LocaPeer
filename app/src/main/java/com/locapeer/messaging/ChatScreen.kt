@@ -103,9 +103,10 @@ fun ChatScreen(
         ActivityResultContracts.OpenDocument()
     ) { uri -> if (uri != null) vm.sendFile(peerId, uri) }
 
-    // Surface file-attachment errors (too large / unreadable / no viewer app) as a Toast.
+    // Surface file-attachment errors (too large / unreadable / no viewer app) as a Toast. The
+    // message is already localized by the ViewModel, so no LocalContext resource read happens here.
     LaunchedEffect(Unit) {
-        vm.mediaError.collect { resId -> Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show() }
+        vm.mediaError.collect { message -> Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
     }
 
     val micPermissionLauncher = rememberLauncherForActivityResult(

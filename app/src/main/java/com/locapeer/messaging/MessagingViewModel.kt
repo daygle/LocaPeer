@@ -544,12 +544,14 @@ class MessagingViewModel @Inject constructor(
     val playingMessageId: StateFlow<String?> = _playingMessageId
 
     /**
-     * One-shot user-facing errors from the file-attachment path, carried as a string resource id so
-     * the screen can surface a localized Toast. A [SharedFlow] (not StateFlow) so the same error
-     * fires every time - re-picking an oversize file must re-toast, not be swallowed as "no change".
+     * One-shot user-facing errors from the file-attachment path, carried as an already-resolved
+     * localized string so the screen can Toast it directly. Resolved here off the application
+     * [context] rather than via the composable's LocalContext, which lint flags for resource reads.
+     * A [SharedFlow] (not StateFlow) so the same error fires every time - re-picking an oversize file
+     * must re-toast, not be swallowed as "no change".
      */
-    private val _mediaError = MutableSharedFlow<Int>(extraBufferCapacity = 1)
-    val mediaError: SharedFlow<Int> = _mediaError
+    private val _mediaError = MutableSharedFlow<String>(extraBufferCapacity = 1)
+    val mediaError: SharedFlow<String> = _mediaError
 
     private var recorder: MediaRecorder? = null
     private var recordFile: File? = null
@@ -618,11 +620,11 @@ class MessagingViewModel @Inject constructor(
                 mimeType = result.mimeType,
             )
             MediaUtils.FileReadResult.TooLarge -> {
-                _mediaError.tryEmit(com.locapeer.R.string.chat_file_too_large)
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_too_large))
                 null
             }
             MediaUtils.FileReadResult.Error -> {
-                _mediaError.tryEmit(com.locapeer.R.string.chat_file_unreadable)
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
                 null
             }
         }
@@ -776,14 +778,14 @@ class MessagingViewModel @Inject constructor(
     fun openFile(msg: MessageEntity) {
         val base64 = msg.mediaBase64
         if (base64.isNullOrBlank()) {
-            _mediaError.tryEmit(com.locapeer.R.string.chat_file_unreadable)
+            _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
             return
         }
         viewModelScope.launch {
             try {
                 val bytes = MediaUtils.decodeBase64(base64)
                 if (bytes == null) {
-                    _mediaError.tryEmit(com.locapeer.R.string.chat_file_unreadable)
+                    _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
                     return@launch
                 }
                 val safeName = sanitizeFilename(msg.mediaFilename)
@@ -800,11 +802,11 @@ class MessagingViewModel @Inject constructor(
                 try {
                     context.startActivity(intent)
                 } catch (e: ActivityNotFoundException) {
-                    _mediaError.tryEmit(com.locapeer.R.string.chat_file_no_app)
+                    _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_no_app))
                 }
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "openFile failed", e)
-                _mediaError.tryEmit(com.locapeer.R.string.chat_file_unreadable)
+                _mediaError.tryEmit(context.getString(com.locapeer.R.string.chat_file_unreadable))
             }
         }
     }
