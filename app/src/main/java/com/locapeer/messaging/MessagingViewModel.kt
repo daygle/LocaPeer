@@ -451,8 +451,27 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Bulk "mark read" from the conversation list clears the unread badge locally only and does
+     * NOT emit read receipts. Selecting conversations from the list is a housekeeping gesture, not
+     * an acknowledgement that the messages were actually opened, so it must not reveal to senders
+     * that their messages were read - only opening the chat ([markRead]) sends receipts.
+     */
     fun markReadMultiple(peerIds: List<String>) {
-        peerIds.forEach { markRead(it) }
+        viewModelScope.launch {
+            peerIds.forEach { messageDao.markAllReadForPeer(it) }
+        }
+    }
+
+    /**
+     * Re-flags the given conversations as unread from the conversation list. Like [markReadMultiple]
+     * this is a local-only housekeeping gesture: it flips only the latest received message back to
+     * unread and emits nothing to the sender.
+     */
+    fun markUnreadMultiple(peerIds: List<String>) {
+        viewModelScope.launch {
+            peerIds.forEach { messageDao.markLatestUnreadForPeer(it) }
+        }
     }
 
     fun setSearchQuery(query: String) {

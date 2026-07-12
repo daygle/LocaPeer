@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.MarkChatUnread
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
@@ -136,6 +137,9 @@ fun ConversationListScreen(
     val allCurrentIds = safeList.map { it.peer.deviceId }.toSet()
     val allSelected = allCurrentIds.isNotEmpty() && selectedIds.containsAll(allCurrentIds)
     val archivingToArchive = currentTab == MessagesTab.CHATS
+    // When every selected conversation is already read, the bulk mark-read action would be a no-op,
+    // so the button flips to "Mark unread" (re-flag) instead. A mixed selection keeps "Mark read".
+    val selectedAllRead = selectedIds.isNotEmpty() && selectedIds.all { (unreadCounts[it] ?: 0) == 0 }
 
     if (showContactPicker) {
         ContactPickerDialog(
@@ -316,14 +320,25 @@ fun ConversationListScreen(
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        BulkActionButton(
-                            icon = { Icon(Icons.Default.DoneAll, contentDescription = null) },
-                            label = stringResource(R.string.conv_mark_read),
-                            onClick = {
-                                vm.markReadMultiple(selectedIds.toList())
-                                selectedIds = emptySet()
-                            }
-                        )
+                        if (selectedAllRead) {
+                            BulkActionButton(
+                                icon = { Icon(Icons.Default.MarkChatUnread, contentDescription = null) },
+                                label = stringResource(R.string.conv_mark_unread),
+                                onClick = {
+                                    vm.markUnreadMultiple(selectedIds.toList())
+                                    selectedIds = emptySet()
+                                }
+                            )
+                        } else {
+                            BulkActionButton(
+                                icon = { Icon(Icons.Default.DoneAll, contentDescription = null) },
+                                label = stringResource(R.string.conv_mark_read),
+                                onClick = {
+                                    vm.markReadMultiple(selectedIds.toList())
+                                    selectedIds = emptySet()
+                                }
+                            )
+                        }
                         BulkActionButton(
                             icon = {
                                 Icon(
