@@ -27,6 +27,7 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     @Inject lateinit var workerFactory: HiltWorkerFactory
     @Inject lateinit var heartbeatReceiver: HeartbeatReceiver
     @Inject lateinit var appPreferences: AppPreferences
+    @Inject lateinit var appLockManager: com.locapeer.settings.AppLockManager
 
     private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
@@ -37,6 +38,11 @@ class LocaPeerApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        // Initialise the lock state from the persisted snapshot and start the
+        // ProcessLifecycleOwner observer so the foreground/background book-keeping
+        // works for BiometricPrompt re-locking. Done synchronously here so the first
+        // composition sees the right value.
+        appLockManager.onAppStart()
         // Seed display formatting from the device, then keep it in sync with user settings so
         // the app's synchronous time/speed formatters reflect the current preference.
         DisplayFormat.init(this)

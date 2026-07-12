@@ -430,6 +430,63 @@
     <string name="peer_precision_suburb">Suburb (~1km)</string>
     <string name="peer_precision_suburb_desc">Neighbourhood-level only</string>
 
+    <!-- Temporary share (one-off, auto-expires) -->
+    <string name="peer_temp_share_title">Quick Share</string>
+    <string name="peer_temp_share_subtitle">Share for a limited time, then auto-stop.</string>
+    <string name="peer_temp_share_active_label">Sharing with %1$s until %2$s</string>
+    <string name="peer_temp_share_active_time_left">Sharing with %1$s for %2$s more</string>
+    <string name="peer_temp_share_chip_15m">15 min</string>
+    <string name="peer_temp_share_chip_1h">1 hour</string>
+    <string name="peer_temp_share_chip_3h">3 hours</string>
+    <string name="peer_temp_share_chip_6h">6 hours</string>
+    <string name="peer_temp_share_chip_12h">12 hours</string>
+    <string name="peer_temp_share_chip_until_tomorrow">Until tomorrow 8am</string>
+    <string name="peer_temp_share_chip_custom">Custom…</string>
+    <string name="peer_temp_share_stop">Stop now</string>
+    <string name="peer_temp_share_custom_picker_title">Share for how long?</string>
+    <string name="peer_temp_share_custom_minutes_hint">Minutes</string>
+
+    <!-- Chat delivery state tooltip / sheet -->
+    <string name="chat_delivery_state_sending">Sending…</string>
+    <string name="chat_delivery_state_sent">Sent (relay accepted)</string>
+    <string name="chat_delivery_state_delivered">Delivered to recipient\'s device</string>
+    <string name="chat_delivery_state_read">Read by recipient</string>
+    <string name="chat_delivery_state_failed">Failed — message stuck in queue</string>
+    <string name="chat_delivery_details_title">Message status</string>
+
+    <!-- App lock -->
+    <string name="settings_app_lock">App Lock</string>
+    <string name="settings_app_lock_subtitle">Require biometric or device PIN to open LocaPeer</string>
+    <string name="settings_app_lock_timeout">Re-lock after</string>
+    <string name="settings_app_lock_timeout_immediate">Immediately on leaving the app</string>
+    <string name="settings_app_lock_timeout_30s">After 30 seconds</string>
+    <string name="settings_app_lock_timeout_1m">After 1 minute</string>
+    <string name="settings_app_lock_timeout_5m">After 5 minutes</string>
+    <string name="app_lock_title">LocaPeer is locked</string>
+    <string name="app_lock_subtitle">Authenticate to view your locations and messages.</string>
+    <string name="app_lock_unlock">Unlock</string>
+    <string name="app_lock_prompt_title">Unlock LocaPeer</string>
+    <string name="app_lock_prompt_subtitle">Use biometric or device PIN</string>
+    <string name="app_lock_activity_unsupported">App lock requires a host that supports the system prompt. Update the app.</string>
+
+    <!-- Theme -->
+    <string name="settings_theme_mode">Theme</string>
+    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_dynamic_color">Material You colours</string>
+    <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
+
+    <!-- About diagnostics -->
+    <string name="about_diagnostics">Network</string>
+    <string name="about_pending_messages">Queued messages</string>
+    <string name="about_no_pending">No queued messages</string>
+    <string name="about_pending_one">1 queued message</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
+
     <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
     <plurals name="conv_delete_count">
         <item quantity="one">Delete %1$d conversation?</item>

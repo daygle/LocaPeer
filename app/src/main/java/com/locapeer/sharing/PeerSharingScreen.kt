@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Chat
@@ -20,6 +21,9 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
@@ -76,6 +80,14 @@ fun PeerSharingScreen(
     val purgeResult by vm.lastPurgeResult.collectAsState()
     val roleChangeResult by vm.roleChangeResult.collectAsState()
     val role = state.peer?.locationRole
+    val tempShareEndsAt = cfg?.temporaryShareEndsAtEpochSeconds
+    val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {
+        while (true) {
+            value = System.currentTimeMillis() / 1000L
+            kotlinx.coroutines.delay(1000L)
+        }
+    }
+    val tempShareActive = tempShareEndsAt?.takeIf { it > nowSec }
 
     var showPrecisionDialog by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
@@ -225,6 +237,76 @@ fun PeerSharingScreen(
                         modifier = Modifier.clickable(enabled = sharingEnabled) { onNavigateToSchedule() },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    // Quick share row: chips for fixed durations + an "until 8am tomorrow"
+                    // preset. While tempShare is active the row shows the countdown and a
+                    // Stop button. The temp-share field is the same one checked inside
+                    // HeartbeatService.broadcastHeartbeat's per-peer loop, so toggling
+                    // here has immediate broadcast effect (no global schedule change).
+                    // tempShareActive is now `Long?` so the smart-cast inside `if (it != null)`
+                    // gives a non-null endsAt. The previous shape (`tempShareActive && tempShareEndsAt != null`)
+                    // triggered the "condition is always true" warning because tempShareActive already
+                    // implies tempShareEndsAt is non-null.
+                    if (tempShareActive != null) {
+                        val endsAt = tempShareActive
+                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+                            Text(
+                                stringResource(
+                                    R.string.peer_temp_share_active_label,
+                                    peerName,
+                                    formatEpochSecondsAsLocalTime(endsAt)
+                                ),
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Text(
+                                stringResource(
+                                    R.string.peer_temp_share_active_time_left,
+                                    peerName,
+                                    humanizeRemaining(endsAt - nowSec)
+                                ),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedButton(
+                                onClick = { vm.clearTemporaryShare() },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Default.Stop, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(6.dp))
+                                Text(stringResource(R.string.peer_temp_share_stop))
+                            }
+                        }
+                    } else if (sharingEnabled) {
+                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
+                            Text(
+                                stringResource(R.string.peer_temp_share_subtitle),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_15m)) { vm.setTemporaryShare(15) }
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_1h)) { vm.setTemporaryShare(60) }
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_3h)) { vm.setTemporaryShare(180) }
+                            }
+                            Spacer(Modifier.height(8.dp))
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_6h)) { vm.setTemporaryShare(360) }
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_12h)) { vm.setTemporaryShare(720) }
+                                TempShareChip(stringResource(R.string.peer_temp_share_chip_until_tomorrow)) { vm.setTemporaryShare(minutesUntilTomorrow8am()) }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -501,4 +583,51 @@ private fun SettingsCard(content: @Composable ColumnScope.() -> Unit) {
     ) {
         Column(content = content)
     }
+}
+
+@Composable
+private fun TempShareChip(label: String, onClick: () -> Unit) {
+    Surface(
+        shape = RoundedCornerShape(20.dp),
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        modifier = Modifier.clickable { onClick() }
+    ) {
+        Text(
+            label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        )
+    }
+}
+
+private fun formatEpochSecondsAsLocalTime(epochSec: Long): String {
+    val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
+    return fmt.format(Date(epochSec * 1000L))
+}
+
+/** "47m" / "2h 5m" / "1d 3h" type human-readable duration from seconds remaining. */
+private fun humanizeRemaining(secsLeft: Long): String {
+    if (secsLeft <= 0) return "—"
+    val totalMin = secsLeft / 60
+    val days = totalMin / (24 * 60)
+    val hours = (totalMin % (24 * 60)) / 60
+    val mins = totalMin % 60
+    return buildString {
+        if (days > 0) append("${days}d ")
+        if (days > 0 || hours > 0) append("${hours}h ")
+        append("${mins}m")
+    }.trim()
+}
+
+/** Minutes from "now" until 08:00 the next day. Used by the "Until tomorrow 8am" chip. */
+private fun minutesUntilTomorrow8am(): Int {
+    val cal = java.util.Calendar.getInstance()
+    cal.add(java.util.Calendar.DAY_OF_YEAR, 1)
+    cal.set(java.util.Calendar.HOUR_OF_DAY, 8)
+    cal.set(java.util.Calendar.MINUTE, 0)
+    cal.set(java.util.Calendar.SECOND, 0)
+    cal.set(java.util.Calendar.MILLISECOND, 0)
+    val ms = cal.timeInMillis - System.currentTimeMillis()
+    return (ms / 60_000L).coerceAtLeast(1L).toInt()
 }

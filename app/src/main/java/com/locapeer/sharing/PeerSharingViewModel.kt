@@ -19,7 +19,12 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
+import android.content.Context
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,6 +34,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 data class PeerSharingUiState(
@@ -47,6 +53,7 @@ class PeerSharingViewModel @Inject constructor(
     private val peerDao: PeerDao,
     private val configDao: PeerSharingConfigDao,
     private val messageDao: MessageDao,
+    private val workManager: WorkManager,
     private val proximityAlertDao: ProximityAlertDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
@@ -280,6 +287,48 @@ class PeerSharingViewModel @Inject constructor(
             peerManager.sendDeleteMyMessages(currentPeerId)
             _lastPurgeResult.value =
                 PurgeResult(context.getString(com.locapeer.R.string.peer_purge_messages_sent, peer.displayName))
+        }
+    }
+
+    /**
+     * Set a one-off temporary share for the current peer. Overrides any recurring schedule
+     * rules for the duration. Also schedules a WorkManager one-time job to clear the field
+     * at the expiry wall-clock time, so the share stops working even if the app is closed
+     * when it elapses.
+     */
+    fun setTemporaryShare(durationMinutes: Int) {
+        viewModelScope.launch {
+            val nowSec = System.currentTimeMillis() / 1000L
+            val endsAtSec = nowSec + durationMinutes.coerceAtLeast(1) * 60L
+            configDao.setTemporaryShareEndsAt(currentPeerId, endsAtSec)
+
+            // Cancel any previous expiry worker for this peer - the latest call wins.
+            // REPLACE in enqueueUniqueWork also handles the case where the user extended
+            // the temp share via a new chip press.
+            val request = OneTimeWorkRequestBuilder<TempShareExpiryWorker>()
+                .setInitialDelay(durationMinutes.coerceAtLeast(1) * 60L, TimeUnit.SECONDS)
+                .setInputData(
+                    androidx.work.Data.Builder()
+                        .putString("peerDeviceId", currentPeerId)
+                        .build()
+                )
+                .build()
+            workManager.enqueueUniqueWork(
+                TempShareExpiryWorker.workNameFor(currentPeerId),
+                ExistingWorkPolicy.REPLACE,
+                request
+            )
+        }
+    }
+
+    /**
+     * Cancel an active temporary share. Clears the field AND the pending worker so a
+     * half-elapsed share doesn't re-fire after the user has explicitly revoked it.
+     */
+    fun clearTemporaryShare() {
+        viewModelScope.launch {
+            configDao.setTemporaryShareEndsAt(currentPeerId, null)
+            workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(currentPeerId))
         }
     }
 }

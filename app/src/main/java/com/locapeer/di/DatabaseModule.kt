@@ -138,7 +138,21 @@ object DatabaseModule {
         }
     }
 
-    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+    /**
+     * v6: per-peer one-off temporary share. Adds [PeerSharingConfig.temporaryShareEndsAtEpochSeconds]
+     * (INTEGER, nullable). A null column is the correct initial state for both fresh installs
+     * ("no temp share ever set") and upgraded installs ("never supported temp share"). The
+     * per-peer temp-share expiry worker reads this column on its tick.
+     */
+    private val MIGRATION_5_6 = object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE peer_sharing_config ADD COLUMN temporaryShareEndsAtEpochSeconds INTEGER DEFAULT NULL"
+            )
+        }
+    }
+
+    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
 
     @Provides
     @Singleton

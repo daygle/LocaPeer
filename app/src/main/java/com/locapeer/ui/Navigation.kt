@@ -316,7 +316,7 @@ fun LocaPeerNavHost(
             ) {
                 val aboutVm: AboutViewModel = hiltViewModel()
                 AboutScreen(
-                    relayClient = aboutVm.relayClient,
+                    aboutVm = aboutVm,
                     onNavigateBack = { navController.popBackStack() },
                     versionName = com.locapeer.BuildConfig.VERSION_NAME,
                     versionCode = com.locapeer.BuildConfig.VERSION_CODE

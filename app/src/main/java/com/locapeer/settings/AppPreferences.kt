@@ -117,8 +117,23 @@ data class AppSettings(
      * devices), which is at odds with the app's relay-only design, so it must be an
      * explicit, informed opt-in.
      */
-    val reverseGeocodingEnabled: Boolean = false
+    val reverseGeocodingEnabled: Boolean = false,
+    /**
+     * Required at next app-start (and after [appLockTimeoutSeconds] of background time)
+     * biometric / device-credential prompt before the app contents are revealed.
+     * [appLockTimeoutSeconds] == 0 means relock immediately on background; the value
+     * choice is exposed as Immediate / 30s / 1m / 5m in Settings.
+     */
+    val appLockEnabled: Boolean = false,
+    /** 0 = immediate on backgrounding. Positive seconds = grace period before relock. */
+    val appLockTimeoutSeconds: Int = 0,
+    /** App appearance: "SYSTEM" (follow OS), "LIGHT", "DARK". */
+    val themeMode: String = "SYSTEM",
+    /** Use Material You / dynamic color on Android 12+. Independent of [themeMode]. */
+    val useDynamicColor: Boolean = true
 )
+
+enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
 @Singleton
 class AppPreferences @Inject constructor(
@@ -159,6 +174,10 @@ class AppPreferences @Inject constructor(
     private val KEY_NOTIFY_ON_TRACKING_ALERTS = booleanPreferencesKey("notify_on_tracking_alerts")
     private val KEY_SHOW_GEOFENCES_ON_MAP = booleanPreferencesKey("show_geofences_on_map")
     private val KEY_REVERSE_GEOCODING = booleanPreferencesKey("reverse_geocoding_enabled")
+    private val KEY_APP_LOCK_ENABLED = booleanPreferencesKey("app_lock_enabled")
+    private val KEY_APP_LOCK_TIMEOUT_SECONDS = intPreferencesKey("app_lock_timeout_seconds")
+    private val KEY_THEME_MODE = stringPreferencesKey("theme_mode")
+    private val KEY_USE_DYNAMIC_COLOR = booleanPreferencesKey("use_dynamic_color")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -207,7 +226,11 @@ class AppPreferences @Inject constructor(
                 useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial(),
                 notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false,
                 showGeofencesOnMap = prefs[KEY_SHOW_GEOFENCES_ON_MAP] ?: false,
-                reverseGeocodingEnabled = prefs[KEY_REVERSE_GEOCODING] ?: false
+                reverseGeocodingEnabled = prefs[KEY_REVERSE_GEOCODING] ?: false,
+                appLockEnabled = prefs[KEY_APP_LOCK_ENABLED] ?: false,
+                appLockTimeoutSeconds = prefs[KEY_APP_LOCK_TIMEOUT_SECONDS] ?: 0,
+                themeMode = prefs[KEY_THEME_MODE] ?: "SYSTEM",
+                useDynamicColor = prefs[KEY_USE_DYNAMIC_COLOR] ?: true
             )
         }
 
@@ -300,6 +323,22 @@ class AppPreferences @Inject constructor(
 
     suspend fun setReverseGeocodingEnabled(enabled: Boolean) {
         context.settingsStore.edit { it[KEY_REVERSE_GEOCODING] = enabled }
+    }
+
+    suspend fun setAppLockEnabled(enabled: Boolean) {
+        context.settingsStore.edit { it[KEY_APP_LOCK_ENABLED] = enabled }
+    }
+
+    suspend fun setAppLockTimeoutSeconds(seconds: Int) {
+        context.settingsStore.edit { it[KEY_APP_LOCK_TIMEOUT_SECONDS] = seconds.coerceAtLeast(0) }
+    }
+
+    suspend fun setThemeMode(mode: ThemeMode) {
+        context.settingsStore.edit { it[KEY_THEME_MODE] = mode.name }
+    }
+
+    suspend fun setUseDynamicColor(use: Boolean) {
+        context.settingsStore.edit { it[KEY_USE_DYNAMIC_COLOR] = use }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {

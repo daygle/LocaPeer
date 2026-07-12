@@ -10,6 +10,7 @@ import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
@@ -37,6 +38,7 @@ class MessagingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val pendingMessageDao: PendingMessageDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
@@ -105,6 +107,13 @@ class MessagingViewModel @Inject constructor(
         messageDao.getUnreadCountsPerPeer()
             .map { rows -> rows.associate { it.peerId to it.cnt } }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
+
+    /** Count of messages queued in the relay outbox (sent but not yet acknowledged by any
+     *  relay). Surfaced on the chat list and AboutScreen so outbox backups are visible
+     *  beyond the simple connected/disconnected dot. */
+    val pendingMessageCount: StateFlow<Int> =
+        pendingMessageDao.countAll()
+            .stateIn(viewModelScope, SharingStarted.Lazily, 0)
 
     private val _typingPeers = MutableStateFlow<Map<String, Long>>(emptyMap())
     /** Maps peerDeviceId (= pubkey) to the millisecond timestamp of the last typing event. */

@@ -47,6 +47,27 @@ object SharingSchedule {
     }
 
     /**
+     * Per-peer "should I share right now" check that respects a one-off temporary share
+     * alongside the recurring schedule. The temp share, when active, overrides the
+     * schedule so the user can push a quick "share for the next hour" without changing
+     * their normal weekly hours. Order matters: the temporary share is the LAST gate
+     * because it is a deliberate override - if it is set, sharing is allowed regardless
+     * of the schedule, but sharingEnabled / precision / role checks upstream in the
+     * caller still apply. null endsAt means no active temp share, so the schedule
+     * decides.
+     */
+    fun isPeerSharingActive(
+        rules: List<ScheduleRule>,
+        dayIndex: Int,
+        currentMinute: Int,
+        tempEndsAtEpochSeconds: Long?,
+        nowEpochSeconds: Long
+    ): Boolean {
+        if (tempEndsAtEpochSeconds != null && nowEpochSeconds < tempEndsAtEpochSeconds) return true
+        return isActive(rules, dayIndex, currentMinute)
+    }
+
+    /**
      * Checks if the schedule is active for a specific rule and time.
      * Uses inclusive comparison for the end minute so that a rule ending at 23:59 (1439)
      * covers the full last minute of the day.

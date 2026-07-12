@@ -22,7 +22,18 @@ data class PeerSharingConfig(
     /** How long this contact keeps my location data on their device. 0 = forever. */
     val retentionDaysLocation: Int = 30,
     /** How long this contact keeps my messages on their device. 0 = forever. */
-    val retentionDaysMessages: Int = 0
+    val retentionDaysMessages: Int = 0,
+    /**
+     * One-off temporary share expiry, expressed as Unix epoch SECONDS. While the current
+     * wall-clock time is below this value, sharing is allowed for this peer regardless of
+     * the recurring [scheduleRules] gate. null = no active temporary share.
+     *
+     * Epoch seconds (not millis) keep the value readable in `adb shell sqlite3`, so a
+     * support engineer can `select temporary_share_ends_at_epoch_seconds from
+     * peer_sharing_config` and immediately see a wall-clock time. The HeartbeatService
+     * and worker convert via `System.currentTimeMillis() / 1000`.
+     */
+    val temporaryShareEndsAtEpochSeconds: Long? = null
 )
 
 fun PeerSharingConfig.scheduleRules(): List<ScheduleRule> = scheduleRulesJson.toScheduleRules()

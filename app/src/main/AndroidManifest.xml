@@ -26,6 +26,10 @@
     <!-- Notifications -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- App-lock screen uses BiometricPrompt; this permission covers Strong/Weak biometrics.
+         Device-credential fallback (PIN/pattern) needs no permission on API 28+. -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+
     <!-- Wake lock to keep CPU running during background work -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 

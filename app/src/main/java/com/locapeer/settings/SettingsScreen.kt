@@ -82,6 +82,8 @@ fun SettingsScreen(
     var showLanguageDialog by remember { mutableStateOf(false) }
     var showFixedLocationPicker by remember { mutableStateOf(false) }
     var fixedLocationCaptureMessage by remember { mutableStateOf("") }
+    var showLockTimeoutDialog by remember { mutableStateOf(false) }
+    var showThemeDialog by remember { mutableStateOf(false) }
     var showExportDialog by remember { mutableStateOf(false) }
     var exportSections by remember { mutableStateOf(setOf(BackupSection.PRIVATE_KEY, BackupSection.CONTACTS, BackupSection.GEOFENCES, BackupSection.SETTINGS)) }
     var exportPassword by remember { mutableStateOf("") }
@@ -239,6 +241,46 @@ fun SettingsScreen(
             item { SectionLabel(stringResource(R.string.settings_section_security)) }
             item {
                 SettingsCard {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_app_lock)) },
+                        supportingContent = { Text(stringResource(R.string.settings_app_lock_subtitle)) },
+                        leadingContent = { Icon(Icons.Default.Fingerprint, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.appLockEnabled,
+                                onCheckedChange = { vm.setAppLockEnabled(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                        modifier = Modifier.clickable { vm.setAppLockEnabled(!settings.appLockEnabled) }
+                    )
+                    if (settings.appLockEnabled) {
+                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                        ListItem(
+                            headlineContent = { Text(stringResource(R.string.settings_app_lock_timeout)) },
+                            supportingContent = {
+                                Text(
+                                    when (settings.appLockTimeoutSeconds) {
+                                        0  -> stringResource(R.string.settings_app_lock_timeout_immediate)
+                                        30 -> stringResource(R.string.settings_app_lock_timeout_30s)
+                                        60 -> stringResource(R.string.settings_app_lock_timeout_1m)
+                                        else -> stringResource(R.string.settings_app_lock_timeout_5m)
+                                    }
+                                )
+                            },
+                            leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
+                            trailingContent = {
+                                Icon(
+                                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            },
+                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                            modifier = Modifier.clickable { showLockTimeoutDialog = true }
+                        )
+                    }
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     NavRow(
                         icon = Icons.Default.Shield,
                         label = stringResource(R.string.settings_permissions),
@@ -499,6 +541,31 @@ fun SettingsScreen(
             item { SectionLabel(stringResource(R.string.settings_section_appearance)) }
             item {
                 SettingsCard {
+                    val currentThemeLabel = when (settings.themeMode) {
+                        "LIGHT" -> stringResource(R.string.settings_theme_light)
+                        "DARK" -> stringResource(R.string.settings_theme_dark)
+                        else -> stringResource(R.string.settings_theme_system)
+                    }
+                    NavRow(
+                        icon = Icons.Default.Brightness6,
+                        label = stringResource(R.string.settings_theme_mode),
+                        subtitle = currentThemeLabel,
+                        onClick = { showThemeDialog = true }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_dynamic_color)) },
+                        supportingContent = { Text(stringResource(R.string.settings_dynamic_color_subtitle)) },
+                        leadingContent = { Icon(Icons.Default.ColorLens, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.useDynamicColor,
+                                onCheckedChange = { vm.setUseDynamicColor(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     NavRow(
                         icon = Icons.Default.GridView,
                         label = stringResource(R.string.settings_customize_nav),
@@ -1000,6 +1067,107 @@ fun SettingsScreen(
                 showFixedLocationPicker = false
             },
             onDismiss = { showFixedLocationPicker = false }
+        )
+    }
+
+    if (showLockTimeoutDialog) {
+        val timeoutOptions = listOf(
+            0  to stringResource(R.string.settings_app_lock_timeout_immediate),
+            30 to stringResource(R.string.settings_app_lock_timeout_30s),
+            60 to stringResource(R.string.settings_app_lock_timeout_1m),
+            300 to stringResource(R.string.settings_app_lock_timeout_5m),
+        )
+        AlertDialog(
+            onDismissRequest = { showLockTimeoutDialog = false },
+            title = { Text(stringResource(R.string.settings_app_lock_timeout)) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    timeoutOptions.forEach { (value, label) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    vm.setAppLockTimeoutSeconds(value)
+                                    showLockTimeoutDialog = false
+                                }
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = settings.appLockTimeoutSeconds == value,
+                                onClick = {
+                                    vm.setAppLockTimeoutSeconds(value)
+                                    showLockTimeoutDialog = false
+                                }
+                            )
+                            Text(
+                                text = label,
+                                modifier = Modifier.padding(start = 12.dp),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showLockTimeoutDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
+    }
+
+    if (showThemeDialog) {
+        val themeOptions = listOf(
+            com.locapeer.settings.ThemeMode.SYSTEM to stringResource(R.string.settings_theme_system),
+            com.locapeer.settings.ThemeMode.LIGHT  to stringResource(R.string.settings_theme_light),
+            com.locapeer.settings.ThemeMode.DARK   to stringResource(R.string.settings_theme_dark),
+        )
+        AlertDialog(
+            onDismissRequest = { showThemeDialog = false },
+            title = { Text(stringResource(R.string.settings_theme_mode)) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    themeOptions.forEach { (mode, label) ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    vm.setThemeMode(mode)
+                                    showThemeDialog = false
+                                }
+                                .padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            RadioButton(
+                                selected = settings.themeMode == mode.name,
+                                onClick = {
+                                    vm.setThemeMode(mode)
+                                    showThemeDialog = false
+                                }
+                            )
+                            Text(
+                                text = label,
+                                modifier = Modifier.padding(start = 12.dp),
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showThemeDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
         )
     }
 }

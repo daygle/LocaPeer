@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.AlertDialog
@@ -33,9 +34,12 @@ import com.locapeer.invite.EXTRA_SENDER_RELAY
 import com.locapeer.messaging.MessagingViewModel
 import com.locapeer.onboarding.OnboardingScreen
 import com.locapeer.onboarding.OnboardingViewModel
+import com.locapeer.settings.AppLockManager
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.ThemeMode
 import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.ui.LocaPeerNavHost
+import com.locapeer.ui.components.AppLockScreen
 import com.locapeer.ui.theme.LocaPeerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -60,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var keyManager: KeyManager
     @Inject lateinit var approvalManager: SupervisionApprovalManager
+    @Inject lateinit var appLockManager: AppLockManager
 
     private val pendingNavTarget = mutableStateOf<NavTarget?>(null)
 
@@ -68,27 +73,57 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         handleIntent(intent)
         enableEdgeToEdge()
-        
+
         setContent {
-            LocaPeerTheme {
+            // Theme preferences flow into LocaPeerTheme as plain parameters rather than
+            // via AppCompatDelegate so the in-app language switch (AppCompatDelegate.setApplicationLocales)
+            // and the dark-mode toggle stay orthogonal: AppCompatDelegate's night-mode call
+            // would re-configure resources globally and trigger Activity recreation.
+            val settings by prefs.settings.collectAsState(initial = null)
+            val themeMode = settings?.themeMode
+                ?.let { runCatching { ThemeMode.valueOf(it) }.getOrDefault(ThemeMode.SYSTEM) }
+                ?: ThemeMode.SYSTEM
+            val darkTheme = when (themeMode) {
+                ThemeMode.SYSTEM -> isSystemInDarkTheme()
+                ThemeMode.LIGHT -> false
+                ThemeMode.DARK -> true
+            }
+            val useDynamicColor = settings?.useDynamicColor ?: true
+
+            LocaPeerTheme(darkTheme = darkTheme, dynamicColor = useDynamicColor) {
+                // App lock: lifted into a single if/else above the existing content so
+                // the lock renders OVER everything (including during onboarding and
+                // supervised-mode remote approval). The state is observed here so a
+                // successful BiometricPrompt unlocks the rest of the tree instantly.
+                val unlocked by appLockManager.unlocked.collectAsState()
+                if (!unlocked) {
+                    AppLockScreen(onUnlocked = { appLockManager.setUnlocked(true) })
+                    return@LocaPeerTheme
+                }
+
                 val onboardingComplete by remember(prefs) {
                     prefs.settings.map { it.onboardingComplete }
                 }.collectAsState(initial = null)
-                
+
                 val navTarget by pendingNavTarget
                 val pendingApproval by approvalManager.pending.collectAsState()
 
-                if (pendingApproval != null) {
-                    val req = pendingApproval!!
+                // Capture-by-val doesn't smart-cast a `by`-delegated StateFlow read, so we
+                // route the deviceName through a safe call directly into stringResource.
+                pendingApproval?.let { req ->
                     AlertDialog(
                         onDismissRequest = { approvalManager.respond(approved = false) },
                         title = { Text(stringResource(R.string.supervision_request_title)) },
                         text = { Text(stringResource(R.string.supervision_request_message, req.deviceName)) },
                         confirmButton = {
-                            Button(onClick = { approvalManager.respond(approved = true) }) { Text(stringResource(R.string.common_approve)) }
+                            Button(onClick = { approvalManager.respond(approved = true) }) {
+                                Text(stringResource(R.string.common_approve))
+                            }
                         },
                         dismissButton = {
-                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) { Text(stringResource(R.string.common_deny)) }
+                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) {
+                                Text(stringResource(R.string.common_deny))
+                            }
                         },
                     )
                 }
@@ -121,14 +156,15 @@ class MainActivity : AppCompatActivity() {
                             // Auto-start HeartbeatService on app open if enabled and permitted.
                             LaunchedEffect(Unit) {
                                 delay(1000) // Stagger service start to reduce CPU spike
-                                val settings = prefs.settings.first()
-                                if (!settings.heartbeatEnabled) return@LaunchedEffect
-                                val hasLocation = (ContextCompat.checkSelfPermission(
-                                    this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
-                                ) == PackageManager.PERMISSION_GRANTED) ||
-                                (ContextCompat.checkSelfPermission(
-                                    this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION
-                                ) == PackageManager.PERMISSION_GRANTED)
+                                val current = prefs.settings
+                                if (!current.first().heartbeatEnabled) return@LaunchedEffect
+                                val hasLocation =
+                                    ContextCompat.checkSelfPermission(
+                                        this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
+                                    ) == PackageManager.PERMISSION_GRANTED ||
+                                    ContextCompat.checkSelfPermission(
+                                        this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION
+                                    ) == PackageManager.PERMISSION_GRANTED
                                 if (!hasLocation) return@LaunchedEffect
                                 val intent = Intent(this@MainActivity, HeartbeatService::class.java)
                                 startForegroundService(intent)
@@ -189,4 +225,11 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-data class NavTarget(val route: String, val peerId: String?, val peerName: String, val extra: String? = null, val isRoleChange: Boolean = false, val requestedRole: String? = null)
+data class NavTarget(
+    val route: String,
+    val peerId: String?,
+    val peerName: String,
+    val extra: String? = null,
+    val isRoleChange: Boolean = false,
+    val requestedRole: String? = null
+)

@@ -852,11 +852,16 @@ class HeartbeatService : LifecycleService() {
 
                 // Move heavy crypto (NIP-44 encryption + Schnorr signing) to Default dispatcher
                 // to avoid skipping frames on the main thread.
+                val nowSec = nowMs / 1000L
                 withContext(Dispatchers.Default) {
                     targetRecipients.forEach { recipient ->
                         val cfg = configMap[recipient.deviceId]
 
-                        if (!isSos && cfg != null && !SharingSchedule.isActive(cfg.scheduleRules(), dayIndex, currentMinute)) return@forEach
+                        if (!isSos && cfg != null && !SharingSchedule.isPeerSharingActive(
+                                cfg.scheduleRules(), dayIndex, currentMinute,
+                                cfg.temporaryShareEndsAtEpochSeconds, nowSec
+                            )
+                        ) return@forEach
 
                         // Suburb precision deliberately shares only an approximate area. Coarsen the
                         // position AND drop the fine-grained fields that would otherwise undo it:

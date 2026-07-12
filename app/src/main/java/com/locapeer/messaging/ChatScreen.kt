@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Unarchive
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -387,8 +388,14 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNa
                     onNavigateToMap = onNavigateToMap
                 )
                 if (msg.isMine) {
+                    var deliverySheetOpen by remember { mutableStateOf(false) }
                     Row(
-                        modifier = Modifier.align(Alignment.End),
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .combinedClickable(
+                                onClick = {},
+                                onLongClick = { deliverySheetOpen = true }
+                            ),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
@@ -413,6 +420,9 @@ private fun MessageBubble(msg: MessageEntity, onLongClick: () -> Unit = {}, onNa
                             modifier = Modifier.size(12.dp),
                             tint = statusTint
                         )
+                    }
+                    if (deliverySheetOpen) {
+                        DeliveryStatusSheet(msg.deliveryState) { deliverySheetOpen = false }
                     }
                 } else {
                     Text(
@@ -526,3 +536,56 @@ private fun ChatInputBar(
 
 private fun formatTime(millis: Long): String =
     com.locapeer.util.DisplayFormat.timeFormat().format(Date(millis))
+
+/**
+ * Bottom-sheet shown on long-press of a sent message's delivery row. Surfaces the
+ * state machine the small checkmark icon encodes so the user can confirm exactly
+ * what "delivered" or "read" means (relay accepted vs. delivered vs. read receipt),
+ * and so a "SENDING…" bubble that's been stuck gives a clear "failed / queued"
+ * surface beyond the tiny clock icon. The sheet stays local to the bubble and
+ * dismisses on a system drag or button tap.
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DeliveryStatusSheet(deliveryState: String, onDismiss: () -> Unit) {
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
+        Column(modifier = Modifier.padding(24.dp)) {
+            Text(
+                stringResource(R.string.chat_delivery_details_title),
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(Modifier.height(12.dp))
+            val (icon, tint, body) = when (deliveryState) {
+                DeliveryState.SENDING.name -> Triple(
+                    Icons.Default.AccessTime, MaterialTheme.colorScheme.onSurfaceVariant,
+                    stringResource(R.string.chat_delivery_state_sending)
+                )
+                DeliveryState.SENT.name -> Triple(
+                    Icons.Default.Done, MaterialTheme.colorScheme.onSurfaceVariant,
+                    stringResource(R.string.chat_delivery_state_sent)
+                )
+                DeliveryState.DELIVERED.name -> Triple(
+                    Icons.Default.DoneAll, MaterialTheme.colorScheme.onSurfaceVariant,
+                    stringResource(R.string.chat_delivery_state_delivered)
+                )
+                DeliveryState.READ.name -> Triple(
+                    Icons.Default.DoneAll, MaterialTheme.colorScheme.primary,
+                    stringResource(R.string.chat_delivery_state_read)
+                )
+                else -> Triple(
+                    Icons.Default.Warning, MaterialTheme.colorScheme.error,
+                    stringResource(R.string.chat_delivery_state_failed)
+                )
+            }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Icon(icon, contentDescription = null, tint = tint)
+                Text(body, style = MaterialTheme.typography.bodyMedium)
+            }
+            Spacer(Modifier.height(16.dp))
+            Button(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(R.string.common_close))
+            }
+        }
+    }
+}

@@ -37,6 +37,14 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET notifyOnMissedHeartbeat = :enabled WHERE peerDeviceId = :peerDeviceId")
     suspend fun setNotifyOnMissedHeartbeat(peerDeviceId: String, enabled: Boolean)
 
+    /**
+     * Set or clear the per-peer one-off temporary share expiry. Pass null to clear. The
+     * caller is responsible for also scheduling/cancelling [com.locapeer.sharing.TempShareExpiryWorker]
+     * - the DAO only stores the value.
+     */
+    @Query("UPDATE peer_sharing_config SET temporaryShareEndsAtEpochSeconds = :endsAtEpochSeconds WHERE peerDeviceId = :peerDeviceId")
+    suspend fun setTemporaryShareEndsAt(peerDeviceId: String, endsAtEpochSeconds: Long?)
+
     @Query("SELECT * FROM peer_sharing_config")
     suspend fun getAll(): List<PeerSharingConfig>
 

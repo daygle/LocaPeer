@@ -68,6 +68,17 @@ android {
         unitTests.isReturnDefaultValues = true
     }
 
+    // Room writes KSP-exported schema JSONs to app/schemas/ at build time. The instrumented
+    // MigrationTest needs those files inside the test APK's assets/ folder so
+    // MigrationTestHelper.createDatabase(name, version) can replay an exact historical
+    // schema before running migrations forward - otherwise the tests fail with
+    // FileNotFoundException for com.locapeer.data.AppDatabase/{N}.json.
+    sourceSets {
+        named("androidTest") {
+            assets.srcDir("$projectDir/schemas")
+        }
+    }
+
     packaging {
         jniLibs {
             useLegacyPackaging = false
@@ -118,6 +129,12 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.9.8")
+
+    // Biometric / device-credential prompt for the optional app-lock screen
+    implementation("androidx.biometric:biometric:1.1.0")
+    // ProcessLifecycleOwner for "app actually backgrounded" events (vs. per-Activity
+    // ON_STOP, which fires on rotation and transient system dialogs)
+    implementation("androidx.lifecycle:lifecycle-process:2.8.7")
 
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.60.1")
@@ -177,6 +194,10 @@ dependencies {
 
     // Unit tests
     testImplementation("junit:junit:4.13.2")
+    // Mockito for limited mocked-AppPreferences coverage of AppLockManager (only the
+    // unlocked StateFlow default + setUnlocked() flip is meaningful without a real
+    // DataStore; lifecycle observer and pref-driven coroutines stay covered by inspection).
+    testImplementation("org.mockito:mockito-core:5.14.2")
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.room:room-testing:2.8.4")

@@ -83,7 +83,13 @@ data class SharingConfigBackup(
     val retentionDaysLocation: Int,
     val retentionDaysMessages: Int,
     val isMySupervised: Boolean = false,
-    val notifyOnMissedHeartbeat: Boolean = false
+    val notifyOnMissedHeartbeat: Boolean = false,
+    /**
+     * Optional so that backups created before the temp-share feature round-trip
+     * without losing it silently: restore with the field absent is treated as
+     * "no active temp share", which matches the prior absence of the column.
+     */
+    val temporaryShareEndsAtEpochSeconds: Long? = null
 )
 
 @Serializable
@@ -499,7 +505,8 @@ class SettingsViewModel @Inject constructor(
                                     isMySupervised = sc.isMySupervised,
                                     notifyOnMissedHeartbeat = sc.notifyOnMissedHeartbeat,
                                     retentionDaysLocation = sc.retentionDaysLocation,
-                                    retentionDaysMessages = sc.retentionDaysMessages
+                                    retentionDaysMessages = sc.retentionDaysMessages,
+                                    temporaryShareEndsAtEpochSeconds = sc.temporaryShareEndsAtEpochSeconds
                                 ))
                             }
                         }
@@ -701,6 +708,22 @@ class SettingsViewModel @Inject constructor(
 
     fun setReverseGeocodingEnabled(enabled: Boolean) {
         viewModelScope.launch { prefs.setReverseGeocodingEnabled(enabled) }
+    }
+
+    fun setAppLockEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setAppLockEnabled(enabled) }
+    }
+
+    fun setAppLockTimeoutSeconds(seconds: Int) {
+        viewModelScope.launch { prefs.setAppLockTimeoutSeconds(seconds) }
+    }
+
+    fun setThemeMode(mode: ThemeMode) {
+        viewModelScope.launch { prefs.setThemeMode(mode) }
+    }
+
+    fun setUseDynamicColor(use: Boolean) {
+        viewModelScope.launch { prefs.setUseDynamicColor(use) }
     }
 
     companion object {
