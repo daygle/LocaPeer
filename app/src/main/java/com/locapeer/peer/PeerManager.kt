@@ -3,6 +3,7 @@ package com.locapeer.peer
 import android.util.Log
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
@@ -30,6 +31,7 @@ class PeerManager @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val sharingConfigDao: PeerSharingConfigDao,
+    private val circleDao: CircleDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient
@@ -42,6 +44,9 @@ class PeerManager @Inject constructor(
         peerDao.deletePeerById(deviceId)
         heartbeatDao.deleteAllForDevice(deviceId)
         sharingConfigDao.deleteForPeer(deviceId)
+        // Drop them from every circle too, or future circle messages / circle location
+        // shares would keep fanning out individually-encrypted copies to their pubkey.
+        circleDao.removeMemberFromAllCircles(deviceId)
     }
 
     /**
@@ -57,6 +62,7 @@ class PeerManager @Inject constructor(
         heartbeatDao.deleteAllForDevice(deviceId)
         messageDao.deleteAllForPeer(deviceId)
         sharingConfigDao.deleteForPeer(deviceId)
+        circleDao.removeMemberFromAllCircles(deviceId)
     }
 
     /** Purge all messages we sent to a specific peer on their device. */
@@ -74,6 +80,7 @@ class PeerManager @Inject constructor(
         peerDao.deletePeerById(senderDeviceId)
         heartbeatDao.deleteAllForDevice(senderDeviceId)
         sharingConfigDao.deleteForPeer(senderDeviceId)
+        circleDao.removeMemberFromAllCircles(senderDeviceId)
         Log.i(TAG, "Removed peer $senderDeviceId after they removed us")
     }
 
