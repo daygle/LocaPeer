@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">Belum Dibaca</string>
     <string name="conv_search_placeholder">Cari percakapan…</string>
     <string name="conv_tab_chats">Obrolan</string>
+    <string name="conv_tab_circles">Lingkaran</string>
     <string name="conv_tab_archived">Diarsipkan</string>
     <string name="conv_mark_read">Tandai Dibaca</string>
     <string name="conv_archive">Arsipkan</string>

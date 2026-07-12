@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Haijasomwa</string>
     <string name="conv_search_placeholder">Tafuta mazungumzo…</string>
     <string name="conv_tab_chats">Gumzo</string>
+    <string name="conv_tab_circles">Maduara</string>
     <string name="conv_tab_archived">Yaliyohifadhiwa</string>
     <string name="conv_mark_read">Weka Kama Imesomwa</string>
     <string name="conv_archive">Hifadhi</string>

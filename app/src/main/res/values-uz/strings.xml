@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">O‘qilmagan</string>
     <string name="conv_search_placeholder">Suhbatlarni qidirish…</string>
     <string name="conv_tab_chats">Chatlar</string>
+    <string name="conv_tab_circles">Doiralar</string>
     <string name="conv_tab_archived">Arxivlangan</string>
     <string name="conv_mark_read">O‘qilgan deb belgilash</string>
     <string name="conv_archive">Arxivlash</string>

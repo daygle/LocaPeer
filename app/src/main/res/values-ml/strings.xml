@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">വായിക്കാത്തവ</string>
     <string name="conv_search_placeholder">സംഭാഷണങ്ങൾ തിരയുക…</string>
     <string name="conv_tab_chats">ചാറ്റുകൾ</string>
+    <string name="conv_tab_circles">സർക്കിളുകൾ</string>
     <string name="conv_tab_archived">ആർക്കൈവ് ചെയ്തവ</string>
     <string name="conv_mark_read">വായിച്ചതായി അടയാളപ്പെടുത്തുക</string>
     <string name="conv_archive">ആർക്കൈവ് ചെയ്യുക</string>

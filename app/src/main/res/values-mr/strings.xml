@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">न वाचलेले</string>
     <string name="conv_search_placeholder">संभाषणे शोधा…</string>
     <string name="conv_tab_chats">चॅट्स</string>
+    <string name="conv_tab_circles">मंडळे</string>
     <string name="conv_tab_archived">आर्काइव्ह केलेले</string>
     <string name="conv_mark_read">वाचलेले म्हणून चिन्हांकित करा</string>
     <string name="conv_archive">आर्काइव्ह</string>

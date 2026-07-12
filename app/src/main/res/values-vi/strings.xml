@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">Chưa đọc</string>
     <string name="conv_search_placeholder">Tìm cuộc trò chuyện…</string>
     <string name="conv_tab_chats">Trò chuyện</string>
+    <string name="conv_tab_circles">Vòng kết nối</string>
     <string name="conv_tab_archived">Đã lưu trữ</string>
     <string name="conv_mark_read">Đánh dấu đã đọc</string>
     <string name="conv_archive">Lưu trữ</string>

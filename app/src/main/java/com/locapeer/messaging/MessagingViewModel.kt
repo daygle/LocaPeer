@@ -151,8 +151,10 @@ class MessagingViewModel @Inject constructor(
 
     // ----- Circles (client-side groups) -----
 
-    /** Group conversation rows, one per circle, newest activity first. */
-    val groupConversations: StateFlow<List<GroupConversationSummary>> =
+    /** Group conversation rows, one per circle, newest activity first.
+     *  Nullable so callers can distinguish LOADING (Room has not emitted yet) from
+     *  EMPTY (no circles exist yet). See [com.locapeer.messaging.ConversationListScreen]. */
+    val groupConversations: StateFlow<List<GroupConversationSummary>?> =
         combine(
             circleDao.observeCircles(),
             messageDao.getGroupConversationSummaries(),
@@ -169,7 +171,7 @@ class MessagingViewModel @Inject constructor(
                     unread = unread[c.id] ?: 0
                 )
             }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     /** Group messages share the 1:1 thread query because peerId holds the circle id. */
     fun getGroupMessages(circleId: String) = messageDao.getMessagesForPeer(circleId)
@@ -206,6 +208,13 @@ class MessagingViewModel @Inject constructor(
                         creator = circle.creatorPubkey
                     )
                 )
+                // Capture each successfully built event id keyed by recipient pubkey while the
+                // fanout runs. Captured BEFORE publish so a partial network failure doesn't
+                // strand an unsent event id in the map - we only record what NostrEvent.build
+                // actually produced. Consumed later by [deleteMessageFromRemote] to fan out N
+                // separate NIP-09 kind-5 events. CSV format because both halves are strict
+                // 64-char lowercase hex so `:`/`,` can never collide with payload bytes.
+                val idsByMember = mutableListOf<String>()
                 withContext(Dispatchers.Default) {
                     members.filter { it != pubHex }.forEach { memberPub ->
                         try {
@@ -218,6 +227,7 @@ class MessagingViewModel @Inject constructor(
                                 tags = listOf(listOf("p", memberPub)),
                                 crypto = crypto
                             )
+                            idsByMember.add("$memberPub:${event.id}")
                             relayClient.publishEvent(event)
                         } catch (e: Exception) {
                             Log.e("MessagingViewModel", "group send to $memberPub failed", e)
@@ -234,7 +244,8 @@ class MessagingViewModel @Inject constructor(
                         isMine = true,
                         deliveryState = DeliveryState.SENT.name,
                         nostrEventId = "",
-                        groupId = circleId
+                        groupId = circleId,
+                        nostrEventIdsByMember = idsByMember.joinToString(","),
                     )
                 )
             } catch (e: Exception) {
@@ -258,6 +269,109 @@ class MessagingViewModel @Inject constructor(
             }
     }
 
+    /**
+     * Compresses a picked image down to the [MediaUtils.MAX_IMAGE_BYTES] cap and fans it out to
+     * every non-self circle member as a media-in-group NIP-44 DM. The image is encrypted into
+     * EACH recipient's individually-addressed copy on the relay (no shared group key); the
+     * recipient side probes [MediaWire] inside [GroupWire.text] and reverses the nesting.
+     */
+    fun sendGroupImage(circleId: String, uri: Uri) {
+        viewModelScope.launch {
+            val base64 = withContext(Dispatchers.Default) { MediaUtils.compressImageToBase64(context, uri) }
+            if (base64 == null) {
+                Log.w("MessagingViewModel", "sendGroupImage: could not read/compress image")
+                return@launch
+            }
+            sendGroupMedia(
+                circleId,
+                MediaMessage(kind = MediaKind.IMAGE, data = base64),
+                MessageType.IMAGE,
+                context.getString(com.locapeer.R.string.chat_preview_photo),
+            )
+        }
+    }
+
+    /**
+     * Fan out a media envelope (image or voice) to every non-self circle member as a nested
+     * group + media NIP-44 DM:
+     *
+     *   outer plaintext = GroupWire.encode(GroupMessage(text = MediaWire.encode(media)))
+     *
+     * Recipients decode the outer wrapper first, then probe the inner [MediaWire] envelope so
+     * the DB row is stored with contentType=IMAGE/AUDIO and a localised preview ("📷 Photo" /
+     * "🎤 Voice message") - never the raw Base64 / magic-prefixed text. See
+     * [HeartbeatReceiver.processDmInBackground] for the matching receive path.
+     */
+    private fun sendGroupMedia(
+        circleId: String,
+        media: MediaMessage,
+        contentType: String,
+        previewText: String,
+    ) {
+        viewModelScope.launch {
+            try {
+                val circle = circleDao.getCircle(circleId) ?: return@launch
+                val members = circleDao.getMemberPubkeys(circleId)
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val privBytes = crypto.hexToBytes(privHex)
+                // Per-member list captured at send time so recipients can repair their local
+                // circle after membership churn.
+                val fullMembers = (members + pubHex).distinct()
+                val innerMediaEnvelope = MediaWire.encode(media)
+                val outerGroupEnvelope = GroupWire.encode(
+                    GroupMessage(
+                        gid = circleId,
+                        gname = circle.name,
+                        members = fullMembers,
+                        text = innerMediaEnvelope,
+                        creator = circle.creatorPubkey,
+                    )
+                )
+                // Same per-member event-id capture as [sendGroupMessage] - the map is what
+                // [deleteMessageFromRemote] reads to fan out NIP-09 deletions for media rows.
+                val idsByMember = mutableListOf<String>()
+                withContext(Dispatchers.Default) {
+                    members.filter { it != pubHex }.forEach { memberPub ->
+                        try {
+                            val encrypted = crypto.nip44Encrypt(privBytes, memberPub, outerGroupEnvelope)
+                            val event = NostrEvent.build(
+                                privKeyHex = privHex,
+                                pubKeyHex = pubHex,
+                                kind = NostrEventKind.ENCRYPTED_DM,
+                                content = encrypted,
+                                tags = listOf(listOf("p", memberPub)),
+                                crypto = crypto,
+                            )
+                            idsByMember.add("$memberPub:${event.id}")
+                            relayClient.publishEvent(event)
+                        } catch (e: Exception) {
+                            Log.e("MessagingViewModel", "group media send to $memberPub failed", e)
+                        }
+                    }
+                }
+                messageDao.insert(
+                    MessageEntity(
+                        id = UUID.randomUUID().toString(),
+                        peerId = circleId,
+                        senderPublicKeyHex = pubHex,
+                        content = previewText,
+                        timestamp = System.currentTimeMillis(),
+                        isMine = true,
+                        deliveryState = DeliveryState.SENT.name,
+                        nostrEventId = "",
+                        groupId = circleId,
+                        contentType = contentType,
+                        mediaBase64 = media.data,
+                        mediaDurationMs = media.durationMs,
+                        nostrEventIdsByMember = idsByMember.joinToString(","),
+                    )
+                )
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "sendGroupMedia failed", e)
+            }
+        }
+    }
+
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
     fun deleteMessage(msg: MessageEntity) {
@@ -267,19 +381,47 @@ class MessagingViewModel @Inject constructor(
     fun deleteMessageFromRemote(msg: MessageEntity) {
         viewModelScope.launch {
             try {
-                if (msg.nostrEventId.isEmpty()) return@launch
                 val (privHex, pubHex) = keyManager.ensureKeypair()
-                
-                // NIP-09 Event Deletion
-                val event = NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.EVENT_DELETION,
-                    content = "Deleting message",
-                    tags = listOf(listOf("e", msg.nostrEventId)),
-                    crypto = crypto
-                )
-                relayClient.publishEvent(event)
+                // Collect every relay event id we need to invalidate - either the single 1:1
+                // event id or all per-recipient fan-out ids from a circle message. Each id
+                // becomes its own NIP-09 kind-5 event so every contact gets exactly the kind-5
+                // carrying the SAME event id they observed on the relay - their
+                // processDeletionEvent match (`msg.senderPublicKeyHex == event.pubkey` + tag
+                // `e` matches the message's own nostrEventId) then succeeds. NIP-09 events
+                // without a matching recipient side are a harmless no-op.
+                val targets = mutableListOf<String>()
+                if (msg.nostrEventId.isNotEmpty()) targets.add(msg.nostrEventId)
+                if (msg.nostrEventIdsByMember.isNotEmpty()) {
+                    // Format: `memberPubHex:eventIdHex` pairs separated by ','. Bounded split
+                    // because every entry is strict lowercase hex so substringAfter never finds
+                    // a stray `:` inside the value halves.
+                    msg.nostrEventIdsByMember.split(",").forEach { pair ->
+                        val eventId = pair.substringAfter(":", "")
+                        if (eventId.isNotEmpty()) targets.add(eventId)
+                    }
+                }
+                if (targets.isEmpty()) {
+                    // Defensive no-op. The menu gate in GroupChatScreen/ChatScreen hides these
+                    // for pre-v9 rows, but a self-only circle row (legitimately zero non-self
+                    // fanout targets) or a future code path could still reach here. Log at DEBUG
+                    // level so it never clutters logcat but is available during investigation.
+                    Log.d(
+                        "MessagingViewModel",
+                        "deleteMessageFromRemote: no relay event ids recorded for msg ${msg.id}"
+                    )
+                    return@launch
+                }
+                targets.forEach { targetEventId ->
+                    val event = NostrEvent.build(
+                        privKeyHex = privHex,
+                        pubKeyHex = pubHex,
+                        kind = NostrEventKind.EVENT_DELETION,
+                        content = "Deleting message",
+                        tags = listOf(listOf("e", targetEventId)),
+                        crypto = crypto
+                    )
+                    relayClient.publishEvent(event)
+                }
             } catch (e: Exception) {
                 android.util.Log.e("MessagingViewModel", "deleteMessageFromRemote failed", e)
             }
@@ -383,9 +525,19 @@ class MessagingViewModel @Inject constructor(
     private var recorder: MediaRecorder? = null
     private var recordFile: File? = null
     private var recordStartMs: Long = 0L
-    private var recordPeerId: String? = null
+    /**
+     * Where an in-progress recording is destined to be sent. Sealed class so [stopRecordingAndSend]
+     * dispatches cleanly between 1:1 and circle routing without flag-style booleans. Also lets a
+     * future listener ('whoever just started recording') be added without touching call sites.
+     */
+    private var recordTarget: RecordTarget? = null
     private var recordTimeoutJob: Job? = null
-    private var player: MediaPlayer? = null
+    /**
+     * Active [MediaPlayer] instances keyed by voice-note message id. Per-id temp files plus
+     * per-id players mean a second message can be tapped mid-playback and replaces only the
+     * previous one cleanly (no shared `play.m4a` race). Cleared in [stopAudio] / [onCleared].
+     */
+    private val players: MutableMap<String, MediaPlayer> = mutableMapOf()
 
     /** Compresses and sends an image picked from the gallery as an inline IMAGE message. */
     fun sendImage(peerId: String, uri: Uri) {
@@ -404,7 +556,10 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
-    fun startRecording(peerId: String) {
+    /** Starts a voice-note recording for the given destination (1:1 or circle). The
+     *  destination is stamped once at start so [stopRecordingAndSend] can route correctly
+     *  to the right send pipeline without holding the call site's UI state for that. */
+    fun startRecording(target: RecordTarget) {
         if (_isRecording.value) return
         try {
             val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
@@ -421,7 +576,7 @@ class MessagingViewModel @Inject constructor(
             recorder = rec
             recordFile = file
             recordStartMs = System.currentTimeMillis()
-            recordPeerId = peerId
+            recordTarget = target
             _isRecording.value = true
             // Auto-stop-and-send at the cap so a forgotten recording can't produce a giant payload.
             recordTimeoutJob = viewModelScope.launch {
@@ -435,18 +590,20 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
-    /** Stops recording and sends the voice note to the peer the recording was started for. */
+    /** Stops recording and routes the encoded voice note to wherever [startRecording] said
+     *  it was going - either the 1:1 peer pipeline or the circle fan-out pipeline. */
     fun stopRecordingAndSend() {
         if (!_isRecording.value) return
         val file = recordFile
-        val peerId = recordPeerId
+        val target = recordTarget
         val durationMs = System.currentTimeMillis() - recordStartMs
         recordTimeoutJob?.cancel()
+        recordTimeoutJob = null
         var ok = true
         try { recorder?.stop() } catch (e: Exception) { ok = false }
         releaseRecorder()
         _isRecording.value = false
-        if (!ok || file == null || peerId == null || !file.exists() || durationMs < 500) {
+        if (!ok || file == null || target == null || !file.exists() || durationMs < 500) {
             file?.delete()
             return
         }
@@ -454,12 +611,21 @@ class MessagingViewModel @Inject constructor(
             val bytes = withContext(Dispatchers.IO) { runCatching { file.readBytes() }.getOrNull() }
             file.delete()
             if (bytes == null) return@launch
-            sendMediaMessage(
-                peerId,
-                MediaMessage(kind = MediaKind.AUDIO, data = MediaUtils.encodeBase64(bytes), durationMs = durationMs),
-                MessageType.AUDIO,
-                context.getString(com.locapeer.R.string.chat_preview_voice)
+            // Build the envelope once, dispatch by destination. The target snapshot prevents any
+            // weirdness if stopRecordingAndSend is intercepted by a future cancel-and-restart flow.
+            val media = MediaMessage(
+                kind = MediaKind.AUDIO,
+                data = MediaUtils.encodeBase64(bytes),
+                durationMs = durationMs,
             )
+            val preview = context.getString(com.locapeer.R.string.chat_preview_voice)
+            when (target) {
+                is RecordTarget.Peer -> sendMediaMessage(target.id, media, MessageType.AUDIO, preview)
+                is RecordTarget.Circle -> sendGroupMedia(target.id, media, MessageType.AUDIO, preview)
+            }
+            // Clear once both dispatch and buffer-handling finishes; keeps the lifecycle tight
+            // so a subsequent startRecording can't accidentally inherit a stale target.
+            recordTarget = null
         }
     }
 
@@ -471,7 +637,7 @@ class MessagingViewModel @Inject constructor(
         _isRecording.value = false
         recordFile?.delete()
         recordFile = null
-        recordPeerId = null
+        recordTarget = null
     }
 
     private fun releaseRecorder() {
@@ -479,7 +645,9 @@ class MessagingViewModel @Inject constructor(
         recorder = null
     }
 
-    /** Decodes an inline voice note to a temp file and plays it; a second call stops playback. */
+    /** Decodes an inline voice note to a per-message temp file and plays it. Tapping a different
+     *  voice note while one is playing releases-and-stops the old player cleanly (keyed
+     *  [players] map + keyed cache file - no shared `play.m4a` race). */
     fun toggleAudioPlayback(messageId: String, base64: String) {
         if (_playingMessageId.value == messageId) {
             stopAudio()
@@ -490,14 +658,16 @@ class MessagingViewModel @Inject constructor(
             try {
                 val bytes = MediaUtils.decodeBase64(base64) ?: return@launch
                 val file = withContext(Dispatchers.IO) {
-                    File(context.cacheDir, "play.m4a").apply { writeBytes(bytes) }
+                    // Per-message cache file: a simultaneous play of a different voice note
+                    // never overwrites the active file mid-stream.
+                    File(context.cacheDir, "play_${messageId}.m4a").apply { writeBytes(bytes) }
                 }
                 val mp = MediaPlayer()
                 mp.setDataSource(file.absolutePath)
                 mp.setOnCompletionListener { stopAudio() }
                 mp.prepare()
                 mp.start()
-                player = mp
+                players[messageId] = mp
                 _playingMessageId.value = messageId
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "audio playback failed", e)
@@ -507,11 +677,14 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun stopAudio() {
-        try {
-            player?.stop()
-            player?.release()
-        } catch (_: Exception) {}
-        player = null
+        // Release every active player regardless of who started it - a single audio session in
+        // a decentralised messaging app might still happen to overlap briefly across screens if
+        // the user keeps tapping, so the safe default is "always tear them all down".
+        players.values.forEach { mp ->
+            try { mp.stop() } catch (_: Exception) {}
+            try { mp.release() } catch (_: Exception) {}
+        }
+        players.clear()
         _playingMessageId.value = null
     }
 
@@ -700,3 +873,15 @@ data class GroupConversationSummary(
     val memberCount: Int,
     val unread: Int
 )
+
+/**
+ * Destination of an in-progress voice recording. Lets [MessagingViewModel.startRecording] take a
+ * single argument and keep the existing [MessagingViewModel.stopRecordingAndSend] signature
+ * (which has no destination parameter), while still routing to either the 1:1 peer send path
+ * ([MessagingViewModel.sendMediaMessage]) or the circle fan-out path
+ * ([MessagingViewModel.sendGroupMedia]).
+ */
+sealed class RecordTarget {
+    data class Peer(val id: String) : RecordTarget()
+    data class Circle(val id: String) : RecordTarget()
+}

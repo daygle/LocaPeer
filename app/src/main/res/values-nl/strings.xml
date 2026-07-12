@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Ongelezen</string>
     <string name="conv_search_placeholder">Gesprekken zoeken…</string>
     <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_circles">Kringen</string>
     <string name="conv_tab_archived">Gearchiveerd</string>
     <string name="conv_mark_read">Als gelezen markeren</string>
     <string name="conv_archive">Archiveren</string>

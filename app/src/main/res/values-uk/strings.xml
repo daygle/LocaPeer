@@ -465,6 +465,7 @@
     <string name="conv_sort_unread">Непрочитані</string>
     <string name="conv_search_placeholder">Пошук розмов…</string>
     <string name="conv_tab_chats">Чати</string>
+    <string name="conv_tab_circles">Кола</string>
     <string name="conv_tab_archived">Архів</string>
     <string name="conv_mark_read">Прочитано</string>
     <string name="conv_archive">В архів</string>

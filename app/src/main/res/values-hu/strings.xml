@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Olvasatlan</string>
     <string name="conv_search_placeholder">Beszélgetések keresése…</string>
     <string name="conv_tab_chats">Csevegések</string>
+    <string name="conv_tab_circles">Körök</string>
     <string name="conv_tab_archived">Archivált</string>
     <string name="conv_mark_read">Megjelölés olvasottként</string>
     <string name="conv_archive">Archiválás</string>

@@ -26,6 +26,25 @@ data class MessageEntity(
     val deliveryState: String = DeliveryState.SENT.name,
     val isRead: Boolean = false,
     val nostrEventId: String = "",
+    /**
+     * Per-recipient event ids for circle (group) messages. Stored as a CSV string of
+     * `memberPubHex:eventIdHex` pairs separated by commas, e.g.
+     *   "abcdef0123...:deadbeef...,deadbeef...:cafebabe..."
+     * Both halves are exactly 64-char lowercase hex so the `:` and `,` delimiters cannot
+     * collide with payload contents. Empty string when the row is a 1:1 message or the
+     * fan-out recorded nothing (e.g. only-self circle). Populated at send time by
+     * [com.locapeer.messaging.MessagingViewModel.sendGroupMessage] /
+     * [com.locapeer.messaging.MessagingViewModel.sendGroupMedia], then read at delete
+     * time by [com.locapeer.messaging.MessagingViewModel.deleteMessageFromRemote] to
+     * publish N separate NIP-09 kind-5 events (one per recipient).
+     *
+     * Note: the tracking key is just `memberPub` rather than the `(circleId, memberPub)`
+     * composite one might expect, because each circle-message row in `messages` already
+     * belongs to exactly one circle via this row's [groupId] column. There is no scenario
+     * where the same `memberPub:eventId` pair lives under two different circles, so the
+     * outer circle identity is implicit in the parent row and we don't need to repeat it.
+     */
+    val nostrEventIdsByMember: String = "",
     /** True when stored during a messaging block - hidden from UI until unblocked. */
     val isBlocked: Boolean = false,
     /** Non-null circle id when this message belongs to a group conversation; null for 1:1. */

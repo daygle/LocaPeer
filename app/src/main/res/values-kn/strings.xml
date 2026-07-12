@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">ಓದದವು</string>
     <string name="conv_search_placeholder">ಸಂಭಾಷಣೆಗಳನ್ನು ಹುಡುಕಿ…</string>
     <string name="conv_tab_chats">ಚಾಟ್‌ಗಳು</string>
+    <string name="conv_tab_circles">ವೃತ್ತಗಳು</string>
     <string name="conv_tab_archived">ಆರ್ಕೈವ್ ಮಾಡಲಾದವು</string>
     <string name="conv_mark_read">ಓದಿದಂತೆ ಗುರುತಿಸಿ</string>
     <string name="conv_archive">ಆರ್ಕೈವ್ ಮಾಡಿ</string>

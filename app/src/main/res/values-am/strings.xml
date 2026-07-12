@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">ያልተነበበ</string>
     <string name="conv_search_placeholder">ንግግሮችን ይፈልጉ…</string>
     <string name="conv_tab_chats">ቻቶች</string>
+    <string name="conv_tab_circles">ክቦች</string>
     <string name="conv_tab_archived">የተቀመጡ</string>
     <string name="conv_mark_read">እንደተነበበ ምልክት አድርግ</string>
     <string name="conv_archive">አስቀምጥ</string>

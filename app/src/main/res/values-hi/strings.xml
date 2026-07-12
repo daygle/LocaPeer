@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">अपठित</string>
     <string name="conv_search_placeholder">बातचीत खोजें…</string>
     <string name="conv_tab_chats">चैट</string>
+    <string name="conv_tab_circles">मंडलियाँ</string>
     <string name="conv_tab_archived">संग्रहीत</string>
     <string name="conv_mark_read">पढ़ा हुआ चिह्नित करें</string>
     <string name="conv_archive">संग्रहित करें</string>

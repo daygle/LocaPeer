@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Kan hin dubbisamne</string>
     <string name="conv_search_placeholder">Haasawa barbaadi…</string>
     <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_circles">Geengoowwan</string>
     <string name="conv_tab_archived">Olkaa\'aman</string>
     <string name="conv_mark_read">Akka dubbisametti mallattoo itti godhi</string>
     <string name="conv_archive">Olkaa\'i</string>

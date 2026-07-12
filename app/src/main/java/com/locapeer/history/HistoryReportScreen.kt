@@ -36,7 +36,6 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
-import com.locapeer.ui.components.EmptyState
 import com.locapeer.util.DisplayFormat
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.BoundingBox
@@ -408,7 +407,7 @@ private fun HistoryMapTab(
         SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
     }
 
-    DisposableEffect(lifecycleOwner) {
+    DisposableEffect(lifecycleOwner, mapViewRef) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
@@ -417,6 +416,13 @@ private fun HistoryMapTab(
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
+        
+        // If the activity is already resumed when we create the MapView (e.g. switching tabs),
+        // we must manually call onResume() to start tile loading.
+        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            mapViewRef?.onResume()
+        }
+
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
             mapViewRef?.onPause()
@@ -444,6 +450,7 @@ private fun HistoryMapTab(
                     setBuiltInZoomControls(false)
                     setMultiTouchControls(true)
                     isVerticalMapRepetitionEnabled = false
+                    controller.setZoom(15.0) // Set a default zoom level so it's not at 0.0
                     setOnTouchListener { v, event ->
                         when (event.action) {
                             android.view.MotionEvent.ACTION_DOWN,
@@ -466,12 +473,23 @@ private fun HistoryMapTab(
                 if (mapView.tileProvider.tileSource != targetTileSource) {
                     mapView.setTileSource(targetTileSource)
                 }
-                mapView.overlays.clear()
+
+                // rebuilding markers is expensive; only do it if the data (or pin selection) actually changes.
+                val selectedId = selectedPing?.id
+                val dataHash = listOf(heartbeats, addresses, isDark, selectedId).hashCode()
+                if (mapView.getTag(R.id.map_data_hash) == dataHash) {
+                    mapView.invalidate()
+                    return@AndroidView
+                }
+                mapView.setTag(R.id.map_data_hash, dataHash)
+
+                // Target only overlays this screen owns.
+                mapView.overlays.removeAll { it is Marker || it is Polyline }
                 if (heartbeats.isEmpty()) return@AndroidView
 
                 // Read the selection here so the overlays rebuild (and the tapped pin is
                 // re-drawn highlighted) whenever it changes.
-                val selectedId = selectedPing?.id
+                // selectedId already captured in dataHash above
 
                 val pinColor = heartbeats.last().pinColor
                 val lineArgb = if (pinColor.isNotEmpty())

@@ -465,6 +465,7 @@
     <string name="conv_sort_unread">Nepřečtené</string>
     <string name="conv_search_placeholder">Hledat konverzace…</string>
     <string name="conv_tab_chats">Chaty</string>
+    <string name="conv_tab_circles">Kruhy</string>
     <string name="conv_tab_archived">Archivované</string>
     <string name="conv_mark_read">Označit jako přečtené</string>
     <string name="conv_archive">Archivovat</string>

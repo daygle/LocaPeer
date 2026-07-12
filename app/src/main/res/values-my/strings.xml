@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">မဖတ်ရသေးသော</string>
     <string name="conv_search_placeholder">စကားဝိုင်းများ ရှာဖွေရန်…</string>
     <string name="conv_tab_chats">ချတ်များ</string>
+    <string name="conv_tab_circles">စက်ဝိုင်းများ</string>
     <string name="conv_tab_archived">သိမ်းဆည်းထားသော</string>
     <string name="conv_mark_read">ဖတ်ပြီးအဖြစ် မှတ်သားရန်</string>
     <string name="conv_archive">သိမ်းဆည်းရန်</string>

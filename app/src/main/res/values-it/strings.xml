@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Non letti</string>
     <string name="conv_search_placeholder">Cerca conversazioni…</string>
     <string name="conv_tab_chats">Chat</string>
+    <string name="conv_tab_circles">Cerchie</string>
     <string name="conv_tab_archived">Archiviate</string>
     <string name="conv_mark_read">Segna come letto</string>
     <string name="conv_archive">Archivia</string>

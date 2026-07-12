@@ -510,6 +510,7 @@
     <string name="conv_sort_unread">Unread</string>
     <string name="conv_search_placeholder">Search conversations…</string>
     <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_circles">Circles</string>
     <string name="conv_tab_archived">Archived</string>
     <string name="conv_mark_read">Mark Read</string>
     <string name="conv_archive">Archive</string>
@@ -797,6 +798,7 @@
     <!-- Inline media messages (image / voice) -->
     <string name="chat_preview_photo">📷 Photo</string>
     <string name="chat_preview_voice">🎤 Voice message</string>
+    <string name="chat_preview_media_unavailable">📎 Media unavailable</string>
     <string name="chat_cd_attach_image">Attach photo</string>
     <string name="chat_cd_record_voice">Record voice message</string>
     <string name="chat_cd_stop_send_recording">Stop and send</string>

@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">ન વંચાયેલ</string>
     <string name="conv_search_placeholder">સંભાષણો શોધો…</string>
     <string name="conv_tab_chats">ચેટ્સ</string>
+    <string name="conv_tab_circles">વર્તુળો</string>
     <string name="conv_tab_archived">આર્કાઇવ કરેલ</string>
     <string name="conv_mark_read">વંચાયેલ તરીકે ચિહ્નિત કરો</string>
     <string name="conv_archive">આર્કાઇવ</string>

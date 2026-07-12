@@ -189,7 +189,24 @@ object DatabaseModule {
         }
     }
 
-    val ALL_MIGRATIONS = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8)
+    /**
+     * v9: per-fanout NIP-09 deletion for circle messages. Adds nostrEventIdsByMember to messages,
+     * a CSV string of `memberPubHex:eventIdHex` pairs captured at send time. Empty default -
+     * existing rows (1:1 messages and circle messages sent before this version, where we never
+     * tracked per-recipient ids) take the empty map and remain ineligible for remote delete.
+     */
+    private val MIGRATION_8_9 = object : Migration(8, 9) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "ALTER TABLE messages ADD COLUMN nostrEventIdsByMember TEXT NOT NULL DEFAULT ''"
+            )
+        }
+    }
+
+    val ALL_MIGRATIONS = arrayOf(
+        MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
+        MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9
+    )
 
     @Provides
     @Singleton

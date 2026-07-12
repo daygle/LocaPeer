@@ -456,6 +456,7 @@
     <string name="conv_sort_unread">Necitite</string>
     <string name="conv_search_placeholder">Căutați conversații…</string>
     <string name="conv_tab_chats">Conversații</string>
+    <string name="conv_tab_circles">Cercuri</string>
     <string name="conv_tab_archived">Arhivate</string>
     <string name="conv_mark_read">Marcați ca citit</string>
     <string name="conv_archive">Arhivați</string>

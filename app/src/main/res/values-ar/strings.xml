@@ -483,6 +483,7 @@
     <string name="conv_sort_unread">غير مقروءة</string>
     <string name="conv_search_placeholder">البحث في المحادثات…</string>
     <string name="conv_tab_chats">الدردشات</string>
+    <string name="conv_tab_circles">الدوائر</string>
     <string name="conv_tab_archived">المؤرشفة</string>
     <string name="conv_mark_read">وضع علامة مقروءة</string>
     <string name="conv_archive">أرشفة</string>

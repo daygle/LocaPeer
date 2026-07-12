@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">ยังไม่ได้อ่าน</string>
     <string name="conv_search_placeholder">ค้นหาบทสนทนา…</string>
     <string name="conv_tab_chats">แชท</string>
+    <string name="conv_tab_circles">วงกลม</string>
     <string name="conv_tab_archived">เก็บถาวร</string>
     <string name="conv_mark_read">ทำเครื่องหมายว่าอ่านแล้ว</string>
     <string name="conv_archive">เก็บถาวร</string>

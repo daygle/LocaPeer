@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">Belum Dibaca</string>
     <string name="conv_search_placeholder">Cari perbualan…</string>
     <string name="conv_tab_chats">Sembang</string>
+    <string name="conv_tab_circles">Bulatan</string>
     <string name="conv_tab_archived">Diarkibkan</string>
     <string name="conv_mark_read">Tanda Dibaca</string>
     <string name="conv_archive">Arkib</string>

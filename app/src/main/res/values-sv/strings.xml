@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Olästa</string>
     <string name="conv_search_placeholder">Sök konversationer…</string>
     <string name="conv_tab_chats">Chattar</string>
+    <string name="conv_tab_circles">Cirklar</string>
     <string name="conv_tab_archived">Arkiverade</string>
     <string name="conv_mark_read">Markera som läst</string>
     <string name="conv_archive">Arkivera</string>

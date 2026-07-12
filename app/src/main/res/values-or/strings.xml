@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">ଅପଠିତ</string>
     <string name="conv_search_placeholder">କଥାବାର୍ତ୍ତା ଖୋଜନ୍ତୁ…</string>
     <string name="conv_tab_chats">ଚାଟ୍</string>
+    <string name="conv_tab_circles">ବୃତ୍ତ</string>
     <string name="conv_tab_archived">ଆର୍କାଇଭ୍ ହୋଇଛି</string>
     <string name="conv_mark_read">ପଢାଯାଇଛି ବୋଲି ଚିହ୍ନିତ କରନ୍ତୁ</string>
     <string name="conv_archive">ଆର୍କାଇଭ୍</string>

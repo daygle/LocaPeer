@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Ungelesen</string>
     <string name="conv_search_placeholder">Konversationen suchen…</string>
     <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_circles">Kreise</string>
     <string name="conv_tab_archived">Archiviert</string>
     <string name="conv_mark_read">Als gelesen markieren</string>
     <string name="conv_archive">Archivieren</string>

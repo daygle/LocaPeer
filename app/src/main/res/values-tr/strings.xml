@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Okunmamış</string>
     <string name="conv_search_placeholder">Sohbetlerde ara…</string>
     <string name="conv_tab_chats">Sohbetler</string>
+    <string name="conv_tab_circles">Çevreler</string>
     <string name="conv_tab_archived">Arşivlenmiş</string>
     <string name="conv_mark_read">Okundu İşaretle</string>
     <string name="conv_archive">Arşivle</string>

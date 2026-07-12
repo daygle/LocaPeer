@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">نا لوستل شوي</string>
     <string name="conv_search_placeholder">د خبرو اترو لټون…</string>
     <string name="conv_tab_chats">چاټونه</string>
+    <string name="conv_tab_circles">حلقې</string>
     <string name="conv_tab_archived">ارشیف شوي</string>
     <string name="conv_mark_read">د لوستل شوي په توګه نښه کړئ</string>
     <string name="conv_archive">ارشیف کول</string>

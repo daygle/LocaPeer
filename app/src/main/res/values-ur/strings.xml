@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">غیر پڑھے</string>
     <string name="conv_search_placeholder">گفتگو تلاش کریں…</string>
     <string name="conv_tab_chats">چیٹس</string>
+    <string name="conv_tab_circles">حلقے</string>
     <string name="conv_tab_archived">محفوظ شدہ</string>
     <string name="conv_mark_read">پڑھا ہوا نشان زد کریں</string>
     <string name="conv_archive">محفوظ کریں</string>

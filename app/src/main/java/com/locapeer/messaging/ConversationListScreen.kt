@@ -37,6 +37,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -53,46 +55,87 @@ import java.util.Locale
 
 private enum class LoadState { LOADING, EMPTY, CONTENT }
 
+/** Sub-tabs of the Messages screen. Order is canonical and matches [SecondaryTabRow] layout.
+ *  Stored as `Int` via the auto-assigned `ordinal` so the order here is also the runtime order. */
+private enum class MessagesTab {
+    CHATS,
+    CIRCLES,
+    ARCHIVED;
+
+    companion object {
+        fun fromOrdinal(i: Int): MessagesTab =
+            entries.getOrNull(i) ?: CHATS
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConversationListScreen(
     onOpenChat: (peerId: String, peerName: String) -> Unit,
-    onOpenCircles: () -> Unit = {},
+    onOpenGroup: (circleId: String) -> Unit = {},
+    onCreateCircle: () -> Unit = {},
+    onEditCircle: (circleId: String) -> Unit = {},
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
     val archivedConversations by vm.archivedConversations.collectAsState()
+    val groupConversations by vm.groupConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
     val searchQuery by vm.searchQuery.collectAsState()
     val sortOrder by vm.sortOrder.collectAsState()
 
     var showContactPicker by remember { mutableStateOf(false) }
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(MessagesTab.CHATS.ordinal) }
     var showSearch by remember { mutableStateOf(false) }
     var selectedIds by remember { mutableStateOf<Set<String>>(emptySet()) }
     var showSortMenu by remember { mutableStateOf(false) }
     var showBulkDeleteDialog by remember { mutableStateOf(false) }
 
-    LaunchedEffect(selectedTab) { selectedIds = emptySet() }
+    val currentTab = MessagesTab.fromOrdinal(selectedTab)
 
-    val activeList = if (selectedTab == 0) conversations else archivedConversations
+    // Capture delegated properties to local vals to allow smart casting and ensure
+    // consistency within this recomposition frame.
+    val currentGroups = groupConversations
 
-    val allCurrentIds = remember(activeList) {
-        (activeList ?: emptyList()).map { it.peer.deviceId }.toSet()
+    // Switching tabs is treated as a "fresh context": drop any in-progress search and
+    // selection mode, otherwise users would see a stale search bar / selection state
+    // on a list that no longer matches (circles don't search/sort).
+    LaunchedEffect(selectedTab) {
+        selectedIds = emptySet()
+        showSearch = false
+        vm.setSearchQuery("")
     }
 
+    // Pre-compute content for the active non-Circles tab. The Circles tab is rendered
+    // directly off the nullable `groupConversations` flow further below.
+    val activeList: List<ConversationSummary>? = when (currentTab) {
+        MessagesTab.CHATS -> conversations
+        MessagesTab.ARCHIVED -> archivedConversations
+        MessagesTab.CIRCLES -> null
+    }
     val displayList = activeList
 
-    val loadState = when {
-        displayList == null -> LoadState.LOADING
-        displayList.isEmpty() -> LoadState.EMPTY
-        else -> LoadState.CONTENT
+    val loadState = when (currentTab) {
+        MessagesTab.CIRCLES -> when {
+            currentGroups == null -> LoadState.LOADING
+            currentGroups.isEmpty() -> LoadState.EMPTY
+            else -> LoadState.CONTENT
+        }
+        else -> when {
+            displayList == null -> LoadState.LOADING
+            displayList.isEmpty() -> LoadState.EMPTY
+            else -> LoadState.CONTENT
+        }
     }
 
+    val safeList = displayList ?: emptyList()
+    val safeGroups = currentGroups ?: emptyList()
+
     val isSelectionMode = selectedIds.isNotEmpty()
+    val allCurrentIds = safeList.map { it.peer.deviceId }.toSet()
     val allSelected = allCurrentIds.isNotEmpty() && selectedIds.containsAll(allCurrentIds)
-    val archivingToArchive = selectedTab == 0
+    val archivingToArchive = currentTab == MessagesTab.CHATS
 
     if (showContactPicker) {
         ContactPickerDialog(
@@ -177,13 +220,10 @@ fun ConversationListScreen(
                                     contentDescription = stringResource(R.string.conv_cd_select_all)
                                 )
                             }
-                        } else {
-                            IconButton(onClick = onOpenCircles) {
-                                Icon(
-                                    Icons.Default.Group,
-                                    contentDescription = stringResource(R.string.circles_title)
-                                )
-                            }
+                        } else if (currentTab != MessagesTab.CIRCLES) {
+                            // Search / Sort / Select-all are 1:1-chat features and have no
+                            // backing implementation for circle conversations, so they are
+                            // intentionally hidden on the Circles sub-tab.
                             IconButton(onClick = {
                                 showSearch = !showSearch
                                 if (!showSearch) vm.setSearchQuery("")
@@ -227,7 +267,7 @@ fun ConversationListScreen(
                     }
                 )
                 AnimatedVisibility(
-                    visible = showSearch && !isSelectionMode,
+                    visible = showSearch && !isSelectionMode && currentTab == MessagesTab.CHATS,
                     enter = expandVertically() + fadeIn(),
                     exit = shrinkVertically() + fadeOut()
                 ) {
@@ -251,13 +291,18 @@ fun ConversationListScreen(
                 }
                 SecondaryTabRow(selectedTabIndex = selectedTab) {
                     Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
+                        selected = currentTab == MessagesTab.CHATS,
+                        onClick = { selectedTab = MessagesTab.CHATS.ordinal },
                         text = { Text(stringResource(R.string.conv_tab_chats)) }
                     )
                     Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
+                        selected = currentTab == MessagesTab.CIRCLES,
+                        onClick = { selectedTab = MessagesTab.CIRCLES.ordinal },
+                        text = { Text(stringResource(R.string.conv_tab_circles)) }
+                    )
+                    Tab(
+                        selected = currentTab == MessagesTab.ARCHIVED,
+                        onClick = { selectedTab = MessagesTab.ARCHIVED.ordinal },
                         text = { Text(stringResource(R.string.conv_tab_archived)) }
                     )
                 }
@@ -303,14 +348,22 @@ fun ConversationListScreen(
         },
         floatingActionButton = {
             if (!isSelectionMode) {
-                FloatingActionButton(onClick = { showContactPicker = true }) {
-                    Icon(Icons.Default.Add, contentDescription = stringResource(R.string.conv_cd_new_message))
+                when (currentTab) {
+                    MessagesTab.CHATS -> FloatingActionButton(onClick = { showContactPicker = true }) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.conv_cd_new_message))
+                    }
+                    MessagesTab.CIRCLES -> ExtendedFloatingActionButton(
+                        onClick = onCreateCircle,
+                        icon = { Icon(Icons.Default.Add, contentDescription = null) },
+                        text = { Text(stringResource(R.string.circles_new)) }
+                    )
+                    MessagesTab.ARCHIVED -> Unit /* no FAB on the Archive sub-tab */
                 }
             }
         }
     ) { padding ->
         AnimatedContent(
-            targetState = loadState,
+            targetState = currentTab to loadState,
             transitionSpec = {
                 fadeIn(tween(300)) togetherWith fadeOut(tween(200))
             },
@@ -318,7 +371,7 @@ fun ConversationListScreen(
                 .fillMaxSize()
                 .padding(padding),
             label = "conversations_state"
-        ) { state ->
+        ) { (_, state) ->
             when (state) {
                 LoadState.LOADING -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
@@ -326,50 +379,76 @@ fun ConversationListScreen(
                     }
                 }
                 LoadState.EMPTY -> {
-                    val emptyTitle = when {
-                        searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results, searchQuery)
-                        selectedTab == 1 -> stringResource(R.string.conv_empty_archived_title)
-                        else -> stringResource(R.string.conv_empty_title)
+                    when (currentTab) {
+                        MessagesTab.CIRCLES -> {
+                            EmptyState(
+                                icon = Icons.Default.Group,
+                                title = stringResource(R.string.circles_empty_title),
+                                subtitle = stringResource(R.string.circles_empty_body)
+                            )
+                        }
+                        else -> {
+                            val emptyTitle = when {
+                                searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results, searchQuery)
+                                currentTab == MessagesTab.ARCHIVED -> stringResource(R.string.conv_empty_archived_title)
+                                else -> stringResource(R.string.conv_empty_title)
+                            }
+                            val emptySubtitle = when {
+                                searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results_sub)
+                                currentTab == MessagesTab.ARCHIVED -> stringResource(R.string.conv_empty_archived_sub)
+                                else -> stringResource(R.string.conv_empty_sub)
+                            }
+                            EmptyState(
+                                icon = if (currentTab == MessagesTab.CHATS) Icons.Default.ChatBubbleOutline else Icons.Default.Archive,
+                                title = emptyTitle,
+                                subtitle = emptySubtitle
+                            )
+                        }
                     }
-                    val emptySubtitle = when {
-                        searchQuery.isNotBlank() -> stringResource(R.string.conv_empty_no_results_sub)
-                        selectedTab == 1 -> stringResource(R.string.conv_empty_archived_sub)
-                        else -> stringResource(R.string.conv_empty_sub)
-                    }
-                    EmptyState(
-                        icon = if (selectedTab == 0) Icons.Default.ChatBubbleOutline else Icons.Default.Archive,
-                        title = emptyTitle,
-                        subtitle = emptySubtitle
-                    )
                 }
                 LoadState.CONTENT -> {
-                    val safeList = displayList ?: emptyList()
-                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(safeList, key = { it.peer.deviceId }) { conv ->
-                            val isSelected = conv.peer.deviceId in selectedIds
-                            SwipeActionsConversation(
-                                conv = conv,
-                                unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
-                                isSelected = isSelected,
-                                isSelectionMode = isSelectionMode,
-                                onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
-                                onToggleSelect = {
-                                    selectedIds = if (isSelected)
-                                        selectedIds - conv.peer.deviceId
-                                    else
-                                        selectedIds + conv.peer.deviceId
-                                },
-                                onEnterSelectionMode = {
-                                    selectedIds = setOf(conv.peer.deviceId)
-                                },
-                                onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
-                                onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
-                                onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
-                            )
-                            HorizontalDivider(
-                                modifier = Modifier.padding(start = 72.dp),
-                                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
-                            )
+                    if (currentTab == MessagesTab.CIRCLES) {
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(safeGroups, key = { it.circle.id }) { group ->
+                                CircleRow(
+                                    group = group,
+                                    onClick = { onOpenGroup(group.circle.id) },
+                                    onEdit = { onEditCircle(group.circle.id) }
+                                )
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(start = 72.dp),
+                                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                                )
+                            }
+                        }
+                    } else {
+                        LazyColumn(modifier = Modifier.fillMaxSize()) {
+                            items(safeList, key = { it.peer.deviceId }) { conv ->
+                                val isSelected = conv.peer.deviceId in selectedIds
+                                SwipeActionsConversation(
+                                    conv = conv,
+                                    unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
+                                    isSelected = isSelected,
+                                    isSelectionMode = isSelectionMode,
+                                    onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
+                                    onToggleSelect = {
+                                        selectedIds = if (isSelected)
+                                            selectedIds - conv.peer.deviceId
+                                        else
+                                            selectedIds + conv.peer.deviceId
+                                    },
+                                    onEnterSelectionMode = {
+                                        selectedIds = setOf(conv.peer.deviceId)
+                                    },
+                                    onDeleteLocal = { vm.deleteConversation(conv.peer.deviceId) },
+                                    onDeleteRemote = { vm.deleteConversationFromRemote(conv.peer.deviceId) },
+                                    onArchive = { vm.archiveConversation(conv.peer.deviceId, !conv.peer.isArchived) }
+                                )
+                                HorizontalDivider(
+                                    modifier = Modifier.padding(start = 72.dp),
+                                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                                )
+                            }
                         }
                     }
                 }
@@ -391,6 +470,63 @@ private fun BulkActionButton(
         IconButton(onClick = onClick) { icon() }
         Text(label, style = MaterialTheme.typography.labelSmall)
     }
+}
+
+/** Mirrors the row layout of `CircleListScreen` so the icon, preview, edit button and
+ *  unread badge look consistent across the two surfaces. Selection / swipe-to-archive is
+ *  intentionally NOT exposed for circles - those affordances are 1:1-chat specific. */
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun CircleRow(
+    group: GroupConversationSummary,
+    onClick: () -> Unit,
+    onEdit: () -> Unit
+) {
+    val haptic = LocalHapticFeedback.current
+    ListItem(
+        headlineContent = { Text(group.circle.name, fontWeight = FontWeight.Medium) },
+        supportingContent = {
+            val preview = group.lastMessage?.content
+            Text(
+                preview ?: stringResource(R.string.circles_member_count, group.memberCount),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        },
+        leadingContent = {
+            Box(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.tertiaryContainer),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    Icons.Default.Group,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onTertiaryContainer
+                )
+            }
+        },
+        trailingContent = {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (group.unread > 0) {
+                    Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("${group.unread}") }
+                }
+                TextButton(onClick = onEdit) {
+                    Text(stringResource(R.string.circles_edit))
+                }
+            }
+        },
+        modifier = Modifier.combinedClickable(
+            onClick = onClick,
+            onLongClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                onEdit()
+            }
+        )
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

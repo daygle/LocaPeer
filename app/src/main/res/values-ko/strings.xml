@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">읽지 않음</string>
     <string name="conv_search_placeholder">대화 검색…</string>
     <string name="conv_tab_chats">채팅</string>
+    <string name="conv_tab_circles">서클</string>
     <string name="conv_tab_archived">보관됨</string>
     <string name="conv_mark_read">읽음으로 표시</string>
     <string name="conv_archive">보관</string>

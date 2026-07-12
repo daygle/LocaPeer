@@ -96,13 +96,16 @@ fun ChatScreen(
 
     val micPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
-    ) { granted -> if (granted) vm.startRecording(peerId) }
+    ) { granted -> if (granted) vm.startRecording(RecordTarget.Peer(peerId)) }
 
     val onStartRecording: () -> Unit = {
         val granted = androidx.core.content.ContextCompat.checkSelfPermission(
             context, android.Manifest.permission.RECORD_AUDIO
         ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-        if (granted) vm.startRecording(peerId)
+        // 1:1 chats stamp Peer(id); circle chats stamp Circle(id). The ViewModel stores this
+        // key internally so stopRecordingAndSend() can dispatch to the right send pipeline
+        // without taking a destination parameter.
+        if (granted) vm.startRecording(RecordTarget.Peer(peerId))
         else micPermissionLauncher.launch(android.Manifest.permission.RECORD_AUDIO)
     }
 
@@ -308,7 +311,7 @@ fun ChatScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 private fun SwipeToDeleteMessage(
     msg: MessageEntity,
@@ -401,10 +404,20 @@ private fun SwipeToDeleteMessage(
             }
         }
     ) {
-        Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
+        // Outer Box wrapping the SwipeToDismissBox's CONTENT slot (not its background).
+        // `.fillMaxWidth()` makes the long-press hit area cover the whole row, and
+        // `combinedClickable` lives OUTSIDE the SwipeToDismissBox's `pointerInput`
+        // capture so long-press isn't intercepted by the swipe detector. Inner-content
+        // taps (image / voice / location pin / delivery-row long-press) still route
+        // through their own nested gesture modifiers on `MessageBubble`.
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .combinedClickable(onClick = {}, onLongClick = { showDeleteDialog = true })
+                .background(MaterialTheme.colorScheme.surface)
+        ) {
             MessageBubble(
                 msg,
-                onLongClick = { showDeleteDialog = true },
                 onNavigateToMap = onNavigateToMap,
                 isPlaying = isPlaying,
                 onToggleAudio = onToggleAudio,
@@ -418,7 +431,6 @@ private fun SwipeToDeleteMessage(
 @Composable
 private fun MessageBubble(
     msg: MessageEntity,
-    onLongClick: () -> Unit = {},
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
@@ -437,7 +449,12 @@ private fun MessageBubble(
         Box(
             modifier = Modifier
                 .widthIn(max = 280.dp)
-                .combinedClickable(onClick = {}, onLongClick = onLongClick)
+                // Intentionally NO combinedClickable on the bubble Box. The SwipeToDismissBox
+                // wrapper's `pointerInput` blocks nested combinedClickable long-press detection;
+                // long-press on the message body is owned by the wrapper's outer Box (above
+                // the swipe detector). Inner-content taps (image / voice / location pin) and
+                // the delivery-row long-press (delivery status sheet) keep their own nested
+                // gesture modifiers.
                 .background(
                     bubbleColor,
                     RoundedCornerShape(
@@ -591,7 +608,7 @@ private fun LinkifiedText(
 }
 
 @Composable
-private fun ChatInputBar(
+internal fun ChatInputBar(
     value: String,
     onValueChange: (String) -> Unit,
     onSend: () -> Unit,
@@ -687,7 +704,7 @@ private fun ChatInputBar(
 
 /** Inline image thumbnail; tap to open the full-screen viewer. */
 @Composable
-private fun ImageMessageContent(base64: String?, onView: () -> Unit) {
+internal fun ImageMessageContent(base64: String?, onView: () -> Unit) {
     val bitmap = remember(base64) { base64?.let { MediaUtils.decodeBase64ToBitmap(it) } }
     if (bitmap == null) {
         Text(stringResource(R.string.chat_preview_photo), style = MaterialTheme.typography.bodyMedium)
@@ -706,7 +723,7 @@ private fun ImageMessageContent(base64: String?, onView: () -> Unit) {
 
 /** Voice-note bubble: play/pause toggle plus duration. */
 @Composable
-private fun VoiceMessageContent(
+internal fun VoiceMessageContent(
     base64: String?,
     durationMs: Long?,
     isPlaying: Boolean,
@@ -732,7 +749,7 @@ private fun VoiceMessageContent(
 
 /** Full-screen image viewer shown when a photo message is tapped. */
 @Composable
-private fun ImageViewerDialog(base64: String, onDismiss: () -> Unit) {
+internal fun ImageViewerDialog(base64: String, onDismiss: () -> Unit) {
     val bitmap = remember(base64) { MediaUtils.decodeBase64ToBitmap(base64) }
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Box(

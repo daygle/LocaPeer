@@ -469,6 +469,12 @@ class HeartbeatReceiver @Inject constructor(
         // Circle (group) message: materialise the circle locally and thread by circle id. Only
         // accepted from known, non-blocked contacts (same trust gate as 1:1), so a stranger can't
         // spam you by inventing a "group". No delivery ack: group has no per-sender delivery state.
+        //
+        // The text payload may also be a nested media-in-group envelope (senders wrap
+        // `MediaWire.encode(...)` inside `GroupMessage.text` for image/voice sharing). Detect
+        // that here so the DB row carries `contentType=IMAGE/AUDIO` plus the media bytes, and
+        // the conversation-list preview shows "📷 Photo" / "🎤 Voice" rather than the raw
+        // Base64 magic blob. See `MessagingViewModel.sendGroupMedia` for the matching sender.
         val group = com.locapeer.messaging.GroupWire.decode(plaintext)
         if (group != null) {
             if (isBlocked) return
@@ -482,12 +488,52 @@ class HeartbeatReceiver @Inject constructor(
                 senderPubkey = event.pubkey,
                 memberPubkeys = group.members
             )
+            val innerMedia = com.locapeer.messaging.MediaWire.decode(group.text)
+            // Validate `kind` against the recognised union before consuming the media branch.
+            // An unknown kind (forward-compat "video", hand-crafted garbage, etc.) silently coerces
+            // to AUDIO under the old `else` branch and renders as a fake voice note; fall through
+            // to the text-render path so the user sees "📷 Photo" / "🎤 Voice message" only for
+            // kinds this app actually understands.
+            if (innerMedia != null && (innerMedia.kind == com.locapeer.messaging.MediaKind.IMAGE ||
+                    innerMedia.kind == com.locapeer.messaging.MediaKind.AUDIO)) {
+                val isImage = innerMedia.kind == com.locapeer.messaging.MediaKind.IMAGE
+                val ct = if (isImage) com.locapeer.data.entity.MessageType.IMAGE
+                    else com.locapeer.data.entity.MessageType.AUDIO
+                val preview = if (isImage) context.getString(R.string.chat_preview_photo)
+                    else context.getString(R.string.chat_preview_voice)
+                messageDao.insert(
+                    MessageEntity(
+                        id = event.id,
+                        peerId = group.gid,
+                        senderPublicKeyHex = event.pubkey,
+                        content = preview,
+                        timestamp = event.createdAt * 1000L,
+                        isMine = false,
+                        deliveryState = DeliveryState.DELIVERED.name,
+                        nostrEventId = event.id,
+                        groupId = group.gid,
+                        contentType = ct,
+                        mediaBase64 = innerMedia.data,
+                        mediaDurationMs = innerMedia.durationMs,
+                    )
+                )
+                sendGroupMessageNotification(group.gname, sender.displayName, preview, group.gid)
+                return
+            }
+            // Safety net: never persist raw magic-prefixed bytes (corrupted or unsupported media
+            // envelope that decode() rejected) as plain text - the conversation list would render
+            // garbled \u0001LPM1{...} headings. Render a photo-preview placeholder instead, which
+            // matches the most common case and is distinguishable enough for a tap-to-attempt-
+            // recovery.
+            val content = if (group.text.startsWith("\u0001"))
+                context.getString(R.string.chat_preview_photo)
+            else group.text
             messageDao.insert(
                 MessageEntity(
                     id = event.id,
                     peerId = group.gid,
                     senderPublicKeyHex = event.pubkey,
-                    content = group.text,
+                    content = content,
                     timestamp = event.createdAt * 1000L,
                     isMine = false,
                     deliveryState = DeliveryState.DELIVERED.name,
@@ -495,7 +541,7 @@ class HeartbeatReceiver @Inject constructor(
                     groupId = group.gid
                 )
             )
-            sendGroupMessageNotification(group.gname, sender.displayName, group.text, group.gid)
+            sendGroupMessageNotification(group.gname, sender.displayName, content, group.gid)
             return
         }
 

@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Μη αναγνωσμένα</string>
     <string name="conv_search_placeholder">Αναζήτηση συνομιλιών…</string>
     <string name="conv_tab_chats">Συνομιλίες</string>
+    <string name="conv_tab_circles">Κύκλοι</string>
     <string name="conv_tab_archived">Αρχειοθετημένες</string>
     <string name="conv_mark_read">Σήμανση ως αναγνωσμένο</string>
     <string name="conv_archive">Αρχειοθέτηση</string>

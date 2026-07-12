@@ -456,6 +456,7 @@
     <string name="conv_sort_unread">לא נקרא</string>
     <string name="conv_search_placeholder">חפש שיחות…</string>
     <string name="conv_tab_chats">צ׳אטים</string>
+    <string name="conv_tab_circles">מעגלים</string>
     <string name="conv_tab_archived">בארכיון</string>
     <string name="conv_mark_read">סמן כנקרא</string>
     <string name="conv_archive">העבר לארכיון</string>

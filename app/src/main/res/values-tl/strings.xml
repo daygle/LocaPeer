@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Hindi Nabasa</string>
     <string name="conv_search_placeholder">Maghanap ng mga usapan…</string>
     <string name="conv_tab_chats">Mga Chat</string>
+    <string name="conv_tab_circles">Mga Circle</string>
     <string name="conv_tab_archived">Naka-archive</string>
     <string name="conv_mark_read">Markahang Nabasa</string>
     <string name="conv_archive">I-archive</string>

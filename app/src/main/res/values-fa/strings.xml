@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">خوانده‌نشده</string>
     <string name="conv_search_placeholder">جستجوی گفتگوها…</string>
     <string name="conv_tab_chats">گفتگوها</string>
+    <string name="conv_tab_circles">حلقه‌ها</string>
     <string name="conv_tab_archived">بایگانی‌شده</string>
     <string name="conv_mark_read">علامت خوانده‌شده</string>
     <string name="conv_archive">بایگانی</string>

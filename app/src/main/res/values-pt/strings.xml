@@ -448,6 +448,7 @@
     <string name="conv_sort_unread">Não lidas</string>
     <string name="conv_search_placeholder">Buscar conversas…</string>
     <string name="conv_tab_chats">Chats</string>
+    <string name="conv_tab_circles">Círculos</string>
     <string name="conv_tab_archived">Arquivadas</string>
     <string name="conv_mark_read">Marcar como Lida</string>
     <string name="conv_archive">Arquivar</string>

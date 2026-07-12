@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">చదవనివి</string>
     <string name="conv_search_placeholder">సంభాషణలను వెతుకు…</string>
     <string name="conv_tab_chats">చాట్‌లు</string>
+    <string name="conv_tab_circles">సర్కిల్‌లు</string>
     <string name="conv_tab_archived">ఆర్కైవ్ చేసినవి</string>
     <string name="conv_mark_read">చదివినట్లు గుర్తించు</string>
     <string name="conv_archive">ఆర్కైవ్ చేయి</string>

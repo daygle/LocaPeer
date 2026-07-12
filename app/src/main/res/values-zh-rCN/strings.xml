@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">未读</string>
     <string name="conv_search_placeholder">搜索会话…</string>
     <string name="conv_tab_chats">聊天</string>
+    <string name="conv_tab_circles">圈子</string>
     <string name="conv_tab_archived">已归档</string>
     <string name="conv_mark_read">标记为已读</string>
     <string name="conv_archive">归档</string>

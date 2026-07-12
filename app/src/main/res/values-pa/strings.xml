@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">ਅਣ-ਪੜ੍ਹੇ</string>
     <string name="conv_search_placeholder">ਸੰਵਾਦ ਖੋਜੋ…</string>
     <string name="conv_tab_chats">ਚੈਟ</string>
+    <string name="conv_tab_circles">ਸਰਕਲ</string>
     <string name="conv_tab_archived">ਆਰਕਾਈਵ ਕੀਤੇ ਗਏ</string>
     <string name="conv_mark_read">ਪੜ੍ਹਿਆ ਹੋਇਆ ਮਾਰਕ ਕਰੋ</string>
     <string name="conv_archive">ਆਰਕਾਈਵ ਕਰੋ</string>

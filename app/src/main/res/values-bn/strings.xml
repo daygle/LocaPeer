@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">অপঠিত</string>
     <string name="conv_search_placeholder">কথোপকথন খুঁজুন…</string>
     <string name="conv_tab_chats">চ্যাট</string>
+    <string name="conv_tab_circles">বৃত্ত</string>
     <string name="conv_tab_archived">সংরক্ষণাগারভুক্ত</string>
     <string name="conv_mark_read">পঠিত চিহ্নিত করুন</string>
     <string name="conv_archive">সংরক্ষণাগারে রাখুন</string>

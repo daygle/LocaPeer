@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">Оқылмаған</string>
     <string name="conv_search_placeholder">Сөйлесулерді іздеу…</string>
     <string name="conv_tab_chats">Чаттар</string>
+    <string name="conv_tab_circles">Шеңберлер</string>
     <string name="conv_tab_archived">Мұрағатталған</string>
     <string name="conv_mark_read">Оқылды деп белгілеу</string>
     <string name="conv_archive">Мұрағаттау</string>

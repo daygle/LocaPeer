@@ -438,6 +438,7 @@
     <string name="conv_sort_unread">未読</string>
     <string name="conv_search_placeholder">会話を検索…</string>
     <string name="conv_tab_chats">チャット</string>
+    <string name="conv_tab_circles">サークル</string>
     <string name="conv_tab_archived">アーカイブ済み</string>
     <string name="conv_mark_read">既読にする</string>
     <string name="conv_archive">アーカイブ</string>

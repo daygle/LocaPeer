@@ -447,6 +447,7 @@
     <string name="conv_sort_unread">படிக்காதவை</string>
     <string name="conv_search_placeholder">உரையாடல்களைத் தேடு…</string>
     <string name="conv_tab_chats">சாட்கள்</string>
+    <string name="conv_tab_circles">வட்டங்கள்</string>
     <string name="conv_tab_archived">காப்பகப்படுத்தப்பட்டது</string>
     <string name="conv_mark_read">படித்ததாகக் குறிக்கவும்</string>
     <string name="conv_archive">காப்பகப்படுத்து</string>
