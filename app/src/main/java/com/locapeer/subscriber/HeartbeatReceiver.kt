@@ -457,6 +457,24 @@ class HeartbeatReceiver @Inject constructor(
         notificationManager.notify(payload.deviceId, NOTIF_ID_SOS, notification)
     }
 
+    /** Maps a [com.locapeer.messaging.MediaKind] to its stored [MessageType], or null for an
+     *  unrecognised kind so the caller can fall through to the plain-text path instead of
+     *  synthesising a bogus media bubble. */
+    private fun mediaContentType(kind: String): String? = when (kind) {
+        com.locapeer.messaging.MediaKind.IMAGE -> com.locapeer.data.entity.MessageType.IMAGE
+        com.locapeer.messaging.MediaKind.AUDIO -> com.locapeer.data.entity.MessageType.AUDIO
+        com.locapeer.messaging.MediaKind.FILE -> com.locapeer.data.entity.MessageType.FILE
+        else -> null
+    }
+
+    /** Localized conversation-list / notification preview for an inline media message. */
+    private fun mediaPreview(media: com.locapeer.messaging.MediaMessage): String = when (media.kind) {
+        com.locapeer.messaging.MediaKind.IMAGE -> context.getString(R.string.chat_preview_photo)
+        com.locapeer.messaging.MediaKind.AUDIO -> context.getString(R.string.chat_preview_voice)
+        else -> if (media.filename.isNullOrBlank()) context.getString(R.string.chat_preview_file)
+            else context.getString(R.string.chat_preview_file_named, media.filename)
+    }
+
     private suspend fun processDmInBackground(event: NostrEvent) {
         if (messageDao.getByNostrEventId(event.id) != null) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
@@ -490,17 +508,13 @@ class HeartbeatReceiver @Inject constructor(
             )
             val innerMedia = com.locapeer.messaging.MediaWire.decode(group.text)
             // Validate `kind` against the recognised union before consuming the media branch.
-            // An unknown kind (forward-compat "video", hand-crafted garbage, etc.) silently coerces
-            // to AUDIO under the old `else` branch and renders as a fake voice note; fall through
-            // to the text-render path so the user sees "📷 Photo" / "🎤 Voice message" only for
-            // kinds this app actually understands.
-            if (innerMedia != null && (innerMedia.kind == com.locapeer.messaging.MediaKind.IMAGE ||
-                    innerMedia.kind == com.locapeer.messaging.MediaKind.AUDIO)) {
-                val isImage = innerMedia.kind == com.locapeer.messaging.MediaKind.IMAGE
-                val ct = if (isImage) com.locapeer.data.entity.MessageType.IMAGE
-                    else com.locapeer.data.entity.MessageType.AUDIO
-                val preview = if (isImage) context.getString(R.string.chat_preview_photo)
-                    else context.getString(R.string.chat_preview_voice)
+            // An unknown kind (a future type, hand-crafted garbage, etc.) returns null here and
+            // falls through to the text-render path, so the user sees a real media bubble only for
+            // kinds this app actually understands (image / voice / file) - never a fake voice note
+            // synthesised from an unknown payload.
+            val innerType = innerMedia?.let { mediaContentType(it.kind) }
+            if (innerMedia != null && innerType != null) {
+                val preview = mediaPreview(innerMedia)
                 messageDao.insert(
                     MessageEntity(
                         id = event.id,
@@ -512,9 +526,11 @@ class HeartbeatReceiver @Inject constructor(
                         deliveryState = DeliveryState.DELIVERED.name,
                         nostrEventId = event.id,
                         groupId = group.gid,
-                        contentType = ct,
+                        contentType = innerType,
                         mediaBase64 = innerMedia.data,
                         mediaDurationMs = innerMedia.durationMs,
+                        mediaFilename = innerMedia.filename,
+                        mediaMimeType = innerMedia.mimeType,
                     )
                 )
                 sendGroupMessageNotification(group.gname, sender.displayName, preview, group.gid)
@@ -548,11 +564,9 @@ class HeartbeatReceiver @Inject constructor(
         // Inline media (image / voice): store the Base64 payload on the row so retention/purge/
         // backup handle it unchanged, mirroring the 1:1 text path (blocked rows stored hidden).
         val media = com.locapeer.messaging.MediaWire.decode(plaintext)
-        if (media != null) {
-            val contentType = if (media.kind == com.locapeer.messaging.MediaKind.IMAGE)
-                com.locapeer.data.entity.MessageType.IMAGE else com.locapeer.data.entity.MessageType.AUDIO
-            val preview = if (media.kind == com.locapeer.messaging.MediaKind.IMAGE)
-                context.getString(R.string.chat_preview_photo) else context.getString(R.string.chat_preview_voice)
+        val mediaType = media?.let { mediaContentType(it.kind) }
+        if (media != null && mediaType != null) {
+            val preview = mediaPreview(media)
             val mediaMsg = MessageEntity(
                 id = event.id,
                 peerId = event.pubkey,
@@ -563,9 +577,11 @@ class HeartbeatReceiver @Inject constructor(
                 deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
                 nostrEventId = event.id,
                 isBlocked = isBlocked,
-                contentType = contentType,
+                contentType = mediaType,
                 mediaBase64 = media.data,
-                mediaDurationMs = media.durationMs
+                mediaDurationMs = media.durationMs,
+                mediaFilename = media.filename,
+                mediaMimeType = media.mimeType
             )
             if (!sender.isArchived || mediaMsg.timestamp > sender.archivedAt) {
                 peerDao.unarchive(event.pubkey)

@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Archive
+import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteSweep
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.InsertDriveFile
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material.icons.filled.Pause
@@ -59,6 +61,7 @@ import com.locapeer.R
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import android.content.Intent
+import android.widget.Toast
 import androidx.core.net.toUri
 import android.util.Patterns
 import java.util.Date
@@ -93,6 +96,17 @@ fun ChatScreen(
     val imagePicker = rememberLauncherForActivityResult(
         ActivityResultContracts.PickVisualMedia()
     ) { uri -> if (uri != null) vm.sendImage(peerId, uri) }
+
+    // Any-type document picker for file attachments. OpenDocument gives a persistable read grant
+    // and the system file UI; the ViewModel enforces the size cap and rejects anything too large.
+    val filePicker = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument()
+    ) { uri -> if (uri != null) vm.sendFile(peerId, uri) }
+
+    // Surface file-attachment errors (too large / unreadable / no viewer app) as a Toast.
+    LaunchedEffect(Unit) {
+        vm.mediaError.collect { resId -> Toast.makeText(context, context.getString(resId), Toast.LENGTH_SHORT).show() }
+    }
 
     val micPermissionLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -279,6 +293,7 @@ fun ChatScreen(
                             )
                         )
                     },
+                    onAttachFile = { filePicker.launch(arrayOf("*/*")) },
                     isRecording = isRecording,
                     onStartRecording = onStartRecording,
                     onStopSendRecording = { vm.stopRecordingAndSend() },
@@ -304,7 +319,8 @@ fun ChatScreen(
                     onNavigateToMap = onNavigateToMap,
                     isPlaying = playingMessageId == msg.id,
                     onToggleAudio = { b64 -> vm.toggleAudioPlayback(msg.id, b64) },
-                    onViewImage = { b64 -> fullscreenImage = b64 }
+                    onViewImage = { b64 -> fullscreenImage = b64 },
+                    onOpenFile = { vm.openFile(msg) }
                 )
             }
         }
@@ -320,7 +336,8 @@ private fun SwipeToDeleteMessage(
     onNavigateToMap: (Double, Double) -> Unit,
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
-    onViewImage: (String) -> Unit = {}
+    onViewImage: (String) -> Unit = {},
+    onOpenFile: () -> Unit = {}
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -421,7 +438,8 @@ private fun SwipeToDeleteMessage(
                 onNavigateToMap = onNavigateToMap,
                 isPlaying = isPlaying,
                 onToggleAudio = onToggleAudio,
-                onViewImage = onViewImage
+                onViewImage = onViewImage,
+                onOpenFile = onOpenFile
             )
         }
     }
@@ -434,7 +452,8 @@ private fun MessageBubble(
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     isPlaying: Boolean = false,
     onToggleAudio: (String) -> Unit = {},
-    onViewImage: (String) -> Unit = {}
+    onViewImage: (String) -> Unit = {},
+    onOpenFile: () -> Unit = {}
 ) {
     val alignment = if (msg.isMine) Alignment.End else Alignment.Start
     val bubbleColor = if (msg.isMine)
@@ -480,6 +499,12 @@ private fun MessageBubble(
                         isPlaying = isPlaying,
                         contentColor = contentColor,
                         onToggle = { msg.mediaBase64?.let(onToggleAudio) }
+                    )
+                    MessageType.FILE -> FileMessageContent(
+                        filename = msg.mediaFilename,
+                        sizeBytes = msg.mediaBase64?.let { MediaUtils.approxDecodedSize(it) },
+                        contentColor = contentColor,
+                        onOpen = onOpenFile
                     )
                     else -> {
                         val pin = remember(msg.content) { detectLocationPin(msg.content) }
@@ -614,6 +639,7 @@ internal fun ChatInputBar(
     onSend: () -> Unit,
     onLocationShare: () -> Unit,
     onAttachImage: () -> Unit,
+    onAttachFile: () -> Unit,
     isRecording: Boolean,
     onStartRecording: () -> Unit,
     onStopSendRecording: () -> Unit,
@@ -673,6 +699,13 @@ internal fun ChatInputBar(
                     Icon(
                         Icons.Default.Image,
                         contentDescription = stringResource(R.string.chat_cd_attach_image),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+                IconButton(onClick = onAttachFile) {
+                    Icon(
+                        Icons.Default.AttachFile,
+                        contentDescription = stringResource(R.string.chat_cd_attach_file),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -744,6 +777,52 @@ internal fun VoiceMessageContent(
         )
         Icon(Icons.Default.Mic, contentDescription = null, modifier = Modifier.size(16.dp), tint = contentColor)
         Text(formatDuration(durationMs ?: 0L), style = MaterialTheme.typography.bodyMedium, color = contentColor)
+    }
+}
+
+/** File-attachment chip: a document icon, the filename, and its size. Tap to open via the system
+ *  viewer (handled by [MessagingViewModel.openFile]). */
+@Composable
+internal fun FileMessageContent(
+    filename: String?,
+    sizeBytes: Int?,
+    contentColor: Color,
+    onOpen: () -> Unit
+) {
+    val name = filename?.takeIf { it.isNotBlank() } ?: stringResource(R.string.chat_file_generic_name)
+    Row(
+        modifier = Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .clickable(onClick = onOpen)
+            .padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(contentColor.copy(alpha = 0.15f)),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(Icons.Default.InsertDriveFile, contentDescription = null, tint = contentColor)
+        }
+        Column(modifier = Modifier.widthIn(max = 200.dp)) {
+            Text(
+                name,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = contentColor,
+                maxLines = 2,
+                overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+            )
+            Text(
+                if (sizeBytes != null) MediaUtils.formatSize(sizeBytes)
+                else stringResource(R.string.chat_file_tap_to_open),
+                style = MaterialTheme.typography.labelSmall,
+                color = contentColor.copy(alpha = 0.7f)
+            )
+        }
     }
 }
 
