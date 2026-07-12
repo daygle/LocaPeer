@@ -513,6 +513,7 @@
     <string name="conv_tab_circles">Circles</string>
     <string name="conv_tab_archived">Archived</string>
     <string name="conv_mark_read">Mark Read</string>
+    <string name="conv_mark_unread">Mark Unread</string>
     <string name="conv_archive">Archive</string>
     <string name="conv_unarchive">Unarchive</string>
     <string name="conv_empty_no_results">No results for \"%1$s\"</string>
@@ -832,8 +833,8 @@
     <string name="circles_no_contacts">Add contacts first, then group them into a circle.</string>
     <string name="circles_empty_title">No circles yet</string>
     <string name="circles_empty_body">Create a circle to message a group of contacts and share your location with all of them at once.</string>
-    <string name="circles_manage_members">Manage members</string>
-    <string name="circles_share_location">Share location with circle</string>
+    <string name="circles_manage_members">Manage Members</string>
+    <string name="circles_share_location">Share Location</string>
     <string name="circles_share_location_desc">Share your live location with everyone in this circle for a set time. Contacts you already share location with start receiving it immediately.</string>
     <string name="circles_delete">Delete Circle</string>
     <string name="circles_delete_title">Delete circle?</string>

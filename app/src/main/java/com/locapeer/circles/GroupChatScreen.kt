@@ -119,7 +119,12 @@ fun GroupChatScreen(
 
     LaunchedEffect(circleId) { vm.markReadGroup(circleId) }
     LaunchedEffect(messages.size) {
-        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
+        if (messages.isNotEmpty()) {
+            // Also mark messages arriving while the screen is open, otherwise a circle the
+            // user is actively reading still accrues an unread badge for later.
+            vm.markReadGroup(circleId)
+            listState.animateScrollToItem(messages.size - 1)
+        }
     }
 
     if (showShareSheet) {
@@ -140,8 +145,8 @@ fun GroupChatScreen(
             text = { Text(stringResource(R.string.circles_delete_message, circleName)) },
             confirmButton = {
                 TextButton(onClick = {
+                    // Removes the circle, its membership rows and its whole message thread.
                     circlesVm.deleteCircle(circleId)
-                    vm.deleteGroupConversation(circleId)
                     showDeleteDialog = false
                     onNavigateBack()
                 }) { Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error) }

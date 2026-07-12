@@ -34,6 +34,19 @@ interface MessageDao {
     @Query("UPDATE messages SET isRead = 1 WHERE peerId = :peerId AND isMine = 0 AND isBlocked = 0")
     suspend fun markAllReadForPeer(peerId: String)
 
+    /**
+     * Flags the most recent received message from a peer as unread so the conversation surfaces an
+     * unread badge again. Only the latest incoming message is touched (badge shows 1) rather than
+     * the whole history, matching how other messengers "mark unread". Local-only, like the bulk
+     * mark-read path - no read receipts are involved either way.
+     */
+    @Query(
+        "UPDATE messages SET isRead = 0 WHERE id = (" +
+            "SELECT id FROM messages WHERE peerId = :peerId AND isMine = 0 AND isBlocked = 0 " +
+            "ORDER BY timestamp DESC, id DESC LIMIT 1)"
+    )
+    suspend fun markLatestUnreadForPeer(peerId: String)
+
     @Query("DELETE FROM messages WHERE id = :messageId")
     suspend fun deleteById(messageId: String)
 

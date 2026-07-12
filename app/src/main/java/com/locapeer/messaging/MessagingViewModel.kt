@@ -185,10 +185,6 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch { messageDao.markAllReadForGroup(circleId) }
     }
 
-    fun deleteGroupConversation(circleId: String) {
-        viewModelScope.launch { messageDao.deleteAllForGroup(circleId) }
-    }
-
     /**
      * Fan a message out to every circle member as an individually NIP-44-encrypted DM, then store
      * one local row in the circle thread. There is no shared group key: each member gets their own
@@ -456,8 +452,27 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Bulk "mark read" from the conversation list clears the unread badge locally only and does
+     * NOT emit read receipts. Selecting conversations from the list is a housekeeping gesture, not
+     * an acknowledgement that the messages were actually opened, so it must not reveal to senders
+     * that their messages were read - only opening the chat ([markRead]) sends receipts.
+     */
     fun markReadMultiple(peerIds: List<String>) {
-        peerIds.forEach { markRead(it) }
+        viewModelScope.launch {
+            peerIds.forEach { messageDao.markAllReadForPeer(it) }
+        }
+    }
+
+    /**
+     * Re-flags the given conversations as unread from the conversation list. Like [markReadMultiple]
+     * this is a local-only housekeeping gesture: it flips only the latest received message back to
+     * unread and emits nothing to the sender.
+     */
+    fun markUnreadMultiple(peerIds: List<String>) {
+        viewModelScope.launch {
+            peerIds.forEach { messageDao.markLatestUnreadForPeer(it) }
+        }
     }
 
     fun setSearchQuery(query: String) {
@@ -658,6 +673,10 @@ class MessagingViewModel @Inject constructor(
         if (!_isRecording.value) return
         val file = recordFile
         val target = recordTarget
+        // Clear synchronously, before the send coroutine below runs: if the user starts a new
+        // recording immediately, the async clear that used to live at the end of that coroutine
+        // could null out the NEW recording's freshly-stamped target and silently drop its send.
+        recordTarget = null
         val durationMs = System.currentTimeMillis() - recordStartMs
         recordTimeoutJob?.cancel()
         recordTimeoutJob = null
@@ -685,9 +704,6 @@ class MessagingViewModel @Inject constructor(
                 is RecordTarget.Peer -> sendMediaMessage(target.id, media, MessageType.AUDIO, preview)
                 is RecordTarget.Circle -> sendGroupMedia(target.id, media, MessageType.AUDIO, preview)
             }
-            // Clear once both dispatch and buffer-handling finishes; keeps the lifecycle tight
-            // so a subsequent startRecording can't accidentally inherit a stale target.
-            recordTarget = null
         }
     }
 

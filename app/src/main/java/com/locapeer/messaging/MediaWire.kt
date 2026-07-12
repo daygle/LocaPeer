@@ -46,6 +46,10 @@ object MediaWire {
 
     fun encode(message: MediaMessage): String = MAGIC + json.encodeToString(MediaMessage.serializer(), message)
 
+    /** True when [plaintext] carries the media magic prefix, even if the body fails to decode.
+     *  Lets callers avoid rendering a raw (possibly corrupted) envelope as message text. */
+    fun isEnvelope(plaintext: String): Boolean = plaintext.startsWith(MAGIC)
+
     /** Returns the decoded media message, or null when [plaintext] is not a media envelope. */
     fun decode(plaintext: String): MediaMessage? {
         if (!plaintext.startsWith(MAGIC)) return null
