@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Bateri Lemah (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Pengesanan Gerakan</string>
-    <string name="settings_motion_detection_on">Dihidupkan — memperhalusi jenis pergerakan anda (berjalan, memandu) dalam sejarah</string>
-    <string name="settings_motion_detection_off">Dimatikan — benarkan akses aktiviti fizikal untuk label pergerakan yang lebih tepat</string>
+    <string name="settings_motion_detection_on">Dihidupkan - memperhalusi jenis pergerakan anda (berjalan, memandu) dalam sejarah</string>
+    <string name="settings_motion_detection_off">Dimatikan - benarkan akses aktiviti fizikal untuk label pergerakan yang lebih tepat</string>
     <string name="settings_battery_optimization">Pengoptimuman Bateri</string>
-    <string name="settings_battery_optimization_unrestricted">Tanpa had — LocaPeer boleh berjalan bebas di latar belakang</string>
-    <string name="settings_battery_optimization_restricted">Dioptimumkan — ketik untuk tetapkan Tanpa had dalam tetapan sistem</string>
+    <string name="settings_battery_optimization_unrestricted">Tanpa had - LocaPeer boleh berjalan bebas di latar belakang</string>
+    <string name="settings_battery_optimization_restricted">Dioptimumkan - ketik untuk tetapkan Tanpa had dalam tetapan sistem</string>
 
     <!-- Keizinan -->
     <string name="settings_permissions">Keizinan</string>
     <string name="settings_permissions_subtitle">Semak dan baiki akses apl kepada lokasi, kamera dan banyak lagi</string>
     <string name="permissions_intro">LocaPeer memerlukan keizinan ini untuk berkongsi lokasi anda, mengimbas jemputan dan terus berjalan di latar belakang. Ketik mana-mana yang tidak diberikan untuk membaikinya.</string>
     <string name="perm_location_title">Lokasi</string>
-    <string name="perm_location_granted">Diberikan — lokasi anda boleh dikongsi</string>
-    <string name="perm_location_denied">Tidak diberikan — ketik untuk membenarkan akses lokasi</string>
+    <string name="perm_location_granted">Diberikan - lokasi anda boleh dikongsi</string>
+    <string name="perm_location_denied">Tidak diberikan - ketik untuk membenarkan akses lokasi</string>
     <string name="perm_background_location_title">Lokasi Latar Belakang</string>
-    <string name="perm_background_location_granted">Diberikan — lokasi terus dikongsi apabila apl ditutup</string>
-    <string name="perm_background_location_denied">Tidak diberikan — ketik untuk membenarkan akses \'Benarkan sepanjang masa\' dalam tetapan</string>
+    <string name="perm_background_location_granted">Diberikan - lokasi terus dikongsi apabila apl ditutup</string>
+    <string name="perm_background_location_denied">Tidak diberikan - ketik untuk membenarkan akses \'Benarkan sepanjang masa\' dalam tetapan</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Diberikan — digunakan untuk mengimbas kod QR jemputan</string>
-    <string name="perm_camera_denied">Tidak diberikan — ketik untuk membenarkan kamera</string>
+    <string name="perm_camera_granted">Diberikan - digunakan untuk mengimbas kod QR jemputan</string>
+    <string name="perm_camera_denied">Tidak diberikan - ketik untuk membenarkan kamera</string>
     <string name="perm_notifications_title">Pemberitahuan</string>
-    <string name="perm_notifications_granted">Diberikan — amaran dan kemas kini status boleh ditunjukkan</string>
-    <string name="perm_notifications_denied">Tidak diberikan — ketik untuk membenarkan pemberitahuan</string>
+    <string name="perm_notifications_granted">Diberikan - amaran dan kemas kini status boleh ditunjukkan</string>
+    <string name="perm_notifications_denied">Tidak diberikan - ketik untuk membenarkan pemberitahuan</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Unit Kelajuan</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">Disulitkan Hujung ke Hujung</string>
     <string name="onboarding_feature_e2e_subtitle">Lokasi anda disulitkan pada peranti</string>
     <string name="onboarding_feature_servers_title">Tiada Pelayan Proprietari</string>
-    <string name="onboarding_feature_servers_subtitle">Menggunakan geganti Nostr terbuka sebagai pengangkutan selamat — data anda kekal disulitkan dan peribadi</string>
+    <string name="onboarding_feature_servers_subtitle">Menggunakan geganti Nostr terbuka sebagai pengangkutan selamat - data anda kekal disulitkan dan peribadi</string>
     <string name="onboarding_feature_phone_title">Kekal pada Telefon Anda</string>
     <string name="onboarding_feature_phone_subtitle">Sejarah lokasi penuh anda kekal pada peranti anda. Hanya kedudukan semasa dikongsi dengan kenalan terpilih</string>
     <string name="onboarding_name_prompt">Apakah panggilan kenalan anda untuk anda?</string>
@@ -287,13 +287,13 @@
     <string name="onboarding_restore_from_backup">Pulihkan Daripada Sandaran</string>
     <string name="onboarding_key_note">Kunci peribadi anda dijana secara setempat dan tidak pernah meninggalkan peranti ini.</string>
     <string name="onboarding_permissions_title">Kebenaran</string>
-    <string name="onboarding_permissions_desc">LocaPeer memerlukan akses lokasi untuk berkongsi kedudukan anda, akses kamera untuk mengimbas kod jemputan, dan akses pemberitahuan untuk status latar belakang. Akses aktiviti fizikal adalah pilihan — ia membantu melabelkan pergerakan anda (berjalan, memandu) dengan lebih tepat.</string>
+    <string name="onboarding_permissions_desc">LocaPeer memerlukan akses lokasi untuk berkongsi kedudukan anda, akses kamera untuk mengimbas kod jemputan, dan akses pemberitahuan untuk status latar belakang. Akses aktiviti fizikal adalah pilihan - ia membantu melabelkan pergerakan anda (berjalan, memandu) dengan lebih tepat.</string>
     <string name="onboarding_before_ask_title">Sebelum kami bertanya</string>
     <string name="onboarding_before_ask_intro">Anda akan melihat beberapa gesaan sistem seterusnya:</string>
-    <string name="onboarding_before_ask_location">• Lokasi — diperlukan, untuk berkongsi kedudukan anda.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — untuk mengimbas kod jemputan.</string>
-    <string name="onboarding_before_ask_notifications">• Pemberitahuan — untuk status latar belakang.</string>
-    <string name="onboarding_before_ask_activity">• Aktiviti fizikal — pilihan. Ia membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat. Anda boleh melangkaunya dan menghidupkannya kemudian dalam Tetapan.</string>
+    <string name="onboarding_before_ask_location">• Lokasi - diperlukan, untuk berkongsi kedudukan anda.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - untuk mengimbas kod jemputan.</string>
+    <string name="onboarding_before_ask_notifications">• Pemberitahuan - untuk status latar belakang.</string>
+    <string name="onboarding_before_ask_activity">• Aktiviti fizikal - pilihan. Ia membolehkan LocaPeer membezakan berjalan, memandu dan berdiri diam dengan lebih tepat. Anda boleh melangkaunya dan menghidupkannya kemudian dalam Tetapan.</string>
     <string name="onboarding_grant_permissions">Berikan Kebenaran</string>
     <string name="onboarding_bg_location_title">Lokasi Latar Belakang</string>
     <string name="onboarding_bg_location_desc">Untuk memastikan kenalan anda sentiasa dikemas kini semasa aplikasi ditutup, sila pilih \"Benarkan sepanjang masa\" pada skrin seterusnya.</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">Pergi ke lokasi</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS HIDUP</string>
-    <string name="map_overdue">Tertunggak — tiada kemas kini terkini</string>
+    <string name="map_overdue">Tertunggak - tiada kemas kini terkini</string>
     <string name="map_stat_last_seen">Kali terakhir dilihat</string>
     <string name="map_stat_battery">Bateri</string>
     <string name="map_stat_accuracy">Ketepatan</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">Terima untuk membenarkan permintaan kelulusan buka kunci daripada peranti ini</string>
     <string name="notif_supervisor_request_big">Terima untuk membenarkan %1$s menghantar permintaan kelulusan buka kunci kepada anda apabila mod diselia aktif.</string>
     <string name="notif_supervised_active_title">Mod diselia aktif</string>
-    <string name="notif_supervised_active_text">Penyelia anda mengesahkan — mod diselia kini disediakan</string>
+    <string name="notif_supervised_active_text">Penyelia anda mengesahkan - mod diselia kini disediakan</string>
     <string name="notif_supervised_declined_title">Mod diselia ditolak</string>
-    <string name="notif_supervised_declined_text">Penyelia anda menolak permintaan — mod diselia telah dimatikan</string>
+    <string name="notif_supervised_declined_text">Penyelia anda menolak permintaan - mod diselia telah dimatikan</string>
     <string name="notif_tracking_alert_title">Amaran Penjejakan</string>
     <string name="notif_tracking_proximity">%1$s menerima amaran jarak dekat mengenai anda</string>
     <string name="notif_tracking_geofence">%1$s menerima amaran bahawa anda memasuki/keluar pagar: %2$s</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">Kenalan tidak dijumpai</string>
     <string name="peer_purge_location_sent">Arahan padam jauh untuk SEMUA lokasi dihantar kepada %1$s</string>
     <string name="peer_purge_messages_sent">Arahan padam jauh untuk SEMUA mesej dihantar kepada %1$s</string>
-    <string name="onboarding_error_key_length">Kunci tidak sah — mesti 64 aksara heks.</string>
-    <string name="onboarding_error_key_range">Kunci peribadi tidak sah — di luar julat lengkung.</string>
+    <string name="onboarding_error_key_length">Kunci tidak sah - mesti 64 aksara heks.</string>
+    <string name="onboarding_error_key_range">Kunci peribadi tidak sah - di luar julat lengkung.</string>
     <string name="onboarding_error_hex">Format heks tidak sah.</string>
     <string name="onboarding_error_import_failed">Gagal mengimport kunci: %1$s</string>
 </resources>

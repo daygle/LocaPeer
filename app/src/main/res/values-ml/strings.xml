@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">പ്രവർത്തനക്ഷമമാക്കി - ചരിത്രത്തിലെ നിങ്ങളുടെ ചലന തരം (നടത്തം, ഡ്രൈവിംഗ്) പരിഷ്കരിക്കുന്നു</string>
     <string name="settings_motion_detection_off">ഓഫ് - കൂടുതൽ കൃത്യമായ ചലന ലേബലുകൾക്കായി ശാരീരിക പ്രവർത്തന ആക്സസ് അനുവദിക്കുക</string>
     <string name="settings_battery_optimization">ബാറ്ററി ഒപ്റ്റിമൈസേഷൻ</string>
-    <string name="settings_battery_optimization_unrestricted">നിയന്ത്രണമില്ലാത്തത് — LocaPeer-ന് പശ്ചാത്തലത്തിൽ സ്വതന്ത്രമായി പ്രവർത്തിക്കാൻ കഴിയും</string>
-    <string name="settings_battery_optimization_restricted">ഒപ്റ്റിമൈസ് ചെയ്തത് — സിസ്റ്റം ക്രമീകരണങ്ങളിൽ നിയന്ത്രണമില്ലാത്തതാക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="settings_battery_optimization_unrestricted">നിയന്ത്രണമില്ലാത്തത് - LocaPeer-ന് പശ്ചാത്തലത്തിൽ സ്വതന്ത്രമായി പ്രവർത്തിക്കാൻ കഴിയും</string>
+    <string name="settings_battery_optimization_restricted">ഒപ്റ്റിമൈസ് ചെയ്തത് - സിസ്റ്റം ക്രമീകരണങ്ങളിൽ നിയന്ത്രണമില്ലാത്തതാക്കാൻ ടാപ്പ് ചെയ്യുക</string>
 
     <!-- അനുമതികൾ -->
     <string name="settings_permissions">അനുമതികൾ</string>
     <string name="settings_permissions_subtitle">ലൊക്കേഷൻ, ക്യാമറ എന്നിവയിലേക്കുള്ള ആപ്പ് ആക്സസ് അവലോകനം ചെയ്യുകയും ശരിയാക്കുകയും ചെയ്യുക</string>
     <string name="permissions_intro">നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടാനും ക്ഷണങ്ങൾ സ്കാൻ ചെയ്യാനും പശ്ചാത്തലത്തിൽ പ്രവർത്തിക്കാനും LocaPeer-ന് ഈ അനുമതികൾ ആവശ്യമാണ്. നൽകിയിട്ടില്ലാത്തവ ശരിയാക്കാൻ ടാപ്പ് ചെയ്യുക.</string>
     <string name="perm_location_title">ലൊക്കേഷൻ</string>
-    <string name="perm_location_granted">നൽകി — നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടാം</string>
-    <string name="perm_location_denied">നൽകിയിട്ടില്ല — ലൊക്കേഷൻ ആക്സസ് അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_location_granted">നൽകി - നിങ്ങളുടെ ലൊക്കേഷൻ പങ്കിടാം</string>
+    <string name="perm_location_denied">നൽകിയിട്ടില്ല - ലൊക്കേഷൻ ആക്സസ് അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
     <string name="perm_background_location_title">പശ്ചാത്തല ലൊക്കേഷൻ</string>
-    <string name="perm_background_location_granted">നൽകി — ആപ്പ് അടച്ചിരിക്കുമ്പോഴും ലൊക്കേഷൻ പങ്കിടൽ തുടരും</string>
-    <string name="perm_background_location_denied">നൽകിയിട്ടില്ല — ക്രമീകരണങ്ങളിൽ \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' തിരഞ്ഞെടുക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_background_location_granted">നൽകി - ആപ്പ് അടച്ചിരിക്കുമ്പോഴും ലൊക്കേഷൻ പങ്കിടൽ തുടരും</string>
+    <string name="perm_background_location_denied">നൽകിയിട്ടില്ല - ക്രമീകരണങ്ങളിൽ \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' തിരഞ്ഞെടുക്കാൻ ടാപ്പ് ചെയ്യുക</string>
     <string name="perm_camera_title">ക്യാമറ</string>
-    <string name="perm_camera_granted">നൽകി — ക്ഷണ QR കോഡുകൾ സ്കാൻ ചെയ്യാൻ ഉപയോഗിക്കുന്നു</string>
-    <string name="perm_camera_denied">നൽകിയിട്ടില്ല — ക്യാമറ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_camera_granted">നൽകി - ക്ഷണ QR കോഡുകൾ സ്കാൻ ചെയ്യാൻ ഉപയോഗിക്കുന്നു</string>
+    <string name="perm_camera_denied">നൽകിയിട്ടില്ല - ക്യാമറ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
     <string name="perm_notifications_title">അറിയിപ്പുകൾ</string>
-    <string name="perm_notifications_granted">നൽകി — അലേർട്ടുകളും സ്റ്റാറ്റസ് അപ്‌ഡേറ്റുകളും കാണിക്കാനാകും</string>
-    <string name="perm_notifications_denied">നൽകിയിട്ടില്ല — അറിയിപ്പുകൾ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+    <string name="perm_notifications_granted">നൽകി - അലേർട്ടുകളും സ്റ്റാറ്റസ് അപ്‌ഡേറ്റുകളും കാണിക്കാനാകും</string>
+    <string name="perm_notifications_denied">നൽകിയിട്ടില്ല - അറിയിപ്പുകൾ അനുവദിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
 
     <!-- യൂണിറ്റുകളും പ്രദർശനവും -->
     <string name="settings_speed_units">വേഗതയുടെ യൂണിറ്റുകൾ</string>

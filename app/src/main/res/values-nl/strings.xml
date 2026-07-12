@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Batterij bijna leeg (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Bewegingsdetectie</string>
-    <string name="settings_motion_detection_on">Ingeschakeld — verfijnt je bewegingstype (lopen, autorijden) in de geschiedenis</string>
-    <string name="settings_motion_detection_off">Uit — sta toegang tot fysieke activiteit toe voor nauwkeurigere bewegingslabels</string>
+    <string name="settings_motion_detection_on">Ingeschakeld - verfijnt je bewegingstype (lopen, autorijden) in de geschiedenis</string>
+    <string name="settings_motion_detection_off">Uit - sta toegang tot fysieke activiteit toe voor nauwkeurigere bewegingslabels</string>
     <string name="settings_battery_optimization">Batterijoptimalisatie</string>
-    <string name="settings_battery_optimization_unrestricted">Onbeperkt — LocaPeer kan vrij in de achtergrond draaien</string>
-    <string name="settings_battery_optimization_restricted">Geoptimaliseerd — tik om dit in te stellen op Onbeperkt in de systeeminstellingen</string>
+    <string name="settings_battery_optimization_unrestricted">Onbeperkt - LocaPeer kan vrij in de achtergrond draaien</string>
+    <string name="settings_battery_optimization_restricted">Geoptimaliseerd - tik om dit in te stellen op Onbeperkt in de systeeminstellingen</string>
 
     <!-- Machtigingen -->
     <string name="settings_permissions">Machtigingen</string>
     <string name="settings_permissions_subtitle">App-toegang tot locatie, camera en meer bekijken en herstellen</string>
     <string name="permissions_intro">LocaPeer heeft deze machtigingen nodig om je locatie te delen, uitnodigingen te scannen en op de achtergrond te blijven werken. Tik op een machtiging die niet is verleend om deze te herstellen.</string>
     <string name="perm_location_title">Locatie</string>
-    <string name="perm_location_granted">Verleend — je locatie kan worden gedeeld</string>
-    <string name="perm_location_denied">Niet verleend — tik om locatietoegang toe te staan</string>
+    <string name="perm_location_granted">Verleend - je locatie kan worden gedeeld</string>
+    <string name="perm_location_denied">Niet verleend - tik om locatietoegang toe te staan</string>
     <string name="perm_background_location_title">Achtergrondlocatie</string>
-    <string name="perm_background_location_granted">Verleend — locatie blijft delen wanneer de app is gesloten</string>
-    <string name="perm_background_location_denied">Niet verleend — tik om toegang "Altijd toestaan" te verlenen in de instellingen</string>
+    <string name="perm_background_location_granted">Verleend - locatie blijft delen wanneer de app is gesloten</string>
+    <string name="perm_background_location_denied">Niet verleend - tik om toegang "Altijd toestaan" te verlenen in de instellingen</string>
     <string name="perm_camera_title">Camera</string>
-    <string name="perm_camera_granted">Verleend — wordt gebruikt om QR-codes voor uitnodigingen te scannen</string>
-    <string name="perm_camera_denied">Niet verleend — tik om de camera toe te staan</string>
+    <string name="perm_camera_granted">Verleend - wordt gebruikt om QR-codes voor uitnodigingen te scannen</string>
+    <string name="perm_camera_denied">Niet verleend - tik om de camera toe te staan</string>
     <string name="perm_notifications_title">Meldingen</string>
-    <string name="perm_notifications_granted">Verleend — waarschuwingen en statusupdates kunnen worden getoond</string>
-    <string name="perm_notifications_denied">Niet verleend — tik om meldingen toe te staan</string>
+    <string name="perm_notifications_granted">Verleend - waarschuwingen en statusupdates kunnen worden getoond</string>
+    <string name="perm_notifications_denied">Niet verleend - tik om meldingen toe te staan</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Snelheidseenheden</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">End-to-end versleuteld</string>
     <string name="onboarding_feature_e2e_subtitle">Je locatie wordt op het apparaat versleuteld</string>
     <string name="onboarding_feature_servers_title">Geen propriëtaire servers</string>
-    <string name="onboarding_feature_servers_subtitle">Gebruikt open Nostr-relays als beveiligd transport — je gegevens blijven versleuteld en privé</string>
+    <string name="onboarding_feature_servers_subtitle">Gebruikt open Nostr-relays als beveiligd transport - je gegevens blijven versleuteld en privé</string>
     <string name="onboarding_feature_phone_title">Blijft op je telefoon</string>
     <string name="onboarding_feature_phone_subtitle">Je volledige locatiegeschiedenis blijft op je apparaat. Alleen je huidige positie wordt gedeeld met geselecteerde contacten</string>
     <string name="onboarding_name_prompt">Hoe moeten je contacten je noemen?</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">Herstellen vanuit back-up</string>
     <string name="onboarding_key_note">Je privésleutel wordt lokaal gegenereerd en verlaat dit apparaat nooit.</string>
     <string name="onboarding_permissions_title">Machtigingen</string>
-    <string name="onboarding_permissions_desc">LocaPeer heeft locatietoegang nodig om je positie te delen, cameratoegang om uitnodigingscodes te scannen en meldingstoegang voor achtergrondstatus. Toegang tot fysieke activiteit is optioneel — het helpt je beweging (lopen, autorijden) nauwkeuriger te labelen.</string>
+    <string name="onboarding_permissions_desc">LocaPeer heeft locatietoegang nodig om je positie te delen, cameratoegang om uitnodigingscodes te scannen en meldingstoegang voor achtergrondstatus. Toegang tot fysieke activiteit is optioneel - het helpt je beweging (lopen, autorijden) nauwkeuriger te labelen.</string>
     <string name="onboarding_before_ask_title">Voordat we het vragen</string>
     <string name="onboarding_before_ask_intro">Je ziet zo een paar systeemvragen:</string>
-    <string name="onboarding_before_ask_location">• Locatie — vereist, om je positie te delen.</string>
-    <string name="onboarding_before_ask_camera">• Camera — om uitnodigingscodes te scannen.</string>
-    <string name="onboarding_before_ask_notifications">• Meldingen — voor achtergrondstatus.</string>
-    <string name="onboarding_before_ask_activity">• Fysieke activiteit — optioneel. Hiermee kan LocaPeer lopen, autorijden en stilstaan beter onderscheiden. Je kunt dit overslaan en later inschakelen via Instellingen.</string>
+    <string name="onboarding_before_ask_location">• Locatie - vereist, om je positie te delen.</string>
+    <string name="onboarding_before_ask_camera">• Camera - om uitnodigingscodes te scannen.</string>
+    <string name="onboarding_before_ask_notifications">• Meldingen - voor achtergrondstatus.</string>
+    <string name="onboarding_before_ask_activity">• Fysieke activiteit - optioneel. Hiermee kan LocaPeer lopen, autorijden en stilstaan beter onderscheiden. Je kunt dit overslaan en later inschakelen via Instellingen.</string>
     <string name="onboarding_grant_permissions">Machtigingen verlenen</string>
     <string name="onboarding_bg_location_title">Locatie op de achtergrond</string>
     <string name="onboarding_bg_location_desc">Kies in het volgende scherm \"Altijd toestaan\" zodat je contacten updates krijgen terwijl de app gesloten is.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Naar locatie</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS AAN</string>
-    <string name="map_overdue">Achterstallig — geen recente update</string>
+    <string name="map_overdue">Achterstallig - geen recente update</string>
     <string name="map_stat_last_seen">Laatst gezien</string>
     <string name="map_stat_battery">Batterij</string>
     <string name="map_stat_accuracy">Nauwkeurigheid</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Accepteer om ontgrendelverzoeken van dit apparaat toe te staan</string>
     <string name="notif_supervisor_request_big">Accepteer zodat %1$s je goedkeuringsverzoeken voor ontgrendeling kan sturen wanneer de toezichtmodus actief is.</string>
     <string name="notif_supervised_active_title">Toezichtmodus actief</string>
-    <string name="notif_supervised_active_text">Je toezichthouder heeft bevestigd — de toezichtmodus is nu ingesteld</string>
+    <string name="notif_supervised_active_text">Je toezichthouder heeft bevestigd - de toezichtmodus is nu ingesteld</string>
     <string name="notif_supervised_declined_title">Toezichtmodus geweigerd</string>
-    <string name="notif_supervised_declined_text">Je toezichthouder heeft het verzoek geweigerd — de toezichtmodus is uitgeschakeld</string>
+    <string name="notif_supervised_declined_text">Je toezichthouder heeft het verzoek geweigerd - de toezichtmodus is uitgeschakeld</string>
     <string name="notif_tracking_alert_title">Volgmelding</string>
     <string name="notif_tracking_proximity">%1$s heeft een nabijheidsmelding over jou ontvangen</string>
     <string name="notif_tracking_geofence">%1$s heeft een melding ontvangen dat je zone %2$s bent binnengegaan/verlaten</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">Contact niet gevonden</string>
     <string name="peer_purge_location_sent">Opdracht om ALLE locaties op afstand te verwijderen verzonden naar %1$s</string>
     <string name="peer_purge_messages_sent">Opdracht om ALLE berichten op afstand te verwijderen verzonden naar %1$s</string>
-    <string name="onboarding_error_key_length">Ongeldige sleutel — moet 64 hexadecimale tekens zijn.</string>
-    <string name="onboarding_error_key_range">Ongeldige privésleutel — buiten het bereik van de curve.</string>
+    <string name="onboarding_error_key_length">Ongeldige sleutel - moet 64 hexadecimale tekens zijn.</string>
+    <string name="onboarding_error_key_range">Ongeldige privésleutel - buiten het bereik van de curve.</string>
     <string name="onboarding_error_hex">Ongeldig hexadecimaal formaat.</string>
     <string name="onboarding_error_import_failed">Sleutel importeren mislukt: %1$s</string>
 </resources>

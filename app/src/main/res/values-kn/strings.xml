@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ - ಇತಿಹಾಸದಲ್ಲಿ ನಿಮ್ಮ ಚಲನೆಯ ಪ್ರಕಾರವನ್ನು (ನಡಿಗೆ, ಚಾಲನೆ) ಪರಿಷ್ಕರಿಸುತ್ತದೆ</string>
     <string name="settings_motion_detection_off">ಆಫ್ - ಹೆಚ್ಚು ನಿಖರವಾದ ಚಲನೆಯ ಲೇಬಲ್‌ಗಳಿಗಾಗಿ ದೈಹಿಕ ಚಟುವಟಿಕೆಯ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="settings_battery_optimization">ಬ್ಯಾಟರಿ ಆಪ್ಟಿಮೈಸೇಶನ್</string>
-    <string name="settings_battery_optimization_unrestricted">ನಿರ್ಬಂಧವಿಲ್ಲದ — LocaPeer ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಮುಕ್ತವಾಗಿ ರನ್ ಮಾಡಬಹುದು</string>
-    <string name="settings_battery_optimization_restricted">ಆಪ್ಟಿಮೈಸ್ ಮಾಡಲಾಗಿದೆ — ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಿರ್ಬಂಧವಿಲ್ಲದ ಎಂದು ಹೊಂದಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="settings_battery_optimization_unrestricted">ನಿರ್ಬಂಧವಿಲ್ಲದ - LocaPeer ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಮುಕ್ತವಾಗಿ ರನ್ ಮಾಡಬಹುದು</string>
+    <string name="settings_battery_optimization_restricted">ಆಪ್ಟಿಮೈಸ್ ಮಾಡಲಾಗಿದೆ - ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಿರ್ಬಂಧವಿಲ್ಲದ ಎಂದು ಹೊಂದಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
 
     <!-- ಅನುಮತಿಗಳು -->
     <string name="settings_permissions">ಅನುಮತಿಗಳು</string>
     <string name="settings_permissions_subtitle">ಸ್ಥಳ, ಕ್ಯಾಮೆರಾ ಮತ್ತು ಹೆಚ್ಚಿನವುಗಳಿಗೆ ಅಪ್ಲಿಕೇಶನ್ ಪ್ರವೇಶವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸರಿಪಡಿಸಿ</string>
     <string name="permissions_intro">ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಲು, ಆಹ್ವಾನಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಮತ್ತು ಹಿನ್ನೆಲೆಯಲ್ಲಿ ಕಾರ್ಯನಿರ್ವಹಿಸಲು LocaPeer ಗೆ ಈ ಅನುಮತಿಗಳ ಅಗತ್ಯವಿದೆ. ಯಾವುದನ್ನಾದರೂ ನೀಡದಿದ್ದರೆ ಸರಿಪಡಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ.</string>
     <string name="perm_location_title">ಸ್ಥಳ</string>
-    <string name="perm_location_granted">ನೀಡಲಾಗಿದೆ — ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಬಹುದು</string>
-    <string name="perm_location_denied">ನೀಡಿಲ್ಲ — ಸ್ಥಳ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="perm_location_granted">ನೀಡಲಾಗಿದೆ - ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಬಹುದು</string>
+    <string name="perm_location_denied">ನೀಡಿಲ್ಲ - ಸ್ಥಳ ಪ್ರವೇಶವನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="perm_background_location_title">ಹಿನ್ನೆಲೆ ಸ್ಥಳ</string>
-    <string name="perm_background_location_granted">ನೀಡಲಾಗಿದೆ — ಅಪ್ಲಿಕೇಶನ್ ಮುಚ್ಚಿದಾಗಲೂ ಸ್ಥಳ ಹಂಚಿಕೆ ಮುಂದುವರಿಯುತ್ತದೆ</string>
-    <string name="perm_background_location_denied">ನೀಡಿಲ್ಲ — ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ \'ಎಲ್ಲಾ ಸಮಯದಲ್ಲೂ ಅನುಮತಿಸಿ\' ಆಯ್ಕೆ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="perm_background_location_granted">ನೀಡಲಾಗಿದೆ - ಅಪ್ಲಿಕೇಶನ್ ಮುಚ್ಚಿದಾಗಲೂ ಸ್ಥಳ ಹಂಚಿಕೆ ಮುಂದುವರಿಯುತ್ತದೆ</string>
+    <string name="perm_background_location_denied">ನೀಡಿಲ್ಲ - ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ \'ಎಲ್ಲಾ ಸಮಯದಲ್ಲೂ ಅನುಮತಿಸಿ\' ಆಯ್ಕೆ ಮಾಡಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="perm_camera_title">ಕ್ಯಾಮೆರಾ</string>
-    <string name="perm_camera_granted">ನೀಡಲಾಗಿದೆ — ಆಹ್ವಾನ QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಬಳಸಲಾಗುತ್ತದೆ</string>
-    <string name="perm_camera_denied">ನೀಡಿಲ್ಲ — ಕ್ಯಾಮೆರಾವನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="perm_camera_granted">ನೀಡಲಾಗಿದೆ - ಆಹ್ವಾನ QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಬಳಸಲಾಗುತ್ತದೆ</string>
+    <string name="perm_camera_denied">ನೀಡಿಲ್ಲ - ಕ್ಯಾಮೆರಾವನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
     <string name="perm_notifications_title">ಅಧಿಸೂಚನೆಗಳು</string>
-    <string name="perm_notifications_granted">ನೀಡಲಾಗಿದೆ — ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ಸ್ಥಿತಿ ನವೀಕರಣಗಳನ್ನು ತೋರಿಸಬಹುದು</string>
-    <string name="perm_notifications_denied">ನೀಡಿಲ್ಲ — ಅಧಿಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="perm_notifications_granted">ನೀಡಲಾಗಿದೆ - ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತು ಸ್ಥಿತಿ ನವೀಕರಣಗಳನ್ನು ತೋರಿಸಬಹುದು</string>
+    <string name="perm_notifications_denied">ನೀಡಿಲ್ಲ - ಅಧಿಸೂಚನೆಗಳನ್ನು ಅನುಮತಿಸಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
 
     <!-- ಘಟಕಗಳು ಮತ್ತು ಪ್ರದರ್ಶನ -->
     <string name="settings_speed_units">ವೇಗದ ಘಟಕಗಳು</string>

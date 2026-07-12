@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">Hojiirra ooleera - gosa sochii keessanii (deemuu, oofuu) seenaa keessatti sirreessa</string>
     <string name="settings_motion_detection_off">Cufameera - qindaa\'ina sochii sirrii ta\'eef hayyama sochii qaamaa kennaa</string>
     <string name="settings_battery_optimization">Optimayizeeshinii Baatiri</string>
-    <string name="settings_battery_optimization_unrestricted">Hin daangeffamne — LocaPeer duubatti bilisaan hojjechu danda\'a</string>
-    <string name="settings_battery_optimization_restricted">Optimayizeeshinii — gara Hin daangeffamneetti jijjiiruuf tuqi</string>
+    <string name="settings_battery_optimization_unrestricted">Hin daangeffamne - LocaPeer duubatti bilisaan hojjechu danda\'a</string>
+    <string name="settings_battery_optimization_restricted">Optimayizeeshinii - gara Hin daangeffamneetti jijjiiruuf tuqi</string>
 
     <!-- Hayyamawwan -->
     <string name="settings_permissions">Hayyamawwan</string>
     <string name="settings_permissions_subtitle">Hayyamawwan bakka, kämeree fi k.k.f. sephanichaa sakatta\'aa fi sirreessaa</string>
     <string name="permissions_intro">LocaPeer bakka keessan qooduuf, afeerrawwan sakatta\'uuf fi duubatti hojjechuuf hayyamawwan kanneen barbaada. Kan hin kennamne kamiyyuu sirreessuuf tuqi.</string>
     <string name="perm_location_title">Bakka</string>
-    <string name="perm_location_granted">Kennameera — bakka keessan qoodu dandeessu</string>
-    <string name="perm_location_denied">Hin kennamne — hayyama bakkaa kennuuf tuqi</string>
+    <string name="perm_location_granted">Kennameera - bakka keessan qoodu dandeessu</string>
+    <string name="perm_location_denied">Hin kennamne - hayyama bakkaa kennuuf tuqi</string>
     <string name="perm_background_location_title">Bakka Duubaa</string>
-    <string name="perm_background_location_granted">Kennameera — sephanichi yoo cufameeyyuu bakki qoodamaa jira</string>
-    <string name="perm_background_location_denied">Hin kennamne — sajataawwan keessatti \'Yeroo hunda hayyami\' filachuuf tuqi</string>
+    <string name="perm_background_location_granted">Kennameera - sephanichi yoo cufameeyyuu bakki qoodamaa jira</string>
+    <string name="perm_background_location_denied">Hin kennamne - sajataawwan keessatti \'Yeroo hunda hayyami\' filachuuf tuqi</string>
     <string name="perm_camera_title">Kämeree</string>
-    <string name="perm_camera_granted">Kennameera — koodii QR afeerraa sakatta\'uuf tajaajila</string>
-    <string name="perm_camera_denied">Hin kennamne — kämeree hayyamuuf tuqi</string>
+    <string name="perm_camera_granted">Kennameera - koodii QR afeerraa sakatta\'uuf tajaajila</string>
+    <string name="perm_camera_denied">Hin kennamne - kämeree hayyamuuf tuqi</string>
     <string name="perm_notifications_title">Beeksisawwan</string>
-    <string name="perm_notifications_granted">Kennameera — akeekkachiisni fi haaromsi haalaa mul\'achuu danda\'u</string>
-    <string name="perm_notifications_denied">Hin kennamne — beeksisawwan hayyamuuf tuqi</string>
+    <string name="perm_notifications_granted">Kennameera - akeekkachiisni fi haaromsi haalaa mul\'achuu danda\'u</string>
+    <string name="perm_notifications_denied">Hin kennamne - beeksisawwan hayyamuuf tuqi</string>
 
     <!-- Yuunitiiwwan &amp; Mul\'ata -->
     <string name="settings_speed_units">Yuunitii Saffisaa</string>

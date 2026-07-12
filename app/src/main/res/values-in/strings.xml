@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Baterai Lemah (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d mnt</string>
     <string name="settings_motion_detection">Deteksi Gerakan</string>
-    <string name="settings_motion_detection_on">Aktif — menyempurnakan jenis gerakan Anda (berjalan, berkendara) di riwayat</string>
-    <string name="settings_motion_detection_off">Nonaktif — izinkan akses aktivitas fisik untuk label gerakan yang lebih akurat</string>
+    <string name="settings_motion_detection_on">Aktif - menyempurnakan jenis gerakan Anda (berjalan, berkendara) di riwayat</string>
+    <string name="settings_motion_detection_off">Nonaktif - izinkan akses aktivitas fisik untuk label gerakan yang lebih akurat</string>
     <string name="settings_battery_optimization">Optimalisasi Baterai</string>
-    <string name="settings_battery_optimization_unrestricted">Tidak dibatasi — LocaPeer dapat berjalan bebas di latar belakang</string>
-    <string name="settings_battery_optimization_restricted">Dioptimalkan — ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
+    <string name="settings_battery_optimization_unrestricted">Tidak dibatasi - LocaPeer dapat berjalan bebas di latar belakang</string>
+    <string name="settings_battery_optimization_restricted">Dioptimalkan - ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
 
     <!-- Izin -->
     <string name="settings_permissions">Izin</string>
     <string name="settings_permissions_subtitle">Tinjau dan perbaiki akses aplikasi ke lokasi, kamera, dan lainnya</string>
     <string name="permissions_intro">LocaPeer memerlukan izin ini untuk berbagi lokasi Anda, memindai undangan, dan terus berjalan di latar belakang. Ketuk apa pun yang tidak diberikan untuk memperbaikinya.</string>
     <string name="perm_location_title">Lokasi</string>
-    <string name="perm_location_granted">Diberikan — lokasi Anda dapat dibagikan</string>
-    <string name="perm_location_denied">Tidak diberikan — ketuk untuk mengizinkan akses lokasi</string>
+    <string name="perm_location_granted">Diberikan - lokasi Anda dapat dibagikan</string>
+    <string name="perm_location_denied">Tidak diberikan - ketuk untuk mengizinkan akses lokasi</string>
     <string name="perm_background_location_title">Lokasi Latar Belakang</string>
-    <string name="perm_background_location_granted">Diberikan — lokasi terus dibagikan saat aplikasi ditutup</string>
-    <string name="perm_background_location_denied">Tidak diberikan — ketuk untuk mengizinkan akses \'Izinkan sepanjang waktu\' di setelan</string>
+    <string name="perm_background_location_granted">Diberikan - lokasi terus dibagikan saat aplikasi ditutup</string>
+    <string name="perm_background_location_denied">Tidak diberikan - ketuk untuk mengizinkan akses \'Izinkan sepanjang waktu\' di setelan</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Diberikan — digunakan untuk memindai kode QR undangan</string>
-    <string name="perm_camera_denied">Tidak diberikan — ketuk untuk mengizinkan kamera</string>
+    <string name="perm_camera_granted">Diberikan - digunakan untuk memindai kode QR undangan</string>
+    <string name="perm_camera_denied">Tidak diberikan - ketuk untuk mengizinkan kamera</string>
     <string name="perm_notifications_title">Notifikasi</string>
-    <string name="perm_notifications_granted">Diberikan — peringatan dan pembaruan status dapat ditampilkan</string>
-    <string name="perm_notifications_denied">Tidak diberikan — ketuk untuk mengizinkan notifikasi</string>
+    <string name="perm_notifications_granted">Diberikan - peringatan dan pembaruan status dapat ditampilkan</string>
+    <string name="perm_notifications_denied">Tidak diberikan - ketuk untuk mengizinkan notifikasi</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Satuan Kecepatan</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">Terenkripsi End-to-End</string>
     <string name="onboarding_feature_e2e_subtitle">Lokasi Anda dienkripsi di perangkat</string>
     <string name="onboarding_feature_servers_title">Tanpa Server Kepemilikan</string>
-    <string name="onboarding_feature_servers_subtitle">Menggunakan relay Nostr terbuka sebagai transport aman — data Anda tetap terenkripsi dan privat</string>
+    <string name="onboarding_feature_servers_subtitle">Menggunakan relay Nostr terbuka sebagai transport aman - data Anda tetap terenkripsi dan privat</string>
     <string name="onboarding_feature_phone_title">Tetap di Ponsel Anda</string>
     <string name="onboarding_feature_phone_subtitle">Seluruh riwayat lokasi tetap di perangkat Anda. Hanya posisi terkini yang dibagikan ke kontak terpilih</string>
     <string name="onboarding_name_prompt">Kontak Anda memanggil Anda apa?</string>
@@ -287,13 +287,13 @@
     <string name="onboarding_restore_from_backup">Pulihkan Dari Cadangan</string>
     <string name="onboarding_key_note">Kunci privat Anda dibuat secara lokal dan tidak pernah meninggalkan perangkat ini.</string>
     <string name="onboarding_permissions_title">Izin</string>
-    <string name="onboarding_permissions_desc">LocaPeer memerlukan akses lokasi untuk membagikan posisi Anda, akses kamera untuk memindai kode undangan, dan akses notifikasi untuk status latar belakang. Akses aktivitas fisik bersifat opsional — membantu melabeli gerakan Anda (berjalan, berkendara) dengan lebih akurat.</string>
+    <string name="onboarding_permissions_desc">LocaPeer memerlukan akses lokasi untuk membagikan posisi Anda, akses kamera untuk memindai kode undangan, dan akses notifikasi untuk status latar belakang. Akses aktivitas fisik bersifat opsional - membantu melabeli gerakan Anda (berjalan, berkendara) dengan lebih akurat.</string>
     <string name="onboarding_before_ask_title">Sebelum kami meminta</string>
     <string name="onboarding_before_ask_intro">Anda akan melihat beberapa permintaan sistem berikut:</string>
-    <string name="onboarding_before_ask_location">• Lokasi — wajib, untuk membagikan posisi Anda.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — untuk memindai kode undangan.</string>
-    <string name="onboarding_before_ask_notifications">• Notifikasi — untuk status latar belakang.</string>
-    <string name="onboarding_before_ask_activity">• Aktivitas fisik — opsional. Membantu LocaPeer membedakan berjalan, berkendara, dan diam dengan lebih akurat. Anda bisa melewatinya dan mengaktifkannya nanti di Setelan.</string>
+    <string name="onboarding_before_ask_location">• Lokasi - wajib, untuk membagikan posisi Anda.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - untuk memindai kode undangan.</string>
+    <string name="onboarding_before_ask_notifications">• Notifikasi - untuk status latar belakang.</string>
+    <string name="onboarding_before_ask_activity">• Aktivitas fisik - opsional. Membantu LocaPeer membedakan berjalan, berkendara, dan diam dengan lebih akurat. Anda bisa melewatinya dan mengaktifkannya nanti di Setelan.</string>
     <string name="onboarding_grant_permissions">Berikan Izin</string>
     <string name="onboarding_bg_location_title">Lokasi Latar Belakang</string>
     <string name="onboarding_bg_location_desc">Agar kontak Anda tetap mendapat pembaruan saat aplikasi ditutup, pilih \"Izinkan sepanjang waktu\" di layar berikutnya.</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">Ke lokasi</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS AKTIF</string>
-    <string name="map_overdue">Terlambat — tidak ada pembaruan terkini</string>
+    <string name="map_overdue">Terlambat - tidak ada pembaruan terkini</string>
     <string name="map_stat_last_seen">Terakhir terlihat</string>
     <string name="map_stat_battery">Baterai</string>
     <string name="map_stat_accuracy">Akurasi</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">Terima untuk mengizinkan permintaan persetujuan buka kunci dari perangkat ini</string>
     <string name="notif_supervisor_request_big">Terima agar %1$s dapat mengirimi Anda permintaan persetujuan buka kunci saat mode terawasi aktif.</string>
     <string name="notif_supervised_active_title">Mode terawasi aktif</string>
-    <string name="notif_supervised_active_text">Pengawas Anda mengonfirmasi — mode terawasi kini disiapkan</string>
+    <string name="notif_supervised_active_text">Pengawas Anda mengonfirmasi - mode terawasi kini disiapkan</string>
     <string name="notif_supervised_declined_title">Mode terawasi ditolak</string>
-    <string name="notif_supervised_declined_text">Pengawas Anda menolak permintaan — mode terawasi telah dinonaktifkan</string>
+    <string name="notif_supervised_declined_text">Pengawas Anda menolak permintaan - mode terawasi telah dinonaktifkan</string>
     <string name="notif_tracking_alert_title">Peringatan Pelacakan</string>
     <string name="notif_tracking_proximity">%1$s menerima peringatan jarak dekat tentang Anda</string>
     <string name="notif_tracking_geofence">%1$s menerima peringatan bahwa Anda masuk/keluar pagar: %2$s</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">Kontak tidak ditemukan</string>
     <string name="peer_purge_location_sent">Perintah hapus jarak jauh untuk SEMUA lokasi dikirim ke %1$s</string>
     <string name="peer_purge_messages_sent">Perintah hapus jarak jauh untuk SEMUA pesan dikirim ke %1$s</string>
-    <string name="onboarding_error_key_length">Kunci tidak valid — harus 64 karakter heksadesimal.</string>
-    <string name="onboarding_error_key_range">Kunci privat tidak valid — di luar rentang kurva.</string>
+    <string name="onboarding_error_key_length">Kunci tidak valid - harus 64 karakter heksadesimal.</string>
+    <string name="onboarding_error_key_range">Kunci privat tidak valid - di luar rentang kurva.</string>
     <string name="onboarding_error_hex">Format heksadesimal tidak valid.</string>
     <string name="onboarding_error_import_failed">Gagal mengimpor kunci: %1$s</string>
 </resources>

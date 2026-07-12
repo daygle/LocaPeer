@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Alacsony töltöttség (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d perc</string>
     <string name="settings_motion_detection">Mozgásérzékelés</string>
-    <string name="settings_motion_detection_on">Bekapcsolva — pontosítja a mozgástípust (gyaloglás, vezetés) az előzményekben</string>
-    <string name="settings_motion_detection_off">Kikapcsolva — engedélyezze a testmozgás-hozzáférést a pontosabb mozgáscímkékhez</string>
+    <string name="settings_motion_detection_on">Bekapcsolva - pontosítja a mozgástípust (gyaloglás, vezetés) az előzményekben</string>
+    <string name="settings_motion_detection_off">Kikapcsolva - engedélyezze a testmozgás-hozzáférést a pontosabb mozgáscímkékhez</string>
     <string name="settings_battery_optimization">Akkumulátor-optimalizálás</string>
-    <string name="settings_battery_optimization_unrestricted">Korlátozás nélküli — a LocaPeer szabadon futhat a háttérben</string>
-    <string name="settings_battery_optimization_restricted">Optimalizált — érintse meg a Korlátozás nélküli beállításhoz a rendszerbeállításokban</string>
+    <string name="settings_battery_optimization_unrestricted">Korlátozás nélküli - a LocaPeer szabadon futhat a háttérben</string>
+    <string name="settings_battery_optimization_restricted">Optimalizált - érintse meg a Korlátozás nélküli beállításhoz a rendszerbeállításokban</string>
 
     <!-- Engedélyek -->
     <string name="settings_permissions">Engedélyek</string>
     <string name="settings_permissions_subtitle">Az alkalmazás helyadatokhoz, kamerához és egyebekhez való hozzáférésének áttekintése és javítása</string>
     <string name="permissions_intro">A LocaPeer-nek szüksége van ezekre az engedélyekre a helyzet megosztásához, a meghívók beolvasásához és a háttérben való működéshez. Érintse meg a meg nem adott engedélyeket a javításhoz.</string>
     <string name="perm_location_title">Helyszín</string>
-    <string name="perm_location_granted">Megadva — a tartózkodási helye megosztható</string>
-    <string name="perm_location_denied">Nincs megadva — érintse meg a helyhozzáférés engedélyezéséhez</string>
+    <string name="perm_location_granted">Megadva - a tartózkodási helye megosztható</string>
+    <string name="perm_location_denied">Nincs megadva - érintse meg a helyhozzáférés engedélyezéséhez</string>
     <string name="perm_background_location_title">Háttérben lévő helyszín</string>
-    <string name="perm_background_location_granted">Megadva — a helymegosztás az alkalmazás bezárása után is folytatódik</string>
-    <string name="perm_background_location_denied">Nincs megadva — érintse meg a „Mindig engedélyezve” hozzáférés megadásához a beállításokban</string>
+    <string name="perm_background_location_granted">Megadva - a helymegosztás az alkalmazás bezárása után is folytatódik</string>
+    <string name="perm_background_location_denied">Nincs megadva - érintse meg a „Mindig engedélyezve” hozzáférés megadásához a beállításokban</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Megadva — a meghívó QR-kódok beolvasására szolgál</string>
-    <string name="perm_camera_denied">Nincs megadva — érintse meg a kamera engedélyezéséhez</string>
+    <string name="perm_camera_granted">Megadva - a meghívó QR-kódok beolvasására szolgál</string>
+    <string name="perm_camera_denied">Nincs megadva - érintse meg a kamera engedélyezéséhez</string>
     <string name="perm_notifications_title">Értesítések</string>
-    <string name="perm_notifications_granted">Megadva — a riasztások és állapotfrissítések megjeleníthetők</string>
-    <string name="perm_notifications_denied">Nincs megadva — érintse meg az értesítések engedélyezéséhez</string>
+    <string name="perm_notifications_granted">Megadva - a riasztások és állapotfrissítések megjeleníthetők</string>
+    <string name="perm_notifications_denied">Nincs megadva - érintse meg az értesítések engedélyezéséhez</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Sebesség mértékegysége</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">Végpontok közötti titkosítás</string>
     <string name="onboarding_feature_e2e_subtitle">Helyzete az eszközön titkosítódik</string>
     <string name="onboarding_feature_servers_title">Nincsenek zárt szerverek</string>
-    <string name="onboarding_feature_servers_subtitle">Nyílt Nostr reléket használ biztonságos átvitelként — adatai titkosítottak és privátak maradnak</string>
+    <string name="onboarding_feature_servers_subtitle">Nyílt Nostr reléket használ biztonságos átvitelként - adatai titkosítottak és privátak maradnak</string>
     <string name="onboarding_feature_phone_title">A telefonján marad</string>
     <string name="onboarding_feature_phone_subtitle">A teljes helyelőzménye az eszközén marad. Csak az aktuális helyzete kerül megosztásra a kiválasztott névjegyekkel</string>
     <string name="onboarding_name_prompt">Hogyan szólítsák a névjegyei?</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">Visszaállítás mentésből</string>
     <string name="onboarding_key_note">Privát kulcsa helyben jön létre, és soha nem hagyja el ezt az eszközt.</string>
     <string name="onboarding_permissions_title">Engedélyek</string>
-    <string name="onboarding_permissions_desc">A LocaPeer-nek helyhozzáférés kell a pozíció megosztásához, kamerahozzáférés a meghívókódok beolvasásához és értesítési hozzáférés a háttérállapothoz. A testmozgás-hozzáférés nem kötelező — segít pontosabban címkézni a mozgását (gyaloglás, vezetés).</string>
+    <string name="onboarding_permissions_desc">A LocaPeer-nek helyhozzáférés kell a pozíció megosztásához, kamerahozzáférés a meghívókódok beolvasásához és értesítési hozzáférés a háttérállapothoz. A testmozgás-hozzáférés nem kötelező - segít pontosabban címkézni a mozgását (gyaloglás, vezetés).</string>
     <string name="onboarding_before_ask_title">Mielőtt megkérdezzük</string>
     <string name="onboarding_before_ask_intro">Hamarosan néhány rendszerkérdést lát majd:</string>
-    <string name="onboarding_before_ask_location">• Hely — kötelező, a pozíció megosztásához.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — a meghívókódok beolvasásához.</string>
-    <string name="onboarding_before_ask_notifications">• Értesítések — a háttérállapothoz.</string>
-    <string name="onboarding_before_ask_activity">• Testmozgás — nem kötelező. Segít a LocaPeer-nek pontosabban megkülönböztetni a gyaloglást, a vezetést és az állást. Kihagyhatja, és később a Beállításokban engedélyezheti.</string>
+    <string name="onboarding_before_ask_location">• Hely - kötelező, a pozíció megosztásához.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - a meghívókódok beolvasásához.</string>
+    <string name="onboarding_before_ask_notifications">• Értesítések - a háttérállapothoz.</string>
+    <string name="onboarding_before_ask_activity">• Testmozgás - nem kötelező. Segít a LocaPeer-nek pontosabban megkülönböztetni a gyaloglást, a vezetést és az állást. Kihagyhatja, és később a Beállításokban engedélyezheti.</string>
     <string name="onboarding_grant_permissions">Engedélyek megadása</string>
     <string name="onboarding_bg_location_title">Háttérbeli helymeghatározás</string>
     <string name="onboarding_bg_location_desc">Ahhoz, hogy a névjegyei az alkalmazás bezárása után is frissüljenek, válassza a következő képernyőn a „Mindig engedélyezés” lehetőséget.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Ugrás a helyhez</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS BE</string>
-    <string name="map_overdue">Késésben — nincs friss frissítés</string>
+    <string name="map_overdue">Késésben - nincs friss frissítés</string>
     <string name="map_stat_last_seen">Utoljára látva</string>
     <string name="map_stat_battery">Akkumulátor</string>
     <string name="map_stat_accuracy">Pontosság</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Fogadja el, hogy engedélyezze a feloldás-jóváhagyási kérelmeket erről az eszközről</string>
     <string name="notif_supervisor_request_big">Fogadja el, hogy %1$s feloldás-jóváhagyási kérelmeket küldhessen Önnek, amikor a felügyelt mód aktív.</string>
     <string name="notif_supervised_active_title">Felügyelt mód aktív</string>
-    <string name="notif_supervised_active_text">A felügyelő megerősítette — a felügyelt mód beállítva</string>
+    <string name="notif_supervised_active_text">A felügyelő megerősítette - a felügyelt mód beállítva</string>
     <string name="notif_supervised_declined_title">Felügyelt mód elutasítva</string>
-    <string name="notif_supervised_declined_text">A felügyelő elutasította a kérelmet — a felügyelt mód kikapcsolva</string>
+    <string name="notif_supervised_declined_text">A felügyelő elutasította a kérelmet - a felügyelt mód kikapcsolva</string>
     <string name="notif_tracking_alert_title">Követési riasztás</string>
     <string name="notif_tracking_proximity">%1$s közelségi riasztást kapott Önről</string>
     <string name="notif_tracking_geofence">%1$s riasztást kapott arról, hogy Ön belépett a(z) %2$s kerítésbe / elhagyta azt</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">A partner nem található</string>
     <string name="peer_purge_location_sent">Az ÖSSZES helyadat távoli törlésére vonatkozó parancs elküldve %1$s részére</string>
     <string name="peer_purge_messages_sent">Az ÖSSZES üzenet távoli törlésére vonatkozó parancs elküldve %1$s részére</string>
-    <string name="onboarding_error_key_length">Érvénytelen kulcs — 64 hexadecimális karakternek kell lennie.</string>
-    <string name="onboarding_error_key_range">Érvénytelen privát kulcs — a görbe tartományán kívül esik.</string>
+    <string name="onboarding_error_key_length">Érvénytelen kulcs - 64 hexadecimális karakternek kell lennie.</string>
+    <string name="onboarding_error_key_range">Érvénytelen privát kulcs - a görbe tartományán kívül esik.</string>
     <string name="onboarding_error_hex">Érvénytelen hexadecimális formátum.</string>
     <string name="onboarding_error_import_failed">A kulcs importálása sikertelen: %1$s</string>
 </resources>

@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Mababang Baterya (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Pagtukoy ng Galaw</string>
-    <string name="settings_motion_detection_on">Naka-on — pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
-    <string name="settings_motion_detection_off">Naka-off — payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
+    <string name="settings_motion_detection_on">Naka-on - pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
+    <string name="settings_motion_detection_off">Naka-off - payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
     <string name="settings_battery_optimization">Optimization ng Baterya</string>
-    <string name="settings_battery_optimization_unrestricted">Walang limitasyon — maaaring malayang tumakbo ang LocaPeer sa background</string>
-    <string name="settings_battery_optimization_restricted">Na-optimize — i-tap para i-set sa Walang limitasyon sa mga setting ng system</string>
+    <string name="settings_battery_optimization_unrestricted">Walang limitasyon - maaaring malayang tumakbo ang LocaPeer sa background</string>
+    <string name="settings_battery_optimization_restricted">Na-optimize - i-tap para i-set sa Walang limitasyon sa mga setting ng system</string>
 
     <!-- Mga Pahintulot -->
     <string name="settings_permissions">Mga Pahintulot</string>
     <string name="settings_permissions_subtitle">Suriin at ayusin ang access ng app sa lokasyon, camera, at higit pa</string>
     <string name="permissions_intro">Kailangan ng LocaPeer ang mga pahintulot na ito para ibahagi ang iyong lokasyon, mag-scan ng mga invite, at manatiling tumatakbo sa background. I-tap ang alinman na hindi pa ibinibigay para ayusin ang mga ito.</string>
     <string name="perm_location_title">Lokasyon</string>
-    <string name="perm_location_granted">Ibinigay na — maaaring ibahagi ang iyong lokasyon</string>
-    <string name="perm_location_denied">Hindi ibinigay — i-tap para payagan ang access sa lokasyon</string>
+    <string name="perm_location_granted">Ibinigay na - maaaring ibahagi ang iyong lokasyon</string>
+    <string name="perm_location_denied">Hindi ibinigay - i-tap para payagan ang access sa lokasyon</string>
     <string name="perm_background_location_title">Lokasyon sa Background</string>
-    <string name="perm_background_location_granted">Ibinigay na — patuloy ang pagbabahagi ng lokasyon kapag sarado ang app</string>
-    <string name="perm_background_location_denied">Hindi ibinigay — i-tap para payagan ang access na \'Payagan sa lahat ng oras\' sa mga setting</string>
+    <string name="perm_background_location_granted">Ibinigay na - patuloy ang pagbabahagi ng lokasyon kapag sarado ang app</string>
+    <string name="perm_background_location_denied">Hindi ibinigay - i-tap para payagan ang access na \'Payagan sa lahat ng oras\' sa mga setting</string>
     <string name="perm_camera_title">Camera</string>
-    <string name="perm_camera_granted">Ibinigay na — ginagamit para mag-scan ng mga invite QR code</string>
-    <string name="perm_camera_denied">Hindi ibinigay — i-tap para payagan ang camera</string>
+    <string name="perm_camera_granted">Ibinigay na - ginagamit para mag-scan ng mga invite QR code</string>
+    <string name="perm_camera_denied">Hindi ibinigay - i-tap para payagan ang camera</string>
     <string name="perm_notifications_title">Mga Notification</string>
-    <string name="perm_notifications_granted">Ibinigay na — maaaring ipakita ang mga alerto at update sa status</string>
-    <string name="perm_notifications_denied">Hindi ibinigay — i-tap para payagan ang mga notification</string>
+    <string name="perm_notifications_granted">Ibinigay na - maaaring ipakita ang mga alerto at update sa status</string>
+    <string name="perm_notifications_denied">Hindi ibinigay - i-tap para payagan ang mga notification</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Mga Yunit ng Bilis</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">End-to-End na Naka-encrypt</string>
     <string name="onboarding_feature_e2e_subtitle">Naka-encrypt ang iyong lokasyon sa device</string>
     <string name="onboarding_feature_servers_title">Walang Proprietary Server</string>
-    <string name="onboarding_feature_servers_subtitle">Gumagamit ng bukas na Nostr relay bilang secure na transport — nananatiling naka-encrypt at pribado ang iyong data</string>
+    <string name="onboarding_feature_servers_subtitle">Gumagamit ng bukas na Nostr relay bilang secure na transport - nananatiling naka-encrypt at pribado ang iyong data</string>
     <string name="onboarding_feature_phone_title">Nananatili sa Iyong Telepono</string>
     <string name="onboarding_feature_phone_subtitle">Nananatili sa iyong device ang buong kasaysayan ng lokasyon mo. Ang kasalukuyang posisyon mo lang ang ibinabahagi sa mga piniling contact</string>
     <string name="onboarding_name_prompt">Ano ang itatawag sa iyo ng iyong mga contact?</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">I-restore Mula sa Backup</string>
     <string name="onboarding_key_note">Ang iyong pribadong susi ay ginagawa nang lokal at hindi kailanman umaalis sa device na ito.</string>
     <string name="onboarding_permissions_title">Mga Pahintulot</string>
-    <string name="onboarding_permissions_desc">Kailangan ng LocaPeer ng access sa lokasyon para ibahagi ang iyong posisyon, access sa camera para mag-scan ng invite code, at access sa notification para sa background status. Opsyonal ang access sa pisikal na aktibidad — tumutulong itong mas tumpak na ma-label ang iyong galaw (paglalakad, pagmamaneho).</string>
+    <string name="onboarding_permissions_desc">Kailangan ng LocaPeer ng access sa lokasyon para ibahagi ang iyong posisyon, access sa camera para mag-scan ng invite code, at access sa notification para sa background status. Opsyonal ang access sa pisikal na aktibidad - tumutulong itong mas tumpak na ma-label ang iyong galaw (paglalakad, pagmamaneho).</string>
     <string name="onboarding_before_ask_title">Bago kami magtanong</string>
     <string name="onboarding_before_ask_intro">May makikita kang ilang system prompt sa susunod:</string>
-    <string name="onboarding_before_ask_location">• Lokasyon — kailangan, para ibahagi ang iyong posisyon.</string>
-    <string name="onboarding_before_ask_camera">• Camera — para mag-scan ng invite code.</string>
-    <string name="onboarding_before_ask_notifications">• Mga Notification — para sa background status.</string>
-    <string name="onboarding_before_ask_activity">• Pisikal na aktibidad — opsyonal. Nagbibigay-daan ito sa LocaPeer na mas tumpak na matukoy ang paglalakad, pagmamaneho at pananatiling nakatigil. Maaari mong laktawan at i-enable mamaya sa mga Setting.</string>
+    <string name="onboarding_before_ask_location">• Lokasyon - kailangan, para ibahagi ang iyong posisyon.</string>
+    <string name="onboarding_before_ask_camera">• Camera - para mag-scan ng invite code.</string>
+    <string name="onboarding_before_ask_notifications">• Mga Notification - para sa background status.</string>
+    <string name="onboarding_before_ask_activity">• Pisikal na aktibidad - opsyonal. Nagbibigay-daan ito sa LocaPeer na mas tumpak na matukoy ang paglalakad, pagmamaneho at pananatiling nakatigil. Maaari mong laktawan at i-enable mamaya sa mga Setting.</string>
     <string name="onboarding_grant_permissions">Ibigay ang mga Pahintulot</string>
     <string name="onboarding_bg_location_title">Lokasyon sa Background</string>
     <string name="onboarding_bg_location_desc">Para manatiling updated ang iyong mga contact habang sarado ang app, piliin ang \"Payagan sa lahat ng oras\" sa susunod na screen.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Pumunta sa lokasyon</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">NAKA-ON ANG SOS</string>
-    <string name="map_overdue">Overdue — walang kamakailang update</string>
+    <string name="map_overdue">Overdue - walang kamakailang update</string>
     <string name="map_stat_last_seen">Huling nakita</string>
     <string name="map_stat_battery">Baterya</string>
     <string name="map_stat_accuracy">Katumpakan</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Tanggapin para payagan ang mga kahilingan sa pag-apruba ng unlock mula sa device na ito</string>
     <string name="notif_supervisor_request_big">Tanggapin para payagan si %1$s na magpadala sa iyo ng mga kahilingan sa pag-apruba ng unlock kapag aktibo ang supervised mode.</string>
     <string name="notif_supervised_active_title">Aktibo ang supervised mode</string>
-    <string name="notif_supervised_active_text">Kinumpirma ng iyong superbisor — naka-set up na ngayon ang supervised mode</string>
+    <string name="notif_supervised_active_text">Kinumpirma ng iyong superbisor - naka-set up na ngayon ang supervised mode</string>
     <string name="notif_supervised_declined_title">Tinanggihan ang supervised mode</string>
-    <string name="notif_supervised_declined_text">Tinanggihan ng iyong superbisor ang kahilingan — na-disable ang supervised mode</string>
+    <string name="notif_supervised_declined_text">Tinanggihan ng iyong superbisor ang kahilingan - na-disable ang supervised mode</string>
     <string name="notif_tracking_alert_title">Alerto sa Pagtunton</string>
     <string name="notif_tracking_proximity">Nakatanggap si %1$s ng proximity alert tungkol sa iyo</string>
     <string name="notif_tracking_geofence">Nakatanggap si %1$s ng alerto na pumasok/lumabas ka sa fence: %2$s</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">Hindi nakita ang contact</string>
     <string name="peer_purge_location_sent">Naipadala kay %1$s ang remote delete command para sa LAHAT ng lokasyon</string>
     <string name="peer_purge_messages_sent">Naipadala kay %1$s ang remote delete command para sa LAHAT ng mensahe</string>
-    <string name="onboarding_error_key_length">Di-wastong key — dapat 64 hex character.</string>
-    <string name="onboarding_error_key_range">Di-wastong pribadong key — labas sa saklaw ng curve.</string>
+    <string name="onboarding_error_key_length">Di-wastong key - dapat 64 hex character.</string>
+    <string name="onboarding_error_key_range">Di-wastong pribadong key - labas sa saklaw ng curve.</string>
     <string name="onboarding_error_hex">Di-wastong hex format.</string>
     <string name="onboarding_error_import_failed">Nabigong i-import ang key: %1$s</string>
 </resources>

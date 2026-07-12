@@ -173,8 +173,8 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
 
 /**
  * A row for a standard runtime permission. When granted it shows a checkmark and is inert;
- * otherwise tapping requests the permission, or — once it has been permanently denied (asked
- * before and the system will no longer prompt) — routes to the app's system settings so the user
+ * otherwise tapping requests the permission, or - once it has been permanently denied (asked
+ * before and the system will no longer prompt) - routes to the app's system settings so the user
  * can grant it there.
  */
 @OptIn(ExperimentalPermissionsApi::class)

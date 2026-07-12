@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">แบตเตอรี่ต่ำ (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d นาที</string>
     <string name="settings_motion_detection">การตรวจจับการเคลื่อนไหว</string>
-    <string name="settings_motion_detection_on">เปิด — ช่วยระบุประเภทการเคลื่อนไหว (เดิน ขับรถ) ในประวัติได้แม่นยำขึ้น</string>
-    <string name="settings_motion_detection_off">ปิด — อนุญาตการเข้าถึงกิจกรรมทางกายเพื่อป้ายกำกับการเคลื่อนไหวที่แม่นยำขึ้น</string>
+    <string name="settings_motion_detection_on">เปิด - ช่วยระบุประเภทการเคลื่อนไหว (เดิน ขับรถ) ในประวัติได้แม่นยำขึ้น</string>
+    <string name="settings_motion_detection_off">ปิด - อนุญาตการเข้าถึงกิจกรรมทางกายเพื่อป้ายกำกับการเคลื่อนไหวที่แม่นยำขึ้น</string>
     <string name="settings_battery_optimization">การเพิ่มประสิทธิภาพแบตเตอรี่</string>
-    <string name="settings_battery_optimization_unrestricted">ไม่จำกัด — LocaPeer สามารถทำงานได้อย่างอิสระในเบื้องหลัง</string>
-    <string name="settings_battery_optimization_restricted">เพิ่มประสิทธิภาพแล้ว — แตะเพื่อตั้งเป็นไม่จำกัดในการตั้งค่าระบบ</string>
+    <string name="settings_battery_optimization_unrestricted">ไม่จำกัด - LocaPeer สามารถทำงานได้อย่างอิสระในเบื้องหลัง</string>
+    <string name="settings_battery_optimization_restricted">เพิ่มประสิทธิภาพแล้ว - แตะเพื่อตั้งเป็นไม่จำกัดในการตั้งค่าระบบ</string>
 
     <!-- การอนุญาต -->
     <string name="settings_permissions">การอนุญาต</string>
     <string name="settings_permissions_subtitle">ตรวจสอบและแก้ไขการเข้าถึงตำแหน่ง กล้อง และอื่นๆ ของแอป</string>
     <string name="permissions_intro">LocaPeer ต้องการการอนุญาตเหล่านี้เพื่อแชร์ตำแหน่งของคุณ สแกนคำเชิญ และทำงานต่อในเบื้องหลัง แตะรายการที่ยังไม่ได้รับอนุญาตเพื่อแก้ไข</string>
     <string name="perm_location_title">ตำแหน่ง</string>
-    <string name="perm_location_granted">อนุญาตแล้ว — สามารถแชร์ตำแหน่งของคุณได้</string>
-    <string name="perm_location_denied">ยังไม่อนุญาต — แตะเพื่ออนุญาตการเข้าถึงตำแหน่ง</string>
+    <string name="perm_location_granted">อนุญาตแล้ว - สามารถแชร์ตำแหน่งของคุณได้</string>
+    <string name="perm_location_denied">ยังไม่อนุญาต - แตะเพื่ออนุญาตการเข้าถึงตำแหน่ง</string>
     <string name="perm_background_location_title">ตำแหน่งในเบื้องหลัง</string>
-    <string name="perm_background_location_granted">อนุญาตแล้ว — ตำแหน่งจะแชร์ต่อไปแม้ว่าจะปิดแอปแล้ว</string>
-    <string name="perm_background_location_denied">ยังไม่อนุญาต — แตะเพื่ออนุญาตการเข้าถึง \"อนุญาตตลอดเวลา\" ในการตั้งค่า</string>
+    <string name="perm_background_location_granted">อนุญาตแล้ว - ตำแหน่งจะแชร์ต่อไปแม้ว่าจะปิดแอปแล้ว</string>
+    <string name="perm_background_location_denied">ยังไม่อนุญาต - แตะเพื่ออนุญาตการเข้าถึง \"อนุญาตตลอดเวลา\" ในการตั้งค่า</string>
     <string name="perm_camera_title">กล้อง</string>
-    <string name="perm_camera_granted">อนุญาตแล้ว — ใช้สำหรับสแกนรหัส QR คำเชิญ</string>
-    <string name="perm_camera_denied">ยังไม่อนุญาต — แตะเพื่ออนุญาตกล้อง</string>
+    <string name="perm_camera_granted">อนุญาตแล้ว - ใช้สำหรับสแกนรหัส QR คำเชิญ</string>
+    <string name="perm_camera_denied">ยังไม่อนุญาต - แตะเพื่ออนุญาตกล้อง</string>
     <string name="perm_notifications_title">การแจ้งเตือน</string>
-    <string name="perm_notifications_granted">อนุญาตแล้ว — สามารถแสดงการแจ้งเตือนและการอัปเดตสถานะได้</string>
-    <string name="perm_notifications_denied">ยังไม่อนุญาต — แตะเพื่ออนุญาตการแจ้งเตือน</string>
+    <string name="perm_notifications_granted">อนุญาตแล้ว - สามารถแสดงการแจ้งเตือนและการอัปเดตสถานะได้</string>
+    <string name="perm_notifications_denied">ยังไม่อนุญาต - แตะเพื่ออนุญาตการแจ้งเตือน</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">หน่วยความเร็ว</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">เข้ารหัสจากปลายถึงปลาย</string>
     <string name="onboarding_feature_e2e_subtitle">ตำแหน่งของคุณถูกเข้ารหัสบนอุปกรณ์</string>
     <string name="onboarding_feature_servers_title">ไม่มีเซิร์ฟเวอร์ผูกขาด</string>
-    <string name="onboarding_feature_servers_subtitle">ใช้รีเลย์ Nostr แบบเปิดเป็นช่องทางส่งข้อมูลที่ปลอดภัย — ข้อมูลของคุณยังคงถูกเข้ารหัสและเป็นส่วนตัว</string>
+    <string name="onboarding_feature_servers_subtitle">ใช้รีเลย์ Nostr แบบเปิดเป็นช่องทางส่งข้อมูลที่ปลอดภัย - ข้อมูลของคุณยังคงถูกเข้ารหัสและเป็นส่วนตัว</string>
     <string name="onboarding_feature_phone_title">อยู่บนโทรศัพท์ของคุณ</string>
     <string name="onboarding_feature_phone_subtitle">ประวัติตำแหน่งทั้งหมดอยู่บนอุปกรณ์ของคุณ มีเพียงตำแหน่งปัจจุบันที่แชร์กับผู้ติดต่อที่เลือก</string>
     <string name="onboarding_name_prompt">ให้ผู้ติดต่อเรียกคุณว่าอะไรดี?</string>
@@ -287,13 +287,13 @@
     <string name="onboarding_restore_from_backup">กู้คืนจากข้อมูลสำรอง</string>
     <string name="onboarding_key_note">กุญแจส่วนตัวของคุณถูกสร้างในเครื่องและจะไม่ออกจากอุปกรณ์นี้</string>
     <string name="onboarding_permissions_title">สิทธิ์</string>
-    <string name="onboarding_permissions_desc">LocaPeer ต้องการสิทธิ์ตำแหน่งเพื่อแชร์ตำแหน่งของคุณ สิทธิ์กล้องเพื่อสแกนรหัสคำเชิญ และสิทธิ์การแจ้งเตือนสำหรับสถานะเบื้องหลัง สิทธิ์กิจกรรมทางกายเป็นตัวเลือก — ช่วยป้ายกำกับการเคลื่อนไหว (เดิน ขับรถ) ได้แม่นยำขึ้น</string>
+    <string name="onboarding_permissions_desc">LocaPeer ต้องการสิทธิ์ตำแหน่งเพื่อแชร์ตำแหน่งของคุณ สิทธิ์กล้องเพื่อสแกนรหัสคำเชิญ และสิทธิ์การแจ้งเตือนสำหรับสถานะเบื้องหลัง สิทธิ์กิจกรรมทางกายเป็นตัวเลือก - ช่วยป้ายกำกับการเคลื่อนไหว (เดิน ขับรถ) ได้แม่นยำขึ้น</string>
     <string name="onboarding_before_ask_title">ก่อนที่เราจะขอ</string>
     <string name="onboarding_before_ask_intro">คุณจะเห็นข้อความจากระบบสองสามรายการต่อจากนี้:</string>
-    <string name="onboarding_before_ask_location">• ตำแหน่ง — จำเป็น เพื่อแชร์ตำแหน่งของคุณ</string>
-    <string name="onboarding_before_ask_camera">• กล้อง — เพื่อสแกนรหัสคำเชิญ</string>
-    <string name="onboarding_before_ask_notifications">• การแจ้งเตือน — สำหรับสถานะเบื้องหลัง</string>
-    <string name="onboarding_before_ask_activity">• กิจกรรมทางกาย — ไม่บังคับ ช่วยให้ LocaPeer แยกแยะการเดิน การขับรถ และการอยู่นิ่งได้แม่นยำขึ้น ข้ามได้และเปิดภายหลังในการตั้งค่า</string>
+    <string name="onboarding_before_ask_location">• ตำแหน่ง - จำเป็น เพื่อแชร์ตำแหน่งของคุณ</string>
+    <string name="onboarding_before_ask_camera">• กล้อง - เพื่อสแกนรหัสคำเชิญ</string>
+    <string name="onboarding_before_ask_notifications">• การแจ้งเตือน - สำหรับสถานะเบื้องหลัง</string>
+    <string name="onboarding_before_ask_activity">• กิจกรรมทางกาย - ไม่บังคับ ช่วยให้ LocaPeer แยกแยะการเดิน การขับรถ และการอยู่นิ่งได้แม่นยำขึ้น ข้ามได้และเปิดภายหลังในการตั้งค่า</string>
     <string name="onboarding_grant_permissions">ให้สิทธิ์</string>
     <string name="onboarding_bg_location_title">ตำแหน่งเบื้องหลัง</string>
     <string name="onboarding_bg_location_desc">เพื่อให้ผู้ติดต่อได้รับข้อมูลอัปเดตขณะปิดแอป กรุณาเลือก \"อนุญาตตลอดเวลา\" ในหน้าจอถัดไป</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">ไปยังตำแหน่ง</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS เปิด</string>
-    <string name="map_overdue">เกินกำหนด — ไม่มีการอัปเดตล่าสุด</string>
+    <string name="map_overdue">เกินกำหนด - ไม่มีการอัปเดตล่าสุด</string>
     <string name="map_stat_last_seen">เห็นล่าสุด</string>
     <string name="map_stat_battery">แบตเตอรี่</string>
     <string name="map_stat_accuracy">ความแม่นยำ</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">ยอมรับเพื่ออนุญาตคำขออนุมัติปลดล็อกจากอุปกรณ์นี้</string>
     <string name="notif_supervisor_request_big">ยอมรับเพื่อให้ %1$s ส่งคำขออนุมัติปลดล็อกถึงคุณเมื่อโหมดถูกกำกับดูแลทำงาน</string>
     <string name="notif_supervised_active_title">โหมดถูกกำกับดูแลทำงาน</string>
-    <string name="notif_supervised_active_text">ผู้ดูแลของคุณยืนยันแล้ว — โหมดถูกกำกับดูแลถูกตั้งค่าแล้ว</string>
+    <string name="notif_supervised_active_text">ผู้ดูแลของคุณยืนยันแล้ว - โหมดถูกกำกับดูแลถูกตั้งค่าแล้ว</string>
     <string name="notif_supervised_declined_title">โหมดถูกกำกับดูแลถูกปฏิเสธ</string>
-    <string name="notif_supervised_declined_text">ผู้ดูแลของคุณปฏิเสธคำขอ — โหมดถูกกำกับดูแลถูกปิด</string>
+    <string name="notif_supervised_declined_text">ผู้ดูแลของคุณปฏิเสธคำขอ - โหมดถูกกำกับดูแลถูกปิด</string>
     <string name="notif_tracking_alert_title">การเตือนการติดตาม</string>
     <string name="notif_tracking_proximity">%1$s ได้รับการเตือนระยะใกล้เกี่ยวกับคุณ</string>
     <string name="notif_tracking_geofence">%1$s ได้รับการเตือนว่าคุณเข้า/ออกรั้ว: %2$s</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">ไม่พบผู้ติดต่อ</string>
     <string name="peer_purge_location_sent">ส่งคำสั่งลบตำแหน่งทั้งหมดจากระยะไกลไปยัง %1$s แล้ว</string>
     <string name="peer_purge_messages_sent">ส่งคำสั่งลบข้อความทั้งหมดจากระยะไกลไปยัง %1$s แล้ว</string>
-    <string name="onboarding_error_key_length">กุญแจไม่ถูกต้อง — ต้องเป็นอักขระฐานสิบหก 64 ตัว</string>
-    <string name="onboarding_error_key_range">กุญแจส่วนตัวไม่ถูกต้อง — อยู่นอกช่วงของเส้นโค้ง</string>
+    <string name="onboarding_error_key_length">กุญแจไม่ถูกต้อง - ต้องเป็นอักขระฐานสิบหก 64 ตัว</string>
+    <string name="onboarding_error_key_range">กุญแจส่วนตัวไม่ถูกต้อง - อยู่นอกช่วงของเส้นโค้ง</string>
     <string name="onboarding_error_hex">รูปแบบฐานสิบหกไม่ถูกต้อง</string>
     <string name="onboarding_error_import_failed">นำเข้ากุญแจล้มเหลว: %1$s</string>
 </resources>

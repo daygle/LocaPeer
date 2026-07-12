@@ -124,28 +124,28 @@
     <string name="settings_low_battery" formatted="false">Niski poziom baterii (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Wykrywanie ruchu</string>
-    <string name="settings_motion_detection_on">Włączone — doprecyzowuje typ ruchu (chód, jazda) w historii</string>
-    <string name="settings_motion_detection_off">Wyłączone — zezwól na dostęp do aktywności fizycznej, aby uzyskać dokładniejsze etykiety ruchu</string>
+    <string name="settings_motion_detection_on">Włączone - doprecyzowuje typ ruchu (chód, jazda) w historii</string>
+    <string name="settings_motion_detection_off">Wyłączone - zezwól na dostęp do aktywności fizycznej, aby uzyskać dokładniejsze etykiety ruchu</string>
     <string name="settings_battery_optimization">Optymalizacja baterii</string>
-    <string name="settings_battery_optimization_unrestricted">Bez ograniczeń — LocaPeer może działać swobodnie w tle</string>
-    <string name="settings_battery_optimization_restricted">Zoptymalizowano — dotknij, aby ustawić Bez ograniczeń w ustawieniach systemu</string>
+    <string name="settings_battery_optimization_unrestricted">Bez ograniczeń - LocaPeer może działać swobodnie w tle</string>
+    <string name="settings_battery_optimization_restricted">Zoptymalizowano - dotknij, aby ustawić Bez ograniczeń w ustawieniach systemu</string>
 
     <!-- Uprawnienia -->
     <string name="settings_permissions">Uprawnienia</string>
     <string name="settings_permissions_subtitle">Przeglądaj i poprawiaj dostęp aplikacji do lokalizacji, aparatu i innych</string>
     <string name="permissions_intro">LocaPeer potrzebuje tych uprawnień, aby udostępniać Twoją lokalizację, skanować zaproszenia i działać w tle. Dotknij tych, które nie zostały przyznane, aby to naprawić.</string>
     <string name="perm_location_title">Lokalizacja</string>
-    <string name="perm_location_granted">Przyznano — Twoja lokalizacja może być udostępniana</string>
-    <string name="perm_location_denied">Nie przyznano — dotknij, aby zezwolić na dostęp do lokalizacji</string>
+    <string name="perm_location_granted">Przyznano - Twoja lokalizacja może być udostępniana</string>
+    <string name="perm_location_denied">Nie przyznano - dotknij, aby zezwolić na dostęp do lokalizacji</string>
     <string name="perm_background_location_title">Lokalizacja w tle</string>
-    <string name="perm_background_location_granted">Przyznano — lokalizacja jest udostępniana nawet po zamknięciu aplikacji</string>
-    <string name="perm_background_location_denied">Nie przyznano — dotknij, aby zezwolić na dostęp „Zawsze” w ustawieniach</string>
+    <string name="perm_background_location_granted">Przyznano - lokalizacja jest udostępniana nawet po zamknięciu aplikacji</string>
+    <string name="perm_background_location_denied">Nie przyznano - dotknij, aby zezwolić na dostęp „Zawsze” w ustawieniach</string>
     <string name="perm_camera_title">Aparat</string>
-    <string name="perm_camera_granted">Przyznano — używany do skanowania kodów QR z zaproszeniami</string>
-    <string name="perm_camera_denied">Nie przyznano — dotknij, aby zezwolić na korzystanie z aparatu</string>
+    <string name="perm_camera_granted">Przyznano - używany do skanowania kodów QR z zaproszeniami</string>
+    <string name="perm_camera_denied">Nie przyznano - dotknij, aby zezwolić na korzystanie z aparatu</string>
     <string name="perm_notifications_title">Powiadomienia</string>
-    <string name="perm_notifications_granted">Przyznano — alerty i aktualizacje statusu mogą być wyświetlane</string>
-    <string name="perm_notifications_denied">Nie przyznano — dotknij, aby zezwolić na powiadomienia</string>
+    <string name="perm_notifications_granted">Przyznano - alerty i aktualizacje statusu mogą być wyświetlane</string>
+    <string name="perm_notifications_denied">Nie przyznano - dotknij, aby zezwolić na powiadomienia</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Jednostki prędkości</string>
@@ -296,7 +296,7 @@
     <string name="onboarding_feature_e2e_title">Szyfrowanie end-to-end</string>
     <string name="onboarding_feature_e2e_subtitle">Twoja lokalizacja jest szyfrowana na urządzeniu</string>
     <string name="onboarding_feature_servers_title">Bez własnościowych serwerów</string>
-    <string name="onboarding_feature_servers_subtitle">Otwarte przekaźniki Nostr służą jako bezpieczny transport — Twoje dane pozostają zaszyfrowane i prywatne</string>
+    <string name="onboarding_feature_servers_subtitle">Otwarte przekaźniki Nostr służą jako bezpieczny transport - Twoje dane pozostają zaszyfrowane i prywatne</string>
     <string name="onboarding_feature_phone_title">Zostaje na Twoim telefonie</string>
     <string name="onboarding_feature_phone_subtitle">Pełna historia lokalizacji pozostaje na Twoim urządzeniu. Wybranym kontaktom udostępniana jest tylko bieżąca pozycja</string>
     <string name="onboarding_name_prompt">Jak mają Cię nazywać Twoje kontakty?</string>
@@ -305,13 +305,13 @@
     <string name="onboarding_restore_from_backup">Przywróć z kopii zapasowej</string>
     <string name="onboarding_key_note">Twój klucz prywatny jest generowany lokalnie i nigdy nie opuszcza tego urządzenia.</string>
     <string name="onboarding_permissions_title">Uprawnienia</string>
-    <string name="onboarding_permissions_desc">LocaPeer potrzebuje dostępu do lokalizacji, aby udostępniać Twoją pozycję, do aparatu, aby skanować kody zaproszeń, oraz do powiadomień dla statusu w tle. Dostęp do aktywności fizycznej jest opcjonalny — pomaga dokładniej oznaczać Twój ruch (chód, jazda).</string>
+    <string name="onboarding_permissions_desc">LocaPeer potrzebuje dostępu do lokalizacji, aby udostępniać Twoją pozycję, do aparatu, aby skanować kody zaproszeń, oraz do powiadomień dla statusu w tle. Dostęp do aktywności fizycznej jest opcjonalny - pomaga dokładniej oznaczać Twój ruch (chód, jazda).</string>
     <string name="onboarding_before_ask_title">Zanim zapytamy</string>
     <string name="onboarding_before_ask_intro">Za chwilę zobaczysz kilka systemowych próśb:</string>
-    <string name="onboarding_before_ask_location">• Lokalizacja — wymagana, aby udostępniać Twoją pozycję.</string>
-    <string name="onboarding_before_ask_camera">• Aparat — do skanowania kodów zaproszeń.</string>
-    <string name="onboarding_before_ask_notifications">• Powiadomienia — dla statusu w tle.</string>
-    <string name="onboarding_before_ask_activity">• Aktywność fizyczna — opcjonalna. Pozwala LocaPeer dokładniej odróżniać chód, jazdę i postój. Możesz to pominąć i włączyć później w Ustawieniach.</string>
+    <string name="onboarding_before_ask_location">• Lokalizacja - wymagana, aby udostępniać Twoją pozycję.</string>
+    <string name="onboarding_before_ask_camera">• Aparat - do skanowania kodów zaproszeń.</string>
+    <string name="onboarding_before_ask_notifications">• Powiadomienia - dla statusu w tle.</string>
+    <string name="onboarding_before_ask_activity">• Aktywność fizyczna - opcjonalna. Pozwala LocaPeer dokładniej odróżniać chód, jazdę i postój. Możesz to pominąć i włączyć później w Ustawieniach.</string>
     <string name="onboarding_grant_permissions">Przyznaj uprawnienia</string>
     <string name="onboarding_bg_location_title">Lokalizacja w tle</string>
     <string name="onboarding_bg_location_desc">Aby kontakty otrzymywały aktualizacje, gdy aplikacja jest zamknięta, na następnym ekranie wybierz „Zawsze zezwalaj”.</string>
@@ -524,7 +524,7 @@
     <string name="map_cd_go_location">Przejdź do lokalizacji</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS WŁ.</string>
-    <string name="map_overdue">Zaległe — brak niedawnej aktualizacji</string>
+    <string name="map_overdue">Zaległe - brak niedawnej aktualizacji</string>
     <string name="map_stat_last_seen">Ostatnio widziano</string>
     <string name="map_stat_battery">Bateria</string>
     <string name="map_stat_accuracy">Dokładność</string>
@@ -708,9 +708,9 @@
     <string name="notif_supervisor_request_text">Zaakceptuj, aby zezwolić na prośby o zatwierdzenie odblokowania z tego urządzenia</string>
     <string name="notif_supervisor_request_big">Zaakceptuj, aby %1$s mógł (mogła) wysyłać Ci prośby o zatwierdzenie odblokowania, gdy tryb nadzorowany jest aktywny.</string>
     <string name="notif_supervised_active_title">Tryb nadzorowany aktywny</string>
-    <string name="notif_supervised_active_text">Opiekun potwierdził — tryb nadzorowany został skonfigurowany</string>
+    <string name="notif_supervised_active_text">Opiekun potwierdził - tryb nadzorowany został skonfigurowany</string>
     <string name="notif_supervised_declined_title">Tryb nadzorowany odrzucony</string>
-    <string name="notif_supervised_declined_text">Opiekun odrzucił prośbę — tryb nadzorowany został wyłączony</string>
+    <string name="notif_supervised_declined_text">Opiekun odrzucił prośbę - tryb nadzorowany został wyłączony</string>
     <string name="notif_tracking_alert_title">Alert o śledzeniu</string>
     <string name="notif_tracking_proximity">%1$s otrzymał(a) dotyczący Ciebie alert zbliżeniowy</string>
     <string name="notif_tracking_geofence">%1$s otrzymał(a) alert o Twoim wejściu/wyjściu ze strefy: %2$s</string>
@@ -787,8 +787,8 @@
     <string name="peer_not_found">Nie znaleziono kontaktu</string>
     <string name="peer_purge_location_sent">Polecenie zdalnego usunięcia WSZYSTKICH lokalizacji wysłane do %1$s</string>
     <string name="peer_purge_messages_sent">Polecenie zdalnego usunięcia WSZYSTKICH wiadomości wysłane do %1$s</string>
-    <string name="onboarding_error_key_length">Nieprawidłowy klucz — musi mieć 64 znaki szesnastkowe.</string>
-    <string name="onboarding_error_key_range">Nieprawidłowy klucz prywatny — poza zakresem krzywej.</string>
+    <string name="onboarding_error_key_length">Nieprawidłowy klucz - musi mieć 64 znaki szesnastkowe.</string>
+    <string name="onboarding_error_key_range">Nieprawidłowy klucz prywatny - poza zakresem krzywej.</string>
     <string name="onboarding_error_hex">Nieprawidłowy format szesnastkowy.</string>
     <string name="onboarding_error_import_failed">Nie udało się zaimportować klucza: %1$s</string>
 </resources>

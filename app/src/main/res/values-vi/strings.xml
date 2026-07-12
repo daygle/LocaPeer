@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Pin yếu (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d phút</string>
     <string name="settings_motion_detection">Phát hiện chuyển động</string>
-    <string name="settings_motion_detection_on">Đang bật — tinh chỉnh loại chuyển động (đi bộ, lái xe) trong lịch sử</string>
-    <string name="settings_motion_detection_off">Tắt — cho phép truy cập hoạt động thể chất để có nhãn chuyển động chính xác hơn</string>
+    <string name="settings_motion_detection_on">Đang bật - tinh chỉnh loại chuyển động (đi bộ, lái xe) trong lịch sử</string>
+    <string name="settings_motion_detection_off">Tắt - cho phép truy cập hoạt động thể chất để có nhãn chuyển động chính xác hơn</string>
     <string name="settings_battery_optimization">Tối ưu hóa pin</string>
-    <string name="settings_battery_optimization_unrestricted">Không hạn chế — LocaPeer có thể chạy tự do trong nền</string>
-    <string name="settings_battery_optimization_restricted">Đã tối ưu hóa — nhấn để đặt Không hạn chế trong cài đặt hệ thống</string>
+    <string name="settings_battery_optimization_unrestricted">Không hạn chế - LocaPeer có thể chạy tự do trong nền</string>
+    <string name="settings_battery_optimization_restricted">Đã tối ưu hóa - nhấn để đặt Không hạn chế trong cài đặt hệ thống</string>
 
     <!-- Quyền hạn -->
     <string name="settings_permissions">Quyền hạn</string>
     <string name="settings_permissions_subtitle">Xem xét và khắc phục quyền truy cập của ứng dụng vào vị trí, máy ảnh và hơn thế nữa</string>
     <string name="permissions_intro">LocaPeer cần các quyền này để chia sẻ vị trí của bạn, quét lời mời và tiếp tục chạy trong nền. Nhấn vào bất kỳ quyền nào chưa được cấp để khắc phục.</string>
     <string name="perm_location_title">Vị trí</string>
-    <string name="perm_location_granted">Đã cấp — vị trí của bạn có thể được chia sẻ</string>
-    <string name="perm_location_denied">Chưa cấp — nhấn để cho phép truy cập vị trí</string>
+    <string name="perm_location_granted">Đã cấp - vị trí của bạn có thể được chia sẻ</string>
+    <string name="perm_location_denied">Chưa cấp - nhấn để cho phép truy cập vị trí</string>
     <string name="perm_background_location_title">Vị trí trong nền</string>
-    <string name="perm_background_location_granted">Đã cấp — vị trí tiếp tục được chia sẻ khi ứng dụng bị đóng</string>
-    <string name="perm_background_location_denied">Chưa cấp — nhấn để cho phép truy cập \'Luôn cho phép\' trong cài đặt</string>
+    <string name="perm_background_location_granted">Đã cấp - vị trí tiếp tục được chia sẻ khi ứng dụng bị đóng</string>
+    <string name="perm_background_location_denied">Chưa cấp - nhấn để cho phép truy cập \'Luôn cho phép\' trong cài đặt</string>
     <string name="perm_camera_title">Máy ảnh</string>
-    <string name="perm_camera_granted">Đã cấp — được sử dụng để quét mã QR mời</string>
-    <string name="perm_camera_denied">Chưa cấp — nhấn để cho phép máy ảnh</string>
+    <string name="perm_camera_granted">Đã cấp - được sử dụng để quét mã QR mời</string>
+    <string name="perm_camera_denied">Chưa cấp - nhấn để cho phép máy ảnh</string>
     <string name="perm_notifications_title">Thông báo</string>
-    <string name="perm_notifications_granted">Đã cấp — có thể hiển thị cảnh báo và cập nhật trạng thái</string>
-    <string name="perm_notifications_denied">Chưa cấp — nhấn để cho phép thông báo</string>
+    <string name="perm_notifications_granted">Đã cấp - có thể hiển thị cảnh báo và cập nhật trạng thái</string>
+    <string name="perm_notifications_denied">Chưa cấp - nhấn để cho phép thông báo</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Đơn vị tốc độ</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">Mã hóa đầu cuối</string>
     <string name="onboarding_feature_e2e_subtitle">Vị trí của bạn được mã hóa ngay trên thiết bị</string>
     <string name="onboarding_feature_servers_title">Không máy chủ độc quyền</string>
-    <string name="onboarding_feature_servers_subtitle">Dùng các relay Nostr mở làm kênh truyền an toàn — dữ liệu của bạn luôn được mã hóa và riêng tư</string>
+    <string name="onboarding_feature_servers_subtitle">Dùng các relay Nostr mở làm kênh truyền an toàn - dữ liệu của bạn luôn được mã hóa và riêng tư</string>
     <string name="onboarding_feature_phone_title">Chỉ nằm trên điện thoại của bạn</string>
     <string name="onboarding_feature_phone_subtitle">Toàn bộ lịch sử vị trí nằm trên thiết bị của bạn. Chỉ vị trí hiện tại được chia sẻ với các liên hệ đã chọn</string>
     <string name="onboarding_name_prompt">Danh bạ của bạn nên gọi bạn là gì?</string>
@@ -287,13 +287,13 @@
     <string name="onboarding_restore_from_backup">Khôi phục từ bản sao lưu</string>
     <string name="onboarding_key_note">Khóa riêng tư của bạn được tạo cục bộ và không bao giờ rời khỏi thiết bị này.</string>
     <string name="onboarding_permissions_title">Quyền</string>
-    <string name="onboarding_permissions_desc">LocaPeer cần quyền vị trí để chia sẻ vị trí của bạn, quyền máy ảnh để quét mã mời và quyền thông báo cho trạng thái nền. Quyền hoạt động thể chất là tùy chọn — giúp gắn nhãn chuyển động (đi bộ, lái xe) chính xác hơn.</string>
+    <string name="onboarding_permissions_desc">LocaPeer cần quyền vị trí để chia sẻ vị trí của bạn, quyền máy ảnh để quét mã mời và quyền thông báo cho trạng thái nền. Quyền hoạt động thể chất là tùy chọn - giúp gắn nhãn chuyển động (đi bộ, lái xe) chính xác hơn.</string>
     <string name="onboarding_before_ask_title">Trước khi chúng tôi hỏi</string>
     <string name="onboarding_before_ask_intro">Bạn sẽ thấy một vài lời nhắc hệ thống tiếp theo:</string>
-    <string name="onboarding_before_ask_location">• Vị trí — bắt buộc, để chia sẻ vị trí của bạn.</string>
-    <string name="onboarding_before_ask_camera">• Máy ảnh — để quét mã mời.</string>
-    <string name="onboarding_before_ask_notifications">• Thông báo — cho trạng thái nền.</string>
-    <string name="onboarding_before_ask_activity">• Hoạt động thể chất — tùy chọn. Giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên. Bạn có thể bỏ qua và bật sau trong Cài đặt.</string>
+    <string name="onboarding_before_ask_location">• Vị trí - bắt buộc, để chia sẻ vị trí của bạn.</string>
+    <string name="onboarding_before_ask_camera">• Máy ảnh - để quét mã mời.</string>
+    <string name="onboarding_before_ask_notifications">• Thông báo - cho trạng thái nền.</string>
+    <string name="onboarding_before_ask_activity">• Hoạt động thể chất - tùy chọn. Giúp LocaPeer phân biệt chính xác hơn giữa đi bộ, lái xe và đứng yên. Bạn có thể bỏ qua và bật sau trong Cài đặt.</string>
     <string name="onboarding_grant_permissions">Cấp quyền</string>
     <string name="onboarding_bg_location_title">Vị trí nền</string>
     <string name="onboarding_bg_location_desc">Để danh bạ của bạn luôn được cập nhật khi ứng dụng đóng, hãy chọn \"Luôn cho phép\" ở màn hình tiếp theo.</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">Đến vị trí</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS BẬT</string>
-    <string name="map_overdue">Quá hạn — không có cập nhật gần đây</string>
+    <string name="map_overdue">Quá hạn - không có cập nhật gần đây</string>
     <string name="map_stat_last_seen">Hoạt động gần nhất</string>
     <string name="map_stat_battery">Pin</string>
     <string name="map_stat_accuracy">Độ chính xác</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">Chấp nhận để cho phép các yêu cầu phê duyệt mở khóa từ thiết bị này</string>
     <string name="notif_supervisor_request_big">Chấp nhận để cho phép %1$s gửi cho bạn yêu cầu phê duyệt mở khóa khi chế độ được giám sát đang bật.</string>
     <string name="notif_supervised_active_title">Chế độ được giám sát đang bật</string>
-    <string name="notif_supervised_active_text">Người giám sát của bạn đã xác nhận — chế độ được giám sát đã được thiết lập</string>
+    <string name="notif_supervised_active_text">Người giám sát của bạn đã xác nhận - chế độ được giám sát đã được thiết lập</string>
     <string name="notif_supervised_declined_title">Chế độ được giám sát bị từ chối</string>
-    <string name="notif_supervised_declined_text">Người giám sát của bạn đã từ chối yêu cầu — chế độ được giám sát đã bị tắt</string>
+    <string name="notif_supervised_declined_text">Người giám sát của bạn đã từ chối yêu cầu - chế độ được giám sát đã bị tắt</string>
     <string name="notif_tracking_alert_title">Cảnh báo theo dõi</string>
     <string name="notif_tracking_proximity">%1$s đã nhận cảnh báo khoảng cách gần về bạn</string>
     <string name="notif_tracking_geofence">%1$s đã nhận cảnh báo rằng bạn vào/ra khỏi hàng rào: %2$s</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">Không tìm thấy liên hệ</string>
     <string name="peer_purge_location_sent">Đã gửi lệnh xóa từ xa TẤT CẢ vị trí tới %1$s</string>
     <string name="peer_purge_messages_sent">Đã gửi lệnh xóa từ xa TẤT CẢ tin nhắn tới %1$s</string>
-    <string name="onboarding_error_key_length">Khóa không hợp lệ — phải gồm 64 ký tự hex.</string>
-    <string name="onboarding_error_key_range">Khóa riêng tư không hợp lệ — nằm ngoài phạm vi đường cong.</string>
+    <string name="onboarding_error_key_length">Khóa không hợp lệ - phải gồm 64 ký tự hex.</string>
+    <string name="onboarding_error_key_range">Khóa riêng tư không hợp lệ - nằm ngoài phạm vi đường cong.</string>
     <string name="onboarding_error_hex">Định dạng hex không hợp lệ.</string>
     <string name="onboarding_error_import_failed">Nhập khóa thất bại: %1$s</string>
 </resources>

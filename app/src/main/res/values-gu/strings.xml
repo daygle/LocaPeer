@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">સક્ષમ - ઇતિહાસમાં તમારી હિલચાલનો પ્રકાર (ચાલવું, ડ્રાઇવિંગ) ચોક્કસ રીતે બતાવે છે</string>
     <string name="settings_motion_detection_off">બંધ - વધુ સચોટ હિલચાલ લેબલ્સ માટે શારીરિક પ્રવૃત્તિ ઍક્સેસની મંજૂરી આપો</string>
     <string name="settings_battery_optimization">બેટરી ઓપ્ટિમાઇઝેશન</string>
-    <string name="settings_battery_optimization_unrestricted">અનિયંત્રિત — LocaPeer બેકગ્રાઉન્ડમાં મુક્તપણે ચાલી શકે છે</string>
-    <string name="settings_battery_optimization_restricted">ઓપ્ટિમાઇઝ કરેલ — સિસ્ટમ સેટિંગ્સમાં અનિયંત્રિત સેટ કરવા માટે ટેપ કરો</string>
+    <string name="settings_battery_optimization_unrestricted">અનિયંત્રિત - LocaPeer બેકગ્રાઉન્ડમાં મુક્તપણે ચાલી શકે છે</string>
+    <string name="settings_battery_optimization_restricted">ઓપ્ટિમાઇઝ કરેલ - સિસ્ટમ સેટિંગ્સમાં અનિયંત્રિત સેટ કરવા માટે ટેપ કરો</string>
 
     <!-- પરવાનગીઓ -->
     <string name="settings_permissions">પરવાનગીઓ</string>
     <string name="settings_permissions_subtitle">સ્થાન, કેમેરા અને વધુ માટે ઍપ ઍક્સેસની સમીક્ષા કરો અને સુધારો</string>
     <string name="permissions_intro">તમારું સ્થાન શેર કરવા, આમંત્રણો સ્કેન કરવા અને બેકગ્રાઉન્ડમાં ચાલતા રહેવા માટે LocaPeer ને આ પરવાનગીઓની જરૂર છે. સુધારવા માટે કોઈપણ જે મંજૂર ન હોય તેના પર ટેપ કરો.</string>
     <string name="perm_location_title">સ્થાન</string>
-    <string name="perm_location_granted">મંજૂર — તમારું સ્થાન શેર કરી શકાય છે</string>
-    <string name="perm_location_denied">મંજૂર નથી — સ્થાન ઍક્સેસની મંજૂરી આપવા માટે ટેપ કરો</string>
+    <string name="perm_location_granted">મંજૂર - તમારું સ્થાન શેર કરી શકાય છે</string>
+    <string name="perm_location_denied">મંજૂર નથી - સ્થાન ઍક્સેસની મંજૂરી આપવા માટે ટેપ કરો</string>
     <string name="perm_background_location_title">બેકગ્રાઉન્ડ સ્થાન</string>
-    <string name="perm_background_location_granted">મંજૂર — જ્યારે ઍપ બંધ હોય ત્યારે પણ સ્થાન શેરિંગ ચાલુ રહે છે</string>
-    <string name="perm_background_location_denied">મંજૂર નથી — સેટિંગ્સમાં \'હંમેશા મંજૂરી આપો\' પસંદ કરવા માટે ટેપ કરો</string>
+    <string name="perm_background_location_granted">મંજૂર - જ્યારે ઍપ બંધ હોય ત્યારે પણ સ્થાન શેરિંગ ચાલુ રહે છે</string>
+    <string name="perm_background_location_denied">મંજૂર નથી - સેટિંગ્સમાં \'હંમેશા મંજૂરી આપો\' પસંદ કરવા માટે ટેપ કરો</string>
     <string name="perm_camera_title">કેમેરા</string>
-    <string name="perm_camera_granted">મંજૂર — આમંત્રણ QR કોડ સ્કેન કરવા માટે વપરાય છે</string>
-    <string name="perm_camera_denied">મંજૂર નથી — કેમેરાની મંજૂરી આપવા માટે ટેપ કરો</string>
+    <string name="perm_camera_granted">મંજૂર - આમંત્રણ QR કોડ સ્કેન કરવા માટે વપરાય છે</string>
+    <string name="perm_camera_denied">મંજૂર નથી - કેમેરાની મંજૂરી આપવા માટે ટેપ કરો</string>
     <string name="perm_notifications_title">સૂચનાઓ</string>
-    <string name="perm_notifications_granted">મંજૂર — ચેતવણીઓ અને સ્થિતિ અપડેટ્સ બતાવી શકાય છે</string>
-    <string name="perm_notifications_denied">મંજૂર નથી — સૂચનાઓની મંજૂરી આપવા માટે ટેપ કરો</string>
+    <string name="perm_notifications_granted">મંજૂર - ચેતવણીઓ અને સ્થિતિ અપડેટ્સ બતાવી શકાય છે</string>
+    <string name="perm_notifications_denied">મંજૂર નથી - સૂચનાઓની મંજૂરી આપવા માટે ટેપ કરો</string>
 
     <!-- એકમો અને પ્રદર્શન -->
     <string name="settings_speed_units">ઝડપના એકમો</string>

@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Düşük Pil (&lt; %20)</string>
     <string name="settings_minutes_short">%1$d dk</string>
     <string name="settings_motion_detection">Hareket Algılama</string>
-    <string name="settings_motion_detection_on">Etkin — geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
-    <string name="settings_motion_detection_off">Kapalı — daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
+    <string name="settings_motion_detection_on">Etkin - geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
+    <string name="settings_motion_detection_off">Kapalı - daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
     <string name="settings_battery_optimization">Pil Optimizasyonu</string>
-    <string name="settings_battery_optimization_unrestricted">Kısıtlanmamış — LocaPeer arka planda serbestçe çalışabilir</string>
-    <string name="settings_battery_optimization_restricted">Optimize edildi — sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
+    <string name="settings_battery_optimization_unrestricted">Kısıtlanmamış - LocaPeer arka planda serbestçe çalışabilir</string>
+    <string name="settings_battery_optimization_restricted">Optimize edildi - sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
 
     <!-- İzinler -->
     <string name="settings_permissions">İzinler</string>
     <string name="settings_permissions_subtitle">Uygulamanın konuma, kameraya ve daha fazlasına erişimini inceleyin ve düzeltin</string>
     <string name="permissions_intro">LocaPeer\'in konumunuzu paylaşması, davetleri taraması ve arka planda çalışmaya devam etmesi için bu izinlere ihtiyacı vardır. Verilmeyen izinleri düzeltmek için üzerine dokunun.</string>
     <string name="perm_location_title">Konum</string>
-    <string name="perm_location_granted">Verildi — konumunuz paylaşılabilir</string>
-    <string name="perm_location_denied">Verilmedi — konum erişimine izin vermek için dokunun</string>
+    <string name="perm_location_granted">Verildi - konumunuz paylaşılabilir</string>
+    <string name="perm_location_denied">Verilmedi - konum erişimine izin vermek için dokunun</string>
     <string name="perm_background_location_title">Arka Plan Konumu</string>
-    <string name="perm_background_location_granted">Verildi — uygulama kapalıyken konum paylaşımı devam eder</string>
-    <string name="perm_background_location_denied">Verilmedi — ayarlarda \'Her zaman izin ver\' erişimine izin vermek için dokunun</string>
+    <string name="perm_background_location_granted">Verildi - uygulama kapalıyken konum paylaşımı devam eder</string>
+    <string name="perm_background_location_denied">Verilmedi - ayarlarda \'Her zaman izin ver\' erişimine izin vermek için dokunun</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Verildi — davet QR kodlarını taramak için kullanılır</string>
-    <string name="perm_camera_denied">Verilmedi — kameraya izin vermek için dokunun</string>
+    <string name="perm_camera_granted">Verildi - davet QR kodlarını taramak için kullanılır</string>
+    <string name="perm_camera_denied">Verilmedi - kameraya izin vermek için dokunun</string>
     <string name="perm_notifications_title">Bildirimler</string>
-    <string name="perm_notifications_granted">Verildi — uyarılar ve durum güncellemeleri gösterilebilir</string>
-    <string name="perm_notifications_denied">Verilmedi — bildirimlere izin vermek için dokunun</string>
+    <string name="perm_notifications_granted">Verildi - uyarılar ve durum güncellemeleri gösterilebilir</string>
+    <string name="perm_notifications_denied">Verilmedi - bildirimlere izin vermek için dokunun</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hız Birimleri</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">Uçtan Uca Şifreli</string>
     <string name="onboarding_feature_e2e_subtitle">Konumunuz cihazda şifrelenir</string>
     <string name="onboarding_feature_servers_title">Tescilli Sunucu Yok</string>
-    <string name="onboarding_feature_servers_subtitle">Güvenli taşıma için açık Nostr aktarıcılarını kullanır — verileriniz şifreli ve gizli kalır</string>
+    <string name="onboarding_feature_servers_subtitle">Güvenli taşıma için açık Nostr aktarıcılarını kullanır - verileriniz şifreli ve gizli kalır</string>
     <string name="onboarding_feature_phone_title">Telefonunuzda Kalır</string>
     <string name="onboarding_feature_phone_subtitle">Tüm konum geçmişiniz cihazınızda kalır. Seçili kişilerle yalnızca mevcut konumunuz paylaşılır</string>
     <string name="onboarding_name_prompt">Kişileriniz size nasıl hitap etsin?</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">Yedekten Geri Yükle</string>
     <string name="onboarding_key_note">Özel anahtarınız yerel olarak üretilir ve bu cihazdan asla çıkmaz.</string>
     <string name="onboarding_permissions_title">İzinler</string>
-    <string name="onboarding_permissions_desc">LocaPeer\'in konumunuzu paylaşmak için konum erişimine, davet kodlarını taramak için kamera erişimine ve arka plan durumu için bildirim erişimine ihtiyacı var. Fiziksel aktivite erişimi isteğe bağlıdır — hareketinizi (yürüme, sürüş) daha doğru etiketlemeye yardımcı olur.</string>
+    <string name="onboarding_permissions_desc">LocaPeer\'in konumunuzu paylaşmak için konum erişimine, davet kodlarını taramak için kamera erişimine ve arka plan durumu için bildirim erişimine ihtiyacı var. Fiziksel aktivite erişimi isteğe bağlıdır - hareketinizi (yürüme, sürüş) daha doğru etiketlemeye yardımcı olur.</string>
     <string name="onboarding_before_ask_title">Sormadan önce</string>
     <string name="onboarding_before_ask_intro">Şimdi birkaç sistem istemi göreceksiniz:</string>
-    <string name="onboarding_before_ask_location">• Konum — konumunuzu paylaşmak için gereklidir.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — davet kodlarını taramak için.</string>
-    <string name="onboarding_before_ask_notifications">• Bildirimler — arka plan durumu için.</string>
-    <string name="onboarding_before_ask_activity">• Fiziksel aktivite — isteğe bağlı. LocaPeer\'in yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Atlayıp daha sonra Ayarlar\'dan etkinleştirebilirsiniz.</string>
+    <string name="onboarding_before_ask_location">• Konum - konumunuzu paylaşmak için gereklidir.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - davet kodlarını taramak için.</string>
+    <string name="onboarding_before_ask_notifications">• Bildirimler - arka plan durumu için.</string>
+    <string name="onboarding_before_ask_activity">• Fiziksel aktivite - isteğe bağlı. LocaPeer\'in yürüme, sürüş ve hareketsizliği daha doğru ayırt etmesini sağlar. Atlayıp daha sonra Ayarlar\'dan etkinleştirebilirsiniz.</string>
     <string name="onboarding_grant_permissions">İzinleri Ver</string>
     <string name="onboarding_bg_location_title">Arka Plan Konumu</string>
     <string name="onboarding_bg_location_desc">Uygulama kapalıyken kişilerinizin güncel kalması için sonraki ekranda \"Her zaman izin ver\"i seçin.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Konuma git</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS AÇIK</string>
-    <string name="map_overdue">Gecikti — yakın zamanda güncelleme yok</string>
+    <string name="map_overdue">Gecikti - yakın zamanda güncelleme yok</string>
     <string name="map_stat_last_seen">Son görülme</string>
     <string name="map_stat_battery">Pil</string>
     <string name="map_stat_accuracy">Doğruluk</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Bu cihazdan kilit açma onay isteklerine izin vermek için kabul edin</string>
     <string name="notif_supervisor_request_big">Denetimli mod etkinken %1$s kişisinin size kilit açma onay istekleri göndermesine izin vermek için kabul edin.</string>
     <string name="notif_supervised_active_title">Denetimli mod etkin</string>
-    <string name="notif_supervised_active_text">Denetleyiciniz onayladı — denetimli mod artık kurulu</string>
+    <string name="notif_supervised_active_text">Denetleyiciniz onayladı - denetimli mod artık kurulu</string>
     <string name="notif_supervised_declined_title">Denetimli mod reddedildi</string>
-    <string name="notif_supervised_declined_text">Denetleyiciniz isteği reddetti — denetimli mod kapatıldı</string>
+    <string name="notif_supervised_declined_text">Denetleyiciniz isteği reddetti - denetimli mod kapatıldı</string>
     <string name="notif_tracking_alert_title">Takip Uyarısı</string>
     <string name="notif_tracking_proximity">%1$s sizinle ilgili bir yakınlık uyarısı aldı</string>
     <string name="notif_tracking_geofence">%1$s, %2$s çitine girdiğinize/çıktığınıza dair bir uyarı aldı</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">Kişi bulunamadı</string>
     <string name="peer_purge_location_sent">TÜM konumlar için uzaktan silme komutu %1$s kişisine gönderildi</string>
     <string name="peer_purge_messages_sent">TÜM mesajlar için uzaktan silme komutu %1$s kişisine gönderildi</string>
-    <string name="onboarding_error_key_length">Geçersiz anahtar — 64 onaltılık karakter olmalıdır.</string>
-    <string name="onboarding_error_key_range">Geçersiz özel anahtar — eğri aralığının dışında.</string>
+    <string name="onboarding_error_key_length">Geçersiz anahtar - 64 onaltılık karakter olmalıdır.</string>
+    <string name="onboarding_error_key_range">Geçersiz özel anahtar - eğri aralığının dışında.</string>
     <string name="onboarding_error_hex">Geçersiz onaltılık biçim.</string>
     <string name="onboarding_error_import_failed">Anahtar içe aktarılamadı: %1$s</string>
 </resources>

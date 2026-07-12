@@ -123,28 +123,28 @@
     <string name="settings_low_battery" formatted="false">סוללה חלשה (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d דק׳</string>
     <string name="settings_motion_detection">זיהוי תנועה</string>
-    <string name="settings_motion_detection_on">מופעל — מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
-    <string name="settings_motion_detection_off">כבוי — אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
+    <string name="settings_motion_detection_on">מופעל - מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
+    <string name="settings_motion_detection_off">כבוי - אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
     <string name="settings_battery_optimization">אופטימיזציית סוללה</string>
-    <string name="settings_battery_optimization_unrestricted">ללא הגבלה — LocaPeer יכולה לפעול בחופשיות ברקע</string>
-    <string name="settings_battery_optimization_restricted">מותאם — הקש כדי להגדיר כ"ללא הגבלה" בהגדרות המערכת</string>
+    <string name="settings_battery_optimization_unrestricted">ללא הגבלה - LocaPeer יכולה לפעול בחופשיות ברקע</string>
+    <string name="settings_battery_optimization_restricted">מותאם - הקש כדי להגדיר כ"ללא הגבלה" בהגדרות המערכת</string>
 
     <!-- הרשאות -->
     <string name="settings_permissions">הרשאות</string>
     <string name="settings_permissions_subtitle">סקור ותקן את גישת האפליקציה למיקום, מצלמה ועוד</string>
     <string name="permissions_intro">LocaPeer זקוקה להרשאות אלו כדי לשתף את המיקום שלך, לסרוק הזמנות ולהמשיך לפעול ברקע. הקש על כל הרשאה שלא הוענקה כדי לתקן זאת. </string>
     <string name="perm_location_title">מיקום</string>
-    <string name="perm_location_granted">הוענק — ניתן לשתף את המיקום שלך</string>
-    <string name="perm_location_denied">לא הוענק — הקש כדי לאפשר גישה למיקום</string>
+    <string name="perm_location_granted">הוענק - ניתן לשתף את המיקום שלך</string>
+    <string name="perm_location_denied">לא הוענק - הקש כדי לאפשר גישה למיקום</string>
     <string name="perm_background_location_title">מיקום ברקע</string>
-    <string name="perm_background_location_granted">הוענק — שיתוף המיקום נמשך גם כשהאפליקציה סגורה</string>
-    <string name="perm_background_location_denied">לא הוענק — הקש כדי לאפשר גישת "אפשר תמיד" בהגדרות</string>
+    <string name="perm_background_location_granted">הוענק - שיתוף המיקום נמשך גם כשהאפליקציה סגורה</string>
+    <string name="perm_background_location_denied">לא הוענק - הקש כדי לאפשר גישת "אפשר תמיד" בהגדרות</string>
     <string name="perm_camera_title">מצלמה</string>
-    <string name="perm_camera_granted">הוענק — משמש לסריקת קודי QR של הזמנות</string>
-    <string name="perm_camera_denied">לא הוענק — הקש כדי לאפשר את המצלמה</string>
+    <string name="perm_camera_granted">הוענק - משמש לסריקת קודי QR של הזמנות</string>
+    <string name="perm_camera_denied">לא הוענק - הקש כדי לאפשר את המצלמה</string>
     <string name="perm_notifications_title">התראות</string>
-    <string name="perm_notifications_granted">הוענק — ניתן להציג התראות ועדכוני סטטוס</string>
-    <string name="perm_notifications_denied">לא הוענק — הקש כדי לאפשר התראות</string>
+    <string name="perm_notifications_granted">הוענק - ניתן להציג התראות ועדכוני סטטוס</string>
+    <string name="perm_notifications_denied">לא הוענק - הקש כדי לאפשר התראות</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">יחידות מהירות</string>
@@ -290,7 +290,7 @@
     <string name="onboarding_feature_e2e_title">מוצפן מקצה לקצה</string>
     <string name="onboarding_feature_e2e_subtitle">המיקום שלך מוצפן במכשיר</string>
     <string name="onboarding_feature_servers_title">ללא שרתים קנייניים</string>
-    <string name="onboarding_feature_servers_subtitle">משתמש בממסרי Nostr פתוחים כאמצעי העברה מאובטח — הנתונים שלך נשארים מוצפנים ופרטיים</string>
+    <string name="onboarding_feature_servers_subtitle">משתמש בממסרי Nostr פתוחים כאמצעי העברה מאובטח - הנתונים שלך נשארים מוצפנים ופרטיים</string>
     <string name="onboarding_feature_phone_title">נשאר בטלפון שלך</string>
     <string name="onboarding_feature_phone_subtitle">היסטוריית המיקום המלאה שלך נשארת במכשיר שלך. רק המיקום הנוכחי שלך משותף עם אנשי קשר נבחרים</string>
     <string name="onboarding_name_prompt">איך אנשי הקשר שלך יקראו לך?</string>
@@ -299,13 +299,13 @@
     <string name="onboarding_restore_from_backup">שחזר מגיבוי</string>
     <string name="onboarding_key_note">המפתח הפרטי שלך נוצר מקומית ולעולם אינו עוזב את המכשיר הזה.</string>
     <string name="onboarding_permissions_title">הרשאות</string>
-    <string name="onboarding_permissions_desc">‏LocaPeer זקוק לגישת מיקום כדי לשתף את מיקומך, לגישת מצלמה כדי לסרוק קודי הזמנה, ולגישת התראות עבור סטטוס רקע. גישה לפעילות גופנית היא אופציונלית — היא עוזרת לתייג את התנועה שלך (הליכה, נהיגה) בדיוק רב יותר.</string>
+    <string name="onboarding_permissions_desc">‏LocaPeer זקוק לגישת מיקום כדי לשתף את מיקומך, לגישת מצלמה כדי לסרוק קודי הזמנה, ולגישת התראות עבור סטטוס רקע. גישה לפעילות גופנית היא אופציונלית - היא עוזרת לתייג את התנועה שלך (הליכה, נהיגה) בדיוק רב יותר.</string>
     <string name="onboarding_before_ask_title">לפני שנבקש</string>
     <string name="onboarding_before_ask_intro">בהמשך תראה כמה בקשות מערכת:</string>
-    <string name="onboarding_before_ask_location">• מיקום — נדרש, כדי לשתף את מיקומך.</string>
-    <string name="onboarding_before_ask_camera">• מצלמה — לסריקת קודי הזמנה.</string>
-    <string name="onboarding_before_ask_notifications">• התראות — עבור סטטוס רקע.</string>
-    <string name="onboarding_before_ask_activity">• פעילות גופנית — אופציונלי. מאפשר ל-LocaPeer להבחין בדיוק רב יותר בין הליכה, נהיגה ועמידה. ניתן לדלג ולהפעיל מאוחר יותר בהגדרות.</string>
+    <string name="onboarding_before_ask_location">• מיקום - נדרש, כדי לשתף את מיקומך.</string>
+    <string name="onboarding_before_ask_camera">• מצלמה - לסריקת קודי הזמנה.</string>
+    <string name="onboarding_before_ask_notifications">• התראות - עבור סטטוס רקע.</string>
+    <string name="onboarding_before_ask_activity">• פעילות גופנית - אופציונלי. מאפשר ל-LocaPeer להבחין בדיוק רב יותר בין הליכה, נהיגה ועמידה. ניתן לדלג ולהפעיל מאוחר יותר בהגדרות.</string>
     <string name="onboarding_grant_permissions">הענק הרשאות</string>
     <string name="onboarding_bg_location_title">מיקום ברקע</string>
     <string name="onboarding_bg_location_desc">כדי שאנשי הקשר שלך יישארו מעודכנים כשהאפליקציה סגורה, בחר \"אפשר תמיד\" במסך הבא.</string>
@@ -515,7 +515,7 @@
     <string name="map_cd_go_location">עבור למיקום</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">‏SOS פועל</string>
-    <string name="map_overdue">באיחור — אין עדכון אחרון</string>
+    <string name="map_overdue">באיחור - אין עדכון אחרון</string>
     <string name="map_stat_last_seen">נראה לאחרונה</string>
     <string name="map_stat_battery">סוללה</string>
     <string name="map_stat_accuracy">דיוק</string>
@@ -695,9 +695,9 @@
     <string name="notif_supervisor_request_text">אשר כדי לאפשר בקשות אישור ביטול נעילה ממכשיר זה</string>
     <string name="notif_supervisor_request_big">אשר כדי לאפשר ל-%1$s לשלוח לך בקשות אישור ביטול נעילה כאשר מצב מפוקח פעיל.</string>
     <string name="notif_supervised_active_title">מצב מפוקח פעיל</string>
-    <string name="notif_supervised_active_text">המפקח שלך אישר — מצב מפוקח מוגדר כעת</string>
+    <string name="notif_supervised_active_text">המפקח שלך אישר - מצב מפוקח מוגדר כעת</string>
     <string name="notif_supervised_declined_title">מצב מפוקח נדחה</string>
-    <string name="notif_supervised_declined_text">המפקח שלך דחה את הבקשה — מצב מפוקח הושבת</string>
+    <string name="notif_supervised_declined_text">המפקח שלך דחה את הבקשה - מצב מפוקח הושבת</string>
     <string name="notif_tracking_alert_title">התראת מעקב</string>
     <string name="notif_tracking_proximity">‏%1$s קיבל התראת קרבה לגביך</string>
     <string name="notif_tracking_geofence">‏%1$s קיבל התראה שנכנסת/יצאת מהגדר: %2$s</string>
@@ -772,8 +772,8 @@
     <string name="peer_not_found">איש הקשר לא נמצא</string>
     <string name="peer_purge_location_sent">פקודת מחיקה מרחוק של כל המיקומים נשלחה ל-%1$s</string>
     <string name="peer_purge_messages_sent">פקודת מחיקה מרחוק של כל ההודעות נשלחה ל-%1$s</string>
-    <string name="onboarding_error_key_length">מפתח לא חוקי — חייב להיות 64 תווים הקסדצימליים.</string>
-    <string name="onboarding_error_key_range">מפתח פרטי לא חוקי — מחוץ לטווח העקומה.</string>
+    <string name="onboarding_error_key_length">מפתח לא חוקי - חייב להיות 64 תווים הקסדצימליים.</string>
+    <string name="onboarding_error_key_range">מפתח פרטי לא חוקי - מחוץ לטווח העקומה.</string>
     <string name="onboarding_error_hex">תבנית הקסדצימלית לא חוקית.</string>
     <string name="onboarding_error_import_failed">ייבוא המפתח נכשל: %1$s</string>
 </resources>

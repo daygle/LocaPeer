@@ -126,28 +126,28 @@
     <string name="settings_low_battery" formatted="false">بطارية منخفضة (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d د</string>
     <string name="settings_motion_detection">اكتشاف الحركة</string>
-    <string name="settings_motion_detection_on">مفعّل — يحسّن نوع حركتك (مشي، قيادة) في السجل</string>
-    <string name="settings_motion_detection_off">متوقف — اسمح بالوصول إلى النشاط البدني لتسميات حركة أدق</string>
+    <string name="settings_motion_detection_on">مفعّل - يحسّن نوع حركتك (مشي، قيادة) في السجل</string>
+    <string name="settings_motion_detection_off">متوقف - اسمح بالوصول إلى النشاط البدني لتسميات حركة أدق</string>
     <string name="settings_battery_optimization">تحسين البطارية</string>
-    <string name="settings_battery_optimization_unrestricted">غير مقيد — يمكن لـ LocaPeer العمل بحرية في الخلفية</string>
-    <string name="settings_battery_optimization_restricted">محسّن — انقر لضبطه على غير مقيد في إعدادات النظام</string>
+    <string name="settings_battery_optimization_unrestricted">غير مقيد - يمكن لـ LocaPeer العمل بحرية في الخلفية</string>
+    <string name="settings_battery_optimization_restricted">محسّن - انقر لضبطه على غير مقيد في إعدادات النظام</string>
 
     <!-- الأذونات -->
     <string name="settings_permissions">الأذونات</string>
     <string name="settings_permissions_subtitle">مراجعة وإصلاح وصول التطبيق إلى الموقع والكاميرا والمزيد</string>
     <string name="permissions_intro">يحتاج LocaPeer إلى هذه الأذونات لمشاركة موقعك ومسح الدعوات والاستمرار في العمل في الخلفية. انقر فوق أي منها لم يتم منحه لإصلاحه.</string>
     <string name="perm_location_title">الموقع</string>
-    <string name="perm_location_granted">تم المنح — يمكن مشاركة موقعك</string>
-    <string name="perm_location_denied">لم يتم المنح — انقر للسماح بالوصول إلى الموقع</string>
+    <string name="perm_location_granted">تم المنح - يمكن مشاركة موقعك</string>
+    <string name="perm_location_denied">لم يتم المنح - انقر للسماح بالوصول إلى الموقع</string>
     <string name="perm_background_location_title">الموقع في الخلفية</string>
-    <string name="perm_background_location_granted">تم المنح — تستمر مشاركة الموقع عند إغلاق التطبيق</string>
-    <string name="perm_background_location_denied">لم يتم المنح — انقر للسماح بالوصول "السماح طوال الوقت" في الإعدادات</string>
+    <string name="perm_background_location_granted">تم المنح - تستمر مشاركة الموقع عند إغلاق التطبيق</string>
+    <string name="perm_background_location_denied">لم يتم المنح - انقر للسماح بالوصول "السماح طوال الوقت" في الإعدادات</string>
     <string name="perm_camera_title">الكاميرا</string>
-    <string name="perm_camera_granted">تم المنح — تُستخدم لمسح أكواد QR للدعوات</string>
-    <string name="perm_camera_denied">لم يتم المنح — انقر للسماح بالكاميرا</string>
+    <string name="perm_camera_granted">تم المنح - تُستخدم لمسح أكواد QR للدعوات</string>
+    <string name="perm_camera_denied">لم يتم المنح - انقر للسماح بالكاميرا</string>
     <string name="perm_notifications_title">الإشعارات</string>
-    <string name="perm_notifications_granted">تم المنح — يمكن عرض التنبيهات وتحديثات الحالة</string>
-    <string name="perm_notifications_denied">لم يتم المنح — انقر للسماح بالإشعارات</string>
+    <string name="perm_notifications_granted">تم المنح - يمكن عرض التنبيهات وتحديثات الحالة</string>
+    <string name="perm_notifications_denied">لم يتم المنح - انقر للسماح بالإشعارات</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">وحدات السرعة</string>
@@ -308,7 +308,7 @@
     <string name="onboarding_feature_e2e_title">تشفير من طرف إلى طرف</string>
     <string name="onboarding_feature_e2e_subtitle">يُشفَّر موقعك على الجهاز</string>
     <string name="onboarding_feature_servers_title">بدون خوادم احتكارية</string>
-    <string name="onboarding_feature_servers_subtitle">يستخدم مرحّلات Nostr المفتوحة كوسيلة نقل آمنة — تبقى بياناتك مشفّرة وخاصة</string>
+    <string name="onboarding_feature_servers_subtitle">يستخدم مرحّلات Nostr المفتوحة كوسيلة نقل آمنة - تبقى بياناتك مشفّرة وخاصة</string>
     <string name="onboarding_feature_phone_title">يبقى على هاتفك</string>
     <string name="onboarding_feature_phone_subtitle">يبقى سجل مواقعك الكامل على جهازك. تتم مشاركة موقعك الحالي فقط مع جهات اتصال مختارة</string>
     <string name="onboarding_name_prompt">بماذا تريد أن تناديك جهات اتصالك؟</string>
@@ -317,13 +317,13 @@
     <string name="onboarding_restore_from_backup">الاستعادة من نسخة احتياطية</string>
     <string name="onboarding_key_note">يُنشأ مفتاحك الخاص محليًا ولا يغادر هذا الجهاز أبدًا.</string>
     <string name="onboarding_permissions_title">الأذونات</string>
-    <string name="onboarding_permissions_desc">يحتاج LocaPeer إلى إذن الموقع لمشاركة موضعك، وإذن الكاميرا لمسح رموز الدعوة، وإذن الإشعارات لحالة الخلفية. إذن النشاط البدني اختياري — يساعد على تسمية حركتك (مشي، قيادة) بدقة أكبر.</string>
+    <string name="onboarding_permissions_desc">يحتاج LocaPeer إلى إذن الموقع لمشاركة موضعك، وإذن الكاميرا لمسح رموز الدعوة، وإذن الإشعارات لحالة الخلفية. إذن النشاط البدني اختياري - يساعد على تسمية حركتك (مشي، قيادة) بدقة أكبر.</string>
     <string name="onboarding_before_ask_title">قبل أن نطلب</string>
     <string name="onboarding_before_ask_intro">سترى بعض مطالبات النظام تاليًا:</string>
-    <string name="onboarding_before_ask_location">• الموقع — مطلوب، لمشاركة موضعك.</string>
-    <string name="onboarding_before_ask_camera">• الكاميرا — لمسح رموز الدعوة.</string>
-    <string name="onboarding_before_ask_notifications">• الإشعارات — لحالة الخلفية.</string>
-    <string name="onboarding_before_ask_activity">• النشاط البدني — اختياري. يتيح لـ LocaPeer التمييز بدقة أكبر بين المشي والقيادة والوقوف. يمكنك تخطيه وتفعيله لاحقًا من الإعدادات.</string>
+    <string name="onboarding_before_ask_location">• الموقع - مطلوب، لمشاركة موضعك.</string>
+    <string name="onboarding_before_ask_camera">• الكاميرا - لمسح رموز الدعوة.</string>
+    <string name="onboarding_before_ask_notifications">• الإشعارات - لحالة الخلفية.</string>
+    <string name="onboarding_before_ask_activity">• النشاط البدني - اختياري. يتيح لـ LocaPeer التمييز بدقة أكبر بين المشي والقيادة والوقوف. يمكنك تخطيه وتفعيله لاحقًا من الإعدادات.</string>
     <string name="onboarding_grant_permissions">منح الأذونات</string>
     <string name="onboarding_bg_location_title">الموقع في الخلفية</string>
     <string name="onboarding_bg_location_desc">لإبقاء جهات اتصالك على اطلاع أثناء إغلاق التطبيق، يرجى اختيار \"السماح طوال الوقت\" في الشاشة التالية.</string>
@@ -542,7 +542,7 @@
     <string name="map_cd_go_location">الانتقال إلى الموقع</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS مفعّل</string>
-    <string name="map_overdue">متأخر — لا يوجد تحديث حديث</string>
+    <string name="map_overdue">متأخر - لا يوجد تحديث حديث</string>
     <string name="map_stat_last_seen">آخر ظهور</string>
     <string name="map_stat_battery">البطارية</string>
     <string name="map_stat_accuracy">الدقة</string>
@@ -734,9 +734,9 @@
     <string name="notif_supervisor_request_text">اقبل للسماح بطلبات الموافقة على إلغاء القفل من هذا الجهاز</string>
     <string name="notif_supervisor_request_big">اقبل للسماح لـ %1$s بإرسال طلبات الموافقة على إلغاء القفل إليك عندما يكون الوضع الخاضع للإشراف مفعّلًا.</string>
     <string name="notif_supervised_active_title">الوضع الخاضع للإشراف مفعّل</string>
-    <string name="notif_supervised_active_text">أكّد مشرفك — تم إعداد الوضع الخاضع للإشراف الآن</string>
+    <string name="notif_supervised_active_text">أكّد مشرفك - تم إعداد الوضع الخاضع للإشراف الآن</string>
     <string name="notif_supervised_declined_title">رُفض الوضع الخاضع للإشراف</string>
-    <string name="notif_supervised_declined_text">رفض مشرفك الطلب — تم إيقاف الوضع الخاضع للإشراف</string>
+    <string name="notif_supervised_declined_text">رفض مشرفك الطلب - تم إيقاف الوضع الخاضع للإشراف</string>
     <string name="notif_tracking_alert_title">تنبيه تتبّع</string>
     <string name="notif_tracking_proximity">تلقّى %1$s تنبيه قرب يخصّك</string>
     <string name="notif_tracking_geofence">تلقّى %1$s تنبيهًا بدخولك/خروجك من السور: %2$s</string>
@@ -817,8 +817,8 @@
     <string name="peer_not_found">جهة الاتصال غير موجودة</string>
     <string name="peer_purge_location_sent">أُرسل أمر الحذف عن بُعد لجميع المواقع إلى %1$s</string>
     <string name="peer_purge_messages_sent">أُرسل أمر الحذف عن بُعد لجميع الرسائل إلى %1$s</string>
-    <string name="onboarding_error_key_length">مفتاح غير صالح — يجب أن يتكون من 64 حرفًا سداسيًا عشريًا.</string>
-    <string name="onboarding_error_key_range">مفتاح خاص غير صالح — خارج نطاق المنحنى.</string>
+    <string name="onboarding_error_key_length">مفتاح غير صالح - يجب أن يتكون من 64 حرفًا سداسيًا عشريًا.</string>
+    <string name="onboarding_error_key_range">مفتاح خاص غير صالح - خارج نطاق المنحنى.</string>
     <string name="onboarding_error_hex">تنسيق سداسي عشري غير صالح.</string>
     <string name="onboarding_error_import_failed">فشل استيراد المفتاح: %1$s</string>
 </resources>

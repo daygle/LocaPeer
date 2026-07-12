@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Lågt batteri (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Rörelsedetektering</string>
-    <string name="settings_motion_detection_on">Aktiverad — förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
-    <string name="settings_motion_detection_off">Av — tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
+    <string name="settings_motion_detection_on">Aktiverad - förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
+    <string name="settings_motion_detection_off">Av - tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
     <string name="settings_battery_optimization">Batterioptimering</string>
-    <string name="settings_battery_optimization_unrestricted">Obegränsad — LocaPeer kan köras fritt i bakgrunden</string>
-    <string name="settings_battery_optimization_restricted">Optimerad — tryck för att ställa in Obegränsad i systeminställningarna</string>
+    <string name="settings_battery_optimization_unrestricted">Obegränsad - LocaPeer kan köras fritt i bakgrunden</string>
+    <string name="settings_battery_optimization_restricted">Optimerad - tryck för att ställa in Obegränsad i systeminställningarna</string>
 
     <!-- Behörigheter -->
     <string name="settings_permissions">Behörigheter</string>
     <string name="settings_permissions_subtitle">Granska och åtgärda appens åtkomst till plats, kamera med mera</string>
     <string name="permissions_intro">LocaPeer behöver dessa behörigheter för att dela din plats, skanna inbjudningar och fortsätta köras i bakgrunden. Tryck på de som inte har beviljats för att åtgärda dem.</string>
     <string name="perm_location_title">Plats</string>
-    <string name="perm_location_granted">Beviljad — din plats kan delas</string>
-    <string name="perm_location_denied">Inte beviljad — tryck för att tillåta platsåtkomst</string>
+    <string name="perm_location_granted">Beviljad - din plats kan delas</string>
+    <string name="perm_location_denied">Inte beviljad - tryck för att tillåta platsåtkomst</string>
     <string name="perm_background_location_title">Bakgrundsplats</string>
-    <string name="perm_background_location_granted">Beviljad — platsen fortsätter att delas när appen är stängd</string>
-    <string name="perm_background_location_denied">Inte beviljad — tryck för att tillåta åtkomst \"Tillåt alltid\" i inställningarna</string>
+    <string name="perm_background_location_granted">Beviljad - platsen fortsätter att delas när appen är stängd</string>
+    <string name="perm_background_location_denied">Inte beviljad - tryck för att tillåta åtkomst \"Tillåt alltid\" i inställningarna</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Beviljad — används för att skanna QR-koder för inbjudningar</string>
-    <string name="perm_camera_denied">Inte beviljad — tryck för att tillåta kameran</string>
+    <string name="perm_camera_granted">Beviljad - används för att skanna QR-koder för inbjudningar</string>
+    <string name="perm_camera_denied">Inte beviljad - tryck för att tillåta kameran</string>
     <string name="perm_notifications_title">Aviseringar</string>
-    <string name="perm_notifications_granted">Beviljad — varningar och statusuppdateringar kan visas</string>
-    <string name="perm_notifications_denied">Inte beviljad — tryck för att tillåta aviseringar</string>
+    <string name="perm_notifications_granted">Beviljad - varningar och statusuppdateringar kan visas</string>
+    <string name="perm_notifications_denied">Inte beviljad - tryck för att tillåta aviseringar</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hastighetsenheter</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">Totalsträckskrypterat</string>
     <string name="onboarding_feature_e2e_subtitle">Din plats krypteras på enheten</string>
     <string name="onboarding_feature_servers_title">Inga proprietära servrar</string>
-    <string name="onboarding_feature_servers_subtitle">Använder öppna Nostr-reläer som säker transport — din data förblir krypterad och privat</string>
+    <string name="onboarding_feature_servers_subtitle">Använder öppna Nostr-reläer som säker transport - din data förblir krypterad och privat</string>
     <string name="onboarding_feature_phone_title">Stannar på din telefon</string>
     <string name="onboarding_feature_phone_subtitle">Hela din platshistorik stannar på din enhet. Endast din nuvarande position delas med utvalda kontakter</string>
     <string name="onboarding_name_prompt">Vad ska dina kontakter kalla dig?</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">Återställ från säkerhetskopia</string>
     <string name="onboarding_key_note">Din privata nyckel genereras lokalt och lämnar aldrig denna enhet.</string>
     <string name="onboarding_permissions_title">Behörigheter</string>
-    <string name="onboarding_permissions_desc">LocaPeer behöver platsåtkomst för att dela din position, kameraåtkomst för att skanna inbjudningskoder och aviseringsåtkomst för bakgrundsstatus. Åtkomst till fysisk aktivitet är valfri — den hjälper till att etikettera din rörelse (gång, bilkörning) mer exakt.</string>
+    <string name="onboarding_permissions_desc">LocaPeer behöver platsåtkomst för att dela din position, kameraåtkomst för att skanna inbjudningskoder och aviseringsåtkomst för bakgrundsstatus. Åtkomst till fysisk aktivitet är valfri - den hjälper till att etikettera din rörelse (gång, bilkörning) mer exakt.</string>
     <string name="onboarding_before_ask_title">Innan vi frågar</string>
     <string name="onboarding_before_ask_intro">Du kommer nu att se några systemfrågor:</string>
-    <string name="onboarding_before_ask_location">• Plats — krävs för att dela din position.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — för att skanna inbjudningskoder.</string>
-    <string name="onboarding_before_ask_notifications">• Aviseringar — för bakgrundsstatus.</string>
-    <string name="onboarding_before_ask_activity">• Fysisk aktivitet — valfri. Låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt. Du kan hoppa över den och aktivera den senare i Inställningar.</string>
+    <string name="onboarding_before_ask_location">• Plats - krävs för att dela din position.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - för att skanna inbjudningskoder.</string>
+    <string name="onboarding_before_ask_notifications">• Aviseringar - för bakgrundsstatus.</string>
+    <string name="onboarding_before_ask_activity">• Fysisk aktivitet - valfri. Låter LocaPeer skilja gång, bilkörning och stillastående åt mer exakt. Du kan hoppa över den och aktivera den senare i Inställningar.</string>
     <string name="onboarding_grant_permissions">Bevilja behörigheter</string>
     <string name="onboarding_bg_location_title">Plats i bakgrunden</string>
     <string name="onboarding_bg_location_desc">Välj \"Tillåt alltid\" på nästa skärm så att dina kontakter hålls uppdaterade medan appen är stängd.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Gå till plats</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS PÅ</string>
-    <string name="map_overdue">Försenad — ingen ny uppdatering</string>
+    <string name="map_overdue">Försenad - ingen ny uppdatering</string>
     <string name="map_stat_last_seen">Senast sedd</string>
     <string name="map_stat_battery">Batteri</string>
     <string name="map_stat_accuracy">Noggrannhet</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Acceptera för att tillåta förfrågningar om upplåsningsgodkännande från denna enhet</string>
     <string name="notif_supervisor_request_big">Acceptera för att låta %1$s skicka förfrågningar om upplåsningsgodkännande till dig när övervakat läge är aktivt.</string>
     <string name="notif_supervised_active_title">Övervakat läge aktivt</string>
-    <string name="notif_supervised_active_text">Din tillsynsperson bekräftade — övervakat läge är nu konfigurerat</string>
+    <string name="notif_supervised_active_text">Din tillsynsperson bekräftade - övervakat läge är nu konfigurerat</string>
     <string name="notif_supervised_declined_title">Övervakat läge avböjt</string>
-    <string name="notif_supervised_declined_text">Din tillsynsperson avböjde begäran — övervakat läge har inaktiverats</string>
+    <string name="notif_supervised_declined_text">Din tillsynsperson avböjde begäran - övervakat läge har inaktiverats</string>
     <string name="notif_tracking_alert_title">Spårningslarm</string>
     <string name="notif_tracking_proximity">%1$s fick ett närhetslarm om dig</string>
     <string name="notif_tracking_geofence">%1$s fick ett larm om att du gått in i/lämnat staketet: %2$s</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">Kontakten hittades inte</string>
     <string name="peer_purge_location_sent">Fjärraderingskommando för ALLA platser skickat till %1$s</string>
     <string name="peer_purge_messages_sent">Fjärraderingskommando för ALLA meddelanden skickat till %1$s</string>
-    <string name="onboarding_error_key_length">Ogiltig nyckel — måste vara 64 hexadecimala tecken.</string>
-    <string name="onboarding_error_key_range">Ogiltig privat nyckel — utanför kurvans intervall.</string>
+    <string name="onboarding_error_key_length">Ogiltig nyckel - måste vara 64 hexadecimala tecken.</string>
+    <string name="onboarding_error_key_range">Ogiltig privat nyckel - utanför kurvans intervall.</string>
     <string name="onboarding_error_hex">Ogiltigt hexformat.</string>
     <string name="onboarding_error_import_failed">Kunde inte importera nyckeln: %1$s</string>
 </resources>

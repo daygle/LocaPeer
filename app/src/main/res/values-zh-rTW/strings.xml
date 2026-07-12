@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">低電量 (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d 分鐘</string>
     <string name="settings_motion_detection">動作偵測</string>
-    <string name="settings_motion_detection_on">已啟用 — 精確判斷紀錄中的移動類型（步行、駕駛）</string>
-    <string name="settings_motion_detection_off">關閉 — 允許身體活動存取以取得更準確的移動標籤</string>
+    <string name="settings_motion_detection_on">已啟用 - 精確判斷紀錄中的移動類型（步行、駕駛）</string>
+    <string name="settings_motion_detection_off">關閉 - 允許身體活動存取以取得更準確的移動標籤</string>
     <string name="settings_battery_optimization">電池最佳化</string>
-    <string name="settings_battery_optimization_unrestricted">不受限 — LocaPeer 可以在背景自由執行</string>
-    <string name="settings_battery_optimization_restricted">已最佳化 — 點擊以在系統設定中設為「不受限」</string>
+    <string name="settings_battery_optimization_unrestricted">不受限 - LocaPeer 可以在背景自由執行</string>
+    <string name="settings_battery_optimization_restricted">已最佳化 - 點擊以在系統設定中設為「不受限」</string>
 
     <!-- 權限 -->
     <string name="settings_permissions">權限</string>
     <string name="settings_permissions_subtitle">查看並修復應用程式對位置、相機等的存取權限</string>
     <string name="permissions_intro">LocaPeer 需要這些權限來分享您的位置、掃描邀請並保持背景執行。點擊任何未授予的權限進行修復。</string>
     <string name="perm_location_title">位置</string>
-    <string name="perm_location_granted">已授予 — 可以分享您的位置</string>
-    <string name="perm_location_denied">未授予 — 點擊以允許存取位置資訊</string>
+    <string name="perm_location_granted">已授予 - 可以分享您的位置</string>
+    <string name="perm_location_denied">未授予 - 點擊以允許存取位置資訊</string>
     <string name="perm_background_location_title">背景位置</string>
-    <string name="perm_background_location_granted">已授予 — 應用程式關閉時仍持續分享位置</string>
-    <string name="perm_background_location_denied">未授予 — 點擊以在設定中允許「始終允許」存取</string>
+    <string name="perm_background_location_granted">已授予 - 應用程式關閉時仍持續分享位置</string>
+    <string name="perm_background_location_denied">未授予 - 點擊以在設定中允許「始終允許」存取</string>
     <string name="perm_camera_title">相機</string>
-    <string name="perm_camera_granted">已授予 — 用於掃描邀請 QR 碼</string>
-    <string name="perm_camera_denied">未授予 — 點擊以允許使用相機</string>
+    <string name="perm_camera_granted">已授予 - 用於掃描邀請 QR 碼</string>
+    <string name="perm_camera_denied">未授予 - 點擊以允許使用相機</string>
     <string name="perm_notifications_title">通知</string>
-    <string name="perm_notifications_granted">已授予 — 可以顯示警示和狀態更新</string>
-    <string name="perm_notifications_denied">未授予 — 點擊以允許通知</string>
+    <string name="perm_notifications_granted">已授予 - 可以顯示警示和狀態更新</string>
+    <string name="perm_notifications_denied">未授予 - 點擊以允許通知</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">速度單位</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">端對端加密</string>
     <string name="onboarding_feature_e2e_subtitle">您的位置在裝置上加密</string>
     <string name="onboarding_feature_servers_title">無專有伺服器</string>
-    <string name="onboarding_feature_servers_subtitle">使用開放的 Nostr 中繼站作為安全傳輸 — 您的資料保持加密且私密</string>
+    <string name="onboarding_feature_servers_subtitle">使用開放的 Nostr 中繼站作為安全傳輸 - 您的資料保持加密且私密</string>
     <string name="onboarding_feature_phone_title">留在您的手機上</string>
     <string name="onboarding_feature_phone_subtitle">完整位置紀錄留在您的裝置上。只有目前位置會分享給選定的聯絡人</string>
     <string name="onboarding_name_prompt">您的聯絡人該怎麼稱呼您？</string>
@@ -287,13 +287,13 @@
     <string name="onboarding_restore_from_backup">從備份還原</string>
     <string name="onboarding_key_note">您的私鑰在本機產生，絕不會離開此裝置。</string>
     <string name="onboarding_permissions_title">權限</string>
-    <string name="onboarding_permissions_desc">LocaPeer 需要位置存取以分享您的位置、相機存取以掃描邀請碼，以及通知存取以顯示背景狀態。身體活動存取為選用 — 可協助更準確地標記您的移動方式（步行、駕駛）。</string>
+    <string name="onboarding_permissions_desc">LocaPeer 需要位置存取以分享您的位置、相機存取以掃描邀請碼，以及通知存取以顯示背景狀態。身體活動存取為選用 - 可協助更準確地標記您的移動方式（步行、駕駛）。</string>
     <string name="onboarding_before_ask_title">在詢問之前</string>
     <string name="onboarding_before_ask_intro">接下來您會看到幾個系統提示：</string>
-    <string name="onboarding_before_ask_location">• 位置 — 必要，用於分享您的位置。</string>
-    <string name="onboarding_before_ask_camera">• 相機 — 用於掃描邀請碼。</string>
-    <string name="onboarding_before_ask_notifications">• 通知 — 用於背景狀態。</string>
-    <string name="onboarding_before_ask_activity">• 身體活動 — 選用。可讓 LocaPeer 更準確地區分步行、駕駛與靜止。您可以略過，之後在設定中啟用。</string>
+    <string name="onboarding_before_ask_location">• 位置 - 必要，用於分享您的位置。</string>
+    <string name="onboarding_before_ask_camera">• 相機 - 用於掃描邀請碼。</string>
+    <string name="onboarding_before_ask_notifications">• 通知 - 用於背景狀態。</string>
+    <string name="onboarding_before_ask_activity">• 身體活動 - 選用。可讓 LocaPeer 更準確地區分步行、駕駛與靜止。您可以略過，之後在設定中啟用。</string>
     <string name="onboarding_grant_permissions">授予權限</string>
     <string name="onboarding_bg_location_title">背景位置</string>
     <string name="onboarding_bg_location_desc">為了在應用程式關閉時持續更新您的聯絡人，請在下一個畫面選擇「一律允許」。</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">前往位置</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS 開啟</string>
-    <string name="map_overdue">逾期 — 沒有最近的更新</string>
+    <string name="map_overdue">逾期 - 沒有最近的更新</string>
     <string name="map_stat_last_seen">上次上線</string>
     <string name="map_stat_battery">電量</string>
     <string name="map_stat_accuracy">精確度</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">接受以允許來自此裝置的解鎖核准要求</string>
     <string name="notif_supervisor_request_big">接受後，%1$s 就能在受監督模式啟用時向您傳送解鎖核准要求。</string>
     <string name="notif_supervised_active_title">受監督模式已啟用</string>
-    <string name="notif_supervised_active_text">您的監督者已確認 — 受監督模式現已設定完成</string>
+    <string name="notif_supervised_active_text">您的監督者已確認 - 受監督模式現已設定完成</string>
     <string name="notif_supervised_declined_title">受監督模式遭拒</string>
-    <string name="notif_supervised_declined_text">您的監督者拒絕了要求 — 受監督模式已停用</string>
+    <string name="notif_supervised_declined_text">您的監督者拒絕了要求 - 受監督模式已停用</string>
     <string name="notif_tracking_alert_title">追蹤警示</string>
     <string name="notif_tracking_proximity">%1$s 收到了關於您的鄰近警示</string>
     <string name="notif_tracking_geofence">%1$s 收到您進入/離開圍欄的警示：%2$s</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">找不到聯絡人</string>
     <string name="peer_purge_location_sent">已向 %1$s 送出遠端刪除全部位置的指令</string>
     <string name="peer_purge_messages_sent">已向 %1$s 送出遠端刪除全部訊息的指令</string>
-    <string name="onboarding_error_key_length">金鑰無效 — 必須為 64 個十六進位字元。</string>
-    <string name="onboarding_error_key_range">私鑰無效 — 超出曲線範圍。</string>
+    <string name="onboarding_error_key_length">金鑰無效 - 必須為 64 個十六進位字元。</string>
+    <string name="onboarding_error_key_range">私鑰無效 - 超出曲線範圍。</string>
     <string name="onboarding_error_hex">十六進位格式無效。</string>
     <string name="onboarding_error_import_failed">匯入金鑰失敗：%1$s</string>
 </resources>
