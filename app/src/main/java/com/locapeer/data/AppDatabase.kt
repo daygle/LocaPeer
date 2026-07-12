@@ -15,9 +15,11 @@ import com.locapeer.data.entity.*
         ProximityAlertEntity::class,
         PeerSharingConfig::class,
         PendingMessageEntity::class,
-        PendingRequestEntity::class
+        PendingRequestEntity::class,
+        CircleEntity::class,
+        CircleMemberEntity::class
     ],
-    version = 6,
+    version = 7,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -31,4 +33,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun peerSharingConfigDao(): PeerSharingConfigDao
     abstract fun pendingMessageDao(): PendingMessageDao
     abstract fun pendingRequestDao(): PendingRequestDao
+    abstract fun circleDao(): CircleDao
 }

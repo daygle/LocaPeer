@@ -292,6 +292,17 @@
     <string name="onboarding_get_started">Get Started</string>
     <string name="onboarding_restore_from_backup">Restore From Backup</string>
     <string name="onboarding_key_note">Your private key is generated locally and never leaves this device.</string>
+    <!-- Onboarding: proactive identity backup -->
+    <string name="onboarding_backup_title">Back up your identity</string>
+    <string name="onboarding_backup_desc">Your identity is a private key stored only on this device. There is no account and no password reset — if you lose this phone without a backup, your identity and contacts are gone for good.</string>
+    <string name="onboarding_backup_warning">Anyone with this key can impersonate you and read your messages. Store it somewhere private — a password manager, not a screenshot.</string>
+    <string name="onboarding_backup_reveal">Reveal my private key</string>
+    <string name="onboarding_backup_copy">Copy key</string>
+    <string name="onboarding_backup_copied">Key copied to clipboard</string>
+    <string name="onboarding_backup_confirm">I\'ve saved my private key somewhere safe</string>
+    <string name="onboarding_backup_continue">Continue</string>
+    <string name="onboarding_backup_later">I\'ll back up later</string>
+    <string name="onboarding_backup_note">You can export an encrypted backup any time in Settings → Backup &amp; Keys.</string>
     <string name="onboarding_permissions_title">Permissions</string>
     <string name="onboarding_permissions_desc">LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional - it helps label your movement (walking, driving) more accurately.</string>
     <string name="onboarding_before_ask_title">Before we ask</string>
@@ -788,6 +799,29 @@
     <string name="days_weekends">Weekends</string>
     <string name="days_none">No days</string>
     <string name="chat_my_location_message">My current location: %1$s</string>
+    <!-- Location pin card -->
+    <string name="chat_shared_location">Shared location</string>
+    <string name="chat_tap_to_open_map">Tap to open map</string>
+    <!-- Circles (client-side groups) -->
+    <string name="circles_title">Circles</string>
+    <string name="circles_new">New circle</string>
+    <string name="circles_new_title">New circle</string>
+    <string name="circles_edit">Edit</string>
+    <string name="circles_edit_title">Edit circle</string>
+    <string name="circles_name_label">Circle name</string>
+    <string name="circles_members_header">Members (%1$d)</string>
+    <string name="circles_member_count">%1$d members</string>
+    <string name="circles_no_contacts">Add contacts first, then group them into a circle.</string>
+    <string name="circles_empty_title">No circles yet</string>
+    <string name="circles_empty_body">Create a circle to message a group of contacts and share your location with all of them at once.</string>
+    <string name="circles_manage_members">Manage members</string>
+    <string name="circles_share_location">Share location with circle</string>
+    <string name="circles_share_location_desc">Share your live location with everyone in this circle for a set time. Contacts you already share location with start receiving it immediately.</string>
+    <string name="circles_delete">Delete circle</string>
+    <string name="circles_delete_title">Delete circle?</string>
+    <string name="circles_delete_message">Delete \"%1$s\" and its group conversation? This only removes it from your device.</string>
+    <string name="group_notif_title">%1$s</string>
+    <string name="group_notif_body">%1$s: %2$s</string>
     <string name="scan_error_bad_pubkey">Invalid invite: bad public key</string>
     <string name="scan_error_key_mismatch">Invalid invite: key mismatch</string>
     <string name="scan_error_unknown">Unknown error</string>

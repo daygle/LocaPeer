@@ -28,6 +28,7 @@ import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DoneAll
+import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
@@ -56,6 +57,7 @@ private enum class LoadState { LOADING, EMPTY, CONTENT }
 @Composable
 fun ConversationListScreen(
     onOpenChat: (peerId: String, peerName: String) -> Unit,
+    onOpenCircles: () -> Unit = {},
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
@@ -176,6 +178,12 @@ fun ConversationListScreen(
                                 )
                             }
                         } else {
+                            IconButton(onClick = onOpenCircles) {
+                                Icon(
+                                    Icons.Default.Group,
+                                    contentDescription = stringResource(R.string.circles_title)
+                                )
+                            }
                             IconButton(onClick = {
                                 showSearch = !showSearch
                                 if (!showSearch) vm.setSearchQuery("")

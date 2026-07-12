@@ -13,6 +13,7 @@ import com.locapeer.beacon.HeartbeatPayload
 import com.locapeer.beacon.PurgeRequestPayload
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
@@ -131,6 +132,7 @@ class HeartbeatReceiver @Inject constructor(
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val circleDao: CircleDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val pendingRequestDao: PendingRequestDao,
     private val prefs: AppPreferences,
@@ -463,6 +465,40 @@ class HeartbeatReceiver @Inject constructor(
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
+
+        // Circle (group) message: materialise the circle locally and thread by circle id. Only
+        // accepted from known, non-blocked contacts (same trust gate as 1:1), so a stranger can't
+        // spam you by inventing a "group". No delivery ack: group has no per-sender delivery state.
+        val group = com.locapeer.messaging.GroupWire.decode(plaintext)
+        if (group != null) {
+            if (isBlocked) return
+            val (_, myPubHex) = keyManager.ensureKeypair()
+            // Drop our own fan-out copy echoed back by a relay, and ignore a group we're not in.
+            if (event.pubkey == myPubHex || !group.members.contains(myPubHex)) return
+            circleDao.materialiseFromRemote(
+                circleId = group.gid,
+                name = group.gname,
+                creatorPubkey = group.creator,
+                senderPubkey = event.pubkey,
+                memberPubkeys = group.members
+            )
+            messageDao.insert(
+                MessageEntity(
+                    id = event.id,
+                    peerId = group.gid,
+                    senderPublicKeyHex = event.pubkey,
+                    content = group.text,
+                    timestamp = event.createdAt * 1000L,
+                    isMine = false,
+                    deliveryState = DeliveryState.DELIVERED.name,
+                    nostrEventId = event.id,
+                    groupId = group.gid
+                )
+            )
+            sendGroupMessageNotification(group.gname, sender.displayName, group.text, group.gid)
+            return
+        }
+
         val msg = MessageEntity(
             id = event.id,
             peerId = event.pubkey,
@@ -668,6 +704,28 @@ class HeartbeatReceiver @Inject constructor(
             crypto = crypto
         )
         relayClient.publishEvent(event)
+    }
+
+    private fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
+        // Opens the app (Messages list). A direct-to-group deep link would need a new nav target;
+        // the unread badge on Messages already points the user at the right conversation.
+        val intent = Intent(context, MainActivity::class.java).apply {
+            putExtra("navigateTo", "messages")
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            context, circleId.hashCode(), intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_MESSAGES)
+            .setSmallIcon(R.drawable.ic_notif_message)
+            .setContentTitle(context.getString(R.string.group_notif_title, circleName))
+            .setContentText(context.getString(R.string.group_notif_body, senderName, preview.take(80)))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            .build()
+        notificationManager.notify(circleId, NOTIF_ID_MESSAGE, notification)
     }
 
     private fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {

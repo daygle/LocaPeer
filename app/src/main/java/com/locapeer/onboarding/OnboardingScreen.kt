@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -72,6 +73,7 @@ fun OnboardingScreen(
         ) {
             when (state.step) {
                 OnboardingStep.IDENTITY -> IdentityStep(state, vm)
+                OnboardingStep.BACKUP -> BackupStep(state, vm)
                 OnboardingStep.PERMISSIONS -> PermissionsStep(basicPermissionsState) { vm.nextStep() }
                 OnboardingStep.BACKGROUND_LOCATION -> BackgroundLocationStep(
                     showError = state.showPermissionDeniedError
@@ -242,6 +244,125 @@ private fun IdentityStep(state: OnboardingState, vm: OnboardingViewModel) {
 
     Text(
         stringResource(R.string.onboarding_key_note),
+        style = MaterialTheme.typography.labelSmall,
+        textAlign = TextAlign.Center,
+        color = MaterialTheme.colorScheme.outline
+    )
+}
+
+/**
+ * Proactive "back up your identity" step for a freshly generated key (skipped for users who
+ * restored an existing key). Reveals the private key on demand — the same value Settings → View
+ * Private Key shows, under the app-wide FLAG_SECURE — so the user can copy and store it before
+ * they have anything to lose. Non-blocking: "back up later" always proceeds.
+ */
+@Composable
+private fun BackupStep(state: OnboardingState, vm: OnboardingViewModel) {
+    val context = LocalContext.current
+    // Resolve at composition time: lint forbids Context.getString() from inside a click lambda
+    // because a config change wouldn't invalidate it.
+    val copiedMessage = stringResource(R.string.onboarding_backup_copied)
+    var confirmed by remember { mutableStateOf(false) }
+    val key = state.privateKeyHex
+
+    StepHeader(
+        icon = Icons.Default.VpnKey,
+        title = stringResource(R.string.onboarding_backup_title),
+        description = stringResource(R.string.onboarding_backup_desc)
+    )
+
+    Spacer(Modifier.height(24.dp))
+
+    Surface(
+        color = MaterialTheme.colorScheme.errorContainer,
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(Icons.Default.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer)
+            Text(
+                stringResource(R.string.onboarding_backup_warning),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onErrorContainer
+            )
+        }
+    }
+
+    Spacer(Modifier.height(24.dp))
+
+    if (key.isEmpty()) {
+        Button(
+            onClick = { vm.revealPrivateKey() },
+            modifier = Modifier.fillMaxWidth().height(52.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Icon(Icons.Default.VpnKey, contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.onboarding_backup_reveal))
+        }
+    } else {
+        Surface(
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            shape = RoundedCornerShape(12.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                key,
+                style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        OutlinedButton(
+            onClick = {
+                val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE)
+                    as android.content.ClipboardManager
+                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("LocaPeer private key", key))
+                android.widget.Toast.makeText(
+                    context, copiedMessage, android.widget.Toast.LENGTH_SHORT
+                ).show()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(Icons.Default.ContentCopy, contentDescription = null, modifier = Modifier.size(18.dp))
+            Spacer(Modifier.width(8.dp))
+            Text(stringResource(R.string.onboarding_backup_copy))
+        }
+        Spacer(Modifier.height(16.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth().clickable { confirmed = !confirmed }
+        ) {
+            Checkbox(checked = confirmed, onCheckedChange = { confirmed = it })
+            Text(stringResource(R.string.onboarding_backup_confirm), style = MaterialTheme.typography.bodyMedium)
+        }
+    }
+
+    Spacer(Modifier.height(24.dp))
+
+    Button(
+        onClick = { vm.nextStep() },
+        enabled = confirmed,
+        modifier = Modifier.fillMaxWidth().height(56.dp),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text(stringResource(R.string.onboarding_backup_continue), style = MaterialTheme.typography.titleMedium)
+    }
+
+    Spacer(Modifier.height(8.dp))
+
+    TextButton(onClick = { vm.nextStep() }, modifier = Modifier.fillMaxWidth()) {
+        Text(stringResource(R.string.onboarding_backup_later))
+    }
+
+    Spacer(Modifier.height(12.dp))
+
+    Text(
+        stringResource(R.string.onboarding_backup_note),
         style = MaterialTheme.typography.labelSmall,
         textAlign = TextAlign.Center,
         color = MaterialTheme.colorScheme.outline

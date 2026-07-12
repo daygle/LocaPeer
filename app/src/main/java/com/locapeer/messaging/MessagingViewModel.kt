@@ -8,12 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PendingMessageDao
+import com.locapeer.data.entity.CircleEntity
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
+import java.util.UUID
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrFilter
@@ -38,6 +41,7 @@ class MessagingViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
+    private val circleDao: CircleDao,
     private val pendingMessageDao: PendingMessageDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
@@ -135,6 +139,115 @@ class MessagingViewModel @Inject constructor(
                     val lng = String.format(Locale.US, "%.5f", it.longitude)
                     val url = "https://www.openstreetmap.org/?mlat=$lat&mlon=$lng#map=16/$lat/$lng"
                     sendMessage(peerId, context.getString(com.locapeer.R.string.chat_my_location_message, url))
+                }
+            }
+    }
+
+    // ----- Circles (client-side groups) -----
+
+    /** Group conversation rows, one per circle, newest activity first. */
+    val groupConversations: StateFlow<List<GroupConversationSummary>> =
+        combine(
+            circleDao.observeCircles(),
+            messageDao.getGroupConversationSummaries(),
+            circleDao.observeMemberCounts(),
+            messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
+        ) { circles, lastMsgs, counts, unread ->
+            val lastByGid = lastMsgs.associateBy { it.groupId }
+            val countByGid = counts.associate { it.circleId to it.cnt }
+            circles.map { c ->
+                GroupConversationSummary(
+                    circle = c,
+                    lastMessage = lastByGid[c.id],
+                    memberCount = countByGid[c.id] ?: 0,
+                    unread = unread[c.id] ?: 0
+                )
+            }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    /** Group messages share the 1:1 thread query because peerId holds the circle id. */
+    fun getGroupMessages(circleId: String) = messageDao.getMessagesForPeer(circleId)
+
+    fun observeCircle(circleId: String): Flow<CircleEntity?> = circleDao.observeCircle(circleId)
+
+    fun markReadGroup(circleId: String) {
+        viewModelScope.launch { messageDao.markAllReadForGroup(circleId) }
+    }
+
+    fun deleteGroupConversation(circleId: String) {
+        viewModelScope.launch { messageDao.deleteAllForGroup(circleId) }
+    }
+
+    /**
+     * Fan a message out to every circle member as an individually NIP-44-encrypted DM, then store
+     * one local row in the circle thread. There is no shared group key: each member gets their own
+     * ciphertext, and the envelope carries the member list so a recipient can materialise the circle.
+     */
+    fun sendGroupMessage(circleId: String, content: String) {
+        viewModelScope.launch {
+            try {
+                val circle = circleDao.getCircle(circleId) ?: return@launch
+                val members = circleDao.getMemberPubkeys(circleId)
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val privBytes = crypto.hexToBytes(privHex)
+                val fullMembers = (members + pubHex).distinct()
+                val envelope = GroupWire.encode(
+                    GroupMessage(
+                        gid = circleId,
+                        gname = circle.name,
+                        members = fullMembers,
+                        text = content,
+                        creator = circle.creatorPubkey
+                    )
+                )
+                withContext(Dispatchers.Default) {
+                    members.filter { it != pubHex }.forEach { memberPub ->
+                        try {
+                            val encrypted = crypto.nip44Encrypt(privBytes, memberPub, envelope)
+                            val event = NostrEvent.build(
+                                privKeyHex = privHex,
+                                pubKeyHex = pubHex,
+                                kind = NostrEventKind.ENCRYPTED_DM,
+                                content = encrypted,
+                                tags = listOf(listOf("p", memberPub)),
+                                crypto = crypto
+                            )
+                            relayClient.publishEvent(event)
+                        } catch (e: Exception) {
+                            Log.e("MessagingViewModel", "group send to $memberPub failed", e)
+                        }
+                    }
+                }
+                messageDao.insert(
+                    MessageEntity(
+                        id = UUID.randomUUID().toString(),
+                        peerId = circleId,
+                        senderPublicKeyHex = pubHex,
+                        content = content,
+                        timestamp = System.currentTimeMillis(),
+                        isMine = true,
+                        deliveryState = DeliveryState.SENT.name,
+                        nostrEventId = "",
+                        groupId = circleId
+                    )
+                )
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "sendGroupMessage failed", e)
+            }
+        }
+    }
+
+    /** Share the current location with a whole circle: a group message whose body is an OSM pin URL. */
+    @SuppressLint("MissingPermission")
+    fun sendGroupLocation(circleId: String) {
+        LocationServices.getFusedLocationProviderClient(context)
+            .lastLocation
+            .addOnSuccessListener { loc ->
+                loc?.let {
+                    val lat = String.format(Locale.US, "%.5f", it.latitude)
+                    val lng = String.format(Locale.US, "%.5f", it.longitude)
+                    val url = "https://www.openstreetmap.org/?mlat=$lat&mlon=$lng#map=16/$lat/$lng"
+                    sendGroupMessage(circleId, context.getString(com.locapeer.R.string.chat_my_location_message, url))
                 }
             }
     }
@@ -385,4 +498,12 @@ class MessagingViewModel @Inject constructor(
 data class ConversationSummary(
     val peer: PeerEntity,
     val lastMessage: MessageEntity
+)
+
+data class GroupConversationSummary(
+    val circle: CircleEntity,
+    /** Null until the circle has at least one message. */
+    val lastMessage: MessageEntity?,
+    val memberCount: Int,
+    val unread: Int
 )

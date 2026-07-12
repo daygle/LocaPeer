@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 enum class OnboardingStep {
     IDENTITY,
+    BACKUP,
     PERMISSIONS,
     BACKGROUND_LOCATION,
     BATTERY,
@@ -24,7 +25,11 @@ data class OnboardingState(
     val step: OnboardingStep = OnboardingStep.IDENTITY,
     val isLoading: Boolean = true,
     val importError: String? = null,
-    val showPermissionDeniedError: Boolean = false
+    val showPermissionDeniedError: Boolean = false,
+    /** Populated on demand by [revealPrivateKey] so the backup step can show/copy the key. */
+    val privateKeyHex: String = "",
+    /** True once the user restored an existing key; they already have a backup, so skip BACKUP. */
+    val restoredFromBackup: Boolean = false
 )
 
 @HiltViewModel
@@ -52,7 +57,10 @@ class OnboardingViewModel @Inject constructor(
     fun nextStep() {
         val current = _state.value.step
         val next = when (current) {
-            OnboardingStep.IDENTITY -> OnboardingStep.PERMISSIONS
+            // A restored user already holds their key, so skip the "back up your identity" step.
+            OnboardingStep.IDENTITY ->
+                if (_state.value.restoredFromBackup) OnboardingStep.PERMISSIONS else OnboardingStep.BACKUP
+            OnboardingStep.BACKUP -> OnboardingStep.PERMISSIONS
             OnboardingStep.PERMISSIONS -> OnboardingStep.BACKGROUND_LOCATION
             OnboardingStep.BACKGROUND_LOCATION -> OnboardingStep.BATTERY
             OnboardingStep.BATTERY -> OnboardingStep.DONE
@@ -87,7 +95,7 @@ class OnboardingViewModel @Inject constructor(
             try {
                 keyManager.importPrivateKey(cleaned)
                 val pubHex = keyManager.getPublicKeyHex() ?: ""
-                _state.value = _state.value.copy(publicKeyHex = pubHex, isLoading = false)
+                _state.value = _state.value.copy(publicKeyHex = pubHex, isLoading = false, restoredFromBackup = true)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     isLoading = false,
@@ -99,6 +107,18 @@ class OnboardingViewModel @Inject constructor(
 
     fun clearImportError() {
         _state.value = _state.value.copy(importError = null)
+    }
+
+    /** Fetches the private key on demand so the backup step can display and copy it. */
+    fun revealPrivateKey() {
+        if (_state.value.privateKeyHex.isNotEmpty()) return
+        viewModelScope.launch {
+            try {
+                _state.value = _state.value.copy(privateKeyHex = keyManager.exportPrivateKeyHex())
+            } catch (_: Exception) {
+                // Leave it hidden; the user can still back up later from Settings.
+            }
+        }
     }
 
     fun complete(onDone: () -> Unit) {

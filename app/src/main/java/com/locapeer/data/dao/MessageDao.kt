@@ -46,6 +46,27 @@ interface MessageDao {
     @Query("SELECT * FROM messages WHERE nostrEventId = :eventId LIMIT 1")
     suspend fun getByNostrEventId(eventId: String): MessageEntity?
 
+    // --- Group / circle conversations. A group message stores the circle id in both peerId
+    // (thread key, so getMessagesForPeer works unchanged) and groupId (marker). ---
+
+    /** Latest message per circle, newest first. Used to build the group conversation list. */
+    @Query(
+        "SELECT * FROM messages m1 WHERE groupId IS NOT NULL AND id = (" +
+            "SELECT m2.id FROM messages m2 WHERE m2.groupId = m1.groupId " +
+            "ORDER BY m2.timestamp DESC, m2.id DESC LIMIT 1" +
+            ") ORDER BY timestamp DESC"
+    )
+    fun getGroupConversationSummaries(): Flow<List<MessageEntity>>
+
+    @Query("SELECT groupId AS peerId, COUNT(*) as cnt FROM messages WHERE groupId IS NOT NULL AND isRead = 0 AND isMine = 0 GROUP BY groupId")
+    fun getUnreadCountsPerGroup(): Flow<List<UnreadCountRow>>
+
+    @Query("UPDATE messages SET isRead = 1 WHERE groupId = :groupId AND isMine = 0")
+    suspend fun markAllReadForGroup(groupId: String)
+
+    @Query("DELETE FROM messages WHERE groupId = :groupId")
+    suspend fun deleteAllForGroup(groupId: String)
+
     @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
     suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
 
