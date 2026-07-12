@@ -749,7 +749,6 @@
     <string name="about_diagnostics">Jaringan</string>
     <string name="about_no_pending">Tidak ada pesan dalam antrean</string>
     <string name="about_pending_messages">Pesan dalam antrean</string>
-    <string name="about_pending_one">1 pesan dalam antrean</string>
     <string name="app_lock_activity_unsupported">Kunci aplikasi memerlukan host yang mendukung prompt sistem. Perbarui aplikasi.</string>
     <string name="app_lock_prompt_subtitle">Gunakan biometrik atau PIN perangkat</string>
     <string name="app_lock_prompt_title">Buka kunci LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">Dibaca oleh penerima</string>
     <string name="chat_delivery_state_sending">Mengirim…</string>
     <string name="chat_delivery_state_sent">Terkirim (relai menerima)</string>
-    <string name="chat_mic_permission_needed">Izin mikrofon diperlukan untuk merekam pesan suara.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Pesan suara</string>
     <string name="chat_recording">Merekam…</string>
@@ -814,13 +812,9 @@
     <string name="peer_temp_share_chip_1h">1 jam</string>
     <string name="peer_temp_share_chip_3h">3 jam</string>
     <string name="peer_temp_share_chip_6h">6 jam</string>
-    <string name="peer_temp_share_chip_custom">Khusus…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Sampai besok pukul 8 pagi</string>
-    <string name="peer_temp_share_custom_minutes_hint">Menit</string>
-    <string name="peer_temp_share_custom_picker_title">Berbagi selama berapa lama?</string>
     <string name="peer_temp_share_stop">Hentikan sekarang</string>
     <string name="peer_temp_share_subtitle">Bagikan untuk waktu terbatas, lalu berhenti otomatis.</string>
-    <string name="peer_temp_share_title">Berbagi Cepat</string>
     <string name="settings_app_lock">Kunci Aplikasi</string>
     <string name="settings_app_lock_subtitle">Wajibkan biometrik atau PIN untuk membuka LocaPeer</string>
     <string name="settings_app_lock_timeout">Kunci lagi setelah</string>

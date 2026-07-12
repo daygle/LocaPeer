@@ -749,7 +749,6 @@
     <string name="about_diagnostics">เครือข่าย</string>
     <string name="about_no_pending">ไม่มีข้อความในคิว</string>
     <string name="about_pending_messages">ข้อความในคิว</string>
-    <string name="about_pending_one">1 ข้อความในคิว</string>
     <string name="app_lock_activity_unsupported">การล็อกแอปต้องใช้โฮสต์ที่รองรับพร้อมต์ของระบบ โปรดอัปเดตแอป</string>
     <string name="app_lock_prompt_subtitle">ใช้ไบโอเมตริกหรือ PIN ของอุปกรณ์</string>
     <string name="app_lock_prompt_title">ปลดล็อก LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">ผู้รับอ่านแล้ว</string>
     <string name="chat_delivery_state_sending">กำลังส่ง…</string>
     <string name="chat_delivery_state_sent">ส่งแล้ว (รีเลย์ยอมรับ)</string>
-    <string name="chat_mic_permission_needed">ต้องมีสิทธิ์ไมโครโฟนเพื่อบันทึกข้อความเสียง</string>
     <string name="chat_preview_photo">📷 รูปภาพ</string>
     <string name="chat_preview_voice">🎤 ข้อความเสียง</string>
     <string name="chat_recording">กำลังบันทึก…</string>
@@ -814,13 +812,9 @@
     <string name="peer_temp_share_chip_1h">1 ชั่วโมง</string>
     <string name="peer_temp_share_chip_3h">3 ชั่วโมง</string>
     <string name="peer_temp_share_chip_6h">6 ชั่วโมง</string>
-    <string name="peer_temp_share_chip_custom">กำหนดเอง…</string>
     <string name="peer_temp_share_chip_until_tomorrow">จนถึง 8 โมงเช้าพรุ่งนี้</string>
-    <string name="peer_temp_share_custom_minutes_hint">นาที</string>
-    <string name="peer_temp_share_custom_picker_title">แชร์นานเท่าไร?</string>
     <string name="peer_temp_share_stop">หยุดตอนนี้</string>
     <string name="peer_temp_share_subtitle">แชร์เป็นเวลาจำกัด แล้วหยุดอัตโนมัติ</string>
-    <string name="peer_temp_share_title">แชร์ด่วน</string>
     <string name="settings_app_lock">การล็อกแอป</string>
     <string name="settings_app_lock_subtitle">ต้องใช้ไบโอเมตริกหรือ PIN เพื่อเปิด LocaPeer</string>
     <string name="settings_app_lock_timeout">ล็อกอีกครั้งหลังจาก</string>

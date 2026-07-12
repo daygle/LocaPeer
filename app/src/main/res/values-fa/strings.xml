@@ -764,7 +764,6 @@
     <string name="about_diagnostics">شبکه</string>
     <string name="about_no_pending">پیامی در صف نیست</string>
     <string name="about_pending_messages">پیام‌های در صف</string>
-    <string name="about_pending_one">۱ پیام در صف</string>
     <string name="app_lock_activity_unsupported">قفل برنامه به میزبانی نیاز دارد که از درخواست سیستم پشتیبانی کند. برنامه را به‌روزرسانی کنید.</string>
     <string name="app_lock_prompt_subtitle">از زیست‌سنجی یا پین دستگاه استفاده کنید</string>
     <string name="app_lock_prompt_title">باز کردن قفل LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">توسط گیرنده خوانده شد</string>
     <string name="chat_delivery_state_sending">در حال ارسال…</string>
     <string name="chat_delivery_state_sent">ارسال شد (رله پذیرفت)</string>
-    <string name="chat_mic_permission_needed">برای ضبط پیام صوتی به اجازه میکروفون نیاز است.</string>
     <string name="chat_preview_photo">📷 عکس</string>
     <string name="chat_preview_voice">🎤 پیام صوتی</string>
     <string name="chat_recording">در حال ضبط…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">۱ ساعت</string>
     <string name="peer_temp_share_chip_3h">۳ ساعت</string>
     <string name="peer_temp_share_chip_6h">۶ ساعت</string>
-    <string name="peer_temp_share_chip_custom">سفارشی…</string>
     <string name="peer_temp_share_chip_until_tomorrow">تا فردا ساعت ۸ صبح</string>
-    <string name="peer_temp_share_custom_minutes_hint">دقیقه</string>
-    <string name="peer_temp_share_custom_picker_title">برای چه مدت به اشتراک گذاشته شود؟</string>
     <string name="peer_temp_share_stop">اکنون متوقف کن</string>
     <string name="peer_temp_share_subtitle">برای مدتی محدود به اشتراک بگذارید، سپس به‌طور خودکار متوقف می‌شود.</string>
-    <string name="peer_temp_share_title">اشتراک سریع</string>
     <string name="settings_app_lock">قفل برنامه</string>
     <string name="settings_app_lock_subtitle">برای باز کردن LocaPeer به زیست‌سنجی یا پین دستگاه نیاز باشد</string>
     <string name="settings_app_lock_timeout">قفل مجدد پس از</string>

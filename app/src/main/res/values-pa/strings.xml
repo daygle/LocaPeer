@@ -764,7 +764,6 @@
     <string name="about_diagnostics">ਨੈੱਟਵਰਕ</string>
     <string name="about_no_pending">ਕਤਾਰ ਵਿੱਚ ਕੋਈ ਸੁਨੇਹਾ ਨਹੀਂ</string>
     <string name="about_pending_messages">ਕਤਾਰ ਵਿਚਲੇ ਸੁਨੇਹੇ</string>
-    <string name="about_pending_one">ਕਤਾਰ ਵਿੱਚ 1 ਸੁਨੇਹਾ</string>
     <string name="app_lock_activity_unsupported">ਐਪ ਲਾਕ ਲਈ ਸਿਸਟਮ ਪ੍ਰੋਂਪਟ ਦਾ ਸਮਰਥਨ ਕਰਨ ਵਾਲਾ ਹੋਸਟ ਲੋੜੀਂਦਾ ਹੈ। ਐਪ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।</string>
     <string name="app_lock_prompt_subtitle">ਬਾਇਓਮੈਟ੍ਰਿਕ ਜਾਂ ਡਿਵਾਈਸ PIN ਵਰਤੋ</string>
     <string name="app_lock_prompt_title">LocaPeer ਅਨਲਾਕ ਕਰੋ</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">ਪ੍ਰਾਪਤਕਰਤਾ ਨੇ ਪੜ੍ਹਿਆ</string>
     <string name="chat_delivery_state_sending">ਭੇਜ ਰਿਹਾ ਹੈ…</string>
     <string name="chat_delivery_state_sent">ਭੇਜਿਆ (ਰਿਲੇ ਨੇ ਸਵੀਕਾਰ ਕੀਤਾ)</string>
-    <string name="chat_mic_permission_needed">ਵੌਇਸ ਸੁਨੇਹੇ ਰਿਕਾਰਡ ਕਰਨ ਲਈ ਮਾਈਕ੍ਰੋਫੋਨ ਇਜਾਜ਼ਤ ਲੋੜੀਂਦੀ ਹੈ।</string>
     <string name="chat_preview_photo">📷 ਫੋਟੋ</string>
     <string name="chat_preview_voice">🎤 ਵੌਇਸ ਸੁਨੇਹਾ</string>
     <string name="chat_recording">ਰਿਕਾਰਡ ਹੋ ਰਿਹਾ ਹੈ…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 ਘੰਟਾ</string>
     <string name="peer_temp_share_chip_3h">3 ਘੰਟੇ</string>
     <string name="peer_temp_share_chip_6h">6 ਘੰਟੇ</string>
-    <string name="peer_temp_share_chip_custom">ਕਸਟਮ…</string>
     <string name="peer_temp_share_chip_until_tomorrow">ਕੱਲ੍ਹ ਸਵੇਰੇ 8 ਵਜੇ ਤੱਕ</string>
-    <string name="peer_temp_share_custom_minutes_hint">ਮਿੰਟ</string>
-    <string name="peer_temp_share_custom_picker_title">ਕਿੰਨੇ ਸਮੇਂ ਲਈ ਸਾਂਝਾ ਕਰਨਾ ਹੈ?</string>
     <string name="peer_temp_share_stop">ਹੁਣੇ ਰੋਕੋ</string>
     <string name="peer_temp_share_subtitle">ਸੀਮਤ ਸਮੇਂ ਲਈ ਸਾਂਝਾ ਕਰੋ, ਫਿਰ ਆਪਣੇ-ਆਪ ਰੁਕ ਜਾਂਦਾ ਹੈ।</string>
-    <string name="peer_temp_share_title">ਤੇਜ਼ ਸਾਂਝ</string>
     <string name="settings_app_lock">ਐਪ ਲਾਕ</string>
     <string name="settings_app_lock_subtitle">LocaPeer ਖੋਲ੍ਹਣ ਲਈ ਬਾਇਓਮੈਟ੍ਰਿਕ ਜਾਂ PIN ਲੋੜੀਂਦਾ ਕਰੋ</string>
     <string name="settings_app_lock_timeout">ਇਸ ਤੋਂ ਬਾਅਦ ਮੁੜ ਲਾਕ ਕਰੋ</string>

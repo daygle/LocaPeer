@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Network</string>
     <string name="about_no_pending">Walang mensaheng naka-queue</string>
     <string name="about_pending_messages">Mga mensaheng naka-queue</string>
-    <string name="about_pending_one">1 mensaheng naka-queue</string>
     <string name="app_lock_activity_unsupported">Kailangan ng app lock ng host na sumusuporta sa system prompt. I-update ang app.</string>
     <string name="app_lock_prompt_subtitle">Gumamit ng biometric o PIN ng device</string>
     <string name="app_lock_prompt_title">I-unlock ang LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Nabasa ng tatanggap</string>
     <string name="chat_delivery_state_sending">Ipinapadala…</string>
     <string name="chat_delivery_state_sent">Naipadala (tinanggap ng relay)</string>
-    <string name="chat_mic_permission_needed">Kailangan ng pahintulot sa mikropono para mag-record ng voice message.</string>
     <string name="chat_preview_photo">📷 Larawan</string>
     <string name="chat_preview_voice">🎤 Voice message</string>
     <string name="chat_recording">Nagre-record…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 oras</string>
     <string name="peer_temp_share_chip_3h">3 oras</string>
     <string name="peer_temp_share_chip_6h">6 oras</string>
-    <string name="peer_temp_share_chip_custom">Custom…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Hanggang bukas ng 8 ng umaga</string>
-    <string name="peer_temp_share_custom_minutes_hint">Mga minuto</string>
-    <string name="peer_temp_share_custom_picker_title">Gaano katagal ibabahagi?</string>
     <string name="peer_temp_share_stop">Ihinto na ngayon</string>
     <string name="peer_temp_share_subtitle">Magbahagi sa limitadong oras, pagkatapos ay awtomatikong hihinto.</string>
-    <string name="peer_temp_share_title">Mabilis na Pagbabahagi</string>
     <string name="settings_app_lock">App Lock</string>
     <string name="settings_app_lock_subtitle">Mangailangan ng biometric o PIN para buksan ang LocaPeer</string>
     <string name="settings_app_lock_timeout">Muling i-lock pagkatapos ng</string>

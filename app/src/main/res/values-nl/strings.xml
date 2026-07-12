@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Netwerk</string>
     <string name="about_no_pending">Geen berichten in wachtrij</string>
     <string name="about_pending_messages">Berichten in wachtrij</string>
-    <string name="about_pending_one">1 bericht in wachtrij</string>
     <string name="app_lock_activity_unsupported">App-vergrendeling vereist een host die de systeemprompt ondersteunt. Werk de app bij.</string>
     <string name="app_lock_prompt_subtitle">Gebruik biometrie of de pincode van je apparaat</string>
     <string name="app_lock_prompt_title">LocaPeer ontgrendelen</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Gelezen door ontvanger</string>
     <string name="chat_delivery_state_sending">Verzenden…</string>
     <string name="chat_delivery_state_sent">Verzonden (relay geaccepteerd)</string>
-    <string name="chat_mic_permission_needed">Microfoontoestemming is nodig om spraakberichten op te nemen.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Spraakbericht</string>
     <string name="chat_recording">Opnemen…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 uur</string>
     <string name="peer_temp_share_chip_3h">3 uur</string>
     <string name="peer_temp_share_chip_6h">6 uur</string>
-    <string name="peer_temp_share_chip_custom">Aangepast…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Tot morgen 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minuten</string>
-    <string name="peer_temp_share_custom_picker_title">Hoelang delen?</string>
     <string name="peer_temp_share_stop">Nu stoppen</string>
     <string name="peer_temp_share_subtitle">Deel voor beperkte tijd en stop dan automatisch.</string>
-    <string name="peer_temp_share_title">Snel delen</string>
     <string name="settings_app_lock">App-vergrendeling</string>
     <string name="settings_app_lock_subtitle">Biometrie of pincode vereisen om LocaPeer te openen</string>
     <string name="settings_app_lock_timeout">Opnieuw vergrendelen na</string>

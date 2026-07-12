@@ -764,7 +764,6 @@
     <string name="about_diagnostics">አውታረ መረብ</string>
     <string name="about_no_pending">በወረፋ ላይ ምንም መልእክት የለም</string>
     <string name="about_pending_messages">በወረፋ ላይ ያሉ መልእክቶች</string>
-    <string name="about_pending_one">በወረፋ ላይ 1 መልእክት</string>
     <string name="app_lock_activity_unsupported">የመተግበሪያ ቁልፍ የስርዓት መጠየቂያን የሚደግፍ አስተናጋጅ ይፈልጋል። መተግበሪያውን ያዘምኑ።</string>
     <string name="app_lock_prompt_subtitle">ባዮሜትሪክ ወይም የመሣሪያ ፒን ይጠቀሙ</string>
     <string name="app_lock_prompt_title">LocaPeer ክፈት</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">ተቀባዩ አንብቧል</string>
     <string name="chat_delivery_state_sending">በመላክ ላይ…</string>
     <string name="chat_delivery_state_sent">ተልኳል (ማስተላለፊያው ተቀብሏል)</string>
-    <string name="chat_mic_permission_needed">የድምጽ መልእክቶችን ለመቅዳት የማይክሮፎን ፈቃድ ያስፈልጋል።</string>
     <string name="chat_preview_photo">📷 ፎቶ</string>
     <string name="chat_preview_voice">🎤 የድምጽ መልእክት</string>
     <string name="chat_recording">በመቅዳት ላይ…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 ሰዓት</string>
     <string name="peer_temp_share_chip_3h">3 ሰዓት</string>
     <string name="peer_temp_share_chip_6h">6 ሰዓት</string>
-    <string name="peer_temp_share_chip_custom">ብጁ…</string>
     <string name="peer_temp_share_chip_until_tomorrow">እስከ ነገ ጠዋት 2 ሰዓት</string>
-    <string name="peer_temp_share_custom_minutes_hint">ደቂቃዎች</string>
-    <string name="peer_temp_share_custom_picker_title">ለምን ያህል ጊዜ ማጋራት?</string>
     <string name="peer_temp_share_stop">አሁን አቁም</string>
     <string name="peer_temp_share_subtitle">ለተወሰነ ጊዜ ያጋሩ፣ ከዚያ በራስ-ሰር ይቆማል።</string>
-    <string name="peer_temp_share_title">ፈጣን ማጋራት</string>
     <string name="settings_app_lock">የመተግበሪያ ቁልፍ</string>
     <string name="settings_app_lock_subtitle">LocaPeer ለመክፈት ባዮሜትሪክ ወይም ፒን ይጠይቁ</string>
     <string name="settings_app_lock_timeout">ከዚህ በኋላ እንደገና ቁልፍ</string>

@@ -764,7 +764,6 @@
     <string name="about_diagnostics">नेटवर्क</string>
     <string name="about_no_pending">कतार में कोई संदेश नहीं</string>
     <string name="about_pending_messages">कतार में संदेश</string>
-    <string name="about_pending_one">कतार में 1 संदेश</string>
     <string name="app_lock_activity_unsupported">ऐप लॉक के लिए ऐसे होस्ट की ज़रूरत है जो सिस्टम प्रॉम्प्ट का समर्थन करे। ऐप अपडेट करें।</string>
     <string name="app_lock_prompt_subtitle">बायोमेट्रिक या डिवाइस PIN का उपयोग करें</string>
     <string name="app_lock_prompt_title">LocaPeer अनलॉक करें</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">प्राप्तकर्ता ने पढ़ा</string>
     <string name="chat_delivery_state_sending">भेजा जा रहा है…</string>
     <string name="chat_delivery_state_sent">भेजा गया (रिले ने स्वीकार किया)</string>
-    <string name="chat_mic_permission_needed">वॉइस संदेश रिकॉर्ड करने के लिए माइक्रोफ़ोन अनुमति आवश्यक है।</string>
     <string name="chat_preview_photo">📷 फ़ोटो</string>
     <string name="chat_preview_voice">🎤 वॉइस संदेश</string>
     <string name="chat_recording">रिकॉर्ड हो रहा है…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 घंटा</string>
     <string name="peer_temp_share_chip_3h">3 घंटे</string>
     <string name="peer_temp_share_chip_6h">6 घंटे</string>
-    <string name="peer_temp_share_chip_custom">कस्टम…</string>
     <string name="peer_temp_share_chip_until_tomorrow">कल सुबह 8 बजे तक</string>
-    <string name="peer_temp_share_custom_minutes_hint">मिनट</string>
-    <string name="peer_temp_share_custom_picker_title">कितने समय के लिए साझा करें?</string>
     <string name="peer_temp_share_stop">अभी रोकें</string>
     <string name="peer_temp_share_subtitle">सीमित समय के लिए साझा करें, फिर स्वतः रुक जाए।</string>
-    <string name="peer_temp_share_title">त्वरित साझाकरण</string>
     <string name="settings_app_lock">ऐप लॉक</string>
     <string name="settings_app_lock_subtitle">LocaPeer खोलने के लिए बायोमेट्रिक या डिवाइस PIN आवश्यक करें</string>
     <string name="settings_app_lock_timeout">इसके बाद फिर से लॉक करें</string>

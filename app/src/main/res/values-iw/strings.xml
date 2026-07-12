@@ -779,7 +779,6 @@
     <string name="about_diagnostics">רשת</string>
     <string name="about_no_pending">אין הודעות בתור</string>
     <string name="about_pending_messages">הודעות בתור</string>
-    <string name="about_pending_one">הודעה אחת בתור</string>
     <string name="app_lock_activity_unsupported">נעילת האפליקציה דורשת מארח התומך בבקשת המערכת. עדכן את האפליקציה.</string>
     <string name="app_lock_prompt_subtitle">השתמש בביומטריה או בקוד PIN של המכשיר</string>
     <string name="app_lock_prompt_title">ביטול נעילת LocaPeer</string>
@@ -800,7 +799,6 @@
     <string name="chat_delivery_state_read">נקרא על ידי הנמען</string>
     <string name="chat_delivery_state_sending">שולח…</string>
     <string name="chat_delivery_state_sent">נשלח (הממסר קיבל)</string>
-    <string name="chat_mic_permission_needed">נדרשת הרשאת מיקרופון כדי להקליט הודעות קוליות.</string>
     <string name="chat_preview_photo">📷 תמונה</string>
     <string name="chat_preview_voice">🎤 הודעה קולית</string>
     <string name="chat_recording">מקליט…</string>
@@ -844,13 +842,9 @@
     <string name="peer_temp_share_chip_1h">שעה אחת</string>
     <string name="peer_temp_share_chip_3h">3 שעות</string>
     <string name="peer_temp_share_chip_6h">6 שעות</string>
-    <string name="peer_temp_share_chip_custom">מותאם אישית…</string>
     <string name="peer_temp_share_chip_until_tomorrow">עד מחר ב-8 בבוקר</string>
-    <string name="peer_temp_share_custom_minutes_hint">דקות</string>
-    <string name="peer_temp_share_custom_picker_title">למשך כמה זמן לשתף?</string>
     <string name="peer_temp_share_stop">עצור עכשיו</string>
     <string name="peer_temp_share_subtitle">שתף לזמן מוגבל, ואז עצירה אוטומטית.</string>
-    <string name="peer_temp_share_title">שיתוף מהיר</string>
     <string name="settings_app_lock">נעילת אפליקציה</string>
     <string name="settings_app_lock_subtitle">דרוש ביומטריה או קוד PIN כדי לפתוח את LocaPeer</string>
     <string name="settings_app_lock_timeout">נעל שוב לאחר</string>

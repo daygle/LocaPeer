@@ -749,7 +749,6 @@
     <string name="about_diagnostics">Mạng</string>
     <string name="about_no_pending">Không có tin nhắn trong hàng đợi</string>
     <string name="about_pending_messages">Tin nhắn trong hàng đợi</string>
-    <string name="about_pending_one">1 tin nhắn trong hàng đợi</string>
     <string name="app_lock_activity_unsupported">Khóa ứng dụng cần một máy chủ hỗ trợ lời nhắc hệ thống. Hãy cập nhật ứng dụng.</string>
     <string name="app_lock_prompt_subtitle">Dùng sinh trắc học hoặc mã PIN của thiết bị</string>
     <string name="app_lock_prompt_title">Mở khóa LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">Người nhận đã đọc</string>
     <string name="chat_delivery_state_sending">Đang gửi…</string>
     <string name="chat_delivery_state_sent">Đã gửi (relay đã chấp nhận)</string>
-    <string name="chat_mic_permission_needed">Cần quyền micrô để ghi âm tin nhắn thoại.</string>
     <string name="chat_preview_photo">📷 Ảnh</string>
     <string name="chat_preview_voice">🎤 Tin nhắn thoại</string>
     <string name="chat_recording">Đang ghi âm…</string>
@@ -814,14 +812,10 @@
     <string name="peer_temp_share_chip_1h">1 giờ</string>
     <string name="peer_temp_share_chip_3h">3 giờ</string>
     <string name="peer_temp_share_chip_6h">6 giờ</string>
-    <string name="peer_temp_share_chip_custom">Tùy chỉnh…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Đến 8 giờ sáng mai</string>
-    <string name="peer_temp_share_custom_minutes_hint">Phút</string>
-    <string name="peer_temp_share_custom_picker_title">Chia sẻ trong bao lâu?</string>
-    <string name="peer_temp_share_stop">Dừng ngay</string>
+,targetContent:    <string name="peer_temp_share_stop">Dừng ngay</string>
     <string name="peer_temp_share_subtitle">Chia sẻ trong thời gian giới hạn, sau đó tự động dừng.</string>
-    <string name="peer_temp_share_title">Chia sẻ nhanh</string>
-    <string name="settings_app_lock">Khóa ứng dụng</string>
+,targetContent:    <string name="settings_app_lock">Khóa ứng dụng</string>
     <string name="settings_app_lock_subtitle">Yêu cầu sinh trắc học hoặc mã PIN để mở LocaPeer</string>
     <string name="settings_app_lock_timeout">Khóa lại sau</string>
     <string name="settings_app_lock_timeout_1m">Sau 1 phút</string>

@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Mtandao</string>
     <string name="about_no_pending">Hakuna ujumbe kwenye foleni</string>
     <string name="about_pending_messages">Ujumbe kwenye foleni</string>
-    <string name="about_pending_one">Ujumbe 1 kwenye foleni</string>
     <string name="app_lock_activity_unsupported">Kufuli la programu linahitaji mwenyeji anayeauni kidokezo cha mfumo. Sasisha programu.</string>
     <string name="app_lock_prompt_subtitle">Tumia biometriki au PIN ya kifaa</string>
     <string name="app_lock_prompt_title">Fungua LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Umesomwa na mpokeaji</string>
     <string name="chat_delivery_state_sending">Inatuma…</string>
     <string name="chat_delivery_state_sent">Umetumwa (relay imekubali)</string>
-    <string name="chat_mic_permission_needed">Ruhusa ya maikrofoni inahitajika ili kurekodi ujumbe wa sauti.</string>
     <string name="chat_preview_photo">📷 Picha</string>
     <string name="chat_preview_voice">🎤 Ujumbe wa sauti</string>
     <string name="chat_recording">Inarekodi…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">Saa 1</string>
     <string name="peer_temp_share_chip_3h">Saa 3</string>
     <string name="peer_temp_share_chip_6h">Saa 6</string>
-    <string name="peer_temp_share_chip_custom">Maalum…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Hadi kesho saa 2 asubuhi</string>
-    <string name="peer_temp_share_custom_minutes_hint">Dakika</string>
-    <string name="peer_temp_share_custom_picker_title">Ushiriki kwa muda gani?</string>
     <string name="peer_temp_share_stop">Simamisha sasa</string>
     <string name="peer_temp_share_subtitle">Shiriki kwa muda mfupi, kisha isimame kiotomatiki.</string>
-    <string name="peer_temp_share_title">Kushiriki Haraka</string>
     <string name="settings_app_lock">Kufuli la Programu</string>
     <string name="settings_app_lock_subtitle">Hitaji biometriki au PIN ili kufungua LocaPeer</string>
     <string name="settings_app_lock_timeout">Funga tena baada ya</string>

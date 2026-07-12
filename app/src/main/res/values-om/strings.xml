@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Networkii</string>
     <string name="about_no_pending">Ergaan sarara keessa hin jiru</string>
     <string name="about_pending_messages">Ergaawwan sarara keessa jiran</string>
-    <string name="about_pending_one">Ergaa 1 sarara keessa jira</string>
     <string name="app_lock_activity_unsupported">Cufaan appii keessummeessaa gaaffii sirna deeggaru barbaada. Appii haaromsi.</string>
     <string name="app_lock_prompt_subtitle">Biometrik ykn PIN meeshaa fayyadami</string>
     <string name="app_lock_prompt_title">LocaPeer bani</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Fudhataan dubbiseera</string>
     <string name="chat_delivery_state_sending">Ergaa jira…</string>
     <string name="chat_delivery_state_sent">Ergameera (relay fudhate)</string>
-    <string name="chat_mic_permission_needed">Ergaa sagalee waraabuuf hayyamni maaykiroofoonii barbaachisa.</string>
     <string name="chat_preview_photo">📷 Suuraa</string>
     <string name="chat_preview_voice">🎤 Ergaa sagalee</string>
     <string name="chat_recording">Waraabaa jira…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">Sa\'aatii 1</string>
     <string name="peer_temp_share_chip_3h">Sa\'aatii 3</string>
     <string name="peer_temp_share_chip_6h">Sa\'aatii 6</string>
-    <string name="peer_temp_share_chip_custom">Kan dhuunfaa…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Hanga bori ganama sa\'aa 2</string>
-    <string name="peer_temp_share_custom_minutes_hint">Daqiiqaa</string>
-    <string name="peer_temp_share_custom_picker_title">Yeroo hammamiif qooduu barbaadda?</string>
-    <string name="peer_temp_share_stop">Amma dhaabi</string>
+,targetContent:    <string name="peer_temp_share_stop">Amma dhaabi</string>
     <string name="peer_temp_share_subtitle">Yeroo daangeffameef qoodi, ergasii ofumaan dhaabata.</string>
-    <string name="peer_temp_share_title">Qoodinsa Ariifachiisaa</string>
     <string name="settings_app_lock">Cufaa Appii</string>
     <string name="settings_app_lock_subtitle">LocaPeer banuuf biometrik ykn PIN barbaachisaa godhi</string>
     <string name="settings_app_lock_timeout">Booda irra deebi\'ii cufi</string>

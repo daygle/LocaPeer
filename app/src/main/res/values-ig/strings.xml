@@ -749,7 +749,6 @@
     <string name="about_diagnostics">Netwọk</string>
     <string name="about_no_pending">Enweghị ozi nọ n\'ahịrị</string>
     <string name="about_pending_messages">Ozi nọ n\'ahịrị</string>
-    <string name="about_pending_one">Ozi 1 nọ n\'ahịrị</string>
     <string name="app_lock_activity_unsupported">Mkpọchi ngwa chọrọ onye ọbịa na-akwado arịrịọ sistemụ. Melite ngwa ahụ.</string>
     <string name="app_lock_prompt_subtitle">Jiri biometric ma ọ bụ PIN ngwaọrụ</string>
     <string name="app_lock_prompt_title">Mepee LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">Onye nnata gụrụ ya</string>
     <string name="chat_delivery_state_sending">Na-eziga…</string>
     <string name="chat_delivery_state_sent">Ezigara (relay nabatara)</string>
-    <string name="chat_mic_permission_needed">Achọrọ ikike igwe okwu iji dekọọ ozi olu.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Ozi olu</string>
     <string name="chat_recording">Na-edekọ…</string>
@@ -814,13 +812,9 @@
     <string name="peer_temp_share_chip_1h">Awa 1</string>
     <string name="peer_temp_share_chip_3h">Awa 3</string>
     <string name="peer_temp_share_chip_6h">Awa 6</string>
-    <string name="peer_temp_share_chip_custom">Ahaziri…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Ruo echi elekere 8 ụtụtụ</string>
-    <string name="peer_temp_share_custom_minutes_hint">Nkeji</string>
-    <string name="peer_temp_share_custom_picker_title">Kekọrịta ruo ogologo oge ole?</string>
     <string name="peer_temp_share_stop">Kwụsị ugbu a</string>
     <string name="peer_temp_share_subtitle">Kekọrịta ruo oge nwere oke, wee kwụsị onwe ya.</string>
-    <string name="peer_temp_share_title">Nkekọrịta Ngwa Ngwa</string>
     <string name="settings_app_lock">Mkpọchi Ngwa</string>
     <string name="settings_app_lock_subtitle">Chọọ biometric ma ọ bụ PIN iji mepee LocaPeer</string>
     <string name="settings_app_lock_timeout">Kpọchie ọzọ mgbe</string>

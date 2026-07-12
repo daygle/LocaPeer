@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Tarmoq</string>
     <string name="about_no_pending">Navbatda xabar yo\'q</string>
     <string name="about_pending_messages">Navbatdagi xabarlar</string>
-    <string name="about_pending_one">1 ta xabar navbatda</string>
     <string name="app_lock_activity_unsupported">Ilova qulfi tizim so\'rovini qo\'llab-quvvatlaydigan muhitni talab qiladi. Ilovani yangilang.</string>
     <string name="app_lock_prompt_subtitle">Biometriya yoki qurilma PIN-kodidan foydalaning</string>
     <string name="app_lock_prompt_title">LocaPeer qulfini oching</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Qabul qiluvchi o\'qidi</string>
     <string name="chat_delivery_state_sending">Yuborilmoqda…</string>
     <string name="chat_delivery_state_sent">Yuborildi (rele qabul qildi)</string>
-    <string name="chat_mic_permission_needed">Ovozli xabar yozish uchun mikrofon ruxsati kerak.</string>
     <string name="chat_preview_photo">📷 Rasm</string>
     <string name="chat_preview_voice">🎤 Ovozli xabar</string>
     <string name="chat_recording">Yozilmoqda…</string>
@@ -829,14 +827,10 @@
     <string name="peer_temp_share_chip_1h">1 soat</string>
     <string name="peer_temp_share_chip_3h">3 soat</string>
     <string name="peer_temp_share_chip_6h">6 soat</string>
-    <string name="peer_temp_share_chip_custom">Maxsus…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Ertaga ertalab 8 gacha</string>
-    <string name="peer_temp_share_custom_minutes_hint">Daqiqa</string>
-    <string name="peer_temp_share_custom_picker_title">Qancha vaqt ulashilsin?</string>
-    <string name="peer_temp_share_stop">Hozir to\'xtatish</string>
+,targetContent:    <string name="peer_temp_share_stop">Hozir to\'xtatish</string>
     <string name="peer_temp_share_subtitle">Cheklangan vaqt ulashing, so\'ng avtomatik to\'xtaydi.</string>
-    <string name="peer_temp_share_title">Tezkor ulashish</string>
-    <string name="settings_app_lock">Ilova qulfi</string>
+,targetContent:    <string name="settings_app_lock">Ilova qulfi</string>
     <string name="settings_app_lock_subtitle">LocaPeer\'ni ochish uchun biometriya yoki PIN talab qilish</string>
     <string name="settings_app_lock_timeout">Shundan so\'ng qayta qulflash</string>
     <string name="settings_app_lock_timeout_1m">1 daqiqadan so\'ng</string>

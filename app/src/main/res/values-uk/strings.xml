@@ -794,7 +794,6 @@
     <string name="about_diagnostics">Мережа</string>
     <string name="about_no_pending">Немає повідомлень у черзі</string>
     <string name="about_pending_messages">Повідомлення в черзі</string>
-    <string name="about_pending_one">1 повідомлення в черзі</string>
     <string name="app_lock_activity_unsupported">Для блокування застосунку потрібне середовище з підтримкою системного запиту. Оновіть застосунок.</string>
     <string name="app_lock_prompt_subtitle">Використайте біометрію або PIN-код пристрою</string>
     <string name="app_lock_prompt_title">Розблокувати LocaPeer</string>
@@ -815,7 +814,6 @@
     <string name="chat_delivery_state_read">Прочитано отримувачем</string>
     <string name="chat_delivery_state_sending">Надсилання…</string>
     <string name="chat_delivery_state_sent">Надіслано (прийнято реле)</string>
-    <string name="chat_mic_permission_needed">Для запису голосових повідомлень потрібен дозвіл на мікрофон.</string>
     <string name="chat_preview_photo">📷 Фото</string>
     <string name="chat_preview_voice">🎤 Голосове повідомлення</string>
     <string name="chat_recording">Запис…</string>
@@ -859,13 +857,9 @@
     <string name="peer_temp_share_chip_1h">1 година</string>
     <string name="peer_temp_share_chip_3h">3 години</string>
     <string name="peer_temp_share_chip_6h">6 годин</string>
-    <string name="peer_temp_share_chip_custom">Інше…</string>
     <string name="peer_temp_share_chip_until_tomorrow">До завтра 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Хвилини</string>
-    <string name="peer_temp_share_custom_picker_title">На який час поділитися?</string>
-    <string name="peer_temp_share_stop">Зупинити зараз</string>
+,targetContent:    <string name="peer_temp_share_stop">Зупинити зараз</string>
     <string name="peer_temp_share_subtitle">Діліться обмежений час, потім автоматична зупинка.</string>
-    <string name="peer_temp_share_title">Швидкий доступ</string>
     <string name="settings_app_lock">Блокування застосунку</string>
     <string name="settings_app_lock_subtitle">Вимагати біометрію або PIN-код для відкриття LocaPeer</string>
     <string name="settings_app_lock_timeout">Блокувати знову через</string>

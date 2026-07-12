@@ -748,7 +748,6 @@
     <string name="about_diagnostics">ネットワーク</string>
     <string name="about_no_pending">キューにメッセージはありません</string>
     <string name="about_pending_messages">キュー内のメッセージ</string>
-    <string name="about_pending_one">キューに1件のメッセージ</string>
     <string name="app_lock_activity_unsupported">アプリロックには、システムプロンプトに対応したホストが必要です。アプリを更新してください。</string>
     <string name="app_lock_prompt_subtitle">生体認証またはデバイスのPINを使用</string>
     <string name="app_lock_prompt_title">LocaPeerのロックを解除</string>
@@ -769,7 +768,6 @@
     <string name="chat_delivery_state_read">受信者が既読</string>
     <string name="chat_delivery_state_sending">送信中…</string>
     <string name="chat_delivery_state_sent">送信済み（リレーが受理）</string>
-    <string name="chat_mic_permission_needed">音声メッセージの録音にはマイクの許可が必要です。</string>
     <string name="chat_preview_photo">📷 写真</string>
     <string name="chat_preview_voice">🎤 音声メッセージ</string>
     <string name="chat_recording">録音中…</string>
@@ -813,13 +811,9 @@
     <string name="peer_temp_share_chip_1h">1時間</string>
     <string name="peer_temp_share_chip_3h">3時間</string>
     <string name="peer_temp_share_chip_6h">6時間</string>
-    <string name="peer_temp_share_chip_custom">カスタム…</string>
     <string name="peer_temp_share_chip_until_tomorrow">明日の午前8時まで</string>
-    <string name="peer_temp_share_custom_minutes_hint">分</string>
-    <string name="peer_temp_share_custom_picker_title">どのくらい共有しますか？</string>
     <string name="peer_temp_share_stop">今すぐ停止</string>
     <string name="peer_temp_share_subtitle">限られた時間だけ共有し、その後自動的に停止します。</string>
-    <string name="peer_temp_share_title">クイック共有</string>
     <string name="settings_app_lock">アプリロック</string>
     <string name="settings_app_lock_subtitle">LocaPeerを開くのに生体認証またはデバイスのPINを要求</string>
     <string name="settings_app_lock_timeout">次の時間後に再ロック</string>

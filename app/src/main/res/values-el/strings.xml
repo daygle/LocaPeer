@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Δίκτυο</string>
     <string name="about_no_pending">Δεν υπάρχουν μηνύματα σε αναμονή</string>
     <string name="about_pending_messages">Μηνύματα σε αναμονή</string>
-    <string name="about_pending_one">1 μήνυμα σε αναμονή</string>
     <string name="app_lock_activity_unsupported">Το κλείδωμα εφαρμογής απαιτεί περιβάλλον που υποστηρίζει το μήνυμα συστήματος. Ενημερώστε την εφαρμογή.</string>
     <string name="app_lock_prompt_subtitle">Χρησιμοποιήστε βιομετρικά ή το PIN της συσκευής</string>
     <string name="app_lock_prompt_title">Ξεκλείδωμα LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Διαβάστηκε από τον παραλήπτη</string>
     <string name="chat_delivery_state_sending">Αποστολή…</string>
     <string name="chat_delivery_state_sent">Στάλθηκε (έγινε αποδεκτό από τον αναμεταδότη)</string>
-    <string name="chat_mic_permission_needed">Απαιτείται άδεια μικροφώνου για την εγγραφή φωνητικών μηνυμάτων.</string>
     <string name="chat_preview_photo">📷 Φωτογραφία</string>
     <string name="chat_preview_voice">🎤 Φωνητικό μήνυμα</string>
     <string name="chat_recording">Εγγραφή…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 ώρα</string>
     <string name="peer_temp_share_chip_3h">3 ώρες</string>
     <string name="peer_temp_share_chip_6h">6 ώρες</string>
-    <string name="peer_temp_share_chip_custom">Προσαρμοσμένο…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Μέχρι αύριο στις 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Λεπτά</string>
-    <string name="peer_temp_share_custom_picker_title">Για πόση ώρα να μοιραστεί;</string>
     <string name="peer_temp_share_stop">Διακοπή τώρα</string>
     <string name="peer_temp_share_subtitle">Μοιραστείτε για περιορισμένο χρόνο, μετά αυτόματη διακοπή.</string>
-    <string name="peer_temp_share_title">Γρήγορη κοινοποίηση</string>
     <string name="settings_app_lock">Κλείδωμα εφαρμογής</string>
     <string name="settings_app_lock_subtitle">Απαίτηση βιομετρικών ή PIN συσκευής για άνοιγμα του LocaPeer</string>
     <string name="settings_app_lock_timeout">Επανακλείδωμα μετά από</string>

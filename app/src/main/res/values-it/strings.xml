@@ -763,7 +763,6 @@
     <string name="about_diagnostics">Rete</string>
     <string name="about_no_pending">Nessun messaggio in coda</string>
     <string name="about_pending_messages">Messaggi in coda</string>
-    <string name="about_pending_one">1 messaggio in coda</string>
     <string name="app_lock_activity_unsupported">Il blocco dell\'app richiede un host che supporti la richiesta di sistema. Aggiorna l\'app.</string>
     <string name="app_lock_prompt_subtitle">Usa la biometria o il PIN del dispositivo</string>
     <string name="app_lock_prompt_title">Sblocca LocaPeer</string>
@@ -784,7 +783,6 @@
     <string name="chat_delivery_state_read">Letto dal destinatario</string>
     <string name="chat_delivery_state_sending">Invio…</string>
     <string name="chat_delivery_state_sent">Inviato (accettato dal relay)</string>
-    <string name="chat_mic_permission_needed">È necessaria l\'autorizzazione al microfono per registrare messaggi vocali.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Messaggio vocale</string>
     <string name="chat_recording">Registrazione…</string>
@@ -828,13 +826,9 @@
     <string name="peer_temp_share_chip_1h">1 ora</string>
     <string name="peer_temp_share_chip_3h">3 ore</string>
     <string name="peer_temp_share_chip_6h">6 ore</string>
-    <string name="peer_temp_share_chip_custom">Personalizzato…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Fino a domani alle 8</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minuti</string>
-    <string name="peer_temp_share_custom_picker_title">Per quanto tempo condividere?</string>
     <string name="peer_temp_share_stop">Ferma ora</string>
     <string name="peer_temp_share_subtitle">Condividi per un tempo limitato, poi si ferma automaticamente.</string>
-    <string name="peer_temp_share_title">Condivisione rapida</string>
     <string name="settings_app_lock">Blocco dell\'app</string>
     <string name="settings_app_lock_subtitle">Richiedi biometria o PIN del dispositivo per aprire LocaPeer</string>
     <string name="settings_app_lock_timeout"> Blocca di nuovo dopo</string>

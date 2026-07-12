@@ -764,7 +764,6 @@
     <string name="about_diagnostics">నెట్‌వర్క్</string>
     <string name="about_no_pending">క్యూలో సందేశాలు లేవు</string>
     <string name="about_pending_messages">క్యూలో ఉన్న సందేశాలు</string>
-    <string name="about_pending_one">క్యూలో 1 సందేశం</string>
     <string name="app_lock_activity_unsupported">యాప్ లాక్‌కు సిస్టమ్ ప్రాంప్ట్‌ను మద్దతిచ్చే హోస్ట్ అవసరం. యాప్‌ను నవీకరించండి.</string>
     <string name="app_lock_prompt_subtitle">బయోమెట్రిక్ లేదా పరికర PINను ఉపయోగించండి</string>
     <string name="app_lock_prompt_title">LocaPeerను అన్‌లాక్ చేయండి</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">గ్రహీత చదివారు</string>
     <string name="chat_delivery_state_sending">పంపుతోంది…</string>
     <string name="chat_delivery_state_sent">పంపబడింది (రిలే ఆమోదించింది)</string>
-    <string name="chat_mic_permission_needed">వాయిస్ సందేశాలను రికార్డ్ చేయడానికి మైక్రోఫోన్ అనుమతి అవసరం.</string>
     <string name="chat_preview_photo">📷 ఫోటో</string>
     <string name="chat_preview_voice">🎤 వాయిస్ సందేశం</string>
     <string name="chat_recording">రికార్డ్ అవుతోంది…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 గంట</string>
     <string name="peer_temp_share_chip_3h">3 గంటలు</string>
     <string name="peer_temp_share_chip_6h">6 గంటలు</string>
-    <string name="peer_temp_share_chip_custom">అనుకూలం…</string>
     <string name="peer_temp_share_chip_until_tomorrow">రేపు ఉదయం 8 గంటల వరకు</string>
-    <string name="peer_temp_share_custom_minutes_hint">నిమిషాలు</string>
-    <string name="peer_temp_share_custom_picker_title">ఎంతసేపు భాగస్వామ్యం చేయాలి?</string>
     <string name="peer_temp_share_stop">ఇప్పుడే ఆపండి</string>
     <string name="peer_temp_share_subtitle">పరిమిత సమయం భాగస్వామ్యం చేసి, ఆపై స్వయంచాలకంగా ఆగుతుంది.</string>
-    <string name="peer_temp_share_title">త్వరిత భాగస్వామ్యం</string>
     <string name="settings_app_lock">యాప్ లాక్</string>
     <string name="settings_app_lock_subtitle">LocaPeer తెరవడానికి బయోమెట్రిక్ లేదా PIN అవసరం</string>
     <string name="settings_app_lock_timeout">దీని తర్వాత మళ్లీ లాక్ చేయండి</string>

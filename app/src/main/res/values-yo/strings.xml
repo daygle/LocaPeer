@@ -749,7 +749,6 @@
     <string name="about_diagnostics">Nẹtiwọọki</string>
     <string name="about_no_pending">Kò sí ìránṣẹ́ tó ń dúró ní ìlà</string>
     <string name="about_pending_messages">Àwọn ìránṣẹ́ tó ń dúró ní ìlà</string>
-    <string name="about_pending_one">Ìránṣẹ́ 1 ń dúró ní ìlà</string>
     <string name="app_lock_activity_unsupported">Ìtìpa app nílò olùgbàlejò tó ń ṣàtìlẹ́yìn fún ìbéèrè ètò. Ṣe ìmúdójúìwọ̀n app.</string>
     <string name="app_lock_prompt_subtitle">Lo biometric tàbí PIN ẹ̀rọ</string>
     <string name="app_lock_prompt_title">Ṣí LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">Olùgbà ti kà á</string>
     <string name="chat_delivery_state_sending">Ń fi ránṣẹ́…</string>
     <string name="chat_delivery_state_sent">A ti firánṣẹ́ (relay gbà)</string>
-    <string name="chat_mic_permission_needed">A nílò àṣẹ makirofóònù láti gba àwọn ìránṣẹ́ ohùn sílẹ̀.</string>
     <string name="chat_preview_photo">📷 Fọ́tò</string>
     <string name="chat_preview_voice">🎤 Ìránṣẹ́ ohùn</string>
     <string name="chat_recording">Ń gbà sílẹ̀…</string>
@@ -814,14 +812,10 @@
     <string name="peer_temp_share_chip_1h">Wákàtí 1</string>
     <string name="peer_temp_share_chip_3h">Wákàtí 3</string>
     <string name="peer_temp_share_chip_6h">Wákàtí 6</string>
-    <string name="peer_temp_share_chip_custom">Àdáni…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Títí di ọ̀la aago 8 òwúrọ̀</string>
-    <string name="peer_temp_share_custom_minutes_hint">Ìṣẹ́jú</string>
-    <string name="peer_temp_share_custom_picker_title">Fún ìgbà mélòó ni kí a pín?</string>
-    <string name="peer_temp_share_stop">Dúró báyìí</string>
+,targetContent:    <string name="peer_temp_share_stop">Dúró báyìí</string>
     <string name="peer_temp_share_subtitle">Pín fún àkókò tó ní ààlà, lẹ́yìn náà á dúró fúnra rẹ̀.</string>
-    <string name="peer_temp_share_title">Pínpín Kíákíá</string>
-    <string name="settings_app_lock">Ìtìpa App</string>
+,targetContent:    <string name="settings_app_lock">Ìtìpa App</string>
     <string name="settings_app_lock_subtitle">Béèrè biometric tàbí PIN láti ṣí LocaPeer</string>
     <string name="settings_app_lock_timeout">Tì padà lẹ́yìn</string>
     <string name="settings_app_lock_timeout_1m">Lẹ́yìn ìṣẹ́jú 1</string>

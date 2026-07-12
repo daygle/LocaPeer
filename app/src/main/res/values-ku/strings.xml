@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Tor</string>
     <string name="about_no_pending">Peyamek li benda nîne</string>
     <string name="about_pending_messages">Peyamên li benda</string>
-    <string name="about_pending_one">1 peyam li benda</string>
     <string name="app_lock_activity_unsupported">Kilîta sepanê hewceyî hostek e ku daxwaza sîstemê piştgirî bike. Sepanê nû bike.</string>
     <string name="app_lock_prompt_subtitle">Biyometrî an PIN-a cîhazê bikar bîne</string>
     <string name="app_lock_prompt_title">LocaPeer veke</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Ji hêla wergir ve hate xwendin</string>
     <string name="chat_delivery_state_sending">Tê şandin…</string>
     <string name="chat_delivery_state_sent">Hate şandin (releyê qebûl kir)</string>
-    <string name="chat_mic_permission_needed">Ji bo tomarkirina peyamên dengî destûra mîkrofonê hewce ye.</string>
     <string name="chat_preview_photo">📷 Wêne</string>
     <string name="chat_preview_voice">🎤 Peyama dengî</string>
     <string name="chat_recording">Tê tomarkirin…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 saet</string>
     <string name="peer_temp_share_chip_3h">3 saet</string>
     <string name="peer_temp_share_chip_6h">6 saet</string>
-    <string name="peer_temp_share_chip_custom">Taybet…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Heta sibê saet 8</string>
-    <string name="peer_temp_share_custom_minutes_hint">Xulek</string>
-    <string name="peer_temp_share_custom_picker_title">Bo çiqas demê parve bike?</string>
     <string name="peer_temp_share_stop">Niha rawestîne</string>
     <string name="peer_temp_share_subtitle">Ji bo demeke sînordar parve bike, paşê bixweber raweste.</string>
-    <string name="peer_temp_share_title">Parvekirina bilez</string>
     <string name="settings_app_lock">Kilîta sepanê</string>
     <string name="settings_app_lock_subtitle">Ji bo vekirina LocaPeer biyometrî an PIN bixwaze</string>
     <string name="settings_app_lock_timeout">Piştî vê dîsa qufle bike</string>

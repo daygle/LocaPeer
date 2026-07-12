@@ -794,7 +794,6 @@
     <string name="about_diagnostics">Сеть</string>
     <string name="about_no_pending">Нет сообщений в очереди</string>
     <string name="about_pending_messages">Сообщения в очереди</string>
-    <string name="about_pending_one">1 сообщение в очереди</string>
     <string name="app_lock_activity_unsupported">Для блокировки приложения нужна среда с поддержкой системного запроса. Обновите приложение.</string>
     <string name="app_lock_prompt_subtitle">Используйте биометрию или PIN-код устройства</string>
     <string name="app_lock_prompt_title">Разблокировать LocaPeer</string>
@@ -815,7 +814,6 @@
     <string name="chat_delivery_state_read">Прочитано получателем</string>
     <string name="chat_delivery_state_sending">Отправка…</string>
     <string name="chat_delivery_state_sent">Отправлено (принято реле)</string>
-    <string name="chat_mic_permission_needed">Для записи голосовых сообщений нужно разрешение на микрофон.</string>
     <string name="chat_preview_photo">📷 Фото</string>
     <string name="chat_preview_voice">🎤 Голосовое сообщение</string>
     <string name="chat_recording">Запись…</string>
@@ -859,13 +857,9 @@
     <string name="peer_temp_share_chip_1h">1 час</string>
     <string name="peer_temp_share_chip_3h">3 часа</string>
     <string name="peer_temp_share_chip_6h">6 часов</string>
-    <string name="peer_temp_share_chip_custom">Другое…</string>
     <string name="peer_temp_share_chip_until_tomorrow">До завтра 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Минуты</string>
-    <string name="peer_temp_share_custom_picker_title">На какое время поделиться?</string>
     <string name="peer_temp_share_stop">Остановить сейчас</string>
     <string name="peer_temp_share_subtitle">Делитесь ограниченное время, затем автоматическая остановка.</string>
-    <string name="peer_temp_share_title">Быстрый доступ</string>
     <string name="settings_app_lock">Блокировка приложения</string>
     <string name="settings_app_lock_subtitle">Требовать биометрию или PIN-код для открытия LocaPeer</string>
     <string name="settings_app_lock_timeout">Повторно блокировать через</string>

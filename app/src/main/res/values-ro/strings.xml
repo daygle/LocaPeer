@@ -779,7 +779,6 @@
     <string name="about_diagnostics">Rețea</string>
     <string name="about_no_pending">Niciun mesaj în așteptare</string>
     <string name="about_pending_messages">Mesaje în așteptare</string>
-    <string name="about_pending_one">1 mesaj în așteptare</string>
     <string name="app_lock_activity_unsupported">Blocarea aplicației necesită o gazdă care acceptă solicitarea de sistem. Actualizează aplicația.</string>
     <string name="app_lock_prompt_subtitle">Folosește datele biometrice sau PIN-ul dispozitivului</string>
     <string name="app_lock_prompt_title">Deblochează LocaPeer</string>
@@ -800,7 +799,6 @@
     <string name="chat_delivery_state_read">Citit de destinatar</string>
     <string name="chat_delivery_state_sending">Se trimite…</string>
     <string name="chat_delivery_state_sent">Trimis (acceptat de releu)</string>
-    <string name="chat_mic_permission_needed">Este nevoie de permisiunea pentru microfon ca să înregistrezi mesaje vocale.</string>
     <string name="chat_preview_photo">📷 Fotografie</string>
     <string name="chat_preview_voice">🎤 Mesaj vocal</string>
     <string name="chat_recording">Se înregistrează…</string>
@@ -844,13 +842,9 @@
     <string name="peer_temp_share_chip_1h">1 oră</string>
     <string name="peer_temp_share_chip_3h">3 ore</string>
     <string name="peer_temp_share_chip_6h">6 ore</string>
-    <string name="peer_temp_share_chip_custom">Personalizat…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Până mâine la 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minute</string>
-    <string name="peer_temp_share_custom_picker_title">Pentru cât timp partajezi?</string>
     <string name="peer_temp_share_stop">Oprește acum</string>
     <string name="peer_temp_share_subtitle">Partajează pentru un timp limitat, apoi se oprește automat.</string>
-    <string name="peer_temp_share_title">Partajare rapidă</string>
     <string name="settings_app_lock">Blocarea aplicației</string>
     <string name="settings_app_lock_subtitle">Solicită date biometrice sau PIN pentru a deschide LocaPeer</string>
     <string name="settings_app_lock_timeout">Reblochează după</string>

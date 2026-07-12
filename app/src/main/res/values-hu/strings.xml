@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Hálózat</string>
     <string name="about_no_pending">Nincs üzenet a sorban</string>
     <string name="about_pending_messages">Sorban álló üzenetek</string>
-    <string name="about_pending_one">1 üzenet a sorban</string>
     <string name="app_lock_activity_unsupported">Az alkalmazászár rendszerkérést támogató gazdakörnyezetet igényel. Frissítsd az alkalmazást.</string>
     <string name="app_lock_prompt_subtitle">Használj biometrikus azonosítást vagy az eszköz PIN-kódját</string>
     <string name="app_lock_prompt_title">LocaPeer feloldása</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">A címzett elolvasta</string>
     <string name="chat_delivery_state_sending">Küldés…</string>
     <string name="chat_delivery_state_sent">Elküldve (a relé elfogadta)</string>
-    <string name="chat_mic_permission_needed">Hangüzenetek rögzítéséhez mikrofonengedély szükséges.</string>
     <string name="chat_preview_photo">📷 Fénykép</string>
     <string name="chat_preview_voice">🎤 Hangüzenet</string>
     <string name="chat_recording">Felvétel…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 óra</string>
     <string name="peer_temp_share_chip_3h">3 óra</string>
     <string name="peer_temp_share_chip_6h">6 óra</string>
-    <string name="peer_temp_share_chip_custom">Egyéni…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Holnap reggel 8-ig</string>
-    <string name="peer_temp_share_custom_minutes_hint">Perc</string>
-    <string name="peer_temp_share_custom_picker_title">Meddig osztod meg?</string>
     <string name="peer_temp_share_stop">Leállítás most</string>
     <string name="peer_temp_share_subtitle">Ossz meg korlátozott ideig, majd automatikus leállás.</string>
-    <string name="peer_temp_share_title">Gyors megosztás</string>
     <string name="settings_app_lock">Alkalmazászár</string>
     <string name="settings_app_lock_subtitle">Biometrikus azonosítás vagy PIN szükséges a LocaPeer megnyitásához</string>
     <string name="settings_app_lock_timeout">Újrazárolás ennyi után</string>

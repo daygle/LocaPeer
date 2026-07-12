@@ -749,7 +749,6 @@
     <string name="about_diagnostics">ကွန်ရက်</string>
     <string name="about_no_pending">တန်းစီစောင့်နေသော မက်ဆေ့ချ်မရှိပါ</string>
     <string name="about_pending_messages">တန်းစီစောင့်နေသော မက်ဆေ့ချ်များ</string>
-    <string name="about_pending_one">တန်းစီစောင့်နေသော မက်ဆေ့ချ် ၁ ခု</string>
     <string name="app_lock_activity_unsupported">အက်ပ်လော့ခ်အတွက် စနစ်၏ prompt ကို ပံ့ပိုးသည့် host လိုအပ်သည်။ အက်ပ်ကို အပ်ဒိတ်လုပ်ပါ။</string>
     <string name="app_lock_prompt_subtitle">ဇီဝအချက်အလက် သို့မဟုတ် စက်၏ PIN ကိုသုံးပါ</string>
     <string name="app_lock_prompt_title">LocaPeer ကို လော့ခ်ဖွင့်ရန်</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">လက်ခံသူ ဖတ်ပြီး</string>
     <string name="chat_delivery_state_sending">ပို့နေသည်…</string>
     <string name="chat_delivery_state_sent">ပို့ပြီး (relay က လက်ခံသည်)</string>
-    <string name="chat_mic_permission_needed">အသံမက်ဆေ့ချ်များ ဖမ်းယူရန် မိုက်ခရိုဖုန်း ခွင့်ပြုချက် လိုအပ်သည်။</string>
     <string name="chat_preview_photo">📷 ဓာတ်ပုံ</string>
     <string name="chat_preview_voice">🎤 အသံမက်ဆေ့ချ်</string>
     <string name="chat_recording">ဖမ်းယူနေသည်…</string>
@@ -814,13 +812,9 @@
     <string name="peer_temp_share_chip_1h">1 နာရီ</string>
     <string name="peer_temp_share_chip_3h">3 နာရီ</string>
     <string name="peer_temp_share_chip_6h">6 နာရီ</string>
-    <string name="peer_temp_share_chip_custom">စိတ်ကြိုက်…</string>
     <string name="peer_temp_share_chip_until_tomorrow">မနက်ဖြန် နံနက် 8 နာရီအထိ</string>
-    <string name="peer_temp_share_custom_minutes_hint">မိနစ်</string>
-    <string name="peer_temp_share_custom_picker_title">ဘယ်လောက်ကြာ မျှဝေမလဲ။</string>
     <string name="peer_temp_share_stop">ယခု ရပ်ရန်</string>
     <string name="peer_temp_share_subtitle">အချိန်အကန့်အသတ်ဖြင့် မျှဝေပြီး အလိုအလျောက် ရပ်သည်။</string>
-    <string name="peer_temp_share_title">အမြန် မျှဝေခြင်း</string>
     <string name="settings_app_lock">အက်ပ်လော့ခ်</string>
     <string name="settings_app_lock_subtitle">LocaPeer ဖွင့်ရန် ဇီဝအချက်အလက် သို့မဟုတ် PIN လိုအပ်စေရန်</string>
     <string name="settings_app_lock_timeout">ဤအချိန်ပြီးနောက် ပြန်လော့ခ်ချရန်</string>

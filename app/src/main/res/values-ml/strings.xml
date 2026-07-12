@@ -764,7 +764,6 @@
     <string name="about_diagnostics">നെറ്റ്‌വർക്ക്</string>
     <string name="about_no_pending">ക്യൂവിൽ സന്ദേശങ്ങളില്ല</string>
     <string name="about_pending_messages">ക്യൂവിലുള്ള സന്ദേശങ്ങൾ</string>
-    <string name="about_pending_one">ക്യൂവിൽ 1 സന്ദേശം</string>
     <string name="app_lock_activity_unsupported">ആപ്പ് ലോക്കിന് സിസ്റ്റം പ്രോംപ്റ്റ് പിന്തുണയ്ക്കുന്ന ഹോസ്റ്റ് ആവശ്യമാണ്. ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="app_lock_prompt_subtitle">ബയോമെട്രിക് അല്ലെങ്കിൽ ഉപകരണ PIN ഉപയോഗിക്കുക</string>
     <string name="app_lock_prompt_title">LocaPeer അൺലോക്ക് ചെയ്യുക</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">സ്വീകർത്താവ് വായിച്ചു</string>
     <string name="chat_delivery_state_sending">അയയ്ക്കുന്നു…</string>
     <string name="chat_delivery_state_sent">അയച്ചു (റിലേ സ്വീകരിച്ചു)</string>
-    <string name="chat_mic_permission_needed">വോയ്‌സ് സന്ദേശങ്ങൾ റെക്കോർഡ് ചെയ്യാൻ മൈക്രോഫോൺ അനുമതി ആവശ്യമാണ്.</string>
     <string name="chat_preview_photo">📷 ഫോട്ടോ</string>
     <string name="chat_preview_voice">🎤 വോയ്‌സ് സന്ദേശം</string>
     <string name="chat_recording">റെക്കോർഡ് ചെയ്യുന്നു…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 മണിക്കൂർ</string>
     <string name="peer_temp_share_chip_3h">3 മണിക്കൂർ</string>
     <string name="peer_temp_share_chip_6h">6 മണിക്കൂർ</string>
-    <string name="peer_temp_share_chip_custom">ഇഷ്ടാനുസൃതം…</string>
     <string name="peer_temp_share_chip_until_tomorrow">നാളെ രാവിലെ 8 വരെ</string>
-    <string name="peer_temp_share_custom_minutes_hint">മിനിറ്റ്</string>
-    <string name="peer_temp_share_custom_picker_title">എത്ര നേരം പങ്കിടണം?</string>
     <string name="peer_temp_share_stop">ഇപ്പോൾ നിർത്തുക</string>
     <string name="peer_temp_share_subtitle">പരിമിത സമയത്തേക്ക് പങ്കിടുക, പിന്നീട് സ്വയമേവ നിർത്തും.</string>
-    <string name="peer_temp_share_title">പെട്ടെന്നുള്ള പങ്കിടൽ</string>
     <string name="settings_app_lock">ആപ്പ് ലോക്ക്</string>
     <string name="settings_app_lock_subtitle">LocaPeer തുറക്കാൻ ബയോമെട്രിക് അല്ലെങ്കിൽ PIN ആവശ്യമാക്കുക</string>
     <string name="settings_app_lock_timeout">ഇതിനുശേഷം വീണ്ടും ലോക്ക് ചെയ്യുക</string>

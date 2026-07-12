@@ -749,7 +749,6 @@
     <string name="about_diagnostics">網路</string>
     <string name="about_no_pending">沒有排隊的訊息</string>
     <string name="about_pending_messages">排隊的訊息</string>
-    <string name="about_pending_one">1 則排隊訊息</string>
     <string name="app_lock_activity_unsupported">應用程式鎖需要支援系統提示的宿主。請更新應用程式。</string>
     <string name="app_lock_prompt_subtitle">使用生物辨識或裝置 PIN 碼</string>
     <string name="app_lock_prompt_title">解鎖 LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">收件人已讀</string>
     <string name="chat_delivery_state_sending">正在傳送…</string>
     <string name="chat_delivery_state_sent">已傳送（中繼已接受）</string>
-    <string name="chat_mic_permission_needed">錄製語音訊息需要麥克風權限。</string>
     <string name="chat_preview_photo">📷 相片</string>
     <string name="chat_preview_voice">🎤 語音訊息</string>
     <string name="chat_recording">正在錄音…</string>
@@ -814,14 +812,10 @@
     <string name="peer_temp_share_chip_1h">1 小時</string>
     <string name="peer_temp_share_chip_3h">3 小時</string>
     <string name="peer_temp_share_chip_6h">6 小時</string>
-    <string name="peer_temp_share_chip_custom">自訂…</string>
     <string name="peer_temp_share_chip_until_tomorrow">到明天早上 8 點</string>
-    <string name="peer_temp_share_custom_minutes_hint">分鐘</string>
-    <string name="peer_temp_share_custom_picker_title">要分享多久？</string>
-    <string name="peer_temp_share_stop">立即停止</string>
+,targetContent:,targetContent:    <string name="peer_temp_share_stop">立即停止</string>
     <string name="peer_temp_share_subtitle">分享一段有限的時間，然後自動停止。</string>
-    <string name="peer_temp_share_title">快速分享</string>
-    <string name="settings_app_lock">應用程式鎖</string>
+,targetContent:    <string name="settings_app_lock">應用程式鎖</string>
     <string name="settings_app_lock_subtitle">開啟 LocaPeer 時需要生物辨識或裝置 PIN 碼</string>
     <string name="settings_app_lock_timeout">在此之後重新鎖定</string>
     <string name="settings_app_lock_timeout_1m">1 分鐘後</string>

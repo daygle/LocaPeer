@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Nätverk</string>
     <string name="about_no_pending">Inga köade meddelanden</string>
     <string name="about_pending_messages">Köade meddelanden</string>
-    <string name="about_pending_one">1 köat meddelande</string>
     <string name="app_lock_activity_unsupported">Applåset kräver en värd som stöder systemuppmaningen. Uppdatera appen.</string>
     <string name="app_lock_prompt_subtitle">Använd biometri eller enhetens PIN-kod</string>
     <string name="app_lock_prompt_title">Lås upp LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Läst av mottagaren</string>
     <string name="chat_delivery_state_sending">Skickar…</string>
     <string name="chat_delivery_state_sent">Skickat (accepterat av relä)</string>
-    <string name="chat_mic_permission_needed">Mikrofonbehörighet krävs för att spela in röstmeddelanden.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Röstmeddelande</string>
     <string name="chat_recording">Spelar in…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 timme</string>
     <string name="peer_temp_share_chip_3h">3 timmar</string>
     <string name="peer_temp_share_chip_6h">6 timmar</string>
-    <string name="peer_temp_share_chip_custom">Anpassad…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Till imorgon kl. 8</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minuter</string>
-    <string name="peer_temp_share_custom_picker_title">Hur länge vill du dela?</string>
     <string name="peer_temp_share_stop">Stoppa nu</string>
     <string name="peer_temp_share_subtitle">Dela under begränsad tid, stoppa sedan automatiskt.</string>
-    <string name="peer_temp_share_title">Snabbdelning</string>
     <string name="settings_app_lock">Applås</string>
     <string name="settings_app_lock_subtitle">Kräv biometri eller enhets-PIN för att öppna LocaPeer</string>
     <string name="settings_app_lock_timeout">Lås igen efter</string>

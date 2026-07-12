@@ -824,7 +824,6 @@
     <string name="about_diagnostics">الشبكة</string>
     <string name="about_no_pending">لا توجد رسائل في قائمة الانتظار</string>
     <string name="about_pending_messages">رسائل في قائمة الانتظار</string>
-    <string name="about_pending_one">رسالة واحدة في قائمة الانتظار</string>
     <string name="app_lock_activity_unsupported">يتطلب قفل التطبيق مضيفًا يدعم مطالبة النظام. حدّث التطبيق.</string>
     <string name="app_lock_prompt_subtitle">استخدم القياسات الحيوية أو رمز PIN للجهاز</string>
     <string name="app_lock_prompt_title">فتح LocaPeer</string>
@@ -845,7 +844,6 @@
     <string name="chat_delivery_state_read">قرأها المستلم</string>
     <string name="chat_delivery_state_sending">جارٍ الإرسال…</string>
     <string name="chat_delivery_state_sent">تم الإرسال (قبله المُرحِّل)</string>
-    <string name="chat_mic_permission_needed">إذن الميكروفون مطلوب لتسجيل الرسائل الصوتية.</string>
     <string name="chat_preview_photo">📷 صورة</string>
     <string name="chat_preview_voice">🎤 رسالة صوتية</string>
     <string name="chat_recording">جارٍ التسجيل…</string>
@@ -889,13 +887,9 @@
     <string name="peer_temp_share_chip_1h">ساعة واحدة</string>
     <string name="peer_temp_share_chip_3h">3 ساعات</string>
     <string name="peer_temp_share_chip_6h">6 ساعات</string>
-    <string name="peer_temp_share_chip_custom">مخصص…</string>
     <string name="peer_temp_share_chip_until_tomorrow">حتى الغد 8 صباحًا</string>
-    <string name="peer_temp_share_custom_minutes_hint">دقائق</string>
-    <string name="peer_temp_share_custom_picker_title">لمدة كم تريد المشاركة؟</string>
     <string name="peer_temp_share_stop">إيقاف الآن</string>
     <string name="peer_temp_share_subtitle">شارك لمدة محدودة، ثم يتوقف تلقائيًا.</string>
-    <string name="peer_temp_share_title">مشاركة سريعة</string>
     <string name="settings_app_lock">قفل التطبيق</string>
     <string name="settings_app_lock_subtitle">طلب القياسات الحيوية أو رمز PIN لفتح LocaPeer</string>
     <string name="settings_app_lock_timeout">إعادة القفل بعد</string>

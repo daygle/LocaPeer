@@ -75,7 +75,7 @@ android {
     // FileNotFoundException for com.locapeer.data.AppDatabase/{N}.json.
     sourceSets {
         named("androidTest") {
-            assets.srcDir("$projectDir/schemas")
+            assets.directories.add("schemas")
         }
     }
 

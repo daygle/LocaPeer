@@ -794,7 +794,6 @@
     <string name="about_diagnostics">Sieć</string>
     <string name="about_no_pending">Brak wiadomości w kolejce</string>
     <string name="about_pending_messages">Wiadomości w kolejce</string>
-    <string name="about_pending_one">1 wiadomość w kolejce</string>
     <string name="app_lock_activity_unsupported">Blokada aplikacji wymaga hosta obsługującego monit systemowy. Zaktualizuj aplikację.</string>
     <string name="app_lock_prompt_subtitle">Użyj biometrii lub kodu PIN urządzenia</string>
     <string name="app_lock_prompt_title">Odblokuj LocaPeer</string>
@@ -815,7 +814,6 @@
     <string name="chat_delivery_state_read">Przeczytane przez odbiorcę</string>
     <string name="chat_delivery_state_sending">Wysyłanie…</string>
     <string name="chat_delivery_state_sent">Wysłano (zaakceptowane przez przekaźnik)</string>
-    <string name="chat_mic_permission_needed">Do nagrywania wiadomości głosowych potrzebne jest pozwolenie na mikrofon.</string>
     <string name="chat_preview_photo">📷 Zdjęcie</string>
     <string name="chat_preview_voice">🎤 Wiadomość głosowa</string>
     <string name="chat_recording">Nagrywanie…</string>
@@ -859,13 +857,9 @@
     <string name="peer_temp_share_chip_1h">1 godzina</string>
     <string name="peer_temp_share_chip_3h">3 godziny</string>
     <string name="peer_temp_share_chip_6h">6 godzin</string>
-    <string name="peer_temp_share_chip_custom">Niestandardowy…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Do jutra do 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minuty</string>
-    <string name="peer_temp_share_custom_picker_title">Jak długo udostępniać?</string>
     <string name="peer_temp_share_stop">Zatrzymaj teraz</string>
     <string name="peer_temp_share_subtitle">Udostępniaj przez ograniczony czas, potem automatyczne zatrzymanie.</string>
-    <string name="peer_temp_share_title">Szybkie udostępnianie</string>
     <string name="settings_app_lock">Blokada aplikacji</string>
     <string name="settings_app_lock_subtitle">Wymagaj biometrii lub kodu PIN do otwarcia LocaPeer</string>
     <string name="settings_app_lock_timeout">Zablokuj ponownie po</string>

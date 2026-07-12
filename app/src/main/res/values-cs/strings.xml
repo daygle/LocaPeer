@@ -794,7 +794,6 @@
     <string name="about_diagnostics">Síť</string>
     <string name="about_no_pending">Žádné zprávy ve frontě</string>
     <string name="about_pending_messages">Zprávy ve frontě</string>
-    <string name="about_pending_one">1 zpráva ve frontě</string>
     <string name="app_lock_activity_unsupported">Zámek aplikace vyžaduje prostředí podporující systémovou výzvu. Aktualizujte aplikaci.</string>
     <string name="app_lock_prompt_subtitle">Použijte biometrii nebo PIN zařízení</string>
     <string name="app_lock_prompt_title">Odemknout LocaPeer</string>
@@ -815,7 +814,6 @@
     <string name="chat_delivery_state_read">Přečteno příjemcem</string>
     <string name="chat_delivery_state_sending">Odesílání…</string>
     <string name="chat_delivery_state_sent">Odesláno (přijato relé)</string>
-    <string name="chat_mic_permission_needed">K nahrávání hlasových zpráv je potřeba oprávnění k mikrofonu.</string>
     <string name="chat_preview_photo">📷 Fotka</string>
     <string name="chat_preview_voice">🎤 Hlasová zpráva</string>
     <string name="chat_recording">Nahrávání…</string>
@@ -859,13 +857,9 @@
     <string name="peer_temp_share_chip_1h">1 hodina</string>
     <string name="peer_temp_share_chip_3h">3 hodiny</string>
     <string name="peer_temp_share_chip_6h">6 hodin</string>
-    <string name="peer_temp_share_chip_custom">Vlastní…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Do zítřka do 8:00</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minuty</string>
-    <string name="peer_temp_share_custom_picker_title">Jak dlouho sdílet?</string>
     <string name="peer_temp_share_stop">Zastavit hned</string>
     <string name="peer_temp_share_subtitle">Sdílejte omezenou dobu, poté se automaticky zastaví.</string>
-    <string name="peer_temp_share_title">Rychlé sdílení</string>
     <string name="settings_app_lock">Zámek aplikace</string>
     <string name="settings_app_lock_subtitle">Vyžadovat biometrii nebo PIN k otevření LocaPeer</string>
     <string name="settings_app_lock_timeout">Znovu uzamknout po</string>

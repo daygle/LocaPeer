@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Желі</string>
     <string name="about_no_pending">Кезекте хабар жоқ</string>
     <string name="about_pending_messages">Кезектегі хабарлар</string>
-    <string name="about_pending_one">Кезекте 1 хабар</string>
     <string name="app_lock_activity_unsupported">Қолданба құлпы жүйелік сұрауды қолдайтын ортаны қажет етеді. Қолданбаны жаңартыңыз.</string>
     <string name="app_lock_prompt_subtitle">Биометрияны немесе құрылғы PIN-кодын қолданыңыз</string>
     <string name="app_lock_prompt_title">LocaPeer құлпын ашу</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Алушы оқыды</string>
     <string name="chat_delivery_state_sending">Жіберілуде…</string>
     <string name="chat_delivery_state_sent">Жіберілді (реле қабылдады)</string>
-    <string name="chat_mic_permission_needed">Дауыстық хабар жазу үшін микрофон рұқсаты қажет.</string>
     <string name="chat_preview_photo">📷 Фото</string>
     <string name="chat_preview_voice">🎤 Дауыстық хабар</string>
     <string name="chat_recording">Жазылуда…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 сағат</string>
     <string name="peer_temp_share_chip_3h">3 сағат</string>
     <string name="peer_temp_share_chip_6h">6 сағат</string>
-    <string name="peer_temp_share_chip_custom">Реттелетін…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Ертең таңғы 8-ге дейін</string>
-    <string name="peer_temp_share_custom_minutes_hint">Минут</string>
-    <string name="peer_temp_share_custom_picker_title">Қанша уақытқа бөлісу керек?</string>
     <string name="peer_temp_share_stop">Қазір тоқтату</string>
     <string name="peer_temp_share_subtitle">Шектеулі уақытқа бөлісіңіз, содан кейін автоматты түрде тоқтайды.</string>
-    <string name="peer_temp_share_title">Жылдам бөлісу</string>
     <string name="settings_app_lock">Қолданба құлпы</string>
     <string name="settings_app_lock_subtitle">LocaPeer ашу үшін биометрия немесе PIN талап ету</string>
     <string name="settings_app_lock_timeout">Мынадан кейін қайта құлыптау</string>

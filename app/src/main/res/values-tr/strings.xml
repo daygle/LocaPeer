@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Ağ</string>
     <string name="about_no_pending">Sırada mesaj yok</string>
     <string name="about_pending_messages">Sıradaki mesajlar</string>
-    <string name="about_pending_one">1 mesaj sırada</string>
     <string name="app_lock_activity_unsupported">Uygulama kilidi, sistem istemini destekleyen bir ortam gerektirir. Uygulamayı güncelleyin.</string>
     <string name="app_lock_prompt_subtitle">Biyometri veya cihaz PIN\'ini kullanın</string>
     <string name="app_lock_prompt_title">LocaPeer kilidini aç</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Alıcı tarafından okundu</string>
     <string name="chat_delivery_state_sending">Gönderiliyor…</string>
     <string name="chat_delivery_state_sent">Gönderildi (röle kabul etti)</string>
-    <string name="chat_mic_permission_needed">Sesli mesaj kaydetmek için mikrofon izni gerekir.</string>
     <string name="chat_preview_photo">📷 Fotoğraf</string>
     <string name="chat_preview_voice">🎤 Sesli mesaj</string>
     <string name="chat_recording">Kaydediliyor…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 saat</string>
     <string name="peer_temp_share_chip_3h">3 saat</string>
     <string name="peer_temp_share_chip_6h">6 saat</string>
-    <string name="peer_temp_share_chip_custom">Özel…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Yarın sabah 8\'e kadar</string>
-    <string name="peer_temp_share_custom_minutes_hint">Dakika</string>
-    <string name="peer_temp_share_custom_picker_title">Ne kadar süreyle paylaşılsın?</string>
     <string name="peer_temp_share_stop">Şimdi durdur</string>
     <string name="peer_temp_share_subtitle">Sınırlı bir süre paylaşın, sonra otomatik olarak dursun.</string>
-    <string name="peer_temp_share_title">Hızlı Paylaşım</string>
     <string name="settings_app_lock">Uygulama Kilidi</string>
     <string name="settings_app_lock_subtitle">LocaPeer\'ı açmak için biyometri veya cihaz PIN\'i iste</string>
     <string name="settings_app_lock_timeout">Şu kadar sonra yeniden kilitle</string>

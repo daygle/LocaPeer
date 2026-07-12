@@ -749,7 +749,6 @@
     <string name="about_diagnostics">Jaringan</string>
     <string name="about_no_pending">Tiada mesej dalam baris gilir</string>
     <string name="about_pending_messages">Mesej dalam baris gilir</string>
-    <string name="about_pending_one">1 mesej dalam baris gilir</string>
     <string name="app_lock_activity_unsupported">Kunci apl memerlukan hos yang menyokong gesaan sistem. Kemas kini apl.</string>
     <string name="app_lock_prompt_subtitle">Gunakan biometrik atau PIN peranti</string>
     <string name="app_lock_prompt_title">Buka kunci LocaPeer</string>
@@ -770,7 +769,6 @@
     <string name="chat_delivery_state_read">Dibaca oleh penerima</string>
     <string name="chat_delivery_state_sending">Menghantar…</string>
     <string name="chat_delivery_state_sent">Dihantar (geganti menerima)</string>
-    <string name="chat_mic_permission_needed">Kebenaran mikrofon diperlukan untuk merakam mesej suara.</string>
     <string name="chat_preview_photo">📷 Foto</string>
     <string name="chat_preview_voice">🎤 Pesan suara</string>
     <string name="chat_recording">Merakam…</string>
@@ -814,13 +812,9 @@
     <string name="peer_temp_share_chip_1h">1 jam</string>
     <string name="peer_temp_share_chip_3h">3 jam</string>
     <string name="peer_temp_share_chip_6h">6 jam</string>
-    <string name="peer_temp_share_chip_custom">Tersuai…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Sehingga esok 8 pagi</string>
-    <string name="peer_temp_share_custom_minutes_hint">Menit</string>
-    <string name="peer_temp_share_custom_picker_title">Kongsi untuk berapa lama?</string>
     <string name="peer_temp_share_stop">Hentikan sekarang</string>
     <string name="peer_temp_share_subtitle">Kongsi untuk masa terhad, kemudian berhenti automatik.</string>
-    <string name="peer_temp_share_title">Kongsi Pantas</string>
     <string name="settings_app_lock">Kunci Apl</string>
     <string name="settings_app_lock_subtitle">Wajibkan biometrik atau PIN untuk membuka LocaPeer</string>
     <string name="settings_app_lock_timeout">Kunci semula selepas</string>

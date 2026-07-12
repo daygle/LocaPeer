@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Cibiyar sadarwa</string>
     <string name="about_no_pending">Babu saƙon da ke jira</string>
     <string name="about_pending_messages">Saƙonnin da ke jira</string>
-    <string name="about_pending_one">Saƙo 1 na jira</string>
     <string name="app_lock_activity_unsupported">Kulle-app yana buƙatar mai masaukin da ke goyon bayan tambayar tsarin. Sabunta app.</string>
     <string name="app_lock_prompt_subtitle">Yi amfani da biometric ko PIN na na\'ura</string>
     <string name="app_lock_prompt_title">Buɗe LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Mai karɓa ya karanta</string>
     <string name="chat_delivery_state_sending">Ana aikawa…</string>
     <string name="chat_delivery_state_sent">An aika (relay ya karɓa)</string>
-    <string name="chat_mic_permission_needed">Ana buƙatar izinin makirufo don yin rikodin saƙon murya.</string>
     <string name="chat_preview_photo">📷 Hoto</string>
     <string name="chat_preview_voice">🎤 Saƙon murya</string>
     <string name="chat_recording">Ana yin rikodi…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">Awa 1</string>
     <string name="peer_temp_share_chip_3h">Awa 3</string>
     <string name="peer_temp_share_chip_6h">Awa 6</string>
-    <string name="peer_temp_share_chip_custom">Na musamman…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Har gobe da ƙarfe 8 na safe</string>
-    <string name="peer_temp_share_custom_minutes_hint">Mintuna</string>
-    <string name="peer_temp_share_custom_picker_title">Na tsawon lokaci nawa za a raba?</string>
     <string name="peer_temp_share_stop">Tsaya yanzu</string>
     <string name="peer_temp_share_subtitle">Raba na ɗan lokaci, sannan ya tsaya kai tsaye.</string>
-    <string name="peer_temp_share_title">Rabawa Mai Sauri</string>
     <string name="settings_app_lock">Kulle-App</string>
     <string name="settings_app_lock_subtitle">Buƙaci biometric ko PIN don buɗe LocaPeer</string>
     <string name="settings_app_lock_timeout">Sake kulle bayan</string>

@@ -764,7 +764,6 @@
     <string name="about_diagnostics">Réseau</string>
     <string name="about_no_pending">Aucun message en file d\'attente</string>
     <string name="about_pending_messages">Messages en file d\'attente</string>
-    <string name="about_pending_one">1 message en file d\'attente</string>
     <string name="app_lock_activity_unsupported">Le verrouillage de l\'app nécessite un hôte compatible avec l\'invite système. Mettez l\'app à jour.</string>
     <string name="app_lock_prompt_subtitle">Utilisez la biométrie ou le code de l\'appareil</string>
     <string name="app_lock_prompt_title">Déverrouiller LocaPeer</string>
@@ -785,7 +784,6 @@
     <string name="chat_delivery_state_read">Lu par le destinataire</string>
     <string name="chat_delivery_state_sending">Envoi…</string>
     <string name="chat_delivery_state_sent">Envoyé (accepté par le relais)</string>
-    <string name="chat_mic_permission_needed">L\'autorisation du micro est nécessaire pour enregistrer des messages vocaux.</string>
     <string name="chat_preview_photo">📷 Photo</string>
     <string name="chat_preview_voice">🎤 Message vocal</string>
     <string name="chat_recording">Enregistrement…</string>
@@ -829,13 +827,9 @@
     <string name="peer_temp_share_chip_1h">1 heure</string>
     <string name="peer_temp_share_chip_3h">3 heures</string>
     <string name="peer_temp_share_chip_6h">6 heures</string>
-    <string name="peer_temp_share_chip_custom">Personnalisé…</string>
     <string name="peer_temp_share_chip_until_tomorrow">Jusqu\'à demain 8h</string>
-    <string name="peer_temp_share_custom_minutes_hint">Minutes</string>
-    <string name="peer_temp_share_custom_picker_title">Partager pendant combien de temps ?</string>
     <string name="peer_temp_share_stop">Arrêter maintenant</string>
     <string name="peer_temp_share_subtitle">Partagez pour une durée limitée, puis arrêt automatique.</string>
-    <string name="peer_temp_share_title">Partage rapide</string>
     <string name="settings_app_lock">Verrouillage de l\'app</string>
     <string name="settings_app_lock_subtitle">Exiger la biométrie ou le code de l\'appareil pour ouvrir LocaPeer</string>
     <string name="settings_app_lock_timeout">Reverrouiller après</string>
