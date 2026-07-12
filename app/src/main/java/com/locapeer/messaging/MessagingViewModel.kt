@@ -401,9 +401,10 @@ class MessagingViewModel @Inject constructor(
                     }
                 }
                 if (targets.isEmpty()) {
-                    // Defensive no-op. The menu gate in GroupChatScreen/ChatScreen hides these
-                    // for pre-v9 rows, but a self-only circle row (legitimately zero non-self
-                    // fanout targets) or a future code path could still reach here. Log at DEBUG
+                    // Defensive no-op reached from the long-press delete menu for rows that never
+                    // recorded a relay event id: pre-v9 circle messages, a self-only circle whose
+                    // fanout had zero non-self targets, or a 1:1 row whose nostrEventId never got
+                    // stamped. There is nothing on the relay to invalidate for these. Log at DEBUG
                     // level so it never clutters logcat but is available during investigation.
                     Log.d(
                         "MessagingViewModel",
