@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 7,
-    "identityHash": "1c8e7edd9595109d6c31ec71900daee9",
+    "identityHash": "a00f6cd9658fb93535054d34c7dea152",
     "entities": [
       {
         "tableName": "peers",
@@ -619,7 +619,7 @@
       },
       {
         "tableName": "circles",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `creatorPubkey` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -637,6 +637,12 @@
             "fieldPath": "createdAt",
             "columnName": "createdAt",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "creatorPubkey",
+            "columnName": "creatorPubkey",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -695,7 +701,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1c8e7edd9595109d6c31ec71900daee9')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a00f6cd9658fb93535054d34c7dea152')"
     ]
   }
 }
