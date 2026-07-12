@@ -61,7 +61,7 @@ fun CircleEditScreen(
                     TextButton(
                         enabled = name.isNotBlank() && selected.isNotEmpty(),
                         onClick = {
-                            if (isEdit && circleId != null) {
+                            if (circleId != null) {
                                 vm.renameCircle(circleId, name)
                                 vm.setMembers(circleId, selected.toList())
                             } else {
