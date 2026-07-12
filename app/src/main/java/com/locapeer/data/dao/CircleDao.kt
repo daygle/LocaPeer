@@ -60,15 +60,33 @@ interface CircleDao {
     }
 
     /**
-     * Creates the circle (if missing) and sets its membership from a received group message,
-     * so a recipient sees the same circle the sender defined without a separate invite. The
-     * name is only applied on first creation; a later local rename by the recipient is kept.
+     * Creates the circle (if missing) and sets its membership from a received group message, so a
+     * recipient sees the same circle the sender defined without a separate invite.
+     *
+     * Creator-authoritative: on first sight the claimed [creatorPubkey] is recorded (trust on first
+     * use). Thereafter only a message whose [senderPubkey] equals that stored creator may change the
+     * name or membership; a message from any other member is still delivered (the caller inserts it)
+     * but is not allowed to silently rewrite who is in the circle on this device.
      */
-    suspend fun materialiseFromRemote(circleId: String, name: String, memberPubkeys: List<String>) {
+    suspend fun materialiseFromRemote(
+        circleId: String,
+        name: String,
+        creatorPubkey: String,
+        senderPubkey: String,
+        memberPubkeys: List<String>
+    ) {
         val existing = getCircle(circleId)
         if (existing == null) {
-            upsertCircle(CircleEntity(id = circleId, name = name))
+            upsertCircle(CircleEntity(id = circleId, name = name, creatorPubkey = creatorPubkey))
+            replaceMembers(circleId, memberPubkeys)
+            return
         }
-        replaceMembers(circleId, memberPubkeys)
+        // Only the recorded creator may mutate membership/name. Fall back to the sender when no
+        // creator was ever recorded (circle predates this field), preserving prior behaviour.
+        val authority = existing.creatorPubkey.ifBlank { senderPubkey }
+        if (senderPubkey == authority) {
+            if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
+            replaceMembers(circleId, memberPubkeys)
+        }
     }
 }

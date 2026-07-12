@@ -192,7 +192,13 @@ class MessagingViewModel @Inject constructor(
                 val privBytes = crypto.hexToBytes(privHex)
                 val fullMembers = (members + pubHex).distinct()
                 val envelope = GroupWire.encode(
-                    GroupMessage(gid = circleId, gname = circle.name, members = fullMembers, text = content)
+                    GroupMessage(
+                        gid = circleId,
+                        gname = circle.name,
+                        members = fullMembers,
+                        text = content,
+                        creator = circle.creatorPubkey
+                    )
                 )
                 withContext(Dispatchers.Default) {
                     members.filter { it != pubHex }.forEach { memberPub ->

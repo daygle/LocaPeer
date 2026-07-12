@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
@@ -27,6 +28,7 @@ class CirclesViewModel @Inject constructor(
     private val circleDao: CircleDao,
     private val peerDao: PeerDao,
     private val configDao: PeerSharingConfigDao,
+    private val keyManager: KeyManager,
     private val workManager: WorkManager
 ) : ViewModel() {
 
@@ -41,7 +43,10 @@ class CirclesViewModel @Inject constructor(
     fun createCircle(name: String, memberPubkeys: List<String>) {
         viewModelScope.launch {
             val id = UUID.randomUUID().toString()
-            circleDao.upsertCircle(CircleEntity(id = id, name = name.trim().ifBlank { "Circle" }))
+            val (_, myPubHex) = keyManager.ensureKeypair()
+            circleDao.upsertCircle(
+                CircleEntity(id = id, name = name.trim().ifBlank { "Circle" }, creatorPubkey = myPubHex)
+            )
             circleDao.replaceMembers(id, memberPubkeys)
         }
     }

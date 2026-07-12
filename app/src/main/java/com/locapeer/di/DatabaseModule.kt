@@ -164,7 +164,8 @@ object DatabaseModule {
             db.execSQL("CREATE INDEX IF NOT EXISTS index_messages_groupId ON messages (groupId)")
             db.execSQL(
                 "CREATE TABLE IF NOT EXISTS circles (" +
-                    "id TEXT NOT NULL, name TEXT NOT NULL, createdAt INTEGER NOT NULL, PRIMARY KEY(id))"
+                    "id TEXT NOT NULL, name TEXT NOT NULL, createdAt INTEGER NOT NULL, " +
+                    "creatorPubkey TEXT NOT NULL DEFAULT '', PRIMARY KEY(id))"
             )
             db.execSQL(
                 "CREATE TABLE IF NOT EXISTS circle_members (" +

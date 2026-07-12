@@ -22,7 +22,13 @@ data class GroupMessage(
     /** Full member list as pubkeys, including the sender, so recipients can reconstruct the circle. */
     val members: List<String>,
     /** Message body. A location share is just a body containing the OpenStreetMap mlat/mlon URL. */
-    val text: String
+    val text: String,
+    /**
+     * Pubkey of the circle's creator. A recipient records this on first materialisation and
+     * thereafter only honours name/membership changes carried by messages from this creator, so a
+     * non-creator member can't silently rewrite the circle on everyone else's device.
+     */
+    val creator: String = ""
 )
 
 object GroupWire {

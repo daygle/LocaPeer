@@ -475,7 +475,13 @@ class HeartbeatReceiver @Inject constructor(
             val (_, myPubHex) = keyManager.ensureKeypair()
             // Drop our own fan-out copy echoed back by a relay, and ignore a group we're not in.
             if (event.pubkey == myPubHex || !group.members.contains(myPubHex)) return
-            circleDao.materialiseFromRemote(group.gid, group.gname, group.members)
+            circleDao.materialiseFromRemote(
+                circleId = group.gid,
+                name = group.gname,
+                creatorPubkey = group.creator,
+                senderPubkey = event.pubkey,
+                memberPubkeys = group.members
+            )
             messageDao.insert(
                 MessageEntity(
                     id = event.id,

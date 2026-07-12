@@ -16,5 +16,13 @@ import androidx.room.PrimaryKey
 data class CircleEntity(
     @PrimaryKey val id: String,
     val name: String,
-    val createdAt: Long = System.currentTimeMillis()
+    val createdAt: Long = System.currentTimeMillis(),
+    /**
+     * Pubkey of the device that created the circle, recorded trust-on-first-materialise. Only the
+     * creator's group messages are allowed to change this circle's name or membership on our device
+     * (see [com.locapeer.data.dao.CircleDao.materialiseFromRemote]); a message from any other member
+     * is still shown but cannot silently rewrite who is in the circle. Empty for circles created
+     * before this field existed.
+     */
+    val creatorPubkey: String = ""
 )
