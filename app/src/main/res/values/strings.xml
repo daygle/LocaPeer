@@ -83,7 +83,7 @@
     <string name="settings_geofences">Geofences</string>
     <string name="settings_geofences_subtitle">Manage shared geofence areas</string>
     <string name="settings_notify_when_tracked">Notify When Tracked</string>
-    <string name="settings_notify_when_tracked_subtitle">Get a notification when a contact\'s proximity or geofence alert for you is triggered.</string>
+    <string name="settings_notify_when_tracked_subtitle">Alert when contacts receive proximity or geofence notifications for you.</string>
     <string name="settings_my_location_history">Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
