@@ -124,25 +124,25 @@
     <string name="settings_motion_detection_on">ဖွင့်ထားသည် - မှတ်တမ်းတွင် သင့်လှုပ်ရှားမှု အမျိုးအစား (လမ်းလျှောက်ခြင်း၊ ကားမောင်းခြင်း) ကို ပိုမိုတိကျစေသည်</string>
     <string name="settings_motion_detection_off">ပိတ်ထားသည် - ပိုမိုတိကျသော လှုပ်ရှားမှု အညွှန်းများအတွက် ရုပ်ပိုင်းဆိုင်ရာ လှုပ်ရှားမှု ခွင့်ပြုချက်ကို ပေးပါ</string>
     <string name="settings_battery_optimization">ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင် လုပ်ဆောင်ခြင်း</string>
-    <string name="settings_battery_optimization_unrestricted">ကန့်သတ်ချက်မရှိ — LocaPeer သည် နောက်ကွယ်တွင် လွတ်လပ်စွာ အလုပ်လုပ်နိုင်သည်</string>
-    <string name="settings_battery_optimization_restricted">အကောင်းဆုံးဖြစ်အောင် လုပ်ထားသည် — စနစ်ဆက်တင်များတွင် ကန့်သတ်ချက်မရှိဟု သတ်မှတ်ရန် နှိပ်ပါ</string>
+    <string name="settings_battery_optimization_unrestricted">ကန့်သတ်ချက်မရှိ - LocaPeer သည် နောက်ကွယ်တွင် လွတ်လပ်စွာ အလုပ်လုပ်နိုင်သည်</string>
+    <string name="settings_battery_optimization_restricted">အကောင်းဆုံးဖြစ်အောင် လုပ်ထားသည် - စနစ်ဆက်တင်များတွင် ကန့်သတ်ချက်မရှိဟု သတ်မှတ်ရန် နှိပ်ပါ</string>
 
     <!-- ခွင့်ပြုချက်များ -->
     <string name="settings_permissions">ခွင့်ပြုချက်များ</string>
     <string name="settings_permissions_subtitle">တည်နေရာ၊ ကင်မရာနှင့် အခြားအရာများအတွက် ဝင်ရောက်ခွင့်များကို ပြန်လည်သုံးသပ်ပြီး ပြင်ဆင်ပါ</string>
     <string name="permissions_intro">သင့်တည်နေရာကို မျှဝေရန်၊ ဖိတ်ကြားချက်များကို စကင်န်ဖတ်ရန်နှင့် နောက်ကွယ်တွင် ဆက်လက်အလုပ်လုပ်ရန် LocaPeer သည် ဤခွင့်ပြုချက်များ လိုအပ်သည်။ ခွင့်ပြုချက်မပေးရသေးသော မည်သည့်အရာကိုမဆို ပြင်ဆင်ရန် နှိပ်ပါ။</string>
     <string name="perm_location_title">တည်နေရာ</string>
-    <string name="perm_location_granted">ခွင့်ပြုပြီး — သင့်တည်နေရာကို မျှဝေနိုင်သည်</string>
-    <string name="perm_location_denied">ခွင့်ပြုချက်မရ — တည်နေရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
+    <string name="perm_location_granted">ခွင့်ပြုပြီး - သင့်တည်နေရာကို မျှဝေနိုင်သည်</string>
+    <string name="perm_location_denied">ခွင့်ပြုချက်မရ - တည်နေရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
     <string name="perm_background_location_title">နောက်ကွယ် တည်နေရာ</string>
-    <string name="perm_background_location_granted">ခွင့်ပြုပြီး — မျက်နှာပြင်ပိတ်ထားချိန်တွင်လည်း တည်နေရာမျှဝေမှု ဆက်လက်လုပ်ဆောင်သည်</string>
-    <string name="perm_background_location_denied">ခွင့်ပြုချက်မရ — ဆက်တင်တွင် \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးရန် နှိပ်ပါ</string>
+    <string name="perm_background_location_granted">ခွင့်ပြုပြီး - မျက်နှာပြင်ပိတ်ထားချိန်တွင်လည်း တည်နေရာမျှဝေမှု ဆက်လက်လုပ်ဆောင်သည်</string>
+    <string name="perm_background_location_denied">ခွင့်ပြုချက်မရ - ဆက်တင်တွင် \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးရန် နှိပ်ပါ</string>
     <string name="perm_camera_title">ကင်မရာ</string>
-    <string name="perm_camera_granted">ခွင့်ပြုပြီး — ဖိတ်ကြားချက် QR ကုဒ်များကို စကင်န်ဖတ်ရန် အသုံးပြုသည်</string>
-    <string name="perm_camera_denied">ခွင့်ပြုချက်မရ — ကင်မရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
+    <string name="perm_camera_granted">ခွင့်ပြုပြီး - ဖိတ်ကြားချက် QR ကုဒ်များကို စကင်န်ဖတ်ရန် အသုံးပြုသည်</string>
+    <string name="perm_camera_denied">ခွင့်ပြုချက်မရ - ကင်မရာ ခွင့်ပြုချက်ပေးရန် နှိပ်ပါ</string>
     <string name="perm_notifications_title">အသိပေးချက်များ</string>
-    <string name="perm_notifications_granted">ခွင့်ပြုပြီး — သတိပေးချက်များနှင့် အခြေအနေ အပ်ဒိတ်များကို ပြသနိုင်သည်</string>
-    <string name="perm_notifications_denied">ခွင့်ပြုချက်မရ — အသိပေးချက်များ ခွင့်ပြုရန် နှိပ်ပါ</string>
+    <string name="perm_notifications_granted">ခွင့်ပြုပြီး - သတိပေးချက်များနှင့် အခြေအနေ အပ်ဒိတ်များကို ပြသနိုင်သည်</string>
+    <string name="perm_notifications_denied">ခွင့်ပြုချက်မရ - အသိပေးချက်များ ခွင့်ပြုရန် နှိပ်ပါ</string>
 
     <!-- ယူနစ်များနှင့် ပြသမှု -->
     <string name="settings_speed_units">အရှိန် ယူနစ်များ</string>

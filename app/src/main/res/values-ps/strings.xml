@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">ټیټه بیټرۍ (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d دقیقې</string>
     <string name="settings_motion_detection">د حرکت کشف</string>
-    <string name="settings_motion_detection_on">فعال — ستاسو د حرکت ډول (روان، موټر چلول) په تاریخچه کې روښانه کوي</string>
-    <string name="settings_motion_detection_off">بند — د ډیر دقیق حرکت لیبلونو لپاره فزیکي فعالیت ته د لاسرسي اجازه ورکړئ</string>
+    <string name="settings_motion_detection_on">فعال - ستاسو د حرکت ډول (روان، موټر چلول) په تاریخچه کې روښانه کوي</string>
+    <string name="settings_motion_detection_off">بند - د ډیر دقیق حرکت لیبلونو لپاره فزیکي فعالیت ته د لاسرسي اجازه ورکړئ</string>
     <string name="settings_battery_optimization">د بیټرۍ اصلاح کول</string>
-    <string name="settings_battery_optimization_unrestricted">بې حده — LocaPeer کولی شي په شالید کې په آزاده توګه کار وکړي</string>
-    <string name="settings_battery_optimization_restricted">اصلاح شوی — په سیسټم ترتیباتو کې بې حده ته د ټاکلو لپاره کلیک وکړئ</string>
+    <string name="settings_battery_optimization_unrestricted">بې حده - LocaPeer کولی شي په شالید کې په آزاده توګه کار وکړي</string>
+    <string name="settings_battery_optimization_restricted">اصلاح شوی - په سیسټم ترتیباتو کې بې حده ته د ټاکلو لپاره کلیک وکړئ</string>
 
     <!-- اجازې -->
     <string name="settings_permissions">اجازې</string>
     <string name="settings_permissions_subtitle">ځای، کمرې او نورو ته د اپلیکیشن لاسرسی بیاکتنه او سم کړئ</string>
     <string name="permissions_intro">LocaPeer ستاسو د ځای شریکولو، بلنو سکین کولو او په شالید کې د فعالیت دوام لپاره دې اجازو ته اړتیا لري. د هرې هغې اجازې سمولو لپاره چې نه وي ورکړل شوي، کلیک وکړئ.</string>
     <string name="perm_location_title">ځای</string>
-    <string name="perm_location_granted">ورکړل شوه — ستاسو ځای شریک کیدی شي</string>
-    <string name="perm_location_denied">نه ده ورکړل شوې — د ځای اجازه ورکولو لپاره کلیک وکړئ</string>
+    <string name="perm_location_granted">ورکړل شوه - ستاسو ځای شریک کیدی شي</string>
+    <string name="perm_location_denied">نه ده ورکړل شوې - د ځای اجازه ورکولو لپاره کلیک وکړئ</string>
     <string name="perm_background_location_title">شالید ځای</string>
-    <string name="perm_background_location_granted">ورکړل شوه — کله چې اپلیکیشن بند وي نو ځای شریکول دوام لري</string>
-    <string name="perm_background_location_denied">نه ده ورکړل شوې — په ترتیباتو کې د \'تل اجازه ورکړئ\' غوره کولو لپاره کلیک وکړئ</string>
+    <string name="perm_background_location_granted">ورکړل شوه - کله چې اپلیکیشن بند وي نو ځای شریکول دوام لري</string>
+    <string name="perm_background_location_denied">نه ده ورکړل شوې - په ترتیباتو کې د \'تل اجازه ورکړئ\' غوره کولو لپاره کلیک وکړئ</string>
     <string name="perm_camera_title">کمره</string>
-    <string name="perm_camera_granted">ورکړل شوه — د بلنې QR کوډونو سکین کولو لپاره کارول کیږي</string>
-    <string name="perm_camera_denied">نه ده ورکړل شوې — کمرې ته د اجازې ورکولو لپاره کلیک وکړئ</string>
+    <string name="perm_camera_granted">ورکړل شوه - د بلنې QR کوډونو سکین کولو لپاره کارول کیږي</string>
+    <string name="perm_camera_denied">نه ده ورکړل شوې - کمرې ته د اجازې ورکولو لپاره کلیک وکړئ</string>
     <string name="perm_notifications_title">خبرتیاوې</string>
-    <string name="perm_notifications_granted">ورکړل شوه — خبرتیاوې او حالت تازه معلومات ښودل کیدی شي</string>
-    <string name="perm_notifications_denied">نه ده ورکړل شوې — خبرتیاو ته د اجازې ورکولو لپاره کلیک وکړئ</string>
+    <string name="perm_notifications_granted">ورکړل شوه - خبرتیاوې او حالت تازه معلومات ښودل کیدی شي</string>
+    <string name="perm_notifications_denied">نه ده ورکړل شوې - خبرتیاو ته د اجازې ورکولو لپاره کلیک وکړئ</string>
 
     <!-- واحدونه او ښودنه -->
     <string name="settings_speed_units">د سرعت واحدونه</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">ځای ته لاړ شه</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS فعال دی</string>
-    <string name="map_overdue">ځنډ شوی — تازه معلومات نشته</string>
+    <string name="map_overdue">ځنډ شوی - تازه معلومات نشته</string>
     <string name="map_stat_last_seen">وروستی ځل لیدل شوی</string>
     <string name="map_stat_battery">بیټرۍ</string>
     <string name="map_stat_accuracy">دقت</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">د دې وسیلې د خلاصولو غوښتنو منلو ته غاړه کیږدئ</string>
     <string name="notif_supervisor_request_big">کله چې د څارنې حالت فعال وي، اجازه ورکړئ چې %1$s تاسو ته د خلاصولو غوښتنې واستوي.</string>
     <string name="notif_supervised_active_title">د څارنې حالت فعال دی</string>
-    <string name="notif_supervised_active_text">ستاسو څارونکي تایید کړه — د څارنې حالت اوس تنظیم شوی</string>
+    <string name="notif_supervised_active_text">ستاسو څارونکي تایید کړه - د څارنې حالت اوس تنظیم شوی</string>
     <string name="notif_supervised_declined_title">د څارنې حالت رد شو</string>
-    <string name="notif_supervised_declined_text">ستاسو څارونکي غوښتنه رد کړه — د څارنې حالت بند شو</string>
+    <string name="notif_supervised_declined_text">ستاسو څارونکي غوښتنه رد کړه - د څارنې حالت بند شو</string>
     <string name="notif_tracking_alert_title">د تعقیب خبرتیا</string>
     <string name="notif_tracking_proximity">%1$s ستاسو په اړه د نږدېوالي خبرتیا ترلاسه کړه</string>
     <string name="notif_tracking_geofence">%1$s خبرتیا ترلاسه کړه چې تاسو سیمې ته ننوتی/ووتل: %2$s</string>

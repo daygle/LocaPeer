@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">सक्षम - इतिहासामध्ये तुमच्या हालचालीचा प्रकार (चालणे, ड्रायव्हिंग) अचूकपणे दाखवते</string>
     <string name="settings_motion_detection_off">बंद - अधिक अचूक हालचाल लेबलांसाठी शारीरिक क्रियाकलाप प्रवेशास अनुमती द्या</string>
     <string name="settings_battery_optimization">बॅटरी ऑप्टिमायझेशन</string>
-    <string name="settings_battery_optimization_unrestricted">अनिर्बंध — LocaPeer बॅकग्राउंडमध्ये मुक्तपणे चालू शकते</string>
-    <string name="settings_battery_optimization_restricted">ऑप्टिमाइझ केलेले — सिस्टम सेटिंग्जमध्ये अनिर्बंध सेट करण्यासाठी टॅप करा</string>
+    <string name="settings_battery_optimization_unrestricted">अनिर्बंध - LocaPeer बॅकग्राउंडमध्ये मुक्तपणे चालू शकते</string>
+    <string name="settings_battery_optimization_restricted">ऑप्टिमाइझ केलेले - सिस्टम सेटिंग्जमध्ये अनिर्बंध सेट करण्यासाठी टॅप करा</string>
 
     <!-- परवानग्या -->
     <string name="settings_permissions">परवानग्या</string>
     <string name="settings_permissions_subtitle">स्थान, कॅमेरा आणि अधिकसाठी ॲप प्रवेशाचे पुनरावलोकन करा आणि निराकरण करा</string>
     <string name="permissions_intro">तुमचे स्थान शेअर करण्यासाठी, आमंत्रणे स्कॅन करण्यासाठी आणि बॅकग्राउंडमध्ये चालू राहण्यासाठी LocaPeer ला या परवानग्यांची आवश्यकता आहे. मंजूर नसलेल्या कोणत्याही परवानगीवर निराकरण करण्यासाठी टॅप करा.</string>
     <string name="perm_location_title">स्थान</string>
-    <string name="perm_location_granted">मंजूर — तुमचे स्थान शेअर केले जाऊ शकते</string>
-    <string name="perm_location_denied">मंजूर नाही — स्थान प्रवेशास अनुमती देण्यासाठी टॅप करा</string>
+    <string name="perm_location_granted">मंजूर - तुमचे स्थान शेअर केले जाऊ शकते</string>
+    <string name="perm_location_denied">मंजूर नाही - स्थान प्रवेशास अनुमती देण्यासाठी टॅप करा</string>
     <string name="perm_background_location_title">बॅकग्राउंड स्थान</string>
-    <string name="perm_background_location_granted">मंजूर — ॲप बंद असतानाही स्थान शेअरिंग चालू राहते</string>
-    <string name="perm_background_location_denied">मंजूर नाही — सेटिंग्जमध्ये \'नेहमी अनुमती द्या\' निवडण्यासाठी टॅप करा</string>
+    <string name="perm_background_location_granted">मंजूर - ॲप बंद असतानाही स्थान शेअरिंग चालू राहते</string>
+    <string name="perm_background_location_denied">मंजूर नाही - सेटिंग्जमध्ये \'नेहमी अनुमती द्या\' निवडण्यासाठी टॅप करा</string>
     <string name="perm_camera_title">कॅमेरा</string>
-    <string name="perm_camera_granted">मंजूर — आमंत्रण QR कोड स्कॅन करण्यासाठी वापरले जाते</string>
-    <string name="perm_camera_denied">मंजूर नाही — कॅमेराला अनुमती देण्यासाठी टॅप करा</string>
+    <string name="perm_camera_granted">मंजूर - आमंत्रण QR कोड स्कॅन करण्यासाठी वापरले जाते</string>
+    <string name="perm_camera_denied">मंजूर नाही - कॅमेराला अनुमती देण्यासाठी टॅप करा</string>
     <string name="perm_notifications_title">सूचना</string>
-    <string name="perm_notifications_granted">मंजूर — अलर्ट आणि स्थिती अपडेट्स दाखवले जाऊ शकतात</string>
-    <string name="perm_notifications_denied">मंजूर नाही — सूचनांना अनुमती देण्यासाठी टॅप करा</string>
+    <string name="perm_notifications_granted">मंजूर - अलर्ट आणि स्थिती अपडेट्स दाखवले जाऊ शकतात</string>
+    <string name="perm_notifications_denied">मंजूर नाही - सूचनांना अनुमती देण्यासाठी टॅप करा</string>
 
     <!-- युनिट्स आणि डिस्प्ले -->
     <string name="settings_speed_units">वेग युनिट्स</string>

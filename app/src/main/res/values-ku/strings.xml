@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">Çalak e - cureyê tevgera we (meşîn, ajotin) di dîrokê de safî dike</string>
     <string name="settings_motion_detection_off">Girtî - ji bo etîketên tevgerê yên rasttir destûrê bide gihîştina çalakiya laşî</string>
     <string name="settings_battery_optimization">Optimîzasyona Pîlê</string>
-    <string name="settings_battery_optimization_unrestricted">Bêsînorkirî — LocaPeer dikare di paşperdeyê de serbest bixebite</string>
-    <string name="settings_battery_optimization_restricted">Optimîzekirî — li sazkirinên pergalê bitikînin da ku bêsînorkirî bikin</string>
+    <string name="settings_battery_optimization_unrestricted">Bêsînorkirî - LocaPeer dikare di paşperdeyê de serbest bixebite</string>
+    <string name="settings_battery_optimization_restricted">Optimîzekirî - li sazkirinên pergalê bitikînin da ku bêsînorkirî bikin</string>
 
     <!-- Destûr -->
     <string name="settings_permissions">Destûr</string>
     <string name="settings_permissions_subtitle">Gihîştina sepanê ya cih, kêmere û yên din binirxînin û sererast bikin</string>
     <string name="permissions_intro">LocaPeer ji bo parvekirina cihê we, şopandina vexwendinan û xebata di paşperdeyê de hewcedarî bi van destûran heye. Li yê ku nehatî dayîn bitikînin da ku sererast bikin.</string>
     <string name="perm_location_title">Cih</string>
-    <string name="perm_location_granted">Hat dayîn — cihê we dikare were parvekirin</string>
-    <string name="perm_location_denied">Nedayîn — ji bo destûra gihîştina cih bitikînin</string>
+    <string name="perm_location_granted">Hat dayîn - cihê we dikare were parvekirin</string>
+    <string name="perm_location_denied">Nedayîn - ji bo destûra gihîştina cih bitikînin</string>
     <string name="perm_background_location_title">Cihê Paşperdeyê</string>
-    <string name="perm_background_location_granted">Hat dayîn — gava sepan girtî be jî parvekirina cih berdewam dike</string>
-    <string name="perm_background_location_denied">Nedayîn — ji bo destûra \'Her tim\' li sazkirinê bitikînin</string>
+    <string name="perm_background_location_granted">Hat dayîn - gava sepan girtî be jî parvekirina cih berdewam dike</string>
+    <string name="perm_background_location_denied">Nedayîn - ji bo destûra \'Her tim\' li sazkirinê bitikînin</string>
     <string name="perm_camera_title">Kêmere</string>
-    <string name="perm_camera_granted">Hat dayîn — ji bo şopandina kodên QR yên vexwendinê tê bikar anîn</string>
-    <string name="perm_camera_denied">Nedayîn — ji bo destûra kêmereyê bitikînin</string>
+    <string name="perm_camera_granted">Hat dayîn - ji bo şopandina kodên QR yên vexwendinê tê bikar anîn</string>
+    <string name="perm_camera_denied">Nedayîn - ji bo destûra kêmereyê bitikînin</string>
     <string name="perm_notifications_title">Agahdarkirin</string>
-    <string name="perm_notifications_granted">Hat dayîn — hişyarî û nûvekirinên rewşê dikarin werin nîşandan</string>
-    <string name="perm_notifications_denied">Nedayîn — ji bo destûra agahdarkirinê bitikînin</string>
+    <string name="perm_notifications_granted">Hat dayîn - hişyarî û nûvekirinên rewşê dikarin werin nîşandan</string>
+    <string name="perm_notifications_denied">Nedayîn - ji bo destûra agahdarkirinê bitikînin</string>
 
     <!-- Yekîne &amp; Nîşandan -->
     <string name="settings_speed_units">Yekîneyên Lezê</string>

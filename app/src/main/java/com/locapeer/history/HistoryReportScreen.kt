@@ -523,7 +523,7 @@ private fun HistoryMapTab(
                     mapView.overlays.add(marker)
                 }
 
-                // Only fit the viewport when the day's data changes — selecting a pin
+                // Only fit the viewport when the day's data changes - selecting a pin
                 // rebuilds the overlays and must not yank the camera back out.
                 val boundsKey = heartbeats.hashCode()
                 if (mapView.tag != boundsKey) {

@@ -124,28 +124,28 @@
     <string name="settings_low_battery" formatted="false">Slabá baterie (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Detekce pohybu</string>
-    <string name="settings_motion_detection_on">Zapnuto — zpřesňuje typ pohybu (chůze, jízda) v historii</string>
-    <string name="settings_motion_detection_off">Vypnuto — povolte přístup k fyzické aktivitě pro přesnější štítky pohybu</string>
+    <string name="settings_motion_detection_on">Zapnuto - zpřesňuje typ pohybu (chůze, jízda) v historii</string>
+    <string name="settings_motion_detection_off">Vypnuto - povolte přístup k fyzické aktivitě pro přesnější štítky pohybu</string>
     <string name="settings_battery_optimization">Optimalizace baterie</string>
-    <string name="settings_battery_optimization_unrestricted">Bez omezení — LocaPeer může běžet volně na pozadí</string>
-    <string name="settings_battery_optimization_restricted">Optimalizováno — klepnutím nastavte Bez omezení v nastavení systému</string>
+    <string name="settings_battery_optimization_unrestricted">Bez omezení - LocaPeer může běžet volně na pozadí</string>
+    <string name="settings_battery_optimization_restricted">Optimalizováno - klepnutím nastavte Bez omezení v nastavení systému</string>
 
     <!-- Oprávnění -->
     <string name="settings_permissions">Oprávnění</string>
     <string name="settings_permissions_subtitle">Kontrola a oprava přístupu aplikace k poloze, fotoaparátu a dalším</string>
     <string name="permissions_intro">LocaPeer potřebuje tato oprávnění ke sdílení vaší polohy, skenování pozvánek a dalšímu běhu na pozadí. Klepnutím na jakékoli neudělené oprávnění jej opravíte.</string>
     <string name="perm_location_title">Poloha</string>
-    <string name="perm_location_granted">Uděleno — vaše poloha může být sdílena</string>
-    <string name="perm_location_denied">Neuděleno — klepnutím povolte přístup k poloze</string>
+    <string name="perm_location_granted">Uděleno - vaše poloha může být sdílena</string>
+    <string name="perm_location_denied">Neuděleno - klepnutím povolte přístup k poloze</string>
     <string name="perm_background_location_title">Poloha na pozadí</string>
-    <string name="perm_background_location_granted">Uděleno — poloha se sdílí i po zavření aplikace</string>
-    <string name="perm_background_location_denied">Neuděleno — klepnutím v nastavení povolte přístup „Povolit vždy“</string>
+    <string name="perm_background_location_granted">Uděleno - poloha se sdílí i po zavření aplikace</string>
+    <string name="perm_background_location_denied">Neuděleno - klepnutím v nastavení povolte přístup „Povolit vždy“</string>
     <string name="perm_camera_title">Fotoaparát</string>
-    <string name="perm_camera_granted">Uděleno — používá se ke skenování QR kódů pozvánek</string>
-    <string name="perm_camera_denied">Neuděleno — klepnutím povolte fotoaparát</string>
+    <string name="perm_camera_granted">Uděleno - používá se ke skenování QR kódů pozvánek</string>
+    <string name="perm_camera_denied">Neuděleno - klepnutím povolte fotoaparát</string>
     <string name="perm_notifications_title">Oznámení</string>
-    <string name="perm_notifications_granted">Uděleno — mohou být zobrazena upozornění a aktualizace stavu</string>
-    <string name="perm_notifications_denied">Neuděleno — klepnutím povolte oznámení</string>
+    <string name="perm_notifications_granted">Uděleno - mohou být zobrazena upozornění a aktualizace stavu</string>
+    <string name="perm_notifications_denied">Neuděleno - klepnutím povolte oznámení</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Jednotky rychlosti</string>
@@ -296,7 +296,7 @@
     <string name="onboarding_feature_e2e_title">End-to-end šifrování</string>
     <string name="onboarding_feature_e2e_subtitle">Vaše poloha je šifrována v zařízení</string>
     <string name="onboarding_feature_servers_title">Žádné proprietární servery</string>
-    <string name="onboarding_feature_servers_subtitle">Používá otevřená relé Nostr jako zabezpečený přenos — vaše data zůstávají šifrovaná a soukromá</string>
+    <string name="onboarding_feature_servers_subtitle">Používá otevřená relé Nostr jako zabezpečený přenos - vaše data zůstávají šifrovaná a soukromá</string>
     <string name="onboarding_feature_phone_title">Zůstává ve vašem telefonu</string>
     <string name="onboarding_feature_phone_subtitle">Celá historie polohy zůstává ve vašem zařízení. Vybraným kontaktům se sdílí jen aktuální pozice</string>
     <string name="onboarding_name_prompt">Jak vás mají vaše kontakty oslovovat?</string>
@@ -305,13 +305,13 @@
     <string name="onboarding_restore_from_backup">Obnovit ze zálohy</string>
     <string name="onboarding_key_note">Soukromý klíč se generuje lokálně a nikdy neopustí toto zařízení.</string>
     <string name="onboarding_permissions_title">Oprávnění</string>
-    <string name="onboarding_permissions_desc">LocaPeer potřebuje přístup k poloze pro sdílení vaší pozice, ke kameře pro skenování zvacích kódů a k oznámením pro stav na pozadí. Přístup k fyzické aktivitě je volitelný — pomáhá přesněji označovat váš pohyb (chůze, jízda).</string>
+    <string name="onboarding_permissions_desc">LocaPeer potřebuje přístup k poloze pro sdílení vaší pozice, ke kameře pro skenování zvacích kódů a k oznámením pro stav na pozadí. Přístup k fyzické aktivitě je volitelný - pomáhá přesněji označovat váš pohyb (chůze, jízda).</string>
     <string name="onboarding_before_ask_title">Než se zeptáme</string>
     <string name="onboarding_before_ask_intro">Nyní se zobrazí několik systémových dotazů:</string>
-    <string name="onboarding_before_ask_location">• Poloha — povinná, pro sdílení vaší pozice.</string>
-    <string name="onboarding_before_ask_camera">• Kamera — pro skenování zvacích kódů.</string>
-    <string name="onboarding_before_ask_notifications">• Oznámení — pro stav na pozadí.</string>
-    <string name="onboarding_before_ask_activity">• Fyzická aktivita — volitelné. Umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání. Můžete přeskočit a povolit později v Nastavení.</string>
+    <string name="onboarding_before_ask_location">• Poloha - povinná, pro sdílení vaší pozice.</string>
+    <string name="onboarding_before_ask_camera">• Kamera - pro skenování zvacích kódů.</string>
+    <string name="onboarding_before_ask_notifications">• Oznámení - pro stav na pozadí.</string>
+    <string name="onboarding_before_ask_activity">• Fyzická aktivita - volitelné. Umožňuje aplikaci LocaPeer přesněji rozlišovat chůzi, jízdu a stání. Můžete přeskočit a povolit později v Nastavení.</string>
     <string name="onboarding_grant_permissions">Udělit oprávnění</string>
     <string name="onboarding_bg_location_title">Poloha na pozadí</string>
     <string name="onboarding_bg_location_desc">Aby vaše kontakty dostávaly aktualizace i při zavřené aplikaci, vyberte na další obrazovce „Povolit vždy“.</string>
@@ -524,7 +524,7 @@
     <string name="map_cd_go_location">Přejít na polohu</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ZAP</string>
-    <string name="map_overdue">Zpožděno — žádná nedávná aktualizace</string>
+    <string name="map_overdue">Zpožděno - žádná nedávná aktualizace</string>
     <string name="map_stat_last_seen">Naposledy online</string>
     <string name="map_stat_battery">Baterie</string>
     <string name="map_stat_accuracy">Přesnost</string>
@@ -708,9 +708,9 @@
     <string name="notif_supervisor_request_text">Přijetím povolíte žádosti o schválení odemčení z tohoto zařízení</string>
     <string name="notif_supervisor_request_big">Přijetím umožníte uživateli %1$s posílat vám žádosti o schválení odemčení, když je aktivní režim pod dohledem.</string>
     <string name="notif_supervised_active_title">Režim pod dohledem aktivní</string>
-    <string name="notif_supervised_active_text">Dohlížitel potvrdil — režim pod dohledem je nyní nastaven</string>
+    <string name="notif_supervised_active_text">Dohlížitel potvrdil - režim pod dohledem je nyní nastaven</string>
     <string name="notif_supervised_declined_title">Režim pod dohledem odmítnut</string>
-    <string name="notif_supervised_declined_text">Dohlížitel žádost odmítl — režim pod dohledem byl vypnut</string>
+    <string name="notif_supervised_declined_text">Dohlížitel žádost odmítl - režim pod dohledem byl vypnut</string>
     <string name="notif_tracking_alert_title">Upozornění na sledování</string>
     <string name="notif_tracking_proximity">%1$s obdržel(a) upozornění na vaši blízkost</string>
     <string name="notif_tracking_geofence">%1$s obdržel(a) upozornění, že jste vstoupili do zóny/opustili zónu: %2$s</string>
@@ -787,8 +787,8 @@
     <string name="peer_not_found">Kontakt nenalezen</string>
     <string name="peer_purge_location_sent">Příkaz ke vzdálenému smazání VŠECH poloh odeslán uživateli %1$s</string>
     <string name="peer_purge_messages_sent">Příkaz ke vzdálenému smazání VŠECH zpráv odeslán uživateli %1$s</string>
-    <string name="onboarding_error_key_length">Neplatný klíč — musí mít 64 hexadecimálních znaků.</string>
-    <string name="onboarding_error_key_range">Neplatný soukromý klíč — mimo rozsah křivky.</string>
+    <string name="onboarding_error_key_length">Neplatný klíč - musí mít 64 hexadecimálních znaků.</string>
+    <string name="onboarding_error_key_range">Neplatný soukromý klíč - mimo rozsah křivky.</string>
     <string name="onboarding_error_hex">Neplatný hexadecimální formát.</string>
     <string name="onboarding_error_import_failed">Import klíče se nezdařil: %1$s</string>
 </resources>

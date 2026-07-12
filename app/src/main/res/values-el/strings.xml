@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Χαμηλή μπαταρία (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d λεπ.</string>
     <string name="settings_motion_detection">Ανίχνευση κίνησης</string>
-    <string name="settings_motion_detection_on">Ενεργή — βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
-    <string name="settings_motion_detection_off">Ανενεργή — επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
+    <string name="settings_motion_detection_on">Ενεργή - βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
+    <string name="settings_motion_detection_off">Ανενεργή - επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
     <string name="settings_battery_optimization">Βελτιστοποίηση μπαταρίας</string>
-    <string name="settings_battery_optimization_unrestricted">Χωρίς περιορισμούς — το LocaPeer μπορεί να εκτελείται ελεύθερα στο παρασκήνιο</string>
-    <string name="settings_battery_optimization_restricted">Βελτιστοποιημένη — πατήστε για να ορίσετε Χωρίς περιορισμούς στις ρυθμίσεις συστήματος</string>
+    <string name="settings_battery_optimization_unrestricted">Χωρίς περιορισμούς - το LocaPeer μπορεί να εκτελείται ελεύθερα στο παρασκήνιο</string>
+    <string name="settings_battery_optimization_restricted">Βελτιστοποιημένη - πατήστε για να ορίσετε Χωρίς περιορισμούς στις ρυθμίσεις συστήματος</string>
 
     <!-- Άδειες -->
     <string name="settings_permissions">Άδειες</string>
     <string name="settings_permissions_subtitle">Ελέγξτε και διορθώστε την πρόσβαση της εφαρμογής στην τοποθεσία, την κάμερα και άλλα</string>
     <string name="permissions_intro">Το LocaPeer χρειάζεται αυτές τις άδειες για να μοιράζεται την τοποθεσία σας, να σαρώνει προσκλήσεις και να συνεχίζει να εκτελείται στο παρασκήνιο. Πατήστε οποιαδήποτε δεν έχει εκχωρηθεί για να τη διορθώσετε.</string>
     <string name="perm_location_title">Τοποθεσία</string>
-    <string name="perm_location_granted">Εκχωρήθηκε — η τοποθεσία σας μπορεί να μοιραστεί</string>
-    <string name="perm_location_denied">Δεν εκχωρήθηκε — πατήστε για να επιτρέψετε την πρόσβαση στην τοποθεσία</string>
+    <string name="perm_location_granted">Εκχωρήθηκε - η τοποθεσία σας μπορεί να μοιραστεί</string>
+    <string name="perm_location_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την πρόσβαση στην τοποθεσία</string>
     <string name="perm_background_location_title">Τοποθεσία στο παρασκήνιο</string>
-    <string name="perm_background_location_granted">Εκχωρήθηκε — η κοινή χρήση τοποθεσίας συνεχίζεται όταν η εφαρμογή είναι κλειστή</string>
-    <string name="perm_background_location_denied">Δεν εκχωρήθηκε — πατήστε για να επιτρέψετε την πρόσβαση «Να επιτρέπεται πάντα» στις ρυθμίσεις</string>
+    <string name="perm_background_location_granted">Εκχωρήθηκε - η κοινή χρήση τοποθεσίας συνεχίζεται όταν η εφαρμογή είναι κλειστή</string>
+    <string name="perm_background_location_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την πρόσβαση «Να επιτρέπεται πάντα» στις ρυθμίσεις</string>
     <string name="perm_camera_title">Κάμερα</string>
-    <string name="perm_camera_granted">Εκχωρήθηκε — χρησιμοποιείται για τη σάρωση κωδικών QR προσκλήσεων</string>
-    <string name="perm_camera_denied">Δεν εκχωρήθηκε — πατήστε για να επιτρέψετε την κάμερα</string>
+    <string name="perm_camera_granted">Εκχωρήθηκε - χρησιμοποιείται για τη σάρωση κωδικών QR προσκλήσεων</string>
+    <string name="perm_camera_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την κάμερα</string>
     <string name="perm_notifications_title">Ειδοποιήσεις</string>
-    <string name="perm_notifications_granted">Εκχωρήθηκε — μπορούν να εμφανιστούν ειδοποιήσεις και ενημερώσεις κατάστασης</string>
-    <string name="perm_notifications_denied">Δεν εκχωρήθηκε — πατήστε για να επιτρέψετε τις ειδοποιήσεις</string>
+    <string name="perm_notifications_granted">Εκχωρήθηκε - μπορούν να εμφανιστούν ειδοποιήσεις και ενημερώσεις κατάστασης</string>
+    <string name="perm_notifications_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε τις ειδοποιήσεις</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Μονάδες ταχύτητας</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">Κρυπτογράφηση από άκρο σε άκρο</string>
     <string name="onboarding_feature_e2e_subtitle">Η τοποθεσία σας κρυπτογραφείται στη συσκευή</string>
     <string name="onboarding_feature_servers_title">Χωρίς ιδιόκτητους διακομιστές</string>
-    <string name="onboarding_feature_servers_subtitle">Χρησιμοποιεί ανοιχτούς αναμεταδότες Nostr ως ασφαλή μεταφορά — τα δεδομένα σας παραμένουν κρυπτογραφημένα και ιδιωτικά</string>
+    <string name="onboarding_feature_servers_subtitle">Χρησιμοποιεί ανοιχτούς αναμεταδότες Nostr ως ασφαλή μεταφορά - τα δεδομένα σας παραμένουν κρυπτογραφημένα και ιδιωτικά</string>
     <string name="onboarding_feature_phone_title">Μένει στο τηλέφωνό σας</string>
     <string name="onboarding_feature_phone_subtitle">Το πλήρες ιστορικό τοποθεσίας μένει στη συσκευή σας. Μόνο η τρέχουσα θέση σας κοινοποιείται σε επιλεγμένες επαφές</string>
     <string name="onboarding_name_prompt">Πώς να σας αποκαλούν οι επαφές σας;</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">Επαναφορά από αντίγραφο ασφαλείας</string>
     <string name="onboarding_key_note">Το ιδιωτικό σας κλειδί δημιουργείται τοπικά και δεν φεύγει ποτέ από αυτή τη συσκευή.</string>
     <string name="onboarding_permissions_title">Άδειες</string>
-    <string name="onboarding_permissions_desc">Το LocaPeer χρειάζεται πρόσβαση στην τοποθεσία για να κοινοποιεί τη θέση σας, στην κάμερα για σάρωση κωδικών πρόσκλησης και στις ειδοποιήσεις για την κατάσταση στο παρασκήνιο. Η πρόσβαση στη σωματική δραστηριότητα είναι προαιρετική — βοηθά στην ακριβέστερη επισήμανση της κίνησής σας (περπάτημα, οδήγηση).</string>
+    <string name="onboarding_permissions_desc">Το LocaPeer χρειάζεται πρόσβαση στην τοποθεσία για να κοινοποιεί τη θέση σας, στην κάμερα για σάρωση κωδικών πρόσκλησης και στις ειδοποιήσεις για την κατάσταση στο παρασκήνιο. Η πρόσβαση στη σωματική δραστηριότητα είναι προαιρετική - βοηθά στην ακριβέστερη επισήμανση της κίνησής σας (περπάτημα, οδήγηση).</string>
     <string name="onboarding_before_ask_title">Πριν ρωτήσουμε</string>
     <string name="onboarding_before_ask_intro">Θα δείτε στη συνέχεια μερικά μηνύματα του συστήματος:</string>
-    <string name="onboarding_before_ask_location">• Τοποθεσία — απαραίτητη, για την κοινοποίηση της θέσης σας.</string>
-    <string name="onboarding_before_ask_camera">• Κάμερα — για σάρωση κωδικών πρόσκλησης.</string>
-    <string name="onboarding_before_ask_notifications">• Ειδοποιήσεις — για την κατάσταση στο παρασκήνιο.</string>
-    <string name="onboarding_before_ask_activity">• Σωματική δραστηριότητα — προαιρετική. Επιτρέπει στο LocaPeer να ξεχωρίζει ακριβέστερα το περπάτημα, την οδήγηση και τη στάση. Μπορείτε να την παραλείψετε και να την ενεργοποιήσετε αργότερα στις Ρυθμίσεις.</string>
+    <string name="onboarding_before_ask_location">• Τοποθεσία - απαραίτητη, για την κοινοποίηση της θέσης σας.</string>
+    <string name="onboarding_before_ask_camera">• Κάμερα - για σάρωση κωδικών πρόσκλησης.</string>
+    <string name="onboarding_before_ask_notifications">• Ειδοποιήσεις - για την κατάσταση στο παρασκήνιο.</string>
+    <string name="onboarding_before_ask_activity">• Σωματική δραστηριότητα - προαιρετική. Επιτρέπει στο LocaPeer να ξεχωρίζει ακριβέστερα το περπάτημα, την οδήγηση και τη στάση. Μπορείτε να την παραλείψετε και να την ενεργοποιήσετε αργότερα στις Ρυθμίσεις.</string>
     <string name="onboarding_grant_permissions">Παραχώρηση αδειών</string>
     <string name="onboarding_bg_location_title">Τοποθεσία στο παρασκήνιο</string>
     <string name="onboarding_bg_location_desc">Για να ενημερώνονται οι επαφές σας όταν η εφαρμογή είναι κλειστή, επιλέξτε «Να επιτρέπεται πάντα» στην επόμενη οθόνη.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Μετάβαση στην τοποθεσία</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ΕΝΕΡΓΟ</string>
-    <string name="map_overdue">Καθυστέρηση — καμία πρόσφατη ενημέρωση</string>
+    <string name="map_overdue">Καθυστέρηση - καμία πρόσφατη ενημέρωση</string>
     <string name="map_stat_last_seen">Τελευταία εμφάνιση</string>
     <string name="map_stat_battery">Μπαταρία</string>
     <string name="map_stat_accuracy">Ακρίβεια</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Αποδεχθείτε για να επιτρέπονται αιτήματα έγκρισης ξεκλειδώματος από αυτή τη συσκευή</string>
     <string name="notif_supervisor_request_big">Αποδεχθείτε για να μπορεί ο/η %1$s να σας στέλνει αιτήματα έγκρισης ξεκλειδώματος όταν είναι ενεργή η εποπτευόμενη λειτουργία.</string>
     <string name="notif_supervised_active_title">Εποπτευόμενη λειτουργία ενεργή</string>
-    <string name="notif_supervised_active_text">Ο επόπτης επιβεβαίωσε — η εποπτευόμενη λειτουργία ρυθμίστηκε</string>
+    <string name="notif_supervised_active_text">Ο επόπτης επιβεβαίωσε - η εποπτευόμενη λειτουργία ρυθμίστηκε</string>
     <string name="notif_supervised_declined_title">Η εποπτευόμενη λειτουργία απορρίφθηκε</string>
-    <string name="notif_supervised_declined_text">Ο επόπτης απέρριψε το αίτημα — η εποπτευόμενη λειτουργία απενεργοποιήθηκε</string>
+    <string name="notif_supervised_declined_text">Ο επόπτης απέρριψε το αίτημα - η εποπτευόμενη λειτουργία απενεργοποιήθηκε</string>
     <string name="notif_tracking_alert_title">Ειδοποίηση παρακολούθησης</string>
     <string name="notif_tracking_proximity">Ο/Η %1$s έλαβε ειδοποίηση εγγύτητας για εσάς</string>
     <string name="notif_tracking_geofence">Ο/Η %1$s έλαβε ειδοποίηση ότι μπήκατε/βγήκατε από τον φράκτη: %2$s</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">Η επαφή δεν βρέθηκε</string>
     <string name="peer_purge_location_sent">Εντολή απομακρυσμένης διαγραφής ΟΛΩΝ των τοποθεσιών στάλθηκε στον/στην %1$s</string>
     <string name="peer_purge_messages_sent">Εντολή απομακρυσμένης διαγραφής ΟΛΩΝ των μηνυμάτων στάλθηκε στον/στην %1$s</string>
-    <string name="onboarding_error_key_length">Μη έγκυρο κλειδί — πρέπει να αποτελείται από 64 δεκαεξαδικούς χαρακτήρες.</string>
-    <string name="onboarding_error_key_range">Μη έγκυρο ιδιωτικό κλειδί — εκτός εύρους καμπύλης.</string>
+    <string name="onboarding_error_key_length">Μη έγκυρο κλειδί - πρέπει να αποτελείται από 64 δεκαεξαδικούς χαρακτήρες.</string>
+    <string name="onboarding_error_key_range">Μη έγκυρο ιδιωτικό κλειδί - εκτός εύρους καμπύλης.</string>
     <string name="onboarding_error_hex">Μη έγκυρη δεκαεξαδική μορφή.</string>
     <string name="onboarding_error_import_failed">Η εισαγωγή του κλειδιού απέτυχε: %1$s</string>
 </resources>

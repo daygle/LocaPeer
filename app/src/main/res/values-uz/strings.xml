@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Batareya quvvati past (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d daqiqa</string>
     <string name="settings_motion_detection">Harakatni aniqlash</string>
-    <string name="settings_motion_detection_on">Yoqilgan — tarixdagi harakat turini (yurish, haydash) aniqlashtiradi</string>
-    <string name="settings_motion_detection_off">O‘chirilgan — harakat belgilarini aniqroq ko‘rsatish uchun jismoniy faollikka ruxsat bering</string>
+    <string name="settings_motion_detection_on">Yoqilgan - tarixdagi harakat turini (yurish, haydash) aniqlashtiradi</string>
+    <string name="settings_motion_detection_off">O‘chirilgan - harakat belgilarini aniqroq ko‘rsatish uchun jismoniy faollikka ruxsat bering</string>
     <string name="settings_battery_optimization">Batareya optimallashtirish</string>
-    <string name="settings_battery_optimization_unrestricted">Cheklovsiz — LocaPeer fonda erkin ishlay oladi</string>
-    <string name="settings_battery_optimization_restricted">Optimallashtirilgan — tizim sozlamalarida cheklovsiz deb sozlash uchun bosing</string>
+    <string name="settings_battery_optimization_unrestricted">Cheklovsiz - LocaPeer fonda erkin ishlay oladi</string>
+    <string name="settings_battery_optimization_restricted">Optimallashtirilgan - tizim sozlamalarida cheklovsiz deb sozlash uchun bosing</string>
 
     <!-- Ruxsatlar -->
     <string name="settings_permissions">Ruxsatlar</string>
     <string name="settings_permissions_subtitle">Ilovaning joylashuv, kamera va boshqalarga ruxsatlarini ko‘rib chiqish va tuzatish</string>
     <string name="permissions_intro">LocaPeer-ga joylashuvni baham ko‘rish, takliflarni skanerlash va fonda ishlash uchun ushbu ruxsatlar kerak. Berilmagan ruxsatlarni tuzatish uchun bosing.</string>
     <string name="perm_location_title">Joylashuv</string>
-    <string name="perm_location_granted">Berilgan — joylashuvingiz baham ko‘rilishi mumkin</string>
-    <string name="perm_location_denied">Berilmagan — joylashuvga ruxsat berish uchun bosing</string>
+    <string name="perm_location_granted">Berilgan - joylashuvingiz baham ko‘rilishi mumkin</string>
+    <string name="perm_location_denied">Berilmagan - joylashuvga ruxsat berish uchun bosing</string>
     <string name="perm_background_location_title">Fon rejimidagi joylashuv</string>
-    <string name="perm_background_location_granted">Berilgan — ilova yopilganda ham joylashuvni baham ko‘rish davom etadi</string>
-    <string name="perm_background_location_denied">Berilmagan — sozlamalarda «Har doim ruxsat berish» rejimini tanlash uchun bosing</string>
+    <string name="perm_background_location_granted">Berilgan - ilova yopilganda ham joylashuvni baham ko‘rish davom etadi</string>
+    <string name="perm_background_location_denied">Berilmagan - sozlamalarda «Har doim ruxsat berish» rejimini tanlash uchun bosing</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Berilgan — taklif QR kodlarini skanerlash uchun ishlatiladi</string>
-    <string name="perm_camera_denied">Berilmagan — kameraga ruxsat berish uchun bosing</string>
+    <string name="perm_camera_granted">Berilgan - taklif QR kodlarini skanerlash uchun ishlatiladi</string>
+    <string name="perm_camera_denied">Berilmagan - kameraga ruxsat berish uchun bosing</string>
     <string name="perm_notifications_title">Bildirishnomalar</string>
-    <string name="perm_notifications_granted">Berilgan — ogohlantirishlar va holat yangilanishlari ko‘rsatilishi mumkin</string>
-    <string name="perm_notifications_denied">Berilmagan — bildirishnomalarga ruxsat berish uchun bosing</string>
+    <string name="perm_notifications_granted">Berilgan - ogohlantirishlar va holat yangilanishlari ko‘rsatilishi mumkin</string>
+    <string name="perm_notifications_denied">Berilmagan - bildirishnomalarga ruxsat berish uchun bosing</string>
 
     <!-- Birliklar va displey -->
     <string name="settings_speed_units">Tezlik birliklari</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">Shifrlangan</string>
     <string name="onboarding_feature_e2e_subtitle">Joylashuvingiz qurilmada shifrlanadi</string>
     <string name="onboarding_feature_servers_title">Shaxsiy serverlarsiz</string>
-    <string name="onboarding_feature_servers_subtitle">Xavfsiz tashuvchi sifatida ochiq Nostr relelaridan foydalanadi — ma’lumotlaringiz shifrlangan va maxfiy bo‘lib qoladi</string>
+    <string name="onboarding_feature_servers_subtitle">Xavfsiz tashuvchi sifatida ochiq Nostr relelaridan foydalanadi - ma’lumotlaringiz shifrlangan va maxfiy bo‘lib qoladi</string>
     <string name="onboarding_feature_phone_title">Telefoningizda qoladi</string>
     <string name="onboarding_feature_phone_subtitle">To‘liq joylashuv tarixingiz qurilmangizda qoladi. Faqat joriy holatingiz tanlangan kontaktlar bilan baham ko‘riladi</string>
     <string name="onboarding_name_prompt">Kontaktlaringiz sizni nima deb atashini xohlaysiz?</string>
@@ -293,7 +293,7 @@
     <string name="onboarding_restore_from_backup">Rezerv nusxadan tiklash</string>
     <string name="onboarding_key_note">Maxfiy kalitingiz mahalliy darajada yaratiladi va hech qachon ushbu qurilmani tark etmaydi.</string>
     <string name="onboarding_permissions_title">Ruxsatlar</string>
-    <string name="onboarding_permissions_desc">LocaPeer-ga joylashuvingizni baham ko‘rish uchun joylashuvga ruxsat, taklif kodlarini skanerlash uchun kameraga ruxsat va fon rejimi holati uchun bildirishnomalar ruxsati kerak. Jismoniy faollikka ruxsat majburiy emas — u harakatingizni (yurish, haydash) aniqroq ko‘rsatishga yordam beradi.</string>
+    <string name="onboarding_permissions_desc">LocaPeer-ga joylashuvingizni baham ko‘rish uchun joylashuvga ruxsat, taklif kodlarini skanerlash uchun kameraga ruxsat va fon rejimi holati uchun bildirishnomalar ruxsati kerak. Jismoniy faollikka ruxsat majburiy emas - u harakatingizni (yurish, haydash) aniqroq ko‘rsatishga yordam beradi.</string>
     <string name="onboarding_before_ask_title">So‘rashimizdan oldin</string>
     <string name="onboarding_before_ask_intro">Keyin quyidagi tizim so‘rovlarini ko‘rasiz:</string>
     <string name="onboarding_before_ask_location">• Joylashuv - joylashuvingizni baham ko‘rish uchun kerak.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">Joylashuvga o‘tish</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS YOQILGAN</string>
-    <string name="map_overdue">Kechikkan — so‘nggi yangilanish yo‘q</string>
+    <string name="map_overdue">Kechikkan - so‘nggi yangilanish yo‘q</string>
     <string name="map_stat_last_seen">Oxirgi marta ko‘rilgan</string>
     <string name="map_stat_battery">Batareya</string>
     <string name="map_stat_accuracy">Aniqlik</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">Ushbu qurilmadan qulfdan chiqarish so‘rovlarini tasdiqlashga kelishish</string>
     <string name="notif_supervisor_request_big">Nazorat rejimi faol bo‘lganda %1$s-ga qulfdan chiqarish so‘rovlarini yuborishga ruxsat berish uchun qabul qiling.</string>
     <string name="notif_supervised_active_title">Nazorat rejimi faol</string>
-    <string name="notif_supervised_active_text">Nazoratchingiz tasdiqladi — nazorat rejimi endi sozlangan</string>
+    <string name="notif_supervised_active_text">Nazoratchingiz tasdiqladi - nazorat rejimi endi sozlangan</string>
     <string name="notif_supervised_declined_title">Nazorat rejimi rad etildi</string>
-    <string name="notif_supervised_declined_text">Nazoratchingiz so‘rovni qabul qilmadi — nazorat rejimi o‘chirildi</string>
+    <string name="notif_supervised_declined_text">Nazoratchingiz so‘rovni qabul qilmadi - nazorat rejimi o‘chirildi</string>
     <string name="notif_tracking_alert_title">Kuzatuv ogohlantirishi</string>
     <string name="notif_tracking_proximity">%1$s siz haqingizda yaqinlik ogohlantirishi oldi</string>
     <string name="notif_tracking_geofence">%1$s sizning hududga kirganingiz/chiqqaningiz haqida ogohlantirish oldi: %2$s</string>

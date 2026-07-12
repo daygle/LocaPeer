@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">Aktiviert - verfeinert Ihren Bewegungstyp (Gehen, Fahren) im Verlauf</string>
     <string name="settings_motion_detection_off">Aus - Zugriff auf körperliche Aktivität für genauere Bewegungsbezeichnungen erlauben</string>
     <string name="settings_battery_optimization">Akku-Optimierung</string>
-    <string name="settings_battery_optimization_unrestricted">Uneingeschränkt — LocaPeer kann frei im Hintergrund ausgeführt werden</string>
-    <string name="settings_battery_optimization_restricted">Optimiert — tippen, um in den Systemeinstellungen auf Uneingeschränkt zu setzen</string>
+    <string name="settings_battery_optimization_unrestricted">Uneingeschränkt - LocaPeer kann frei im Hintergrund ausgeführt werden</string>
+    <string name="settings_battery_optimization_restricted">Optimiert - tippen, um in den Systemeinstellungen auf Uneingeschränkt zu setzen</string>
 
     <!-- Berechtigungen -->
     <string name="settings_permissions">Berechtigungen</string>
     <string name="settings_permissions_subtitle">App-Zugriff auf Standort, Kamera und mehr überprüfen und beheben</string>
     <string name="permissions_intro">LocaPeer benötigt diese Berechtigungen, um Ihren Standort zu teilen, Einladungen zu scannen und im Hintergrund weiterzulaufen. Tippen Sie auf eine nicht erteilte Berechtigung, um sie zu beheben.</string>
     <string name="perm_location_title">Standort</string>
-    <string name="perm_location_granted">Erteilt — Ihr Standort kann geteilt werden</string>
-    <string name="perm_location_denied">Nicht erteilt — tippen, um Standortzugriff zu erlauben</string>
+    <string name="perm_location_granted">Erteilt - Ihr Standort kann geteilt werden</string>
+    <string name="perm_location_denied">Nicht erteilt - tippen, um Standortzugriff zu erlauben</string>
     <string name="perm_background_location_title">Hintergrundstandort</string>
-    <string name="perm_background_location_granted">Erteilt — Standortfreigabe wird fortgesetzt, wenn die App geschlossen ist</string>
-    <string name="perm_background_location_denied">Nicht erteilt — tippen, um in den Einstellungen den Zugriff "Immer zulassen" zu erlauben</string>
+    <string name="perm_background_location_granted">Erteilt - Standortfreigabe wird fortgesetzt, wenn die App geschlossen ist</string>
+    <string name="perm_background_location_denied">Nicht erteilt - tippen, um in den Einstellungen den Zugriff "Immer zulassen" zu erlauben</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Erteilt — wird zum Scannen von Einladungs-QR-Codes verwendet</string>
-    <string name="perm_camera_denied">Nicht erteilt — tippen, um die Kamera zu erlauben</string>
+    <string name="perm_camera_granted">Erteilt - wird zum Scannen von Einladungs-QR-Codes verwendet</string>
+    <string name="perm_camera_denied">Nicht erteilt - tippen, um die Kamera zu erlauben</string>
     <string name="perm_notifications_title">Benachrichtigungen</string>
-    <string name="perm_notifications_granted">Erteilt — Warnungen und Statusaktualisierungen können angezeigt werden</string>
-    <string name="perm_notifications_denied">Nicht erteilt — tippen, um Benachrichtigungen zu erlauben</string>
+    <string name="perm_notifications_granted">Erteilt - Warnungen und Statusaktualisierungen können angezeigt werden</string>
+    <string name="perm_notifications_denied">Nicht erteilt - tippen, um Benachrichtigungen zu erlauben</string>
 
     <!-- Einheiten &amp; Anzeige -->
     <string name="settings_speed_units">Geschwindigkeitseinheiten</string>

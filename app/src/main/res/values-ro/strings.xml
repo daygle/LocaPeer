@@ -123,28 +123,28 @@
     <string name="settings_low_battery" formatted="false">Baterie scăzută (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Detectarea mișcării</string>
-    <string name="settings_motion_detection_on">Activată — rafinează tipul de mișcare (mers, condus) din istoric</string>
-    <string name="settings_motion_detection_off">Dezactivată — permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
+    <string name="settings_motion_detection_on">Activată - rafinează tipul de mișcare (mers, condus) din istoric</string>
+    <string name="settings_motion_detection_off">Dezactivată - permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
     <string name="settings_battery_optimization">Optimizarea bateriei</string>
-    <string name="settings_battery_optimization_unrestricted">Nerestricționat — LocaPeer poate rula liber în fundal</string>
-    <string name="settings_battery_optimization_restricted">Optimizat — atingeți pentru a seta Nerestricționat în setările sistemului</string>
+    <string name="settings_battery_optimization_unrestricted">Nerestricționat - LocaPeer poate rula liber în fundal</string>
+    <string name="settings_battery_optimization_restricted">Optimizat - atingeți pentru a seta Nerestricționat în setările sistemului</string>
 
     <!-- Permisiuni -->
     <string name="settings_permissions">Permisiuni</string>
     <string name="settings_permissions_subtitle">Examinați și corectați accesul aplicației la locație, cameră și altele</string>
     <string name="permissions_intro">LocaPeer are nevoie de aceste permisiuni pentru a vă partaja locația, a scana invitații și a continua să ruleze în fundal. Atingeți oricare dintre cele neacordate pentru a le corecta.</string>
     <string name="perm_location_title">Locație</string>
-    <string name="perm_location_granted">Acordat — locația dvs. poate fi partajată</string>
-    <string name="perm_location_denied">Neacordat — atingeți pentru a permite accesul la locație</string>
+    <string name="perm_location_granted">Acordat - locația dvs. poate fi partajată</string>
+    <string name="perm_location_denied">Neacordat - atingeți pentru a permite accesul la locație</string>
     <string name="perm_background_location_title">Locație în fundal</string>
-    <string name="perm_background_location_granted">Acordat — locația continuă să fie partajată când aplicația este închisă</string>
-    <string name="perm_background_location_denied">Neacordat — atingeți pentru a permite accesul „Întotdeauna” în setări</string>
+    <string name="perm_background_location_granted">Acordat - locația continuă să fie partajată când aplicația este închisă</string>
+    <string name="perm_background_location_denied">Neacordat - atingeți pentru a permite accesul „Întotdeauna” în setări</string>
     <string name="perm_camera_title">Cameră</string>
-    <string name="perm_camera_granted">Acordat — utilizată pentru a scana codurile QR de invitație</string>
-    <string name="perm_camera_denied">Neacordat — atingeți pentru a permite camera</string>
+    <string name="perm_camera_granted">Acordat - utilizată pentru a scana codurile QR de invitație</string>
+    <string name="perm_camera_denied">Neacordat - atingeți pentru a permite camera</string>
     <string name="perm_notifications_title">Notificări</string>
-    <string name="perm_notifications_granted">Acordat — alerte și actualizări de stare pot fi afișate</string>
-    <string name="perm_notifications_denied">Neacordat — atingeți pentru a permite notificările</string>
+    <string name="perm_notifications_granted">Acordat - alerte și actualizări de stare pot fi afișate</string>
+    <string name="perm_notifications_denied">Neacordat - atingeți pentru a permite notificările</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Unități de viteză</string>
@@ -290,7 +290,7 @@
     <string name="onboarding_feature_e2e_title">Criptare end-to-end</string>
     <string name="onboarding_feature_e2e_subtitle">Locația dvs. este criptată pe dispozitiv</string>
     <string name="onboarding_feature_servers_title">Fără servere proprietare</string>
-    <string name="onboarding_feature_servers_subtitle">Folosește relee Nostr deschise ca transport securizat — datele dvs. rămân criptate și private</string>
+    <string name="onboarding_feature_servers_subtitle">Folosește relee Nostr deschise ca transport securizat - datele dvs. rămân criptate și private</string>
     <string name="onboarding_feature_phone_title">Rămâne pe telefonul dvs.</string>
     <string name="onboarding_feature_phone_subtitle">Istoricul complet al locațiilor rămâne pe dispozitivul dvs. Doar poziția curentă este partajată cu contactele selectate</string>
     <string name="onboarding_name_prompt">Cum să vă spună contactele?</string>
@@ -299,13 +299,13 @@
     <string name="onboarding_restore_from_backup">Restaurați din copia de rezervă</string>
     <string name="onboarding_key_note">Cheia privată este generată local și nu părăsește niciodată acest dispozitiv.</string>
     <string name="onboarding_permissions_title">Permisiuni</string>
-    <string name="onboarding_permissions_desc">LocaPeer are nevoie de acces la locație pentru a vă partaja poziția, la cameră pentru a scana codurile de invitație și la notificări pentru starea în fundal. Accesul la activitatea fizică este opțional — ajută la etichetarea mai precisă a mișcării (mers, condus).</string>
+    <string name="onboarding_permissions_desc">LocaPeer are nevoie de acces la locație pentru a vă partaja poziția, la cameră pentru a scana codurile de invitație și la notificări pentru starea în fundal. Accesul la activitatea fizică este opțional - ajută la etichetarea mai precisă a mișcării (mers, condus).</string>
     <string name="onboarding_before_ask_title">Înainte să întrebăm</string>
     <string name="onboarding_before_ask_intro">Urmează câteva solicitări de sistem:</string>
-    <string name="onboarding_before_ask_location">• Locație — obligatorie, pentru a vă partaja poziția.</string>
-    <string name="onboarding_before_ask_camera">• Cameră — pentru scanarea codurilor de invitație.</string>
-    <string name="onboarding_before_ask_notifications">• Notificări — pentru starea în fundal.</string>
-    <string name="onboarding_before_ask_activity">• Activitate fizică — opțional. Permite LocaPeer să distingă mai precis mersul, condusul și staționarea. Puteți sări peste și activa mai târziu din Setări.</string>
+    <string name="onboarding_before_ask_location">• Locație - obligatorie, pentru a vă partaja poziția.</string>
+    <string name="onboarding_before_ask_camera">• Cameră - pentru scanarea codurilor de invitație.</string>
+    <string name="onboarding_before_ask_notifications">• Notificări - pentru starea în fundal.</string>
+    <string name="onboarding_before_ask_activity">• Activitate fizică - opțional. Permite LocaPeer să distingă mai precis mersul, condusul și staționarea. Puteți sări peste și activa mai târziu din Setări.</string>
     <string name="onboarding_grant_permissions">Acordați permisiunile</string>
     <string name="onboarding_bg_location_title">Locație în fundal</string>
     <string name="onboarding_bg_location_desc">Pentru a vă ține contactele la curent când aplicația este închisă, selectați „Permiteți tot timpul” pe ecranul următor.</string>
@@ -515,7 +515,7 @@
     <string name="map_cd_go_location">Mergeți la locație</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS PORNIT</string>
-    <string name="map_overdue">Întârziat — nicio actualizare recentă</string>
+    <string name="map_overdue">Întârziat - nicio actualizare recentă</string>
     <string name="map_stat_last_seen">Văzut ultima dată</string>
     <string name="map_stat_battery">Baterie</string>
     <string name="map_stat_accuracy">Precizie</string>
@@ -695,9 +695,9 @@
     <string name="notif_supervisor_request_text">Acceptați pentru a permite cereri de aprobare a deblocării de pe acest dispozitiv</string>
     <string name="notif_supervisor_request_big">Acceptați pentru a permite lui %1$s să vă trimită cereri de aprobare a deblocării când modul supravegheat este activ.</string>
     <string name="notif_supervised_active_title">Mod supravegheat activ</string>
-    <string name="notif_supervised_active_text">Supraveghetorul a confirmat — modul supravegheat este acum configurat</string>
+    <string name="notif_supervised_active_text">Supraveghetorul a confirmat - modul supravegheat este acum configurat</string>
     <string name="notif_supervised_declined_title">Mod supravegheat refuzat</string>
-    <string name="notif_supervised_declined_text">Supraveghetorul a refuzat cererea — modul supravegheat a fost dezactivat</string>
+    <string name="notif_supervised_declined_text">Supraveghetorul a refuzat cererea - modul supravegheat a fost dezactivat</string>
     <string name="notif_tracking_alert_title">Alertă de urmărire</string>
     <string name="notif_tracking_proximity">%1$s a primit o alertă de proximitate despre dvs.</string>
     <string name="notif_tracking_geofence">%1$s a primit o alertă că ați intrat/ieșit din perimetrul: %2$s</string>
@@ -772,8 +772,8 @@
     <string name="peer_not_found">Contactul nu a fost găsit</string>
     <string name="peer_purge_location_sent">Comandă de ștergere de la distanță a TUTUROR locațiilor trimisă lui %1$s</string>
     <string name="peer_purge_messages_sent">Comandă de ștergere de la distanță a TUTUROR mesajelor trimisă lui %1$s</string>
-    <string name="onboarding_error_key_length">Cheie nevalidă — trebuie să aibă 64 de caractere hexazecimale.</string>
-    <string name="onboarding_error_key_range">Cheie privată nevalidă — în afara intervalului curbei.</string>
+    <string name="onboarding_error_key_length">Cheie nevalidă - trebuie să aibă 64 de caractere hexazecimale.</string>
+    <string name="onboarding_error_key_range">Cheie privată nevalidă - în afara intervalului curbei.</string>
     <string name="onboarding_error_hex">Format hexazecimal nevalid.</string>
     <string name="onboarding_error_import_failed">Importul cheii a eșuat: %1$s</string>
 </resources>

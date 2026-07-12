@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">Imewezeshwa - inaboresha aina ya harakati zako (kutembea, kuendesha gari) katika historia</string>
     <string name="settings_motion_detection_off">Imezimwa - ruhusu ufikiaji wa shughuli za kimwili kwa lebo sahihi zaidi za mwendo</string>
     <string name="settings_battery_optimization">Uboreshaji wa Betri</string>
-    <string name="settings_battery_optimization_unrestricted">Haina kikomo — LocaPeer inaweza kufanya kazi kwa uhuru chinichini</string>
-    <string name="settings_battery_optimization_restricted">Imeboreshwa — gusa ili uweke Haina kikomo katika mipangilio ya mfumo</string>
+    <string name="settings_battery_optimization_unrestricted">Haina kikomo - LocaPeer inaweza kufanya kazi kwa uhuru chinichini</string>
+    <string name="settings_battery_optimization_restricted">Imeboreshwa - gusa ili uweke Haina kikomo katika mipangilio ya mfumo</string>
 
     <!-- Ruhusa -->
     <string name="settings_permissions">Ruhusa</string>
     <string name="settings_permissions_subtitle">Kagua na urekebishe ufikiaji wa programu kwa mahali, kamera na zaidi</string>
     <string name="permissions_intro">LocaPeer inahitaji ruhusa hizi ili kushiriki eneo lako, kuchanganua mialiko na kuendelea kufanya kazi chinichini. Gusa yoyote ambayo haijatolewa ili kuirekebisha.</string>
     <string name="perm_location_title">Mahali</string>
-    <string name="perm_location_granted">Imetolewa — eneo lako linaweza kushirikiwa</string>
-    <string name="perm_location_denied">Haijatolewa — gusa ili uruhusu ufikiaji wa mahali</string>
+    <string name="perm_location_granted">Imetolewa - eneo lako linaweza kushirikiwa</string>
+    <string name="perm_location_denied">Haijatolewa - gusa ili uruhusu ufikiaji wa mahali</string>
     <string name="perm_background_location_title">Mahali pa Chinichini</string>
-    <string name="perm_background_location_granted">Imetolewa — eneo linaendelea kushirikiwa wakati programu imefungwa</string>
-    <string name="perm_background_location_denied">Haijatolewa — gusa ili uruhusu ufikiaji wa kila wakati katika mipangilio</string>
+    <string name="perm_background_location_granted">Imetolewa - eneo linaendelea kushirikiwa wakati programu imefungwa</string>
+    <string name="perm_background_location_denied">Haijatolewa - gusa ili uruhusu ufikiaji wa kila wakati katika mipangilio</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Imetolewa — hutumika kuchanganua nambari za QR za mwaliko</string>
-    <string name="perm_camera_denied">Haijatolewa — gusa ili uruhusu kamera</string>
+    <string name="perm_camera_granted">Imetolewa - hutumika kuchanganua nambari za QR za mwaliko</string>
+    <string name="perm_camera_denied">Haijatolewa - gusa ili uruhusu kamera</string>
     <string name="perm_notifications_title">Arifa</string>
-    <string name="perm_notifications_granted">Imetolewa — arifa na sasisho za hali zinaweza kuonyeshwa</string>
-    <string name="perm_notifications_denied">Haijatolewa — gusa ili uruhusu arifa</string>
+    <string name="perm_notifications_granted">Imetolewa - arifa na sasisho za hali zinaweza kuonyeshwa</string>
+    <string name="perm_notifications_denied">Haijatolewa - gusa ili uruhusu arifa</string>
 
     <!-- Vitengo &amp; Maonyesho -->
     <string name="settings_speed_units">Vitengo vya Kasi</string>

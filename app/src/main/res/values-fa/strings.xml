@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">باتری کم (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d دقیقه</string>
     <string name="settings_motion_detection">تشخیص حرکت</string>
-    <string name="settings_motion_detection_on">فعال — نوع حرکت شما (پیاده‌روی، رانندگی) را در تاریخچه دقیق‌تر می‌کند</string>
-    <string name="settings_motion_detection_off">غیرفعال — برای برچسب‌های حرکتی دقیق‌تر، دسترسی به فعالیت بدنی را مجاز کنید</string>
+    <string name="settings_motion_detection_on">فعال - نوع حرکت شما (پیاده‌روی، رانندگی) را در تاریخچه دقیق‌تر می‌کند</string>
+    <string name="settings_motion_detection_off">غیرفعال - برای برچسب‌های حرکتی دقیق‌تر، دسترسی به فعالیت بدنی را مجاز کنید</string>
     <string name="settings_battery_optimization">بهینه‌سازی باتری</string>
-    <string name="settings_battery_optimization_unrestricted">بدون محدودیت — LocaPeer می‌تواند آزادانه در پس‌زمینه اجرا شود</string>
-    <string name="settings_battery_optimization_restricted">بهینه‌شده — برای تنظیم روی بدون محدودیت در تنظیمات سیستم ضربه بزنید</string>
+    <string name="settings_battery_optimization_unrestricted">بدون محدودیت - LocaPeer می‌تواند آزادانه در پس‌زمینه اجرا شود</string>
+    <string name="settings_battery_optimization_restricted">بهینه‌شده - برای تنظیم روی بدون محدودیت در تنظیمات سیستم ضربه بزنید</string>
 
     <!-- مجوزها -->
     <string name="settings_permissions">مجوزها</string>
     <string name="settings_permissions_subtitle">بررسی و اصلاح دسترسی برنامه به مکان، دوربین و موارد دیگر</string>
     <string name="permissions_intro">LocaPeer برای اشتراک‌گذاری مکان شما، اسکن دعوت‌نامه‌ها و ادامه فعالیت در پس‌زمینه به این مجوزها نیاز دارد. برای اصلاح، روی هر موردی که مجاز نیست ضربه بزنید.</string>
     <string name="perm_location_title">مکان</string>
-    <string name="perm_location_granted">مجاز — مکان شما می‌تواند به اشتراک گذاشته شود</string>
-    <string name="perm_location_denied">غیرمجاز — برای اجازه دسترسی به مکان ضربه بزنید</string>
+    <string name="perm_location_granted">مجاز - مکان شما می‌تواند به اشتراک گذاشته شود</string>
+    <string name="perm_location_denied">غیرمجاز - برای اجازه دسترسی به مکان ضربه بزنید</string>
     <string name="perm_background_location_title">مکان در پس‌زمینه</string>
-    <string name="perm_background_location_granted">مجاز — اشتراک‌گذاری مکان هنگام بسته بودن برنامه ادامه می‌یابد</string>
-    <string name="perm_background_location_denied">غیرمجاز — برای اجازه دسترسی «همیشه اجازه بده» در تنظیمات ضربه بزنید</string>
+    <string name="perm_background_location_granted">مجاز - اشتراک‌گذاری مکان هنگام بسته بودن برنامه ادامه می‌یابد</string>
+    <string name="perm_background_location_denied">غیرمجاز - برای اجازه دسترسی «همیشه اجازه بده» در تنظیمات ضربه بزنید</string>
     <string name="perm_camera_title">دوربین</string>
-    <string name="perm_camera_granted">مجاز — برای اسکن کدهای QR دعوت استفاده می‌شود</string>
-    <string name="perm_camera_denied">غیرمجاز — برای اجازه دسترسی به دوربین ضربه بزنید</string>
+    <string name="perm_camera_granted">مجاز - برای اسکن کدهای QR دعوت استفاده می‌شود</string>
+    <string name="perm_camera_denied">غیرمجاز - برای اجازه دسترسی به دوربین ضربه بزنید</string>
     <string name="perm_notifications_title">اعلان‌ها</string>
-    <string name="perm_notifications_granted">مجاز — هشدارها و به‌روزرسانی‌های وضعیت می‌توانند نمایش داده شوند</string>
-    <string name="perm_notifications_denied">غیرمجاز — برای اجازه اعلان‌ها ضربه بزنید</string>
+    <string name="perm_notifications_granted">مجاز - هشدارها و به‌روزرسانی‌های وضعیت می‌توانند نمایش داده شوند</string>
+    <string name="perm_notifications_denied">غیرمجاز - برای اجازه اعلان‌ها ضربه بزنید</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">واحد سرعت</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">رمزگذاری سرتاسری</string>
     <string name="onboarding_feature_e2e_subtitle">موقعیت شما روی دستگاه رمزگذاری می‌شود</string>
     <string name="onboarding_feature_servers_title">بدون سرورهای انحصاری</string>
-    <string name="onboarding_feature_servers_subtitle">از رله‌های باز Nostr به‌عنوان بستر انتقال امن استفاده می‌کند — داده‌های شما رمزگذاری‌شده و خصوصی می‌ماند</string>
+    <string name="onboarding_feature_servers_subtitle">از رله‌های باز Nostr به‌عنوان بستر انتقال امن استفاده می‌کند - داده‌های شما رمزگذاری‌شده و خصوصی می‌ماند</string>
     <string name="onboarding_feature_phone_title">روی گوشی شما می‌ماند</string>
     <string name="onboarding_feature_phone_subtitle">تاریخچه کامل موقعیت شما روی دستگاه‌تان می‌ماند. فقط موقعیت فعلی شما با مخاطبین منتخب به اشتراک گذاشته می‌شود</string>
     <string name="onboarding_name_prompt">مخاطبین‌تان شما را چه صدا کنند؟</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">بازیابی از پشتیبان</string>
     <string name="onboarding_key_note">کلید خصوصی شما به‌صورت محلی ساخته می‌شود و هرگز از این دستگاه خارج نمی‌شود.</string>
     <string name="onboarding_permissions_title">مجوزها</string>
-    <string name="onboarding_permissions_desc">LocaPeer برای اشتراک‌گذاری موقعیت به دسترسی مکان، برای اسکن کدهای دعوت به دوربین و برای وضعیت پس‌زمینه به اعلان‌ها نیاز دارد. دسترسی به فعالیت بدنی اختیاری است — به برچسب‌گذاری دقیق‌تر حرکت شما (پیاده‌روی، رانندگی) کمک می‌کند.</string>
+    <string name="onboarding_permissions_desc">LocaPeer برای اشتراک‌گذاری موقعیت به دسترسی مکان، برای اسکن کدهای دعوت به دوربین و برای وضعیت پس‌زمینه به اعلان‌ها نیاز دارد. دسترسی به فعالیت بدنی اختیاری است - به برچسب‌گذاری دقیق‌تر حرکت شما (پیاده‌روی، رانندگی) کمک می‌کند.</string>
     <string name="onboarding_before_ask_title">پیش از درخواست</string>
     <string name="onboarding_before_ask_intro">در ادامه چند پیام سیستمی خواهید دید:</string>
-    <string name="onboarding_before_ask_location">• مکان — لازم است، برای اشتراک‌گذاری موقعیت شما.</string>
-    <string name="onboarding_before_ask_camera">• دوربین — برای اسکن کدهای دعوت.</string>
-    <string name="onboarding_before_ask_notifications">• اعلان‌ها — برای وضعیت پس‌زمینه.</string>
-    <string name="onboarding_before_ask_activity">• فعالیت بدنی — اختیاری. به LocaPeer امکان می‌دهد پیاده‌روی، رانندگی و سکون را دقیق‌تر تشخیص دهد. می‌توانید رد کنید و بعداً در تنظیمات فعالش کنید.</string>
+    <string name="onboarding_before_ask_location">• مکان - لازم است، برای اشتراک‌گذاری موقعیت شما.</string>
+    <string name="onboarding_before_ask_camera">• دوربین - برای اسکن کدهای دعوت.</string>
+    <string name="onboarding_before_ask_notifications">• اعلان‌ها - برای وضعیت پس‌زمینه.</string>
+    <string name="onboarding_before_ask_activity">• فعالیت بدنی - اختیاری. به LocaPeer امکان می‌دهد پیاده‌روی، رانندگی و سکون را دقیق‌تر تشخیص دهد. می‌توانید رد کنید و بعداً در تنظیمات فعالش کنید.</string>
     <string name="onboarding_grant_permissions">اعطای مجوزها</string>
     <string name="onboarding_bg_location_title">مکان در پس‌زمینه</string>
     <string name="onboarding_bg_location_desc">برای اینکه مخاطبین شما هنگام بسته‌بودن برنامه به‌روز بمانند، در صفحه بعد «همیشه مجاز» را انتخاب کنید.</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">رفتن به موقعیت</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS روشن</string>
-    <string name="map_overdue">تأخیر — به‌روزرسانی اخیری نیست</string>
+    <string name="map_overdue">تأخیر - به‌روزرسانی اخیری نیست</string>
     <string name="map_stat_last_seen">آخرین بازدید</string>
     <string name="map_stat_battery">باتری</string>
     <string name="map_stat_accuracy">دقت</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">برای اجازه‌دادن به درخواست‌های تأیید بازکردن قفل از این دستگاه، بپذیرید</string>
     <string name="notif_supervisor_request_big">بپذیرید تا %1$s بتواند در حالت تحت نظارت برایتان درخواست تأیید بازکردن قفل بفرستد.</string>
     <string name="notif_supervised_active_title">حالت تحت نظارت فعال است</string>
-    <string name="notif_supervised_active_text">ناظر شما تأیید کرد — حالت تحت نظارت اکنون تنظیم شده است</string>
+    <string name="notif_supervised_active_text">ناظر شما تأیید کرد - حالت تحت نظارت اکنون تنظیم شده است</string>
     <string name="notif_supervised_declined_title">حالت تحت نظارت رد شد</string>
-    <string name="notif_supervised_declined_text">ناظر شما درخواست را رد کرد — حالت تحت نظارت غیرفعال شد</string>
+    <string name="notif_supervised_declined_text">ناظر شما درخواست را رد کرد - حالت تحت نظارت غیرفعال شد</string>
     <string name="notif_tracking_alert_title">هشدار ردیابی</string>
     <string name="notif_tracking_proximity">%1$s هشدار مجاورتی درباره شما دریافت کرد</string>
     <string name="notif_tracking_geofence">%1$s هشداری دریافت کرد که شما وارد/خارج از حصار شدید: %2$s</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">مخاطب یافت نشد</string>
     <string name="peer_purge_location_sent">فرمان حذف از راه دور همه موقعیت‌ها برای %1$s ارسال شد</string>
     <string name="peer_purge_messages_sent">فرمان حذف از راه دور همه پیام‌ها برای %1$s ارسال شد</string>
-    <string name="onboarding_error_key_length">کلید نامعتبر — باید ۶۴ نویسه هگز باشد.</string>
-    <string name="onboarding_error_key_range">کلید خصوصی نامعتبر — خارج از محدوده منحنی.</string>
+    <string name="onboarding_error_key_length">کلید نامعتبر - باید ۶۴ نویسه هگز باشد.</string>
+    <string name="onboarding_error_key_range">کلید خصوصی نامعتبر - خارج از محدوده منحنی.</string>
     <string name="onboarding_error_hex">قالب هگز نامعتبر است.</string>
     <string name="onboarding_error_import_failed">درون‌ریزی کلید ناموفق بود: %1$s</string>
 </resources>

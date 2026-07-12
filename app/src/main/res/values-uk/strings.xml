@@ -124,28 +124,28 @@
     <string name="settings_low_battery" formatted="false">Низький заряд (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d хв</string>
     <string name="settings_motion_detection">Розпізнавання руху</string>
-    <string name="settings_motion_detection_on">Увімкнено — уточнює тип руху (ходьба, керування авто) в історії</string>
-    <string name="settings_motion_detection_off">Вимкнено — надайте доступ до фізичної активності для точніших міток руху</string>
+    <string name="settings_motion_detection_on">Увімкнено - уточнює тип руху (ходьба, керування авто) в історії</string>
+    <string name="settings_motion_detection_off">Вимкнено - надайте доступ до фізичної активності для точніших міток руху</string>
     <string name="settings_battery_optimization">Оптимізація заряду</string>
-    <string name="settings_battery_optimization_unrestricted">Без обмежень — LocaPeer може вільно працювати у фоновому режимі</string>
-    <string name="settings_battery_optimization_restricted">Оптимізовано — натисніть, щоб встановити «Без обмежень» у системних налаштуваннях</string>
+    <string name="settings_battery_optimization_unrestricted">Без обмежень - LocaPeer може вільно працювати у фоновому режимі</string>
+    <string name="settings_battery_optimization_restricted">Оптимізовано - натисніть, щоб встановити «Без обмежень» у системних налаштуваннях</string>
 
     <!-- Дозволи -->
     <string name="settings_permissions">Дозволи</string>
     <string name="settings_permissions_subtitle">Перегляд і виправлення доступу програми до місцезнаходження, камери тощо</string>
     <string name="permissions_intro">LocaPeer потребує цих дозволів, щоб ділитися вашим місцезнаходженням, сканувати запрошення та продовжувати працювати у фоновому режимі. Натисніть на будь-який ненаданий дозвіл, щоб це виправити. </string>
     <string name="perm_location_title">Місцезнаходження</string>
-    <string name="perm_location_granted">Надано — ваше місцезнаходження можна передавати</string>
-    <string name="perm_location_denied">Не надано — натисніть, щоб дозволити доступ до місцезнаходження</string>
+    <string name="perm_location_granted">Надано - ваше місцезнаходження можна передавати</string>
+    <string name="perm_location_denied">Не надано - натисніть, щоб дозволити доступ до місцезнаходження</string>
     <string name="perm_background_location_title">Фонове місцезнаходження</string>
-    <string name="perm_background_location_granted">Надано — передача місцезнаходження продовжується, коли програма закрита</string>
-    <string name="perm_background_location_denied">Не надано — натисніть, щоб дозволити доступ «Дозволити у будь-якому режимі» у налаштуваннях</string>
+    <string name="perm_background_location_granted">Надано - передача місцезнаходження продовжується, коли програма закрита</string>
+    <string name="perm_background_location_denied">Не надано - натисніть, щоб дозволити доступ «Дозволити у будь-якому режимі» у налаштуваннях</string>
     <string name="perm_camera_title">Камера</string>
-    <string name="perm_camera_granted">Надано — використовується для сканування QR-кодів запрошень</string>
-    <string name="perm_camera_denied">Не надано — натисніть, щоб дозволити камеру</string>
+    <string name="perm_camera_granted">Надано - використовується для сканування QR-кодів запрошень</string>
+    <string name="perm_camera_denied">Не надано - натисніть, щоб дозволити камеру</string>
     <string name="perm_notifications_title">Сповіщення</string>
-    <string name="perm_notifications_granted">Надано — можуть відображатися попередження та оновлення статусу</string>
-    <string name="perm_notifications_denied">Не надано — натисніть, щоб дозволити сповіщення</string>
+    <string name="perm_notifications_granted">Надано - можуть відображатися попередження та оновлення статусу</string>
+    <string name="perm_notifications_denied">Не надано - натисніть, щоб дозволити сповіщення</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Одиниці швидкості</string>
@@ -296,7 +296,7 @@
     <string name="onboarding_feature_e2e_title">Наскрізне шифрування</string>
     <string name="onboarding_feature_e2e_subtitle">Ваше місцезнаходження шифрується на пристрої</string>
     <string name="onboarding_feature_servers_title">Без пропрієтарних серверів</string>
-    <string name="onboarding_feature_servers_subtitle">Відкриті ретранслятори Nostr використовуються як захищений транспорт — ваші дані залишаються зашифрованими та приватними</string>
+    <string name="onboarding_feature_servers_subtitle">Відкриті ретранслятори Nostr використовуються як захищений транспорт - ваші дані залишаються зашифрованими та приватними</string>
     <string name="onboarding_feature_phone_title">Усе залишається на телефоні</string>
     <string name="onboarding_feature_phone_subtitle">Повна історія місцезнаходжень зберігається лише на вашому пристрої. Вибраним контактам передається тільки поточна позиція</string>
     <string name="onboarding_name_prompt">Як вас називатимуть ваші контакти?</string>
@@ -305,13 +305,13 @@
     <string name="onboarding_restore_from_backup">Відновити з резервної копії</string>
     <string name="onboarding_key_note">Закритий ключ створюється локально й ніколи не залишає цей пристрій.</string>
     <string name="onboarding_permissions_title">Дозволи</string>
-    <string name="onboarding_permissions_desc">LocaPeer потребує доступу до місцезнаходження для передавання вашої позиції, до камери — для сканування кодів запрошень і до сповіщень — для фонового статусу. Доступ до фізичної активності необовʼязковий: він допомагає точніше визначати тип руху (ходьба, керування авто).</string>
+    <string name="onboarding_permissions_desc">LocaPeer потребує доступу до місцезнаходження для передавання вашої позиції, до камери - для сканування кодів запрошень і до сповіщень - для фонового статусу. Доступ до фізичної активності необовʼязковий: він допомагає точніше визначати тип руху (ходьба, керування авто).</string>
     <string name="onboarding_before_ask_title">Перш ніж запитати</string>
     <string name="onboarding_before_ask_intro">Зараз зʼявиться кілька системних запитів:</string>
-    <string name="onboarding_before_ask_location">• Місцезнаходження — обовʼязково, щоб передавати вашу позицію.</string>
-    <string name="onboarding_before_ask_camera">• Камера — для сканування кодів запрошень.</string>
-    <string name="onboarding_before_ask_notifications">• Сповіщення — для фонового статусу.</string>
-    <string name="onboarding_before_ask_activity">• Фізична активність — необовʼязково. Допомагає LocaPeer точніше розрізняти ходьбу, керування авто та нерухомість. Можна пропустити й увімкнути пізніше в налаштуваннях.</string>
+    <string name="onboarding_before_ask_location">• Місцезнаходження - обовʼязково, щоб передавати вашу позицію.</string>
+    <string name="onboarding_before_ask_camera">• Камера - для сканування кодів запрошень.</string>
+    <string name="onboarding_before_ask_notifications">• Сповіщення - для фонового статусу.</string>
+    <string name="onboarding_before_ask_activity">• Фізична активність - необовʼязково. Допомагає LocaPeer точніше розрізняти ходьбу, керування авто та нерухомість. Можна пропустити й увімкнути пізніше в налаштуваннях.</string>
     <string name="onboarding_grant_permissions">Надати дозволи</string>
     <string name="onboarding_bg_location_title">Фонове місцезнаходження</string>
     <string name="onboarding_bg_location_desc">Щоб ваші контакти отримували оновлення, коли застосунок закрито, виберіть на наступному екрані «Дозволити завжди».</string>
@@ -524,7 +524,7 @@
     <string name="map_cd_go_location">До місцезнаходження</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS УВІМК</string>
-    <string name="map_overdue">Прострочено — давно немає оновлень</string>
+    <string name="map_overdue">Прострочено - давно немає оновлень</string>
     <string name="map_stat_last_seen">Останній сигнал</string>
     <string name="map_stat_battery">Батарея</string>
     <string name="map_stat_accuracy">Точність</string>
@@ -603,7 +603,7 @@
     <string name="geo_cd_radius_increase">Збільшити радіус</string>
     <string name="geo_cd_radius_decrease">Зменшити радіус</string>
     <string name="geo_hint_tap">Натисніть або утримуйте мапу, щоб розмістити</string>
-    <string name="geo_hint_move">Масштаб — щипком • Утримуйте або перетягніть позначку, щоб перемістити</string>
+    <string name="geo_hint_move">Масштаб - щипком • Утримуйте або перетягніть позначку, щоб перемістити</string>
     <string name="geo_basic_info">Основні відомості</string>
     <string name="geo_search_title">Пошук за адресою</string>
     <string name="geo_search_label">Адреса або місце</string>
@@ -708,9 +708,9 @@
     <string name="notif_supervisor_request_text">Прийміть, щоб дозволити запити на схвалення розблокування з цього пристрою</string>
     <string name="notif_supervisor_request_big">Прийміть, щоб %1$s міг(могла) надсилати вам запити на схвалення розблокування в контрольованому режимі.</string>
     <string name="notif_supervised_active_title">Контрольований режим активний</string>
-    <string name="notif_supervised_active_text">Наглядач підтвердив — контрольований режим налаштовано</string>
+    <string name="notif_supervised_active_text">Наглядач підтвердив - контрольований режим налаштовано</string>
     <string name="notif_supervised_declined_title">Контрольований режим відхилено</string>
-    <string name="notif_supervised_declined_text">Наглядач відхилив запит — контрольований режим вимкнено</string>
+    <string name="notif_supervised_declined_text">Наглядач відхилив запит - контрольований режим вимкнено</string>
     <string name="notif_tracking_alert_title">Оповіщення про стеження</string>
     <string name="notif_tracking_proximity">%1$s отримав(-ла) оповіщення про ваше наближення</string>
     <string name="notif_tracking_geofence">%1$s отримав(-ла) оповіщення про вхід/вихід із зони: %2$s</string>
@@ -787,8 +787,8 @@
     <string name="peer_not_found">Піра не знайдено</string>
     <string name="peer_purge_location_sent">Команду видалення ВСІХ місцезнаходжень надіслано %1$s</string>
     <string name="peer_purge_messages_sent">Команду видалення ВСІХ повідомлень надіслано %1$s</string>
-    <string name="onboarding_error_key_length">Недійсний ключ — має бути 64 шістнадцяткові символи.</string>
-    <string name="onboarding_error_key_range">Недійсний закритий ключ — поза діапазоном кривої.</string>
+    <string name="onboarding_error_key_length">Недійсний ключ - має бути 64 шістнадцяткові символи.</string>
+    <string name="onboarding_error_key_range">Недійсний закритий ключ - поза діапазоном кривої.</string>
     <string name="onboarding_error_hex">Неправильний шістнадцятковий формат.</string>
     <string name="onboarding_error_import_failed">Не вдалося імпортувати ключ: %1$s</string>
 </resources>

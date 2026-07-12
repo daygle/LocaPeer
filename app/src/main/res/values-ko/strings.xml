@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">배터리 부족 (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d분</string>
     <string name="settings_motion_detection">동작 감지</string>
-    <string name="settings_motion_detection_on">켜짐 — 기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
-    <string name="settings_motion_detection_off">꺼짐 — 더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
+    <string name="settings_motion_detection_on">켜짐 - 기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
+    <string name="settings_motion_detection_off">꺼짐 - 더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
     <string name="settings_battery_optimization">배터리 최적화</string>
-    <string name="settings_battery_optimization_unrestricted">제한 없음 — LocaPeer가 백그라운드에서 자유롭게 실행될 수 있습니다</string>
-    <string name="settings_battery_optimization_restricted">최적화됨 — 시스템 설정에서 \'제한 없음\'으로 설정하려면 탭하세요</string>
+    <string name="settings_battery_optimization_unrestricted">제한 없음 - LocaPeer가 백그라운드에서 자유롭게 실행될 수 있습니다</string>
+    <string name="settings_battery_optimization_restricted">최적화됨 - 시스템 설정에서 \'제한 없음\'으로 설정하려면 탭하세요</string>
 
     <!-- 권한 -->
     <string name="settings_permissions">권한</string>
     <string name="settings_permissions_subtitle">위치, 카메라 등에 대한 앱 액세스 검토 및 수정</string>
     <string name="permissions_intro">LocaPeer가 위치를 공유하고, 초대를 스캔하며, 백그라운드에서 계속 실행되려면 이러한 권한이 필요합니다. 허용되지 않은 권한을 탭하여 수정하세요.</string>
     <string name="perm_location_title">위치</string>
-    <string name="perm_location_granted">허용됨 — 위치를 공유할 수 있습니다</string>
-    <string name="perm_location_denied">허용 안 됨 — 위치 액세스를 허용하려면 탭하세요</string>
+    <string name="perm_location_granted">허용됨 - 위치를 공유할 수 있습니다</string>
+    <string name="perm_location_denied">허용 안 됨 - 위치 액세스를 허용하려면 탭하세요</string>
     <string name="perm_background_location_title">백그라운드 위치</string>
-    <string name="perm_background_location_granted">허용됨 — 앱이 닫혀 있을 때도 위치 공유를 계속합니다</string>
-    <string name="perm_background_location_denied">허용 안 됨 — 설정에서 \'항상 허용\' 액세스를 허용하려면 탭하세요</string>
+    <string name="perm_background_location_granted">허용됨 - 앱이 닫혀 있을 때도 위치 공유를 계속합니다</string>
+    <string name="perm_background_location_denied">허용 안 됨 - 설정에서 \'항상 허용\' 액세스를 허용하려면 탭하세요</string>
     <string name="perm_camera_title">카메라</string>
-    <string name="perm_camera_granted">허용됨 — 초대 QR 코드를 스캔하는 데 사용됩니다</string>
-    <string name="perm_camera_denied">허용 안 됨 — 카메라를 허용하려면 탭하세요</string>
+    <string name="perm_camera_granted">허용됨 - 초대 QR 코드를 스캔하는 데 사용됩니다</string>
+    <string name="perm_camera_denied">허용 안 됨 - 카메라를 허용하려면 탭하세요</string>
     <string name="perm_notifications_title">알림</string>
-    <string name="perm_notifications_granted">허용됨 — 알림 및 상태 업데이트를 표시할 수 있습니다</string>
-    <string name="perm_notifications_denied">허용 안 됨 — 알림을 허용하려면 탭하세요</string>
+    <string name="perm_notifications_granted">허용됨 - 알림 및 상태 업데이트를 표시할 수 있습니다</string>
+    <string name="perm_notifications_denied">허용 안 됨 - 알림을 허용하려면 탭하세요</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">속도 단위</string>
@@ -278,7 +278,7 @@
     <string name="onboarding_feature_e2e_title">종단 간 암호화</string>
     <string name="onboarding_feature_e2e_subtitle">위치가 기기에서 암호화됩니다</string>
     <string name="onboarding_feature_servers_title">독점 서버 없음</string>
-    <string name="onboarding_feature_servers_subtitle">개방형 Nostr 릴레이를 보안 전송 수단으로 사용합니다 — 데이터는 암호화된 채 비공개로 유지됩니다</string>
+    <string name="onboarding_feature_servers_subtitle">개방형 Nostr 릴레이를 보안 전송 수단으로 사용합니다 - 데이터는 암호화된 채 비공개로 유지됩니다</string>
     <string name="onboarding_feature_phone_title">휴대폰에만 저장</string>
     <string name="onboarding_feature_phone_subtitle">전체 위치 기록은 내 기기에만 남습니다. 선택한 연락처에는 현재 위치만 공유됩니다</string>
     <string name="onboarding_name_prompt">연락처들이 나를 뭐라고 부르면 좋을까요?</string>
@@ -290,10 +290,10 @@
     <string name="onboarding_permissions_desc">LocaPeer는 위치 공유를 위한 위치 접근, 초대 코드 스캔을 위한 카메라 접근, 백그라운드 상태를 위한 알림 접근이 필요합니다. 신체 활동 접근은 선택 사항이며 이동(걷기, 운전)을 더 정확하게 라벨링하는 데 도움이 됩니다.</string>
     <string name="onboarding_before_ask_title">요청하기 전에</string>
     <string name="onboarding_before_ask_intro">곧 몇 가지 시스템 알림이 표시됩니다:</string>
-    <string name="onboarding_before_ask_location">• 위치 — 필수, 내 위치를 공유하기 위해.</string>
-    <string name="onboarding_before_ask_camera">• 카메라 — 초대 코드 스캔용.</string>
-    <string name="onboarding_before_ask_notifications">• 알림 — 백그라운드 상태용.</string>
-    <string name="onboarding_before_ask_activity">• 신체 활동 — 선택 사항. LocaPeer가 걷기, 운전, 정지 상태를 더 정확하게 구분할 수 있습니다. 건너뛰고 나중에 설정에서 켤 수 있습니다.</string>
+    <string name="onboarding_before_ask_location">• 위치 - 필수, 내 위치를 공유하기 위해.</string>
+    <string name="onboarding_before_ask_camera">• 카메라 - 초대 코드 스캔용.</string>
+    <string name="onboarding_before_ask_notifications">• 알림 - 백그라운드 상태용.</string>
+    <string name="onboarding_before_ask_activity">• 신체 활동 - 선택 사항. LocaPeer가 걷기, 운전, 정지 상태를 더 정확하게 구분할 수 있습니다. 건너뛰고 나중에 설정에서 켤 수 있습니다.</string>
     <string name="onboarding_grant_permissions">권한 부여</string>
     <string name="onboarding_bg_location_title">백그라운드 위치</string>
     <string name="onboarding_bg_location_desc">앱이 닫혀 있는 동안에도 연락처에 최신 위치를 알리려면 다음 화면에서 \"항상 허용\"을 선택하세요.</string>
@@ -497,7 +497,7 @@
     <string name="map_cd_go_location">위치로 이동</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS 켜짐</string>
-    <string name="map_overdue">지연됨 — 최근 업데이트 없음</string>
+    <string name="map_overdue">지연됨 - 최근 업데이트 없음</string>
     <string name="map_stat_last_seen">마지막 확인</string>
     <string name="map_stat_battery">배터리</string>
     <string name="map_stat_accuracy">정확도</string>
@@ -669,9 +669,9 @@
     <string name="notif_supervisor_request_text">이 기기의 잠금 해제 승인 요청을 허용하려면 수락하세요</string>
     <string name="notif_supervisor_request_big">감독 모드가 활성화된 동안 %1$s 님이 잠금 해제 승인 요청을 보낼 수 있도록 수락하세요.</string>
     <string name="notif_supervised_active_title">감독 모드 활성화됨</string>
-    <string name="notif_supervised_active_text">감독자가 확인했습니다 — 감독 모드가 설정되었습니다</string>
+    <string name="notif_supervised_active_text">감독자가 확인했습니다 - 감독 모드가 설정되었습니다</string>
     <string name="notif_supervised_declined_title">감독 모드 거절됨</string>
-    <string name="notif_supervised_declined_text">감독자가 요청을 거절했습니다 — 감독 모드가 비활성화되었습니다</string>
+    <string name="notif_supervised_declined_text">감독자가 요청을 거절했습니다 - 감독 모드가 비활성화되었습니다</string>
     <string name="notif_tracking_alert_title">추적 알림</string>
     <string name="notif_tracking_proximity">%1$s 님이 나에 대한 근접 알림을 받았습니다</string>
     <string name="notif_tracking_geofence">%1$s 님이 내가 구역 %2$s에 진입/이탈했다는 알림을 받았습니다</string>
@@ -742,8 +742,8 @@
     <string name="peer_not_found">연락처를 찾을 수 없습니다</string>
     <string name="peer_purge_location_sent">모든 위치의 원격 삭제 명령을 %1$s 님에게 보냈습니다</string>
     <string name="peer_purge_messages_sent">모든 메시지의 원격 삭제 명령을 %1$s 님에게 보냈습니다</string>
-    <string name="onboarding_error_key_length">잘못된 키 — 64자 16진수여야 합니다.</string>
-    <string name="onboarding_error_key_range">잘못된 개인 키 — 곡선 범위를 벗어났습니다.</string>
+    <string name="onboarding_error_key_length">잘못된 키 - 64자 16진수여야 합니다.</string>
+    <string name="onboarding_error_key_range">잘못된 개인 키 - 곡선 범위를 벗어났습니다.</string>
     <string name="onboarding_error_hex">잘못된 16진수 형식입니다.</string>
     <string name="onboarding_error_import_failed">키 가져오기 실패: %1$s</string>
 </resources>

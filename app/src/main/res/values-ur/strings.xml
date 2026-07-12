@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">کم بیٹری (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d منٹ</string>
     <string name="settings_motion_detection">حرکت کا پتہ لگانا</string>
-    <string name="settings_motion_detection_on">آن — تاریخ میں آپ کی حرکت کی قسم (پیدل، ڈرائیونگ) کو بہتر بناتا ہے</string>
-    <string name="settings_motion_detection_off">بند — زیادہ درست حرکت لیبلز کے لیے جسمانی سرگرمی تک رسائی کی اجازت دیں</string>
+    <string name="settings_motion_detection_on">آن - تاریخ میں آپ کی حرکت کی قسم (پیدل، ڈرائیونگ) کو بہتر بناتا ہے</string>
+    <string name="settings_motion_detection_off">بند - زیادہ درست حرکت لیبلز کے لیے جسمانی سرگرمی تک رسائی کی اجازت دیں</string>
     <string name="settings_battery_optimization">بیٹری آپٹیمائزیشن</string>
-    <string name="settings_battery_optimization_unrestricted">غیر محدود — LocaPeer پس منظر میں آزادانہ طور پر چل سکتا ہے</string>
-    <string name="settings_battery_optimization_restricted">آپٹیمائزڈ — سسٹم کی ترتیبات میں غیر محدود پر سیٹ کرنے کے لیے تھپتھپائیں</string>
+    <string name="settings_battery_optimization_unrestricted">غیر محدود - LocaPeer پس منظر میں آزادانہ طور پر چل سکتا ہے</string>
+    <string name="settings_battery_optimization_restricted">آپٹیمائزڈ - سسٹم کی ترتیبات میں غیر محدود پر سیٹ کرنے کے لیے تھپتھپائیں</string>
 
     <!-- اجازتیں -->
     <string name="settings_permissions">اجازتیں</string>
     <string name="settings_permissions_subtitle">مقام، کیمرہ اور مزید تک ایپ کی رسائی کا جائزہ لیں اور درست کریں</string>
     <string name="permissions_intro">LocaPeer کو آپ کا مقام شیئر کرنے، دعوت نامے اسکین کرنے اور پس منظر میں کام جاری رکھنے کے لیے ان اجازتوں کی ضرورت ہے۔ درست کرنے کے لیے کسی بھی ایسی اجازت پر تھپتھپائیں جو نہیں دی گئی ہے۔</string>
     <string name="perm_location_title">مقام</string>
-    <string name="perm_location_granted">دی گئی — آپ کا مقام شیئر کیا جا سکتا ہے</string>
-    <string name="perm_location_denied">نہیں دی گئی — مقام کی رسائی کی اجازت دینے کے لیے تھپتھپائیں</string>
+    <string name="perm_location_granted">دی گئی - آپ کا مقام شیئر کیا جا سکتا ہے</string>
+    <string name="perm_location_denied">نہیں دی گئی - مقام کی رسائی کی اجازت دینے کے لیے تھپتھپائیں</string>
     <string name="perm_background_location_title">پس منظر کا مقام</string>
-    <string name="perm_background_location_granted">دی گئی — ایپ بند ہونے پر بھی مقام کا اشتراک جاری رہتا ہے</string>
-    <string name="perm_background_location_denied">نہیں دی گئی — ترتیبات میں \'ہر وقت اجازت دیں\' رسائی دینے کے لیے تھپتھپائیں</string>
+    <string name="perm_background_location_granted">دی گئی - ایپ بند ہونے پر بھی مقام کا اشتراک جاری رہتا ہے</string>
+    <string name="perm_background_location_denied">نہیں دی گئی - ترتیبات میں \'ہر وقت اجازت دیں\' رسائی دینے کے لیے تھپتھپائیں</string>
     <string name="perm_camera_title">کیمرہ</string>
-    <string name="perm_camera_granted">دی گئی — دعوت نامہ QR کوڈ اسکین کرنے کے لیے استعمال کیا جاتا ہے</string>
-    <string name="perm_camera_denied">نہیں دی گئی — کیمرے کی اجازت دینے کے لیے تھپتھپائیں</string>
+    <string name="perm_camera_granted">دی گئی - دعوت نامہ QR کوڈ اسکین کرنے کے لیے استعمال کیا جاتا ہے</string>
+    <string name="perm_camera_denied">نہیں دی گئی - کیمرے کی اجازت دینے کے لیے تھپتھپائیں</string>
     <string name="perm_notifications_title">اطلاعات</string>
-    <string name="perm_notifications_granted">دی گئی — الرٹس اور اسٹیٹس اپ ڈیٹس دکھائے جا سکتے ہیں</string>
-    <string name="perm_notifications_denied">نہیں دی گئی — اطلاعات کی اجازت دینے کے لیے تھپتھپائیں</string>
+    <string name="perm_notifications_granted">دی گئی - الرٹس اور اسٹیٹس اپ ڈیٹس دکھائے جا سکتے ہیں</string>
+    <string name="perm_notifications_denied">نہیں دی گئی - اطلاعات کی اجازت دینے کے لیے تھپتھپائیں</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">رفتار کی اکائیاں</string>
@@ -284,7 +284,7 @@
     <string name="onboarding_feature_e2e_title">اینڈ ٹو اینڈ خفیہ کردہ</string>
     <string name="onboarding_feature_e2e_subtitle">آپ کا مقام آلے پر خفیہ کیا جاتا ہے</string>
     <string name="onboarding_feature_servers_title">کوئی ملکیتی سرور نہیں</string>
-    <string name="onboarding_feature_servers_subtitle">محفوظ ٹرانسپورٹ کے طور پر کھلے Nostr ریلے استعمال کرتا ہے — آپ کا ڈیٹا خفیہ اور نجی رہتا ہے</string>
+    <string name="onboarding_feature_servers_subtitle">محفوظ ٹرانسپورٹ کے طور پر کھلے Nostr ریلے استعمال کرتا ہے - آپ کا ڈیٹا خفیہ اور نجی رہتا ہے</string>
     <string name="onboarding_feature_phone_title">آپ کے فون پر رہتا ہے</string>
     <string name="onboarding_feature_phone_subtitle">آپ کی مکمل مقام کی تاریخ آپ کے آلے پر رہتی ہے۔ صرف آپ کا موجودہ مقام منتخب رابطوں کے ساتھ شیئر ہوتا ہے</string>
     <string name="onboarding_name_prompt">آپ کے رابطے آپ کو کیا کہہ کر بلائیں؟</string>
@@ -293,13 +293,13 @@
     <string name="onboarding_restore_from_backup">بیک اپ سے بحال کریں</string>
     <string name="onboarding_key_note">آپ کی نجی کلید مقامی طور پر بنتی ہے اور کبھی اس آلے سے باہر نہیں جاتی۔</string>
     <string name="onboarding_permissions_title">اجازتیں</string>
-    <string name="onboarding_permissions_desc">LocaPeer کو آپ کا مقام شیئر کرنے کے لیے مقام کی رسائی، دعوتی کوڈز اسکین کرنے کے لیے کیمرے کی رسائی، اور پس منظر کی حالت کے لیے اطلاعات کی رسائی درکار ہے۔ جسمانی سرگرمی کی رسائی اختیاری ہے — یہ آپ کی حرکت (پیدل، ڈرائیونگ) کو زیادہ درست لیبل کرنے میں مدد دیتی ہے۔</string>
+    <string name="onboarding_permissions_desc">LocaPeer کو آپ کا مقام شیئر کرنے کے لیے مقام کی رسائی، دعوتی کوڈز اسکین کرنے کے لیے کیمرے کی رسائی، اور پس منظر کی حالت کے لیے اطلاعات کی رسائی درکار ہے۔ جسمانی سرگرمی کی رسائی اختیاری ہے - یہ آپ کی حرکت (پیدل، ڈرائیونگ) کو زیادہ درست لیبل کرنے میں مدد دیتی ہے۔</string>
     <string name="onboarding_before_ask_title">پوچھنے سے پہلے</string>
     <string name="onboarding_before_ask_intro">اگلے مرحلے میں آپ کو چند سسٹم پرامپٹس نظر آئیں گے:</string>
-    <string name="onboarding_before_ask_location">• مقام — لازمی، آپ کا مقام شیئر کرنے کے لیے۔</string>
-    <string name="onboarding_before_ask_camera">• کیمرہ — دعوتی کوڈز اسکین کرنے کے لیے۔</string>
-    <string name="onboarding_before_ask_notifications">• اطلاعات — پس منظر کی حالت کے لیے۔</string>
-    <string name="onboarding_before_ask_activity">• جسمانی سرگرمی — اختیاری۔ یہ LocaPeer کو پیدل چلنے، ڈرائیونگ اور ساکن رہنے میں زیادہ درست فرق کرنے دیتی ہے۔ آپ اسے چھوڑ سکتے ہیں اور بعد میں ترتیبات میں آن کر سکتے ہیں۔</string>
+    <string name="onboarding_before_ask_location">• مقام - لازمی، آپ کا مقام شیئر کرنے کے لیے۔</string>
+    <string name="onboarding_before_ask_camera">• کیمرہ - دعوتی کوڈز اسکین کرنے کے لیے۔</string>
+    <string name="onboarding_before_ask_notifications">• اطلاعات - پس منظر کی حالت کے لیے۔</string>
+    <string name="onboarding_before_ask_activity">• جسمانی سرگرمی - اختیاری۔ یہ LocaPeer کو پیدل چلنے، ڈرائیونگ اور ساکن رہنے میں زیادہ درست فرق کرنے دیتی ہے۔ آپ اسے چھوڑ سکتے ہیں اور بعد میں ترتیبات میں آن کر سکتے ہیں۔</string>
     <string name="onboarding_grant_permissions">اجازتیں دیں</string>
     <string name="onboarding_bg_location_title">پس منظر کا مقام</string>
     <string name="onboarding_bg_location_desc">ایپ بند ہونے پر بھی آپ کے رابطوں کو اپ ڈیٹ رکھنے کے لیے، اگلی اسکرین پر \"ہمیشہ اجازت دیں\" منتخب کریں۔</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">مقام پر جائیں</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS آن</string>
-    <string name="map_overdue">تاخیر — کوئی حالیہ اپ ڈیٹ نہیں</string>
+    <string name="map_overdue">تاخیر - کوئی حالیہ اپ ڈیٹ نہیں</string>
     <string name="map_stat_last_seen">آخری بار دیکھا گیا</string>
     <string name="map_stat_battery">بیٹری</string>
     <string name="map_stat_accuracy">درستگی</string>
@@ -682,9 +682,9 @@
     <string name="notif_supervisor_request_text">اس آلے سے ان لاک منظوری کی درخواستوں کی اجازت دینے کے لیے قبول کریں</string>
     <string name="notif_supervisor_request_big">زیرِ نگرانی موڈ فعال ہونے پر %1$s کو آپ کو ان لاک منظوری کی درخواستیں بھیجنے کی اجازت دینے کے لیے قبول کریں۔</string>
     <string name="notif_supervised_active_title">زیرِ نگرانی موڈ فعال</string>
-    <string name="notif_supervised_active_text">آپ کے نگران نے تصدیق کر دی — زیرِ نگرانی موڈ اب سیٹ ہو گیا ہے</string>
+    <string name="notif_supervised_active_text">آپ کے نگران نے تصدیق کر دی - زیرِ نگرانی موڈ اب سیٹ ہو گیا ہے</string>
     <string name="notif_supervised_declined_title">زیرِ نگرانی موڈ مسترد</string>
-    <string name="notif_supervised_declined_text">آپ کے نگران نے درخواست مسترد کر دی — زیرِ نگرانی موڈ بند کر دیا گیا</string>
+    <string name="notif_supervised_declined_text">آپ کے نگران نے درخواست مسترد کر دی - زیرِ نگرانی موڈ بند کر دیا گیا</string>
     <string name="notif_tracking_alert_title">ٹریکنگ الرٹ</string>
     <string name="notif_tracking_proximity">%1$s کو آپ کے بارے میں قربت الرٹ ملا</string>
     <string name="notif_tracking_geofence">%1$s کو الرٹ ملا کہ آپ فینس میں داخل/خارج ہوئے: %2$s</string>
@@ -757,8 +757,8 @@
     <string name="peer_not_found">رابطہ نہیں ملا</string>
     <string name="peer_purge_location_sent">تمام مقامات کے دور دراز حذف کا کمانڈ %1$s کو بھیج دیا گیا</string>
     <string name="peer_purge_messages_sent">تمام پیغامات کے دور دراز حذف کا کمانڈ %1$s کو بھیج دیا گیا</string>
-    <string name="onboarding_error_key_length">غلط کلید — 64 ہیکس حروف ہونے چاہئیں۔</string>
-    <string name="onboarding_error_key_range">غلط نجی کلید — منحنی کی حد سے باہر۔</string>
+    <string name="onboarding_error_key_length">غلط کلید - 64 ہیکس حروف ہونے چاہئیں۔</string>
+    <string name="onboarding_error_key_range">غلط نجی کلید - منحنی کی حد سے باہر۔</string>
     <string name="onboarding_error_hex">غلط ہیکس فارمیٹ۔</string>
     <string name="onboarding_error_import_failed">کلید امپورٹ ناکام: %1$s</string>
 </resources>

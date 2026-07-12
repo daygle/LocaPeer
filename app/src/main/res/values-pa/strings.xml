@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">ਸਮਰੱਥ - ਇਤਿਹਾਸ ਵਿੱਚ ਤੁਹਾਡੀ ਗਤੀ ਦੀ ਕਿਸਮ (ਪੈਦਲ, ਡਰਾਈਵਿੰਗ) ਨੂੰ ਸਹੀ ਕਰਦਾ ਹੈ</string>
     <string name="settings_motion_detection_off">ਬੰਦ - ਵਧੇਰੇ ਸਹੀ ਗਤੀ ਲੇਬਲਾਂ ਲਈ ਸਰੀਰਕ ਗਤੀਵਿਧੀ ਪਹੁੰਚ ਦੀ ਆਗਿਆ ਦਿਓ</string>
     <string name="settings_battery_optimization">ਬੈਟਰੀ ਅਨੁਕੂਲਨ</string>
-    <string name="settings_battery_optimization_unrestricted">ਬਿਨਾਂ ਰੋਕ-ਟੋਕ — LocaPeer ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਖੁੱਲ੍ਹ ਕੇ ਚੱਲ ਸਕਦਾ ਹੈ</string>
-    <string name="settings_battery_optimization_restricted">ਅਨੁਕੂਲਿਤ — ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬਿਨਾਂ ਰੋਕ-ਟੋਕ ਤੇ ਸੈੱਟ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="settings_battery_optimization_unrestricted">ਬਿਨਾਂ ਰੋਕ-ਟੋਕ - LocaPeer ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਖੁੱਲ੍ਹ ਕੇ ਚੱਲ ਸਕਦਾ ਹੈ</string>
+    <string name="settings_battery_optimization_restricted">ਅਨੁਕੂਲਿਤ - ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਬਿਨਾਂ ਰੋਕ-ਟੋਕ ਤੇ ਸੈੱਟ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ</string>
 
     <!-- ਪਰਮਿਸ਼ਨਾਂ -->
     <string name="settings_permissions">ਪਰਮਿਸ਼ਨਾਂ</string>
     <string name="settings_permissions_subtitle">ਟਿਕਾਣਾ, ਕੈਮਰਾ ਅਤੇ ਹੋਰ ਚੀਜ਼ਾਂ ਤੱਕ ਐਪ ਪਹੁੰਚ ਦੀ ਸਮੀਖਿਆ ਕਰੋ ਅਤੇ ਸਹੀ ਕਰੋ</string>
     <string name="permissions_intro">ਆਪਣਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨ, ਸੱਦਿਆਂ ਨੂੰ ਸਕੈਨ ਕਰਨ ਅਤੇ ਬੈਕਗਰਾਉਂਡ ਵਿੱਚ ਚੱਲਦੇ ਰਹਿਣ ਲਈ LocaPeer ਨੂੰ ਇਹਨਾਂ ਪਰਮਿਸ਼ਨਾਂ ਦੀ ਲੋੜ ਹੈ। ਕਿਸੇ ਵੀ ਅਜਿਹੀ ਪਰਮਿਸ਼ਨ \'ਤੇ ਟੈਪ ਕਰੋ ਜੋ ਪ੍ਰਦਾਨ ਨਹੀਂ ਕੀਤੀ ਗਈ ਹੈ ਤਾਂ ਜੋ ਇਸਨੂੰ ਸਹੀ ਕੀਤਾ ਜਾ ਸਕੇ।</string>
     <string name="perm_location_title">ਟਿਕਾਣਾ</string>
-    <string name="perm_location_granted">ਦਿੱਤੀ ਗਈ — ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
-    <string name="perm_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਟਿਕਾਣਾ ਪਹੁੰਚ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="perm_location_granted">ਦਿੱਤੀ ਗਈ - ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ</string>
+    <string name="perm_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ - ਟਿਕਾਣਾ ਪਹੁੰਚ ਦੀ ਆਗਿਆ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="perm_background_location_title">ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣਾ</string>
-    <string name="perm_background_location_granted">ਦਿੱਤੀ ਗਈ — ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਵੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਾਰੀ ਰਹਿੰਦਾ ਹੈ</string>
-    <string name="perm_background_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਸੈਟਿੰਗਾਂ ਵਿੱਚ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣਨ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="perm_background_location_granted">ਦਿੱਤੀ ਗਈ - ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਵੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਾਰੀ ਰਹਿੰਦਾ ਹੈ</string>
+    <string name="perm_background_location_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ - ਸੈਟਿੰਗਾਂ ਵਿੱਚ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣਨ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="perm_camera_title">ਕੈਮਰਾ</string>
-    <string name="perm_camera_granted">ਦਿੱਤੀ ਗਈ — ਸੱਦੇ ਦੇ QR ਕੋਡ ਸਕੈਨ ਕਰਨ ਲਈ ਵਰਤੀ ਜਾਂਦੀ ਹੈ</string>
-    <string name="perm_camera_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਕੈਮਰੇ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="perm_camera_granted">ਦਿੱਤੀ ਗਈ - ਸੱਦੇ ਦੇ QR ਕੋਡ ਸਕੈਨ ਕਰਨ ਲਈ ਵਰਤੀ ਜਾਂਦੀ ਹੈ</string>
+    <string name="perm_camera_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ - ਕੈਮਰੇ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
     <string name="perm_notifications_title">ਨੋਟੀਫਿਕੇਸ਼ਨ</string>
-    <string name="perm_notifications_granted">ਦਿੱਤੀ ਗਈ — ਅਲਰਟ ਅਤੇ ਸਥਿਤੀ ਅੱਪਡੇਟ ਦਿਖਾਏ ਜਾ ਸਕਦੇ ਹਨ</string>
-    <string name="perm_notifications_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ — ਨੋਟੀਫਿਕੇਸ਼ਨਾਂ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="perm_notifications_granted">ਦਿੱਤੀ ਗਈ - ਅਲਰਟ ਅਤੇ ਸਥਿਤੀ ਅੱਪਡੇਟ ਦਿਖਾਏ ਜਾ ਸਕਦੇ ਹਨ</string>
+    <string name="perm_notifications_denied">ਨਹੀਂ ਦਿੱਤੀ ਗਈ - ਨੋਟੀਫਿਕੇਸ਼ਨਾਂ ਦੀ ਇਜਾਜ਼ਤ ਦੇਣ ਲਈ ਟੈਪ ਕਰੋ</string>
 
     <!-- ਇਕਾਈਆਂ ਅਤੇ ਡਿਸਪਲੇ -->
     <string name="settings_speed_units">ਗਤੀ ਦੀਆਂ ਇਕਾਈਆਂ</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">ਟਿਕਾਣੇ ਤੇ ਜਾਓ</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ਚਾਲੂ</string>
-    <string name="map_overdue">ਦੇਰੀ — ਕੋਈ ਤਾਜ਼ਾ ਅੱਪਡੇਟ ਨਹੀਂ ਹੈ</string>
+    <string name="map_overdue">ਦੇਰੀ - ਕੋਈ ਤਾਜ਼ਾ ਅੱਪਡੇਟ ਨਹੀਂ ਹੈ</string>
     <string name="map_stat_last_seen">ਆਖਰੀ ਵਾਰ ਦੇਖਿਆ ਗਿਆ</string>
     <string name="map_stat_battery">ਬੈਟਰੀ</string>
     <string name="map_stat_accuracy">ਸ਼ੁੱਧਤਾ</string>

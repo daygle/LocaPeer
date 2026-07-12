@@ -125,25 +125,25 @@
     <string name="settings_motion_detection_on">ସକ୍ଷମ - ଇତିହାସରେ ଆପଣଙ୍କର ଗତିବିଧି ପ୍ରକାର (ଚାଲିବା, ଡ୍ରାଇଭିଂ) କୁ ପରିଷ୍କାର କରେ</string>
     <string name="settings_motion_detection_off">ବନ୍ଦ - ଅଧିକ ସଠିକ୍ ଗତିବିଧି ଲେବଲ୍ ପାଇଁ ଶାରୀରିକ କାର୍ଯ୍ୟକଳାପ ପ୍ରବେଶକୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="settings_battery_optimization">ବ୍ୟାଟେରୀ ଅପ୍ଟିମାଇଜେସନ୍</string>
-    <string name="settings_battery_optimization_unrestricted">ଅପ୍ରତିବନ୍ଧିତ — LocaPeer ପୃଷ୍ଠଭୂମିରେ ମୁକ୍ତ ଭାବରେ ଚାଲିପାରିବ</string>
-    <string name="settings_battery_optimization_restricted">ଅପ୍ଟିମାଇଜ୍ ହୋଇଛି — ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରେ ଅପ୍ରତିବନ୍ଧିତ ସେଟ୍ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="settings_battery_optimization_unrestricted">ଅପ୍ରତିବନ୍ଧିତ - LocaPeer ପୃଷ୍ଠଭୂମିରେ ମୁକ୍ତ ଭାବରେ ଚାଲିପାରିବ</string>
+    <string name="settings_battery_optimization_restricted">ଅପ୍ଟିମାଇଜ୍ ହୋଇଛି - ସିଷ୍ଟମ୍ ସେଟିଂସମୂହରେ ଅପ୍ରତିବନ୍ଧିତ ସେଟ୍ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
 
     <!-- ଅନୁମତି -->
     <string name="settings_permissions">ଅନୁମତି</string>
     <string name="settings_permissions_subtitle">ସ୍ଥାନ, କ୍ୟାମେରା ଏବଂ ଅନ୍ୟାନ୍ୟ ପାଇଁ ଆପ୍ ପ୍ରବେଶର ସମୀକ୍ଷା ଏବଂ ସମାଧାନ କରନ୍ତୁ</string>
     <string name="permissions_intro">ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରିବାକୁ, ନିମନ୍ତ୍ରଣ ସ୍କାନ କରିବାକୁ ଏବଂ ପୃଷ୍ଠଭୂମିରେ ଚାଲିବାକୁ LocaPeer କୁ ଏହି ଅନୁମତିଗୁଡ଼ିକ ଆବଶ୍ୟକ । ସେଗୁଡ଼ିକୁ ସମାଧାନ କରିବା ପାଇଁ ଯେକୌଣସି ପ୍ରଦାନ କରାଯାଇନଥିବା ଅନୁମତି ଉପରେ ଟ୍ୟାପ୍ କରନ୍ତୁ ।</string>
     <string name="perm_location_title">ସ୍ଥାନ</string>
-    <string name="perm_location_granted">ପ୍ରଦାନ କରାଯାଇଛି — ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରାଯାଇପାରିବ</string>
-    <string name="perm_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ସ୍ଥାନ ପ୍ରବେଶକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_location_granted">ପ୍ରଦାନ କରାଯାଇଛି - ଆପଣଙ୍କ ସ୍ଥାନ ଅଂଶୀଦାର କରାଯାଇପାରିବ</string>
+    <string name="perm_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ - ସ୍ଥାନ ପ୍ରବେଶକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="perm_background_location_title">ପୃଷ୍ଠଭୂମି ସ୍ଥାନ</string>
-    <string name="perm_background_location_granted">ପ୍ରଦାନ କରାଯାଇଛି — ଆପ୍ ବନ୍ଦ ହେଲେ ମଧ୍ୟ ସ୍ଥାନ ଅଂଶୀଦାର ଜାରି ରହେ</string>
-    <string name="perm_background_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ସେଟିଂସମୂହରେ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_background_location_granted">ପ୍ରଦାନ କରାଯାଇଛି - ଆପ୍ ବନ୍ଦ ହେଲେ ମଧ୍ୟ ସ୍ଥାନ ଅଂଶୀଦାର ଜାରି ରହେ</string>
+    <string name="perm_background_location_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ - ସେଟିଂସମୂହରେ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରିବାକୁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="perm_camera_title">କ୍ୟାମେରା</string>
-    <string name="perm_camera_granted">ପ୍ରଦାନ କରାଯାଇଛି — ନିମନ୍ତ୍ରଣ QR କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ</string>
-    <string name="perm_camera_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — କ୍ୟାମେରାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_camera_granted">ପ୍ରଦାନ କରାଯାଇଛି - ନିମନ୍ତ୍ରଣ QR କୋଡ୍ ସ୍କାନ କରିବା ପାଇଁ ବ୍ୟବହୃତ ହୁଏ</string>
+    <string name="perm_camera_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ - କ୍ୟାମେରାକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
     <string name="perm_notifications_title">ବିଜ୍ଞପ୍ତି</string>
-    <string name="perm_notifications_granted">ପ୍ରଦାନ କରାଯାଇଛି — ସତର୍କତା ଏବଂ ସ୍ଥିତି ଅପଡେଟ୍ ଦେଖାଯାଇପାରିବ</string>
-    <string name="perm_notifications_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ — ବିଜ୍ଞପ୍ତିକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
+    <string name="perm_notifications_granted">ପ୍ରଦାନ କରାଯାଇଛି - ସତର୍କତା ଏବଂ ସ୍ଥିତି ଅପଡେଟ୍ ଦେଖାଯାଇପାରିବ</string>
+    <string name="perm_notifications_denied">ପ୍ରଦାନ କରାଯାଇ ନାହିଁ - ବିଜ୍ଞପ୍ତିକୁ ଅନୁମତି ଦେବା ପାଇଁ ଟ୍ୟାପ୍ କରନ୍ତୁ</string>
 
     <!-- ୟୁନିଟ୍ ଏବଂ ପ୍ରଦର୍ଶନ -->
     <string name="settings_speed_units">ଗତି ୟୁନିଟ୍</string>
@@ -506,7 +506,7 @@
     <string name="map_cd_go_location">ସ୍ଥାନକୁ ଯାଆନ୍ତୁ</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ଚାଲୁ ଅଛି</string>
-    <string name="map_overdue">ବିଳମ୍ବିତ — କୌଣସି ସାମ୍ପ୍ରତିକ ଅପଡେଟ୍ ନାହିଁ</string>
+    <string name="map_overdue">ବିଳମ୍ବିତ - କୌଣସି ସାମ୍ପ୍ରତିକ ଅପଡେଟ୍ ନାହିଁ</string>
     <string name="map_stat_last_seen">ଶେଷ ଥର ଦେଖାଯାଇଥିଲା</string>
     <string name="map_stat_battery">ବ୍ୟାଟେରୀ</string>
     <string name="map_stat_accuracy">ସଠିକତା</string>
