@@ -811,11 +811,11 @@
     <string name="chat_tap_to_open_map">Tap to open map</string>
     <!-- Circles (client-side groups) -->
     <string name="circles_title">Circles</string>
-    <string name="circles_new">New circle</string>
-    <string name="circles_new_title">New circle</string>
+    <string name="circles_new">New Circle</string>
+    <string name="circles_new_title">New Circle</string>
     <string name="circles_edit">Edit</string>
-    <string name="circles_edit_title">Edit circle</string>
-    <string name="circles_name_label">Circle name</string>
+    <string name="circles_edit_title">Edit Circle</string>
+    <string name="circles_name_label">Circle Name</string>
     <string name="circles_members_header">Members (%1$d)</string>
     <string name="circles_member_count" tools:ignore="PluralsCandidate">%1$d members</string>
     <string name="circles_no_contacts">Add contacts first, then group them into a circle.</string>
@@ -824,7 +824,7 @@
     <string name="circles_manage_members">Manage members</string>
     <string name="circles_share_location">Share location with circle</string>
     <string name="circles_share_location_desc">Share your live location with everyone in this circle for a set time. Contacts you already share location with start receiving it immediately.</string>
-    <string name="circles_delete">Delete circle</string>
+    <string name="circles_delete">Delete Circle</string>
     <string name="circles_delete_title">Delete circle?</string>
     <string name="circles_delete_message">Delete \"%1$s\" and its group conversation? This only removes it from your device.</string>
     <string name="group_notif_title">%1$s</string>
