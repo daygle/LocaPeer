@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Haske</string>
     <string name="settings_theme_mode">Jigo</string>
     <string name="settings_theme_system">Bi tsarin</string>
+    <string name="chat_preview_file">📎 Fayil</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Abin haɗawa</string>
+    <string name="chat_cd_attach_file">Haɗa fayil</string>
+    <string name="chat_file_tap_to_open">Danna don buɗewa</string>
+    <string name="chat_file_too_large">Fayil ya yi girma sosai (matsakaici 100 KB)</string>
+    <string name="chat_file_unreadable">An kasa karanta wannan fayil</string>
+    <string name="chat_file_no_app">Babu manhaja da za ta iya buɗe wannan fayil</string>
+    <string name="circles_view_members">Duba Mambobi</string>
+    <string name="circles_view_title">Mambobin Da\'ira</string>
+    <string name="circles_owner_only">Mai da\'irar kaɗai ne zai iya sauya mata suna ko canza mambobinta.</string>
+    <string name="circles_owner_label">Mai shi: %1$s</string>
+    <string name="circles_owner_you">Kai</string>
+    <string name="circles_owner_tag">Mai shi</string>
+    <string name="circles_leave">Bar Da\'ira</string>
+    <string name="circles_leave_title">Bar da\'irar?</string>
+    <string name="circles_leave_message">Ka bar \"%1$s\"? Za a sanar da mai shi kuma ya cire ka daga da\'irar.</string>
+    <string name="circles_leave_local">Bar da share a wannan na\'ura</string>
+    <string name="circles_leave_local_sub">Yana cire da\'irar da saƙonninta daga wannan na\'ura. Saƙonnin da ka aika sun kasance a na\'urorin sauran mambobi.</string>
+    <string name="circles_leave_remote">Bar da share ko\'ina</string>
+    <string name="circles_leave_remote_sub">Har ila yau yana share saƙonnin da ka aika daga na\'urorin sauran mambobi.</string>
+    <string name="conv_mark_unread">Yi Alama a matsayin Wanda ba a Karanta ba</string>
 </resources>

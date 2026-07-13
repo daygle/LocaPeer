@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Ronî</string>
     <string name="settings_theme_mode">Mijar</string>
     <string name="settings_theme_system">Li gorî sîstemê</string>
+    <string name="chat_preview_file">📎 Pel</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Pêvek</string>
+    <string name="chat_cd_attach_file">Pel pêve bike</string>
+    <string name="chat_file_tap_to_open">Ji bo vekirinê bitikîne</string>
+    <string name="chat_file_too_large">Pel pir mezin e (herî zêde 100 KB)</string>
+    <string name="chat_file_unreadable">Ew pel nehat xwendin</string>
+    <string name="chat_file_no_app">Tu sepan nikare vê pelê veke</string>
+    <string name="circles_view_members">Endaman bibîne</string>
+    <string name="circles_view_title">Endamên xelekê</string>
+    <string name="circles_owner_only">Tenê xwediyê xelekê dikare navê wê biguhere an endamên wê biguhere.</string>
+    <string name="circles_owner_label">Xwedî: %1$s</string>
+    <string name="circles_owner_you">Tu</string>
+    <string name="circles_owner_tag">Xwedî</string>
+    <string name="circles_leave">Ji xelekê derkeve</string>
+    <string name="circles_leave_title">Ji xelekê derkevî?</string>
+    <string name="circles_leave_message">Ji \"%1$s\" derkevî? Xwedî tê agahdarkirin û te ji xelekê radike.</string>
+    <string name="circles_leave_local">Derkeve û li ser vê amûrê jê bibe</string>
+    <string name="circles_leave_local_sub">Xelekê û peyamên wê ji vê amûrê radike. Peyamên te şandine li ser amûrên endamên din dimînin.</string>
+    <string name="circles_leave_remote">Derkeve û li her derê jê bibe</string>
+    <string name="circles_leave_remote_sub">Peyamên te şandine jî ji amûrên endamên din jê dibe.</string>
+    <string name="conv_mark_unread">Wek nexwendî nîşan bike</string>
 </resources>

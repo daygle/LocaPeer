@@ -820,4 +820,26 @@
     <string name="settings_theme_light">Nwuru anwụ</string>
     <string name="settings_theme_mode">Isiokwu</string>
     <string name="settings_theme_system">Soro sistemụ</string>
+    <string name="chat_preview_file">📎 Faịlụ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Ihe njikọ</string>
+    <string name="chat_cd_attach_file">Jikọọ faịlụ</string>
+    <string name="chat_file_tap_to_open">Pịa iji mepee</string>
+    <string name="chat_file_too_large">Faịlụ buru ibu nke ukwuu (kachasị 100 KB)</string>
+    <string name="chat_file_unreadable">Enweghị ike ịgụ faịlụ ahụ</string>
+    <string name="chat_file_no_app">Ọ dịghị ngwa nwere ike imepe faịlụ a</string>
+    <string name="circles_view_members">Lelee Ndị Otu</string>
+    <string name="circles_view_title">Ndị Otu Gburugburu</string>
+    <string name="circles_owner_only">Naanị onye nwe gburugburu nwere ike ịgbanwe aha ya maọbụ gbanwee ndị otu ya.</string>
+    <string name="circles_owner_label">Onye nwe: %1$s</string>
+    <string name="circles_owner_you">Gị</string>
+    <string name="circles_owner_tag">Onye nwe</string>
+    <string name="circles_leave">Hapụ Gburugburu</string>
+    <string name="circles_leave_title">Hapụ gburugburu?</string>
+    <string name="circles_leave_message">Hapụ \"%1$s\"? A ga-agwa onye nwe ya, ọ ga-ewepụ gị na gburugburu.</string>
+    <string name="circles_leave_local">Hapụ ma hichapụ na ngwaọrụ a</string>
+    <string name="circles_leave_local_sub">Na-ewepụ gburugburu na ozi ya na ngwaọrụ a. Ozi ị zipụrụ na-anọgide na ngwaọrụ ndị otu ndị ọzọ.</string>
+    <string name="circles_leave_remote">Hapụ ma hichapụ ebe niile</string>
+    <string name="circles_leave_remote_sub">Ọ na-ehichapụkwa ozi ị zipụrụ na ngwaọrụ ndị otu ndị ọzọ.</string>
+    <string name="conv_mark_unread">Kaa akara dị ka Agụghị Agụ</string>
 </resources>

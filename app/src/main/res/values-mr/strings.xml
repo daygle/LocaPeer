@@ -835,4 +835,26 @@
     <string name="settings_theme_light">फिकट</string>
     <string name="settings_theme_mode">थीम</string>
     <string name="settings_theme_system">सिस्टमनुसार</string>
+    <string name="chat_preview_file">📎 फाइल</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">जोडपत्र</string>
+    <string name="chat_cd_attach_file">फाइल जोडा</string>
+    <string name="chat_file_tap_to_open">उघडण्यासाठी टॅप करा</string>
+    <string name="chat_file_too_large">फाइल खूप मोठी आहे (कमाल 100 KB)</string>
+    <string name="chat_file_unreadable">ती फाइल वाचता आली नाही</string>
+    <string name="chat_file_no_app">कोणतेही ॲप ही फाइल उघडू शकत नाही</string>
+    <string name="circles_view_members">सदस्य पाहा</string>
+    <string name="circles_view_title">वर्तुळाचे सदस्य</string>
+    <string name="circles_owner_only">वर्तुळाचे नाव बदलणे किंवा त्याचे सदस्य बदलणे फक्त त्याचा मालकच करू शकतो.</string>
+    <string name="circles_owner_label">मालक: %1$s</string>
+    <string name="circles_owner_you">तुम्ही</string>
+    <string name="circles_owner_tag">मालक</string>
+    <string name="circles_leave">वर्तुळ सोडा</string>
+    <string name="circles_leave_title">वर्तुळ सोडायचे?</string>
+    <string name="circles_leave_message">\"%1$s\" सोडायचे? मालकाला सूचित केले जाते आणि तो तुम्हाला वर्तुळातून काढून टाकतो.</string>
+    <string name="circles_leave_local">सोडा आणि या डिव्हाइसवरून हटवा</string>
+    <string name="circles_leave_local_sub">या डिव्हाइसवरून वर्तुळ आणि त्यातील संदेश काढून टाकते. तुम्ही पाठवलेले संदेश इतर सदस्यांच्या डिव्हाइसवर राहतात.</string>
+    <string name="circles_leave_remote">सोडा आणि सर्वत्र हटवा</string>
+    <string name="circles_leave_remote_sub">तुम्ही पाठवलेले संदेश इतर सदस्यांच्या डिव्हाइसवरूनही हटवते.</string>
+    <string name="conv_mark_unread">न वाचलेले म्हणून चिन्हांकित करा</string>
 </resources>

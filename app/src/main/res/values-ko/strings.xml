@@ -820,4 +820,26 @@
     <string name="settings_theme_light">밝은 테마</string>
     <string name="settings_theme_mode">테마</string>
     <string name="settings_theme_system">시스템 설정 따르기</string>
+    <string name="chat_preview_file">📎 파일</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">첨부파일</string>
+    <string name="chat_cd_attach_file">파일 첨부</string>
+    <string name="chat_file_tap_to_open">탭하여 열기</string>
+    <string name="chat_file_too_large">파일이 너무 큽니다(최대 100KB)</string>
+    <string name="chat_file_unreadable">해당 파일을 읽을 수 없습니다</string>
+    <string name="chat_file_no_app">이 파일을 열 수 있는 앱이 없습니다</string>
+    <string name="circles_view_members">멤버 보기</string>
+    <string name="circles_view_title">서클 멤버</string>
+    <string name="circles_owner_only">서클의 이름을 바꾸거나 멤버를 변경할 수 있는 사람은 소유자뿐입니다.</string>
+    <string name="circles_owner_label">소유자: %1$s</string>
+    <string name="circles_owner_you">나</string>
+    <string name="circles_owner_tag">소유자</string>
+    <string name="circles_leave">서클 나가기</string>
+    <string name="circles_leave_title">서클에서 나가시겠어요?</string>
+    <string name="circles_leave_message">\"%1$s\"에서 나가시겠어요? 소유자에게 알림이 전송되고 소유자가 회원님을 서클에서 삭제합니다.</string>
+    <string name="circles_leave_local">나가고 이 기기에서 삭제</string>
+    <string name="circles_leave_local_sub">이 기기에서 서클과 메시지를 삭제합니다. 내가 보낸 메시지는 다른 멤버의 기기에 남아 있습니다.</string>
+    <string name="circles_leave_remote">나가고 모든 기기에서 삭제</string>
+    <string name="circles_leave_remote_sub">내가 보낸 메시지도 다른 멤버의 기기에서 삭제합니다.</string>
+    <string name="conv_mark_unread">읽지 않음으로 표시</string>
 </resources>

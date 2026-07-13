@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Ανοιχτό</string>
     <string name="settings_theme_mode">Θέμα</string>
     <string name="settings_theme_system">Ακολούθησε το σύστημα</string>
+    <string name="chat_preview_file">📎 Αρχείο</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Συνημμένο</string>
+    <string name="chat_cd_attach_file">Επισύναψη αρχείου</string>
+    <string name="chat_file_tap_to_open">Πατήστε για άνοιγμα</string>
+    <string name="chat_file_too_large">Το αρχείο είναι πολύ μεγάλο (μέγ. 100 KB)</string>
+    <string name="chat_file_unreadable">Δεν ήταν δυνατή η ανάγνωση αυτού του αρχείου</string>
+    <string name="chat_file_no_app">Καμία εφαρμογή δεν μπορεί να ανοίξει αυτό το αρχείο</string>
+    <string name="circles_view_members">Προβολή μελών</string>
+    <string name="circles_view_title">Μέλη κύκλου</string>
+    <string name="circles_owner_only">Μόνο ο κάτοχος του κύκλου μπορεί να τον μετονομάσει ή να αλλάξει τα μέλη του.</string>
+    <string name="circles_owner_label">Κάτοχος: %1$s</string>
+    <string name="circles_owner_you">Εσείς</string>
+    <string name="circles_owner_tag">Κάτοχος</string>
+    <string name="circles_leave">Αποχώρηση από τον κύκλο</string>
+    <string name="circles_leave_title">Αποχώρηση από τον κύκλο;</string>
+    <string name="circles_leave_message">Αποχώρηση από τον «%1$s»; Ο κάτοχος ειδοποιείται και σας αφαιρεί από τον κύκλο.</string>
+    <string name="circles_leave_local">Αποχώρηση και διαγραφή σε αυτή τη συσκευή</string>
+    <string name="circles_leave_local_sub">Καταργεί τον κύκλο και τα μηνύματά του από αυτή τη συσκευή. Τα μηνύματα που στείλατε παραμένουν στις συσκευές των άλλων μελών.</string>
+    <string name="circles_leave_remote">Αποχώρηση και διαγραφή παντού</string>
+    <string name="circles_leave_remote_sub">Διαγράφει επίσης τα μηνύματα που στείλατε από τις συσκευές των άλλων μελών.</string>
+    <string name="conv_mark_unread">Επισήμανση ως μη αναγνωσμένο</string>
 </resources>

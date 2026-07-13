@@ -865,4 +865,26 @@
     <string name="settings_theme_light">Světlý</string>
     <string name="settings_theme_mode">Motiv</string>
     <string name="settings_theme_system">Podle systému</string>
+    <string name="chat_preview_file">📎 Soubor</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Příloha</string>
+    <string name="chat_cd_attach_file">Připojit soubor</string>
+    <string name="chat_file_tap_to_open">Klepnutím otevřete</string>
+    <string name="chat_file_too_large">Soubor je příliš velký (max. 100 KB)</string>
+    <string name="chat_file_unreadable">Tento soubor se nepodařilo přečíst</string>
+    <string name="chat_file_no_app">Tento soubor nemůže otevřít žádná aplikace</string>
+    <string name="circles_view_members">Zobrazit členy</string>
+    <string name="circles_view_title">Členové okruhu</string>
+    <string name="circles_owner_only">Pouze vlastník okruhu jej může přejmenovat nebo změnit jeho členy.</string>
+    <string name="circles_owner_label">Vlastník: %1$s</string>
+    <string name="circles_owner_you">Vy</string>
+    <string name="circles_owner_tag">Vlastník</string>
+    <string name="circles_leave">Opustit okruh</string>
+    <string name="circles_leave_title">Opustit okruh?</string>
+    <string name="circles_leave_message">Opustit „%1$s\"? Vlastník bude upozorněn a odebere vás z okruhu.</string>
+    <string name="circles_leave_local">Opustit a smazat v tomto zařízení</string>
+    <string name="circles_leave_local_sub">Odebere okruh a jeho zprávy z tohoto zařízení. Zprávy, které jste odeslali, zůstanou v zařízeních ostatních členů.</string>
+    <string name="circles_leave_remote">Opustit a smazat všude</string>
+    <string name="circles_leave_remote_sub">Smaže také zprávy, které jste odeslali, ze zařízení ostatních členů.</string>
+    <string name="conv_mark_unread">Označit jako nepřečtené</string>
 </resources>

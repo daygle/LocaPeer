@@ -835,4 +835,26 @@
     <string name="settings_theme_light">ਹਲਕਾ</string>
     <string name="settings_theme_mode">ਥੀਮ</string>
     <string name="settings_theme_system">ਸਿਸਟਮ ਅਨੁਸਾਰ</string>
+    <string name="chat_preview_file">📎 ਫ਼ਾਈਲ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ਨੱਥੀ</string>
+    <string name="chat_cd_attach_file">ਫ਼ਾਈਲ ਨੱਥੀ ਕਰੋ</string>
+    <string name="chat_file_tap_to_open">ਖੋਲ੍ਹਣ ਲਈ ਟੈਪ ਕਰੋ</string>
+    <string name="chat_file_too_large">ਫ਼ਾਈਲ ਬਹੁਤ ਵੱਡੀ ਹੈ (ਵੱਧ ਤੋਂ ਵੱਧ 100 KB)</string>
+    <string name="chat_file_unreadable">ਉਹ ਫ਼ਾਈਲ ਪੜ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕੀ</string>
+    <string name="chat_file_no_app">ਕੋਈ ਵੀ ਐਪ ਇਸ ਫ਼ਾਈਲ ਨੂੰ ਨਹੀਂ ਖੋਲ੍ਹ ਸਕਦੀ</string>
+    <string name="circles_view_members">ਮੈਂਬਰ ਦੇਖੋ</string>
+    <string name="circles_view_title">ਸਰਕਲ ਦੇ ਮੈਂਬਰ</string>
+    <string name="circles_owner_only">ਸਰਕਲ ਦਾ ਨਾਂ ਬਦਲਣਾ ਜਾਂ ਇਸ ਦੇ ਮੈਂਬਰ ਬਦਲਣਾ ਸਿਰਫ਼ ਇਸ ਦਾ ਮਾਲਕ ਹੀ ਕਰ ਸਕਦਾ ਹੈ।</string>
+    <string name="circles_owner_label">ਮਾਲਕ: %1$s</string>
+    <string name="circles_owner_you">ਤੁਸੀਂ</string>
+    <string name="circles_owner_tag">ਮਾਲਕ</string>
+    <string name="circles_leave">ਸਰਕਲ ਛੱਡੋ</string>
+    <string name="circles_leave_title">ਸਰਕਲ ਛੱਡਣਾ ਹੈ?</string>
+    <string name="circles_leave_message">\"%1$s\" ਛੱਡਣਾ ਹੈ? ਮਾਲਕ ਨੂੰ ਸੂਚਿਤ ਕੀਤਾ ਜਾਂਦਾ ਹੈ ਅਤੇ ਉਹ ਤੁਹਾਨੂੰ ਸਰਕਲ ਤੋਂ ਹਟਾ ਦਿੰਦਾ ਹੈ।</string>
+    <string name="circles_leave_local">ਛੱਡੋ ਅਤੇ ਇਸ ਡੀਵਾਈਸ ਤੋਂ ਮਿਟਾਓ</string>
+    <string name="circles_leave_local_sub">ਇਸ ਡੀਵਾਈਸ ਤੋਂ ਸਰਕਲ ਅਤੇ ਇਸ ਦੇ ਸੁਨੇਹੇ ਹਟਾ ਦਿੰਦਾ ਹੈ। ਤੁਹਾਡੇ ਭੇਜੇ ਸੁਨੇਹੇ ਹੋਰ ਮੈਂਬਰਾਂ ਦੀਆਂ ਡੀਵਾਈਸਾਂ ਉੱਤੇ ਰਹਿੰਦੇ ਹਨ।</string>
+    <string name="circles_leave_remote">ਛੱਡੋ ਅਤੇ ਹਰ ਥਾਂ ਤੋਂ ਮਿਟਾਓ</string>
+    <string name="circles_leave_remote_sub">ਤੁਹਾਡੇ ਭੇਜੇ ਸੁਨੇਹੇ ਹੋਰ ਮੈਂਬਰਾਂ ਦੀਆਂ ਡੀਵਾਈਸਾਂ ਤੋਂ ਵੀ ਮਿਟਾ ਦਿੰਦਾ ਹੈ।</string>
+    <string name="conv_mark_unread">ਨਾ-ਪੜ੍ਹੇ ਵਜੋਂ ਮਾਰਕ ਕਰੋ</string>
 </resources>

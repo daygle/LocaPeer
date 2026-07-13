@@ -865,4 +865,26 @@
     <string name="settings_theme_light">Jasny</string>
     <string name="settings_theme_mode">Motyw</string>
     <string name="settings_theme_system">Zgodnie z systemem</string>
+    <string name="chat_preview_file">📎 Plik</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Załącznik</string>
+    <string name="chat_cd_attach_file">Załącz plik</string>
+    <string name="chat_file_tap_to_open">Dotknij, aby otworzyć</string>
+    <string name="chat_file_too_large">Plik jest za duży (maks. 100 KB)</string>
+    <string name="chat_file_unreadable">Nie udało się odczytać tego pliku</string>
+    <string name="chat_file_no_app">Żadna aplikacja nie może otworzyć tego pliku</string>
+    <string name="circles_view_members">Zobacz członków</string>
+    <string name="circles_view_title">Członkowie kręgu</string>
+    <string name="circles_owner_only">Tylko właściciel kręgu może zmienić jego nazwę lub jego członków.</string>
+    <string name="circles_owner_label">Właściciel: %1$s</string>
+    <string name="circles_owner_you">Ty</string>
+    <string name="circles_owner_tag">Właściciel</string>
+    <string name="circles_leave">Opuść krąg</string>
+    <string name="circles_leave_title">Opuścić krąg?</string>
+    <string name="circles_leave_message">Opuścić „%1$s\"? Właściciel zostanie powiadomiony i usunie Cię z kręgu.</string>
+    <string name="circles_leave_local">Opuść i usuń na tym urządzeniu</string>
+    <string name="circles_leave_local_sub">Usuwa krąg i jego wiadomości z tego urządzenia. Wysłane przez Ciebie wiadomości pozostaną na urządzeniach innych członków.</string>
+    <string name="circles_leave_remote">Opuść i usuń wszędzie</string>
+    <string name="circles_leave_remote_sub">Usuwa też wysłane przez Ciebie wiadomości z urządzeń innych członków.</string>
+    <string name="conv_mark_unread">Oznacz jako nieprzeczytane</string>
 </resources>

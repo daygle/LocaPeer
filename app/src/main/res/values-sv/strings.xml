@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Ljust</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Följ systemet</string>
+    <string name="chat_preview_file">📎 Fil</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Bilaga</string>
+    <string name="chat_cd_attach_file">Bifoga fil</string>
+    <string name="chat_file_tap_to_open">Tryck för att öppna</string>
+    <string name="chat_file_too_large">Filen är för stor (max 100 KB)</string>
+    <string name="chat_file_unreadable">Det gick inte att läsa filen</string>
+    <string name="chat_file_no_app">Ingen app kan öppna den här filen</string>
+    <string name="circles_view_members">Visa medlemmar</string>
+    <string name="circles_view_title">Cirkelns medlemmar</string>
+    <string name="circles_owner_only">Endast cirkelns ägare kan byta namn på den eller ändra dess medlemmar.</string>
+    <string name="circles_owner_label">Ägare: %1$s</string>
+    <string name="circles_owner_you">Du</string>
+    <string name="circles_owner_tag">Ägare</string>
+    <string name="circles_leave">Lämna cirkeln</string>
+    <string name="circles_leave_title">Lämna cirkeln?</string>
+    <string name="circles_leave_message">Lämna \"%1$s\"? Ägaren meddelas och tar bort dig från cirkeln.</string>
+    <string name="circles_leave_local">Lämna och radera på den här enheten</string>
+    <string name="circles_leave_local_sub">Tar bort cirkeln och dess meddelanden från den här enheten. Meddelanden du skickat finns kvar på övriga medlemmars enheter.</string>
+    <string name="circles_leave_remote">Lämna och radera överallt</string>
+    <string name="circles_leave_remote_sub">Raderar även meddelanden du skickat från de andra medlemmarnas enheter.</string>
+    <string name="conv_mark_unread">Markera som oläst</string>
 </resources>

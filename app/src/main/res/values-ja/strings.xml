@@ -819,4 +819,26 @@
     <string name="settings_theme_light">ライト</string>
     <string name="settings_theme_mode">テーマ</string>
     <string name="settings_theme_system">システムに従う</string>
+    <string name="chat_preview_file">📎 ファイル</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">添付ファイル</string>
+    <string name="chat_cd_attach_file">ファイルを添付</string>
+    <string name="chat_file_tap_to_open">タップして開く</string>
+    <string name="chat_file_too_large">ファイルが大きすぎます（最大 100 KB）</string>
+    <string name="chat_file_unreadable">そのファイルを読み取れませんでした</string>
+    <string name="chat_file_no_app">このファイルを開けるアプリがありません</string>
+    <string name="circles_view_members">メンバーを表示</string>
+    <string name="circles_view_title">サークルのメンバー</string>
+    <string name="circles_owner_only">サークルの名前変更やメンバーの変更ができるのはオーナーだけです。</string>
+    <string name="circles_owner_label">オーナー: %1$s</string>
+    <string name="circles_owner_you">あなた</string>
+    <string name="circles_owner_tag">オーナー</string>
+    <string name="circles_leave">サークルを退出</string>
+    <string name="circles_leave_title">サークルを退出しますか？</string>
+    <string name="circles_leave_message">「%1$s」を退出しますか？オーナーに通知され、あなたはサークルから削除されます。</string>
+    <string name="circles_leave_local">退出してこの端末から削除</string>
+    <string name="circles_leave_local_sub">この端末からサークルとそのメッセージを削除します。あなたが送信したメッセージは他のメンバーの端末に残ります。</string>
+    <string name="circles_leave_remote">退出してすべての端末から削除</string>
+    <string name="circles_leave_remote_sub">あなたが送信したメッセージを他のメンバーの端末からも削除します。</string>
+    <string name="conv_mark_unread">未読にする</string>
 </resources>

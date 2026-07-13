@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Ifaa</string>
     <string name="settings_theme_mode">Themii</string>
     <string name="settings_theme_system">Sirna hordofi</string>
+    <string name="chat_preview_file">📎 Faayilii</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Maxxansaa</string>
+    <string name="chat_cd_attach_file">Faayilii maxxansi</string>
+    <string name="chat_file_tap_to_open">Banuuf tuqi</string>
+    <string name="chat_file_too_large">Faayiliin baay\'ee guddaadha (ol\'aanaa 100 KB)</string>
+    <string name="chat_file_unreadable">Faayilii sana dubbisuun hin danda\'amne</string>
+    <string name="chat_file_no_app">Aappiin faayilii kana banuu danda\'u hin jiru</string>
+    <string name="circles_view_members">Miseensota Ilaali</string>
+    <string name="circles_view_title">Miseensota Geengoo</string>
+    <string name="circles_owner_only">Maqaa geengoo jijjiiruu yookaan miseensota isaa jijjiiruu kan danda\'u abbaa isaa qofa.</string>
+    <string name="circles_owner_label">Abbaa: %1$s</string>
+    <string name="circles_owner_you">Ati</string>
+    <string name="circles_owner_tag">Abbaa</string>
+    <string name="circles_leave">Geengoo Gadhiisi</string>
+    <string name="circles_leave_title">Geengoo gadhiiftaa?</string>
+    <string name="circles_leave_message">\"%1$s\" gadhiiftaa? Abbaan ni beeksifama, geengoo irraas si baasa.</string>
+    <string name="circles_leave_local">Gadhiisiitii meeshaa kana irraa haqi</string>
+    <string name="circles_leave_local_sub">Geengoo fi ergaawwan isaa meeshaa kana irraa haqa. Ergaawwan ati ergite meeshaalee miseensota kaanii irra turu.</string>
+    <string name="circles_leave_remote">Gadhiisiitii bakka hunda irraa haqi</string>
+    <string name="circles_leave_remote_sub">Akkasumas ergaawwan ati ergite meeshaalee miseensota kaanii irraa haqa.</string>
+    <string name="conv_mark_unread">Kan hin dubbifamne jedhii mallattoo godhi</string>
 </resources>

@@ -819,4 +819,26 @@
     <string name="settings_theme_light">浅色</string>
     <string name="settings_theme_mode">主题</string>
     <string name="settings_theme_system">跟随系统</string>
+    <string name="chat_preview_file">📎 文件</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">附件</string>
+    <string name="chat_cd_attach_file">添加文件</string>
+    <string name="chat_file_tap_to_open">点按以打开</string>
+    <string name="chat_file_too_large">文件太大（最大 100 KB）</string>
+    <string name="chat_file_unreadable">无法读取该文件</string>
+    <string name="chat_file_no_app">没有应用可以打开此文件</string>
+    <string name="circles_view_members">查看成员</string>
+    <string name="circles_view_title">圈子成员</string>
+    <string name="circles_owner_only">只有圈子的所有者才能重命名圈子或更改其成员。</string>
+    <string name="circles_owner_label">所有者：%1$s</string>
+    <string name="circles_owner_you">你</string>
+    <string name="circles_owner_tag">所有者</string>
+    <string name="circles_leave">退出圈子</string>
+    <string name="circles_leave_title">退出圈子？</string>
+    <string name="circles_leave_message">退出\"%1$s\"？将通知所有者并将你移出圈子。</string>
+    <string name="circles_leave_local">退出并在此设备上删除</string>
+    <string name="circles_leave_local_sub">从此设备移除圈子及其消息。你发送的消息仍保留在其他成员的设备上。</string>
+    <string name="circles_leave_remote">退出并在所有设备上删除</string>
+    <string name="circles_leave_remote_sub">同时从其他成员的设备上删除你发送的消息。</string>
+    <string name="conv_mark_unread">标记为未读</string>
 </resources>

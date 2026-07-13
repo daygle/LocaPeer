@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Világos</string>
     <string name="settings_theme_mode">Téma</string>
     <string name="settings_theme_system">Rendszer szerint</string>
+    <string name="chat_preview_file">📎 Fájl</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Melléklet</string>
+    <string name="chat_cd_attach_file">Fájl csatolása</string>
+    <string name="chat_file_tap_to_open">Koppintson a megnyitáshoz</string>
+    <string name="chat_file_too_large">A fájl túl nagy (max. 100 KB)</string>
+    <string name="chat_file_unreadable">Nem sikerült beolvasni a fájlt</string>
+    <string name="chat_file_no_app">Egyetlen alkalmazás sem tudja megnyitni ezt a fájlt</string>
+    <string name="circles_view_members">Tagok megtekintése</string>
+    <string name="circles_view_title">Kör tagjai</string>
+    <string name="circles_owner_only">Csak a kör tulajdonosa nevezheti át, vagy módosíthatja a tagjait.</string>
+    <string name="circles_owner_label">Tulajdonos: %1$s</string>
+    <string name="circles_owner_you">Ön</string>
+    <string name="circles_owner_tag">Tulajdonos</string>
+    <string name="circles_leave">Kör elhagyása</string>
+    <string name="circles_leave_title">Elhagyja a kört?</string>
+    <string name="circles_leave_message">Elhagyja a(z) „%1$s\" kört? A tulajdonos értesítést kap, és eltávolítja Önt a körből.</string>
+    <string name="circles_leave_local">Elhagyás és törlés ezen az eszközön</string>
+    <string name="circles_leave_local_sub">Eltávolítja a kört és üzeneteit erről az eszközről. Az elküldött üzenetei a többi tag eszközén maradnak.</string>
+    <string name="circles_leave_remote">Elhagyás és törlés mindenhol</string>
+    <string name="circles_leave_remote_sub">Törli az elküldött üzeneteit a többi tag eszközéről is.</string>
+    <string name="conv_mark_unread">Megjelölés olvasatlanként</string>
 </resources>

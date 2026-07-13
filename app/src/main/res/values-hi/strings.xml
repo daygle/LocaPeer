@@ -835,4 +835,26 @@
     <string name="settings_theme_light">हल्का</string>
     <string name="settings_theme_mode">थीम</string>
     <string name="settings_theme_system">सिस्टम के अनुसार</string>
+    <string name="chat_preview_file">📎 फ़ाइल</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">अटैचमेंट</string>
+    <string name="chat_cd_attach_file">फ़ाइल अटैच करें</string>
+    <string name="chat_file_tap_to_open">खोलने के लिए टैप करें</string>
+    <string name="chat_file_too_large">फ़ाइल बहुत बड़ी है (अधिकतम 100 KB)</string>
+    <string name="chat_file_unreadable">वह फ़ाइल पढ़ी नहीं जा सकी</string>
+    <string name="chat_file_no_app">कोई भी ऐप इस फ़ाइल को नहीं खोल सकता</string>
+    <string name="circles_view_members">सदस्य देखें</string>
+    <string name="circles_view_title">सर्कल के सदस्य</string>
+    <string name="circles_owner_only">केवल सर्कल का मालिक ही इसका नाम बदल सकता है या इसके सदस्यों को बदल सकता है.</string>
+    <string name="circles_owner_label">मालिक: %1$s</string>
+    <string name="circles_owner_you">आप</string>
+    <string name="circles_owner_tag">मालिक</string>
+    <string name="circles_leave">सर्कल छोड़ें</string>
+    <string name="circles_leave_title">सर्कल छोड़ें?</string>
+    <string name="circles_leave_message">\"%1$s\" छोड़ें? मालिक को सूचित किया जाता है और वह आपको सर्कल से हटा देता है.</string>
+    <string name="circles_leave_local">छोड़ें और इस डिवाइस से हटाएँ</string>
+    <string name="circles_leave_local_sub">इस डिवाइस से सर्कल और उसके संदेश हटा देता है. आपके भेजे गए संदेश अन्य सदस्यों के डिवाइस पर बने रहते हैं.</string>
+    <string name="circles_leave_remote">छोड़ें और हर जगह से हटाएँ</string>
+    <string name="circles_leave_remote_sub">आपके भेजे गए संदेशों को अन्य सदस्यों के डिवाइस से भी हटा देता है.</string>
+    <string name="conv_mark_unread">अपठित के रूप में चिह्नित करें</string>
 </resources>

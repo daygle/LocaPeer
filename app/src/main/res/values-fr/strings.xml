@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Clair</string>
     <string name="settings_theme_mode">Thème</string>
     <string name="settings_theme_system">Suivre le système</string>
+    <string name="chat_preview_file">📎 Fichier</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Pièce jointe</string>
+    <string name="chat_cd_attach_file">Joindre un fichier</string>
+    <string name="chat_file_tap_to_open">Appuyez pour ouvrir</string>
+    <string name="chat_file_too_large">Le fichier est trop volumineux (max. 100 Ko)</string>
+    <string name="chat_file_unreadable">Impossible de lire ce fichier</string>
+    <string name="chat_file_no_app">Aucune application ne peut ouvrir ce fichier</string>
+    <string name="circles_view_members">Voir les membres</string>
+    <string name="circles_view_title">Membres du cercle</string>
+    <string name="circles_owner_only">Seul le propriétaire du cercle peut le renommer ou modifier ses membres.</string>
+    <string name="circles_owner_label">Propriétaire : %1$s</string>
+    <string name="circles_owner_you">Vous</string>
+    <string name="circles_owner_tag">Propriétaire</string>
+    <string name="circles_leave">Quitter le cercle</string>
+    <string name="circles_leave_title">Quitter le cercle ?</string>
+    <string name="circles_leave_message">Quitter « %1$s » ? Le propriétaire est notifié et vous retire du cercle.</string>
+    <string name="circles_leave_local">Quitter et supprimer sur cet appareil</string>
+    <string name="circles_leave_local_sub">Supprime le cercle et ses messages de cet appareil. Les messages que vous avez envoyés restent sur les appareils des autres membres.</string>
+    <string name="circles_leave_remote">Quitter et supprimer partout</string>
+    <string name="circles_leave_remote_sub">Supprime aussi les messages que vous avez envoyés des appareils des autres membres.</string>
+    <string name="conv_mark_unread">Marquer comme non lu</string>
 </resources>

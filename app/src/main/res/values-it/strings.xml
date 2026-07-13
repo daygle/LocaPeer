@@ -834,4 +834,26 @@
     <string name="settings_theme_light">Chiaro</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Segui il sistema</string>
+    <string name="chat_preview_file">📎 File</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Allegato</string>
+    <string name="chat_cd_attach_file">Allega file</string>
+    <string name="chat_file_tap_to_open">Tocca per aprire</string>
+    <string name="chat_file_too_large">Il file è troppo grande (max 100 KB)</string>
+    <string name="chat_file_unreadable">Impossibile leggere il file</string>
+    <string name="chat_file_no_app">Nessuna app può aprire questo file</string>
+    <string name="circles_view_members">Visualizza membri</string>
+    <string name="circles_view_title">Membri della cerchia</string>
+    <string name="circles_owner_only">Solo il proprietario della cerchia può rinominarla o modificarne i membri.</string>
+    <string name="circles_owner_label">Proprietario: %1$s</string>
+    <string name="circles_owner_you">Tu</string>
+    <string name="circles_owner_tag">Proprietario</string>
+    <string name="circles_leave">Abbandona la cerchia</string>
+    <string name="circles_leave_title">Abbandonare la cerchia?</string>
+    <string name="circles_leave_message">Abbandonare \"%1$s\"? Il proprietario viene avvisato e ti rimuove dalla cerchia.</string>
+    <string name="circles_leave_local">Abbandona ed elimina su questo dispositivo</string>
+    <string name="circles_leave_local_sub">Rimuove la cerchia e i suoi messaggi da questo dispositivo. I messaggi che hai inviato restano sui dispositivi degli altri membri.</string>
+    <string name="circles_leave_remote">Abbandona ed elimina ovunque</string>
+    <string name="circles_leave_remote_sub">Elimina anche i messaggi che hai inviato dai dispositivi degli altri membri.</string>
+    <string name="conv_mark_unread">Segna come non letto</string>
 </resources>

@@ -835,4 +835,26 @@
     <string name="settings_theme_light">Açık</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Sistemi izle</string>
+    <string name="chat_preview_file">📎 Dosya</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Ek</string>
+    <string name="chat_cd_attach_file">Dosya ekle</string>
+    <string name="chat_file_tap_to_open">Açmak için dokunun</string>
+    <string name="chat_file_too_large">Dosya çok büyük (en fazla 100 KB)</string>
+    <string name="chat_file_unreadable">Bu dosya okunamadı</string>
+    <string name="chat_file_no_app">Bu dosyayı hiçbir uygulama açamıyor</string>
+    <string name="circles_view_members">Üyeleri görüntüle</string>
+    <string name="circles_view_title">Çember üyeleri</string>
+    <string name="circles_owner_only">Çemberi yalnızca sahibi yeniden adlandırabilir veya üyelerini değiştirebilir.</string>
+    <string name="circles_owner_label">Sahibi: %1$s</string>
+    <string name="circles_owner_you">Siz</string>
+    <string name="circles_owner_tag">Sahibi</string>
+    <string name="circles_leave">Çemberden ayrıl</string>
+    <string name="circles_leave_title">Çemberden ayrılınsın mı?</string>
+    <string name="circles_leave_message">\"%1$s\" çemberinden ayrılınsın mı? Sahibi bilgilendirilir ve sizi çemberden çıkarır.</string>
+    <string name="circles_leave_local">Ayrıl ve bu cihazdan sil</string>
+    <string name="circles_leave_local_sub">Çemberi ve mesajlarını bu cihazdan kaldırır. Gönderdiğiniz mesajlar diğer üyelerin cihazlarında kalır.</string>
+    <string name="circles_leave_remote">Ayrıl ve her yerden sil</string>
+    <string name="circles_leave_remote_sub">Gönderdiğiniz mesajları diğer üyelerin cihazlarından da siler.</string>
+    <string name="conv_mark_unread">Okunmadı olarak işaretle</string>
 </resources>

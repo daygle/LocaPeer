@@ -850,4 +850,26 @@
     <string name="settings_theme_light">Luminos</string>
     <string name="settings_theme_mode">Temă</string>
     <string name="settings_theme_system">Urmează sistemul</string>
+    <string name="chat_preview_file">📎 Fișier</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Atașament</string>
+    <string name="chat_cd_attach_file">Atașează fișier</string>
+    <string name="chat_file_tap_to_open">Atinge pentru a deschide</string>
+    <string name="chat_file_too_large">Fișierul este prea mare (max. 100 KB)</string>
+    <string name="chat_file_unreadable">Nu s-a putut citi acel fișier</string>
+    <string name="chat_file_no_app">Nicio aplicație nu poate deschide acest fișier</string>
+    <string name="circles_view_members">Vezi membrii</string>
+    <string name="circles_view_title">Membrii cercului</string>
+    <string name="circles_owner_only">Doar proprietarul cercului îl poate redenumi sau îi poate modifica membrii.</string>
+    <string name="circles_owner_label">Proprietar: %1$s</string>
+    <string name="circles_owner_you">Tu</string>
+    <string name="circles_owner_tag">Proprietar</string>
+    <string name="circles_leave">Părăsește cercul</string>
+    <string name="circles_leave_title">Părăsești cercul?</string>
+    <string name="circles_leave_message">Părăsești „%1$s\"? Proprietarul este notificat și te elimină din cerc.</string>
+    <string name="circles_leave_local">Părăsește și șterge de pe acest dispozitiv</string>
+    <string name="circles_leave_local_sub">Elimină cercul și mesajele sale de pe acest dispozitiv. Mesajele trimise de tine rămân pe dispozitivele celorlalți membri.</string>
+    <string name="circles_leave_remote">Părăsește și șterge peste tot</string>
+    <string name="circles_leave_remote_sub">Șterge și mesajele trimise de tine de pe dispozitivele celorlalți membri.</string>
+    <string name="conv_mark_unread">Marchează ca necitit</string>
 </resources>

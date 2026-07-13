@@ -820,4 +820,26 @@
     <string name="settings_theme_light">အလင်း</string>
     <string name="settings_theme_mode">အပြင်အဆင်</string>
     <string name="settings_theme_system">စနစ်အတိုင်း</string>
+    <string name="chat_preview_file">📎 ဖိုင်</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ပူးတွဲဖိုင်</string>
+    <string name="chat_cd_attach_file">ဖိုင်တွဲရန်</string>
+    <string name="chat_file_tap_to_open">ဖွင့်ရန် တို့ပါ</string>
+    <string name="chat_file_too_large">ဖိုင်အရွယ်ကြီးလွန်းသည် (အများဆုံး 100 KB)</string>
+    <string name="chat_file_unreadable">ထိုဖိုင်ကို ဖတ်၍မရပါ</string>
+    <string name="chat_file_no_app">ဤဖိုင်ကို ဖွင့်နိုင်သည့် အက်ပ်မရှိပါ</string>
+    <string name="circles_view_members">အဖွဲ့ဝင်များ ကြည့်ရန်</string>
+    <string name="circles_view_title">စက်ဝိုင်းအဖွဲ့ဝင်များ</string>
+    <string name="circles_owner_only">စက်ဝိုင်း၏ အမည်ပြောင်းခြင်း သို့မဟုတ် အဖွဲ့ဝင်များ ပြောင်းလဲခြင်းကို ပိုင်ရှင်သာ ပြုလုပ်နိုင်သည်။</string>
+    <string name="circles_owner_label">ပိုင်ရှင်- %1$s</string>
+    <string name="circles_owner_you">သင်</string>
+    <string name="circles_owner_tag">ပိုင်ရှင်</string>
+    <string name="circles_leave">စက်ဝိုင်းမှ ထွက်ရန်</string>
+    <string name="circles_leave_title">စက်ဝိုင်းမှ ထွက်မလား။</string>
+    <string name="circles_leave_message">\"%1$s\" မှ ထွက်မလား။ ပိုင်ရှင်ကို အကြောင်းကြားပြီး သင့်ကို စက်ဝိုင်းမှ ဖယ်ရှားပါမည်။</string>
+    <string name="circles_leave_local">ထွက်ပြီး ဤစက်တွင် ဖျက်ရန်</string>
+    <string name="circles_leave_local_sub">ဤစက်မှ စက်ဝိုင်းနှင့် ၎င်း၏မက်ဆေ့ဂျ်များကို ဖယ်ရှားသည်။ သင်ပို့ခဲ့သော မက်ဆေ့ဂျ်များသည် အခြားအဖွဲ့ဝင်များ၏ စက်များတွင် ကျန်ရှိနေမည်။</string>
+    <string name="circles_leave_remote">ထွက်ပြီး နေရာတိုင်းတွင် ဖျက်ရန်</string>
+    <string name="circles_leave_remote_sub">သင်ပို့ခဲ့သော မက်ဆေ့ဂျ်များကိုလည်း အခြားအဖွဲ့ဝင်များ၏ စက်များမှ ဖျက်ပါမည်။</string>
+    <string name="conv_mark_unread">မဖတ်ရသေးဟု မှတ်သားရန်</string>
 </resources>

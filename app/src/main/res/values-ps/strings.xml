@@ -835,4 +835,26 @@
     <string name="settings_theme_light">روښانه</string>
     <string name="settings_theme_mode">تیم</string>
     <string name="settings_theme_system">سسٹم کے مطابق</string>
+    <string name="chat_preview_file">📎 دوتنه</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ضمیمه</string>
+    <string name="chat_cd_attach_file">دوتنه ضمیمه کړئ</string>
+    <string name="chat_file_tap_to_open">د پرانیستلو لپاره ټک ووهئ</string>
+    <string name="chat_file_too_large">دوتنه ډېره لویه ده (تر ۱۰۰ KB)</string>
+    <string name="chat_file_unreadable">دا دوتنه لوستل ونشول</string>
+    <string name="chat_file_no_app">هیڅ اپلیکیشن دا دوتنه نشي پرانیستلی</string>
+    <string name="circles_view_members">غړي وګورئ</string>
+    <string name="circles_view_title">د حلقې غړي</string>
+    <string name="circles_owner_only">یوازې د حلقې مالک کولی شي هغه بیانوموي یا د هغې غړي بدل کړي.</string>
+    <string name="circles_owner_label">مالک: %1$s</string>
+    <string name="circles_owner_you">تاسو</string>
+    <string name="circles_owner_tag">مالک</string>
+    <string name="circles_leave">حلقه پرېږدئ</string>
+    <string name="circles_leave_title">حلقه پرېږدئ؟</string>
+    <string name="circles_leave_message">\"%1$s\" پرېږدئ؟ مالک ته خبر ورکول کیږي او تاسو له حلقې لرې کوي.</string>
+    <string name="circles_leave_local">پرېښودل او پدې وسیله کې ړنګول</string>
+    <string name="circles_leave_local_sub">حلقه او د هغې پیغامونه له دې وسیلې لرې کوي. ستاسو لیږل شوي پیغامونه د نورو غړو په وسیلو کې پاتې کیږي.</string>
+    <string name="circles_leave_remote">پرېښودل او هر ځای ړنګول</string>
+    <string name="circles_leave_remote_sub">ستاسو لیږل شوي پیغامونه هم د نورو غړو له وسیلو ړنګوي.</string>
+    <string name="conv_mark_unread">د نالوستلي په توګه نښه کړئ</string>
 </resources>

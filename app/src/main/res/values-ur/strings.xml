@@ -835,4 +835,26 @@
     <string name="settings_theme_light">ہلکا</string>
     <string name="settings_theme_mode">تھیم</string>
     <string name="settings_theme_system">سسٹم کے مطابق</string>
+    <string name="chat_preview_file">📎 فائل</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">منسلکہ</string>
+    <string name="chat_cd_attach_file">فائل منسلک کریں</string>
+    <string name="chat_file_tap_to_open">کھولنے کے لیے تھپتھپائیں</string>
+    <string name="chat_file_too_large">فائل بہت بڑی ہے (زیادہ سے زیادہ 100 KB)</string>
+    <string name="chat_file_unreadable">وہ فائل پڑھی نہیں جا سکی</string>
+    <string name="chat_file_no_app">کوئی ایپ اس فائل کو نہیں کھول سکتی</string>
+    <string name="circles_view_members">اراکین دیکھیں</string>
+    <string name="circles_view_title">حلقے کے اراکین</string>
+    <string name="circles_owner_only">صرف حلقے کا مالک اس کا نام بدل سکتا ہے یا اس کے اراکین تبدیل کر سکتا ہے۔</string>
+    <string name="circles_owner_label">مالک: %1$s</string>
+    <string name="circles_owner_you">آپ</string>
+    <string name="circles_owner_tag">مالک</string>
+    <string name="circles_leave">حلقہ چھوڑیں</string>
+    <string name="circles_leave_title">حلقہ چھوڑیں؟</string>
+    <string name="circles_leave_message">\"%1$s\" چھوڑیں؟ مالک کو مطلع کیا جاتا ہے اور وہ آپ کو حلقے سے ہٹا دیتا ہے۔</string>
+    <string name="circles_leave_local">چھوڑیں اور اس آلے سے حذف کریں</string>
+    <string name="circles_leave_local_sub">اس آلے سے حلقہ اور اس کے پیغامات ہٹا دیتا ہے۔ آپ کے بھیجے گئے پیغامات دیگر اراکین کے آلات پر رہتے ہیں۔</string>
+    <string name="circles_leave_remote">چھوڑیں اور ہر جگہ سے حذف کریں</string>
+    <string name="circles_leave_remote_sub">آپ کے بھیجے گئے پیغامات دیگر اراکین کے آلات سے بھی حذف کرتا ہے۔</string>
+    <string name="conv_mark_unread">غیر پڑھا ہوا نشان زد کریں</string>
 </resources>

@@ -820,4 +820,26 @@
     <string name="settings_theme_light">Sáng</string>
     <string name="settings_theme_mode">Giao diện</string>
     <string name="settings_theme_system">Theo hệ thống</string>
+    <string name="chat_preview_file">📎 Tệp</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Tệp đính kèm</string>
+    <string name="chat_cd_attach_file">Đính kèm tệp</string>
+    <string name="chat_file_tap_to_open">Nhấn để mở</string>
+    <string name="chat_file_too_large">Tệp quá lớn (tối đa 100 KB)</string>
+    <string name="chat_file_unreadable">Không thể đọc tệp đó</string>
+    <string name="chat_file_no_app">Không có ứng dụng nào có thể mở tệp này</string>
+    <string name="circles_view_members">Xem thành viên</string>
+    <string name="circles_view_title">Thành viên vòng kết nối</string>
+    <string name="circles_owner_only">Chỉ chủ sở hữu vòng kết nối mới có thể đổi tên hoặc thay đổi thành viên của vòng.</string>
+    <string name="circles_owner_label">Chủ sở hữu: %1$s</string>
+    <string name="circles_owner_you">Bạn</string>
+    <string name="circles_owner_tag">Chủ sở hữu</string>
+    <string name="circles_leave">Rời vòng kết nối</string>
+    <string name="circles_leave_title">Rời vòng kết nối?</string>
+    <string name="circles_leave_message">Rời \"%1$s\"? Chủ sở hữu sẽ được thông báo và xóa bạn khỏi vòng kết nối.</string>
+    <string name="circles_leave_local">Rời và xóa trên thiết bị này</string>
+    <string name="circles_leave_local_sub">Xóa vòng kết nối và tin nhắn của nó khỏi thiết bị này. Tin nhắn bạn đã gửi vẫn còn trên thiết bị của các thành viên khác.</string>
+    <string name="circles_leave_remote">Rời và xóa ở mọi nơi</string>
+    <string name="circles_leave_remote_sub">Đồng thời xóa các tin nhắn bạn đã gửi khỏi thiết bị của các thành viên khác.</string>
+    <string name="conv_mark_unread">Đánh dấu là chưa đọc</string>
 </resources>

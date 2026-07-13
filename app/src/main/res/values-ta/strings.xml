@@ -835,4 +835,26 @@
     <string name="settings_theme_light">ஒளி</string>
     <string name="settings_theme_mode">தீம்</string>
     <string name="settings_theme_system">சாதனத்தைப் பின்பற்று</string>
+    <string name="chat_preview_file">📎 கோப்பு</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">இணைப்பு</string>
+    <string name="chat_cd_attach_file">கோப்பை இணைக்கவும்</string>
+    <string name="chat_file_tap_to_open">திறக்க தட்டவும்</string>
+    <string name="chat_file_too_large">கோப்பு மிகப் பெரியது (அதிகபட்சம் 100 KB)</string>
+    <string name="chat_file_unreadable">அந்தக் கோப்பைப் படிக்க முடியவில்லை</string>
+    <string name="chat_file_no_app">இந்தக் கோப்பை எந்த ஆப்ஸாலும் திறக்க முடியாது</string>
+    <string name="circles_view_members">உறுப்பினர்களைப் பார்</string>
+    <string name="circles_view_title">வட்ட உறுப்பினர்கள்</string>
+    <string name="circles_owner_only">வட்டத்தின் பெயரை மாற்றவோ அதன் உறுப்பினர்களை மாற்றவோ உரிமையாளரால் மட்டுமே முடியும்.</string>
+    <string name="circles_owner_label">உரிமையாளர்: %1$s</string>
+    <string name="circles_owner_you">நீங்கள்</string>
+    <string name="circles_owner_tag">உரிமையாளர்</string>
+    <string name="circles_leave">வட்டத்தை விட்டு வெளியேறு</string>
+    <string name="circles_leave_title">வட்டத்தை விட்டு வெளியேறவா?</string>
+    <string name="circles_leave_message">\"%1$s\"-ஐ விட்டு வெளியேறவா? உரிமையாளருக்குத் தெரிவிக்கப்பட்டு, அவர் உங்களை வட்டத்திலிருந்து அகற்றுவார்.</string>
+    <string name="circles_leave_local">வெளியேறி இந்தச் சாதனத்திலிருந்து நீக்கு</string>
+    <string name="circles_leave_local_sub">இந்தச் சாதனத்திலிருந்து வட்டத்தையும் அதன் செய்திகளையும் அகற்றும். நீங்கள் அனுப்பிய செய்திகள் மற்ற உறுப்பினர்களின் சாதனங்களில் இருக்கும்.</string>
+    <string name="circles_leave_remote">வெளியேறி எல்லா இடங்களிலிருந்தும் நீக்கு</string>
+    <string name="circles_leave_remote_sub">நீங்கள் அனுப்பிய செய்திகளையும் மற்ற உறுப்பினர்களின் சாதனங்களிலிருந்து நீக்கும்.</string>
+    <string name="conv_mark_unread">படிக்காததாகக் குறி</string>
 </resources>

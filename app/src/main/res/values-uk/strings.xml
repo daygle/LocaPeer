@@ -865,4 +865,26 @@
     <string name="settings_theme_light">Світла</string>
     <string name="settings_theme_mode">Тема</string>
     <string name="settings_theme_system">Як у системі</string>
+    <string name="chat_preview_file">📎 Файл</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Вкладення</string>
+    <string name="chat_cd_attach_file">Прикріпити файл</string>
+    <string name="chat_file_tap_to_open">Торкніться, щоб відкрити</string>
+    <string name="chat_file_too_large">Файл занадто великий (макс. 100 КБ)</string>
+    <string name="chat_file_unreadable">Не вдалося прочитати цей файл</string>
+    <string name="chat_file_no_app">Немає застосунку для відкриття цього файлу</string>
+    <string name="circles_view_members">Переглянути учасників</string>
+    <string name="circles_view_title">Учасники кола</string>
+    <string name="circles_owner_only">Лише власник кола може перейменувати його або змінити його учасників.</string>
+    <string name="circles_owner_label">Власник: %1$s</string>
+    <string name="circles_owner_you">Ви</string>
+    <string name="circles_owner_tag">Власник</string>
+    <string name="circles_leave">Покинути коло</string>
+    <string name="circles_leave_title">Покинути коло?</string>
+    <string name="circles_leave_message">Покинути «%1$s»? Власник отримає сповіщення й видалить вас із кола.</string>
+    <string name="circles_leave_local">Покинути й видалити на цьому пристрої</string>
+    <string name="circles_leave_local_sub">Видаляє коло та його повідомлення з цього пристрою. Надіслані вами повідомлення залишаться на пристроях інших учасників.</string>
+    <string name="circles_leave_remote">Покинути й видалити всюди</string>
+    <string name="circles_leave_remote_sub">Також видаляє надіслані вами повідомлення з пристроїв інших учасників.</string>
+    <string name="conv_mark_unread">Позначити як непрочитане</string>
 </resources>

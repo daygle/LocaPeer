@@ -820,4 +820,26 @@
     <string name="settings_theme_light">Terang</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Ikuti sistem</string>
+    <string name="chat_preview_file">📎 File</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Lampiran</string>
+    <string name="chat_cd_attach_file">Lampirkan file</string>
+    <string name="chat_file_tap_to_open">Ketuk untuk membuka</string>
+    <string name="chat_file_too_large">File terlalu besar (maks 100 KB)</string>
+    <string name="chat_file_unreadable">Tidak dapat membaca file itu</string>
+    <string name="chat_file_no_app">Tidak ada aplikasi yang dapat membuka file ini</string>
+    <string name="circles_view_members">Lihat Anggota</string>
+    <string name="circles_view_title">Anggota Lingkaran</string>
+    <string name="circles_owner_only">Hanya pemilik lingkaran yang dapat mengganti namanya atau mengubah anggotanya.</string>
+    <string name="circles_owner_label">Pemilik: %1$s</string>
+    <string name="circles_owner_you">Anda</string>
+    <string name="circles_owner_tag">Pemilik</string>
+    <string name="circles_leave">Tinggalkan Lingkaran</string>
+    <string name="circles_leave_title">Tinggalkan lingkaran?</string>
+    <string name="circles_leave_message">Tinggalkan \"%1$s\"? Pemilik akan diberi tahu dan mengeluarkan Anda dari lingkaran.</string>
+    <string name="circles_leave_local">Tinggalkan dan hapus di perangkat ini</string>
+    <string name="circles_leave_local_sub">Menghapus lingkaran dan pesannya dari perangkat ini. Pesan yang Anda kirim tetap ada di perangkat anggota lain.</string>
+    <string name="circles_leave_remote">Tinggalkan dan hapus di mana saja</string>
+    <string name="circles_leave_remote_sub">Juga menghapus pesan yang Anda kirim dari perangkat anggota lain.</string>
+    <string name="conv_mark_unread">Tandai Belum Dibaca</string>
 </resources>
