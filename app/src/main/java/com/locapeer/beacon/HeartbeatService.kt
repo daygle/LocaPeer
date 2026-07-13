@@ -81,6 +81,15 @@ private const val MAX_SEED_AGE_MS = 10 * 60_000L
  * coarse fixes used while stationary. Auto-expires back to the settled profile.
  */
 private const val CLASSIFY_BOOST_MS = 45_000L
+/**
+ * How long to hold high-accuracy GPS right after the device *settles* into STATIONARY,
+ * so a single sharp fix can anchor the resting pin before GPS relaxes to the low-power
+ * profile it uses for the rest of the stay. Stationary is where the device spends most
+ * of its time and its pin is the one peers watch most, yet its coarse network fixes can
+ * sit hundreds of metres off; one short burst per settle buys a sharp anchor for a
+ * small, bounded battery cost. Auto-expires back to the stationary profile.
+ */
+private const val STATIONARY_ANCHOR_BOOST_MS = 20_000L
 
 private fun MotionState.isMoving(): Boolean =
     this == MotionState.WALKING || this == MotionState.RUNNING ||
@@ -145,6 +154,9 @@ class HeartbeatService : LifecycleService() {
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
+    /** Elapsed-time deadline until which GPS stays high-accuracy after settling, to sharpen
+     *  the resting anchor before relaxing to the stationary profile (see STATIONARY_ANCHOR_BOOST_MS). */
+    @Volatile private var stationaryAnchorBoostUntilMs = 0L
     /**
      * True while location updates are stopped because the global schedule is inactive,
      * so the pulse that finds the schedule open again knows to restart GPS. Probing
@@ -259,6 +271,9 @@ class HeartbeatService : LifecycleService() {
                 stationaryAnchorLat = lastLat
                 stationaryAnchorLng = lastLng
                 stationaryAnchorAcc = lastAccuracy
+                // Just settled: hold high accuracy briefly so a sharp fix can anchor the
+                // resting pin (and tighten the exit anchor) before GPS drops to low power.
+                beginStationaryAnchorBoost()
             }
             // Just started moving from a settled state: boost GPS so the classifier can
             // reach the correct moving state (esp. DRIVING) on clean fixes.
@@ -292,6 +307,26 @@ class HeartbeatService : LifecycleService() {
 
     private val locationBoostDowngrade = Runnable {
         // Boost window elapsed; re-request so GPS returns to the current state's profile.
+        if (isStarted) updateLocationRequest()
+    }
+
+    /**
+     * Arm the post-settle high-accuracy window for [STATIONARY_ANCHOR_BOOST_MS] and
+     * schedule a re-request that relaxes GPS back to the stationary profile once it
+     * elapses. Unlike [beginClassificationBoost] this fires *while* STATIONARY, so
+     * [buildLocationRequest] gives it its own branch. Each genuine settle re-arms the
+     * window from scratch; the caller refreshes the request so the boost takes effect at
+     * once. The caller already re-requests on the state change, and the FixSelector plus
+     * the exit-anchor tighten logic pick up the sharper fixes the window produces.
+     */
+    private fun beginStationaryAnchorBoost() {
+        stationaryAnchorBoostUntilMs = SystemClock.elapsedRealtime() + STATIONARY_ANCHOR_BOOST_MS
+        handler.removeCallbacks(stationaryAnchorDowngrade)
+        handler.postDelayed(stationaryAnchorDowngrade, STATIONARY_ANCHOR_BOOST_MS)
+    }
+
+    private val stationaryAnchorDowngrade = Runnable {
+        // Anchor window elapsed; re-request so stationary GPS relaxes to low power.
         if (isStarted) updateLocationRequest()
     }
 
@@ -562,10 +597,16 @@ class HeartbeatService : LifecycleService() {
         // relax a stale GPS DRIVING off high accuracy. The boost window still keys off the
         // GPS classifier, since it exists to help that classifier reach the right state.
         val cadenceState = effectiveIntervalState()
+        // The mirror of [boosting] for the settle direction: a short high-accuracy burst
+        // *while* stationary to sharpen the resting anchor, then back to low power.
+        val anchorBoosting = !isSos && !lowBattery &&
+            cadenceState == MotionState.STATIONARY &&
+            SystemClock.elapsedRealtime() < stationaryAnchorBoostUntilMs
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
             lowBattery -> Priority.PRIORITY_LOW_POWER
             boosting -> Priority.PRIORITY_HIGH_ACCURACY
+            anchorBoosting -> Priority.PRIORITY_HIGH_ACCURACY
             cadenceState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
             cadenceState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
@@ -573,6 +614,9 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
+            // Sample fast during the settle burst so a sharp fix actually lands inside the
+            // window; must precede the stationary branch, which otherwise waits 5 minutes.
+            anchorBoosting -> 15_000L
             cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             boosting -> 15_000L
             else -> 30_000L
@@ -1034,6 +1078,7 @@ class HeartbeatService : LifecycleService() {
         isStarted = false
         handler.removeCallbacks(heartbeatRunnable)
         handler.removeCallbacks(locationBoostDowngrade)
+        handler.removeCallbacks(stationaryAnchorDowngrade)
         stopActivityRecognition()
         try {
             (getSystemService(ALARM_SERVICE) as AlarmManager).cancel(pulseCheckIntent())
