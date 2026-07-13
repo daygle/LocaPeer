@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,14 +28,14 @@ fun CircleEditScreen(
     vm: CirclesViewModel = hiltViewModel()
 ) {
     val isEdit = circleId != null
-    val contacts by vm.contacts.collectAsState()
-    val myPub by vm.myPubkeyHex.collectAsState()
+    val contacts by vm.contacts.collectAsStateWithLifecycle()
+    val myPub by vm.myPubkeyHex.collectAsStateWithLifecycle()
     val existingCircle by remember(circleId) {
         if (circleId != null) vm.observeCircle(circleId) else kotlinx.coroutines.flow.flowOf(null)
-    }.collectAsState(initial = null)
+    }.collectAsStateWithLifecycle(initialValue = null)
     val existingMembers by remember(circleId) {
         if (circleId != null) vm.observeMembers(circleId) else kotlinx.coroutines.flow.flowOf(emptyList())
-    }.collectAsState(initial = emptyList())
+    }.collectAsStateWithLifecycle(initialValue = emptyList())
 
     // Only the circle's owner may rename it or change membership. Creating a new circle (isEdit =
     // false) is always allowed. In edit mode we stay read-only until the circle row has loaded so a

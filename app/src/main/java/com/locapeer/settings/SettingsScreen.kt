@@ -15,6 +15,7 @@ import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,12 +48,12 @@ fun SettingsScreen(
     onNavigateToPermissions: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
-    val settings by vm.settings.collectAsState()
-    val peers by vm.peers.collectAsState()
-    val publicKeyHex by vm.publicKeyHex.collectAsState()
-    val profileQr by vm.profileQr.collectAsState()
+    val settings by vm.settings.collectAsStateWithLifecycle()
+    val peers by vm.peers.collectAsStateWithLifecycle()
+    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
+    val profileQr by vm.profileQr.collectAsStateWithLifecycle()
 
-    val unlockState by vm.unlockState.collectAsState()
+    val unlockState by vm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (settings.supervisedModeEnabled && !sessionUnlocked) {
         SupervisionGate(
@@ -93,9 +94,9 @@ fun SettingsScreen(
         uri?.let { vm.exportBackup(it, exportSections, exportPassword.takeIf { p -> p.isNotBlank() }) }
         exportPassword = ""
     }
-    val backupResult by vm.backupResult.collectAsState()
-    val pendingRestore by vm.pendingRestore.collectAsState()
-    val restorePasswordError by vm.restorePasswordError.collectAsState()
+    val backupResult by vm.backupResult.collectAsStateWithLifecycle()
+    val pendingRestore by vm.pendingRestore.collectAsStateWithLifecycle()
+    val restorePasswordError by vm.restorePasswordError.collectAsStateWithLifecycle()
     val importLauncher = rememberLauncherForActivityResult(
         androidx.activity.result.contract.ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }

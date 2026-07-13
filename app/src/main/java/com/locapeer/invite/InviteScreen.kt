@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -101,7 +102,7 @@ fun InviteScreen(
 
 @Composable
 private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
-    val state by vm.state.collectAsState()
+    val state by vm.state.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
@@ -192,7 +193,7 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
 @Composable
 private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
-    val scanState by vm.scanState.collectAsState()
+    val scanState by vm.scanState.collectAsStateWithLifecycle()
     var pasteText by remember { mutableStateOf("") }
 
     Column(

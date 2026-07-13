@@ -15,6 +15,7 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,8 +42,8 @@ fun ContactsScreen(
     onNavigateToInvite: () -> Unit = {},
     vm: ContactsViewModel = hiltViewModel()
 ) {
-    val contacts by vm.contacts.collectAsState()
-    val pendingCount by vm.pendingRequestCount.collectAsState()
+    val contacts by vm.contacts.collectAsStateWithLifecycle()
+    val pendingCount by vm.pendingRequestCount.collectAsStateWithLifecycle()
 
     // Per-contact dialogs (unchanged)
     var confirmAction by remember { mutableStateOf<Pair<ContactItem, DataAction>?>(null) }

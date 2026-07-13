@@ -15,6 +15,7 @@ import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,24 +55,24 @@ fun MapScreen(
     onNavigateToHistory: (peerId: String) -> Unit = {},
     vm: MapViewModel = hiltViewModel()
 ) {
-    val uiState by vm.uiState.collectAsState()
+    val uiState by vm.uiState.collectAsStateWithLifecycle()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
     var showFriendList by remember { mutableStateOf(false) }
     var showSosConfirm by remember { mutableStateOf(false) }
-    val isSosActive by vm.isSosActive.collectAsState()
-    val hasSosContacts by vm.hasSosContacts.collectAsState()
-    val userLocation by vm.userLocation.collectAsState()
-    val lastMapCenter by vm.lastMapCenter.collectAsState()
-    val relayStatus by vm.relayStatus.collectAsState()
-    val centerOnArgs by vm.centerOnArgs.collectAsState()
-    val myDisplayName by vm.myDisplayName.collectAsState()
-    val myPinColor by vm.myPinColor.collectAsState()
-    val mapStartZoom by vm.mapStartZoom.collectAsState()
-    val mapStartingPoint by vm.mapStartingPoint.collectAsState()
-    val mapFixedLat by vm.mapFixedLat.collectAsState()
-    val mapFixedLng by vm.mapFixedLng.collectAsState()
-    val showGeofences by vm.showGeofences.collectAsState()
-    val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsState()
+    val isSosActive by vm.isSosActive.collectAsStateWithLifecycle()
+    val hasSosContacts by vm.hasSosContacts.collectAsStateWithLifecycle()
+    val userLocation by vm.userLocation.collectAsStateWithLifecycle()
+    val lastMapCenter by vm.lastMapCenter.collectAsStateWithLifecycle()
+    val relayStatus by vm.relayStatus.collectAsStateWithLifecycle()
+    val centerOnArgs by vm.centerOnArgs.collectAsStateWithLifecycle()
+    val myDisplayName by vm.myDisplayName.collectAsStateWithLifecycle()
+    val myPinColor by vm.myPinColor.collectAsStateWithLifecycle()
+    val mapStartZoom by vm.mapStartZoom.collectAsStateWithLifecycle()
+    val mapStartingPoint by vm.mapStartingPoint.collectAsStateWithLifecycle()
+    val mapFixedLat by vm.mapFixedLat.collectAsStateWithLifecycle()
+    val mapFixedLng by vm.mapFixedLng.collectAsStateWithLifecycle()
+    val showGeofences by vm.showGeofences.collectAsStateWithLifecycle()
+    val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }

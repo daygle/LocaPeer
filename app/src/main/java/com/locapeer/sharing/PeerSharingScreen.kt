@@ -13,6 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,8 +50,8 @@ fun PeerSharingScreen(
     vm: PeerSharingViewModel = hiltViewModel()
 ) {
     val gateVm: SupervisionGateViewModel = hiltViewModel()
-    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
-    val gateUnlockState by gateVm.unlockState.collectAsState()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsStateWithLifecycle()
+    val gateUnlockState by gateVm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (supervisedModeEnabled && !sessionUnlocked) {
         SupervisionGate(
@@ -64,7 +65,7 @@ fun PeerSharingScreen(
 
     LaunchedEffect(peerId) { vm.init(peerId) }
 
-    val state by vm.uiState.collectAsState()
+    val state by vm.uiState.collectAsStateWithLifecycle()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
     val isPaused = !sharingEnabled
@@ -77,8 +78,8 @@ fun PeerSharingScreen(
     val retentionDaysLocation = cfg?.retentionDaysLocation ?: 30
     val retentionDaysMessages = cfg?.retentionDaysMessages ?: 0
     val proximityAlert = state.proximityAlert
-    val purgeResult by vm.lastPurgeResult.collectAsState()
-    val roleChangeResult by vm.roleChangeResult.collectAsState()
+    val purgeResult by vm.lastPurgeResult.collectAsStateWithLifecycle()
+    val roleChangeResult by vm.roleChangeResult.collectAsStateWithLifecycle()
     val role = state.peer?.locationRole
     val tempShareEndsAt = cfg?.temporaryShareEndsAtEpochSeconds
     val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {

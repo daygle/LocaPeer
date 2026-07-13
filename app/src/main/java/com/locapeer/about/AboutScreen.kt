@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,8 +32,8 @@ fun AboutScreen(
     versionName: String = "1.1.1",
     versionCode: Int = 5
 ) {
-    val relayStatus by aboutVm.relayStatus.collectAsState()
-    val pendingCount by aboutVm.pendingMessageCount.collectAsState()
+    val relayStatus by aboutVm.relayStatus.collectAsStateWithLifecycle()
+    val pendingCount by aboutVm.pendingMessageCount.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {

@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.QrCode
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.annotation.StringRes
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -82,7 +83,7 @@ fun LocaPeerNavHost(
     onNavTargetConsumed: () -> Unit = {},
     prefs: AppPreferences
 ) {
-    val settings by prefs.settings.collectAsState(initial = null)
+    val settings by prefs.settings.collectAsStateWithLifecycle(initialValue = null)
     val navController = rememberNavController()
     val backstackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = backstackEntry?.destination?.route
