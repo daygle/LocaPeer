@@ -465,8 +465,8 @@
     <!-- App lock -->
     <string name="settings_app_lock">App Lock</string>
     <string name="settings_app_lock_subtitle">Require biometric or device PIN to open LocaPeer</string>
-    <string name="settings_app_lock_timeout">Re-lock after</string>
-    <string name="settings_app_lock_timeout_immediate">Immediately on leaving the app</string>
+    <string name="settings_app_lock_timeout">Re-lock After</string>
+    <string name="settings_app_lock_timeout_immediate">Immediately</string>
     <string name="settings_app_lock_timeout_30s">After 30 seconds</string>
     <string name="settings_app_lock_timeout_1m">After 1 minute</string>
     <string name="settings_app_lock_timeout_5m">After 5 minutes</string>
