@@ -18,6 +18,20 @@ package com.locapeer.beacon
  */
 object MotionFusion {
 
+    /**
+     * Age past which an AR reading is considered stale (see [fuse]/[fuseForInterval]'s
+     * `arStale` parameter). AR only reports on transitions, so a long unchanged stretch
+     * is normal - staleness therefore doesn't discard the reading, it only strips its
+     * authority ASYMMETRICALLY: a stale reading may no longer assert a FASTER state
+     * than GPS (that's the expensive direction - a missed STILL after parking would
+     * otherwise hold high-accuracy GPS at driving cadence forever), but it keeps its
+     * authority to argue for a slower-or-equal one (a stale STILL should still stop
+     * indoor GPS scatter from labelling a settled device as driving, which is the very
+     * case AR fusion was added for). Timestamps refresh on every transition event,
+     * including re-entries of the current state.
+     */
+    const val AR_STALE_MS = 20 * 60_000L
+
     // com.google.android.gms.location.DetectedActivity constants, mirrored here so this
     // file stays Android-free and JVM-testable. Kept in sync with the SDK values.
     const val IN_VEHICLE = 0
@@ -44,26 +58,43 @@ object MotionFusion {
     }
 
     /**
+     * A stale AR reading loses its authority to assert a FASTER state than GPS; it is
+     * then treated as absent. Slower-or-equal claims survive staleness - see the
+     * rationale on [AR_STALE_MS]. Fresh readings pass through untouched.
+     */
+    private fun effectiveArState(
+        gpsState: MotionState,
+        arState: MotionState?,
+        arStale: Boolean,
+    ): MotionState? =
+        if (arState != null && arStale && cadenceRank(arState) > cadenceRank(gpsState)) null
+        else arState
+
+    /**
      * The label to store/broadcast, given the GPS-derived state and the latest AR
      * reading ([arState] is null when AR hasn't reported yet, is unavailable, or the
-     * permission was denied).
+     * permission was denied; [arStale] strips an old reading's authority to claim a
+     * faster state than GPS - see [AR_STALE_MS]).
      *
      * Rules, in order:
-     *  1. When AR has a reading it is authoritative for the *label*. This is what fixes
-     *     "a walk read as driving": AR positively identifies on-foot motion from the
-     *     accelerometer, so GPS scatter can no longer assert DRIVING. The known cost is
-     *     AR's transition latency briefly lagging the label at the very start of a trip,
-     *     and the rare slow-vehicle case AR reports as on-foot - both far milder than a
-     *     wholesale wrong state. GPS remains authoritative for position, speed, bearing
-     *     and the pulse cadence, none of which this touches.
+     *  1. When AR has a (still-authoritative) reading it wins the *label*. This is what
+     *     fixes "a walk read as driving": AR positively identifies on-foot motion from
+     *     the accelerometer, so GPS scatter can no longer assert DRIVING. The known cost
+     *     is AR's transition latency briefly lagging the label at the very start of a
+     *     trip, and the rare slow-vehicle case AR reports as on-foot - both far milder
+     *     than a wholesale wrong state. GPS remains authoritative for position, speed,
+     *     bearing and the pulse cadence, none of which this touches.
      *  2. With no AR reading, fall back to the GPS state, except that a transitional /
      *     cold-start UNKNOWN resolves to STATIONARY so history never shows the raw
      *     "Unknown" token when there is genuinely nothing better to say.
      */
-    fun fuse(gpsState: MotionState, arState: MotionState?): MotionState = when {
-        arState != null -> arState
-        gpsState == MotionState.UNKNOWN -> MotionState.STATIONARY
-        else -> gpsState
+    fun fuse(gpsState: MotionState, arState: MotionState?, arStale: Boolean = false): MotionState {
+        val ar = effectiveArState(gpsState, arState, arStale)
+        return when {
+            ar != null -> ar
+            gpsState == MotionState.UNKNOWN -> MotionState.STATIONARY
+            else -> gpsState
+        }
     }
 
     /** States ordered by poll cadence (faster motion → shorter interval). UNKNOWN sits at
@@ -90,11 +121,22 @@ object MotionFusion {
      *  2. Otherwise use whichever signal demands the faster cadence (higher rank). This
      *     keeps GPS's fast motion-onset detection and never lets a lagging AR STILL slow a
      *     freshly detected drive; STILL (rank 0) can only ever match, never lower, GPS.
+     *
+     * [arStale] (see [AR_STALE_MS]) strips an old reading's power to *raise* the
+     * cadence above GPS: without it, a single missed STILL transition after parking
+     * left the vehicle reading outranking GPS's settled STATIONARY forever, pinning
+     * high-accuracy GPS at driving cadence for the whole stay.
      */
-    fun fuseForInterval(gpsState: MotionState, arState: MotionState?): MotionState = when {
-        arState == null -> gpsState
-        arState == MotionState.WALKING || arState == MotionState.RUNNING || arState == MotionState.CYCLING -> arState
-        cadenceRank(arState) > cadenceRank(gpsState) -> arState
-        else -> gpsState
+    fun fuseForInterval(
+        gpsState: MotionState,
+        arState: MotionState?,
+        arStale: Boolean = false,
+    ): MotionState {
+        val ar = effectiveArState(gpsState, arState, arStale) ?: return gpsState
+        return when {
+            ar == MotionState.WALKING || ar == MotionState.RUNNING || ar == MotionState.CYCLING -> ar
+            cadenceRank(ar) > cadenceRank(gpsState) -> ar
+            else -> gpsState
+        }
     }
 }

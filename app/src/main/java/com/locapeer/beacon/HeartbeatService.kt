@@ -24,6 +24,7 @@ import com.google.android.gms.location.ActivityRecognition
 import com.google.android.gms.location.ActivityTransition
 import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.ActivityTransitionResult
+import com.google.android.gms.location.CurrentLocationRequest
 import com.google.android.gms.location.DetectedActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Granularity
@@ -72,6 +73,19 @@ const val ACTION_ACTIVITY_TRANSITION = "com.locapeer.ACTIVITY_TRANSITION"
 
 /** Slack added to the doze-backstop alarm so the handler normally fires first. */
 private const val PULSE_BACKSTOP_SLACK_MS = 90_000L
+/**
+ * Only arm the doze backstop for delays at least this long. Short-interval states
+ * (moving profiles) don't need it - doze doesn't engage on a moving device, the
+ * watchdog worker covers service death - and arming it there costs a full exact-alarm
+ * wakeup per pulse. Applied by BOTH schedulers ([reschedulePulse] and the runnable's
+ * own re-post): if either armed unconditionally, one stray reschedule would start a
+ * self-perpetuating alarm chain (alarm -> PULSE_CHECK -> reschedule -> alarm...) that
+ * keeps exact alarms firing at short cadence indefinitely.
+ */
+private const val DOZE_BACKSTOP_MIN_DELAY_MS = 300_000L
+/** Re-check cadence while suspended when the schedule can never match (all-empty
+ *  day masks), where there is no next-window time to sleep towards. */
+private const val NEVER_ACTIVE_RECHECK_MS = 3_600_000L
 /** Ignore cached last-known locations older than this when pre-seeding at startup. */
 private const val MAX_SEED_AGE_MS = 10 * 60_000L
 /**
@@ -140,6 +154,13 @@ class HeartbeatService : LifecycleService() {
      * [MotionFusion.fuse]. Interval selection stays keyed off the GPS state.
      */
     @Volatile private var arMotionState: MotionState? = null
+    /** Elapsed-time stamp of the last AR transition (any type, including a repeat of the
+     *  current state), so [arIsStale] can strip a silently-dead AR feed of its authority. */
+    @Volatile private var arMotionStateAtMs = 0L
+    /** The cadence state last pushed into [intervalManager], so [refreshCadenceState]
+     *  can detect changes that arrive without a new GPS/AR event (an AR reading going
+     *  stale between pulses). */
+    private var appliedCadenceState = MotionState.UNKNOWN
     private var candidateMotionState = MotionState.UNKNOWN
     private var candidateMotionCount = 0
     private var prevFixLat = 0.0
@@ -166,6 +187,15 @@ class HeartbeatService : LifecycleService() {
      * whole active window while stale coordinates keep being broadcast.
      */
     @Volatile private var gpsSuspendedBySchedule = false
+    /**
+     * True from the moment GPS resumes after a schedule suspension until the first live
+     * fix lands. While set, pulses skip the broadcast: the cached position predates the
+     * off-window (the device may have moved for hours with GPS off) and must not be
+     * shipped stamped with the current time. Peers seeing silence until a real fix
+     * exists beats peers seeing a confidently-wrong pin. SOS bypasses this everywhere -
+     * a stale emergency position still beats none.
+     */
+    @Volatile private var awaitingFreshFix = false
 
     private var isStarted = false
 
@@ -185,7 +215,12 @@ class HeartbeatService : LifecycleService() {
                 // Report the sharpest still-current fix in the window, not merely the
                 // latest: the selected fix's whole payload moves together so history and
                 // peers never see a coarse position stamped with a sharp fix's speed.
-                if (fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
+                // While stationary the selector's age backstop is disabled, otherwise the
+                // 5-min low-power cadence out-ages every held fix and the coarse network
+                // fixes would wobble the resting pin (and could push lastAccuracy past
+                // the send gate, silencing heartbeats for the whole stay).
+                val stationaryHold = currentMotionState == MotionState.STATIONARY
+                if (fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos, stationaryHold)) {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
                     lastAccuracy = loc.accuracy
@@ -197,11 +232,40 @@ class HeartbeatService : LifecycleService() {
                 }
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
                 if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
-                // If no heartbeat has gone out yet (empty lastLocation cache at start,
-                // so the initial pulse was skipped), send one now that a usable fix
-                // exists. Skip when the fix fails the accuracy gate: it would only be
-                // withheld again, re-triggering this on every fix until GPS sharpens.
-                if (isStarted && lastPulseElapsedMs == 0L && !sendGateBlocks(loc.accuracy)) pulseNow()
+                // Two cases need a pulse as soon as a usable fix exists: no heartbeat has
+                // gone out yet (empty lastLocation cache at start, so the initial pulse
+                // was skipped), or GPS just resumed after a schedule suspension and the
+                // broadcast was held for a fresh fix. Gate on the accuracy of the fix
+                // actually being reported (lastAccuracy, i.e. post-selector): a blocked
+                // pulse would only be withheld again, re-triggering on every fix until
+                // GPS sharpens.
+                if (isStarted && (lastPulseElapsedMs == 0L || awaitingFreshFix) &&
+                    !sendGateBlocks(lastAccuracy)
+                ) {
+                    awaitingFreshFix = false
+                    pulseNow()
+                }
+            }
+        }
+    }
+
+    /**
+     * Battery is also sampled once per pulse, but the pulse can be a full low-battery
+     * interval away (30-120 min): without these events a device plugged in at 15% kept
+     * crawling at the low-battery cadence for up to that long after charging past the
+     * threshold, and a device draining fast between long stationary pulses kept
+     * full-rate GPS running well below 20%. The receiver only does work when the
+     * low-battery state actually flips.
+     */
+    private val batteryEventReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: android.content.Context, intent: Intent) {
+            if (!isStarted) return
+            intervalManager.updateBattery(getBatteryLevel())
+            val lowNow = intervalManager.isLowBattery()
+            if (lowNow != wasLowBattery) {
+                wasLowBattery = lowNow
+                updateLocationRequest()
+                reschedulePulse()
             }
         }
     }
@@ -239,13 +303,38 @@ class HeartbeatService : LifecycleService() {
     }
 
     /**
+     * True when the AR reading is old enough that a missed transition is plausible
+     * (e.g. the STILL after parking never arrived). See [MotionFusion.AR_STALE_MS]
+     * for how staleness changes the fusion rules.
+     */
+    private fun arIsStale(): Boolean =
+        arMotionState != null &&
+            SystemClock.elapsedRealtime() - arMotionStateAtMs > MotionFusion.AR_STALE_MS
+
+    /**
      * State that drives pulse cadence and GPS power: the GPS classifier fused with the
      * latest Activity Recognition reading (see [MotionFusion.fuseForInterval]). Recomputed
      * wherever either input changes so a stale GPS DRIVING doesn't keep the radio hot while
      * AR reports the user is on foot.
      */
     private fun effectiveIntervalState(): MotionState =
-        MotionFusion.fuseForInterval(currentMotionState, arMotionState)
+        MotionFusion.fuseForInterval(currentMotionState, arMotionState, arIsStale())
+
+    /**
+     * Recompute the cadence state and, when it changed, push it into the interval
+     * manager. Returns whether it changed so callers can decide to rebuild the
+     * location request / pulse schedule. Called from every GPS/AR event AND once per
+     * pulse: the cadence can change with no new event at all when the AR reading
+     * crosses [MotionFusion.AR_STALE_MS] - without the per-pulse call, a missed AR
+     * STILL would keep a parked device on the driving profile forever.
+     */
+    private fun refreshCadenceState(): Boolean {
+        val cadence = effectiveIntervalState()
+        if (cadence == appliedCadenceState) return false
+        appliedCadenceState = cadence
+        intervalManager.updateMotionState(cadence)
+        return true
+    }
 
     // Require consecutive fixes to agree before switching state (see
     // MotionMath.samplesRequiredToSwitch), so a single noisy GPS speed sample
@@ -278,7 +367,9 @@ class HeartbeatService : LifecycleService() {
             // Just started moving from a settled state: boost GPS so the classifier can
             // reach the correct moving state (esp. DRIVING) on clean fixes.
             if (newState.isMoving() && !previous.isMoving()) beginClassificationBoost()
-            intervalManager.updateMotionState(effectiveIntervalState())
+            refreshCadenceState()
+            // Unconditional even when the fused cadence didn't change: the boost windows
+            // armed above alter the request independently of the cadence state.
             updateLocationRequest()
             reschedulePulse()
         }
@@ -361,7 +452,7 @@ class HeartbeatService : LifecycleService() {
             currentMotionState = MotionState.UNKNOWN
             candidateMotionCount = 0
             beginClassificationBoost()
-            intervalManager.updateMotionState(effectiveIntervalState())
+            refreshCadenceState()
             updateLocationRequest()
             reschedulePulse()
         }
@@ -373,28 +464,56 @@ class HeartbeatService : LifecycleService() {
             // callbacks before this could be re-posted): without it one stale post
             // re-arms the self-rescheduling loop in a destroyed service.
             if (!isStarted) return
+
+            // Re-sample the inputs that can go stale with no event of their own, BEFORE
+            // any early return: battery (previously only sampled deep inside a successful
+            // broadcast, so a blocked heartbeat could leave full-rate GPS running at 5%,
+            // and recovery after charging waited a whole low-battery interval) and the
+            // fused cadence state (an AR reading crossing its staleness threshold changes
+            // the cadence with no new GPS/AR event - see refreshCadenceState).
+            intervalManager.updateBattery(getBatteryLevel())
+            val lowNow = intervalManager.isLowBattery()
+            var requestStale = refreshCadenceState()
+            if (lowNow != wasLowBattery) {
+                wasLowBattery = lowNow
+                requestStale = true
+            }
+
             val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
-
-            if (scheduleActive) {
-                // GPS was stopped while off-schedule; restart it now the window is open.
-                if (gpsSuspendedBySchedule) updateLocationRequest()
-
-                if (broadcastHeartbeat()) {
-                    lastPulseElapsedMs = SystemClock.elapsedRealtime()
-                }
-            } else {
+            if (!scheduleActive) {
                 Log.d(TAG, "Heartbeat suppressed: outside global schedule. Suspending GPS.")
-                // Stop GPS to save battery during off-hours
+                // Stop GPS to save battery during off-hours, then sleep until the window
+                // actually opens instead of re-checking at the motion cadence: the rules
+                // are fully known, so pulsing every few minutes all night (each pulse a
+                // wakeup, some an exact alarm) buys nothing. Rule edits mid-sleep are
+                // handled by the settings collector, and a DST shift is self-correcting -
+                // the woken pulse re-checks and re-sleeps on the recomputed gap.
                 suspendLocationUpdatesForSchedule()
+                val (dayIndex, minute) = SharingSchedule.nowDayMinute()
+                val minutesUntilOpen = SharingSchedule.minutesUntilNextActive(
+                    currentSettings.globalScheduleRules, dayIndex, minute
+                )
+                val delay = minutesUntilOpen?.let { (it * 60_000L).coerceAtLeast(60_000L) }
+                    ?: NEVER_ACTIVE_RECHECK_MS
+                handler.postDelayed(this, delay)
+                if (delay >= DOZE_BACKSTOP_MIN_DELAY_MS) armDozeBackstop(delay)
+                return
+            }
+
+            // GPS was stopped while off-schedule (restarting it arms the fresh-fix hold),
+            // or its profile inputs changed above; rebuild the request either way.
+            if (gpsSuspendedBySchedule || requestStale) updateLocationRequest()
+
+            // While the fresh-fix hold is set the cached position predates the schedule
+            // window and must not be broadcast; the location callback pulses as soon as
+            // a live fix lands. SOS bypasses the hold - stale beats silent in an emergency.
+            if ((isSos || !awaitingFreshFix) && broadcastHeartbeat()) {
+                lastPulseElapsedMs = SystemClock.elapsedRealtime()
             }
 
             val interval = intervalManager.getIntervalMillis(currentSettings).coerceAtLeast(5000L)
             handler.postDelayed(this, interval)
-            
-            // Only arm the doze backstop for significant intervals to avoid excessive system calls
-            if (interval >= 300_000L) {
-                armDozeBackstop(interval)
-            }
+            if (interval >= DOZE_BACKSTOP_MIN_DELAY_MS) armDozeBackstop(interval)
         }
     }
 
@@ -442,15 +561,39 @@ class HeartbeatService : LifecycleService() {
         isRunning = true
         fusedLocation = LocationServices.getFusedLocationProviderClient(this)
         createNotificationChannel()
+        // Charger and battery-threshold events, so the low-battery profile engages and
+        // releases promptly instead of waiting for the next (possibly distant) pulse.
+        ContextCompat.registerReceiver(
+            this,
+            batteryEventReceiver,
+            android.content.IntentFilter().apply {
+                addAction(Intent.ACTION_POWER_CONNECTED)
+                addAction(Intent.ACTION_POWER_DISCONNECTED)
+                addAction(Intent.ACTION_BATTERY_LOW)
+                addAction(Intent.ACTION_BATTERY_OKAY)
+            },
+            ContextCompat.RECEIVER_NOT_EXPORTED,
+        )
         lifecycleScope.launch {
             prefs.settings.collect { settings ->
                 val previous = currentSettings
                 currentSettings = settings
-                // Re-anchor the pending pulse when an interval setting changes so the
-                // new cadence applies now rather than after the next heartbeat.
-                if (isStarted &&
+                if (!isStarted) return@collect
+                if (settings.globalScheduleRules != previous.globalScheduleRules) {
+                    // Schedule edits must apply NOW, not at the next pulse: while
+                    // suspended, the pending pulse can be an entire off-window away, so
+                    // a user deleting their schedule (expecting sharing to resume) would
+                    // otherwise wait hours. Rebuild the request (which suspends or
+                    // resumes GPS as the new rules dictate) and re-anchor the pulse -
+                    // after a long suspension the elapsed interval makes it fire at
+                    // once, and the fresh-fix hold keeps that pulse honest.
+                    updateLocationRequest()
+                    reschedulePulse()
+                } else if (
                     intervalManager.getIntervalMillis(settings) != intervalManager.getIntervalMillis(previous)
                 ) {
+                    // Re-anchor the pending pulse when an interval setting changes so the
+                    // new cadence applies now rather than after the next heartbeat.
                     reschedulePulse()
                 }
             }
@@ -652,7 +795,14 @@ class HeartbeatService : LifecycleService() {
             return
         }
 
-        gpsSuspendedBySchedule = false
+        if (gpsSuspendedBySchedule) {
+            // Resuming after an off-schedule suspension: the cached position predates
+            // the window (GPS was off, the device may have moved). Hold broadcasts
+            // until a live fix lands (cleared in the location callback) - except in
+            // SOS, where a stale position still beats none.
+            if (!isSos) awaitingFreshFix = true
+            gpsSuspendedBySchedule = false
+        }
         try {
             fusedLocation.removeLocationUpdates(locationCallback)
             fusedLocation.requestLocationUpdates(buildLocationRequest(), locationCallback, Looper.getMainLooper())
@@ -753,14 +903,17 @@ class HeartbeatService : LifecycleService() {
             .lastOrNull { it.transitionType == ActivityTransition.ACTIVITY_TRANSITION_ENTER }
             ?.let { event ->
                 MotionFusion.fromActivityType(event.activityType)?.let { mapped ->
-                    val changed = mapped != arMotionState
                     arMotionState = mapped
+                    // Every event refreshes the staleness clock, including a re-entry of
+                    // the current state: a repeated reading is fresh evidence.
+                    arMotionStateAtMs = SystemClock.elapsedRealtime()
                     Log.d(TAG, "Activity Recognition -> $mapped")
                     // A new reading can change the effective cadence state (e.g. AR now
                     // reports on-foot while GPS is a stale DRIVING), so re-apply it to the
-                    // interval, the GPS power profile and the pulse schedule.
-                    if (changed && isStarted) {
-                        intervalManager.updateMotionState(effectiveIntervalState())
+                    // interval, the GPS power profile and the pulse schedule. A refreshed
+                    // timestamp alone can also un-stale a reading, so recompute even when
+                    // the mapped state itself is unchanged.
+                    if (isStarted && refreshCadenceState()) {
                         updateLocationRequest()
                         reschedulePulse()
                     }
@@ -776,10 +929,20 @@ class HeartbeatService : LifecycleService() {
 
     @SuppressLint("MissingPermission")
     private fun forceLocationFetchThenPulse() {
-        // Both listeners run on the main thread and check isStarted so a callback
-        // landing after onDestroy can't re-post the (self-rescheduling) heartbeat
-        // runnable into a destroyed service and keep pulsing phantom heartbeats.
-        fusedLocation.lastLocation.addOnSuccessListener { loc ->
+        // getCurrentLocation rather than lastLocation: the cache can be arbitrarily old
+        // (or empty), and an SOS position stamped "now" from a days-old cached point is
+        // actively misleading. The max-age bound serves an acceptably recent cached fix
+        // instantly; otherwise a genuinely fresh high-accuracy fix is requested, with a
+        // duration cap so the SOS pulse is never held long. Both listeners run on the
+        // main thread and check isStarted so a callback landing after onDestroy can't
+        // re-post the (self-rescheduling) heartbeat runnable into a destroyed service.
+        val request = CurrentLocationRequest.Builder()
+            .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
+            .setMaxUpdateAgeMillis(MAX_SEED_AGE_MS)
+            .setDurationMillis(15_000L)
+            .build()
+        try {
+            fusedLocation.getCurrentLocation(request, null).addOnSuccessListener { loc ->
                 if (loc != null) {
                     lastLat = loc.latitude
                     lastLng = loc.longitude
@@ -791,11 +954,17 @@ class HeartbeatService : LifecycleService() {
                     fixSelector.reset()
                     Log.d(TAG, "Force fetch successful")
                 } else {
-                Log.w(TAG, "Force fetch returned null location")
+                    // Timed out with no fix; the 10s SOS live request keeps trying, and
+                    // the first fix it lands triggers a pulse via the location callback.
+                    Log.w(TAG, "Force fetch returned null location")
+                }
+                if (isStarted) pulseNow()
+            }.addOnFailureListener {
+                Log.e(TAG, "Force fetch failed", it)
+                if (isStarted) pulseNow()
             }
-            if (isStarted) pulseNow()
-        }.addOnFailureListener {
-            Log.e(TAG, "Force fetch failed", it)
+        } catch (e: Exception) {
+            Log.e(TAG, "Force fetch unavailable", e)
             if (isStarted) pulseNow()
         }
     }
@@ -816,7 +985,10 @@ class HeartbeatService : LifecycleService() {
         val elapsed = SystemClock.elapsedRealtime() - lastPulseElapsedMs
         val delay = (interval - elapsed).coerceAtLeast(0L)
         handler.postDelayed(heartbeatRunnable, delay)
-        armDozeBackstop(delay)
+        // Same threshold as the runnable's own re-post (see DOZE_BACKSTOP_MIN_DELAY_MS):
+        // arming unconditionally here started an alarm chain at short intervals, since
+        // each PULSE_CHECK lands back in this method and re-armed the next alarm.
+        if (delay >= DOZE_BACKSTOP_MIN_DELAY_MS) armDozeBackstop(delay)
     }
 
     /**
@@ -831,25 +1003,35 @@ class HeartbeatService : LifecycleService() {
 
     /** Returns false when no heartbeat was recorded because no location fix exists yet. */
     private fun broadcastHeartbeat(isSos: Boolean = this.isSos): Boolean {
-        if (lastLat == 0.0 && lastLng == 0.0) {
+        // Snapshot the reported fix once, on the main thread, before anything async:
+        // the fields are individually @Volatile but written as a group by the location
+        // callback, so reading them again later (especially from the crypto worker
+        // below, which runs on Default while fixes keep landing on main) could mix
+        // fields of two different fixes - or ship different positions to the local
+        // history row and each recipient within one heartbeat.
+        val fixLat = lastLat
+        val fixLng = lastLng
+        val fixAccuracy = lastAccuracy
+        val fixSpeed = lastSpeed
+        val fixBearing = lastBearing
+        val fixAltitude = lastAltitude
+        // Stored/broadcast label fuses the GPS classifier with the Activity Recognition
+        // reading (staleness-aware); interval selection stays keyed off the cadence state.
+        val motionStateLabel = MotionFusion.fuse(currentMotionState, arMotionState, arIsStale()).name
+
+        if (fixLat == 0.0 && fixLng == 0.0) {
             Log.d(TAG, "Skipping heartbeat: no location fixed yet")
             return false
         }
         // Sender-side accuracy gate: withhold a fix we don't trust from both local
         // history and peers, so a coarse cell fix doesn't paint a misleading pin.
-        if (sendGateBlocks(lastAccuracy)) {
-            Log.d(TAG, "Skipping heartbeat: accuracy ${lastAccuracy}m worse than gate ${currentSettings.sendMaxAccuracyMeters}m")
+        if (sendGateBlocks(fixAccuracy)) {
+            Log.d(TAG, "Skipping heartbeat: accuracy ${fixAccuracy}m worse than gate ${currentSettings.sendMaxAccuracyMeters}m")
             return false
         }
+        // Low-battery profile transitions are handled by the pulse runnable and the
+        // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
-        intervalManager.updateBattery(battery)
-        // Battery is sampled once per heartbeat; when it crosses the low-battery
-        // threshold the location request must be rebuilt to match the new profile.
-        val lowNow = intervalManager.isLowBattery()
-        if (lowNow != wasLowBattery) {
-            wasLowBattery = lowNow
-            updateLocationRequest()
-        }
 
         lifecycleScope.launch {
             try {
@@ -858,25 +1040,22 @@ class HeartbeatService : LifecycleService() {
 
                 val nowMs = System.currentTimeMillis()
                 val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
-                // Stored/broadcast label fuses the GPS classifier with the Activity
-                // Recognition reading; interval selection above stays GPS-driven.
-                val motionStateLabel = MotionFusion.fuse(currentMotionState, arMotionState).name
                 heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
                         displayName = settings.displayName,
                         timestamp = nowMs,
-                        lat = lastLat,
-                        lng = lastLng,
-                        accuracy = lastAccuracy,
+                        lat = fixLat,
+                        lng = fixLng,
+                        accuracy = fixAccuracy,
                         battery = battery,
                         motionState = motionStateLabel,
                         isSos = isSos,
                         receivedAt = nowMs,
                         pinColor = settings.pinColor,
-                        speed = lastSpeed,
-                        bearing = lastBearing,
-                        altitude = lastAltitude,
+                        speed = fixSpeed,
+                        bearing = fixBearing,
+                        altitude = fixAltitude,
                         expectedIntervalSeconds = expectedIntervalSec
                     )
                 )
@@ -936,9 +1115,9 @@ class HeartbeatService : LifecycleService() {
                         // let a recipient dead-reckon a finer track than the ~1 km grid implies.
                         val suburb = cfg?.precisionMode == PrecisionMode.SUBURB.name && !isSos
                         val (sendLat, sendLng) = if (suburb) {
-                            SharingSchedule.toSuburbPrecision(lastLat, lastLng)
+                            SharingSchedule.toSuburbPrecision(fixLat, fixLng)
                         } else {
-                            lastLat to lastLng
+                            fixLat to fixLng
                         }
 
                         val payload = HeartbeatPayload(
@@ -947,15 +1126,15 @@ class HeartbeatService : LifecycleService() {
                             timestamp = Instant.now().toString(),
                             lat = sendLat,
                             lng = sendLng,
-                            accuracy = if (suburb) 1100f else lastAccuracy,
+                            accuracy = if (suburb) 1100f else fixAccuracy,
                             battery = battery,
                             motionState = motionStateLabel,
                             isSos = isSos,
                             retentionDays = cfg?.retentionDaysLocation ?: 30,
                             pinColor = settings.pinColor,
-                            speed = if (suburb) 0f else lastSpeed,
-                            bearing = if (suburb) 0f else lastBearing,
-                            altitude = if (suburb) 0.0 else lastAltitude,
+                            speed = if (suburb) 0f else fixSpeed,
+                            bearing = if (suburb) 0f else fixBearing,
+                            altitude = if (suburb) 0.0 else fixAltitude,
                             expectedIntervalSeconds = expectedIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)
@@ -1079,6 +1258,11 @@ class HeartbeatService : LifecycleService() {
         handler.removeCallbacks(heartbeatRunnable)
         handler.removeCallbacks(locationBoostDowngrade)
         handler.removeCallbacks(stationaryAnchorDowngrade)
+        try {
+            unregisterReceiver(batteryEventReceiver)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to unregister battery receiver", e)
+        }
         stopActivityRecognition()
         try {
             (getSystemService(ALARM_SERVICE) as AlarmManager).cancel(pulseCheckIntent())

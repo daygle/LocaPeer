@@ -79,6 +79,25 @@ object SharingSchedule {
     }
 
     /**
+     * Minutes from (dayIndex, currentMinute) until [isActive] next returns true, or null
+     * when the rules can never match (every rule's day-mask is empty). Returns 0 when the
+     * schedule is active right now. Scans minute-by-minute across the week - at most
+     * 10,080 cheap bitmask checks, and it only runs while sharing is suspended, so the
+     * obviously-correct scan beats a closed-form walk of rule boundaries (which would
+     * have to reproduce the overnight-wrap and inclusive-end subtleties of [isActive]).
+     */
+    fun minutesUntilNextActive(rules: List<ScheduleRule>, dayIndex: Int, currentMinute: Int): Int? {
+        if (rules.isEmpty()) return 0
+        val weekMinutes = 7 * 1440
+        val nowAbs = dayIndex * 1440 + currentMinute
+        for (offset in 0 until weekMinutes) {
+            val t = (nowAbs + offset) % weekMinutes
+            if (isActive(rules, t / 1440, t % 1440)) return offset
+        }
+        return null
+    }
+
+    /**
      * Formats a minute-of-day schedule boundary via the app's central time formatter, so the
      * labels honour the user's 12/24-hour setting and match the locale-aware AM/PM strings used
      * everywhere else.
