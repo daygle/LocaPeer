@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.MarkChatUnread
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -229,6 +230,7 @@ fun ConversationListScreen(
         topBar = {
             Column {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     navigationIcon = {
                         if (isSelectionMode) {
                             IconButton(onClick = { selectedIds = emptySet() }) {

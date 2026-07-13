@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -104,7 +105,7 @@ fun SettingsScreen(
     ) { uri -> uri?.let { vm.loadBackupForRestore(it) } }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(stringResource(R.string.settings_title)) }) }
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.settings_title)) }, colors = locaPeerTopAppBarColors()) }
     ) { padding ->
         LazyColumn(
             modifier = Modifier

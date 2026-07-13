@@ -6,6 +6,7 @@ import androidx.compose.material.icons.automirrored.filled.Chat
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
@@ -56,7 +57,7 @@ fun IncomingShareRequestScreen(
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text(title) }) }
+        topBar = { TopAppBar(title = { Text(title) }, colors = locaPeerTopAppBarColors()) }
     ) { padding ->
         Column(
             modifier = Modifier
