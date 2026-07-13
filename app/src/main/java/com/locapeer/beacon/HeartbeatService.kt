@@ -26,6 +26,7 @@ import com.google.android.gms.location.ActivityTransitionRequest
 import com.google.android.gms.location.ActivityTransitionResult
 import com.google.android.gms.location.DetectedActivity
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Granularity
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
@@ -107,6 +108,9 @@ class HeartbeatService : LifecycleService() {
     private lateinit var fusedLocation: FusedLocationProviderClient
     private val handler = Handler(Looper.getMainLooper())
     private val locationFilter = LocationFilter()
+    // Among fixes that clear the filter, picks the sharpest still-current one to report,
+    // rather than whichever landed last before the pulse (see FixSelector).
+    private val fixSelector = FixSelector()
 
     @Volatile private var lastLat = 0.0
     @Volatile private var lastLng = 0.0
@@ -163,15 +167,22 @@ class HeartbeatService : LifecycleService() {
                     Log.d(TAG, "Dropped implausible fix: acc=${loc.accuracy}m")
                     return
                 }
-                lastLat = loc.latitude
-                lastLng = loc.longitude
-                lastAccuracy = loc.accuracy
-                lastBearing = if (loc.hasBearing()) loc.bearing else 0f
-                // GPS altitude is often missing (indoors, cold fix); keep the last known
-                // reading rather than flicker to a misleading 0 m / sea level.
-                if (loc.hasAltitude()) lastAltitude = loc.altitude
+                // Classification (and the prev-fix baseline estimateSpeed advances) runs
+                // on every accepted fix, independent of which fix is chosen to report.
                 val speed = estimateSpeed(loc)
-                lastSpeed = speed ?: 0f
+                // Report the sharpest still-current fix in the window, not merely the
+                // latest: the selected fix's whole payload moves together so history and
+                // peers never see a coarse position stamped with a sharp fix's speed.
+                if (fixSelector.select(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
+                    lastLat = loc.latitude
+                    lastLng = loc.longitude
+                    lastAccuracy = loc.accuracy
+                    lastBearing = if (loc.hasBearing()) loc.bearing else 0f
+                    // GPS altitude is often missing (indoors, cold fix); keep the last known
+                    // reading rather than flicker to a misleading 0 m / sea level.
+                    if (loc.hasAltitude()) lastAltitude = loc.altitude
+                    lastSpeed = speed ?: 0f
+                }
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
                 if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // If no heartbeat has gone out yet (empty lastLocation cache at start,
@@ -568,6 +579,15 @@ class HeartbeatService : LifecycleService() {
         }
         return LocationRequest.Builder(priority, pollIntervalMs)
             .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+            // Hold briefly for a sharper first fix after each request reboot instead of
+            // returning the first coarse one; the reboot happens on every state change.
+            .setWaitForAccurateLocation(true)
+            // Fine granularity where the permission allows it, so a fix is never silently
+            // coarsened below what the priority already asked for.
+            .setGranularity(Granularity.GRANULARITY_FINE)
+            // A request reboot may otherwise replay a stale cached fix as the first
+            // delivery; require a genuinely fresh one so pulses never ship an old point.
+            .setMaxUpdateAgeMillis(0)
             .build()
     }
 
@@ -722,6 +742,9 @@ class HeartbeatService : LifecycleService() {
                     lastAccuracy = loc.accuracy
                     if (loc.hasBearing()) lastBearing = loc.bearing
                     if (loc.hasAltitude()) lastAltitude = loc.altitude
+                    // This forced position bypasses the selector; drop its baseline so the
+                    // next live fix is taken rather than held against a one-shot fetch.
+                    fixSelector.reset()
                     Log.d(TAG, "Force fetch successful")
                 } else {
                 Log.w(TAG, "Force fetch returned null location")
