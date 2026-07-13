@@ -84,6 +84,8 @@ fun ConversationListScreen(
     val archivedGroupConversations by vm.archivedGroupConversations.collectAsState()
     val peers by vm.peers.collectAsState()
     val unreadCounts by vm.unreadCounts.collectAsState()
+    val chatsUnreadTotal by vm.chatsUnreadTotal.collectAsState()
+    val circlesUnreadTotal by vm.circlesUnreadTotal.collectAsState()
     val searchQuery by vm.searchQuery.collectAsState()
     val sortOrder by vm.sortOrder.collectAsState()
 
@@ -333,12 +335,12 @@ fun ConversationListScreen(
                     Tab(
                         selected = currentTab == MessagesTab.CHATS,
                         onClick = { selectedTab = MessagesTab.CHATS.ordinal },
-                        text = { Text(stringResource(R.string.conv_tab_chats)) }
+                        text = { TabLabelWithBadge(stringResource(R.string.conv_tab_chats), chatsUnreadTotal) }
                     )
                     Tab(
                         selected = currentTab == MessagesTab.CIRCLES,
                         onClick = { selectedTab = MessagesTab.CIRCLES.ordinal },
-                        text = { Text(stringResource(R.string.conv_tab_circles)) }
+                        text = { TabLabelWithBadge(stringResource(R.string.conv_tab_circles), circlesUnreadTotal) }
                     )
                     Tab(
                         selected = currentTab == MessagesTab.ARCHIVED,
@@ -542,6 +544,26 @@ fun ConversationListScreen(
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+/**
+ * A sub-tab label with a trailing unread badge. Lets the Chats / Circles tabs surface unread that
+ * lives on a tab the user isn't currently viewing, mirroring the per-row unread badges. The badge
+ * is hidden at zero; counts above 99 collapse to "99+".
+ */
+@Composable
+private fun TabLabelWithBadge(label: String, unread: Int) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp)
+    ) {
+        Text(label)
+        if (unread > 0) {
+            Badge(containerColor = MaterialTheme.colorScheme.primary) {
+                Text(if (unread > 99) "99+" else "$unread")
             }
         }
     }
