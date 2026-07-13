@@ -798,8 +798,6 @@
     <string name="circles_new">Geengoo haaraa</string>
     <string name="circles_new_title">Geengoo haaraa</string>
     <string name="circles_no_contacts">Jalqaba quunnamtii dabali, ergasii geengoo tokko keessatti walitti qabi.</string>
-    <string name="circles_share_location">Bakka geengoo waliin qoodi</string>
-    <string name="circles_share_location_desc">Yeroo murtaa\'eef bakka kee kallattiin nama geengoo kana keessa jiran hunda waliin qoodi. Quunnamtiiwwan bakka duraan waliin qooddu battalumatti fudhachuu jalqabu.</string>
     <string name="circles_title">Geengoowwan</string>
     <string name="geo_section_areas">Naannoowwan qoodaman</string>
     <string name="geo_section_assignments">Geofence ramadaman</string>

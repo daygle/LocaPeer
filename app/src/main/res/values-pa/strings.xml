@@ -798,8 +798,6 @@
     <string name="circles_new">ਨਵਾਂ ਸਰਕਲ</string>
     <string name="circles_new_title">ਨਵਾਂ ਸਰਕਲ</string>
     <string name="circles_no_contacts">ਪਹਿਲਾਂ ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੋ, ਫਿਰ ਉਨ੍ਹਾਂ ਨੂੰ ਇੱਕ ਸਰਕਲ ਵਿੱਚ ਸਮੂਹਬੱਧ ਕਰੋ।</string>
-    <string name="circles_share_location">ਸਰਕਲ ਨਾਲ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰੋ</string>
-    <string name="circles_share_location_desc">ਨਿਰਧਾਰਤ ਸਮੇਂ ਲਈ ਇਸ ਸਰਕਲ ਦੇ ਸਾਰਿਆਂ ਨਾਲ ਆਪਣਾ ਲਾਈਵ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰੋ। ਜਿਨ੍ਹਾਂ ਸੰਪਰਕਾਂ ਨਾਲ ਤੁਸੀਂ ਪਹਿਲਾਂ ਹੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਦੇ ਹੋ, ਉਹ ਤੁਰੰਤ ਇਸ ਨੂੰ ਪ੍ਰਾਪਤ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰ ਦਿੰਦੇ ਹਨ।</string>
     <string name="circles_title">ਸਰਕਲ</string>
     <string name="geo_section_areas">ਸਾਂਝੇ ਖੇਤਰ</string>
     <string name="geo_section_assignments">ਨਿਯੁਕਤ ਜੀਓਫੈਂਸ</string>

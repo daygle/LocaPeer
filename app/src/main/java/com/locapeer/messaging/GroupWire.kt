@@ -6,7 +6,7 @@ import kotlinx.serialization.json.Json
 /**
  * Wire format for circle (group) messages. A group message is an ordinary NIP-44 encrypted DM
  * (kind ENCRYPTED_DM) whose decrypted plaintext is this envelope, distinguished from a plain
- * text message by a leading control-character [MAGIC]. Plain 1:1 messages stay raw text, so
+ * text message by a leading [MAGIC] tag. Plain 1:1 messages stay raw text, so
  * older clients and the existing link/pin detection keep working untouched.
  *
  * The envelope carries the circle id, its current name and full member list, so a recipient can
@@ -32,7 +32,9 @@ data class GroupMessage(
 )
 
 object GroupWire {
-    /** Control char + tag. A user cannot type U+0001 on a keyboard, so this can't collide with real text. */
+    /** Envelope tag ("LPG1"). It is ordinary printable text, but [decode] requires valid
+     *  GroupMessage JSON after it, so a plain message starting with "LPG1" is not mistaken
+     *  for a group message. */
     private const val MAGIC = "LPG1"
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }

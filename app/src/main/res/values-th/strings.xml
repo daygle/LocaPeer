@@ -783,8 +783,6 @@
     <string name="circles_new">วงกลมใหม่</string>
     <string name="circles_new_title">วงกลมใหม่</string>
     <string name="circles_no_contacts">เพิ่มผู้ติดต่อก่อน แล้วจึงจัดกลุ่มพวกเขาเป็นวงกลม</string>
-    <string name="circles_share_location">แชร์ตำแหน่งกับวงกลม</string>
-    <string name="circles_share_location_desc">แชร์ตำแหน่งสดของคุณกับทุกคนในวงกลมนี้เป็นเวลาที่กำหนด ผู้ติดต่อที่คุณแชร์ตำแหน่งด้วยอยู่แล้วจะเริ่มรับทันที</string>
     <string name="circles_title">วงกลม</string>
     <string name="geo_section_areas">พื้นที่ที่แชร์</string>
     <string name="geo_section_assignments">รั้วพิกัดที่กำหนด</string>

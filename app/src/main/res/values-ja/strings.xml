@@ -782,8 +782,6 @@
     <string name="circles_new">新しいサークル</string>
     <string name="circles_new_title">新しいサークル</string>
     <string name="circles_no_contacts">先に連絡先を追加してから、サークルにまとめてください。</string>
-    <string name="circles_share_location">サークルと位置情報を共有</string>
-    <string name="circles_share_location_desc">設定した時間だけ、このサークルの全員とリアルタイムの位置情報を共有します。すでに位置情報を共有している連絡先はすぐに受信を開始します。</string>
     <string name="circles_title">サークル</string>
     <string name="geo_section_areas">共有エリア</string>
     <string name="geo_section_assignments">割り当て済みジオフェンス</string>

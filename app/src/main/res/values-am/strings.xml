@@ -798,8 +798,6 @@
     <string name="circles_new">አዲስ ክብ</string>
     <string name="circles_new_title">አዲስ ክብ</string>
     <string name="circles_no_contacts">በመጀመሪያ እውቂያዎችን ያክሉ፣ ከዚያ በአንድ ክብ ውስጥ ያሰባስቧቸው።</string>
-    <string name="circles_share_location">ቦታን ከክብ ጋር አጋራ</string>
-    <string name="circles_share_location_desc">ለተወሰነ ጊዜ የቀጥታ ቦታዎን ከዚህ ክብ ውስጥ ካሉ ሁሉም ጋር ያጋሩ። ቀድሞ ቦታ የሚያጋሩዋቸው እውቂያዎች ወዲያውኑ መቀበል ይጀምራሉ።</string>
     <string name="circles_title">ክቦች</string>
     <string name="geo_section_areas">የተጋሩ አካባቢዎች</string>
     <string name="geo_section_assignments">የተመደቡ ጂኦፈንሶች</string>

@@ -858,8 +858,6 @@
     <string name="circles_new">دائرة جديدة</string>
     <string name="circles_new_title">دائرة جديدة</string>
     <string name="circles_no_contacts">أضف جهات اتصال أولًا، ثم اجمعها في دائرة.</string>
-    <string name="circles_share_location">مشاركة الموقع مع الدائرة</string>
-    <string name="circles_share_location_desc">شارك موقعك المباشر مع الجميع في هذه الدائرة لمدة محددة. جهات الاتصال التي تشارك موقعك معها بالفعل تبدأ في استلامه فورًا.</string>
     <string name="circles_title">الدوائر</string>
     <string name="geo_section_areas">المناطق المشتركة</string>
     <string name="geo_section_assignments">الأسيجة الجغرافية المعيّنة</string>

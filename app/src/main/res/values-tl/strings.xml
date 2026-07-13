@@ -798,8 +798,6 @@
     <string name="circles_new">Bagong circle</string>
     <string name="circles_new_title">Bagong circle</string>
     <string name="circles_no_contacts">Magdagdag muna ng mga contact, pagkatapos ay pagpangkatin sila sa isang circle.</string>
-    <string name="circles_share_location">Ibahagi ang lokasyon sa circle</string>
-    <string name="circles_share_location_desc">Ibahagi ang iyong live na lokasyon sa lahat sa circle na ito sa loob ng nakatakdang oras. Ang mga contact na binabahaginan mo na ng lokasyon ay agad itong matatanggap.</string>
     <string name="circles_title">Mga Circle</string>
     <string name="geo_section_areas">Mga ibinahaging lugar</string>
     <string name="geo_section_assignments">Mga nakatalagang geofence</string>

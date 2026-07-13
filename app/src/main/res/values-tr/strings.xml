@@ -798,8 +798,6 @@
     <string name="circles_new">Yeni çevre</string>
     <string name="circles_new_title">Yeni çevre</string>
     <string name="circles_no_contacts">Önce kişi ekleyin, sonra onları bir çevrede gruplayın.</string>
-    <string name="circles_share_location">Konumu çevreyle paylaş</string>
-    <string name="circles_share_location_desc">Canlı konumunuzu belirli bir süre boyunca bu çevredeki herkesle paylaşın. Konumunuzu zaten paylaştığınız kişiler onu hemen almaya başlar.</string>
     <string name="circles_title">Çevreler</string>
     <string name="geo_section_areas">Paylaşılan alanlar</string>
     <string name="geo_section_assignments">Atanmış coğrafi sınırlar</string>

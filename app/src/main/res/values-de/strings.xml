@@ -797,8 +797,6 @@
     <string name="circles_new">Neuer Kreis</string>
     <string name="circles_new_title">Neuer Kreis</string>
     <string name="circles_no_contacts">Füge zuerst Kontakte hinzu und gruppiere sie dann in einem Kreis.</string>
-    <string name="circles_share_location">Standort mit Kreis teilen</string>
-    <string name="circles_share_location_desc">Teile deinen Live-Standort für eine festgelegte Zeit mit allen in diesem Kreis. Kontakte, mit denen du bereits deinen Standort teilst, erhalten ihn sofort.</string>
     <string name="circles_title">Kreise</string>
     <string name="geo_section_areas">Geteilte Bereiche</string>
     <string name="geo_section_assignments">Zugewiesene Geofences</string>

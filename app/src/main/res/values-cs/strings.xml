@@ -828,8 +828,6 @@
     <string name="circles_new">Nový kruh</string>
     <string name="circles_new_title">Nový kruh</string>
     <string name="circles_no_contacts">Nejprve přidejte kontakty a poté je seskupte do kruhu.</string>
-    <string name="circles_share_location">Sdílet polohu s kruhem</string>
-    <string name="circles_share_location_desc">Sdílejte svou živou polohu se všemi v tomto kruhu po stanovenou dobu. Kontakty, s nimiž už polohu sdílíte, ji začnou dostávat okamžitě.</string>
     <string name="circles_title">Kruhy</string>
     <string name="geo_section_areas">Sdílené oblasti</string>
     <string name="geo_section_assignments">Přiřazené geofence</string>

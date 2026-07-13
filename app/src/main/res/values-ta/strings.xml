@@ -798,8 +798,6 @@
     <string name="circles_new">புதிய வட்டம்</string>
     <string name="circles_new_title">புதிய வட்டம்</string>
     <string name="circles_no_contacts">முதலில் தொடர்புகளைச் சேர்க்கவும், பிறகு அவர்களை ஒரு வட்டமாகக் குழுவாக்கவும்.</string>
-    <string name="circles_share_location">வட்டத்துடன் இடத்தைப் பகிர்</string>
-    <string name="circles_share_location_desc">நிர்ணயிக்கப்பட்ட நேரத்திற்கு இந்த வட்டத்தில் உள்ள அனைவருடனும் உங்கள் நேரடி இடத்தைப் பகிரவும். ஏற்கனவே இடத்தைப் பகிரும் தொடர்புகள் உடனடியாக அதைப் பெறத் தொடங்குவார்கள்.</string>
     <string name="circles_title">வட்டங்கள்</string>
     <string name="geo_section_areas">பகிரப்பட்ட பகுதிகள்</string>
     <string name="geo_section_assignments">ஒதுக்கப்பட்ட ஜியோஃபென்ஸ்கள்</string>

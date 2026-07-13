@@ -783,8 +783,6 @@
     <string name="circles_new">Lingkaran baru</string>
     <string name="circles_new_title">Lingkaran baru</string>
     <string name="circles_no_contacts">Tambahkan kontak dulu, lalu kelompokkan ke dalam lingkaran.</string>
-    <string name="circles_share_location">Bagikan lokasi dengan lingkaran</string>
-    <string name="circles_share_location_desc">Bagikan lokasi langsung Anda dengan semua orang di lingkaran ini selama waktu yang ditentukan. Kontak yang sudah Anda bagikan lokasinya akan langsung menerimanya.</string>
     <string name="circles_title">Lingkaran</string>
     <string name="geo_section_areas">Area bersama</string>
     <string name="geo_section_assignments">Geofence yang ditetapkan</string>

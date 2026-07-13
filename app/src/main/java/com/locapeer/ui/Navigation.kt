@@ -44,7 +44,6 @@ import com.locapeer.settings.PermissionsScreen
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.circles.CircleEditScreen
-import com.locapeer.circles.CircleListScreen
 import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
 import com.locapeer.sharing.ScheduleScreen
@@ -289,20 +288,6 @@ fun LocaPeerNavHost(
                             restoreState = true
                         }
                     }
-                )
-            }
-            composable(
-                "circles",
-                enterTransition = { slideEnter },
-                exitTransition = { slideExit },
-                popEnterTransition = { slidePopEnter },
-                popExitTransition = { slidePopExit }
-            ) {
-                CircleListScreen(
-                    onNavigateBack = { navController.popBackStack() },
-                    onOpenGroup = { circleId -> navController.navigate("groupchat/$circleId") },
-                    onCreate = { navController.navigate("circle-edit") },
-                    onEdit = { circleId -> navController.navigate("circle-edit?circleId=$circleId") }
                 )
             }
             composable(

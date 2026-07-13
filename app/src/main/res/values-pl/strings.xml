@@ -828,8 +828,6 @@
     <string name="circles_new">Nowy krąg</string>
     <string name="circles_new_title">Nowy krąg</string>
     <string name="circles_no_contacts">Najpierw dodaj kontakty, a następnie pogrupuj je w krąg.</string>
-    <string name="circles_share_location">Udostępnij lokalizację kręgowi</string>
-    <string name="circles_share_location_desc">Udostępniaj swoją lokalizację na żywo wszystkim w tym kręgu przez określony czas. Kontakty, którym już udostępniasz lokalizację, zaczną ją otrzymywać natychmiast.</string>
     <string name="circles_title">Kręgi</string>
     <string name="geo_section_areas">Udostępnione obszary</string>
     <string name="geo_section_assignments">Przypisane geofence</string>

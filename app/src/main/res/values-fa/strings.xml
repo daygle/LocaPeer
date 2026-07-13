@@ -798,8 +798,6 @@
     <string name="circles_new">حلقه جدید</string>
     <string name="circles_new_title">حلقه جدید</string>
     <string name="circles_no_contacts">ابتدا مخاطب اضافه کنید، سپس آن‌ها را در یک حلقه گروه‌بندی کنید.</string>
-    <string name="circles_share_location">اشتراک مکان با حلقه</string>
-    <string name="circles_share_location_desc">مکان زنده خود را برای مدتی مشخص با همه اعضای این حلقه به اشتراک بگذارید. مخاطبانی که مکان خود را از قبل با آن‌ها به اشتراک می‌گذارید، بلافاصله آن را دریافت می‌کنند.</string>
     <string name="circles_title">حلقه‌ها</string>
     <string name="geo_section_areas">مناطق مشترک</string>
     <string name="geo_section_assignments">حصارهای جغرافیایی تخصیص‌یافته</string>

@@ -798,8 +798,6 @@
     <string name="circles_new">نیا حلقہ</string>
     <string name="circles_new_title">نیا حلقہ</string>
     <string name="circles_no_contacts">پہلے رابطے شامل کریں، پھر انہیں ایک حلقے میں گروپ کریں۔</string>
-    <string name="circles_share_location">حلقے کے ساتھ مقام شیئر کریں</string>
-    <string name="circles_share_location_desc">اپنا لائیو مقام مقررہ وقت کے لیے اس حلقے کے سب لوگوں کے ساتھ شیئر کریں۔ جن رابطوں کے ساتھ آپ پہلے ہی مقام شیئر کرتے ہیں وہ اسے فوراً وصول کرنا شروع کر دیتے ہیں۔</string>
     <string name="circles_title">حلقے</string>
     <string name="geo_section_areas">مشترکہ علاقے</string>
     <string name="geo_section_assignments">تفویض کردہ جیو فینس</string>

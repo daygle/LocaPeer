@@ -6,8 +6,8 @@ import kotlinx.serialization.json.Json
 /**
  * Wire format for image / voice / file messages. Like [GroupWire], a media message is an ordinary
  * NIP-44 encrypted DM (kind ENCRYPTED_DM) whose decrypted plaintext is this envelope, distinguished
- * from plain text by a leading control-character [MAGIC]. Plain text messages stay raw, so older
- * clients and the location-pin detection keep working untouched.
+ * from plain text by a leading [MAGIC] tag immediately followed by the JSON object. Plain text
+ * messages stay raw, so older clients and the location-pin detection keep working untouched.
  *
  * The media bytes travel Base64-encoded inside [data] - aggressively downscaled/compressed and
  * size-capped before sending (see MediaUtils), so the payload stays within relay limits and the
@@ -39,16 +39,21 @@ object MediaKind {
 }
 
 object MediaWire {
-    /** Control char + tag; a user can't type U+0001, so this never collides with real text. */
+    /** Envelope tag ("LPM1"). It is ordinary printable text, so the `{`-follows check in
+     *  [isEnvelope] and the JSON parse in [decode] are what actually distinguish an envelope
+     *  from a plain message that merely starts with "LPM1". */
     private const val MAGIC = "LPM1"
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     fun encode(message: MediaMessage): String = MAGIC + json.encodeToString(MediaMessage.serializer(), message)
 
-    /** True when [plaintext] carries the media magic prefix, even if the body fails to decode.
-     *  Lets callers avoid rendering a raw (possibly corrupted) envelope as message text. */
-    fun isEnvelope(plaintext: String): Boolean = plaintext.startsWith(MAGIC)
+    /** True when [plaintext] looks like a media envelope - the [MAGIC] tag immediately followed by
+     *  the opening `{` of the JSON body - even if the body itself fails to decode. Lets callers
+     *  avoid rendering a raw (possibly corrupted) envelope as message text, without misfiring on a
+     *  plain message a user simply typed starting with "LPM1". */
+    fun isEnvelope(plaintext: String): Boolean =
+        plaintext.startsWith(MAGIC) && plaintext.getOrNull(MAGIC.length) == '{'
 
     /** Returns the decoded media message, or null when [plaintext] is not a media envelope. */
     fun decode(plaintext: String): MediaMessage? {

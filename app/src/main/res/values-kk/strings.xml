@@ -798,8 +798,6 @@
     <string name="circles_new">Жаңа шеңбер</string>
     <string name="circles_new_title">Жаңа шеңбер</string>
     <string name="circles_no_contacts">Алдымен контактілер қосыңыз, содан кейін оларды шеңберге топтастырыңыз.</string>
-    <string name="circles_share_location">Орынды шеңбермен бөлісу</string>
-    <string name="circles_share_location_desc">Тікелей орныңызды осы шеңбердегі барлығымен белгілі бір уақытқа бөлісіңіз. Орныңызды бұрыннан бөлісіп жүрген контактілер оны бірден ала бастайды.</string>
     <string name="circles_title">Шеңберлер</string>
     <string name="geo_section_areas">Ортақ аймақтар</string>
     <string name="geo_section_assignments">Тағайындалған геоаймақтар</string>

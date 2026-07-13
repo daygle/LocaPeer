@@ -813,8 +813,6 @@
     <string name="circles_new">Cerc nou</string>
     <string name="circles_new_title">Cerc nou</string>
     <string name="circles_no_contacts">Adaugă mai întâi contacte, apoi grupează-le într-un cerc.</string>
-    <string name="circles_share_location">Partajează locația cu cercul</string>
-    <string name="circles_share_location_desc">Partajează-ți locația în timp real cu toți din acest cerc pentru un timp stabilit. Contactele cu care partajezi deja locația încep să o primească imediat.</string>
     <string name="circles_title">Cercuri</string>
     <string name="geo_section_areas">Zone partajate</string>
     <string name="geo_section_assignments">Geofence atribuite</string>

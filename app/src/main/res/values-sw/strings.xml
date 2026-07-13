@@ -798,8 +798,6 @@
     <string name="circles_new">Duara jipya</string>
     <string name="circles_new_title">Duara jipya</string>
     <string name="circles_no_contacts">Ongeza anwani kwanza, kisha ziweke pamoja katika duara.</string>
-    <string name="circles_share_location">Shiriki mahali na duara</string>
-    <string name="circles_share_location_desc">Shiriki mahali ulipo moja kwa moja na kila mtu katika duara hili kwa muda uliowekwa. Anwani ambao tayari unashiriki nao mahali wataanza kupokea mara moja.</string>
     <string name="circles_title">Maduara</string>
     <string name="geo_section_areas">Maeneo yaliyoshirikiwa</string>
     <string name="geo_section_assignments">Geofence zilizokabidhiwa</string>

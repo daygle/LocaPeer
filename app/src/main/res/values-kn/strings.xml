@@ -798,8 +798,6 @@
     <string name="circles_new">ಹೊಸ ವೃತ್ತ</string>
     <string name="circles_new_title">ಹೊಸ ವೃತ್ತ</string>
     <string name="circles_no_contacts">ಮೊದಲು ಸಂಪರ್ಕಗಳನ್ನು ಸೇರಿಸಿ, ನಂತರ ಅವರನ್ನು ವೃತ್ತವಾಗಿ ಗುಂಪುಗೂಡಿಸಿ.</string>
-    <string name="circles_share_location">ವೃತ್ತದೊಂದಿಗೆ ಸ್ಥಳ ಹಂಚಿಕೊಳ್ಳಿ</string>
-    <string name="circles_share_location_desc">ನಿಗದಿತ ಸಮಯದವರೆಗೆ ಈ ವೃತ್ತದ ಎಲ್ಲರೊಂದಿಗೆ ನಿಮ್ಮ ನೇರ ಸ್ಥಳವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ. ನೀವು ಈಗಾಗಲೇ ಸ್ಥಳ ಹಂಚಿಕೊಳ್ಳುವ ಸಂಪರ್ಕಗಳು ತಕ್ಷಣ ಅದನ್ನು ಸ್ವೀಕರಿಸಲು ಪ್ರಾರಂಭಿಸುತ್ತವೆ.</string>
     <string name="circles_title">ವೃತ್ತಗಳು</string>
     <string name="geo_section_areas">ಹಂಚಿದ ಪ್ರದೇಶಗಳು</string>
     <string name="geo_section_assignments">ನಿಯೋಜಿಸಲಾದ ಜಿಯೋಫೆನ್ಸ್‌ಗಳು</string>

@@ -797,8 +797,6 @@
     <string name="circles_new">Nuova cerchia</string>
     <string name="circles_new_title">Nuova cerchia</string>
     <string name="circles_no_contacts">Aggiungi prima i contatti, poi raggruppali in una cerchia.</string>
-    <string name="circles_share_location">Condividi posizione con la cerchia</string>
-    <string name="circles_share_location_desc">Condividi la tua posizione in tempo reale con tutti nella cerchia per un tempo stabilito. I contatti con cui condividi già la posizione iniziano a riceverla subito.</string>
     <string name="circles_title">Cerchie</string>
     <string name="geo_section_areas">Aree condivise</string>
     <string name="geo_section_assignments">Geofence assegnati</string>
