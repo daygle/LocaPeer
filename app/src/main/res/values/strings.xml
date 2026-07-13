@@ -600,7 +600,7 @@
     <string name="history_emergency_sos">Emergency SOS signal</string>
     <string name="history_detail_location">Location</string>
     <string name="history_detail_coordinates">Coordinates</string>
-    <string name="history_within">within ±%1$s</string>
+    <string name="history_within">Within ±%1$s</string>
     <string name="history_detail_movement">Movement</string>
     <string name="history_movement_desc">%1$s %2$s heading %3$s</string>
 
