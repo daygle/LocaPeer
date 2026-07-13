@@ -41,6 +41,18 @@ fun CircleEditScreen(
     // non-owner never briefly sees editable controls. See CirclesViewModel.canEditCircle.
     val canEdit = !isEdit || (existingCircle != null && vm.canEditCircle(existingCircle, myPub))
 
+    // Who owns this circle (edit/view mode only), shown so members can see who controls its name
+    // and membership. "You" when this device is the owner, otherwise the contact's name (or Unknown
+    // for a creator who isn't in contacts). A blank creator is a legacy circle with no recorded
+    // owner, so nothing is shown. Held back until myPub loads so the owner never flashes as Unknown.
+    val ownerPubkey = existingCircle?.creatorPubkey?.takeIf { it.isNotBlank() }
+    val ownerName: String? = when {
+        !isEdit || ownerPubkey == null || myPub.isBlank() -> null
+        ownerPubkey == myPub -> stringResource(R.string.circles_owner_you)
+        else -> contacts.find { it.deviceId == ownerPubkey }?.displayName?.ifBlank { null }
+            ?: stringResource(R.string.fallback_unknown)
+    }
+
     var name by remember { mutableStateOf("") }
     var selected by remember { mutableStateOf<Set<String>>(emptySet()) }
     var seeded by remember { mutableStateOf(false) }
@@ -123,6 +135,15 @@ fun CircleEditScreen(
                 style = MaterialTheme.typography.labelLarge,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             )
+            // Surface the circle's owner (who alone can rename it / change members).
+            ownerName?.let { owner ->
+                Text(
+                    stringResource(R.string.circles_owner_label, owner),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp).padding(bottom = 8.dp)
+                )
+            }
             if (contacts.isEmpty()) {
                 Text(
                     stringResource(R.string.circles_no_contacts),
@@ -138,6 +159,17 @@ fun CircleEditScreen(
                         headlineContent = {
                             Text(contact.displayName.ifBlank { stringResource(R.string.fallback_unknown) })
                         },
+                        // Tag the owner's row so it's clear who controls the circle (the owner is
+                        // also a member). Only appears when the creator is one of your contacts.
+                        trailingContent = if (contact.deviceId == ownerPubkey) {
+                            {
+                                Text(
+                                    stringResource(R.string.circles_owner_tag),
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        } else null,
                         leadingContent = {
                             Checkbox(
                                 checked = checked,

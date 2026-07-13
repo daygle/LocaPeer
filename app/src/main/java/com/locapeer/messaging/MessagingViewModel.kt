@@ -130,6 +130,25 @@ class MessagingViewModel @Inject constructor(
             .map { rows -> rows.associate { it.peerId to it.cnt } }
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
 
+    /**
+     * Total unread across all non-archived 1:1 chats, driving the badge on the Chats sub-tab so
+     * unread on a tab the user isn't currently viewing is still visible. Computed from the raw DAO
+     * flows (not the search-filtered [conversations]) so the badge reflects the true tab state
+     * regardless of any active search.
+     */
+    val chatsUnreadTotal: StateFlow<Int> =
+        combine(peerDao.getAllPeers(), messageDao.getUnreadCountsPerPeer()) { peers, rows ->
+            val archived = peers.filter { it.isArchived }.map { it.deviceId }.toSet()
+            rows.filterNot { it.peerId in archived }.sumOf { it.cnt }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, 0)
+
+    /** Total unread across all non-archived circles, driving the badge on the Circles sub-tab. */
+    val circlesUnreadTotal: StateFlow<Int> =
+        combine(circleDao.observeCircles(), messageDao.getUnreadCountsPerGroup()) { circles, rows ->
+            val active = circles.filterNot { it.isArchived }.map { it.id }.toSet()
+            rows.filter { it.peerId in active }.sumOf { it.cnt }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, 0)
+
     /** Count of messages queued in the relay outbox (sent but not yet acknowledged by any
      *  relay). Surfaced on the chat list and AboutScreen so outbox backups are visible
      *  beyond the simple connected/disconnected dot. */
