@@ -137,10 +137,6 @@ cd LocaPeer
 
 **Default relays**: `wss://relay.daygle.net`, `wss://nos.lol`, `wss://relay.damus.io`, `wss://relay.snort.social`
 
-## Releases
-
-See [CHANGELOG.md](CHANGELOG.md) for a per-version list of what shipped (Added / Changed / Fixed / Security). The top of the file always carries an `[Unreleased]` section so contributors can see what has landed on `main` but is not yet tagged.
-
 ## Privacy & Security
 
 - **Zero Trust Relay**: The Nostr relay is a dumb transport; all application event payloads are NIP-44 encrypted before leaving the device. The relay can see NIP-09 deletion requests (kind 5, plaintext by standard) and event metadata (kind, timestamp, pubkey), but cannot read your location data or message content.
