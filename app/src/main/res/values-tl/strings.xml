@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Mababang Baterya (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Pagtukoy ng Galaw</string>
-    <string name="settings_motion_detection_on">Naka-on - pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
-    <string name="settings_motion_detection_off">Naka-off - payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
+    <string name="settings_motion_detection_on">Pinipino ang uri ng iyong galaw (paglalakad, pagmamaneho) sa kasaysayan</string>
+    <string name="settings_motion_detection_off">Payagan ang access sa pisikal na aktibidad para sa mas tumpak na mga label ng galaw</string>
     <string name="settings_battery_optimization">Optimization ng Baterya</string>
-    <string name="settings_battery_optimization_unrestricted">Walang limitasyon - maaaring malayang tumakbo ang LocaPeer sa background</string>
-    <string name="settings_battery_optimization_restricted">Na-optimize - i-tap para i-set sa Walang limitasyon sa mga setting ng system</string>
+    <string name="settings_battery_optimization_unrestricted">Maaaring malayang tumakbo ang LocaPeer sa background</string>
+    <string name="settings_battery_optimization_restricted">I-tap para i-set sa Walang limitasyon sa mga setting ng system</string>
 
     <!-- Mga Pahintulot -->
     <string name="settings_permissions">Mga Pahintulot</string>
     <string name="settings_permissions_subtitle">Suriin at ayusin ang access ng app sa lokasyon, camera, at higit pa</string>
     <string name="permissions_intro">Kailangan ng LocaPeer ang mga pahintulot na ito para ibahagi ang iyong lokasyon, mag-scan ng mga invite, at manatiling tumatakbo sa background. I-tap ang alinman na hindi pa ibinibigay para ayusin ang mga ito.</string>
     <string name="perm_location_title">Lokasyon</string>
-    <string name="perm_location_granted">Ibinigay na - maaaring ibahagi ang iyong lokasyon</string>
-    <string name="perm_location_denied">Hindi ibinigay - i-tap para payagan ang access sa lokasyon</string>
+    <string name="perm_location_granted">Maaaring ibahagi ang iyong lokasyon</string>
+    <string name="perm_location_denied">I-tap para payagan ang access sa lokasyon</string>
     <string name="perm_background_location_title">Lokasyon sa Background</string>
-    <string name="perm_background_location_granted">Ibinigay na - patuloy ang pagbabahagi ng lokasyon kapag sarado ang app</string>
-    <string name="perm_background_location_denied">Hindi ibinigay - i-tap para payagan ang access na \'Payagan sa lahat ng oras\' sa mga setting</string>
+    <string name="perm_background_location_granted">Patuloy ang pagbabahagi ng lokasyon kapag sarado ang app</string>
+    <string name="perm_background_location_denied">I-tap para payagan ang access na \'Payagan sa lahat ng oras\' sa mga setting</string>
     <string name="perm_camera_title">Camera</string>
-    <string name="perm_camera_granted">Ibinigay na - ginagamit para mag-scan ng mga invite QR code</string>
-    <string name="perm_camera_denied">Hindi ibinigay - i-tap para payagan ang camera</string>
+    <string name="perm_camera_granted">Ginagamit para mag-scan ng mga invite QR code</string>
+    <string name="perm_camera_denied">I-tap para payagan ang camera</string>
     <string name="perm_notifications_title">Mga Notification</string>
-    <string name="perm_notifications_granted">Ibinigay na - maaaring ipakita ang mga alerto at update sa status</string>
-    <string name="perm_notifications_denied">Hindi ibinigay - i-tap para payagan ang mga notification</string>
+    <string name="perm_notifications_granted">Maaaring ipakita ang mga alerto at update sa status</string>
+    <string name="perm_notifications_denied">I-tap para payagan ang mga notification</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Mga Yunit ng Bilis</string>

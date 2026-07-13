@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
@@ -37,6 +38,7 @@ fun PendingRequestsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(stringResource(R.string.contacts_cd_pending_requests)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {

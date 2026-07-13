@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -79,6 +80,7 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(stringResource(R.string.settings_permissions)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {

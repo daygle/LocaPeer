@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +40,7 @@ fun SupervisionGate(
         topBar = {
             if (onNavigateBack != null) {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     title = {},
                     navigationIcon = {
                         IconButton(onClick = onNavigateBack) {

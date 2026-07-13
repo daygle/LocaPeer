@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Baterai Lemah (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d mnt</string>
     <string name="settings_motion_detection">Deteksi Gerakan</string>
-    <string name="settings_motion_detection_on">Aktif - menyempurnakan jenis gerakan Anda (berjalan, berkendara) di riwayat</string>
-    <string name="settings_motion_detection_off">Nonaktif - izinkan akses aktivitas fisik untuk label gerakan yang lebih akurat</string>
+    <string name="settings_motion_detection_on">Menyempurnakan jenis gerakan Anda (berjalan, berkendara) di riwayat</string>
+    <string name="settings_motion_detection_off">Izinkan akses aktivitas fisik untuk label gerakan yang lebih akurat</string>
     <string name="settings_battery_optimization">Optimalisasi Baterai</string>
-    <string name="settings_battery_optimization_unrestricted">Tidak dibatasi - LocaPeer dapat berjalan bebas di latar belakang</string>
-    <string name="settings_battery_optimization_restricted">Dioptimalkan - ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer dapat berjalan bebas di latar belakang</string>
+    <string name="settings_battery_optimization_restricted">Ketuk untuk menyetel ke Tidak dibatasi di setelan sistem</string>
 
     <!-- Izin -->
     <string name="settings_permissions">Izin</string>
     <string name="settings_permissions_subtitle">Tinjau dan perbaiki akses aplikasi ke lokasi, kamera, dan lainnya</string>
     <string name="permissions_intro">LocaPeer memerlukan izin ini untuk berbagi lokasi Anda, memindai undangan, dan terus berjalan di latar belakang. Ketuk apa pun yang tidak diberikan untuk memperbaikinya.</string>
     <string name="perm_location_title">Lokasi</string>
-    <string name="perm_location_granted">Diberikan - lokasi Anda dapat dibagikan</string>
-    <string name="perm_location_denied">Tidak diberikan - ketuk untuk mengizinkan akses lokasi</string>
+    <string name="perm_location_granted">Lokasi Anda dapat dibagikan</string>
+    <string name="perm_location_denied">Ketuk untuk mengizinkan akses lokasi</string>
     <string name="perm_background_location_title">Lokasi Latar Belakang</string>
-    <string name="perm_background_location_granted">Diberikan - lokasi terus dibagikan saat aplikasi ditutup</string>
-    <string name="perm_background_location_denied">Tidak diberikan - ketuk untuk mengizinkan akses \'Izinkan sepanjang waktu\' di setelan</string>
+    <string name="perm_background_location_granted">Lokasi terus dibagikan saat aplikasi ditutup</string>
+    <string name="perm_background_location_denied">Ketuk untuk mengizinkan akses \'Izinkan sepanjang waktu\' di setelan</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Diberikan - digunakan untuk memindai kode QR undangan</string>
-    <string name="perm_camera_denied">Tidak diberikan - ketuk untuk mengizinkan kamera</string>
+    <string name="perm_camera_granted">Digunakan untuk memindai kode QR undangan</string>
+    <string name="perm_camera_denied">Ketuk untuk mengizinkan kamera</string>
     <string name="perm_notifications_title">Notifikasi</string>
-    <string name="perm_notifications_granted">Diberikan - peringatan dan pembaruan status dapat ditampilkan</string>
-    <string name="perm_notifications_denied">Tidak diberikan - ketuk untuk mengizinkan notifikasi</string>
+    <string name="perm_notifications_granted">Peringatan dan pembaruan status dapat ditampilkan</string>
+    <string name="perm_notifications_denied">Ketuk untuk mengizinkan notifikasi</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Satuan Kecepatan</string>

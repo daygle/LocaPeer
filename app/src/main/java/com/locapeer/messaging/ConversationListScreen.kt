@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.MarkChatUnread
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -243,9 +244,7 @@ fun ConversationListScreen(
                             Text(stringResource(R.string.tab_messages), fontWeight = FontWeight.SemiBold)
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
+                    colors = locaPeerTopAppBarColors(),
                     actions = {
                         if (isSelectionMode) {
                             IconButton(onClick = {

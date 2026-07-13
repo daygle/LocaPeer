@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">ዝቅተኛ ባትሪ (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d ደቂቃ</string>
     <string name="settings_motion_detection">እንቅስቃሴን መለየት</string>
-    <string name="settings_motion_detection_on">ነቅቷል - የእንቅስቃሴ አይነትዎን (መራመድ፣ መንዳት) በታሪክ ውስጥ ያጣራል</string>
-    <string name="settings_motion_detection_off">ጠፍቷል - ይበልጥ ትክክለኛ ለሆኑ የእንቅስቃሴ መሰየሚያዎች የአካል ብቃት እንቅስቃሴ መረጃን ይፍቀዱ</string>
+    <string name="settings_motion_detection_on">የእንቅስቃሴ አይነትዎን (መራመድ፣ መንዳት) በታሪክ ውስጥ ያጣራል</string>
+    <string name="settings_motion_detection_off">ይበልጥ ትክክለኛ ለሆኑ የእንቅስቃሴ መሰየሚያዎች የአካል ብቃት እንቅስቃሴ መረጃን ይፍቀዱ</string>
     <string name="settings_battery_optimization">የባትሪ ማመቻቸት</string>
-    <string name="settings_battery_optimization_unrestricted">ያልተገደበ - LocaPeer ከበስተጀርባ በነፃነት ሊሠራ ይችላል</string>
-    <string name="settings_battery_optimization_restricted">የተመቻቸ - በስርዓት ቅንብሮች ውስጥ ወደ ያልተገደበ ለመቀየር ይንኩ</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer ከበስተጀርባ በነፃነት ሊሠራ ይችላል</string>
+    <string name="settings_battery_optimization_restricted">በስርዓት ቅንብሮች ውስጥ ወደ ያልተገደበ ለመቀየር ይንኩ</string>
 
     <!-- ፈቃዶች -->
     <string name="settings_permissions">ፈቃዶች</string>
     <string name="settings_permissions_subtitle">የመተግበሪያውን የአካባቢ፣ የካሜራ እና ሌሎች ፈቃዶችን ይገምግሙ</string>
     <string name="permissions_intro">LocaPeer አካባቢዎን ለማጋራት፣ ግብዣዎችን ለመፈተሽ እና ከበስተጀርባ መስራቱን ለመቀጠል እነዚህ ፈቃዶች ያስፈልገዋል። ያልተሰጡትን ለማስተካከል የፈለጉትን ይንኩ።</string>
     <string name="perm_location_title">አካባቢ</string>
-    <string name="perm_location_granted">ተሰጥቷል - አካባቢዎ ሊጋራ ይችላል</string>
-    <string name="perm_location_denied">አልተሰጠም - የአካባቢ ፈቃድ ለመስጠት ይንኩ</string>
+    <string name="perm_location_granted">አካባቢዎ ሊጋራ ይችላል</string>
+    <string name="perm_location_denied">የአካባቢ ፈቃድ ለመስጠት ይንኩ</string>
     <string name="perm_background_location_title">የበስተጀርባ አካባቢ</string>
-    <string name="perm_background_location_granted">ተሰጥቷል - መተግበሪያው ሲዘጋም አካባቢ ማጋራት ይቀጥላል</string>
-    <string name="perm_background_location_denied">አልተሰጠም - በቅንብሮች ውስጥ \'ሁልጊዜ ፍቀድ\' የሚለውን ለመምረጥ ይንኩ</string>
+    <string name="perm_background_location_granted">መተግበሪያው ሲዘጋም አካባቢ ማጋራት ይቀጥላል</string>
+    <string name="perm_background_location_denied">በቅንብሮች ውስጥ \'ሁልጊዜ ፍቀድ\' የሚለውን ለመምረጥ ይንኩ</string>
     <string name="perm_camera_title">ካሜራ</string>
-    <string name="perm_camera_granted">ተሰጥቷል - የግብዣ QR ኮዶችን ለመፈተሽ ያገለግላል</string>
-    <string name="perm_camera_denied">አልተሰጠም - ካሜራውን ለመፍቀድ ይንኩ</string>
+    <string name="perm_camera_granted">የግብዣ QR ኮዶችን ለመፈተሽ ያገለግላል</string>
+    <string name="perm_camera_denied">ካሜራውን ለመፍቀድ ይንኩ</string>
     <string name="perm_notifications_title">ማሳወቂያዎች</string>
-    <string name="perm_notifications_granted">ተሰጥቷል - ማስጠንቀቂያዎች እና የሁኔታ ዝመናዎች ሊታዩ ይችላሉ</string>
-    <string name="perm_notifications_denied">አልተሰጠም - ማሳወቂያዎችን ለመፍቀድ ይንኩ</string>
+    <string name="perm_notifications_granted">ማስጠንቀቂያዎች እና የሁኔታ ዝመናዎች ሊታዩ ይችላሉ</string>
+    <string name="perm_notifications_denied">ማሳወቂያዎችን ለመፍቀድ ይንኩ</string>
 
     <!-- ዩኒቶች እና ማሳያ -->
     <string name="settings_speed_units">የፍጥነት ዩኒቶች</string>

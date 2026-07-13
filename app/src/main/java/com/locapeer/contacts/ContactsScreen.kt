@@ -14,6 +14,7 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -77,6 +78,7 @@ fun ContactsScreen(
         topBar = {
             if (isSelectionMode) {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     navigationIcon = {
                         IconButton(onClick = { selectedIds = emptySet() }) {
                             Icon(Icons.Default.Close, contentDescription = stringResource(R.string.contacts_cd_cancel_selection))
@@ -96,6 +98,7 @@ fun ContactsScreen(
                 )
             } else {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     title = { Text(stringResource(R.string.tab_contacts)) },
                     actions = {
                         IconButton(onClick = {

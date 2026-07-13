@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">배터리 부족 (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d분</string>
     <string name="settings_motion_detection">동작 감지</string>
-    <string name="settings_motion_detection_on">켜짐 - 기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
-    <string name="settings_motion_detection_off">꺼짐 - 더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
+    <string name="settings_motion_detection_on">기록에서 이동 유형(걷기, 운전)을 더 정밀하게 표시합니다</string>
+    <string name="settings_motion_detection_off">더 정확한 이동 라벨을 위해 신체 활동 접근을 허용하세요</string>
     <string name="settings_battery_optimization">배터리 최적화</string>
-    <string name="settings_battery_optimization_unrestricted">제한 없음 - LocaPeer가 백그라운드에서 자유롭게 실행될 수 있습니다</string>
-    <string name="settings_battery_optimization_restricted">최적화됨 - 시스템 설정에서 \'제한 없음\'으로 설정하려면 탭하세요</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer가 백그라운드에서 자유롭게 실행될 수 있습니다</string>
+    <string name="settings_battery_optimization_restricted">시스템 설정에서 \'제한 없음\'으로 설정하려면 탭하세요</string>
 
     <!-- 권한 -->
     <string name="settings_permissions">권한</string>
     <string name="settings_permissions_subtitle">위치, 카메라 등에 대한 앱 액세스 검토 및 수정</string>
     <string name="permissions_intro">LocaPeer가 위치를 공유하고, 초대를 스캔하며, 백그라운드에서 계속 실행되려면 이러한 권한이 필요합니다. 허용되지 않은 권한을 탭하여 수정하세요.</string>
     <string name="perm_location_title">위치</string>
-    <string name="perm_location_granted">허용됨 - 위치를 공유할 수 있습니다</string>
-    <string name="perm_location_denied">허용 안 됨 - 위치 액세스를 허용하려면 탭하세요</string>
+    <string name="perm_location_granted">위치를 공유할 수 있습니다</string>
+    <string name="perm_location_denied">위치 액세스를 허용하려면 탭하세요</string>
     <string name="perm_background_location_title">백그라운드 위치</string>
-    <string name="perm_background_location_granted">허용됨 - 앱이 닫혀 있을 때도 위치 공유를 계속합니다</string>
-    <string name="perm_background_location_denied">허용 안 됨 - 설정에서 \'항상 허용\' 액세스를 허용하려면 탭하세요</string>
+    <string name="perm_background_location_granted">앱이 닫혀 있을 때도 위치 공유를 계속합니다</string>
+    <string name="perm_background_location_denied">설정에서 \'항상 허용\' 액세스를 허용하려면 탭하세요</string>
     <string name="perm_camera_title">카메라</string>
-    <string name="perm_camera_granted">허용됨 - 초대 QR 코드를 스캔하는 데 사용됩니다</string>
-    <string name="perm_camera_denied">허용 안 됨 - 카메라를 허용하려면 탭하세요</string>
+    <string name="perm_camera_granted">초대 QR 코드를 스캔하는 데 사용됩니다</string>
+    <string name="perm_camera_denied">카메라를 허용하려면 탭하세요</string>
     <string name="perm_notifications_title">알림</string>
-    <string name="perm_notifications_granted">허용됨 - 알림 및 상태 업데이트를 표시할 수 있습니다</string>
-    <string name="perm_notifications_denied">허용 안 됨 - 알림을 허용하려면 탭하세요</string>
+    <string name="perm_notifications_granted">알림 및 상태 업데이트를 표시할 수 있습니다</string>
+    <string name="perm_notifications_denied">알림을 허용하려면 탭하세요</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">속도 단위</string>

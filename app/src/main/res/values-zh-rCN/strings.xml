@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">低电量 (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d 分钟</string>
     <string name="settings_motion_detection">运动检测</string>
-    <string name="settings_motion_detection_on">已启用 - 优化历史记录中的运动类型 (步行, 驾车)</string>
-    <string name="settings_motion_detection_off">关闭 - 允许访问身体活动以获得更准确的运动标签</string>
+    <string name="settings_motion_detection_on">优化历史记录中的运动类型 (步行, 驾车)</string>
+    <string name="settings_motion_detection_off">允许访问身体活动以获得更准确的运动标签</string>
     <string name="settings_battery_optimization">电池优化</string>
-    <string name="settings_battery_optimization_unrestricted">无限制 - LocaPeer 可以在后台自由运行</string>
-    <string name="settings_battery_optimization_restricted">已优化 - 点击在系统设置中设为“无限制”</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer 可以在后台自由运行</string>
+    <string name="settings_battery_optimization_restricted">点击在系统设置中设为“无限制”</string>
 
     <!-- 权限 -->
     <string name="settings_permissions">权限</string>
     <string name="settings_permissions_subtitle">查看并修复应用对位置、摄像头等的访问权限</string>
     <string name="permissions_intro">LocaPeer 需要这些权限来共享您的位置、扫描邀请并保持后台运行。点击任何未授予的权限进行修复。</string>
     <string name="perm_location_title">位置</string>
-    <string name="perm_location_granted">已授予 - 可以共享您的位置</string>
-    <string name="perm_location_denied">未授予 - 点击以允许访问位置信息</string>
+    <string name="perm_location_granted">可以共享您的位置</string>
+    <string name="perm_location_denied">点击以允许访问位置信息</string>
     <string name="perm_background_location_title">后台位置</string>
-    <string name="perm_background_location_granted">已授予 - 应用关闭时仍持续共享位置</string>
-    <string name="perm_background_location_denied">未授予 - 点击以在设置中允许“始终允许”访问</string>
+    <string name="perm_background_location_granted">应用关闭时仍持续共享位置</string>
+    <string name="perm_background_location_denied">点击以在设置中允许“始终允许”访问</string>
     <string name="perm_camera_title">摄像头</string>
-    <string name="perm_camera_granted">已授予 - 用于扫描邀请二维码</string>
-    <string name="perm_camera_denied">未授予 - 点击以允许使用摄像头</string>
+    <string name="perm_camera_granted">用于扫描邀请二维码</string>
+    <string name="perm_camera_denied">点击以允许使用摄像头</string>
     <string name="perm_notifications_title">通知</string>
-    <string name="perm_notifications_granted">已授予 - 可以显示警报和状态更新</string>
-    <string name="perm_notifications_denied">未授予 - 点击以允许通知</string>
+    <string name="perm_notifications_granted">可以显示警报和状态更新</string>
+    <string name="perm_notifications_denied">点击以允许通知</string>
 
     <!-- 单位与显示 -->
     <string name="settings_speed_units">速度单位</string>

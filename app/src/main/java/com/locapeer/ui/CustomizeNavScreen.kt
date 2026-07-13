@@ -8,6 +8,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -47,6 +48,7 @@ fun CustomizeNavScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(stringResource(R.string.settings_customize_nav)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {

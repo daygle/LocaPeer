@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -93,6 +94,7 @@ fun HistoryReportScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = {
                     Text(
                         when {

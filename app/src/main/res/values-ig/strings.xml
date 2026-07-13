@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Batrị dị ala (&lt; 20%)</string>
     <string name="settings_minutes_short">Nkeji %1$d</string>
     <string name="settings_motion_detection">Nchọpụta Mmegharị</string>
-    <string name="settings_motion_detection_on">Gbanyere - na-edozi ụdị mmegharị gị (ije ije, ịkwọ ụgbọala) na akụkọ</string>
-    <string name="settings_motion_detection_off">Gbanyụọ - kwe ka ịnweta ọrụ anụ ahụ maka akara mmegharị ziri ezi</string>
+    <string name="settings_motion_detection_on">Na-edozi ụdị mmegharị gị (ije ije, ịkwọ ụgbọala) na akụkọ</string>
+    <string name="settings_motion_detection_off">Kwe ka ịnweta ọrụ anụ ahụ maka akara mmegharị ziri ezi</string>
     <string name="settings_battery_optimization">Nkwalite Batrị</string>
-    <string name="settings_battery_optimization_unrestricted">Enweghị mgbochi - LocaPeer nwere ike na-agba n\'azụ n\'efu</string>
-    <string name="settings_battery_optimization_restricted">Emegharịrị - pịa ka ịtọọ Enweghị mgbochi na ntọala sistemụ</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer nwere ike na-agba n\'azụ n\'efu</string>
+    <string name="settings_battery_optimization_restricted">Pịa ka ịtọọ Enweghị mgbochi na ntọala sistemụ</string>
 
     <!-- Ikike -->
     <string name="settings_permissions">Ikike</string>
     <string name="settings_permissions_subtitle">Nyochaa ma dozie ohere ngwa na ebe, igwefoto na ndị ọzọ</string>
     <string name="permissions_intro">LocaPeer chọrọ ikike ndị a iji kesaa ebe ị nọ, nyochaa òkù ma na-agba n\'azụ. Pịa nke ọ bụla na-enyeghị ka idozie ha.</string>
     <string name="perm_location_title">Ebe</string>
-    <string name="perm_location_granted">Enyere - enwere ike ikesa ebe ị nọ</string>
-    <string name="perm_location_denied">Enyeghị - pịa ka ị kwe ka ohere ebe</string>
+    <string name="perm_location_granted">Enwere ike ikesa ebe ị nọ</string>
+    <string name="perm_location_denied">Pịa ka ị kwe ka ohere ebe</string>
     <string name="perm_background_location_title">Ebe n\'azụ</string>
-    <string name="perm_background_location_granted">Enyere - ebe na-aga n\'ihu na-ekerịta mgbe emechiri ngwa ahụ</string>
-    <string name="perm_background_location_denied">Enyeghị - pịa ka ị kwe ka ohere \'Kwe ka oge niile\' na ntọala</string>
+    <string name="perm_background_location_granted">Ebe na-aga n\'ihu na-ekerịta mgbe emechiri ngwa ahụ</string>
+    <string name="perm_background_location_denied">Pịa ka ị kwe ka ohere \'Kwe ka oge niile\' na ntọala</string>
     <string name="perm_camera_title">Igwefoto</string>
-    <string name="perm_camera_granted">Enyere - eji nyochaa koodu QR òkù</string>
-    <string name="perm_camera_denied">Enyeghị - pịa ka ị kwe ka igwefoto</string>
+    <string name="perm_camera_granted">Eji nyochaa koodu QR òkù</string>
+    <string name="perm_camera_denied">Pịa ka ị kwe ka igwefoto</string>
     <string name="perm_notifications_title">Ọkwa</string>
-    <string name="perm_notifications_granted">Enyere - mkpu na mmelite ọkwa nwere ike ịpụta</string>
-    <string name="perm_notifications_denied">Enyeghị - pịa ka ị kwe ka ọkwa</string>
+    <string name="perm_notifications_granted">Mkpu na mmelite ọkwa nwere ike ịpụta</string>
+    <string name="perm_notifications_denied">Pịa ka ị kwe ka ọkwa</string>
 
     <!-- Nkeji &amp; Ngosipụta -->
     <string name="settings_speed_units">Nkeji Ọsọ</string>

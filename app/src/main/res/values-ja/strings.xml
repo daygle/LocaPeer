@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">低バッテリー (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d 分</string>
     <string name="settings_motion_detection">動作検出</string>
-    <string name="settings_motion_detection_on">有効 - 履歴内の移動タイプ（歩行、運転）を精緻化します</string>
-    <string name="settings_motion_detection_off">オフ - より正確な移動ラベルのために身体活動へのアクセスを許可してください</string>
+    <string name="settings_motion_detection_on">履歴内の移動タイプ（歩行、運転）を精緻化します</string>
+    <string name="settings_motion_detection_off">より正確な移動ラベルのために身体活動へのアクセスを許可してください</string>
     <string name="settings_battery_optimization">バッテリーの最適化</string>
-    <string name="settings_battery_optimization_unrestricted">制限なし - LocaPeer はバックグラウンドで自由に実行できます</string>
-    <string name="settings_battery_optimization_restricted">最適化済み - タップしてシステム設定で「制限なし」に設定してください</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer はバックグラウンドで自由に実行できます</string>
+    <string name="settings_battery_optimization_restricted">タップしてシステム設定で「制限なし」に設定してください</string>
 
     <!-- 権限 -->
     <string name="settings_permissions">権限</string>
     <string name="settings_permissions_subtitle">位置情報やカメラなどへのアプリのアクセスを確認・修正します</string>
     <string name="permissions_intro">LocaPeer は、位置情報の共有、招待のスキャン、バックグラウンドでの動作継続のためにこれらの権限を必要とします。未許可のものをタップして修正してください。</string>
     <string name="perm_location_title">位置情報</string>
-    <string name="perm_location_granted">許可済み - 位置情報を共有できます</string>
-    <string name="perm_location_denied">未許可 - タップして位置情報へのアクセスを許可してください</string>
+    <string name="perm_location_granted">位置情報を共有できます</string>
+    <string name="perm_location_denied">タップして位置情報へのアクセスを許可してください</string>
     <string name="perm_background_location_title">バックグラウンドでの位置情報</string>
-    <string name="perm_background_location_granted">許可済み - アプリを閉じている間も位置情報の共有を継続します</string>
-    <string name="perm_background_location_denied">未許可 - タップして設定で「常に許可」を選択してください</string>
+    <string name="perm_background_location_granted">アプリを閉じている間も位置情報の共有を継続します</string>
+    <string name="perm_background_location_denied">タップして設定で「常に許可」を選択してください</string>
     <string name="perm_camera_title">カメラ</string>
-    <string name="perm_camera_granted">許可済み - 招待のQRコードのスキャンに使用されます</string>
-    <string name="perm_camera_denied">未許可 - タップしてカメラを許可してください</string>
+    <string name="perm_camera_granted">招待のQRコードのスキャンに使用されます</string>
+    <string name="perm_camera_denied">タップしてカメラを許可してください</string>
     <string name="perm_notifications_title">通知</string>
-    <string name="perm_notifications_granted">許可済み - アラートやステータスの更新を表示できます</string>
-    <string name="perm_notifications_denied">未許可 - タップして通知を許可してください</string>
+    <string name="perm_notifications_granted">アラートやステータスの更新を表示できます</string>
+    <string name="perm_notifications_denied">タップして通知を許可してください</string>
 
     <!-- 単位と表示 -->
     <string name="settings_speed_units">速度の単位</string>

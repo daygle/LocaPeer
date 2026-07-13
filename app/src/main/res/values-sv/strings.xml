@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Lågt batteri (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Rörelsedetektering</string>
-    <string name="settings_motion_detection_on">Aktiverad - förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
-    <string name="settings_motion_detection_off">Av - tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
+    <string name="settings_motion_detection_on">Förfinar din rörelsetyp (gång, bilkörning) i historiken</string>
+    <string name="settings_motion_detection_off">Tillåt åtkomst till fysisk aktivitet för mer exakta rörelseetiketter</string>
     <string name="settings_battery_optimization">Batterioptimering</string>
-    <string name="settings_battery_optimization_unrestricted">Obegränsad - LocaPeer kan köras fritt i bakgrunden</string>
-    <string name="settings_battery_optimization_restricted">Optimerad - tryck för att ställa in Obegränsad i systeminställningarna</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer kan köras fritt i bakgrunden</string>
+    <string name="settings_battery_optimization_restricted">Tryck för att ställa in Obegränsad i systeminställningarna</string>
 
     <!-- Behörigheter -->
     <string name="settings_permissions">Behörigheter</string>
     <string name="settings_permissions_subtitle">Granska och åtgärda appens åtkomst till plats, kamera med mera</string>
     <string name="permissions_intro">LocaPeer behöver dessa behörigheter för att dela din plats, skanna inbjudningar och fortsätta köras i bakgrunden. Tryck på de som inte har beviljats för att åtgärda dem.</string>
     <string name="perm_location_title">Plats</string>
-    <string name="perm_location_granted">Beviljad - din plats kan delas</string>
-    <string name="perm_location_denied">Inte beviljad - tryck för att tillåta platsåtkomst</string>
+    <string name="perm_location_granted">Din plats kan delas</string>
+    <string name="perm_location_denied">Tryck för att tillåta platsåtkomst</string>
     <string name="perm_background_location_title">Bakgrundsplats</string>
-    <string name="perm_background_location_granted">Beviljad - platsen fortsätter att delas när appen är stängd</string>
-    <string name="perm_background_location_denied">Inte beviljad - tryck för att tillåta åtkomst \"Tillåt alltid\" i inställningarna</string>
+    <string name="perm_background_location_granted">Platsen fortsätter att delas när appen är stängd</string>
+    <string name="perm_background_location_denied">Tryck för att tillåta åtkomst \"Tillåt alltid\" i inställningarna</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Beviljad - används för att skanna QR-koder för inbjudningar</string>
-    <string name="perm_camera_denied">Inte beviljad - tryck för att tillåta kameran</string>
+    <string name="perm_camera_granted">Används för att skanna QR-koder för inbjudningar</string>
+    <string name="perm_camera_denied">Tryck för att tillåta kameran</string>
     <string name="perm_notifications_title">Aviseringar</string>
-    <string name="perm_notifications_granted">Beviljad - varningar och statusuppdateringar kan visas</string>
-    <string name="perm_notifications_denied">Inte beviljad - tryck för att tillåta aviseringar</string>
+    <string name="perm_notifications_granted">Varningar och statusuppdateringar kan visas</string>
+    <string name="perm_notifications_denied">Tryck för att tillåta aviseringar</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hastighetsenheter</string>

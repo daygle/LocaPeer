@@ -123,28 +123,28 @@
     <string name="settings_low_battery" formatted="false">Baterie scăzută (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Detectarea mișcării</string>
-    <string name="settings_motion_detection_on">Activată - rafinează tipul de mișcare (mers, condus) din istoric</string>
-    <string name="settings_motion_detection_off">Dezactivată - permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
+    <string name="settings_motion_detection_on">Rafinează tipul de mișcare (mers, condus) din istoric</string>
+    <string name="settings_motion_detection_off">Permiteți accesul la activitatea fizică pentru etichete de mișcare mai precise</string>
     <string name="settings_battery_optimization">Optimizarea bateriei</string>
-    <string name="settings_battery_optimization_unrestricted">Nerestricționat - LocaPeer poate rula liber în fundal</string>
-    <string name="settings_battery_optimization_restricted">Optimizat - atingeți pentru a seta Nerestricționat în setările sistemului</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer poate rula liber în fundal</string>
+    <string name="settings_battery_optimization_restricted">Atingeți pentru a seta Nerestricționat în setările sistemului</string>
 
     <!-- Permisiuni -->
     <string name="settings_permissions">Permisiuni</string>
     <string name="settings_permissions_subtitle">Examinați și corectați accesul aplicației la locație, cameră și altele</string>
     <string name="permissions_intro">LocaPeer are nevoie de aceste permisiuni pentru a vă partaja locația, a scana invitații și a continua să ruleze în fundal. Atingeți oricare dintre cele neacordate pentru a le corecta.</string>
     <string name="perm_location_title">Locație</string>
-    <string name="perm_location_granted">Acordat - locația dvs. poate fi partajată</string>
-    <string name="perm_location_denied">Neacordat - atingeți pentru a permite accesul la locație</string>
+    <string name="perm_location_granted">Locația dvs. poate fi partajată</string>
+    <string name="perm_location_denied">Atingeți pentru a permite accesul la locație</string>
     <string name="perm_background_location_title">Locație în fundal</string>
-    <string name="perm_background_location_granted">Acordat - locația continuă să fie partajată când aplicația este închisă</string>
-    <string name="perm_background_location_denied">Neacordat - atingeți pentru a permite accesul „Întotdeauna” în setări</string>
+    <string name="perm_background_location_granted">Locația continuă să fie partajată când aplicația este închisă</string>
+    <string name="perm_background_location_denied">Atingeți pentru a permite accesul „Întotdeauna” în setări</string>
     <string name="perm_camera_title">Cameră</string>
-    <string name="perm_camera_granted">Acordat - utilizată pentru a scana codurile QR de invitație</string>
-    <string name="perm_camera_denied">Neacordat - atingeți pentru a permite camera</string>
+    <string name="perm_camera_granted">Utilizată pentru a scana codurile QR de invitație</string>
+    <string name="perm_camera_denied">Atingeți pentru a permite camera</string>
     <string name="perm_notifications_title">Notificări</string>
-    <string name="perm_notifications_granted">Acordat - alerte și actualizări de stare pot fi afișate</string>
-    <string name="perm_notifications_denied">Neacordat - atingeți pentru a permite notificările</string>
+    <string name="perm_notifications_granted">Alerte și actualizări de stare pot fi afișate</string>
+    <string name="perm_notifications_denied">Atingeți pentru a permite notificările</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Unități de viteză</string>

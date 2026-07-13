@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -125,6 +126,7 @@ private fun GlobalGeofencesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(stringResource(R.string.settings_geofences)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
@@ -242,6 +244,7 @@ private fun ContactGeofencesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(title) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
@@ -561,6 +564,7 @@ private fun GeofenceAreaDialog(
         Scaffold(
             topBar = {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     title = { Text(if (existing != null) stringResource(R.string.geo_edit_title) else stringResource(R.string.geo_new_title)) },
                     navigationIcon = {
                         IconButton(onClick = onDismiss) {
@@ -858,6 +862,7 @@ private fun AssignmentDialog(
         Scaffold(
             topBar = {
                 TopAppBar(
+                    colors = locaPeerTopAppBarColors(),
                     title = { Text(if (existing != null) stringResource(R.string.geo_edit_assignment) else stringResource(R.string.geo_assign_title)) },
                     navigationIcon = {
                         IconButton(onClick = onDismiss) {

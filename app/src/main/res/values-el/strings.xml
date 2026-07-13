@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Χαμηλή μπαταρία (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d λεπ.</string>
     <string name="settings_motion_detection">Ανίχνευση κίνησης</string>
-    <string name="settings_motion_detection_on">Ενεργή - βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
-    <string name="settings_motion_detection_off">Ανενεργή - επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
+    <string name="settings_motion_detection_on">Βελτιώνει τον τύπο κίνησης (περπάτημα, οδήγηση) στο ιστορικό</string>
+    <string name="settings_motion_detection_off">Επιτρέψτε την πρόσβαση στη σωματική δραστηριότητα για ακριβέστερες ετικέτες κίνησης</string>
     <string name="settings_battery_optimization">Βελτιστοποίηση μπαταρίας</string>
-    <string name="settings_battery_optimization_unrestricted">Χωρίς περιορισμούς - το LocaPeer μπορεί να εκτελείται ελεύθερα στο παρασκήνιο</string>
-    <string name="settings_battery_optimization_restricted">Βελτιστοποιημένη - πατήστε για να ορίσετε Χωρίς περιορισμούς στις ρυθμίσεις συστήματος</string>
+    <string name="settings_battery_optimization_unrestricted">Το LocaPeer μπορεί να εκτελείται ελεύθερα στο παρασκήνιο</string>
+    <string name="settings_battery_optimization_restricted">Πατήστε για να ορίσετε Χωρίς περιορισμούς στις ρυθμίσεις συστήματος</string>
 
     <!-- Άδειες -->
     <string name="settings_permissions">Άδειες</string>
     <string name="settings_permissions_subtitle">Ελέγξτε και διορθώστε την πρόσβαση της εφαρμογής στην τοποθεσία, την κάμερα και άλλα</string>
     <string name="permissions_intro">Το LocaPeer χρειάζεται αυτές τις άδειες για να μοιράζεται την τοποθεσία σας, να σαρώνει προσκλήσεις και να συνεχίζει να εκτελείται στο παρασκήνιο. Πατήστε οποιαδήποτε δεν έχει εκχωρηθεί για να τη διορθώσετε.</string>
     <string name="perm_location_title">Τοποθεσία</string>
-    <string name="perm_location_granted">Εκχωρήθηκε - η τοποθεσία σας μπορεί να μοιραστεί</string>
-    <string name="perm_location_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την πρόσβαση στην τοποθεσία</string>
+    <string name="perm_location_granted">Η τοποθεσία σας μπορεί να μοιραστεί</string>
+    <string name="perm_location_denied">Πατήστε για να επιτρέψετε την πρόσβαση στην τοποθεσία</string>
     <string name="perm_background_location_title">Τοποθεσία στο παρασκήνιο</string>
-    <string name="perm_background_location_granted">Εκχωρήθηκε - η κοινή χρήση τοποθεσίας συνεχίζεται όταν η εφαρμογή είναι κλειστή</string>
-    <string name="perm_background_location_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την πρόσβαση «Να επιτρέπεται πάντα» στις ρυθμίσεις</string>
+    <string name="perm_background_location_granted">Η κοινή χρήση τοποθεσίας συνεχίζεται όταν η εφαρμογή είναι κλειστή</string>
+    <string name="perm_background_location_denied">Πατήστε για να επιτρέψετε την πρόσβαση «Να επιτρέπεται πάντα» στις ρυθμίσεις</string>
     <string name="perm_camera_title">Κάμερα</string>
-    <string name="perm_camera_granted">Εκχωρήθηκε - χρησιμοποιείται για τη σάρωση κωδικών QR προσκλήσεων</string>
-    <string name="perm_camera_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε την κάμερα</string>
+    <string name="perm_camera_granted">Χρησιμοποιείται για τη σάρωση κωδικών QR προσκλήσεων</string>
+    <string name="perm_camera_denied">Πατήστε για να επιτρέψετε την κάμερα</string>
     <string name="perm_notifications_title">Ειδοποιήσεις</string>
-    <string name="perm_notifications_granted">Εκχωρήθηκε - μπορούν να εμφανιστούν ειδοποιήσεις και ενημερώσεις κατάστασης</string>
-    <string name="perm_notifications_denied">Δεν εκχωρήθηκε - πατήστε για να επιτρέψετε τις ειδοποιήσεις</string>
+    <string name="perm_notifications_granted">Μπορούν να εμφανιστούν ειδοποιήσεις και ενημερώσεις κατάστασης</string>
+    <string name="perm_notifications_denied">Πατήστε για να επιτρέψετε τις ειδοποιήσεις</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Μονάδες ταχύτητας</string>

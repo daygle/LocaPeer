@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.*
+import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
@@ -38,6 +39,7 @@ fun AboutScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                colors = locaPeerTopAppBarColors(),
                 title = { Text(stringResource(R.string.settings_about_locapeer)) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
