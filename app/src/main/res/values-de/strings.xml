@@ -786,7 +786,6 @@
     <string name="circles_delete">Kreis löschen</string>
     <string name="circles_delete_message">\"%1$s\" und die zugehörige Gruppenunterhaltung löschen? Dies entfernt sie nur von deinem Gerät.</string>
     <string name="circles_delete_title">Kreis löschen?</string>
-    <string name="circles_edit">Bearbeiten</string>
     <string name="circles_edit_title">Kreis bearbeiten</string>
     <string name="circles_empty_body">Erstelle einen Kreis, um einer Gruppe von Kontakten zu schreiben und deinen Standort mit allen gleichzeitig zu teilen.</string>
     <string name="circles_empty_title">Noch keine Kreise</string>
@@ -835,4 +834,26 @@
     <string name="settings_theme_light">Hell</string>
     <string name="settings_theme_mode">Design</string>
     <string name="settings_theme_system">System folgen</string>
+    <string name="chat_preview_file">📎 Datei</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Anhang</string>
+    <string name="chat_cd_attach_file">Datei anhängen</string>
+    <string name="chat_file_tap_to_open">Zum Öffnen tippen</string>
+    <string name="chat_file_too_large">Datei ist zu groß (max. 100 KB)</string>
+    <string name="chat_file_unreadable">Datei konnte nicht gelesen werden</string>
+    <string name="chat_file_no_app">Keine App kann diese Datei öffnen</string>
+    <string name="circles_view_members">Mitglieder anzeigen</string>
+    <string name="circles_view_title">Kreismitglieder</string>
+    <string name="circles_owner_only">Nur der Eigentümer des Kreises kann ihn umbenennen oder seine Mitglieder ändern.</string>
+    <string name="circles_owner_label">Eigentümer: %1$s</string>
+    <string name="circles_owner_you">Du</string>
+    <string name="circles_owner_tag">Eigentümer</string>
+    <string name="circles_leave">Kreis verlassen</string>
+    <string name="circles_leave_title">Kreis verlassen?</string>
+    <string name="circles_leave_message">„%1$s\" verlassen? Der Eigentümer wird benachrichtigt und entfernt dich aus dem Kreis.</string>
+    <string name="circles_leave_local">Verlassen und auf diesem Gerät löschen</string>
+    <string name="circles_leave_local_sub">Entfernt den Kreis und seine Nachrichten von diesem Gerät. Von dir gesendete Nachrichten bleiben auf den Geräten der anderen Mitglieder.</string>
+    <string name="circles_leave_remote">Verlassen und überall löschen</string>
+    <string name="circles_leave_remote_sub">Löscht auch die von dir gesendeten Nachrichten von den Geräten der anderen Mitglieder.</string>
+    <string name="conv_mark_unread">Als ungelesen markieren</string>
 </resources>

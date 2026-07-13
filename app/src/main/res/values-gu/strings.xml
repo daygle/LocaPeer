@@ -787,7 +787,6 @@
     <string name="circles_delete">વર્તુળ કાઢી નાખો</string>
     <string name="circles_delete_message">\"%1$s\" અને તેની જૂથ વાતચીત કાઢી નાખવી? આ ફક્ત તમારા ડિવાઇસમાંથી દૂર કરે છે.</string>
     <string name="circles_delete_title">વર્તુળ કાઢી નાખવું?</string>
-    <string name="circles_edit">સંપાદિત કરો</string>
     <string name="circles_edit_title">વર્તુળ સંપાદિત કરો</string>
     <string name="circles_empty_body">સંપર્કોના જૂથને સંદેશ મોકલવા અને તમારું સ્થાન બધા સાથે એકસાથે શેર કરવા એક વર્તુળ બનાવો.</string>
     <string name="circles_empty_title">હજી કોઈ વર્તુળ નથી</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">આછો</string>
     <string name="settings_theme_mode">થીમ</string>
     <string name="settings_theme_system">સિસ્ટમ મુજબ</string>
+    <string name="chat_preview_file">📎 ફાઇલ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">જોડાણ</string>
+    <string name="chat_cd_attach_file">ફાઇલ જોડો</string>
+    <string name="chat_file_tap_to_open">ખોલવા માટે ટૅપ કરો</string>
+    <string name="chat_file_too_large">ફાઇલ ખૂબ મોટી છે (વધુમાં વધુ 100 KB)</string>
+    <string name="chat_file_unreadable">એ ફાઇલ વાંચી શકાઈ નથી</string>
+    <string name="chat_file_no_app">કોઈ ઍપ આ ફાઇલ ખોલી શકતી નથી</string>
+    <string name="circles_view_members">સભ્યો જુઓ</string>
+    <string name="circles_view_title">વર્તુળના સભ્યો</string>
+    <string name="circles_owner_only">વર્તુળનું નામ બદલવા કે તેના સભ્યો બદલવા ફક્ત તેનો માલિક જ કરી શકે છે.</string>
+    <string name="circles_owner_label">માલિક: %1$s</string>
+    <string name="circles_owner_you">તમે</string>
+    <string name="circles_owner_tag">માલિક</string>
+    <string name="circles_leave">વર્તુળ છોડો</string>
+    <string name="circles_leave_title">વર્તુળ છોડવું છે?</string>
+    <string name="circles_leave_message">\"%1$s\" છોડવું છે? માલિકને જાણ કરવામાં આવે છે અને તે તમને વર્તુળમાંથી દૂર કરે છે.</string>
+    <string name="circles_leave_local">છોડો અને આ ડિવાઇસમાંથી કાઢી નાખો</string>
+    <string name="circles_leave_local_sub">આ ડિવાઇસમાંથી વર્તુળ અને તેના સંદેશા દૂર કરે છે. તમે મોકલેલા સંદેશા અન્ય સભ્યોના ડિવાઇસ પર રહે છે.</string>
+    <string name="circles_leave_remote">છોડો અને બધે કાઢી નાખો</string>
+    <string name="circles_leave_remote_sub">તમે મોકલેલા સંદેશા અન્ય સભ્યોના ડિવાઇસમાંથી પણ કાઢી નાખે છે.</string>
+    <string name="conv_mark_unread">ન વાંચેલા તરીકે માર્ક કરો</string>
 </resources>

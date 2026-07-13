@@ -772,7 +772,6 @@
     <string name="circles_delete">Pa àyíká rẹ́</string>
     <string name="circles_delete_message">Pa \"%1$s\" àti ìjíròrò ẹgbẹ́ rẹ̀ rẹ́? Èyí máa yọ ọ́ kúrò lórí ẹ̀rọ rẹ nìkan.</string>
     <string name="circles_delete_title">Pa àyíká rẹ́?</string>
-    <string name="circles_edit">Ṣàtúnṣe</string>
     <string name="circles_edit_title">Ṣàtúnṣe àyíká</string>
     <string name="circles_empty_body">Ṣẹ̀dá àyíká láti fi ìránṣẹ́ ránṣẹ́ sí ẹgbẹ́ àwọn ọ̀rẹ́ àti láti pín ipò rẹ pẹ̀lú gbogbo wọn lẹ́ẹ̀kan náà.</string>
     <string name="circles_empty_title">Kò sí àyíká síbẹ̀</string>
@@ -821,4 +820,26 @@
     <string name="settings_theme_light">Ìmọ́lẹ̀</string>
     <string name="settings_theme_mode">Àkòrí</string>
     <string name="settings_theme_system">Tẹ̀lé ètò</string>
+    <string name="chat_preview_file">📎 Faili</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Àsomọ́</string>
+    <string name="chat_cd_attach_file">So faili mọ́</string>
+    <string name="chat_file_tap_to_open">Tẹ̀ láti ṣí i</string>
+    <string name="chat_file_too_large">Faili tóbi jù (ó pọ̀ jù 100 KB)</string>
+    <string name="chat_file_unreadable">Kò ṣeé ka faili yẹn</string>
+    <string name="chat_file_no_app">Kò sí áàpù tí ó lè ṣí faili yìí</string>
+    <string name="circles_view_members">Wo Àwọn Ọmọ Ẹgbẹ́</string>
+    <string name="circles_view_title">Àwọn Ọmọ Ẹgbẹ́ Àyíká</string>
+    <string name="circles_owner_only">Olówó àyíká nìkan ni ó lè yí orúkọ rẹ̀ padà tàbí yí àwọn ọmọ ẹgbẹ́ rẹ̀ padà.</string>
+    <string name="circles_owner_label">Olówó: %1$s</string>
+    <string name="circles_owner_you">Ìwọ</string>
+    <string name="circles_owner_tag">Olówó</string>
+    <string name="circles_leave">Kúrò nínú Àyíká</string>
+    <string name="circles_leave_title">Kúrò nínú àyíká?</string>
+    <string name="circles_leave_message">Kúrò nínú \"%1$s\"? A ó fi tó olówó rẹ̀ létí, yóò sì yọ ọ́ kúrò nínú àyíká.</string>
+    <string name="circles_leave_local">Kúrò kí o sì paarẹ́ lórí ẹ̀rọ yìí</string>
+    <string name="circles_leave_local_sub">Yọ àyíká àti àwọn ìránṣẹ́ rẹ̀ kúrò lórí ẹ̀rọ yìí. Àwọn ìránṣẹ́ tí o rán yóò dúró lórí àwọn ẹ̀rọ àwọn ọmọ ẹgbẹ́ mìíràn.</string>
+    <string name="circles_leave_remote">Kúrò kí o sì paarẹ́ níbi gbogbo</string>
+    <string name="circles_leave_remote_sub">Ó tún ń pa àwọn ìránṣẹ́ tí o rán kúrò lórí àwọn ẹ̀rọ àwọn ọmọ ẹgbẹ́ mìíràn.</string>
+    <string name="conv_mark_unread">Sàmì sí gẹ́gẹ́ bí Àìkà</string>
 </resources>

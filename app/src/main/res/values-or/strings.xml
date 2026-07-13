@@ -787,7 +787,6 @@
     <string name="circles_delete">ବୃତ୍ତ ବିଲୋପ କରନ୍ତୁ</string>
     <string name="circles_delete_message">\"%1$s\" ଏବଂ ଏହାର ଗୋଷ୍ଠୀ ବାର୍ତ୍ତାଳାପ ବିଲୋପ କରିବେ? ଏହା କେବଳ ଆପଣଙ୍କ ଡିଭାଇସରୁ ହଟାଏ।</string>
     <string name="circles_delete_title">ବୃତ୍ତ ବିଲୋପ କରିବେ?</string>
-    <string name="circles_edit">ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="circles_edit_title">ବୃତ୍ତ ସମ୍ପାଦନ କରନ୍ତୁ</string>
     <string name="circles_empty_body">ଏକ ଯୋଗାଯୋଗ ଗୋଷ୍ଠୀକୁ ବାର୍ତ୍ତା ପଠାଇବାକୁ ଏବଂ ଆପଣଙ୍କ ଅବସ୍ଥାନ ସମସ୍ତଙ୍କ ସହ ଏକାଥରେ ସେୟାର୍ କରିବାକୁ ଏକ ବୃତ୍ତ ସୃଷ୍ଟି କରନ୍ତୁ।</string>
     <string name="circles_empty_title">ଏବେ ପର୍ଯ୍ୟନ୍ତ କୌଣସି ବୃତ୍ତ ନାହିଁ</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">ହାଲୁକା</string>
     <string name="settings_theme_mode">ଥିମ୍</string>
     <string name="settings_theme_system">ସିଷ୍ଟମ୍ ଅନୁସରଣ କରନ୍ତୁ</string>
+    <string name="chat_preview_file">📎 ଫାଇଲ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ସଂଲଗ୍ନକ</string>
+    <string name="chat_cd_attach_file">ଫାଇଲ ସଂଲଗ୍ନ କରନ୍ତୁ</string>
+    <string name="chat_file_tap_to_open">ଖୋଲିବାକୁ ଟାପ୍ କରନ୍ତୁ</string>
+    <string name="chat_file_too_large">ଫାଇଲ ବହୁତ ବଡ଼ (ସର୍ବାଧିକ 100 KB)</string>
+    <string name="chat_file_unreadable">ସେହି ଫାଇଲ ପଢ଼ାଯାଇପାରିଲା ନାହିଁ</string>
+    <string name="chat_file_no_app">କୌଣସି ଆପ୍ ଏହି ଫାଇଲକୁ ଖୋଲିପାରିବ ନାହିଁ</string>
+    <string name="circles_view_members">ସଦସ୍ୟ ଦେଖନ୍ତୁ</string>
+    <string name="circles_view_title">ବୃତ୍ତର ସଦସ୍ୟ</string>
+    <string name="circles_owner_only">କେବଳ ବୃତ୍ତର ମାଲିକ ଏହାର ନାମ ବଦଳାଇ ପାରିବେ କିମ୍ବା ଏହାର ସଦସ୍ୟ ବଦଳାଇ ପାରିବେ।</string>
+    <string name="circles_owner_label">ମାଲିକ: %1$s</string>
+    <string name="circles_owner_you">ଆପଣ</string>
+    <string name="circles_owner_tag">ମାଲିକ</string>
+    <string name="circles_leave">ବୃତ୍ତ ଛାଡ଼ନ୍ତୁ</string>
+    <string name="circles_leave_title">ବୃତ୍ତ ଛାଡ଼ିବେ?</string>
+    <string name="circles_leave_message">\"%1$s\" ଛାଡ଼ିବେ? ମାଲିକଙ୍କୁ ସୂଚିତ କରାଯାଏ ଏବଂ ସେ ଆପଣଙ୍କୁ ବୃତ୍ତରୁ ହଟାନ୍ତି।</string>
+    <string name="circles_leave_local">ଛାଡ଼ି ଏହି ଡିଭାଇସରୁ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="circles_leave_local_sub">ଏହି ଡିଭାଇସରୁ ବୃତ୍ତ ଏବଂ ଏହାର ବାର୍ତ୍ତାଗୁଡ଼ିକୁ ହଟାଏ। ଆପଣ ପଠାଇଥିବା ବାର୍ତ୍ତାଗୁଡ଼ିକ ଅନ୍ୟ ସଦସ୍ୟଙ୍କ ଡିଭାଇସରେ ରହିଥାଏ।</string>
+    <string name="circles_leave_remote">ଛାଡ଼ି ସବୁଠାରୁ ବିଲୋପ କରନ୍ତୁ</string>
+    <string name="circles_leave_remote_sub">ଆପଣ ପଠାଇଥିବା ବାର୍ତ୍ତାଗୁଡ଼ିକୁ ମଧ୍ୟ ଅନ୍ୟ ସଦସ୍ୟଙ୍କ ଡିଭାଇସରୁ ବିଲୋପ କରେ।</string>
+    <string name="conv_mark_unread">ଅପଠିତ ଭାବେ ଚିହ୍ନଟ କରନ୍ତୁ</string>
 </resources>

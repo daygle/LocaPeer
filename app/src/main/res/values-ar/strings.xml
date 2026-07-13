@@ -847,7 +847,6 @@
     <string name="circles_delete">حذف الدائرة</string>
     <string name="circles_delete_message">حذف \"%1$s\" ومحادثتها الجماعية؟ هذا يزيلها من جهازك فقط.</string>
     <string name="circles_delete_title">حذف الدائرة؟</string>
-    <string name="circles_edit">تعديل</string>
     <string name="circles_edit_title">تعديل الدائرة</string>
     <string name="circles_empty_body">أنشئ دائرة لمراسلة مجموعة من جهات الاتصال ومشاركة موقعك معهم جميعًا دفعة واحدة.</string>
     <string name="circles_empty_title">لا توجد دوائر بعد</string>
@@ -896,4 +895,26 @@
     <string name="settings_theme_light">فاتح</string>
     <string name="settings_theme_mode">المظهر</string>
     <string name="settings_theme_system">اتّبع النظام</string>
+    <string name="chat_preview_file">📎 ملف</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">مرفق</string>
+    <string name="chat_cd_attach_file">إرفاق ملف</string>
+    <string name="chat_file_tap_to_open">اضغط للفتح</string>
+    <string name="chat_file_too_large">الملف كبير جدًا (بحد أقصى 100 كيلوبايت)</string>
+    <string name="chat_file_unreadable">تعذّر قراءة هذا الملف</string>
+    <string name="chat_file_no_app">لا يوجد تطبيق يمكنه فتح هذا الملف</string>
+    <string name="circles_view_members">عرض الأعضاء</string>
+    <string name="circles_view_title">أعضاء الدائرة</string>
+    <string name="circles_owner_only">يمكن لمالك الدائرة فقط إعادة تسميتها أو تغيير أعضائها.</string>
+    <string name="circles_owner_label">المالك: %1$s</string>
+    <string name="circles_owner_you">أنت</string>
+    <string name="circles_owner_tag">المالك</string>
+    <string name="circles_leave">مغادرة الدائرة</string>
+    <string name="circles_leave_title">مغادرة الدائرة؟</string>
+    <string name="circles_leave_message">مغادرة \"%1$s\"؟ سيتم إشعار المالك وإزالتك من الدائرة.</string>
+    <string name="circles_leave_local">المغادرة والحذف من هذا الجهاز</string>
+    <string name="circles_leave_local_sub">يزيل الدائرة ورسائلها من هذا الجهاز. تبقى الرسائل التي أرسلتها على أجهزة الأعضاء الآخرين.</string>
+    <string name="circles_leave_remote">المغادرة والحذف من كل مكان</string>
+    <string name="circles_leave_remote_sub">يحذف أيضًا الرسائل التي أرسلتها من أجهزة الأعضاء الآخرين.</string>
+    <string name="conv_mark_unread">وضع علامة كغير مقروء</string>
 </resources>

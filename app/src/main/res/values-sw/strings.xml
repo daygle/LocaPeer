@@ -787,7 +787,6 @@
     <string name="circles_delete">Futa duara</string>
     <string name="circles_delete_message">Futa \"%1$s\" na mazungumzo yake ya kikundi? Hii inaiondoa kwenye kifaa chako pekee.</string>
     <string name="circles_delete_title">Futa duara?</string>
-    <string name="circles_edit">Hariri</string>
     <string name="circles_edit_title">Hariri duara</string>
     <string name="circles_empty_body">Unda duara ili kutuma ujumbe kwa kikundi cha anwani na kushiriki mahali ulipo na wote kwa mara moja.</string>
     <string name="circles_empty_title">Bado hakuna maduara</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">Angavu</string>
     <string name="settings_theme_mode">Mandhari</string>
     <string name="settings_theme_system">Fuata mfumo</string>
+    <string name="chat_preview_file">📎 Faili</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Kiambatisho</string>
+    <string name="chat_cd_attach_file">Ambatisha faili</string>
+    <string name="chat_file_tap_to_open">Gusa ili kufungua</string>
+    <string name="chat_file_too_large">Faili ni kubwa mno (upeo 100 KB)</string>
+    <string name="chat_file_unreadable">Imeshindwa kusoma faili hiyo</string>
+    <string name="chat_file_no_app">Hakuna programu inayoweza kufungua faili hii</string>
+    <string name="circles_view_members">Angalia Wanachama</string>
+    <string name="circles_view_title">Wanachama wa Duara</string>
+    <string name="circles_owner_only">Ni mmiliki wa duara pekee anayeweza kulipa jina jipya au kubadilisha wanachama wake.</string>
+    <string name="circles_owner_label">Mmiliki: %1$s</string>
+    <string name="circles_owner_you">Wewe</string>
+    <string name="circles_owner_tag">Mmiliki</string>
+    <string name="circles_leave">Ondoka Kwenye Duara</string>
+    <string name="circles_leave_title">Ondoka kwenye duara?</string>
+    <string name="circles_leave_message">Ondoka \"%1$s\"? Mmiliki atafahamishwa na atakuondoa kwenye duara.</string>
+    <string name="circles_leave_local">Ondoka na ufute kwenye kifaa hiki</string>
+    <string name="circles_leave_local_sub">Huondoa duara na ujumbe wake kwenye kifaa hiki. Ujumbe uliotuma unabaki kwenye vifaa vya wanachama wengine.</string>
+    <string name="circles_leave_remote">Ondoka na ufute kila mahali</string>
+    <string name="circles_leave_remote_sub">Pia hufuta ujumbe uliotuma kwenye vifaa vya wanachama wengine.</string>
+    <string name="conv_mark_unread">Weka Alama Kuwa Haijasomwa</string>
 </resources>

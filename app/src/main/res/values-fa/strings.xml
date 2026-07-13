@@ -787,7 +787,6 @@
     <string name="circles_delete">حذف حلقه</string>
     <string name="circles_delete_message">«%1$s» و گفتگوی گروهی‌اش حذف شود؟ این فقط آن را از دستگاه شما حذف می‌کند.</string>
     <string name="circles_delete_title">حلقه حذف شود؟</string>
-    <string name="circles_edit">ویرایش</string>
     <string name="circles_edit_title">ویرایش حلقه</string>
     <string name="circles_empty_body">یک حلقه بسازید تا به گروهی از مخاطبان پیام دهید و مکان خود را یک‌جا با همه به اشتراک بگذارید.</string>
     <string name="circles_empty_title">هنوز حلقه‌ای نیست</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">روشن</string>
     <string name="settings_theme_mode">پوسته</string>
     <string name="settings_theme_system">مطابق سیستم</string>
+    <string name="chat_preview_file">📎 فایل</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">پیوست</string>
+    <string name="chat_cd_attach_file">پیوست فایل</string>
+    <string name="chat_file_tap_to_open">برای باز کردن ضربه بزنید</string>
+    <string name="chat_file_too_large">فایل خیلی بزرگ است (حداکثر ۱۰۰ کیلوبایت)</string>
+    <string name="chat_file_unreadable">خواندن این فایل ممکن نشد</string>
+    <string name="chat_file_no_app">هیچ برنامه‌ای نمی‌تواند این فایل را باز کند</string>
+    <string name="circles_view_members">مشاهده اعضا</string>
+    <string name="circles_view_title">اعضای حلقه</string>
+    <string name="circles_owner_only">فقط مالک حلقه می‌تواند نام آن را تغییر دهد یا اعضای آن را عوض کند.</string>
+    <string name="circles_owner_label">مالک: %1$s</string>
+    <string name="circles_owner_you">شما</string>
+    <string name="circles_owner_tag">مالک</string>
+    <string name="circles_leave">ترک حلقه</string>
+    <string name="circles_leave_title">حلقه ترک شود؟</string>
+    <string name="circles_leave_message">«%1$s» را ترک می‌کنید؟ به مالک اطلاع داده می‌شود و شما را از حلقه حذف می‌کند.</string>
+    <string name="circles_leave_local">ترک و حذف در این دستگاه</string>
+    <string name="circles_leave_local_sub">حلقه و پیام‌های آن را از این دستگاه حذف می‌کند. پیام‌هایی که فرستاده‌اید روی دستگاه سایر اعضا باقی می‌مانند.</string>
+    <string name="circles_leave_remote">ترک و حذف در همه‌جا</string>
+    <string name="circles_leave_remote_sub">پیام‌هایی را که فرستاده‌اید نیز از دستگاه سایر اعضا حذف می‌کند.</string>
+    <string name="conv_mark_unread">علامت‌گذاری به‌عنوان خوانده‌نشده</string>
 </resources>

@@ -817,7 +817,6 @@
     <string name="circles_delete">Удалить круг</string>
     <string name="circles_delete_message">Удалить «%1$s» и его групповой разговор? Это удалит его только с вашего устройства.</string>
     <string name="circles_delete_title">Удалить круг?</string>
-    <string name="circles_edit">Изменить</string>
     <string name="circles_edit_title">Изменить круг</string>
     <string name="circles_empty_body">Создайте круг, чтобы писать группе контактов и делиться местоположением со всеми сразу.</string>
     <string name="circles_empty_title">Кругов пока нет</string>
@@ -866,4 +865,26 @@
     <string name="settings_theme_light">Светлая</string>
     <string name="settings_theme_mode">Тема</string>
     <string name="settings_theme_system">Как в системе</string>
+    <string name="chat_preview_file">📎 Файл</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Вложение</string>
+    <string name="chat_cd_attach_file">Прикрепить файл</string>
+    <string name="chat_file_tap_to_open">Нажмите, чтобы открыть</string>
+    <string name="chat_file_too_large">Файл слишком большой (макс. 100 КБ)</string>
+    <string name="chat_file_unreadable">Не удалось прочитать этот файл</string>
+    <string name="chat_file_no_app">Нет приложения для открытия этого файла</string>
+    <string name="circles_view_members">Показать участников</string>
+    <string name="circles_view_title">Участники круга</string>
+    <string name="circles_owner_only">Только владелец круга может переименовать его или изменить его участников.</string>
+    <string name="circles_owner_label">Владелец: %1$s</string>
+    <string name="circles_owner_you">Вы</string>
+    <string name="circles_owner_tag">Владелец</string>
+    <string name="circles_leave">Покинуть круг</string>
+    <string name="circles_leave_title">Покинуть круг?</string>
+    <string name="circles_leave_message">Покинуть «%1$s»? Владелец получит уведомление и удалит вас из круга.</string>
+    <string name="circles_leave_local">Покинуть и удалить на этом устройстве</string>
+    <string name="circles_leave_local_sub">Удаляет круг и его сообщения с этого устройства. Отправленные вами сообщения останутся на устройствах других участников.</string>
+    <string name="circles_leave_remote">Покинуть и удалить везде</string>
+    <string name="circles_leave_remote_sub">Также удаляет отправленные вами сообщения с устройств других участников.</string>
+    <string name="conv_mark_unread">Отметить как непрочитанное</string>
 </resources>

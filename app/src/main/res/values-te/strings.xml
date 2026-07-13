@@ -787,7 +787,6 @@
     <string name="circles_delete">సర్కిల్‌ను తొలగించండి</string>
     <string name="circles_delete_message">\"%1$s\" మరియు దాని గ్రూప్ సంభాషణను తొలగించాలా? ఇది మీ పరికరం నుండి మాత్రమే తీసివేస్తుంది.</string>
     <string name="circles_delete_title">సర్కిల్‌ను తొలగించాలా?</string>
-    <string name="circles_edit">సవరించండి</string>
     <string name="circles_edit_title">సర్కిల్‌ను సవరించండి</string>
     <string name="circles_empty_body">పరిచయాల సమూహానికి సందేశం పంపడానికి, మీ స్థానాన్ని అందరితో ఒకేసారి భాగస్వామ్యం చేయడానికి ఒక సర్కిల్‌ను సృష్టించండి.</string>
     <string name="circles_empty_title">ఇంకా సర్కిల్‌లు లేవు</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">లేత</string>
     <string name="settings_theme_mode">థీమ్</string>
     <string name="settings_theme_system">సిస్టమ్‌ను అనుసరించండి</string>
+    <string name="chat_preview_file">📎 ఫైల్</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">జోడింపు</string>
+    <string name="chat_cd_attach_file">ఫైల్‌ను జోడించండి</string>
+    <string name="chat_file_tap_to_open">తెరవడానికి నొక్కండి</string>
+    <string name="chat_file_too_large">ఫైల్ చాలా పెద్దది (గరిష్టంగా 100 KB)</string>
+    <string name="chat_file_unreadable">ఆ ఫైల్‌ను చదవడం సాధ్యపడలేదు</string>
+    <string name="chat_file_no_app">ఈ ఫైల్‌ను ఏ యాప్ కూడా తెరవలేదు</string>
+    <string name="circles_view_members">సభ్యులను చూడండి</string>
+    <string name="circles_view_title">సర్కిల్ సభ్యులు</string>
+    <string name="circles_owner_only">సర్కిల్ పేరు మార్చడం లేదా దాని సభ్యులను మార్చడం కేవలం దాని యజమాని మాత్రమే చేయగలరు.</string>
+    <string name="circles_owner_label">యజమాని: %1$s</string>
+    <string name="circles_owner_you">మీరు</string>
+    <string name="circles_owner_tag">యజమాని</string>
+    <string name="circles_leave">సర్కిల్ నుండి నిష్క్రమించండి</string>
+    <string name="circles_leave_title">సర్కిల్ నుండి నిష్క్రమించాలా?</string>
+    <string name="circles_leave_message">\"%1$s\" నుండి నిష్క్రమించాలా? యజమానికి తెలియజేయబడుతుంది, ఆయన మిమ్మల్ని సర్కిల్ నుండి తొలగిస్తారు.</string>
+    <string name="circles_leave_local">నిష్క్రమించి ఈ పరికరం నుండి తొలగించండి</string>
+    <string name="circles_leave_local_sub">ఈ పరికరం నుండి సర్కిల్‌ను, దాని సందేశాలను తీసివేస్తుంది. మీరు పంపిన సందేశాలు ఇతర సభ్యుల పరికరాల్లో ఉంటాయి.</string>
+    <string name="circles_leave_remote">నిష్క్రమించి ప్రతిచోటా తొలగించండి</string>
+    <string name="circles_leave_remote_sub">మీరు పంపిన సందేశాలను ఇతర సభ్యుల పరికరాల నుండి కూడా తొలగిస్తుంది.</string>
+    <string name="conv_mark_unread">చదవనిదిగా గుర్తు పెట్టండి</string>
 </resources>

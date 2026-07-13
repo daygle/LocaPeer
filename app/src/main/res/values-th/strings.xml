@@ -772,7 +772,6 @@
     <string name="circles_delete">ลบวงกลม</string>
     <string name="circles_delete_message">ลบ \"%1$s\" และการสนทนากลุ่มของมันไหม การดำเนินการนี้จะลบออกจากอุปกรณ์ของคุณเท่านั้น</string>
     <string name="circles_delete_title">ลบวงกลมไหม</string>
-    <string name="circles_edit">แก้ไข</string>
     <string name="circles_edit_title">แก้ไขวงกลม</string>
     <string name="circles_empty_body">สร้างวงกลมเพื่อส่งข้อความถึงกลุ่มผู้ติดต่อและแชร์ตำแหน่งของคุณกับทุกคนพร้อมกัน</string>
     <string name="circles_empty_title">ยังไม่มีวงกลม</string>
@@ -821,4 +820,26 @@
     <string name="settings_theme_light">สว่าง</string>
     <string name="settings_theme_mode">ธีม</string>
     <string name="settings_theme_system">ตามระบบ</string>
+    <string name="chat_preview_file">📎 ไฟล์</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ไฟล์แนบ</string>
+    <string name="chat_cd_attach_file">แนบไฟล์</string>
+    <string name="chat_file_tap_to_open">แตะเพื่อเปิด</string>
+    <string name="chat_file_too_large">ไฟล์ใหญ่เกินไป (สูงสุด 100 KB)</string>
+    <string name="chat_file_unreadable">อ่านไฟล์นั้นไม่ได้</string>
+    <string name="chat_file_no_app">ไม่มีแอปที่เปิดไฟล์นี้ได้</string>
+    <string name="circles_view_members">ดูสมาชิก</string>
+    <string name="circles_view_title">สมาชิกเซอร์เคิล</string>
+    <string name="circles_owner_only">เฉพาะเจ้าของเซอร์เคิลเท่านั้นที่เปลี่ยนชื่อหรือเปลี่ยนสมาชิกได้</string>
+    <string name="circles_owner_label">เจ้าของ: %1$s</string>
+    <string name="circles_owner_you">คุณ</string>
+    <string name="circles_owner_tag">เจ้าของ</string>
+    <string name="circles_leave">ออกจากเซอร์เคิล</string>
+    <string name="circles_leave_title">ออกจากเซอร์เคิลไหม</string>
+    <string name="circles_leave_message">ออกจาก \"%1$s\" ไหม เจ้าของจะได้รับแจ้งและนำคุณออกจากเซอร์เคิล</string>
+    <string name="circles_leave_local">ออกและลบในอุปกรณ์นี้</string>
+    <string name="circles_leave_local_sub">นำเซอร์เคิลและข้อความออกจากอุปกรณ์นี้ ข้อความที่คุณส่งจะยังอยู่ในอุปกรณ์ของสมาชิกคนอื่น</string>
+    <string name="circles_leave_remote">ออกและลบทุกที่</string>
+    <string name="circles_leave_remote_sub">ลบข้อความที่คุณส่งออกจากอุปกรณ์ของสมาชิกคนอื่นด้วย</string>
+    <string name="conv_mark_unread">ทำเครื่องหมายว่ายังไม่อ่าน</string>
 </resources>

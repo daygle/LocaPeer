@@ -817,7 +817,6 @@
     <string name="circles_title">Circles</string>
     <string name="circles_new">New Circle</string>
     <string name="circles_new_title">New Circle</string>
-    <string name="circles_edit">Edit</string>
     <string name="circles_edit_title">Edit Circle</string>
     <string name="circles_name_label">Circle Name</string>
     <string name="circles_members_header">Members (%1$d)</string>

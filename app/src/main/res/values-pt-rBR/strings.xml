@@ -785,7 +785,6 @@
     <string name="circles_delete">Eliminar círculo</string>
     <string name="circles_delete_message">Excluir \"%1$s\" e sua conversa de grupo? Isso remove apenas do seu dispositivo.</string>
     <string name="circles_delete_title">Eliminar círculo?</string>
-    <string name="circles_edit">Editar</string>
     <string name="circles_edit_title">Editar círculo</string>
     <string name="circles_empty_body">Crie um círculo para enviar mensagens a um grupo de contatos e compartilhar sua localização com todos de uma vez.</string>
     <string name="circles_empty_title">Ainda sem círculos</string>
@@ -834,5 +833,27 @@
     <string name="settings_theme_light">Claro</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Seguir o sistema</string>
+    <string name="chat_preview_file">📎 Arquivo</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Anexo</string>
+    <string name="chat_cd_attach_file">Anexar arquivo</string>
+    <string name="chat_file_tap_to_open">Toque para abrir</string>
+    <string name="chat_file_too_large">O arquivo é muito grande (máx. 100 KB)</string>
+    <string name="chat_file_unreadable">Não foi possível ler esse arquivo</string>
+    <string name="chat_file_no_app">Nenhum app pode abrir este arquivo</string>
+    <string name="circles_view_members">Ver membros</string>
+    <string name="circles_view_title">Membros do círculo</string>
+    <string name="circles_owner_only">Somente o proprietário do círculo pode renomeá-lo ou alterar seus membros.</string>
+    <string name="circles_owner_label">Proprietário: %1$s</string>
+    <string name="circles_owner_you">Você</string>
+    <string name="circles_owner_tag">Proprietário</string>
+    <string name="circles_leave">Sair do círculo</string>
+    <string name="circles_leave_title">Sair do círculo?</string>
+    <string name="circles_leave_message">Sair de \"%1$s\"? O proprietário é notificado e remove você do círculo.</string>
+    <string name="circles_leave_local">Sair e excluir neste dispositivo</string>
+    <string name="circles_leave_local_sub">Remove o círculo e suas mensagens deste dispositivo. As mensagens que você enviou permanecem nos dispositivos dos outros membros.</string>
+    <string name="circles_leave_remote">Sair e excluir em todos os lugares</string>
+    <string name="circles_leave_remote_sub">Também exclui as mensagens que você enviou dos dispositivos dos outros membros.</string>
+    <string name="conv_mark_unread">Marcar como não lida</string>
 </resources>
 

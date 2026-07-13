@@ -787,7 +787,6 @@
     <string name="circles_delete">ክብ ሰርዝ</string>
     <string name="circles_delete_message">\"%1$s\" እና የቡድን ውይይቱን ይሰረዝ? ይህ ከመሣሪያዎ ብቻ ያስወግደዋል።</string>
     <string name="circles_delete_title">ክብ ይሰረዝ?</string>
-    <string name="circles_edit">አርትዕ</string>
     <string name="circles_edit_title">ክብ አርትዕ</string>
     <string name="circles_empty_body">ለቡድን እውቂያዎች መልእክት ለመላክ እና ቦታዎን በአንድ ጊዜ ከሁሉም ጋር ለማጋራት ክብ ይፍጠሩ።</string>
     <string name="circles_empty_title">እስካሁን ምንም ክብ የለም</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">ብሩህ</string>
     <string name="settings_theme_mode">ገጽታ</string>
     <string name="settings_theme_system">ስርዓቱን ተከተል</string>
+    <string name="chat_preview_file">📎 ፋይል</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">አባሪ</string>
+    <string name="chat_cd_attach_file">ፋይል አያይዝ</string>
+    <string name="chat_file_tap_to_open">ለመክፈት ይንኩ</string>
+    <string name="chat_file_too_large">ፋይሉ በጣም ትልቅ ነው (ቢበዛ 100 KB)</string>
+    <string name="chat_file_unreadable">ያን ፋይል ማንበብ አልተቻለም</string>
+    <string name="chat_file_no_app">ይህን ፋይል ሊከፍት የሚችል መተግበሪያ የለም</string>
+    <string name="circles_view_members">አባላትን ይመልከቱ</string>
+    <string name="circles_view_title">የክበብ አባላት</string>
+    <string name="circles_owner_only">የክበቡን ስም መቀየር ወይም አባላቱን መቀየር የሚችለው ባለቤቱ ብቻ ነው።</string>
+    <string name="circles_owner_label">ባለቤት: %1$s</string>
+    <string name="circles_owner_you">እርስዎ</string>
+    <string name="circles_owner_tag">ባለቤት</string>
+    <string name="circles_leave">ክበብ ልቀቅ</string>
+    <string name="circles_leave_title">ክበብ ልቀቅ?</string>
+    <string name="circles_leave_message">\"%1$s\"ን ልቀቅ? ባለቤቱ ይነገረዋል እናም ከክበቡ ያስወግድዎታል።</string>
+    <string name="circles_leave_local">ልቀቅና ከዚህ መሣሪያ ሰርዝ</string>
+    <string name="circles_leave_local_sub">ክበቡንና መልእክቶቹን ከዚህ መሣሪያ ያስወግዳል። የላኳቸው መልእክቶች በሌሎች አባላት መሣሪያዎች ላይ ይቆያሉ።</string>
+    <string name="circles_leave_remote">ልቀቅና በሁሉም ቦታ ሰርዝ</string>
+    <string name="circles_leave_remote_sub">የላኳቸውን መልእክቶች ከሌሎች አባላት መሣሪያዎችም ይሰርዛል።</string>
+    <string name="conv_mark_unread">እንዳልተነበበ ምልክት አድርግ</string>
 </resources>

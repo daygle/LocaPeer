@@ -802,7 +802,6 @@
     <string name="circles_delete">מחק מעגל</string>
     <string name="circles_delete_message">למחוק את \"%1$s\" ואת שיחת הקבוצה שלו? פעולה זו מסירה אותו רק מהמכשיר שלך.</string>
     <string name="circles_delete_title">למחוק את המעגל?</string>
-    <string name="circles_edit">ערוך</string>
     <string name="circles_edit_title">ערוך מעגל</string>
     <string name="circles_empty_body">צור מעגל כדי לשלוח הודעות לקבוצת אנשי קשר ולשתף את המיקום שלך עם כולם בבת אחת.</string>
     <string name="circles_empty_title">אין עדיין מעגלים</string>
@@ -851,4 +850,26 @@
     <string name="settings_theme_light">בהיר</string>
     <string name="settings_theme_mode">ערכת נושא</string>
     <string name="settings_theme_system">לפי המערכת</string>
+    <string name="chat_preview_file">📎 קובץ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">קובץ מצורף</string>
+    <string name="chat_cd_attach_file">צירוף קובץ</string>
+    <string name="chat_file_tap_to_open">הקש כדי לפתוח</string>
+    <string name="chat_file_too_large">הקובץ גדול מדי (עד 100 KB)</string>
+    <string name="chat_file_unreadable">לא ניתן לקרוא את הקובץ הזה</string>
+    <string name="chat_file_no_app">אין אפליקציה שיכולה לפתוח קובץ זה</string>
+    <string name="circles_view_members">הצגת חברים</string>
+    <string name="circles_view_title">חברי המעגל</string>
+    <string name="circles_owner_only">רק הבעלים של המעגל יכול לשנות את שמו או לשנות את חבריו.</string>
+    <string name="circles_owner_label">בעלים: %1$s</string>
+    <string name="circles_owner_you">אתה</string>
+    <string name="circles_owner_tag">בעלים</string>
+    <string name="circles_leave">עזיבת המעגל</string>
+    <string name="circles_leave_title">לעזוב את המעגל?</string>
+    <string name="circles_leave_message">לעזוב את \"%1$s\"? הבעלים יקבל הודעה ויסיר אותך מהמעגל.</string>
+    <string name="circles_leave_local">עזיבה ומחיקה במכשיר זה</string>
+    <string name="circles_leave_local_sub">מסיר את המעגל ואת הודעותיו ממכשיר זה. ההודעות ששלחת נשארות במכשירים של החברים האחרים.</string>
+    <string name="circles_leave_remote">עזיבה ומחיקה בכל מקום</string>
+    <string name="circles_leave_remote_sub">מוחק גם את ההודעות ששלחת מהמכשירים של החברים האחרים.</string>
+    <string name="conv_mark_unread">סמן כלא נקרא</string>
 </resources>

@@ -787,7 +787,6 @@
     <string name="circles_delete">Kring verwijderen</string>
     <string name="circles_delete_message">\"%1$s\" en het bijbehorende groepsgesprek verwijderen? Dit verwijdert het alleen van je apparaat.</string>
     <string name="circles_delete_title">Kring verwijderen?</string>
-    <string name="circles_edit">Bewerken</string>
     <string name="circles_edit_title">Kring bewerken</string>
     <string name="circles_empty_body">Maak een kring om een groep contacten te berichten en je locatie in één keer met iedereen te delen.</string>
     <string name="circles_empty_title">Nog geen kringen</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">Licht</string>
     <string name="settings_theme_mode">Thema</string>
     <string name="settings_theme_system">Systeem volgen</string>
+    <string name="chat_preview_file">📎 Bestand</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Bijlage</string>
+    <string name="chat_cd_attach_file">Bestand bijvoegen</string>
+    <string name="chat_file_tap_to_open">Tik om te openen</string>
+    <string name="chat_file_too_large">Bestand is te groot (max. 100 KB)</string>
+    <string name="chat_file_unreadable">Kan dat bestand niet lezen</string>
+    <string name="chat_file_no_app">Geen app kan dit bestand openen</string>
+    <string name="circles_view_members">Leden bekijken</string>
+    <string name="circles_view_title">Cirkelleden</string>
+    <string name="circles_owner_only">Alleen de eigenaar van de cirkel kan deze hernoemen of de leden ervan wijzigen.</string>
+    <string name="circles_owner_label">Eigenaar: %1$s</string>
+    <string name="circles_owner_you">Jij</string>
+    <string name="circles_owner_tag">Eigenaar</string>
+    <string name="circles_leave">Cirkel verlaten</string>
+    <string name="circles_leave_title">Cirkel verlaten?</string>
+    <string name="circles_leave_message">\"%1$s\" verlaten? De eigenaar krijgt bericht en verwijdert je uit de cirkel.</string>
+    <string name="circles_leave_local">Verlaten en verwijderen op dit apparaat</string>
+    <string name="circles_leave_local_sub">Verwijdert de cirkel en de berichten ervan van dit apparaat. Berichten die je hebt verzonden, blijven op de apparaten van andere leden staan.</string>
+    <string name="circles_leave_remote">Verlaten en overal verwijderen</string>
+    <string name="circles_leave_remote_sub">Verwijdert ook de berichten die je hebt verzonden van de apparaten van de andere leden.</string>
+    <string name="conv_mark_unread">Markeren als ongelezen</string>
 </resources>

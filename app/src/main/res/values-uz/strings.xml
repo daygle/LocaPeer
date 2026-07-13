@@ -787,7 +787,6 @@
     <string name="circles_delete">Doirani o\'chirish</string>
     <string name="circles_delete_message">\"%1$s\" va uning guruh suhbatini o\'chirilsinmi? Bu faqat qurilmangizdan olib tashlaydi.</string>
     <string name="circles_delete_title">Doira o\'chirilsinmi?</string>
-    <string name="circles_edit">Tahrirlash</string>
     <string name="circles_edit_title">Doirani tahrirlash</string>
     <string name="circles_empty_body">Bir guruh kontaktga xabar yuborish va joylashuvingizni ular bilan bir vaqtda ulashish uchun doira yarating.</string>
     <string name="circles_empty_title">Hali doiralar yo\'q</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">Yorug\'</string>
     <string name="settings_theme_mode">Mavzu</string>
     <string name="settings_theme_system">Tizimga mos</string>
+    <string name="chat_preview_file">📎 Fayl</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Ilova</string>
+    <string name="chat_cd_attach_file">Fayl biriktirish</string>
+    <string name="chat_file_tap_to_open">Ochish uchun bosing</string>
+    <string name="chat_file_too_large">Fayl juda katta (koʻpi bilan 100 KB)</string>
+    <string name="chat_file_unreadable">Bu faylni oʻqib boʻlmadi</string>
+    <string name="chat_file_no_app">Hech qanday ilova bu faylni ocholmaydi</string>
+    <string name="circles_view_members">Aʼzolarni koʻrish</string>
+    <string name="circles_view_title">Doira aʼzolari</string>
+    <string name="circles_owner_only">Doira nomini faqat egasi oʻzgartira oladi yoki aʼzolarini oʻzgartira oladi.</string>
+    <string name="circles_owner_label">Egasi: %1$s</string>
+    <string name="circles_owner_you">Siz</string>
+    <string name="circles_owner_tag">Egasi</string>
+    <string name="circles_leave">Doiradan chiqish</string>
+    <string name="circles_leave_title">Doiradan chiqasizmi?</string>
+    <string name="circles_leave_message">\"%1$s\" doirasidan chiqasizmi? Egasi xabardor qilinadi va sizni doiradan chiqaradi.</string>
+    <string name="circles_leave_local">Chiqish va bu qurilmadan oʻchirish</string>
+    <string name="circles_leave_local_sub">Doira va uning xabarlarini bu qurilmadan olib tashlaydi. Siz yuborgan xabarlar boshqa aʼzolarning qurilmalarida qoladi.</string>
+    <string name="circles_leave_remote">Chiqish va hamma joydan oʻchirish</string>
+    <string name="circles_leave_remote_sub">Siz yuborgan xabarlarni boshqa aʼzolarning qurilmalaridan ham oʻchiradi.</string>
+    <string name="conv_mark_unread">Oʻqilmagan deb belgilash</string>
 </resources>

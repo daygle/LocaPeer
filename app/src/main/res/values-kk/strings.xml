@@ -787,7 +787,6 @@
     <string name="circles_delete">Шеңберді жою</string>
     <string name="circles_delete_message">\"%1$s\" және оның топтық сөйлесуін жою керек пе? Бұл оны тек құрылғыңыздан жояды.</string>
     <string name="circles_delete_title">Шеңберді жою керек пе?</string>
-    <string name="circles_edit">Өңдеу</string>
     <string name="circles_edit_title">Шеңберді өңдеу</string>
     <string name="circles_empty_body">Контактілер тобына хабар жіберу және орныңызды олардың барлығымен бірден бөлісу үшін шеңбер жасаңыз.</string>
     <string name="circles_empty_title">Әзірге шеңберлер жоқ</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">Ашық</string>
     <string name="settings_theme_mode">Тақырып</string>
     <string name="settings_theme_system">Жүйе бойынша</string>
+    <string name="chat_preview_file">📎 Файл</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Тіркеме</string>
+    <string name="chat_cd_attach_file">Файл тіркеу</string>
+    <string name="chat_file_tap_to_open">Ашу үшін түртіңіз</string>
+    <string name="chat_file_too_large">Файл тым үлкен (ең көбі 100 КБ)</string>
+    <string name="chat_file_unreadable">Бұл файлды оқу мүмкін болмады</string>
+    <string name="chat_file_no_app">Бұл файлды ешбір қолданба аша алмайды</string>
+    <string name="circles_view_members">Мүшелерді көру</string>
+    <string name="circles_view_title">Шеңбер мүшелері</string>
+    <string name="circles_owner_only">Шеңбердің атын өзгертуге немесе мүшелерін өзгертуге тек оның иесі құқылы.</string>
+    <string name="circles_owner_label">Иесі: %1$s</string>
+    <string name="circles_owner_you">Сіз</string>
+    <string name="circles_owner_tag">Иесі</string>
+    <string name="circles_leave">Шеңберден шығу</string>
+    <string name="circles_leave_title">Шеңберден шығасыз ба?</string>
+    <string name="circles_leave_message">\"%1$s\" шеңберінен шығасыз ба? Иесіне хабарланады және сізді шеңберден шығарады.</string>
+    <string name="circles_leave_local">Шығу және осы құрылғыдан жою</string>
+    <string name="circles_leave_local_sub">Шеңберді және оның хабарларын осы құрылғыдан жояды. Сіз жіберген хабарлар басқа мүшелердің құрылғыларында қалады.</string>
+    <string name="circles_leave_remote">Шығу және барлық жерден жою</string>
+    <string name="circles_leave_remote_sub">Сіз жіберген хабарларды басқа мүшелердің құрылғыларынан да жояды.</string>
+    <string name="conv_mark_unread">Оқылмаған деп белгілеу</string>
 </resources>

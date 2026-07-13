@@ -787,7 +787,6 @@
     <string name="circles_delete">Tanggalin ang circle</string>
     <string name="circles_delete_message">Tanggalin ang \"%1$s\" at ang group conversation nito? Aalisin lang ito sa iyong device.</string>
     <string name="circles_delete_title">Tanggalin ang circle?</string>
-    <string name="circles_edit">I-edit</string>
     <string name="circles_edit_title">I-edit ang circle</string>
     <string name="circles_empty_body">Gumawa ng circle para magmensahe sa isang grupo ng mga contact at ibahagi ang iyong lokasyon sa lahat nang sabay-sabay.</string>
     <string name="circles_empty_title">Wala pang circle</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">Maliwanag</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Sundin ang system</string>
+    <string name="chat_preview_file">📎 File</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Lakip</string>
+    <string name="chat_cd_attach_file">Maglakip ng file</string>
+    <string name="chat_file_tap_to_open">I-tap para buksan</string>
+    <string name="chat_file_too_large">Masyadong malaki ang file (max 100 KB)</string>
+    <string name="chat_file_unreadable">Hindi mabasa ang file na iyon</string>
+    <string name="chat_file_no_app">Walang app na makakabukas sa file na ito</string>
+    <string name="circles_view_members">Tingnan ang mga Miyembro</string>
+    <string name="circles_view_title">Mga Miyembro ng Circle</string>
+    <string name="circles_owner_only">Ang may-ari lang ng circle ang makakapagpalit ng pangalan nito o makakapagbago ng mga miyembro nito.</string>
+    <string name="circles_owner_label">May-ari: %1$s</string>
+    <string name="circles_owner_you">Ikaw</string>
+    <string name="circles_owner_tag">May-ari</string>
+    <string name="circles_leave">Umalis sa Circle</string>
+    <string name="circles_leave_title">Aalis sa circle?</string>
+    <string name="circles_leave_message">Aalis sa \"%1$s\"? Aabisuhan ang may-ari at aalisin ka sa circle.</string>
+    <string name="circles_leave_local">Umalis at burahin sa device na ito</string>
+    <string name="circles_leave_local_sub">Inaalis ang circle at mga mensahe nito sa device na ito. Nananatili sa mga device ng ibang miyembro ang mga mensaheng ipinadala mo.</string>
+    <string name="circles_leave_remote">Umalis at burahin kahit saan</string>
+    <string name="circles_leave_remote_sub">Binubura rin ang mga mensaheng ipinadala mo sa mga device ng ibang miyembro.</string>
+    <string name="conv_mark_unread">Markahan bilang Hindi Nabasa</string>
 </resources>

@@ -787,7 +787,6 @@
     <string name="circles_delete">സർക്കിൾ ഇല്ലാതാക്കുക</string>
     <string name="circles_delete_message">\"%1$s\" ഉം അതിന്റെ ഗ്രൂപ്പ് സംഭാഷണവും ഇല്ലാതാക്കണോ? ഇത് നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് മാത്രം നീക്കംചെയ്യുന്നു.</string>
     <string name="circles_delete_title">സർക്കിൾ ഇല്ലാതാക്കണോ?</string>
-    <string name="circles_edit">എഡിറ്റ് ചെയ്യുക</string>
     <string name="circles_edit_title">സർക്കിൾ എഡിറ്റ് ചെയ്യുക</string>
     <string name="circles_empty_body">ഒരു കൂട്ടം കോൺടാക്റ്റുകൾക്ക് സന്ദേശം അയയ്ക്കാനും നിങ്ങളുടെ സ്ഥാനം എല്ലാവരുമായും ഒരുമിച്ച് പങ്കിടാനും ഒരു സർക്കിൾ സൃഷ്ടിക്കുക.</string>
     <string name="circles_empty_title">ഇതുവരെ സർക്കിളുകളില്ല</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">ഇളം</string>
     <string name="settings_theme_mode">തീം</string>
     <string name="settings_theme_system">സിസ്റ്റം അനുസരിക്കുക</string>
+    <string name="chat_preview_file">📎 ഫയൽ</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">അറ്റാച്ച്‌മെന്റ്</string>
+    <string name="chat_cd_attach_file">ഫയൽ അറ്റാച്ചുചെയ്യുക</string>
+    <string name="chat_file_tap_to_open">തുറക്കാൻ ടാപ്പുചെയ്യുക</string>
+    <string name="chat_file_too_large">ഫയൽ വളരെ വലുതാണ് (പരമാവധി 100 KB)</string>
+    <string name="chat_file_unreadable">ആ ഫയൽ വായിക്കാനായില്ല</string>
+    <string name="chat_file_no_app">ഈ ഫയൽ തുറക്കാൻ ഒരു ആപ്പിനും കഴിയില്ല</string>
+    <string name="circles_view_members">അംഗങ്ങളെ കാണുക</string>
+    <string name="circles_view_title">സർക്കിൾ അംഗങ്ങൾ</string>
+    <string name="circles_owner_only">സർക്കിളിന്റെ പേര് മാറ്റാനോ അതിലെ അംഗങ്ങളെ മാറ്റാനോ ഉടമയ്ക്ക് മാത്രമേ കഴിയൂ.</string>
+    <string name="circles_owner_label">ഉടമ: %1$s</string>
+    <string name="circles_owner_you">നിങ്ങൾ</string>
+    <string name="circles_owner_tag">ഉടമ</string>
+    <string name="circles_leave">സർക്കിൾ വിടുക</string>
+    <string name="circles_leave_title">സർക്കിൾ വിടണോ?</string>
+    <string name="circles_leave_message">\"%1$s\" വിടണോ? ഉടമയെ അറിയിക്കുകയും അവർ നിങ്ങളെ സർക്കിളിൽ നിന്ന് നീക്കംചെയ്യുകയും ചെയ്യും.</string>
+    <string name="circles_leave_local">വിട്ട് ഈ ഉപകരണത്തിൽ നിന്ന് ഇല്ലാതാക്കുക</string>
+    <string name="circles_leave_local_sub">ഈ ഉപകരണത്തിൽ നിന്ന് സർക്കിളും അതിന്റെ സന്ദേശങ്ങളും നീക്കംചെയ്യുന്നു. നിങ്ങൾ അയച്ച സന്ദേശങ്ങൾ മറ്റ് അംഗങ്ങളുടെ ഉപകരണങ്ങളിൽ തുടരും.</string>
+    <string name="circles_leave_remote">വിട്ട് എല്ലായിടത്തും ഇല്ലാതാക്കുക</string>
+    <string name="circles_leave_remote_sub">നിങ്ങൾ അയച്ച സന്ദേശങ്ങൾ മറ്റ് അംഗങ്ങളുടെ ഉപകരണങ്ങളിൽ നിന്നും ഇല്ലാതാക്കുന്നു.</string>
+    <string name="conv_mark_unread">വായിക്കാത്തതായി അടയാളപ്പെടുത്തുക</string>
 </resources>

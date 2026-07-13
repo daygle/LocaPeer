@@ -787,7 +787,6 @@
     <string name="circles_delete">ವೃತ್ತ ಅಳಿಸಿ</string>
     <string name="circles_delete_message">\"%1$s\" ಮತ್ತು ಅದರ ಗುಂಪು ಸಂಭಾಷಣೆಯನ್ನು ಅಳಿಸಬೇಕೆ? ಇದು ನಿಮ್ಮ ಸಾಧನದಿಂದ ಮಾತ್ರ ತೆಗೆದುಹಾಕುತ್ತದೆ.</string>
     <string name="circles_delete_title">ವೃತ್ತ ಅಳಿಸಬೇಕೆ?</string>
-    <string name="circles_edit">ಸಂಪಾದಿಸಿ</string>
     <string name="circles_edit_title">ವೃತ್ತ ಸಂಪಾದಿಸಿ</string>
     <string name="circles_empty_body">ಸಂಪರ್ಕಗಳ ಗುಂಪಿಗೆ ಸಂದೇಶ ಕಳುಹಿಸಲು ಮತ್ತು ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಎಲ್ಲರೊಂದಿಗೆ ಒಟ್ಟಿಗೆ ಹಂಚಿಕೊಳ್ಳಲು ವೃತ್ತವನ್ನು ರಚಿಸಿ.</string>
     <string name="circles_empty_title">ಇನ್ನೂ ವೃತ್ತಗಳಿಲ್ಲ</string>
@@ -836,4 +835,26 @@
     <string name="settings_theme_light">ತಿಳಿ</string>
     <string name="settings_theme_mode">ಥೀಮ್</string>
     <string name="settings_theme_system">ಸಿಸ್ಟಂ ಅನುಸರಿಸಿ</string>
+    <string name="chat_preview_file">📎 ಫೈಲ್</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">ಲಗತ್ತು</string>
+    <string name="chat_cd_attach_file">ಫೈಲ್ ಲಗತ್ತಿಸಿ</string>
+    <string name="chat_file_tap_to_open">ತೆರೆಯಲು ಟ್ಯಾಪ್ ಮಾಡಿ</string>
+    <string name="chat_file_too_large">ಫೈಲ್ ತುಂಬಾ ದೊಡ್ಡದಾಗಿದೆ (ಗರಿಷ್ಠ 100 KB)</string>
+    <string name="chat_file_unreadable">ಆ ಫೈಲ್ ಅನ್ನು ಓದಲಾಗಲಿಲ್ಲ</string>
+    <string name="chat_file_no_app">ಈ ಫೈಲ್ ಅನ್ನು ಯಾವುದೇ ಆ್ಯಪ್ ತೆರೆಯಲಾಗುವುದಿಲ್ಲ</string>
+    <string name="circles_view_members">ಸದಸ್ಯರನ್ನು ನೋಡಿ</string>
+    <string name="circles_view_title">ವೃತ್ತದ ಸದಸ್ಯರು</string>
+    <string name="circles_owner_only">ವೃತ್ತದ ಹೆಸರನ್ನು ಬದಲಾಯಿಸಲು ಅಥವಾ ಅದರ ಸದಸ್ಯರನ್ನು ಬದಲಾಯಿಸಲು ಅದರ ಮಾಲೀಕರಿಗೆ ಮಾತ್ರ ಸಾಧ್ಯ.</string>
+    <string name="circles_owner_label">ಮಾಲೀಕ: %1$s</string>
+    <string name="circles_owner_you">ನೀವು</string>
+    <string name="circles_owner_tag">ಮಾಲೀಕ</string>
+    <string name="circles_leave">ವೃತ್ತದಿಂದ ನಿರ್ಗಮಿಸಿ</string>
+    <string name="circles_leave_title">ವೃತ್ತದಿಂದ ನಿರ್ಗಮಿಸಬೇಕೇ?</string>
+    <string name="circles_leave_message">\"%1$s\" ಬಿಡಬೇಕೇ? ಮಾಲೀಕರಿಗೆ ಸೂಚಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಅವರು ನಿಮ್ಮನ್ನು ವೃತ್ತದಿಂದ ತೆಗೆದುಹಾಕುತ್ತಾರೆ.</string>
+    <string name="circles_leave_local">ನಿರ್ಗಮಿಸಿ ಮತ್ತು ಈ ಸಾಧನದಿಂದ ಅಳಿಸಿ</string>
+    <string name="circles_leave_local_sub">ಈ ಸಾಧನದಿಂದ ವೃತ್ತ ಮತ್ತು ಅದರ ಸಂದೇಶಗಳನ್ನು ತೆಗೆದುಹಾಕುತ್ತದೆ. ನೀವು ಕಳುಹಿಸಿದ ಸಂದೇಶಗಳು ಇತರ ಸದಸ್ಯರ ಸಾಧನಗಳಲ್ಲಿ ಉಳಿಯುತ್ತವೆ.</string>
+    <string name="circles_leave_remote">ನಿರ್ಗಮಿಸಿ ಮತ್ತು ಎಲ್ಲೆಡೆ ಅಳಿಸಿ</string>
+    <string name="circles_leave_remote_sub">ನೀವು ಕಳುಹಿಸಿದ ಸಂದೇಶಗಳನ್ನು ಇತರ ಸದಸ್ಯರ ಸಾಧನಗಳಿಂದಲೂ ಅಳಿಸುತ್ತದೆ.</string>
+    <string name="conv_mark_unread">ಓದದಿರುವಂತೆ ಗುರುತಿಸಿ</string>
 </resources>

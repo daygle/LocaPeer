@@ -772,7 +772,6 @@
     <string name="circles_delete">Padam bulatan</string>
     <string name="circles_delete_message">Padam \"%1$s\" dan perbualan kumpulannya? Ini hanya mengeluarkannya daripada peranti anda.</string>
     <string name="circles_delete_title">Padam bulatan?</string>
-    <string name="circles_edit">Edit</string>
     <string name="circles_edit_title">Edit bulatan</string>
     <string name="circles_empty_body">Cipta bulatan untuk menghantar mesej kepada sekumpulan kenalan dan berkongsi lokasi anda dengan semua sekaligus.</string>
     <string name="circles_empty_title">Belum ada bulatan</string>
@@ -821,4 +820,26 @@
     <string name="settings_theme_light">Terang</string>
     <string name="settings_theme_mode">Tema</string>
     <string name="settings_theme_system">Ikut sistem</string>
+    <string name="chat_preview_file">📎 Fail</string>
+    <string name="chat_preview_file_named">📎 %1$s</string>
+    <string name="chat_file_generic_name">Lampiran</string>
+    <string name="chat_cd_attach_file">Lampirkan fail</string>
+    <string name="chat_file_tap_to_open">Ketik untuk membuka</string>
+    <string name="chat_file_too_large">Fail terlalu besar (maks 100 KB)</string>
+    <string name="chat_file_unreadable">Tidak dapat membaca fail itu</string>
+    <string name="chat_file_no_app">Tiada apl yang boleh membuka fail ini</string>
+    <string name="circles_view_members">Lihat Ahli</string>
+    <string name="circles_view_title">Ahli Bulatan</string>
+    <string name="circles_owner_only">Hanya pemilik bulatan boleh menamakan semula atau menukar ahlinya.</string>
+    <string name="circles_owner_label">Pemilik: %1$s</string>
+    <string name="circles_owner_you">Anda</string>
+    <string name="circles_owner_tag">Pemilik</string>
+    <string name="circles_leave">Tinggalkan Bulatan</string>
+    <string name="circles_leave_title">Tinggalkan bulatan?</string>
+    <string name="circles_leave_message">Tinggalkan \"%1$s\"? Pemilik akan dimaklumkan dan mengeluarkan anda daripada bulatan.</string>
+    <string name="circles_leave_local">Tinggalkan dan padam pada peranti ini</string>
+    <string name="circles_leave_local_sub">Mengalih keluar bulatan dan mesejnya daripada peranti ini. Mesej yang anda hantar kekal pada peranti ahli lain.</string>
+    <string name="circles_leave_remote">Tinggalkan dan padam di mana-mana</string>
+    <string name="circles_leave_remote_sub">Turut memadam mesej yang anda hantar daripada peranti ahli lain.</string>
+    <string name="conv_mark_unread">Tandai Belum Dibaca</string>
 </resources>
