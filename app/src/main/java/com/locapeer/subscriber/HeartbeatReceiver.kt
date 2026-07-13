@@ -120,7 +120,8 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SUPERVISED_REGISTER,
     NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
     NostrEventKind.SUPERVISED_REGISTER_DECLINE,
-    NostrEventKind.TRACKING_ALERT
+    NostrEventKind.TRACKING_ALERT,
+    NostrEventKind.CIRCLE_LEAVE
 )
 
 @Singleton
@@ -191,7 +192,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.PEER_REMOVED,
                         NostrEventKind.DELETE_MY_MESSAGES,
                         NostrEventKind.DELETE_MY_LOCATION,
-                        NostrEventKind.TRACKING_ALERT
+                        NostrEventKind.TRACKING_ALERT,
+                        NostrEventKind.CIRCLE_LEAVE
                     ),
                     pTags = listOf(pubHex),
                     since = nowEpoch
@@ -258,6 +260,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
                     NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
+                    NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
                 }
               } catch (e: Exception) {
                 Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
@@ -499,6 +502,17 @@ class HeartbeatReceiver @Inject constructor(
             val (_, myPubHex) = keyManager.ensureKeypair()
             // Drop our own fan-out copy echoed back by a relay, and ignore a group we're not in.
             if (event.pubkey == myPubHex || !group.members.contains(myPubHex)) return
+            // If the user explicitly left this circle, don't let a straggler re-create it. A message
+            // from the circle's creator that still lists us is treated as a re-invite: clear the
+            // "left" flag and rejoin. Any other sender (a member still fanning to us before the
+            // owner's removal has propagated) is dropped so the circle stays gone.
+            if (prefs.getLeftCircleIds().contains(group.gid)) {
+                if (group.creator.isNotBlank() && event.pubkey == group.creator) {
+                    prefs.removeLeftCircleId(group.gid)
+                } else {
+                    return
+                }
+            }
             // For a circle we already know, only the recorded creator or a locally-known member
             // may post into the thread. The envelope's member list is sender-controlled, so
             // without this gate a member the creator has since removed (who still knows the gid)
@@ -901,6 +915,28 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         peerManager.handleDeleteMyLocation(event.pubkey)
+    }
+
+    /**
+     * A member left one of our circles: drop them from its membership so we stop fanning messages
+     * to them (the reduced list propagates to the rest of the circle on our next message). Only
+     * acts for a circle WE created, and only removes the signed sender, so a contact can neither
+     * evict a third party nor alter a circle they don't own.
+     */
+    private suspend fun processCircleLeave(event: NostrEvent) {
+        peerDao.getPeer(event.pubkey) ?: return  // known contacts only
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<com.locapeer.circles.CircleLeavePayload>(plaintext)
+        } catch (e: Exception) { return }
+        val circle = circleDao.getCircle(payload.gid) ?: return
+        val (_, myPub) = keyManager.ensureKeypair()
+        if (circle.creatorPubkey != myPub) return
+        circleDao.removeMember(payload.gid, event.pubkey)
+        Log.d(TAG, "Removed ${event.pubkey} from circle ${payload.gid} after they left")
     }
 
     private suspend fun processTrackingAlert(event: NostrEvent) {

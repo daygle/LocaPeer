@@ -179,6 +179,7 @@ class AppPreferences @Inject constructor(
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
     private val KEY_MAP_FIXED_LNG = doublePreferencesKey("map_fixed_lng")
     private val KEY_RECENT_EVENT_IDS = stringPreferencesKey("recent_event_ids")
+    private val KEY_LEFT_CIRCLE_IDS = stringPreferencesKey("left_circle_ids")
     private val KEY_USE_IMPERIAL_SPEED = booleanPreferencesKey("use_imperial_speed")
     private val KEY_USE_24_HOUR_TIME = booleanPreferencesKey("use_24_hour_time")
     private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
@@ -400,6 +401,35 @@ class AppPreferences @Inject constructor(
     suspend fun saveRecentEventIds(ids: Set<String>) {
         val trimmed = ids.toList().takeLast(1000)
         context.settingsStore.edit { it[KEY_RECENT_EVENT_IDS] = trimmed.joinToString(",") }
+    }
+
+    /**
+     * Circle ids the local user has explicitly left. An incoming circle message for one of these is
+     * ignored so a straggler from another member can't silently re-create a circle the user left
+     * (see [com.locapeer.subscriber.HeartbeatReceiver]). Cleared for a circle when its owner
+     * re-invites the user. Stored as a comma-separated string; circle ids are UUIDs so they never
+     * contain a comma.
+     */
+    suspend fun getLeftCircleIds(): Set<String> {
+        val raw = context.settingsStore.data.first()[KEY_LEFT_CIRCLE_IDS] ?: return emptySet()
+        return raw.split(",").filter { it.isNotBlank() }.toSet()
+    }
+
+    suspend fun addLeftCircleId(gid: String) {
+        context.settingsStore.edit {
+            val current = it[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { s -> s.isNotBlank() }?.toMutableSet()
+                ?: mutableSetOf()
+            current.add(gid)
+            it[KEY_LEFT_CIRCLE_IDS] = current.joinToString(",")
+        }
+    }
+
+    suspend fun removeLeftCircleId(gid: String) {
+        context.settingsStore.edit {
+            val current = it[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { s -> s.isNotBlank() }?.toMutableSet()
+                ?: return@edit
+            if (current.remove(gid)) it[KEY_LEFT_CIRCLE_IDS] = current.joinToString(",")
+        }
     }
 
     suspend fun updateIntervals(

@@ -837,6 +837,13 @@
     <string name="circles_delete">Delete Circle</string>
     <string name="circles_delete_title">Delete circle?</string>
     <string name="circles_delete_message">Delete \"%1$s\" and its group conversation? This only removes it from your device.</string>
+    <string name="circles_leave">Leave Circle</string>
+    <string name="circles_leave_title">Leave circle?</string>
+    <string name="circles_leave_message">Leave \"%1$s\"? The owner is notified and removes you from the circle.</string>
+    <string name="circles_leave_local">Leave and delete on this device</string>
+    <string name="circles_leave_local_sub">Removes the circle and its messages from this device. Messages you sent stay on other members\' devices.</string>
+    <string name="circles_leave_remote">Leave and delete everywhere</string>
+    <string name="circles_leave_remote_sub">Also deletes the messages you sent from the other members\' devices.</string>
     <string name="group_notif_title">%1$s</string>
     <string name="group_notif_body">%1$s: %2$s</string>
     <string name="scan_error_bad_pubkey">Invalid invite: bad public key</string>
