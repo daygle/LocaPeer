@@ -129,7 +129,13 @@ fun ChatScreen(
 
     LaunchedEffect(peerId) { vm.markRead(peerId) }
     LaunchedEffect(messages.size) {
-        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
+        if (messages.isNotEmpty()) {
+            // Also mark messages arriving while the screen is open, otherwise a conversation the
+            // user is actively reading still accrues an unread badge (and withholds the read
+            // receipt) for later. Mirrors GroupChatScreen.
+            vm.markRead(peerId)
+            listState.animateScrollToItem(messages.size - 1)
+        }
     }
 
     if (showDeleteConversationDialog) {

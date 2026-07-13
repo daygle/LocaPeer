@@ -73,16 +73,5 @@ class ContactsViewModel @Inject constructor(
         }
     }
 
-    fun setLocationSharing(deviceId: String, enabled: Boolean) {
-        viewModelScope.launch {
-            val existing = sharingConfigDao.getForPeer(deviceId)
-            if (existing != null) {
-                sharingConfigDao.setSharingEnabled(deviceId, enabled)
-            } else {
-                sharingConfigDao.upsert(PeerSharingConfig(peerDeviceId = deviceId, sharingEnabled = enabled))
-            }
-        }
-    }
-
     fun formatLastSeen(timestamp: Long): String = com.locapeer.util.DisplayFormat.relativeTimestamp(timestamp)
 }
