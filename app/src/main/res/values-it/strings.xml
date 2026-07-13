@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Batteria scarica (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Rilevamento movimento</string>
-    <string name="settings_motion_detection_on">Abilitato - perfeziona il tipo di movimento (camminata, guida) nella cronologia</string>
-    <string name="settings_motion_detection_off">Off - consenti l\'accesso all\'attività fisica per etichette di movimento più precise</string>
+    <string name="settings_motion_detection_on">Perfeziona il tipo di movimento (camminata, guida) nella cronologia</string>
+    <string name="settings_motion_detection_off">Consenti l\'accesso all\'attività fisica per etichette di movimento più precise</string>
     <string name="settings_battery_optimization">Ottimizzazione batteria</string>
-    <string name="settings_battery_optimization_unrestricted">Senza restrizioni - LocaPeer può essere eseguito liberamente in background</string>
-    <string name="settings_battery_optimization_restricted">Ottimizzato - tocca per impostare Senza restrizioni nelle impostazioni di sistema</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer può essere eseguito liberamente in background</string>
+    <string name="settings_battery_optimization_restricted">Tocca per impostare Senza restrizioni nelle impostazioni di sistema</string>
 
     <!-- Autorizzazioni -->
     <string name="settings_permissions">Autorizzazioni</string>
     <string name="settings_permissions_subtitle">Rivedi e correggi l\'accesso dell\'app a posizione, fotocamera e altro</string>
     <string name="permissions_intro">LocaPeer ha bisogno di queste autorizzazioni per condividere la tua posizione, scansionare gli inviti e continuare a funzionare in background. Tocca quelle non concesse per correggerle. </string>
     <string name="perm_location_title">Posizione</string>
-    <string name="perm_location_granted">Concesso - la tua posizione può essere condivisa</string>
-    <string name="perm_location_denied">Non concesso - tocca per consentire l\'accesso alla posizione</string>
+    <string name="perm_location_granted">La tua posizione può essere condivisa</string>
+    <string name="perm_location_denied">Tocca per consentire l\'accesso alla posizione</string>
     <string name="perm_background_location_title">Posizione in background</string>
-    <string name="perm_background_location_granted">Concesso - la condivisione della posizione continua quando l\'app è chiusa</string>
-    <string name="perm_background_location_denied">Non concesso - tocca per consentire l\'accesso "Sempre" nelle impostazioni</string>
+    <string name="perm_background_location_granted">La condivisione della posizione continua quando l\'app è chiusa</string>
+    <string name="perm_background_location_denied">Tocca per consentire l\'accesso "Sempre" nelle impostazioni</string>
     <string name="perm_camera_title">Fotocamera</string>
-    <string name="perm_camera_granted">Concesso - utilizzata per scansionare i codici QR di invito</string>
-    <string name="perm_camera_denied">Non concesso - tocca per consentire la fotocamera</string>
+    <string name="perm_camera_granted">Utilizzata per scansionare i codici QR di invito</string>
+    <string name="perm_camera_denied">Tocca per consentire la fotocamera</string>
     <string name="perm_notifications_title">Notifiche</string>
-    <string name="perm_notifications_granted">Concesso - possono essere mostrati avvisi e aggiornamenti di stato</string>
-    <string name="perm_notifications_denied">Non concesso - tocca per consentire le notifiche</string>
+    <string name="perm_notifications_granted">Possono essere mostrati avvisi e aggiornamenti di stato</string>
+    <string name="perm_notifications_denied">Tocca per consentire le notifiche</string>
 
     <!-- Unità e Visualizzazione -->
     <string name="settings_speed_units">Unità di velocità</string>

@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">कम बैटरी (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d मिनट</string>
     <string name="settings_motion_detection">गति पहचान</string>
-    <string name="settings_motion_detection_on">चालू - इतिहास में आपकी गति के प्रकार (चलना, गाड़ी चलाना) को परिष्कृत करता है</string>
-    <string name="settings_motion_detection_off">बंद - अधिक सटीक गति लेबल के लिए शारीरिक गतिविधि की अनुमति दें</string>
+    <string name="settings_motion_detection_on">इतिहास में आपकी गति के प्रकार (चलना, गाड़ी चलाना) को परिष्कृत करता है</string>
+    <string name="settings_motion_detection_off">अधिक सटीक गति लेबल के लिए शारीरिक गतिविधि की अनुमति दें</string>
     <string name="settings_battery_optimization">बैटरी अनुकूलन</string>
-    <string name="settings_battery_optimization_unrestricted">अप्रतिबंधित - LocaPeer बैकग्राउंड में स्वतंत्र रूप से चल सकता है</string>
-    <string name="settings_battery_optimization_restricted">अनुकूलित - सिस्टम सेटिंग्स में अप्रतिबंधित पर सेट करने के लिए टैप करें</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer बैकग्राउंड में स्वतंत्र रूप से चल सकता है</string>
+    <string name="settings_battery_optimization_restricted">सिस्टम सेटिंग्स में अप्रतिबंधित पर सेट करने के लिए टैप करें</string>
 
     <!-- अनुमतियाँ -->
     <string name="settings_permissions">अनुमतियाँ</string>
     <string name="settings_permissions_subtitle">स्थान, कैमरा और अन्य तक ऐप की पहुँच की समीक्षा करें और ठीक करें</string>
     <string name="permissions_intro">LocaPeer को आपका स्थान साझा करने, आमंत्रणों को स्कैन करने और बैकग्राउंड में चलते रहने के लिए इन अनुमतियों की आवश्यकता है। ठीक करने के लिए किसी भी ऐसी अनुमति पर टैप करें जो प्रदान नहीं की गई है।</string>
     <string name="perm_location_title">स्थान</string>
-    <string name="perm_location_granted">प्रदान की गई - आपका स्थान साझा किया जा सकता है</string>
-    <string name="perm_location_denied">प्रदान नहीं की गई - स्थान पहुँच की अनुमति देने के लिए टैप करें</string>
+    <string name="perm_location_granted">आपका स्थान साझा किया जा सकता है</string>
+    <string name="perm_location_denied">स्थान पहुँच की अनुमति देने के लिए टैप करें</string>
     <string name="perm_background_location_title">बैकग्राउंड स्थान</string>
-    <string name="perm_background_location_granted">प्रदान की गई - ऐप बंद होने पर भी स्थान साझा करना जारी रहता है</string>
-    <string name="perm_background_location_denied">प्रदान नहीं की गई - सेटिंग्स में \'हर समय अनुमति दें\' पहुँच प्रदान करने के लिए टैप करें</string>
+    <string name="perm_background_location_granted">ऐप बंद होने पर भी स्थान साझा करना जारी रहता है</string>
+    <string name="perm_background_location_denied">सेटिंग्स में \'हर समय अनुमति दें\' पहुँच प्रदान करने के लिए टैप करें</string>
     <string name="perm_camera_title">कैमरा</string>
-    <string name="perm_camera_granted">प्रदान की गई - आमंत्रण QR कोड स्कैन करने के लिए उपयोग किया जाता है</string>
-    <string name="perm_camera_denied">प्रदान नहीं की गई - कैमरे की अनुमति देने के लिए टैप करें</string>
+    <string name="perm_camera_granted">आमंत्रण QR कोड स्कैन करने के लिए उपयोग किया जाता है</string>
+    <string name="perm_camera_denied">कैमरे की अनुमति देने के लिए टैप करें</string>
     <string name="perm_notifications_title">सूचनाएं</string>
-    <string name="perm_notifications_granted">प्रदान की गई - अलर्ट और स्थिति अपडेट दिखाए जा सकते हैं</string>
-    <string name="perm_notifications_denied">प्रदान नहीं की गई - सूचनाओं की अनुमति देने के लिए टैप करें</string>
+    <string name="perm_notifications_granted">अलर्ट और स्थिति अपडेट दिखाए जा सकते हैं</string>
+    <string name="perm_notifications_denied">सूचनाओं की अनुमति देने के लिए टैप करें</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">गति इकाइयाँ</string>

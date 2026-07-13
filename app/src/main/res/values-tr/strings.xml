@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Düşük Pil (&lt; %20)</string>
     <string name="settings_minutes_short">%1$d dk</string>
     <string name="settings_motion_detection">Hareket Algılama</string>
-    <string name="settings_motion_detection_on">Etkin - geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
-    <string name="settings_motion_detection_off">Kapalı - daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
+    <string name="settings_motion_detection_on">Geçmişteki hareket türünüzü (yürüme, sürüş) hassaslaştırır</string>
+    <string name="settings_motion_detection_off">Daha doğru hareket etiketleri için fiziksel aktivite erişimine izin verin</string>
     <string name="settings_battery_optimization">Pil Optimizasyonu</string>
-    <string name="settings_battery_optimization_unrestricted">Kısıtlanmamış - LocaPeer arka planda serbestçe çalışabilir</string>
-    <string name="settings_battery_optimization_restricted">Optimize edildi - sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer arka planda serbestçe çalışabilir</string>
+    <string name="settings_battery_optimization_restricted">Sistem ayarlarında Kısıtlanmamış olarak ayarlamak için dokunun</string>
 
     <!-- İzinler -->
     <string name="settings_permissions">İzinler</string>
     <string name="settings_permissions_subtitle">Uygulamanın konuma, kameraya ve daha fazlasına erişimini inceleyin ve düzeltin</string>
     <string name="permissions_intro">LocaPeer\'in konumunuzu paylaşması, davetleri taraması ve arka planda çalışmaya devam etmesi için bu izinlere ihtiyacı vardır. Verilmeyen izinleri düzeltmek için üzerine dokunun.</string>
     <string name="perm_location_title">Konum</string>
-    <string name="perm_location_granted">Verildi - konumunuz paylaşılabilir</string>
-    <string name="perm_location_denied">Verilmedi - konum erişimine izin vermek için dokunun</string>
+    <string name="perm_location_granted">Konumunuz paylaşılabilir</string>
+    <string name="perm_location_denied">Konum erişimine izin vermek için dokunun</string>
     <string name="perm_background_location_title">Arka Plan Konumu</string>
-    <string name="perm_background_location_granted">Verildi - uygulama kapalıyken konum paylaşımı devam eder</string>
-    <string name="perm_background_location_denied">Verilmedi - ayarlarda \'Her zaman izin ver\' erişimine izin vermek için dokunun</string>
+    <string name="perm_background_location_granted">Uygulama kapalıyken konum paylaşımı devam eder</string>
+    <string name="perm_background_location_denied">Ayarlarda \'Her zaman izin ver\' erişimine izin vermek için dokunun</string>
     <string name="perm_camera_title">Kamera</string>
-    <string name="perm_camera_granted">Verildi - davet QR kodlarını taramak için kullanılır</string>
-    <string name="perm_camera_denied">Verilmedi - kameraya izin vermek için dokunun</string>
+    <string name="perm_camera_granted">Davet QR kodlarını taramak için kullanılır</string>
+    <string name="perm_camera_denied">Kameraya izin vermek için dokunun</string>
     <string name="perm_notifications_title">Bildirimler</string>
-    <string name="perm_notifications_granted">Verildi - uyarılar ve durum güncellemeleri gösterilebilir</string>
-    <string name="perm_notifications_denied">Verilmedi - bildirimlere izin vermek için dokunun</string>
+    <string name="perm_notifications_granted">Uyarılar ve durum güncellemeleri gösterilebilir</string>
+    <string name="perm_notifications_denied">Bildirimlere izin vermek için dokunun</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Hız Birimleri</string>

@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">తక్కువ బ్యాటరీ (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d నిమి</string>
     <string name="settings_motion_detection">చలనాన్ని గుర్తించడం</string>
-    <string name="settings_motion_detection_on">ప్రారంభించబడింది - చరిత్రలో మీ కదలిక రకాన్ని (నడక, డ్రైవింగ్) మెరుగుపరుస్తుంది</string>
-    <string name="settings_motion_detection_off">ఆఫ్ - మరింత ఖచ్చితమైన కదలిక లేబుల్‌ల కోసం భౌతిక కార్యాచరణ ప్రాప్యతను అనుమతించండి</string>
+    <string name="settings_motion_detection_on">చరిత్రలో మీ కదలిక రకాన్ని (నడక, డ్రైవింగ్) మెరుగుపరుస్తుంది</string>
+    <string name="settings_motion_detection_off">మరింత ఖచ్చితమైన కదలిక లేబుల్‌ల కోసం భౌతిక కార్యాచరణ ప్రాప్యతను అనుమతించండి</string>
     <string name="settings_battery_optimization">బ్యాటరీ ఆప్టిమైజేషన్</string>
-    <string name="settings_battery_optimization_unrestricted">నియంత్రణ లేని - LocaPeer బ్యాక్‌గ్రౌండ్‌లో స్వేచ్ఛగా రన్ చేయగలదు</string>
-    <string name="settings_battery_optimization_restricted">ఆప్టిమైజ్ చేయబడింది - సిస్టమ్ సెట్టింగ్‌లలో నియంత్రణ లేని విధంగా సెట్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer బ్యాక్‌గ్రౌండ్‌లో స్వేచ్ఛగా రన్ చేయగలదు</string>
+    <string name="settings_battery_optimization_restricted">సిస్టమ్ సెట్టింగ్‌లలో నియంత్రణ లేని విధంగా సెట్ చేయడానికి ట్యాప్ చేయండి</string>
 
     <!-- అనుమతులు -->
     <string name="settings_permissions">అనుమతులు</string>
     <string name="settings_permissions_subtitle">స్థానం, కెమెరా మరియు మరిన్నింటికి యాప్ యాక్సెస్‌ని సమీక్షించండి మరియు సరిచేయండి</string>
     <string name="permissions_intro">మీ స్థానాన్ని పంచుకోవడానికి, ఆహ్వానాలను స్కాన్ చేయడానికి మరియు బ్యాక్‌గ్రౌండ్‌లో రన్ అవుతూ ఉండటానికి LocaPeer కి ఈ అనుమతులు అవసరం. మంజూరు చేయని వాటిని సరిచేయడానికి ట్యాప్ చేయండి.</string>
     <string name="perm_location_title">స్థానం</string>
-    <string name="perm_location_granted">మంజూరు చేయబడింది - మీ స్థానాన్ని పంచుకోవచ్చు</string>
-    <string name="perm_location_denied">మంజూరు చేయలేదు - స్థాన ప్రాప్యతను అనుమతించడానికి ట్యాప్ చేయండి</string>
+    <string name="perm_location_granted">మీ స్థానాన్ని పంచుకోవచ్చు</string>
+    <string name="perm_location_denied">స్థాన ప్రాప్యతను అనుమతించడానికి ట్యాప్ చేయండి</string>
     <string name="perm_background_location_title">బ్యాక్‌గ్రౌండ్ స్థానం</string>
-    <string name="perm_background_location_granted">మంజూరు చేయబడింది - యాప్ క్లోజ్ చేసినప్పుడు కూడా స్థాన షేరింగ్ కొనసాగుతుంది</string>
-    <string name="perm_background_location_denied">మంజూరు చేయలేదు - సెట్టింగ్‌లలో \'ఎల్లప్పుడూ అనుమతించు\' ఎంచుకోవడానికి ట్యాప్ చేయండి</string>
+    <string name="perm_background_location_granted">యాప్ క్లోజ్ చేసినప్పుడు కూడా స్థాన షేరింగ్ కొనసాగుతుంది</string>
+    <string name="perm_background_location_denied">సెట్టింగ్‌లలో \'ఎల్లప్పుడూ అనుమతించు\' ఎంచుకోవడానికి ట్యాప్ చేయండి</string>
     <string name="perm_camera_title">కెమెరా</string>
-    <string name="perm_camera_granted">మంజూరు చేయబడింది - ఆహ్వాన QR కోడ్‌లను స్కాన్ చేయడానికి ఉపయోగించబడుతుంది</string>
-    <string name="perm_camera_denied">మంజూరు చేయలేదు - కెమెరాను అనుమతించడానికి ట్యాప్ చేయండి</string>
+    <string name="perm_camera_granted">ఆహ్వాన QR కోడ్‌లను స్కాన్ చేయడానికి ఉపయోగించబడుతుంది</string>
+    <string name="perm_camera_denied">కెమెరాను అనుమతించడానికి ట్యాప్ చేయండి</string>
     <string name="perm_notifications_title">నోటిఫికేషన్లు</string>
-    <string name="perm_notifications_granted">మంజూరు చేయబడింది - హెచ్చరికలు మరియు స్థితి నవీకరణలను చూపవచ్చు</string>
-    <string name="perm_notifications_denied">మంజూరు చేయలేదు - నోటిఫికేషన్లను అనుమతించడానికి ట్యాప్ చేయండి</string>
+    <string name="perm_notifications_granted">హెచ్చరికలు మరియు స్థితి నవీకరణలను చూపవచ్చు</string>
+    <string name="perm_notifications_denied">నోటిఫికేషన్లను అనుమతించడానికి ట్యాప్ చేయండి</string>
 
     <!-- యూనిట్లు &amp; ప్రదర్శన -->
     <string name="settings_speed_units">వేగ యూనిట్లు</string>

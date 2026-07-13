@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Baturi Ya Yi Ƙasa (&lt; 20%)</string>
     <string name="settings_minutes_short">Minti %1$d</string>
     <string name="settings_motion_detection">Gano Motsi</string>
-    <string name="settings_motion_detection_on">An kunna - yana tace nau\'in motsin ku (tafiya, tuki) a tarihi</string>
-    <string name="settings_motion_detection_off">A kashe - ba da damar shiga ayyukan jiki don ingantaccen lakabin motsi</string>
+    <string name="settings_motion_detection_on">Yana tace nau\'in motsin ku (tafiya, tuki) a tarihi</string>
+    <string name="settings_motion_detection_off">Ba da damar shiga ayyukan jiki don ingantaccen lakabin motsi</string>
     <string name="settings_battery_optimization">Inganta Baturi</string>
-    <string name="settings_battery_optimization_unrestricted">Ba shi da iyaka - LocaPeer na iya yin aiki a bango kyauta</string>
-    <string name="settings_battery_optimization_restricted">An inganta - danna don saita zuwa Ba shi da iyaka a saitunan tsarin</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer na iya yin aiki a bango kyauta</string>
+    <string name="settings_battery_optimization_restricted">Danna don saita zuwa Ba shi da iyaka a saitunan tsarin</string>
 
     <!-- Izini -->
     <string name="settings_permissions">Izini</string>
     <string name="settings_permissions_subtitle">Dubawa da gyara damar app na shiga wuri, kamara da sauransu</string>
     <string name="permissions_intro">LocaPeer tana buƙatar waɗannan izini don raba wurin ku, bincika gayyata da ci gaba da aiki a bango. Danna duk wanda ba a bayar ba don gyara su.</string>
     <string name="perm_location_title">Wuri</string>
-    <string name="perm_location_granted">An bayar - za a iya raba wurin ku</string>
-    <string name="perm_location_denied">Ba a bayar ba - danna don ba da damar shiga wuri</string>
+    <string name="perm_location_granted">Za a iya raba wurin ku</string>
+    <string name="perm_location_denied">Danna don ba da damar shiga wuri</string>
     <string name="perm_background_location_title">Wurin Bango</string>
-    <string name="perm_background_location_granted">An bayar - rabon wuri yana ci gaba lokacin da app ɗin yake a rufe</string>
-    <string name="perm_background_location_denied">Ba a bayar ba - danna don ba da damar shiga \'A kowane lokaci\' a saituna</string>
+    <string name="perm_background_location_granted">Rabon wuri yana ci gaba lokacin da app ɗin yake a rufe</string>
+    <string name="perm_background_location_denied">Danna don ba da damar shiga \'A kowane lokaci\' a saituna</string>
     <string name="perm_camera_title">Kamara</string>
-    <string name="perm_camera_granted">An bayar - ana amfani da shi don duba lambobin QR na gayyata</string>
-    <string name="perm_camera_denied">Ba a bayar ba - danna don ba da damar kamara</string>
+    <string name="perm_camera_granted">Ana amfani da shi don duba lambobin QR na gayyata</string>
+    <string name="perm_camera_denied">Danna don ba da damar kamara</string>
     <string name="perm_notifications_title">Sanarwa</string>
-    <string name="perm_notifications_granted">An bayar - ana iya nuna gargaɗi da sabunta matsayi</string>
-    <string name="perm_notifications_denied">Ba a bayar ba - danna don ba da damar sanarwa</string>
+    <string name="perm_notifications_granted">Ana iya nuna gargaɗi da sabunta matsayi</string>
+    <string name="perm_notifications_denied">Danna don ba da damar sanarwa</string>
 
     <!-- Raka'a &amp; Nunawa -->
     <string name="settings_speed_units">Raka\'ar Sauri</string>

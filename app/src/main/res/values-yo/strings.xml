@@ -121,28 +121,28 @@
     <string name="settings_low_battery" formatted="false">Bátìrì Kéré (&lt; 20%)</string>
     <string name="settings_minutes_short">Ìṣẹ́jú %1$d</string>
     <string name="settings_motion_detection">Ìwárí Iṣipopada</string>
-    <string name="settings_motion_detection_on">Mú ṣiṣẹ́ - ń jẹ́ kí á mọ irú iṣẹ́ tí o ń ṣe (rìn, wakọ̀) nínú ìtàn rẹ</string>
-    <string name="settings_motion_detection_off">Pá - gba àyè fún iṣẹ́ ara fún ìsọfúnni iṣipopada tó pé</string>
+    <string name="settings_motion_detection_on">Ń jẹ́ kí á mọ irú iṣẹ́ tí o ń ṣe (rìn, wakọ̀) nínú ìtàn rẹ</string>
+    <string name="settings_motion_detection_off">Gba àyè fún iṣẹ́ ara fún ìsọfúnni iṣipopada tó pé</string>
     <string name="settings_battery_optimization">Ìmúgbòòrò Bátìrì</string>
-    <string name="settings_battery_optimization_unrestricted">Kò sí ìhámọ́ - LocaPeer le ṣiṣẹ́ nínú abẹ́lẹ̀ láìsí ìdíwọ́</string>
-    <string name="settings_battery_optimization_restricted">Mú dunjú - tẹ̀ ẹ́ láti tò ó sí Kò sí ìhámọ́ nínú ètò ẹ̀rọ</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer le ṣiṣẹ́ nínú abẹ́lẹ̀ láìsí ìdíwọ́</string>
+    <string name="settings_battery_optimization_restricted">Tẹ̀ ẹ́ láti tò ó sí Kò sí ìhámọ́ nínú ètò ẹ̀rọ</string>
 
     <!-- Awọn igbanilaaye -->
     <string name="settings_permissions">Ìgbàníláyè</string>
     <string name="settings_permissions_subtitle">Wo àti ṣàtúnṣe àyè fún ipò, kámẹ́rà àti bẹ́ẹ̀ bẹ́ẹ̀ lọ</string>
     <string name="permissions_intro">LocaPeer nílò àwọn ìgbàníláyè yìí láti pín ipò rẹ, ṣàyẹ̀wò ìpè àti láti máa ṣiṣẹ́ nínú abẹ́lẹ̀. Tẹ èyí tí o kò bá gba láti ṣàtúnṣe rẹ̀.</string>
     <string name="perm_location_title">Ipò</string>
-    <string name="perm_location_granted">Gba - a le pín ipò rẹ</string>
-    <string name="perm_location_denied">Kò gba - tẹ̀ ẹ́ láti gba àyè fún ipò</string>
+    <string name="perm_location_granted">A le pín ipò rẹ</string>
+    <string name="perm_location_denied">Tẹ̀ ẹ́ láti gba àyè fún ipò</string>
     <string name="perm_background_location_title">Ipò Abẹ́lẹ̀</string>
-    <string name="perm_background_location_granted">Gba - ipò rẹ ń pín nìṣó bí o bá tiẹ ti ngba nínú ngwa náà</string>
-    <string name="perm_background_location_denied">Kò gba - tẹ̀ ẹ́ láti gba àyè fún \'Gba ní gbogbo ìgbà\' nínú ètò</string>
+    <string name="perm_background_location_granted">Ipò rẹ ń pín nìṣó bí o bá tiẹ ti ngba nínú ngwa náà</string>
+    <string name="perm_background_location_denied">Tẹ̀ ẹ́ láti gba àyè fún \'Gba ní gbogbo ìgbà\' nínú ètò</string>
     <string name="perm_camera_title">Kámẹ́rà</string>
-    <string name="perm_camera_granted">Gba - a ń lò ó láti ṣàyẹ̀wò koodu QR ìpè</string>
-    <string name="perm_camera_denied">Kò gba - tẹ̀ ẹ́ láti gba àyè fún kámẹ́rà</string>
+    <string name="perm_camera_granted">A ń lò ó láti ṣàyẹ̀wò koodu QR ìpè</string>
+    <string name="perm_camera_denied">Tẹ̀ ẹ́ láti gba àyè fún kámẹ́rà</string>
     <string name="perm_notifications_title">Ìsọfúnni</string>
-    <string name="perm_notifications_granted">Gba - ìkìlọ̀ àti ìsọfúnni ipò le hàn</string>
-    <string name="perm_notifications_denied">Kò gba - tẹ̀ ẹ́ láti gba àyè fún ìsọfúnni</string>
+    <string name="perm_notifications_granted">Ìkìlọ̀ àti ìsọfúnni ipò le hàn</string>
+    <string name="perm_notifications_denied">Tẹ̀ ẹ́ láti gba àyè fún ìsọfúnni</string>
 
     <!-- Ìwọ̀n &amp; Ìfarahàn -->
     <string name="settings_speed_units">Ìwọ̀n Ọsọ</string>

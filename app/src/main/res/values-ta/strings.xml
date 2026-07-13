@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">குறைந்த பேட்டரி (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d நிமி</string>
     <string name="settings_motion_detection">இயக்கத்தைக் கண்டறிதல்</string>
-    <string name="settings_motion_detection_on">இயக்கப்பட்டது - வரலாற்றில் உங்கள் இயக்க வகையை (நடத்தல், வாகனம் ஓட்டுதல்) செம்மைப்படுத்துகிறது</string>
-    <string name="settings_motion_detection_off">அணை - துல்லியமான இயக்க லேபிள்களுக்கு உடல் செயல்பாட்டு அணுகலை அனுமதிக்கவும்</string>
+    <string name="settings_motion_detection_on">வரலாற்றில் உங்கள் இயக்க வகையை (நடத்தல், வாகனம் ஓட்டுதல்) செம்மைப்படுத்துகிறது</string>
+    <string name="settings_motion_detection_off">துல்லியமான இயக்க லேபிள்களுக்கு உடல் செயல்பாட்டு அணுகலை அனுமதிக்கவும்</string>
     <string name="settings_battery_optimization">பேட்டரி மேம்படுத்தல்</string>
-    <string name="settings_battery_optimization_unrestricted">கட்டுப்பாடற்றது - LocaPeer பின்னணியில் சுதந்திரமாக இயங்க முடியும்</string>
-    <string name="settings_battery_optimization_restricted">மேம்படுத்தப்பட்டது - கணினி அமைப்புகளில் கட்டுப்பாடற்றதாக அமைக்க தட்டவும்</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer பின்னணியில் சுதந்திரமாக இயங்க முடியும்</string>
+    <string name="settings_battery_optimization_restricted">கணினி அமைப்புகளில் கட்டுப்பாடற்றதாக அமைக்க தட்டவும்</string>
 
     <!-- அனுமதிகள் -->
     <string name="settings_permissions">அனுமதிகள்</string>
     <string name="settings_permissions_subtitle">இருப்பிடம், கேமரா மற்றும் பலவற்றிற்கான பயன்பாட்டு அணுகலைச் சரிபார்த்து சரிசெய்யவும்</string>
     <string name="permissions_intro">உங்கள் இருப்பிடத்தைப் பகிரவும், அழைப்புகளை ஸ்கேன் செய்யவும் மற்றும் பின்னணியில் தொடர்ந்து இயங்கவும் LocaPeer-க்கு இந்த அனுமதிகள் தேவை. வழங்கப்படாதவற்றைச் சரிசெய்ய அவற்றைத் தட்டவும்.</string>
     <string name="perm_location_title">இருப்பிடம்</string>
-    <string name="perm_location_granted">வழங்கப்பட்டது - உங்கள் இருப்பிடத்தைப் பகிரலாம்</string>
-    <string name="perm_location_denied">வழங்கப்படவில்லை - இருப்பிட அணுகலை அனுமதிக்க தட்டவும்</string>
+    <string name="perm_location_granted">உங்கள் இருப்பிடத்தைப் பகிரலாம்</string>
+    <string name="perm_location_denied">இருப்பிட அணுகலை அனுமதிக்க தட்டவும்</string>
     <string name="perm_background_location_title">பின்னணி இருப்பிடம்</string>
-    <string name="perm_background_location_granted">வழங்கப்பட்டது - பயன்பாடு மூடப்பட்டிருந்தாலும் இருப்பிடப் பகிர்வு தொடரும்</string>
-    <string name="perm_background_location_denied">வழங்கப்படவில்லை - அமைப்புகளில் \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="perm_background_location_granted">பயன்பாடு மூடப்பட்டிருந்தாலும் இருப்பிடப் பகிர்வு தொடரும்</string>
+    <string name="perm_background_location_denied">அமைப்புகளில் \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்க தட்டவும்</string>
     <string name="perm_camera_title">கேமரா</string>
-    <string name="perm_camera_granted">வழங்கப்பட்டது - அழைப்பு QR குறியீடுகளை ஸ்கேன் செய்யப் பயன்படுகிறது</string>
-    <string name="perm_camera_denied">வழங்கப்படவில்லை - கேமராவை அனுமதிக்க தட்டவும்</string>
+    <string name="perm_camera_granted">அழைப்பு QR குறியீடுகளை ஸ்கேன் செய்யப் பயன்படுகிறது</string>
+    <string name="perm_camera_denied">கேமராவை அனுமதிக்க தட்டவும்</string>
     <string name="perm_notifications_title">அறிவிப்புகள்</string>
-    <string name="perm_notifications_granted">வழங்கப்பட்டது - எச்சரிக்கைகள் மற்றும் நிலை புதுப்பிப்புகளைக் காட்டலாம்</string>
-    <string name="perm_notifications_denied">வழங்கப்படவில்லை - அறிவிப்புகளை அனுமதிக்க தட்டவும்</string>
+    <string name="perm_notifications_granted">எச்சரிக்கைகள் மற்றும் நிலை புதுப்பிப்புகளைக் காட்டலாம்</string>
+    <string name="perm_notifications_denied">அறிவிப்புகளை அனுமதிக்க தட்டவும்</string>
 
     <!-- அலகுகள் &amp; காட்சி -->
     <string name="settings_speed_units">வேக அலகுகள்</string>

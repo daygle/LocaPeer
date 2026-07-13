@@ -126,28 +126,28 @@
     <string name="settings_low_battery" formatted="false">بطارية منخفضة (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d د</string>
     <string name="settings_motion_detection">اكتشاف الحركة</string>
-    <string name="settings_motion_detection_on">مفعّل - يحسّن نوع حركتك (مشي، قيادة) في السجل</string>
-    <string name="settings_motion_detection_off">متوقف - اسمح بالوصول إلى النشاط البدني لتسميات حركة أدق</string>
+    <string name="settings_motion_detection_on">يحسّن نوع حركتك (مشي، قيادة) في السجل</string>
+    <string name="settings_motion_detection_off">اسمح بالوصول إلى النشاط البدني لتسميات حركة أدق</string>
     <string name="settings_battery_optimization">تحسين البطارية</string>
-    <string name="settings_battery_optimization_unrestricted">غير مقيد - يمكن لـ LocaPeer العمل بحرية في الخلفية</string>
-    <string name="settings_battery_optimization_restricted">محسّن - انقر لضبطه على غير مقيد في إعدادات النظام</string>
+    <string name="settings_battery_optimization_unrestricted">يمكن لـ LocaPeer العمل بحرية في الخلفية</string>
+    <string name="settings_battery_optimization_restricted">انقر لضبطه على غير مقيد في إعدادات النظام</string>
 
     <!-- الأذونات -->
     <string name="settings_permissions">الأذونات</string>
     <string name="settings_permissions_subtitle">مراجعة وإصلاح وصول التطبيق إلى الموقع والكاميرا والمزيد</string>
     <string name="permissions_intro">يحتاج LocaPeer إلى هذه الأذونات لمشاركة موقعك ومسح الدعوات والاستمرار في العمل في الخلفية. انقر فوق أي منها لم يتم منحه لإصلاحه.</string>
     <string name="perm_location_title">الموقع</string>
-    <string name="perm_location_granted">تم المنح - يمكن مشاركة موقعك</string>
-    <string name="perm_location_denied">لم يتم المنح - انقر للسماح بالوصول إلى الموقع</string>
+    <string name="perm_location_granted">يمكن مشاركة موقعك</string>
+    <string name="perm_location_denied">انقر للسماح بالوصول إلى الموقع</string>
     <string name="perm_background_location_title">الموقع في الخلفية</string>
-    <string name="perm_background_location_granted">تم المنح - تستمر مشاركة الموقع عند إغلاق التطبيق</string>
-    <string name="perm_background_location_denied">لم يتم المنح - انقر للسماح بالوصول "السماح طوال الوقت" في الإعدادات</string>
+    <string name="perm_background_location_granted">تستمر مشاركة الموقع عند إغلاق التطبيق</string>
+    <string name="perm_background_location_denied">انقر للسماح بالوصول "السماح طوال الوقت" في الإعدادات</string>
     <string name="perm_camera_title">الكاميرا</string>
-    <string name="perm_camera_granted">تم المنح - تُستخدم لمسح أكواد QR للدعوات</string>
-    <string name="perm_camera_denied">لم يتم المنح - انقر للسماح بالكاميرا</string>
+    <string name="perm_camera_granted">تُستخدم لمسح أكواد QR للدعوات</string>
+    <string name="perm_camera_denied">انقر للسماح بالكاميرا</string>
     <string name="perm_notifications_title">الإشعارات</string>
-    <string name="perm_notifications_granted">تم المنح - يمكن عرض التنبيهات وتحديثات الحالة</string>
-    <string name="perm_notifications_denied">لم يتم المنح - انقر للسماح بالإشعارات</string>
+    <string name="perm_notifications_granted">يمكن عرض التنبيهات وتحديثات الحالة</string>
+    <string name="perm_notifications_denied">انقر للسماح بالإشعارات</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">وحدات السرعة</string>

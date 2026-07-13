@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Төмен батарея (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d мин</string>
     <string name="settings_motion_detection">Қозғалысты анықтау</string>
-    <string name="settings_motion_detection_on">Қосулы - тарихтағы қозғалыс түрін (жаяу жүру, көлік жүргізу) нақтылайды</string>
-    <string name="settings_motion_detection_off">Өшірулі - қозғалыс белгілерін дәлірек анықтау үшін дене белсенділігіне рұқсат беріңіз</string>
+    <string name="settings_motion_detection_on">Тарихтағы қозғалыс түрін (жаяу жүру, көлік жүргізу) нақтылайды</string>
+    <string name="settings_motion_detection_off">Қозғалыс белгілерін дәлірек анықтау үшін дене белсенділігіне рұқсат беріңіз</string>
     <string name="settings_battery_optimization">Батареяны оңтайландыру</string>
-    <string name="settings_battery_optimization_unrestricted">Шектеусіз - LocaPeer фонда еркін жұмыс істей алады</string>
-    <string name="settings_battery_optimization_restricted">Оңтайландырылған - жүйелік параметрлерде шектеусіз деп орнату үшін түртіңіз</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer фонда еркін жұмыс істей алады</string>
+    <string name="settings_battery_optimization_restricted">Жүйелік параметрлерде шектеусіз деп орнату үшін түртіңіз</string>
 
     <!-- Рұқсаттар -->
     <string name="settings_permissions">Рұқсаттар</string>
     <string name="settings_permissions_subtitle">Қолданбаның орынға, камераға және т.б. рұқсаттарын қарап шығу және түзету</string>
     <string name="permissions_intro">LocaPeer-ге орынды бөлісу, шақыруларды сканерлеу және фонда жұмысын жалғастыру үшін осы рұқсаттар қажет. Берілмеген рұқсаттарды түзету үшін түртіңіз.</string>
     <string name="perm_location_title">Орын</string>
-    <string name="perm_location_granted">Берілді - орналасқан жеріңізді бөлісуге болады</string>
-    <string name="perm_location_denied">Берілмеді - орынға рұқсат беру үшін түртіңіз</string>
+    <string name="perm_location_granted">Орналасқан жеріңізді бөлісуге болады</string>
+    <string name="perm_location_denied">Орынға рұқсат беру үшін түртіңіз</string>
     <string name="perm_background_location_title">Фондық орын</string>
-    <string name="perm_background_location_granted">Берілді - қолданба жабылғанда да орынды бөлісу жалғасады</string>
-    <string name="perm_background_location_denied">Берілмеді - параметрлерде «Әрқашан рұқсат беру» опциясын таңдау үшін түртіңіз</string>
+    <string name="perm_background_location_granted">Қолданба жабылғанда да орынды бөлісу жалғасады</string>
+    <string name="perm_background_location_denied">Параметрлерде «Әрқашан рұқсат беру» опциясын таңдау үшін түртіңіз</string>
     <string name="perm_camera_title">Камера</string>
-    <string name="perm_camera_granted">Берілді - шақыру QR кодтарын сканерлеу үшін қолданылады</string>
-    <string name="perm_camera_denied">Берілмеді - камераға рұқсат беру үшін түртіңіз</string>
+    <string name="perm_camera_granted">Шақыру QR кодтарын сканерлеу үшін қолданылады</string>
+    <string name="perm_camera_denied">Камераға рұқсат беру үшін түртіңіз</string>
     <string name="perm_notifications_title">Хабарландырулар</string>
-    <string name="perm_notifications_granted">Берілді - ескертулер мен күй жаңартулары көрсетілуі мүмкін</string>
-    <string name="perm_notifications_denied">Берілмеді - хабарландыруларға рұқсат беру үшін түртіңіз</string>
+    <string name="perm_notifications_granted">Ескертулер мен күй жаңартулары көрсетілуі мүмкін</string>
+    <string name="perm_notifications_denied">Хабарландыруларға рұқсат беру үшін түртіңіз</string>
 
     <!-- Бірліктер және дисплей -->
     <string name="settings_speed_units">Жылдамдық бірліктері</string>

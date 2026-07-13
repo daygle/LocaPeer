@@ -124,28 +124,28 @@
     <string name="settings_low_battery" formatted="false">Низький заряд (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d хв</string>
     <string name="settings_motion_detection">Розпізнавання руху</string>
-    <string name="settings_motion_detection_on">Увімкнено - уточнює тип руху (ходьба, керування авто) в історії</string>
-    <string name="settings_motion_detection_off">Вимкнено - надайте доступ до фізичної активності для точніших міток руху</string>
+    <string name="settings_motion_detection_on">Уточнює тип руху (ходьба, керування авто) в історії</string>
+    <string name="settings_motion_detection_off">Надайте доступ до фізичної активності для точніших міток руху</string>
     <string name="settings_battery_optimization">Оптимізація заряду</string>
-    <string name="settings_battery_optimization_unrestricted">Без обмежень - LocaPeer може вільно працювати у фоновому режимі</string>
-    <string name="settings_battery_optimization_restricted">Оптимізовано - натисніть, щоб встановити «Без обмежень» у системних налаштуваннях</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer може вільно працювати у фоновому режимі</string>
+    <string name="settings_battery_optimization_restricted">Натисніть, щоб встановити «Без обмежень» у системних налаштуваннях</string>
 
     <!-- Дозволи -->
     <string name="settings_permissions">Дозволи</string>
     <string name="settings_permissions_subtitle">Перегляд і виправлення доступу програми до місцезнаходження, камери тощо</string>
     <string name="permissions_intro">LocaPeer потребує цих дозволів, щоб ділитися вашим місцезнаходженням, сканувати запрошення та продовжувати працювати у фоновому режимі. Натисніть на будь-який ненаданий дозвіл, щоб це виправити. </string>
     <string name="perm_location_title">Місцезнаходження</string>
-    <string name="perm_location_granted">Надано - ваше місцезнаходження можна передавати</string>
-    <string name="perm_location_denied">Не надано - натисніть, щоб дозволити доступ до місцезнаходження</string>
+    <string name="perm_location_granted">Ваше місцезнаходження можна передавати</string>
+    <string name="perm_location_denied">Натисніть, щоб дозволити доступ до місцезнаходження</string>
     <string name="perm_background_location_title">Фонове місцезнаходження</string>
-    <string name="perm_background_location_granted">Надано - передача місцезнаходження продовжується, коли програма закрита</string>
-    <string name="perm_background_location_denied">Не надано - натисніть, щоб дозволити доступ «Дозволити у будь-якому режимі» у налаштуваннях</string>
+    <string name="perm_background_location_granted">Передача місцезнаходження продовжується, коли програма закрита</string>
+    <string name="perm_background_location_denied">Натисніть, щоб дозволити доступ «Дозволити у будь-якому режимі» у налаштуваннях</string>
     <string name="perm_camera_title">Камера</string>
-    <string name="perm_camera_granted">Надано - використовується для сканування QR-кодів запрошень</string>
-    <string name="perm_camera_denied">Не надано - натисніть, щоб дозволити камеру</string>
+    <string name="perm_camera_granted">Використовується для сканування QR-кодів запрошень</string>
+    <string name="perm_camera_denied">Натисніть, щоб дозволити камеру</string>
     <string name="perm_notifications_title">Сповіщення</string>
-    <string name="perm_notifications_granted">Надано - можуть відображатися попередження та оновлення статусу</string>
-    <string name="perm_notifications_denied">Не надано - натисніть, щоб дозволити сповіщення</string>
+    <string name="perm_notifications_granted">Можуть відображатися попередження та оновлення статусу</string>
+    <string name="perm_notifications_denied">Натисніть, щоб дозволити сповіщення</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Одиниці швидкості</string>

@@ -123,28 +123,28 @@
     <string name="settings_low_battery" formatted="false">סוללה חלשה (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d דק׳</string>
     <string name="settings_motion_detection">זיהוי תנועה</string>
-    <string name="settings_motion_detection_on">מופעל - מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
-    <string name="settings_motion_detection_off">כבוי - אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
+    <string name="settings_motion_detection_on">מדייק את סוג התנועה שלך (הליכה, נהיגה) בהיסטוריה</string>
+    <string name="settings_motion_detection_off">אפשר גישה לפעילות גופנית לתוויות תנועה מדויקות יותר</string>
     <string name="settings_battery_optimization">אופטימיזציית סוללה</string>
-    <string name="settings_battery_optimization_unrestricted">ללא הגבלה - LocaPeer יכולה לפעול בחופשיות ברקע</string>
-    <string name="settings_battery_optimization_restricted">מותאם - הקש כדי להגדיר כ"ללא הגבלה" בהגדרות המערכת</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer יכולה לפעול בחופשיות ברקע</string>
+    <string name="settings_battery_optimization_restricted">הקש כדי להגדיר כ"ללא הגבלה" בהגדרות המערכת</string>
 
     <!-- הרשאות -->
     <string name="settings_permissions">הרשאות</string>
     <string name="settings_permissions_subtitle">סקור ותקן את גישת האפליקציה למיקום, מצלמה ועוד</string>
     <string name="permissions_intro">LocaPeer זקוקה להרשאות אלו כדי לשתף את המיקום שלך, לסרוק הזמנות ולהמשיך לפעול ברקע. הקש על כל הרשאה שלא הוענקה כדי לתקן זאת. </string>
     <string name="perm_location_title">מיקום</string>
-    <string name="perm_location_granted">הוענק - ניתן לשתף את המיקום שלך</string>
-    <string name="perm_location_denied">לא הוענק - הקש כדי לאפשר גישה למיקום</string>
+    <string name="perm_location_granted">ניתן לשתף את המיקום שלך</string>
+    <string name="perm_location_denied">הקש כדי לאפשר גישה למיקום</string>
     <string name="perm_background_location_title">מיקום ברקע</string>
-    <string name="perm_background_location_granted">הוענק - שיתוף המיקום נמשך גם כשהאפליקציה סגורה</string>
-    <string name="perm_background_location_denied">לא הוענק - הקש כדי לאפשר גישת "אפשר תמיד" בהגדרות</string>
+    <string name="perm_background_location_granted">שיתוף המיקום נמשך גם כשהאפליקציה סגורה</string>
+    <string name="perm_background_location_denied">הקש כדי לאפשר גישת "אפשר תמיד" בהגדרות</string>
     <string name="perm_camera_title">מצלמה</string>
-    <string name="perm_camera_granted">הוענק - משמש לסריקת קודי QR של הזמנות</string>
-    <string name="perm_camera_denied">לא הוענק - הקש כדי לאפשר את המצלמה</string>
+    <string name="perm_camera_granted">משמש לסריקת קודי QR של הזמנות</string>
+    <string name="perm_camera_denied">הקש כדי לאפשר את המצלמה</string>
     <string name="perm_notifications_title">התראות</string>
-    <string name="perm_notifications_granted">הוענק - ניתן להציג התראות ועדכוני סטטוס</string>
-    <string name="perm_notifications_denied">לא הוענק - הקש כדי לאפשר התראות</string>
+    <string name="perm_notifications_granted">ניתן להציג התראות ועדכוני סטטוס</string>
+    <string name="perm_notifications_denied">הקש כדי לאפשר התראות</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">יחידות מהירות</string>
