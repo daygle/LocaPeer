@@ -795,11 +795,9 @@
     <string name="days_weekdays">Weekdays</string>
     <string name="days_weekends">Weekends</string>
     <string name="days_none">No days</string>
-    <string name="chat_my_location_message">My current location: %1$s</string>
-    <!-- Inline media messages (image / voice) -->
+    <string name="chat_my_location_message">My current location: %1$s</string>    <!-- Inline media messages (image / voice) -->
     <string name="chat_preview_photo">📷 Photo</string>
     <string name="chat_preview_voice">🎤 Voice message</string>
-    <string name="chat_preview_media_unavailable">📎 Media unavailable</string>
     <!-- Inline file attachments -->
     <string name="chat_preview_file">📎 File</string>
     <string name="chat_preview_file_named">📎 %1$s</string>
