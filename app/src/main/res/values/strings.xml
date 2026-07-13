@@ -530,13 +530,7 @@
     <string name="conv_picker_empty">No contacts yet. Scan a QR code to add a contact.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Clear chat history?</string>
-    <string name="chat_clear_message">How do you want to clear this conversation with %1$s?</string>
-    <string name="chat_clear_locally">Clear Locally</string>
-    <string name="chat_clear_both">Clear Locally/From Contact</string>
-    <string name="chat_clear_both_sub">Clears the chat locally and triggers a deletion request to %1$s for the messages you sent.</string>
     <string name="chat_cd_options">Options</string>
-    <string name="chat_clear_history_menu">Clear Chat History</string>
     <string name="chat_typing">%1$s is typing…</string>
     <string name="chat_blocked_banner">You have blocked messages from %1$s. Go to Contacts to unblock.</string>
     <string name="chat_delete_msg_title">Delete message?</string>

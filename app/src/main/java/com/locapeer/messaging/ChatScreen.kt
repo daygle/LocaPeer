@@ -22,7 +22,6 @@ import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.AttachFile
 import androidx.compose.material.icons.filled.Block
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.MoreVert
@@ -86,7 +85,6 @@ fun ChatScreen(
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
     var showOptionsMenu by remember { mutableStateOf(false) }
-    var showClearChatDialog by remember { mutableStateOf(false) }
     var showDeleteConversationDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
@@ -132,44 +130,6 @@ fun ChatScreen(
     LaunchedEffect(peerId) { vm.markRead(peerId) }
     LaunchedEffect(messages.size) {
         if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
-    }
-
-    if (showClearChatDialog) {
-        AlertDialog(
-            onDismissRequest = { showClearChatDialog = false },
-            icon = { Icon(Icons.Default.DeleteSweep, contentDescription = null) },
-            title = { Text(stringResource(R.string.chat_clear_title)) },
-            text = {
-                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(stringResource(R.string.chat_clear_message, peerName))
-
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.chat_clear_locally)) },
-                        supportingContent = { Text(stringResource(R.string.conv_delete_locally_sub)) },
-                        modifier = Modifier.clickable {
-                            vm.deleteConversation(peerId)
-                            showClearChatDialog = false
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.chat_clear_both)) },
-                        supportingContent = { Text(stringResource(R.string.chat_clear_both_sub, peerName)) },
-                        modifier = Modifier.clickable {
-                            vm.deleteConversation(peerId)
-                            vm.deleteConversationFromRemote(peerId)
-                            showClearChatDialog = false
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                }
-            },
-            confirmButton = {},
-            dismissButton = {
-                TextButton(onClick = { showClearChatDialog = false }) { Text(stringResource(R.string.common_cancel)) }
-            }
-        )
     }
 
     if (showDeleteConversationDialog) {
@@ -261,14 +221,6 @@ fun ChatScreen(
                                 }
                             )
                             HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.chat_clear_history_menu), color = MaterialTheme.colorScheme.error) },
-                                leadingIcon = { Icon(Icons.Default.DeleteSweep, null, tint = MaterialTheme.colorScheme.error) },
-                                onClick = {
-                                    showOptionsMenu = false
-                                    showClearChatDialog = true
-                                }
-                            )
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.common_delete), color = MaterialTheme.colorScheme.error) },
                                 leadingIcon = { Icon(Icons.Default.Delete, null, tint = MaterialTheme.colorScheme.error) },
@@ -576,13 +528,16 @@ private fun MessageBubble(
                 }
                 if (msg.isMine) {
                     var deliverySheetOpen by remember { mutableStateOf(false) }
+                    // Plain `.clickable` (no long-press) so the parent SwipeToDeleteMessage
+                    // wrapper's `onLongClick` still fires when the user long-presses on the
+                    // delivery row of their own message — matching the circle chat's
+                    // "long-press anywhere on the bubble = delete" behaviour. A regular tap
+                    // here still opens the delivery-status sheet (cheaper gesture for "what
+                    // does this icon mean?").
                     Row(
                         modifier = Modifier
                             .align(Alignment.End)
-                            .combinedClickable(
-                                onClick = {},
-                                onLongClick = { deliverySheetOpen = true }
-                            ),
+                            .clickable { deliverySheetOpen = true },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(2.dp)
                     ) {
