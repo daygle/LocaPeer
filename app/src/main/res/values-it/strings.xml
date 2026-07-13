@@ -786,7 +786,6 @@
     <string name="circles_delete">Elimina cerchia</string>
     <string name="circles_delete_message">Eliminare \"%1$s\" e la sua conversazione di gruppo? Questo la rimuove solo dal tuo dispositivo.</string>
     <string name="circles_delete_title">Eliminare la cerchia?</string>
-    <string name="circles_edit">Modifica</string>
     <string name="circles_edit_title">Modifica cerchia</string>
     <string name="circles_empty_body">Crea una cerchia per inviare messaggi a un gruppo di contatti e condividere la tua posizione con tutti in una volta.</string>
     <string name="circles_empty_title">Ancora nessuna cerchia</string>

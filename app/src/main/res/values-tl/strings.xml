@@ -787,7 +787,6 @@
     <string name="circles_delete">Tanggalin ang circle</string>
     <string name="circles_delete_message">Tanggalin ang \"%1$s\" at ang group conversation nito? Aalisin lang ito sa iyong device.</string>
     <string name="circles_delete_title">Tanggalin ang circle?</string>
-    <string name="circles_edit">I-edit</string>
     <string name="circles_edit_title">I-edit ang circle</string>
     <string name="circles_empty_body">Gumawa ng circle para magmensahe sa isang grupo ng mga contact at ibahagi ang iyong lokasyon sa lahat nang sabay-sabay.</string>
     <string name="circles_empty_title">Wala pang circle</string>

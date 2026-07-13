@@ -787,7 +787,6 @@
     <string name="circles_delete">സർക്കിൾ ഇല്ലാതാക്കുക</string>
     <string name="circles_delete_message">\"%1$s\" ഉം അതിന്റെ ഗ്രൂപ്പ് സംഭാഷണവും ഇല്ലാതാക്കണോ? ഇത് നിങ്ങളുടെ ഉപകരണത്തിൽ നിന്ന് മാത്രം നീക്കംചെയ്യുന്നു.</string>
     <string name="circles_delete_title">സർക്കിൾ ഇല്ലാതാക്കണോ?</string>
-    <string name="circles_edit">എഡിറ്റ് ചെയ്യുക</string>
     <string name="circles_edit_title">സർക്കിൾ എഡിറ്റ് ചെയ്യുക</string>
     <string name="circles_empty_body">ഒരു കൂട്ടം കോൺടാക്റ്റുകൾക്ക് സന്ദേശം അയയ്ക്കാനും നിങ്ങളുടെ സ്ഥാനം എല്ലാവരുമായും ഒരുമിച്ച് പങ്കിടാനും ഒരു സർക്കിൾ സൃഷ്ടിക്കുക.</string>
     <string name="circles_empty_title">ഇതുവരെ സർക്കിളുകളില്ല</string>

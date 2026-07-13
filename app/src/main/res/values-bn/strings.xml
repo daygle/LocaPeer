@@ -787,7 +787,6 @@
     <string name="circles_delete">বৃত্ত মুছুন</string>
     <string name="circles_delete_message">\"%1$s\" এবং এর গ্রুপ কথোপকথন মুছবেন? এটি শুধু আপনার ডিভাইস থেকে সরিয়ে দেয়।</string>
     <string name="circles_delete_title">বৃত্ত মুছবেন?</string>
-    <string name="circles_edit">সম্পাদনা</string>
     <string name="circles_edit_title">বৃত্ত সম্পাদনা করুন</string>
     <string name="circles_empty_body">একদল পরিচিতিকে বার্তা পাঠাতে এবং সবার সঙ্গে একসাথে আপনার অবস্থান শেয়ার করতে একটি বৃত্ত তৈরি করুন।</string>
     <string name="circles_empty_title">এখনও কোনো বৃত্ত নেই</string>

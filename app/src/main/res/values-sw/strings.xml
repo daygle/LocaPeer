@@ -787,7 +787,6 @@
     <string name="circles_delete">Futa duara</string>
     <string name="circles_delete_message">Futa \"%1$s\" na mazungumzo yake ya kikundi? Hii inaiondoa kwenye kifaa chako pekee.</string>
     <string name="circles_delete_title">Futa duara?</string>
-    <string name="circles_edit">Hariri</string>
     <string name="circles_edit_title">Hariri duara</string>
     <string name="circles_empty_body">Unda duara ili kutuma ujumbe kwa kikundi cha anwani na kushiriki mahali ulipo na wote kwa mara moja.</string>
     <string name="circles_empty_title">Bado hakuna maduara</string>

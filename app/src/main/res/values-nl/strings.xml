@@ -787,7 +787,6 @@
     <string name="circles_delete">Kring verwijderen</string>
     <string name="circles_delete_message">\"%1$s\" en het bijbehorende groepsgesprek verwijderen? Dit verwijdert het alleen van je apparaat.</string>
     <string name="circles_delete_title">Kring verwijderen?</string>
-    <string name="circles_edit">Bewerken</string>
     <string name="circles_edit_title">Kring bewerken</string>
     <string name="circles_empty_body">Maak een kring om een groep contacten te berichten en je locatie in één keer met iedereen te delen.</string>
     <string name="circles_empty_title">Nog geen kringen</string>

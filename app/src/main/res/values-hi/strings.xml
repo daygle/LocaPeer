@@ -787,7 +787,6 @@
     <string name="circles_delete">मंडली हटाएँ</string>
     <string name="circles_delete_message">\"%1$s\" और उसकी समूह बातचीत हटाएँ? यह केवल आपके डिवाइस से हटाता है।</string>
     <string name="circles_delete_title">मंडली हटाएँ?</string>
-    <string name="circles_edit">संपादित करें</string>
     <string name="circles_edit_title">मंडली संपादित करें</string>
     <string name="circles_empty_body">संपर्कों के समूह को संदेश भेजने और अपना स्थान सभी के साथ एक साथ साझा करने के लिए एक मंडली बनाएँ।</string>
     <string name="circles_empty_title">अभी कोई मंडली नहीं</string>

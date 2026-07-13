@@ -772,7 +772,6 @@
     <string name="circles_delete">서클 삭제</string>
     <string name="circles_delete_message">\"%1$s\"와(과) 그 그룹 대화를 삭제할까요? 이 작업은 내 기기에서만 제거합니다.</string>
     <string name="circles_delete_title">서클을 삭제할까요?</string>
-    <string name="circles_edit">편집</string>
     <string name="circles_edit_title">서클 편집</string>
     <string name="circles_empty_body">서클을 만들면 연락처 그룹에 메시지를 보내고 모두와 한 번에 위치를 공유할 수 있습니다.</string>
     <string name="circles_empty_title">아직 서클이 없습니다</string>

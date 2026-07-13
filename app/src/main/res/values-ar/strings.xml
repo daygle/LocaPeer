@@ -847,7 +847,6 @@
     <string name="circles_delete">حذف الدائرة</string>
     <string name="circles_delete_message">حذف \"%1$s\" ومحادثتها الجماعية؟ هذا يزيلها من جهازك فقط.</string>
     <string name="circles_delete_title">حذف الدائرة؟</string>
-    <string name="circles_edit">تعديل</string>
     <string name="circles_edit_title">تعديل الدائرة</string>
     <string name="circles_empty_body">أنشئ دائرة لمراسلة مجموعة من جهات الاتصال ومشاركة موقعك معهم جميعًا دفعة واحدة.</string>
     <string name="circles_empty_title">لا توجد دوائر بعد</string>

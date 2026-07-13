@@ -772,7 +772,6 @@
     <string name="circles_delete">စက်ဝိုင်း ဖျက်ရန်</string>
     <string name="circles_delete_message">\"%1$s\" နှင့် ၎င်း၏ အဖွဲ့စကားဝိုင်းကို ဖျက်မလား။ ၎င်းသည် သင့်စက်မှသာ ဖယ်ရှားသည်။</string>
     <string name="circles_delete_title">စက်ဝိုင်း ဖျက်မလား။</string>
-    <string name="circles_edit">တည်းဖြတ်ရန်</string>
     <string name="circles_edit_title">စက်ဝိုင်း တည်းဖြတ်ရန်</string>
     <string name="circles_empty_body">အဆက်အသွယ်အုပ်စုတစ်ခုသို့ မက်ဆေ့ချ်ပို့ရန်နှင့် သင့်တည်နေရာကို တစ်ပြိုင်တည်း အားလုံးနှင့် မျှဝေရန် စက်ဝိုင်းတစ်ခု ဖန်တီးပါ။</string>
     <string name="circles_empty_title">စက်ဝိုင်းများ မရှိသေးပါ</string>

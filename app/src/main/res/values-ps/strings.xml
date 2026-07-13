@@ -787,7 +787,6 @@
     <string name="circles_delete">حلقہ حذف کریں</string>
     <string name="circles_delete_message">\"%1$s\" اور اس کی گروپ گفتگو حذف کریں؟ یہ صرف آپ کے آلے سے ہٹاتا ہے۔</string>
     <string name="circles_delete_title">حلقہ حذف کریں؟</string>
-    <string name="circles_edit">ترمیم کریں</string>
     <string name="circles_edit_title">حلقہ میں ترمیم کریں</string>
     <string name="circles_empty_body">رابطوں کے ایک گروپ کو پیغام بھیجنے اور اپنا مقام سب کے ساتھ ایک ساتھ شیئر کرنے کے لیے ایک حلقہ بنائیں۔</string>
     <string name="circles_empty_title">ابھی کوئی حلقہ نہیں</string>

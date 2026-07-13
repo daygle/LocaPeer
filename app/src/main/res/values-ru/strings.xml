@@ -817,7 +817,6 @@
     <string name="circles_delete">Удалить круг</string>
     <string name="circles_delete_message">Удалить «%1$s» и его групповой разговор? Это удалит его только с вашего устройства.</string>
     <string name="circles_delete_title">Удалить круг?</string>
-    <string name="circles_edit">Изменить</string>
     <string name="circles_edit_title">Изменить круг</string>
     <string name="circles_empty_body">Создайте круг, чтобы писать группе контактов и делиться местоположением со всеми сразу.</string>
     <string name="circles_empty_title">Кругов пока нет</string>

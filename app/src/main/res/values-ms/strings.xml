@@ -772,7 +772,6 @@
     <string name="circles_delete">Padam bulatan</string>
     <string name="circles_delete_message">Padam \"%1$s\" dan perbualan kumpulannya? Ini hanya mengeluarkannya daripada peranti anda.</string>
     <string name="circles_delete_title">Padam bulatan?</string>
-    <string name="circles_edit">Edit</string>
     <string name="circles_edit_title">Edit bulatan</string>
     <string name="circles_empty_body">Cipta bulatan untuk menghantar mesej kepada sekumpulan kenalan dan berkongsi lokasi anda dengan semua sekaligus.</string>
     <string name="circles_empty_title">Belum ada bulatan</string>

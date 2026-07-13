@@ -787,7 +787,6 @@
     <string name="circles_delete">Çevreyi sil</string>
     <string name="circles_delete_message">\"%1$s\" ve grup sohbeti silinsin mi? Bu yalnızca cihazınızdan kaldırır.</string>
     <string name="circles_delete_title">Çevre silinsin mi?</string>
-    <string name="circles_edit">Düzenle</string>
     <string name="circles_edit_title">Çevreyi düzenle</string>
     <string name="circles_empty_body">Bir grup kişiye mesaj göndermek ve konumunuzu hepsiyle aynı anda paylaşmak için bir çevre oluşturun.</string>
     <string name="circles_empty_title">Henüz çevre yok</string>

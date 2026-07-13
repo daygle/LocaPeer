@@ -787,7 +787,6 @@
     <string name="circles_delete">வட்டத்தை நீக்கு</string>
     <string name="circles_delete_message">\"%1$s\" மற்றும் அதன் குழு உரையாடலை நீக்கவா? இது உங்கள் சாதனத்திலிருந்து மட்டுமே அகற்றுகிறது.</string>
     <string name="circles_delete_title">வட்டத்தை நீக்கவா?</string>
-    <string name="circles_edit">திருத்து</string>
     <string name="circles_edit_title">வட்டத்தைத் திருத்து</string>
     <string name="circles_empty_body">தொடர்புகளின் குழுவிற்குச் செய்தி அனுப்பவும், உங்கள் இடத்தை அனைவருடனும் ஒரே நேரத்தில் பகிரவும் ஒரு வட்டத்தை உருவாக்கவும்.</string>
     <string name="circles_empty_title">இன்னும் வட்டங்கள் இல்லை</string>

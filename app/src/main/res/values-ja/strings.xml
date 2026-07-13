@@ -771,7 +771,6 @@
     <string name="circles_delete">サークルを削除</string>
     <string name="circles_delete_message">「%1$s」とそのグループ会話を削除しますか？これはお使いのデバイスから削除するだけです。</string>
     <string name="circles_delete_title">サークルを削除しますか？</string>
-    <string name="circles_edit">編集</string>
     <string name="circles_edit_title">サークルを編集</string>
     <string name="circles_empty_body">サークルを作成すると、連絡先のグループにメッセージを送り、全員と一度に位置情報を共有できます。</string>
     <string name="circles_empty_title">まだサークルがありません</string>

@@ -787,7 +787,6 @@
     <string name="circles_delete">વર્તુળ કાઢી નાખો</string>
     <string name="circles_delete_message">\"%1$s\" અને તેની જૂથ વાતચીત કાઢી નાખવી? આ ફક્ત તમારા ડિવાઇસમાંથી દૂર કરે છે.</string>
     <string name="circles_delete_title">વર્તુળ કાઢી નાખવું?</string>
-    <string name="circles_edit">સંપાદિત કરો</string>
     <string name="circles_edit_title">વર્તુળ સંપાદિત કરો</string>
     <string name="circles_empty_body">સંપર્કોના જૂથને સંદેશ મોકલવા અને તમારું સ્થાન બધા સાથે એકસાથે શેર કરવા એક વર્તુળ બનાવો.</string>
     <string name="circles_empty_title">હજી કોઈ વર્તુળ નથી</string>

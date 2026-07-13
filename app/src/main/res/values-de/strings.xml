@@ -786,7 +786,6 @@
     <string name="circles_delete">Kreis löschen</string>
     <string name="circles_delete_message">\"%1$s\" und die zugehörige Gruppenunterhaltung löschen? Dies entfernt sie nur von deinem Gerät.</string>
     <string name="circles_delete_title">Kreis löschen?</string>
-    <string name="circles_edit">Bearbeiten</string>
     <string name="circles_edit_title">Kreis bearbeiten</string>
     <string name="circles_empty_body">Erstelle einen Kreis, um einer Gruppe von Kontakten zu schreiben und deinen Standort mit allen gleichzeitig zu teilen.</string>
     <string name="circles_empty_title">Noch keine Kreise</string>

@@ -771,7 +771,6 @@
     <string name="circles_delete">删除圈子</string>
     <string name="circles_delete_message">删除“%1$s”及其群聊？此操作只会将其从您的设备中移除。</string>
     <string name="circles_delete_title">删除圈子？</string>
-    <string name="circles_edit">编辑</string>
     <string name="circles_edit_title">编辑圈子</string>
     <string name="circles_empty_body">创建一个圈子，即可向一组联系人发送消息，并一次性与所有人共享您的位置。</string>
     <string name="circles_empty_title">还没有圈子</string>

@@ -772,7 +772,6 @@
     <string name="circles_delete">ลบวงกลม</string>
     <string name="circles_delete_message">ลบ \"%1$s\" และการสนทนากลุ่มของมันไหม การดำเนินการนี้จะลบออกจากอุปกรณ์ของคุณเท่านั้น</string>
     <string name="circles_delete_title">ลบวงกลมไหม</string>
-    <string name="circles_edit">แก้ไข</string>
     <string name="circles_edit_title">แก้ไขวงกลม</string>
     <string name="circles_empty_body">สร้างวงกลมเพื่อส่งข้อความถึงกลุ่มผู้ติดต่อและแชร์ตำแหน่งของคุณกับทุกคนพร้อมกัน</string>
     <string name="circles_empty_title">ยังไม่มีวงกลม</string>

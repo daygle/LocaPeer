@@ -817,7 +817,6 @@
     <string name="circles_delete">Видалити коло</string>
     <string name="circles_delete_message">Видалити «%1$s» та його груповий чат? Це видалить його лише з вашого пристрою.</string>
     <string name="circles_delete_title">Видалити коло?</string>
-    <string name="circles_edit">Редагувати</string>
     <string name="circles_edit_title">Редагувати коло</string>
     <string name="circles_empty_body">Створіть коло, щоб писати групі контактів і ділитися своїм місцезнаходженням з усіма одразу.</string>
     <string name="circles_empty_title">Кіл ще немає</string>

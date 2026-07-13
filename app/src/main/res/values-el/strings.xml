@@ -787,7 +787,6 @@
     <string name="circles_delete">Διαγραφή κύκλου</string>
     <string name="circles_delete_message">Διαγραφή του «%1$s» και της ομαδικής συνομιλίας του; Αυτό το αφαιρεί μόνο από τη συσκευή σας.</string>
     <string name="circles_delete_title">Διαγραφή κύκλου;</string>
-    <string name="circles_edit">Επεξεργασία</string>
     <string name="circles_edit_title">Επεξεργασία κύκλου</string>
     <string name="circles_empty_body">Δημιουργήστε έναν κύκλο για να στέλνετε μηνύματα σε μια ομάδα επαφών και να μοιράζεστε την τοποθεσία σας με όλους ταυτόχρονα.</string>
     <string name="circles_empty_title">Δεν υπάρχουν κύκλοι ακόμη</string>

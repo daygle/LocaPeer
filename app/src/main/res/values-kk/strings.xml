@@ -787,7 +787,6 @@
     <string name="circles_delete">Шеңберді жою</string>
     <string name="circles_delete_message">\"%1$s\" және оның топтық сөйлесуін жою керек пе? Бұл оны тек құрылғыңыздан жояды.</string>
     <string name="circles_delete_title">Шеңберді жою керек пе?</string>
-    <string name="circles_edit">Өңдеу</string>
     <string name="circles_edit_title">Шеңберді өңдеу</string>
     <string name="circles_empty_body">Контактілер тобына хабар жіберу және орныңызды олардың барлығымен бірден бөлісу үшін шеңбер жасаңыз.</string>
     <string name="circles_empty_title">Әзірге шеңберлер жоқ</string>

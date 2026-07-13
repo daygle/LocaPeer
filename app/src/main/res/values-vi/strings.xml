@@ -772,7 +772,6 @@
     <string name="circles_delete">Xóa vòng kết nối</string>
     <string name="circles_delete_message">Xóa \"%1$s\" và cuộc trò chuyện nhóm của nó? Thao tác này chỉ xóa khỏi thiết bị của bạn.</string>
     <string name="circles_delete_title">Xóa vòng kết nối?</string>
-    <string name="circles_edit">Chỉnh sửa</string>
     <string name="circles_edit_title">Chỉnh sửa vòng kết nối</string>
     <string name="circles_empty_body">Tạo một vòng kết nối để nhắn tin cho một nhóm liên hệ và chia sẻ vị trí của bạn với tất cả cùng lúc.</string>
     <string name="circles_empty_title">Chưa có vòng kết nối</string>

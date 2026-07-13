@@ -817,7 +817,6 @@
     <string name="circles_delete">Smazat kruh</string>
     <string name="circles_delete_message">Smazat „%1$s“ a jeho skupinovou konverzaci? Odstraní se pouze z vašeho zařízení.</string>
     <string name="circles_delete_title">Smazat kruh?</string>
-    <string name="circles_edit">Upravit</string>
     <string name="circles_edit_title">Upravit kruh</string>
     <string name="circles_empty_body">Vytvořte kruh, abyste mohli psát skupině kontaktů a sdílet svou polohu se všemi najednou.</string>
     <string name="circles_empty_title">Zatím žádné kruhy</string>

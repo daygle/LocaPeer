@@ -772,7 +772,6 @@
     <string name="circles_delete">Hapus lingkaran</string>
     <string name="circles_delete_message">Hapus \"%1$s\" dan percakapan grupnya? Ini hanya menghapusnya dari perangkat Anda.</string>
     <string name="circles_delete_title">Hapus lingkaran?</string>
-    <string name="circles_edit">Edit</string>
     <string name="circles_edit_title">Edit lingkaran</string>
     <string name="circles_empty_body">Buat lingkaran untuk mengirim pesan ke sekelompok kontak dan membagikan lokasi Anda ke semuanya sekaligus.</string>
     <string name="circles_empty_title">Belum ada lingkaran</string>

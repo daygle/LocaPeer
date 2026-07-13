@@ -787,7 +787,6 @@
     <string name="circles_delete">ክብ ሰርዝ</string>
     <string name="circles_delete_message">\"%1$s\" እና የቡድን ውይይቱን ይሰረዝ? ይህ ከመሣሪያዎ ብቻ ያስወግደዋል።</string>
     <string name="circles_delete_title">ክብ ይሰረዝ?</string>
-    <string name="circles_edit">አርትዕ</string>
     <string name="circles_edit_title">ክብ አርትዕ</string>
     <string name="circles_empty_body">ለቡድን እውቂያዎች መልእክት ለመላክ እና ቦታዎን በአንድ ጊዜ ከሁሉም ጋር ለማጋራት ክብ ይፍጠሩ።</string>
     <string name="circles_empty_title">እስካሁን ምንም ክብ የለም</string>

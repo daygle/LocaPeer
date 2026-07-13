@@ -786,7 +786,6 @@
     <string name="circles_delete">Eliminar círculo</string>
     <string name="circles_delete_message">¿Eliminar \"%1$s\" y su conversación de grupo? Esto solo lo quita de tu dispositivo.</string>
     <string name="circles_delete_title">¿Eliminar círculo?</string>
-    <string name="circles_edit">Editar</string>
     <string name="circles_edit_title">Editar círculo</string>
     <string name="circles_empty_body">Crea un círculo para enviar mensajes a un grupo de contactos y compartir tu ubicación con todos a la vez.</string>
     <string name="circles_empty_title">Aún no hay círculos</string>

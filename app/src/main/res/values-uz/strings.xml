@@ -787,7 +787,6 @@
     <string name="circles_delete">Doirani o\'chirish</string>
     <string name="circles_delete_message">\"%1$s\" va uning guruh suhbatini o\'chirilsinmi? Bu faqat qurilmangizdan olib tashlaydi.</string>
     <string name="circles_delete_title">Doira o\'chirilsinmi?</string>
-    <string name="circles_edit">Tahrirlash</string>
     <string name="circles_edit_title">Doirani tahrirlash</string>
     <string name="circles_empty_body">Bir guruh kontaktga xabar yuborish va joylashuvingizni ular bilan bir vaqtda ulashish uchun doira yarating.</string>
     <string name="circles_empty_title">Hali doiralar yo\'q</string>

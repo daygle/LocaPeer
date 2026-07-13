@@ -787,7 +787,6 @@
     <string name="circles_delete">मंडळ हटवा</string>
     <string name="circles_delete_message">\"%1$s\" आणि त्याचे गट संभाषण हटवायचे? हे फक्त तुमच्या डिव्हाइसवरून काढून टाकते.</string>
     <string name="circles_delete_title">मंडळ हटवायचे?</string>
-    <string name="circles_edit">संपादित करा</string>
     <string name="circles_edit_title">मंडळ संपादित करा</string>
     <string name="circles_empty_body">संपर्कांच्या गटाला संदेश पाठवण्यासाठी आणि तुमचे स्थान सर्वांसोबत एकाच वेळी शेअर करण्यासाठी मंडळ तयार करा.</string>
     <string name="circles_empty_title">अजून मंडळे नाहीत</string>

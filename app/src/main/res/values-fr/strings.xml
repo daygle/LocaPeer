@@ -787,7 +787,6 @@
     <string name="circles_delete">Supprimer le cercle</string>
     <string name="circles_delete_message">Supprimer \"%1$s\" et sa conversation de groupe ? Cela ne le retire que de votre appareil.</string>
     <string name="circles_delete_title">Supprimer le cercle ?</string>
-    <string name="circles_edit">Modifier</string>
     <string name="circles_edit_title">Modifier le cercle</string>
     <string name="circles_empty_body">Créez un cercle pour envoyer des messages à un groupe de contacts et partager votre position avec tous en même temps.</string>
     <string name="circles_empty_title">Aucun cercle pour l\'instant</string>

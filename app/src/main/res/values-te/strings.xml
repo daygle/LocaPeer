@@ -787,7 +787,6 @@
     <string name="circles_delete">సర్కిల్‌ను తొలగించండి</string>
     <string name="circles_delete_message">\"%1$s\" మరియు దాని గ్రూప్ సంభాషణను తొలగించాలా? ఇది మీ పరికరం నుండి మాత్రమే తీసివేస్తుంది.</string>
     <string name="circles_delete_title">సర్కిల్‌ను తొలగించాలా?</string>
-    <string name="circles_edit">సవరించండి</string>
     <string name="circles_edit_title">సర్కిల్‌ను సవరించండి</string>
     <string name="circles_empty_body">పరిచయాల సమూహానికి సందేశం పంపడానికి, మీ స్థానాన్ని అందరితో ఒకేసారి భాగస్వామ్యం చేయడానికి ఒక సర్కిల్‌ను సృష్టించండి.</string>
     <string name="circles_empty_title">ఇంకా సర్కిల్‌లు లేవు</string>

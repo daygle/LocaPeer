@@ -802,7 +802,6 @@
     <string name="circles_delete">מחק מעגל</string>
     <string name="circles_delete_message">למחוק את \"%1$s\" ואת שיחת הקבוצה שלו? פעולה זו מסירה אותו רק מהמכשיר שלך.</string>
     <string name="circles_delete_title">למחוק את המעגל?</string>
-    <string name="circles_edit">ערוך</string>
     <string name="circles_edit_title">ערוך מעגל</string>
     <string name="circles_empty_body">צור מעגל כדי לשלוח הודעות לקבוצת אנשי קשר ולשתף את המיקום שלך עם כולם בבת אחת.</string>
     <string name="circles_empty_title">אין עדיין מעגלים</string>

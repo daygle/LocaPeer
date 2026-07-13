@@ -817,7 +817,6 @@
     <string name="circles_delete">Usuń krąg</string>
     <string name="circles_delete_message">Usunąć „%1$s” i jego rozmowę grupową? Spowoduje to usunięcie tylko z Twojego urządzenia.</string>
     <string name="circles_delete_title">Usunąć krąg?</string>
-    <string name="circles_edit">Edytuj</string>
     <string name="circles_edit_title">Edytuj krąg</string>
     <string name="circles_empty_body">Utwórz krąg, aby pisać do grupy kontaktów i udostępniać swoją lokalizację wszystkim naraz.</string>
     <string name="circles_empty_title">Brak kręgów</string>
