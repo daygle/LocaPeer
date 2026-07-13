@@ -113,6 +113,12 @@ fun LocaPeerNavHost(
                 val peerId = target.peerId ?: return@LaunchedEffect
                 navController.navigate("chat/$peerId/${Uri.encode(target.peerName.ifBlank { "Chat" })}")
             }
+            "groupchat" -> {
+                // peerId carries the circle id (see MainActivity.handleNavIntent). Opening the
+                // group thread keeps a tapped circle message - and any reply - inside the circle.
+                val circleId = target.peerId ?: return@LaunchedEffect
+                navController.navigate("groupchat/$circleId")
+            }
             "map" -> {
                 val peerId = target.peerId
                 if (peerId != null) {

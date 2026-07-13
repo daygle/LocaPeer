@@ -215,6 +215,14 @@ class MainActivity : AppCompatActivity() {
             val isRoleChange = intent.getBooleanExtra(EXTRA_IS_ROLE_CHANGE, false)
             val requestedRole = intent.getStringExtra(EXTRA_REQUESTED_ROLE)
             pendingNavTarget.value = NavTarget("share-request", pubkey, name, relay, isRoleChange, requestedRole)
+        } else if (navigateTo == "groupchat") {
+            // Circle-message notification: peerId carries the circle id so Navigation deep-links
+            // into the group chat (groupchat/{circleId}) rather than any 1:1 conversation.
+            val circleId = intent.getStringExtra("openCircle") ?: ""
+            val circleName = intent.getStringExtra("circleName") ?: ""
+            if (circleId.isNotEmpty()) {
+                pendingNavTarget.value = NavTarget("groupchat", circleId, circleName)
+            }
         } else {
             val peerId = intent.getStringExtra("openChat") ?: intent.getStringExtra("highlightPeer")
             val peerName = intent.getStringExtra("peerName") ?: ""
