@@ -75,7 +75,6 @@ fun ConversationListScreen(
     onOpenChat: (peerId: String, peerName: String) -> Unit,
     onOpenGroup: (circleId: String) -> Unit = {},
     onCreateCircle: () -> Unit = {},
-    onEditCircle: (circleId: String) -> Unit = {},
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val conversations by vm.conversations.collectAsState()
@@ -465,7 +464,6 @@ fun ConversationListScreen(
                                     isSelected = isSelected,
                                     isSelectionMode = isSelectionMode,
                                     onClick = { onOpenGroup(group.circle.id) },
-                                    onEdit = { onEditCircle(group.circle.id) },
                                     onToggleSelect = {
                                         selectedIds = if (isSelected)
                                             selectedIds - group.circle.id
@@ -521,7 +519,6 @@ fun ConversationListScreen(
                                         isSelected = isSelected,
                                         isSelectionMode = isSelectionMode,
                                         onClick = { onOpenGroup(group.circle.id) },
-                                        onEdit = { onEditCircle(group.circle.id) },
                                         onToggleSelect = {
                                             selectedIds = if (isSelected)
                                                 selectedIds - group.circle.id
@@ -561,10 +558,11 @@ private fun BulkActionButton(
     }
 }
 
-/** Mirrors the row layout of `CircleListScreen` so the icon, preview, edit button and
- *  unread badge look consistent across the two surfaces. Long-press enters the same
- *  selection mode as chat rows (mark read / archive / delete via the bulk-action bar);
- *  editing stays on the explicit Edit button. */
+/** Mirrors the row layout of `CircleListScreen` for the icon and unread badge, and the
+ *  trailing "date-then-badge" idiom of `ConversationRow` (1:1 chats) so the Circles /
+ *  Archived tabs surface the same last-message timestamp as the Chats tab. Long-press
+ *  enters the same selection mode as chat rows (mark read / archive / delete via the
+ *  bulk-action bar). */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CircleRow(
@@ -572,7 +570,6 @@ private fun CircleRow(
     isSelected: Boolean = false,
     isSelectionMode: Boolean = false,
     onClick: () -> Unit,
-    onEdit: () -> Unit,
     onToggleSelect: () -> Unit = {},
     onEnterSelectionMode: () -> Unit = {}
 ) {
@@ -614,17 +611,23 @@ private fun CircleRow(
                 }
             },
             trailingContent = {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                // Mirrors `ConversationRow`'s "date on top, badge below" idiom so rows in
+                // the Circles / Archived tabs read their timestamp exactly like rows in the
+                // Chats tab. When the circle has no messages yet, the supportingContent
+                // already falls back to "X members" - the column just stays empty so the
+                // row is visually balanced with chat rows that always carry a date.
+                Column(horizontalAlignment = Alignment.End, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                    val lastTs = group.lastMessage?.timestamp
+                    if (lastTs != null) {
+                        Text(
+                            formatTime(lastTs),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = if (group.unread > 0) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                     if (group.unread > 0) {
                         Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("${group.unread}") }
-                    }
-                    // Hidden while selecting so a stray tap can't yank the user into the
-                    // edit screen mid-selection - the same reason chat rows swap all their
-                    // tap targets for select-toggles in selection mode.
-                    if (!isSelectionMode) {
-                        TextButton(onClick = onEdit) {
-                            Text(stringResource(R.string.circles_edit))
-                        }
                     }
                 }
             },

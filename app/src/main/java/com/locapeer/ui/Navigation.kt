@@ -198,8 +198,7 @@ fun LocaPeerNavHost(
                         navController.navigate("chat/$peerId/${Uri.encode(peerName.ifBlank { "Chat" })}")
                     },
                     onOpenGroup = { circleId -> navController.navigate("groupchat/$circleId") },
-                    onCreateCircle = { navController.navigate("circle-edit") },
-                    onEditCircle = { circleId -> navController.navigate("circle-edit?circleId=$circleId") }
+                    onCreateCircle = { navController.navigate("circle-edit") }
                 )
             }
             composable(Screen.Contacts.route) {
