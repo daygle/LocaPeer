@@ -37,6 +37,7 @@ fun CircleListScreen(
 ) {
     val groupsState by vm.groupConversations.collectAsState()
     val groups = groupsState ?: emptyList()
+    val myPub by vm.myPubkeyHex.collectAsState()
     val haptic = LocalHapticFeedback.current
 
     Scaffold(
@@ -51,11 +52,9 @@ fun CircleListScreen(
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = onCreate,
-                icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                text = { Text(stringResource(R.string.circles_new)) }
-            )
+            FloatingActionButton(onClick = onCreate) {
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.circles_new))
+            }
         }
     ) { padding ->
         if (groups.isEmpty()) {
@@ -87,6 +86,11 @@ fun CircleListScreen(
                 .fillMaxSize()
                 .padding(padding)) {
                 items(groups, key = { it.circle.id }) { group ->
+                    // Owner-only editing: a non-owner opens the member screen read-only, so the
+                    // per-row action reads "View" for them. Blank creator = legacy circle with no
+                    // recorded owner, still editable by anyone.
+                    val canEditCircle = group.circle.creatorPubkey.isBlank() ||
+                        group.circle.creatorPubkey == myPub
                     ListItem(
                         headlineContent = { Text(group.circle.name, fontWeight = FontWeight.Medium) },
                         supportingContent = {
@@ -119,7 +123,10 @@ fun CircleListScreen(
                                     Badge(containerColor = MaterialTheme.colorScheme.primary) { Text("${group.unread}") }
                                 }
                                 TextButton(onClick = { onEdit(group.circle.id) }) {
-                                    Text(stringResource(R.string.circles_edit))
+                                    Text(stringResource(
+                                        if (canEditCircle) R.string.circles_edit
+                                        else R.string.circles_view_members
+                                    ))
                                 }
                             }
                         },

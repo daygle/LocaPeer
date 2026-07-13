@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -87,7 +88,10 @@ fun ConversationListScreen(
     val sortOrder by vm.sortOrder.collectAsState()
 
     var showContactPicker by remember { mutableStateOf(false) }
-    var selectedTab by remember { mutableIntStateOf(MessagesTab.CHATS.ordinal) }
+    // rememberSaveable (not remember) so the selected sub-tab survives navigating into a chat or
+    // circle and back: opening a circle chat disposes this screen's composition, and a plain
+    // remember would reset the user to the Chats tab on return instead of the Circles tab.
+    var selectedTab by rememberSaveable { mutableIntStateOf(MessagesTab.CHATS.ordinal) }
     var showSearch by remember { mutableStateOf(false) }
     var selectedIds by remember { mutableStateOf<Set<String>>(emptySet()) }
     var showSortMenu by remember { mutableStateOf(false) }
@@ -402,11 +406,9 @@ fun ConversationListScreen(
                     MessagesTab.CHATS -> FloatingActionButton(onClick = { showContactPicker = true }) {
                         Icon(Icons.Default.Add, contentDescription = stringResource(R.string.conv_cd_new_message))
                     }
-                    MessagesTab.CIRCLES -> ExtendedFloatingActionButton(
-                        onClick = onCreateCircle,
-                        icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                        text = { Text(stringResource(R.string.circles_new)) }
-                    )
+                    MessagesTab.CIRCLES -> FloatingActionButton(onClick = onCreateCircle) {
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.circles_new))
+                    }
                     MessagesTab.ARCHIVED -> Unit /* no FAB on the Archive sub-tab */
                 }
             }

@@ -18,6 +18,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -37,6 +38,26 @@ class CirclesViewModel @Inject constructor(
     /** All contacts, used as the pool to pick circle members from. */
     val contacts: StateFlow<List<PeerEntity>> =
         peerDao.getAllPeers().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    /**
+     * This device's own pubkey, used to decide whether the local user owns a circle
+     * (`circle.creatorPubkey == myPubkeyHex`). Only the owner may rename a circle or change its
+     * membership; the edit UI is gated on this so a non-owner member can't reshape the group.
+     * Empty until the keypair loads.
+     */
+    val myPubkeyHex: StateFlow<String> =
+        flow { emit(keyManager.ensureKeypair().second) }
+            .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
+    /**
+     * True when the local user may edit [circle] (rename / change members). The owner is whoever
+     * created the circle ([CircleEntity.creatorPubkey]); circles created before ownership existed
+     * carry a blank creator and stay editable by anyone (there is no recorded owner to enforce).
+     */
+    fun canEditCircle(circle: CircleEntity?, myPubkey: String): Boolean {
+        val creator = circle?.creatorPubkey ?: return true
+        return creator.isBlank() || creator == myPubkey
+    }
 
     fun observeCircle(circleId: String): Flow<CircleEntity?> = circleDao.observeCircle(circleId)
 

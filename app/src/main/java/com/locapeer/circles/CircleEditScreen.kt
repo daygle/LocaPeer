@@ -28,12 +28,18 @@ fun CircleEditScreen(
 ) {
     val isEdit = circleId != null
     val contacts by vm.contacts.collectAsState()
+    val myPub by vm.myPubkeyHex.collectAsState()
     val existingCircle by remember(circleId) {
         if (circleId != null) vm.observeCircle(circleId) else kotlinx.coroutines.flow.flowOf(null)
     }.collectAsState(initial = null)
     val existingMembers by remember(circleId) {
         if (circleId != null) vm.observeMembers(circleId) else kotlinx.coroutines.flow.flowOf(emptyList())
     }.collectAsState(initial = emptyList())
+
+    // Only the circle's owner may rename it or change membership. Creating a new circle (isEdit =
+    // false) is always allowed. In edit mode we stay read-only until the circle row has loaded so a
+    // non-owner never briefly sees editable controls. See CirclesViewModel.canEditCircle.
+    val canEdit = !isEdit || (existingCircle != null && vm.canEditCircle(existingCircle, myPub))
 
     var name by remember { mutableStateOf("") }
     var selected by remember { mutableStateOf<Set<String>>(emptySet()) }
@@ -51,25 +57,39 @@ fun CircleEditScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(if (isEdit) R.string.circles_edit_title else R.string.circles_new_title)) },
+                title = {
+                    Text(
+                        stringResource(
+                            when {
+                                !canEdit -> R.string.circles_view_title
+                                isEdit -> R.string.circles_edit_title
+                                else -> R.string.circles_new_title
+                            }
+                        )
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.cd_back))
                     }
                 },
                 actions = {
-                    TextButton(
-                        enabled = name.isNotBlank() && selected.isNotEmpty(),
-                        onClick = {
-                            if (circleId != null) {
-                                vm.renameCircle(circleId, name)
-                                vm.setMembers(circleId, selected.toList())
-                            } else {
-                                vm.createCircle(name, selected.toList())
+                    // Save is shown only to a user who may edit this circle. Non-owners get a
+                    // read-only view (see the banner below), so there is nothing to save.
+                    if (canEdit) {
+                        TextButton(
+                            enabled = name.isNotBlank() && selected.isNotEmpty(),
+                            onClick = {
+                                if (circleId != null) {
+                                    vm.renameCircle(circleId, name)
+                                    vm.setMembers(circleId, selected.toList())
+                                } else {
+                                    vm.createCircle(name, selected.toList())
+                                }
+                                onNavigateBack()
                             }
-                            onNavigateBack()
-                        }
-                    ) { Text(stringResource(R.string.common_save)) }
+                        ) { Text(stringResource(R.string.common_save)) }
+                    }
                 }
             )
         }
@@ -79,9 +99,19 @@ fun CircleEditScreen(
                 .fillMaxSize()
                 .padding(padding)
         ) {
+            // Read-only banner for a non-owner: explains why the fields below are locked.
+            if (!canEdit) {
+                Text(
+                    stringResource(R.string.circles_owner_only),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
             OutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
+                readOnly = !canEdit,
                 label = { Text(stringResource(R.string.circles_name_label)) },
                 singleLine = true,
                 modifier = Modifier
@@ -111,14 +141,17 @@ fun CircleEditScreen(
                         leadingContent = {
                             Checkbox(
                                 checked = checked,
+                                enabled = canEdit,
                                 onCheckedChange = { on ->
                                     selected = if (on) selected + contact.deviceId else selected - contact.deviceId
                                 }
                             )
                         },
-                        modifier = Modifier.clickable {
+                        // Row tap toggles membership only when the user may edit; a non-owner's
+                        // view is read-only.
+                        modifier = if (canEdit) Modifier.clickable {
                             selected = if (checked) selected - contact.deviceId else selected + contact.deviceId
-                        }
+                        } else Modifier
                     )
                 }
             }

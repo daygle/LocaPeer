@@ -826,6 +826,9 @@
     <string name="circles_empty_title">No circles yet</string>
     <string name="circles_empty_body">Create a circle to message a group of contacts and share your location with all of them at once.</string>
     <string name="circles_manage_members">Manage Members</string>
+    <string name="circles_view_members">View Members</string>
+    <string name="circles_view_title">Circle Members</string>
+    <string name="circles_owner_only">Only the circle\'s owner can rename it or change its members.</string>
     <string name="circles_share_location">Share Location</string>
     <string name="circles_share_location_desc">Share your live location with everyone in this circle for a set time. Contacts you already share location with start receiving it immediately.</string>
     <string name="circles_delete">Delete Circle</string>
