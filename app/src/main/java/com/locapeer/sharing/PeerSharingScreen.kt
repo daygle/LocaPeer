@@ -325,6 +325,7 @@ fun PeerSharingScreen(
                         Column(modifier = Modifier.padding(bottom = 16.dp)) {
                             ListItem(
                                 headlineContent = { Text(stringResource(R.string.settings_temporary_location_share)) },
+                                supportingContent = { Text(stringResource(R.string.peer_temp_share_subtitle)) },
                                 leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
                                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                             )
