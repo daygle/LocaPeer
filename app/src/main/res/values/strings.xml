@@ -122,28 +122,28 @@
     <string name="settings_low_battery" formatted="false">Low Battery (&lt; 20%)</string>
     <string name="settings_minutes_short">%1$d min</string>
     <string name="settings_motion_detection">Motion Detection</string>
-    <string name="settings_motion_detection_on">Enabled - refines your movement type (walking, driving) in history</string>
-    <string name="settings_motion_detection_off">Off - allow physical activity access for more accurate movement labels</string>
+    <string name="settings_motion_detection_on">Refines your movement type (walking, driving) in history</string>
+    <string name="settings_motion_detection_off">Allow physical activity access for more accurate movement labels</string>
     <string name="settings_battery_optimization">Battery Optimization</string>
-    <string name="settings_battery_optimization_unrestricted">Unrestricted - LocaPeer can run freely in the background</string>
-    <string name="settings_battery_optimization_restricted">Optimized - tap to set Unrestricted in system settings</string>
+    <string name="settings_battery_optimization_unrestricted">LocaPeer can run freely in the background</string>
+    <string name="settings_battery_optimization_restricted">Tap to set Unrestricted in system settings</string>
 
     <!-- Permissions -->
     <string name="settings_permissions">Permissions</string>
     <string name="settings_permissions_subtitle">Review and fix app access to location, camera and more</string>
     <string name="permissions_intro">LocaPeer needs these permissions to share your location, scan invites and keep running in the background. Tap any that aren\'t granted to fix them.</string>
     <string name="perm_location_title">Location</string>
-    <string name="perm_location_granted">Granted - your location can be shared</string>
-    <string name="perm_location_denied">Not granted - tap to allow location access</string>
+    <string name="perm_location_granted">Your location can be shared</string>
+    <string name="perm_location_denied">Tap to allow location access</string>
     <string name="perm_background_location_title">Background Location</string>
-    <string name="perm_background_location_granted">Granted - location keeps sharing when the app is closed</string>
-    <string name="perm_background_location_denied">Not granted - tap to allow all-the-time access in settings</string>
+    <string name="perm_background_location_granted">Location keeps sharing when the app is closed</string>
+    <string name="perm_background_location_denied">Tap to allow all-the-time access in settings</string>
     <string name="perm_camera_title">Camera</string>
-    <string name="perm_camera_granted">Granted - used to scan invite QR codes</string>
-    <string name="perm_camera_denied">Not granted - tap to allow the camera</string>
+    <string name="perm_camera_granted">Used to scan invite QR codes</string>
+    <string name="perm_camera_denied">Tap to allow the camera</string>
     <string name="perm_notifications_title">Notifications</string>
-    <string name="perm_notifications_granted">Granted - alerts and status updates can be shown</string>
-    <string name="perm_notifications_denied">Not granted - tap to allow notifications</string>
+    <string name="perm_notifications_granted">Alerts and status updates can be shown</string>
+    <string name="perm_notifications_denied">Tap to allow notifications</string>
 
     <!-- Units &amp; Display -->
     <string name="settings_speed_units">Speed Units</string>
