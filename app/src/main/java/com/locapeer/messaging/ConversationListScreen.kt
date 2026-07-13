@@ -230,7 +230,6 @@ fun ConversationListScreen(
         topBar = {
             Column {
                 TopAppBar(
-                    colors = locaPeerTopAppBarColors(),
                     navigationIcon = {
                         if (isSelectionMode) {
                             IconButton(onClick = { selectedIds = emptySet() }) {
@@ -245,9 +244,7 @@ fun ConversationListScreen(
                             Text(stringResource(R.string.tab_messages), fontWeight = FontWeight.SemiBold)
                         }
                     },
-                    colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.surface
-                    ),
+                    colors = locaPeerTopAppBarColors(),
                     actions = {
                         if (isSelectionMode) {
                             IconButton(onClick = {
