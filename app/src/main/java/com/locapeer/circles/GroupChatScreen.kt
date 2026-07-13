@@ -21,7 +21,6 @@ import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.MyLocation
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -74,7 +73,6 @@ fun GroupChatScreen(
 
     var inputText by remember { mutableStateOf("") }
     var showMenu by remember { mutableStateOf(false) }
-    var showShareSheet by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
     // Message the user is about to delete via long-press or left-swipe. Both gestures
     // converge on the same AlertDialog so the delete options stay identical to 1:1 chat.
@@ -132,16 +130,6 @@ fun GroupChatScreen(
             vm.markReadGroup(circleId)
             listState.animateScrollToItem(messages.size - 1)
         }
-    }
-
-    if (showShareSheet) {
-        CircleShareLocationSheet(
-            onPick = { minutes ->
-                circlesVm.shareLocationWithCircle(circleId, minutes)
-                showShareSheet = false
-            },
-            onDismiss = { showShareSheet = false }
-        )
     }
 
     if (showDeleteDialog) {
@@ -277,11 +265,9 @@ fun GroupChatScreen(
                                 leadingIcon = { Icon(Icons.Default.Group, null) },
                                 onClick = { showMenu = false; onManageMembers(circleId) }
                             )
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.circles_share_location)) },
-                                leadingIcon = { Icon(Icons.Default.Share, null) },
-                                onClick = { showMenu = false; showShareSheet = true }
-                            )
+                            // Note: no "Share Location" entry here - the chat input bar's location
+                            // button (onLocationShare below) already covers sharing a location with
+                            // the circle, so the menu doesn't duplicate it.
                             // Archive/unarchive parity with ChatScreen's 1:1 options menu. The
                             // circle drops off (or returns to) the Circles tab; archived circles
                             // live on the Archived tab of the Messages screen.
@@ -487,37 +473,6 @@ private fun GroupMessageBubble(
                     modifier = Modifier.align(Alignment.End)
                 )
             }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun CircleShareLocationSheet(onPick: (Int) -> Unit, onDismiss: () -> Unit) {
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
-    ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState) {
-        Column(modifier = Modifier.padding(24.dp)) {
-            Text(stringResource(R.string.circles_share_location), style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(4.dp))
-            Text(
-                stringResource(R.string.circles_share_location_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(Modifier.height(16.dp))
-            val options = listOf(
-                15 to stringResource(R.string.peer_temp_share_chip_15m),
-                60 to stringResource(R.string.peer_temp_share_chip_1h),
-                180 to stringResource(R.string.peer_temp_share_chip_3h),
-                360 to stringResource(R.string.peer_temp_share_chip_6h)
-            )
-            options.forEach { (minutes, label) ->
-                OutlinedButton(
-                    onClick = { onPick(minutes) },
-                    modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
-                ) { Text(label) }
-            }
-            Spacer(Modifier.height(8.dp))
         }
     }
 }

@@ -52,11 +52,9 @@ fun CircleListScreen(
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = onCreate,
-                icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                text = { Text(stringResource(R.string.circles_new)) }
-            )
+            FloatingActionButton(onClick = onCreate) {
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.circles_new))
+            }
         }
     ) { padding ->
         if (groups.isEmpty()) {
