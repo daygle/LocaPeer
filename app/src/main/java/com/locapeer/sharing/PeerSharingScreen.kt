@@ -252,7 +252,10 @@ fun PeerSharingScreen(
                             border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
                                     Icon(
                                         Icons.Default.Timelapse,
                                         contentDescription = null,
@@ -261,17 +264,27 @@ fun PeerSharingScreen(
                                     )
                                     Spacer(Modifier.width(12.dp))
                                     Text(
-                                        stringResource(
-                                            R.string.peer_temp_share_active_label,
-                                            peerName,
-                                            com.locapeer.util.DisplayFormat.timeFormat().format(java.util.Date(endsAt * 1000L))
-                                        ),
+                                        stringResource(R.string.settings_temporary_location_share),
                                         style = MaterialTheme.typography.titleMedium,
                                         fontWeight = FontWeight.Bold,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
                                 }
                                 Spacer(Modifier.height(8.dp))
+                                Text(
+                                    stringResource(
+                                        R.string.peer_temp_share_active_label,
+                                        peerName,
+                                        com.locapeer.util.DisplayFormat.timeFormat().format(java.util.Date(endsAt * 1000L))
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    maxLines = 1,
+                                    overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                )
+                                Spacer(Modifier.height(4.dp))
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Icon(
                                         Icons.Default.Timer,
@@ -286,8 +299,10 @@ fun PeerSharingScreen(
                                             peerName,
                                             com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec)
                                         ),
-                                        style = MaterialTheme.typography.bodyMedium,
-                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
                                 }
                                 Spacer(Modifier.height(16.dp))
@@ -309,7 +324,7 @@ fun PeerSharingScreen(
                     } else if (sharingEnabled) {
                         Column(modifier = Modifier.padding(bottom = 16.dp)) {
                             ListItem(
-                                headlineContent = { Text(stringResource(R.string.peer_temp_share_subtitle)) },
+                                headlineContent = { Text(stringResource(R.string.settings_temporary_location_share)) },
                                 leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
                                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                             )

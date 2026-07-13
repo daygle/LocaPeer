@@ -171,7 +171,7 @@ fun SettingsScreen(
 
             // ── 1b. Active Temporary Shares ──────────────────────────────────
             if (activeTempShares.isNotEmpty()) {
-                item { SectionLabel(stringResource(R.string.peer_temp_share_subtitle)) }
+                item { SectionLabel(stringResource(R.string.settings_temporary_location_share)) }
                 item {
                     SettingsCard {
                         activeTempShares.forEachIndexed { index, (peer, config) ->
@@ -183,14 +183,22 @@ fun SettingsScreen(
                                 }
                             }
                             ListItem(
-                                headlineContent = { Text(peer.displayName) },
+                                headlineContent = {
+                                    Text(
+                                        peer.displayName,
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                    )
+                                },
                                 supportingContent = {
                                     Text(
                                         stringResource(
-                                            R.string.peer_temp_share_active_label,
+                                            R.string.peer_temp_share_active_time_left,
                                             peer.displayName,
-                                            com.locapeer.util.DisplayFormat.timeFormat().format(Date(endsAt * 1000L))
-                                        ) + " (" + com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec) + ")"
+                                            com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec)
+                                        ),
+                                        maxLines = 1,
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
                                 },
                                 leadingContent = {

@@ -442,6 +442,7 @@
     <string name="peer_precision_suburb_desc">Neighbourhood-level only</string>
 
     <!-- Temporary share (one-off, auto-expires) -->
+    <string name="settings_temporary_location_share">Temporary Location Share</string>
     <string name="peer_temp_share_subtitle">Share for a limited time, then auto-stop.</string>
     <string name="peer_temp_share_active_label">Sharing with %1$s until %2$s</string>
     <string name="peer_temp_share_active_time_left">Sharing with %1$s for %2$s more</string>
