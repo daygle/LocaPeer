@@ -998,6 +998,15 @@ class HeartbeatReceiver @Inject constructor(
             return
         }
 
+        // Bind the payload's claimed identity to the signing key, mirroring processTrackAccept.
+        // The pending-request row, the review screen and the eventual accept are all keyed on
+        // senderPublicKeyHex, so an unchecked mismatch would let the signer forge a request
+        // "from" any other pubkey - and attach their own relay URL to that identity.
+        if (payload.senderPublicKeyHex != event.pubkey) {
+            Log.w(TAG, "Track request identity mismatch: payload=${payload.senderPublicKeyHex.take(16)} signer=${event.pubkey}")
+            return
+        }
+
         Log.i(TAG, "Received track request from ${payload.senderDisplayName} (${event.pubkey})")
 
         val existing = peerDao.getPeer(event.pubkey)
