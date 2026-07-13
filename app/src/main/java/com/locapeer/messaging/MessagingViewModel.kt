@@ -64,6 +64,15 @@ class MessagingViewModel @Inject constructor(
         peerDao.getAllPeers()
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
+    /**
+     * This device's own pubkey. Used by the circle screens to tell whether the local user owns a
+     * circle (`circle.creatorPubkey == myPubkeyHex`); only the owner may rename it or change its
+     * membership. Empty until the keypair loads.
+     */
+    val myPubkeyHex: StateFlow<String> =
+        flow { emit(keyManager.ensureKeypair().second) }
+            .stateIn(viewModelScope, SharingStarted.Lazily, "")
+
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery
 

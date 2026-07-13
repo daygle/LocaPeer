@@ -64,9 +64,13 @@ fun GroupChatScreen(
     val messages by remember(circleId) { vm.getGroupMessages(circleId) }.collectAsState(initial = emptyList())
     val members by remember(circleId) { circlesVm.observeMembers(circleId) }.collectAsState(initial = emptyList())
     val peers by vm.peers.collectAsState()
+    val myPub by vm.myPubkeyHex.collectAsState()
     val isRecording by vm.isRecording.collectAsState()
     val playingMessageId by vm.playingMessageId.collectAsState()
     val nameByPubkey = remember(peers) { peers.associate { it.deviceId to it.displayName } }
+    // Only the owner may rename the circle or change its members; a non-owner opens the member
+    // screen read-only, so the menu entry reads "View members" for them.
+    val canEditCircle = circlesVm.canEditCircle(circle, myPub)
 
     var inputText by remember { mutableStateOf("") }
     var showMenu by remember { mutableStateOf(false) }
@@ -264,7 +268,12 @@ fun GroupChatScreen(
                         }
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                             DropdownMenuItem(
-                                text = { Text(stringResource(R.string.circles_manage_members)) },
+                                text = {
+                                    Text(stringResource(
+                                        if (canEditCircle) R.string.circles_manage_members
+                                        else R.string.circles_view_members
+                                    ))
+                                },
                                 leadingIcon = { Icon(Icons.Default.Group, null) },
                                 onClick = { showMenu = false; onManageMembers(circleId) }
                             )
