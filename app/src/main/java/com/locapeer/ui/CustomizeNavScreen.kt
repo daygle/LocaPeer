@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,7 +25,7 @@ fun CustomizeNavScreen(
     prefs: AppPreferences,
     onNavigateBack: () -> Unit
 ) {
-    val settings by prefs.settings.collectAsState(initial = null)
+    val settings by prefs.settings.collectAsStateWithLifecycle(initialValue = null)
     val scope = rememberCoroutineScope()
 
     // Build ordered list with visible flag. Map is always visible and pinned first.

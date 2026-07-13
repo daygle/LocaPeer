@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,13 +60,13 @@ fun GroupChatScreen(
     vm: MessagingViewModel = hiltViewModel(),
     circlesVm: CirclesViewModel = hiltViewModel()
 ) {
-    val circle by remember(circleId) { vm.observeCircle(circleId) }.collectAsState(initial = null)
-    val messages by remember(circleId) { vm.getGroupMessages(circleId) }.collectAsState(initial = emptyList())
-    val members by remember(circleId) { circlesVm.observeMembers(circleId) }.collectAsState(initial = emptyList())
-    val peers by vm.peers.collectAsState()
-    val myPub by vm.myPubkeyHex.collectAsState()
-    val isRecording by vm.isRecording.collectAsState()
-    val playingMessageId by vm.playingMessageId.collectAsState()
+    val circle by remember(circleId) { vm.observeCircle(circleId) }.collectAsStateWithLifecycle(initialValue = null)
+    val messages by remember(circleId) { vm.getGroupMessages(circleId) }.collectAsStateWithLifecycle(initialValue = emptyList())
+    val members by remember(circleId) { circlesVm.observeMembers(circleId) }.collectAsStateWithLifecycle(initialValue = emptyList())
+    val peers by vm.peers.collectAsStateWithLifecycle()
+    val myPub by vm.myPubkeyHex.collectAsStateWithLifecycle()
+    val isRecording by vm.isRecording.collectAsStateWithLifecycle()
+    val playingMessageId by vm.playingMessageId.collectAsStateWithLifecycle()
     val nameByPubkey = remember(peers) { peers.associate { it.deviceId to it.displayName } }
     // Only the owner may rename the circle or change its members; a non-owner opens the member
     // screen read-only, so the menu entry reads "View members" for them.

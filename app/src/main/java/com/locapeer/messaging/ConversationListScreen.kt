@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,16 +79,16 @@ fun ConversationListScreen(
     onCreateCircle: () -> Unit = {},
     vm: MessagingViewModel = hiltViewModel()
 ) {
-    val conversations by vm.conversations.collectAsState()
-    val archivedConversations by vm.archivedConversations.collectAsState()
-    val groupConversations by vm.groupConversations.collectAsState()
-    val archivedGroupConversations by vm.archivedGroupConversations.collectAsState()
-    val peers by vm.peers.collectAsState()
-    val unreadCounts by vm.unreadCounts.collectAsState()
-    val chatsUnreadTotal by vm.chatsUnreadTotal.collectAsState()
-    val circlesUnreadTotal by vm.circlesUnreadTotal.collectAsState()
-    val searchQuery by vm.searchQuery.collectAsState()
-    val sortOrder by vm.sortOrder.collectAsState()
+    val conversations by vm.conversations.collectAsStateWithLifecycle()
+    val archivedConversations by vm.archivedConversations.collectAsStateWithLifecycle()
+    val groupConversations by vm.groupConversations.collectAsStateWithLifecycle()
+    val archivedGroupConversations by vm.archivedGroupConversations.collectAsStateWithLifecycle()
+    val peers by vm.peers.collectAsStateWithLifecycle()
+    val unreadCounts by vm.unreadCounts.collectAsStateWithLifecycle()
+    val chatsUnreadTotal by vm.chatsUnreadTotal.collectAsStateWithLifecycle()
+    val circlesUnreadTotal by vm.circlesUnreadTotal.collectAsStateWithLifecycle()
+    val searchQuery by vm.searchQuery.collectAsStateWithLifecycle()
+    val sortOrder by vm.sortOrder.collectAsStateWithLifecycle()
 
     var showContactPicker by remember { mutableStateOf(false) }
     // rememberSaveable (not remember) so the selected sub-tab survives navigating into a chat or

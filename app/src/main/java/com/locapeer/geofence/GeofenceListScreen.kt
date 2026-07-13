@@ -25,6 +25,7 @@ import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -82,8 +83,8 @@ fun GeofenceListScreen(
     vm: GeofenceViewModel = hiltViewModel()
 ) {
     val gateVm: SupervisionGateViewModel = hiltViewModel()
-    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
-    val gateUnlockState by gateVm.unlockState.collectAsState()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsStateWithLifecycle()
+    val gateUnlockState by gateVm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (supervisedModeEnabled && !sessionUnlocked) {
         SupervisionGate(
@@ -109,10 +110,10 @@ private fun GlobalGeofencesScreen(
     vm: GeofenceViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val areas by vm.geofences.collectAsState()
-    val assignments by vm.allAssignments.collectAsState()
-    val broadcasters by vm.receiveContactsWithLocation.collectAsState()
-    val addressSearchEnabled by vm.addressSearchEnabled.collectAsState()
+    val areas by vm.geofences.collectAsStateWithLifecycle()
+    val assignments by vm.allAssignments.collectAsStateWithLifecycle()
+    val broadcasters by vm.receiveContactsWithLocation.collectAsStateWithLifecycle()
+    val addressSearchEnabled by vm.addressSearchEnabled.collectAsStateWithLifecycle()
 
     var showCreateDialog by remember { mutableStateOf(false) }
     var editingArea by remember { mutableStateOf<GeofenceEntity?>(null) }
@@ -225,10 +226,10 @@ private fun ContactGeofencesScreen(
     vm: GeofenceViewModel,
     onNavigateBack: () -> Unit
 ) {
-    val areas by vm.geofences.collectAsState()
-    val broadcasters by vm.receiveContactsWithLocation.collectAsState()
+    val areas by vm.geofences.collectAsStateWithLifecycle()
+    val broadcasters by vm.receiveContactsWithLocation.collectAsStateWithLifecycle()
     val assignments by remember(peerId) { vm.assignmentsForContact(peerId) }
-        .collectAsState(initial = emptyList())
+        .collectAsStateWithLifecycle(initialValue = emptyList())
 
     val contactName = broadcasters.find { it.peer.deviceId == peerId }?.peer?.displayName
     val title = if (contactName != null) stringResource(R.string.geo_for_contact, contactName) else stringResource(R.string.settings_geofences)

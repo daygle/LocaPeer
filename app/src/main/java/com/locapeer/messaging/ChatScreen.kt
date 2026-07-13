@@ -36,6 +36,7 @@ import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
@@ -75,11 +76,11 @@ fun ChatScreen(
     vm: MessagingViewModel = hiltViewModel()
 ) {
     val messagesFlow = remember(peerId) { vm.getMessages(peerId) }
-    val messages by messagesFlow.collectAsState(initial = emptyList())
-    val typingPeers by vm.typingPeers.collectAsState()
+    val messages by messagesFlow.collectAsStateWithLifecycle(initialValue = emptyList())
+    val typingPeers by vm.typingPeers.collectAsStateWithLifecycle()
     val isPeerTyping = typingPeers.containsKey(peerId)
     val peerFlow = remember(peerId) { vm.observePeer(peerId) }
-    val peer by peerFlow.collectAsState(initial = null)
+    val peer by peerFlow.collectAsStateWithLifecycle(initialValue = null)
     val messagingEnabled = peer?.messagingEnabled ?: true
     val isArchived = peer?.isArchived ?: false
     var inputText by remember { mutableStateOf("") }
@@ -88,8 +89,8 @@ fun ChatScreen(
     var showDeleteConversationDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    val isRecording by vm.isRecording.collectAsState()
-    val playingMessageId by vm.playingMessageId.collectAsState()
+    val isRecording by vm.isRecording.collectAsStateWithLifecycle()
+    val playingMessageId by vm.playingMessageId.collectAsStateWithLifecycle()
     var fullscreenImage by remember { mutableStateOf<String?>(null) }
 
     val imagePicker = rememberLauncherForActivityResult(

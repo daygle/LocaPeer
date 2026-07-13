@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,8 +33,8 @@ fun ScheduleScreen(
     vm: ScheduleViewModel = hiltViewModel()
 ) {
     val gateVm: SupervisionGateViewModel = hiltViewModel()
-    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsState()
-    val gateUnlockState by gateVm.unlockState.collectAsState()
+    val supervisedModeEnabled by gateVm.supervisedModeEnabled.collectAsStateWithLifecycle()
+    val gateUnlockState by gateVm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
     if (supervisedModeEnabled && !sessionUnlocked) {
         SupervisionGate(
@@ -45,7 +46,7 @@ fun ScheduleScreen(
         return
     }
 
-    val rules by vm.rules.collectAsState()
+    val rules by vm.rules.collectAsStateWithLifecycle()
     val title = if (vm.scope == "global") stringResource(R.string.settings_sharing_schedule)
                 else stringResource(R.string.schedule_for_peer, vm.peerName)
 

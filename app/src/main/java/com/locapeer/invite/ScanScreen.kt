@@ -3,6 +3,7 @@ package com.locapeer.invite
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -28,7 +29,7 @@ fun ScanScreen(
     vm: ScanViewModel = hiltViewModel()
 ) {
     val cameraPermission = rememberPermissionState(android.Manifest.permission.CAMERA)
-    val scanState by vm.scanState.collectAsState()
+    val scanState by vm.scanState.collectAsStateWithLifecycle()
 
     LaunchedEffect(inviteData) {
         if (inviteData != null) {

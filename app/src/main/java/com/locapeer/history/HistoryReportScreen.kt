@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -57,7 +58,7 @@ fun HistoryReportScreen(
     onNavigateBack: (() -> Unit)? = null,
     vm: HistoryReportViewModel = hiltViewModel()
 ) {
-    val selfPubkeyHex by vm.selfPubkeyHex.collectAsState()
+    val selfPubkeyHex by vm.selfPubkeyHex.collectAsStateWithLifecycle()
 
     LaunchedEffect(peerId) {
         if (peerId != null) vm.selectPeer(peerId)
@@ -67,14 +68,14 @@ fun HistoryReportScreen(
         if (isOwnHistoryMode && selfPubkeyHex != null) vm.selectPeer(selfPubkeyHex!!)
     }
 
-    val broadcasters by vm.receiveContacts.collectAsState()
-    val selectedPeerId by vm.selectedPeerId.collectAsState()
-    val selectedDayStart by vm.selectedDayStart.collectAsState()
-    val startTimeOffset by vm.startTimeOffset.collectAsState()
-    val endTimeOffset by vm.endTimeOffset.collectAsState()
-    val heartbeats by vm.heartbeats.collectAsState()
-    val addresses by vm.addresses.collectAsState()
-    val selfDisplayName by vm.selfDisplayName.collectAsState()
+    val broadcasters by vm.receiveContacts.collectAsStateWithLifecycle()
+    val selectedPeerId by vm.selectedPeerId.collectAsStateWithLifecycle()
+    val selectedDayStart by vm.selectedDayStart.collectAsStateWithLifecycle()
+    val startTimeOffset by vm.startTimeOffset.collectAsStateWithLifecycle()
+    val endTimeOffset by vm.endTimeOffset.collectAsStateWithLifecycle()
+    val heartbeats by vm.heartbeats.collectAsStateWithLifecycle()
+    val addresses by vm.addresses.collectAsStateWithLifecycle()
+    val selfDisplayName by vm.selfDisplayName.collectAsStateWithLifecycle()
 
     val isDark = isSystemInDarkTheme()
 

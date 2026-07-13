@@ -11,7 +11,7 @@ import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.SwapHoriz
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,7 +32,7 @@ fun PendingRequestsScreen(
     onOpenRequest: (pubkey: String, name: String, relay: String, isRoleChange: Boolean, requestedRole: String?) -> Unit,
     vm: PendingRequestsViewModel = hiltViewModel()
 ) {
-    val requests by vm.requests.collectAsState()
+    val requests by vm.requests.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
