@@ -29,7 +29,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -178,6 +180,20 @@ class SettingsViewModel @Inject constructor(
 
     val peers = peerDao.getAllPeers()
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    val activeTempShares: StateFlow<List<Pair<PeerEntity, PeerSharingConfig>>> = combine(
+        peerDao.getAllPeers(),
+        sharingConfigDao.observeAll()
+    ) { peers, configs ->
+        val nowSec = System.currentTimeMillis() / 1000L
+        val configMap = configs.associateBy { it.peerDeviceId }
+        peers.mapNotNull { peer ->
+            val cfg = configMap[peer.deviceId]
+            if (cfg != null && (cfg.temporaryShareEndsAtEpochSeconds ?: 0L) > nowSec) {
+                peer to cfg
+            } else null
+        }
+    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _publicKeyHex = MutableStateFlow("")
     val publicKeyHex: StateFlow<String> = _publicKeyHex
@@ -724,6 +740,12 @@ class SettingsViewModel @Inject constructor(
 
     fun setUseDynamicColor(use: Boolean) {
         viewModelScope.launch { prefs.setUseDynamicColor(use) }
+    }
+
+    fun stopTemporaryShare(peerDeviceId: String) {
+        viewModelScope.launch {
+            sharingConfigDao.setTemporaryShareEndsAt(peerDeviceId, null)
+        }
     }
 
     companion object {

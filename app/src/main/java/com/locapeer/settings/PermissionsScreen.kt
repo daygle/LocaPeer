@@ -196,7 +196,7 @@ private fun RuntimePermissionRow(
         statusText = if (granted) grantedText else deniedText,
         onClick = {
             when {
-                granted -> {}
+                granted -> openAppDetailsSettings(context)
                 asked && !permission.status.shouldShowRationale -> openAppDetailsSettings(context)
                 else -> {
                     asked = true
@@ -257,7 +257,7 @@ private fun PermissionStatusRow(
                 Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         },
-        modifier = if (granted) Modifier else Modifier.clickable(onClick = onClick),
+        modifier = Modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
     )
 }

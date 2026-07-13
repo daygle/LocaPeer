@@ -109,4 +109,18 @@ object DisplayFormat {
         val normalized = ((bearing % 360f) + 360f) % 360f
         return dirs[((normalized + 22.5f) / 45f).toInt() % 8]
     }
+
+    /** "47m" / "2h 5m" / "1d 3h" type human-readable duration from seconds remaining. */
+    fun humanizeRemaining(secsLeft: Long): String {
+        if (secsLeft <= 0) return "-"
+        val totalMin = secsLeft / 60
+        val days = totalMin / (24 * 60)
+        val hours = (totalMin % (24 * 60)) / 60
+        val mins = totalMin % 60
+        return buildString {
+            if (days > 0) append("${days}d ")
+            if (days > 0 || hours > 0) append("${hours}h ")
+            append("${mins}m")
+        }.trim()
+    }
 }

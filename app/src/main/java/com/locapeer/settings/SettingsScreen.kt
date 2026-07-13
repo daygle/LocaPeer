@@ -34,6 +34,7 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.MapLocationPicker
 import com.locapeer.ui.components.RetentionRow
+import java.util.Date
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +53,7 @@ fun SettingsScreen(
     val peers by vm.peers.collectAsStateWithLifecycle()
     val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
     val profileQr by vm.profileQr.collectAsStateWithLifecycle()
+    val activeTempShares by vm.activeTempShares.collectAsStateWithLifecycle()
 
     val unlockState by vm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
@@ -162,6 +164,57 @@ fun SettingsScreen(
                             Icon(Icons.Default.QrCode, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(Modifier.width(6.dp))
                             Text(stringResource(R.string.settings_my_qr))
+                        }
+                    }
+                }
+            }
+
+            // ── 1b. Active Temporary Shares ──────────────────────────────────
+            if (activeTempShares.isNotEmpty()) {
+                item { SectionLabel(stringResource(R.string.peer_temp_share_subtitle)) }
+                item {
+                    SettingsCard {
+                        activeTempShares.forEachIndexed { index, (peer, config) ->
+                            val endsAt = config.temporaryShareEndsAtEpochSeconds ?: 0L
+                            val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {
+                                while (true) {
+                                    value = System.currentTimeMillis() / 1000L
+                                    kotlinx.coroutines.delay(1000L)
+                                }
+                            }
+                            ListItem(
+                                headlineContent = { Text(peer.displayName) },
+                                supportingContent = {
+                                    Text(
+                                        stringResource(
+                                            R.string.peer_temp_share_active_label,
+                                            peer.displayName,
+                                            com.locapeer.util.DisplayFormat.timeFormat().format(Date(endsAt * 1000L))
+                                        ) + " (" + com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec) + ")"
+                                    )
+                                },
+                                leadingContent = {
+                                    Icon(
+                                        Icons.Default.Timelapse,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                },
+                                trailingContent = {
+                                    IconButton(onClick = { vm.stopTemporaryShare(peer.deviceId) }) {
+                                        Icon(
+                                            Icons.Default.Stop,
+                                            contentDescription = stringResource(R.string.peer_temp_share_stop),
+                                            tint = MaterialTheme.colorScheme.error
+                                        )
+                                    }
+                                },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
+                                modifier = Modifier.clickable { onNavigateToPeerSharing(peer.deviceId, peer.displayName) }
+                            )
+                            if (index < activeTempShares.size - 1) {
+                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                            }
                         }
                     }
                 }

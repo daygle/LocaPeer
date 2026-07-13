@@ -56,9 +56,16 @@ object PermissionManager {
 
     @android.annotation.SuppressLint("BatteryLife")
     fun requestBatteryOptimizationExemption(context: Context) {
-        val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-            data = "package:${context.packageName}".toUri()
+        val intent = if (isIgnoringBatteryOptimizations(context)) {
+            // If already ignored, jump to the general settings list so the user can see it
+            Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+        } else {
+            // Otherwise, show the direct request dialog (requires REQUEST_IGNORE_BATTERY_OPTIMIZATIONS permission)
+            Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
+                data = "package:${context.packageName}".toUri()
+            }
         }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 }

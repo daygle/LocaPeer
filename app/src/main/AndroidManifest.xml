@@ -50,6 +50,9 @@
     <!-- Receive boot completed to restart services -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!-- Request to ignore battery optimizations so background broadcast stays alive -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
     <application
         android:name=".LocaPeerApplication"
         android:allowBackup="true"

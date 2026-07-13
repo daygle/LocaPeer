@@ -2,8 +2,10 @@ package com.locapeer.sharing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -239,72 +241,101 @@ fun PeerSharingScreen(
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    // Quick share row: chips for fixed durations + an "until 8am tomorrow"
-                    // preset. While tempShare is active the row shows the countdown and a
-                    // Stop button. The temp-share field is the same one checked inside
-                    // HeartbeatService.broadcastHeartbeat's per-peer loop, so toggling
-                    // here has immediate broadcast effect (no global schedule change).
-                    // tempShareActive is now `Long?` so the smart-cast inside `if (it != null)`
-                    // gives a non-null endsAt. The previous shape (`tempShareActive && tempShareEndsAt != null`)
-                    // triggered the "condition is always true" warning because tempShareActive already
-                    // implies tempShareEndsAt is non-null.
                     if (tempShareActive != null) {
                         val endsAt = tempShareActive
-                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                            Text(
-                                stringResource(
-                                    R.string.peer_temp_share_active_label,
-                                    peerName,
-                                    formatEpochSecondsAsLocalTime(endsAt)
-                                ),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontWeight = FontWeight.Medium
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            Text(
-                                stringResource(
-                                    R.string.peer_temp_share_active_time_left,
-                                    peerName,
-                                    humanizeRemaining(endsAt - nowSec)
-                                ),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Spacer(Modifier.height(8.dp))
-                            OutlinedButton(
-                                onClick = { vm.clearTemporaryShare() },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Icon(Icons.Default.Stop, contentDescription = null, modifier = Modifier.size(16.dp))
-                                Spacer(Modifier.width(6.dp))
-                                Text(stringResource(R.string.peer_temp_share_stop))
+                        Surface(
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .fillMaxWidth(),
+                            shape = RoundedCornerShape(16.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
+                        ) {
+                            Column(modifier = Modifier.padding(16.dp)) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        Icons.Default.Timelapse,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(24.dp)
+                                    )
+                                    Spacer(Modifier.width(12.dp))
+                                    Text(
+                                        stringResource(
+                                            R.string.peer_temp_share_active_label,
+                                            peerName,
+                                            com.locapeer.util.DisplayFormat.timeFormat().format(java.util.Date(endsAt * 1000L))
+                                        ),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                                Spacer(Modifier.height(8.dp))
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Icon(
+                                        Icons.Default.Timer,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
+                                        modifier = Modifier.size(16.dp)
+                                    )
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(
+                                        stringResource(
+                                            R.string.peer_temp_share_active_time_left,
+                                            peerName,
+                                            com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec)
+                                        ),
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                                    )
+                                }
+                                Spacer(Modifier.height(16.dp))
+                                Button(
+                                    onClick = { vm.clearTemporaryShare() },
+                                    modifier = Modifier.fillMaxWidth(),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = MaterialTheme.colorScheme.errorContainer,
+                                        contentColor = MaterialTheme.colorScheme.onErrorContainer
+                                    ),
+                                    contentPadding = PaddingValues(vertical = 8.dp)
+                                ) {
+                                    Icon(Icons.Default.Stop, contentDescription = null, modifier = Modifier.size(18.dp))
+                                    Spacer(Modifier.width(8.dp))
+                                    Text(stringResource(R.string.peer_temp_share_stop), fontWeight = FontWeight.SemiBold)
+                                }
                             }
                         }
                     } else if (sharingEnabled) {
-                        Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
-                            Text(
-                                stringResource(R.string.peer_temp_share_subtitle),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                        Column(modifier = Modifier.padding(bottom = 16.dp)) {
+                            ListItem(
+                                headlineContent = { Text(stringResource(R.string.peer_temp_share_subtitle)) },
+                                leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
+                                colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                             )
-                            Spacer(Modifier.height(8.dp))
                             Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .horizontalScroll(rememberScrollState())
+                                    .padding(horizontal = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_15m)) { vm.setTemporaryShare(15) }
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_1h)) { vm.setTemporaryShare(60) }
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_3h)) { vm.setTemporaryShare(180) }
-                            }
-                            Spacer(Modifier.height(8.dp))
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_6h)) { vm.setTemporaryShare(360) }
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_12h)) { vm.setTemporaryShare(720) }
-                                TempShareChip(stringResource(R.string.peer_temp_share_chip_until_tomorrow)) { vm.setTemporaryShare(minutesUntilTomorrow8am()) }
+                                val options = listOf(
+                                    15 to stringResource(R.string.peer_temp_share_chip_15m),
+                                    60 to stringResource(R.string.peer_temp_share_chip_1h),
+                                    180 to stringResource(R.string.peer_temp_share_chip_3h),
+                                    360 to stringResource(R.string.peer_temp_share_chip_6h),
+                                    720 to stringResource(R.string.peer_temp_share_chip_12h),
+                                    minutesUntilTomorrow8am() to stringResource(R.string.peer_temp_share_chip_until_tomorrow)
+                                )
+                                options.forEach { (mins, label) ->
+                                    SuggestionChip(
+                                        onClick = { vm.setTemporaryShare(mins) },
+                                        label = { Text(label) },
+                                        icon = { Icon(Icons.Default.Timer, null, modifier = Modifier.size(18.dp)) },
+                                        shape = RoundedCornerShape(12.dp)
+                                    )
+                                }
                             }
                         }
                     }
@@ -600,25 +631,6 @@ private fun TempShareChip(label: String, onClick: () -> Unit) {
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
         )
     }
-}
-
-private fun formatEpochSecondsAsLocalTime(epochSec: Long): String {
-    val fmt = SimpleDateFormat("HH:mm", Locale.getDefault())
-    return fmt.format(Date(epochSec * 1000L))
-}
-
-/** "47m" / "2h 5m" / "1d 3h" type human-readable duration from seconds remaining. */
-private fun humanizeRemaining(secsLeft: Long): String {
-    if (secsLeft <= 0) return "-"
-    val totalMin = secsLeft / 60
-    val days = totalMin / (24 * 60)
-    val hours = (totalMin % (24 * 60)) / 60
-    val mins = totalMin % 60
-    return buildString {
-        if (days > 0) append("${days}d ")
-        if (days > 0 || hours > 0) append("${hours}h ")
-        append("${mins}m")
-    }.trim()
 }
 
 /** Minutes from "now" until 08:00 the next day. Used by the "Until tomorrow 8am" chip. */
