@@ -38,12 +38,6 @@ object PermissionManager {
             emptyList()
         }
 
-    fun hasBasicPermissions(context: Context): Boolean {
-        return REQUIRED_PERMISSIONS.all {
-            ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
     fun hasBackgroundLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContextCompat.checkSelfPermission(
