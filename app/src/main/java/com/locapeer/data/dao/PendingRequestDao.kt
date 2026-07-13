@@ -9,6 +9,9 @@ interface PendingRequestDao {
     @Query("SELECT * FROM pending_requests ORDER BY receivedAt DESC")
     fun observeAll(): Flow<List<PendingRequestEntity>>
 
+    @Query("SELECT * FROM pending_requests WHERE senderPubkey = :senderPubkey")
+    suspend fun getByPubkey(senderPubkey: String): PendingRequestEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(request: PendingRequestEntity)
 

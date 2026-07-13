@@ -108,15 +108,28 @@ class NostrRelayClient @Inject constructor(
             }
         }
         scope.launch {
-            peerDao.getAllPeers().map { peers -> 
-                peers.map { it.relayUrl } 
+            peerDao.getAllPeers().map { peers ->
+                peers.map { it.relayUrl }
             }.distinctUntilChanged().collect { peerRelays ->
                 val allUrls = (HARDCODED_RELAYS + peerRelays).asSequence()
-                    .filter { it.isNotBlank() }
+                    .filter { isValidRelayUrl(it) }
                     .toSet()
                 updateRelays(allUrls.toList())
             }
         }
+    }
+
+    /**
+     * Relay URLs arrive from invites and peer-controlled payloads as well as our own hardcoded
+     * list, and OkHttp's newWebSocket accepts http(s)/ws(s) targets alike. Only secure WebSocket
+     * endpoints are acceptable here: rejecting everything else keeps a crafted invite from
+     * pointing the client at a cleartext ws:// relay or an arbitrary http(s) host (with the
+     * reconnect loop hammering it) on the victim's network.
+     */
+    private fun isValidRelayUrl(url: String): Boolean {
+        val uri = try { java.net.URI(url) } catch (_: Exception) { return false }
+        // URI() accepts scheme-less strings (scheme == null), so the safe-call is load-bearing.
+        return uri.scheme?.equals("wss", ignoreCase = true) == true && !uri.host.isNullOrBlank()
     }
 
     private fun updateRelays(urls: List<String>) {
@@ -150,7 +163,7 @@ class NostrRelayClient @Inject constructor(
     }
 
     fun connect(url: String) {
-        if (url.isBlank()) return
+        if (!isValidRelayUrl(url)) return
         val conn = relays.getOrPut(url) {
             _relayStatus.update { it + (url to false) }
             RelayConnection(url)
