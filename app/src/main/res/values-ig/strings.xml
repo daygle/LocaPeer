@@ -783,8 +783,6 @@
     <string name="circles_new">Okirikiri ọhụrụ</string>
     <string name="circles_new_title">Okirikiri ọhụrụ</string>
     <string name="circles_no_contacts">Buru ụzọ tinye kọntaktị, wee chịkọta ha n\'ime otu okirikiri.</string>
-    <string name="circles_share_location">Kekọrịta ebe na okirikiri</string>
-    <string name="circles_share_location_desc">Kekọrịta ebe ị nọ ozugbo na onye ọ bụla dị n\'okirikiri a ruo oge a kara aka. Kọntaktị ndị ị na-ekekọrịtakwara ebe ga-amalite ịnata ya ozugbo.</string>
     <string name="circles_title">Okirikiri</string>
     <string name="geo_section_areas">Mpaghara e kekọrịtara</string>
     <string name="geo_section_assignments">Geofence e kenyere</string>

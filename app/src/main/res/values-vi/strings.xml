@@ -783,8 +783,6 @@
     <string name="circles_new">Vòng kết nối mới</string>
     <string name="circles_new_title">Vòng kết nối mới</string>
     <string name="circles_no_contacts">Trước tiên hãy thêm liên hệ, sau đó nhóm họ vào một vòng kết nối.</string>
-    <string name="circles_share_location">Chia sẻ vị trí với vòng kết nối</string>
-    <string name="circles_share_location_desc">Chia sẻ vị trí trực tiếp của bạn với mọi người trong vòng kết nối này trong một khoảng thời gian đã đặt. Những liên hệ mà bạn đã chia sẻ vị trí sẽ bắt đầu nhận ngay lập tức.</string>
     <string name="circles_title">Vòng kết nối</string>
     <string name="geo_section_areas">Khu vực đã chia sẻ</string>
     <string name="geo_section_assignments">Hàng rào địa lý đã gán</string>

@@ -798,8 +798,6 @@
     <string name="circles_new">Ny cirkel</string>
     <string name="circles_new_title">Ny cirkel</string>
     <string name="circles_no_contacts">Lägg till kontakter först, gruppera dem sedan i en cirkel.</string>
-    <string name="circles_share_location">Dela plats med cirkeln</string>
-    <string name="circles_share_location_desc">Dela din plats i realtid med alla i cirkeln under en bestämd tid. Kontakter som du redan delar plats med börjar ta emot den direkt.</string>
     <string name="circles_title">Cirklar</string>
     <string name="geo_section_areas">Delade områden</string>
     <string name="geo_section_assignments">Tilldelade geofences</string>

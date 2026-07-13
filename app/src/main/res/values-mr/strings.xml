@@ -798,8 +798,6 @@
     <string name="circles_new">नवीन मंडळ</string>
     <string name="circles_new_title">नवीन मंडळ</string>
     <string name="circles_no_contacts">आधी संपर्क जोडा, नंतर त्यांना एका मंडळात गटबद्ध करा.</string>
-    <string name="circles_share_location">मंडळासोबत स्थान शेअर करा</string>
-    <string name="circles_share_location_desc">ठरलेल्या वेळेसाठी या मंडळातील सर्वांसोबत तुमचे थेट स्थान शेअर करा. तुम्ही आधीच स्थान शेअर करत असलेले संपर्क ते लगेच मिळवायला सुरुवात करतात.</string>
     <string name="circles_title">मंडळे</string>
     <string name="geo_section_areas">शेअर केलेली क्षेत्रे</string>
     <string name="geo_section_assignments">नियुक्त जिओफेन्स</string>

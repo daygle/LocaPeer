@@ -783,8 +783,6 @@
     <string name="circles_new">新增圈子</string>
     <string name="circles_new_title">新增圈子</string>
     <string name="circles_no_contacts">請先新增聯絡人，然後將他們分組為一個圈子。</string>
-    <string name="circles_share_location">與圈子分享位置</string>
-    <string name="circles_share_location_desc">在設定的時間內與此圈子中的所有人分享您的即時位置。已與您分享位置的聯絡人會立即開始接收。</string>
     <string name="circles_title">圈子</string>
     <string name="geo_section_areas">共享區域</string>
     <string name="geo_section_assignments">已指派的地理圍欄</string>

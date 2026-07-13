@@ -832,8 +832,6 @@
     <string name="circles_owner_label">Owner: %1$s</string>
     <string name="circles_owner_you">You</string>
     <string name="circles_owner_tag">Owner</string>
-    <string name="circles_share_location">Share Location</string>
-    <string name="circles_share_location_desc">Share your live location with everyone in this circle for a set time. Contacts you already share location with start receiving it immediately.</string>
     <string name="circles_delete">Delete Circle</string>
     <string name="circles_delete_title">Delete circle?</string>
     <string name="circles_delete_message">Delete \"%1$s\" and its group conversation? This only removes it from your device.</string>

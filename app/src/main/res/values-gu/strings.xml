@@ -798,8 +798,6 @@
     <string name="circles_new">નવું વર્તુળ</string>
     <string name="circles_new_title">નવું વર્તુળ</string>
     <string name="circles_no_contacts">પહેલા સંપર્કો ઉમેરો, પછી તેમને એક વર્તુળમાં જૂથબદ્ધ કરો.</string>
-    <string name="circles_share_location">વર્તુળ સાથે સ્થાન શેર કરો</string>
-    <string name="circles_share_location_desc">નિર્ધારિત સમય માટે આ વર્તુળના બધા સાથે તમારું જીવંત સ્થાન શેર કરો. તમે પહેલેથી સ્થાન શેર કરતા હો તેવા સંપર્કો તરત જ તે મેળવવાનું શરૂ કરે છે.</string>
     <string name="circles_title">વર્તુળો</string>
     <string name="geo_section_areas">શેર કરેલા વિસ્તારો</string>
     <string name="geo_section_assignments">સોંપેલ જિયોફેન્સ</string>

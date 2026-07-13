@@ -813,8 +813,6 @@
     <string name="circles_new">מעגל חדש</string>
     <string name="circles_new_title">מעגל חדש</string>
     <string name="circles_no_contacts">הוסף תחילה אנשי קשר, ואז קבץ אותם למעגל.</string>
-    <string name="circles_share_location">שתף מיקום עם המעגל</string>
-    <string name="circles_share_location_desc">שתף את המיקום החי שלך עם כל חברי המעגל למשך זמן מוגדר. אנשי קשר שאתה כבר משתף איתם מיקום מתחילים לקבל אותו מיד.</string>
     <string name="circles_title">מעגלים</string>
     <string name="geo_section_areas">אזורים משותפים</string>
     <string name="geo_section_assignments">גדרות גיאוגרפיות שהוקצו</string>

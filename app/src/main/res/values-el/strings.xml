@@ -798,8 +798,6 @@
     <string name="circles_new">Νέος κύκλος</string>
     <string name="circles_new_title">Νέος κύκλος</string>
     <string name="circles_no_contacts">Προσθέστε πρώτα επαφές και μετά ομαδοποιήστε τες σε έναν κύκλο.</string>
-    <string name="circles_share_location">Κοινοποίηση τοποθεσίας στον κύκλο</string>
-    <string name="circles_share_location_desc">Μοιραστείτε τη ζωντανή τοποθεσία σας με όλους σε αυτόν τον κύκλο για καθορισμένο χρόνο. Οι επαφές με τις οποίες ήδη μοιράζεστε τοποθεσία αρχίζουν να τη λαμβάνουν αμέσως.</string>
     <string name="circles_title">Κύκλοι</string>
     <string name="geo_section_areas">Κοινές περιοχές</string>
     <string name="geo_section_assignments">Αντιστοιχισμένα geofence</string>

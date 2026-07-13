@@ -797,8 +797,6 @@
     <string name="circles_new">Nuevo círculo</string>
     <string name="circles_new_title">Nuevo círculo</string>
     <string name="circles_no_contacts">Añade contactos primero y luego agrúpalos en un círculo.</string>
-    <string name="circles_share_location">Compartir ubicación con el círculo</string>
-    <string name="circles_share_location_desc">Comparte tu ubicación en tiempo real con todos los del círculo durante un tiempo determinado. Los contactos con los que ya compartes ubicación empiezan a recibirla de inmediato.</string>
     <string name="circles_title">Círculos</string>
     <string name="geo_section_areas">Áreas compartidas</string>
     <string name="geo_section_assignments">Geocercas asignadas</string>

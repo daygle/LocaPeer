@@ -404,16 +404,18 @@ class AppPreferences @Inject constructor(
     }
 
     /**
-     * Circle ids the local user has explicitly left. An incoming circle message for one of these is
-     * ignored so a straggler from another member can't silently re-create a circle the user left
-     * (see [com.locapeer.subscriber.HeartbeatReceiver]). Cleared for a circle when its owner
+     * Circle ids the local user has explicitly left, as a live flow. An incoming circle message for
+     * one of these is ignored so a straggler from another member can't silently re-create a circle
+     * the user left (see [com.locapeer.subscriber.HeartbeatReceiver], which caches the latest value
+     * so it never reads DataStore on the per-message hot path). Cleared for a circle when its owner
      * re-invites the user. Stored as a comma-separated string; circle ids are UUIDs so they never
      * contain a comma.
      */
-    suspend fun getLeftCircleIds(): Set<String> {
-        val raw = context.settingsStore.data.first()[KEY_LEFT_CIRCLE_IDS] ?: return emptySet()
-        return raw.split(",").filter { it.isNotBlank() }.toSet()
-    }
+    val leftCircleIds: Flow<Set<String>> = context.settingsStore.data
+        .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
+        .map { prefs ->
+            prefs[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
+        }
 
     suspend fun addLeftCircleId(gid: String) {
         context.settingsStore.edit {

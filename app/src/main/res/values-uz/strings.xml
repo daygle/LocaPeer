@@ -798,8 +798,6 @@
     <string name="circles_new">Yangi doira</string>
     <string name="circles_new_title">Yangi doira</string>
     <string name="circles_no_contacts">Avval kontaktlar qo\'shing, so\'ng ularni doiraga birlashtiring.</string>
-    <string name="circles_share_location">Joylashuvni doira bilan ulashish</string>
-    <string name="circles_share_location_desc">Jonli joylashuvingizni belgilangan vaqt davomida ushbu doiradagi hamma bilan ulashing. Siz allaqachon joylashuv ulashadigan kontaktlar uni darhol qabul qila boshlaydi.</string>
     <string name="circles_title">Doiralar</string>
     <string name="geo_section_areas">Ulashilgan hududlar</string>
     <string name="geo_section_assignments">Tayinlangan geofenceslar</string>

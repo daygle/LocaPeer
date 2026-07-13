@@ -783,8 +783,6 @@
     <string name="circles_new">새 서클</string>
     <string name="circles_new_title">새 서클</string>
     <string name="circles_no_contacts">먼저 연락처를 추가한 다음 서클로 묶으세요.</string>
-    <string name="circles_share_location">서클과 위치 공유</string>
-    <string name="circles_share_location_desc">설정한 시간 동안 이 서클의 모든 사람과 실시간 위치를 공유합니다. 이미 위치를 공유 중인 연락처는 즉시 받기 시작합니다.</string>
     <string name="circles_title">서클</string>
     <string name="geo_section_areas">공유 영역</string>
     <string name="geo_section_assignments">지정된 지오펜스</string>

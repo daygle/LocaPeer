@@ -798,8 +798,6 @@
     <string name="circles_new">Új kör</string>
     <string name="circles_new_title">Új kör</string>
     <string name="circles_no_contacts">Előbb adj hozzá névjegyeket, majd csoportosítsd őket egy körbe.</string>
-    <string name="circles_share_location">Hely megosztása a körrel</string>
-    <string name="circles_share_location_desc">Oszd meg élő helyedet a kör minden tagjával egy megadott ideig. Azok a névjegyek, akikkel már megosztod a helyed, azonnal megkapják.</string>
     <string name="circles_title">Körök</string>
     <string name="geo_section_areas">Megosztott területek</string>
     <string name="geo_section_assignments">Hozzárendelt geokerítések</string>

@@ -798,8 +798,6 @@
     <string name="circles_new">नई मंडली</string>
     <string name="circles_new_title">नई मंडली</string>
     <string name="circles_no_contacts">पहले संपर्क जोड़ें, फिर उन्हें एक मंडली में समूहित करें।</string>
-    <string name="circles_share_location">मंडली के साथ स्थान साझा करें</string>
-    <string name="circles_share_location_desc">निर्धारित समय के लिए इस मंडली के सभी लोगों के साथ अपना लाइव स्थान साझा करें। जिन संपर्कों के साथ आप पहले से स्थान साझा करते हैं, वे इसे तुरंत प्राप्त करना शुरू कर देते हैं।</string>
     <string name="circles_title">मंडलियाँ</string>
     <string name="geo_section_areas">साझा क्षेत्र</string>
     <string name="geo_section_assignments">निर्दिष्ट जियोफेंस</string>

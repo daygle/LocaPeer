@@ -586,8 +586,8 @@ private fun BulkActionButton(
     }
 }
 
-/** Mirrors the row layout of `CircleListScreen` for the icon and unread badge, and the
- *  trailing "date-then-badge" idiom of `ConversationRow` (1:1 chats) so the Circles /
+/** A circle row: a group icon with an unread badge, and the trailing "date-then-badge"
+ *  idiom of `ConversationRow` (1:1 chats) so the Circles /
  *  Archived tabs surface the same last-message timestamp as the Chats tab. Long-press
  *  enters the same selection mode as chat rows (mark read / archive / delete via the
  *  bulk-action bar). */

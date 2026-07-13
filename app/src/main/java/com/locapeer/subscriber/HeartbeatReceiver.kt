@@ -151,6 +151,13 @@ class HeartbeatReceiver @Inject constructor(
     /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
     @Volatile private var lastPersistedHbEpoch = 0L
 
+    /**
+     * In-memory mirror of [AppPreferences.leftCircleIds], kept fresh by a collector started in
+     * [start]. Read on the per-message hot path in [processDmInBackground] to suppress circles the
+     * user left, so that path never touches DataStore.
+     */
+    @Volatile private var leftCircleIds: Set<String> = emptySet()
+
     // Buffer for batched heartbeat inserts (see HB_BATCH_* constants). Guarded by
     // batchMutex. pendingKeys mirrors the buffer's (deviceId, timestamp) pairs so a
     // duplicate arriving from a second relay within the same flush window is dropped
@@ -164,6 +171,9 @@ class HeartbeatReceiver @Inject constructor(
     fun start() {
         createAlertChannel()
         createMessageChannel()
+        // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
+        // DataStore read per message.
+        prefs.leftCircleIds.onEach { leftCircleIds = it }.launchIn(scope)
         scope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             relayClient.connect()
@@ -506,7 +516,7 @@ class HeartbeatReceiver @Inject constructor(
             // from the circle's creator that still lists us is treated as a re-invite: clear the
             // "left" flag and rejoin. Any other sender (a member still fanning to us before the
             // owner's removal has propagated) is dropped so the circle stays gone.
-            if (prefs.getLeftCircleIds().contains(group.gid)) {
+            if (leftCircleIds.contains(group.gid)) {
                 if (group.creator.isNotBlank() && event.pubkey == group.creator) {
                     prefs.removeLeftCircleId(group.gid)
                 } else {

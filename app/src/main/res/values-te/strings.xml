@@ -798,8 +798,6 @@
     <string name="circles_new">కొత్త సర్కిల్</string>
     <string name="circles_new_title">కొత్త సర్కిల్</string>
     <string name="circles_no_contacts">ముందుగా పరిచయాలను జోడించి, ఆపై వాటిని ఒక సర్కిల్‌గా సమూహపరచండి.</string>
-    <string name="circles_share_location">సర్కిల్‌తో స్థానాన్ని భాగస్వామ్యం చేయండి</string>
-    <string name="circles_share_location_desc">నిర్ణీత సమయం పాటు ఈ సర్కిల్‌లోని అందరితో మీ ప్రత్యక్ష స్థానాన్ని భాగస్వామ్యం చేయండి. మీరు ఇప్పటికే స్థానం భాగస్వామ్యం చేసే పరిచయాలు వెంటనే దాన్ని అందుకోవడం ప్రారంభిస్తారు.</string>
     <string name="circles_title">సర్కిల్‌లు</string>
     <string name="geo_section_areas">భాగస్వామ్య ప్రాంతాలు</string>
     <string name="geo_section_assignments">కేటాయించిన జియోఫెన్స్‌లు</string>

@@ -798,8 +798,6 @@
     <string name="circles_new">Sabuwar da\'ira</string>
     <string name="circles_new_title">Sabuwar da\'ira</string>
     <string name="circles_no_contacts">Fara ƙara lambobin sadarwa, sannan ka haɗa su cikin da\'ira.</string>
-    <string name="circles_share_location">Raba wuri da da\'ira</string>
-    <string name="circles_share_location_desc">Raba wurin ka kai tsaye da kowa a cikin wannan da\'ira na wani ƙayyadadden lokaci. Lambobin sadarwa da kake riga kana raba wuri da su za su fara karɓa nan take.</string>
     <string name="circles_title">Da\'iru</string>
     <string name="geo_section_areas">Wuraren da aka raba</string>
     <string name="geo_section_assignments">Geofence da aka ba da</string>

@@ -798,8 +798,6 @@
     <string name="circles_new">নতুন বৃত্ত</string>
     <string name="circles_new_title">নতুন বৃত্ত</string>
     <string name="circles_no_contacts">প্রথমে পরিচিতি যোগ করুন, তারপর তাদের একটি বৃত্তে দলবদ্ধ করুন।</string>
-    <string name="circles_share_location">বৃত্তের সঙ্গে অবস্থান শেয়ার করুন</string>
-    <string name="circles_share_location_desc">নির্ধারিত সময়ের জন্য এই বৃত্তের সবার সঙ্গে আপনার সরাসরি অবস্থান শেয়ার করুন। যাদের সঙ্গে আপনি ইতিমধ্যে অবস্থান শেয়ার করেন তারা সঙ্গে সঙ্গে তা পেতে শুরু করবে।</string>
     <string name="circles_title">বৃত্ত</string>
     <string name="geo_section_areas">শেয়ার করা এলাকা</string>
     <string name="geo_section_assignments">বরাদ্দকৃত জিওফেন্স</string>

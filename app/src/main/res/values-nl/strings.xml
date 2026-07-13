@@ -798,8 +798,6 @@
     <string name="circles_new">Nieuwe kring</string>
     <string name="circles_new_title">Nieuwe kring</string>
     <string name="circles_no_contacts">Voeg eerst contacten toe en groepeer ze dan in een kring.</string>
-    <string name="circles_share_location">Locatie delen met kring</string>
-    <string name="circles_share_location_desc">Deel je live locatie gedurende een ingestelde tijd met iedereen in deze kring. Contacten met wie je al je locatie deelt, ontvangen die meteen.</string>
     <string name="circles_title">Kringen</string>
     <string name="geo_section_areas">Gedeelde gebieden</string>
     <string name="geo_section_assignments">Toegewezen geofences</string>

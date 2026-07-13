@@ -783,8 +783,6 @@
     <string name="circles_new">Bulatan baharu</string>
     <string name="circles_new_title">Bulatan baharu</string>
     <string name="circles_no_contacts">Tambah kenalan dahulu, kemudian kumpulkan mereka dalam satu bulatan.</string>
-    <string name="circles_share_location">Kongsi lokasi dengan bulatan</string>
-    <string name="circles_share_location_desc">Kongsi lokasi langsung anda dengan semua orang dalam bulatan ini untuk tempoh yang ditetapkan. Kenalan yang sudah anda kongsi lokasi akan mula menerimanya serta-merta.</string>
     <string name="circles_title">Bulatan</string>
     <string name="geo_section_areas">Kawasan dikongsi</string>
     <string name="geo_section_assignments">Geofence yang diperuntukkan</string>

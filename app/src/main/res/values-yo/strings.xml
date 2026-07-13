@@ -783,8 +783,6 @@
     <string name="circles_new">Àyíká tuntun</string>
     <string name="circles_new_title">Àyíká tuntun</string>
     <string name="circles_no_contacts">Kọ́kọ́ fi àwọn ọ̀rẹ́ kún, lẹ́yìn náà kó wọn papọ̀ sínú àyíká kan.</string>
-    <string name="circles_share_location">Pín ipò pẹ̀lú àyíká</string>
-    <string name="circles_share_location_desc">Pín ipò rẹ tààrà pẹ̀lú gbogbo ènìyàn nínú àyíká yìí fún àkókò tí a gbé kalẹ̀. Àwọn ọ̀rẹ́ tí o ti ń pín ipò pẹ̀lú wọn máa bẹ̀rẹ̀ sí gbà á lẹ́sẹ̀kẹsẹ̀.</string>
     <string name="circles_title">Àwọn àyíká</string>
     <string name="geo_section_areas">Àwọn agbègbè tí a pín</string>
     <string name="geo_section_assignments">Àwọn geofence tí a yàn</string>

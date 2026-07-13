@@ -828,8 +828,6 @@
     <string name="circles_new">Новый круг</string>
     <string name="circles_new_title">Новый круг</string>
     <string name="circles_no_contacts">Сначала добавьте контакты, затем объедините их в круг.</string>
-    <string name="circles_share_location">Поделиться местоположением с кругом</string>
-    <string name="circles_share_location_desc">Делитесь своим местоположением в реальном времени со всеми в этом круге в течение заданного времени. Контакты, с которыми вы уже делитесь местоположением, начнут получать его сразу.</string>
     <string name="circles_title">Круги</string>
     <string name="geo_section_areas">Общие зоны</string>
     <string name="geo_section_assignments">Назначенные геозоны</string>

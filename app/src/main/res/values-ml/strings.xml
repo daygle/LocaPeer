@@ -798,8 +798,6 @@
     <string name="circles_new">പുതിയ സർക്കിൾ</string>
     <string name="circles_new_title">പുതിയ സർക്കിൾ</string>
     <string name="circles_no_contacts">ആദ്യം കോൺടാക്റ്റുകൾ ചേർക്കുക, തുടർന്ന് അവരെ ഒരു സർക്കിളായി ഗ്രൂപ്പുചെയ്യുക.</string>
-    <string name="circles_share_location">സർക്കിളുമായി സ്ഥാനം പങ്കിടുക</string>
-    <string name="circles_share_location_desc">നിശ്ചിത സമയത്തേക്ക് ഈ സർക്കിളിലെ എല്ലാവരുമായും നിങ്ങളുടെ തത്സമയ സ്ഥാനം പങ്കിടുക. നിങ്ങൾ ഇതിനകം സ്ഥാനം പങ്കിടുന്ന കോൺടാക്റ്റുകൾ ഉടൻ അത് സ്വീകരിക്കാൻ തുടങ്ങും.</string>
     <string name="circles_title">സർക്കിളുകൾ</string>
     <string name="geo_section_areas">പങ്കിട്ട പ്രദേശങ്ങൾ</string>
     <string name="geo_section_assignments">നിയോഗിച്ച ജിയോഫെൻസുകൾ</string>

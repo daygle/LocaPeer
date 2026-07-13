@@ -783,8 +783,6 @@
     <string name="circles_new">စက်ဝိုင်းအသစ်</string>
     <string name="circles_new_title">စက်ဝိုင်းအသစ်</string>
     <string name="circles_no_contacts">ဦးစွာ အဆက်အသွယ်များ ထည့်ပါ၊ ထို့နောက် ၎င်းတို့ကို စက်ဝိုင်းတစ်ခုအဖြစ် စုစည်းပါ။</string>
-    <string name="circles_share_location">စက်ဝိုင်းနှင့် တည်နေရာ မျှဝေရန်</string>
-    <string name="circles_share_location_desc">သတ်မှတ်ထားသည့် အချိန်အတွင်း ဤစက်ဝိုင်းရှိ လူတိုင်းနှင့် သင့်တိုက်ရိုက်တည်နေရာကို မျှဝေပါ။ သင် တည်နေရာ မျှဝေထားပြီးသော အဆက်အသွယ်များသည် ချက်ချင်း စတင်လက်ခံမည်။</string>
     <string name="circles_title">စက်ဝိုင်းများ</string>
     <string name="geo_section_areas">မျှဝေထားသော ဧရိယာများ</string>
     <string name="geo_section_assignments">သတ်မှတ်ထားသော geofence များ</string>
