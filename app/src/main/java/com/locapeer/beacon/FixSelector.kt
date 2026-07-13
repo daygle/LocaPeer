@@ -27,6 +27,16 @@ class FixSelector {
          * Backstop: never hold a fix longer than this. Past it a fresher (if coarser)
          * fix is taken, so the reported position can't lag reality when slow drift
          * stays under the movement threshold on every step.
+         *
+         * Skipped while the caller reports the device as stationary (see [select]'s
+         * `stationaryHold`): at the stationary poll cadence (5 min) every fix arrives
+         * past this window, so the backstop would hand the pin to the next coarse
+         * network fix and the "stationary pin stays sharp" promise above would never
+         * hold beyond 90s. While stationary the age backstop is unnecessary anyway -
+         * the position isn't supposed to change, genuine relocation still forces the
+         * newer fix through via the movement rule, and the stationary-exit detector
+         * (which sees every filter-accepted fix, selected or not) provides the
+         * independent escape hatch back to a moving profile.
          */
         const val MAX_HOLD_MS = 90_000L
     }
@@ -54,13 +64,25 @@ class FixSelector {
      * take it (newer and at least as sharp is unambiguously better). A newer-but-coarser
      * fix is taken only once the held one is older than [MAX_HOLD_MS] or the device has
      * moved beyond the two fixes' combined accuracy; otherwise the sharper held fix wins.
+     *
+     * [stationaryHold] disables the age backstop while the caller's motion classifier
+     * reports STATIONARY (see the note on [MAX_HOLD_MS]): only a sharper fix or provable
+     * movement may then displace the held fix, so the resting pin can't be dragged
+     * around by the coarse low-power fixes used for the rest of the stay.
      */
-    fun select(lat: Double, lng: Double, accuracyM: Float, elapsedRealtimeNs: Long): Boolean {
+    fun select(
+        lat: Double,
+        lng: Double,
+        accuracyM: Float,
+        elapsedRealtimeNs: Long,
+        stationaryHold: Boolean = false,
+    ): Boolean {
         if (!hasSelected || accuracyM <= selAccM) {
             record(lat, lng, accuracyM, elapsedRealtimeNs)
             return true
         }
-        val heldTooOld = elapsedRealtimeNs - selElapsedNs >= MAX_HOLD_MS * 1_000_000L
+        val heldTooOld = !stationaryHold &&
+            elapsedRealtimeNs - selElapsedNs >= MAX_HOLD_MS * 1_000_000L
         val distM = GeoMath.haversineMetres(selLat, selLng, lat, lng).toFloat()
         val moved = distM > selAccM + accuracyM
         if (heldTooOld || moved) {

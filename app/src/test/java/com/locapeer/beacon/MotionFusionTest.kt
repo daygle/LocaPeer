@@ -92,4 +92,65 @@ class MotionFusionTest {
         assertEquals(MotionState.DRIVING, MotionFusion.fuseForInterval(MotionState.DRIVING, null))
         assertEquals(MotionState.STATIONARY, MotionFusion.fuseForInterval(MotionState.STATIONARY, null))
     }
+
+    // --- staleness: a stale AR reading may not assert a FASTER state than GPS ---
+
+    @Test
+    fun `stale vehicle reading cannot pin a settled device to driving`() {
+        // The missed-STILL-after-parking case: GPS has settled to STATIONARY, the last
+        // AR event is an old IN_VEHICLE. Stale AR must not hold the driving cadence
+        // (battery) nor the driving label (correctness).
+        assertEquals(
+            MotionState.STATIONARY,
+            MotionFusion.fuseForInterval(MotionState.STATIONARY, MotionState.DRIVING, arStale = true)
+        )
+        assertEquals(
+            MotionState.STATIONARY,
+            MotionFusion.fuse(MotionState.STATIONARY, MotionState.DRIVING, arStale = true)
+        )
+    }
+
+    @Test
+    fun `stale still reading keeps authority against GPS scatter`() {
+        // Sitting at home for hours: the STILL reading is old but arguing for a SLOWER
+        // state, which survives staleness - indoor GPS scatter briefly classifying
+        // DRIVING must not flip the label.
+        assertEquals(
+            MotionState.STATIONARY,
+            MotionFusion.fuse(MotionState.DRIVING, MotionState.STATIONARY, arStale = true)
+        )
+        // The cadence side is unchanged by design: GPS's fresh DRIVING keeps the fast
+        // cadence (rank max), so a genuine drive start is never slowed.
+        assertEquals(
+            MotionState.DRIVING,
+            MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.STATIONARY, arStale = true)
+        )
+    }
+
+    @Test
+    fun `stale on-foot reading still caps a GPS driving cadence`() {
+        // On-foot argues slower than DRIVING, so it keeps its shop-visit capping power
+        // even when stale.
+        assertEquals(
+            MotionState.WALKING,
+            MotionFusion.fuseForInterval(MotionState.DRIVING, MotionState.WALKING, arStale = true)
+        )
+        // ...but a stale on-foot reading cannot RAISE a settled device's cadence.
+        assertEquals(
+            MotionState.STATIONARY,
+            MotionFusion.fuseForInterval(MotionState.STATIONARY, MotionState.WALKING, arStale = true)
+        )
+    }
+
+    @Test
+    fun `fresh readings are unaffected by the staleness rules`() {
+        assertEquals(
+            MotionState.DRIVING,
+            MotionFusion.fuseForInterval(MotionState.STATIONARY, MotionState.DRIVING, arStale = false)
+        )
+        assertEquals(
+            MotionState.DRIVING,
+            MotionFusion.fuse(MotionState.STATIONARY, MotionState.DRIVING, arStale = false)
+        )
+    }
 }

@@ -66,6 +66,41 @@ class FixSelectorTest {
     }
 
     @Test
+    fun `stationary hold keeps the sharp fix past the age backstop`() {
+        val s = FixSelector()
+        assertTrue(s.select(baseLat, baseLng, 8f, ns(0)))
+        // At the 5-min stationary poll cadence every fix is past MAX_HOLD_MS; with the
+        // hold engaged a coarse network fix at the same place must NOT take the pin.
+        assertFalse(s.select(baseLat + latOffsetForMetres(50.0), baseLng, 800f, ns(300), stationaryHold = true))
+        // Nor the next one, arbitrarily far past the backstop.
+        assertFalse(s.select(baseLat + latOffsetForMetres(80.0), baseLng, 700f, ns(1200), stationaryHold = true))
+    }
+
+    @Test
+    fun `stationary hold still yields to provable movement`() {
+        val s = FixSelector()
+        assertTrue(s.select(baseLat, baseLng, 8f, ns(0)))
+        // 1200m away at 800m accuracy: displacement exceeds 8+800, the device provably
+        // moved, so the fresh fix wins even with the hold engaged.
+        assertTrue(s.select(baseLat + latOffsetForMetres(1200.0), baseLng, 800f, ns(300), stationaryHold = true))
+    }
+
+    @Test
+    fun `stationary hold still takes a sharper fix`() {
+        val s = FixSelector()
+        assertTrue(s.select(baseLat, baseLng, 30f, ns(0)))
+        assertTrue(s.select(baseLat, baseLng, 8f, ns(300), stationaryHold = true))
+    }
+
+    @Test
+    fun `age backstop still applies without stationary hold`() {
+        val s = FixSelector()
+        assertTrue(s.select(baseLat, baseLng, 8f, ns(0)))
+        val pastHold = FixSelector.MAX_HOLD_MS / 1000 + 1
+        assertTrue(s.select(baseLat, baseLng, 30f, ns(pastHold), stationaryHold = false))
+    }
+
+    @Test
     fun `reset makes the next fix take unconditionally`() {
         val s = FixSelector()
         assertTrue(s.select(baseLat, baseLng, 8f, ns(0)))
