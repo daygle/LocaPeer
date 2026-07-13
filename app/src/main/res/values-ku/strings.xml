@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Hîna têkilî tune. Koda QR bixwînin da ku têkiliyek zêde bikin.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Dîroka chatê paqij bike?</string>
-    <string name="chat_clear_message">Hûn dixwazin vê axaftina bi %1$s re çawa paqij bikin?</string>
-    <string name="chat_clear_locally">Bi Herêmî Paqij Bike</string>
-    <string name="chat_clear_both">Ji Herêmî/Ji Têkiliyê Paqij Bike</string>
-    <string name="chat_clear_both_sub">Chatê bi herêmî paqij dike û daxwaza jêbirina peyamên ku we şandine ji %1$s re dişîne.</string>
     <string name="chat_cd_options">Vebijark</string>
-    <string name="chat_clear_history_menu">Dîroka Chatê Paqij Bike</string>
     <string name="chat_typing">%1$s dinivîse…</string>
     <string name="chat_blocked_banner">We peyamên ji %1$s asteng kirine. Ji bo rakirina astengiyê herin Têkiliyan.</string>
     <string name="chat_delete_msg_title">Peyamê jê bibe?</string>

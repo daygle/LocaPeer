@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Nog geen contacten. Scan een QR-code om een contact toe te voegen.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Chatgeschiedenis wissen?</string>
-    <string name="chat_clear_message">Hoe wil je dit gesprek met %1$s wissen?</string>
-    <string name="chat_clear_locally">Lokaal wissen</string>
-    <string name="chat_clear_both">Lokaal en bij contact wissen</string>
-    <string name="chat_clear_both_sub">Wist de chat lokaal en stuurt %1$s een verwijderverzoek voor de berichten die je hebt verstuurd.</string>
     <string name="chat_cd_options">Opties</string>
-    <string name="chat_clear_history_menu">Chatgeschiedenis wissen</string>
     <string name="chat_typing">%1$s is aan het typen…</string>
     <string name="chat_blocked_banner">Je hebt berichten van %1$s geblokkeerd. Ga naar Contacten om te deblokkeren.</string>
     <string name="chat_delete_msg_title">Bericht verwijderen?</string>

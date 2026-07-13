@@ -502,13 +502,7 @@
     <string name="conv_picker_empty">لا توجد جهات اتصال بعد. امسح رمز QR لإضافة جهة اتصال.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">مسح سجلّ الدردشة؟</string>
-    <string name="chat_clear_message">كيف تريد مسح هذه المحادثة مع %1$s؟</string>
-    <string name="chat_clear_locally">مسح محليًا</string>
-    <string name="chat_clear_both">مسح محليًا/من جهة الاتصال</string>
-    <string name="chat_clear_both_sub">يمسح الدردشة محليًا ويرسل إلى %1$s طلب حذف للرسائل التي أرسلتها.</string>
     <string name="chat_cd_options">خيارات</string>
-    <string name="chat_clear_history_menu">مسح سجلّ الدردشة</string>
     <string name="chat_typing">%1$s يكتب…</string>
     <string name="chat_blocked_banner">لقد حظرت الرسائل من %1$s. انتقل إلى جهات الاتصال لإلغاء الحظر.</string>
     <string name="chat_delete_msg_title">حذف الرسالة؟</string>

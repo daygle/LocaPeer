@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Quunnamtiin hin jiru. Koodii QR sakatta\'uun quunnamtii dabaladhaa.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Seenaa chat-ii haquu?</string>
-    <string name="chat_clear_message">Haasawa %1$s waliin qabdu akkamitti haquu barbaadda?</string>
-    <string name="chat_clear_locally">Meeshaa keessaa haqi</string>
-    <string name="chat_clear_both">Meeshaa koo fi quunnamtii irraa haqi</string>
-    <string name="chat_clear_both_sub">Chat meeshaa keessan irraa haqee ergaawwan ati ergan %1$s irraa akka haqaman gaafata.</string>
     <string name="chat_cd_options">Filannoo</string>
-    <string name="chat_clear_history_menu">Seenaa Chat-ii Haqi</string>
     <string name="chat_typing">%1$s ergaa barreessaa jira…</string>
     <string name="chat_blocked_banner">Ati ergaawwan %1$s irraa dhufan cufteetta. Sajataawwan quunnamtii irraa bani.</string>
     <string name="chat_delete_msg_title">Ergaa haquu?</string>

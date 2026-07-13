@@ -825,10 +825,14 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
-        // Opens the app (Messages list). A direct-to-group deep link would need a new nav target;
-        // the unread badge on Messages already points the user at the right conversation.
+        // Deep-link straight into the circle chat (not the Messages list) so tapping a circle
+        // message opens the group thread - where a reply routes through the circle fan-out to
+        // every member - and never the 1:1 chat with the sender. "openCircle" carries the circle
+        // id the same way "openChat" carries a peer id for 1:1 notifications.
         val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra("navigateTo", "messages")
+            putExtra("navigateTo", "groupchat")
+            putExtra("openCircle", circleId)
+            putExtra("circleName", circleName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }
         val pi = PendingIntent.getActivity(
@@ -839,6 +843,9 @@ class HeartbeatReceiver @Inject constructor(
             .setSmallIcon(R.drawable.ic_notif_message)
             .setContentTitle(context.getString(R.string.group_notif_title, circleName))
             .setContentText(context.getString(R.string.group_notif_body, senderName, preview.take(80)))
+            // Tag the notification as a circle so it reads as a group message, not a 1:1 from
+            // someone named after the circle (whose title would just be the sender's name).
+            .setSubText(context.getString(R.string.circles_title))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)

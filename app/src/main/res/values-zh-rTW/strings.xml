@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">還沒有聯絡人。掃描 QR 碼以新增聯絡人。</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">要清除聊天紀錄嗎？</string>
-    <string name="chat_clear_message">您想如何清除與 %1$s 的這段對話？</string>
-    <string name="chat_clear_locally">從本機清除</string>
-    <string name="chat_clear_both">從本機/聯絡人清除</string>
-    <string name="chat_clear_both_sub">從本機清除聊天，並向 %1$s 傳送刪除您所傳訊息的要求。</string>
     <string name="chat_cd_options">選項</string>
-    <string name="chat_clear_history_menu">清除聊天紀錄</string>
     <string name="chat_typing">%1$s 正在輸入…</string>
     <string name="chat_blocked_banner">您已封鎖來自 %1$s 的訊息。請前往「聯絡人」解除封鎖。</string>
     <string name="chat_delete_msg_title">要刪除訊息嗎？</string>

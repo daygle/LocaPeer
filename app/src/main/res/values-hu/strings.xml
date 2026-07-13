@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Még nincsenek névjegyek. Olvasson be egy QR-kódot névjegy hozzáadásához.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Törli a csevegési előzményeket?</string>
-    <string name="chat_clear_message">Hogyan szeretné törölni ezt a beszélgetést %1$s partnerrel?</string>
-    <string name="chat_clear_locally">Törlés helyben</string>
-    <string name="chat_clear_both">Törlés helyben/a partnernél</string>
-    <string name="chat_clear_both_sub">Helyben törli a csevegést, és törlési kérelmet küld %1$s részére az Ön által küldött üzenetekre.</string>
     <string name="chat_cd_options">Beállítások</string>
-    <string name="chat_clear_history_menu">Csevegési előzmények törlése</string>
     <string name="chat_typing">%1$s éppen ír…</string>
     <string name="chat_blocked_banner">Letiltotta %1$s üzeneteit. A feloldáshoz lépjen a Névjegyekhez.</string>
     <string name="chat_delete_msg_title">Törli az üzenetet?</string>

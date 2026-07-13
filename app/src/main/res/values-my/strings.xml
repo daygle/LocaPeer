@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">အဆက်အသွယ်များ မရှိသေးပါ။ အဆက်အသွယ်ထည့်ရန် QR ကုဒ်ကို စကင်န်ဖတ်ပါ။</string>
 
     <!-- ── ချတ် မျက်နှာပြင် ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ချတ်မှတ်တမ်းကို ဖျက်မလား။</string>
-    <string name="chat_clear_message">%1$s နှင့် စကားဝိုင်းကို သင်ဘယ်လို ဖျက်ချင်သလဲ။</string>
-    <string name="chat_clear_locally">စက်ထဲမှသာ ဖျက်ရန်</string>
-    <string name="chat_clear_both">နှစ်ဖက်လုံးမှ ဖျက်ရန်</string>
-    <string name="chat_clear_both_sub">သင့်စက်မှ ချတ်ကို ဖျက်ပစ်ပြီး သင်ပို့ထားသော မက်ဆေ့ဂျ်များကို ဖျက်ရန် %1$s ထံ တောင်းဆိုချက် ပို့ပါမည်။</string>
     <string name="chat_cd_options">ရွေးချယ်စရာများ</string>
-    <string name="chat_clear_history_menu">ချတ်မှတ်တမ်းကို ဖျက်ရန်</string>
     <string name="chat_typing">%1$s က စာရိုက်နေသည်…</string>
     <string name="chat_blocked_banner">%1$s ထံမှ မက်ဆေ့ဂျ်များကို သင်ပိတ်ပင်ထားသည်။ ပြန်ဖွင့်ရန် အဆက်အသွယ်များသို့ သွားပါ။</string>
     <string name="chat_delete_msg_title">မက်ဆေ့ဂျ်ကို ဖျက်မလား။</string>

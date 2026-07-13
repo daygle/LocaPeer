@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Inga kontakter ännu. Skanna en QR-kod för att lägga till en kontakt.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Rensa chatthistorik?</string>
-    <string name="chat_clear_message">Hur vill du rensa denna konversation med %1$s?</string>
-    <string name="chat_clear_locally">Rensa lokalt</string>
-    <string name="chat_clear_both">Rensa lokalt/hos kontakten</string>
-    <string name="chat_clear_both_sub">Rensar chatten lokalt och skickar en raderingsbegäran till %1$s för meddelandena du skickat.</string>
     <string name="chat_cd_options">Alternativ</string>
-    <string name="chat_clear_history_menu">Rensa chatthistorik</string>
     <string name="chat_typing">%1$s skriver…</string>
     <string name="chat_blocked_banner">Du har blockerat meddelanden från %1$s. Gå till Kontakter för att avblockera.</string>
     <string name="chat_delete_msg_title">Radera meddelande?</string>

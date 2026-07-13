@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Bado hakuna anwani. Changanua nambari ya QR ili uongeze anwani.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Futa historia ya gumzo?</string>
-    <string name="chat_clear_message">Je, ungependa kufuta vipi mazungumzo haya na %1$s?</string>
-    <string name="chat_clear_locally">Futa Kwenye Kifaa</string>
-    <string name="chat_clear_both">Futa Kwenye Kifaa/Kutoka kwa Anwani</string>
-    <string name="chat_clear_both_sub">Hufuta gumzo kwenye kifaa na kuanzisha ombi la kufuta kwa %1$s kwa ujumbe uliotuma.</string>
     <string name="chat_cd_options">Chaguzi</string>
-    <string name="chat_clear_history_menu">Futa Historia ya Gumzo</string>
     <string name="chat_typing">%1$s anaandika…</string>
     <string name="chat_blocked_banner">Umeziba ujumbe kutoka kwa %1$s. Nenda kwa Anwani ili ufungue.</string>
     <string name="chat_delete_msg_title">Futa ujumbe?</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">अद्याप कोणतेही संपर्क नाहीत. संपर्क जोडण्यासाठी QR कोड स्कॅन करा.</string>
 
     <!-- ── चॅट स्क्रीन ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">चॅट इतिहास साफ करायचा?</string>
-    <string name="chat_clear_message">%1$s सोबतचे हे संभाषण तुम्हाला कसे साफ करायचे आहे?</string>
-    <string name="chat_clear_locally">स्थानिक पातळीवर साफ करा</string>
-    <string name="chat_clear_both">स्थानिक पातळीवर/संपर्काकडून साफ करा</string>
-    <string name="chat_clear_both_sub">चॅट स्थानिक पातळीवर साफ करते आणि तुम्ही पाठवलेले संदेश हटवण्यासाठी %1$s ला विनंती पाठवते.</string>
     <string name="chat_cd_options">पर्याय</string>
-    <string name="chat_clear_history_menu">चॅट इतिहास साफ करा</string>
     <string name="chat_typing">%1$s टाइप करत आहे…</string>
     <string name="chat_blocked_banner">तुम्ही %1$s कडून येणारे संदेश अवरोधित केले आहेत. अनब्लॉक करण्यासाठी संपर्कांवर जा.</string>
     <string name="chat_delete_msg_title">संदेश हटवायचा?</string>

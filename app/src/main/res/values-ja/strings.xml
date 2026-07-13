@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">連絡先がまだありません。QRコードをスキャンして連絡先を追加してください。</string>
 
     <!-- ── チャット画面 ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">チャット履歴を消去しますか？</string>
-    <string name="chat_clear_message">%1$sとの会話をどのように消去しますか？</string>
-    <string name="chat_clear_locally">ローカルから消去</string>
-    <string name="chat_clear_both">両方から消去</string>
-    <string name="chat_clear_both_sub">ローカルから消去し、%1$sに送信メッセージの削除を依頼します。</string>
     <string name="chat_cd_options">オプション</string>
-    <string name="chat_clear_history_menu">チャット履歴を消去</string>
     <string name="chat_typing">%1$sが入力中…</string>
     <string name="chat_blocked_banner">%1$sからのメッセージをブロックしています。解除するには連絡先へ移動してください。</string>
     <string name="chat_delete_msg_title">メッセージを削除しますか？</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">እስካሁን ምንም እውቂያዎች የሉም። እውቂያ ለመጨመር QR ኮድ ይፈትሹ።</string>
 
     <!-- ── የቻት ማያ ገጽ ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">የቻት ታሪክ ይጥፋ?</string>
-    <string name="chat_clear_message">ከ%1$s ጋር ያለውን ንግግር እንዴት ማጽዳት ይፈልጋሉ?</string>
-    <string name="chat_clear_locally">በመሣሪያው ላይ ብቻ አጽዳ</string>
-    <string name="chat_clear_both">ከሁለቱም አጽዳ</string>
-    <string name="chat_clear_both_sub">ቻቱን በመሣሪያዎ ላይ ያጸዳል እና የላኳቸውን መልእክቶች እንዲጠፉ ለ%1$s ጥያቄ ይልካል።</string>
     <string name="chat_cd_options">አማራጮች</string>
-    <string name="chat_clear_history_menu">የቻት ታሪክን አጽዳ</string>
     <string name="chat_typing">%1$s እየጻፈ ነው…</string>
     <string name="chat_blocked_banner">ከ%1$s የሚላኩ መልእክቶችን አግደዋል። እገዳውን ለማንሳት ወደ እውቂያዎች ይሂዱ።</string>
     <string name="chat_delete_msg_title">መልእክት ይጥፋ?</string>

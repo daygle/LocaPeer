@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">尚无联系人。扫描二维码添加联系人。</string>
 
     <!-- ── 聊天屏幕 ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">清除聊天历史？</string>
-    <string name="chat_clear_message">您想如何清除与 %1$s 的这段会话？</string>
-    <string name="chat_clear_locally">本地清除</string>
-    <string name="chat_clear_both">双向清除</string>
-    <string name="chat_clear_both_sub">本地移除并请求 %1$s 删除您发送的消息。</string>
     <string name="chat_cd_options">选项</string>
-    <string name="chat_clear_history_menu">清除聊天历史</string>
     <string name="chat_typing">%1$s 正在输入…</string>
     <string name="chat_blocked_banner">您已屏蔽来自 %1$s 的消息制。前往“联系人”以取消屏蔽。</string>
     <string name="chat_delete_msg_title">删除消息？</string>

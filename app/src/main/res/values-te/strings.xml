@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">ఇంకా పరిచయాలు లేవు. పరిచయాన్ని జోడించడానికి QR కోడ్‌ను స్కాన్ చేయండి.</string>
 
     <!-- ── చాట్ స్క్రీన్ ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">చాట్ చరిత్రను క్లియర్ చేయాలా?</string>
-    <string name="chat_clear_message">%1$s తో ఉన్న ఈ సంభాషణను మీరు ఎలా క్లియర్ చేయాలనుకుంటున్నారు?</string>
-    <string name="chat_clear_locally">స్థానికంగా క్లియర్ చేయి</string>
-    <string name="chat_clear_both">స్థానికంగా/పరిచయం నుండి క్లియర్ చేయి</string>
-    <string name="chat_clear_both_sub">చాట్‌ని స్థానికంగా క్లియర్ చేస్తుంది మరియు మీరు పంపిన సందేశాలను తొలగించడానికి %1$s కి అభ్యర్థనను పంపుతుంది.</string>
     <string name="chat_cd_options">ఎంపికలు</string>
-    <string name="chat_clear_history_menu">చాట్ చరిత్రను క్లియర్ చేయి</string>
     <string name="chat_typing">%1$s టైప్ చేస్తున్నారు…</string>
     <string name="chat_blocked_banner">మీరు %1$s నుండి సందేశాలను నిరోధించారు. అన్‌బ్లాక్ చేయడానికి పరిచయాలకు వెళ్లండి.</string>
     <string name="chat_delete_msg_title">సందేశాన్ని తొలగించాలా?</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Wala pang contact. Mag-scan ng QR code para magdagdag ng contact.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">I-clear ang kasaysayan ng chat?</string>
-    <string name="chat_clear_message">Paano mo gustong i-clear ang usapang ito kay %1$s?</string>
-    <string name="chat_clear_locally">I-clear nang Lokal</string>
-    <string name="chat_clear_both">I-clear nang Lokal/Mula sa Contact</string>
-    <string name="chat_clear_both_sub">Kini-clear ang chat nang lokal at nagpapadala kay %1$s ng kahilingang burahin ang mga mensaheng ipinadala mo.</string>
     <string name="chat_cd_options">Mga Opsyon</string>
-    <string name="chat_clear_history_menu">I-clear ang Kasaysayan ng Chat</string>
     <string name="chat_typing">Nagta-type si %1$s…</string>
     <string name="chat_blocked_banner">Na-block mo ang mga mensahe mula kay %1$s. Pumunta sa Contacts para mag-unblock.</string>
     <string name="chat_delete_msg_title">Burahin ang mensahe?</string>

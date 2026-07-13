@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Ancora nessun contatto. Scansiona un codice QR per aggiungere un contatto.</string>
 
     <!-- ── Schermata chat ──────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Cancellare cronologia chat?</string>
-    <string name="chat_clear_message">In che modo desideri cancellare questa conversazione con %1$s?</string>
-    <string name="chat_clear_locally">Cancella localmente</string>
-    <string name="chat_clear_both">Cancella da entrambi</string>
-    <string name="chat_clear_both_sub">Lo rimuove localmente e richiede a %1$s di eliminare i messaggi inviati.</string>
     <string name="chat_cd_options">Opzioni</string>
-    <string name="chat_clear_history_menu">Cancella cronologia chat</string>
     <string name="chat_typing">%1$s sta scrivendo…</string>
     <string name="chat_blocked_banner">Hai bloccato i messaggi da %1$s. Vai in Contatti per sbloccare.</string>
     <string name="chat_delete_msg_title">Eliminare messaggio?</string>

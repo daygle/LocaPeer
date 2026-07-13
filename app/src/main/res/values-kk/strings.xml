@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Контактілер әлі жоқ. Контакт қосу үшін QR кодын сканерлеңіз.</string>
 
     <!-- ── Чат экраны ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Чат тарихын тазалау керек пе?</string>
-    <string name="chat_clear_message">%1$s-мен сөйлесуді қалай тазалағыңыз келеді?</string>
-    <string name="chat_clear_locally">Құрылғыдан тазалау</string>
-    <string name="chat_clear_both">Екі жақтан да тазалау</string>
-    <string name="chat_clear_both_sub">Чатты құрылғыдан тазалайды және %1$s-ге сіз жіберген хабарламаларды жою сұрауын жібереді.</string>
     <string name="chat_cd_options">Опциялар</string>
-    <string name="chat_clear_history_menu">Чат тарихын тазалау</string>
     <string name="chat_typing">%1$s жазып жатыр…</string>
     <string name="chat_blocked_banner">Сіз %1$s-ден келетін хабарламаларды бұғаттадыңыз. Бұғаттан шығару үшін контактілерге өтіңіз.</string>
     <string name="chat_delete_msg_title">Хабарламаны жою керек пе?</string>

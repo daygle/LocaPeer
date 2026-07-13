@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">لا تر اوسه اړیکې نشته. د اړیکې اضافه کولو لپاره یو QR کوډ سکین کړئ.</string>
 
     <!-- ── د چاټ سکرین ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">د چاټ تاریخچه پاکه کړو؟</string>
-    <string name="chat_clear_message">تاسو څنګه غواړئ له %1$s سره دا خبرې اترې پاکې کړئ؟</string>
-    <string name="chat_clear_locally">په وسیله کې پاک کړئ</string>
-    <string name="chat_clear_both">په وسیله او له اړیکې څخه پاک کړئ</string>
-    <string name="chat_clear_both_sub">چاټ په وسیله کې پاکوي او %1$s ته ستاسو د لیږل شوو پیغامونو د پاکولو غوښتنه لیږي.</string>
     <string name="chat_cd_options">انتخابونه</string>
-    <string name="chat_clear_history_menu">د چاټ تاریخچه پاک کړئ</string>
     <string name="chat_typing">%1$s د پیغام لیکلو په حال کې دی…</string>
     <string name="chat_blocked_banner">تاسو له %1$s څخه پیغامونه بند کړي دي. د خلاصولو لپاره اړیکو ته لاړ شئ.</string>
     <string name="chat_delete_msg_title">پیغام پاک کړو؟</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">ಇನ್ನೂ ಯಾವುದೇ ಸಂಪರ್ಕಗಳಿಲ್ಲ. ಸಂಪರ್ಕವನ್ನು ಸೇರಿಸಲು QR ಕೋಡ್ ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ.</string>
 
     <!-- ── ಚಾಟ್ ಪರದೆ ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ಚಾಟ್ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಬೇಕೇ?</string>
-    <string name="chat_clear_message">%1$s ರೊಂದಿಗಿನ ಈ ಸಂಭಾಷಣೆಯನ್ನು ನೀವು ಹೇಗೆ ತೆರವುಗೊಳಿಸಲು ಬಯಸುತ್ತೀರಿ?</string>
-    <string name="chat_clear_locally">ಸ್ಥಳೀಯವಾಗಿ ತೆರವುಗೊಳಿಸಿ</string>
-    <string name="chat_clear_both">ಸ್ಥಳೀಯವಾಗಿ/ಸಂಪರ್ಕದಿಂದ ತೆರವುಗೊಳಿಸಿ</string>
-    <string name="chat_clear_both_sub">ಚಾಟ್ ಅನ್ನು ಸ್ಥಳೀಯವಾಗಿ ತೆರವುಗೊಳಿಸುತ್ತದೆ ಮತ್ತು ನೀವು ಕಳುಹಿಸಿದ ಸಂದೇಶಗಳನ್ನು ಅಳಿಸಲು %1$s ಅವರಿಗೆ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸುತ್ತದೆ.</string>
     <string name="chat_cd_options">ಆಯ್ಕೆಗಳು</string>
-    <string name="chat_clear_history_menu">ಚಾಟ್ ಇತಿಹಾಸವನ್ನು ತೆರವುಗೊಳಿಸಿ</string>
     <string name="chat_typing">%1$s ಟೈಪ್ ಮಾಡುತ್ತಿದ್ದಾರೆ…</string>
     <string name="chat_blocked_banner">ನೀವು %1$s ರಿಂದ ಸಂದೇಶಗಳನ್ನು ನಿರ್ಬಂಧಿಸಿದ್ದೀರಿ. ಅನಿರ್ಬಂಧಿಸಲು ಸಂಪರ್ಕಗಳಿಗೆ ಹೋಗಿ.</string>
     <string name="chat_delete_msg_title">ಸಂದೇಶವನ್ನು ಅಳಿಸಬೇಕೇ?</string>

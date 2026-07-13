@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">Chưa có liên hệ. Quét mã QR để thêm liên hệ.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Xóa lịch sử trò chuyện?</string>
-    <string name="chat_clear_message">Bạn muốn xóa cuộc trò chuyện với %1$s như thế nào?</string>
-    <string name="chat_clear_locally">Xóa cục bộ</string>
-    <string name="chat_clear_both">Xóa cục bộ/khỏi liên hệ</string>
-    <string name="chat_clear_both_sub">Xóa cuộc trò chuyện cục bộ và gửi tới %1$s yêu cầu xóa các tin nhắn bạn đã gửi.</string>
     <string name="chat_cd_options">Tùy chọn</string>
-    <string name="chat_clear_history_menu">Xóa lịch sử trò chuyện</string>
     <string name="chat_typing">%1$s đang nhập…</string>
     <string name="chat_blocked_banner">Bạn đã chặn tin nhắn từ %1$s. Vào Danh bạ để bỏ chặn.</string>
     <string name="chat_delete_msg_title">Xóa tin nhắn?</string>

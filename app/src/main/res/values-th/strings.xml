@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">ยังไม่มีผู้ติดต่อ สแกนรหัส QR เพื่อเพิ่มผู้ติดต่อ</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ล้างประวัติแชท?</string>
-    <string name="chat_clear_message">คุณต้องการล้างบทสนทนากับ %1$s อย่างไร?</string>
-    <string name="chat_clear_locally">ล้างในเครื่อง</string>
-    <string name="chat_clear_both">ล้างในเครื่อง/จากผู้ติดต่อ</string>
-    <string name="chat_clear_both_sub">ล้างแชทในเครื่องและส่งคำขอลบข้อความที่คุณส่งไปยัง %1$s</string>
     <string name="chat_cd_options">ตัวเลือก</string>
-    <string name="chat_clear_history_menu">ล้างประวัติแชท</string>
     <string name="chat_typing">%1$s กำลังพิมพ์…</string>
     <string name="chat_blocked_banner">คุณได้บล็อกข้อความจาก %1$s ไปที่ผู้ติดต่อเพื่อเลิกบล็อก</string>
     <string name="chat_delete_msg_title">ลบข้อความ?</string>

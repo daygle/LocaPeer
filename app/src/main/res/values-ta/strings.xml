@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">இன்னும் தொடர்புகள் இல்லை. தொடர்பைச் சேர்க்க QR குறியீட்டை ஸ்கேன் செய்யவும்.</string>
 
     <!-- ── சாட் திரை ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">சாட் வரலாற்றை அழிக்கவா?</string>
-    <string name="chat_clear_message">%1$s உடனான இந்த உரையாடலை எப்படி அழிக்க விரும்புகிறீர்கள்?</string>
-    <string name="chat_clear_locally">உள்நாட்டில் அழி</string>
-    <string name="chat_clear_both">இரு இடங்களிலும் அழி</string>
-    <string name="chat_clear_both_sub">சாட்டை உள்நாட்டில் அழித்து, நீங்கள் அனுப்பிய செய்திகளை நீக்குமாறு %1$s-க்கு கோரிக்கை அனுப்பும்.</string>
     <string name="chat_cd_options">விருப்பங்கள்</string>
-    <string name="chat_clear_history_menu">சாட் வரலாற்றை அழி</string>
     <string name="chat_typing">%1$s தட்டச்சு செய்கிறார்…</string>
     <string name="chat_blocked_banner">%1$s இடமிருந்து வரும் செய்திகளைத் தடுத்துள்ளீர்கள். நீக்க தொடர்புகளுக்குச் செல்லவும்.</string>
     <string name="chat_delete_msg_title">செய்தியை நீக்கவா?</string>

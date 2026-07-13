@@ -467,13 +467,7 @@
     <string name="conv_picker_empty">Aucun contact pour l\'instant. Scannez un code QR pour ajouter un contact.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Effacer l\'historique du chat ?</string>
-    <string name="chat_clear_message">Comment souhaitez-vous effacer cette conversation avec %1$s ?</string>
-    <string name="chat_clear_locally">Effacer localement</string>
-    <string name="chat_clear_both">Effacer des deux</string>
-    <string name="chat_clear_both_sub">Le supprime localement et demande à %1$s de supprimer les messages que vous avez envoyés.</string>
     <string name="chat_cd_options">Options</string>
-    <string name="chat_clear_history_menu">Effacer l\'historique du chat</string>
     <string name="chat_typing">%1$s écrit…</string>
     <string name="chat_blocked_banner">Vous avez bloqué les messages de %1$s. Allez dans Contacts pour débloquer.</string>
     <string name="chat_delete_msg_title">Supprimer le message ?</string>

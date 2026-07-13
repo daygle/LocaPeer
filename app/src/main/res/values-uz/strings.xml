@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Kontaktlar hali yo‘q. Kontakt qo‘shish uchun QR kodni skanerlang.</string>
 
     <!-- ── Chat ekrani ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Chat tarixini tozalash kerakmi?</string>
-    <string name="chat_clear_message">%1$s bilan suhbatni qanday tozalamoqchisiz?</string>
-    <string name="chat_clear_locally">Qurilmadan tozalash</string>
-    <string name="chat_clear_both">Ikki tomondan ham tozalash</string>
-    <string name="chat_clear_both_sub">Chatni qurilmangizdan tozalaydi va %1$s-ga siz yuborgan xabarlarni o‘chirish so‘rovini yuboradi.</string>
     <string name="chat_cd_options">Imkoniyatlar</string>
-    <string name="chat_clear_history_menu">Chat tarixini tozalash</string>
     <string name="chat_typing">%1$s yozmoqda…</string>
     <string name="chat_blocked_banner">Siz %1$s-dan keladigan xabarlarni blokladingiz. Blokdan chiqarish uchun Kontaktlarga o‘ting.</string>
     <string name="chat_delete_msg_title">Xabar o‘chirilsinmi?</string>
