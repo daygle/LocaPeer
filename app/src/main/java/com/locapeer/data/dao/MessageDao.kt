@@ -80,6 +80,11 @@ interface MessageDao {
     @Query("DELETE FROM messages WHERE groupId = :groupId")
     suspend fun deleteAllForGroup(groupId: String)
 
+    /** Messages the local user sent to a circle - used to fan out NIP-09 deletions when leaving
+     *  a circle with the "delete my messages everywhere" option. */
+    @Query("SELECT * FROM messages WHERE groupId = :groupId AND isMine = 1")
+    suspend fun getMineForGroup(groupId: String): List<MessageEntity>
+
     @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
     suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
 

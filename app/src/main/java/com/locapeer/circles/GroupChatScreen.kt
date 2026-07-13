@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Archive
 import androidx.compose.material.icons.filled.Delete
@@ -74,6 +75,7 @@ fun GroupChatScreen(
     var inputText by remember { mutableStateOf("") }
     var showMenu by remember { mutableStateOf(false) }
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showLeaveDialog by remember { mutableStateOf(false) }
     // Message the user is about to delete via long-press or left-swipe. Both gestures
     // converge on the same AlertDialog so the delete options stay identical to 1:1 chat.
     var pendingDeleteMsg by remember { mutableStateOf<MessageEntity?>(null) }
@@ -148,6 +150,46 @@ fun GroupChatScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) { Text(stringResource(R.string.common_cancel)) }
+            }
+        )
+    }
+
+    // Leave dialog (non-owners). Notifies the owner (who drops you from the circle) and removes your
+    // local copy; the two options mirror the message-delete menu - keep your sent messages on the
+    // other members' devices, or delete them there too (NIP-09, your own messages only).
+    if (showLeaveDialog) {
+        AlertDialog(
+            onDismissRequest = { showLeaveDialog = false },
+            icon = { Icon(Icons.Default.Delete, contentDescription = null) },
+            title = { Text(stringResource(R.string.circles_leave_title)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(stringResource(R.string.circles_leave_message, circleName))
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.circles_leave_local)) },
+                        supportingContent = { Text(stringResource(R.string.circles_leave_local_sub)) },
+                        modifier = Modifier.clickable {
+                            vm.leaveCircle(circleId, alsoDeleteRemote = false)
+                            showLeaveDialog = false
+                            onNavigateBack()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.circles_leave_remote)) },
+                        supportingContent = { Text(stringResource(R.string.circles_leave_remote_sub)) },
+                        modifier = Modifier.clickable {
+                            vm.leaveCircle(circleId, alsoDeleteRemote = true)
+                            showLeaveDialog = false
+                            onNavigateBack()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { showLeaveDialog = false }) { Text(stringResource(R.string.common_cancel)) }
             }
         )
     }
@@ -281,11 +323,22 @@ fun GroupChatScreen(
                                 }
                             )
                             HorizontalDivider()
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.circles_delete), color = MaterialTheme.colorScheme.error) },
-                                leadingIcon = { Icon(Icons.Default.DeleteSweep, null, tint = MaterialTheme.colorScheme.error) },
-                                onClick = { showMenu = false; showDeleteDialog = true }
-                            )
+                            // Owner (or a legacy circle with no recorded owner) disbands their copy
+                            // via "Delete Circle"; a non-owner member "Leaves" - which notifies the
+                            // owner to drop them and removes their local copy.
+                            if (canEditCircle) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.circles_delete), color = MaterialTheme.colorScheme.error) },
+                                    leadingIcon = { Icon(Icons.Default.DeleteSweep, null, tint = MaterialTheme.colorScheme.error) },
+                                    onClick = { showMenu = false; showDeleteDialog = true }
+                                )
+                            } else {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.circles_leave), color = MaterialTheme.colorScheme.error) },
+                                    leadingIcon = { Icon(Icons.AutoMirrored.Filled.Logout, null, tint = MaterialTheme.colorScheme.error) },
+                                    onClick = { showMenu = false; showLeaveDialog = true }
+                                )
+                            }
                         }
                     }
                 }

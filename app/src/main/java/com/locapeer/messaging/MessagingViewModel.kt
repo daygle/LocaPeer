@@ -55,7 +55,8 @@ class MessagingViewModel @Inject constructor(
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
-    private val peerManager: com.locapeer.peer.PeerManager
+    private val peerManager: com.locapeer.peer.PeerManager,
+    private val prefs: com.locapeer.settings.AppPreferences
 ) : ViewModel() {
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -269,6 +270,60 @@ class MessagingViewModel @Inject constructor(
             messageDao.deleteAllForGroup(circleId)
             circleDao.clearMembers(circleId)
             circleDao.deleteCircle(circleId)
+        }
+    }
+
+    /**
+     * Leave a circle the local user does not own. Notifies the owner (who drops us from the circle's
+     * membership so we stop receiving it), optionally deletes the messages we sent to the circle from
+     * every member's device (NIP-09, sender-only), records that we left so a straggler message can't
+     * silently re-create the circle, then removes our local copy.
+     *
+     * If we own the circle or it has no recorded owner there is nobody authoritative to notify, so
+     * this falls back to a plain local delete (owners disband via [deleteCircleAndConversation]).
+     */
+    fun leaveCircle(circleId: String, alsoDeleteRemote: Boolean) {
+        viewModelScope.launch {
+            try {
+                val circle = circleDao.getCircle(circleId) ?: return@launch
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val owner = circle.creatorPubkey
+                if (owner.isBlank() || owner == pubHex) {
+                    messageDao.deleteAllForGroup(circleId)
+                    circleDao.clearMembers(circleId)
+                    circleDao.deleteCircle(circleId)
+                    return@launch
+                }
+                // Tell the owner we left so they remove us from the circle's membership.
+                try {
+                    val privBytes = crypto.hexToBytes(privHex)
+                    val payload = json.encodeToString(com.locapeer.circles.CircleLeavePayload(circleId))
+                    val encrypted = crypto.nip44Encrypt(privBytes, owner, payload)
+                    val event = NostrEvent.build(
+                        privKeyHex = privHex,
+                        pubKeyHex = pubHex,
+                        kind = NostrEventKind.CIRCLE_LEAVE,
+                        content = encrypted,
+                        tags = listOf(listOf("p", owner)),
+                        crypto = crypto
+                    )
+                    relayClient.publishEvent(event)
+                } catch (e: Exception) {
+                    Log.e("MessagingViewModel", "circle leave notify failed", e)
+                }
+                // Optionally remove the messages we sent from the other members' devices too.
+                if (alsoDeleteRemote) {
+                    messageDao.getMineForGroup(circleId).forEach { deleteMessageFromRemote(it) }
+                }
+                // Remember we left so an incoming straggler can't re-materialise the circle.
+                prefs.addLeftCircleId(circleId)
+                // Drop our local copy of the circle, its membership and its messages.
+                messageDao.deleteAllForGroup(circleId)
+                circleDao.clearMembers(circleId)
+                circleDao.deleteCircle(circleId)
+            } catch (e: Exception) {
+                Log.e("MessagingViewModel", "leaveCircle failed", e)
+            }
         }
     }
 
