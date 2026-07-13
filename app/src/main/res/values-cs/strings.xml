@@ -484,13 +484,7 @@
     <string name="conv_picker_empty">Zatím žádné kontakty. Naskenujte QR kód a přidejte kontakt.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Vymazat historii chatu?</string>
-    <string name="chat_clear_message">Jak chcete vymazat tuto konverzaci s %1$s?</string>
-    <string name="chat_clear_locally">Vymazat lokálně</string>
-    <string name="chat_clear_both">Vymazat lokálně/u kontaktu</string>
-    <string name="chat_clear_both_sub">Vymaže chat lokálně a odešle uživateli %1$s žádost o smazání zpráv, které jste odeslali.</string>
     <string name="chat_cd_options">Možnosti</string>
-    <string name="chat_clear_history_menu">Vymazat historii chatu</string>
     <string name="chat_typing">%1$s píše…</string>
     <string name="chat_blocked_banner">Zablokovali jste zprávy od %1$s. Odblokovat můžete v Kontaktech.</string>
     <string name="chat_delete_msg_title">Smazat zprávu?</string>

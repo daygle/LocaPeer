@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Henüz kişi yok. Kişi eklemek için bir QR kodu tarayın.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Sohbet geçmişi temizlensin mi?</string>
-    <string name="chat_clear_message">%1$s ile bu sohbeti nasıl temizlemek istersiniz?</string>
-    <string name="chat_clear_locally">Yerel Olarak Temizle</string>
-    <string name="chat_clear_both">Yerelden/Kişiden Temizle</string>
-    <string name="chat_clear_both_sub">Sohbeti yerel olarak temizler ve gönderdiğiniz mesajlar için %1$s kişisine bir silme isteği gönderir.</string>
     <string name="chat_cd_options">Seçenekler</string>
-    <string name="chat_clear_history_menu">Sohbet Geçmişini Temizle</string>
     <string name="chat_typing">%1$s yazıyor…</string>
     <string name="chat_blocked_banner">%1$s kişisinden gelen mesajları engellediniz. Engeli kaldırmak için Kişiler\'e gidin.</string>
     <string name="chat_delete_msg_title">Mesaj silinsin mi?</string>

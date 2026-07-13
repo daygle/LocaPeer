@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">Belum ada kenalan. Imbas kod QR untuk menambah kenalan.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Kosongkan sejarah sembang?</string>
-    <string name="chat_clear_message">Bagaimanakah anda mahu mengosongkan perbualan dengan %1$s ini?</string>
-    <string name="chat_clear_locally">Kosongkan Secara Setempat</string>
-    <string name="chat_clear_both">Kosongkan Setempat/Daripada Kenalan</string>
-    <string name="chat_clear_both_sub">Mengosongkan sembang secara setempat dan menghantar permintaan pemadaman kepada %1$s untuk mesej yang anda hantar.</string>
     <string name="chat_cd_options">Pilihan</string>
-    <string name="chat_clear_history_menu">Kosongkan Sejarah Sembang</string>
     <string name="chat_typing">%1$s sedang menaip…</string>
     <string name="chat_blocked_banner">Anda telah menyekat mesej daripada %1$s. Pergi ke Kenalan untuk menyahsekat.</string>
     <string name="chat_delete_msg_title">Padam mesej?</string>

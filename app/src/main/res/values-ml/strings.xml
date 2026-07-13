@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">കോൺടാക്റ്റുകൾ ഒന്നുമില്ല. ഒരു കോൺടാക്റ്റിനെ ചേർക്കാൻ QR കോഡ് സ്കാൻ ചെയ്യുക.</string>
 
     <!-- ── ചാറ്റ് സ്ക്രീൻ ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ചാറ്റ് ചരിത്രം മായ്ക്കണോ?</string>
-    <string name="chat_clear_message">%1$s-യുമായുള്ള ഈ സംഭാഷണം എങ്ങനെ മായ്ക്കണം?</string>
-    <string name="chat_clear_locally">ലോക്കലായി മായ്ക്കുക</string>
-    <string name="chat_clear_both">ലോക്കലായി/കോൺടാക്റ്റിൽ നിന്ന് മായ്ക്കുക</string>
-    <string name="chat_clear_both_sub">ചാറ്റ് ലോക്കലായി മായ്ക്കുകയും നിങ്ങൾ അയച്ച സന്ദേശങ്ങൾ ഇല്ലാതാക്കാൻ %1$s-ലേക്ക് അഭ്യർത്ഥന അയയ്ക്കുകയും ചെയ്യുന്നു.</string>
     <string name="chat_cd_options">ഓപ്ഷനുകൾ</string>
-    <string name="chat_clear_history_menu">ചാറ്റ് ചരിത്രം മായ്ക്കുക</string>
     <string name="chat_typing">%1$s ടൈപ്പ് ചെയ്യുന്നു…</string>
     <string name="chat_blocked_banner">നിങ്ങൾ %1$s-ൽ നിന്നുള്ള സന്ദേശങ്ങൾ തടഞ്ഞു. അൺബ്ലോക്ക് ചെയ്യാൻ കോൺടാക്റ്റുകളിലേക്ക് പോകുക.</string>
     <string name="chat_delete_msg_title">സന്ദേശം ഇല്ലാതാക്കണോ?</string>

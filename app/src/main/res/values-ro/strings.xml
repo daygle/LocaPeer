@@ -475,13 +475,7 @@
     <string name="conv_picker_empty">Niciun contact încă. Scanați un cod QR pentru a adăuga un contact.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Ștergeți istoricul conversației?</string>
-    <string name="chat_clear_message">Cum doriți să ștergeți această conversație cu %1$s?</string>
-    <string name="chat_clear_locally">Ștergeți local</string>
-    <string name="chat_clear_both">Ștergeți local/de la contact</string>
-    <string name="chat_clear_both_sub">Șterge conversația local și trimite lui %1$s o cerere de ștergere a mesajelor trimise de dvs.</string>
     <string name="chat_cd_options">Opțiuni</string>
-    <string name="chat_clear_history_menu">Ștergeți istoricul conversației</string>
     <string name="chat_typing">%1$s scrie…</string>
     <string name="chat_blocked_banner">Ați blocat mesajele de la %1$s. Mergeți la Contacte pentru a debloca.</string>
     <string name="chat_delete_msg_title">Ștergeți mesajul?</string>

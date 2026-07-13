@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">ابھی کوئی رابطہ نہیں۔ رابطہ شامل کرنے کے لیے QR کوڈ اسکین کریں۔</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">چیٹ کی تاریخ صاف کریں؟</string>
-    <string name="chat_clear_message">آپ %1$s کے ساتھ یہ گفتگو کیسے صاف کرنا چاہتے ہیں؟</string>
-    <string name="chat_clear_locally">مقامی طور پر صاف کریں</string>
-    <string name="chat_clear_both">مقامی/رابطے سے صاف کریں</string>
-    <string name="chat_clear_both_sub">چیٹ مقامی طور پر صاف کرتا ہے اور آپ کے بھیجے گئے پیغامات کے لیے %1$s کو حذف کی درخواست بھیجتا ہے۔</string>
     <string name="chat_cd_options">اختیارات</string>
-    <string name="chat_clear_history_menu">چیٹ کی تاریخ صاف کریں</string>
     <string name="chat_typing">%1$s ٹائپ کر رہا ہے…</string>
     <string name="chat_blocked_banner">آپ نے %1$s کے پیغامات مسدود کر دیے ہیں۔ غیر مسدود کرنے کے لیے رابطوں میں جائیں۔</string>
     <string name="chat_delete_msg_title">پیغام حذف کریں؟</string>

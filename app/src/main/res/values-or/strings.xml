@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ସମ୍ପର୍କ ନାହିଁ । ସମ୍ପର୍କ ଯୋଡିବାକୁ ଏକ QR କୋଡ୍ ସ୍କାନ କରନ୍ତୁ ।</string>
 
     <!-- ── ଚାଟ୍ ସ୍କ୍ରିନ୍ ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ଚାଟ୍ ଇତିହାସ ସଫା କରିବେ କି?</string>
-    <string name="chat_clear_message">%1$s ସହିତ ଏହି କଥାବାର୍ତ୍ତା ଆପଣ କିପରି ସଫା କରିବାକୁ ଚାହୁଁଛନ୍ତି?</string>
-    <string name="chat_clear_locally">ସ୍ଥାନୀୟ ଭାବରେ ସଫା କରନ୍ତୁ</string>
-    <string name="chat_clear_both">ଉଭୟ ସ୍ଥାନରୁ ସଫା କରନ୍ତୁ</string>
-    <string name="chat_clear_both_sub">ଚାଟ୍‌କୁ ସ୍ଥାନୀୟ ଭାବରେ ସଫା କରେ ଏବଂ ଆପଣ ପଠାଇଥିବା ବାର୍ତ୍ତାକୁ ଡିଲିଟ୍ କରିବାକୁ %1$s କୁ ଅନୁରୋଧ ପଠାଏ ।</string>
     <string name="chat_cd_options">ବିକଳ୍ପ</string>
-    <string name="chat_clear_history_menu">ଚାଟ୍ ଇତିହାସ ସଫା କରନ୍ତୁ</string>
     <string name="chat_typing">%1$s ଲେଖୁଛନ୍ତି…</string>
     <string name="chat_blocked_banner">ଆପଣ %1$s ଙ୍କ ଠାରୁ ବାର୍ତ୍ତା ବ୍ଲକ୍ କରିଛନ୍ତି । ଅନବ୍ଲକ୍ କରିବାକୁ ସମ୍ପର୍କକୁ ଯାଆନ୍ତୁ ।</string>
     <string name="chat_delete_msg_title">ବାର୍ତ୍ତା ଡିଲିଟ୍ କରିବେ କି?</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Noch keine Kontakte. Scannen Sie einen QR-Code, um einen Kontakt hinzuzufügen.</string>
 
     <!-- ── Chat-Bildschirm ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Chatverlauf löschen?</string>
-    <string name="chat_clear_message">Wie möchten Sie diese Konversation mit %1$s löschen?</string>
-    <string name="chat_clear_locally">Lokal löschen</string>
-    <string name="chat_clear_both">Von beiden löschen</string>
-    <string name="chat_clear_both_sub">Löscht sie lokal und bittet %1$s, von Ihnen gesendete Nachrichten zu löschen.</string>
     <string name="chat_cd_options">Optionen</string>
-    <string name="chat_clear_history_menu">Chatverlauf löschen</string>
     <string name="chat_typing">%1$s schreibt…</string>
     <string name="chat_blocked_banner">Sie haben Nachrichten von %1$s blockiert. Gehen Sie zu Kontakte, um sie zu entsperren.</string>
     <string name="chat_delete_msg_title">Nachricht löschen?</string>

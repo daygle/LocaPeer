@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Δεν υπάρχουν ακόμη επαφές. Σαρώστε έναν κωδικό QR για να προσθέσετε επαφή.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Εκκαθάριση ιστορικού συνομιλίας;</string>
-    <string name="chat_clear_message">Πώς θέλετε να εκκαθαρίσετε αυτή τη συνομιλία με τον/την %1$s;</string>
-    <string name="chat_clear_locally">Τοπική εκκαθάριση</string>
-    <string name="chat_clear_both">Εκκαθάριση τοπικά/από την επαφή</string>
-    <string name="chat_clear_both_sub">Εκκαθαρίζει τη συνομιλία τοπικά και στέλνει στον/στην %1$s αίτημα διαγραφής των μηνυμάτων που στείλατε.</string>
     <string name="chat_cd_options">Επιλογές</string>
-    <string name="chat_clear_history_menu">Εκκαθάριση ιστορικού συνομιλίας</string>
     <string name="chat_typing">Ο/Η %1$s πληκτρολογεί…</string>
     <string name="chat_blocked_banner">Έχετε αποκλείσει τα μηνύματα από τον/την %1$s. Μεταβείτε στις Επαφές για άρση αποκλεισμού.</string>
     <string name="chat_delete_msg_title">Διαγραφή μηνύματος;</string>

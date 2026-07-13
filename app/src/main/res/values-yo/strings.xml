@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">Enweghị ojúlùmọ̀ kankan ugbu a. Ṣàyẹ̀wò koodu QR láti tinye ojúlùmọ̀.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Pa ìtàn chat rẹ́?</string>
-    <string name="chat_clear_message">Kedu ka ị chọrọ isi pa mkparịta ụka a rẹ́ pẹ̀lú %1$s?</string>
-    <string name="chat_clear_locally">Pa rẹ́ sínú Ẹ̀rọ</string>
-    <string name="chat_clear_both">Pa rẹ́ sínú Ẹ̀rọ/Láti ọ̀dọ̀ Ojúlùmọ̀</string>
-    <string name="chat_clear_both_sub">Yóò pa chat rẹ́ nínú ẹ̀rọ rẹ yóò sì rán ìbéèrè láti pa ozi tí o sọ ránṣẹ́ rẹ́ sọ́dọ̀ %1$s.</string>
     <string name="chat_cd_options">Nhọrọ</string>
-    <string name="chat_clear_history_menu">Pa Ìtàn Chat Rẹ́</string>
     <string name="chat_typing">%1$s na-ede ozi…</string>
     <string name="chat_blocked_banner">O ti mechi ozi láti ọ̀dọ̀ %1$s. Gaa na ojúlùmọ̀ láti ṣí i.</string>
     <string name="chat_delete_msg_title">Pa ozi rẹ́?</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">هنوز مخاطبی ندارید. برای افزودن مخاطب یک کد QR اسکن کنید.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">تاریخچه گفتگو پاک شود؟</string>
-    <string name="chat_clear_message">می‌خواهید این گفتگو با %1$s را چگونه پاک کنید؟</string>
-    <string name="chat_clear_locally">پاک‌کردن محلی</string>
-    <string name="chat_clear_both">پاک‌کردن محلی/از مخاطب</string>
-    <string name="chat_clear_both_sub">گفتگو را به‌صورت محلی پاک می‌کند و درخواست حذف پیام‌های ارسالی شما را برای %1$s می‌فرستد.</string>
     <string name="chat_cd_options">گزینه‌ها</string>
-    <string name="chat_clear_history_menu">پاک‌کردن تاریخچه گفتگو</string>
     <string name="chat_typing">%1$s در حال نوشتن است…</string>
     <string name="chat_blocked_banner">شما پیام‌های %1$s را مسدود کرده‌اید. برای رفع مسدودی به «مخاطبین» بروید.</string>
     <string name="chat_delete_msg_title">پیام حذف شود؟</string>

@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Aún no hay contactos. Escanee un código QR para agregar un contacto.</string>
 
     <!-- ── Pantalla de chat ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">¿Borrar historial de chat?</string>
-    <string name="chat_clear_message">¿Cómo desea borrar esta conversación con %1$s?</string>
-    <string name="chat_clear_locally">Borrar localmente</string>
-    <string name="chat_clear_both">Borrar de ambos</string>
-    <string name="chat_clear_both_sub">Lo elimina localmente y solicita a %1$s que elimine los mensajes que usted envió.</string>
     <string name="chat_cd_options">Opciones</string>
-    <string name="chat_clear_history_menu">Borrar historial de chat</string>
     <string name="chat_typing">%1$s está escribiendo…</string>
     <string name="chat_blocked_banner">Ha bloqueado los mensajes de %1$s. Vaya a Contactos para desbloquear.</string>
     <string name="chat_delete_msg_title">¿Eliminar mensaje?</string>

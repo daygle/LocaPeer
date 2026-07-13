@@ -484,13 +484,7 @@
     <string name="conv_picker_empty">Brak kontaktów. Zeskanuj kod QR, aby dodać kontakt.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Wyczyścić historię czatu?</string>
-    <string name="chat_clear_message">Jak chcesz wyczyścić tę rozmowę z %1$s?</string>
-    <string name="chat_clear_locally">Wyczyść lokalnie</string>
-    <string name="chat_clear_both">Wyczyść lokalnie i u kontaktu</string>
-    <string name="chat_clear_both_sub">Czyści czat lokalnie i wysyła do %1$s żądanie usunięcia wysłanych przez Ciebie wiadomości.</string>
     <string name="chat_cd_options">Opcje</string>
-    <string name="chat_clear_history_menu">Wyczyść historię czatu</string>
     <string name="chat_typing">%1$s pisze…</string>
     <string name="chat_blocked_banner">Wiadomości od %1$s są zablokowane. Odblokuj w Kontaktach.</string>
     <string name="chat_delete_msg_title">Usunąć wiadomość?</string>

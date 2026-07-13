@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">Babu lambobi tukuna. Duba lambar QR don ƙara lamba.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Share tarihin hira?</string>
-    <string name="chat_clear_message">Kedu yadda kuke son share wannan hira da %1$s?</string>
-    <string name="chat_clear_locally">Share A Cikin Na\'urar</string>
-    <string name="chat_clear_both">Share A Cikin Na\'urar/Daga Lamba</string>
-    <string name="chat_clear_both_sub">Yana share hira a cikin na\'ura kuma yana aika buƙatar sharewa zuwa ga %1$s don saƙon da kuka aika.</string>
     <string name="chat_cd_options">Zaɓuɓɓuka</string>
-    <string name="chat_clear_history_menu">Share Tarihin Hira</string>
     <string name="chat_typing">%1$s na rubutu…</string>
     <string name="chat_blocked_banner">Kun toshe saƙonni daga %1$s. Jeka Lambobi don buɗewa.</string>
     <string name="chat_delete_msg_title">Share saƙo?</string>

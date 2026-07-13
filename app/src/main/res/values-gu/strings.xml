@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">હજુ સુધી કોઈ સંપર્કો નથી. સંપર્ક ઉમેરવા માટે QR કોડ સ્કેન કરો.</string>
 
     <!-- ── ચેટ સ્ક્રીન ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">ચેટ ઇતિહાસ સાફ કરવો છે?</string>
-    <string name="chat_clear_message">%1$s સાથેનું આ સંભાષણ તમે કેવી રીતે સાફ કરવા માંગો છો?</string>
-    <string name="chat_clear_locally">સ્થાનિક રીતે સાફ કરો</string>
-    <string name="chat_clear_both">સ્થાનિક રીતે/સંપર્કમાંથી સાફ કરો</string>
-    <string name="chat_clear_both_sub">ચેટને સ્થાનિક રીતે સાફ કરે છે અને તમે મોકલેલા સંદેશાઓ ડીલીટ કરવા માટે %1$s ને વિનંતી મોકલે છે.</string>
     <string name="chat_cd_options">વિકલ્પો</string>
-    <string name="chat_clear_history_menu">ચેટ ઇતિહાસ સાફ કરો</string>
     <string name="chat_typing">%1$s ટાઇપ કરી રહ્યા છે…</string>
     <string name="chat_blocked_banner">તમે %1$s ના સંદેશાઓ અવરોધિત કર્યા છે. અનબ્લોક કરવા માટે સંપર્કો પર જાઓ.</string>
     <string name="chat_delete_msg_title">સંદેશ ડીલીટ કરવો છે?</string>

@@ -484,13 +484,7 @@
     <string name="conv_picker_empty">Поки немає контактів. Відскануйте QR-код, щоб додати контакт.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Очистити історію чату?</string>
-    <string name="chat_clear_message">Як очистити цю розмову з %1$s?</string>
-    <string name="chat_clear_locally">Очистити локально</string>
-    <string name="chat_clear_both">Очистити локально та в контакту</string>
-    <string name="chat_clear_both_sub">Очищає чат локально й надсилає %1$s запит на видалення надісланих вами повідомлень.</string>
     <string name="chat_cd_options">Параметри</string>
-    <string name="chat_clear_history_menu">Очистити історію чату</string>
     <string name="chat_typing">%1$s пише…</string>
     <string name="chat_blocked_banner">Ви заблокували повідомлення від %1$s. Розблокувати можна в розділі «Контакти».</string>
     <string name="chat_delete_msg_title">Видалити повідомлення?</string>

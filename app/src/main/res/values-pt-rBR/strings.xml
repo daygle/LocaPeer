@@ -467,13 +467,7 @@
     <string name="conv_picker_empty">Ainda sem contatos. Escaneie um código QR para adicionar um contato.</string>
 
     <!-- ── Tela de Chat ───────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Limpar histórico do chat?</string>
-    <string name="chat_clear_message">Como você deseja limpar esta conversa com %1$s?</string>
-    <string name="chat_clear_locally">Limpar localmente</string>
-    <string name="chat_clear_both">Limpar de ambos</string>
-    <string name="chat_clear_both_sub">Remove localmente e solicita que %1$s exclua as mensagens que você enviou.</string>
     <string name="chat_cd_options">Opções</string>
-    <string name="chat_clear_history_menu">Limpar Histórico do Chat</string>
     <string name="chat_typing">%1$s está digitando…</string>
     <string name="chat_blocked_banner">Você bloqueou mensagens de %1$s. Vá em Contatos para desbloquear.</string>
     <string name="chat_delete_msg_title">Excluir mensagem?</string>

@@ -475,13 +475,7 @@
     <string name="conv_picker_empty">עדיין אין אנשי קשר. סרוק קוד QR כדי להוסיף איש קשר.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">לנקות את היסטוריית הצ׳אט?</string>
-    <string name="chat_clear_message">כיצד ברצונך לנקות שיחה זו עם %1$s?</string>
-    <string name="chat_clear_locally">נקה מקומית</string>
-    <string name="chat_clear_both">נקה מקומית/אצל איש הקשר</string>
-    <string name="chat_clear_both_sub">מנקה את הצ׳אט מקומית ושולח ל-%1$s בקשת מחיקה עבור ההודעות ששלחת.</string>
     <string name="chat_cd_options">אפשרויות</string>
-    <string name="chat_clear_history_menu">נקה היסטוריית צ׳אט</string>
     <string name="chat_typing">‏%1$s מקליד…</string>
     <string name="chat_blocked_banner">חסמת הודעות מ-%1$s. עבור לאנשי הקשר כדי לבטל את החסימה.</string>
     <string name="chat_delete_msg_title">למחוק את ההודעה?</string>

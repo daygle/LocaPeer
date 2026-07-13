@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">Belum ada kontak. Pindai kode QR untuk menambah kontak.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Hapus riwayat obrolan?</string>
-    <string name="chat_clear_message">Bagaimana Anda ingin menghapus percakapan dengan %1$s ini?</string>
-    <string name="chat_clear_locally">Hapus Secara Lokal</string>
-    <string name="chat_clear_both">Hapus Lokal/Dari Kontak</string>
-    <string name="chat_clear_both_sub">Menghapus obrolan secara lokal dan mengirim permintaan penghapusan ke %1$s untuk pesan yang Anda kirim.</string>
     <string name="chat_cd_options">Opsi</string>
-    <string name="chat_clear_history_menu">Hapus Riwayat Obrolan</string>
     <string name="chat_typing">%1$s sedang mengetik…</string>
     <string name="chat_blocked_banner">Anda memblokir pesan dari %1$s. Buka Kontak untuk membuka blokir.</string>
     <string name="chat_delete_msg_title">Hapus pesan?</string>

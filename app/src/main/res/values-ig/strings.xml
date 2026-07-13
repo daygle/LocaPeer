@@ -457,13 +457,7 @@
     <string name="conv_picker_empty">Enweghị kọntaktị ugbu a. Nyochaa koodu QR ka itinyekwuo kọntaktị.</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">Hichapụ akụkọ chat?</string>
-    <string name="chat_clear_message">Kedu ka ị chọrọ isi hichapụ mkparịta ụka a na %1$s?</string>
-    <string name="chat_clear_locally">Hichapụ n\'ime Ngwaọrụ</string>
-    <string name="chat_clear_both">Hichapụ n\'ime Ngwaọrụ/Site na Kọntaktị</string>
-    <string name="chat_clear_both_sub">Na-ehichapụ chat n\'ime ngwaọrụ wee malite arịrịọ ihichapụ gaa na %1$s maka ozi ị siri zipụ.</string>
     <string name="chat_cd_options">Nhọrọ</string>
-    <string name="chat_clear_history_menu">Hichapụ Akụkọ Chat</string>
     <string name="chat_typing">%1$s na-ede ozi…</string>
     <string name="chat_blocked_banner">Ị mechiela ozi sitere na %1$s. Gaa na Kọntaktị ka ị kpọghee.</string>
     <string name="chat_delete_msg_title">Hichapụ ozi?</string>

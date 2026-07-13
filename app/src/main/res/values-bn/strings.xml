@@ -466,13 +466,7 @@
     <string name="conv_picker_empty">এখনও কোনো পরিচিতি নেই। পরিচিতি যোগ করতে একটি QR কোড স্ক্যান করুন।</string>
 
     <!-- ── Chat screen ────────────────────────────────────────────────────── -->
-    <string name="chat_clear_title">চ্যাটের ইতিহাস মুছবেন?</string>
-    <string name="chat_clear_message">%1$s-এর সাথে এই কথোপকথন আপনি কীভাবে মুছতে চান?</string>
-    <string name="chat_clear_locally">স্থানীয়ভাবে মুছুন</string>
-    <string name="chat_clear_both">স্থানীয়/পরিচিতি থেকে মুছুন</string>
-    <string name="chat_clear_both_sub">চ্যাট স্থানীয়ভাবে মুছে ফেলে এবং আপনার পাঠানো বার্তার জন্য %1$s-কে মোছার অনুরোধ পাঠায়।</string>
     <string name="chat_cd_options">বিকল্প</string>
-    <string name="chat_clear_history_menu">চ্যাটের ইতিহাস মুছুন</string>
     <string name="chat_typing">%1$s টাইপ করছেন…</string>
     <string name="chat_blocked_banner">আপনি %1$s থেকে বার্তা ব্লক করেছেন। আনব্লক করতে পরিচিতিতে যান।</string>
     <string name="chat_delete_msg_title">বার্তা মুছবেন?</string>
