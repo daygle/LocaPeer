@@ -113,16 +113,35 @@ class MessagingViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val archivedConversations: StateFlow<List<ConversationSummary>> =
-        messageDao.getConversationSummaries()
-            .combine(peerDao.getAllPeers()) { msgs, peers ->
-                val peerMap = peers.associateBy { it.deviceId }
-                msgs.mapNotNull { msg ->
-                    val peer = peerMap[msg.peerId] ?: return@mapNotNull null
-                    if (!peer.isArchived) return@mapNotNull null
-                    ConversationSummary(peer = peer, lastMessage = msg)
-                }
+        combine(
+            messageDao.getConversationSummaries(),
+            peerDao.getAllPeers(),
+            _searchQuery,
+            _sortOrder,
+            messageDao.getUnreadCountsPerPeer().map { rows -> rows.associate { it.peerId to it.cnt } }
+        ) { msgs, peers, query, sort, unreadCounts ->
+            // Mirrors the [conversations] search/sort pipeline exactly, but keeps only archived
+            // peers, so the Archived tab offers the same search-and-sort affordances as Chats.
+            val peerMap = peers.associateBy { it.deviceId }
+            val base = msgs.mapNotNull { msg ->
+                val peer = peerMap[msg.peerId] ?: return@mapNotNull null
+                if (!peer.isArchived) return@mapNotNull null
+                ConversationSummary(peer = peer, lastMessage = msg)
             }
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+            val filtered = if (query.isBlank()) base
+            else base.filter {
+                it.peer.displayName.contains(query, ignoreCase = true) ||
+                    it.lastMessage.content.contains(query, ignoreCase = true)
+            }
+            when (sort) {
+                SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage.timestamp }
+                SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase(Locale.ROOT) }
+                SortOrder.UNREAD -> filtered.sortedWith(
+                    compareByDescending<ConversationSummary> { (unreadCounts[it.peer.deviceId] ?: 0) > 0 }
+                        .thenByDescending { it.lastMessage.timestamp }
+                )
+            }
+        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun observePeer(peerId: String): Flow<PeerEntity?> = peerDao.observePeer(peerId)
 
@@ -238,24 +257,45 @@ class MessagingViewModel @Inject constructor(
             }
         }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations. */
+    /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations. Applies
+     *  the same search/sort pipeline as [groupConversations] so the Archived tab's search-and-sort
+     *  covers circles too. Two-stage combine because the base combine already uses 4 flows and
+     *  adding query + sort would exceed the typed `combine` overload's 5-argument limit. */
     val archivedGroupConversations: StateFlow<List<GroupConversationSummary>> =
         combine(
-            circleDao.observeCircles(),
-            messageDao.getGroupConversationSummaries(),
-            circleDao.observeMemberCounts(),
-            messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
-        ) { circles, lastMsgs, counts, unread ->
-            val lastByGid = lastMsgs.associateBy { it.groupId }
-            val countByGid = counts.associate { it.circleId to it.cnt }
-            circles.filter { it.isArchived }.map { c ->
-                GroupConversationSummary(
-                    circle = c,
-                    lastMessage = lastByGid[c.id],
-                    memberCount = countByGid[c.id] ?: 0,
-                    unread = unread[c.id] ?: 0
+            combine(
+                circleDao.observeCircles(),
+                messageDao.getGroupConversationSummaries(),
+                circleDao.observeMemberCounts(),
+                messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
+            ) { circles, lastMsgs, counts, unread ->
+                val lastByGid = lastMsgs.associateBy { it.groupId }
+                val countByGid = counts.associate { it.circleId to it.cnt }
+                circles.filter { it.isArchived }.map { c ->
+                    GroupConversationSummary(
+                        circle = c,
+                        lastMessage = lastByGid[c.id],
+                        memberCount = countByGid[c.id] ?: 0,
+                        unread = unread[c.id] ?: 0
+                    )
+                }
+            },
+            _searchQuery,
+            _sortOrder,
+        ) { list, query, sort ->
+            val filtered = if (query.isBlank()) list
+            else list.filter {
+                it.circle.name.contains(query, ignoreCase = true) ||
+                    (it.lastMessage?.content?.contains(query, ignoreCase = true) ?: false)
+            }
+            when (sort) {
+                SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
+                SortOrder.NAME -> filtered.sortedBy { it.circle.name.lowercase(Locale.ROOT) }
+                SortOrder.UNREAD -> filtered.sortedWith(
+                    compareByDescending<GroupConversationSummary> { it.unread > 0 }
+                        .thenByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
                 )
-            }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
+            }
         }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     /** Archive/unarchive a circle - the group counterpart of [archiveConversation]. */

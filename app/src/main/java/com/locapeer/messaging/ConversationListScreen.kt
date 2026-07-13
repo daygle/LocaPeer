@@ -257,12 +257,13 @@ fun ConversationListScreen(
                                 )
                             }
                         } else {
-                            // Search + Sort live on CHATS and CIRCLES — the two `conversations`
-                            // flows that actually apply them. Hidden on ARCHIVED because that
-                            // tab's VM flow doesn't run the search/sort pipeline, so a button
-                            // there would toggle state and surface nothing (silent no-op).
+                            // Search + Sort are available on every list tab. Each tab's VM flow
+                            // (conversations / groupConversations / archivedConversations +
+                            // archivedGroupConversations) runs the same search/sort pipeline, so the
+                            // controls apply on Chats, Circles and Archived alike.
                             val showSearchAndSort = currentTab == MessagesTab.CHATS ||
-                                currentTab == MessagesTab.CIRCLES
+                                currentTab == MessagesTab.CIRCLES ||
+                                currentTab == MessagesTab.ARCHIVED
                             if (showSearchAndSort) {
                                 IconButton(onClick = {
                                     showSearch = !showSearch
@@ -309,7 +310,8 @@ fun ConversationListScreen(
                 )
                 AnimatedVisibility(
                     visible = showSearch && !isSelectionMode &&
-                        (currentTab == MessagesTab.CHATS || currentTab == MessagesTab.CIRCLES),
+                        (currentTab == MessagesTab.CHATS || currentTab == MessagesTab.CIRCLES ||
+                            currentTab == MessagesTab.ARCHIVED),
                     enter = expandVertically() + fadeIn(),
                     exit = shrinkVertically() + fadeOut()
                 ) {
