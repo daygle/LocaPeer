@@ -459,7 +459,7 @@
     <string name="chat_delivery_state_delivered">Delivered to recipient\'s device</string>
     <string name="chat_delivery_state_read">Read by recipient</string>
     <string name="chat_delivery_state_failed">Failed - message stuck in queue</string>
-    <string name="chat_delivery_details_title">Message status</string>
+    <string name="chat_delivery_details_title">Message Status</string>
 
     <!-- App lock -->
     <string name="settings_app_lock">App Lock</string>
