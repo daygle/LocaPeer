@@ -13,10 +13,15 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.toScheduleRules
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.IOException
@@ -139,6 +144,13 @@ enum class ThemeMode { SYSTEM, LIGHT, DARK }
 class AppPreferences @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
+    // Deserializing AppSettings (30+ fields, plus CSV/JSON parsing) is done once here on a
+    // background dispatcher and shared, instead of re-running for every collector on its own
+    // (often main) thread. At app start a dozen+ collectors — Compose, several ViewModels,
+    // the Application — subscribe to `settings`; sharing keeps that off the main thread and
+    // collapses the redundant work into a single upstream, cutting cold-start jank.
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
     private val KEY_DISPLAY_NAME = stringPreferencesKey("display_name")
     private val KEY_HEARTBEAT_ENABLED = booleanPreferencesKey("heartbeat_enabled")
     private val KEY_STATIONARY_INTERVAL = intPreferencesKey("stationary_interval")
@@ -233,6 +245,11 @@ class AppPreferences @Inject constructor(
                 useDynamicColor = prefs[KEY_USE_DYNAMIC_COLOR] ?: true
             )
         }
+        // replay = 1 caches the latest settings so newly-mounted screens get it immediately
+        // (no spinner flash) without re-reading disk; WhileSubscribed lets the upstream stop
+        // when nothing is observing. No synthetic initial value is emitted, so the existing
+        // `null`-until-loaded semantics in MainActivity (onboarding spinner) are preserved.
+        .shareIn(scope, SharingStarted.WhileSubscribed(5_000), replay = 1)
 
     suspend fun updateDisplayName(name: String) {
         context.settingsStore.edit { it[KEY_DISPLAY_NAME] = name }
