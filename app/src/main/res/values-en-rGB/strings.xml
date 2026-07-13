@@ -42,7 +42,7 @@
     <string name="chat_delivery_state_failed">Failed - message stuck in queue</string>
     <string name="chat_delivery_details_title">Message status</string>
     <string name="settings_theme_mode">Theme</string>
-    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_theme_system">Follow System</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_dynamic_color">Material You colours</string>

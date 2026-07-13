@@ -479,7 +479,7 @@
 
     <!-- Theme -->
     <string name="settings_theme_mode">Theme</string>
-    <string name="settings_theme_system">Follow system</string>
+    <string name="settings_theme_system">Follow System</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_dynamic_color">Material You Colours</string>
