@@ -134,6 +134,12 @@ class HeartbeatService : LifecycleService() {
     // Among fixes that clear the filter, picks the sharpest still-current one to report,
     // rather than whichever landed last before the pulse (see FixSelector).
     private val fixSelector = FixSelector()
+    // Anchors each stationary stay and judges displacement-based exits, corroborating
+    // them across two fixes so a single glitch can't fake one (see StationaryExitDetector).
+    private val stationaryExit = StationaryExitDetector()
+    // Per-pulse counters over the pipeline's decisions, logged one line per pulse so
+    // the tunables can be calibrated from real-world logs (see PipelineDiagnostics).
+    private val diagnostics = PipelineDiagnostics()
 
     @Volatile private var lastLat = 0.0
     @Volatile private var lastLng = 0.0
@@ -168,10 +174,6 @@ class HeartbeatService : LifecycleService() {
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
     private var wasLowBattery = false
-    private var stationaryAnchorSet = false
-    private var stationaryAnchorLat = 0.0
-    private var stationaryAnchorLng = 0.0
-    private var stationaryAnchorAcc = 0f
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
@@ -206,8 +208,50 @@ class HeartbeatService : LifecycleService() {
                 // classification too, since a glitch fix also poisons the
                 // displacement-derived speed of the fix after it.
                 if (!locationFilter.accept(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
+                    diagnostics.onFilterRejected()
                     Log.d(TAG, "Dropped implausible fix: acc=${loc.accuracy}m")
                     return
+                }
+                diagnostics.onFixAccepted()
+                // Displacement-based stationary exit, evaluated BEFORE the speed baseline
+                // and the selector so an uncorroborated exit-candidate fix can be withheld
+                // wholesale, exactly like a filter rejection. At the stationary cadence the
+                // filter's stale-accept always applies, so a one-off sharp glitch kilometres
+                // away reaches here looking legitimate; trusting it immediately (the old
+                // behaviour) painted the glitch for peers and history and let it poison the
+                // next fix's derived speed. Instead the candidate only boosts GPS - the
+                // corroborating fix ~15-30s later confirms a real exit, while a fix back at
+                // the anchor unmasks the glitch, which then never reports at all.
+                if (currentMotionState == MotionState.STATIONARY) {
+                    when (stationaryExit.evaluate(loc.latitude, loc.longitude, loc.accuracy, loc.elapsedRealtimeNanos)) {
+                        StationaryExitDetector.Verdict.CANDIDATE -> {
+                            diagnostics.onExitCandidateHeld()
+                            Log.d(TAG, "Stationary exit candidate held for corroboration (acc=${loc.accuracy}m)")
+                            beginClassificationBoost()
+                            updateLocationRequest()
+                            return
+                        }
+                        StationaryExitDetector.Verdict.EXIT -> {
+                            diagnostics.onExitConfirmed()
+                            currentMotionState = MotionState.UNKNOWN
+                            candidateMotionCount = 0
+                            // The device has PROVABLY left the anchor, so an AR STILL is
+                            // wrong about right now whatever its age (fresh = AR lagging a
+                            // trip start; stale = the transition was missed entirely). Drop
+                            // it so the label and cadence follow the GPS classifier until
+                            // the next AR event repopulates the reading - GPS scatter can't
+                            // reach here, since scatter never clears the displacement
+                            // threshold that confirmed this exit.
+                            if (arMotionState == MotionState.STATIONARY) arMotionState = null
+                            beginClassificationBoost()
+                            refreshCadenceState()
+                            updateLocationRequest()
+                            reschedulePulse()
+                            // Fall through: this corroborating fix is processed normally
+                            // (with STATIONARY exited, the selector takes it via movement).
+                        }
+                        else -> {} // HELD / TIGHTENED: process the fix normally.
+                    }
                 }
                 // Classification (and the prev-fix baseline estimateSpeed advances) runs
                 // on every accepted fix, independent of which fix is chosen to report.
@@ -229,9 +273,10 @@ class HeartbeatService : LifecycleService() {
                     // reading rather than flicker to a misleading 0 m / sea level.
                     if (loc.hasAltitude()) lastAltitude = loc.altitude
                     lastSpeed = speed ?: 0f
+                } else {
+                    diagnostics.onSelectorHeld()
                 }
                 speed?.let { onMotionSample(MotionMath.classify(it)) }
-                if (currentMotionState == MotionState.STATIONARY) checkStationaryExit(loc)
                 // Two cases need a pulse as soon as a usable fix exists: no heartbeat has
                 // gone out yet (empty lastLocation cache at start, so the initial pulse
                 // was skipped), or GPS just resumed after a schedule suspension and the
@@ -355,11 +400,9 @@ class HeartbeatService : LifecycleService() {
             val previous = currentMotionState
             currentMotionState = newState
             candidateMotionCount = 0
+            diagnostics.onMotionStateChange()
             if (newState == MotionState.STATIONARY) {
-                stationaryAnchorSet = true
-                stationaryAnchorLat = lastLat
-                stationaryAnchorLng = lastLng
-                stationaryAnchorAcc = lastAccuracy
+                stationaryExit.setAnchor(lastLat, lastLng, lastAccuracy)
                 // Just settled: hold high accuracy briefly so a sharp fix can anchor the
                 // resting pin (and tighten the exit anchor) before GPS drops to low power.
                 beginStationaryAnchorBoost()
@@ -383,15 +426,17 @@ class HeartbeatService : LifecycleService() {
      * refresh the location request (via the [updateLocationRequest] it already issues on
      * a state change) so the boost takes effect immediately.
      *
-     * A single settled exit can reach here twice - first from [checkStationaryExit]
-     * (STATIONARY -> UNKNOWN), then from the fix that latches UNKNOWN -> moving. An
-     * already-running window is left as-is rather than re-armed, so the total boost
-     * never exceeds [CLASSIFY_BOOST_MS] from the first trigger.
+     * A single settled exit can reach here several times - from the exit-candidate
+     * hold, from the confirmed exit (STATIONARY -> UNKNOWN), then from the fix that
+     * latches UNKNOWN -> moving. An already-running window is left as-is rather than
+     * re-armed, so the total boost never exceeds [CLASSIFY_BOOST_MS] from the first
+     * trigger.
      */
     private fun beginClassificationBoost() {
         val now = SystemClock.elapsedRealtime()
         if (now < classificationBoostUntilMs) return
         classificationBoostUntilMs = now + CLASSIFY_BOOST_MS
+        diagnostics.onClassificationBoost()
         handler.removeCallbacks(locationBoostDowngrade)
         handler.postDelayed(locationBoostDowngrade, CLASSIFY_BOOST_MS)
     }
@@ -412,6 +457,7 @@ class HeartbeatService : LifecycleService() {
      */
     private fun beginStationaryAnchorBoost() {
         stationaryAnchorBoostUntilMs = SystemClock.elapsedRealtime() + STATIONARY_ANCHOR_BOOST_MS
+        diagnostics.onAnchorBoost()
         handler.removeCallbacks(stationaryAnchorDowngrade)
         handler.postDelayed(stationaryAnchorDowngrade, STATIONARY_ANCHOR_BOOST_MS)
     }
@@ -419,43 +465,6 @@ class HeartbeatService : LifecycleService() {
     private val stationaryAnchorDowngrade = Runnable {
         // Anchor window elapsed; re-request so stationary GPS relaxes to low power.
         if (isStarted) updateLocationRequest()
-    }
-
-    /**
-     * Escape hatch for the STATIONARY state. The low-power fixes used while
-     * stationary can be so coarse (cell-tower fixes are off by hundreds of metres
-     * to kilometres) that the distance travelled between fixes never exceeds their
-     * accuracy radius, so speed-based detection reads 0 and the device stays
-     * STATIONARY for an entire drive - and never upgrades to GPS to find out.
-     * Instead compare against where the device *became* stationary: total
-     * displacement grows without bound while driving, so once it clears the
-     * combined uncertainty the device has provably moved. Exit to UNKNOWN - which
-     * latches on the very next classified fix rather than asserting a possibly-wrong
-     * WALKING - and boost GPS so that fix carries clean speed.
-     */
-    private fun checkStationaryExit(loc: android.location.Location) {
-        if (!stationaryAnchorSet) return
-        val dist = FloatArray(1)
-        android.location.Location.distanceBetween(
-            stationaryAnchorLat, stationaryAnchorLng, loc.latitude, loc.longitude, dist
-        )
-        // Tighten the anchor when a strictly better fix confirms the same place,
-        // so a coarse initial anchor doesn't leave the exit threshold needlessly wide.
-        if (MotionMath.shouldTightenAnchor(dist[0], stationaryAnchorAcc, loc.accuracy)) {
-            stationaryAnchorLat = loc.latitude
-            stationaryAnchorLng = loc.longitude
-            stationaryAnchorAcc = loc.accuracy
-            return
-        }
-        if (MotionMath.shouldExitStationary(dist[0], stationaryAnchorAcc, loc.accuracy)) {
-            stationaryAnchorSet = false
-            currentMotionState = MotionState.UNKNOWN
-            candidateMotionCount = 0
-            beginClassificationBoost()
-            refreshCadenceState()
-            updateLocationRequest()
-            reschedulePulse()
-        }
     }
 
     private val heartbeatRunnable = object : Runnable {
@@ -471,13 +480,25 @@ class HeartbeatService : LifecycleService() {
             // and recovery after charging waited a whole low-battery interval) and the
             // fused cadence state (an AR reading crossing its staleness threshold changes
             // the cadence with no new GPS/AR event - see refreshCadenceState).
-            intervalManager.updateBattery(getBatteryLevel())
+            val batteryNow = getBatteryLevel()
+            intervalManager.updateBattery(batteryNow)
             val lowNow = intervalManager.isLowBattery()
             var requestStale = refreshCadenceState()
             if (lowNow != wasLowBattery) {
                 wasLowBattery = lowNow
                 requestStale = true
             }
+
+            // One diagnostic line per pulse (minutes apart, negligible volume): the
+            // current pipeline state plus counters since the previous pulse, so the
+            // tunables can be calibrated from a plain logcat capture.
+            Log.i(
+                TAG,
+                "Pulse: gps=$currentMotionState cadence=$appliedCadenceState " +
+                    "ar=${arMotionState?.name ?: "none"}${if (arIsStale()) "(stale)" else ""} " +
+                    "sos=$isSos battery=$batteryNow low=$lowNow acc=${lastAccuracy}m " +
+                    diagnostics.summarizeAndReset()
+            )
 
             val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
             if (!scheduleActive) {
@@ -732,9 +753,12 @@ class HeartbeatService : LifecycleService() {
         val lowBattery = !isSos && intervalManager.isLowBattery()
         // A brief high-accuracy window right after leaving a settled place, so the
         // classifier reaches the right moving state before GPS relaxes. Never overrides
-        // low battery (which must stay frugal) and is moot while stationary.
+        // low battery (which must stay frugal). Moot while stationary, EXCEPT when an
+        // exit candidate is pending corroboration: the state is then still STATIONARY
+        // by design (the candidate fix was withheld), but the corroborating fix must
+        // arrive at boost cadence, not at the 5-minute stationary poll.
         val boosting = !isSos && !lowBattery &&
-            currentMotionState != MotionState.STATIONARY &&
+            (currentMotionState != MotionState.STATIONARY || stationaryExit.hasPendingCandidate) &&
             SystemClock.elapsedRealtime() < classificationBoostUntilMs
         // The power profile follows the fused cadence state, so AR reporting on-foot can
         // relax a stale GPS DRIVING off high accuracy. The boost window still keys off the
@@ -757,11 +781,13 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
-            // Sample fast during the settle burst so a sharp fix actually lands inside the
-            // window; must precede the stationary branch, which otherwise waits 5 minutes.
+            // Sample fast during either boost so a usable fix actually lands inside the
+            // window; both must precede the stationary branch, which otherwise waits 5
+            // minutes - the classification boost can now be live WHILE stationary, when
+            // an exit candidate is pending its corroborating fix.
             anchorBoosting -> 15_000L
-            cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             boosting -> 15_000L
+            cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             else -> 30_000L
         }
         return LocationRequest.Builder(priority, pollIntervalMs)
