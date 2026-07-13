@@ -154,26 +154,59 @@ class MessagingViewModel @Inject constructor(
 
     // ----- Circles (client-side groups) -----
 
-    /** Group conversation rows, one per non-archived circle, newest activity first.
-     *  Nullable so callers can distinguish LOADING (Room has not emitted yet) from
-     *  EMPTY (no circles exist yet). See [com.locapeer.messaging.ConversationListScreen]. */
+    /**
+     * Group conversation rows, one per non-archived circle, filtered by [_searchQuery]
+     * and ordered by [_sortOrder]. Mirrors exactly how [conversations] threads query
+     * and sort for 1:1 chats, so the Circles / Archived tabs can offer the same
+     * search-and-sort affordances as the Chats tab.
+     *
+     * Nullable so callers can distinguish LOADING (Room has not emitted yet) from
+     * EMPTY (no circles exist yet). See [com.locapeer.messaging.ConversationListScreen].
+     */
     val groupConversations: StateFlow<List<GroupConversationSummary>?> =
         combine(
-            circleDao.observeCircles(),
-            messageDao.getGroupConversationSummaries(),
-            circleDao.observeMemberCounts(),
-            messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
-        ) { circles, lastMsgs, counts, unread ->
-            val lastByGid = lastMsgs.associateBy { it.groupId }
-            val countByGid = counts.associate { it.circleId to it.cnt }
-            circles.filterNot { it.isArchived }.map { c ->
-                GroupConversationSummary(
-                    circle = c,
-                    lastMessage = lastByGid[c.id],
-                    memberCount = countByGid[c.id] ?: 0,
-                    unread = unread[c.id] ?: 0
+            // Stage 1: build the unfiltered, unsorted per-circle summary rows from the
+            // underlying DAO flows. The standard typed `combine` overload tops out at 5
+            // arguments and adding `_searchQuery` + `_sortOrder` here would exceed that,
+            // so the search/sort stage is chained as a second combine below instead.
+            combine(
+                circleDao.observeCircles(),
+                messageDao.getGroupConversationSummaries(),
+                circleDao.observeMemberCounts(),
+                messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
+            ) { circles, lastMsgs, counts, unread ->
+                val lastByGid = lastMsgs.associateBy { it.groupId }
+                val countByGid = counts.associate { it.circleId to it.cnt }
+                circles.filterNot { it.isArchived }.map { c ->
+                    GroupConversationSummary(
+                        circle = c,
+                        lastMessage = lastByGid[c.id],
+                        memberCount = countByGid[c.id] ?: 0,
+                        unread = unread[c.id] ?: 0
+                    )
+                }
+            },
+            _searchQuery,
+            _sortOrder,
+        ) { list, query, sort ->
+            // Search matches the circle name OR the last-message preview (mirrors how
+            // 1:1 chat search matches `displayName` + `lastMessage.content`). `lastMessage`
+            // is nullable, hence the explicit null-safe chain.
+            val filtered = if (query.isBlank()) list
+            else list.filter {
+                it.circle.name.contains(query, ignoreCase = true) ||
+                    (it.lastMessage?.content?.contains(query, ignoreCase = true) ?: false)
+            }
+            when (sort) {
+                SortOrder.DATE -> filtered.sortedByDescending {
+                    it.lastMessage?.timestamp ?: it.circle.createdAt
+                }
+                SortOrder.NAME -> filtered.sortedBy { it.circle.name.lowercase(Locale.ROOT) }
+                SortOrder.UNREAD -> filtered.sortedWith(
+                    compareByDescending<GroupConversationSummary> { it.unread > 0 }
+                        .thenByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
                 )
-            }.sortedByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
+            }
         }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations. */

@@ -251,12 +251,13 @@ fun ConversationListScreen(
                                 )
                             }
                         } else {
-                            // Search / Sort are 1:1-chat features and have no backing
-                            // implementation for circle conversations, so they are
-                            // intentionally hidden on the Circles sub-tab. Select-all
-                            // (below) works everywhere now that circle rows support the
-                            // same selection mode as chat rows.
-                            if (currentTab != MessagesTab.CIRCLES) {
+                            // Search + Sort live on CHATS and CIRCLES — the two `conversations`
+                            // flows that actually apply them. Hidden on ARCHIVED because that
+                            // tab's VM flow doesn't run the search/sort pipeline, so a button
+                            // there would toggle state and surface nothing (silent no-op).
+                            val showSearchAndSort = currentTab == MessagesTab.CHATS ||
+                                currentTab == MessagesTab.CIRCLES
+                            if (showSearchAndSort) {
                                 IconButton(onClick = {
                                     showSearch = !showSearch
                                     if (!showSearch) vm.setSearchQuery("")
@@ -301,7 +302,8 @@ fun ConversationListScreen(
                     }
                 )
                 AnimatedVisibility(
-                    visible = showSearch && !isSelectionMode && currentTab == MessagesTab.CHATS,
+                    visible = showSearch && !isSelectionMode &&
+                        (currentTab == MessagesTab.CHATS || currentTab == MessagesTab.CIRCLES),
                     enter = expandVertically() + fadeIn(),
                     exit = shrinkVertically() + fadeOut()
                 ) {
