@@ -41,10 +41,10 @@ val HARDCODED_RELAYS = listOf(
 /**
  * The app's own relay, always used regardless of the public-relay toggle - it is the one
  * relay we control and the safe default rendezvous. The remaining [HARDCODED_RELAYS] are
- * large *public* Nostr relays: encrypted payloads are safe on them, but the event envelope
+ * large public Nostr relays: encrypted payloads are safe on them, but the event envelope
  * (recipient `p` tags, kinds, timing) is not, so a privacy-conscious user can switch them
  * off via [AppSettings.usePublicRelays] and rely on the primary plus their own custom
- * relays. Peers' invite-supplied relays are always honoured so contacts can still connect.
+ * relays. Peers' invite supplied relays are always honoured so contacts can still connect.
  */
 val PRIMARY_RELAY: String = HARDCODED_RELAYS.first()
 val PUBLIC_RELAYS: List<String> = HARDCODED_RELAYS.drop(1)
@@ -148,15 +148,15 @@ data class AppSettings(
     /** Use Material You / dynamic color on Android 12+. Independent of [themeMode]. */
     val useDynamicColor: Boolean = true,
     /**
-     * Extra relay URLs (wss://) the user added. Combined with the primary relay, the
-     * public relays (when [usePublicRelays] is on) and peers' invite relays to form the
-     * live connection set.
+     * Set of relay URLs (built-in or custom) that the user has explicitly disabled.
+     * If a URL is not in this set, it is considered enabled.
      */
-    val customRelays: List<String> = emptyList(),
-    /** Whether to connect to the built-in public relays (see [PUBLIC_RELAYS]). On by
-     *  default so existing peers stay reachable; off routes only via the primary and
-     *  custom relays for users who want to minimise metadata exposure. */
-    val usePublicRelays: Boolean = true
+    val disabledRelayUrls: Set<String> = emptySet(),
+    /**
+     * Extra relay URLs (wss://) the user added. Combined with the hardcoded
+     * [HARDCODED_RELAYS] and peers' invite relays to form the live connection set.
+     */
+    val customRelays: List<String> = emptyList()
 )
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -212,8 +212,8 @@ class AppPreferences @Inject constructor(
     private val KEY_APP_LOCK_TIMEOUT_SECONDS = intPreferencesKey("app_lock_timeout_seconds")
     private val KEY_THEME_MODE = stringPreferencesKey("theme_mode")
     private val KEY_USE_DYNAMIC_COLOR = booleanPreferencesKey("use_dynamic_color")
+    private val KEY_DISABLED_RELAY_URLS = stringPreferencesKey("disabled_relay_urls")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
-    private val KEY_USE_PUBLIC_RELAYS = booleanPreferencesKey("use_public_relays")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -267,12 +267,15 @@ class AppPreferences @Inject constructor(
                 appLockTimeoutSeconds = prefs[KEY_APP_LOCK_TIMEOUT_SECONDS] ?: 0,
                 themeMode = prefs[KEY_THEME_MODE] ?: "SYSTEM",
                 useDynamicColor = prefs[KEY_USE_DYNAMIC_COLOR] ?: true,
+                disabledRelayUrls = prefs[KEY_DISABLED_RELAY_URLS]
+                    ?.split(",")
+                    ?.filter { it.isNotBlank() }
+                    ?.toSet() ?: emptySet(),
                 customRelays = prefs[KEY_CUSTOM_RELAYS]
                     ?.split(",")
                     ?.map { it.trim() }
                     ?.filter { it.isNotBlank() }
-                    ?: emptyList(),
-                usePublicRelays = prefs[KEY_USE_PUBLIC_RELAYS] ?: true
+                    ?: emptyList()
             )
         }
         // replay = 1 caches the latest settings so newly-mounted screens get it immediately
@@ -308,15 +311,18 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { it[KEY_START_ROUTE] = route }
     }
 
-    /** Persist the user's custom relay list (already validated/deduped by the caller). */
-    suspend fun setCustomRelays(relays: List<String>) {
-        context.settingsStore.edit {
-            it[KEY_CUSTOM_RELAYS] = relays.map { r -> r.trim() }.filter { r -> r.isNotBlank() }.joinToString(",")
+    suspend fun setRelayEnabled(url: String, enabled: Boolean) {
+        context.settingsStore.edit { prefs ->
+            val current = prefs[KEY_DISABLED_RELAY_URLS]?.split(",")?.filter { it.isNotBlank() }?.toMutableSet()
+                ?: mutableSetOf()
+            if (enabled) current.remove(url) else current.add(url)
+            prefs[KEY_DISABLED_RELAY_URLS] = current.joinToString(",")
         }
     }
 
-    suspend fun setUsePublicRelays(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_USE_PUBLIC_RELAYS] = enabled }
+    /** Persist the user's custom relay list (already validated/deduped by the caller). */
+    suspend fun setCustomRelays(urls: List<String>) {
+        context.settingsStore.edit { it[KEY_CUSTOM_RELAYS] = urls.joinToString(",") }
     }
 
     suspend fun setLocalLocationRetentionDays(days: Int) {

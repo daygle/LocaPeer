@@ -7,7 +7,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Circle
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.MyLocation
 import androidx.compose.material3.*
@@ -33,7 +32,6 @@ fun AboutScreen(
     versionName: String = "1.1.1",
     versionCode: Int = 5
 ) {
-    val relayStatus by aboutVm.relayStatus.collectAsStateWithLifecycle()
     val pendingCount by aboutVm.pendingMessageCount.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -136,50 +134,6 @@ fun AboutScreen(
                                 color = if (pendingCount > 0) MaterialTheme.colorScheme.error
                                         else MaterialTheme.colorScheme.onSurfaceVariant
                             )
-                        }
-                    }
-                }
-            }
-
-            // Relay status card
-            Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)) {
-                Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(
-                        stringResource(R.string.about_relay_connections),
-                        style = MaterialTheme.typography.titleSmall,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                    if (relayStatus.isEmpty()) {
-                        Text(
-                            stringResource(R.string.about_disconnected),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    } else {
-                        relayStatus.forEach { (url, connected) ->
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(10.dp)
-                            ) {
-                                Icon(
-                                    Icons.Default.Circle,
-                                    contentDescription = if (connected) stringResource(R.string.about_connected) else stringResource(R.string.about_disconnected),
-                                    modifier = Modifier.size(10.dp),
-                                    tint = if (connected) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
-                                )
-                                Column(modifier = Modifier.weight(1f)) {
-                                    Text(
-                                        url.removePrefix("wss://"),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        fontWeight = FontWeight.Medium
-                                    )
-                                    Text(
-                                        if (connected) stringResource(R.string.about_connected) else stringResource(R.string.about_disconnected),
-                                        style = MaterialTheme.typography.labelSmall,
-                                        color = if (connected) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error
-                                    )
-                                }
-                            }
                         }
                     }
                 }

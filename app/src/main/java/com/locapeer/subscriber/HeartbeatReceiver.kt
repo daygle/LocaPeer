@@ -405,13 +405,11 @@ class HeartbeatReceiver @Inject constructor(
     /**
      * Persist the heartbeat sync baseline (throttled) so the next session's catch-up
      * starts near where this one left off instead of replaying the whole window.
-     * Only near-live events advance it: relays replay stored events newest-first, so
-     * taking the baseline from a replayed event could skip older ones still streaming
-     * in if the app dies mid-replay. Re-replaying is safe - inserts are deduped.
+     * We advance the sync baseline whenever we see a newer event, even during
+     * catch-up: if the app is killed mid-replay (or a relay flaps), the next start
+     * picks up where we left off rather than re-requesting the same 7 days of history.
      */
     private suspend fun advanceHeartbeatBaseline(eventEpoch: Long) {
-        val nowEpoch = System.currentTimeMillis() / 1000
-        if (nowEpoch - eventEpoch > 3600) return
         if (eventEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
             lastPersistedHbEpoch = eventEpoch
             prefs.setLastHeartbeatSubEpoch(eventEpoch)

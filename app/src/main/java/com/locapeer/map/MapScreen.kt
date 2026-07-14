@@ -541,60 +541,72 @@ private fun OsmdroidMapView(
                 compass.setCompassCenter(mapView.width - 45f * density, 40f * density)
             }
 
-            // Only rebuild markers/geofences if the underlying data has actually changed.
-            // This prevents the 3.8s "Davey" lag during high-frequency heartbeat catch-up.
-            val dataHash = listOf(pins, geofences, userLocation, isSosActive, myPinColor).hashCode()
-            if (mapView.getTag(R.id.map_data_hash) == dataHash) {
-                // Same data, just invalidate to ensure correct orientation/compass rendering
-                mapView.invalidate()
-                return@AndroidView
-            }
-            mapView.setTag(R.id.map_data_hash, dataHash)
+            // Only rebuild markers/geofences if the underlying contact data has actually changed.
+            // We exclude userLocation from this hash so that frequent GPS jitter doesn't
+            // trigger a full (expensive) clear and re-add of all overlays.
+            val dataHash = listOf(
+                pins.map { Triple(it.peer.deviceId, it.heartbeat?.timestamp, it.isOverdue) },
+                geofences,
+                isSosActive,
+                myPinColor
+            ).hashCode()
 
-            mapView.overlays.removeAll { it is Marker || it is Polygon }
-            geofences.forEach { geofenceOnMap ->
-                val fence = geofenceOnMap.fence
-                val strokeColor = GeofenceBoth
-                val circle = Polygon().apply {
-                    points = Polygon.pointsAsCircle(GeoPoint(fence.lat, fence.lng), fence.radiusMetres.toDouble())
-                    fillPaint.color = android.graphics.Color.argb(30, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
-                    outlinePaint.color = android.graphics.Color.argb(200, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
-                    outlinePaint.strokeWidth = 4f
-                    title = fence.name
-                }
-                mapView.overlays.add(circle)
-                val label = Marker(mapView).apply {
-                    position = GeoPoint(GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()), fence.lng)
-                    icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, circle.outlinePaint.color)
-                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                    infoWindow = null
-                    setOnMarkerClickListener { _, _ -> true }
-                }
-                mapView.overlays.add(label)
-            }
-            pins.forEach { pinData ->
-                pinData.heartbeat?.let { hb ->
-                    val marker = Marker(mapView).apply {
-                        position = GeoPoint(hb.lat, hb.lng)
-                        title = pinData.peer.displayName
-                        setIcon(MarkerIconFactory.create(context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor))
+            if (mapView.getTag(R.id.map_data_hash) != dataHash) {
+                mapView.setTag(R.id.map_data_hash, dataHash)
+                mapView.overlays.removeAll { it is Marker || it is Polygon }
+                geofences.forEach { geofenceOnMap ->
+                    val fence = geofenceOnMap.fence
+                    val strokeColor = GeofenceBoth
+                    val circle = Polygon().apply {
+                        points = Polygon.pointsAsCircle(GeoPoint(fence.lat, fence.lng), fence.radiusMetres.toDouble())
+                        fillPaint.color = android.graphics.Color.argb(30, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
+                        outlinePaint.color = android.graphics.Color.argb(200, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
+                        outlinePaint.strokeWidth = 4f
+                        title = fence.name
+                    }
+                    mapView.overlays.add(circle)
+                    val label = Marker(mapView).apply {
+                        position = GeoPoint(GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()), fence.lng)
+                        icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, circle.outlinePaint.color)
                         setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                         infoWindow = null
-                        setOnMarkerClickListener { _, _ -> onPinTapped(pinData); true }
+                        setOnMarkerClickListener { _, _ -> true }
                     }
-                    mapView.overlays.add(marker)
+                    mapView.overlays.add(label)
+                }
+                pins.forEach { pinData ->
+                    pinData.heartbeat?.let { hb ->
+                        val marker = Marker(mapView).apply {
+                            position = GeoPoint(hb.lat, hb.lng)
+                            title = pinData.peer.displayName
+                            setIcon(MarkerIconFactory.create(context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor))
+                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                            infoWindow = null
+                            setOnMarkerClickListener { _, _ -> onPinTapped(pinData); true }
+                        }
+                        mapView.overlays.add(marker)
+                    }
                 }
             }
+
+            // Always update my location marker position separately if userLocation changed
             userLocation?.let { loc ->
-                val myMarker = Marker(mapView).apply {
-                    position = loc
-                    title = context.getString(R.string.map_you)
-                    icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive)
-                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                    infoWindow = null
-                }
-                mapView.overlays.add(myMarker)
+                val myLocationLabel = context.getString(R.string.map_you)
+                val myMarker = mapView.overlays.filterIsInstance<Marker>()
+                    .firstOrNull { it.title == myLocationLabel }
+                    ?: Marker(mapView).apply {
+                        title = myLocationLabel
+                        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                        infoWindow = null
+                        mapView.overlays.add(this)
+                    }
+                myMarker.position = loc
+                myMarker.icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive)
+            } ?: run {
+                val myLocationLabel = context.getString(R.string.map_you)
+                mapView.overlays.removeAll { it is Marker && it.title == myLocationLabel }
             }
+
             mapView.invalidate()
         },
         modifier = modifier

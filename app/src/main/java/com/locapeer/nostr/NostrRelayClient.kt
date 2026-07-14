@@ -9,8 +9,7 @@ import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
-import com.locapeer.settings.PRIMARY_RELAY
-import com.locapeer.settings.PUBLIC_RELAYS
+import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -143,20 +142,18 @@ class NostrRelayClient @Inject constructor(
             }
         }
         scope.launch {
-            // The live connection set combines the user's relay preferences (primary +
-            // optional public + custom) with peers' invite-supplied relays, so a peer stays
-            // reachable on their own relay even if the user disabled the public ones.
+            // The live connection set combines the hardcoded relays and the user's custom
+            // relays, filtered by their individual enabled status. Peers' invite relays
+            // are always added so contacts stay reachable.
             val peerRelaysFlow = peerDao.getAllPeers().map { peers -> peers.map { it.relayUrl } }
             val relayPrefsFlow = prefs.settings
-                .map { it.usePublicRelays to it.customRelays }
+                .map { s -> s.disabledRelayUrls to s.customRelays }
                 .distinctUntilChanged()
-            combine(peerRelaysFlow, relayPrefsFlow) { peerRelays, (usePublic, custom) ->
-                val configured = buildList {
-                    add(PRIMARY_RELAY)
-                    if (usePublic) addAll(PUBLIC_RELAYS)
-                    addAll(custom)
-                }
-                (configured + peerRelays).asSequence()
+            combine(peerRelaysFlow, relayPrefsFlow) { peerRelays, (disabled, custom) ->
+                val allConfigured: List<String> = HARDCODED_RELAYS + custom
+                val enabled = allConfigured.filter { it !in disabled }
+
+                (enabled + peerRelays).asSequence()
                     .filter { isValidRelayUrl(it) }
                     .toSet()
             }.distinctUntilChanged().collect { allUrls ->
