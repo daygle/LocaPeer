@@ -487,6 +487,16 @@ class HeartbeatReceiver @Inject constructor(
     private fun sendSosNotification(name: String, payload: HeartbeatPayload) {
         val intent = Intent(context, MainActivity::class.java)
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        // Public (device-lock-screen) version: keep the urgency - who is in trouble - but
+        // drop the raw coordinates from the private text, which the full notification below
+        // still carries once the phone is unlocked.
+        val publicVersion = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_alert)
+            .setContentTitle(context.getString(R.string.notif_sos_title, name))
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .build()
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_alert)
             .setContentTitle(context.getString(R.string.notif_sos_title, name))
@@ -495,6 +505,9 @@ class HeartbeatReceiver @Inject constructor(
             .setCategory(NotificationCompat.CATEGORY_ALARM)
             .setContentIntent(pi)
             .setAutoCancel(true)
+            // Redact the coordinate-bearing text on a locked screen; show publicVersion instead.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            .setPublicVersion(publicVersion)
             .build()
         notificationManager.notify(payload.deviceId, NOTIF_ID_SOS, notification)
     }
@@ -902,6 +915,8 @@ class HeartbeatReceiver @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)
+            // Hide the sender/preview on a locked screen; the system shows a redacted form.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify(circleId, NOTIF_ID_MESSAGE, notification)
     }
@@ -921,6 +936,8 @@ class HeartbeatReceiver @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)
+            // Hide the sender name/preview on a locked screen; the system shows a redacted form.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify(peerId, NOTIF_ID_MESSAGE, notification)
     }
@@ -1031,6 +1048,8 @@ class HeartbeatReceiver @Inject constructor(
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)
+            // Names in the body are hidden on a locked screen.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify(event.pubkey, NOTIF_ID_TRACKING_ALERT, notification)
     }
@@ -1280,6 +1299,12 @@ class HeartbeatReceiver @Inject constructor(
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
             description = context.getString(R.string.channel_desc_alerts)
+            // Redact contact names / coordinates on the device lock screen by default.
+            // Takes effect on new installs (Android ignores channel-property changes after
+            // creation); the per-notification setVisibility on the sensitive alerts covers
+            // existing installs too. A locked phone showing a peer's location or an SOS's
+            // coordinates is exactly what a location app must not do.
+            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
         }
         notificationManager.createNotificationChannel(channel)
     }
@@ -1289,7 +1314,10 @@ class HeartbeatReceiver @Inject constructor(
             CHANNEL_ID_MESSAGES,
             context.getString(R.string.channel_name_messages),
             NotificationManager.IMPORTANCE_HIGH
-        ).apply { description = context.getString(R.string.channel_desc_messages) }
+        ).apply {
+            description = context.getString(R.string.channel_desc_messages)
+            lockscreenVisibility = android.app.Notification.VISIBILITY_PRIVATE
+        }
         notificationManager.createNotificationChannel(channel)
     }
 }
