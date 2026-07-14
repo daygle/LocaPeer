@@ -657,9 +657,6 @@
     <!-- ── பற்றி திரை ───────────────────────────────────────────────────── -->
     <string name="about_version">பதிப்பு %1$s (பில்ட் %2$d)</string>
     <string name="about_tagline">நீங்கள் நம்பும் நபர்களுடன் தனிப்பட்ட இருப்பிடப் பகிர்வு. கணக்குகள் இல்லை, கிளவுட் இல்லை, எங்களால் கண்காணிப்பு இல்லை.</string>
-    <string name="about_relay_connections">ரிலே இணைப்புகள்</string>
-    <string name="about_connected">இணைக்கப்பட்டது</string>
-    <string name="about_disconnected">இணைப்பு துண்டிக்கப்பட்டது</string>
     <string name="about_open_source">திறந்த மூல நூலகங்கள்</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap சார்ந்த வரைபட ரெண்டரிங்</string>
     <string name="about_lib_okhttp_desc">Nostr ரிலேவுக்கான WebSocket போக்குவரத்து</string>

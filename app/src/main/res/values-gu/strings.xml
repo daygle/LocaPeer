@@ -657,9 +657,6 @@
     <!-- ── વિશે સ્ક્રીન ───────────────────────────────────────────────────── -->
     <string name="about_version">સંસ્કરણ %1$s (બિલ્ડ %2$d)</string>
     <string name="about_tagline">તમે વિશ્વાસ કરો છો તેવા લોકો સાથે ખાનગી સ્થાન શેરિંગ. કોઈ એકાઉન્ટ નથી, કોઈ ક્લાઉડ નથી, અમારા દ્વારા કોઈ ટ્રેકિંગ નથી.</string>
-    <string name="about_relay_connections">રિલે કનેક્શન્સ</string>
-    <string name="about_connected">જોડાયેલ</string>
-    <string name="about_disconnected">ડિસ્કનેક્ટ થયેલ</string>
     <string name="about_open_source">ઓપન સોર્સ લાઈબ્રેરીઓ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap આધારિત નકશો રેન્ડરિંગ</string>
     <string name="about_lib_okhttp_desc">Nostr રિલે માટે WebSocket પરિવહન</string>

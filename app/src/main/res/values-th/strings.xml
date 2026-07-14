@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">เวอร์ชัน %1$s (บิลด์ %2$d)</string>
     <string name="about_tagline">แชร์ตำแหน่งแบบส่วนตัวกับคนที่คุณไว้ใจ ไม่มีบัญชี ไม่มีคลาวด์ เราไม่ติดตามคุณ</string>
-    <string name="about_relay_connections">การเชื่อมต่อรีเลย์</string>
-    <string name="about_connected">เชื่อมต่อแล้ว</string>
-    <string name="about_disconnected">ตัดการเชื่อมต่อ</string>
     <string name="about_open_source">ไลบรารีโอเพนซอร์ส</string>
     <string name="about_lib_osmdroid_desc">การแสดงแผนที่บนพื้นฐาน OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">การส่งข้อมูล WebSocket สำหรับรีเลย์ Nostr</string>

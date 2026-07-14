@@ -657,9 +657,6 @@
     <!-- ── Über-Bildschirm ───────────────────────────────────────────────────── -->
     <string name="about_version">Version %1$s (Build %2$d)</string>
     <string name="about_tagline">Private Standortfreigabe mit Menschen, denen Sie vertrauen. Keine Konten, keine Cloud, kein Tracking durch uns.</string>
-    <string name="about_relay_connections">Relay-Verbindungen</string>
-    <string name="about_connected">Verbunden</string>
-    <string name="about_disconnected">Getrennt</string>
     <string name="about_open_source">Open-Source-Bibliotheken</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap-basierte Kartenwiedergabe</string>
     <string name="about_lib_okhttp_desc">WebSocket-Transport für Nostr-Relay</string>

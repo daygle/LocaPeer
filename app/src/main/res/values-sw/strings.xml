@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Toleo %1$s (jengo %2$d)</string>
     <string name="about_tagline">Ushiriki wa faragha wa mahali na watu unaowaamini. Hakuna akaunti, hakuna wingu, hakuna ufuatiliaji na sisi.</string>
-    <string name="about_relay_connections">Viunganisho vya Relay</string>
-    <string name="about_connected">Imeunganishwa</string>
-    <string name="about_disconnected">Imekatika</string>
     <string name="about_open_source">Maktaba za Chanzo Wazi</string>
     <string name="about_lib_osmdroid_desc">Utoaji wa ramani kulingana na OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Usafirishaji wa WebSocket kwa relay ya Nostr</string>

@@ -644,9 +644,6 @@
     <!-- ── 关于屏幕 ───────────────────────────────────────────────────── -->
     <string name="about_version">版本 %1$s (内部版本 %2$d)</string>
     <string name="about_tagline">与您信任的人私密共享位置。无账号，无云端，我们不进行任何追踪。</string>
-    <string name="about_relay_connections">中继连接</string>
-    <string name="about_connected">已连接</string>
-    <string name="about_disconnected">已断开</string>
     <string name="about_open_source">开源库</string>
     <string name="about_lib_osmdroid_desc">基于 OpenStreetMap 的地图渲染</string>
     <string name="about_lib_okhttp_desc">用于 Nostr 中继的 WebSocket 传输</string>

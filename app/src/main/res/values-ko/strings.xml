@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">버전 %1$s (빌드 %2$d)</string>
     <string name="about_tagline">신뢰하는 사람들과의 비공개 위치 공유. 계정 없음, 클라우드 없음, 우리의 추적 없음.</string>
-    <string name="about_relay_connections">릴레이 연결</string>
-    <string name="about_connected">연결됨</string>
-    <string name="about_disconnected">연결 끊김</string>
     <string name="about_open_source">오픈 소스 라이브러리</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap 기반 지도 렌더링</string>
     <string name="about_lib_okhttp_desc">Nostr 릴레이용 WebSocket 전송</string>

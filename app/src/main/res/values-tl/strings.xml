@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Bersyon %1$s (build %2$d)</string>
     <string name="about_tagline">Pribadong pagbabahagi ng lokasyon sa mga taong pinagkakatiwalaan mo. Walang account, walang cloud, walang pagsubaybay mula sa amin.</string>
-    <string name="about_relay_connections">Mga Koneksyon sa Relay</string>
-    <string name="about_connected">Nakakonekta</string>
-    <string name="about_disconnected">Naka-disconnect</string>
     <string name="about_open_source">Mga Open Source Library</string>
     <string name="about_lib_osmdroid_desc">Pag-render ng mapa batay sa OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket transport para sa Nostr relay</string>

@@ -656,9 +656,6 @@
     <!-- ── Tela Sobre ──────────────────────────────────────────────────────── -->
     <string name="about_version">Versão %1$s (compilação %2$d)</string>
     <string name="about_tagline">Compartilhamento privado de localização com pessoas em quem você confia. Sem contas, sem nuvem, sem rastreamento por nossa parte.</string>
-    <string name="about_relay_connections">Conexões de Relay</string>
-    <string name="about_connected">Conectado</string>
-    <string name="about_disconnected">Desconectado</string>
     <string name="about_open_source">Bibliotecas de Código Aberto</string>
     <string name="about_lib_osmdroid_desc">Renderização de mapas baseada no OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Transporte WebSocket para o relay Nostr</string>

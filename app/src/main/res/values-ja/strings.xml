@@ -644,9 +644,6 @@
     <!-- ── 詳細画面 ───────────────────────────────────────────────────── -->
     <string name="about_version">バージョン %1$s (ビルド %2$d)</string>
     <string name="about_tagline">信頼できる人とのプライベートな位置共有。アカウントなし、クラウドなし、追跡なし。</string>
-    <string name="about_relay_connections">リレー接続</string>
-    <string name="about_connected">接続済み</string>
-    <string name="about_disconnected">切断</string>
     <string name="about_open_source">オープンソースライブラリ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMapベースのマップレンダリング</string>
     <string name="about_lib_okhttp_desc">Nostrリレー用のWebSocketトランスポート</string>

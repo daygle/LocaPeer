@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">版本 %1$s（組建 %2$d）</string>
     <string name="about_tagline">與您信任的人私密分享位置。無帳號、無雲端、我們不追蹤。</string>
-    <string name="about_relay_connections">中繼站連線</string>
-    <string name="about_connected">已連線</string>
-    <string name="about_disconnected">已斷線</string>
     <string name="about_open_source">開放原始碼程式庫</string>
     <string name="about_lib_osmdroid_desc">以 OpenStreetMap 為基礎的地圖繪製</string>
     <string name="about_lib_okhttp_desc">Nostr 中繼站的 WebSocket 傳輸</string>

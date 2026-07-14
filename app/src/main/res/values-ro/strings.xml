@@ -670,9 +670,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Versiunea %1$s (build %2$d)</string>
     <string name="about_tagline">Partajare privată a locației cu persoane de încredere. Fără conturi, fără cloud, fără urmărire din partea noastră.</string>
-    <string name="about_relay_connections">Conexiuni la relee</string>
-    <string name="about_connected">Conectat</string>
-    <string name="about_disconnected">Deconectat</string>
     <string name="about_open_source">Biblioteci open source</string>
     <string name="about_lib_osmdroid_desc">Redare de hărți bazată pe OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Transport WebSocket pentru releul Nostr</string>

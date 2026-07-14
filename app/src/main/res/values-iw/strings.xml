@@ -670,9 +670,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">גרסה %1$s (בנייה %2$d)</string>
     <string name="about_tagline">שיתוף מיקום פרטי עם אנשים שאתה סומך עליהם. ללא חשבונות, ללא ענן, ללא מעקב מצדנו.</string>
-    <string name="about_relay_connections">חיבורי ממסר</string>
-    <string name="about_connected">מחובר</string>
-    <string name="about_disconnected">מנותק</string>
     <string name="about_open_source">ספריות קוד פתוח</string>
     <string name="about_lib_osmdroid_desc">עיבוד מפות מבוסס OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">העברת WebSocket עבור ממסר Nostr</string>

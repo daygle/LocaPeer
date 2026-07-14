@@ -683,9 +683,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Verze %1$s (sestavení %2$d)</string>
     <string name="about_tagline">Soukromé sdílení polohy s lidmi, kterým důvěřujete. Žádné účty, žádný cloud, žádné sledování z naší strany.</string>
-    <string name="about_relay_connections">Připojení k relé</string>
-    <string name="about_connected">Připojeno</string>
-    <string name="about_disconnected">Odpojeno</string>
     <string name="about_open_source">Open source knihovny</string>
     <string name="about_lib_osmdroid_desc">Vykreslování map založené na OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket přenos pro relé Nostr</string>

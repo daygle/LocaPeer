@@ -709,9 +709,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">الإصدار %1$s (البنية %2$d)</string>
     <string name="about_tagline">مشاركة خاصة للموقع مع من تثق بهم. بدون حسابات، بدون سحابة، بدون تتبّع من جانبنا.</string>
-    <string name="about_relay_connections">اتصالات المرحّلات</string>
-    <string name="about_connected">متصل</string>
-    <string name="about_disconnected">غير متصل</string>
     <string name="about_open_source">مكتبات مفتوحة المصدر</string>
     <string name="about_lib_osmdroid_desc">عرض الخرائط المعتمد على OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">نقل WebSocket لمرحّل Nostr</string>

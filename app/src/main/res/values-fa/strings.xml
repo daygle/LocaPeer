@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">نسخه %1$s (ساخت %2$d)</string>
     <string name="about_tagline">اشتراک‌گذاری خصوصی موقعیت با افراد مورد اعتمادتان. بدون حساب، بدون ابر، بدون ردیابی از سوی ما.</string>
-    <string name="about_relay_connections">اتصال‌های رله</string>
-    <string name="about_connected">متصل</string>
-    <string name="about_disconnected">قطع</string>
     <string name="about_open_source">کتابخانه‌های متن‌باز</string>
     <string name="about_lib_osmdroid_desc">رسم نقشه مبتنی بر OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">انتقال WebSocket برای رله Nostr</string>

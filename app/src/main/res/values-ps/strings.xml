@@ -657,9 +657,6 @@
     <!-- ── په اړه سکرین ───────────────────────────────────────────────────── -->
     <string name="about_version">نسخه %1$s (build %2$d)</string>
     <string name="about_tagline">له هغو خلکو سره د ځای شخصي شریکول چې تاسو پرې باور لرئ. بې اکاونټه، بې کلاوډه، زموږ لخوا بې تعقیبه.</string>
-    <string name="about_relay_connections">د ریلی اړیکې</string>
-    <string name="about_connected">وصل شو</string>
-    <string name="about_disconnected">قطع شو</string>
     <string name="about_open_source">د خلاصې سرچینې کتابتونونه</string>
     <string name="about_lib_osmdroid_desc">د نقشې رینډرینګ د OpenStreetMap پر بنسټ</string>
     <string name="about_lib_okhttp_desc">د Nostr ریلی لپاره د WebSocket لیږد</string>

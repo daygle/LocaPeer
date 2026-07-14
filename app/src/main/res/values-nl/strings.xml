@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Versie %1$s (build %2$d)</string>
     <string name="about_tagline">Privé locatie delen met mensen die je vertrouwt. Geen accounts, geen cloud, geen tracking door ons.</string>
-    <string name="about_relay_connections">Relayverbindingen</string>
-    <string name="about_connected">Verbonden</string>
-    <string name="about_disconnected">Niet verbonden</string>
     <string name="about_open_source">Opensourcebibliotheken</string>
     <string name="about_lib_osmdroid_desc">Kaartweergave op basis van OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket-transport voor Nostr-relay</string>

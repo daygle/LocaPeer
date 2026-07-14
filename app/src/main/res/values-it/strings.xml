@@ -657,9 +657,6 @@
     <!-- ── Schermata informazioni ─────────────────────────────────────────── -->
     <string name="about_version">Versione %1$s (build %2$d)</string>
     <string name="about_tagline">Condivisione privata della posizione con persone di cui ti fidi. Nessun account, nessun cloud, nessun tracciamento da parte nostra.</string>
-    <string name="about_relay_connections">Connessioni relay</string>
-    <string name="about_connected">Connesso</string>
-    <string name="about_disconnected">Disconnesso</string>
     <string name="about_open_source">Librerie Open Source</string>
     <string name="about_lib_osmdroid_desc">Rendering mappe basato su OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Trasporto WebSocket per relay Nostr</string>

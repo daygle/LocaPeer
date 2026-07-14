@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Versi %1$s (binaan %2$d)</string>
     <string name="about_tagline">Perkongsian lokasi peribadi dengan orang yang anda percayai. Tiada akaun, tiada awan, tiada penjejakan oleh kami.</string>
-    <string name="about_relay_connections">Sambungan Geganti</string>
-    <string name="about_connected">Bersambung</string>
-    <string name="about_disconnected">Terputus</string>
     <string name="about_open_source">Perpustakaan Sumber Terbuka</string>
     <string name="about_lib_osmdroid_desc">Pemaparan peta berasaskan OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Pengangkutan WebSocket untuk geganti Nostr</string>
