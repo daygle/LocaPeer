@@ -657,9 +657,7 @@
     <!-- ── ስለ ማያ ገጽ ───────────────────────────────────────────────────── -->
     <string name="about_version">ስሪት %1$s (build %2$d)</string>
     <string name="about_tagline">የግል አካባቢን ከሚያምኗቸው ሰዎች ጋር ማጋራት። ምንም መለያ የለም፣ ምንም ክላውድ የለም፣ በእኛ ክትትል የለም።</string>
-    <string name="about_relay_connections">የሪሌይ ግንኙነቶች</string>
-    <string name="about_connected">ተገናኝቷል</string>
-    <string name="about_disconnected">ተቋርጧል</string>
+
     <string name="about_open_source">ክፍት ምንጭ ላይብረሪዎች</string>
     <string name="about_lib_osmdroid_desc">በOpenStreetMap ላይ የተመሰረተ የካርታ አቀራረብ</string>
     <string name="about_lib_okhttp_desc">ለNostr ሪሌይ የWebSocket ማጓጓዣ</string>

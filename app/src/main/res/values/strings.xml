@@ -173,15 +173,8 @@
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Choose which relays carry your data</string>
     <string name="relays_intro">LocaPeer sends your data through Nostr relays. Content is always end-to-end encrypted, but public relays can still see which contacts you talk to and when. Use your own relays to reduce that exposure.</string>
-    <string name="relays_primary_header">Primary Relay</string>
-    <string name="relays_primary_toggle">Use Primary Relay</string>
-    <string name="relays_primary_toggle_desc">The default relay for LocaPeer. Turn off to use only your own custom relays.</string>
     <string name="relays_public_header">Public Relays</string>
-    <string name="relays_public_toggle">Use Public Relays</string>
-    <string name="relays_public_toggle_desc">Recommended so contacts on public relays stay reachable. Turn off to route only through your primary and custom relays.</string>
     <string name="relays_custom_header">Your Relays</string>
-    <string name="relays_custom_toggle">Use Custom Relays</string>
-    <string name="relays_custom_toggle_desc">Connect to the relay addresses you have added below.</string>
     <string name="relays_custom_empty">No custom relays added.</string>
     <string name="relays_add_hint">wss://your-relay.example</string>
     <string name="relays_add">Add Relay</string>
@@ -748,9 +741,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Version %1$s (build %2$d)</string>
     <string name="about_tagline">Private, end-to-end encrypted location sharing with people you trust. No accounts, no proprietary servers, and no tracking. Built on open source and open protocols.</string>
-    <string name="about_relay_connections">Relay Connections</string>
-    <string name="about_connected">Connected</string>
-    <string name="about_disconnected">Disconnected</string>
     <string name="about_open_source">Open Source Libraries</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap-based map rendering</string>
     <string name="about_lib_okhttp_desc">WebSocket transport for Nostr relay</string>

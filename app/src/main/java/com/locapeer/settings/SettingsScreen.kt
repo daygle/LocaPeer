@@ -1262,7 +1262,7 @@ private fun tabLabel(route: String): String = when (route) {
     "messages" -> stringResource(R.string.tab_messages)
     "history-tab" -> stringResource(R.string.tab_history)
     "contacts" -> stringResource(R.string.tab_contacts)
-    "invite" -> stringResource(R.string.tab_qr)
+    "invite" -> stringResource(R.string.contacts_cd_qr_invite)
     "settings" -> stringResource(R.string.tab_settings)
     else -> route.replaceFirstChar { it.uppercaseChar() }
 }
