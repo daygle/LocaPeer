@@ -42,6 +42,7 @@ import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.PermissionsScreen
+import com.locapeer.settings.RelaySettingsScreen
 import com.locapeer.settings.SettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.circles.CircleEditScreen
@@ -250,6 +251,7 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
+                    onNavigateToRelays = { navController.navigate("relays") },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
                     onNavigateToGeofences = { navController.navigate("geofences") },
                     onNavigateToMyHistory = { pubkeyHex ->
@@ -427,6 +429,17 @@ fun LocaPeerNavHost(
             ) {
                 CustomizeNavScreen(
                     prefs = prefs,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                "relays",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                RelaySettingsScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }

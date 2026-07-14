@@ -310,6 +310,7 @@ class MessagingViewModel @Inject constructor(
             messageDao.deleteAllForGroup(circleId)
             circleDao.clearMembers(circleId)
             circleDao.deleteCircle(circleId)
+            MediaCache.clearDecryptedMedia(context)
         }
     }
 
@@ -567,7 +568,11 @@ class MessagingViewModel @Inject constructor(
     fun getMessages(peerId: String) = messageDao.getMessagesForPeer(peerId)
 
     fun deleteMessage(msg: MessageEntity) {
-        viewModelScope.launch { messageDao.delete(msg) }
+        viewModelScope.launch {
+            messageDao.delete(msg)
+            // Drop any decrypted copy of this message's media staged in the cache.
+            MediaCache.clearDecryptedMedia(context)
+        }
     }
 
     fun deleteMessageFromRemote(msg: MessageEntity) {
@@ -622,7 +627,11 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun deleteConversation(peerId: String) {
-        viewModelScope.launch { messageDao.deleteAllForPeer(peerId) }
+        viewModelScope.launch {
+            messageDao.deleteAllForPeer(peerId)
+            // Purge any decrypted attachments/voice notes staged in the cache.
+            MediaCache.clearDecryptedMedia(context)
+        }
     }
 
     fun deleteConversationFromRemote(peerId: String) {

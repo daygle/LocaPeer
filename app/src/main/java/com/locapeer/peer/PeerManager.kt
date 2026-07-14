@@ -1,13 +1,19 @@
 package com.locapeer.peer
 
+import android.content.Context
 import android.util.Log
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.messaging.MediaCache
+import dagger.hilt.android.qualifiers.ApplicationContext
 import com.locapeer.data.dao.CircleDao
+import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.dao.PendingRequestDao
+import com.locapeer.data.dao.ProximityAlertDao
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
@@ -27,26 +33,49 @@ data class DataDeletionPayload(val senderPubKeyHex: String)
 
 @Singleton
 class PeerManager @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val circleDao: CircleDao,
+    private val geofenceAssignmentDao: GeofenceAssignmentDao,
+    private val proximityAlertDao: ProximityAlertDao,
+    private val pendingRequestDao: PendingRequestDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient
 ) {
     private val json = Json { ignoreUnknownKeys = true }
 
-    /** Notify the peer, then remove them and all their data locally. */
-    suspend fun removePeer(deviceId: String) {
-        notifyPeerRemoved(deviceId)
+    /**
+     * Delete every local trace of a contact. Centralised so all three removal paths
+     * (we remove them, we remove ourselves from them, they remove us) wipe the same
+     * set of per-peer rows - previously each path cleaned a different subset, leaving
+     * message history, geofence assignments or proximity alerts behind to reactivate
+     * if the contact was ever re-added.
+     */
+    private suspend fun wipeAllPeerData(deviceId: String) {
         peerDao.deletePeerById(deviceId)
         heartbeatDao.deleteAllForDevice(deviceId)
+        messageDao.deleteAllForPeer(deviceId)
         sharingConfigDao.deleteForPeer(deviceId)
         // Drop them from every circle too, or future circle messages / circle location
         // shares would keep fanning out individually-encrypted copies to their pubkey.
         circleDao.removeMemberFromAllCircles(deviceId)
+        // Per-contact tracking config keyed by device id: without these a re-added
+        // contact silently reactivates geofences/proximity alerts the user set up before.
+        geofenceAssignmentDao.deleteForTrackedDevice(deviceId)
+        proximityAlertDao.deleteForPeer(deviceId)
+        pendingRequestDao.deleteByPubkey(deviceId)
+        // Drop any decrypted media we cached to view/play from this contact.
+        MediaCache.clearDecryptedMedia(context)
+    }
+
+    /** Notify the peer, then remove them and all their data locally. */
+    suspend fun removePeer(deviceId: String) {
+        notifyPeerRemoved(deviceId)
+        wipeAllPeerData(deviceId)
     }
 
     /**
@@ -58,11 +87,7 @@ class PeerManager @Inject constructor(
         sendDeleteMyLocation(deviceId)
         notifyPeerRemoved(deviceId)
         // Also clean up locally - peer agreed to mutual tracking, so remove them here too
-        peerDao.deletePeerById(deviceId)
-        heartbeatDao.deleteAllForDevice(deviceId)
-        messageDao.deleteAllForPeer(deviceId)
-        sharingConfigDao.deleteForPeer(deviceId)
-        circleDao.removeMemberFromAllCircles(deviceId)
+        wipeAllPeerData(deviceId)
     }
 
     /** Purge all messages we sent to a specific peer on their device. */
@@ -77,16 +102,14 @@ class PeerManager @Inject constructor(
 
     /** Called when we receive a PEER_REMOVED event - remove the sender silently. */
     suspend fun handleRemovalByPeer(senderDeviceId: String) {
-        peerDao.deletePeerById(senderDeviceId)
-        heartbeatDao.deleteAllForDevice(senderDeviceId)
-        sharingConfigDao.deleteForPeer(senderDeviceId)
-        circleDao.removeMemberFromAllCircles(senderDeviceId)
+        wipeAllPeerData(senderDeviceId)
         Log.i(TAG, "Removed peer $senderDeviceId after they removed us")
     }
 
     /** Called when we receive DELETE_MY_MESSAGES - wipe all messages sent by that pubkey. */
     suspend fun handleDeleteMyMessages(senderPubKeyHex: String) {
         messageDao.deleteAllFromSender(senderPubKeyHex)
+        MediaCache.clearDecryptedMedia(context)
         Log.i(TAG, "Deleted all messages from $senderPubKeyHex at their request")
     }
 

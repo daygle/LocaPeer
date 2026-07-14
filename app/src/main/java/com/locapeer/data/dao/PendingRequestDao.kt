@@ -18,6 +18,11 @@ interface PendingRequestDao {
     @Query("DELETE FROM pending_requests WHERE senderPubkey = :senderPubkey")
     suspend fun deleteByPubkey(senderPubkey: String)
 
+    /** Age out stale incoming requests so a stranger cycling keys can't grow this table
+     *  without bound (each request is a notification + a row). */
+    @Query("DELETE FROM pending_requests WHERE receivedAt < :cutoff")
+    suspend fun deleteOlderThan(cutoff: Long)
+
     @Query("SELECT COUNT(*) FROM pending_requests")
     fun observeCount(): Flow<Int>
 }

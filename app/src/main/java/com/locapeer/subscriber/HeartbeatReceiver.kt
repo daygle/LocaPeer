@@ -94,6 +94,16 @@ private const val HB_BATCH_MAX_DELAY_MS = 500L
 // Side effects (SOS alarm, geofence/proximity alerts) only fire for heartbeats this
 // recent; older ones are history backfill and must not raise stale alerts.
 private const val FRESH_HEARTBEAT_MS = 10 * 60_000L
+// Tolerance for inter-device clock skew when rejecting a peer command timestamped
+// before we added the contact (see isStalePeerCommand). Generous enough to absorb
+// real skew, far tighter than the days-old replays it is meant to block.
+private const val CONTROL_CLOCK_SKEW_MS = 24 * 60 * 60_000L
+// A peer-supplied heartbeat timestamp this far in the future is clock skew at best and
+// a poisoned "latest pin" at worst; clamp it to arrival time (see processEvent).
+private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
+// Ceiling for the sender-reported heartbeat interval (24h). Above this the value is
+// meaningless for missed-alert timing and only useful for suppression, so it is capped.
+private const val MAX_EXPECTED_INTERVAL_S = 24 * 60 * 60L
 // Throttle for persisting the heartbeat sync baseline as live events arrive.
 private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
 
@@ -326,10 +336,25 @@ class HeartbeatReceiver @Inject constructor(
             val privBytes = crypto.hexToBytes(privHex)
             val plaintext = crypto.nip44Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
+            // Reject out-of-range coordinates outright: the payload is peer-controlled,
+            // and a lat/lng outside the valid range feeds NaN-free but nonsensical values
+            // into the geofence/proximity distance math and the map. (kotlinx blocks
+            // NaN/Infinity already; this covers merely-implausible finite values.)
+            if (payload.lat !in -90.0..90.0 || payload.lng !in -180.0..180.0) {
+                Log.w(TAG, "Dropping heartbeat from ${event.pubkey}: out-of-range coords")
+                return
+            }
             // Use event.pubkey (canonical 64-char Nostr pubkey) so the heartbeat always
             // matches the peer row regardless of what the payload.deviceId contains.
             val canonicalDeviceId = event.pubkey
-            val timestampMs = Instant.parse(payload.timestamp).toEpochMilli()
+            // Clamp a future-dated timestamp to arrival time. Queries order by the
+            // sender-controlled timestamp, so a far-future value would pin as the
+            // permanent "latest" position and re-pass the isFresh gate on every relay
+            // redelivery, re-firing SOS/geofence alerts. Past timestamps are fine -
+            // they are exactly how catch-up backfill lands as history.
+            val now = System.currentTimeMillis()
+            val rawTimestampMs = Instant.parse(payload.timestamp).toEpochMilli()
+            val timestampMs = rawTimestampMs.coerceAtMost(now + HEARTBEAT_FUTURE_SKEW_MS)
             // Catch-up subscriptions can replay events already stored (relay overlap,
             // dedupe-cache eviction across restarts) - never insert the same ping twice.
             // Also drops duplicates still sitting in the un-flushed batch buffer.
@@ -351,7 +376,11 @@ class HeartbeatReceiver @Inject constructor(
                 speed = payload.speed,
                 bearing = payload.bearing,
                 altitude = payload.altitude,
-                expectedIntervalSeconds = payload.expectedIntervalSeconds
+                // Bound the sender-reported interval to a sane range. The missed-heartbeat
+                // watchdog multiplies this by 1000 then ×2; an unbounded value would either
+                // overflow or push the alert threshold so far out that a peer could silently
+                // suppress their own missed-location alerts by claiming a huge interval.
+                expectedIntervalSeconds = payload.expectedIntervalSeconds.coerceIn(0L, MAX_EXPECTED_INTERVAL_S)
             )
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
@@ -896,9 +925,30 @@ class HeartbeatReceiver @Inject constructor(
         notificationManager.notify(peerId, NOTIF_ID_MESSAGE, notification)
     }
 
+    /**
+     * Freshness gate for the irreversible peer commands (PEER_REMOVED, DELETE_MY_MESSAGES,
+     * DELETE_MY_LOCATION), which - unlike the supervision handlers - carry out a
+     * destructive local action with no undo. The signature proves the sender, but a
+     * relay can redeliver an old signed event once it falls out of the 2,000-id dedup
+     * cache (or after a reinstall), which would silently wipe a since-re-added contact
+     * and their data. A command timestamped before we added this contact cannot be
+     * legitimate; [CONTROL_CLOCK_SKEW_MS] absorbs honest inter-device clock skew so a
+     * genuine command sent moments after the relationship formed still applies.
+     */
+    private fun isStalePeerCommand(event: NostrEvent, peer: PeerEntity): Boolean {
+        val eventMs = event.createdAt * 1000L
+        if (eventMs < peer.addedAt - CONTROL_CLOCK_SKEW_MS) {
+            Log.w(TAG, "Ignoring stale peer command kind=${event.kind} from ${event.pubkey}: " +
+                "event=$eventMs addedAt=${peer.addedAt}")
+            return true
+        }
+        return false
+    }
+
     private suspend fun processPeerRemoved(event: NostrEvent) {
         // Only act if we know this peer - ignore unknown senders
-        peerDao.getPeer(event.pubkey) ?: return
+        val peer = peerDao.getPeer(event.pubkey) ?: return
+        if (isStalePeerCommand(event, peer)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -910,7 +960,8 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processDeleteMyMessages(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        val peer = peerDao.getPeer(event.pubkey) ?: return
+        if (isStalePeerCommand(event, peer)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -919,7 +970,8 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processDeleteMyLocation(event: NostrEvent) {
-        peerDao.getPeer(event.pubkey) ?: return
+        val peer = peerDao.getPeer(event.pubkey) ?: return
+        if (isStalePeerCommand(event, peer)) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)

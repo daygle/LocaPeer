@@ -44,6 +44,7 @@ fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToAbout: () -> Unit = {},
     onNavigateToCustomizeNav: () -> Unit = {},
+    onNavigateToRelays: () -> Unit = {},
     onNavigateToGlobalSchedule: () -> Unit = {},
     onNavigateToGeofences: () -> Unit = {},
     onNavigateToMyHistory: (pubkeyHex: String) -> Unit = {},
@@ -634,6 +635,13 @@ fun SettingsScreen(
                         label = stringResource(R.string.settings_customize_nav),
                         subtitle = stringResource(R.string.settings_customize_nav_subtitle),
                         onClick = onNavigateToCustomizeNav
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    NavRow(
+                        icon = Icons.Default.Cloud,
+                        label = stringResource(R.string.settings_relays),
+                        subtitle = stringResource(R.string.settings_relays_subtitle),
+                        onClick = onNavigateToRelays
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                     NavRow(
