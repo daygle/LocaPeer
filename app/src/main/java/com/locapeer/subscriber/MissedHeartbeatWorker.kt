@@ -77,6 +77,14 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 val pi = PendingIntent.getActivity(
                     applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
                 )
+                // Lock-screen version keeps the "who went quiet" title but drops the last
+                // known coordinates carried in the private text.
+                val publicVersion = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
+                    .setSmallIcon(R.drawable.ic_notif_alert)
+                    .setContentTitle(applicationContext.getString(R.string.notif_missed_title, peer.displayName))
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                    .build()
                 val notification = NotificationCompat.Builder(applicationContext, "locapeer_alerts")
                     .setSmallIcon(R.drawable.ic_notif_alert)
                     .setContentTitle(applicationContext.getString(R.string.notif_missed_title, peer.displayName))
@@ -84,6 +92,8 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setContentIntent(pi)
                     .setAutoCancel(true)
+                    .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                    .setPublicVersion(publicVersion)
                     .build()
                 notificationManager.notify(peer.deviceId, NOTIF_ID_MISSED_HEARTBEAT, notification)
             }
