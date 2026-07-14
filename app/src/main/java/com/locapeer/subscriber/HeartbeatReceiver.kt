@@ -98,6 +98,12 @@ private const val FRESH_HEARTBEAT_MS = 10 * 60_000L
 // before we added the contact (see isStalePeerCommand). Generous enough to absorb
 // real skew, far tighter than the days-old replays it is meant to block.
 private const val CONTROL_CLOCK_SKEW_MS = 24 * 60 * 60_000L
+// Flood caps: a stranger cycling keys can send unlimited signed-but-unsolicited track
+// requests (each a notification + a row), and a hostile known contact can materialise
+// unlimited circles. Above these totals, further NEW ones are dropped silently until the
+// user clears the backlog. Existing-contact role changes and known circles are exempt.
+private const val MAX_PENDING_TRACK_REQUESTS = 30
+private const val MAX_REMOTE_CIRCLES = 100
 // A peer-supplied heartbeat timestamp this far in the future is clock skew at best and
 // a poisoned "latest pin" at worst; clamp it to arrival time (see processEvent).
 private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
@@ -574,6 +580,13 @@ class HeartbeatReceiver @Inject constructor(
                 !circleDao.getMemberPubkeys(group.gid).contains(event.pubkey)
             ) {
                 Log.w(TAG, "Dropping circle message for ${group.gid} from non-member ${event.pubkey}")
+                return
+            }
+            // Flood cap: only a brand-new circle grows the table, so a hostile known contact
+            // inventing endless gids can't balloon it. Messages into already-known circles
+            // are unaffected.
+            if (knownCircle == null && circleDao.countCircles() >= MAX_REMOTE_CIRCLES) {
+                Log.w(TAG, "Dropping new circle ${group.gid}: circle cap reached")
                 return
             }
             circleDao.materialiseFromRemote(
@@ -1095,6 +1108,19 @@ class HeartbeatReceiver @Inject constructor(
                 Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
                 return
             }
+        }
+
+        // Flood cap: a stranger cycling keys sends signed-but-unsolicited new requests from
+        // ever-changing pubkeys. Once the backlog is full, drop further NEW ones (a repeat
+        // from an already-queued pubkey just REPLACEs its row, so it's exempt; role changes
+        // come from existing contacts and are exempt too). The user clears the queue to
+        // resume receiving new requests; the 30-day expiry drains it on its own.
+        if (!payload.isRoleChange &&
+            pendingRequestDao.getByPubkey(event.pubkey) == null &&
+            pendingRequestDao.count() >= MAX_PENDING_TRACK_REQUESTS
+        ) {
+            Log.w(TAG, "Dropping track request from ${event.pubkey}: pending-request cap reached")
+            return
         }
 
         val notifId = event.pubkey.hashCode() + 20000

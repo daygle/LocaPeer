@@ -25,4 +25,8 @@ interface PendingRequestDao {
 
     @Query("SELECT COUNT(*) FROM pending_requests")
     fun observeCount(): Flow<Int>
+
+    /** Point-in-time count, for the incoming-request flood cap (see HeartbeatReceiver). */
+    @Query("SELECT COUNT(*) FROM pending_requests")
+    suspend fun count(): Int
 }

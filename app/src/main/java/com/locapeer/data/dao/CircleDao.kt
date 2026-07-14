@@ -22,6 +22,10 @@ interface CircleDao {
     @Query("SELECT * FROM circles WHERE id = :circleId LIMIT 1")
     suspend fun getCircle(circleId: String): CircleEntity?
 
+    /** Point-in-time circle count, for the remote-circle-creation flood cap. */
+    @Query("SELECT COUNT(*) FROM circles")
+    suspend fun countCircles(): Int
+
     @Query("SELECT * FROM circles WHERE id = :circleId LIMIT 1")
     fun observeCircle(circleId: String): Flow<CircleEntity?>
 

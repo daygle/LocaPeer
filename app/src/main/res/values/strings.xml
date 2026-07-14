@@ -230,6 +230,7 @@
     <string name="settings_not_in_backup">Not in this backup</string>
     <string name="settings_enable_supervised_title">Enable Supervised Mode</string>
     <string name="settings_enable_supervised_message">Choose a peer who will act as supervisor. They must approve access to settings from their device.</string>
+    <string name="settings_enable_supervised_lockout_warning">While supervised mode is on, changing settings, removing your supervisor, or turning this off all need your supervisor\'s approval. If they become unreachable, you may be locked out until they respond.</string>
     <string name="settings_no_peers_found">No peers found. Add a peer first by scanning their invite QR code.</string>
     <string name="settings_disable_supervised_title">Disable Supervised Mode?</string>
     <string name="settings_disable_supervised_message">Settings will be accessible without supervisor approval.</string>
@@ -498,6 +499,7 @@
     <string name="app_lock_prompt_title">Unlock LocaPeer</string>
     <string name="app_lock_prompt_subtitle">Use biometric or device PIN</string>
     <string name="app_lock_activity_unsupported">App lock requires a host that supports the system prompt. Update the app.</string>
+    <string name="app_lock_no_credential">No screen lock is set on this device, so there\'s nothing to unlock with. Set a PIN, pattern, password, or biometric in your device settings, then reopen LocaPeer.</string>
 
     <!-- Theme -->
     <string name="settings_theme_mode">Theme</string>
