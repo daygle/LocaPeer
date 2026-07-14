@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Sürüm %1$s (derleme %2$d)</string>
     <string name="about_tagline">Güvendiğiniz kişilerle özel konum paylaşımı. Hesap yok, bulut yok, bizim tarafımızdan takip yok.</string>
-    <string name="about_relay_connections">Aktarıcı Bağlantıları</string>
-    <string name="about_connected">Bağlı</string>
-    <string name="about_disconnected">Bağlı değil</string>
     <string name="about_open_source">Açık Kaynak Kitaplıklar</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap tabanlı harita görüntüleme</string>
     <string name="about_lib_okhttp_desc">Nostr aktarıcısı için WebSocket taşıması</string>

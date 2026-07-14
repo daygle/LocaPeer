@@ -657,9 +657,6 @@
     <!-- ── ਬਾਰੇ ਸਕ੍ਰੀਨ ───────────────────────────────────────────────────── -->
     <string name="about_version">ਵਰਜਨ %1$s (ਬਿਲਡ %2$d)</string>
     <string name="about_tagline">"ਉਹਨਾਂ ਲੋਕਾਂ ਨਾਲ ਨਿੱਜੀ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਜਿਨ੍ਹਾਂ \'ਤੇ ਤੁਸੀਂ ਭਰੋਸਾ ਕਰਦੇ ਹੋ। ਕੋਈ ਖਾਤਾ ਨਹੀਂ, ਕੋਈ ਕਲਾਉਡ ਨਹੀਂ, ਸਾਡੇ ਦੁਆਰਾ ਕੋਈ ਟਰੈਕਿੰਗ ਨਹੀਂ।"</string>
-    <string name="about_relay_connections">ਰੀਲੇਅ ਕਨੈਕਸ਼ਨ</string>
-    <string name="about_connected">ਜੁੜਿਆ ਹੋਇਆ</string>
-    <string name="about_disconnected">ਡਿਸਕਨੈਕਟ ਹੋ ਗਿਆ</string>
     <string name="about_open_source">ਓਪਨ ਸੋਰਸ ਲਾਇਬ੍ਰੇਰੀਆਂ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap ਅਧਾਰਤ ਨਕਸ਼ਾ ਰੈਂਡਰਿੰਗ</string>
     <string name="about_lib_okhttp_desc">Nostr ਰੀਲੇਅ ਲਈ WebSocket ਆਵਾਜਾਈ</string>

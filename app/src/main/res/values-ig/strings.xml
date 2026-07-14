@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Ụdị %1$s (build %2$d)</string>
     <string name="about_tagline">Ikekọrịta ebe nzuzo na ndị ị tụkwasịrị obi. Enweghị akaụntụ, enweghị igwe ojii, enweghị nleba anya site n\'aka anyị.</string>
-    <string name="about_relay_connections">Njikọ Relay</string>
-    <string name="about_connected">Ejikọrọ</string>
-    <string name="about_disconnected">Akwụsịla njikọ</string>
     <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
     <string name="about_lib_osmdroid_desc">Ngosipụta map dabere na OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Ụgbọ njem WebSocket maka relay Nostr</string>

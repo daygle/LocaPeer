@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Versi %1$s (build %2$d)</string>
     <string name="about_tagline">Berbagi lokasi privat dengan orang yang Anda percaya. Tanpa akun, tanpa cloud, tanpa pelacakan oleh kami.</string>
-    <string name="about_relay_connections">Koneksi Relay</string>
-    <string name="about_connected">Terhubung</string>
-    <string name="about_disconnected">Terputus</string>
     <string name="about_open_source">Pustaka Sumber Terbuka</string>
     <string name="about_lib_osmdroid_desc">Rendering peta berbasis OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Transport WebSocket untuk relay Nostr</string>

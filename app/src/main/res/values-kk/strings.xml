@@ -657,9 +657,6 @@
     <!-- ── Туралы экран ───────────────────────────────────────────────────── -->
     <string name="about_version">Нұсқасы %1$s (build %2$d)</string>
     <string name="about_tagline">Өзіңіз сенетін адамдармен жеке орын бөлісу. Аккаунтсыз, бұлтсыз, біздің тарапымыздан бақылаусыз.</string>
-    <string name="about_relay_connections">Релелік қосылымдар</string>
-    <string name="about_connected">Қосылды</string>
-    <string name="about_disconnected">Ажыратылды</string>
     <string name="about_open_source">Ашық бастапқы кітапханалар</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap негізіндегі карта рендерингі</string>
     <string name="about_lib_okhttp_desc">Nostr релесіне арналған WebSocket тасымалдауы</string>

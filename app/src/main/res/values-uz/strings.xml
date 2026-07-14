@@ -657,9 +657,6 @@
     <!-- ── Haqida ekran ───────────────────────────────────────────────────── -->
     <string name="about_version">Versiya %1$s (build %2$d)</string>
     <string name="about_tagline">O‘zingiz ishonadigan odamlar bilan shaxsiy joylashuvni baham ko‘rish. Akkauntsiz, bulutsiz, biz tomonimizdan kuzatuvsiz.</string>
-    <string name="about_relay_connections">Releli ulanishlar</string>
-    <string name="about_connected">Ulandi</string>
-    <string name="about_disconnected">Ulanish uzildi</string>
     <string name="about_open_source">Ochiq kodli kutubxonalar</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap-ga asoslangan xarita renderlash</string>
     <string name="about_lib_okhttp_desc">Nostr relesi uchun WebSocket tashuvchisi</string>

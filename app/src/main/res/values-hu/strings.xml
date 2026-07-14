@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Verzió: %1$s (build %2$d)</string>
     <string name="about_tagline">Privát helymegosztás azokkal, akikben megbízik. Nincsenek fiókok, nincs felhő, mi nem követjük.</string>
-    <string name="about_relay_connections">Relékapcsolatok</string>
-    <string name="about_connected">Csatlakoztatva</string>
-    <string name="about_disconnected">Leválasztva</string>
     <string name="about_open_source">Nyílt forráskódú könyvtárak</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap-alapú térképmegjelenítés</string>
     <string name="about_lib_okhttp_desc">WebSocket-átvitel a Nostr reléhez</string>

@@ -657,9 +657,6 @@
     <!-- ── വിവരങ്ങൾ സ്ക്രീൻ ───────────────────────────────────────────────────── -->
     <string name="about_version">പതിപ്പ് %1$s (ബിൽഡ് %2$d)</string>
     <string name="about_tagline">നിങ്ങൾ വിശ്വസിക്കുന്ന ആളുകളുമായി സ്വകാര്യ ലൊക്കേഷൻ പങ്കിടൽ. അക്കൗണ്ടുകളില്ല, ക്ലൗഡില്ല, ഞങ്ങൾ ട്രാക്ക് ചെയ്യുന്നില്ല.</string>
-    <string name="about_relay_connections">റിലേ കണക്ഷനുകൾ</string>
-    <string name="about_connected">ബന്ധിപ്പിച്ചു</string>
-    <string name="about_disconnected">ബന്ധം വേർപെട്ടു</string>
     <string name="about_open_source">ഓപ്പൺ സോഴ്സ് ലൈബ്രറികൾ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap അധിഷ്ഠിത മാപ്പ് റെൻഡറിംഗ്</string>
     <string name="about_lib_okhttp_desc">Nostr റിലേയ്ക്കുള്ള WebSocket ട്രാൻസ്പോർട്ട്</string>

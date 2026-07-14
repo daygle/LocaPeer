@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Έκδοση %1$s (build %2$d)</string>
     <string name="about_tagline">Ιδιωτική κοινοποίηση τοποθεσίας με άτομα που εμπιστεύεστε. Χωρίς λογαριασμούς, χωρίς cloud, χωρίς παρακολούθηση από εμάς.</string>
-    <string name="about_relay_connections">Συνδέσεις αναμεταδοτών</string>
-    <string name="about_connected">Συνδεδεμένο</string>
-    <string name="about_disconnected">Αποσυνδεδεμένο</string>
     <string name="about_open_source">Βιβλιοθήκες ανοιχτού κώδικα</string>
     <string name="about_lib_osmdroid_desc">Απόδοση χαρτών βασισμένη στο OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Μεταφορά WebSocket για τον αναμεταδότη Nostr</string>

@@ -683,9 +683,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Wersja %1$s (kompilacja %2$d)</string>
     <string name="about_tagline">Prywatne udostępnianie lokalizacji zaufanym osobom. Bez kont, bez chmury, bez śledzenia z naszej strony.</string>
-    <string name="about_relay_connections">Połączenia z przekaźnikami</string>
-    <string name="about_connected">Połączono</string>
-    <string name="about_disconnected">Rozłączono</string>
     <string name="about_open_source">Biblioteki open source</string>
     <string name="about_lib_osmdroid_desc">Renderowanie map na bazie OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Transport WebSocket dla przekaźników Nostr</string>

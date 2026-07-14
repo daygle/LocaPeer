@@ -657,9 +657,6 @@
     <!-- ── ବିଷୟରେ ସ୍କ୍ରିନ୍ ───────────────────────────────────────────────────── -->
     <string name="about_version">ସଂସ୍କରଣ %1$s (ବିଲ୍ଡ %2$d)</string>
     <string name="about_tagline">ଆପଣ ବିଶ୍ୱାସ କରୁଥିବା ଲୋକଙ୍କ ସହିତ ବ୍ୟକ୍ତିଗତ ସ୍ଥାନ ଅଂଶୀଦାର । କୌଣସି ଆକାଉଣ୍ଟ୍ ନାହିଁ, କୌଣସି କ୍ଲାଉଡ୍ ନାହିଁ, ଆମ ଦ୍ୱାରା କୌଣସି ଟ୍ରାକିଂ ନାହିଁ ।</string>
-    <string name="about_relay_connections">ରିଲେ ସଂଯୋଗ</string>
-    <string name="about_connected">ସଂଯୋଜିତ</string>
-    <string name="about_disconnected">ସଂଯୋଗ ବିଚ୍ଛିନ୍ନ</string>
     <string name="about_open_source">ମୁକ୍ତ ଉତ୍ସ ଲାଇବ୍ରେରୀ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap ଆଧାରିତ ମାନଚିତ୍ର ରେଣ୍ଡରିଂ</string>
     <string name="about_lib_okhttp_desc">Nostr ରିଲେ ପାଇଁ WebSocket ପରିବହନ</string>

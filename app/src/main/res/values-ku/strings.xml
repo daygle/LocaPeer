@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Guherto %1$s (build %2$d)</string>
     <string name="about_tagline">Parvekirina cihê taybet bi kesên ku hûn pê ewle ne. Bê hesab, bê ewran, bê şopandina ji hêla me ve.</string>
-    <string name="about_relay_connections">Girêdanên Relayê</string>
-    <string name="about_connected">Girêdayî</string>
-    <string name="about_disconnected">Girêdan qut bû</string>
     <string name="about_open_source">Pirtûkxaneyên Çavkaniya Vekirî</string>
     <string name="about_lib_osmdroid_desc">Renderkirina nexşeyê ya li ser bingeha OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Veguhestina WebSocket ji bo relay Nostr</string>

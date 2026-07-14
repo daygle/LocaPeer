@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Varsiinii %1$s (build %2$d)</string>
     <string name="about_tagline">Qoodiinsa bakka jiranii iccitii namoota ati amantu waliin. Akkauntii malee, claud malee, to\'annoo keenya malee.</string>
-    <string name="about_relay_connections">Njikọ Relay</string>
-    <string name="about_connected">Wal-quunnamaniiru</string>
-    <string name="about_disconnected">Wal-quunnamtiin citeera</string>
     <string name="about_open_source">Ọba akwụkwọ Isi mmalite</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap kaartaadhaaf</string>
     <string name="about_lib_okhttp_desc">WebSocket tajaajila Nostr-f</string>

@@ -644,9 +644,6 @@
     <!-- ── အကြောင်း မျက်နှာပြင် ───────────────────────────────────────────────────── -->
     <string name="about_version">ဗားရှင်း %1$s (build %2$d)</string>
     <string name="about_tagline">သင်ယုံကြည်ရသူများနှင့် တည်နေရာကို သီးသန့်မျှဝေပါ။ အကောင့်များ၊ ကလောက်ဒ်များနှင့် ကျွန်ုပ်တို့၏ ခြေရာခံခြင်းများ မရှိပါ။</string>
-    <string name="about_relay_connections">ရီလေး ချိတ်ဆက်မှုများ</string>
-    <string name="about_connected">ချိတ်ဆက်ပြီး</string>
-    <string name="about_disconnected">ချိတ်ဆက်မှု ပြတ်တောက်သွားသည်</string>
     <string name="about_open_source">ပွင့်လင်းရင်းမြစ် လိုင်ဘရီများ</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap အခြေခံ မြေပုံ ရေးဆွဲခြင်း</string>
     <string name="about_lib_okhttp_desc">Nostr ရီလေးအတွက် WebSocket သယ်ယူပို့ဆောင်ရေး</string>

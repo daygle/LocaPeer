@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">ورژن %1$s (بلڈ %2$d)</string>
     <string name="about_tagline">ان لوگوں کے ساتھ نجی مقام کا اشتراک جن پر آپ بھروسا کرتے ہیں۔ کوئی اکاؤنٹ نہیں، کوئی کلاؤڈ نہیں، ہماری طرف سے کوئی ٹریکنگ نہیں۔</string>
-    <string name="about_relay_connections">ریلے کنکشنز</string>
-    <string name="about_connected">منسلک</string>
-    <string name="about_disconnected">منقطع</string>
     <string name="about_open_source">اوپن سورس لائبریریاں</string>
     <string name="about_lib_osmdroid_desc">OpenStreetMap پر مبنی نقشہ رینڈرنگ</string>
     <string name="about_lib_okhttp_desc">Nostr ریلے کے لیے WebSocket ٹرانسپورٹ</string>

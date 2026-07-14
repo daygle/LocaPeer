@@ -644,9 +644,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Phiên bản %1$s (bản dựng %2$d)</string>
     <string name="about_tagline">Chia sẻ vị trí riêng tư với những người bạn tin tưởng. Không tài khoản, không đám mây, chúng tôi không theo dõi.</string>
-    <string name="about_relay_connections">Kết nối relay</string>
-    <string name="about_connected">Đã kết nối</string>
-    <string name="about_disconnected">Đã ngắt kết nối</string>
     <string name="about_open_source">Thư viện mã nguồn mở</string>
     <string name="about_lib_osmdroid_desc">Hiển thị bản đồ dựa trên OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Truyền WebSocket cho relay Nostr</string>

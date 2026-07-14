@@ -683,9 +683,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Версія %1$s (збірка %2$d)</string>
     <string name="about_tagline">Приватний обмін місцезнаходженням із тими, кому ви довіряєте. Без облікових записів, без хмари, без стеження з нашого боку.</string>
-    <string name="about_relay_connections">Підключення до ретрансляторів</string>
-    <string name="about_connected">Підключено</string>
-    <string name="about_disconnected">Відключено</string>
     <string name="about_open_source">Бібліотеки з відкритим кодом</string>
     <string name="about_lib_osmdroid_desc">Відображення мап на основі OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket-транспорт для ретрансляторів Nostr</string>

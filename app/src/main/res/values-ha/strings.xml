@@ -657,9 +657,6 @@
     <!-- ── About screen ───────────────────────────────────────────────────── -->
     <string name="about_version">Sigar %1$s (build %2$d)</string>
     <string name="about_tagline">Raba wurin zama na sirri tare da mutanen da kuka amince da su. Babu asusu, babu girgije, babu sa ido daga gare mu.</string>
-    <string name="about_relay_connections">Haɗin Relay</string>
-    <string name="about_connected">An haɗa</string>
-    <string name="about_disconnected">An cire haɗin</string>
     <string name="about_open_source">Laburaren tushe na fili</string>
     <string name="about_lib_osmdroid_desc">Nunin taswira dangane da OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Sufurin WebSocket don relay Nostr</string>
