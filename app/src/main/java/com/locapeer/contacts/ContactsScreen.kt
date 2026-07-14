@@ -46,6 +46,22 @@ fun ContactsScreen(
     val contacts by vm.contacts.collectAsStateWithLifecycle()
     val pendingCount by vm.pendingRequestCount.collectAsStateWithLifecycle()
 
+    // One-shot messages (e.g. a blocked supervisor removal) surfaced as a snackbar.
+    // Strings are resolved via stringResource (Configuration-aware) here at composable
+    // scope, not LocalContext.getString inside the effect - lint flags the latter for
+    // returning stale values across configuration changes.
+    val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+    val supervisorLockedMsg = stringResource(R.string.contacts_supervisor_locked)
+    LaunchedEffect(Unit) {
+        vm.messages.collect { resId ->
+            val text = when (resId) {
+                R.string.contacts_supervisor_locked -> supervisorLockedMsg
+                else -> return@collect
+            }
+            snackbarHostState.showSnackbar(text)
+        }
+    }
+
     // Per-contact dialogs (unchanged)
     var confirmAction by remember { mutableStateOf<Pair<ContactItem, DataAction>?>(null) }
     var editingContact by remember { mutableStateOf<ContactItem?>(null) }
@@ -75,6 +91,7 @@ fun ContactsScreen(
     }
 
     Scaffold(
+        snackbarHost = { androidx.compose.material3.SnackbarHost(snackbarHostState) },
         topBar = {
             if (isSelectionMode) {
                 TopAppBar(

@@ -72,6 +72,9 @@ fun PeerSharingScreen(
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
     val isPaused = !sharingEnabled
+    // While supervised, sharing with the supervisor can't be turned off here (the toggles
+    // are locked; the ViewModel enforces it regardless). See PeerSharingUiState.supervisorLocked.
+    val supervisorLocked = state.supervisorLocked
     val messagingEnabled = state.peer?.messagingEnabled ?: true
     val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val isSosContact = cfg?.isSosContact ?: false
@@ -177,7 +180,7 @@ fun PeerSharingScreen(
                             )
                         },
                         trailingContent = {
-                            Switch(checked = isSend, onCheckedChange = { vm.setSendRole(it) })
+                            Switch(checked = isSend, onCheckedChange = { vm.setSendRole(it) }, enabled = !supervisorLocked)
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
@@ -217,10 +220,18 @@ fun PeerSharingScreen(
                         supportingContent = { Text(stringResource(R.string.peer_pause_sub, peerName)) },
                         leadingContent = { Icon(Icons.Default.PauseCircle, contentDescription = null, tint = if (isPaused) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant) },
                         trailingContent = {
-                            Switch(checked = isPaused, onCheckedChange = { vm.setSharingEnabled(!it) })
+                            Switch(checked = isPaused, onCheckedChange = { vm.setSharingEnabled(!it) }, enabled = !supervisorLocked)
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
+                    if (supervisorLocked) {
+                        Text(
+                            stringResource(R.string.peer_sharing_supervisor_locked),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+                        )
+                    }
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ListItem(
                         headlineContent = { Text(stringResource(R.string.peer_precision)) },
@@ -394,7 +405,9 @@ fun PeerSharingScreen(
                             Switch(
                                 checked = notifyOnMissedHeartbeat,
                                 onCheckedChange = { vm.setNotifyOnMissedHeartbeat(it) },
-                                enabled = receivesLocation
+                                // Forced on and locked for a device this user supervises: a
+                                // supervised device going silent is the signal supervision exists to catch.
+                                enabled = receivesLocation && !isMySupervised
                             )
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
