@@ -1437,6 +1437,12 @@ private fun SupervisedModeSetupDialog(peers: List<PeerEntity>, onConfirm: (Strin
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    stringResource(R.string.settings_enable_supervised_lockout_warning),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error
+                )
                 if (peers.isEmpty()) {
                     Spacer(Modifier.height(16.dp))
                     Text(stringResource(R.string.settings_no_peers_found), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)

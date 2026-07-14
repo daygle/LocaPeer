@@ -60,6 +60,11 @@ fun AppLockScreen(
     val activity = context as? FragmentActivity
     var authAttempted by remember { mutableStateOf(false) }
     var lastError by remember { mutableStateOf<String?>(null) }
+    // No enrolled biometric AND no device PIN/pattern/password means BiometricPrompt has
+    // nothing to check, so the auto-prompt never fires and the unlock button would only
+    // error. Detect it up front to show an actionable message instead of a silent
+    // dead-end (the user removed their screen lock after enabling app-lock).
+    val noCredential = activity != null && !canAuthenticate(activity)
 
     // Auto-attempt on first composition whenever the device *can* authenticate - the
     // visible button is only a retry affordance, since most unlocks should be one tap.
@@ -113,7 +118,16 @@ fun AppLockScreen(
 
                 Spacer(Modifier.height(8.dp))
 
-                if (activity != null) {
+                if (noCredential) {
+                    // No screen lock on the device: the prompt can't run. Tell the user how
+                    // to recover rather than leaving them on a dead button.
+                    Text(
+                        stringResource(R.string.app_lock_no_credential),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center
+                    )
+                } else if (activity != null) {
                     Button(
                         onClick = { prompt(activity, onUnlocked) { msg -> lastError = msg } },
                         modifier = Modifier.fillMaxWidth()
