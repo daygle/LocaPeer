@@ -16,7 +16,9 @@ import com.locapeer.data.dao.HeartbeatDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.messaging.MediaCache
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
@@ -29,6 +31,8 @@ import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "RetentionWorker"
+// Unactioned incoming track requests older than this are dropped as abandoned/spam.
+private const val PENDING_REQUEST_TTL_DAYS = 30L
 
 @HiltWorker
 class RetentionEnforcementWorker @AssistedInject constructor(
@@ -39,6 +43,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
     private val peerDao: PeerDao,
     private val heartbeatDao: HeartbeatDao,
     private val messageDao: MessageDao,
+    private val pendingRequestDao: PendingRequestDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient
@@ -48,6 +53,13 @@ class RetentionEnforcementWorker @AssistedInject constructor(
         val settings = prefs.settings.first()
         val configs = configDao.getAll()
         val peerMap = peerDao.getAllPeers().first().associateBy { it.deviceId }
+
+        // Age out stale incoming track requests (never actioned) regardless of retention
+        // settings, so the table and its notifications can't grow without bound from a
+        // stranger cycling keys. Runs before the no-retention early-out below.
+        pendingRequestDao.deleteOlderThan(
+            System.currentTimeMillis() - PENDING_REQUEST_TTL_DAYS * 24 * 3600 * 1000L
+        )
 
         val hasLocalWork = settings.localLocationRetentionDays > 0 || settings.localMessageRetentionDays > 0
         val hasRemoteWork = configs.any {
@@ -68,6 +80,8 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             if (settings.localMessageRetentionDays > 0) {
                 val cutoffMs = System.currentTimeMillis() - settings.localMessageRetentionDays * 24 * 3600 * 1000L
                 messageDao.deleteOlderThan(cutoffMs)
+                // Purge decrypted media staged in the cache for any now-deleted message.
+                MediaCache.clearDecryptedMedia(applicationContext)
                 Log.d(TAG, "Purged local messages older than ${settings.localMessageRetentionDays} days")
             }
 

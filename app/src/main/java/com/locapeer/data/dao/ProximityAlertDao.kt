@@ -12,6 +12,10 @@ interface ProximityAlertDao {
     @Delete
     suspend fun delete(alert: ProximityAlertEntity)
 
+    /** Drop a removed contact's proximity alert so it can't reactivate if they're re-added. */
+    @Query("DELETE FROM proximity_alerts WHERE peerDeviceId = :peerDeviceId")
+    suspend fun deleteForPeer(peerDeviceId: String)
+
     @Query("SELECT * FROM proximity_alerts")
     fun getAll(): Flow<List<ProximityAlertEntity>>
 

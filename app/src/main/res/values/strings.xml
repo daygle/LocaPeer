@@ -170,6 +170,22 @@
     <!-- Appearance -->
     <string name="settings_customize_nav">Customize Navigation</string>
     <string name="settings_customize_nav_subtitle">Choose and reorder bottom tabs</string>
+    <string name="settings_relays">Relays</string>
+    <string name="settings_relays_subtitle">Choose which relays carry your data</string>
+    <string name="relays_intro">LocaPeer sends your data through Nostr relays. Content is always end-to-end encrypted, but public relays can still see which contacts you talk to and when. Use your own relays to reduce that exposure.</string>
+    <string name="relays_primary_header">Primary relay</string>
+    <string name="relays_public_header">Public relays</string>
+    <string name="relays_public_toggle">Use public relays</string>
+    <string name="relays_public_toggle_desc">Recommended so contacts on public relays stay reachable. Turn off to route only through your primary and custom relays.</string>
+    <string name="relays_custom_header">Your relays</string>
+    <string name="relays_custom_empty">No custom relays added.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Add relay</string>
+    <string name="relays_add_invalid">Enter a valid wss:// relay address.</string>
+    <string name="relays_add_duplicate">That relay is already in the list.</string>
+    <string name="relays_remove">Remove relay</string>
+    <string name="relays_status_connected">Connected</string>
+    <string name="relays_status_disconnected">Disconnected</string>
     <string name="settings_start_page">Start Page</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_title">App Language</string>

@@ -45,6 +45,10 @@ interface GeofenceAssignmentDao {
     @Query("DELETE FROM geofence_assignments WHERE geofenceId = :geofenceId")
     suspend fun deleteForGeofence(geofenceId: String)
 
+    /** Drop a removed contact's geofence assignments so they can't reactivate if re-added. */
+    @Query("DELETE FROM geofence_assignments WHERE trackedDeviceId = :trackedDeviceId")
+    suspend fun deleteForTrackedDevice(trackedDeviceId: String)
+
     /** Active geofences (area + trigger) watching a given tracked contact, for the engine. */
     @Query(
         """

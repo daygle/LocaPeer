@@ -1,12 +1,17 @@
 package com.locapeer.nostr
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import android.util.Log
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
-import com.locapeer.settings.HARDCODED_RELAYS
+import com.locapeer.settings.PRIMARY_RELAY
+import com.locapeer.settings.PUBLIC_RELAYS
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -17,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -40,8 +46,16 @@ import javax.inject.Singleton
 
 private const val TAG = "NostrRelayClient"
 
+// Offline-queue bounds for HEARTBEAT events (see PendingMessageDao). Location beats are
+// self-superseding, so unlike queued messages they must not accumulate without limit
+// while offline: keep only recent, few per relay. SOS (a different kind) is exempt.
+private const val HEARTBEAT_QUEUE_PATTERN = "%\"kind\":${NostrEventKind.HEARTBEAT}%"
+private const val HEARTBEAT_QUEUE_MAX_AGE_MS = 6 * 60 * 60_000L // 6h
+private const val HEARTBEAT_QUEUE_MAX_PER_RELAY = 30
+
 @Singleton
 class NostrRelayClient @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val pendingMessageDao: PendingMessageDao,
     private val peerDao: PeerDao,
     private val prefs: AppPreferences,
@@ -87,7 +101,28 @@ class NostrRelayClient @Inject constructor(
     private val recentEventIds by lazy { LinkedHashSet<String>(2048) }
     private val eventsSinceLastSave = java.util.concurrent.atomic.AtomicInteger(0)
 
+    /**
+     * When connectivity returns, kick every relay to reconnect at once instead of waiting
+     * out its exponential backoff (up to 5 min): after a tunnel/airplane-mode gap the
+     * backoff timer would otherwise leave the app silent long after the network is back.
+     * A no-op unless we are in connected mode; each relay's own guards drop the call if it
+     * is already connected/connecting, so this can't stampede duplicate sockets.
+     */
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            if (!isGloballyConnected) return
+            Log.d(TAG, "Network available; nudging relays to reconnect")
+            relays.values.forEach { it.reconnectNow() }
+        }
+    }
+
     init {
+        try {
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            cm?.registerDefaultNetworkCallback(networkCallback)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to register network callback", e)
+        }
         scope.launch {
             val persisted = prefs.getRecentEventIds()
             if (persisted.isNotEmpty()) {
@@ -108,12 +143,23 @@ class NostrRelayClient @Inject constructor(
             }
         }
         scope.launch {
-            peerDao.getAllPeers().map { peers ->
-                peers.map { it.relayUrl }
-            }.distinctUntilChanged().collect { peerRelays ->
-                val allUrls = (HARDCODED_RELAYS + peerRelays).asSequence()
+            // The live connection set combines the user's relay preferences (primary +
+            // optional public + custom) with peers' invite-supplied relays, so a peer stays
+            // reachable on their own relay even if the user disabled the public ones.
+            val peerRelaysFlow = peerDao.getAllPeers().map { peers -> peers.map { it.relayUrl } }
+            val relayPrefsFlow = prefs.settings
+                .map { it.usePublicRelays to it.customRelays }
+                .distinctUntilChanged()
+            combine(peerRelaysFlow, relayPrefsFlow) { peerRelays, (usePublic, custom) ->
+                val configured = buildList {
+                    add(PRIMARY_RELAY)
+                    if (usePublic) addAll(PUBLIC_RELAYS)
+                    addAll(custom)
+                }
+                (configured + peerRelays).asSequence()
                     .filter { isValidRelayUrl(it) }
                     .toSet()
+            }.distinctUntilChanged().collect { allUrls ->
                 updateRelays(allUrls.toList())
             }
         }
@@ -211,9 +257,7 @@ class NostrRelayClient @Inject constructor(
             if (relay.isConnected) {
                 val success = relay.send(msg)
                 if (!success && isEvent) {
-                    scope.launch {
-                        pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
-                    }
+                    scope.launch { queuePending(relay.url, msg) }
                     relay.scheduleReconnect()
                 }
             } else {
@@ -226,11 +270,20 @@ class NostrRelayClient @Inject constructor(
 
         if (isEvent && disconnectedRelays.isNotEmpty()) {
             scope.launch {
-                disconnectedRelays.forEach { relay ->
-                    pendingMessageDao.insert(PendingMessageEntity(relayUrl = relay.url, content = msg))
-                }
+                disconnectedRelays.forEach { relay -> queuePending(relay.url, msg) }
             }
         }
+    }
+
+    /** Persist a failed/offline event for later flush, then bound the heartbeat backlog
+     *  (age + count) so self-superseding location beats can't grow the table without end
+     *  while offline. Queued messages and SOS alerts are left untouched. */
+    private suspend fun queuePending(relayUrl: String, msg: String) {
+        pendingMessageDao.insert(PendingMessageEntity(relayUrl = relayUrl, content = msg))
+        pendingMessageDao.deleteStaleHeartbeats(
+            relayUrl, HEARTBEAT_QUEUE_PATTERN, System.currentTimeMillis() - HEARTBEAT_QUEUE_MAX_AGE_MS
+        )
+        pendingMessageDao.capHeartbeats(relayUrl, HEARTBEAT_QUEUE_PATTERN, HEARTBEAT_QUEUE_MAX_PER_RELAY)
     }
 
     private fun flushPendingTo(relay: RelayConnection) {
@@ -285,6 +338,19 @@ class NostrRelayClient @Inject constructor(
 
         fun ensureConnecting() {
             if (webSocket == null) connect()
+        }
+
+        /** Cancel any pending backoff and attempt a connection right now. Safe to call when
+         *  already connected/connecting - [connect] early-returns in that case. Used when
+         *  the OS reports the network is back, so we don't sit out the backoff delay. */
+        fun reconnectNow() {
+            if (isConnected || webSocket != null) return
+            synchronized(reconnectLock) {
+                reconnectJob?.cancel()
+                reconnectJob = null
+                reconnectAttempts = 0
+            }
+            connect()
         }
 
         fun send(msg: String): Boolean =
