@@ -46,6 +46,15 @@ fun ContactsScreen(
     val contacts by vm.contacts.collectAsStateWithLifecycle()
     val pendingCount by vm.pendingRequestCount.collectAsStateWithLifecycle()
 
+    // One-shot messages (e.g. a blocked supervisor removal) surfaced as a snackbar.
+    val snackbarHostState = remember { androidx.compose.material3.SnackbarHostState() }
+    val messageContext = androidx.compose.ui.platform.LocalContext.current
+    LaunchedEffect(Unit) {
+        vm.messages.collect { resId ->
+            snackbarHostState.showSnackbar(messageContext.getString(resId))
+        }
+    }
+
     // Per-contact dialogs (unchanged)
     var confirmAction by remember { mutableStateOf<Pair<ContactItem, DataAction>?>(null) }
     var editingContact by remember { mutableStateOf<ContactItem?>(null) }
@@ -75,6 +84,7 @@ fun ContactsScreen(
     }
 
     Scaffold(
+        snackbarHost = { androidx.compose.material3.SnackbarHost(snackbarHostState) },
         topBar = {
             if (isSelectionMode) {
                 TopAppBar(

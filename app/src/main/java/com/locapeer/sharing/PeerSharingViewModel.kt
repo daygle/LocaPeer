@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -41,7 +42,15 @@ data class PeerSharingUiState(
     val peer: PeerEntity? = null,
     val config: PeerSharingConfig? = null,
     val proximityAlert: ProximityAlertEntity? = null,
-    val heartbeat: com.locapeer.data.entity.HeartbeatEntity? = null
+    val heartbeat: com.locapeer.data.entity.HeartbeatEntity? = null,
+    /**
+     * True when this peer is the user's supervisor and supervised mode is on. The user
+     * may not stop sharing their location with their supervisor (disable sharing, or
+     * drop the SEND role) while supervised - that would defeat supervision from a screen
+     * the settings gate doesn't cover. Lifting supervised mode (gated in Settings behind
+     * supervisor approval) is the only way to release this.
+     */
+    val supervisorLocked: Boolean = false
 )
 
 /** Outcome of a manual remote-purge command, typed so the UI doesn't sniff message text. */
@@ -86,9 +95,13 @@ class PeerSharingViewModel @Inject constructor(
             val configFlow = configDao.observeForPeer(peerId)
             val alertFlow = proximityAlertDao.observeForPeer(peerId)
             val heartbeatFlow = heartbeatDao.observeLatestHeartbeat(peerId)
+            val supervisorLockedFlow = prefs.settings.map {
+                it.supervisedModeEnabled && it.supervisorPubkey.equals(peerId, ignoreCase = true)
+            }
 
-            combine(peerFlow, configFlow, alertFlow, heartbeatFlow) { peer, config, alert, hb ->
-                PeerSharingUiState(peer, config, alert, hb)
+            combine(peerFlow, configFlow, alertFlow, heartbeatFlow, supervisorLockedFlow) {
+                peer, config, alert, hb, locked ->
+                PeerSharingUiState(peer, config, alert, hb, locked)
             }.collect {
                 _uiState.value = it
             }
@@ -99,10 +112,20 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setSharingEnabled(enabled: Boolean) {
         viewModelScope.launch {
+            // Can't stop sharing with the supervisor while supervised (see supervisorLocked).
+            if (!enabled && isSupervisorLocked()) return@launch
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setSharingEnabled(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
         }
+    }
+
+    /** True when the current peer is the supervisor and supervised mode is active - the
+     *  location-sharing controls toward that peer are then locked (see supervisorLocked). */
+    private suspend fun isSupervisorLocked(): Boolean {
+        val settings = prefs.settings.first()
+        return settings.supervisedModeEnabled &&
+            settings.supervisorPubkey.equals(currentPeerId, ignoreCase = true)
     }
 
     fun setMessagingEnabled(enabled: Boolean) {
@@ -139,6 +162,9 @@ class PeerSharingViewModel @Inject constructor(
     fun setNotifyOnMissedHeartbeat(enabled: Boolean) {
         viewModelScope.launch {
             val existing = configDao.getForPeer(currentPeerId)
+            // Missed-heartbeat alerts stay forced on for a device this user supervises -
+            // it's the only reliable signal that a supervised device has gone dark.
+            if (!enabled && existing?.isMySupervised == true) return@launch
             if (existing != null) configDao.setNotifyOnMissedHeartbeat(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(notifyOnMissedHeartbeat = enabled))
         }
@@ -198,6 +224,9 @@ class PeerSharingViewModel @Inject constructor(
 
     fun setSendRole(enabled: Boolean) {
         viewModelScope.launch {
+            // Dropping the SEND role toward the supervisor stops location reaching them,
+            // which supervised mode must prevent (see supervisorLocked).
+            if (!enabled && isSupervisorLocked()) return@launch
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             val wasSharing = peer.locationRole == PeerEntity.ROLE_SEND ||
                              peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE

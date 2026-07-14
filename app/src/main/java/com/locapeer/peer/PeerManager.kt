@@ -17,6 +17,8 @@ import com.locapeer.data.dao.ProximityAlertDao
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
+import kotlinx.coroutines.flow.first
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -42,11 +44,27 @@ class PeerManager @Inject constructor(
     private val geofenceAssignmentDao: GeofenceAssignmentDao,
     private val proximityAlertDao: ProximityAlertDao,
     private val pendingRequestDao: PendingRequestDao,
+    private val prefs: AppPreferences,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient
 ) {
     private val json = Json { ignoreUnknownKeys = true }
+
+    /**
+     * True when [deviceId] is the user's supervisor and supervised mode is active. The
+     * user can't unilaterally remove their supervisor while supervised - that would end
+     * supervision from a screen the settings gate doesn't cover. This is the hard
+     * backstop behind the disabled UI; lifting supervised mode (gated in Settings behind
+     * the supervisor's approval) is the only way to release it. A PEER_REMOVED *from*
+     * the supervisor still cleans up normally (see handleRemovalByPeer), since the
+     * supervisor is allowed to end the relationship.
+     */
+    private suspend fun isProtectedSupervisor(deviceId: String): Boolean {
+        val settings = prefs.settings.first()
+        return settings.supervisedModeEnabled &&
+            settings.supervisorPubkey.equals(deviceId, ignoreCase = true)
+    }
 
     /**
      * Delete every local trace of a contact. Centralised so all three removal paths
@@ -72,22 +90,33 @@ class PeerManager @Inject constructor(
         MediaCache.clearDecryptedMedia(context)
     }
 
-    /** Notify the peer, then remove them and all their data locally. */
-    suspend fun removePeer(deviceId: String) {
+    /** Notify the peer, then remove them and all their data locally. Returns false
+     *  (a no-op) when blocked because the peer is the active supervisor. */
+    suspend fun removePeer(deviceId: String): Boolean {
+        if (isProtectedSupervisor(deviceId)) {
+            Log.w(TAG, "Refusing to remove supervisor $deviceId while supervised mode is active")
+            return false
+        }
         notifyPeerRemoved(deviceId)
         wipeAllPeerData(deviceId)
+        return true
     }
 
     /**
      * Send DELETE_MY_MESSAGES + DELETE_MY_LOCATION to the peer and remove ourselves
      * from their contact list, then delete their data locally too.
      */
-    suspend fun removeSelfFromPeer(deviceId: String) {
+    suspend fun removeSelfFromPeer(deviceId: String): Boolean {
+        if (isProtectedSupervisor(deviceId)) {
+            Log.w(TAG, "Refusing to remove self from supervisor $deviceId while supervised mode is active")
+            return false
+        }
         sendDeleteMyMessages(deviceId)
         sendDeleteMyLocation(deviceId)
         notifyPeerRemoved(deviceId)
         // Also clean up locally - peer agreed to mutual tracking, so remove them here too
         wipeAllPeerData(deviceId)
+        return true
     }
 
     /** Purge all messages we sent to a specific peer on their device. */

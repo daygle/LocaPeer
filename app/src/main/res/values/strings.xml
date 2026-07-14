@@ -251,6 +251,8 @@
     <string name="contacts_cd_deselect_all">Deselect all</string>
     <string name="contacts_cd_qr_invite">QR / Invite</string>
     <string name="contacts_cd_pending_requests">Pending Requests</string>
+    <string name="contacts_supervisor_locked">You can\'t remove your supervisor while supervised mode is on. Turn off supervised mode first.</string>
+    <string name="peer_sharing_supervisor_locked">Supervised mode is on, so location sharing with your supervisor can\'t be turned off here.</string>
     <string name="contacts_sort_last_seen">Last Seen</string>
     <string name="contacts_search_placeholder">Search contacts…</string>
     <string name="contacts_empty_title">No contacts yet</string>
@@ -868,6 +870,7 @@
     <string name="backup_saved">Backup saved: %1$s</string>
     <string name="backup_saved_encrypted">Backup saved (encrypted): %1$s</string>
     <string name="backup_failed">Backup failed: %1$s</string>
+    <string name="backup_key_needs_password">Set a password to include your private key. An unencrypted key file could let anyone take over your identity.</string>
     <string name="backup_could_not_read_file">Could not read file</string>
     <string name="backup_could_not_write_file">Could not write file</string>
     <string name="backup_could_not_read">Could not read backup: %1$s</string>

@@ -25,6 +25,10 @@ data class ContactItem(
     val config: PeerSharingConfig?
 )
 
+/** String-resource id emitted on [ContactsViewModel.messages] when an action is blocked
+ *  because the contact is the user's active supervisor. */
+val MSG_SUPERVISOR_LOCKED = com.locapeer.R.string.contacts_supervisor_locked
+
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
     private val peerDao: PeerDao,
@@ -37,6 +41,11 @@ class ContactsViewModel @Inject constructor(
 
     val pendingRequestCount = pendingRequestDao.observeCount()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+
+    // One-shot user messages (e.g. a removal blocked because the contact is the active
+    // supervisor). The screen collects this and shows a snackbar/toast.
+    private val _messages = kotlinx.coroutines.flow.MutableSharedFlow<Int>(extraBufferCapacity = 4)
+    val messages: kotlinx.coroutines.flow.SharedFlow<Int> = _messages
 
     val contacts = combine(
         peerDao.getAllPeers(),
@@ -51,12 +60,16 @@ class ContactsViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     fun removePeer(deviceId: String) {
-        viewModelScope.launch { peerManager.removePeer(deviceId) }
+        viewModelScope.launch {
+            if (!peerManager.removePeer(deviceId)) _messages.emit(MSG_SUPERVISOR_LOCKED)
+        }
     }
 
     /** Send DELETE_MY_MESSAGES + DELETE_MY_LOCATION + PEER_REMOVED to the contact, then wipe locally. */
     fun removeSelfFromPeer(deviceId: String) {
-        viewModelScope.launch { peerManager.removeSelfFromPeer(deviceId) }
+        viewModelScope.launch {
+            if (!peerManager.removeSelfFromPeer(deviceId)) _messages.emit(MSG_SUPERVISOR_LOCKED)
+        }
     }
 
     fun purgeMyMessagesOnPeer(deviceId: String) {

@@ -69,14 +69,21 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                 when (intent.action) {
                     ACTION_SUPERVISED_REGISTER_ACCEPT -> {
                         Log.d("SupervisedRegisterReceiver", "Accepted supervised registration from $requesterName")
+                        // Force missed-heartbeat alerts on for a supervised device: supervision
+                        // is only meaningful if the supervisor is told when the device goes
+                        // silent (the app can't prevent an uninstall/force-stop/permission
+                        // revoke, so detect-and-notify is the actual guarantee). The toggle is
+                        // locked on in the UI while isMySupervised.
                         val cfg = ep.sharingConfigDao().getForPeer(requesterPubkey)
                         if (cfg != null) {
                             ep.sharingConfigDao().setIsMySupervised(requesterPubkey, true)
+                            ep.sharingConfigDao().setNotifyOnMissedHeartbeat(requesterPubkey, true)
                         } else {
                             ep.sharingConfigDao().upsert(
                                 com.locapeer.data.entity.PeerSharingConfig(
                                     peerDeviceId = requesterPubkey,
-                                    isMySupervised = true
+                                    isMySupervised = true,
+                                    notifyOnMissedHeartbeat = true
                                 )
                             )
                         }

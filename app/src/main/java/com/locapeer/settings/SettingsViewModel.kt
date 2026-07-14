@@ -288,6 +288,17 @@ class SettingsViewModel @Inject constructor(
     fun exportBackup(uri: Uri, sections: Set<BackupSection>, password: String? = null) {
         viewModelScope.launch {
             try {
+                // Never write the raw private key to an unencrypted file. The export lands
+                // wherever the user's file picker points (Downloads, a cloud folder), and a
+                // plaintext key there is a full identity + history compromise. Password
+                // encryption already exists below; require it whenever the key is included.
+                if (BackupSection.PRIVATE_KEY in sections && password.isNullOrBlank()) {
+                    _backupResult.value = BackupResult(
+                        context.getString(com.locapeer.R.string.backup_key_needs_password),
+                        isError = true
+                    )
+                    return@launch
+                }
                 val s = prefs.settings.first()
                 val plainBackup = LocaPeerBackup(
                     privateKeyHex = if (BackupSection.PRIVATE_KEY in sections)

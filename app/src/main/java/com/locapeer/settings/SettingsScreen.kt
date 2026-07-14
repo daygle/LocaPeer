@@ -901,6 +901,15 @@ fun SettingsScreen(
                     Spacer(Modifier.height(24.dp))
                     Text(stringResource(R.string.settings_select_sections), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
                     BackupSectionItem(stringResource(R.string.backup_section_private_key), BackupSection.PRIVATE_KEY, exportSections, BackupSection.entries.toSet()) { exportSections = it }
+                    // Exporting the private key without a password would write it in plaintext;
+                    // warn inline and disable the confirm button below until one is set.
+                    if (BackupSection.PRIVATE_KEY in exportSections && exportPassword.isBlank()) {
+                        Text(
+                            stringResource(R.string.backup_key_needs_password),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                     BackupSectionItem(stringResource(R.string.backup_section_contacts), BackupSection.CONTACTS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
                     BackupSectionItem(stringResource(R.string.backup_section_geofences), BackupSection.GEOFENCES, exportSections, BackupSection.entries.toSet()) { exportSections = it }
                     BackupSectionItem(stringResource(R.string.backup_section_settings), BackupSection.SETTINGS, exportSections, BackupSection.entries.toSet()) { exportSections = it }
@@ -912,7 +921,8 @@ fun SettingsScreen(
                         showExportDialog = false
                         exportLauncher.launch("locapeer-backup.json")
                     },
-                    enabled = exportSections.isNotEmpty()
+                    enabled = exportSections.isNotEmpty() &&
+                        (BackupSection.PRIVATE_KEY !in exportSections || exportPassword.isNotBlank())
                 ) { Text(stringResource(R.string.settings_choose_file_location)) }
             },
             dismissButton = {
