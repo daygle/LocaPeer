@@ -21,3 +21,6 @@ captures/
 
 # Translation helpers (regenerate via Google Translate; not user artifacts)
 .translate_locales.py
+
+# Freebuff session data
+.freebuff/
