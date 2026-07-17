@@ -69,6 +69,9 @@ const val ACTION_SOS_ON = "com.locapeer.SOS_ON"
 const val ACTION_SOS_OFF = "com.locapeer.SOS_OFF"
 const val ACTION_STOP = "com.locapeer.STOP_HEARTBEAT"
 const val ACTION_PULSE_CHECK = "com.locapeer.PULSE_CHECK"
+// A contact just started viewing our location: break out of the current sleep and pulse
+// at the live cadence now (the LiveViewRegistry lease drives the ongoing interval).
+const val ACTION_LIVE_VIEW = "com.locapeer.LIVE_VIEW"
 const val ACTION_ACTIVITY_TRANSITION = "com.locapeer.ACTIVITY_TRANSITION"
 
 /** Slack added to the doze-backstop alarm so the handler normally fires first. */
@@ -174,6 +177,9 @@ class HeartbeatService : LifecycleService() {
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
     private var wasLowBattery = false
+    // Tracks the live-view state applied to the GPS request, so the pulse loop can relax
+    // the profile when the last viewer's lease lapses (see the runnable).
+    private var wasLiveView = false
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
@@ -488,6 +494,15 @@ class HeartbeatService : LifecycleService() {
                 wasLowBattery = lowNow
                 requestStale = true
             }
+            // Live-view mode ends silently when the last viewer's lease lapses (no event
+            // arrives to signal it), so detect the transition here and rebuild the GPS
+            // request - otherwise the fast/high-accuracy profile would linger after the
+            // last watcher left. The start transition is handled by ACTION_LIVE_VIEW.
+            val liveNow = intervalManager.isLiveViewActive()
+            if (liveNow != wasLiveView) {
+                wasLiveView = liveNow
+                requestStale = true
+            }
 
             // One diagnostic line per pulse (minutes apart, negligible volume): the
             // current pipeline state plus counters since the previous pulse, so the
@@ -666,6 +681,14 @@ class HeartbeatService : LifecycleService() {
             // Doze backstop fired: catch up if the handler was frozen past the
             // interval, otherwise this just re-arms the schedule.
             ACTION_PULSE_CHECK -> reschedulePulse()
+            ACTION_LIVE_VIEW -> {
+                // A viewer's lease just went active. Switch GPS to the fast/high-accuracy
+                // live profile and pulse now instead of waiting out the current interval.
+                if (isStarted) {
+                    updateLocationRequest()
+                    reschedulePulse()
+                }
+            }
             ACTION_ACTIVITY_TRANSITION -> handleActivityTransition(intent)
         }
         return START_STICKY
@@ -751,6 +774,10 @@ class HeartbeatService : LifecycleService() {
         // Below 20% battery the heartbeat cadence already stretches to the
         // low-battery interval; keeping full-rate GPS running would defeat it.
         val lowBattery = !isSos && intervalManager.isLowBattery()
+        // A contact is watching the map: sample fast and accurate so the ~5s live pulses
+        // carry a genuinely fresh fix. Deliberately below SOS priority and, like the boost
+        // windows, never overrides low battery.
+        val liveView = !isSos && !lowBattery && intervalManager.isLiveViewActive()
         // A brief high-accuracy window right after leaving a settled place, so the
         // classifier reaches the right moving state before GPS relaxes. Never overrides
         // low battery (which must stay frugal). Moot while stationary, EXCEPT when an
@@ -772,6 +799,7 @@ class HeartbeatService : LifecycleService() {
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
             lowBattery -> Priority.PRIORITY_LOW_POWER
+            liveView -> Priority.PRIORITY_HIGH_ACCURACY
             boosting -> Priority.PRIORITY_HIGH_ACCURACY
             anchorBoosting -> Priority.PRIORITY_HIGH_ACCURACY
             cadenceState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
@@ -781,6 +809,7 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
+            liveView -> 5_000L
             // Sample fast during either boost so a usable fix actually lands inside the
             // window; both must precede the stationary branch, which otherwise waits 5
             // minutes - the classification boost can now be live WHILE stationary, when

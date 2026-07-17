@@ -5,7 +5,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AdaptiveIntervalManager @Inject constructor() {
+class AdaptiveIntervalManager @Inject constructor(
+    private val liveViewRegistry: LiveViewRegistry
+) {
 
     @Volatile private var isSosMode = false
     @Volatile private var currentMotionState = MotionState.UNKNOWN
@@ -16,10 +18,18 @@ class AdaptiveIntervalManager @Inject constructor() {
     fun updateBattery(level: Int) { batteryLevel = level }
     fun isLowBattery(): Boolean = batteryLevel < 20
 
+    /** True when a contact is actively viewing this device's location AND the battery can
+     *  afford the fast cadence. Low battery deliberately suppresses live mode: unlike SOS,
+     *  a viewer's convenience must not defeat battery protection. */
+    fun isLiveViewActive(): Boolean = batteryLevel >= 20 && liveViewRegistry.isActive()
+
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
         val currentBattery = batteryLevel
         if (currentBattery < 20) return (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
+        // A contact watching the map pulls updates to a near-real-time cadence, but only
+        // while their lease is live; it lapses seconds after they close the map.
+        if (liveViewRegistry.isActive()) return LIVE_VIEW_INTERVAL_MS
         return motionIntervalMillis(currentMotionState, settings)
             .coerceAtLeast(15_000L) // Minimum 15 seconds to avoid battery drain and relay spam
     }

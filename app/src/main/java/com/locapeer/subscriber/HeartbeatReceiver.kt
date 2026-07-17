@@ -112,6 +112,9 @@ private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
 private const val MAX_EXPECTED_INTERVAL_S = 24 * 60 * 60L
 // Throttle for persisting the heartbeat sync baseline as live events arrive.
 private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
+// A live-view request older than this (by the sender's own clock, tolerant of skew both
+// ways) is a stale replay and must not silently re-arm the fast broadcast cadence.
+private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -159,7 +162,8 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val peerManager: PeerManager,
-    private val trackResponseSender: com.locapeer.invite.TrackResponseSender
+    private val trackResponseSender: com.locapeer.invite.TrackResponseSender,
+    private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
@@ -219,7 +223,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_MESSAGES,
                         NostrEventKind.DELETE_MY_LOCATION,
                         NostrEventKind.TRACKING_ALERT,
-                        NostrEventKind.CIRCLE_LEAVE
+                        NostrEventKind.CIRCLE_LEAVE,
+                        NostrEventKind.LIVE_VIEW_REQUEST
                     ),
                     pTags = listOf(pubHex),
                     since = nowEpoch
@@ -287,6 +292,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
                     NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
+                    NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
                 }
               } catch (e: Exception) {
                 Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
@@ -317,6 +323,58 @@ class HeartbeatReceiver @Inject constructor(
         if (payload.deviceId != event.pubkey) return
         heartbeatDao.deleteOlderThanForDevice(payload.deviceId, payload.deleteOlderThanMs)
         Log.d(TAG, "Purged ${payload.deviceId} heartbeats before ${payload.deleteOlderThanMs}ms")
+    }
+
+    /**
+     * A contact has the map open and wants our location live. Grant a short lease (see
+     * [com.locapeer.beacon.LiveViewRegistry]) so the heartbeat loop speeds up while they
+     * watch. This is only a cadence hint: it is honoured strictly within the same
+     * role/pause gates the normal heartbeat sender applies, so it can never leak location
+     * to a contact we are not already sharing with.
+     */
+    private suspend fun processLiveViewRequest(event: NostrEvent) {
+        val peer = peerDao.getPeer(event.pubkey) ?: return
+        // Only meaningful for a contact we send location to; boosting for anyone else
+        // would change nothing they can see.
+        if (peer.locationRole != PeerEntity.ROLE_SEND &&
+            peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE
+        ) return
+        // A per-contact pause overrides everything, exactly as it does for heartbeats.
+        if (sharingConfigDao.getForPeer(peer.deviceId)?.sharingEnabled == false) return
+
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<com.locapeer.beacon.LiveViewPayload>(plaintext)
+        } catch (e: Exception) { return }
+        // Anti-spoof: the payload identity must match the signer.
+        if (payload.deviceId != event.pubkey) return
+        // Freshness guard against replays of an old request.
+        if (kotlin.math.abs(System.currentTimeMillis() - payload.sentAtMs) > LIVE_VIEW_FRESHNESS_MS) return
+
+        // grant() reports the inactive -> active transition; only then must we wake the
+        // service, since while already live it re-reads the registry every 5s on its own.
+        if (liveViewRegistry.grant(event.pubkey)) nudgeLiveView()
+        Log.d(TAG, "Live-view request granted for ${event.pubkey}")
+    }
+
+    /**
+     * Poke the running [com.locapeer.beacon.HeartbeatService] so it breaks out of any long
+     * sleep and pulses at the live cadence immediately. If the service is not running (or a
+     * background start is disallowed), the lease still stands and the service adopts live
+     * mode on its next pulse whenever it is next sharing - so a failure here is harmless.
+     */
+    private fun nudgeLiveView() {
+        try {
+            context.startService(
+                Intent(context, com.locapeer.beacon.HeartbeatService::class.java)
+                    .setAction(com.locapeer.beacon.ACTION_LIVE_VIEW)
+            )
+        } catch (e: Exception) {
+            Log.d(TAG, "Live-view service nudge skipped: ${e.message}")
+        }
     }
 
     private suspend fun processEvent(event: NostrEvent) {

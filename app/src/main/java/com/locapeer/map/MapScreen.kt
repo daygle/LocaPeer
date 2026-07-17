@@ -81,6 +81,31 @@ fun MapScreen(
     var mapStyle by remember { mutableStateOf(if (systemDark) "DARK" else "LIGHT") }
     val isDark = mapStyle == "DARK"
 
+    // While the map is on screen, ask the contacts we track to broadcast at a live
+    // cadence (Google-Maps-style). Balanced across app background (ON_RESUME/ON_PAUSE) and
+    // leaving the map (onDispose); the ViewModel makes the calls idempotent so overlapping
+    // transitions can't unbalance the underlying reference count. The immediate start
+    // covers re-entering the map tab while the Activity is already resumed, where no
+    // ON_RESUME fires.
+    val liveLifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(liveLifecycleOwner) {
+        if (liveLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+            vm.startLiveView()
+        }
+        val observer = LifecycleEventObserver { _, event ->
+            when (event) {
+                Lifecycle.Event.ON_RESUME -> vm.startLiveView()
+                Lifecycle.Event.ON_PAUSE -> vm.stopLiveView()
+                else -> {}
+            }
+        }
+        liveLifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            liveLifecycleOwner.lifecycle.removeObserver(observer)
+            vm.stopLiveView()
+        }
+    }
+
     LaunchedEffect(centerOnArgs) {
         centerOnArgs?.let {
             centerOnPin = it
