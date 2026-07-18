@@ -128,7 +128,7 @@ Custom application events (kinds 1040-1058) are tagged with the recipient's publ
 **Requirements**
 - Android Studio (latest stable recommended, for `compileSdk` 37 support)
 - JDK 17+
-- Android SDK: `compileSdk` 37, `targetSdk` 36, `minSdk` 26 (Android 8.0)
+- Android SDK: `compileSdk` 37, `targetSdk` 37, `minSdk` 26 (Android 8.0)
 
 ```bash
 git clone https://github.com/daygle/LocaPeer.git

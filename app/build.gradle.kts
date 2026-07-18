@@ -35,8 +35,6 @@ android {
 
         // Ensure we still fail on other real code errors
         abortOnError = true
-        // Uploaded as artifact in CI
-        htmlReport = true
     }
 
     buildTypes {
