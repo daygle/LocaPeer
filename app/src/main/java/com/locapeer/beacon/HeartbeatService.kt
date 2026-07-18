@@ -498,7 +498,7 @@ class HeartbeatService : LifecycleService() {
             // arrives to signal it), so detect the transition here and rebuild the GPS
             // request - otherwise the fast/high-accuracy profile would linger after the
             // last watcher left. The start transition is handled by ACTION_LIVE_VIEW.
-            val liveNow = intervalManager.isLiveViewActive()
+            val liveNow = intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
             if (liveNow != wasLiveView) {
                 wasLiveView = liveNow
                 requestStale = true
@@ -777,7 +777,7 @@ class HeartbeatService : LifecycleService() {
         // A contact is watching the map: sample fast and accurate so the ~5s live pulses
         // carry a genuinely fresh fix. Deliberately below SOS priority and, like the boost
         // windows, never overrides low battery.
-        val liveView = !isSos && !lowBattery && intervalManager.isLiveViewActive()
+        val liveView = !isSos && !lowBattery && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
         // A brief high-accuracy window right after leaving a settled place, so the
         // classifier reaches the right moving state before GPS relaxes. Never overrides
         // low battery (which must stay frugal). Moot while stationary, EXCEPT when an

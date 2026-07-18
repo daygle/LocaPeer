@@ -733,6 +733,14 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch { prefs.setNotifyOnTrackingAlerts(notify) }
     }
 
+    fun setAllowLiveBoost(enabled: Boolean) {
+        viewModelScope.launch { prefs.setAllowLiveBoost(enabled) }
+    }
+
+    fun setRequestLiveBoost(enabled: Boolean) {
+        viewModelScope.launch { prefs.setRequestLiveBoost(enabled) }
+    }
+
     fun setReverseGeocodingEnabled(enabled: Boolean) {
         viewModelScope.launch { prefs.setReverseGeocodingEnabled(enabled) }
     }

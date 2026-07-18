@@ -298,6 +298,36 @@ fun SettingsScreen(
                         },
                         colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_allow_live_boost)) },
+                        supportingContent = {
+                            Text(stringResource(R.string.settings_allow_live_boost_subtitle))
+                        },
+                        leadingContent = { Icon(Icons.Default.Timelapse, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.allowLiveBoost,
+                                onCheckedChange = { vm.setAllowLiveBoost(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.settings_request_live_boost)) },
+                        supportingContent = {
+                            Text(stringResource(R.string.settings_request_live_boost_subtitle))
+                        },
+                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
+                        trailingContent = {
+                            Switch(
+                                checked = settings.requestLiveBoost,
+                                onCheckedChange = { vm.setRequestLiveBoost(it) }
+                            )
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
                 }
             }
 

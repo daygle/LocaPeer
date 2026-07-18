@@ -43,7 +43,8 @@ class LiveViewSender @Inject constructor(
     private val relayClient: NostrRelayClient,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val peerDao: PeerDao
+    private val peerDao: PeerDao,
+    private val prefs: com.locapeer.settings.AppPreferences
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val json = Json { ignoreUnknownKeys = true }
@@ -92,6 +93,7 @@ class LiveViewSender @Inject constructor(
     }
 
     private suspend fun announceOnce() {
+        if (!prefs.settings.first().requestLiveBoost) return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val recipients = peerDao.getAllPeers().first().filter {
             it.locationRole == PeerEntity.ROLE_RECEIVE || it.locationRole == PeerEntity.ROLE_SEND_RECEIVE

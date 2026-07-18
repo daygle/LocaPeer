@@ -156,7 +156,15 @@ data class AppSettings(
      * Extra relay URLs (wss://) the user added. Combined with the hardcoded
      * [HARDCODED_RELAYS] and peers' invite relays to form the live connection set.
      */
-    val customRelays: List<String> = emptyList()
+    val customRelays: List<String> = emptyList(),
+    /**
+     * If true, speed up own broadcasts when a contact is watching the map.
+     */
+    val allowLiveBoost: Boolean = true,
+    /**
+     * If true, ask contacts for faster updates when viewing them on the map.
+     */
+    val requestLiveBoost: Boolean = true
 )
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
@@ -214,6 +222,8 @@ class AppPreferences @Inject constructor(
     private val KEY_USE_DYNAMIC_COLOR = booleanPreferencesKey("use_dynamic_color")
     private val KEY_DISABLED_RELAY_URLS = stringPreferencesKey("disabled_relay_urls")
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
+    private val KEY_ALLOW_LIVE_BOOST = booleanPreferencesKey("allow_live_boost")
+    private val KEY_REQUEST_LIVE_BOOST = booleanPreferencesKey("request_live_boost")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -275,7 +285,9 @@ class AppPreferences @Inject constructor(
                     ?.split(",")
                     ?.map { it.trim() }
                     ?.filter { it.isNotBlank() }
-                    ?: emptyList()
+                    ?: emptyList(),
+                allowLiveBoost = prefs[KEY_ALLOW_LIVE_BOOST] ?: true,
+                requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true
             )
         }
         // replay = 1 caches the latest settings so newly-mounted screens get it immediately
@@ -403,6 +415,14 @@ class AppPreferences @Inject constructor(
 
     suspend fun setUseDynamicColor(use: Boolean) {
         context.settingsStore.edit { it[KEY_USE_DYNAMIC_COLOR] = use }
+    }
+
+    suspend fun setAllowLiveBoost(enabled: Boolean) {
+        context.settingsStore.edit { it[KEY_ALLOW_LIVE_BOOST] = enabled }
+    }
+
+    suspend fun setRequestLiveBoost(enabled: Boolean) {
+        context.settingsStore.edit { it[KEY_REQUEST_LIVE_BOOST] = enabled }
     }
 
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {
