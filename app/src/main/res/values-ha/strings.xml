@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Bar da share ko\'ina</string>
     <string name="circles_leave_remote_sub">Har ila yau yana share saƙonnin da ka aika daga na\'urorin sauran mambobi.</string>
     <string name="conv_mark_unread">Yi Alama a matsayin Wanda ba a Karanta ba</string>
+    <!-- Pending translation: Live Boost, Relays, Supervised Mode, Temporary Sharing (English placeholders) -->
+    <string name="settings_allow_live_boost">Allow Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Speed up your updates when a contact is viewing the map.</string>
+    <string name="settings_request_live_boost">Request Live Updates</string>
+    <string name="settings_request_live_boost_subtitle">Ask contacts for faster updates when you have the map open.</string>
+    <string name="settings_relays">Relays</string>
+    <string name="settings_relays_subtitle">Choose which relays carry your data</string>
+    <string name="relays_intro">LocaPeer sends your data through Nostr relays. Content is always end-to-end encrypted, but public relays can still see which contacts you talk to and when. Use your own relays to reduce that exposure.</string>
+    <string name="relays_public_header">Public Relays</string>
+    <string name="relays_custom_header">Your Relays</string>
+    <string name="relays_custom_empty">No custom relays added.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Add Relay</string>
+    <string name="relays_add_invalid">Enter a valid wss:// relay address.</string>
+    <string name="relays_add_duplicate">That relay is already in the list.</string>
+    <string name="relays_remove">Remove relay</string>
+    <string name="relays_status_connected">Connected</string>
+    <string name="relays_status_disconnected">Disconnected</string>
+    <string name="relays_status_disabled">Disabled</string>
+    <string name="settings_enable_supervised_lockout_warning">While supervised mode is on, changing settings, removing your supervisor, or turning this off all need your supervisor\'s approval. If they become unreachable, you may be locked out until they respond.</string>
+    <string name="contacts_supervisor_locked">You can\'t remove your supervisor while supervised mode is on. Turn off supervised mode first.</string>
+    <string name="peer_sharing_supervisor_locked">Supervised mode is on, so location sharing with your supervisor can\'t be turned off here.</string>
+    <string name="settings_temporary_location_share">Temporary Location Share</string>
+    <string name="app_lock_no_credential">No screen lock is set on this device, so there\'s nothing to unlock with. Set a PIN, pattern, password, or biometric in your device settings, then reopen LocaPeer.</string>
+    <string name="backup_key_needs_password">Set a password to include your private key. An unencrypted key file could let anyone take over your identity.</string>
 </resources>

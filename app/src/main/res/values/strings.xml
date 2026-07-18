@@ -186,6 +186,7 @@
     <string name="relays_remove">Remove relay</string>
     <string name="relays_status_connected">Connected</string>
     <string name="relays_status_disconnected">Disconnected</string>
+    <string name="relays_status_disabled">Disabled</string>
     <string name="settings_start_page">Start Page</string>
     <string name="settings_language">Language</string>
     <string name="settings_language_title">App Language</string>
