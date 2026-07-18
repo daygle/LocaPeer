@@ -604,7 +604,17 @@ private fun OsmdroidMapView(
                         val marker = Marker(mapView).apply {
                             position = GeoPoint(hb.lat, hb.lng)
                             title = pinData.peer.displayName
-                            setIcon(MarkerIconFactory.create(context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor))
+                            setIcon(
+                                MarkerIconFactory.create(
+                                    context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor,
+                                    bearingDegrees = hb.bearing,
+                                    // Show a heading arrow only for a contact that is genuinely
+                                    // moving (matches the speed-chip gate) and whose fix is current;
+                                    // a stale/overdue pin must not imply a live direction.
+                                    showDirection = !pinData.isOverdue && hb.speed > 0f &&
+                                        !hb.motionState.equals("STATIONARY", ignoreCase = true)
+                                )
+                            )
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             infoWindow = null
                             setOnMarkerClickListener { _, _ -> onPinTapped(pinData); true }
