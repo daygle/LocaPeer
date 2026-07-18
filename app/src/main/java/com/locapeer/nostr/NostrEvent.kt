@@ -34,6 +34,10 @@ object NostrEventKind {
     const val SUPERVISED_REGISTER_DECLINE = 1057
     const val TRACKING_ALERT = 1058
     const val CIRCLE_LEAVE = 1059
+    // Sent by a viewer while they have the map open, asking the recipient to broadcast
+    // location at a fast "live" cadence for a short lease. Purely a rate hint - it never
+    // grants access the recipient's role/pause settings don't already allow.
+    const val LIVE_VIEW_REQUEST = 1060
 }
 
 @Serializable

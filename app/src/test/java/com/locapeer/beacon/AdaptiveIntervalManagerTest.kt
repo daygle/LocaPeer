@@ -10,6 +10,7 @@ import org.junit.Test
 class AdaptiveIntervalManagerTest {
 
     private lateinit var manager: AdaptiveIntervalManager
+    private lateinit var liveViewRegistry: LiveViewRegistry
     private val settings = AppSettings(
         stationaryIntervalMinutes = 15,
         walkingIntervalMinutes = 5,
@@ -21,7 +22,8 @@ class AdaptiveIntervalManagerTest {
 
     @Before
     fun setUp() {
-        manager = AdaptiveIntervalManager()
+        liveViewRegistry = LiveViewRegistry()
+        manager = AdaptiveIntervalManager(liveViewRegistry)
         manager.updateBattery(100)
     }
 
@@ -80,5 +82,37 @@ class AdaptiveIntervalManagerTest {
         assertTrue(manager.isLowBattery())
         manager.updateBattery(20)
         assertFalse(manager.isLowBattery())
+    }
+
+    @Test
+    fun `an active live-view lease pulls the interval to the live cadence`() {
+        manager.updateMotionState(MotionState.STATIONARY)
+        assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
+        liveViewRegistry.grant("viewer-pubkey")
+        assertTrue(manager.isLiveViewActive())
+        assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings))
+    }
+
+    @Test
+    fun `sos outranks live view`() {
+        liveViewRegistry.grant("viewer-pubkey")
+        manager.setSosMode(enabled = true)
+        assertEquals(15_000L, manager.getIntervalMillis(settings))
+    }
+
+    @Test
+    fun `low battery suppresses live view to protect the battery`() {
+        liveViewRegistry.grant("viewer-pubkey")
+        manager.updateBattery(15)
+        assertFalse(manager.isLiveViewActive())
+        assertEquals(30 * 60_000L, manager.getIntervalMillis(settings))
+    }
+
+    @Test
+    fun `an expired live-view lease no longer boosts`() {
+        manager.updateMotionState(MotionState.STATIONARY)
+        liveViewRegistry.grant("viewer-pubkey", leaseMs = 0L)
+        assertFalse(manager.isLiveViewActive())
+        assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
     }
 }

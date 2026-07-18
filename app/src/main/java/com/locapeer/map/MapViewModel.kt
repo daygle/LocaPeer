@@ -65,6 +65,7 @@ class MapViewModel @Inject constructor(
     private val geofenceAssignmentDao: com.locapeer.data.dao.GeofenceAssignmentDao,
     private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
+    private val liveViewSender: com.locapeer.beacon.LiveViewSender,
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
@@ -115,6 +116,32 @@ class MapViewModel @Inject constructor(
         viewModelScope.launch {
             appPreferences.setShowGeofencesOnMap(!showGeofences.value)
         }
+    }
+
+    // Guards the live-view announce loop so the screen's lifecycle callbacks can be
+    // idempotent: ON_RESUME / re-entry may both try to start, and ON_PAUSE / onDispose may
+    // both try to stop. Only genuine transitions reach the reference-counted sender.
+    private var liveViewOn = false
+
+    /** Begin telling tracked contacts we are viewing them, if not already doing so. */
+    fun startLiveView() {
+        if (liveViewOn) return
+        liveViewOn = true
+        liveViewSender.startViewing()
+    }
+
+    /** Stop announcing that we are viewing tracked contacts, if currently doing so. */
+    fun stopLiveView() {
+        if (!liveViewOn) return
+        liveViewOn = false
+        liveViewSender.stopViewing()
+    }
+
+    override fun onCleared() {
+        // The screen normally stops us via onDispose, but a process-level teardown may
+        // clear the ViewModel without it; make sure the announce loop can't outlive us.
+        stopLiveView()
+        super.onCleared()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
