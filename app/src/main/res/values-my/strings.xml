@@ -837,4 +837,29 @@
     <string name="circles_leave_remote">ထွက်ပြီး နေရာတိုင်းတွင် ဖျက်ရန်</string>
     <string name="circles_leave_remote_sub">သင်ပို့ခဲ့သော မက်ဆေ့ဂျ်များကိုလည်း အခြားအဖွဲ့ဝင်များ၏ စက်များမှ ဖျက်ပါမည်။</string>
     <string name="conv_mark_unread">မဖတ်ရသေးဟု မှတ်သားရန်</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ကို ခွင့်ပြုရန်</string>
+    <string name="settings_allow_live_boost_subtitle">အဆက်အသွယ်တစ်ဦးက မြေပုံကို ကြည့်နေချိန်တွင် သင့်အပ်ဒိတ်များကို အရှိန်မြှင့်ပါ။</string>
+    <string name="settings_request_live_boost">တိုက်ရိုက်အပ်ဒိတ်များ တောင်းဆိုရန်</string>
+    <string name="settings_request_live_boost_subtitle">သင့်မြေပုံဖွင့်ထားချိန်တွင် အဆက်အသွယ်များထံမှ ပိုမြန်သောအပ်ဒိတ်များ တောင်းဆိုပါ။</string>
+    <string name="settings_relays">ရီလေးများ</string>
+    <string name="settings_relays_subtitle">သင့်ဒေတာကို မည်သည့်ရီလေးများက သယ်ဆောင်မည်ကို ရွေးပါ</string>
+    <string name="relays_intro">LocaPeer သည် သင့်ဒေတာကို Nostr ရီလေးများမှတစ်ဆင့် ပို့ပါသည်။ အကြောင်းအရာကို အမြဲတမ်း အစအဆုံး ကုဒ်ဝှက်ထားသော်လည်း အများသုံးရီလေးများသည် သင်မည်သည့်အဆက်အသွယ်များနှင့် မည်သည့်အချိန်တွင် ပြောဆိုသည်ကို မြင်နိုင်ဆဲဖြစ်သည်။ ထိုဖော်ထုတ်မှုကို လျှော့ချရန် သင့်ကိုယ်ပိုင်ရီလေးများကို အသုံးပြုပါ။</string>
+    <string name="relays_public_header">အများသုံးရီလေးများ</string>
+    <string name="relays_custom_header">သင့်ရီလေးများ</string>
+    <string name="relays_custom_empty">စိတ်ကြိုက်ရီလေးများ ထည့်မထားပါ။</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">ရီလေးထည့်ရန်</string>
+    <string name="relays_add_invalid">မှန်ကန်သော wss:// ရီလေးလိပ်စာ ထည့်ပါ။</string>
+    <string name="relays_add_duplicate">ထိုရီလေးသည် စာရင်းတွင် ရှိပြီးဖြစ်သည်။</string>
+    <string name="relays_remove">ရီလေးဖယ်ရှားရန်</string>
+    <string name="relays_status_connected">ချိတ်ဆက်ထားသည်</string>
+    <string name="relays_status_disconnected">ချိတ်ဆက်မှုပြတ်တောက်သည်</string>
+    <string name="relays_status_disabled">ပိတ်ထားသည်</string>
+    <string name="settings_enable_supervised_lockout_warning">ကြီးကြပ်မှုမုဒ် ဖွင့်ထားစဉ်တွင် ဆက်တင်များပြောင်းလဲခြင်း၊ သင့်ကြီးကြပ်သူကို ဖယ်ရှားခြင်း သို့မဟုတ် ၎င်းကို ပိတ်ခြင်းအားလုံးသည် သင့်ကြီးကြပ်သူ၏ အတည်ပြုချက်လိုအပ်သည်။ ၎င်းတို့ကို ဆက်သွယ်၍မရတော့ပါက ၎င်းတို့ ပြန်ဖြေကြားသည်အထိ သင် လော့ခ်ချခံရနိုင်သည်။</string>
+    <string name="contacts_supervisor_locked">ကြီးကြပ်မှုမုဒ် ဖွင့်ထားစဉ်တွင် သင့်ကြီးကြပ်သူကို ဖယ်ရှား၍မရပါ။ ကြီးကြပ်မှုမုဒ်ကို ဦးစွာ ပိတ်ပါ။</string>
+    <string name="peer_sharing_supervisor_locked">ကြီးကြပ်မှုမုဒ် ဖွင့်ထားသဖြင့် သင့်ကြီးကြပ်သူနှင့် တည်နေရာမျှဝေခြင်းကို ဤနေရာတွင် ပိတ်၍မရပါ။</string>
+    <string name="settings_temporary_location_share">ယာယီ တည်နေရာမျှဝေခြင်း</string>
+    <string name="app_lock_no_credential">ဤစက်ပစ္စည်းတွင် ဖန်သားပြင်လော့ခ် သတ်မှတ်မထားသဖြင့် လော့ခ်ဖွင့်ရန် မည်သည့်အရာမှ မရှိပါ။ သင့်စက်ဆက်တင်များတွင် PIN၊ ပုံစံ၊ စကားဝှက် သို့မဟုတ် ဇီဝဗေဒအချက်အလက်တစ်ခုကို သတ်မှတ်ပြီး LocaPeer ကို ပြန်ဖွင့်ပါ။</string>
+    <string name="backup_key_needs_password">သင့်သီးသန့်ကီးကို ထည့်သွင်းရန် စကားဝှက်တစ်ခု သတ်မှတ်ပါ။ ကုဒ်ဝှက်မထားသော ကီးဖိုင်သည် မည်သူမဆို သင့်အထောက်အထားကို သိမ်းပိုက်နိုင်စေပါသည်။</string>
 </resources>

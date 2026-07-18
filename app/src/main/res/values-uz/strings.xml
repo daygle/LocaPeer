@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Chiqish va hamma joydan oʻchirish</string>
     <string name="circles_leave_remote_sub">Siz yuborgan xabarlarni boshqa aʼzolarning qurilmalaridan ham oʻchiradi.</string>
     <string name="conv_mark_unread">Oʻqilmagan deb belgilash</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost\'ga ruxsat berish</string>
+    <string name="settings_allow_live_boost_subtitle">Kontakt xaritani ko\'rayotganda yangilanishlaringizni tezlashtiring.</string>
+    <string name="settings_request_live_boost">Jonli yangilanishlarni so\'rash</string>
+    <string name="settings_request_live_boost_subtitle">Xarita ochiq bo\'lganda kontaktlardan tezroq yangilanishlarni so\'rang.</string>
+    <string name="settings_relays">Relelar</string>
+    <string name="settings_relays_subtitle">Ma\'lumotlaringizni qaysi relelar tashishini tanlang</string>
+    <string name="relays_intro">LocaPeer ma\'lumotlaringizni Nostr relelari orqali yuboradi. Kontent har doim uchdan-uchgacha shifrlangan, ammo ommaviy relelar baribir siz kim bilan va qachon gaplashayotganingizni ko\'ra oladi. Bu oshkoralikni kamaytirish uchun o\'z relelaringizdan foydalaning.</string>
+    <string name="relays_public_header">Ommaviy relelar</string>
+    <string name="relays_custom_header">Sizning relelaringiz</string>
+    <string name="relays_custom_empty">Maxsus relelar qo\'shilmagan.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Rele qo\'shish</string>
+    <string name="relays_add_invalid">Yaroqli wss:// rele manzilini kiriting.</string>
+    <string name="relays_add_duplicate">Bu rele allaqachon ro\'yxatda mavjud.</string>
+    <string name="relays_remove">Releni olib tashlash</string>
+    <string name="relays_status_connected">Ulangan</string>
+    <string name="relays_status_disconnected">Uzilgan</string>
+    <string name="relays_status_disabled">O\'chirilgan</string>
+    <string name="settings_enable_supervised_lockout_warning">Nazorat rejimi yoqilganda sozlamalarni o\'zgartirish, nazoratchingizni olib tashlash yoki uni o\'chirish uchun nazoratchingizning tasdig\'i talab qilinadi. Agar u bog\'lanib bo\'lmaydigan bo\'lib qolsa, u javob bergunicha bloklanib qolishingiz mumkin.</string>
+    <string name="contacts_supervisor_locked">Nazorat rejimi yoqilganda nazoratchingizni olib tashlay olmaysiz. Avval nazorat rejimini o\'chiring.</string>
+    <string name="peer_sharing_supervisor_locked">Nazorat rejimi yoqilgan, shuning uchun nazoratchingiz bilan joylashuvni ulashishni bu yerda o\'chirib bo\'lmaydi.</string>
+    <string name="settings_temporary_location_share">Vaqtinchalik joylashuvni ulashish</string>
+    <string name="app_lock_no_credential">Bu qurilmada ekran qulfi o\'rnatilmagan, shuning uchun ochish uchun hech narsa yo\'q. Qurilma sozlamalarida PIN, grafik kalit, parol yoki biometrika o\'rnating, so\'ng LocaPeer\'ni qayta oching.</string>
+    <string name="backup_key_needs_password">Shaxsiy kalitingizni kiritish uchun parol o\'rnating. Shifrlanmagan kalit fayli har kimga sizning shaxsingizni egallashga imkon berishi mumkin.</string>
 </resources>

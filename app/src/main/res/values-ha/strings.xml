@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Bar da share ko\'ina</string>
     <string name="circles_leave_remote_sub">Har ila yau yana share saƙonnin da ka aika daga na\'urorin sauran mambobi.</string>
     <string name="conv_mark_unread">Yi Alama a matsayin Wanda ba a Karanta ba</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Bar da Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Hanzarta sabuntawarka lokacin da lamba ke duban taswira.</string>
+    <string name="settings_request_live_boost">Nemi sabuntawa kai tsaye</string>
+    <string name="settings_request_live_boost_subtitle">Nemi lambobi su ba da sabuntawa cikin sauri lokacin da taswira ke a bude.</string>
+    <string name="settings_relays">Relays</string>
+    <string name="settings_relays_subtitle">Zabi wadanne relays ke dauke da bayananka</string>
+    <string name="relays_intro">LocaPeer yana aika bayananka ta relays na Nostr. Ana boye abun ciki koyaushe daga karshe zuwa karshe, amma relays na jama\'a har yanzu suna iya ganin wadanne lambobi kake magana da su da kuma yaushe. Yi amfani da relays naka don rage wannan fallasa.</string>
+    <string name="relays_public_header">Relays na jama\'a</string>
+    <string name="relays_custom_header">Relays dinka</string>
+    <string name="relays_custom_empty">Ba a kara relays na musamman ba.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Kara relay</string>
+    <string name="relays_add_invalid">Shigar da ingantaccen adireshin relay na wss://.</string>
+    <string name="relays_add_duplicate">Wannan relay yana cikin jerin tuni.</string>
+    <string name="relays_remove">Cire relay</string>
+    <string name="relays_status_connected">An hada</string>
+    <string name="relays_status_disconnected">An yanke</string>
+    <string name="relays_status_disabled">An kashe</string>
+    <string name="settings_enable_supervised_lockout_warning">Yayin da yanayin kulawa ke kunne, canza saituna, cire mai kula da kai, ko kashe wannan duk suna bukatar amincewar mai kula da kai. Idan ya zama ba a iya samun sa, kana iya zama a kulle har sai ya amsa.</string>
+    <string name="contacts_supervisor_locked">Ba za ka iya cire mai kula da kai ba yayin da yanayin kulawa ke kunne. Da farko ka kashe yanayin kulawa.</string>
+    <string name="peer_sharing_supervisor_locked">Yanayin kulawa yana kunne, don haka ba a iya kashe raba wuri da mai kula da kai a nan.</string>
+    <string name="settings_temporary_location_share">Raba wuri na wucin gadi</string>
+    <string name="app_lock_no_credential">Babu kullen allo da aka saita a wannan na\'urar, don haka babu abin da za a bude da shi. Saita PIN, tsari, kalmar sirri, ko biometric a cikin saitunan na\'urarka, sannan ka sake bude LocaPeer.</string>
+    <string name="backup_key_needs_password">Saita kalmar sirri don hada da makullin sirrinka. Fayil na makulli mara boyewa zai iya bar kowa ya karbe asalinka.</string>
 </resources>

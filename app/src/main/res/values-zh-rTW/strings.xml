@@ -837,4 +837,29 @@
     <string name="circles_leave_remote">離開並在所有裝置上刪除</string>
     <string name="circles_leave_remote_sub">同時從其他成員的裝置上刪除你傳送的訊息。</string>
     <string name="conv_mark_unread">標示為未讀</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">允許 Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">當聯絡人正在查看地圖時加快你的更新。</string>
+    <string name="settings_request_live_boost">要求即時更新</string>
+    <string name="settings_request_live_boost_subtitle">當你開啟地圖時，向聯絡人要求更快的更新。</string>
+    <string name="settings_relays">中繼</string>
+    <string name="settings_relays_subtitle">選擇由哪些中繼傳輸你的資料</string>
+    <string name="relays_intro">LocaPeer 透過 Nostr 中繼傳送你的資料。內容一律採用端對端加密，但公共中繼仍能看到你與哪些聯絡人以及何時通訊。使用你自己的中繼可減少這種暴露。</string>
+    <string name="relays_public_header">公共中繼</string>
+    <string name="relays_custom_header">你的中繼</string>
+    <string name="relays_custom_empty">未新增自訂中繼。</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">新增中繼</string>
+    <string name="relays_add_invalid">請輸入有效的 wss:// 中繼位址。</string>
+    <string name="relays_add_duplicate">該中繼已在清單中。</string>
+    <string name="relays_remove">移除中繼</string>
+    <string name="relays_status_connected">已連線</string>
+    <string name="relays_status_disconnected">已中斷連線</string>
+    <string name="relays_status_disabled">已停用</string>
+    <string name="settings_enable_supervised_lockout_warning">在監督模式開啟期間，變更設定、移除監督者或關閉此模式都需要你的監督者核准。如果無法聯絡到對方，你可能會被鎖定，直到對方回應。</string>
+    <string name="contacts_supervisor_locked">監督模式開啟期間，你無法移除監督者。請先關閉監督模式。</string>
+    <string name="peer_sharing_supervisor_locked">監督模式已開啟，因此無法在此處關閉與監督者的位置分享。</string>
+    <string name="settings_temporary_location_share">暫時位置分享</string>
+    <string name="app_lock_no_credential">此裝置未設定螢幕鎖定，因此沒有可用於解鎖的方式。請在裝置設定中設定 PIN、圖形、密碼或生物辨識，然後重新開啟 LocaPeer。</string>
+    <string name="backup_key_needs_password">設定密碼以包含你的私密金鑰。未加密的金鑰檔案可能會讓任何人接管你的身分。</string>
 </resources>

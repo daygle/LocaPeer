@@ -882,4 +882,29 @@
     <string name="circles_leave_remote">Opuść i usuń wszędzie</string>
     <string name="circles_leave_remote_sub">Usuwa też wysłane przez Ciebie wiadomości z urządzeń innych członków.</string>
     <string name="conv_mark_unread">Oznacz jako nieprzeczytane</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Zezwól na Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Przyspiesz swoje aktualizacje, gdy kontakt przegląda mapę.</string>
+    <string name="settings_request_live_boost">Poproś o aktualizacje na żywo</string>
+    <string name="settings_request_live_boost_subtitle">Poproś kontakty o szybsze aktualizacje, gdy masz otwartą mapę.</string>
+    <string name="settings_relays">Przekaźniki</string>
+    <string name="settings_relays_subtitle">Wybierz, które przekaźniki przenoszą Twoje dane</string>
+    <string name="relays_intro">LocaPeer wysyła Twoje dane przez przekaźniki Nostr. Treść jest zawsze szyfrowana od końca do końca, ale przekaźniki publiczne nadal widzą, z którymi kontaktami rozmawiasz i kiedy. Używaj własnych przekaźników, aby ograniczyć to ujawnienie.</string>
+    <string name="relays_public_header">Przekaźniki publiczne</string>
+    <string name="relays_custom_header">Twoje przekaźniki</string>
+    <string name="relays_custom_empty">Nie dodano własnych przekaźników.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Dodaj przekaźnik</string>
+    <string name="relays_add_invalid">Wprowadź prawidłowy adres przekaźnika wss://.</string>
+    <string name="relays_add_duplicate">Ten przekaźnik jest już na liście.</string>
+    <string name="relays_remove">Usuń przekaźnik</string>
+    <string name="relays_status_connected">Połączono</string>
+    <string name="relays_status_disconnected">Rozłączono</string>
+    <string name="relays_status_disabled">Wyłączono</string>
+    <string name="settings_enable_supervised_lockout_warning">Gdy tryb nadzorowany jest włączony, zmiana ustawień, usunięcie opiekuna lub jego wyłączenie wymagają zgody Twojego opiekuna. Jeśli stanie się nieosiągalny, możesz zostać zablokowany, dopóki nie odpowie.</string>
+    <string name="contacts_supervisor_locked">Nie możesz usunąć opiekuna, gdy tryb nadzorowany jest włączony. Najpierw wyłącz tryb nadzorowany.</string>
+    <string name="peer_sharing_supervisor_locked">Tryb nadzorowany jest włączony, więc udostępniania lokalizacji opiekunowi nie można tutaj wyłączyć.</string>
+    <string name="settings_temporary_location_share">Tymczasowe udostępnianie lokalizacji</string>
+    <string name="app_lock_no_credential">Na tym urządzeniu nie ustawiono blokady ekranu, więc nie ma czym odblokować. Ustaw kod PIN, wzór, hasło lub dane biometryczne w ustawieniach urządzenia, a następnie ponownie otwórz LocaPeer.</string>
+    <string name="backup_key_needs_password">Ustaw hasło, aby dołączyć klucz prywatny. Niezaszyfrowany plik klucza może pozwolić każdemu przejąć Twoją tożsamość.</string>
 </resources>

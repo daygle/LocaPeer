@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">છોડો અને બધે કાઢી નાખો</string>
     <string name="circles_leave_remote_sub">તમે મોકલેલા સંદેશા અન્ય સભ્યોના ડિવાઇસમાંથી પણ કાઢી નાખે છે.</string>
     <string name="conv_mark_unread">ન વાંચેલા તરીકે માર્ક કરો</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ને મંજૂરી આપો</string>
+    <string name="settings_allow_live_boost_subtitle">જ્યારે કોઈ સંપર્ક નકશો જોઈ રહ્યો હોય ત્યારે તમારા અપડેટ ઝડપી કરો.</string>
+    <string name="settings_request_live_boost">લાઇવ અપડેટની વિનંતી કરો</string>
+    <string name="settings_request_live_boost_subtitle">જ્યારે તમારો નકશો ખુલ્લો હોય ત્યારે સંપર્કો પાસેથી ઝડપી અપડેટની વિનંતી કરો.</string>
+    <string name="settings_relays">રિલે</string>
+    <string name="settings_relays_subtitle">પસંદ કરો કે કયા રિલે તમારો ડેટા વહન કરે</string>
+    <string name="relays_intro">LocaPeer તમારો ડેટા Nostr રિલે દ્વારા મોકલે છે. સામગ્રી હંમેશા એન્ડ-ટુ-એન્ડ એન્ક્રિપ્ટેડ હોય છે, પરંતુ સાર્વજનિક રિલે હજુ પણ જોઈ શકે છે કે તમે કયા સંપર્કો સાથે અને ક્યારે વાત કરો છો. આ ખુલ્લાપણું ઘટાડવા માટે તમારા પોતાના રિલેનો ઉપયોગ કરો.</string>
+    <string name="relays_public_header">સાર્વજનિક રિલે</string>
+    <string name="relays_custom_header">તમારા રિલે</string>
+    <string name="relays_custom_empty">કોઈ કસ્ટમ રિલે ઉમેર્યા નથી.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">રિલે ઉમેરો</string>
+    <string name="relays_add_invalid">માન્ય wss:// રિલે સરનામું દાખલ કરો.</string>
+    <string name="relays_add_duplicate">તે રિલે પહેલેથી જ સૂચિમાં છે.</string>
+    <string name="relays_remove">રિલે દૂર કરો</string>
+    <string name="relays_status_connected">કનેક્ટેડ</string>
+    <string name="relays_status_disconnected">ડિસ્કનેક્ટેડ</string>
+    <string name="relays_status_disabled">અક્ષમ</string>
+    <string name="settings_enable_supervised_lockout_warning">દેખરેખ મોડ ચાલુ હોય ત્યાં સુધી, સેટિંગ્સ બદલવા, તમારા દેખરેખકારને દૂર કરવા, અથવા આને બંધ કરવા માટે તમારા દેખરેખકારની મંજૂરી જરૂરી છે. જો તેઓ સંપર્ક બહાર થઈ જાય, તો તેઓ જવાબ ન આપે ત્યાં સુધી તમે લૉક આઉટ રહી શકો છો.</string>
+    <string name="contacts_supervisor_locked">દેખરેખ મોડ ચાલુ હોય ત્યાં સુધી તમે તમારા દેખરેખકારને દૂર કરી શકતા નથી. પહેલા દેખરેખ મોડ બંધ કરો.</string>
+    <string name="peer_sharing_supervisor_locked">દેખરેખ મોડ ચાલુ છે, તેથી તમારા દેખરેખકાર સાથે સ્થાન શેરિંગ અહીં બંધ કરી શકાતું નથી.</string>
+    <string name="settings_temporary_location_share">કામચલાઉ સ્થાન શેરિંગ</string>
+    <string name="app_lock_no_credential">આ ઉપકરણ પર કોઈ સ્ક્રીન લૉક સેટ નથી, તેથી અનલૉક કરવા માટે કંઈ નથી. તમારા ઉપકરણ સેટિંગ્સમાં એક PIN, પેટર્ન, પાસવર્ડ, અથવા બાયોમેટ્રિક સેટ કરો, પછી LocaPeer ફરીથી ખોલો.</string>
+    <string name="backup_key_needs_password">તમારી ખાનગી કી શામેલ કરવા માટે એક પાસવર્ડ સેટ કરો. એન્ક્રિપ્ટ ન કરેલી કી ફાઇલ કોઈને પણ તમારી ઓળખ પર કબજો કરવા દઈ શકે છે.</string>
 </resources>

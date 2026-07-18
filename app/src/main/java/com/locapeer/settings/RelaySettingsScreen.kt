@@ -254,7 +254,7 @@ private fun RelayRow(
         supportingContent = {
             Text(
                 text = when {
-                    !isEnabled -> "Disabled"
+                    !isEnabled -> stringResource(R.string.relays_status_disabled)
                     connected -> stringResource(R.string.relays_status_connected)
                     else -> stringResource(R.string.relays_status_disconnected)
                 },

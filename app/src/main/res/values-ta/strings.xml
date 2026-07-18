@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">வெளியேறி எல்லா இடங்களிலிருந்தும் நீக்கு</string>
     <string name="circles_leave_remote_sub">நீங்கள் அனுப்பிய செய்திகளையும் மற்ற உறுப்பினர்களின் சாதனங்களிலிருந்து நீக்கும்.</string>
     <string name="conv_mark_unread">படிக்காததாகக் குறி</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ஐ அனுமதி</string>
+    <string name="settings_allow_live_boost_subtitle">ஒரு தொடர்பு வரைபடத்தைப் பார்க்கும்போது உங்கள் புதுப்பிப்புகளை வேகப்படுத்துங்கள்.</string>
+    <string name="settings_request_live_boost">நேரடி புதுப்பிப்புகளைக் கோருங்கள்</string>
+    <string name="settings_request_live_boost_subtitle">உங்கள் வரைபடம் திறந்திருக்கும்போது தொடர்புகளிடம் வேகமான புதுப்பிப்புகளைக் கோருங்கள்.</string>
+    <string name="settings_relays">ரிலேக்கள்</string>
+    <string name="settings_relays_subtitle">உங்கள் தரவை எந்த ரிலேக்கள் கொண்டு செல்ல வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="relays_intro">LocaPeer உங்கள் தரவை Nostr ரிலேக்கள் வழியாக அனுப்புகிறது. உள்ளடக்கம் எப்போதும் முனை முதல் முனை வரை குறியாக்கம் செய்யப்படுகிறது, ஆனால் பொது ரிலேக்கள் நீங்கள் எந்தத் தொடர்புகளுடன், எப்போது பேசுகிறீர்கள் என்பதை இன்னும் பார்க்க முடியும். இந்த வெளிப்பாட்டைக் குறைக்க உங்கள் சொந்த ரிலேக்களைப் பயன்படுத்தவும்.</string>
+    <string name="relays_public_header">பொது ரிலேக்கள்</string>
+    <string name="relays_custom_header">உங்கள் ரிலேக்கள்</string>
+    <string name="relays_custom_empty">தனிப்பயன் ரிலேக்கள் எதுவும் சேர்க்கப்படவில்லை.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">ரிலே சேர்</string>
+    <string name="relays_add_invalid">சரியான wss:// ரிலே முகவரியை உள்ளிடவும்.</string>
+    <string name="relays_add_duplicate">அந்த ரிலே ஏற்கனவே பட்டியலில் உள்ளது.</string>
+    <string name="relays_remove">ரிலேயை அகற்று</string>
+    <string name="relays_status_connected">இணைக்கப்பட்டது</string>
+    <string name="relays_status_disconnected">இணைப்பு துண்டிக்கப்பட்டது</string>
+    <string name="relays_status_disabled">முடக்கப்பட்டது</string>
+    <string name="settings_enable_supervised_lockout_warning">கண்காணிப்பு பயன்முறை இயக்கத்தில் இருக்கும்போது, அமைப்புகளை மாற்றுவது, உங்கள் மேற்பார்வையாளரை அகற்றுவது, அல்லது இதை முடக்குவது ஆகிய அனைத்திற்கும் உங்கள் மேற்பார்வையாளரின் ஒப்புதல் தேவை. அவரைத் தொடர்பு கொள்ள முடியாமல் போனால், அவர் பதிலளிக்கும் வரை நீங்கள் பூட்டப்பட்டிருக்கலாம்.</string>
+    <string name="contacts_supervisor_locked">கண்காணிப்பு பயன்முறை இயக்கத்தில் இருக்கும்போது உங்கள் மேற்பார்வையாளரை அகற்ற முடியாது. முதலில் கண்காணிப்பு பயன்முறையை முடக்கவும்.</string>
+    <string name="peer_sharing_supervisor_locked">கண்காணிப்பு பயன்முறை இயக்கத்தில் உள்ளது, எனவே உங்கள் மேற்பார்வையாளருடன் இருப்பிடப் பகிர்வை இங்கே முடக்க முடியாது.</string>
+    <string name="settings_temporary_location_share">தற்காலிக இருப்பிடப் பகிர்வு</string>
+    <string name="app_lock_no_credential">இந்தச் சாதனத்தில் திரைப் பூட்டு அமைக்கப்படவில்லை, எனவே திறக்க எதுவும் இல்லை. உங்கள் சாதன அமைப்புகளில் ஒரு PIN, வடிவம், கடவுச்சொல், அல்லது பயோமெட்ரிக் அமைத்து, பிறகு LocaPeer ஐ மீண்டும் திறக்கவும்.</string>
+    <string name="backup_key_needs_password">உங்கள் தனிப்பட்ட விசையைச் சேர்க்க ஒரு கடவுச்சொல்லை அமைக்கவும். குறியாக்கம் செய்யப்படாத விசைக் கோப்பு யாரையும் உங்கள் அடையாளத்தைக் கைப்பற்ற அனுமதிக்கலாம்.</string>
 </resources>

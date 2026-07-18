@@ -853,4 +853,29 @@
     <string name="circles_leave_remote">ልቀቅና በሁሉም ቦታ ሰርዝ</string>
     <string name="circles_leave_remote_sub">የላኳቸውን መልእክቶች ከሌሎች አባላት መሣሪያዎችም ይሰርዛል።</string>
     <string name="conv_mark_unread">እንዳልተነበበ ምልክት አድርግ</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ን ፍቀድ</string>
+    <string name="settings_allow_live_boost_subtitle">አንድ እውቂያ ካርታውን በሚመለከትበት ጊዜ ዝማኔዎችዎን ያፋጥኑ።</string>
+    <string name="settings_request_live_boost">የቀጥታ ዝማኔዎችን ይጠይቁ</string>
+    <string name="settings_request_live_boost_subtitle">ካርታዎ ክፍት ሲሆን ከእውቂያዎች ፈጣን ዝማኔዎችን ይጠይቁ።</string>
+    <string name="settings_relays">ማስተላለፊያዎች</string>
+    <string name="settings_relays_subtitle">የትኞቹ ማስተላለፊያዎች ውሂብዎን እንደሚያጓጉዙ ይምረጡ</string>
+    <string name="relays_intro">LocaPeer ውሂብዎን በNostr ማስተላለፊያዎች በኩል ይልካል። ይዘቱ ሁልጊዜ ከጫፍ እስከ ጫፍ የተመሰጠረ ነው፣ ነገር ግን የሕዝብ ማስተላለፊያዎች አሁንም ከየትኞቹ እውቂያዎች ጋር እና መቼ እንደሚነጋገሩ ማየት ይችላሉ። ይህን መጋለጥ ለመቀነስ የራስዎን ማስተላለፊያዎች ይጠቀሙ።</string>
+    <string name="relays_public_header">የሕዝብ ማስተላለፊያዎች</string>
+    <string name="relays_custom_header">የእርስዎ ማስተላለፊያዎች</string>
+    <string name="relays_custom_empty">ምንም ብጁ ማስተላለፊያዎች አልተጨመሩም።</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">ማስተላለፊያ አክል</string>
+    <string name="relays_add_invalid">ትክክለኛ የwss:// ማስተላለፊያ አድራሻ ያስገቡ።</string>
+    <string name="relays_add_duplicate">ያ ማስተላለፊያ አስቀድሞ በዝርዝሩ ውስጥ አለ።</string>
+    <string name="relays_remove">ማስተላለፊያ አስወግድ</string>
+    <string name="relays_status_connected">ተገናኝቷል</string>
+    <string name="relays_status_disconnected">ተቋርጧል</string>
+    <string name="relays_status_disabled">ተሰናክሏል</string>
+    <string name="settings_enable_supervised_lockout_warning">የክትትል ሁነታ በርቶ እያለ፣ ቅንብሮችን መቀየር፣ ተቆጣጣሪዎን ማስወገድ፣ ወይም ይህንን ማጥፋት ሁሉም የተቆጣጣሪዎን ማጽደቅ ይፈልጋሉ። ማግኘት ካልተቻለ፣ እስኪመልስ ድረስ ተቆልፈው ሊቆዩ ይችላሉ።</string>
+    <string name="contacts_supervisor_locked">የክትትል ሁነታ በርቶ እያለ ተቆጣጣሪዎን ማስወገድ አይችሉም። መጀመሪያ የክትትል ሁነታን ያጥፉ።</string>
+    <string name="peer_sharing_supervisor_locked">የክትትል ሁነታ በርቷል፣ ስለዚህ ከተቆጣጣሪዎ ጋር የአካባቢ ማጋራትን እዚህ ማጥፋት አይቻልም።</string>
+    <string name="settings_temporary_location_share">ጊዜያዊ የአካባቢ ማጋራት</string>
+    <string name="app_lock_no_credential">በዚህ መሣሪያ ላይ ምንም የማያ ገጽ መቆለፊያ አልተዋቀረም፣ ስለዚህ የሚከፍት ምንም ነገር የለም። በመሣሪያዎ ቅንብሮች ውስጥ PIN፣ ስርዓተ ጥለት፣ የይለፍ ቃል፣ ወይም ባዮሜትሪክ ያዋቅሩ፣ ከዚያ LocaPeer ን እንደገና ይክፈቱ።</string>
+    <string name="backup_key_needs_password">የግል ቁልፍዎን ለማካተት የይለፍ ቃል ያዋቅሩ። ያልተመሰጠረ የቁልፍ ፋይል ማንኛውም ሰው ማንነትዎን እንዲይዝ ሊፈቅድ ይችላል።</string>
 </resources>

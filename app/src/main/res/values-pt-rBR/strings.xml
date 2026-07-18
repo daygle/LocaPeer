@@ -850,5 +850,30 @@
     <string name="circles_leave_remote">Sair e excluir em todos os lugares</string>
     <string name="circles_leave_remote_sub">Também exclui as mensagens que você enviou dos dispositivos dos outros membros.</string>
     <string name="conv_mark_unread">Marcar como não lida</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Permitir Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Acelere suas atualizações quando um contato estiver vendo o mapa.</string>
+    <string name="settings_request_live_boost">Solicitar atualizações ao vivo</string>
+    <string name="settings_request_live_boost_subtitle">Peça aos contatos atualizações mais rápidas quando você estiver com o mapa aberto.</string>
+    <string name="settings_relays">Relays</string>
+    <string name="settings_relays_subtitle">Escolha quais relays transportam seus dados</string>
+    <string name="relays_intro">O LocaPeer envia seus dados por meio de relays Nostr. O conteúdo é sempre criptografado de ponta a ponta, mas os relays públicos ainda podem ver com quais contatos você fala e quando. Use seus próprios relays para reduzir essa exposição.</string>
+    <string name="relays_public_header">Relays públicos</string>
+    <string name="relays_custom_header">Seus relays</string>
+    <string name="relays_custom_empty">Nenhum relay personalizado adicionado.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Adicionar relay</string>
+    <string name="relays_add_invalid">Digite um endereço de relay wss:// válido.</string>
+    <string name="relays_add_duplicate">Esse relay já está na lista.</string>
+    <string name="relays_remove">Remover relay</string>
+    <string name="relays_status_connected">Conectado</string>
+    <string name="relays_status_disconnected">Desconectado</string>
+    <string name="relays_status_disabled">Desativado</string>
+    <string name="settings_enable_supervised_lockout_warning">Enquanto o modo supervisionado estiver ativado, alterar configurações, remover seu supervisor ou desativá-lo exigem a aprovação do seu supervisor. Se ele ficar inacessível, você pode ficar bloqueado até que responda.</string>
+    <string name="contacts_supervisor_locked">Você não pode remover seu supervisor enquanto o modo supervisionado estiver ativado. Desative primeiro o modo supervisionado.</string>
+    <string name="peer_sharing_supervisor_locked">O modo supervisionado está ativado, então o compartilhamento de localização com seu supervisor não pode ser desativado aqui.</string>
+    <string name="settings_temporary_location_share">Compartilhamento de localização temporário</string>
+    <string name="app_lock_no_credential">Nenhum bloqueio de tela está configurado neste dispositivo, então não há nada para desbloquear. Configure um PIN, padrão, senha ou biometria nas configurações do dispositivo e reabra o LocaPeer.</string>
+    <string name="backup_key_needs_password">Defina uma senha para incluir sua chave privada. Um arquivo de chave não criptografado pode permitir que qualquer pessoa assuma sua identidade.</string>
 </resources>
 

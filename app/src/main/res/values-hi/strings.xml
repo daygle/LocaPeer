@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">छोड़ें और हर जगह से हटाएँ</string>
     <string name="circles_leave_remote_sub">आपके भेजे गए संदेशों को अन्य सदस्यों के डिवाइस से भी हटा देता है.</string>
     <string name="conv_mark_unread">अपठित के रूप में चिह्नित करें</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost की अनुमति दें</string>
+    <string name="settings_allow_live_boost_subtitle">जब कोई संपर्क मानचित्र देख रहा हो तो अपने अपडेट तेज़ करें।</string>
+    <string name="settings_request_live_boost">लाइव अपडेट का अनुरोध करें</string>
+    <string name="settings_request_live_boost_subtitle">जब आपका मानचित्र खुला हो तो संपर्कों से तेज़ अपडेट का अनुरोध करें।</string>
+    <string name="settings_relays">रिले</string>
+    <string name="settings_relays_subtitle">चुनें कि कौन से रिले आपका डेटा ले जाएँ</string>
+    <string name="relays_intro">LocaPeer आपका डेटा Nostr रिले के माध्यम से भेजता है। सामग्री हमेशा एंड-टू-एंड एन्क्रिप्टेड रहती है, लेकिन सार्वजनिक रिले फिर भी देख सकते हैं कि आप किन संपर्कों से और कब बात करते हैं। इस जोखिम को कम करने के लिए अपने स्वयं के रिले का उपयोग करें।</string>
+    <string name="relays_public_header">सार्वजनिक रिले</string>
+    <string name="relays_custom_header">आपके रिले</string>
+    <string name="relays_custom_empty">कोई कस्टम रिले नहीं जोड़ा गया।</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">रिले जोड़ें</string>
+    <string name="relays_add_invalid">एक मान्य wss:// रिले पता दर्ज करें।</string>
+    <string name="relays_add_duplicate">वह रिले पहले से सूची में है।</string>
+    <string name="relays_remove">रिले हटाएँ</string>
+    <string name="relays_status_connected">कनेक्ट हो गया</string>
+    <string name="relays_status_disconnected">डिस्कनेक्ट हो गया</string>
+    <string name="relays_status_disabled">अक्षम</string>
+    <string name="settings_enable_supervised_lockout_warning">जब तक पर्यवेक्षित मोड चालू है, सेटिंग बदलने, अपने पर्यवेक्षक को हटाने, या इसे बंद करने के लिए आपके पर्यवेक्षक की मंज़ूरी आवश्यक है। यदि वे अनुपलब्ध हो जाते हैं, तो उनके जवाब देने तक आप लॉक आउट रह सकते हैं।</string>
+    <string name="contacts_supervisor_locked">जब तक पर्यवेक्षित मोड चालू है आप अपने पर्यवेक्षक को नहीं हटा सकते। पहले पर्यवेक्षित मोड बंद करें।</string>
+    <string name="peer_sharing_supervisor_locked">पर्यवेक्षित मोड चालू है, इसलिए अपने पर्यवेक्षक के साथ स्थान साझाकरण यहाँ बंद नहीं किया जा सकता।</string>
+    <string name="settings_temporary_location_share">अस्थायी स्थान साझाकरण</string>
+    <string name="app_lock_no_credential">इस डिवाइस पर कोई स्क्रीन लॉक सेट नहीं है, इसलिए अनलॉक करने के लिए कुछ नहीं है। अपने डिवाइस की सेटिंग में एक PIN, पैटर्न, पासवर्ड, या बायोमेट्रिक सेट करें, फिर LocaPeer दोबारा खोलें।</string>
+    <string name="backup_key_needs_password">अपनी निजी कुंजी शामिल करने के लिए एक पासवर्ड सेट करें। एक अनएन्क्रिप्टेड कुंजी फ़ाइल किसी को भी आपकी पहचान पर कब्ज़ा करने दे सकती है।</string>
 </resources>

@@ -837,4 +837,29 @@
     <string name="circles_leave_remote">Rời và xóa ở mọi nơi</string>
     <string name="circles_leave_remote_sub">Đồng thời xóa các tin nhắn bạn đã gửi khỏi thiết bị của các thành viên khác.</string>
     <string name="conv_mark_unread">Đánh dấu là chưa đọc</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Cho phép Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Tăng tốc cập nhật của bạn khi một liên hệ đang xem bản đồ.</string>
+    <string name="settings_request_live_boost">Yêu cầu cập nhật trực tiếp</string>
+    <string name="settings_request_live_boost_subtitle">Yêu cầu các liên hệ cập nhật nhanh hơn khi bạn đang mở bản đồ.</string>
+    <string name="settings_relays">Relay</string>
+    <string name="settings_relays_subtitle">Chọn relay nào sẽ truyền tải dữ liệu của bạn</string>
+    <string name="relays_intro">LocaPeer gửi dữ liệu của bạn qua các relay Nostr. Nội dung luôn được mã hóa đầu cuối, nhưng các relay công khai vẫn có thể thấy bạn trò chuyện với liên hệ nào và khi nào. Hãy dùng relay của riêng bạn để giảm mức độ phơi bày đó.</string>
+    <string name="relays_public_header">Relay công khai</string>
+    <string name="relays_custom_header">Relay của bạn</string>
+    <string name="relays_custom_empty">Chưa thêm relay tùy chỉnh nào.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Thêm relay</string>
+    <string name="relays_add_invalid">Nhập địa chỉ relay wss:// hợp lệ.</string>
+    <string name="relays_add_duplicate">Relay đó đã có trong danh sách.</string>
+    <string name="relays_remove">Xóa relay</string>
+    <string name="relays_status_connected">Đã kết nối</string>
+    <string name="relays_status_disconnected">Đã ngắt kết nối</string>
+    <string name="relays_status_disabled">Đã tắt</string>
+    <string name="settings_enable_supervised_lockout_warning">Khi chế độ giám sát đang bật, việc thay đổi cài đặt, xóa người giám sát hoặc tắt chế độ này đều cần sự chấp thuận của người giám sát của bạn. Nếu họ trở nên không thể liên lạc, bạn có thể bị khóa cho đến khi họ phản hồi.</string>
+    <string name="contacts_supervisor_locked">Bạn không thể xóa người giám sát khi chế độ giám sát đang bật. Hãy tắt chế độ giám sát trước.</string>
+    <string name="peer_sharing_supervisor_locked">Chế độ giám sát đang bật nên không thể tắt việc chia sẻ vị trí với người giám sát của bạn ở đây.</string>
+    <string name="settings_temporary_location_share">Chia sẻ vị trí tạm thời</string>
+    <string name="app_lock_no_credential">Thiết bị này chưa đặt khóa màn hình nên không có gì để mở khóa. Hãy đặt mã PIN, hình mở khóa, mật khẩu hoặc sinh trắc học trong cài đặt thiết bị, rồi mở lại LocaPeer.</string>
+    <string name="backup_key_needs_password">Đặt mật khẩu để bao gồm khóa riêng tư của bạn. Tệp khóa không được mã hóa có thể cho phép bất kỳ ai chiếm đoạt danh tính của bạn.</string>
 </resources>

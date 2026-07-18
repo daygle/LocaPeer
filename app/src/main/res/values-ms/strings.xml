@@ -837,4 +837,29 @@
     <string name="circles_leave_remote">Tinggalkan dan padam di mana-mana</string>
     <string name="circles_leave_remote_sub">Turut memadam mesej yang anda hantar daripada peranti ahli lain.</string>
     <string name="conv_mark_unread">Tandai Belum Dibaca</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Benarkan Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Percepat kemas kini anda apabila kenalan sedang melihat peta.</string>
+    <string name="settings_request_live_boost">Minta kemas kini langsung</string>
+    <string name="settings_request_live_boost_subtitle">Minta kenalan untuk kemas kini lebih pantas apabila peta anda dibuka.</string>
+    <string name="settings_relays">Geganti</string>
+    <string name="settings_relays_subtitle">Pilih geganti yang membawa data anda</string>
+    <string name="relays_intro">LocaPeer menghantar data anda melalui geganti Nostr. Kandungan sentiasa disulitkan hujung ke hujung, tetapi geganti awam masih boleh melihat kenalan yang anda hubungi dan bila. Gunakan geganti anda sendiri untuk mengurangkan pendedahan itu.</string>
+    <string name="relays_public_header">Geganti awam</string>
+    <string name="relays_custom_header">Geganti anda</string>
+    <string name="relays_custom_empty">Tiada geganti tersuai ditambah.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Tambah geganti</string>
+    <string name="relays_add_invalid">Masukkan alamat geganti wss:// yang sah.</string>
+    <string name="relays_add_duplicate">Geganti itu sudah ada dalam senarai.</string>
+    <string name="relays_remove">Alih keluar geganti</string>
+    <string name="relays_status_connected">Disambungkan</string>
+    <string name="relays_status_disconnected">Diputuskan</string>
+    <string name="relays_status_disabled">Dilumpuhkan</string>
+    <string name="settings_enable_supervised_lockout_warning">Semasa mod diselia dihidupkan, menukar tetapan, mengalih keluar penyelia anda, atau mematikannya semuanya memerlukan kelulusan penyelia anda. Jika mereka tidak dapat dihubungi, anda mungkin terkunci sehingga mereka membalas.</string>
+    <string name="contacts_supervisor_locked">Anda tidak boleh mengalih keluar penyelia anda semasa mod diselia dihidupkan. Matikan mod diselia dahulu.</string>
+    <string name="peer_sharing_supervisor_locked">Mod diselia dihidupkan, jadi perkongsian lokasi dengan penyelia anda tidak boleh dimatikan di sini.</string>
+    <string name="settings_temporary_location_share">Perkongsian lokasi sementara</string>
+    <string name="app_lock_no_credential">Tiada kunci skrin ditetapkan pada peranti ini, jadi tiada apa untuk membuka kunci. Tetapkan PIN, corak, kata laluan, atau biometrik dalam tetapan peranti anda, kemudian buka semula LocaPeer.</string>
+    <string name="backup_key_needs_password">Tetapkan kata laluan untuk menyertakan kunci peribadi anda. Fail kunci yang tidak disulitkan boleh membenarkan sesiapa sahaja mengambil alih identiti anda.</string>
 </resources>

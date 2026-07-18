@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">ছেড়ে দিন এবং সর্বত্র মুছুন</string>
     <string name="circles_leave_remote_sub">আপনার পাঠানো বার্তাগুলিও অন্য সদস্যদের ডিভাইস থেকে মুছে দেয়।</string>
     <string name="conv_mark_unread">অপঠিত হিসেবে চিহ্নিত করুন</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost অনুমতি দিন</string>
+    <string name="settings_allow_live_boost_subtitle">যখন কোনো পরিচিতি মানচিত্র দেখছেন তখন আপনার আপডেটগুলো দ্রুত করুন।</string>
+    <string name="settings_request_live_boost">লাইভ আপডেটের অনুরোধ করুন</string>
+    <string name="settings_request_live_boost_subtitle">আপনার মানচিত্র খোলা থাকলে পরিচিতিদের কাছে দ্রুত আপডেটের অনুরোধ করুন।</string>
+    <string name="settings_relays">রিলে</string>
+    <string name="settings_relays_subtitle">কোন রিলেগুলো আপনার ডেটা বহন করবে তা বেছে নিন</string>
+    <string name="relays_intro">LocaPeer আপনার ডেটা Nostr রিলের মাধ্যমে পাঠায়। বিষয়বস্তু সবসময় এন্ড-টু-এন্ড এনক্রিপ্ট করা থাকে, তবে সর্বজনীন রিলেগুলো এখনও দেখতে পারে আপনি কোন পরিচিতিদের সঙ্গে এবং কখন কথা বলছেন। এই প্রকাশ কমাতে আপনার নিজের রিলে ব্যবহার করুন।</string>
+    <string name="relays_public_header">সর্বজনীন রিলে</string>
+    <string name="relays_custom_header">আপনার রিলে</string>
+    <string name="relays_custom_empty">কোনো কাস্টম রিলে যোগ করা হয়নি।</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">রিলে যোগ করুন</string>
+    <string name="relays_add_invalid">একটি বৈধ wss:// রিলে ঠিকানা লিখুন।</string>
+    <string name="relays_add_duplicate">সেই রিলে ইতিমধ্যে তালিকায় আছে।</string>
+    <string name="relays_remove">রিলে সরান</string>
+    <string name="relays_status_connected">সংযুক্ত</string>
+    <string name="relays_status_disconnected">সংযোগ বিচ্ছিন্ন</string>
+    <string name="relays_status_disabled">নিষ্ক্রিয়</string>
+    <string name="settings_enable_supervised_lockout_warning">তত্ত্বাবধান মোড চালু থাকাকালীন, সেটিংস পরিবর্তন, আপনার তত্ত্বাবধায়ককে সরানো, বা এটি বন্ধ করার জন্য আপনার তত্ত্বাবধায়কের অনুমোদন প্রয়োজন। তারা যোগাযোগের বাইরে চলে গেলে, তারা সাড়া না দেওয়া পর্যন্ত আপনি লক আউট থাকতে পারেন।</string>
+    <string name="contacts_supervisor_locked">তত্ত্বাবধান মোড চালু থাকাকালীন আপনি আপনার তত্ত্বাবধায়ককে সরাতে পারবেন না। আগে তত্ত্বাবধান মোড বন্ধ করুন।</string>
+    <string name="peer_sharing_supervisor_locked">তত্ত্বাবধান মোড চালু আছে, তাই আপনার তত্ত্বাবধায়কের সঙ্গে অবস্থান শেয়ারিং এখানে বন্ধ করা যাবে না।</string>
+    <string name="settings_temporary_location_share">অস্থায়ী অবস্থান শেয়ারিং</string>
+    <string name="app_lock_no_credential">এই ডিভাইসে কোনো স্ক্রিন লক সেট করা নেই, তাই আনলক করার মতো কিছু নেই। আপনার ডিভাইস সেটিংসে একটি PIN, প্যাটার্ন, পাসওয়ার্ড, বা বায়োমেট্রিক সেট করুন, তারপর LocaPeer আবার খুলুন।</string>
+    <string name="backup_key_needs_password">আপনার ব্যক্তিগত কী অন্তর্ভুক্ত করতে একটি পাসওয়ার্ড সেট করুন। একটি এনক্রিপ্ট না-করা কী ফাইল যে কাউকে আপনার পরিচয় দখল করতে দিতে পারে।</string>
 </resources>

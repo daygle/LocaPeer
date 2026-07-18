@@ -867,4 +867,29 @@
     <string name="circles_leave_remote">Părăsește și șterge peste tot</string>
     <string name="circles_leave_remote_sub">Șterge și mesajele trimise de tine de pe dispozitivele celorlalți membri.</string>
     <string name="conv_mark_unread">Marchează ca necitit</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Permite Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Accelerează actualizările atunci când un contact vizualizează harta.</string>
+    <string name="settings_request_live_boost">Solicită actualizări în timp real</string>
+    <string name="settings_request_live_boost_subtitle">Cere contactelor actualizări mai rapide când ai harta deschisă.</string>
+    <string name="settings_relays">Relee</string>
+    <string name="settings_relays_subtitle">Alege ce relee îți transportă datele</string>
+    <string name="relays_intro">LocaPeer îți trimite datele prin relee Nostr. Conținutul este întotdeauna criptat de la un capăt la altul, dar releele publice pot vedea totuși cu ce contacte vorbești și când. Folosește propriile relee pentru a reduce această expunere.</string>
+    <string name="relays_public_header">Relee publice</string>
+    <string name="relays_custom_header">Releele tale</string>
+    <string name="relays_custom_empty">Niciun releu personalizat adăugat.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Adaugă releu</string>
+    <string name="relays_add_invalid">Introdu o adresă de releu wss:// validă.</string>
+    <string name="relays_add_duplicate">Acel releu este deja în listă.</string>
+    <string name="relays_remove">Elimină releul</string>
+    <string name="relays_status_connected">Conectat</string>
+    <string name="relays_status_disconnected">Deconectat</string>
+    <string name="relays_status_disabled">Dezactivat</string>
+    <string name="settings_enable_supervised_lockout_warning">Cât timp modul supravegheat este activat, modificarea setărilor, eliminarea supraveghetorului sau dezactivarea acestuia necesită toate aprobarea supraveghetorului tău. Dacă devine inaccesibil, este posibil să rămâi blocat până când răspunde.</string>
+    <string name="contacts_supervisor_locked">Nu îți poți elimina supraveghetorul cât timp modul supravegheat este activat. Dezactivează mai întâi modul supravegheat.</string>
+    <string name="peer_sharing_supervisor_locked">Modul supravegheat este activat, așa că partajarea locației cu supraveghetorul tău nu poate fi dezactivată aici.</string>
+    <string name="settings_temporary_location_share">Partajare temporară a locației</string>
+    <string name="app_lock_no_credential">Pe acest dispozitiv nu este setată nicio blocare a ecranului, așa că nu există nimic cu care să deblochezi. Setează un PIN, model, parolă sau date biometrice în setările dispozitivului, apoi redeschide LocaPeer.</string>
+    <string name="backup_key_needs_password">Setează o parolă pentru a include cheia ta privată. Un fișier de cheie necriptat ar putea permite oricui să îți preia identitatea.</string>
 </resources>

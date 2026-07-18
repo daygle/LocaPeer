@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">ترک و حذف در همه‌جا</string>
     <string name="circles_leave_remote_sub">پیام‌هایی را که فرستاده‌اید نیز از دستگاه سایر اعضا حذف می‌کند.</string>
     <string name="conv_mark_unread">علامت‌گذاری به‌عنوان خوانده‌نشده</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">اجازه دادن به Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">وقتی مخاطبی نقشه را می‌بیند، به‌روزرسانی‌هایتان را سریع‌تر کنید.</string>
+    <string name="settings_request_live_boost">درخواست به‌روزرسانی زنده</string>
+    <string name="settings_request_live_boost_subtitle">وقتی نقشه باز است، از مخاطبان به‌روزرسانی‌های سریع‌تر بخواهید.</string>
+    <string name="settings_relays">رله‌ها</string>
+    <string name="settings_relays_subtitle">انتخاب کنید کدام رله‌ها داده‌های شما را منتقل کنند</string>
+    <string name="relays_intro">LocaPeer داده‌های شما را از طریق رله‌های Nostr ارسال می‌کند. محتوا همیشه به‌صورت سرتاسری رمزگذاری می‌شود، اما رله‌های عمومی همچنان می‌توانند ببینند با چه مخاطبانی و چه زمانی صحبت می‌کنید. برای کاهش این آشکارسازی از رله‌های خودتان استفاده کنید.</string>
+    <string name="relays_public_header">رله‌های عمومی</string>
+    <string name="relays_custom_header">رله‌های شما</string>
+    <string name="relays_custom_empty">هیچ رله سفارشی‌ای اضافه نشده است.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">افزودن رله</string>
+    <string name="relays_add_invalid">یک نشانی رله wss:// معتبر وارد کنید.</string>
+    <string name="relays_add_duplicate">آن رله از قبل در فهرست است.</string>
+    <string name="relays_remove">حذف رله</string>
+    <string name="relays_status_connected">متصل</string>
+    <string name="relays_status_disconnected">قطع شد</string>
+    <string name="relays_status_disabled">غیرفعال</string>
+    <string name="settings_enable_supervised_lockout_warning">تا زمانی که حالت تحت نظارت روشن است، تغییر تنظیمات، حذف ناظر یا خاموش‌کردن آن همگی به تأیید ناظرتان نیاز دارند. اگر او در دسترس نباشد، ممکن است تا زمانی که پاسخ دهد قفل بمانید.</string>
+    <string name="contacts_supervisor_locked">تا زمانی که حالت تحت نظارت روشن است نمی‌توانید ناظرتان را حذف کنید. ابتدا حالت تحت نظارت را خاموش کنید.</string>
+    <string name="peer_sharing_supervisor_locked">حالت تحت نظارت روشن است، بنابراین اشتراک‌گذاری موقعیت مکانی با ناظرتان را نمی‌توان از اینجا خاموش کرد.</string>
+    <string name="settings_temporary_location_share">اشتراک‌گذاری موقت موقعیت مکانی</string>
+    <string name="app_lock_no_credential">روی این دستگاه هیچ قفل صفحه‌ای تنظیم نشده است، بنابراین چیزی برای بازکردن قفل وجود ندارد. در تنظیمات دستگاهتان یک پین، الگو، رمز عبور یا زیست‌سنجی تنظیم کنید و سپس LocaPeer را دوباره باز کنید.</string>
+    <string name="backup_key_needs_password">برای گنجاندن کلید خصوصی‌تان یک رمز عبور تنظیم کنید. یک فایل کلید رمزگذاری‌نشده می‌تواند به هرکسی اجازه دهد هویت شما را تصاحب کند.</string>
 </resources>

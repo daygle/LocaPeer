@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Gadhiisiitii bakka hunda irraa haqi</string>
     <string name="circles_leave_remote_sub">Akkasumas ergaawwan ati ergite meeshaalee miseensota kaanii irraa haqa.</string>
     <string name="conv_mark_unread">Kan hin dubbifamne jedhii mallattoo godhi</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost hayyami</string>
+    <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii kee kaartaa ilaalu haaromsa kee saffisiisi.</string>
+    <string name="settings_request_live_boost">Haaromsa kallattii gaafadhu</string>
+    <string name="settings_request_live_boost_subtitle">Yeroo kaartaan banaa taʼetti namoota quunnamtii keessan haaromsa saffisaa gaafadhu.</string>
+    <string name="settings_relays">Riileyoota</string>
+    <string name="settings_relays_subtitle">Riileyoonni kamtu daataa kee akka baatu filadhu</string>
+    <string name="relays_intro">LocaPeer daataa kee riileyoota Nostr karaa erga. Qabiyyeen yeroo hunda dhuma irraa hanga dhumaatti ni iccitaawa, garuu riileyoonni ummataa ammallee namoota quunnamtii ati dubbistuu fi yeroo isaa arguu dandaʼu. Saaxilamummaa kana hir\'isuuf riileyoota kee mataa kee fayyadami.</string>
+    <string name="relays_public_header">Riileyoota ummataa</string>
+    <string name="relays_custom_header">Riileyoota kee</string>
+    <string name="relays_custom_empty">Riileyoonni matee dabalaman hin jiran.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Riilee dabaluu</string>
+    <string name="relays_add_invalid">Teessoo riilee wss:// sirrii galchi.</string>
+    <string name="relays_add_duplicate">Riileen sun duraanuu tarree keessa jira.</string>
+    <string name="relays_remove">Riilee haquu</string>
+    <string name="relays_status_connected">Walqunnamaniiru</string>
+    <string name="relays_status_disconnected">Addaan citeera</string>
+    <string name="relays_status_disabled">Cufameera</string>
+    <string name="settings_enable_supervised_lockout_warning">Yeroo haalli toʼannaa banaa taʼetti, qindaaʼina jijjiiruun, toʼataa kee haquun, ykn kana cufuun hundi mirkaneessa toʼataa kee barbaada. Yoo isaan bilbilaan hin argamne, hanga isaan deebisanitti cufamuu dandeessa.</string>
+    <string name="contacts_supervisor_locked">Yeroo haalli toʼannaa banaa taʼetti toʼataa kee haquu hin dandeessu. Duraan dursii haala toʼannaa cufi.</string>
+    <string name="peer_sharing_supervisor_locked">Haalli toʼannaa banaadha, kanaafuu bakka jireenyaa toʼataa kee waliin qooduun asitti cufamuu hin dandaʼu.</string>
+    <string name="settings_temporary_location_share">Bakka yeroo qooduu</string>
+    <string name="app_lock_no_credential">Meeshaa kana irratti cufaan iskiriinii hin qindeeffamne, kanaafuu wanti ittiin banan hin jiru. Qindaaʼina meeshaa kee keessatti PIN, faayidaa, jecha darbii, ykn biometric qindeessi, ergasii LocaPeer irra deebiʼii bani.</string>
+    <string name="backup_key_needs_password">Furtuu dhuunfaa kee dabaluuf jecha darbii qindeessi. Faayilii furtuu hin iccitaaʼin namni kamiyyuu eenyummaa kee akka fudhatu gochuu dandaʼa.</string>
 </resources>

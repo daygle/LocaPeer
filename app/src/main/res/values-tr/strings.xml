@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Ayrıl ve her yerden sil</string>
     <string name="circles_leave_remote_sub">Gönderdiğiniz mesajları diğer üyelerin cihazlarından da siler.</string>
     <string name="conv_mark_unread">Okunmadı olarak işaretle</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost\'a izin ver</string>
+    <string name="settings_allow_live_boost_subtitle">Bir kişi haritayı görüntülerken güncellemelerinizi hızlandırın.</string>
+    <string name="settings_request_live_boost">Canlı güncelleme iste</string>
+    <string name="settings_request_live_boost_subtitle">Harita açıkken kişilerden daha hızlı güncellemeler isteyin.</string>
+    <string name="settings_relays">Röleler</string>
+    <string name="settings_relays_subtitle">Verilerinizi hangi rölelerin taşıyacağını seçin</string>
+    <string name="relays_intro">LocaPeer verilerinizi Nostr röleleri üzerinden gönderir. İçerik her zaman uçtan uca şifrelenir, ancak genel röleler yine de hangi kişilerle ne zaman konuştuğunuzu görebilir. Bu maruz kalmayı azaltmak için kendi rölelerinizi kullanın.</string>
+    <string name="relays_public_header">Genel röleler</string>
+    <string name="relays_custom_header">Röleleriniz</string>
+    <string name="relays_custom_empty">Özel röle eklenmedi.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Röle ekle</string>
+    <string name="relays_add_invalid">Geçerli bir wss:// röle adresi girin.</string>
+    <string name="relays_add_duplicate">Bu röle zaten listede.</string>
+    <string name="relays_remove">Röleyi kaldır</string>
+    <string name="relays_status_connected">Bağlandı</string>
+    <string name="relays_status_disconnected">Bağlantı kesildi</string>
+    <string name="relays_status_disabled">Devre dışı</string>
+    <string name="settings_enable_supervised_lockout_warning">Denetimli mod açıkken ayarları değiştirmek, denetçinizi kaldırmak veya bunu kapatmak denetçinizin onayını gerektirir. Ulaşılamaz hale gelirse, yanıt verene kadar kilitli kalabilirsiniz.</string>
+    <string name="contacts_supervisor_locked">Denetimli mod açıkken denetçinizi kaldıramazsınız. Önce denetimli modu kapatın.</string>
+    <string name="peer_sharing_supervisor_locked">Denetimli mod açık, bu yüzden denetçinizle konum paylaşımı buradan kapatılamaz.</string>
+    <string name="settings_temporary_location_share">Geçici konum paylaşımı</string>
+    <string name="app_lock_no_credential">Bu cihazda ekran kilidi ayarlanmadığından kilidi açacak bir şey yok. Cihaz ayarlarınızda bir PIN, desen, parola veya biyometri ayarlayın ve ardından LocaPeer\'i yeniden açın.</string>
+    <string name="backup_key_needs_password">Özel anahtarınızı dahil etmek için bir parola ayarlayın. Şifrelenmemiş bir anahtar dosyası, herhangi birinin kimliğinizi ele geçirmesine izin verebilir.</string>
 </resources>

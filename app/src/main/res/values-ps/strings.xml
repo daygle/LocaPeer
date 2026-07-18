@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">پرېښودل او هر ځای ړنګول</string>
     <string name="circles_leave_remote_sub">ستاسو لیږل شوي پیغامونه هم د نورو غړو له وسیلو ړنګوي.</string>
     <string name="conv_mark_unread">د نالوستلي په توګه نښه کړئ</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ته اجازه ورکړئ</string>
+    <string name="settings_allow_live_boost_subtitle">کله چې یو اړیکه نقشه ګوري ستاسو تازه معلومات ګړندي کړئ.</string>
+    <string name="settings_request_live_boost">د ژوندي تازه معلوماتو غوښتنه وکړئ</string>
+    <string name="settings_request_live_boost_subtitle">کله چې ستاسو نقشه پرانیستې وي له اړیکو څخه د چټکو تازه معلوماتو غوښتنه وکړئ.</string>
+    <string name="settings_relays">ریلې ګانې</string>
+    <string name="settings_relays_subtitle">غوره کړئ چې کومې ریلې ګانې ستاسو معلومات لیږدوي</string>
+    <string name="relays_intro">LocaPeer ستاسو معلومات د Nostr ریلې ګانو له لارې لیږي. منځپانګه تل له پیل نه تر پایه کوډ شوې وي، خو عامه ریلې ګانې لاهم لیدلی شي چې تاسو له کومو اړیکو سره او کله خبرې کوئ. د دې افشا کولو کمولو لپاره خپلې ریلې ګانې وکاروئ.</string>
+    <string name="relays_public_header">عامه ریلې ګانې</string>
+    <string name="relays_custom_header">ستاسو ریلې ګانې</string>
+    <string name="relays_custom_empty">هیڅ دودیزه ریلې نه ده اضافه شوې.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">ریلې اضافه کړئ</string>
+    <string name="relays_add_invalid">یو باوري wss:// ریلې پته دننه کړئ.</string>
+    <string name="relays_add_duplicate">هغه ریلې لا دمخه په لیست کې ده.</string>
+    <string name="relays_remove">ریلې لرې کړئ</string>
+    <string name="relays_status_connected">وصل شو</string>
+    <string name="relays_status_disconnected">بې اړیکې شو</string>
+    <string name="relays_status_disabled">غیر فعال</string>
+    <string name="settings_enable_supervised_lockout_warning">تر څو چې څارل شوی حالت فعال وي، د تنظیماتو بدلول، ستاسو د څارونکي لرې کول، یا د دې بندول ټول ستاسو د څارونکي تصویب ته اړتیا لري. که هغه بې لاسرسي شي، تاسو ممکن تر هغه پورې بند پاتې شئ چې هغه ځواب ورکړي.</string>
+    <string name="contacts_supervisor_locked">تر څو چې څارل شوی حالت فعال وي تاسو خپل څارونکی نشئ لرې کولی. لومړی څارل شوی حالت بند کړئ.</string>
+    <string name="peer_sharing_supervisor_locked">څارل شوی حالت فعال دی، نو له خپل څارونکي سره د موقعیت شریکول دلته نشي بندیدلی.</string>
+    <string name="settings_temporary_location_share">د موقعیت لنډمهاله شریکول</string>
+    <string name="app_lock_no_credential">په دې وسیله کې د سکرین هیڅ کولپ نه دی ټاکل شوی، نو د خلاصولو لپاره هیڅ شی نشته. ستاسو د وسیلې تنظیماتو کې یو PIN، نمونه، پټنوم، یا بایومیټریک وټاکئ، بیا LocaPeer بیا پرانیزئ.</string>
+    <string name="backup_key_needs_password">د خپل خصوصي کلي د شاملولو لپاره پټنوم وټاکئ. یو غیر کوډ شوی کلي فایل کولی شي هر چا ته اجازه ورکړي چې ستاسو پیژندنه ونیسي.</string>
 </resources>

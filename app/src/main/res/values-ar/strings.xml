@@ -912,4 +912,29 @@
     <string name="circles_leave_remote">المغادرة والحذف من كل مكان</string>
     <string name="circles_leave_remote_sub">يحذف أيضًا الرسائل التي أرسلتها من أجهزة الأعضاء الآخرين.</string>
     <string name="conv_mark_unread">وضع علامة كغير مقروء</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">السماح بـ Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">سرّع تحديثاتك عندما يعرض أحد جهات الاتصال الخريطة.</string>
+    <string name="settings_request_live_boost">طلب تحديثات مباشرة</string>
+    <string name="settings_request_live_boost_subtitle">اطلب من جهات الاتصال تحديثات أسرع عندما تكون الخريطة مفتوحة.</string>
+    <string name="settings_relays">المُرحّلات</string>
+    <string name="settings_relays_subtitle">اختر المُرحّلات التي تنقل بياناتك</string>
+    <string name="relays_intro">يرسل LocaPeer بياناتك عبر مُرحّلات Nostr. المحتوى مشفّر دائمًا من طرف إلى طرف، لكن يمكن للمُرحّلات العامة أن ترى مع مَن تتحدث ومتى. استخدم مُرحّلاتك الخاصة لتقليل هذا الانكشاف.</string>
+    <string name="relays_public_header">المُرحّلات العامة</string>
+    <string name="relays_custom_header">مُرحّلاتك</string>
+    <string name="relays_custom_empty">لم تتم إضافة مُرحّلات مخصصة.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">إضافة مُرحّل</string>
+    <string name="relays_add_invalid">أدخل عنوان مُرحّل wss:// صالحًا.</string>
+    <string name="relays_add_duplicate">هذا المُرحّل موجود بالفعل في القائمة.</string>
+    <string name="relays_remove">إزالة المُرحّل</string>
+    <string name="relays_status_connected">متصل</string>
+    <string name="relays_status_disconnected">غير متصل</string>
+    <string name="relays_status_disabled">معطّل</string>
+    <string name="settings_enable_supervised_lockout_warning">أثناء تفعيل الوضع الخاضع للإشراف، يتطلب تغيير الإعدادات أو إزالة المشرف أو إيقاف هذا الوضع موافقة المشرف. إذا تعذّر الوصول إليه، فقد تظل مقفلًا خارج التطبيق حتى يستجيب.</string>
+    <string name="contacts_supervisor_locked">لا يمكنك إزالة المشرف أثناء تفعيل الوضع الخاضع للإشراف. أوقف الوضع الخاضع للإشراف أولًا.</string>
+    <string name="peer_sharing_supervisor_locked">الوضع الخاضع للإشراف مفعّل، لذا لا يمكن إيقاف مشاركة الموقع مع المشرف من هنا.</string>
+    <string name="settings_temporary_location_share">مشاركة الموقع المؤقتة</string>
+    <string name="app_lock_no_credential">لا يوجد قفل شاشة مضبوط على هذا الجهاز، لذا لا يوجد ما يمكن فتح القفل به. اضبط رمز PIN أو نمطًا أو كلمة مرور أو قياسًا حيويًا في إعدادات جهازك، ثم أعد فتح LocaPeer.</string>
+    <string name="backup_key_needs_password">اضبط كلمة مرور لتضمين مفتاحك الخاص. قد يسمح ملف المفتاح غير المشفّر لأي شخص بالاستيلاء على هويتك.</string>
 </resources>

@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">ਛੱਡੋ ਅਤੇ ਹਰ ਥਾਂ ਤੋਂ ਮਿਟਾਓ</string>
     <string name="circles_leave_remote_sub">ਤੁਹਾਡੇ ਭੇਜੇ ਸੁਨੇਹੇ ਹੋਰ ਮੈਂਬਰਾਂ ਦੀਆਂ ਡੀਵਾਈਸਾਂ ਤੋਂ ਵੀ ਮਿਟਾ ਦਿੰਦਾ ਹੈ।</string>
     <string name="conv_mark_unread">ਨਾ-ਪੜ੍ਹੇ ਵਜੋਂ ਮਾਰਕ ਕਰੋ</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ਦੀ ਆਗਿਆ ਦਿਓ</string>
+    <string name="settings_allow_live_boost_subtitle">ਜਦੋਂ ਕੋਈ ਸੰਪਰਕ ਨਕਸ਼ਾ ਦੇਖ ਰਿਹਾ ਹੋਵੇ ਤਾਂ ਆਪਣੇ ਅੱਪਡੇਟ ਤੇਜ਼ ਕਰੋ।</string>
+    <string name="settings_request_live_boost">ਲਾਈਵ ਅੱਪਡੇਟ ਦੀ ਬੇਨਤੀ ਕਰੋ</string>
+    <string name="settings_request_live_boost_subtitle">ਜਦੋਂ ਤੁਹਾਡਾ ਨਕਸ਼ਾ ਖੁੱਲ੍ਹਾ ਹੋਵੇ ਤਾਂ ਸੰਪਰਕਾਂ ਤੋਂ ਤੇਜ਼ ਅੱਪਡੇਟ ਦੀ ਬੇਨਤੀ ਕਰੋ।</string>
+    <string name="settings_relays">ਰਿਲੇ</string>
+    <string name="settings_relays_subtitle">ਚੁਣੋ ਕਿ ਕਿਹੜੇ ਰਿਲੇ ਤੁਹਾਡਾ ਡਾਟਾ ਲੈ ਕੇ ਜਾਣ</string>
+    <string name="relays_intro">LocaPeer ਤੁਹਾਡਾ ਡਾਟਾ Nostr ਰਿਲੇ ਰਾਹੀਂ ਭੇਜਦਾ ਹੈ। ਸਮੱਗਰੀ ਹਮੇਸ਼ਾ ਐਂਡ-ਟੂ-ਐਂਡ ਐਨਕ੍ਰਿਪਟਿਡ ਹੁੰਦੀ ਹੈ, ਪਰ ਜਨਤਕ ਰਿਲੇ ਫਿਰ ਵੀ ਦੇਖ ਸਕਦੇ ਹਨ ਕਿ ਤੁਸੀਂ ਕਿਹੜੇ ਸੰਪਰਕਾਂ ਨਾਲ ਅਤੇ ਕਦੋਂ ਗੱਲ ਕਰਦੇ ਹੋ। ਇਸ ਖੁਲਾਸੇ ਨੂੰ ਘਟਾਉਣ ਲਈ ਆਪਣੇ ਖੁਦ ਦੇ ਰਿਲੇ ਵਰਤੋ।</string>
+    <string name="relays_public_header">ਜਨਤਕ ਰਿਲੇ</string>
+    <string name="relays_custom_header">ਤੁਹਾਡੇ ਰਿਲੇ</string>
+    <string name="relays_custom_empty">ਕੋਈ ਕਸਟਮ ਰਿਲੇ ਸ਼ਾਮਲ ਨਹੀਂ ਕੀਤੇ ਗਏ।</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">ਰਿਲੇ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="relays_add_invalid">ਇੱਕ ਵੈਧ wss:// ਰਿਲੇ ਪਤਾ ਦਾਖਲ ਕਰੋ।</string>
+    <string name="relays_add_duplicate">ਉਹ ਰਿਲੇ ਪਹਿਲਾਂ ਹੀ ਸੂਚੀ ਵਿੱਚ ਹੈ।</string>
+    <string name="relays_remove">ਰਿਲੇ ਹਟਾਓ</string>
+    <string name="relays_status_connected">ਕਨੈਕਟ ਹੋ ਗਿਆ</string>
+    <string name="relays_status_disconnected">ਡਿਸਕਨੈਕਟ ਹੋ ਗਿਆ</string>
+    <string name="relays_status_disabled">ਅਯੋਗ</string>
+    <string name="settings_enable_supervised_lockout_warning">ਜਦੋਂ ਤੱਕ ਨਿਗਰਾਨੀ ਮੋਡ ਚਾਲੂ ਹੈ, ਸੈਟਿੰਗਾਂ ਬਦਲਣ, ਆਪਣੇ ਨਿਗਰਾਨ ਨੂੰ ਹਟਾਉਣ, ਜਾਂ ਇਸਨੂੰ ਬੰਦ ਕਰਨ ਲਈ ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਲੋੜੀਂਦੀ ਹੈ। ਜੇ ਉਹ ਪਹੁੰਚ ਤੋਂ ਬਾਹਰ ਹੋ ਜਾਂਦੇ ਹਨ, ਤਾਂ ਉਹਨਾਂ ਦੇ ਜਵਾਬ ਦੇਣ ਤੱਕ ਤੁਸੀਂ ਲਾਕ ਆਊਟ ਰਹਿ ਸਕਦੇ ਹੋ।</string>
+    <string name="contacts_supervisor_locked">ਜਦੋਂ ਤੱਕ ਨਿਗਰਾਨੀ ਮੋਡ ਚਾਲੂ ਹੈ ਤੁਸੀਂ ਆਪਣੇ ਨਿਗਰਾਨ ਨੂੰ ਹਟਾ ਨਹੀਂ ਸਕਦੇ। ਪਹਿਲਾਂ ਨਿਗਰਾਨੀ ਮੋਡ ਬੰਦ ਕਰੋ।</string>
+    <string name="peer_sharing_supervisor_locked">ਨਿਗਰਾਨੀ ਮੋਡ ਚਾਲੂ ਹੈ, ਇਸ ਲਈ ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਨਾਲ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਇੱਥੇ ਬੰਦ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
+    <string name="settings_temporary_location_share">ਅਸਥਾਈ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ</string>
+    <string name="app_lock_no_credential">ਇਸ ਡੀਵਾਈਸ ਉੱਤੇ ਕੋਈ ਸਕ੍ਰੀਨ ਲਾਕ ਸੈੱਟ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਅਨਲਾਕ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ। ਆਪਣੀਆਂ ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇੱਕ PIN, ਪੈਟਰਨ, ਪਾਸਵਰਡ, ਜਾਂ ਬਾਇਓਮੈਟ੍ਰਿਕ ਸੈੱਟ ਕਰੋ, ਫਿਰ LocaPeer ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
+    <string name="backup_key_needs_password">ਆਪਣੀ ਨਿੱਜੀ ਕੁੰਜੀ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ। ਇੱਕ ਅਣ-ਐਨਕ੍ਰਿਪਟਿਡ ਕੁੰਜੀ ਫਾਈਲ ਕਿਸੇ ਨੂੰ ਵੀ ਤੁਹਾਡੀ ਪਛਾਣ ਉੱਤੇ ਕਬਜ਼ਾ ਕਰਨ ਦੇ ਸਕਦੀ ਹੈ।</string>
 </resources>

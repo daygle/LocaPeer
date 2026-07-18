@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">सोडा आणि सर्वत्र हटवा</string>
     <string name="circles_leave_remote_sub">तुम्ही पाठवलेले संदेश इतर सदस्यांच्या डिव्हाइसवरूनही हटवते.</string>
     <string name="conv_mark_unread">न वाचलेले म्हणून चिन्हांकित करा</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost ला अनुमती द्या</string>
+    <string name="settings_allow_live_boost_subtitle">एखादा संपर्क नकाशा पाहत असताना तुमची अपडेट जलद करा.</string>
+    <string name="settings_request_live_boost">थेट अपडेटची विनंती करा</string>
+    <string name="settings_request_live_boost_subtitle">तुमचा नकाशा उघडा असताना संपर्कांकडून जलद अपडेटची विनंती करा.</string>
+    <string name="settings_relays">रिले</string>
+    <string name="settings_relays_subtitle">तुमचा डेटा कोणते रिले वाहून नेतील ते निवडा</string>
+    <string name="relays_intro">LocaPeer तुमचा डेटा Nostr रिलेद्वारे पाठवते. मजकूर नेहमी एंड-टू-एंड एन्क्रिप्टेड असतो, परंतु सार्वजनिक रिले अजूनही पाहू शकतात की तुम्ही कोणत्या संपर्कांशी आणि केव्हा बोलता. हे उघड होणे कमी करण्यासाठी तुमचे स्वतःचे रिले वापरा.</string>
+    <string name="relays_public_header">सार्वजनिक रिले</string>
+    <string name="relays_custom_header">तुमचे रिले</string>
+    <string name="relays_custom_empty">कोणतेही कस्टम रिले जोडलेले नाहीत.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">रिले जोडा</string>
+    <string name="relays_add_invalid">वैध wss:// रिले पत्ता टाका.</string>
+    <string name="relays_add_duplicate">तो रिले आधीच यादीत आहे.</string>
+    <string name="relays_remove">रिले काढा</string>
+    <string name="relays_status_connected">कनेक्ट केले</string>
+    <string name="relays_status_disconnected">डिस्कनेक्ट केले</string>
+    <string name="relays_status_disabled">अक्षम</string>
+    <string name="settings_enable_supervised_lockout_warning">पर्यवेक्षित मोड चालू असेपर्यंत, सेटिंग्ज बदलणे, तुमचा पर्यवेक्षक काढणे, किंवा हे बंद करणे या सर्वांसाठी तुमच्या पर्यवेक्षकाची मंजुरी आवश्यक आहे. ते संपर्काबाहेर गेले, तर ते प्रतिसाद देईपर्यंत तुम्ही लॉक आउट राहू शकता.</string>
+    <string name="contacts_supervisor_locked">पर्यवेक्षित मोड चालू असेपर्यंत तुम्ही तुमचा पर्यवेक्षक काढू शकत नाही. आधी पर्यवेक्षित मोड बंद करा.</string>
+    <string name="peer_sharing_supervisor_locked">पर्यवेक्षित मोड चालू आहे, त्यामुळे तुमच्या पर्यवेक्षकासोबत स्थान सामायिकरण येथे बंद करता येणार नाही.</string>
+    <string name="settings_temporary_location_share">तात्पुरते स्थान सामायिकरण</string>
+    <string name="app_lock_no_credential">या डिव्हाइसवर कोणतेही स्क्रीन लॉक सेट केलेले नाही, त्यामुळे अनलॉक करण्यासाठी काहीही नाही. तुमच्या डिव्हाइस सेटिंग्जमध्ये एक PIN, पॅटर्न, पासवर्ड, किंवा बायोमेट्रिक सेट करा, नंतर LocaPeer पुन्हा उघडा.</string>
+    <string name="backup_key_needs_password">तुमची खाजगी की समाविष्ट करण्यासाठी एक पासवर्ड सेट करा. एन्क्रिप्ट न केलेली की फाइल कोणालाही तुमची ओळख ताब्यात घेऊ देऊ शकते.</string>
 </resources>

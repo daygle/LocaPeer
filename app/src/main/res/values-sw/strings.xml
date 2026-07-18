@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Ondoka na ufute kila mahali</string>
     <string name="circles_leave_remote_sub">Pia hufuta ujumbe uliotuma kwenye vifaa vya wanachama wengine.</string>
     <string name="conv_mark_unread">Weka Alama Kuwa Haijasomwa</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Ruhusu Live Boost</string>
+    <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati anwani anatazama ramani.</string>
+    <string name="settings_request_live_boost">Omba masasisho ya moja kwa moja</string>
+    <string name="settings_request_live_boost_subtitle">Omba anwani masasisho ya haraka zaidi unapokuwa na ramani wazi.</string>
+    <string name="settings_relays">Rele</string>
+    <string name="settings_relays_subtitle">Chagua rele zipi zinabeba data yako</string>
+    <string name="relays_intro">LocaPeer hutuma data yako kupitia rele za Nostr. Maudhui daima yamesimbwa mwanzo hadi mwisho, lakini rele za umma bado zinaweza kuona ni anwani zipi unazozungumza nazo na lini. Tumia rele zako mwenyewe ili kupunguza mfichuo huo.</string>
+    <string name="relays_public_header">Rele za umma</string>
+    <string name="relays_custom_header">Rele zako</string>
+    <string name="relays_custom_empty">Hakuna rele maalum zilizoongezwa.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Ongeza rele</string>
+    <string name="relays_add_invalid">Weka anwani halali ya rele ya wss://.</string>
+    <string name="relays_add_duplicate">Rele hiyo tayari imo kwenye orodha.</string>
+    <string name="relays_remove">Ondoa rele</string>
+    <string name="relays_status_connected">Imeunganishwa</string>
+    <string name="relays_status_disconnected">Imetenganishwa</string>
+    <string name="relays_status_disabled">Imezimwa</string>
+    <string name="settings_enable_supervised_lockout_warning">Wakati hali ya usimamizi imewashwa, kubadilisha mipangilio, kuondoa msimamizi wako, au kuizima kote kunahitaji idhini ya msimamizi wako. Iwapo hawezi kufikiwa, unaweza kufungiwa nje hadi ajibu.</string>
+    <string name="contacts_supervisor_locked">Huwezi kumwondoa msimamizi wako wakati hali ya usimamizi imewashwa. Zima hali ya usimamizi kwanza.</string>
+    <string name="peer_sharing_supervisor_locked">Hali ya usimamizi imewashwa, kwa hivyo kushiriki eneo na msimamizi wako hakuwezi kuzimwa hapa.</string>
+    <string name="settings_temporary_location_share">Kushiriki eneo kwa muda</string>
+    <string name="app_lock_no_credential">Hakuna ufunguo wa skrini uliowekwa kwenye kifaa hiki, kwa hivyo hakuna cha kufungulia. Weka PIN, mchoro, nenosiri, au biometriki katika mipangilio ya kifaa chako, kisha ufungue tena LocaPeer.</string>
+    <string name="backup_key_needs_password">Weka nenosiri ili kujumuisha ufunguo wako wa faragha. Faili ya ufunguo isiyosimbwa inaweza kumruhusu mtu yeyote kuchukua utambulisho wako.</string>
 </resources>

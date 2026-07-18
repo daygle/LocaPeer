@@ -836,4 +836,29 @@
     <string name="circles_leave_remote">退出してすべての端末から削除</string>
     <string name="circles_leave_remote_sub">あなたが送信したメッセージを他のメンバーの端末からも削除します。</string>
     <string name="conv_mark_unread">未読にする</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost を許可</string>
+    <string name="settings_allow_live_boost_subtitle">連絡先が地図を表示しているときに更新を高速化します。</string>
+    <string name="settings_request_live_boost">ライブ更新をリクエスト</string>
+    <string name="settings_request_live_boost_subtitle">地図を開いているときに、連絡先へより速い更新をリクエストします。</string>
+    <string name="settings_relays">リレー</string>
+    <string name="settings_relays_subtitle">データを伝送するリレーを選択します</string>
+    <string name="relays_intro">LocaPeer は Nostr リレーを介してデータを送信します。コンテンツは常にエンドツーエンドで暗号化されますが、公開リレーはあなたが誰といつやり取りしているかを見ることができます。この露出を減らすには、自分のリレーを使用してください。</string>
+    <string name="relays_public_header">公開リレー</string>
+    <string name="relays_custom_header">あなたのリレー</string>
+    <string name="relays_custom_empty">カスタムリレーは追加されていません。</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">リレーを追加</string>
+    <string name="relays_add_invalid">有効な wss:// リレーアドレスを入力してください。</string>
+    <string name="relays_add_duplicate">そのリレーはすでにリストにあります。</string>
+    <string name="relays_remove">リレーを削除</string>
+    <string name="relays_status_connected">接続済み</string>
+    <string name="relays_status_disconnected">切断済み</string>
+    <string name="relays_status_disabled">無効</string>
+    <string name="settings_enable_supervised_lockout_warning">監督モードが有効な間は、設定の変更、監督者の削除、これをオフにすることのすべてに監督者の承認が必要です。監督者に連絡が取れなくなった場合、返答があるまでロックアウトされる可能性があります。</string>
+    <string name="contacts_supervisor_locked">監督モードが有効な間は監督者を削除できません。先に監督モードをオフにしてください。</string>
+    <string name="peer_sharing_supervisor_locked">監督モードが有効なため、監督者との位置情報の共有をここでオフにすることはできません。</string>
+    <string name="settings_temporary_location_share">一時的な位置情報の共有</string>
+    <string name="app_lock_no_credential">この端末には画面ロックが設定されていないため、ロック解除に使えるものがありません。端末の設定で PIN、パターン、パスワード、または生体認証を設定してから、LocaPeer を再度開いてください。</string>
+    <string name="backup_key_needs_password">秘密鍵を含めるにはパスワードを設定してください。暗号化されていない鍵ファイルは、誰でもあなたの身元を乗っ取れるようにしてしまう可能性があります。</string>
 </resources>

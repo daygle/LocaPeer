@@ -852,4 +852,29 @@
     <string name="circles_leave_remote">Шығу және барлық жерден жою</string>
     <string name="circles_leave_remote_sub">Сіз жіберген хабарларды басқа мүшелердің құрылғыларынан да жояды.</string>
     <string name="conv_mark_unread">Оқылмаған деп белгілеу</string>
+    <!-- Machine-translated; review recommended -->
+    <string name="settings_allow_live_boost">Live Boost рұқсат ету</string>
+    <string name="settings_allow_live_boost_subtitle">Контакт картаны қарап жатқанда жаңартуларыңызды жылдамдатыңыз.</string>
+    <string name="settings_request_live_boost">Тікелей жаңартуларды сұрау</string>
+    <string name="settings_request_live_boost_subtitle">Карта ашық болғанда контакттардан жылдамырақ жаңартуларды сұраңыз.</string>
+    <string name="settings_relays">Реле</string>
+    <string name="settings_relays_subtitle">Деректеріңізді қай реле тасымалдайтынын таңдаңыз</string>
+    <string name="relays_intro">LocaPeer деректеріңізді Nostr релелері арқылы жібереді. Мазмұн әрқашан ұштан-ұшқа шифрланады, бірақ жалпыға ортақ реле сіз қай контактпен және қашан сөйлескеніңізді көре алады. Бұл ашықтықты азайту үшін өз релелеріңізді пайдаланыңыз.</string>
+    <string name="relays_public_header">Жалпыға ортақ реле</string>
+    <string name="relays_custom_header">Сіздің релелеріңіз</string>
+    <string name="relays_custom_empty">Теңшелетін реле қосылмаған.</string>
+    <string name="relays_add_hint">wss://your-relay.example</string>
+    <string name="relays_add">Реле қосу</string>
+    <string name="relays_add_invalid">Жарамды wss:// реле мекенжайын енгізіңіз.</string>
+    <string name="relays_add_duplicate">Бұл реле тізімде бұрыннан бар.</string>
+    <string name="relays_remove">Релені жою</string>
+    <string name="relays_status_connected">Қосылған</string>
+    <string name="relays_status_disconnected">Ажыратылған</string>
+    <string name="relays_status_disabled">Өшірілген</string>
+    <string name="settings_enable_supervised_lockout_warning">Бақыланатын режим қосулы кезде параметрлерді өзгерту, бақылаушыны жою немесе оны өшіру бақылаушыңыздың мақұлдауын қажет етеді. Егер ол қолжетімсіз болса, ол жауап бергенше құлыпталып қалуыңыз мүмкін.</string>
+    <string name="contacts_supervisor_locked">Бақыланатын режим қосулы кезде бақылаушыңызды жоя алмайсыз. Алдымен бақыланатын режимді өшіріңіз.</string>
+    <string name="peer_sharing_supervisor_locked">Бақыланатын режим қосулы, сондықтан бақылаушыңызбен орынды бөлісуді мұнда өшіру мүмкін емес.</string>
+    <string name="settings_temporary_location_share">Уақытша орынмен бөлісу</string>
+    <string name="app_lock_no_credential">Бұл құрылғыда экран құлпы орнатылмаған, сондықтан құлыпты ашатын ештеңе жоқ. Құрылғы параметрлерінде PIN, өрнек, құпия сөз немесе биометрия орнатыңыз, содан кейін LocaPeer қолданбасын қайта ашыңыз.</string>
+    <string name="backup_key_needs_password">Жеке кілтіңізді қосу үшін құпия сөз орнатыңыз. Шифрланбаған кілт файлы кез келген адамға сіздің жеке басыңызды иеленуге мүмкіндік беруі мүмкін.</string>
 </resources>
