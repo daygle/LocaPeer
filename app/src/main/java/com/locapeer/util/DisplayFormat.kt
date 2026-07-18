@@ -103,7 +103,7 @@ object DisplayFormat {
         }
     }
 
-    /** Direction string from a 0–360 degree bearing, e.g. "N", "SW". */
+    /** Direction string from a 0-360 degree bearing, e.g. "N", "SW". */
     fun bearingToCardinal(bearing: Float): String {
         val dirs = arrayOf("N", "NE", "E", "SE", "S", "SW", "W", "NW")
         val normalized = ((bearing % 360f) + 360f) % 360f

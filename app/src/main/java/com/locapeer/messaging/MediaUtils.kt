@@ -22,7 +22,7 @@ object MediaUtils {
     const val MAX_IMAGE_DIM = 1280
     /** Hard cap on compressed JPEG bytes before Base64 (~150 KB). */
     const val MAX_IMAGE_BYTES = 150 * 1024
-    /** Cap on voice-note length. Most Nostr relays hard-cap event size between 64–100 KB,
+    /** Cap on voice-note length. Most Nostr relays hard-cap event size between 64-100 KB,
      *  and each fan-out to a circle member ships its own NIP-44 encrypted copy. 10 s at 24 kbps
      *  encodes to ~35 KB encrypted (~47 KB after Base64 + NIP-44 overhead), keeping the relay
      *  happy on 5-member circles even on the tighter relays. Recording auto-stops here. */

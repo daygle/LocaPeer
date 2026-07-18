@@ -539,7 +539,7 @@ private fun MessageBubble(
                     var deliverySheetOpen by remember { mutableStateOf(false) }
                     // Plain `.clickable` (no long-press) so the parent SwipeToDeleteMessage
                     // wrapper's `onLongClick` still fires when the user long-presses on the
-                    // delivery row of their own message — matching the circle chat's
+                    // delivery row of their own message - matching the circle chat's
                     // "long-press anywhere on the bubble = delete" behaviour. A regular tap
                     // here still opens the delivery-status sheet (cheaper gesture for "what
                     // does this icon mean?").

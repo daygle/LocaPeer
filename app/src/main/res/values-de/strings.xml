@@ -740,8 +740,8 @@
         <item quantity="other">%1$d Geofences</item>
     </plurals>
     <string name="onboarding_error_hex">Ungültiges Hex-Format.</string>
-    <string name="onboarding_error_key_length">Ungültiger Schlüssel – muss 64 Hex-Zeichen lang sein.</string>
-    <string name="onboarding_error_key_range">Ungültiger privater Schlüssel – außerhalb des Kurvenbereichs.</string>
+    <string name="onboarding_error_key_length">Ungültiger Schlüssel - muss 64 Hex-Zeichen lang sein.</string>
+    <string name="onboarding_error_key_range">Ungültiger privater Schlüssel - außerhalb des Kurvenbereichs.</string>
     <string name="onboarding_error_import_failed">Schlüsselimport fehlgeschlagen: %1$s</string>
     <string name="scan_error_invalid_link">Ungültiger Einladungslink</string>
     <string name="scan_error_bad_pubkey">Ungültige Einladung: fehlerhafter öffentlicher Schlüssel</string>
@@ -771,7 +771,7 @@
     <string name="chat_cd_view_image">Foto ansehen</string>
     <string name="chat_delivery_details_title">Nachrichtenstatus</string>
     <string name="chat_delivery_state_delivered">An das Gerät des Empfängers zugestellt</string>
-    <string name="chat_delivery_state_failed">Fehlgeschlagen – Nachricht hängt in der Warteschlange</string>
+    <string name="chat_delivery_state_failed">Fehlgeschlagen - Nachricht hängt in der Warteschlange</string>
     <string name="chat_delivery_state_read">Vom Empfänger gelesen</string>
     <string name="chat_delivery_state_sending">Wird gesendet…</string>
     <string name="chat_delivery_state_sent">Gesendet (vom Relay angenommen)</string>
@@ -802,12 +802,12 @@
     <string name="onboarding_backup_continue">Weiter</string>
     <string name="onboarding_backup_copied">Schlüssel in die Zwischenablage kopiert</string>
     <string name="onboarding_backup_copy">Schlüssel kopieren</string>
-    <string name="onboarding_backup_desc">Deine Identität ist ein privater Schlüssel, der nur auf diesem Gerät gespeichert ist. Es gibt kein Konto und kein Zurücksetzen des Passworts – wenn du dieses Telefon ohne Sicherung verlierst, sind deine Identität und Kontakte für immer verloren.</string>
+    <string name="onboarding_backup_desc">Deine Identität ist ein privater Schlüssel, der nur auf diesem Gerät gespeichert ist. Es gibt kein Konto und kein Zurücksetzen des Passworts - wenn du dieses Telefon ohne Sicherung verlierst, sind deine Identität und Kontakte für immer verloren.</string>
     <string name="onboarding_backup_later">Ich sichere später</string>
     <string name="onboarding_backup_note">Du kannst jederzeit unter Einstellungen → Sicherung &amp; Schlüssel eine verschlüsselte Sicherung exportieren.</string>
     <string name="onboarding_backup_reveal">Meinen privaten Schlüssel anzeigen</string>
     <string name="onboarding_backup_title">Sichere deine Identität</string>
-    <string name="onboarding_backup_warning">Jeder mit diesem Schlüssel kann sich als du ausgeben und deine Nachrichten lesen. Bewahre ihn an einem privaten Ort auf – ein Passwort-Manager, kein Screenshot.</string>
+    <string name="onboarding_backup_warning">Jeder mit diesem Schlüssel kann sich als du ausgeben und deine Nachrichten lesen. Bewahre ihn an einem privaten Ort auf - ein Passwort-Manager, kein Screenshot.</string>
     <string name="peer_temp_share_active_label">Teilen mit %1$s bis %2$s</string>
     <string name="peer_temp_share_active_time_left">Teilen mit %1$s für weitere %2$s</string>
     <string name="peer_temp_share_chip_12h">12 Stunden</string>

@@ -105,7 +105,7 @@ data class AppSettings(
     val pinColor: String = "",
     /** Persisted SOS state so it survives process death while HeartbeatService is sticky. */
     val sosActive: Boolean = false,
-    /** Default zoom level (3–18) applied for all starting-point modes except Remember last position. */
+    /** Default zoom level (3-18) applied for all starting-point modes except Remember last position. */
     val mapStartZoom: Double = 16.0,
     /**
      * How the map centres on open.
@@ -167,8 +167,8 @@ class AppPreferences @Inject constructor(
 ) {
     // Deserializing AppSettings (30+ fields, plus CSV/JSON parsing) is done once here on a
     // background dispatcher and shared, instead of re-running for every collector on its own
-    // (often main) thread. At app start a dozen+ collectors — Compose, several ViewModels,
-    // the Application — subscribe to `settings`; sharing keeps that off the main thread and
+    // (often main) thread. At app start a dozen+ collectors - Compose, several ViewModels,
+    // the Application - subscribe to `settings`; sharing keeps that off the main thread and
     // collapses the redundant work into a single upstream, cutting cold-start jank.
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 

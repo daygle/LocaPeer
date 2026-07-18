@@ -1303,7 +1303,7 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
 }
 
 /**
- * A labelled 0–500 m slider used for the distance/accuracy filters. Shows "Off" at 0 and the
+ * A labelled 0-500 m slider used for the distance/accuracy filters. Shows "Off" at 0 and the
  * unit-aware distance otherwise, and only commits on release so the setting isn't rewritten on
  * every drag frame.
  */
