@@ -91,18 +91,19 @@ fun ScanScreen(
                             style = MaterialTheme.typography.titleLarge
                         )
                         Text(
-                            stringResource(R.string.scan_request_sent_message, scanState.addedName ?: ""),
+                            stringResource(R.string.scan_request_sent_message, scanState.addedName),
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Button(onClick = onNavigateBack) { Text(stringResource(R.string.common_done)) }
                     }
                 }
                 scanState.error != null -> {
+                    val error = scanState.error!!
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(24.dp)
                     ) {
-                        Text(stringResource(R.string.scan_failed, scanState.error ?: ""))
+                        Text(stringResource(R.string.scan_failed, error))
                         Button(onClick = { vm.reset() }) { Text(stringResource(R.string.common_try_again)) }
                     }
                 }

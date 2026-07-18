@@ -575,7 +575,7 @@ private fun GeofenceAreaDialog(
                         Button(
                             onClick = {
                                 submitted = true
-                                if (isValid) onSave(name, lat!!, lng!!, radiusValue!!)
+                                if (isValid) onSave(name, lat, lng, radiusValue)
                             },
                             modifier = Modifier.padding(end = 8.dp)
                         ) {

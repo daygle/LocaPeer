@@ -89,7 +89,7 @@ class AdaptiveIntervalManagerTest {
         manager.updateMotionState(MotionState.STATIONARY)
         assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
         liveViewRegistry.grant("viewer-pubkey")
-        assertTrue(manager.isLiveViewActive())
+        assertTrue(manager.isLiveViewActive(allowBoost = true))
         assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings))
     }
 
@@ -104,7 +104,7 @@ class AdaptiveIntervalManagerTest {
     fun `low battery suppresses live view to protect the battery`() {
         liveViewRegistry.grant("viewer-pubkey")
         manager.updateBattery(15)
-        assertFalse(manager.isLiveViewActive())
+        assertFalse(manager.isLiveViewActive(allowBoost = true))
         assertEquals(30 * 60_000L, manager.getIntervalMillis(settings))
     }
 
@@ -112,7 +112,7 @@ class AdaptiveIntervalManagerTest {
     fun `an expired live-view lease no longer boosts`() {
         manager.updateMotionState(MotionState.STATIONARY)
         liveViewRegistry.grant("viewer-pubkey", leaseMs = 0L)
-        assertFalse(manager.isLiveViewActive())
+        assertFalse(manager.isLiveViewActive(allowBoost = true))
         assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
     }
 }

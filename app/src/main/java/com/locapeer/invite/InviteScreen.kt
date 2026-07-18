@@ -221,7 +221,7 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                 }
             }
         } else if (scanState.success) {
-            SuccessView(scanState.addedName ?: stringResource(R.string.invite_fallback_name), onDone, vm)
+            SuccessView(scanState.addedName, onDone, vm)
         } else if (scanState.pendingName != null) {
             ConfirmView(scanState.pendingName!!, vm)
         } else {

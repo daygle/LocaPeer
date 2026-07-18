@@ -428,9 +428,9 @@ fun PeerSharingScreen(
                     )
 
                     if (alertActive && receivesLocation) {
-                        val radius = proximityAlert?.radiusMetres ?: 500
-                        val proxRules = remember(proximityAlert?.scheduleRules) {
-                            proximityAlert?.scheduleRules?.toScheduleRules() ?: emptyList()
+                        val radius = proximityAlert.radiusMetres
+                        val proxRules = remember(proximityAlert.scheduleRules) {
+                            proximityAlert.scheduleRules.toScheduleRules()
                         }
                         val hasProxSchedule = proxRules.isNotEmpty()
 
