@@ -625,6 +625,12 @@ class HeartbeatService : LifecycleService() {
                     // once, and the fresh-fix hold keeps that pulse honest.
                     updateLocationRequest()
                     reschedulePulse()
+                } else if (settings.allowLiveBoost != previous.allowLiveBoost) {
+                    // Toggle applied immediately: if boost is turned OFF while someone
+                    // is watching, GPS must relax to low power now rather than at the
+                    // next 5s pulse.
+                    updateLocationRequest()
+                    reschedulePulse()
                 } else if (
                     intervalManager.getIntervalMillis(settings) != intervalManager.getIntervalMillis(previous)
                 ) {

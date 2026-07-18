@@ -333,6 +333,7 @@ class HeartbeatReceiver @Inject constructor(
      * to a contact we are not already sharing with.
      */
     private suspend fun processLiveViewRequest(event: NostrEvent) {
+        if (!prefs.settings.first().allowLiveBoost) return
         val peer = peerDao.getPeer(event.pubkey) ?: return
         // Only meaningful for a contact we send location to; boosting for anyone else
         // would change nothing they can see.
