@@ -31,7 +31,6 @@
     <string name="tab_messages">Μηνύματα</string>
     <string name="tab_history">Ιστορικό</string>
     <string name="tab_contacts">Επαφές</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Ρυθμίσεις</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Στρέψτε την κάμερα σε ένα QR του LocaPeer</string>
     <string name="invite_paste_title">Ή επικολλήστε σύνδεσμο πρόσκλησης</string>
     <string name="invite_process_link">Επεξεργασία συνδέσμου</string>
-    <string name="invite_fallback_name">Επαφή</string>
     <string name="invite_success_message">Θα συνδεθείτε με τον/την %1$s μόλις αποδεχθεί.</string>
     <string name="invite_confirm_add_title">Προσθήκη του/της %1$s;</string>
     <string name="invite_confirm_add_message">Προσθήκη στις επαφές σας και κοινοποίηση τοποθεσίας;</string>

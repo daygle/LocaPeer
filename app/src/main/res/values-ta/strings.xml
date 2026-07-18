@@ -31,7 +31,6 @@
     <string name="tab_messages">செய்திகள்</string>
     <string name="tab_history">வரலாறு</string>
     <string name="tab_contacts">தொடர்புகள்</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">அமைப்புகள்</string>
 
     <!-- ── இயக்கம் / செயல்பாட்டு நிலைகள் ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">LocaPeer QR-ஐ நோக்கி கேமராவைத் திருப்பவும்</string>
     <string name="invite_paste_title">அல்லது அழைப்பு இணைப்பை ஒட்டவும்</string>
     <string name="invite_process_link">இணைப்பைச் செயலாக்கு</string>
-    <string name="invite_fallback_name">தொடர்பு</string>
     <string name="invite_success_message">அவர்கள் ஏற்றவுடன் நீங்கள் %1$s உடன் இணைக்கப்படுவீர்கள்.</string>
     <string name="invite_confirm_add_title">%1$s-ஐச் சேர்க்கவா?</string>
     <string name="invite_confirm_add_message">அவர்களை உங்கள் தொடர்புகளில் சேர்த்து இருப்பிடத்தைப் பகிரவா?</string>

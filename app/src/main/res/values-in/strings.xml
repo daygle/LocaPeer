@@ -31,7 +31,6 @@
     <string name="tab_messages">Pesan</string>
     <string name="tab_history">Riwayat</string>
     <string name="tab_contacts">Kontak</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Pengaturan</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">Arahkan kamera ke QR LocaPeer</string>
     <string name="invite_paste_title">Atau Tempel Tautan Undangan</string>
     <string name="invite_process_link">Proses Tautan</string>
-    <string name="invite_fallback_name">Kontak</string>
     <string name="invite_success_message">Anda akan terhubung dengan %1$s setelah mereka menerima.</string>
     <string name="invite_confirm_add_title">Tambahkan %1$s?</string>
     <string name="invite_confirm_add_message">Tambahkan ke kontak Anda dan bagikan lokasi?</string>

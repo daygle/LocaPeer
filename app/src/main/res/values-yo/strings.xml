@@ -31,7 +31,6 @@
     <string name="tab_messages">Awọn ifiranṣẹ</string>
     <string name="tab_history">Ìtàn</string>
     <string name="tab_contacts">Awọn ojúlùmọ̀</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Ètò</string>
 
     <!-- ── Iṣipopada / awọn ipinlẹ iṣẹ ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">Tuo kámẹ́rà sí QR LocaPeer</string>
     <string name="invite_paste_title">Ma ọ bụ Tapawa Link Ìpè</string>
     <string name="invite_process_link">Nhazi Link</string>
-    <string name="invite_fallback_name">Ojúlùmọ̀</string>
     <string name="invite_success_message">Ẹ ó jápọ̀ mọ́ %1$s ozugbo wọ́n bá gbà.</string>
     <string name="invite_confirm_add_title">Tinye %1$s?</string>
     <string name="invite_confirm_add_message">Tinye wọn mọ́ àwọn ojúlùmọ̀ rẹ kí o sì pín ipò rẹ?</string>

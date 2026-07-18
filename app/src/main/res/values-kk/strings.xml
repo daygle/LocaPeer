@@ -31,7 +31,6 @@
     <string name="tab_messages">Хабарламалар</string>
     <string name="tab_history">Тарих</string>
     <string name="tab_contacts">Контактілер</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Параметрлер</string>
 
     <!-- ── Қозғалыс күйлері ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Камераны LocaPeer QR-ына бағыттаңыз</string>
     <string name="invite_paste_title">Немесе шақыру сілтемесін қойыңыз</string>
     <string name="invite_process_link">Сілтемені өңдеу</string>
-    <string name="invite_fallback_name">Контакт</string>
     <string name="invite_success_message">Олар мақұлдағаннан кейін %1$s-мен байланысасыз.</string>
     <string name="invite_confirm_add_title">%1$s қосу керек пе?</string>
     <string name="invite_confirm_add_message">Оларды контактілеріңізге қосып, орналасқан жеріңізді бөлісесіз бе?</string>

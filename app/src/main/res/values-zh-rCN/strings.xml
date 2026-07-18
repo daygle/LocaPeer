@@ -31,7 +31,6 @@
     <string name="tab_messages">消息</string>
     <string name="tab_history">历史</string>
     <string name="tab_contacts">联系人</string>
-    <string name="tab_qr">二维码</string>
     <string name="tab_settings">设置</string>
 
     <!-- ── 运动 / 活动状态 ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">将摄像头对准 LocaPeer 二维码</string>
     <string name="invite_paste_title">或粘贴邀请链接</string>
     <string name="invite_process_link">处理链接</string>
-    <string name="invite_fallback_name">联系人</string>
     <string name="invite_success_message">一旦他们接受，您将与 %1$s 建立连接。</string>
     <string name="invite_confirm_add_title">添加 %1$s？</string>
     <string name="invite_confirm_add_message">将他们添加到您的联系人并共享位置？</string>

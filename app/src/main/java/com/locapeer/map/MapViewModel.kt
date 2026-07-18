@@ -141,7 +141,6 @@ class MapViewModel @Inject constructor(
         // The screen normally stops us via onDispose, but a process-level teardown may
         // clear the ViewModel without it; make sure the announce loop can't outlive us.
         stopLiveView()
-        super.onCleared()
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

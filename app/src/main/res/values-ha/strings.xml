@@ -31,7 +31,6 @@
     <string name="tab_messages">Saƙonni</string>
     <string name="tab_history">Tarihi</string>
     <string name="tab_contacts">Lambobi</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Saituna</string>
 
     <!-- ── Matsayin motsi / aiki ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Tuo igwefoto na QR LocaPeer</string>
     <string name="invite_paste_title">Ko Manna Hanyar Gayyata</string>
     <string name="invite_process_link">Gudanar Da Hanya</string>
-    <string name="invite_fallback_name">Lamba</string>
     <string name="invite_success_message">Za a haɗa ku da %1$s da zaran sun amince.</string>
     <string name="invite_confirm_add_title">Ƙara %1$s?</string>
     <string name="invite_confirm_add_message">Ƙara su cikin lambobinku sannan a raba wurin zama?</string>

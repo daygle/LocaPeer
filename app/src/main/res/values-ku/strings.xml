@@ -31,7 +31,6 @@
     <string name="tab_messages">Peyam</string>
     <string name="tab_history">Dîrok</string>
     <string name="tab_contacts">Têkilî</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Sazkirin</string>
 
     <!-- ── Rewşên tevgerê ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Kêmereyê ber bi QR-ya LocaPeer ve bigirin</string>
     <string name="invite_paste_title">An Lînka Vexwendinê Binivîsin</string>
     <string name="invite_process_link">Lînkê Bişopîne</string>
-    <string name="invite_fallback_name">Têkilî</string>
     <string name="invite_success_message">Dema wan qebûl kir hûn ê bi %1$s re werin girêdan.</string>
     <string name="invite_confirm_add_title">%1$s zêde bike?</string>
     <string name="invite_confirm_add_message">Wan li têkiliyên xwe zêde bikin û cih parve bikin?</string>

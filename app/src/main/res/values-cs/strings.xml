@@ -31,7 +31,6 @@
     <string name="tab_messages">Zprávy</string>
     <string name="tab_history">Historie</string>
     <string name="tab_contacts">Kontakty</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Nastavení</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -361,7 +360,6 @@
     <string name="invite_point_camera">Namiřte kameru na QR kód LocaPeer</string>
     <string name="invite_paste_title">Nebo vložte zvací odkaz</string>
     <string name="invite_process_link">Zpracovat odkaz</string>
-    <string name="invite_fallback_name">Kontakt</string>
     <string name="invite_success_message">Po přijetí budete propojeni s %1$s.</string>
     <string name="invite_confirm_add_title">Přidat %1$s?</string>
     <string name="invite_confirm_add_message">Přidat do kontaktů a sdílet polohu?</string>

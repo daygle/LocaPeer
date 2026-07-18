@@ -31,7 +31,6 @@
     <string name="tab_messages">Mesaje</string>
     <string name="tab_history">Istoric</string>
     <string name="tab_contacts">Contacte</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Setări</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -355,7 +354,6 @@
     <string name="invite_point_camera">Îndreptați camera spre un cod QR LocaPeer</string>
     <string name="invite_paste_title">Sau lipiți linkul de invitație</string>
     <string name="invite_process_link">Procesați linkul</string>
-    <string name="invite_fallback_name">Contact</string>
     <string name="invite_success_message">Veți fi conectat cu %1$s după ce acceptă.</string>
     <string name="invite_confirm_add_title">Adăugați %1$s?</string>
     <string name="invite_confirm_add_message">Îl adăugați la contacte și partajați locația?</string>

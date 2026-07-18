@@ -31,7 +31,6 @@
     <string name="tab_messages">پیغامونه</string>
     <string name="tab_history">تاریخچه</string>
     <string name="tab_contacts">اړیکې</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">ترتیبات</string>
 
     <!-- ── د حرکت حالتونه ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">کمره د LocaPeer QR په لور ونیسئ</string>
     <string name="invite_paste_title">یا د بلنې لینک واچوئ</string>
     <string name="invite_process_link">لینک پروسس کړئ</string>
-    <string name="invite_fallback_name">اړیکه</string>
     <string name="invite_success_message">کله چې هغوی ومني نو له %1$s سره به وصل شئ.</string>
     <string name="invite_confirm_add_title">%1$s اضافه کړو؟</string>
     <string name="invite_confirm_add_message">هغوی خپلو اړیکو ته اضافه کړئ او ځای شریک کړئ؟</string>

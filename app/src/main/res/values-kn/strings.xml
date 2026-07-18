@@ -31,7 +31,6 @@
     <string name="tab_messages">ಸಂದೇಶಗಳು</string>
     <string name="tab_history">ಇತಿಹಾಸ</string>
     <string name="tab_contacts">ಸಂಪರ್ಕಗಳು</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">ಸೆಟ್ಟಿಂಗ್‌ಗಳು</string>
 
     <!-- ── ಚಲನೆ / ಚಟುವಟಿಕೆಯ ಸ್ಥಿತಿಗಳು ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">ಕ್ಯಾಮೆರಾವನ್ನು LocaPeer QR ನತ್ತ ತೋರಿಸಿ</string>
     <string name="invite_paste_title">ಅಥವಾ ಆಹ್ವಾನ ಲಿಂಕ್ ಅನ್ನು ಅಂಟಿಸಿ</string>
     <string name="invite_process_link">ಲಿಂಕ್ ಪ್ರಕ್ರಿಯೆಗೊಳಿಸಿ</string>
-    <string name="invite_fallback_name">ಸಂಪರ್ಕ</string>
     <string name="invite_success_message">ಅವರು ಒಪ್ಪಿಕೊಂಡ ನಂತರ ನೀವು %1$s ರೊಂದಿಗೆ ಸಂಪರ್ಕಗೊಳ್ಳುತ್ತೀರಿ.</string>
     <string name="invite_confirm_add_title">%1$s ರನ್ನು ಸೇರಿಸಬೇಕೇ?</string>
     <string name="invite_confirm_add_message">ಅವರನ್ನು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಿಗೆ ಸೇರಿಸಿ ಮತ್ತು ಸ್ಥಳ ಹಂಚಿಕೊಳ್ಳಬೇಕೇ?</string>

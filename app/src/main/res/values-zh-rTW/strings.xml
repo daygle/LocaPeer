@@ -31,7 +31,6 @@
     <string name="tab_messages">訊息</string>
     <string name="tab_history">歷史</string>
     <string name="tab_contacts">聯絡人</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">設定</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">將相機對準 LocaPeer QR 碼</string>
     <string name="invite_paste_title">或貼上邀請連結</string>
     <string name="invite_process_link">處理連結</string>
-    <string name="invite_fallback_name">聯絡人</string>
     <string name="invite_success_message">%1$s 接受後即可連結。</string>
     <string name="invite_confirm_add_title">要新增 %1$s 嗎？</string>
     <string name="invite_confirm_add_message">將對方加入您的聯絡人並分享位置？</string>

@@ -31,7 +31,6 @@
     <string name="tab_messages">Сообщения</string>
     <string name="tab_history">История</string>
     <string name="tab_contacts">Контакты</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Настройки</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -361,7 +360,6 @@
     <string name="invite_point_camera">Наведите камеру на QR-код LocaPeer</string>
     <string name="invite_paste_title">Или вставьте ссылку-приглашение</string>
     <string name="invite_process_link">Обработать ссылку</string>
-    <string name="invite_fallback_name">Контакт</string>
     <string name="invite_success_message">Вы будете связаны с %1$s после принятия приглашения.</string>
     <string name="invite_confirm_add_title">Добавить %1$s?</string>
     <string name="invite_confirm_add_message">Добавить в контакты и делиться местоположением?</string>

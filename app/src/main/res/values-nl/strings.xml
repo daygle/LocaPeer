@@ -31,7 +31,6 @@
     <string name="tab_messages">Berichten</string>
     <string name="tab_history">Geschiedenis</string>
     <string name="tab_contacts">Contacten</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Instellingen</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Richt de camera op een LocaPeer-QR</string>
     <string name="invite_paste_title">Of plak een uitnodigingslink</string>
     <string name="invite_process_link">Link verwerken</string>
-    <string name="invite_fallback_name">Contact</string>
     <string name="invite_success_message">Zodra %1$s accepteert, zijn jullie verbonden.</string>
     <string name="invite_confirm_add_title">%1$s toevoegen?</string>
     <string name="invite_confirm_add_message">Toevoegen aan je contacten en locatie delen?</string>

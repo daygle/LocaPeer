@@ -31,7 +31,6 @@
     <string name="tab_messages">پیام‌ها</string>
     <string name="tab_history">تاریخچه</string>
     <string name="tab_contacts">مخاطبین</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">تنظیمات</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">دوربین را به‌سوی کد QR لوکاپیر بگیرید</string>
     <string name="invite_paste_title">یا پیوند دعوت را جای‌گذاری کنید</string>
     <string name="invite_process_link">پردازش پیوند</string>
-    <string name="invite_fallback_name">مخاطب</string>
     <string name="invite_success_message">پس از پذیرش %1$s، ارتباط برقرار می‌شود.</string>
     <string name="invite_confirm_add_title">%1$s اضافه شود؟</string>
     <string name="invite_confirm_add_message">به مخاطبین‌تان اضافه شود و موقعیت به اشتراک گذاشته شود؟</string>

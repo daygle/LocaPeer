@@ -31,7 +31,6 @@
     <string name="tab_messages">Tin nhắn</string>
     <string name="tab_history">Lịch sử</string>
     <string name="tab_contacts">Liên hệ</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Cài đặt</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">Hướng máy ảnh vào mã QR LocaPeer</string>
     <string name="invite_paste_title">Hoặc dán liên kết mời</string>
     <string name="invite_process_link">Xử lý liên kết</string>
-    <string name="invite_fallback_name">Liên hệ</string>
     <string name="invite_success_message">Bạn sẽ được kết nối với %1$s khi họ chấp nhận.</string>
     <string name="invite_confirm_add_title">Thêm %1$s?</string>
     <string name="invite_confirm_add_message">Thêm họ vào danh bạ và chia sẻ vị trí?</string>

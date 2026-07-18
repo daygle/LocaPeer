@@ -31,7 +31,6 @@
     <string name="tab_messages">Messaggi</string>
     <string name="tab_history">Cronologia</string>
     <string name="tab_contacts">Contatti</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Impostazioni</string>
 
     <!-- ── Stati di movimento / attività ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Punta la fotocamera verso un QR LocaPeer</string>
     <string name="invite_paste_title">O incolla il link d\'invito</string>
     <string name="invite_process_link">Elabora link</string>
-    <string name="invite_fallback_name">Contatto</string>
     <string name="invite_success_message">Sarai connesso con %1$s una volta che avrà accettato.</string>
     <string name="invite_confirm_add_title">Aggiungere %1$s?</string>
     <string name="invite_confirm_add_message">Aggiungerlo ai contatti e condividere la posizione?</string>

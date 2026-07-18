@@ -31,7 +31,6 @@
     <string name="tab_messages">Mesajlar</string>
     <string name="tab_history">Geçmiş</string>
     <string name="tab_contacts">Kişiler</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Ayarlar</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Kamerayı bir LocaPeer QR koduna doğrultun</string>
     <string name="invite_paste_title">Veya Davet Bağlantısını Yapıştırın</string>
     <string name="invite_process_link">Bağlantıyı İşle</string>
-    <string name="invite_fallback_name">Kişi</string>
     <string name="invite_success_message">%1$s kabul ettiğinde bağlanacaksınız.</string>
     <string name="invite_confirm_add_title">%1$s eklensin mi?</string>
     <string name="invite_confirm_add_message">Kişilerinize ekleyip konum paylaşılsın mı?</string>

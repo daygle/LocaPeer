@@ -31,7 +31,6 @@
     <string name="tab_messages">Üzenetek</string>
     <string name="tab_history">Előzmények</string>
     <string name="tab_contacts">Kapcsolatok</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">Beállítások</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">Irányítsa a kamerát egy LocaPeer QR-kódra</string>
     <string name="invite_paste_title">Vagy illessze be a meghívólinket</string>
     <string name="invite_process_link">Link feldolgozása</string>
-    <string name="invite_fallback_name">Névjegy</string>
     <string name="invite_success_message">Miután %1$s elfogadja, kapcsolatba kerülnek.</string>
     <string name="invite_confirm_add_title">Hozzáadja: %1$s?</string>
     <string name="invite_confirm_add_message">Hozzáadja a névjegyeihez és megosztja a helyzetét?</string>

@@ -31,7 +31,6 @@
     <string name="tab_messages">မက်ဆေ့ဂျ်များ</string>
     <string name="tab_history">မှတ်တမ်း</string>
     <string name="tab_contacts">အဆက်အသွယ်များ</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">ဆက်တင်များ</string>
 
     <!-- ── လှုပ်ရှားမှု အခြေအနေများ ───────────────────────────────────────── -->
@@ -343,7 +342,6 @@
     <string name="invite_point_camera">ကင်မရာကို LocaPeer QR ဆီသို့ ချိန်ပါ</string>
     <string name="invite_paste_title">သို့မဟုတ် ဖိတ်ကြားချက်လင့်ခ်ကို ထည့်ပါ</string>
     <string name="invite_process_link">လင့်ခ်ကို စစ်ဆေးရန်</string>
-    <string name="invite_fallback_name">အဆက်အသွယ်</string>
     <string name="invite_success_message">သူတို့ လက်ခံပြီးသည်နှင့် သင်သည် %1$s နှင့် ချိတ်ဆက်မိပါလိမ့်မည်။</string>
     <string name="invite_confirm_add_title">%1$s ကို ထည့်မလား။</string>
     <string name="invite_confirm_add_message">သူတို့ကို သင့်အဆက်အသွယ်ထဲ ထည့်ပြီး တည်နေရာ မျှဝေမလား။</string>

@@ -31,7 +31,6 @@
     <string name="tab_messages">संदेश</string>
     <string name="tab_history">इतिहास</string>
     <string name="tab_contacts">संपर्क</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">सेटिंग्स</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">कैमरे को LocaPeer QR की ओर करें</string>
     <string name="invite_paste_title">या आमंत्रण लिंक चिपकाएँ</string>
     <string name="invite_process_link">लिंक प्रोसेस करें</string>
-    <string name="invite_fallback_name">संपर्क</string>
     <string name="invite_success_message">%1$s के स्वीकारते ही आप जुड़ जाएँगे।</string>
     <string name="invite_confirm_add_title">%1$s को जोड़ें?</string>
     <string name="invite_confirm_add_message">उन्हें अपने संपर्कों में जोड़ें और स्थान साझा करें?</string>

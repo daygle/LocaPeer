@@ -31,7 +31,6 @@
     <string name="tab_messages">الرسائل</string>
     <string name="tab_history">السجل</string>
     <string name="tab_contacts">جهات الاتصال</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">الإعدادات</string>
 
     <!-- ── Motion / activity states ───────────────────────────────────────── -->
@@ -373,7 +372,6 @@
     <string name="invite_point_camera">وجّه الكاميرا نحو رمز QR الخاص بـ LocaPeer</string>
     <string name="invite_paste_title">أو الصق رابط الدعوة</string>
     <string name="invite_process_link">معالجة الرابط</string>
-    <string name="invite_fallback_name">جهة اتصال</string>
     <string name="invite_success_message">سيتم الربط بينك وبين %1$s بمجرد قبوله.</string>
     <string name="invite_confirm_add_title">إضافة %1$s؟</string>
     <string name="invite_confirm_add_message">إضافته إلى جهات اتصالك ومشاركة الموقع؟</string>

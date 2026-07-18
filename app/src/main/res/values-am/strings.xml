@@ -31,7 +31,6 @@
     <string name="tab_messages">መልእክቶች</string>
     <string name="tab_history">ታሪክ</string>
     <string name="tab_contacts">እውቂያዎች</string>
-    <string name="tab_qr">QR</string>
     <string name="tab_settings">ቅንብሮች</string>
 
     <!-- ── የእንቅስቃሴ ሁኔታዎች ───────────────────────────────────────── -->
@@ -349,7 +348,6 @@
     <string name="invite_point_camera">ካሜራውን ወደ LocaPeer QR ያዙሩት</string>
     <string name="invite_paste_title">ወይም የግብዣ ሊንክ ይለጥፉ</string>
     <string name="invite_process_link">ሊንክን አከናውን</string>
-    <string name="invite_fallback_name">እውቂያ</string>
     <string name="invite_success_message">አንዴ ሲቀበሉ ከ%1$s ጋር ይገናኛሉ።</string>
     <string name="invite_confirm_add_title">%1$s ይታከል?</string>
     <string name="invite_confirm_add_message">ወደ እውቂያዎችዎ ይታከሉ እና አካባቢ ይጋሩ?</string>
