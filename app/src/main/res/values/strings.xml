@@ -582,6 +582,7 @@
     <string name="map_cd_go_my_location">Go to my location</string>
     <string name="map_sos_active">⚠ SOS ACTIVE</string>
     <string name="map_away">Away</string>
+    <string name="map_live">● Live</string>
     <string name="map_no_location_yet">No location yet</string>
     <string name="map_cd_go_location">Go to location</string>
     <string name="map_sos">SOS</string>

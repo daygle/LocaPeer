@@ -43,7 +43,14 @@ private val Context.mapPrefs by preferencesDataStore(name = "map_prefs")
 data class PinData(
     val peer: PeerEntity,
     val heartbeat: HeartbeatEntity?,
-    val isOverdue: Boolean
+    val isOverdue: Boolean,
+    /**
+     * True when this contact is currently broadcasting at the fast live-view cadence
+     * *and* their most recent fix is fresh — i.e. they are streaming their location live
+     * right now (because someone is watching them). Derived purely from the heartbeat we
+     * already receive; see [com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS].
+     */
+    val isLive: Boolean = false
 )
 
 data class GeofenceOnMap(
@@ -283,7 +290,13 @@ class MapViewModel @Inject constructor(
             // timestamp (the sender's device clock) to avoid false overdue flags caused by
             // inter-device clock skew.
             val overdue = hb != null && (now - hb.receivedAt) > (intervalSec * 1000L * 2).coerceAtLeast(120_000L)
-            PinData(peer, hb, overdue)
+            // Live = broadcasting at the fast live-view floor with a genuinely fresh fix.
+            // The freshness window (a few live intervals) keeps the badge from lingering
+            // once their re-sends stop, well before the much later overdue threshold.
+            val live = hb != null && !overdue &&
+                hb.expectedIntervalSeconds * 1000L <= com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS &&
+                (now - hb.receivedAt) < com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS * 4
+            PinData(peer, hb, overdue, live)
         }
         val nameByDevice = snapshot.peers.associate { it.deviceId to it.displayName }
         val assignmentsByFence = snapshot.assignments.groupBy { it.geofenceId }

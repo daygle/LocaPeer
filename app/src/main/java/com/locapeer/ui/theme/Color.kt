@@ -32,3 +32,6 @@ val SosRedContainer = Color(0xFFFFCDD2)
 val GeofenceEnter = Color(0xFF2196F3)
 val GeofenceExit = Color(0xFFFF9800)
 val GeofenceBoth = Color(0xFF9C27B0)
+
+// Contact is streaming location at the live "someone is watching" cadence.
+val LiveGreen = Color(0xFF00C853)
