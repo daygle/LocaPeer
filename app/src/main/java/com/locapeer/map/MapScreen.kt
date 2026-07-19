@@ -394,11 +394,17 @@ private fun FriendItem(pin: PinData, onClick: () -> Unit, onMessage: () -> Unit,
                 when {
                     hb?.isSos == true -> stringResource(R.string.map_sos_active)
                     pin.isOverdue -> stringResource(R.string.map_away)
+                    pin.isLive -> stringResource(R.string.map_live)
                     hb != null -> hb.motionState.lowercase().replaceFirstChar { it.uppercase() }
                     else -> stringResource(R.string.map_no_location_yet)
                 },
                 style = MaterialTheme.typography.labelSmall,
-                color = if (hb?.isSos == true) SosRed else MaterialTheme.colorScheme.onSurfaceVariant
+                fontWeight = if (pin.isLive && hb?.isSos != true && !pin.isOverdue) FontWeight.Bold else FontWeight.Normal,
+                color = when {
+                    hb?.isSos == true -> SosRed
+                    pin.isLive && !pin.isOverdue -> LiveGreen
+                    else -> MaterialTheme.colorScheme.onSurfaceVariant
+                }
             )
             if (hb != null) {
                 Text(stringResource(R.string.contacts_last_seen, formatTimestamp(hb.timestamp)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
@@ -570,7 +576,7 @@ private fun OsmdroidMapView(
             // We exclude userLocation from this hash so that frequent GPS jitter doesn't
             // trigger a full (expensive) clear and re-add of all overlays.
             val dataHash = listOf(
-                pins.map { Triple(it.peer.deviceId, it.heartbeat?.timestamp, it.isOverdue) },
+                pins.map { listOf(it.peer.deviceId, it.heartbeat?.timestamp, it.isOverdue, it.isLive) },
                 geofences,
                 isSosActive,
                 myPinColor
@@ -612,7 +618,8 @@ private fun OsmdroidMapView(
                                     // moving (matches the speed-chip gate) and whose fix is current;
                                     // a stale/overdue pin must not imply a live direction.
                                     showDirection = !pinData.isOverdue && hb.speed > 0f &&
-                                        !hb.motionState.equals("STATIONARY", ignoreCase = true)
+                                        !hb.motionState.equals("STATIONARY", ignoreCase = true),
+                                    isLive = pinData.isLive
                                 )
                             )
                             setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
@@ -672,6 +679,7 @@ private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long)
                         Text(pin.peer.displayName, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
                         if (hb?.isSos == true) Text(stringResource(R.string.map_sos_active), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = SosRed)
                         else if (pin.isOverdue) Text(stringResource(R.string.map_overdue), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
+                        else if (pin.isLive) Text(stringResource(R.string.map_live), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = LiveGreen)
                     }
                 }
                 IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close)) }

@@ -38,13 +38,17 @@ object MarkerIconFactory {
         pinColor: String = "",
         isSelected: Boolean = false,
         bearingDegrees: Float = 0f,
-        showDirection: Boolean = false
+        showDirection: Boolean = false,
+        isLive: Boolean = false
     ): BitmapDrawable {
         val density = context.resources.displayMetrics.density
+        // A live contact gets a green ring; suppress it while SOS/overdue own the colour so
+        // those states stay unambiguous.
+        val showLive = isLive && !isSos && !isOverdue
         // Quantise the bearing in the cache key so continuous heading changes reuse a
         // small, bounded set of bitmaps instead of thrashing the LRU cache.
         val quantBearing = if (showDirection) (Math.round(bearingDegrees / 15f) * 15) % 360 else 0
-        val key = "$displayName-$isOverdue-$isSos-$pinColor-$isSelected-$showDirection-$quantBearing"
+        val key = "$displayName-$isOverdue-$isSos-$pinColor-$isSelected-$showDirection-$quantBearing-$showLive"
         cache.get(key)?.let { return it }
 
         // Selected pins render larger so the tapped marker stands out on the history map
@@ -55,7 +59,10 @@ object MarkerIconFactory {
         // tail tip still lands at the bitmap's bottom-centre and the caller's ANCHOR_BOTTOM
         // keeps pointing the pin at the exact coordinate (no anchor change needed).
         val arrowReach = if (showDirection) density * 9f else 0f
-        val sideTopPad = density * 4f + arrowReach
+        // The live ring sits just outside the white border and needs a little clearance so
+        // it isn't clipped by the bitmap edge.
+        val liveReach = if (showLive) density * 4f else 0f
+        val sideTopPad = density * 4f + maxOf(arrowReach, liveReach)
         val tailDrop = maxOf(density * 9f, arrowReach + density * 2f)
         val width = (sizePx + sideTopPad * 2f).toInt().coerceAtLeast(1)
         val height = (sideTopPad + radius * 2f + tailDrop + density * 2f).toInt().coerceAtLeast(1)
@@ -117,6 +124,17 @@ object MarkerIconFactory {
                 strokeWidth = density * 2.5f
             }
             drawCircle(cx, cy, radius - 1, borderPaint)
+
+            // Live ring: a green halo just outside the white border marking a contact who is
+            // streaming location live right now. Drawn before the tail so the tail caps its
+            // lower edge cleanly.
+            if (showLive) {
+                drawCircle(cx, cy, radius + density * 2.5f, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                    color = "#00C853".toColorInt()
+                    style = Paint.Style.STROKE
+                    strokeWidth = density * 2.5f
+                })
+            }
 
             // Initials
             val initial = displayName.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
