@@ -23,13 +23,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.locapeer.R
+import com.locapeer.ui.components.CardDivider
+import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -91,7 +92,7 @@ fun RelaySettingsScreen(
                         onRemove = null
                     )
                     if (index < vm.allBuiltInRelays.size - 1) {
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        CardDivider()
                     }
                 }
             }
@@ -102,15 +103,11 @@ fun RelaySettingsScreen(
                 icon = Icons.Default.Storage
             ) {
                 if (customRelays.isEmpty()) {
-                    ListItem(
-                        headlineContent = {
-                            Text(
-                                stringResource(R.string.relays_custom_empty),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    Text(
+                        stringResource(R.string.relays_custom_empty),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp)
                     )
                 } else {
                     customRelays.forEachIndexed { index, url ->
@@ -123,16 +120,16 @@ fun RelaySettingsScreen(
                             onRemove = { vm.removeCustomRelay(url, customRelays) }
                         )
                         if (index < customRelays.size - 1) {
-                            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                            CardDivider()
                         }
                     }
                 }
 
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                CardDivider()
 
                 // Add Relay Field
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     OutlinedTextField(
@@ -175,34 +172,7 @@ private fun RelaySection(
     icon: ImageVector,
     content: @Composable ColumnScope.() -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(horizontal = 4.dp)
-        ) {
-            Icon(
-                icon,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-        OutlinedCard(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.outlinedCardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Column(content = content)
-        }
-    }
+    SettingsCard(headerIcon = icon, headerTitle = title, content = content)
 }
 
 /** Runs the add, returning a string-res id to show on failure or null on success. */
@@ -225,23 +195,26 @@ private fun RelayRow(
     onToggle: (Boolean) -> Unit,
     onRemove: (() -> Unit)?
 ) {
-    ListItem(
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-        leadingContent = {
-            Box(
-                Modifier
-                    .size(10.dp)
-                    .clip(CircleShape)
-                    .background(
-                        when {
-                            !isEnabled -> MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
-                            connected -> Color(0xFF4CAF50)
-                            else -> MaterialTheme.colorScheme.error
-                        }
-                    )
-            )
-        },
-        headlineContent = {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            Modifier
+                .size(10.dp)
+                .clip(CircleShape)
+                .background(
+                    when {
+                        !isEnabled -> MaterialTheme.colorScheme.outline.copy(alpha = 0.5f)
+                        connected -> Color(0xFF4CAF50)
+                        else -> MaterialTheme.colorScheme.error
+                    }
+                )
+        )
+        Spacer(Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 url,
                 style = MaterialTheme.typography.bodyMedium,
@@ -250,8 +223,6 @@ private fun RelayRow(
                 overflow = TextOverflow.Ellipsis,
                 color = if (isEnabled) Color.Unspecified else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
             )
-        },
-        supportingContent = {
             Text(
                 text = when {
                     !isEnabled -> stringResource(R.string.relays_status_disabled)
@@ -259,28 +230,26 @@ private fun RelayRow(
                     else -> stringResource(R.string.relays_status_disconnected)
                 },
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(top = 2.dp)
             )
-        },
-        trailingContent = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Switch(
-                    checked = isEnabled,
-                    onCheckedChange = onToggle,
-                    modifier = Modifier.scaleSwitch(0.8f)
+        }
+        Spacer(Modifier.width(8.dp))
+        Switch(
+            checked = isEnabled,
+            onCheckedChange = onToggle,
+            modifier = Modifier.scaleSwitch(0.8f)
+        )
+        if (onRemove != null) {
+            IconButton(onClick = onRemove) {
+                Icon(
+                    Icons.Default.Close,
+                    contentDescription = stringResource(R.string.relays_remove),
+                    tint = MaterialTheme.colorScheme.error
                 )
-                if (onRemove != null) {
-                    IconButton(onClick = onRemove) {
-                        Icon(
-                            Icons.Default.Close,
-                            contentDescription = stringResource(R.string.relays_remove),
-                            tint = MaterialTheme.colorScheme.error
-                        )
-                    }
-                }
             }
         }
-    )
+    }
 }
 
 // Helper to scale the switch down slightly to fit better in ListItems
