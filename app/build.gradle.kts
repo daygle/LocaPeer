@@ -46,7 +46,7 @@ android {
                 "proguard-rules.pro",
             )
             ndk {
-                debugSymbolLevel = "SYMBOL_TABLE"
+                debugSymbolLevel = "FULL"
             }
         }
     }
@@ -80,6 +80,7 @@ android {
     packaging {
         jniLibs {
             useLegacyPackaging = false
+            // Silence "Unable to strip" warnings for pre-stripped 3rd party libs
             keepDebugSymbols += "**/libandroidx.graphics.path.so"
             keepDebugSymbols += "**/libdatastore_shared_counter.so"
             keepDebugSymbols += "**/libimage_processing_util_jni.so"
