@@ -10,8 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.automirrored.filled.Message
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
@@ -22,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,8 +30,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.supervised.SupervisionGate
+import com.locapeer.ui.components.CardDivider
 import com.locapeer.ui.components.MapLocationPicker
 import com.locapeer.ui.components.RetentionRow
+import com.locapeer.ui.components.SettingsCard
+import com.locapeer.ui.components.SettingsRow
+import com.locapeer.ui.components.SwitchRow
 import java.util.Date
 import kotlin.math.roundToInt
 
@@ -112,7 +113,8 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(bottom = 24.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
             // ── 1. Profile ───────────────────────────────────────────────────
@@ -120,7 +122,7 @@ fun SettingsScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 20.dp),
+                        .padding(vertical = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -173,9 +175,11 @@ fun SettingsScreen(
 
             // ── 1b. Active Temporary Shares ──────────────────────────────────
             if (activeTempShares.isNotEmpty()) {
-                item { SectionLabel(stringResource(R.string.settings_temporary_location_share)) }
                 item {
-                    SettingsCard {
+                    SettingsCard(
+                        headerIcon = Icons.Default.Timelapse,
+                        headerTitle = stringResource(R.string.settings_temporary_location_share)
+                    ) {
                         activeTempShares.forEachIndexed { index, (peer, config) ->
                             val endsAt = config.temporaryShareEndsAtEpochSeconds ?: 0L
                             val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {
@@ -184,46 +188,42 @@ fun SettingsScreen(
                                     kotlinx.coroutines.delay(1000L)
                                 }
                             }
-                            ListItem(
-                                headlineContent = {
+                            if (index > 0) CardDivider()
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { onNavigateToPeerSharing(peer.deviceId, peer.displayName) }
+                                    .padding(horizontal = 20.dp, vertical = 12.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
                                     Text(
                                         peer.displayName,
+                                        style = MaterialTheme.typography.bodyLarge,
                                         maxLines = 1,
                                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                                     )
-                                },
-                                supportingContent = {
                                     Text(
                                         stringResource(
                                             R.string.peer_temp_share_active_time_left,
                                             peer.displayName,
                                             com.locapeer.util.DisplayFormat.humanizeRemaining(endsAt - nowSec)
                                         ),
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         maxLines = 1,
-                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                                        modifier = Modifier.padding(top = 2.dp)
                                     )
-                                },
-                                leadingContent = {
+                                }
+                                Spacer(Modifier.width(12.dp))
+                                IconButton(onClick = { vm.stopTemporaryShare(peer.deviceId) }) {
                                     Icon(
-                                        Icons.Default.Timelapse,
-                                        contentDescription = null,
-                                        tint = MaterialTheme.colorScheme.primary
+                                        Icons.Default.Stop,
+                                        contentDescription = stringResource(R.string.peer_temp_share_stop),
+                                        tint = MaterialTheme.colorScheme.error
                                     )
-                                },
-                                trailingContent = {
-                                    IconButton(onClick = { vm.stopTemporaryShare(peer.deviceId) }) {
-                                        Icon(
-                                            Icons.Default.Stop,
-                                            contentDescription = stringResource(R.string.peer_temp_share_stop),
-                                            tint = MaterialTheme.colorScheme.error
-                                        )
-                                    }
-                                },
-                                colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                                modifier = Modifier.clickable { onNavigateToPeerSharing(peer.deviceId, peer.displayName) }
-                            )
-                            if (index < activeTempShares.size - 1) {
-                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                                }
                             }
                         }
                     }
@@ -231,209 +231,159 @@ fun SettingsScreen(
             }
 
             // ── 2. Location & Privacy ──────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_location_privacy)) }
             item {
-                SettingsCard {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_share_location)) },
-                        supportingContent = { Text(if (settings.heartbeatEnabled) stringResource(R.string.settings_broadcasting) else stringResource(R.string.settings_not_broadcasting)) },
-                        leadingContent = { Icon(Icons.Default.LocationOn, contentDescription = null, tint = if (settings.heartbeatEnabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.heartbeatEnabled,
-                                onCheckedChange = { vm.setHeartbeatEnabled(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                SettingsCard(
+                    headerIcon = Icons.Default.LocationOn,
+                    headerTitle = stringResource(R.string.settings_section_location_privacy)
+                ) {
+                    SwitchRow(
+                        title = stringResource(R.string.settings_share_location),
+                        subtitle = if (settings.heartbeatEnabled) stringResource(R.string.settings_broadcasting) else stringResource(R.string.settings_not_broadcasting),
+                        checked = settings.heartbeatEnabled,
+                        onCheckedChange = { vm.setHeartbeatEnabled(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.Schedule,
-                        label = stringResource(R.string.settings_sharing_schedule),
-                        subtitle = if (settings.globalScheduleRules.isEmpty()) stringResource(R.string.settings_always_on)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_sharing_schedule),
+                        value = if (settings.globalScheduleRules.isEmpty()) stringResource(R.string.settings_always_on)
                         else pluralStringResource(R.plurals.settings_schedule_rule_count, settings.globalScheduleRules.size, settings.globalScheduleRules.size),
                         onClick = onNavigateToGlobalSchedule
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.Fence,
-                        label = stringResource(R.string.settings_geofences),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_geofences),
                         subtitle = stringResource(R.string.settings_geofences_subtitle),
                         onClick = onNavigateToGeofences
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_notify_when_tracked)) },
-                        supportingContent = {
-                            Text(stringResource(R.string.settings_notify_when_tracked_subtitle))
-                        },
-                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.notifyOnTrackingAlerts,
-                                onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SwitchRow(
+                        title = stringResource(R.string.settings_notify_when_tracked),
+                        subtitle = stringResource(R.string.settings_notify_when_tracked_subtitle),
+                        checked = settings.notifyOnTrackingAlerts,
+                        onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.History,
-                        label = stringResource(R.string.settings_my_location_history),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_my_location_history),
                         subtitle = stringResource(R.string.settings_my_location_history_subtitle),
                         onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_lookup_addresses)) },
-                        supportingContent = {
-                            Text(stringResource(R.string.settings_lookup_addresses_subtitle))
-                        },
-                        leadingContent = { Icon(Icons.Default.Place, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.reverseGeocodingEnabled,
-                                onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SwitchRow(
+                        title = stringResource(R.string.settings_lookup_addresses),
+                        subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
+                        checked = settings.reverseGeocodingEnabled,
+                        onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_allow_live_boost)) },
-                        supportingContent = {
-                            Text(stringResource(R.string.settings_allow_live_boost_subtitle))
-                        },
-                        leadingContent = { Icon(Icons.Default.Timelapse, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.allowLiveBoost,
-                                onCheckedChange = { vm.setAllowLiveBoost(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SwitchRow(
+                        title = stringResource(R.string.settings_allow_live_boost),
+                        subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
+                        checked = settings.allowLiveBoost,
+                        onCheckedChange = { vm.setAllowLiveBoost(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_request_live_boost)) },
-                        supportingContent = {
-                            Text(stringResource(R.string.settings_request_live_boost_subtitle))
-                        },
-                        leadingContent = { Icon(Icons.Default.Visibility, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.requestLiveBoost,
-                                onCheckedChange = { vm.setRequestLiveBoost(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SwitchRow(
+                        title = stringResource(R.string.settings_request_live_boost),
+                        subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
+                        checked = settings.requestLiveBoost,
+                        onCheckedChange = { vm.setRequestLiveBoost(it) }
                     )
                 }
             }
 
             // ── 3. Security ──────────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_security)) }
             item {
-                SettingsCard {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_app_lock)) },
-                        supportingContent = { Text(stringResource(R.string.settings_app_lock_subtitle)) },
-                        leadingContent = { Icon(Icons.Default.Fingerprint, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.appLockEnabled,
-                                onCheckedChange = { vm.setAppLockEnabled(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                        modifier = Modifier.clickable { vm.setAppLockEnabled(!settings.appLockEnabled) }
+                SettingsCard(
+                    headerIcon = Icons.Default.Shield,
+                    headerTitle = stringResource(R.string.settings_section_security)
+                ) {
+                    SwitchRow(
+                        title = stringResource(R.string.settings_app_lock),
+                        subtitle = stringResource(R.string.settings_app_lock_subtitle),
+                        checked = settings.appLockEnabled,
+                        onCheckedChange = { vm.setAppLockEnabled(it) }
                     )
                     if (settings.appLockEnabled) {
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.settings_app_lock_timeout)) },
-                            supportingContent = {
-                                Text(
-                                    when (settings.appLockTimeoutSeconds) {
-                                        0  -> stringResource(R.string.settings_app_lock_timeout_immediate)
-                                        30 -> stringResource(R.string.settings_app_lock_timeout_30s)
-                                        60 -> stringResource(R.string.settings_app_lock_timeout_1m)
-                                        else -> stringResource(R.string.settings_app_lock_timeout_5m)
-                                    }
-                                )
+                        CardDivider()
+                        SettingsRow(
+                            title = stringResource(R.string.settings_app_lock_timeout),
+                            value = when (settings.appLockTimeoutSeconds) {
+                                0  -> stringResource(R.string.settings_app_lock_timeout_immediate)
+                                30 -> stringResource(R.string.settings_app_lock_timeout_30s)
+                                60 -> stringResource(R.string.settings_app_lock_timeout_1m)
+                                else -> stringResource(R.string.settings_app_lock_timeout_5m)
                             },
-                            leadingContent = { Icon(Icons.Default.Timer, contentDescription = null) },
-                            trailingContent = {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-                            modifier = Modifier.clickable { showLockTimeoutDialog = true }
+                            onClick = { showLockTimeoutDialog = true }
                         )
                     }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    NavRow(
-                        icon = Icons.Default.Shield,
-                        label = stringResource(R.string.settings_permissions),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_permissions),
                         subtitle = stringResource(R.string.settings_permissions_subtitle),
                         onClick = onNavigateToPermissions
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    CardDivider()
                     if (settings.supervisedModeEnabled) {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.settings_supervision_active)) },
-                            supportingContent = { Text(stringResource(R.string.settings_supervision_active_subtitle)) },
-                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null, tint = MaterialTheme.colorScheme.primary) },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                        )
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.settings_disable_supervised), color = MaterialTheme.colorScheme.error) },
-                            leadingContent = { Icon(Icons.Default.LockOpen, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                            modifier = Modifier.clickable { showDisableSupervisedConfirm = true },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 20.dp, vertical = 12.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    stringResource(R.string.settings_supervision_active),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                Text(
+                                    stringResource(R.string.settings_supervision_active_subtitle),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    modifier = Modifier.padding(top = 2.dp)
+                                )
+                            }
+                        }
+                        CardDivider()
+                        SettingsRow(
+                            title = stringResource(R.string.settings_disable_supervised),
+                            destructive = true,
+                            onClick = { showDisableSupervisedConfirm = true }
                         )
                     } else {
-                        ListItem(
-                            headlineContent = { Text(stringResource(R.string.settings_supervised_mode)) },
-                            supportingContent = { Text(stringResource(R.string.settings_supervised_mode_subtitle)) },
-                            leadingContent = { Icon(Icons.Default.Lock, contentDescription = null) },
-                            trailingContent = {
-                                Switch(checked = false, onCheckedChange = { if (it) showSupervisedSetup = true })
-                            },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                        SwitchRow(
+                            title = stringResource(R.string.settings_supervised_mode),
+                            subtitle = stringResource(R.string.settings_supervised_mode_subtitle),
+                            checked = false,
+                            onCheckedChange = { if (it) showSupervisedSetup = true }
                         )
                     }
                 }
             }
 
             // ── 4. Map ───────────────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_map)) }
             item {
-                SettingsCard {
-                    val startingPointLabel = when (settings.mapStartingPoint) {
-                        "OWN_PIN" -> stringResource(R.string.settings_map_current_location)
-                        "FIT_ALL" -> stringResource(R.string.settings_map_all_contacts)
-                        "FIXED_LOCATION" -> stringResource(R.string.settings_map_fixed_location)
-                        else -> stringResource(R.string.settings_map_last_position)
-                    }
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_starting_point)) },
-                        supportingContent = { Text(startingPointLabel) },
-                        leadingContent = { Icon(Icons.Default.TravelExplore, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showMapStartingPointDialog = true; fixedLocationCaptureMessage = "" },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                val startingPointLabel = when (settings.mapStartingPoint) {
+                    "OWN_PIN" -> stringResource(R.string.settings_map_current_location)
+                    "FIT_ALL" -> stringResource(R.string.settings_map_all_contacts)
+                    "FIXED_LOCATION" -> stringResource(R.string.settings_map_fixed_location)
+                    else -> stringResource(R.string.settings_map_last_position)
+                }
+                SettingsCard(
+                    headerIcon = Icons.Default.Map,
+                    headerTitle = stringResource(R.string.settings_section_map)
+                ) {
+                    SettingsRow(
+                        title = stringResource(R.string.settings_starting_point),
+                        value = startingPointLabel,
+                        onClick = { showMapStartingPointDialog = true; fixedLocationCaptureMessage = "" }
                     )
                     if (settings.mapStartingPoint == "FIXED_LOCATION") {
                         val hasFixed = settings.mapFixedLat != 0.0 || settings.mapFixedLng != 0.0
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 56.dp, end = 16.dp, bottom = 12.dp),
+                                .padding(start = 20.dp, end = 20.dp, bottom = 12.dp),
                             verticalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
                             Text(
@@ -452,109 +402,91 @@ fun SettingsScreen(
                             }
                         }
                     }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    Row(
+                    CardDivider()
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 12.dp),
-                        verticalAlignment = Alignment.Top
+                            .padding(horizontal = 20.dp, vertical = 12.dp)
                     ) {
-                        Icon(
-                            Icons.Default.ZoomIn,
-                            contentDescription = null,
-                            modifier = Modifier.padding(top = 2.dp),
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        Spacer(Modifier.width(16.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text(stringResource(R.string.settings_default_zoom_level), style = MaterialTheme.typography.bodyMedium)
-                                Text(settings.mapStartZoom.toInt().toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
-                            }
-                            Slider(
-                                value = settings.mapStartZoom.toFloat(),
-                                onValueChange = { vm.setMapStartZoom(it.toDouble()) },
-                                valueRange = 3f..18f,
-                                steps = 14,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                            Text(stringResource(R.string.settings_default_zoom_level), style = MaterialTheme.typography.bodyLarge)
+                            Text(settings.mapStartZoom.toInt().toString(), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold, color = MaterialTheme.colorScheme.primary)
                         }
+                        Slider(
+                            value = settings.mapStartZoom.toFloat(),
+                            onValueChange = { vm.setMapStartZoom(it.toDouble()) },
+                            valueRange = 3f..18f,
+                            steps = 14,
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        leadingContent = { Icon(Icons.Default.Palette, contentDescription = null) },
-                        headlineContent = { Text(stringResource(R.string.settings_map_pin_colour)) },
-                        supportingContent = {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 8.dp),
-                                verticalArrangement = Arrangement.spacedBy(12.dp)
+                    CardDivider()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(stringResource(R.string.settings_map_pin_colour), style = MaterialTheme.typography.bodyLarge)
+                        PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                PIN_COLOR_OPTIONS.chunked(6).forEach { rowColors ->
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
+                                rowColors.forEach { hex ->
+                                    val color = Color(hex.toColorInt())
+                                    val isSelected = hex == settings.pinColor
+                                    Box(
+                                        modifier = Modifier
+                                            .size(28.dp)
+                                            .clip(CircleShape)
+                                            .background(color)
+                                            .clickable { vm.setPinColor(hex) },
+                                        contentAlignment = Alignment.Center
                                     ) {
-                                        rowColors.forEach { hex ->
-                                            val color = Color(hex.toColorInt())
-                                            val isSelected = hex == settings.pinColor
-                                            Box(
-                                                modifier = Modifier
-                                                    .size(28.dp)
-                                                    .clip(CircleShape)
-                                                    .background(color)
-                                                    .clickable { vm.setPinColor(hex) },
-                                                contentAlignment = Alignment.Center
-                                            ) {
-                                                if (isSelected) {
-                                                    Icon(
-                                                        Icons.Default.Check,
-                                                        contentDescription = null,
-                                                        tint = Color.White,
-                                                        modifier = Modifier.size(16.dp)
-                                                    )
-                                                }
-                                            }
+                                        if (isSelected) {
+                                            Icon(
+                                                Icons.Default.Check,
+                                                contentDescription = null,
+                                                tint = Color.White,
+                                                modifier = Modifier.size(16.dp)
+                                            )
                                         }
                                     }
                                 }
                             }
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
+                        }
+                    }
                 }
             }
 
             // ── 5. Performance ───────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_battery_performance)) }
             item {
-                SettingsCard {
-                    NavRow(
-                        icon = Icons.Default.Timer,
-                        label = stringResource(R.string.settings_update_cadence),
+                SettingsCard(
+                    headerIcon = Icons.Default.Timer,
+                    headerTitle = stringResource(R.string.settings_section_battery_performance)
+                ) {
+                    SettingsRow(
+                        title = stringResource(R.string.settings_update_cadence),
                         subtitle = stringResource(R.string.settings_update_cadence_subtitle),
                         onClick = { showIntervalsDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    CardDivider()
                     MetresFilterSliderRow(
-                        icon = Icons.Default.Straighten,
                         title = stringResource(R.string.settings_min_distance_filtering),
                         subtitle = stringResource(R.string.settings_min_distance_filtering_subtitle),
                         valueMeters = settings.historyMinDistanceMeters,
                         onCommit = { vm.setHistoryMinDistanceMeters(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    CardDivider()
                     MetresFilterSliderRow(
-                        icon = Icons.Default.GpsOff,
                         title = stringResource(R.string.settings_discard_low_accuracy),
                         subtitle = stringResource(R.string.settings_discard_low_accuracy_subtitle),
                         valueMeters = settings.sendMaxAccuracyMeters,
                         onCommit = { vm.setSendMaxAccuracyMeters(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                    CardDivider()
                     MetresFilterSliderRow(
-                        icon = Icons.Default.FilterAlt,
                         title = stringResource(R.string.settings_hide_low_accuracy),
                         subtitle = stringResource(R.string.settings_hide_low_accuracy_subtitle),
                         valueMeters = settings.historyMaxAccuracyMeters,
@@ -564,53 +496,44 @@ fun SettingsScreen(
             }
 
             // ── 6. Units & Display ───────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_units_display)) }
             item {
-                SettingsCard {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_speed_units)) },
-                        supportingContent = { Text(if (settings.useImperialSpeed) stringResource(R.string.settings_speed_imperial) else stringResource(R.string.settings_speed_metric)) },
-                        leadingContent = { Icon(Icons.Default.Speed, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showSpeedUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                SettingsCard(
+                    headerIcon = Icons.Default.Straighten,
+                    headerTitle = stringResource(R.string.settings_section_units_display)
+                ) {
+                    SettingsRow(
+                        title = stringResource(R.string.settings_speed_units),
+                        value = if (settings.useImperialSpeed) stringResource(R.string.settings_speed_imperial) else stringResource(R.string.settings_speed_metric),
+                        onClick = { showSpeedUnitDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_elevation_units)) },
-                        supportingContent = { Text(if (settings.useImperialElevation) stringResource(R.string.settings_elevation_imperial) else stringResource(R.string.settings_elevation_metric)) },
-                        leadingContent = { Icon(Icons.Default.Terrain, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showElevationUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_elevation_units),
+                        value = if (settings.useImperialElevation) stringResource(R.string.settings_elevation_imperial) else stringResource(R.string.settings_elevation_metric),
+                        onClick = { showElevationUnitDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_distance_units)) },
-                        supportingContent = { Text(if (settings.useImperialDistance) stringResource(R.string.settings_distance_imperial) else stringResource(R.string.settings_distance_metric)) },
-                        leadingContent = { Icon(Icons.Default.Straighten, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showDistanceUnitDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_distance_units),
+                        value = if (settings.useImperialDistance) stringResource(R.string.settings_distance_imperial) else stringResource(R.string.settings_distance_metric),
+                        onClick = { showDistanceUnitDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_time_format)) },
-                        supportingContent = { Text(if (settings.use24HourTime) stringResource(R.string.settings_time_24h) else stringResource(R.string.settings_time_12h)) },
-                        leadingContent = { Icon(Icons.Default.Schedule, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { showTimeFormatDialog = true },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_time_format),
+                        value = if (settings.use24HourTime) stringResource(R.string.settings_time_24h) else stringResource(R.string.settings_time_12h),
+                        onClick = { showTimeFormatDialog = true }
                     )
                 }
             }
 
             // ── 7. Retention ─────────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_retention)) }
             item {
-                SettingsCard {
+                SettingsCard(
+                    headerIcon = Icons.Default.History,
+                    headerTitle = stringResource(R.string.settings_section_retention)
+                ) {
                     RetentionRow(
-                        icon = Icons.Default.LocationOn,
                         title = stringResource(R.string.settings_retention_location),
                         subtitle = stringResource(R.string.settings_retention_location_subtitle),
                         selected = settings.localLocationRetentionDays,
@@ -618,9 +541,8 @@ fun SettingsScreen(
                         purgeLabel = stringResource(R.string.settings_clear_all_location),
                         onPurge = { showClearLocationConfirm = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    CardDivider()
                     RetentionRow(
-                        icon = Icons.AutoMirrored.Filled.Message,
                         title = stringResource(R.string.settings_retention_messages),
                         subtitle = stringResource(R.string.settings_retention_messages_subtitle),
                         selected = settings.localMessageRetentionDays,
@@ -632,115 +554,100 @@ fun SettingsScreen(
             }
 
             // ── 8. Appearance ────────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_appearance)) }
             item {
-                SettingsCard {
-                    val currentThemeLabel = when (settings.themeMode) {
-                        "LIGHT" -> stringResource(R.string.settings_theme_light)
-                        "DARK" -> stringResource(R.string.settings_theme_dark)
-                        else -> stringResource(R.string.settings_theme_system)
-                    }
-                    NavRow(
-                        icon = Icons.Default.Brightness6,
-                        label = stringResource(R.string.settings_theme_mode),
-                        subtitle = currentThemeLabel,
+                val currentThemeLabel = when (settings.themeMode) {
+                    "LIGHT" -> stringResource(R.string.settings_theme_light)
+                    "DARK" -> stringResource(R.string.settings_theme_dark)
+                    else -> stringResource(R.string.settings_theme_system)
+                }
+                val currentLanguage = AppLanguage.current()
+                SettingsCard(
+                    headerIcon = Icons.Default.Palette,
+                    headerTitle = stringResource(R.string.settings_section_appearance)
+                ) {
+                    SettingsRow(
+                        title = stringResource(R.string.settings_theme_mode),
+                        value = currentThemeLabel,
                         onClick = { showThemeDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_dynamic_color)) },
-                        supportingContent = { Text(stringResource(R.string.settings_dynamic_color_subtitle)) },
-                        leadingContent = { Icon(Icons.Default.ColorLens, contentDescription = null) },
-                        trailingContent = {
-                            Switch(
-                                checked = settings.useDynamicColor,
-                                onCheckedChange = { vm.setUseDynamicColor(it) }
-                            )
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SwitchRow(
+                        title = stringResource(R.string.settings_dynamic_color),
+                        subtitle = stringResource(R.string.settings_dynamic_color_subtitle),
+                        checked = settings.useDynamicColor,
+                        onCheckedChange = { vm.setUseDynamicColor(it) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    NavRow(
-                        icon = Icons.Default.GridView,
-                        label = stringResource(R.string.settings_customize_nav),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_customize_nav),
                         subtitle = stringResource(R.string.settings_customize_nav_subtitle),
                         onClick = onNavigateToCustomizeNav
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    NavRow(
-                        icon = Icons.Default.Cloud,
-                        label = stringResource(R.string.settings_relays),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_relays),
                         subtitle = stringResource(R.string.settings_relays_subtitle),
                         onClick = onNavigateToRelays
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    NavRow(
-                        icon = Icons.Default.Home,
-                        label = stringResource(R.string.settings_start_page),
-                        subtitle = tabLabel(settings.startRoute),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_start_page),
+                        value = tabLabel(settings.startRoute),
                         onClick = { showStartPageDialog = true }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                    val currentLanguage = AppLanguage.current()
-                    NavRow(
-                        icon = Icons.Default.Language,
-                        label = stringResource(R.string.settings_language),
-                        subtitle = currentLanguage.nativeName ?: stringResource(R.string.settings_language_system),
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_language),
+                        value = currentLanguage.nativeName ?: stringResource(R.string.settings_language_system),
                         onClick = { showLanguageDialog = true }
                     )
                 }
             }
 
             // ── 9. Keys & Backup ──────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_backup_keys)) }
             item {
-                SettingsCard {
+                SettingsCard(
+                    headerIcon = Icons.Default.VpnKey,
+                    headerTitle = stringResource(R.string.settings_section_backup_keys)
+                ) {
                     backupResult?.let { result ->
                         Text(
                             result.message,
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.labelSmall,
                             color = if (result.isError) MaterialTheme.colorScheme.error
                             else MaterialTheme.colorScheme.primary
                         )
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        CardDivider()
                     }
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_export_backup)) },
-                        supportingContent = { Text(stringResource(R.string.settings_export_backup_subtitle)) },
-                        leadingContent = { Icon(Icons.Default.Upload, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
-                        modifier = Modifier.clickable { showExportDialog = true; vm.clearBackupResult() },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    SettingsRow(
+                        title = stringResource(R.string.settings_export_backup),
+                        subtitle = stringResource(R.string.settings_export_backup_subtitle),
+                        onClick = { showExportDialog = true; vm.clearBackupResult() }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_import_backup)) },
-                        supportingContent = { Text(stringResource(R.string.settings_import_backup_subtitle)) },
-                        leadingContent = { Icon(Icons.Default.Download, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
-                        modifier = Modifier.clickable { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_import_backup),
+                        subtitle = stringResource(R.string.settings_import_backup_subtitle),
+                        onClick = { importLauncher.launch(arrayOf("application/json", "*/*")); vm.clearBackupResult() }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.settings_view_private_key)) },
-                        supportingContent = { Text(stringResource(R.string.settings_view_private_key_subtitle)) },
-                        leadingContent = { Icon(Icons.Default.VpnKey, contentDescription = null) },
-                        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null) },
-                        modifier = Modifier.clickable { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    CardDivider()
+                    SettingsRow(
+                        title = stringResource(R.string.settings_view_private_key),
+                        subtitle = stringResource(R.string.settings_view_private_key_subtitle),
+                        onClick = { vm.exportPrivateKey { key -> exportedKey = key; showKeyDialog = true } }
                     )
                 }
             }
 
             // ── 10. About ────────────────────────────────────────────────────
-            item { SectionLabel(stringResource(R.string.settings_section_about)) }
             item {
-                SettingsCard {
-                    NavRow(
-                        icon = Icons.Default.Info,
-                        label = stringResource(R.string.settings_about_locapeer),
+                SettingsCard(
+                    headerIcon = Icons.Default.Info,
+                    headerTitle = stringResource(R.string.settings_section_about)
+                ) {
+                    SettingsRow(
+                        title = stringResource(R.string.settings_about_locapeer),
                         subtitle = stringResource(R.string.settings_about_subtitle),
                         onClick = onNavigateToAbout
                     )
@@ -1297,41 +1204,6 @@ private fun tabLabel(route: String): String = when (route) {
     else -> route.replaceFirstChar { it.uppercaseChar() }
 }
 
-@Composable
-private fun SectionLabel(text: String) {
-    Text(
-        text,
-        style = MaterialTheme.typography.labelMedium,
-        color = MaterialTheme.colorScheme.primary,
-        modifier = Modifier.padding(start = 16.dp, top = 20.dp, bottom = 4.dp)
-    )
-}
-
-@Composable
-private fun SettingsCard(content: @Composable ColumnScope.() -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-    ) {
-        Column(content = content)
-    }
-}
-
-@Composable
-private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: () -> Unit) {
-    ListItem(
-        headlineContent = { Text(label) },
-        supportingContent = { Text(subtitle) },
-        leadingContent = { Icon(icon, contentDescription = null) },
-        trailingContent = { Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-        modifier = Modifier.clickable(onClick = onClick),
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
-}
-
 /**
  * A labelled 0-500 m slider used for the distance/accuracy filters. Shows "Off" at 0 and the
  * unit-aware distance otherwise, and only commits on release so the setting isn't rewritten on
@@ -1339,47 +1211,36 @@ private fun NavRow(icon: ImageVector, label: String, subtitle: String, onClick: 
  */
 @Composable
 private fun MetresFilterSliderRow(
-    icon: ImageVector,
     title: String,
     subtitle: String,
     valueMeters: Int,
     onCommit: (Int) -> Unit
 ) {
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.Top
+            .padding(horizontal = 20.dp, vertical = 12.dp)
     ) {
-        Icon(
-            icon,
-            contentDescription = null,
-            modifier = Modifier.padding(top = 2.dp),
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Spacer(Modifier.width(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            var value by remember(valueMeters) { mutableFloatStateOf(valueMeters.toFloat()) }
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text(title, style = MaterialTheme.typography.bodyMedium)
-                Text(
-                    if (value.roundToInt() == 0) stringResource(R.string.common_off)
-                    else com.locapeer.util.DisplayFormat.distanceValue(value.roundToInt().toDouble()),
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-            Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Slider(
-                value = value,
-                onValueChange = { value = it },
-                onValueChangeFinished = { onCommit(value.roundToInt()) },
-                valueRange = 0f..500f,
-                steps = 19,
-                modifier = Modifier.fillMaxWidth()
+        var value by remember(valueMeters) { mutableFloatStateOf(valueMeters.toFloat()) }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                if (value.roundToInt() == 0) stringResource(R.string.common_off)
+                else com.locapeer.util.DisplayFormat.distanceValue(value.roundToInt().toDouble()),
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.colorScheme.primary
             )
         }
+        Text(subtitle, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Slider(
+            value = value,
+            onValueChange = { value = it },
+            onValueChangeFinished = { onCommit(value.roundToInt()) },
+            valueRange = 0f..500f,
+            steps = 19,
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 

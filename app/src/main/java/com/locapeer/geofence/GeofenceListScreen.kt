@@ -56,8 +56,8 @@ import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.SharingSchedule
 import com.locapeer.sharing.newScheduleRule
 import com.locapeer.sharing.toScheduleRules
+import com.locapeer.ui.components.CardDivider
 import com.locapeer.ui.components.EmptyState
-import com.locapeer.ui.components.SectionLabel
 import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.theme.GeofenceBoth
 import com.locapeer.ui.theme.GeofenceEnter
@@ -145,7 +145,7 @@ private fun GlobalGeofencesScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(bottom = 96.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 96.dp)
         ) {
             if (areas.isEmpty()) {
                 item {
@@ -157,10 +157,12 @@ private fun GlobalGeofencesScreen(
                     )
                 }
             } else {
-                item { SectionLabel(stringResource(R.string.geo_section_areas)) }
                 item {
                     val unknownName = stringResource(R.string.geo_unknown)
-                    SettingsCard {
+                    SettingsCard(
+                        headerIcon = Icons.Default.Fence,
+                        headerTitle = stringResource(R.string.geo_section_areas)
+                    ) {
                         areas.forEachIndexed { index, area ->
                             val names = assignmentsByFence[area.id].orEmpty()
                                 .map { nameByDevice[it.trackedDeviceId] ?: unknownName }
@@ -172,7 +174,7 @@ private fun GlobalGeofencesScreen(
                                 onDelete = { pendingDelete = area }
                             )
                             if (index < areas.lastIndex) {
-                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                                CardDivider()
                             }
                         }
                     }
@@ -263,7 +265,7 @@ private fun ContactGeofencesScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(bottom = 96.dp)
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 96.dp)
         ) {
             if (assignments.isEmpty()) {
                 item {
@@ -275,9 +277,11 @@ private fun ContactGeofencesScreen(
                     )
                 }
             } else {
-                item { SectionLabel(stringResource(R.string.geo_section_assignments)) }
                 item {
-                    SettingsCard {
+                    SettingsCard(
+                        headerIcon = Icons.Default.Fence,
+                        headerTitle = stringResource(R.string.geo_section_assignments)
+                    ) {
                         assignments.forEachIndexed { index, assignment ->
                             AssignmentRow(
                                 assignment = assignment,
@@ -286,7 +290,7 @@ private fun ContactGeofencesScreen(
                                 onDelete = { pendingDelete = assignment }
                             )
                             if (index < assignments.lastIndex) {
-                                HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                                CardDivider()
                             }
                         }
                     }

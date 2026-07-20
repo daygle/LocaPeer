@@ -12,20 +12,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.DirectionsWalk
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.BatteryChargingFull
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Map
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.Security
 import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
+import com.locapeer.ui.components.CardDivider
+import com.locapeer.ui.components.SettingsCard
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -95,79 +91,69 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
-                .padding(vertical = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
                 stringResource(R.string.permissions_intro),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                modifier = Modifier.padding(horizontal = 4.dp)
             )
 
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp),
-                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+            SettingsCard(
+                headerIcon = Icons.Default.Security,
+                headerTitle = stringResource(R.string.settings_permissions)
             ) {
-                Column {
-                    RuntimePermissionRow(
-                        icon = Icons.Default.LocationOn,
-                        title = stringResource(R.string.perm_location_title),
-                        grantedText = stringResource(R.string.perm_location_granted),
-                        deniedText = stringResource(R.string.perm_location_denied),
-                        permission = locationPermission
-                    )
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        SystemAccessRow(
-                            icon = Icons.Default.Map,
-                            title = stringResource(R.string.perm_background_location_title),
-                            granted = backgroundLocationGranted,
-                            grantedText = stringResource(R.string.perm_background_location_granted),
-                            deniedText = stringResource(R.string.perm_background_location_denied),
-                            onClick = { openAppDetailsSettings(context) }
-                        )
-                    }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                    RuntimePermissionRow(
-                        icon = Icons.Default.PhotoCamera,
-                        title = stringResource(R.string.perm_camera_title),
-                        grantedText = stringResource(R.string.perm_camera_granted),
-                        deniedText = stringResource(R.string.perm_camera_denied),
-                        permission = cameraPermission
-                    )
-                    if (notificationPermission != null) {
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        RuntimePermissionRow(
-                            icon = Icons.Default.Notifications,
-                            title = stringResource(R.string.perm_notifications_title),
-                            grantedText = stringResource(R.string.perm_notifications_granted),
-                            deniedText = stringResource(R.string.perm_notifications_denied),
-                            permission = notificationPermission
-                        )
-                    }
-                    if (motionPermission != null) {
-                        HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
-                        RuntimePermissionRow(
-                            icon = Icons.AutoMirrored.Filled.DirectionsWalk,
-                            title = stringResource(R.string.settings_motion_detection),
-                            grantedText = stringResource(R.string.settings_motion_detection_on),
-                            deniedText = stringResource(R.string.settings_motion_detection_off),
-                            permission = motionPermission
-                        )
-                    }
-                    HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
+                RuntimePermissionRow(
+                    title = stringResource(R.string.perm_location_title),
+                    grantedText = stringResource(R.string.perm_location_granted),
+                    deniedText = stringResource(R.string.perm_location_denied),
+                    permission = locationPermission
+                )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    CardDivider()
                     SystemAccessRow(
-                        icon = Icons.Default.BatteryChargingFull,
-                        title = stringResource(R.string.settings_battery_optimization),
-                        granted = batteryOptimizationIgnored,
-                        grantedText = stringResource(R.string.settings_battery_optimization_unrestricted),
-                        deniedText = stringResource(R.string.settings_battery_optimization_restricted),
-                        onClick = { PermissionManager.requestBatteryOptimizationExemption(context) }
+                        title = stringResource(R.string.perm_background_location_title),
+                        granted = backgroundLocationGranted,
+                        grantedText = stringResource(R.string.perm_background_location_granted),
+                        deniedText = stringResource(R.string.perm_background_location_denied),
+                        onClick = { openAppDetailsSettings(context) }
                     )
                 }
+                CardDivider()
+                RuntimePermissionRow(
+                    title = stringResource(R.string.perm_camera_title),
+                    grantedText = stringResource(R.string.perm_camera_granted),
+                    deniedText = stringResource(R.string.perm_camera_denied),
+                    permission = cameraPermission
+                )
+                if (notificationPermission != null) {
+                    CardDivider()
+                    RuntimePermissionRow(
+                        title = stringResource(R.string.perm_notifications_title),
+                        grantedText = stringResource(R.string.perm_notifications_granted),
+                        deniedText = stringResource(R.string.perm_notifications_denied),
+                        permission = notificationPermission
+                    )
+                }
+                if (motionPermission != null) {
+                    CardDivider()
+                    RuntimePermissionRow(
+                        title = stringResource(R.string.settings_motion_detection),
+                        grantedText = stringResource(R.string.settings_motion_detection_on),
+                        deniedText = stringResource(R.string.settings_motion_detection_off),
+                        permission = motionPermission
+                    )
+                }
+                CardDivider()
+                SystemAccessRow(
+                    title = stringResource(R.string.settings_battery_optimization),
+                    granted = batteryOptimizationIgnored,
+                    grantedText = stringResource(R.string.settings_battery_optimization_unrestricted),
+                    deniedText = stringResource(R.string.settings_battery_optimization_restricted),
+                    onClick = { PermissionManager.requestBatteryOptimizationExemption(context) }
+                )
             }
         }
     }
@@ -182,7 +168,6 @@ fun PermissionsScreen(onNavigateBack: () -> Unit) {
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun RuntimePermissionRow(
-    icon: ImageVector,
     title: String,
     grantedText: String,
     deniedText: String,
@@ -192,7 +177,6 @@ private fun RuntimePermissionRow(
     val granted = permission.status.isGranted
     var asked by remember { mutableStateOf(false) }
     PermissionStatusRow(
-        icon = icon,
         title = title,
         granted = granted,
         statusText = if (granted) grantedText else deniedText,
@@ -216,7 +200,6 @@ private fun RuntimePermissionRow(
  */
 @Composable
 private fun SystemAccessRow(
-    icon: ImageVector,
     title: String,
     granted: Boolean,
     grantedText: String,
@@ -224,7 +207,6 @@ private fun SystemAccessRow(
     onClick: () -> Unit
 ) {
     PermissionStatusRow(
-        icon = icon,
         title = title,
         granted = granted,
         statusText = if (granted) grantedText else deniedText,
@@ -234,34 +216,48 @@ private fun SystemAccessRow(
 
 @Composable
 private fun PermissionStatusRow(
-    icon: ImageVector,
     title: String,
     granted: Boolean,
     statusText: String,
     onClick: () -> Unit
 ) {
-    ListItem(
-        headlineContent = { Text(title) },
-        supportingContent = {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(modifier = Modifier.weight(1f)) {
             Text(
-                statusText,
-                color = if (granted) MaterialTheme.colorScheme.onSurfaceVariant
-                        else MaterialTheme.colorScheme.error
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
             )
-        },
-        leadingContent = {
-            Icon(icon, contentDescription = null, tint = if (granted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant)
-        },
-        trailingContent = {
-            if (granted) {
-                Icon(Icons.Default.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-            } else {
-                Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-        },
-        modifier = Modifier.clickable(onClick = onClick),
-        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-    )
+            Text(
+                text = statusText,
+                style = MaterialTheme.typography.bodySmall,
+                color = if (granted) MaterialTheme.colorScheme.onSurfaceVariant
+                else MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 2.dp)
+            )
+        }
+        Spacer(Modifier.width(12.dp))
+        if (granted) {
+            Icon(
+                Icons.Default.CheckCircle,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+        } else {
+            Icon(
+                Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    }
 }
 
 private fun openAppDetailsSettings(context: Context) {
