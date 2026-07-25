@@ -86,8 +86,9 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             }
 
             // Per-peer remote purges
-            configs.forEach { cfg ->
-                val peer = peerMap[cfg.peerDeviceId] ?: return@forEach
+            for (cfg in configs) {
+                if (isStopped) return Result.retry()
+                val peer = peerMap[cfg.peerDeviceId] ?: continue
 
                 // Location purge: only meaningful for peers who actually keep our heartbeats
                 if (cfg.retentionDaysLocation > 0 &&
@@ -119,6 +120,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
             Result.success()
         } catch (e: Exception) {
+            if (e is kotlinx.coroutines.CancellationException) throw e
             Log.e(TAG, "Failed to send purge requests", e)
             Result.retry()
         }
@@ -166,12 +168,11 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             val request = PeriodicWorkRequestBuilder<RetentionEnforcementWorker>(1, TimeUnit.DAYS)
                 .setConstraints(constraints)
                 .build()
-            // UPDATE (not KEEP) so existing installs adopt the battery-not-low constraint
-            // on the next launch; UPDATE keeps the current periodic schedule and run
+            // UPDATE keeps the current periodic schedule and run
             // history, it only re-applies the (now constrained) work spec.
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.UPDATE,
+                ExistingPeriodicWorkPolicy.KEEP,
                 request
             )
         }

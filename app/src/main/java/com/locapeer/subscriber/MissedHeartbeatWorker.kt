@@ -55,11 +55,12 @@ class MissedHeartbeatWorker @AssistedInject constructor(
 
         val alertConfigs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
 
-        receiveContacts.forEach { peer ->
+        for (peer in receiveContacts) {
+            if (isStopped) return Result.retry()
             // Missed-heartbeat alerts are per-contact opt-in ("Missed Location Alert"
             // in Contact Settings); most contacts going quiet is not noteworthy.
-            if (alertConfigs[peer.deviceId]?.notifyOnMissedHeartbeat != true) return@forEach
-            val latest = heartbeatDao.getLatestReceivedHeartbeat(peer.deviceId) ?: return@forEach
+            if (alertConfigs[peer.deviceId]?.notifyOnMissedHeartbeat != true) continue
+            val latest = heartbeatDao.getLatestReceivedHeartbeat(peer.deviceId) ?: continue
             // The sender reports its own interval in every ping. The 60s floor keeps
             // SOS-rate (15s) senders from alerting on mere relay jitter - combined
             // with the ×2 threshold below that means 2 min of silence.
