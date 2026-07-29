@@ -22,5 +22,6 @@ captures/
 # Translation helpers (regenerate via Google Translate; not user artifacts)
 .translate_locales.py
 
-# Freebuff session data
+# AI coding-agent session data (tool-internal scratch space; never user content)
 .freebuff/
+.artifacts/
