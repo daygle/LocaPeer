@@ -37,9 +37,7 @@ import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
 import com.locapeer.util.Geocoding
 import com.locapeer.ui.theme.*
-import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.util.MapTileIndex
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon

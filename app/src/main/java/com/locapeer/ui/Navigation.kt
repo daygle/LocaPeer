@@ -38,7 +38,6 @@ import com.locapeer.invite.PendingRequestsScreen
 import com.locapeer.map.MapScreen
 import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
-import com.locapeer.proximity.ProximityAlertsScreen
 import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.PermissionsScreen
@@ -49,8 +48,6 @@ import com.locapeer.circles.CircleEditScreen
 import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
 import com.locapeer.sharing.ScheduleScreen
-import javax.inject.Inject
-import javax.inject.Singleton
 
 sealed class Screen(val route: String, @StringRes val labelRes: Int, val icon: ImageVector) {
     object Map      : Screen("map",          R.string.tab_map,      Icons.Default.Map)
