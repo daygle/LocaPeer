@@ -16,6 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # A healthy run finishes in well under 15 min; this only guards against a
+    # hung daemon/download so a stuck job doesn't burn the 6h GitHub default.
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +36,13 @@ jobs:
         # Added lintDebug to catch issues early.
         # testDebugUnitTest avoids recompiling for release since these are JVM tests.
         run: ./gradlew lintDebug testDebugUnitTest assembleDebug
+
+      - name: Build release variant (R8 / resource shrinking)
+        # assembleDebug never runs R8, resource shrinking, or the ProGuard rules,
+        # so a missing keep-rule only surfaces in a release build. Exercising the
+        # release variant here catches those "fine in debug, broken in release"
+        # regressions in CI. The APK is unsigned - no signing secrets required.
+        run: ./gradlew lintRelease assembleRelease
 
       # Upload reports so you can see results even if the build fails.
       - name: Upload Test/Lint Reports
@@ -57,6 +67,22 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           retention-days: 7 # Optimized: Don't keep debug APKs forever
 
+  # Flag any dependency a PR adds/updates that carries a known vulnerability
+  # (or an incompatible licence) before it reaches main. PR events only - the
+  # action diffs the PR's dependency graph against its base.
+  dependency-review:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Dependency review
+        uses: actions/dependency-review-action@v4
+        with:
+          comment-summary-in-pr: on-failure
+
   # Schema snapshots must live in the repo, but local builds aren't always
   # possible, so commit any new snapshot back to the PR branch. Same-repo PRs
   # only: fork PRs get a read-only token and their head branch doesn't exist
@@ -65,6 +91,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
@@ -86,7 +113,9 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add app/schemas
-            git commit -m "Add generated Room schema snapshots"
+            # [skip ci]: this push is a generated artifact, not new source, so
+            # it shouldn't trigger a second full CI run on the same PR.
+            git commit -m "Add generated Room schema snapshots [skip ci]"
             git push origin "HEAD:${{ github.head_ref }}"
           else
             echo "No schema changes detected."
