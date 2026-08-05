@@ -53,9 +53,7 @@ import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
-import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 private enum class LoadState { LOADING, EMPTY, CONTENT }
 

@@ -50,7 +50,6 @@ import com.locapeer.supervised.SupervisionGate
 import com.locapeer.supervised.SupervisionGateViewModel
 import com.locapeer.data.dao.AssignmentWithArea
 import com.locapeer.data.entity.GeofenceEntity
-import com.locapeer.sharing.DayPicker
 import com.locapeer.sharing.RuleEditDialog
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.SharingSchedule
