@@ -425,7 +425,9 @@
     <string name="peer_category_sharing_title">Sharing Controls</string>
     <string name="peer_category_sharing_subtitle">Roles, precision, and schedule</string>
     <string name="peer_category_safety_title">Safety &amp; Alerts</string>
-    <string name="peer_category_safety_subtitle">SOS, missed updates, proximity, supervision</string>
+    <string name="peer_category_safety_subtitle">SOS, missed updates, and proximity alerts</string>
+    <string name="peer_category_security_title">Security</string>
+    <string name="peer_category_security_subtitle">Supervision controls</string>
     <string name="peer_category_history_title">Zones &amp; History</string>
     <string name="peer_category_history_subtitle">Geofences and movement history</string>
     <string name="peer_category_retention_title">Data Retention</string>

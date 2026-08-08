@@ -38,6 +38,7 @@ fun PeerSharingScreen(
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     onNavigateToControls: () -> Unit = {},
     onNavigateToAlerts: () -> Unit = {},
+    onNavigateToSecurity: () -> Unit = {},
     onNavigateToZonesHistory: () -> Unit = {},
     onNavigateToLocationHistory: () -> Unit = {},
     onNavigateToMessaging: () -> Unit = {},
@@ -168,6 +169,13 @@ fun PeerSharingScreen(
                             title = stringResource(R.string.peer_category_safety_title),
                             subtitle = stringResource(R.string.peer_category_safety_subtitle),
                             onClick = onNavigateToAlerts
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Security,
+                            title = stringResource(R.string.peer_category_security_title),
+                            subtitle = stringResource(R.string.peer_category_security_subtitle),
+                            onClick = onNavigateToSecurity
                         )
                         CardDivider()
                         CategoryRow(

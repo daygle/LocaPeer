@@ -58,6 +58,7 @@ import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
 import com.locapeer.sharing.PeerSharingControlsScreen
 import com.locapeer.sharing.PeerSafetyAlertsScreen
+import com.locapeer.sharing.PeerSecurityScreen
 import com.locapeer.sharing.PeerZonesHistoryScreen
 import com.locapeer.sharing.PeerMessagingScreen
 import com.locapeer.sharing.PeerRetentionScreen
@@ -553,6 +554,9 @@ fun LocaPeerNavHost(
                     onNavigateToAlerts = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/alerts")
                     },
+                    onNavigateToSecurity = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/security")
+                    },
                     onNavigateToZonesHistory = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/zones-history")
                     },
@@ -603,6 +607,25 @@ fun LocaPeerNavHost(
                 val peerId = entry.arguments?.getString("peerId") ?: ""
                 val peerName = entry.arguments?.getString("peerName") ?: ""
                 PeerSafetyAlertsScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/security",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerSecurityScreen(
                     peerId = peerId,
                     peerName = peerName,
                     onNavigateBack = { navController.popBackStack() }

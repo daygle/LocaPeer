@@ -428,9 +428,26 @@ fun PeerSafetyAlertsScreen(
             }
         }
 
+    }
+}
+
+// ─── Security ──────────────────────────────────────────────────────────────────
+
+@Composable
+fun PeerSecurityScreen(
+    peerId: String,
+    peerName: String,
+    onNavigateBack: () -> Unit,
+    vm: PeerSharingViewModel = hiltViewModel(),
+) {
+    LaunchedEffect(peerId) { vm.init(peerId) }
+    val state by vm.uiState.collectAsStateWithLifecycle()
+    val isMySupervised = state.config?.isMySupervised ?: false
+
+    PeerSharingSubScreen(stringResource(R.string.peer_category_security_title), onNavigateBack) {
         SettingsCard(
             headerIcon = Icons.Default.Security,
-            headerTitle = stringResource(R.string.peer_supervise)
+            headerTitle = stringResource(R.string.peer_category_security_title)
         ) {
             SwitchRow(
                 title = stringResource(R.string.peer_supervise),
