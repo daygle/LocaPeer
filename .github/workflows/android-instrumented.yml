@@ -31,6 +31,9 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v4
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -39,8 +42,7 @@ jobs:
 
       - name: Install compile SDK
         run: |
-          yes | sdkmanager --licenses >/dev/null
-          sdkmanager --install 'platforms;android-37' 'build-tools;37.0.0' >/dev/null
+          sdkmanager --install 'platforms;android-37' 'build-tools;37.0.0'
 
       - name: Run Android instrumented tests
         uses: reactivecircus/android-emulator-runner@v2
