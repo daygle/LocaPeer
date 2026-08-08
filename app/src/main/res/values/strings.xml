@@ -569,7 +569,7 @@
     <!-- ── Map screen ─────────────────────────────────────────────────────── -->
     <string name="map_location_off_title">Location is turned off</string>
     <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Turn on</string>
+    <string name="map_location_off_action">Open settings</string>
     <string name="map_sos_activate_title">Activate SOS?</string>
     <string name="map_sos_deactivate_title">Deactivate SOS?</string>
     <string name="map_sos_activate_msg">This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated.</string>

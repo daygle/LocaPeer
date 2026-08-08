@@ -87,7 +87,9 @@ fun MapScreen(
     // the permission flow covers the not-granted case.
     var locationServicesOff by remember { mutableStateOf(false) }
     val locationCheckOwner = LocalLifecycleOwner.current
-    DisposableEffect(locationCheckOwner) {
+    // Key on context too: if LocalContext changes (e.g. Activity recreation) the effect restarts
+    // with the fresh context rather than reading location state through a stale one.
+    DisposableEffect(locationCheckOwner, context) {
         fun refresh() {
             locationServicesOff = PermissionManager.hasLocationPermission(context) &&
                 !PermissionManager.isLocationServicesEnabled(context)
