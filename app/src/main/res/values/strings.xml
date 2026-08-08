@@ -379,6 +379,9 @@
     <string name="invite_point_camera">Point camera at a LocaPeer QR</string>
     <string name="invite_paste_title">Or Paste Invite Link</string>
     <string name="invite_process_link">Process Link</string>
+    <string name="scan_grant_permission">Grant Permission</string>
+    <string name="scan_request_sent_title">Request Sent</string>
+    <string name="scan_add_share">Add &amp; Share</string>
     <string name="invite_success_message">You\'ll be connected with %1$s once they accept.</string>
     <string name="invite_confirm_add_title">Add %1$s?</string>
     <string name="invite_confirm_add_message">Add them to your contacts and share location?</string>

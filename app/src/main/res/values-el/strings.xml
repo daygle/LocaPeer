@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Διατήρηση (Αυτή η συσκευή)</string>
     <string name="settings_section_appearance">Εμφάνιση</string>
     <string name="settings_section_backup_keys">Αντίγραφα ασφαλείας &amp; Κλειδιά</string>
-    <string name="settings_section_about">Πληροφορίες</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Επεξεργασία ονόματος</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Δοκιμάστε ξανά</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Σάρωση πρόσκλησης</string>
-    <string name="scan_camera_needed">Απαιτείται άδεια κάμερας για τη σάρωση κωδικών QR.</string>
-    <string name="scan_grant_permission">Παραχώρηση άδειας</string>
-    <string name="scan_add_contact_title">Προσθήκη επαφής;</string>
-    <string name="scan_add_contact_message">Αυτό θα σας συνδέσει με τον/την %1$s και θα αρχίσετε να μοιράζεστε την τοποθεσία σας μεταξύ σας.</string>
-    <string name="scan_add_share">Προσθήκη και κοινοποίηση</string>
-    <string name="scan_request_sent_title">Το αίτημα στάλθηκε!</string>
-    <string name="scan_request_sent_message">Στάλθηκε αίτημα στον/στην %1$s. Θα συνδεθείτε μόλις το αποδεχθεί.</string>
-    <string name="scan_failed">Η σάρωση απέτυχε: %1$s</string>
 
     <string name="cd_back">Πίσω</string>
     <string name="common_review">Έλεγχος</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Προσωρινή κοινοποίηση τοποθεσίας</string>
     <string name="app_lock_no_credential">Δεν έχει οριστεί κλείδωμα οθόνης σε αυτή τη συσκευή, επομένως δεν υπάρχει τίποτα για ξεκλείδωμα. Ορίστε έναν κωδικό PIN, μοτίβο, κωδικό πρόσβασης ή βιομετρικά στοιχεία στις ρυθμίσεις της συσκευής σας και μετά ανοίξτε ξανά το LocaPeer.</string>
     <string name="backup_key_needs_password">Ορίστε έναν κωδικό πρόσβασης για να συμπεριλάβετε το ιδιωτικό σας κλειδί. Ένα μη κρυπτογραφημένο αρχείο κλειδιού θα μπορούσε να επιτρέψει σε οποιονδήποτε να αναλάβει την ταυτότητά σας.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

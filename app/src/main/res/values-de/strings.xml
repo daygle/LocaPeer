@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Aufbewahrung (Dieses Gerät)</string>
     <string name="settings_section_appearance">Aussehen</string>
     <string name="settings_section_backup_keys">Sicherung &amp; Schlüssel</string>
-    <string name="settings_section_about">Über</string>
 
     <!-- Profil -->
     <string name="settings_edit_name">Name bearbeiten</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Erneut versuchen</string>
 
     <!-- ── Einladung scannen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Einladung scannen</string>
-    <string name="scan_camera_needed">Kameraberechtigung wird zum Scannen von QR-Codes benötigt.</string>
-    <string name="scan_grant_permission">Berechtigung erteilen</string>
-    <string name="scan_add_contact_title">Kontakt hinzufügen?</string>
-    <string name="scan_add_contact_message">Dies verbindet Sie mit %1$s und Sie beginnen, Standorte miteinander zu teilen.</string>
-    <string name="scan_add_share">Hinzufügen &amp; Teilen</string>
-    <string name="scan_request_sent_title">Anfrage gesendet!</string>
-    <string name="scan_request_sent_message">Eine Anfrage wurde an %1$s gesendet. Sie werden verbunden, sobald diese akzeptiert wird.</string>
-    <string name="scan_failed">Scan fehlgeschlagen: %1$s</string>
 
     <string name="cd_back">Zurück</string>
     <string name="common_review">Überprüfen</string>
@@ -876,4 +866,21 @@
     <string name="settings_temporary_location_share">Temporäre Standortfreigabe</string>
     <string name="app_lock_no_credential">Auf diesem Gerät ist keine Bildschirmsperre eingerichtet, daher gibt es nichts zum Entsperren. Richte in den Geräteeinstellungen eine PIN, ein Muster, ein Passwort oder biometrische Daten ein und öffne LocaPeer dann erneut.</string>
     <string name="backup_key_needs_password">Lege ein Passwort fest, um deinen privaten Schlüssel einzuschließen. Eine unverschlüsselte Schlüsseldatei könnte es jedem ermöglichen, deine Identität zu übernehmen.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>
