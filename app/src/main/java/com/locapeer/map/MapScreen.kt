@@ -621,7 +621,7 @@ private fun OsmdroidMapView(
     AndroidView(
         factory = { ctx ->
             MapView(ctx).apply {
-                setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT)
+                setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
                 val scaleBar = ScaleBarOverlay(this).apply {
@@ -646,10 +646,17 @@ private fun OsmdroidMapView(
                     }
                     else -> controller.setZoom(mapStartZoom)
                 }
-            }.also { mapViewRef = it }
+            }.also {
+                mapViewRef = it
+                // This screen can be entered while the Activity is already RESUMED, so do not
+                // wait for a future lifecycle callback to start osmdroid's tile loader.
+                if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                    it.onResume()
+                }
+            }
         },
         update = { mapView ->
-            val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT
+            val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT
             if (mapView.tileProvider.tileSource != targetTileSource) mapView.setTileSource(targetTileSource)
             mapView.overlays.filterIsInstance<CompassOverlay>().firstOrNull()?.let { compass ->
                 val density = mapView.context.resources.displayMetrics.density

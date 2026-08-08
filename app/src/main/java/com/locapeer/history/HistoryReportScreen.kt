@@ -407,34 +407,21 @@ private fun HistoryMapTab(
         SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
     }
 
-    // This effect restarts whenever mapViewRef changes (the factory below sets it after the
-    // first composition), so its dispose block must NOT detach the map - it would tear down
-    // the tile provider of the freshly created MapView and the background would never load.
-    DisposableEffect(lifecycleOwner, mapViewRef) {
-        val mapView = mapViewRef
+    // Keep one lifecycle observer for the whole MapView lifetime. Keying this effect on
+    // mapViewRef makes it restart when AndroidView creates the view; the old cleanup can then
+    // race with osmdroid's tile writer and shut down the freshly created map.
+    DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> mapView?.onResume()
-                Lifecycle.Event.ON_PAUSE -> mapView?.onPause()
+                Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
+                Lifecycle.Event.ON_PAUSE -> mapViewRef?.onPause()
                 else -> {}
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
 
-        // If the activity is already resumed when we create the MapView (e.g. switching tabs),
-        // we must manually call onResume() to start tile loading.
-        if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            mapView?.onResume()
-        }
-
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-        }
-    }
-
-    // Detach the MapView only when the tab actually leaves the composition.
-    DisposableEffect(Unit) {
-        onDispose {
             mapViewRef?.onPause()
             mapViewRef?.onDetach()
             mapViewRef = null
@@ -456,7 +443,7 @@ private fun HistoryMapTab(
             factory = { ctx ->
                 @Suppress("DEPRECATION")
                 MapView(ctx).apply {
-                    setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT)
+                    setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT)
                     setBuiltInZoomControls(false)
                     setMultiTouchControls(true)
                     isVerticalMapRepetitionEnabled = false
@@ -476,10 +463,17 @@ private fun HistoryMapTab(
                         }
                         false
                     }
-                }.also { mapViewRef = it }
+                }.also {
+                    mapViewRef = it
+                    // The Activity may already be RESUMED when this tab creates its MapView;
+                    // no future ON_RESUME event is guaranteed in that case.
+                    if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        it.onResume()
+                    }
+                }
             },
             update = { mapView ->
-                val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.CARTO_LIGHT
+                val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT
                 if (mapView.tileProvider.tileSource != targetTileSource) {
                     mapView.setTileSource(targetTileSource)
                 }

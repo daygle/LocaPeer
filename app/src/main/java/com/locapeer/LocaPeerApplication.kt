@@ -61,7 +61,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
         // settings and remain stuck showing grey tile placeholders.
         try {
             org.osmdroid.config.Configuration.getInstance().apply {
-                userAgentValue = packageName
+                // Identify the app to public OSM tile servers; a generic/default user-agent
+                // can be rejected and leaves osmdroid showing only its tile grid.
+                userAgentValue = "LocaPeer/${BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)"
                 osmdroidBasePath = filesDir
                 osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
                 // Load configuration from shared preferences (recommended by OSMDroid)
