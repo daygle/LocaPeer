@@ -40,9 +40,17 @@ import com.locapeer.messaging.ChatScreen
 import com.locapeer.messaging.ConversationListScreen
 import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
+import com.locapeer.settings.AppearanceSettingsScreen
+import com.locapeer.settings.BackupSettingsScreen
+import com.locapeer.settings.LocationPrivacySettingsScreen
+import com.locapeer.settings.MapSettingsScreen
+import com.locapeer.settings.PerformanceSettingsScreen
 import com.locapeer.settings.PermissionsScreen
 import com.locapeer.settings.RelaySettingsScreen
+import com.locapeer.settings.RetentionSettingsScreen
+import com.locapeer.settings.SecuritySettingsScreen
 import com.locapeer.settings.SettingsScreen
+import com.locapeer.settings.UnitsDisplaySettingsScreen
 import com.locapeer.contacts.ContactsScreen
 import com.locapeer.circles.CircleEditScreen
 import com.locapeer.circles.GroupChatScreen
@@ -247,15 +255,99 @@ fun LocaPeerNavHost(
                         navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Person" })}")
                     },
                     onNavigateToAbout = { navController.navigate("about") },
-                    onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
-                    onNavigateToRelays = { navController.navigate("relays") },
+                    onNavigateToLocationPrivacy = { navController.navigate("settings/location") },
+                    onNavigateToSecurity = { navController.navigate("settings/security") },
+                    onNavigateToMap = { navController.navigate("settings/map") },
+                    onNavigateToPerformance = { navController.navigate("settings/performance") },
+                    onNavigateToUnits = { navController.navigate("settings/units") },
+                    onNavigateToRetention = { navController.navigate("settings/retention") },
+                    onNavigateToAppearance = { navController.navigate("settings/appearance") },
+                    onNavigateToBackup = { navController.navigate("settings/backup") },
+                )
+            }
+            composable(
+                "settings/location",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                LocationPrivacySettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
                     onNavigateToGeofences = { navController.navigate("geofences") },
-                    onNavigateToMyHistory = { pubkeyHex ->
-                        navController.navigate("history-report?peerId=$pubkeyHex")
-                    },
-                    onNavigateToPermissions = { navController.navigate("permissions") }
+                    onNavigateToMyHistory = { pubkeyHex -> navController.navigate("history-report?peerId=$pubkeyHex") },
                 )
+            }
+            composable(
+                "settings/security",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                SecuritySettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToPermissions = { navController.navigate("permissions") },
+                )
+            }
+            composable(
+                "settings/map",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                MapSettingsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "settings/performance",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                PerformanceSettingsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "settings/units",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                UnitsDisplaySettingsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "settings/retention",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                RetentionSettingsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
+                "settings/appearance",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                AppearanceSettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
+                    onNavigateToRelays = { navController.navigate("relays") },
+                )
+            }
+            composable(
+                "settings/backup",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                BackupSettingsScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 "permissions",

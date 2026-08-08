@@ -32,6 +32,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.R
+import com.locapeer.onboarding.PermissionManager
 import com.locapeer.ui.components.RelayStatusChip
 import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
@@ -78,6 +79,28 @@ fun MapScreen(
     val systemDark = isSystemInDarkTheme()
     var mapStyle by remember { mutableStateOf(if (systemDark) "DARK" else "LIGHT") }
     val isDark = mapStyle == "DARK"
+
+    // The device location master switch can be off even after every app permission is granted,
+    // in which case no fixes are ever produced and the map would silently show nothing. Watch it
+    // (re-reading on resume, since the user toggles it in system settings) so we can surface a
+    // banner prompting them to turn it back on. Only relevant once location permission is granted;
+    // the permission flow covers the not-granted case.
+    var locationServicesOff by remember { mutableStateOf(false) }
+    val locationCheckOwner = LocalLifecycleOwner.current
+    // Key on context too: if LocalContext changes (e.g. Activity recreation) the effect restarts
+    // with the fresh context rather than reading location state through a stale one.
+    DisposableEffect(locationCheckOwner, context) {
+        fun refresh() {
+            locationServicesOff = PermissionManager.hasLocationPermission(context) &&
+                !PermissionManager.isLocationServicesEnabled(context)
+        }
+        refresh()
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) refresh()
+        }
+        locationCheckOwner.lifecycle.addObserver(observer)
+        onDispose { locationCheckOwner.lifecycle.removeObserver(observer) }
+    }
 
     // While the map is on screen, ask the contacts we track to broadcast at a live
     // cadence (Google-Maps-style). Balanced across app background (ON_RESUME/ON_PAUSE) and
@@ -289,8 +312,71 @@ fun MapScreen(
                     )
                 }
             }
+
+            LocationOffBanner(
+                visible = locationServicesOff,
+                onEnable = { PermissionManager.openLocationSettings(context) },
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
+
+/**
+ * A dismiss-free warning shown at the very top of the map when the device's location master
+ * switch is off. Location fixes never arrive in that state, so the map would otherwise look
+ * broken with no explanation; this tells the user what's wrong and routes them to fix it.
+ */
+@Composable
+private fun LocationOffBanner(visible: Boolean, onEnable: () -> Unit, modifier: Modifier = Modifier) {
+    AnimatedVisibility(
+        visible = visible,
+        modifier = modifier,
+        enter = expandVertically() + fadeIn(),
+        exit = shrinkVertically() + fadeOut()
+    ) {
+        Surface(
+            color = MaterialTheme.colorScheme.errorContainer,
+            contentColor = MaterialTheme.colorScheme.onErrorContainer,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .statusBarsPadding()
+                    .padding(start = 16.dp, end = 12.dp, top = 12.dp, bottom = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    Icons.Default.LocationOff,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(Modifier.width(12.dp))
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        stringResource(R.string.map_location_off_title),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        stringResource(R.string.map_location_off_message),
+                        style = MaterialTheme.typography.bodySmall
+                    )
+                }
+                Spacer(Modifier.width(8.dp))
+                Button(
+                    onClick = onEnable,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError
+                    )
+                ) {
+                    Text(stringResource(R.string.map_location_off_action))
+                }
+            }
+        }
+    }
+}
 
 @Composable
 private fun FriendListPanel(
