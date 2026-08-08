@@ -221,6 +221,21 @@ fun PeerSharingControlsScreen(
                     }
                 } else null
             )
+            CardDivider()
+            SettingsRow(
+                title = stringResource(R.string.peer_precision),
+                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
+                enabled = sharingEnabled,
+                onClick = { showPrecisionDialog = true }
+            )
+            CardDivider()
+            SettingsRow(
+                title = stringResource(R.string.settings_sharing_schedule),
+                value = if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
+                else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size),
+                enabled = sharingEnabled,
+                onClick = onNavigateToSchedule
+            )
         }
 
         SettingsCard(
@@ -242,21 +257,6 @@ fun PeerSharingControlsScreen(
                     modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp)
                 )
             }
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.peer_precision),
-                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
-                enabled = sharingEnabled,
-                onClick = { showPrecisionDialog = true }
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_sharing_schedule),
-                value = if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
-                else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size),
-                enabled = sharingEnabled,
-                onClick = onNavigateToSchedule
-            )
         }
 
         if (tempShareActive != null) {

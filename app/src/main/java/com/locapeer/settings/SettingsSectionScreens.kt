@@ -124,27 +124,6 @@ fun LocationPrivacySettingsScreen(
                 subtitle = stringResource(R.string.settings_my_location_history_subtitle),
                 onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
             )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_lookup_addresses),
-                subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
-                checked = settings.reverseGeocodingEnabled,
-                onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_allow_live_boost),
-                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
-                checked = settings.allowLiveBoost,
-                onCheckedChange = { vm.setAllowLiveBoost(it) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_request_live_boost),
-                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
-                checked = settings.requestLiveBoost,
-                onCheckedChange = { vm.setRequestLiveBoost(it) }
-            )
         }
     }
 }
@@ -428,6 +407,13 @@ fun MapSettingsScreen(
                                 }
                             }
                         }
+                        CardDivider()
+                        SwitchRow(
+                            title = stringResource(R.string.settings_lookup_addresses),
+                            subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
+                            checked = settings.reverseGeocodingEnabled,
+                            onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
+                        )
                     }
                 }
             }
@@ -484,6 +470,20 @@ fun PerformanceSettingsScreen(
             headerIcon = Icons.Default.Timer,
             headerTitle = stringResource(R.string.settings_section_battery_performance)
         ) {
+            SwitchRow(
+                title = stringResource(R.string.settings_allow_live_boost),
+                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
+                checked = settings.allowLiveBoost,
+                onCheckedChange = { vm.setAllowLiveBoost(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_request_live_boost),
+                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
+                checked = settings.requestLiveBoost,
+                onCheckedChange = { vm.setRequestLiveBoost(it) }
+            )
+            CardDivider()
             SettingsRow(
                 title = stringResource(R.string.settings_update_cadence),
                 subtitle = stringResource(R.string.settings_update_cadence_subtitle),
@@ -1094,5 +1094,4 @@ private fun BackupSectionItem(
         }
     }
 }
-
 
