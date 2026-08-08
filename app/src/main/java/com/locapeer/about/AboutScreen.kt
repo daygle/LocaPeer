@@ -27,8 +27,8 @@ import com.locapeer.R
 fun AboutScreen(
     aboutVm: AboutViewModel,
     onNavigateBack: () -> Unit,
-    versionName: String = "1.1.35",
-    versionCode: Int = 39,
+    versionName: String = "1.1.36",
+    versionCode: Int = 40,
 ) {
     val pendingCount by aboutVm.pendingMessageCount.collectAsStateWithLifecycle()
 
