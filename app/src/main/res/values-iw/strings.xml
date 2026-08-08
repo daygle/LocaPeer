@@ -27,6 +27,19 @@
     <string name="common_deny">דחה</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">גדרות גאוגרפיות והיסטוריית תנועה</string>
+    <string name="peer_category_history_title">אזורים והיסטוריה</string>
+    <string name="peer_category_messaging_subtitle">אפשר או חסום הודעות צ\'אט</string>
+    <string name="peer_category_messaging_title">הודעות</string>
+    <string name="peer_category_retention_subtitle">היסטוריה מרחוק ומחיקה</string>
+    <string name="peer_category_retention_title">שמירת נתונים</string>
+    <string name="peer_category_safety_subtitle">SOS, עדכונים שהוחמצו, קרבה, פיקוח</string>
+    <string name="peer_category_safety_title">בטיחות והתראות</string>
+    <string name="peer_category_sharing_subtitle">תפקידים, דיוק ולוח זמנים</string>
+    <string name="peer_category_sharing_title">בקרות שיתוף</string>
+    <string name="scan_add_share">הוסף ושתף</string>
+    <string name="scan_grant_permission">הענק הרשאה</string>
+    <string name="scan_request_sent_title">הבקשה נשלחה</string>
     <string name="tab_map">מפה</string>
     <string name="tab_messages">הודעות</string>
     <string name="tab_history">היסטוריה</string>

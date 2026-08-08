@@ -27,6 +27,19 @@
     <string name="common_deny">अस्वीकार करें</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">जियोफ़ेंस और आवागमन इतिहास</string>
+    <string name="peer_category_history_title">ज़ोन और इतिहास</string>
+    <string name="peer_category_messaging_subtitle">चैट संदेशों की अनुमति दें या ब्लॉक करें</string>
+    <string name="peer_category_messaging_title">संदेश</string>
+    <string name="peer_category_retention_subtitle">दूरस्थ इतिहास और साफ़ करना</string>
+    <string name="peer_category_retention_title">डेटा प्रतिधारण</string>
+    <string name="peer_category_safety_subtitle">SOS, छूटे अपडेट, निकटता, निगरानी</string>
+    <string name="peer_category_safety_title">सुरक्षा और अलर्ट</string>
+    <string name="peer_category_sharing_subtitle">भूमिकाएँ, सटीकता और शेड्यूल</string>
+    <string name="peer_category_sharing_title">साझाकरण नियंत्रण</string>
+    <string name="scan_add_share">जोड़ें और साझा करें</string>
+    <string name="scan_grant_permission">अनुमति दें</string>
+    <string name="scan_request_sent_title">अनुरोध भेज दिया गया</string>
     <string name="tab_map">मानचित्र</string>
     <string name="tab_messages">संदेश</string>
     <string name="tab_history">इतिहास</string>

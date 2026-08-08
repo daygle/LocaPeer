@@ -27,6 +27,19 @@
     <string name="common_deny">తిరస్కరించు</string>
 
     <!-- ── నావిగేషన్ ట్యాబ్ లేబుల్‌లు ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">జియోఫెన్సులు మరియు కదలిక చరిత్ర</string>
+    <string name="peer_category_history_title">జోన్‌లు &amp; చరిత్ర</string>
+    <string name="peer_category_messaging_subtitle">చాట్ సందేశాలను అనుమతించండి లేదా నిరోధించండి</string>
+    <string name="peer_category_messaging_title">మెసేజింగ్</string>
+    <string name="peer_category_retention_subtitle">రిమోట్ చరిత్ర మరియు శుభ్రపరచడం</string>
+    <string name="peer_category_retention_title">డేటా ధారణ</string>
+    <string name="peer_category_safety_subtitle">SOS, తప్పిన నవీకరణలు, సామీప్యత, పర్యవేక్షణ</string>
+    <string name="peer_category_safety_title">భద్రత &amp; అలర్ట్‌లు</string>
+    <string name="peer_category_sharing_subtitle">పాత్రలు, ఖచ్చితత్వం మరియు షెడ్యూల్</string>
+    <string name="peer_category_sharing_title">షేరింగ్ నియంత్రణలు</string>
+    <string name="scan_add_share">జోడించండి &amp; షేర్ చేయండి</string>
+    <string name="scan_grant_permission">అనుమతి మంజూరు చేయండి</string>
+    <string name="scan_request_sent_title">అభ్యర్థన పంపబడింది</string>
     <string name="tab_map">మ్యాప్</string>
     <string name="tab_messages">సందేశాలు</string>
     <string name="tab_history">చరిత్ర</string>

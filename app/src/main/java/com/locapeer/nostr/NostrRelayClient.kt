@@ -97,7 +97,9 @@ class NostrRelayClient @Inject constructor(
     private val activeSubscriptions by lazy { mutableMapOf<String, String>() }
 
     private val recentEventLock by lazy { Any() }
-    private val recentEventIds by lazy { LinkedHashSet<String>(2048) }
+    // Per-sender dedup windows: one peer's flood can only evict its own entries, never
+    // another peer's (see EventIdDedupCache). All access is serialized behind recentEventLock.
+    private val dedupCache by lazy { EventIdDedupCache() }
     private val eventsSinceLastSave = java.util.concurrent.atomic.AtomicInteger(0)
 
     /**
@@ -125,20 +127,7 @@ class NostrRelayClient @Inject constructor(
         scope.launch {
             val persisted = prefs.getRecentEventIds()
             if (persisted.isNotEmpty()) {
-                synchronized(recentEventLock) {
-                    persisted.forEach { id ->
-                        if (!recentEventIds.contains(id)) {
-                            if (recentEventIds.size >= 2000) {
-                                val it = recentEventIds.iterator()
-                                if (it.hasNext()) {
-                                    it.next()
-                                    it.remove()
-                                }
-                            }
-                            recentEventIds.add(id)
-                        }
-                    }
-                }
+                synchronized(recentEventLock) { dedupCache.addRestored(persisted) }
             }
         }
         scope.launch {
@@ -397,7 +386,7 @@ class NostrRelayClient @Inject constructor(
                             // runs per relay connection, so two relays delivering the same new id
                             // at once can both verify it before either records it - a rare, harmless
                             // double-check, never a re-verify of an already-accepted event.)
-                            if (synchronized(recentEventLock) { recentEventIds.contains(event.id) }) return
+                            if (synchronized(recentEventLock) { dedupCache.isKnown(event.pubkey, event.id) }) return
                             // Verify the signature BEFORE recording the id. The event id is a hash
                             // of the content only - it does not cover the signature - so a forged
                             // event can echo a known id with a content it doesn't hold the key for.
@@ -411,19 +400,12 @@ class NostrRelayClient @Inject constructor(
                                 return
                             }
                             val isNew = synchronized(recentEventLock) {
-                                if (recentEventIds.size >= 2000 && !recentEventIds.contains(event.id)) {
-                                    val it = recentEventIds.iterator()
-                                    if (it.hasNext()) {
-                                        it.next()
-                                        it.remove()
-                                    }
-                                }
-                                recentEventIds.add(event.id)
+                                dedupCache.record(event.pubkey, event.id)
                             }
                             if (isNew) {
                                 if (eventsSinceLastSave.incrementAndGet() >= 100) {
                                     eventsSinceLastSave.set(0)
-                                    val snapshot = synchronized(recentEventLock) { recentEventIds.toSet() }
+                                    val snapshot = synchronized(recentEventLock) { dedupCache.snapshot() }
                                     scope.launch { prefs.saveRecentEventIds(snapshot) }
                                 }
                                 scope.launch { _events.emit(event) }

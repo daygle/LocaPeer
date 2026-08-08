@@ -27,6 +27,19 @@
     <string name="common_deny">Отклонить</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Геозоны и история перемещений</string>
+    <string name="peer_category_history_title">Зоны и история</string>
+    <string name="peer_category_messaging_subtitle">Разрешить или блокировать сообщения чата</string>
+    <string name="peer_category_messaging_title">Сообщения</string>
+    <string name="peer_category_retention_subtitle">Удалённая история и очистка</string>
+    <string name="peer_category_retention_title">Хранение данных</string>
+    <string name="peer_category_safety_subtitle">SOS, пропущенные обновления, близость, наблюдение</string>
+    <string name="peer_category_safety_title">Безопасность и оповещения</string>
+    <string name="peer_category_sharing_subtitle">Роли, точность и расписание</string>
+    <string name="peer_category_sharing_title">Управление обменом</string>
+    <string name="scan_add_share">Добавить и поделиться</string>
+    <string name="scan_grant_permission">Предоставить разрешение</string>
+    <string name="scan_request_sent_title">Запрос отправлен</string>
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Сообщения</string>
     <string name="tab_history">История</string>

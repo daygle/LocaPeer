@@ -27,6 +27,19 @@
     <string name="common_deny">拒否</string>
 
     <!-- ── ナビゲーションタブのラベル ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ジオフェンスと移動履歴</string>
+    <string name="peer_category_history_title">ゾーンと履歴</string>
+    <string name="peer_category_messaging_subtitle">チャットメッセージを許可またはブロック</string>
+    <string name="peer_category_messaging_title">メッセージ</string>
+    <string name="peer_category_retention_subtitle">リモート履歴と削除</string>
+    <string name="peer_category_retention_title">データ保持</string>
+    <string name="peer_category_safety_subtitle">SOS、見逃した更新、近接、監視</string>
+    <string name="peer_category_safety_title">安全性とアラート</string>
+    <string name="peer_category_sharing_subtitle">ロール、精度、スケジュール</string>
+    <string name="peer_category_sharing_title">共有コントロール</string>
+    <string name="scan_add_share">追加と共有</string>
+    <string name="scan_grant_permission">権限を付与</string>
+    <string name="scan_request_sent_title">リクエストを送信しました</string>
     <string name="tab_map">マップ</string>
     <string name="tab_messages">メッセージ</string>
     <string name="tab_history">履歴</string>

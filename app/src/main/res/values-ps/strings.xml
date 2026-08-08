@@ -27,6 +27,19 @@
     <string name="common_deny">ردول</string>
 
     <!-- ── د نیویګیشن ټب لیبلونه ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">جیو فینسونه او د حرکت تاریخچه</string>
+    <string name="peer_category_history_title">زونونه او تاریخچه</string>
+    <string name="peer_category_messaging_subtitle">د چیټ پیغامونو اجازه ورکول یا بندول</string>
+    <string name="peer_category_messaging_title">پیغام رسول</string>
+    <string name="peer_category_retention_subtitle">لیرې تاریخچه او پاکول</string>
+    <string name="peer_category_retention_title">د معلوماتو ساتنه</string>
+    <string name="peer_category_safety_subtitle">SOS، له لاسه ورکړل شوي تازه معلومات، نږدېوالی، څارنه</string>
+    <string name="peer_category_safety_title">خوندیتوب او خبرتیاوې</string>
+    <string name="peer_category_sharing_subtitle">رولونه، دقیقیت او مهالویش</string>
+    <string name="peer_category_sharing_title">د شریکولو کنټرولونه</string>
+    <string name="scan_add_share">اضافه کول او شریکول</string>
+    <string name="scan_grant_permission">اجازه ورکول</string>
+    <string name="scan_request_sent_title">غوښتنه واستول شوه</string>
     <string name="tab_map">نقشه</string>
     <string name="tab_messages">پیغامونه</string>
     <string name="tab_history">تاریخچه</string>

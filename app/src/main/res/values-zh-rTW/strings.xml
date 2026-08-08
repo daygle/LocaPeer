@@ -27,6 +27,19 @@
     <string name="common_deny">拒絕</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">地理圍欄和移動紀錄</string>
+    <string name="peer_category_history_title">區域與紀錄</string>
+    <string name="peer_category_messaging_subtitle">允許或封鎖聊天訊息</string>
+    <string name="peer_category_messaging_title">訊息</string>
+    <string name="peer_category_retention_subtitle">遠端紀錄和清除</string>
+    <string name="peer_category_retention_title">資料保留</string>
+    <string name="peer_category_safety_subtitle">SOS、錯過的更新、接近提醒、監督</string>
+    <string name="peer_category_safety_title">安全與警示</string>
+    <string name="peer_category_sharing_subtitle">角色、精確度和排程</string>
+    <string name="peer_category_sharing_title">分享控制</string>
+    <string name="scan_add_share">新增並分享</string>
+    <string name="scan_grant_permission">授予權限</string>
+    <string name="scan_request_sent_title">請求已傳送</string>
     <string name="tab_map">地圖</string>
     <string name="tab_messages">訊息</string>
     <string name="tab_history">歷史</string>

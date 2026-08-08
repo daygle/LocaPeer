@@ -27,6 +27,19 @@
     <string name="common_deny">ปฏิเสธ</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">รั้วเสมือนและประวัติการเดินทาง</string>
+    <string name="peer_category_history_title">โซนและประวัติ</string>
+    <string name="peer_category_messaging_subtitle">อนุญาตหรือบล็อกข้อความแชท</string>
+    <string name="peer_category_messaging_title">การส่งข้อความ</string>
+    <string name="peer_category_retention_subtitle">ประวัติระยะไกลและการล้างข้อมูล</string>
+    <string name="peer_category_retention_title">การเก็บข้อมูล</string>
+    <string name="peer_category_safety_subtitle">SOS การอัปเดตที่ไม่ได้รับ ความใกล้ชิด การกำกับดูแล</string>
+    <string name="peer_category_safety_title">ความปลอดภัยและการแจ้งเตือน</string>
+    <string name="peer_category_sharing_subtitle">บทบาท ความแม่นยำ และกำหนดการ</string>
+    <string name="peer_category_sharing_title">การควบคุมการแชร์</string>
+    <string name="scan_add_share">เพิ่มและแชร์</string>
+    <string name="scan_grant_permission">ให้สิทธิ์</string>
+    <string name="scan_request_sent_title">ส่งคำขอแล้ว</string>
     <string name="tab_map">แผนที่</string>
     <string name="tab_messages">ข้อความ</string>
     <string name="tab_history">ประวัติ</string>

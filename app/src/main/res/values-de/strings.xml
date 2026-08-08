@@ -27,6 +27,19 @@
     <string name="common_deny">Ablehnen</string>
 
     <!-- ── Navigations-Tab-Beschriftungen ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences und Bewegungsverlauf</string>
+    <string name="peer_category_history_title">Zonen &amp; Verlauf</string>
+    <string name="peer_category_messaging_subtitle">Chat-Nachrichten erlauben oder blockieren</string>
+    <string name="peer_category_messaging_title">Messaging</string>
+    <string name="peer_category_retention_subtitle">Remote-Verlauf und Löschen</string>
+    <string name="peer_category_retention_title">Datenaufbewahrung</string>
+    <string name="peer_category_safety_subtitle">SOS, verpasste Aktualisierungen, Nähe, Aufsicht</string>
+    <string name="peer_category_safety_title">Sicherheit &amp; Warnungen</string>
+    <string name="peer_category_sharing_subtitle">Rollen, Genauigkeit und Zeitplan</string>
+    <string name="peer_category_sharing_title">Freigabesteuerung</string>
+    <string name="scan_add_share">Hinzufügen &amp; Teilen</string>
+    <string name="scan_grant_permission">Berechtigung erteilen</string>
+    <string name="scan_request_sent_title">Anfrage gesendet</string>
     <string name="tab_map">Karte</string>
     <string name="tab_messages">Nachrichten</string>
     <string name="tab_history">Verlauf</string>

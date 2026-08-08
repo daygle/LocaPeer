@@ -27,6 +27,19 @@
     <string name="common_deny">ನಿರಾಕರಿಸಿ</string>
 
     <!-- ── ನ್ಯಾವಿಗೇಷನ್ ಟ್ಯಾಬ್ ಲೇಬಲ್‌ಗಳು ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ಜಿಯೋಫೆನ್ಸ್‌ಗಳು ಮತ್ತು ಚಲನೆಯ ಇತಿಹಾಸ</string>
+    <string name="peer_category_history_title">ವಲಯಗಳು ಮತ್ತು ಇತಿಹಾಸ</string>
+    <string name="peer_category_messaging_subtitle">ಚಾಟ್ ಸಂದೇಶಗಳನ್ನು ಅನುಮತಿಸಿ ಅಥವಾ ನಿರ್ಬಂಧಿಸಿ</string>
+    <string name="peer_category_messaging_title">ಸಂದೇಶ ಕಳುಹಿಸುವಿಕೆ</string>
+    <string name="peer_category_retention_subtitle">ರಿಮೋಟ್ ಇತಿಹಾಸ ಮತ್ತು ಅಳಿಸುವಿಕೆ</string>
+    <string name="peer_category_retention_title">ಡೇಟಾ ಧಾರಣ</string>
+    <string name="peer_category_safety_subtitle">SOS, ತಪ್ಪಿದ ನವೀಕರಣಗಳು, ಸಾಮೀಪ್ಯ, ಮೇಲ್ವಿಚಾರಣೆ</string>
+    <string name="peer_category_safety_title">ಸುರಕ್ಷತೆ ಮತ್ತು ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="peer_category_sharing_subtitle">ಪಾತ್ರಗಳು, ನಿಖರತೆ ಮತ್ತು ವೇಳಾಪಟ್ಟಿ</string>
+    <string name="peer_category_sharing_title">ಹಂಚಿಕೆ ನಿಯಂತ್ರಣಗಳು</string>
+    <string name="scan_add_share">ಸೇರಿಸಿ ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಿ</string>
+    <string name="scan_grant_permission">ಅನುಮತಿ ನೀಡಿ</string>
+    <string name="scan_request_sent_title">ವಿನಂತಿ ಕಳುಹಿಸಲಾಗಿದೆ</string>
     <string name="tab_map">ನಕ್ಷೆ</string>
     <string name="tab_messages">ಸಂದೇಶಗಳು</string>
     <string name="tab_history">ಇತಿಹಾಸ</string>

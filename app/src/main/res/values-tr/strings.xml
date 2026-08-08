@@ -27,6 +27,19 @@
     <string name="common_deny">Reddet</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Coğrafi çitler ve hareket geçmişi</string>
+    <string name="peer_category_history_title">Bölgeler ve Geçmiş</string>
+    <string name="peer_category_messaging_subtitle">Sohbet mesajlarına izin ver veya engelle</string>
+    <string name="peer_category_messaging_title">Mesajlaşma</string>
+    <string name="peer_category_retention_subtitle">Uzak geçmiş ve temizleme</string>
+    <string name="peer_category_retention_title">Veri Saklama</string>
+    <string name="peer_category_safety_subtitle">SOS, kaçırılan güncellemeler, yakınlık, gözetim</string>
+    <string name="peer_category_safety_title">Güvenlik ve Uyarılar</string>
+    <string name="peer_category_sharing_subtitle">Roller, hassasiyet ve zamanlama</string>
+    <string name="peer_category_sharing_title">Paylaşım Denetimleri</string>
+    <string name="scan_add_share">Ekle ve Paylaş</string>
+    <string name="scan_grant_permission">İzin Ver</string>
+    <string name="scan_request_sent_title">İstek Gönderildi</string>
     <string name="tab_map">Harita</string>
     <string name="tab_messages">Mesajlar</string>
     <string name="tab_history">Geçmiş</string>

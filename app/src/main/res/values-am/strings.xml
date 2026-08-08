@@ -27,6 +27,19 @@
     <string name="common_deny">ከልክል</string>
 
     <!-- ── የአሰሳ ታብ መሰየሚያዎች ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ጂኦፌንሶች እና የእንቅስቃሴ ታሪክ</string>
+    <string name="peer_category_history_title">ዞኖች እና ታሪክ</string>
+    <string name="peer_category_messaging_subtitle">የውይይት መልእክቶችን ፍቀድ ወይም ከልክል</string>
+    <string name="peer_category_messaging_title">መልእክት</string>
+    <string name="peer_category_retention_subtitle">የርቀት ታሪክ እና ማጽዳት</string>
+    <string name="peer_category_retention_title">የውሂብ ማቆያ</string>
+    <string name="peer_category_safety_subtitle">SOS፣ ያመለጡ ዝማኔዎች፣ ቅርበት፣ ክትትል</string>
+    <string name="peer_category_safety_title">ደህንነት እና ማስጠንቀቂያዎች</string>
+    <string name="peer_category_sharing_subtitle">ሚናዎች፣ ትክክለኛነት እና መርሃ ግብር</string>
+    <string name="peer_category_sharing_title">የማጋሪያ መቆጣጠሪያዎች</string>
+    <string name="scan_add_share">አክል እና አጋራ</string>
+    <string name="scan_grant_permission">ፈቃድ ስጥ</string>
+    <string name="scan_request_sent_title">ጥያቄ ተልኳል</string>
     <string name="tab_map">ካርታ</string>
     <string name="tab_messages">መልእክቶች</string>
     <string name="tab_history">ታሪክ</string>

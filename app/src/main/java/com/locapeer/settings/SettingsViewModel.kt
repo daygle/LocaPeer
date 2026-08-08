@@ -22,7 +22,6 @@ import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.supervised.SupervisedModeManager
-import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +57,7 @@ data class LocaPeerBackup(
     val contacts: List<ContactBackup>? = null,
     val geofences: List<GeofenceBackup>? = null,
     val geofenceAssignments: List<GeofenceAssignmentBackup>? = null,
-    val settings: SettingsBackup? = null
+    val settings: SettingsBackup? = null,
 )
 
 @Serializable
@@ -188,7 +187,7 @@ class SettingsViewModel @Inject constructor(
         val configMap = configs.associateBy { it.peerDeviceId }
         peers.mapNotNull { peer ->
             val cfg = configMap[peer.deviceId]
-            if (cfg != null && (cfg.temporaryShareEndsAtEpochSeconds ?: 0L) > nowSec) {
+            if (cfg != null && ((cfg.temporaryShareEndsAtEpochSeconds ?: 0L) > nowSec)) {
                 peer to cfg
             } else null
         }
@@ -250,9 +249,11 @@ class SettingsViewModel @Inject constructor(
                 val intent = Intent(context, HeartbeatService::class.java)
                 context.startForegroundService(intent)
             } else {
-                context.startService(Intent(context, HeartbeatService::class.java).apply {
-                    action = ACTION_STOP
-                })
+                context.startService(
+                    Intent(context, HeartbeatService::class.java).apply {
+                        action = ACTION_STOP
+                    }
+                )
             }
         }
     }

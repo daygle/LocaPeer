@@ -27,6 +27,19 @@
     <string name="common_deny">Denegar</string>
 
     <!-- ── Etiquetas de las pestañas de navegación ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geovallas e historial de movimiento</string>
+    <string name="peer_category_history_title">Zonas e historial</string>
+    <string name="peer_category_messaging_subtitle">Permitir o bloquear mensajes de chat</string>
+    <string name="peer_category_messaging_title">Mensajería</string>
+    <string name="peer_category_retention_subtitle">Historial remoto y depuración</string>
+    <string name="peer_category_retention_title">Retención de datos</string>
+    <string name="peer_category_safety_subtitle">SOS, actualizaciones omitidas, proximidad, supervisión</string>
+    <string name="peer_category_safety_title">Seguridad y alertas</string>
+    <string name="peer_category_sharing_subtitle">Roles, precisión y programación</string>
+    <string name="peer_category_sharing_title">Controles de uso compartido</string>
+    <string name="scan_add_share">Agregar y compartir</string>
+    <string name="scan_grant_permission">Conceder permiso</string>
+    <string name="scan_request_sent_title">Solicitud enviada</string>
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Mensajes</string>
     <string name="tab_history">Historial</string>

@@ -207,7 +207,7 @@
     <string name="settings_import_backup">Import Backup</string>
     <string name="settings_import_backup_subtitle">Restore from a previously exported file</string>
     <string name="settings_view_private_key">Show My Identity Key</string>
-    <string name="settings_view_private_key_subtitle">The secret code that is your identity. Like a password — keep it private.</string>
+    <string name="settings_view_private_key_subtitle">The secret code that is your identity. Like a password - keep it private.</string>
 
     <!-- About -->
     <string name="settings_about_locapeer">About LocaPeer</string>
@@ -220,7 +220,7 @@
     <string name="settings_invite_qr_subtitle">Others can scan this to start tracking you.</string>
     <string name="settings_invite_qr_cd">Invite QR</string>
     <string name="settings_private_key_title">Your Identity Key</string>
-    <string name="settings_private_key_warning">Treat this like a password. Anyone who has it can pretend to be you — never share it, and store it somewhere safe.</string>
+    <string name="settings_private_key_warning">Treat this like a password. Anyone who has it can pretend to be you - never share it, and store it somewhere safe.</string>
     <string name="settings_clear_location_title">Clear Location History?</string>
     <string name="settings_clear_location_message">All stored location pings will be permanently deleted.</string>
     <string name="settings_clear_messages_title">Clear Message History?</string>
@@ -420,6 +420,16 @@
     <string name="peer_receive_on">You can see %1$s\'s location</string>
     <string name="peer_receive_off">You don\'t have access to %1$s\'s location</string>
     <string name="peer_section_privacy">Privacy &amp; Sharing Controls</string>
+    <string name="peer_category_sharing_title">Sharing Controls</string>
+    <string name="peer_category_sharing_subtitle">Roles, precision, and schedule</string>
+    <string name="peer_category_safety_title">Safety &amp; Alerts</string>
+    <string name="peer_category_safety_subtitle">SOS, missed updates, proximity, supervision</string>
+    <string name="peer_category_history_title">Zones &amp; History</string>
+    <string name="peer_category_history_subtitle">Geofences and movement history</string>
+    <string name="peer_category_retention_title">Data Retention</string>
+    <string name="peer_category_retention_subtitle">Remote history and purging</string>
+    <string name="peer_category_messaging_title">Messaging</string>
+    <string name="peer_category_messaging_subtitle">Allow or block chat messages</string>
     <string name="peer_pause_sharing">Pause Sharing</string>
     <string name="peer_pause_sub">Temporarily stop sending your location to %1$s</string>
     <string name="peer_precision">Location Precision</string>

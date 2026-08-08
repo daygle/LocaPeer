@@ -27,6 +27,19 @@
     <string name="common_deny">Refuz</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Perimetre virtuale și istoricul deplasărilor</string>
+    <string name="peer_category_history_title">Zone și istoric</string>
+    <string name="peer_category_messaging_subtitle">Permite sau blochează mesajele de chat</string>
+    <string name="peer_category_messaging_title">Mesagerie</string>
+    <string name="peer_category_retention_subtitle">Istoric de la distanță și ștergere</string>
+    <string name="peer_category_retention_title">Păstrarea datelor</string>
+    <string name="peer_category_safety_subtitle">SOS, actualizări ratate, proximitate, supraveghere</string>
+    <string name="peer_category_safety_title">Siguranță și alerte</string>
+    <string name="peer_category_sharing_subtitle">Roluri, precizie și program</string>
+    <string name="peer_category_sharing_title">Controale de partajare</string>
+    <string name="scan_add_share">Adaugă și partajează</string>
+    <string name="scan_grant_permission">Acordă permisiune</string>
+    <string name="scan_request_sent_title">Cerere trimisă</string>
     <string name="tab_map">Hartă</string>
     <string name="tab_messages">Mesaje</string>
     <string name="tab_history">Istoric</string>

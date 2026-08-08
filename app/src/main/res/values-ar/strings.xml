@@ -27,6 +27,19 @@
     <string name="common_deny">رفض</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">الأسوار الجغرافية وسجل التنقّل</string>
+    <string name="peer_category_history_title">المناطق والسجل</string>
+    <string name="peer_category_messaging_subtitle">السماح برسائل المحادثة أو حظرها</string>
+    <string name="peer_category_messaging_title">المراسلة</string>
+    <string name="peer_category_retention_subtitle">السجل عن بُعد والحذف</string>
+    <string name="peer_category_retention_title">الاحتفاظ بالبيانات</string>
+    <string name="peer_category_safety_subtitle">SOS والتحديثات المفقودة والقرب والإشراف</string>
+    <string name="peer_category_safety_title">السلامة والتنبيهات</string>
+    <string name="peer_category_sharing_subtitle">الأدوار والدقة والجدول الزمني</string>
+    <string name="peer_category_sharing_title">عناصر التحكم بالمشاركة</string>
+    <string name="scan_add_share">إضافة ومشاركة</string>
+    <string name="scan_grant_permission">منح الإذن</string>
+    <string name="scan_request_sent_title">تم إرسال الطلب</string>
     <string name="tab_map">الخريطة</string>
     <string name="tab_messages">الرسائل</string>
     <string name="tab_history">السجل</string>

@@ -27,6 +27,19 @@
     <string name="common_deny">انکار کریں</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">جیو فینس اور نقل و حرکت کی تاریخ</string>
+    <string name="peer_category_history_title">زونز اور تاریخ</string>
+    <string name="peer_category_messaging_subtitle">چیٹ پیغامات کی اجازت دیں یا بلاک کریں</string>
+    <string name="peer_category_messaging_title">پیغام رسانی</string>
+    <string name="peer_category_retention_subtitle">دور دراز کی تاریخ اور صفائی</string>
+    <string name="peer_category_retention_title">ڈیٹا برقراری</string>
+    <string name="peer_category_safety_subtitle">SOS، چھوٹ گئی تازہ کاریاں، قربت، نگرانی</string>
+    <string name="peer_category_safety_title">حفاظت اور الرٹس</string>
+    <string name="peer_category_sharing_subtitle">کردار، درستگی اور شیڈول</string>
+    <string name="peer_category_sharing_title">اشتراک کے کنٹرولز</string>
+    <string name="scan_add_share">شامل کریں اور شیئر کریں</string>
+    <string name="scan_grant_permission">اجازت دیں</string>
+    <string name="scan_request_sent_title">درخواست بھیج دی گئی</string>
     <string name="tab_map">نقشہ</string>
     <string name="tab_messages">پیغامات</string>
     <string name="tab_history">تاریخ</string>

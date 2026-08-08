@@ -27,6 +27,19 @@
     <string name="common_deny">거부</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">지오펜스 및 이동 기록</string>
+    <string name="peer_category_history_title">구역 및 기록</string>
+    <string name="peer_category_messaging_subtitle">채팅 메시지 허용 또는 차단</string>
+    <string name="peer_category_messaging_title">메시지</string>
+    <string name="peer_category_retention_subtitle">원격 기록 및 삭제</string>
+    <string name="peer_category_retention_title">데이터 보존</string>
+    <string name="peer_category_safety_subtitle">SOS, 놓친 업데이트, 근접성, 감독</string>
+    <string name="peer_category_safety_title">안전 및 알림</string>
+    <string name="peer_category_sharing_subtitle">역할, 정확도 및 일정</string>
+    <string name="peer_category_sharing_title">공유 제어</string>
+    <string name="scan_add_share">추가 및 공유</string>
+    <string name="scan_grant_permission">권한 부여</string>
+    <string name="scan_request_sent_title">요청 전송됨</string>
     <string name="tab_map">지도</string>
     <string name="tab_messages">메시지</string>
     <string name="tab_history">기록</string>

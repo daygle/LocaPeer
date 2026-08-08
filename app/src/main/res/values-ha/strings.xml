@@ -27,6 +27,19 @@
     <string name="common_deny">Ƙi</string>
 
     <!-- ── Alamar shafin kewayawa ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences da tarihin motsi</string>
+    <string name="peer_category_history_title">Yankuna &amp; Tarihi</string>
+    <string name="peer_category_messaging_subtitle">Ƙyale ko toshe saƙonnin taɗi</string>
+    <string name="peer_category_messaging_title">Saƙonni</string>
+    <string name="peer_category_retention_subtitle">Tarihin nesa da sharewa</string>
+    <string name="peer_category_retention_title">Riƙewar Bayanai</string>
+    <string name="peer_category_safety_subtitle">SOS, sabuntawa da suka ɓace, kusanci, sa ido</string>
+    <string name="peer_category_safety_title">Tsaro &amp; Gargaɗi</string>
+    <string name="peer_category_sharing_subtitle">Matsayi, daidaito, da jadawali</string>
+    <string name="peer_category_sharing_title">Ikon Rabawa</string>
+    <string name="scan_add_share">Ƙara &amp; Raba</string>
+    <string name="scan_grant_permission">Ba da izini</string>
+    <string name="scan_request_sent_title">An aika buƙatar</string>
     <string name="tab_map">Taswira</string>
     <string name="tab_messages">Saƙonni</string>
     <string name="tab_history">Tarihi</string>

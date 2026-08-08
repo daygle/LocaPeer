@@ -27,6 +27,19 @@
     <string name="common_deny">மறுக்கவும்</string>
 
     <!-- ── வழிசெலுத்தல் தாவல் லேபிள்கள் ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ஜியோஃபென்ஸ்கள் மற்றும் இயக்க வரலாறு</string>
+    <string name="peer_category_history_title">மண்டலங்கள் &amp; வரலாறு</string>
+    <string name="peer_category_messaging_subtitle">அரட்டை செய்திகளை அனுமதிக்கவும் அல்லது தடுக்கவும்</string>
+    <string name="peer_category_messaging_title">செய்தியிடல்</string>
+    <string name="peer_category_retention_subtitle">தொலைநிலை வரலாறு மற்றும் அழித்தல்</string>
+    <string name="peer_category_retention_title">தரவு தக்கவைப்பு</string>
+    <string name="peer_category_safety_subtitle">SOS, தவறிய புதுப்பிப்புகள், அருகாமை, மேற்பார்வை</string>
+    <string name="peer_category_safety_title">பாதுகாப்பு &amp; எச்சரிக்கைகள்</string>
+    <string name="peer_category_sharing_subtitle">பங்குகள், துல்லியம் மற்றும் அட்டவணை</string>
+    <string name="peer_category_sharing_title">பகிர்வு கட்டுப்பாடுகள்</string>
+    <string name="scan_add_share">சேர்க்கவும் &amp; பகிரவும்</string>
+    <string name="scan_grant_permission">அனுமதி வழங்கவும்</string>
+    <string name="scan_request_sent_title">கோரிக்கை அனுப்பப்பட்டது</string>
     <string name="tab_map">வரைபடம்</string>
     <string name="tab_messages">செய்திகள்</string>
     <string name="tab_history">வரலாறு</string>

@@ -1,7 +1,11 @@
 package com.locapeer.sharing
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.MessageDao
@@ -19,19 +23,10 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import android.content.Context
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -50,7 +45,7 @@ data class PeerSharingUiState(
      * the settings gate doesn't cover. Lifting supervised mode (gated in Settings behind
      * supervisor approval) is the only way to release this.
      */
-    val supervisorLocked: Boolean = false
+    val supervisorLocked: Boolean = false,
 )
 
 /** Outcome of a manual remote-purge command, typed so the UI doesn't sniff message text. */
@@ -58,7 +53,7 @@ data class PurgeResult(val message: String, val isError: Boolean = false)
 
 @HiltViewModel
 class PeerSharingViewModel @Inject constructor(
-    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
+    @ApplicationContext private val context: Context,
     private val peerDao: PeerDao,
     private val configDao: PeerSharingConfigDao,
     private val messageDao: MessageDao,
@@ -164,7 +159,7 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             // Missed-heartbeat alerts stay forced on for a device this user supervises -
             // it's the only reliable signal that a supervised device has gone dark.
-            if (!enabled && existing?.isMySupervised == true) return@launch
+            if (!enabled && (existing?.isMySupervised == true)) return@launch
             if (existing != null) configDao.setNotifyOnMissedHeartbeat(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(notifyOnMissedHeartbeat = enabled))
         }

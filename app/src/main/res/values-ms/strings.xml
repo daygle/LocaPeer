@@ -27,6 +27,19 @@
     <string name="common_deny">Nafi</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geopagar dan sejarah pergerakan</string>
+    <string name="peer_category_history_title">Zon &amp; Sejarah</string>
+    <string name="peer_category_messaging_subtitle">Benarkan atau sekat mesej sembang</string>
+    <string name="peer_category_messaging_title">Pemesejan</string>
+    <string name="peer_category_retention_subtitle">Sejarah jauh dan pembersihan</string>
+    <string name="peer_category_retention_title">Pengekalan Data</string>
+    <string name="peer_category_safety_subtitle">SOS, kemas kini terlepas, jarak dekat, penyeliaan</string>
+    <string name="peer_category_safety_title">Keselamatan &amp; Amaran</string>
+    <string name="peer_category_sharing_subtitle">Peranan, ketepatan dan jadual</string>
+    <string name="peer_category_sharing_title">Kawalan Perkongsian</string>
+    <string name="scan_add_share">Tambah &amp; Kongsi</string>
+    <string name="scan_grant_permission">Beri Kebenaran</string>
+    <string name="scan_request_sent_title">Permintaan Dihantar</string>
     <string name="tab_map">Peta</string>
     <string name="tab_messages">Mesej</string>
     <string name="tab_history">Sejarah</string>

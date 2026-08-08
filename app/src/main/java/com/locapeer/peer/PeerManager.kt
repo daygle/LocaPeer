@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.Log
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.MediaCache
+import com.locapeer.proximity.ProximityEngine
 import dagger.hilt.android.qualifiers.ApplicationContext
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.GeofenceAssignmentDao
@@ -47,7 +49,9 @@ class PeerManager @Inject constructor(
     private val prefs: AppPreferences,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
-    private val relayClient: NostrRelayClient
+    private val relayClient: NostrRelayClient,
+    private val geofenceEngine: GeofenceEngine,
+    private val proximityEngine: ProximityEngine
 ) {
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -88,6 +92,11 @@ class PeerManager @Inject constructor(
         pendingRequestDao.deleteByPubkey(deviceId)
         // Drop any decrypted media we cached to view/play from this contact.
         MediaCache.clearDecryptedMedia(context)
+        // Purge the engines' in-memory mirrors (inside/outside, nearby state,
+        // notification cooldowns) so a contact re-added with the same pubkey
+        // starts from a clean seed instead of inheriting pre-removal state.
+        geofenceEngine.onPeerRemoved(deviceId)
+        proximityEngine.onPeerRemoved(deviceId)
     }
 
     /** Notify the peer, then remove them and all their data locally. Returns false

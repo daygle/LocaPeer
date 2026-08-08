@@ -27,6 +27,19 @@
     <string name="common_deny">Tolak</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofence dan riwayat pergerakan</string>
+    <string name="peer_category_history_title">Zona &amp; Riwayat</string>
+    <string name="peer_category_messaging_subtitle">Izinkan atau blokir pesan obrolan</string>
+    <string name="peer_category_messaging_title">Perpesanan</string>
+    <string name="peer_category_retention_subtitle">Riwayat jarak jauh dan pembersihan</string>
+    <string name="peer_category_retention_title">Retensi Data</string>
+    <string name="peer_category_safety_subtitle">SOS, pembaruan terlewat, kedekatan, pengawasan</string>
+    <string name="peer_category_safety_title">Keamanan &amp; Peringatan</string>
+    <string name="peer_category_sharing_subtitle">Peran, presisi, dan jadwal</string>
+    <string name="peer_category_sharing_title">Kontrol Berbagi</string>
+    <string name="scan_add_share">Tambah &amp; Bagikan</string>
+    <string name="scan_grant_permission">Beri Izin</string>
+    <string name="scan_request_sent_title">Permintaan Terkirim</string>
     <string name="tab_map">Peta</string>
     <string name="tab_messages">Pesan</string>
     <string name="tab_history">Riwayat</string>

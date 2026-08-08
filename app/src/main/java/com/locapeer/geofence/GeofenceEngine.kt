@@ -121,6 +121,20 @@ class GeofenceEngine @Inject constructor(
         }
     }
 
+    /**
+     * Drop this device's in-memory state (inside/outside + cooldowns) so a contact
+     * removed and later re-added with the same pubkey starts from a clean seed instead
+     * of inheriting pre-removal state - which would otherwise suppress their first
+     * alert after re-add (the "first observation seeds only" rule would treat the
+     * stale state as a real position and skip the transition). Called from
+     * [com.locapeer.peer.PeerManager] on every removal path.
+     */
+    fun onPeerRemoved(deviceId: String) {
+        insideState.keys.removeIf { it.endsWith(":$deviceId") }
+        // Cooldown keys always carry the :enter/:exit suffix.
+        lastNotifiedAt.keys.removeIf { it.endsWith(":$deviceId:enter") || it.endsWith(":$deviceId:exit") }
+    }
+
     private fun sendTrackingAlertToPeer(peerPubkey: String, fenceName: String) {
         scope.launch {
             try {

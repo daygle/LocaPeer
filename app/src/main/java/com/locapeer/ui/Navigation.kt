@@ -55,6 +55,11 @@ import com.locapeer.contacts.ContactsScreen
 import com.locapeer.circles.CircleEditScreen
 import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
+import com.locapeer.sharing.PeerSharingControlsScreen
+import com.locapeer.sharing.PeerSafetyAlertsScreen
+import com.locapeer.sharing.PeerZonesHistoryScreen
+import com.locapeer.sharing.PeerMessagingScreen
+import com.locapeer.sharing.PeerRetentionScreen
 import com.locapeer.sharing.ScheduleScreen
 
 sealed class Screen(val route: String, @StringRes val labelRes: Int, val icon: ImageVector) {
@@ -76,6 +81,35 @@ val ALL_NAV_SCREENS: List<Screen> = listOf(
     Screen.History
 )
 
+/**
+ * Default ordered tab ids shown before the user customizes the nav bar. Shared by
+ * [AppPreferences] (fresh-install default), the bottom nav bar and the nav customizer,
+ * so the fallback can't drift between them. Order is user-facing and deliberate
+ * (History sits third, not last as in [ALL_NAV_SCREENS]); derived from [Screen] routes
+ * so a route rename propagates automatically.
+ */
+internal val DEFAULT_NAV_TAB_IDS: List<String> = listOf(
+    Screen.Map.route,
+    Screen.Messages.route,
+    Screen.History.route,
+    Screen.Contacts.route,
+    Screen.Invite.route,
+    Screen.Settings.route
+)
+
+/** Route-id → tab lookup. Single source of truth for resolving a saved tab id to a [Screen]. */
+internal val SCREEN_BY_ROUTE: Map<String, Screen> = ALL_NAV_SCREENS.associateBy { it.route }
+
+/**
+ * Localized bottom-navigation label for a tab route id. Shared by the nav bar, Settings'
+ * start-page picker and the nav customizer so every tab name renders identically; unknown
+ * ids fall back to a capitalized copy of the id.
+ */
+@Composable
+internal fun navTabLabel(routeId: String): String =
+    SCREEN_BY_ROUTE[routeId]?.let { stringResource(it.labelRes) }
+        ?: routeId.replaceFirstChar { it.uppercaseChar() }
+
 private val fadeEnter = fadeIn(tween(220))
 private val fadeExit = fadeOut(tween(180))
 private val slideEnter = slideInHorizontally(tween(280)) { it / 3 } + fadeIn(tween(280))
@@ -95,10 +129,9 @@ fun LocaPeerNavHost(
     val currentRoute = backstackEntry?.destination?.route
 
     val bottomNavItems = remember(settings?.navTabIds) {
-        val ids = settings?.navTabIds ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings")
-        val screenByRoute = ALL_NAV_SCREENS.associateBy { it.route }
+        val ids = settings?.navTabIds ?: DEFAULT_NAV_TAB_IDS
         // Always ensure Map is present
-        val ordered = ids.mapNotNull { screenByRoute[it] }
+        val ordered = ids.mapNotNull { SCREEN_BY_ROUTE[it] }
         if (ordered.none { it.route == Screen.Map.route })
             listOf(Screen.Map) + ordered else ordered
     }
@@ -164,8 +197,8 @@ fun LocaPeerNavHost(
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(screen.icon, contentDescription = stringResource(screen.labelRes)) },
-                            label = { Text(stringResource(screen.labelRes), style = MaterialTheme.typography.labelMedium) }
+                            icon = { Icon(screen.icon, contentDescription = navTabLabel(screen.route)) },
+                            label = { Text(navTabLabel(screen.route), style = MaterialTheme.typography.labelMedium) }
                         )
                     }
                 }
@@ -473,6 +506,7 @@ fun LocaPeerNavHost(
             ) { entry ->
                 val peerId = entry.arguments?.getString("peerId") ?: ""
                 val peerName = entry.arguments?.getString("peerName") ?: ""
+                val encodedName = Uri.encode(peerName)
                 PeerSharingScreen(
                     peerId = peerId,
                     peerName = peerName,
@@ -484,15 +518,125 @@ fun LocaPeerNavHost(
                             restoreState = true
                         }
                     },
+                    onNavigateToControls = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/controls")
+                    },
+                    onNavigateToAlerts = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/alerts")
+                    },
+                    onNavigateToZonesHistory = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/zones-history")
+                    },
+                    onNavigateToMessaging = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/messaging")
+                    },
+                    onNavigateToRetention = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/retention")
+                    }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/controls",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerSharingControlsScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() },
                     onNavigateToSchedule = {
                         navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=${Uri.encode(peerName)}")
-                    },
+                    }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/alerts",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerSafetyAlertsScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/zones-history",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerZonesHistoryScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() },
                     onNavigateToGeofences = { id ->
                         navController.navigate("geofences?peerId=$id")
                     },
                     onNavigateToHistory = { id ->
                         navController.navigate("history-report?peerId=$id")
                     }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/messaging",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerMessagingScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/retention",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerRetentionScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
             composable(

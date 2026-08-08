@@ -21,10 +21,9 @@ private const val WORK_NAME_PREFIX = "tempshare-expiry-"
  * temp share early.
  *
  * Idempotent: if the deadline has already been cleared by a status check on the
- * reading path, the clear here is a no-op. If the deadline has been extended (which
- * the UI doesn't currently allow but the worker schema defends against anyway), the
- * worker will be re-scheduled with a fresh delay and replace this work in the queue
- * via [ExistingWorkPolicy.REPLACE].
+ * reading path, the clear here is a no-op. Extending a temp share (a fresh chip press
+ * calls setTemporaryShare again) re-schedules this worker with the new delay and
+ * replaces the queued instance via [ExistingWorkPolicy.REPLACE].
  */
 @HiltWorker
 class TempShareExpiryWorker @AssistedInject constructor(

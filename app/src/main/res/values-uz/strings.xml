@@ -27,6 +27,19 @@
     <string name="common_deny">Rad etish</string>
 
     <!-- ── Navigatsiya tablari yorliqlari ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geozonalar va harakat tarixi</string>
+    <string name="peer_category_history_title">Zonalar va tarix</string>
+    <string name="peer_category_messaging_subtitle">Chat xabarlariga ruxsat berish yoki bloklash</string>
+    <string name="peer_category_messaging_title">Xabarlar</string>
+    <string name="peer_category_retention_subtitle">Masofaviy tarix va tozalash</string>
+    <string name="peer_category_retention_title">Ma’lumotlarni saqlash</string>
+    <string name="peer_category_safety_subtitle">SOS, o‘tkazib yuborilgan yangilanishlar, yaqinlik, nazorat</string>
+    <string name="peer_category_safety_title">Xavfsizlik va ogohlantirishlar</string>
+    <string name="peer_category_sharing_subtitle">Rollar, aniqlik va jadval</string>
+    <string name="peer_category_sharing_title">Baham ko‘rishni boshqarish</string>
+    <string name="scan_add_share">Qo‘shish va baham ko‘rish</string>
+    <string name="scan_grant_permission">Ruxsat berish</string>
+    <string name="scan_request_sent_title">So‘rov yuborildi</string>
     <string name="tab_map">Xarita</string>
     <string name="tab_messages">Xabarlar</string>
     <string name="tab_history">Tarix</string>

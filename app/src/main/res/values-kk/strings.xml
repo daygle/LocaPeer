@@ -27,6 +27,19 @@
     <string name="common_deny">Бас тарту</string>
 
     <!-- ── Навигациялық қойындылар белгілері ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Геоқоршаулар және қозғалыс тарихы</string>
+    <string name="peer_category_history_title">Аймақтар және тарих</string>
+    <string name="peer_category_messaging_subtitle">Чат хабарламаларына рұқсат беру немесе бұғаттау</string>
+    <string name="peer_category_messaging_title">Хабарламалар</string>
+    <string name="peer_category_retention_subtitle">Қашықтағы тарих және тазалау</string>
+    <string name="peer_category_retention_title">Деректерді сақтау</string>
+    <string name="peer_category_safety_subtitle">SOS, өткізіп алған жаңартулар, жақындық, бақылау</string>
+    <string name="peer_category_safety_title">Қауіпсіздік және ескертулер</string>
+    <string name="peer_category_sharing_subtitle">Рөлдер, дәлдік және кесте</string>
+    <string name="peer_category_sharing_title">Бөлісуді басқару</string>
+    <string name="scan_add_share">Қосу және бөлісу</string>
+    <string name="scan_grant_permission">Рұқсат беру</string>
+    <string name="scan_request_sent_title">Сұраныс жіберілді</string>
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Хабарламалар</string>
     <string name="tab_history">Тарих</string>

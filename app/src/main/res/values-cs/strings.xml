@@ -27,6 +27,19 @@
     <string name="common_deny">Odmítnout</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofence a historie pohybu</string>
+    <string name="peer_category_history_title">Zóny a historie</string>
+    <string name="peer_category_messaging_subtitle">Povolit nebo blokovat chatové zprávy</string>
+    <string name="peer_category_messaging_title">Zprávy</string>
+    <string name="peer_category_retention_subtitle">Vzdálená historie a mazání</string>
+    <string name="peer_category_retention_title">Uchovávání dat</string>
+    <string name="peer_category_safety_subtitle">SOS, zmeškané aktualizace, blízkost, dohled</string>
+    <string name="peer_category_safety_title">Bezpečnost a upozornění</string>
+    <string name="peer_category_sharing_subtitle">Role, přesnost a rozvrh</string>
+    <string name="peer_category_sharing_title">Řízení sdílení</string>
+    <string name="scan_add_share">Přidat a sdílet</string>
+    <string name="scan_grant_permission">Udělit oprávnění</string>
+    <string name="scan_request_sent_title">Žádost odeslána</string>
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Zprávy</string>
     <string name="tab_history">Historie</string>

@@ -27,6 +27,19 @@
     <string name="common_deny">Odmów</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geoogrodzenia i historia przemieszczania</string>
+    <string name="peer_category_history_title">Strefy i historia</string>
+    <string name="peer_category_messaging_subtitle">Zezwól na wiadomości czatu lub blokuj je</string>
+    <string name="peer_category_messaging_title">Wiadomości</string>
+    <string name="peer_category_retention_subtitle">Zdalna historia i usuwanie</string>
+    <string name="peer_category_retention_title">Przechowywanie danych</string>
+    <string name="peer_category_safety_subtitle">SOS, pominięte aktualizacje, bliskość, nadzór</string>
+    <string name="peer_category_safety_title">Bezpieczeństwo i alerty</string>
+    <string name="peer_category_sharing_subtitle">Role, dokładność i harmonogram</string>
+    <string name="peer_category_sharing_title">Kontrola udostępniania</string>
+    <string name="scan_add_share">Dodaj i udostępnij</string>
+    <string name="scan_grant_permission">Udziel pozwolenia</string>
+    <string name="scan_request_sent_title">Wysłano prośbę</string>
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Wiadomości</string>
     <string name="tab_history">Historia</string>

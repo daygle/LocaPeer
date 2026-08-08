@@ -27,6 +27,19 @@
     <string name="common_deny">Kọ̀ ọ́</string>
 
     <!-- ── Awọn aami taabu lilọ kiri ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences àti ìtàn ìrìnà</string>
+    <string name="peer_category_history_title">Àwọn Àgbègbè &amp; Ìtàn</string>
+    <string name="peer_category_messaging_subtitle">Gbà láàyè tàbí dènà àwọn ifiranṣẹ́ ìfọ̀rọ̀wérọ̀</string>
+    <string name="peer_category_messaging_title">Ozi</string>
+    <string name="peer_category_retention_subtitle">Ìtàn jíjìn àti ìmúkúrò</string>
+    <string name="peer_category_retention_title">Ìpamọ́ Data</string>
+    <string name="peer_category_safety_subtitle">SOS, àwọn ìmúdójú tí ó ṣẹ́, ìsúnmọ́, àbójútó</string>
+    <string name="peer_category_safety_title">Ààbò &amp; Ìkìlọ̀</string>
+    <string name="peer_category_sharing_subtitle">Àwọn ipa, ìpele pípé, àti ìtòlẹ́sẹ̀</string>
+    <string name="peer_category_sharing_title">Àwọn Ìṣàkóso Ìpínpín</string>
+    <string name="scan_add_share">Fi kún &amp; Pín</string>
+    <string name="scan_grant_permission">Fún ní ìyọ̀ǹda</string>
+    <string name="scan_request_sent_title">A ti fi ìbéèrè ránṣẹ́</string>
     <string name="tab_map">Máàpù</string>
     <string name="tab_messages">Awọn ifiranṣẹ</string>
     <string name="tab_history">Ìtàn</string>

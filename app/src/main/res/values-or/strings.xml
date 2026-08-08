@@ -27,6 +27,19 @@
     <string name="common_deny">ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
 
     <!-- ── ନେଭିଗେସନ୍ ଟ୍ୟାବ୍ ଲେବଲ୍ ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ଜିଓଫେନ୍ସ ଏବଂ ଗତିବିଧି ଇତିହାସ</string>
+    <string name="peer_category_history_title">ଜୋନ୍ ଏବଂ ଇତିହାସ</string>
+    <string name="peer_category_messaging_subtitle">ଚାଟ୍ ବାର୍ତ୍ତାକୁ ଅନୁମତି ଦିଅନ୍ତୁ କିମ୍ବା ଅବରୋଧ କରନ୍ତୁ</string>
+    <string name="peer_category_messaging_title">ମେସେଜିଂ</string>
+    <string name="peer_category_retention_subtitle">ଦୂରବର୍ତ୍ତୀ ଇତିହାସ ଏବଂ ପରିଷ୍କାର</string>
+    <string name="peer_category_retention_title">ଡାଟା ଧାରଣ</string>
+    <string name="peer_category_safety_subtitle">SOS, ହଜିଯାଇଥିବା ଅପଡେଟ୍, ନିକଟତା, ତଦାରଖ</string>
+    <string name="peer_category_safety_title">ସୁରକ୍ଷା ଏବଂ ସତର୍କତା</string>
+    <string name="peer_category_sharing_subtitle">ଭୂମିକା, ସଠିକତା ଏବଂ କାର୍ଯ୍ୟସୂଚୀ</string>
+    <string name="peer_category_sharing_title">ଅଂଶୀଦାର ନିୟନ୍ତ୍ରଣ</string>
+    <string name="scan_add_share">ଯୋଡନ୍ତୁ ଏବଂ ଅଂଶୀଦାର କରନ୍ତୁ</string>
+    <string name="scan_grant_permission">ଅନୁମତି ଦିଅନ୍ତୁ</string>
+    <string name="scan_request_sent_title">ଅନୁରୋଧ ପଠାଯାଇଛି</string>
     <string name="tab_map">ମାନଚିତ୍ର</string>
     <string name="tab_messages">ବାର୍ତ୍ତା</string>
     <string name="tab_history">ଇତିହାସ</string>

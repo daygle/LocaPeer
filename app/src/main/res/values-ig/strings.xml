@@ -27,6 +27,19 @@
     <string name="common_deny">Jụọ</string>
 
     <!-- ── Akara taabụ nnyagharị ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences na akụkọ mmegharị</string>
+    <string name="peer_category_history_title">Mpaghara &amp; Akụkọ</string>
+    <string name="peer_category_messaging_subtitle">Kwe ma ọ bụ gbochie ozi nkata</string>
+    <string name="peer_category_messaging_title">Ozi</string>
+    <string name="peer_category_retention_subtitle">Akụkọ dị anya na ihicha</string>
+    <string name="peer_category_retention_title">Njide Data</string>
+    <string name="peer_category_safety_subtitle">SOS, mmelite ndị echefuru, ịdị nso, nlekọta</string>
+    <string name="peer_category_safety_title">Nchebe &amp; Mkpu</string>
+    <string name="peer_category_sharing_subtitle">Ọrụ, izi ezi, na oge</string>
+    <string name="peer_category_sharing_title">Njikwa Nkekọrịta</string>
+    <string name="scan_add_share">Tinye &amp; Kekọrịta</string>
+    <string name="scan_grant_permission">Nye ikike</string>
+    <string name="scan_request_sent_title">Ezila arịrịọ</string>
     <string name="tab_map">Map</string>
     <string name="tab_messages">Ozi</string>
     <string name="tab_history">Akụkọ</string>

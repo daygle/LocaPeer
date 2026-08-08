@@ -27,6 +27,19 @@
     <string name="common_deny">Tanggihan</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Mga Geofence at kasaysayan ng paggalaw</string>
+    <string name="peer_category_history_title">Mga Sona at Kasaysayan</string>
+    <string name="peer_category_messaging_subtitle">Payagan o i-block ang mga chat message</string>
+    <string name="peer_category_messaging_title">Pagmemensahe</string>
+    <string name="peer_category_retention_subtitle">Remote na kasaysayan at paglilinis</string>
+    <string name="peer_category_retention_title">Pagpapanatili ng Data</string>
+    <string name="peer_category_safety_subtitle">SOS, mga napalampas na update, kalapitan, pangangasiwa</string>
+    <string name="peer_category_safety_title">Kaligtasan at Mga Alerto</string>
+    <string name="peer_category_sharing_subtitle">Mga papel, katumpakan, at iskedyul</string>
+    <string name="peer_category_sharing_title">Mga Kontrol sa Pagbabahagi</string>
+    <string name="scan_add_share">Idagdag at Ibahagi</string>
+    <string name="scan_grant_permission">Magbigay ng Pahintulot</string>
+    <string name="scan_request_sent_title">Naipadala ang Kahilingan</string>
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Mga Mensahe</string>
     <string name="tab_history">Kasaysayan</string>

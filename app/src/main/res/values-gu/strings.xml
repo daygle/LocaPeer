@@ -27,6 +27,19 @@
     <string name="common_deny">નકારવું</string>
 
     <!-- ── નેવિગેશન ટેબ લેબલ્સ ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">જીઓફેન્સ અને મૂવમેન્ટ ઇતિહાસ</string>
+    <string name="peer_category_history_title">ઝોન અને ઇતિહાસ</string>
+    <string name="peer_category_messaging_subtitle">ચેટ સંદેશાઓને મંજૂરી આપો અથવા અવરોધિત કરો</string>
+    <string name="peer_category_messaging_title">મેસેજિંગ</string>
+    <string name="peer_category_retention_subtitle">રિમોટ ઇતિહાસ અને કાઢી નાખવું</string>
+    <string name="peer_category_retention_title">ડેટા જાળવણી</string>
+    <string name="peer_category_safety_subtitle">SOS, ચૂકી ગયેલા અપડેટ્સ, નજીકતા, દેખરેખ</string>
+    <string name="peer_category_safety_title">સુરક્ષા અને ચેતવણીઓ</string>
+    <string name="peer_category_sharing_subtitle">ભૂમિકાઓ, ચોકસાઈ અને શેડ્યૂલ</string>
+    <string name="peer_category_sharing_title">શેરિંગ નિયંત્રણો</string>
+    <string name="scan_add_share">ઉમેરો અને શેર કરો</string>
+    <string name="scan_grant_permission">પરવાનગી આપો</string>
+    <string name="scan_request_sent_title">વિનંતી મોકલાઈ</string>
     <string name="tab_map">નકશો</string>
     <string name="tab_messages">સંદેશાઓ</string>
     <string name="tab_history">ઇતિહાસ</string>

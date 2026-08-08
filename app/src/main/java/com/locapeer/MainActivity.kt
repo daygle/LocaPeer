@@ -47,6 +47,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlin.time.Duration.Companion.milliseconds
 import javax.inject.Inject
 
 /**
@@ -97,7 +98,7 @@ class MainActivity : AppCompatActivity() {
                 // successful BiometricPrompt unlocks the rest of the tree instantly.
                 val unlocked by appLockManager.unlocked.collectAsState()
                 if (!unlocked) {
-                    AppLockScreen(onUnlocked = { appLockManager.setUnlocked(true) })
+                    AppLockScreen(onUnlocked = { appLockManager.setUnlocked(unlocked = true) })
                     return@LocaPeerTheme
                 }
 
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity() {
                         true -> {
                             val messagingVm: MessagingViewModel = hiltViewModel()
                             LaunchedEffect(Unit) {
-                                delay(500) // Yield to allow initial composition to finish
+                                delay(500.milliseconds) // Yield to allow initial composition to finish
                                 val pubHex = withContext(Dispatchers.Default) {
                                     keyManager.getPublicKeyHex()
                                 } ?: return@LaunchedEffect
@@ -155,16 +156,17 @@ class MainActivity : AppCompatActivity() {
                             }
                             // Auto-start HeartbeatService on app open if enabled and permitted.
                             LaunchedEffect(Unit) {
-                                delay(1000) // Stagger service start to reduce CPU spike
+                                delay(1000.milliseconds) // Stagger service start to reduce CPU spike
                                 val current = prefs.settings
                                 if (!current.first().heartbeatEnabled) return@LaunchedEffect
-                                val hasLocation =
+                                val hasLocation = (
                                     ContextCompat.checkSelfPermission(
                                         this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION
                                     ) == PackageManager.PERMISSION_GRANTED ||
                                     ContextCompat.checkSelfPermission(
                                         this@MainActivity, Manifest.permission.ACCESS_COARSE_LOCATION
                                     ) == PackageManager.PERMISSION_GRANTED
+                                )
                                 if (!hasLocation) return@LaunchedEffect
                                 val intent = Intent(this@MainActivity, HeartbeatService::class.java)
                                 startForegroundService(intent)
@@ -197,9 +199,8 @@ class MainActivity : AppCompatActivity() {
         }
         val action = intent?.action
         val data = intent?.data
-        if (action == Intent.ACTION_VIEW && data != null && data.scheme == "locapeer") {
-            val inviteData = data.getQueryParameter("data")
-            if (inviteData != null) {
+        if (action == Intent.ACTION_VIEW && (data?.scheme == "locapeer")) {
+            data.getQueryParameter("data")?.let { inviteData ->
                 pendingNavTarget.value = NavTarget("scan", inviteData, "")
             }
             // Clear the deep-link so it isn't replayed on process-death recreation

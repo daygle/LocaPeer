@@ -27,6 +27,19 @@
     <string name="common_deny">ငြင်းပယ်ရန်</string>
 
     <!-- ── လမ်းညွှန် တက်ဘ် အညွှန်းများ ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ဂျီအိုခြံစည်းရိုးများနှင့် လှုပ်ရှားမှု မှတ်တမ်း</string>
+    <string name="peer_category_history_title">ဇုန်များနှင့် မှတ်တမ်း</string>
+    <string name="peer_category_messaging_subtitle">ချက်တ် မက်ဆေ့ဂျ်များ ခွင့်ပြုရန် သို့မဟုတ် ပိတ်ပင်ရန်</string>
+    <string name="peer_category_messaging_title">မက်ဆေ့ဂျ် ပို့ခြင်း</string>
+    <string name="peer_category_retention_subtitle">အဝေးမှ မှတ်တမ်းနှင့် ဖျက်ခြင်း</string>
+    <string name="peer_category_retention_title">ဒေတာ ထိန်းသိမ်းမှု</string>
+    <string name="peer_category_safety_subtitle">SOS၊ လွတ်သွားသော အပ်ဒိတ်များ၊ အနီးကပ်မှု၊ ကြီးကြပ်မှု</string>
+    <string name="peer_category_safety_title">ဘေးကင်းရေးနှင့် သတိပေးချက်များ</string>
+    <string name="peer_category_sharing_subtitle">အခန်းကဏ္ဍများ၊ တိကျမှုနှင့် အချိန်ဇယား</string>
+    <string name="peer_category_sharing_title">မျှဝေမှု ထိန်းချုပ်ချက်များ</string>
+    <string name="scan_add_share">ထည့်ပြီး မျှဝေပါ</string>
+    <string name="scan_grant_permission">ခွင့်ပြုချက် ပေးပါ</string>
+    <string name="scan_request_sent_title">တောင်းဆိုချက် ပို့ပြီးပါပြီ</string>
     <string name="tab_map">မြေပုံ</string>
     <string name="tab_messages">မက်ဆေ့ဂျ်များ</string>
     <string name="tab_history">မှတ်တမ်း</string>

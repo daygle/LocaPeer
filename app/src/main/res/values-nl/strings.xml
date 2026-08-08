@@ -27,6 +27,19 @@
     <string name="common_deny">Weigeren</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences en bewegingsgeschiedenis</string>
+    <string name="peer_category_history_title">Zones en geschiedenis</string>
+    <string name="peer_category_messaging_subtitle">Chatberichten toestaan of blokkeren</string>
+    <string name="peer_category_messaging_title">Berichten</string>
+    <string name="peer_category_retention_subtitle">Geschiedenis op afstand en opschonen</string>
+    <string name="peer_category_retention_title">Gegevensbewaring</string>
+    <string name="peer_category_safety_subtitle">SOS, gemiste updates, nabijheid, toezicht</string>
+    <string name="peer_category_safety_title">Veiligheid en meldingen</string>
+    <string name="peer_category_sharing_subtitle">Rollen, precisie en planning</string>
+    <string name="peer_category_sharing_title">Deelopties</string>
+    <string name="scan_add_share">Toevoegen en delen</string>
+    <string name="scan_grant_permission">Toestemming verlenen</string>
+    <string name="scan_request_sent_title">Verzoek verzonden</string>
     <string name="tab_map">Kaart</string>
     <string name="tab_messages">Berichten</string>
     <string name="tab_history">Geschiedenis</string>

@@ -93,12 +93,13 @@ fun SettingsRow(
     value: String? = null,
     destructive: Boolean = false,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    action: (@Composable () -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(enabled = enabled, onClick = onClick)
+            .then(if (onClick != null) Modifier.clickable(enabled = enabled, onClick = onClick) else Modifier)
             .padding(horizontal = 20.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -130,22 +131,27 @@ fun SettingsRow(
                 )
             }
         }
-        Spacer(Modifier.width(12.dp))
-        if (destructive) {
-            Icon(
-                imageVector = Icons.Default.DeleteForever,
-                contentDescription = null,
-                tint = if (enabled) MaterialTheme.colorScheme.error
-                else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
-                modifier = Modifier.size(20.dp),
-            )
-        } else {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(20.dp),
-            )
+        if (action != null) {
+            Spacer(Modifier.width(16.dp))
+            action()
+        } else if (onClick != null) {
+            Spacer(Modifier.width(12.dp))
+            if (destructive) {
+                Icon(
+                    imageVector = Icons.Default.DeleteForever,
+                    contentDescription = null,
+                    tint = if (enabled) MaterialTheme.colorScheme.error
+                    else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f),
+                    modifier = Modifier.size(20.dp),
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.size(20.dp),
+                )
+            }
         }
     }
 }

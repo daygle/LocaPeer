@@ -25,7 +25,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.ui.components.CardDivider
+import com.locapeer.ui.components.ChoiceOption
 import com.locapeer.ui.components.MapLocationPicker
+import com.locapeer.ui.components.SingleChoiceDialog
+import com.locapeer.ui.navTabLabel
 import com.locapeer.ui.components.RetentionRow
 import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.components.SettingsRow
@@ -251,12 +254,12 @@ fun SecuritySettingsScreen(
 
     if (showLockTimeoutDialog) {
         val timeoutOptions = listOf(
-            0 to stringResource(R.string.settings_app_lock_timeout_immediate),
-            30 to stringResource(R.string.settings_app_lock_timeout_30s),
-            60 to stringResource(R.string.settings_app_lock_timeout_1m),
-            300 to stringResource(R.string.settings_app_lock_timeout_5m),
+            ChoiceOption(0, stringResource(R.string.settings_app_lock_timeout_immediate)),
+            ChoiceOption(30, stringResource(R.string.settings_app_lock_timeout_30s)),
+            ChoiceOption(60, stringResource(R.string.settings_app_lock_timeout_1m)),
+            ChoiceOption(300, stringResource(R.string.settings_app_lock_timeout_5m)),
         )
-        RadioListDialog(
+        SingleChoiceDialog(
             title = stringResource(R.string.settings_app_lock_timeout),
             options = timeoutOptions,
             isSelected = { it == settings.appLockTimeoutSeconds },
@@ -433,12 +436,12 @@ fun MapSettingsScreen(
 
     if (showMapStartingPointDialog) {
         val options = listOf(
-            "RESTORE_LAST" to stringResource(R.string.settings_map_last_position),
-            "OWN_PIN" to stringResource(R.string.settings_map_current_location),
-            "FIT_ALL" to stringResource(R.string.settings_map_all_contacts),
-            "FIXED_LOCATION" to stringResource(R.string.settings_map_fixed_location)
+            ChoiceOption("RESTORE_LAST", stringResource(R.string.settings_map_last_position)),
+            ChoiceOption("OWN_PIN", stringResource(R.string.settings_map_current_location)),
+            ChoiceOption("FIT_ALL", stringResource(R.string.settings_map_all_contacts)),
+            ChoiceOption("FIXED_LOCATION", stringResource(R.string.settings_map_fixed_location))
         )
-        RadioListDialog(
+        SingleChoiceDialog(
             title = stringResource(R.string.settings_map_starting_point_title),
             options = options,
             isSelected = { it == settings.mapStartingPoint },
@@ -649,7 +652,7 @@ fun UnitsDisplaySettingsScreen(
     if (showSpeedUnitDialog) {
         UnitSelectionDialog(
             title = stringResource(R.string.settings_speed_units),
-            options = listOf(false to stringResource(R.string.settings_speed_metric), true to stringResource(R.string.settings_speed_imperial)),
+            options = listOf(ChoiceOption(false, stringResource(R.string.settings_speed_metric)), ChoiceOption(true, stringResource(R.string.settings_speed_imperial))),
             current = settings.useImperialSpeed,
             onSelected = { vm.setUseImperialSpeed(it); showSpeedUnitDialog = false },
             onDismiss = { showSpeedUnitDialog = false }
@@ -658,7 +661,7 @@ fun UnitsDisplaySettingsScreen(
     if (showElevationUnitDialog) {
         UnitSelectionDialog(
             title = stringResource(R.string.settings_elevation_units),
-            options = listOf(false to stringResource(R.string.settings_elevation_metric), true to stringResource(R.string.settings_elevation_imperial)),
+            options = listOf(ChoiceOption(false, stringResource(R.string.settings_elevation_metric)), ChoiceOption(true, stringResource(R.string.settings_elevation_imperial))),
             current = settings.useImperialElevation,
             onSelected = { vm.setUseImperialElevation(it); showElevationUnitDialog = false },
             onDismiss = { showElevationUnitDialog = false }
@@ -667,7 +670,7 @@ fun UnitsDisplaySettingsScreen(
     if (showDistanceUnitDialog) {
         UnitSelectionDialog(
             title = stringResource(R.string.settings_distance_units),
-            options = listOf(false to stringResource(R.string.settings_distance_metric), true to stringResource(R.string.settings_distance_imperial)),
+            options = listOf(ChoiceOption(false, stringResource(R.string.settings_distance_metric)), ChoiceOption(true, stringResource(R.string.settings_distance_imperial))),
             current = settings.useImperialDistance,
             onSelected = { vm.setUseImperialDistance(it); showDistanceUnitDialog = false },
             onDismiss = { showDistanceUnitDialog = false }
@@ -676,7 +679,7 @@ fun UnitsDisplaySettingsScreen(
     if (showTimeFormatDialog) {
         UnitSelectionDialog(
             title = stringResource(R.string.settings_time_format),
-            options = listOf(false to stringResource(R.string.settings_time_12h), true to stringResource(R.string.settings_time_24h)),
+            options = listOf(ChoiceOption(false, stringResource(R.string.settings_time_12h)), ChoiceOption(true, stringResource(R.string.settings_time_24h))),
             current = settings.use24HourTime,
             onSelected = { vm.setUse24HourTime(it); showTimeFormatDialog = false },
             onDismiss = { showTimeFormatDialog = false }
@@ -687,12 +690,12 @@ fun UnitsDisplaySettingsScreen(
 @Composable
 private fun UnitSelectionDialog(
     title: String,
-    options: List<Pair<Boolean, String>>,
+    options: List<ChoiceOption<Boolean>>,
     current: Boolean,
     onSelected: (Boolean) -> Unit,
     onDismiss: () -> Unit
 ) {
-    RadioListDialog(
+    SingleChoiceDialog(
         title = title,
         options = options,
         isSelected = { it == current },
@@ -815,7 +818,7 @@ fun AppearanceSettingsScreen(
             CardDivider()
             SettingsRow(
                 title = stringResource(R.string.settings_start_page),
-                value = tabLabel(settings.startRoute),
+                value = navTabLabel(settings.startRoute),
                 onClick = { showStartPageDialog = true }
             )
             CardDivider()
@@ -829,11 +832,11 @@ fun AppearanceSettingsScreen(
 
     if (showThemeDialog) {
         val themeOptions = listOf(
-            ThemeMode.SYSTEM to stringResource(R.string.settings_theme_system),
-            ThemeMode.LIGHT to stringResource(R.string.settings_theme_light),
-            ThemeMode.DARK to stringResource(R.string.settings_theme_dark),
+            ChoiceOption(ThemeMode.SYSTEM, stringResource(R.string.settings_theme_system)),
+            ChoiceOption(ThemeMode.LIGHT, stringResource(R.string.settings_theme_light)),
+            ChoiceOption(ThemeMode.DARK, stringResource(R.string.settings_theme_dark)),
         )
-        RadioListDialog(
+        SingleChoiceDialog(
             title = stringResource(R.string.settings_theme_mode),
             options = themeOptions,
             isSelected = { settings.themeMode == it.name },
@@ -843,8 +846,8 @@ fun AppearanceSettingsScreen(
     }
 
     if (showStartPageDialog) {
-        val options = settings.navTabIds.map { it to tabLabel(it) }
-        RadioListDialog(
+        val options = settings.navTabIds.map { ChoiceOption(it, navTabLabel(it)) }
+        SingleChoiceDialog(
             title = stringResource(R.string.settings_start_page),
             options = options,
             isSelected = { settings.startRoute == it },
@@ -855,8 +858,8 @@ fun AppearanceSettingsScreen(
 
     if (showLanguageDialog) {
         val current = AppLanguage.current()
-        val options = AppLanguage.entries.map { it to (it.nativeName ?: stringResource(R.string.settings_language_system)) }
-        RadioListDialog(
+        val options = AppLanguage.entries.map { ChoiceOption(it, it.nativeName ?: stringResource(R.string.settings_language_system)) }
+        SingleChoiceDialog(
             title = stringResource(R.string.settings_language_title),
             options = options,
             isSelected = { current == it },
@@ -864,18 +867,6 @@ fun AppearanceSettingsScreen(
             onDismiss = { showLanguageDialog = false }
         )
     }
-}
-
-/** Localized bottom-navigation label for a route id, matching the tabs shown in the app. */
-@Composable
-private fun tabLabel(route: String): String = when (route) {
-    "map" -> stringResource(R.string.tab_map)
-    "messages" -> stringResource(R.string.tab_messages)
-    "history-tab" -> stringResource(R.string.tab_history)
-    "contacts" -> stringResource(R.string.tab_contacts)
-    "invite" -> stringResource(R.string.contacts_cd_qr_invite)
-    "settings" -> stringResource(R.string.tab_settings)
-    else -> route.replaceFirstChar { it.uppercaseChar() }
 }
 
 // ─── Backup & Recovery ────────────────────────────────────────────────────────
@@ -1104,48 +1095,4 @@ private fun BackupSectionItem(
     }
 }
 
-// ─── Shared single-choice dialog ──────────────────────────────────────────────
 
-/**
- * A single-select radio list in an [AlertDialog], used by the many "pick one option" settings
- * (theme, language, units, start page, map start point, lock timeout). Generic over the option
- * value so each caller keeps its own type.
- */
-@Composable
-private fun <T> RadioListDialog(
-    title: String,
-    options: List<Pair<T, String>>,
-    isSelected: (T) -> Boolean,
-    onSelected: (T) -> Unit,
-    onDismiss: () -> Unit,
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text(title) },
-        text = {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                options.forEach { (value, label) ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onSelected(value) }
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        RadioButton(selected = isSelected(value), onClick = { onSelected(value) })
-                        Text(
-                            text = label,
-                            modifier = Modifier.padding(start = 12.dp),
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-                }
-            }
-        },
-        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.common_cancel)) } }
-    )
-}

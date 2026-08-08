@@ -130,6 +130,17 @@ class ProximityEngine @Inject constructor(
         }
     }
 
+    /**
+     * Drop this peer's in-memory state so a contact removed and later re-added with
+     * the same pubkey starts from a clean seed instead of inheriting pre-removal
+     * nearby/cooldown state (which would suppress their first "nearby" alert after
+     * re-add). Called from [com.locapeer.peer.PeerManager] on every removal path.
+     */
+    fun onPeerRemoved(deviceId: String) {
+        wasNearby.remove(deviceId)
+        lastNotifiedAt.remove(deviceId)
+    }
+
     private fun sendTrackingAlertToPeer(peerPubkey: String) {
         scope.launch {
             try {

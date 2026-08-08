@@ -27,6 +27,19 @@
     <string name="common_deny">നിരസിക്കുക</string>
 
     <!-- ── നാവിഗേഷൻ ടാബ് ലേബലുകൾ ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">ജിയോഫെൻസുകളും ചലന ചരിത്രവും</string>
+    <string name="peer_category_history_title">സോണുകളും ചരിത്രവും</string>
+    <string name="peer_category_messaging_subtitle">ചാറ്റ് സന്ദേശങ്ങൾ അനുവദിക്കുക അല്ലെങ്കിൽ തടയുക</string>
+    <string name="peer_category_messaging_title">മെസേജിംഗ്</string>
+    <string name="peer_category_retention_subtitle">റിമോട്ട് ചരിത്രവും ശുദ്ധീകരണവും</string>
+    <string name="peer_category_retention_title">ഡാറ്റ നിലനിർത്തൽ</string>
+    <string name="peer_category_safety_subtitle">SOS, നഷ്ടപ്പെട്ട അപ്ഡേറ്റുകൾ, സാമീപ്യം, നിരീക്ഷണം</string>
+    <string name="peer_category_safety_title">സുരക്ഷയും അലേർട്ടുകളും</string>
+    <string name="peer_category_sharing_subtitle">റോളുകൾ, കൃത്യത, ഷെഡ്യൂൾ</string>
+    <string name="peer_category_sharing_title">പങ്കിടൽ നിയന്ത്രണങ്ങൾ</string>
+    <string name="scan_add_share">ചേർക്കുകയും പങ്കിടുകയും ചെയ്യുക</string>
+    <string name="scan_grant_permission">അനുമതി നൽകുക</string>
+    <string name="scan_request_sent_title">അഭ്യർത്ഥന അയച്ചു</string>
     <string name="tab_map">മാപ്പ്</string>
     <string name="tab_messages">സന്ദേശങ്ങൾ</string>
     <string name="tab_history">ചരിത്രം</string>

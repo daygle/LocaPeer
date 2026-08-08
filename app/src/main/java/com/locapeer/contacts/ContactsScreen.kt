@@ -96,11 +96,14 @@ fun ContactsScreen(
             // "Add contact" lives on the list itself (the familiar place for it) rather than only
             // as an icon in the top bar. Hidden during multi-select, where the bottom bar takes over.
             if (!isSelectionMode) {
-                ExtendedFloatingActionButton(
+                FloatingActionButton(
                     onClick = onNavigateToInvite,
-                    icon = { Icon(Icons.Default.PersonAdd, contentDescription = null) },
-                    text = { Text(stringResource(R.string.contacts_add_contact)) }
-                )
+                ) {
+                    Icon(
+                        Icons.Default.PersonAdd,
+                        contentDescription = stringResource(R.string.contacts_add_contact)
+                    )
+                }
             }
         },
         topBar = {

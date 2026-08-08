@@ -28,6 +28,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.supervised.SupervisionGate
 import com.locapeer.ui.components.CardDivider
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Settings landing page. Rather than one long scroll of every control, this shows the profile
@@ -139,6 +140,14 @@ fun SettingsScreen(
             // ── Active Temporary Shares ────────────────────────────────────────
             if (activeTempShares.isNotEmpty()) {
                 item {
+                    // One shared clock for the whole card instead of a per-share ticker,
+                    // so N active shares don't spawn N coroutines all updating every second.
+                    val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {
+                        while (true) {
+                            value = System.currentTimeMillis() / 1000L
+                            kotlinx.coroutines.delay(1.seconds)
+                        }
+                    }
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(16.dp),
@@ -167,12 +176,6 @@ fun SettingsScreen(
                             }
                             activeTempShares.forEachIndexed { index, (peer, config) ->
                                 val endsAt = config.temporaryShareEndsAtEpochSeconds ?: 0L
-                                val nowSec by produceState(initialValue = System.currentTimeMillis() / 1000L) {
-                                    while (true) {
-                                        value = System.currentTimeMillis() / 1000L
-                                        kotlinx.coroutines.delay(1000L)
-                                    }
-                                }
                                 if (index > 0) CardDivider()
                                 Row(
                                     modifier = Modifier

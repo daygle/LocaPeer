@@ -25,7 +25,7 @@ class RelaySettingsViewModel @Inject constructor(
     val relayStatus: StateFlow<Map<String, Boolean>> = relayClient.relayStatus
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
-    val allBuiltInRelays: List<String> = com.locapeer.settings.HARDCODED_RELAYS
+    val allBuiltInRelays: List<String> = HARDCODED_RELAYS
 
     /**
      * Validate and add a custom relay. Returns an error string key for the caller to show,
@@ -53,7 +53,7 @@ class RelaySettingsViewModel @Inject constructor(
 
     private fun isValidWssUrl(url: String): Boolean {
         val uri = try { java.net.URI(url) } catch (_: Exception) { return false }
-        return uri.scheme?.equals("wss", ignoreCase = true) == true && !uri.host.isNullOrBlank()
+        return (uri.scheme?.equals("wss", ignoreCase = true) == true) && !uri.host.isNullOrBlank()
     }
 
     enum class RelayAddResult { OK, INVALID, DUPLICATE }

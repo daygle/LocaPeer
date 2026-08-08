@@ -46,7 +46,7 @@ data class PinData(
     val isOverdue: Boolean,
     /**
      * True when this contact is currently broadcasting at the fast live-view cadence
-     * *and* their most recent fix is fresh — i.e. they are streaming their location live
+     * *and* their most recent fix is fresh - i.e. they are streaming their location live
      * right now (because someone is watching them). Derived purely from the heartbeat we
      * already receive; see [com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS].
      */

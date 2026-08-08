@@ -27,6 +27,19 @@
     <string name="common_deny">Απόρριψη</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Γεωφράκτες και ιστορικό μετακινήσεων</string>
+    <string name="peer_category_history_title">Ζώνες και ιστορικό</string>
+    <string name="peer_category_messaging_subtitle">Να επιτρέπονται ή να αποκλείονται τα μηνύματα συνομιλίας</string>
+    <string name="peer_category_messaging_title">Μηνύματα</string>
+    <string name="peer_category_retention_subtitle">Απομακρυσμένο ιστορικό και διαγραφή</string>
+    <string name="peer_category_retention_title">Διατήρηση δεδομένων</string>
+    <string name="peer_category_safety_subtitle">SOS, χαμένες ενημερώσεις, εγγύτητα, επίβλεψη</string>
+    <string name="peer_category_safety_title">Ασφάλεια και ειδοποιήσεις</string>
+    <string name="peer_category_sharing_subtitle">Ρόλοι, ακρίβεια και πρόγραμμα</string>
+    <string name="peer_category_sharing_title">Έλεγχοι κοινοποίησης</string>
+    <string name="scan_add_share">Προσθήκη και κοινοποίηση</string>
+    <string name="scan_grant_permission">Χορήγηση άδειας</string>
+    <string name="scan_request_sent_title">Η αίτηση στάλθηκε</string>
     <string name="tab_map">Χάρτης</string>
     <string name="tab_messages">Μηνύματα</string>
     <string name="tab_history">Ιστορικό</string>

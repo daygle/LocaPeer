@@ -27,6 +27,19 @@
     <string name="common_deny">Didu</string>
 
     <!-- ── Mallattoo taabii naannawaa ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences fi seenaa sochii</string>
+    <string name="peer_category_history_title">Naannolee fi Seenaa</string>
+    <string name="peer_category_messaging_subtitle">Ergaawwan haasaa hayyamuu ykn cufuu</string>
+    <string name="peer_category_messaging_title">Ergaawwan</string>
+    <string name="peer_category_retention_subtitle">Seenaa fagoo fi qulqullessuu</string>
+    <string name="peer_category_retention_title">Data Tursiisuu</string>
+    <string name="peer_category_safety_subtitle">SOS, haaromsa irraa hafan, dhihoo ta\'uu, to\'annoo</string>
+    <string name="peer_category_safety_title">Nageenya fi Akeekkachiisota</string>
+    <string name="peer_category_sharing_subtitle">Shoorawwan, sirrummaa fi sagantaa</string>
+    <string name="peer_category_sharing_title">To\'annoowwan Qoodiinsaa</string>
+    <string name="scan_add_share">Itti dabaluu fi Qooduu</string>
+    <string name="scan_grant_permission">Hayyama kennuu</string>
+    <string name="scan_request_sent_title">Gaaffiin ergame</string>
     <string name="tab_map">Kaartaa</string>
     <string name="tab_messages">Ergaawwan</string>
     <string name="tab_history">Seenaa</string>

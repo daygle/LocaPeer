@@ -27,6 +27,19 @@
     <string name="common_deny">Kataa</string>
 
     <!-- ── Lebo za Vichupo vya Urambazaji ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Maeneo ya Kijiografia na historia ya mwendo</string>
+    <string name="peer_category_history_title">Kanda na Historia</string>
+    <string name="peer_category_messaging_subtitle">Ruhusu au zuia ujumbe wa gumzo</string>
+    <string name="peer_category_messaging_title">Ujumbe</string>
+    <string name="peer_category_retention_subtitle">Historia ya mbali na usafishaji</string>
+    <string name="peer_category_retention_title">Uhifadhi wa Data</string>
+    <string name="peer_category_safety_subtitle">SOS, masasisho yaliyokosekana, ukaribu, usimamizi</string>
+    <string name="peer_category_safety_title">Usalama na Arifa</string>
+    <string name="peer_category_sharing_subtitle">Majukumu, usahihi na ratiba</string>
+    <string name="peer_category_sharing_title">Udhibiti wa Kushiriki</string>
+    <string name="scan_add_share">Ongeza na Shiriki</string>
+    <string name="scan_grant_permission">Toa Ruhusa</string>
+    <string name="scan_request_sent_title">Ombi Limetumwa</string>
     <string name="tab_map">Ramani</string>
     <string name="tab_messages">Ujumbe</string>
     <string name="tab_history">Historia</string>

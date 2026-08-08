@@ -27,6 +27,19 @@
     <string name="common_deny">Elutasítás</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geokerítések és mozgáselőzmények</string>
+    <string name="peer_category_history_title">Zónák és előzmények</string>
+    <string name="peer_category_messaging_subtitle">Csevegőüzenetek engedélyezése vagy tiltása</string>
+    <string name="peer_category_messaging_title">Üzenetküldés</string>
+    <string name="peer_category_retention_subtitle">Távoli előzmények és törlés</string>
+    <string name="peer_category_retention_title">Adatmegőrzés</string>
+    <string name="peer_category_safety_subtitle">SOS, kimaradt frissítések, közelség, felügyelet</string>
+    <string name="peer_category_safety_title">Biztonság és riasztások</string>
+    <string name="peer_category_sharing_subtitle">Szerepek, pontosság és ütemezés</string>
+    <string name="peer_category_sharing_title">Megosztásvezérlés</string>
+    <string name="scan_add_share">Hozzáadás és megosztás</string>
+    <string name="scan_grant_permission">Engedély megadása</string>
+    <string name="scan_request_sent_title">Kérés elküldve</string>
     <string name="tab_map">Térkép</string>
     <string name="tab_messages">Üzenetek</string>
     <string name="tab_history">Előzmények</string>

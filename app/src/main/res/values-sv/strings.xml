@@ -27,6 +27,19 @@
     <string name="common_deny">Neka</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geostaket och rörelsehistorik</string>
+    <string name="peer_category_history_title">Zoner och historik</string>
+    <string name="peer_category_messaging_subtitle">Tillåt eller blockera chattmeddelanden</string>
+    <string name="peer_category_messaging_title">Meddelanden</string>
+    <string name="peer_category_retention_subtitle">Fjärrhistorik och rensning</string>
+    <string name="peer_category_retention_title">Datalagring</string>
+    <string name="peer_category_safety_subtitle">SOS, missade uppdateringar, närhet, övervakning</string>
+    <string name="peer_category_safety_title">Säkerhet och larm</string>
+    <string name="peer_category_sharing_subtitle">Roller, precision och schema</string>
+    <string name="peer_category_sharing_title">Delningskontroller</string>
+    <string name="scan_add_share">Lägg till och dela</string>
+    <string name="scan_grant_permission">Bevilja behörighet</string>
+    <string name="scan_request_sent_title">Förfrågan skickad</string>
     <string name="tab_map">Karta</string>
     <string name="tab_messages">Meddelanden</string>
     <string name="tab_history">Historik</string>

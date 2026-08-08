@@ -27,6 +27,19 @@
     <string name="common_deny">رد کردن</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">حصارهای جغرافیایی و تاریخچه جابه‌جایی</string>
+    <string name="peer_category_history_title">مناطق و تاریخچه</string>
+    <string name="peer_category_messaging_subtitle">اجازه دادن یا مسدود کردن پیام‌های گفتگو</string>
+    <string name="peer_category_messaging_title">پیام‌رسانی</string>
+    <string name="peer_category_retention_subtitle">تاریخچه از راه دور و پاک‌سازی</string>
+    <string name="peer_category_retention_title">نگهداری داده</string>
+    <string name="peer_category_safety_subtitle">SOS، به‌روزرسانی‌های از دست رفته، نزدیکی، نظارت</string>
+    <string name="peer_category_safety_title">ایمنی و هشدارها</string>
+    <string name="peer_category_sharing_subtitle">نقش‌ها، دقت و زمان‌بندی</string>
+    <string name="peer_category_sharing_title">کنترل‌های اشتراک‌گذاری</string>
+    <string name="scan_add_share">افزودن و اشتراک‌گذاری</string>
+    <string name="scan_grant_permission">اعطای مجوز</string>
+    <string name="scan_request_sent_title">درخواست ارسال شد</string>
     <string name="tab_map">نقشه</string>
     <string name="tab_messages">پیام‌ها</string>
     <string name="tab_history">تاریخچه</string>

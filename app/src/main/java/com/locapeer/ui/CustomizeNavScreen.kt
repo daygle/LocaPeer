@@ -30,14 +30,13 @@ fun CustomizeNavScreen(
     val scope = rememberCoroutineScope()
 
     // Build ordered list with visible flag. Map is always visible and pinned first.
-    val currentIds = settings?.navTabIds ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings")
-    val screenByRoute = ALL_NAV_SCREENS.associateBy { it.route }
+    val currentIds = settings?.navTabIds ?: DEFAULT_NAV_TAB_IDS
 
     // State: ordered list of (Screen, visible)
     val items = remember(currentIds) {
         val visibleSet = currentIds.toSet()
         // Start with the user's saved order for visible items
-        val orderedVisible = currentIds.mapNotNull { screenByRoute[it] }
+        val orderedVisible = currentIds.mapNotNull { SCREEN_BY_ROUTE[it] }
         // Append any screens not currently in the list as hidden
         val hidden = ALL_NAV_SCREENS.filter { it.route !in visibleSet }
         (orderedVisible + hidden).map { it to (it.route in visibleSet) }.toMutableStateList()
@@ -79,7 +78,7 @@ fun CustomizeNavScreen(
                     ListItem(
                         headlineContent = {
                             Text(
-                                stringResource(screen.labelRes),
+                                navTabLabel(screen.route),
                                 fontWeight = if (isMap) FontWeight.SemiBold else FontWeight.Normal
                             )
                         },

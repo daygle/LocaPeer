@@ -12,6 +12,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.toScheduleRules
+import com.locapeer.ui.DEFAULT_NAV_TAB_IDS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.IOException
 import javax.inject.Inject
@@ -35,7 +35,7 @@ val HARDCODED_RELAYS = listOf(
     "wss://relay.daygle.net",
     "wss://nos.lol",
     "wss://relay.damus.io",
-    "wss://relay.snort.social"
+    "wss://relay.snort.social",
 )
 
 /**
@@ -43,7 +43,7 @@ val HARDCODED_RELAYS = listOf(
  * relay we control and the safe default rendezvous. The remaining [HARDCODED_RELAYS] are
  * large public Nostr relays: encrypted payloads are safe on them, but the event envelope
  * (recipient `p` tags, kinds, timing) is not, so a privacy-conscious user can switch them
- * off via [AppSettings.usePublicRelays] and rely on the primary plus their own custom
+ * off and rely on the primary plus their own custom
  * relays. Peers' invite supplied relays are always honoured so contacts can still connect.
  */
 val PRIMARY_RELAY: String = HARDCODED_RELAYS.first()
@@ -98,7 +98,7 @@ data class AppSettings(
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
-    val navTabIds: List<String> = listOf("map", "messages", "history-tab", "contacts", "invite", "settings"),
+    val navTabIds: List<String> = DEFAULT_NAV_TAB_IDS,
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
     val startRoute: String = "map",
     /** Hex colour string for the user's own map pin (e.g. "#1565C0"). Empty = auto from name. */
@@ -252,7 +252,7 @@ class AppPreferences @Inject constructor(
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
                     ?.takeIf { it.size >= 2 }
-                    ?: listOf("map", "messages", "history-tab", "contacts", "invite", "settings"),
+                    ?: DEFAULT_NAV_TAB_IDS,
                 startRoute = prefs[KEY_START_ROUTE] ?: "map",
                 localLocationRetentionDays = prefs[KEY_LOCAL_LOCATION_RETENTION] ?: 90,
                 localMessageRetentionDays = prefs[KEY_LOCAL_MESSAGE_RETENTION] ?: 90,

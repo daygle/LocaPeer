@@ -27,6 +27,19 @@
     <string name="common_deny">拒绝</string>
 
     <!-- ── 导航标签 ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">地理围栏和移动历史</string>
+    <string name="peer_category_history_title">区域与历史</string>
+    <string name="peer_category_messaging_subtitle">允许或阻止聊天消息</string>
+    <string name="peer_category_messaging_title">消息</string>
+    <string name="peer_category_retention_subtitle">远程历史记录和清除</string>
+    <string name="peer_category_retention_title">数据保留</string>
+    <string name="peer_category_safety_subtitle">SOS、错过的更新、靠近提醒、监督</string>
+    <string name="peer_category_safety_title">安全与警报</string>
+    <string name="peer_category_sharing_subtitle">角色、精度和计划</string>
+    <string name="peer_category_sharing_title">共享控制</string>
+    <string name="scan_add_share">添加并分享</string>
+    <string name="scan_grant_permission">授予权限</string>
+    <string name="scan_request_sent_title">请求已发送</string>
     <string name="tab_map">地图</string>
     <string name="tab_messages">消息</string>
     <string name="tab_history">历史</string>

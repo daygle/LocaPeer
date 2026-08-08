@@ -27,6 +27,19 @@
     <string name="common_deny">Rifiuta</string>
 
     <!-- ── Etichette schede di navigazione ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofence e cronologia spostamenti</string>
+    <string name="peer_category_history_title">Zone e cronologia</string>
+    <string name="peer_category_messaging_subtitle">Consenti o blocca i messaggi chat</string>
+    <string name="peer_category_messaging_title">Messaggistica</string>
+    <string name="peer_category_retention_subtitle">Cronologia remota e pulizia</string>
+    <string name="peer_category_retention_title">Conservazione dati</string>
+    <string name="peer_category_safety_subtitle">SOS, aggiornamenti mancati, vicinanza, supervisione</string>
+    <string name="peer_category_safety_title">Sicurezza e avvisi</string>
+    <string name="peer_category_sharing_subtitle">Ruoli, precisione e pianificazione</string>
+    <string name="peer_category_sharing_title">Controlli di condivisione</string>
+    <string name="scan_add_share">Aggiungi e condividi</string>
+    <string name="scan_grant_permission">Concedi autorizzazione</string>
+    <string name="scan_request_sent_title">Richiesta inviata</string>
     <string name="tab_map">Mappa</string>
     <string name="tab_messages">Messaggi</string>
     <string name="tab_history">Cronologia</string>

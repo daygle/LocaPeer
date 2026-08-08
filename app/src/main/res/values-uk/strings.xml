@@ -27,6 +27,19 @@
     <string name="common_deny">Відхилити</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Геозони та історія переміщень</string>
+    <string name="peer_category_history_title">Зони та історія</string>
+    <string name="peer_category_messaging_subtitle">Дозволити або блокувати повідомлення чату</string>
+    <string name="peer_category_messaging_title">Повідомлення</string>
+    <string name="peer_category_retention_subtitle">Віддалена історія та очищення</string>
+    <string name="peer_category_retention_title">Зберігання даних</string>
+    <string name="peer_category_safety_subtitle">SOS, пропущені оновлення, близькість, нагляд</string>
+    <string name="peer_category_safety_title">Безпека та оповіщення</string>
+    <string name="peer_category_sharing_subtitle">Ролі, точність і розклад</string>
+    <string name="peer_category_sharing_title">Керування обміном</string>
+    <string name="scan_add_share">Додати та поділитися</string>
+    <string name="scan_grant_permission">Надати дозвіл</string>
+    <string name="scan_request_sent_title">Запит надіслано</string>
     <string name="tab_map">Карта</string>
     <string name="tab_messages">Повідомлення</string>
     <string name="tab_history">Історія</string>

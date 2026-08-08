@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
@@ -20,7 +19,7 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val prefs: AppPreferences,
-    private val configDao: PeerSharingConfigDao
+    private val configDao: PeerSharingConfigDao,
 ) : ViewModel() {
 
     val scope: String = savedStateHandle.get<String>("scope") ?: "global"

@@ -27,6 +27,19 @@
     <string name="common_deny">প্রত্যাখ্যান করুন</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">জিওফেন্স এবং চলাচলের ইতিহাস</string>
+    <string name="peer_category_history_title">অঞ্চল ও ইতিহাস</string>
+    <string name="peer_category_messaging_subtitle">চ্যাট বার্তা অনুমোদন বা ব্লক করুন</string>
+    <string name="peer_category_messaging_title">বার্তা</string>
+    <string name="peer_category_retention_subtitle">দূরবর্তী ইতিহাস এবং মুছে ফেলা</string>
+    <string name="peer_category_retention_title">ডেটা সংরক্ষণ</string>
+    <string name="peer_category_safety_subtitle">SOS, মিস করা আপডেট, নিকটবর্তিতা, তত্ত্বাবধান</string>
+    <string name="peer_category_safety_title">নিরাপত্তা ও সতর্কতা</string>
+    <string name="peer_category_sharing_subtitle">ভূমিকা, নির্ভুলতা এবং সময়সূচি</string>
+    <string name="peer_category_sharing_title">শেয়ারিং নিয়ন্ত্রণ</string>
+    <string name="scan_add_share">যোগ করুন ও শেয়ার করুন</string>
+    <string name="scan_grant_permission">অনুমতি দিন</string>
+    <string name="scan_request_sent_title">অনুরোধ পাঠানো হয়েছে</string>
     <string name="tab_map">মানচিত্র</string>
     <string name="tab_messages">বার্তা</string>
     <string name="tab_history">ইতিহাস</string>

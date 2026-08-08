@@ -27,6 +27,19 @@
     <string name="common_deny">Refuser</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Clôtures virtuelles et historique des mouvements</string>
+    <string name="peer_category_history_title">Zones et historique</string>
+    <string name="peer_category_messaging_subtitle">Autoriser ou bloquer les messages de discussion</string>
+    <string name="peer_category_messaging_title">Messagerie</string>
+    <string name="peer_category_retention_subtitle">Historique distant et purge</string>
+    <string name="peer_category_retention_title">Rétention des données</string>
+    <string name="peer_category_safety_subtitle">SOS, mises à jour manquées, proximité, supervision</string>
+    <string name="peer_category_safety_title">Sécurité et alertes</string>
+    <string name="peer_category_sharing_subtitle">Rôles, précision et planification</string>
+    <string name="peer_category_sharing_title">Contrôles de partage</string>
+    <string name="scan_add_share">Ajouter et partager</string>
+    <string name="scan_grant_permission">Accorder l\'autorisation</string>
+    <string name="scan_request_sent_title">Demande envoyée</string>
     <string name="tab_map">Carte</string>
     <string name="tab_messages">Messages</string>
     <string name="tab_history">Historique</string>

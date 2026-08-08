@@ -27,6 +27,19 @@
     <string name="common_deny">Red bike</string>
 
     <!-- ── Etîketên tabê navîgasyonê ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geofences û dîroka tevgerê</string>
+    <string name="peer_category_history_title">Herêm &amp; Dîrok</string>
+    <string name="peer_category_messaging_subtitle">Peyamên sohbetê destûr bide an asteng bike</string>
+    <string name="peer_category_messaging_title">Peyamşandin</string>
+    <string name="peer_category_retention_subtitle">Dîroka dûr û paqijkirin</string>
+    <string name="peer_category_retention_title">Girtina Daneyan</string>
+    <string name="peer_category_safety_subtitle">SOS, nûvekirinên berdayî, nêzîkatî, çavdêrî</string>
+    <string name="peer_category_safety_title">Ewlehî &amp; Hişyarî</string>
+    <string name="peer_category_sharing_subtitle">Rol, rastbûn û bername</string>
+    <string name="peer_category_sharing_title">Kontrolên Parvekirinê</string>
+    <string name="scan_add_share">Zêde bike &amp; Parve bike</string>
+    <string name="scan_grant_permission">Destûr bide</string>
+    <string name="scan_request_sent_title">Daxwaz hate şandin</string>
     <string name="tab_map">Nexşe</string>
     <string name="tab_messages">Peyam</string>
     <string name="tab_history">Dîrok</string>

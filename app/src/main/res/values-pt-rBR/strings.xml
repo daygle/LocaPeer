@@ -28,6 +28,19 @@
     <string name="common_deny">Recusar</string>
 
     <!-- ── Rótulos das abas de navegação ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Geocercas e histórico de movimentação</string>
+    <string name="peer_category_history_title">Zonas e Histórico</string>
+    <string name="peer_category_messaging_subtitle">Permitir ou bloquear mensagens de chat</string>
+    <string name="peer_category_messaging_title">Mensagens</string>
+    <string name="peer_category_retention_subtitle">Histórico remoto e limpeza</string>
+    <string name="peer_category_retention_title">Retenção de Dados</string>
+    <string name="peer_category_safety_subtitle">SOS, atualizações perdidas, proximidade, supervisão</string>
+    <string name="peer_category_safety_title">Segurança e Alertas</string>
+    <string name="peer_category_sharing_subtitle">Papéis, precisão e programação</string>
+    <string name="peer_category_sharing_title">Controles de Compartilhamento</string>
+    <string name="scan_add_share">Adicionar e Compartilhar</string>
+    <string name="scan_grant_permission">Conceder Permissão</string>
+    <string name="scan_request_sent_title">Solicitação Enviada</string>
     <string name="tab_map">Mapa</string>
     <string name="tab_messages">Mensagens</string>
     <string name="tab_history">Histórico</string>

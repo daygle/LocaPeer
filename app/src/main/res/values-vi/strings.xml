@@ -27,6 +27,19 @@
     <string name="common_deny">Từ chối</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
+    <string name="peer_category_history_subtitle">Hàng rào địa lý và lịch sử di chuyển</string>
+    <string name="peer_category_history_title">Khu vực và lịch sử</string>
+    <string name="peer_category_messaging_subtitle">Cho phép hoặc chặn tin nhắn trò chuyện</string>
+    <string name="peer_category_messaging_title">Nhắn tin</string>
+    <string name="peer_category_retention_subtitle">Lịch sử từ xa và dọn dẹp</string>
+    <string name="peer_category_retention_title">Lưu trữ dữ liệu</string>
+    <string name="peer_category_safety_subtitle">SOS, cập nhật bị bỏ lỡ, khoảng cách gần, giám sát</string>
+    <string name="peer_category_safety_title">An toàn và cảnh báo</string>
+    <string name="peer_category_sharing_subtitle">Vai trò, độ chính xác và lịch trình</string>
+    <string name="peer_category_sharing_title">Kiểm soát chia sẻ</string>
+    <string name="scan_add_share">Thêm và chia sẻ</string>
+    <string name="scan_grant_permission">Cấp quyền</string>
+    <string name="scan_request_sent_title">Đã gửi yêu cầu</string>
     <string name="tab_map">Bản đồ</string>
     <string name="tab_messages">Tin nhắn</string>
     <string name="tab_history">Lịch sử</string>
