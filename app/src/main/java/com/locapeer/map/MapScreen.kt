@@ -139,12 +139,7 @@ fun MapScreen(
         selectedPinAddress = Geocoding.reverseGeocode(context, hb.lat, hb.lng)
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-      LocationOffBanner(
-          visible = locationServicesOff,
-          onEnable = { PermissionManager.openLocationSettings(context) }
-      )
-      Box(modifier = Modifier.fillMaxSize().weight(1f)) {
+    Box(modifier = Modifier.fillMaxSize()) {
         OsmdroidMapView(
                 pins = uiState.pins,
                 geofences = if (showGeofences) uiState.geofences else emptyList(),
@@ -315,9 +310,14 @@ fun MapScreen(
                     )
                 }
             }
-      }
+
+            LocationOffBanner(
+                visible = locationServicesOff,
+                onEnable = { PermissionManager.openLocationSettings(context) },
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
+        }
     }
-}
 
 /**
  * A dismiss-free warning shown at the very top of the map when the device's location master
@@ -325,9 +325,10 @@ fun MapScreen(
  * broken with no explanation; this tells the user what's wrong and routes them to fix it.
  */
 @Composable
-private fun LocationOffBanner(visible: Boolean, onEnable: () -> Unit) {
+private fun LocationOffBanner(visible: Boolean, onEnable: () -> Unit, modifier: Modifier = Modifier) {
     AnimatedVisibility(
         visible = visible,
+        modifier = modifier,
         enter = expandVertically() + fadeIn(),
         exit = shrinkVertically() + fadeOut()
     ) {
