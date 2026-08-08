@@ -59,7 +59,7 @@
     <string name="settings_section_map">Map</string>
     <string name="settings_section_battery_performance">Battery &amp; Performance</string>
     <string name="settings_section_units_display">Units &amp; Display</string>
-    <string name="settings_section_retention">Retention (This Device)</string>
+    <string name="settings_section_retention">Retention</string>
     <string name="settings_section_appearance">Appearance</string>
     <string name="settings_section_connection">Connection</string>
     <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
