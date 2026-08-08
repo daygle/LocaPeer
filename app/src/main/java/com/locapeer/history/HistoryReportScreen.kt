@@ -447,7 +447,8 @@ private fun HistoryMapTab(
                     setBuiltInZoomControls(false)
                     setMultiTouchControls(true)
                     isVerticalMapRepetitionEnabled = false
-                    controller.setZoom(15.0) // Set a default zoom level so it's not at 0.0
+                    // Keep the initial view broad enough for tile loading and orientation.
+                    controller.setZoom(13.0)
                     setOnTouchListener { v, event ->
                         when (event.action) {
                             android.view.MotionEvent.ACTION_DOWN,
@@ -553,7 +554,9 @@ private fun HistoryMapTab(
                     val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
                     val bounds = BoundingBox.fromGeoPoints(points)
                     if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpanWithDateLine < 1e-4)) {
-                        mapView.controller.setZoom(16.0)
+                        // A single fix has no bounds to fit; use a useful neighbourhood view
+                        // instead of zooming so far in that the map appears to be a blank grid.
+                        mapView.controller.setZoom(14.0)
                         mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
                     } else if (mapView.width > 0) {
                         mapView.zoomToBoundingBox(bounds, false, 64)
