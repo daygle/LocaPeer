@@ -450,7 +450,6 @@ fun PeerZonesHistoryScreen(
     peerName: String,
     onNavigateBack: () -> Unit,
     onNavigateToGeofences: (String) -> Unit,
-    onNavigateToHistory: (String) -> Unit,
     vm: PeerSharingViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(peerId) { vm.init(peerId) }
@@ -468,18 +467,6 @@ fun PeerZonesHistoryScreen(
                 subtitle = stringResource(R.string.peer_geofences_sub, peerName),
                 enabled = receivesLocation,
                 onClick = { onNavigateToGeofences(peerId) }
-            )
-        }
-
-        SettingsCard(
-            headerIcon = Icons.Default.History,
-            headerTitle = stringResource(R.string.peer_location_history)
-        ) {
-            SettingsRow(
-                title = stringResource(R.string.peer_location_history),
-                subtitle = stringResource(R.string.peer_location_history_sub, peerName),
-                enabled = receivesLocation,
-                onClick = { onNavigateToHistory(peerId) }
             )
         }
     }

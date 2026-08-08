@@ -556,6 +556,9 @@ fun LocaPeerNavHost(
                     onNavigateToZonesHistory = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/zones-history")
                     },
+                    onNavigateToLocationHistory = {
+                        navController.navigate("history-report?peerId=$peerId")
+                    },
                     onNavigateToMessaging = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/messaging")
                     },
@@ -624,9 +627,6 @@ fun LocaPeerNavHost(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToGeofences = { id ->
                         navController.navigate("geofences?peerId=$id")
-                    },
-                    onNavigateToHistory = { id ->
-                        navController.navigate("history-report?peerId=$id")
                     }
                 )
             }
