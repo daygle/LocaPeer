@@ -46,13 +46,13 @@ fun InviteScreen(
     onNavigateBack: () -> Unit,
     inviteData: String? = null,
     inviteVm: InviteViewModel = hiltViewModel(),
-    scanVm: ScanViewModel = hiltViewModel()
+    scanVm: ScanViewModel = hiltViewModel(),
 ) {
     var selectedTab by remember { mutableStateOf(if (inviteData != null) InviteTab.ADD_CONTACT else InviteTab.MY_INVITE) }
     val context = LocalContext.current
 
     LaunchedEffect(inviteData) {
-        if (inviteData != null) scanVm.processInviteLink(inviteData)
+        inviteData?.let { scanVm.processInviteLink(it) }
     }
 
     Scaffold(
