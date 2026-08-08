@@ -63,7 +63,6 @@
     <string name="settings_section_retention">Retenção (Neste Dispositivo)</string>
     <string name="settings_section_appearance">Aparência</string>
     <string name="settings_section_backup_keys">Backup e Chaves</string>
-    <string name="settings_section_about">Sobre</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Editar Nome</string>
@@ -315,15 +314,6 @@
     <string name="common_try_again">Tentar Novamente</string>
 
     <!-- ── Tela de escaneamento de convite ────────────────────────────────── -->
-    <string name="scan_title">Escanear Convite</string>
-    <string name="scan_camera_needed">A permissão da câmera é necessária para escanear códigos QR.</string>
-    <string name="scan_grant_permission">Conceder Permissão</string>
-    <string name="scan_add_contact_title">Adicionar contato?</string>
-    <string name="scan_add_contact_message">Isso conectará você com %1$s e começará o compartilhamento de localização entre vocês.</string>
-    <string name="scan_add_share">Adicionar e Compartilhar</string>
-    <string name="scan_request_sent_title">Solicitação Enviada!</string>
-    <string name="scan_request_sent_message">Uma solicitação foi enviada para %1$s. Vocês estarão conectados assim que eles aceitarem.</string>
-    <string name="scan_failed">Falha no escaneamento: %1$s</string>
 
     <string name="cd_back">Voltar</string>
     <string name="common_review">Revisar</string>
@@ -875,5 +865,22 @@
     <string name="settings_temporary_location_share">Compartilhamento de localização temporário</string>
     <string name="app_lock_no_credential">Nenhum bloqueio de tela está configurado neste dispositivo, então não há nada para desbloquear. Configure um PIN, padrão, senha ou biometria nas configurações do dispositivo e reabra o LocaPeer.</string>
     <string name="backup_key_needs_password">Defina uma senha para incluir sua chave privada. Um arquivo de chave não criptografado pode permitir que qualquer pessoa assuma sua identidade.</string>
+    <string name="settings_category_location_privacy_subtitle">Compartilhamento, horários, geofences, alertas</string>
+    <string name="settings_category_security_subtitle">Bloqueio do app, permissões, modo supervisionado</string>
+    <string name="settings_category_map_subtitle">Ponto de partida, zoom, cor do marcador</string>
+    <string name="settings_category_performance_subtitle">Cadência de atualização e filtros de precisão</string>
+    <string name="settings_category_units_subtitle">Velocidade, distância, altitude, hora</string>
+    <string name="settings_category_retention_subtitle">Por quanto tempo os dados são mantidos neste dispositivo</string>
+    <string name="settings_category_appearance_subtitle">Tema, cor, navegação, idioma</string>
+    <string name="settings_category_backup_subtitle">Exportação, importação, chave de identidade</string>
+    <string name="contacts_add_contact">Adicionar contato</string>
+    <string name="map_location_off_title">A localização está desativada</string>
+    <string name="map_location_off_message">Sua posição não pode ser atualizada ou compartilhada até que você ative a localização do dispositivo.</string>
+    <string name="map_location_off_action">Abrir configurações</string>
+    <string name="map_live">● Ao vivo</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d mensagem na fila</item>
+        <item quantity="other">%1$d mensagens na fila</item>
+    </plurals>
 </resources>
 

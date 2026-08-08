@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Uhifadhi (Kifaa Hiki)</string>
     <string name="settings_section_appearance">Muonekano</string>
     <string name="settings_section_backup_keys">Hifadhi Nakala &amp; Funguo</string>
-    <string name="settings_section_about">Kuhusu</string>
 
     <!-- Wasifu -->
     <string name="settings_edit_name">Hariri Jina</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Jaribu Tena</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Changanua Mwaliko</string>
-    <string name="scan_camera_needed">Ruhusa ya kamera inahitajika ili kuchanganua nambari za QR.</string>
-    <string name="scan_grant_permission">Toa Ruhusa</string>
-    <string name="scan_add_contact_title">Ongeza anwani?</string>
-    <string name="scan_add_contact_message">Hii itakuunganisha na %1$s na kuanza kushiriki eneo lenu.</string>
-    <string name="scan_add_share">Ongeza &amp; Shiriki</string>
-    <string name="scan_request_sent_title">Ombi Limeitwa!</string>
-    <string name="scan_request_sent_message">Ombi limetumwa kwa %1$s. Mtaunganishwa pindi watakapokubali.</string>
-    <string name="scan_failed">Changanuo limefeli: %1$s</string>
 
     <string name="cd_back">Nyuma</string>
     <string name="common_review">Kagua</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Kushiriki eneo kwa muda</string>
     <string name="app_lock_no_credential">Hakuna ufunguo wa skrini uliowekwa kwenye kifaa hiki, kwa hivyo hakuna cha kufungulia. Weka PIN, mchoro, nenosiri, au biometriki katika mipangilio ya kifaa chako, kisha ufungue tena LocaPeer.</string>
     <string name="backup_key_needs_password">Weka nenosiri ili kujumuisha ufunguo wako wa faragha. Faili ya ufunguo isiyosimbwa inaweza kumruhusu mtu yeyote kuchukua utambulisho wako.</string>
+    <string name="settings_category_location_privacy_subtitle">Kushiriki, ratiba, geofences, arifa</string>
+    <string name="settings_category_security_subtitle">Kufunga programu, ruhusa, hali ya usimamizi</string>
+    <string name="settings_category_map_subtitle">Hatua ya kuanzia, kukuza, rangi ya pini</string>
+    <string name="settings_category_performance_subtitle">Kasi ya kusasisha na vichujio vya usahihi</string>
+    <string name="settings_category_units_subtitle">Kasi, umbali, mwinuko, wakati</string>
+    <string name="settings_category_retention_subtitle">Muda gani data huwekwa kwenye kifaa hiki</string>
+    <string name="settings_category_appearance_subtitle">Mandhari, rangi, urambazaji, lugha</string>
+    <string name="settings_category_backup_subtitle">Hamisha, ingiza, ufunguo wa utambulisho</string>
+    <string name="contacts_add_contact">Ongeza anwani</string>
+    <string name="map_location_off_title">Mahali pamezimwa</string>
+    <string name="map_location_off_message">Nafasi yako haiwezi kusasishwa au kushirikiwa hadi uwashe mahali kwenye kifaa.</string>
+    <string name="map_location_off_action">Fungua mipangilio</string>
+    <string name="map_live">● Moja kwa moja</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">Ujumbe %1$d kwenye foleni</item>
+        <item quantity="other">Jumbe %1$d kwenye foleni</item>
+    </plurals>
 </resources>

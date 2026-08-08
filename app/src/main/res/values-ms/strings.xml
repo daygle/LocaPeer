@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Pengekalan (Peranti Ini)</string>
     <string name="settings_section_appearance">Rupa</string>
     <string name="settings_section_backup_keys">Sandaran &amp; Kunci</string>
-    <string name="settings_section_about">Perihal</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Edit Nama</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">Cuba Lagi</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Imbas Jemputan</string>
-    <string name="scan_camera_needed">Kebenaran kamera diperlukan untuk mengimbas kod QR.</string>
-    <string name="scan_grant_permission">Berikan Kebenaran</string>
-    <string name="scan_add_contact_title">Tambah kenalan?</string>
-    <string name="scan_add_contact_message">Ini akan menghubungkan anda dengan %1$s dan mula berkongsi lokasi antara satu sama lain.</string>
-    <string name="scan_add_share">Tambah &amp; Kongsi</string>
-    <string name="scan_request_sent_title">Permintaan Dihantar!</string>
-    <string name="scan_request_sent_message">Permintaan telah dihantar kepada %1$s. Anda akan dihubungkan setelah mereka menerima.</string>
-    <string name="scan_failed">Imbasan gagal: %1$s</string>
 
     <string name="cd_back">Kembali</string>
     <string name="common_review">Semak</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">Perkongsian lokasi sementara</string>
     <string name="app_lock_no_credential">Tiada kunci skrin ditetapkan pada peranti ini, jadi tiada apa untuk membuka kunci. Tetapkan PIN, corak, kata laluan, atau biometrik dalam tetapan peranti anda, kemudian buka semula LocaPeer.</string>
     <string name="backup_key_needs_password">Tetapkan kata laluan untuk menyertakan kunci peribadi anda. Fail kunci yang tidak disulitkan boleh membenarkan sesiapa sahaja mengambil alih identiti anda.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

@@ -62,7 +62,6 @@
     <string name="settings_section_retention">보관 (이 기기)</string>
     <string name="settings_section_appearance">모양</string>
     <string name="settings_section_backup_keys">백업 및 키</string>
-    <string name="settings_section_about">정보</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">이름 편집</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">다시 시도</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">초대 스캔</string>
-    <string name="scan_camera_needed">QR 코드를 스캔하려면 카메라 권한이 필요합니다.</string>
-    <string name="scan_grant_permission">권한 부여</string>
-    <string name="scan_add_contact_title">연락처를 추가할까요?</string>
-    <string name="scan_add_contact_message">%1$s 님과 연결되어 서로 위치를 공유하게 됩니다.</string>
-    <string name="scan_add_share">추가 및 공유</string>
-    <string name="scan_request_sent_title">요청 전송됨!</string>
-    <string name="scan_request_sent_message">%1$s 님에게 요청을 보냈습니다. 상대가 수락하면 연결됩니다.</string>
-    <string name="scan_failed">스캔 실패: %1$s</string>
 
     <string name="cd_back">뒤로</string>
     <string name="common_review">검토</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">임시 위치 공유</string>
     <string name="app_lock_no_credential">이 기기에 화면 잠금이 설정되어 있지 않아 잠금을 해제할 수단이 없습니다. 기기 설정에서 PIN, 패턴, 비밀번호 또는 생체 인증을 설정한 다음 LocaPeer를 다시 여세요.</string>
     <string name="backup_key_needs_password">개인 키를 포함하려면 비밀번호를 설정하세요. 암호화되지 않은 키 파일은 누구나 여러분의 신원을 탈취할 수 있게 만들 수 있습니다.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

@@ -313,15 +313,6 @@
     <string name="common_try_again">Intentar de nuevo</string>
 
     <!-- ── Pantalla de escaneo de invitación ─────────────────────────────────────────────── -->
-    <string name="scan_title">Escanear invitación</string>
-    <string name="scan_camera_needed">Se necesita permiso de cámara para escanear códigos QR.</string>
-    <string name="scan_grant_permission">Conceder permiso</string>
-    <string name="scan_add_contact_title">¿Agregar contacto?</string>
-    <string name="scan_add_contact_message">Esto lo conectará con %1$s y empezarán a compartir su ubicación entre sí.</string>
-    <string name="scan_add_share">Agregar y compartir</string>
-    <string name="scan_request_sent_title">¡Solicitud enviada!</string>
-    <string name="scan_request_sent_message">Se ha enviado una solicitud a %1$s. Se conectarán una vez que la acepte.</string>
-    <string name="scan_failed">Error de escaneo: %1$s</string>
 
     <string name="cd_back">Atrás</string>
     <string name="common_review">Revisar</string>
@@ -875,22 +866,22 @@
     <string name="settings_temporary_location_share">Compartir ubicación temporalmente</string>
     <string name="app_lock_no_credential">No hay ningún bloqueo de pantalla configurado en este dispositivo, así que no hay nada con qué desbloquear. Configura un PIN, patrón, contraseña o dato biométrico en la configuración de tu dispositivo y vuelve a abrir LocaPeer.</string>
     <string name="backup_key_needs_password">Establece una contraseña para incluir tu clave privada. Un archivo de clave sin cifrar podría permitir que cualquiera se apropie de tu identidad.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
-    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
-    <string name="map_live">● Live</string>
+    <string name="settings_category_location_privacy_subtitle">Uso compartido, horario, geovallas, alertas</string>
+    <string name="settings_category_security_subtitle">Bloqueo de app, permisos, modo supervisado</string>
+    <string name="settings_category_map_subtitle">Punto de partida, zoom, color del pin</string>
+    <string name="settings_category_performance_subtitle">Cadencia de actualización y filtros de precisión</string>
+    <string name="settings_category_units_subtitle">Velocidad, distancia, elevación, hora</string>
+    <string name="settings_category_retention_subtitle">Cuánto tiempo se conservan los datos en este dispositivo</string>
+    <string name="settings_category_appearance_subtitle">Tema, color, navegación, idioma</string>
+    <string name="settings_category_backup_subtitle">Exportar, importar, clave de identidad</string>
+    <string name="contacts_add_contact">Agregar contacto</string>
+    <string name="map_location_off_title">La ubicación está desactivada</string>
+    <string name="map_location_off_message">Tu posición no se puede actualizar ni compartir hasta que actives la ubicación del dispositivo.</string>
+    <string name="map_location_off_action">Abrir configuración</string>
+    <string name="map_live">● En vivo</string>
     <plurals name="about_pending_message_count">
-        <item quantity="one">%1$d queued message</item>
-        <item quantity="other">%1$d queued messages</item>
+        <item quantity="one">%1$d mensaje en cola</item>
+        <item quantity="other">%1$d mensajes en cola</item>
     </plurals>
 </resources>
 

@@ -62,7 +62,6 @@
     <string name="settings_section_retention">ಧಾರಣ (ಈ ಸಾಧನ)</string>
     <string name="settings_section_appearance">ಗೋಚರತೆ</string>
     <string name="settings_section_backup_keys">ಬ್ಯಾಕಪ್ ಮತ್ತು ಕೀಗಳು</string>
-    <string name="settings_section_about">ಬಗ್ಗೆ</string>
 
     <!-- ಪ್ರೊಫೈಲ್ -->
     <string name="settings_edit_name">ಹೆಸರನ್ನು ಬದಲಿಸಿ</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ</string>
 
     <!-- ── ಆಹ್ವಾನ ಸ್ಕ್ಯಾನ್ ಪರದೆ ─────────────────────────────────────────────── -->
-    <string name="scan_title">ಆಹ್ವಾನ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
-    <string name="scan_camera_needed">QR ಕೋಡ್‌ಗಳನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಲು ಕ್ಯಾಮೆರಾ ಅನುಮತಿ ಅಗತ್ಯವಿದೆ.</string>
-    <string name="scan_grant_permission">ಅನುಮತಿ ನೀಡಿ</string>
-    <string name="scan_add_contact_title">ಸಂಪರ್ಕವನ್ನು ಸೇರಿಸಬೇಕೇ?</string>
-    <string name="scan_add_contact_message">ಇದು ನಿಮ್ಮನ್ನು %1$s ರೊಂದಿಗೆ ಸಂಪರ್ಕಿಸುತ್ತದೆ ಮತ್ತು ಪರಸ್ಪರ ಸ್ಥಳ ಹಂಚಿಕೆಯನ್ನು ಪ್ರಾರಂಭಿಸುತ್ತದೆ.</string>
-    <string name="scan_add_share">ಸೇರಿಸಿ ಮತ್ತು ಹಂಚಿಕೊಳ್ಳಿ</string>
-    <string name="scan_request_sent_title">ವಿನಂತಿ ಕಳುಹಿಸಲಾಗಿದೆ!</string>
-    <string name="scan_request_sent_message">%1$s ಅವರಿಗೆ ವಿನಂತಿಯನ್ನು ಕಳುಹಿಸಲಾಗಿದೆ. ಅವರು ಒಪ್ಪಿಕೊಂಡ ನಂತರ ನೀವು ಸಂಪರ್ಕಗೊಳ್ಳುತ್ತೀರಿ.</string>
-    <string name="scan_failed">ಸ್ಕ್ಯಾನ್ ವಿಫಲವಾಗಿದೆ: %1$s</string>
 
     <string name="cd_back">ಹಿಂದಕ್ಕೆ</string>
     <string name="common_review">ಪರಿಶೀಲಿಸಿ</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">ತಾತ್ಕಾಲಿಕ ಸ್ಥಳ ಹಂಚಿಕೆ</string>
     <string name="app_lock_no_credential">ಈ ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಸ್ಕ್ರೀನ್ ಲಾಕ್ ಹೊಂದಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಏನೂ ಇಲ್ಲ. ನಿಮ್ಮ ಸಾಧನ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಒಂದು PIN, ಪ್ಯಾಟರ್ನ್, ಪಾಸ್‌ವರ್ಡ್, ಅಥವಾ ಬಯೋಮೆಟ್ರಿಕ್ ಹೊಂದಿಸಿ, ನಂತರ LocaPeer ಅನ್ನು ಮತ್ತೆ ತೆರೆಯಿರಿ.</string>
     <string name="backup_key_needs_password">ನಿಮ್ಮ ಖಾಸಗಿ ಕೀಯನ್ನು ಸೇರಿಸಲು ಒಂದು ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಸಿ. ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡದ ಕೀ ಫೈಲ್ ಯಾರಾದರೂ ನಿಮ್ಮ ಗುರುತನ್ನು ವಶಪಡಿಸಿಕೊಳ್ಳಲು ಅವಕಾಶ ನೀಡಬಹುದು.</string>
+    <string name="settings_category_location_privacy_subtitle">ಹಂಚಿಕೆ, ವೇಳಾಪಟ್ಟಿ, ಜಿಯೋಫೆನ್ಸ್‌ಗಳು, ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="settings_category_security_subtitle">ಅಪ್ಲಿಕೇಶನ್ ಲಾಕ್, ಅನುಮತಿಗಳು, ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್</string>
+    <string name="settings_category_map_subtitle">ಪ್ರಾರಂಭದ ಹಂತ, ಜೂಮ್, ಪಿನ್ ಬಣ್ಣ</string>
+    <string name="settings_category_performance_subtitle">ನವೀಕರಣ ಆವರ್ತನ ಮತ್ತು ನಿಖರತೆಯ ಫಿಲ್ಟರ್‌ಗಳು</string>
+    <string name="settings_category_units_subtitle">ವೇಗ, ದೂರ, ಎತ್ತರ, ಸಮಯ</string>
+    <string name="settings_category_retention_subtitle">ಈ ಸಾಧನದಲ್ಲಿ ಡೇಟಾವನ್ನು ಎಷ್ಟು ಸಮಯದವರೆಗೆ ಇರಿಸಲಾಗುತ್ತದೆ</string>
+    <string name="settings_category_appearance_subtitle">ಥೀಮ್, ಬಣ್ಣ, ನ್ಯಾವಿಗೇಷನ್, ಭಾಷೆ</string>
+    <string name="settings_category_backup_subtitle">ರಫ್ತು, ಆಮದು, ಗುರುತಿನ ಕೀ</string>
+    <string name="contacts_add_contact">ಸಂಪರ್ಕವನ್ನು ಸೇರಿಸಿ</string>
+    <string name="map_location_off_title">ಸ್ಥಳವನ್ನು ಆಫ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="map_location_off_message">ನೀವು ಸಾಧನದ ಸ್ಥಳವನ್ನು ಆನ್ ಮಾಡುವವರೆಗೆ ನಿಮ್ಮ ಸ್ಥಾನವನ್ನು ನವೀಕರಿಸಲು ಅಥವಾ ಹಂಚಿಕೊಳ್ಳಲು ಸಾಧ್ಯವಿಲ್ಲ.</string>
+    <string name="map_location_off_action">ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
+    <string name="map_live">● ಲೈವ್</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d ಕ್ಯೂ ಮಾಡಲಾದ ಸಂದೇಶ</item>
+        <item quantity="other">%1$d ಕ್ಯೂ ಮಾಡಲಾದ ಸಂದೇಶಗಳು</item>
+    </plurals>
 </resources>

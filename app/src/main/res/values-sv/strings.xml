@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Lagring (Denna enhet)</string>
     <string name="settings_section_appearance">Utseende</string>
     <string name="settings_section_backup_keys">Säkerhetskopiering &amp; Nycklar</string>
-    <string name="settings_section_about">Om</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Redigera namn</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Försök igen</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Skanna inbjudan</string>
-    <string name="scan_camera_needed">Kamerabehörighet krävs för att skanna QR-koder.</string>
-    <string name="scan_grant_permission">Bevilja behörighet</string>
-    <string name="scan_add_contact_title">Lägga till kontakt?</string>
-    <string name="scan_add_contact_message">Detta kopplar ihop dig med %1$s och ni börjar dela plats med varandra.</string>
-    <string name="scan_add_share">Lägg till och dela</string>
-    <string name="scan_request_sent_title">Förfrågan skickad!</string>
-    <string name="scan_request_sent_message">En förfrågan har skickats till %1$s. Ni kopplas ihop när den accepteras.</string>
-    <string name="scan_failed">Skanningen misslyckades: %1$s</string>
 
     <string name="cd_back">Bakåt</string>
     <string name="common_review">Granska</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Tillfällig platsdelning</string>
     <string name="app_lock_no_credential">Ingen skärmlåsning är inställd på den här enheten, så det finns inget att låsa upp med. Ställ in en PIN-kod, ett mönster, ett lösenord eller biometri i enhetens inställningar och öppna sedan LocaPeer igen.</string>
     <string name="backup_key_needs_password">Ange ett lösenord för att inkludera din privata nyckel. En okrypterad nyckelfil kan låta vem som helst ta över din identitet.</string>
+    <string name="settings_category_location_privacy_subtitle">Delning, schema, geofängsel, varningar</string>
+    <string name="settings_category_security_subtitle">Applås, behörigheter, övervakat läge</string>
+    <string name="settings_category_map_subtitle">Startpunkt, zoom, färg på nål</string>
+    <string name="settings_category_performance_subtitle">Uppdateringsfrekvens och noggrannhetsfilter</string>
+    <string name="settings_category_units_subtitle">Hastighet, avstånd, höjd, tid</string>
+    <string name="settings_category_retention_subtitle">Hur länge data sparas på den här enheten</string>
+    <string name="settings_category_appearance_subtitle">Tema, färg, navigering, språk</string>
+    <string name="settings_category_backup_subtitle">Exportera, importera, identitetsnyckel</string>
+    <string name="contacts_add_contact">Lägg till kontakt</string>
+    <string name="map_location_off_title">Plats är avstängd</string>
+    <string name="map_location_off_message">Din position kan inte uppdateras eller delas förrän du slår på enhetens plats.</string>
+    <string name="map_location_off_action">Öppna inställningar</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d köat meddelande</item>
+        <item quantity="other">%1$d köade meddelanden</item>
+    </plurals>
 </resources>

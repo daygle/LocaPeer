@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Girtin (Li ser vê amûrê)</string>
     <string name="settings_section_appearance">Xuyabûn</string>
     <string name="settings_section_backup_keys">Backup &amp; Mifte</string>
-    <string name="settings_section_about">Der barê</string>
 
     <!-- Profîl -->
     <string name="settings_edit_name">Nav Biguhere</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Dîsa Biceribîne</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Vexwendinê Bixwîne</string>
-    <string name="scan_camera_needed">Ji bo xwendina kodên QR destûra kêmereyê hewce ye.</string>
-    <string name="scan_grant_permission">Destûr Bide</string>
-    <string name="scan_add_contact_title">Têkilî zêde bike?</string>
-    <string name="scan_add_contact_message">Ev dê we bi %1$s re girê bide û dest bi parvekirina cihê we bi hev re bike.</string>
-    <string name="scan_add_share">Zêde Bike &amp; Parve Bike</string>
-    <string name="scan_request_sent_title">Daxwaz Hat Şandin!</string>
-    <string name="scan_request_sent_message">Daxwazek ji %1$s re hat şandin. Dema wan qebûl kir hûn ê werin girêdan.</string>
-    <string name="scan_failed">Xwendin bi ser neket: %1$s</string>
 
     <string name="cd_back">Vegere</string>
     <string name="common_review">Binirxîne</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Parvekirina cih a demkî</string>
     <string name="app_lock_no_credential">Li ser vê amûrê ti kilîta ekranê nehatiye danîn, ji ber vê yekê tiştek tune ku pê veke. Di mîhengên amûra xwe de PIN, şêwe, şîfre, an biometrîk saz bike, paşê LocaPeer ji nû ve veke.</string>
     <string name="backup_key_needs_password">Ji bo tevlîkirina kilîta xwe ya taybet şîfreyekê saz bike. Pelê kilîtê yê neşîfrekirî dikare bihêle her kes nasnameya te bi dest bixe.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

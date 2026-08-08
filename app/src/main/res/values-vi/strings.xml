@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Lưu trữ (Thiết bị này)</string>
     <string name="settings_section_appearance">Giao diện</string>
     <string name="settings_section_backup_keys">Sao lưu &amp; Khóa</string>
-    <string name="settings_section_about">Giới thiệu</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Chỉnh sửa tên</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">Thử lại</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Quét lời mời</string>
-    <string name="scan_camera_needed">Cần quyền máy ảnh để quét mã QR.</string>
-    <string name="scan_grant_permission">Cấp quyền</string>
-    <string name="scan_add_contact_title">Thêm liên hệ?</string>
-    <string name="scan_add_contact_message">Thao tác này sẽ kết nối bạn với %1$s và hai bên bắt đầu chia sẻ vị trí cho nhau.</string>
-    <string name="scan_add_share">Thêm và chia sẻ</string>
-    <string name="scan_request_sent_title">Đã gửi yêu cầu!</string>
-    <string name="scan_request_sent_message">Đã gửi yêu cầu tới %1$s. Bạn sẽ được kết nối khi họ chấp nhận.</string>
-    <string name="scan_failed">Quét thất bại: %1$s</string>
 
     <string name="cd_back">Quay lại</string>
     <string name="common_review">Xem lại</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">Chia sẻ vị trí tạm thời</string>
     <string name="app_lock_no_credential">Thiết bị này chưa đặt khóa màn hình nên không có gì để mở khóa. Hãy đặt mã PIN, hình mở khóa, mật khẩu hoặc sinh trắc học trong cài đặt thiết bị, rồi mở lại LocaPeer.</string>
     <string name="backup_key_needs_password">Đặt mật khẩu để bao gồm khóa riêng tư của bạn. Tệp khóa không được mã hóa có thể cho phép bất kỳ ai chiếm đoạt danh tính của bạn.</string>
+    <string name="settings_category_location_privacy_subtitle">Chia sẻ, lịch trình, vùng an toàn, cảnh báo</string>
+    <string name="settings_category_security_subtitle">Khóa ứng dụng, quyền hạn, chế độ giám sát</string>
+    <string name="settings_category_map_subtitle">Điểm xuất phát, thu phóng, màu ghim</string>
+    <string name="settings_category_performance_subtitle">Tần suất cập nhật và bộ lọc độ chính xác</string>
+    <string name="settings_category_units_subtitle">Tốc độ, khoảng cách, độ cao, thời gian</string>
+    <string name="settings_category_retention_subtitle">Thời gian lưu trữ dữ liệu trên thiết bị này</string>
+    <string name="settings_category_appearance_subtitle">Chủ đề, màu sắc, điều hướng, ngôn ngữ</string>
+    <string name="settings_category_backup_subtitle">Xuất, nhập, khóa định danh</string>
+    <string name="contacts_add_contact">Thêm liên hệ</string>
+    <string name="map_location_off_title">Vị trí đã bị tắt</string>
+    <string name="map_location_off_message">Vị trí của bạn không thể cập nhật hoặc chia sẻ cho đến khi bạn bật vị trí trên thiết bị.</string>
+    <string name="map_location_off_action">Mở cài đặt</string>
+    <string name="map_live">● Trực tiếp</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d tin nhắn trong hàng đợi</item>
+    </plurals>
 </resources>

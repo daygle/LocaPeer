@@ -62,7 +62,6 @@
     <string name="settings_section_retention">ဒေတာ ထိန်းသိမ်းမှု (ဤစက်ပစ္စည်းပေါ်တွင်)</string>
     <string name="settings_section_appearance">အသွင်အပြင်</string>
     <string name="settings_section_backup_keys">အရန်သိမ်းဆည်းမှုနှင့် ကီးများ</string>
-    <string name="settings_section_about">အကြောင်း</string>
 
     <!-- ပရိုဖိုင် -->
     <string name="settings_edit_name">အမည်ပြင်ဆင်ရန်</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">ထပ်မံကြိုးစားပါ</string>
 
     <!-- ── ဖိတ်ကြားချက် စကင်န်ဖတ်ခြင်း မျက်နှာပြင် ─────────────────────────────────────────────── -->
-    <string name="scan_title">ဖိတ်ကြားချက် စကင်န်ဖတ်ရန်</string>
-    <string name="scan_camera_needed">QR ကုဒ်များကို စကင်န်ဖတ်ရန် ကင်မရာ ခွင့်ပြုချက် လိုအပ်ပါသည်။</string>
-    <string name="scan_grant_permission">ခွင့်ပြုချက်ပေးရန်</string>
-    <string name="scan_add_contact_title">အဆက်အသွယ် ထည့်မလား။</string>
-    <string name="scan_add_contact_message">၎င်းသည် သင့်ကို %1$s နှင့် ဆက်သွယ်ပေးမည်ဖြစ်ပြီး အပြန်အလှန် တည်နေရာမျှဝေခြင်းကို စတင်ပါမည်။</string>
-    <string name="scan_add_share">ထည့်သွင်း၍ မျှဝေရန်</string>
-    <string name="scan_request_sent_title">တောင်းဆိုချက် ပို့ပြီးပါပြီ။</string>
-    <string name="scan_request_sent_message">%1$s ထံသို့ တောင်းဆိုချက် ပေးပို့ပြီးပါပြီ။ သူတို့ လက်ခံပြီးသည်နှင့် ချိတ်ဆက်မိပါလိမ့်မည်။</string>
-    <string name="scan_failed">စကင်န်ဖတ်ခြင်း မအောင်မြင်ပါ- %1$s</string>
 
     <string name="cd_back">နောက်သို့</string>
     <string name="common_review">ပြန်လည်သုံးသပ်ရန်</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">ယာယီ တည်နေရာမျှဝေခြင်း</string>
     <string name="app_lock_no_credential">ဤစက်ပစ္စည်းတွင် ဖန်သားပြင်လော့ခ် သတ်မှတ်မထားသဖြင့် လော့ခ်ဖွင့်ရန် မည်သည့်အရာမှ မရှိပါ။ သင့်စက်ဆက်တင်များတွင် PIN၊ ပုံစံ၊ စကားဝှက် သို့မဟုတ် ဇီဝဗေဒအချက်အလက်တစ်ခုကို သတ်မှတ်ပြီး LocaPeer ကို ပြန်ဖွင့်ပါ။</string>
     <string name="backup_key_needs_password">သင့်သီးသန့်ကီးကို ထည့်သွင်းရန် စကားဝှက်တစ်ခု သတ်မှတ်ပါ။ ကုဒ်ဝှက်မထားသော ကီးဖိုင်သည် မည်သူမဆို သင့်အထောက်အထားကို သိမ်းပိုက်နိုင်စေပါသည်။</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Saklama (Bu Cihaz)</string>
     <string name="settings_section_appearance">Görünüm</string>
     <string name="settings_section_backup_keys">Yedekleme ve Anahtarlar</string>
-    <string name="settings_section_about">Hakkında</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">İsmi Düzenle</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Tekrar Dene</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Daveti Tara</string>
-    <string name="scan_camera_needed">QR kodlarını taramak için kamera izni gereklidir.</string>
-    <string name="scan_grant_permission">İzin Ver</string>
-    <string name="scan_add_contact_title">Kişi eklensin mi?</string>
-    <string name="scan_add_contact_message">Bu, sizi %1$s ile bağlar ve birbirinizle konum paylaşmaya başlarsınız.</string>
-    <string name="scan_add_share">Ekle ve Paylaş</string>
-    <string name="scan_request_sent_title">İstek Gönderildi!</string>
-    <string name="scan_request_sent_message">%1$s kişisine bir istek gönderildi. Kabul ettiğinde bağlanacaksınız.</string>
-    <string name="scan_failed">Tarama başarısız: %1$s</string>
 
     <string name="cd_back">Geri</string>
     <string name="common_review">İncele</string>
@@ -877,4 +867,20 @@
     <string name="settings_temporary_location_share">Geçici konum paylaşımı</string>
     <string name="app_lock_no_credential">Bu cihazda ekran kilidi ayarlanmadığından kilidi açacak bir şey yok. Cihaz ayarlarınızda bir PIN, desen, parola veya biyometri ayarlayın ve ardından LocaPeer\'i yeniden açın.</string>
     <string name="backup_key_needs_password">Özel anahtarınızı dahil etmek için bir parola ayarlayın. Şifrelenmemiş bir anahtar dosyası, herhangi birinin kimliğinizi ele geçirmesine izin verebilir.</string>
+    <string name="settings_category_location_privacy_subtitle">Paylaşım, program, coğrafi sınırlar, uyarılar</string>
+    <string name="settings_category_security_subtitle">Uygulama kilidi, izinler, denetimli mod</string>
+    <string name="settings_category_map_subtitle">Başlangıç noktası, yakınlaştırma, iğne rengi</string>
+    <string name="settings_category_performance_subtitle">Güncelleme sıklığı ve doğruluk filtreleri</string>
+    <string name="settings_category_units_subtitle">Hız, mesafe, rakım, saat</string>
+    <string name="settings_category_retention_subtitle">Verilerin bu cihazda ne kadar süre tutulacağı</string>
+    <string name="settings_category_appearance_subtitle">Tema, renk, navigasyon, dil</string>
+    <string name="settings_category_backup_subtitle">Dışa aktar, içe aktar, kimlik anahtarı</string>
+    <string name="contacts_add_contact">Kişi ekle</string>
+    <string name="map_location_off_title">Konum kapalı</string>
+    <string name="map_location_off_message">Cihaz konumunu açana kadar konumunuz güncellenemez veya paylaşılamaz.</string>
+    <string name="map_location_off_action">Ayarları aç</string>
+    <string name="map_live">● Canlı</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d kuyruğa alınmış mesaj</item>
+    </plurals>
 </resources>

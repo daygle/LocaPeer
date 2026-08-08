@@ -62,7 +62,6 @@
     <string name="settings_section_retention">ధారణ (ఈ పరికరంలో)</string>
     <string name="settings_section_appearance">రూపం</string>
     <string name="settings_section_backup_keys">బ్యాకప్ &amp; కీలు</string>
-    <string name="settings_section_about">గురించి</string>
 
     <!-- ప్రొఫైల్ -->
     <string name="settings_edit_name">పేరును మార్చు</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">మళ్ళీ ప్రయత్నించు</string>
 
     <!-- ── ఆహ్వాన స్కాన్ స్క్రీన్ ─────────────────────────────────────────────── -->
-    <string name="scan_title">ఆహ్వానాన్ని స్కాన్ చేయి</string>
-    <string name="scan_camera_needed">QR కోడ్‌లను స్కాన్ చేయడానికి కెమెరా అనుమతి అవసరం.</string>
-    <string name="scan_grant_permission">అనుమతి మంజూరు చేయి</string>
-    <string name="scan_add_contact_title">పరిచయాన్ని జోడించాలా?</string>
-    <string name="scan_add_contact_message">ఇది మిమ్మల్ని %1$s తో కనెక్ట్ చేస్తుంది మరియు పరస్పరం స్థాన షేరింగ్‌ని ప్రారంభిస్తుంది.</string>
-    <string name="scan_add_share">జోడించు &amp; పంచుకో</string>
-    <string name="scan_request_sent_title">అభ్యర్థన పంపబడింది!</string>
-    <string name="scan_request_sent_message">%1$s కి అభ్యర్థన పంపబడింది. వారు ఆమోదించిన తర్వాత మీరు కనెక్ట్ అవుతారు.</string>
-    <string name="scan_failed">స్కాన్ విఫలమైంది: %1$s</string>
 
     <string name="cd_back">వెనుకకు</string>
     <string name="common_review">సమీక్షించు</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">తాత్కాలిక స్థాన భాగస్వామ్యం</string>
     <string name="app_lock_no_credential">ఈ పరికరంలో స్క్రీన్ లాక్ సెట్ చేయలేదు, కాబట్టి అన్‌లాక్ చేయడానికి ఏమీ లేదు. మీ పరికర సెట్టింగ్‌లలో ఒక PIN, ప్యాటర్న్, పాస్‌వర్డ్, లేదా బయోమెట్రిక్‌ను సెట్ చేసి, ఆపై LocaPeer ను మళ్లీ తెరవండి.</string>
     <string name="backup_key_needs_password">మీ ప్రైవేట్ కీని చేర్చడానికి ఒక పాస్‌వర్డ్‌ను సెట్ చేయండి. ఎన్‌క్రిప్ట్ చేయని కీ ఫైల్ ఎవరైనా మీ గుర్తింపును స్వాధీనం చేసుకోవడానికి అనుమతించవచ్చు.</string>
+    <string name="settings_category_location_privacy_subtitle">భాగస్వామ్యం, షెడ్యూల్, జియోఫెన్సులు, హెచ్చరికలు</string>
+    <string name="settings_category_security_subtitle">యాప్ లాక్, అనుమతులు, పర్యవేక్షణ మోడ్</string>
+    <string name="settings_category_map_subtitle">ప్రారంభ స్థానం, జూమ్, పిన్ రంగు</string>
+    <string name="settings_category_performance_subtitle">అప్‌డేట్ వేగం మరియు ఖచ్చితత్వ ఫిల్టర్లు</string>
+    <string name="settings_category_units_subtitle">వేగం, దూరం, ఎత్తు, సమయం</string>
+    <string name="settings_category_retention_subtitle">ఈ పరికరంలో డేటా ఎంతకాలం ఉంచబడుతుంది</string>
+    <string name="settings_category_appearance_subtitle">థీమ్, రంగు, నావిగేషన్, భాష</string>
+    <string name="settings_category_backup_subtitle">ఎగుమతి, దిగుమతి, గుర్తింపు కీ</string>
+    <string name="contacts_add_contact">పరిచయాన్ని జోడించు</string>
+    <string name="map_location_off_title">స్థానం ఆపివేయబడింది</string>
+    <string name="map_location_off_message">మీరు పరికర స్థానాన్ని ఆన్ చేసే వరకు మీ స్థానం అప్‌డేట్ చేయబడదు లేదా భాగస్వామ్యం చేయబడదు.</string>
+    <string name="map_location_off_action">సెట్టింగ్‌లను తెరువు</string>
+    <string name="map_live">● ప్రత్యక్ష ప్రసారం</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d క్యూలో ఉన్న సందేశం</item>
+        <item quantity="other">%1$d క్యూలో ఉన్న సందేశాలు</item>
+    </plurals>
 </resources>

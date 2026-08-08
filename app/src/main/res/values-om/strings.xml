@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Tursiisuu (Meeshaa Kanarratti)</string>
     <string name="settings_section_appearance">Bifoota</string>
     <string name="settings_section_backup_keys">Backup &amp; Kiiwwan</string>
-    <string name="settings_section_about">Waa\'ee</string>
 
     <!-- Piroofayila -->
     <string name="settings_edit_name">Maqaa Giddu-galeessaa</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Dîbisii Yaali</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Afeerraa Sakatta\'aa</string>
-    <string name="scan_camera_needed">Koodii QR sakatta\'uuf hayyamni kämeree ni barbaachisa.</string>
-    <string name="scan_grant_permission">Hayyama Kenni</string>
-    <string name="scan_add_contact_title">Quunnamtii dabalachuu?</string>
-    <string name="scan_add_contact_message">Kun si fi %1$s wal-quunnamsiisee bakka jirtan waliin qoodachuu jalqabsiisa.</string>
-    <string name="scan_add_share">Dabaladhu &amp; Qoodi</string>
-    <string name="scan_request_sent_title">Gaaffiin Ergameera!</string>
-    <string name="scan_request_sent_message">Gaaffiin gara %1$s ergameera. Isaan yoo simatan wal-quunnamtu.</string>
-    <string name="scan_failed">Sakatta\'iinsi hin milkoofne: %1$s</string>
 
     <string name="cd_back">Gara duubaa</string>
     <string name="common_review">Ilaali</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Bakka yeroo qooduu</string>
     <string name="app_lock_no_credential">Meeshaa kana irratti cufaan iskiriinii hin qindeeffamne, kanaafuu wanti ittiin banan hin jiru. Qindaaʼina meeshaa kee keessatti PIN, faayidaa, jecha darbii, ykn biometric qindeessi, ergasii LocaPeer irra deebiʼii bani.</string>
     <string name="backup_key_needs_password">Furtuu dhuunfaa kee dabaluuf jecha darbii qindeessi. Faayilii furtuu hin iccitaaʼin namni kamiyyuu eenyummaa kee akka fudhatu gochuu dandaʼa.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

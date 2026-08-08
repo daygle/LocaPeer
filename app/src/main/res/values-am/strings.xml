@@ -313,15 +313,6 @@
     <string name="common_try_again">እንደገና ሞክር</string>
 
     <!-- ── የግብዣ መፈተሻ ማያ ገጽ ─────────────────────────────────────────────── -->
-    <string name="scan_title">ግብዣ ፈትሽ</string>
-    <string name="scan_camera_needed">QR ኮዶችን ለመፈተሽ የካሜራ ፈቃድ ያስፈልጋል።</string>
-    <string name="scan_grant_permission">ፈቃድ ስጥ</string>
-    <string name="scan_add_contact_title">እውቂያ ይታከል?</string>
-    <string name="scan_add_contact_message">ይህ ከ%1$s ጋር ያገናኝዎታል እና አካባቢያችሁን እርስ በእርስ ማጋራት ትጀምራላችሁ።</string>
-    <string name="scan_add_share">አክል እና አጋራ</string>
-    <string name="scan_request_sent_title">ጥያቄ ተልኳል!</string>
-    <string name="scan_request_sent_message">ጥያቄ ለ%1$s ተልኳል። አንዴ ሲቀበሉ ይገናኛሉ።</string>
-    <string name="scan_failed">መፈተሽ አልተሳካም፡ %1$s</string>
 
     <string name="cd_back">ተመለስ</string>
     <string name="common_review">ገምግም</string>
@@ -877,21 +868,21 @@
     <string name="settings_temporary_location_share">ጊዜያዊ የአካባቢ ማጋራት</string>
     <string name="app_lock_no_credential">በዚህ መሣሪያ ላይ ምንም የማያ ገጽ መቆለፊያ አልተዋቀረም፣ ስለዚህ የሚከፍት ምንም ነገር የለም። በመሣሪያዎ ቅንብሮች ውስጥ PIN፣ ስርዓተ ጥለት፣ የይለፍ ቃል፣ ወይም ባዮሜትሪክ ያዋቅሩ፣ ከዚያ LocaPeer ን እንደገና ይክፈቱ።</string>
     <string name="backup_key_needs_password">የግል ቁልፍዎን ለማካተት የይለፍ ቃል ያዋቅሩ። ያልተመሰጠረ የቁልፍ ፋይል ማንኛውም ሰው ማንነትዎን እንዲይዝ ሊፈቅድ ይችላል።</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
-    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
-    <string name="map_live">● Live</string>
+    <string name="settings_category_location_privacy_subtitle">ማጋራት፣ የጊዜ ሰሌዳ፣ ጂኦፌንሶች፣ ማንቂያዎች</string>
+    <string name="settings_category_security_subtitle">የመተግበሪያ ቁልፍ፣ ፈቃዶች፣ ቁጥጥር የሚደረግበት ሁኔታ</string>
+    <string name="settings_category_map_subtitle">መነሻ ነጥብ፣ ማጉላት፣ የፒን ቀለም</string>
+    <string name="settings_category_performance_subtitle">የዝማኔ ድግግሞሽ እና የትክክለኛነት ማጣሪያዎች</string>
+    <string name="settings_category_units_subtitle">ፍጥነት፣ ርቀት፣ ከፍታ፣ ጊዜ</string>
+    <string name="settings_category_retention_subtitle">መረጃ በዚህ መሣሪያ ላይ ለምን ያህል ጊዜ እንደሚቀመጥ</string>
+    <string name="settings_category_appearance_subtitle">ገጽታ፣ ቀለም፣ አሰሳ፣ ቋንቋ</string>
+    <string name="settings_category_backup_subtitle">ወደ ውጭ ላክ፣ አስገባ፣ የማንነት ቁልፍ</string>
+    <string name="contacts_add_contact">እውቂያ አክል</string>
+    <string name="map_location_off_title">ቦታ ጠፍቷል</string>
+    <string name="map_location_off_message">የመሣሪያ ቦታ እስኪያበሩ ድረስ የእርስዎ አቋም ሊዘመን ወይም ሊጋራ አይችልም።</string>
+    <string name="map_location_off_action">ቅንብሮችን ክፈት</string>
+    <string name="map_live">● ቀጥታ</string>
     <plurals name="about_pending_message_count">
-        <item quantity="one">%1$d queued message</item>
-        <item quantity="other">%1$d queued messages</item>
+        <item quantity="one">%1$d በመጠባበቅ ላይ ያለ መልዕክት</item>
+        <item quantity="other">%1$d በመጠባበቅ ላይ ያሉ መልዕክቶች</item>
     </plurals>
 </resources>

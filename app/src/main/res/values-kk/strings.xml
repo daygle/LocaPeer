@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Сақтау (осы құрылғыда)</string>
     <string name="settings_section_appearance">Сыртқы түрі</string>
     <string name="settings_section_backup_keys">Резервтік көшірме және кілттер</string>
-    <string name="settings_section_about">Туралы</string>
 
     <!-- Профиль -->
     <string name="settings_edit_name">Атын өзгерту</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Қайта байқап көру</string>
 
     <!-- ── Шақыруды сканерлеу экраны ─────────────────────────────────────────────── -->
-    <string name="scan_title">Шақыруды сканерлеу</string>
-    <string name="scan_camera_needed">QR кодтарын сканерлеу үшін камераға рұқсат қажет.</string>
-    <string name="scan_grant_permission">Рұқсат беру</string>
-    <string name="scan_add_contact_title">Контакт қосу керек пе?</string>
-    <string name="scan_add_contact_message">Бұл сізді %1$s-мен байланыстырады және орналасқан жеріңізді бір-біріңізбен бөлісуді бастайды.</string>
-    <string name="scan_add_share">Қосу және бөлісу</string>
-    <string name="scan_request_sent_title">Сұрау жіберілді!</string>
-    <string name="scan_request_sent_message">%1$s-ге сұрау жіберілді. Олар мақұлдағаннан кейін қосыласыз.</string>
-    <string name="scan_failed">Сканерлеу сәтсіз аяқталды: %1$s</string>
 
     <string name="cd_back">Артқа</string>
     <string name="common_review">Қарап шығу</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Уақытша орынмен бөлісу</string>
     <string name="app_lock_no_credential">Бұл құрылғыда экран құлпы орнатылмаған, сондықтан құлыпты ашатын ештеңе жоқ. Құрылғы параметрлерінде PIN, өрнек, құпия сөз немесе биометрия орнатыңыз, содан кейін LocaPeer қолданбасын қайта ашыңыз.</string>
     <string name="backup_key_needs_password">Жеке кілтіңізді қосу үшін құпия сөз орнатыңыз. Шифрланбаған кілт файлы кез келген адамға сіздің жеке басыңызды иеленуге мүмкіндік беруі мүмкін.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

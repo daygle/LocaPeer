@@ -62,7 +62,6 @@
     <string name="settings_section_retention">保留 (此裝置)</string>
     <string name="settings_section_appearance">外觀</string>
     <string name="settings_section_backup_keys">備份與金鑰</string>
-    <string name="settings_section_about">關於</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">編輯名稱</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">再試一次</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">掃描邀請</string>
-    <string name="scan_camera_needed">掃描 QR 碼需要相機權限。</string>
-    <string name="scan_grant_permission">授予權限</string>
-    <string name="scan_add_contact_title">要新增聯絡人嗎？</string>
-    <string name="scan_add_contact_message">這會將您與 %1$s 連結，並開始互相分享位置。</string>
-    <string name="scan_add_share">新增並分享</string>
-    <string name="scan_request_sent_title">要求已送出！</string>
-    <string name="scan_request_sent_message">已向 %1$s 送出要求。對方接受後即可連結。</string>
-    <string name="scan_failed">掃描失敗：%1$s</string>
 
     <string name="cd_back">返回</string>
     <string name="common_review">檢視</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">暫時位置分享</string>
     <string name="app_lock_no_credential">此裝置未設定螢幕鎖定，因此沒有可用於解鎖的方式。請在裝置設定中設定 PIN、圖形、密碼或生物辨識，然後重新開啟 LocaPeer。</string>
     <string name="backup_key_needs_password">設定密碼以包含你的私密金鑰。未加密的金鑰檔案可能會讓任何人接管你的身分。</string>
+    <string name="settings_category_location_privacy_subtitle">共享、計畫、地理圍欄、警報</string>
+    <string name="settings_category_security_subtitle">應用鎖、權限、受監護模式</string>
+    <string name="settings_category_map_subtitle">起點、縮放、圖釘顏色</string>
+    <string name="settings_category_performance_subtitle">更新頻率和精度過濾</string>
+    <string name="settings_category_units_subtitle">速度、距離、高度、時間</string>
+    <string name="settings_category_retention_subtitle">數據在設備上的保留時間</string>
+    <string name="settings_category_appearance_subtitle">主題、顏色、導航、語言</string>
+    <string name="settings_category_backup_subtitle">匯出、匯入、身份金鑰</string>
+    <string name="contacts_add_contact">新增聯絡人</string>
+    <string name="map_location_off_title">位置已關閉</string>
+    <string name="map_location_off_message">在開啟設備位置之前，無法更新或共享您的位置。</string>
+    <string name="map_location_off_action">開啟設定</string>
+    <string name="map_live">● 實況</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d 個待發訊息</item>
+    </plurals>
 </resources>

@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Retention (Device na Ito)</string>
     <string name="settings_section_appearance">Hitsura</string>
     <string name="settings_section_backup_keys">Backup at Mga Key</string>
-    <string name="settings_section_about">Tungkol</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">I-edit ang Pangalan</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Subukang Muli</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Mag-scan ng Imbitasyon</string>
-    <string name="scan_camera_needed">Kailangan ng pahintulot sa camera para mag-scan ng QR code.</string>
-    <string name="scan_grant_permission">Ibigay ang Pahintulot</string>
-    <string name="scan_add_contact_title">Magdagdag ng contact?</string>
-    <string name="scan_add_contact_message">Ikokonekta ka nito kay %1$s at magsisimula kayong magbahagi ng lokasyon sa isa\'t isa.</string>
-    <string name="scan_add_share">Idagdag at Ibahagi</string>
-    <string name="scan_request_sent_title">Naipadala ang Kahilingan!</string>
-    <string name="scan_request_sent_message">May kahilingang naipadala kay %1$s. Makokonekta kayo kapag tinanggap niya.</string>
-    <string name="scan_failed">Nabigo ang pag-scan: %1$s</string>
 
     <string name="cd_back">Bumalik</string>
     <string name="common_review">Suriin</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Pansamantalang pagbabahagi ng lokasyon</string>
     <string name="app_lock_no_credential">Walang naka-set na screen lock sa device na ito, kaya walang panuklas. Mag-set ng PIN, pattern, password, o biometric sa mga setting ng iyong device, pagkatapos ay muling buksan ang LocaPeer.</string>
     <string name="backup_key_needs_password">Mag-set ng password upang isama ang iyong pribadong key. Ang hindi naka-encrypt na key file ay maaaring magpahintulot sa sinuman na kunin ang iyong pagkakakilanlan.</string>
+    <string name="settings_category_location_privacy_subtitle">Pagbabahagi, iskedyul, mga geofence, mga alerto</string>
+    <string name="settings_category_security_subtitle">Lock ng app, mga pahintulot, supervised mode</string>
+    <string name="settings_category_map_subtitle">Simulang punto, zoom, kulay ng pin</string>
+    <string name="settings_category_performance_subtitle">Bilis ng pag-update at mga filter ng katumpakan</string>
+    <string name="settings_category_units_subtitle">Bilis, distansya, elebasyon, oras</string>
+    <string name="settings_category_retention_subtitle">Gaano katagal itatago ang data sa device na ito</string>
+    <string name="settings_category_appearance_subtitle">Tema, kulay, nabigasyon, wika</string>
+    <string name="settings_category_backup_subtitle">I-export, i-import, identity key</string>
+    <string name="contacts_add_contact">Magdagdag ng contact</string>
+    <string name="map_location_off_title">Naka-off ang lokasyon</string>
+    <string name="map_location_off_message">Hindi ma-update o maibahagi ang iyong posisyon hangga\'t hindi mo binubuksan ang lokasyon ng device.</string>
+    <string name="map_location_off_action">Buksan ang mga setting</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d mensaheng nakapila</item>
+        <item quantity="other">%1$d na mensaheng nakapila</item>
+    </plurals>
 </resources>

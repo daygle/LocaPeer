@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Conservazione (questo dispositivo)</string>
     <string name="settings_section_appearance">Aspetto</string>
     <string name="settings_section_backup_keys">Backup e Chiavi</string>
-    <string name="settings_section_about">Informazioni</string>
 
     <!-- Profilo -->
     <string name="settings_edit_name">Modifica Nome</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Riprova</string>
 
     <!-- ── Schermata scansiona invito ────────────────────────────────────── -->
-    <string name="scan_title">Scansiona invito</string>
-    <string name="scan_camera_needed">Il permesso per la fotocamera è necessario per scansionare i codici QR.</string>
-    <string name="scan_grant_permission">Concedi permesso</string>
-    <string name="scan_add_contact_title">Aggiungere contatto?</string>
-    <string name="scan_add_contact_message">Questo ti connetterà con %1$s e inizierete a condividere la posizione l\'un l\'altro.</string>
-    <string name="scan_add_share">Aggiungi e Condividi</string>
-    <string name="scan_request_sent_title">Richiesta inviata!</string>
-    <string name="scan_request_sent_message">Una richiesta è stata inviata a %1$s. Sarete connessi una volta che l\'avrà accettata.</string>
-    <string name="scan_failed">Scansione fallita: %1$s</string>
 
     <string name="cd_back">Indietro</string>
     <string name="common_review">Revisiona</string>
@@ -876,4 +866,21 @@
     <string name="settings_temporary_location_share">Condivisione posizione temporanea</string>
     <string name="app_lock_no_credential">Su questo dispositivo non è impostato alcun blocco schermo, quindi non c\'è nulla con cui sbloccare. Imposta un PIN, una sequenza, una password o un dato biometrico nelle impostazioni del dispositivo, poi riapri LocaPeer.</string>
     <string name="backup_key_needs_password">Imposta una password per includere la tua chiave privata. Un file di chiave non crittografato potrebbe permettere a chiunque di impossessarsi della tua identità.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

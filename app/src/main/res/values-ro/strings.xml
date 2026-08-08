@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Retenție (Acest dispozitiv)</string>
     <string name="settings_section_appearance">Aspect</string>
     <string name="settings_section_backup_keys">Backup și chei</string>
-    <string name="settings_section_about">Despre</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Editare nume</string>
@@ -320,15 +319,6 @@
     <string name="common_try_again">Încercați din nou</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Scanați invitația</string>
-    <string name="scan_camera_needed">Este necesară permisiunea camerei pentru a scana coduri QR.</string>
-    <string name="scan_grant_permission">Acordați permisiunea</string>
-    <string name="scan_add_contact_title">Adăugați contactul?</string>
-    <string name="scan_add_contact_message">Aceasta vă va conecta cu %1$s și veți începe să vă partajați locația reciproc.</string>
-    <string name="scan_add_share">Adăugați și partajați</string>
-    <string name="scan_request_sent_title">Cerere trimisă!</string>
-    <string name="scan_request_sent_message">O cerere a fost trimisă lui %1$s. Veți fi conectați după ce o acceptă.</string>
-    <string name="scan_failed">Scanarea a eșuat: %1$s</string>
 
     <string name="cd_back">Înapoi</string>
     <string name="common_review">Verificați</string>
@@ -892,4 +882,22 @@
     <string name="settings_temporary_location_share">Partajare temporară a locației</string>
     <string name="app_lock_no_credential">Pe acest dispozitiv nu este setată nicio blocare a ecranului, așa că nu există nimic cu care să deblochezi. Setează un PIN, model, parolă sau date biometrice în setările dispozitivului, apoi redeschide LocaPeer.</string>
     <string name="backup_key_needs_password">Setează o parolă pentru a include cheia ta privată. Un fișier de cheie necriptat ar putea permite oricui să îți preia identitatea.</string>
+    <string name="settings_category_location_privacy_subtitle">Partajare, program, geofences, alerte</string>
+    <string name="settings_category_security_subtitle">Blocare aplicație, permisiuni, mod supravegheat</string>
+    <string name="settings_category_map_subtitle">Punct de pornire, zoom, culoarea pinului</string>
+    <string name="settings_category_performance_subtitle">Frecvența actualizării și filtre de precizie</string>
+    <string name="settings_category_units_subtitle">Viteză, distanță, altitudine, timp</string>
+    <string name="settings_category_retention_subtitle">Cât timp sunt păstrate datele pe acest dispozitiv</string>
+    <string name="settings_category_appearance_subtitle">Temă, culoare, navigare, limbă</string>
+    <string name="settings_category_backup_subtitle">Export, import, cheie de identitate</string>
+    <string name="contacts_add_contact">Adaugă contact</string>
+    <string name="map_location_off_title">Locația este dezactivată</string>
+    <string name="map_location_off_message">Poziția ta nu poate fi actualizată sau partajată până nu activezi locația dispozitivului.</string>
+    <string name="map_location_off_action">Deschide setările</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d mesaj în așteptare</item>
+        <item quantity="few">%1$d mesaje în așteptare</item>
+        <item quantity="other">%1$d de mesaje în așteptare</item>
+    </plurals>
 </resources>

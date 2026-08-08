@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Хранение (Это устройство)</string>
     <string name="settings_section_appearance">Внешний вид</string>
     <string name="settings_section_backup_keys">Резервное копирование и ключи</string>
-    <string name="settings_section_about">О приложении</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Изменить имя</string>
@@ -326,15 +325,6 @@
     <string name="common_try_again">Повторить</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Сканировать приглашение</string>
-    <string name="scan_camera_needed">Для сканирования QR-кодов нужно разрешение на камеру.</string>
-    <string name="scan_grant_permission">Выдать разрешение</string>
-    <string name="scan_add_contact_title">Добавить контакт?</string>
-    <string name="scan_add_contact_message">Вы свяжетесь с %1$s и начнёте делиться местоположением друг с другом.</string>
-    <string name="scan_add_share">Добавить и делиться</string>
-    <string name="scan_request_sent_title">Запрос отправлен!</string>
-    <string name="scan_request_sent_message">Запрос отправлен %1$s. Вы будете связаны после его принятия.</string>
-    <string name="scan_failed">Сканирование не удалось: %1$s</string>
 
     <string name="cd_back">Назад</string>
     <string name="common_review">Просмотреть</string>
@@ -907,4 +897,23 @@
     <string name="settings_temporary_location_share">Временная передача местоположения</string>
     <string name="app_lock_no_credential">На этом устройстве не установлена блокировка экрана, поэтому разблокировать нечем. Установите PIN-код, графический ключ, пароль или биометрию в настройках устройства, затем снова откройте LocaPeer.</string>
     <string name="backup_key_needs_password">Установите пароль, чтобы включить закрытый ключ. Незашифрованный файл ключа может позволить кому угодно завладеть вашей личностью.</string>
+    <string name="settings_category_location_privacy_subtitle">Общий доступ, расписание, геозоны, оповещения</string>
+    <string name="settings_category_security_subtitle">Блокировка приложения, разрешения, режим контроля</string>
+    <string name="settings_category_map_subtitle">Точка старта, масштаб, цвет метки</string>
+    <string name="settings_category_performance_subtitle">Частота обновления и фильтры точности</string>
+    <string name="settings_category_units_subtitle">Скорость, расстояние, высота, время</string>
+    <string name="settings_category_retention_subtitle">Как долго данные хранятся на этом устройстве</string>
+    <string name="settings_category_appearance_subtitle">Тема, цвет, навигация, язык</string>
+    <string name="settings_category_backup_subtitle">Экспорт, импорт, ключ идентификации</string>
+    <string name="contacts_add_contact">Добавить контакт</string>
+    <string name="map_location_off_title">Местоположение выключено</string>
+    <string name="map_location_off_message">Ваше местоположение не может быть обновлено или передано, пока вы не включите геолокацию на устройстве.</string>
+    <string name="map_location_off_action">Открыть настройки</string>
+    <string name="map_live">● В эфире</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d сообщение в очереди</item>
+        <item quantity="few">%1$d сообщения в очереди</item>
+        <item quantity="many">%1$d сообщений в очереди</item>
+        <item quantity="other">%1$d сообщений в очереди</item>
+    </plurals>
 </resources>

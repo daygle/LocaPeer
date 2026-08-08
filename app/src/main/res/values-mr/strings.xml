@@ -62,7 +62,6 @@
     <string name="settings_section_retention">डेटा टिकवून ठेवणे (या डिव्हाइसवर)</string>
     <string name="settings_section_appearance">स्वरूप</string>
     <string name="settings_section_backup_keys">बॅकअप आणि की</string>
-    <string name="settings_section_about">बद्दल</string>
 
     <!-- प्रोफाइल -->
     <string name="settings_edit_name">नाव संपादित करा</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">पुन्हा प्रयत्न करा</string>
 
     <!-- ── आमंत्रण स्कॅन स्क्रीन ─────────────────────────────────────────────── -->
-    <string name="scan_title">आमंत्रण स्कॅन करा</string>
-    <string name="scan_camera_needed">QR कोड स्कॅन करण्यासाठी कॅमेरा परवानगी आवश्यक आहे.</string>
-    <string name="scan_grant_permission">परवानगी द्या</string>
-    <string name="scan_add_contact_title">संपर्क जोडायचा?</string>
-    <string name="scan_add_contact_message">हे तुम्हाला %1$s शी जोडेल आणि एकमेकांसोबत स्थान शेअर करणे सुरू होईल.</string>
-    <string name="scan_add_share">जोडा आणि शेअर करा</string>
-    <string name="scan_request_sent_title">विनंती पाठवली!</string>
-    <string name="scan_request_sent_message">%1$s ला विनंती पाठवण्यात आली आहे. त्यांनी मंजूर केल्यावर तुम्ही जोडले जाल.</string>
-    <string name="scan_failed">स्कॅन अयशस्वी: %1$s</string>
 
     <string name="cd_back">मागे</string>
     <string name="common_review">पुनरावलोकन करा</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">तात्पुरते स्थान सामायिकरण</string>
     <string name="app_lock_no_credential">या डिव्हाइसवर कोणतेही स्क्रीन लॉक सेट केलेले नाही, त्यामुळे अनलॉक करण्यासाठी काहीही नाही. तुमच्या डिव्हाइस सेटिंग्जमध्ये एक PIN, पॅटर्न, पासवर्ड, किंवा बायोमेट्रिक सेट करा, नंतर LocaPeer पुन्हा उघडा.</string>
     <string name="backup_key_needs_password">तुमची खाजगी की समाविष्ट करण्यासाठी एक पासवर्ड सेट करा. एन्क्रिप्ट न केलेली की फाइल कोणालाही तुमची ओळख ताब्यात घेऊ देऊ शकते.</string>
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+    <string name="contacts_add_contact">Add contact</string>
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Open settings</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d queued message</item>
+        <item quantity="other">%1$d queued messages</item>
+    </plurals>
 </resources>

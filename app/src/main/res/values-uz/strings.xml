@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Saqlash (ushbu qurilmada)</string>
     <string name="settings_section_appearance">Ko‘rinish</string>
     <string name="settings_section_backup_keys">Rezerv nusxa va kalitlar</string>
-    <string name="settings_section_about">Haqida</string>
 
     <!-- Profil -->
     <string name="settings_edit_name">Nomni o‘zgartirish</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">Qayta urinish</string>
 
     <!-- ── Taklifni skanerlash ekrani ─────────────────────────────────────────────── -->
-    <string name="scan_title">Taklifni skanerlash</string>
-    <string name="scan_camera_needed">QR kodlarini skanerlash uchun kameraga ruxsat kerak.</string>
-    <string name="scan_grant_permission">Ruxsat berish</string>
-    <string name="scan_add_contact_title">Kontakt qo‘shilsinmi?</string>
-    <string name="scan_add_contact_message">Bu sizni %1$s bilan bog‘laydi va o‘zaro joylashuvni baham ko‘rishni boshlaydi.</string>
-    <string name="scan_add_share">Qo‘shish va baham ko‘rish</string>
-    <string name="scan_request_sent_title">So‘rov yuborildi!</string>
-    <string name="scan_request_sent_message">%1$s-ga so‘rov yuborildi. Ular tasdiqlaganidan keyin bog‘lanasiz.</string>
-    <string name="scan_failed">Skanerlash muvaffaqiyatsiz tugadi: %1$s</string>
 
     <string name="cd_back">Orqaga</string>
     <string name="common_review">Ko‘rib chiqish</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">Vaqtinchalik joylashuvni ulashish</string>
     <string name="app_lock_no_credential">Bu qurilmada ekran qulfi o\'rnatilmagan, shuning uchun ochish uchun hech narsa yo\'q. Qurilma sozlamalarida PIN, grafik kalit, parol yoki biometrika o\'rnating, so\'ng LocaPeer\'ni qayta oching.</string>
     <string name="backup_key_needs_password">Shaxsiy kalitingizni kiritish uchun parol o\'rnating. Shifrlanmagan kalit fayli har kimga sizning shaxsingizni egallashga imkon berishi mumkin.</string>
+    <string name="settings_category_location_privacy_subtitle">Ulashish, jadval, geozonalar, ogohlantirishlar</string>
+    <string name="settings_category_security_subtitle">Ilova qulfi, ruxsatnomalar, nazorat rejimi</string>
+    <string name="settings_category_map_subtitle">Boshlang\'ich nuqta, masshtab, belgi rangi</string>
+    <string name="settings_category_performance_subtitle">Yangilanish chastotasi va aniqlik filtrlari</string>
+    <string name="settings_category_units_subtitle">Tezlik, masofa, balandlik, vaqt</string>
+    <string name="settings_category_retention_subtitle">Ma\'lumotlar ushbu qurilmada qancha muddat saqlanadi</string>
+    <string name="settings_category_appearance_subtitle">Mavzu, rang, navigatsiya, til</string>
+    <string name="settings_category_backup_subtitle">Eksport, import, identifikatsiya kaliti</string>
+    <string name="contacts_add_contact">Kontakt qo\'shish</string>
+    <string name="map_location_off_title">Joylashuv o\'chirilgan</string>
+    <string name="map_location_off_message">Qurilmaning joylashuv xizmatini yoqmaguningizcha, joylashuvingiz yangilanmaydi va ulashilmaydi.</string>
+    <string name="map_location_off_action">Sozlamalarni ochish</string>
+    <string name="map_live">● Jonli</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">Navbatda %1$d ta xabar</item>
+        <item quantity="other">Navbatda %1$d ta xabar</item>
+    </plurals>
 </resources>

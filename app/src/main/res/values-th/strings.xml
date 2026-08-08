@@ -62,7 +62,6 @@
     <string name="settings_section_retention">การเก็บรักษา (อุปกรณ์นี้)</string>
     <string name="settings_section_appearance">รูปลักษณ์</string>
     <string name="settings_section_backup_keys">การสำรองข้อมูลและคีย์</string>
-    <string name="settings_section_about">เกี่ยวกับ</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">แก้ไขชื่อ</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">ลองอีกครั้ง</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">สแกนคำเชิญ</string>
-    <string name="scan_camera_needed">ต้องใช้สิทธิ์กล้องเพื่อสแกนรหัส QR</string>
-    <string name="scan_grant_permission">ให้สิทธิ์</string>
-    <string name="scan_add_contact_title">เพิ่มผู้ติดต่อ?</string>
-    <string name="scan_add_contact_message">การดำเนินการนี้จะเชื่อมต่อคุณกับ %1$s และเริ่มแชร์ตำแหน่งซึ่งกันและกัน</string>
-    <string name="scan_add_share">เพิ่มและแชร์</string>
-    <string name="scan_request_sent_title">ส่งคำขอแล้ว!</string>
-    <string name="scan_request_sent_message">ส่งคำขอไปยัง %1$s แล้ว คุณจะเชื่อมต่อกันเมื่อเขายอมรับ</string>
-    <string name="scan_failed">สแกนล้มเหลว: %1$s</string>
 
     <string name="cd_back">กลับ</string>
     <string name="common_review">ตรวจสอบ</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">การแชร์ตำแหน่งชั่วคราว</string>
     <string name="app_lock_no_credential">อุปกรณ์นี้ไม่ได้ตั้งค่าการล็อกหน้าจอ จึงไม่มีสิ่งใดใช้ปลดล็อก โปรดตั้งค่า PIN รูปแบบ รหัสผ่าน หรือไบโอเมตริกในการตั้งค่าอุปกรณ์ของคุณ แล้วเปิด LocaPeer อีกครั้ง</string>
     <string name="backup_key_needs_password">ตั้งรหัสผ่านเพื่อรวมคีย์ส่วนตัวของคุณ ไฟล์คีย์ที่ไม่ได้เข้ารหัสอาจทำให้ใครก็ตามเข้าควบคุมตัวตนของคุณได้</string>
+    <string name="settings_category_location_privacy_subtitle">การแชร์, กำหนดการ, จีโอเฟนซ์, การแจ้งเตือน</string>
+    <string name="settings_category_security_subtitle">ล็อกแอป, การอนุญาต, โหมดควบคุมดูแล</string>
+    <string name="settings_category_map_subtitle">จุดเริ่มต้น, ซูม, สีของหมุด</string>
+    <string name="settings_category_performance_subtitle">ความถี่ในการอัปเดตและตัวกรองความแม่นยำ</string>
+    <string name="settings_category_units_subtitle">ความเร็ว, ระยะทาง, ระดับความสูง, เวลา</string>
+    <string name="settings_category_retention_subtitle">ระยะเวลาการเก็บข้อมูลในอุปกรณ์นี้</string>
+    <string name="settings_category_appearance_subtitle">ธีม, สี, การนำทาง, ภาษา</string>
+    <string name="settings_category_backup_subtitle">ส่งออก, นำเข้า, คีย์ระบุตัวตน</string>
+    <string name="contacts_add_contact">เพิ่มผู้ติดต่อ</string>
+    <string name="map_location_off_title">ปิดตำแหน่งอยู่</string>
+    <string name="map_location_off_message">ตำแหน่งของคุณไม่สามารถอัปเดตหรือแชร์ได้จนกว่าคุณจะเปิดตำแหน่งของอุปกรณ์</string>
+    <string name="map_location_off_action">เปิดการตั้งค่า</string>
+    <string name="map_live">● สด</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">%1$d ข้อความที่รอคิว</item>
+    </plurals>
 </resources>

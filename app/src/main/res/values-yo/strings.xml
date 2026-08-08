@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Ìdádúró (Ẹ̀rọ yìí)</string>
     <string name="settings_section_appearance">Ìfarahàn</string>
     <string name="settings_section_backup_keys">Afẹyinti &amp; Àwọn Kókó</string>
-    <string name="settings_section_about">Nípa</string>
 
     <!-- Profaili -->
     <string name="settings_edit_name">Ṣatunkọ Orukọ</string>
@@ -308,15 +307,6 @@
     <string name="common_try_again">Gbalịa Ọzọ</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Ṣàyẹ̀wò Ìpè</string>
-    <string name="scan_camera_needed">O nílò ìgbàníláyè kámẹ́rà láti ṣàyẹ̀wò koodu QR.</string>
-    <string name="scan_grant_permission">Gba Ìgbàníláyè</string>
-    <string name="scan_add_contact_title">Tinye ojúlùmọ̀?</string>
-    <string name="scan_add_contact_message">Nke a yóò jápọ̀ mọ́ %1$s ẹ ó sì bẹ̀rẹ̀ sí ní pín ipò yín fún ara yín.</string>
-    <string name="scan_add_share">Tinye &amp; Pín</string>
-    <string name="scan_request_sent_title">Ezigara Arịrịọ!</string>
-    <string name="scan_request_sent_message">Ezigara %1$s arịrịọ. Ẹ ó jápọ̀ ozugbo wọ́n bá gbà.</string>
-    <string name="scan_failed">Nyocha dara: %1$s</string>
 
     <string name="cd_back">Laghachi azụ</string>
     <string name="common_review">Nyochaa</string>
@@ -862,4 +852,20 @@
     <string name="settings_temporary_location_share">Pinpin ipo fun igba diẹ</string>
     <string name="app_lock_no_credential">Ko si titiipa iboju ti a ṣeto sori ẹrọ yii, nitorina ko si ohun ti a le fi ṣii. Ṣeto PIN, apẹẹrẹ, ọrọ igbaniwọle, tabi biometric ninu awọn eto ẹrọ rẹ, lẹhinna tun ṣii LocaPeer.</string>
     <string name="backup_key_needs_password">Ṣeto ọrọ igbaniwọle lati ni bọtini ikọkọ rẹ. Faili bọtini ti a ko fi pamọ le jẹ ki ẹnikẹni gba idanimọ rẹ.</string>
+    <string name="settings_category_location_privacy_subtitle">Pínpín, ìtòlẹ́sẹẹsẹ, geofences, àwọn ìkìlọ̀</string>
+    <string name="settings_category_security_subtitle">Títìpa ìṣàfilọ́lẹ̀, àwọn ìyọ̀ǹda, ipò alábojútó</string>
+    <string name="settings_category_map_subtitle">Ojú-ìtẹ̀mọ́lẹ̀ ìbẹ̀rẹ̀, sísúnmọ́, àwọ̀ pin</string>
+    <string name="settings_category_performance_subtitle">Ìyárakánkán ìsọdọ̀tun àti àwọn asẹ́ kíkún</string>
+    <string name="settings_category_units_subtitle">Ìyárakánkán, ìjìnnà, gíga, àkókò</string>
+    <string name="settings_category_retention_subtitle">Báwo ni a ṣe tọ́jú data lórí ẹ̀rọ yìí fún ìgbà pípẹ́</string>
+    <string name="settings_category_appearance_subtitle">Akòrí, àwọ̀, ìtọ́sọ́nà, èdè</string>
+    <string name="settings_category_backup_subtitle">Ìfiranṣẹ́jáde, ìfiranṣẹ́wọlé, kókó ìdánimọ̀</string>
+    <string name="contacts_add_contact">Fi ojúlùmọ̀ kún</string>
+    <string name="map_location_off_title">A ti pa ibùdó rẹ</string>
+    <string name="map_location_off_message">Ipò rẹ kò le ṣe ìsọdọ̀tun tàbí kí o pín títí di ìgbà tí o bá tan ibùdó ẹ̀rọ rẹ.</string>
+    <string name="map_location_off_action">Ṣí àwọn ètò</string>
+    <string name="map_live">● Live</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="other">Àwọn iṣẹ́ ìránṣẹ́ %1$d nínú ìlà</item>
+    </plurals>
 </resources>

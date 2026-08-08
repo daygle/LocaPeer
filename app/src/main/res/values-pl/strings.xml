@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Retencja (To urządzenie)</string>
     <string name="settings_section_appearance">Wygląd</string>
     <string name="settings_section_backup_keys">Kopia zapasowa i klucze</string>
-    <string name="settings_section_about">O programie</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">Edytuj nazwę</string>
@@ -326,15 +325,6 @@
     <string name="common_try_again">Spróbuj ponownie</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Skanuj zaproszenie</string>
-    <string name="scan_camera_needed">Do skanowania kodów QR potrzebne jest uprawnienie aparatu.</string>
-    <string name="scan_grant_permission">Przyznaj uprawnienie</string>
-    <string name="scan_add_contact_title">Dodać kontakt?</string>
-    <string name="scan_add_contact_message">Połączysz się z %1$s i zaczniecie wzajemnie udostępniać sobie lokalizację.</string>
-    <string name="scan_add_share">Dodaj i udostępnij</string>
-    <string name="scan_request_sent_title">Prośba wysłana!</string>
-    <string name="scan_request_sent_message">Prośba została wysłana do %1$s. Po jej zaakceptowaniu zostaniecie połączeni.</string>
-    <string name="scan_failed">Skanowanie nie powiodło się: %1$s</string>
 
     <string name="cd_back">Wstecz</string>
     <string name="common_review">Przejrzyj</string>
@@ -907,4 +897,23 @@
     <string name="settings_temporary_location_share">Tymczasowe udostępnianie lokalizacji</string>
     <string name="app_lock_no_credential">Na tym urządzeniu nie ustawiono blokady ekranu, więc nie ma czym odblokować. Ustaw kod PIN, wzór, hasło lub dane biometryczne w ustawieniach urządzenia, a następnie ponownie otwórz LocaPeer.</string>
     <string name="backup_key_needs_password">Ustaw hasło, aby dołączyć klucz prywatny. Niezaszyfrowany plik klucza może pozwolić każdemu przejąć Twoją tożsamość.</string>
+    <string name="settings_category_location_privacy_subtitle">Udostępnianie, harmonogram, geofencing, alerty</string>
+    <string name="settings_category_security_subtitle">Blokada aplikacji, uprawnienia, tryb nadzoru</string>
+    <string name="settings_category_map_subtitle">Punkt startowy, powiększenie, kolor pinezki</string>
+    <string name="settings_category_performance_subtitle">Częstotliwość aktualizacji i filtry dokładności</string>
+    <string name="settings_category_units_subtitle">Prędkość, odległość, wysokość, czas</string>
+    <string name="settings_category_retention_subtitle">Jak długo dane są przechowywane na tym urządzeniu</string>
+    <string name="settings_category_appearance_subtitle">Motyw, kolor, nawigacja, język</string>
+    <string name="settings_category_backup_subtitle">Eksport, import, klucz tożsamości</string>
+    <string name="contacts_add_contact">Dodaj kontakt</string>
+    <string name="map_location_off_title">Lokalizacja jest wyłączona</string>
+    <string name="map_location_off_message">Twoja pozycja nie może być aktualizowana ani udostępniana, dopóki nie włączysz lokalizacji w urządzeniu.</string>
+    <string name="map_location_off_action">Otwórz ustawienia</string>
+    <string name="map_live">● Na żywo</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d wiadomość w kolejce</item>
+        <item quantity="few">%1$d wiadomości w kolejce</item>
+        <item quantity="many">%1$d wiadomości w kolejce</item>
+        <item quantity="other">%1$d wiadomości w kolejce</item>
+    </plurals>
 </resources>

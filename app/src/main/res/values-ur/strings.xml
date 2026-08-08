@@ -62,7 +62,6 @@
     <string name="settings_section_retention">برقرار رکھنا (یہ آلہ)</string>
     <string name="settings_section_appearance">ظہور</string>
     <string name="settings_section_backup_keys">بیک اپ اور چابیاں</string>
-    <string name="settings_section_about">کے بارے میں</string>
 
     <!-- Profile -->
     <string name="settings_edit_name">نام تبدیل کریں</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">دوبارہ کوشش کریں</string>
 
     <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">دعوت اسکین کریں</string>
-    <string name="scan_camera_needed">QR کوڈز اسکین کرنے کے لیے کیمرے کی اجازت درکار ہے۔</string>
-    <string name="scan_grant_permission">اجازت دیں</string>
-    <string name="scan_add_contact_title">رابطہ شامل کریں؟</string>
-    <string name="scan_add_contact_message">یہ آپ کو %1$s کے ساتھ جوڑ دے گا اور آپ ایک دوسرے کے ساتھ مقام شیئر کرنا شروع کریں گے۔</string>
-    <string name="scan_add_share">شامل کریں اور شیئر کریں</string>
-    <string name="scan_request_sent_title">درخواست بھیج دی گئی!</string>
-    <string name="scan_request_sent_message">%1$s کو ایک درخواست بھیج دی گئی ہے۔ ان کے قبول کرتے ہی آپ جڑ جائیں گے۔</string>
-    <string name="scan_failed">اسکین ناکام: %1$s</string>
 
     <string name="cd_back">پیچھے</string>
     <string name="common_review">جائزہ لیں</string>
@@ -876,5 +866,22 @@
     <string name="peer_sharing_supervisor_locked">زیر نگرانی موڈ آن ہے، اس لیے اپنے نگران کے ساتھ مقام کی اشتراک کاری یہاں بند نہیں کی جا سکتی۔</string>
     <string name="settings_temporary_location_share">عارضی مقام کی اشتراک کاری</string>
     <string name="app_lock_no_credential">اس آلے پر کوئی اسکرین لاک سیٹ نہیں ہے، اس لیے کھولنے کے لیے کچھ نہیں ہے۔ اپنے آلے کی ترتیبات میں ایک PIN، پیٹرن، پاس ورڈ، یا بایومیٹرک سیٹ کریں، پھر LocaPeer دوبارہ کھولیں۔</string>
-    <string name="backup_key_needs_password">اپنی نجی کلید شامل کرنے کے لیے ایک پاس ورڈ سیٹ کریں۔ ایک غیر خفیہ کردہ کلید فائل کسی کو بھی آپ کی شناخت پر قبضہ کرنے دے سکتی ہے۔</string>
+    <string name="backup_key_needs_password">اپنی نجی کلید شامل کرنے کے لیے ایک پاس ورڈ سیٹ کریں۔ ایک غیر خفیہ کردہ کلید فائل کسی کو भी آپ کی شناخت پر قبضہ کرنے دے سکتی ہے۔</string>
+    <string name="settings_category_location_privacy_subtitle">شیئرنگ، شیڈول، جیوفینسز، الرٹس</string>
+    <string name="settings_category_security_subtitle">ایپ لاک، اجازتیں، نگرانی کا موڈ</string>
+    <string name="settings_category_map_subtitle">نقطہ آغاز، زوم، پن کا رنگ</string>
+    <string name="settings_category_performance_subtitle">اپ ڈیٹ کی رفتار اور درستگی کے فلٹرز</string>
+    <string name="settings_category_units_subtitle">رفتار، فاصلہ، اونچائی، وقت</string>
+    <string name="settings_category_retention_subtitle">اس ڈیوائس پر ڈیٹا کتنی دیر تک رکھا جاتا ہے</string>
+    <string name="settings_category_appearance_subtitle">تھیم، رنگ، نیویگیشن، زبان</string>
+    <string name="settings_category_backup_subtitle">ایکسپورٹ، امپورٹ، شناختی کلید</string>
+    <string name="contacts_add_contact">رابطہ شامل کریں</string>
+    <string name="map_location_off_title">مقام بند ہے</string>
+    <string name="map_location_off_message">جب تک آپ ڈیوائس کا مقام آن نہیں کرتے، آپ کی پوزیشن اپ ڈیٹ یا شیئر نہیں کی جا سکتی۔</string>
+    <string name="map_location_off_action">ترتیبات کھولیں</string>
+    <string name="map_live">● لائیو</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d قطار میں موجود پیغام</item>
+        <item quantity="other">%1$d قطار میں موجود پیغامات</item>
+    </plurals>
 </resources>

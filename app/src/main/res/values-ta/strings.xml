@@ -62,7 +62,6 @@
     <string name="settings_section_retention">தக்கவைப்பு (இந்தச் சாதனம்)</string>
     <string name="settings_section_appearance">தோற்றம்</string>
     <string name="settings_section_backup_keys">காப்புப்பிரதி &amp; விசைகள்</string>
-    <string name="settings_section_about">பற்றி</string>
 
     <!-- சுயவிவரம் -->
     <string name="settings_edit_name">பெயரைத் தொகு</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">மீண்டும் முயற்சி செய்</string>
 
     <!-- ── அழைப்பு ஸ்கேன் திரை ─────────────────────────────────────────────── -->
-    <string name="scan_title">அழைப்பை ஸ்கேன் செய்</string>
-    <string name="scan_camera_needed">QR குறியீடுகளை ஸ்கேன் செய்ய கேமரா அனுமதி தேவை.</string>
-    <string name="scan_grant_permission">அனுமதி வழங்கு</string>
-    <string name="scan_add_contact_title">தொடர்பைச் சேர்க்கவா?</string>
-    <string name="scan_add_contact_message">இது உங்களை %1$s உடன் இணைத்து இருப்பிடத்தை ஒருவருக்கொருவர் பகிரத் தொடங்கும்.</string>
-    <string name="scan_add_share">சேர்த்துப் பகிர்</string>
-    <string name="scan_request_sent_title">கோரிக்கை அனுப்பப்பட்டது!</string>
-    <string name="scan_request_sent_message">%1$s-க்கு கோரிக்கை அனுப்பப்பட்டுள்ளது. அவர்கள் ஏற்றவுடன் நீங்கள் இணைக்கப்படுவீர்கள்.</string>
-    <string name="scan_failed">ஸ்கேன் தோல்வியடைந்தது: %1$s</string>
 
     <string name="cd_back">பின்னால்</string>
     <string name="common_review">மதிப்பாய்வு செய்</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">தற்காலிக இருப்பிடப் பகிர்வு</string>
     <string name="app_lock_no_credential">இந்தச் சாதனத்தில் திரைப் பூட்டு அமைக்கப்படவில்லை, எனவே திறக்க எதுவும் இல்லை. உங்கள் சாதன அமைப்புகளில் ஒரு PIN, வடிவம், கடவுச்சொல், அல்லது பயோமெட்ரிக் அமைத்து, பிறகு LocaPeer ஐ மீண்டும் திறக்கவும்.</string>
     <string name="backup_key_needs_password">உங்கள் தனிப்பட்ட விசையைச் சேர்க்க ஒரு கடவுச்சொல்லை அமைக்கவும். குறியாக்கம் செய்யப்படாத விசைக் கோப்பு யாரையும் உங்கள் அடையாளத்தைக் கைப்பற்ற அனுமதிக்கலாம்.</string>
+    <string name="settings_category_location_privacy_subtitle">பகிர்வு, கால அட்டவணை, ஜியோஃபென்ஸ்கள், விழிப்பூட்டல்கள்</string>
+    <string name="settings_category_security_subtitle">ஆப் லாக், அனுமதிகள், மேற்பார்வை முறை</string>
+    <string name="settings_category_map_subtitle">தொடக்கப் புள்ளி, ஜூம், பின் நிறம்</string>
+    <string name="settings_category_performance_subtitle">புதுப்பிப்பு வேகம் மற்றும் துல்லிய வடிப்பான்கள்</string>
+    <string name="settings_category_units_subtitle">வேகம், தூரம், உயரம், நேரம்</string>
+    <string name="settings_category_retention_subtitle">இந்தச் சாதனத்தில் தரவு எவ்வளவு காலம் வைக்கப்படுகிறது</string>
+    <string name="settings_category_appearance_subtitle">தீம், நிறம், வழிசெலுத்தல், மொழி</string>
+    <string name="settings_category_backup_subtitle">ஏற்றுமதி, இறக்குமதி, அடையாள விசை</string>
+    <string name="contacts_add_contact">தொடர்பைச் சேர்</string>
+    <string name="map_location_off_title">இருப்பிடம் முடக்கப்பட்டுள்ளது</string>
+    <string name="map_location_off_message">சாதன இருப்பிடத்தை நீங்கள் ஆன் செய்யும் வரை உங்கள் நிலையைப் புதுப்பிக்கவோ பகிரவோ முடியாது.</string>
+    <string name="map_location_off_action">அமைப்புகளைத் திற</string>
+    <string name="map_live">● நேரலை</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d வரிசைப்படுத்தப்பட்ட செய்தி</item>
+        <item quantity="other">%1$d வரிசைப்படுத்தப்பட்ட செய்திகள்</item>
+    </plurals>
 </resources>

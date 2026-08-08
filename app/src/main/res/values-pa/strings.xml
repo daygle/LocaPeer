@@ -62,7 +62,6 @@
     <string name="settings_section_retention">ਡਾਟਾ ਰੱਖਣ ਦੀ ਮਿਆਦ (ਇਸ ਡਿਵਾਈਸ ਤੇ)</string>
     <string name="settings_section_appearance">ਦਿੱਖ</string>
     <string name="settings_section_backup_keys">ਬੈਕਅੱਪ ਅਤੇ ਚਾਬੀਆਂ</string>
-    <string name="settings_section_about">ਬਾਰੇ</string>
 
     <!-- ਪ੍ਰੋਫਾਈਲ -->
     <string name="settings_edit_name">ਨਾਂ ਸੋਧੋ</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
 
     <!-- ── ਸੱਦਾ ਸਕੈਨ ਸਕ੍ਰੀਨ ─────────────────────────────────────────────── -->
-    <string name="scan_title">ਸੱਦਾ ਸਕੈਨ ਕਰੋ</string>
-    <string name="scan_camera_needed">QR ਕੋਡ ਸਕੈਨ ਕਰਨ ਲਈ ਕੈਮਰਾ ਪਰਮਿਸ਼ਨ ਦੀ ਲੋੜ ਹੈ।</string>
-    <string name="scan_grant_permission">ਪਰਮਿਸ਼ਨ ਦਿਓ</string>
-    <string name="scan_add_contact_title">ਸੰਪਰਕ ਸ਼ਾਮਲ ਕਰੀਏ?</string>
-    <string name="scan_add_contact_message">ਇਹ ਤੁਹਾਨੂੰ %1$s ਨਾਲ ਜੋੜ ਦੇਵੇਗਾ ਅਤੇ ਇੱਕ ਦੂਜੇ ਨਾਲ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰੇਗਾ।</string>
-    <string name="scan_add_share">ਸ਼ਾਮਲ ਕਰੋ ਅਤੇ ਸਾਂਝਾ ਕਰੋ</string>
-    <string name="scan_request_sent_title">ਬੇਨਤੀ ਭੇਜੀ ਗਈ!</string>
-    <string name="scan_request_sent_message">%1$s ਨੂੰ ਬੇਨਤੀ ਭੇਜੀ ਗਈ ਹੈ। ਜਦੋਂ ਉਹ ਸਵੀਕਾਰ ਕਰਨਗੇ ਤਾਂ ਤੁਸੀਂ ਜੁੜ ਜਾਓਗੇ।</string>
-    <string name="scan_failed">ਸਕੈਨ ਅਸਫਲ ਰਿਹਾ: %1$s</string>
 
     <string name="cd_back">ਪਿੱਛੇ</string>
     <string name="common_review">ਸਮੀਖਿਆ ਕਰੋ</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">ਅਸਥਾਈ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ</string>
     <string name="app_lock_no_credential">ਇਸ ਡੀਵਾਈਸ ਉੱਤੇ ਕੋਈ ਸਕ੍ਰੀਨ ਲਾਕ ਸੈੱਟ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਅਨਲਾਕ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ। ਆਪਣੀਆਂ ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇੱਕ PIN, ਪੈਟਰਨ, ਪਾਸਵਰਡ, ਜਾਂ ਬਾਇਓਮੈਟ੍ਰਿਕ ਸੈੱਟ ਕਰੋ, ਫਿਰ LocaPeer ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
     <string name="backup_key_needs_password">ਆਪਣੀ ਨਿੱਜੀ ਕੁੰਜੀ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ। ਇੱਕ ਅਣ-ਐਨਕ੍ਰਿਪਟਿਡ ਕੁੰਜੀ ਫਾਈਲ ਕਿਸੇ ਨੂੰ ਵੀ ਤੁਹਾਡੀ ਪਛਾਣ ਉੱਤੇ ਕਬਜ਼ਾ ਕਰਨ ਦੇ ਸਕਦੀ ਹੈ।</string>
+    <string name="settings_category_location_privacy_subtitle">ਸਾਂਝਾ ਕਰਨਾ, ਸਮਾਂ-ਸਾਰਣੀ, ਜੀਓਫੈਂਸ, ਅਲਰਟ</string>
+    <string name="settings_category_security_subtitle">ਐਪ ਲਾਕ, ਇਜਾਜ਼ਤਾਂ, ਨਿગਰਾਨੀ ਮੋਡ</string>
+    <string name="settings_category_map_subtitle">ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ, ਜ਼ੂਮ, ਪਿੰਨ ਦਾ ਰੰਗ</string>
+    <string name="settings_category_performance_subtitle">ਅੱਪਡੇਟ ਅੰਤਰਾਲ ਅਤੇ ਸ਼ੁੱਧਤਾ ਫਿਲਟਰ</string>
+    <string name="settings_category_units_subtitle">ਗਤੀ, ਦੂਰੀ, ਉਚਾਈ, ਸਮਾਂ</string>
+    <string name="settings_category_retention_subtitle">ਇਸ ਡਿਵਾਈਸ ਤੇ ਡਾਟਾ ਕਿੰਨੀ ਦੇર ਰੱਖਿਆ ਜਾਣਾ ਹੈ</string>
+    <string name="settings_category_appearance_subtitle">ਥੀਮ, ਰੰਗ, ਨੇਵੀਗੇਸ਼ਨ, ਭਾਸ਼ਾ</string>
+    <string name="settings_category_backup_subtitle">ਐਕਸਪੋਰਟ, ਇੰਪੋਰਟ, ਪਛਾਣ ਕੁੰਜੀ</string>
+    <string name="contacts_add_contact">ਸੰਪਰਕ ਜੋੜੋ</string>
+    <string name="map_location_off_title">ਟਿਕਾਣਾ ਬੰਦ ਹੈ</string>
+    <string name="map_location_off_message">ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਡਿਵਾਈਸ ਟਿਕาਣਾ ਚਾਲੂ ਨਹੀਂ ਕਰਦੇ, ਤੁਹਾਡੀ ਸਥਿਤੀ ਅੱਪਡੇਟ ਜਾਂ ਸਾਂਝੀ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ।</string>
+    <string name="map_location_off_action">ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ</string>
+    <string name="map_live">● ਲਾਈਵ</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d ਕਤਾਰਬੱਧ ਸੁਨੇਹਾ</item>
+        <item quantity="other">%1$d ਕਤਾਰਬੱਧ ਸੁਨੇਹੇ</item>
+    </plurals>
 </resources>

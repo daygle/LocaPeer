@@ -62,7 +62,6 @@
     <string name="settings_section_retention">ساتل (په دې وسیله کې)</string>
     <string name="settings_section_appearance">بڼه</string>
     <string name="settings_section_backup_keys">بیک اپ او کیليګانې</string>
-    <string name="settings_section_about">په اړه</string>
 
     <!-- پروفایل -->
     <string name="settings_edit_name">نوم بدلول</string>
@@ -314,15 +313,6 @@
     <string name="common_try_again">بیا هڅه وکړئ</string>
 
     <!-- ── د بلنې سکین سکرین ─────────────────────────────────────────────── -->
-    <string name="scan_title">بلنه سکین کړئ</string>
-    <string name="scan_camera_needed">د QR کوډونو سکین کولو لپاره د کمرې اجازې ته اړتیا ده.</string>
-    <string name="scan_grant_permission">اجازه ورکړئ</string>
-    <string name="scan_add_contact_title">اړیکه اضافه کړو؟</string>
-    <string name="scan_add_contact_message">دا به تاسو له %1$s سره وصل کړي او ستاسو ترمنځ د ځای شریکول به پیل کړي.</string>
-    <string name="scan_add_share">اضافه او شریک کړئ</string>
-    <string name="scan_request_sent_title">غوښتنه واستول شوه!</string>
-    <string name="scan_request_sent_message">%1$s ته غوښتنه واستول شوه. کله چې هغوی ومني نو وصل به شئ.</string>
-    <string name="scan_failed">سکین ناکام شو: %1$s</string>
 
     <string name="cd_back">شاته</string>
     <string name="common_review">بیاکتنه</string>
@@ -877,4 +867,21 @@
     <string name="settings_temporary_location_share">د موقعیت لنډمهاله شریکول</string>
     <string name="app_lock_no_credential">په دې وسیله کې د سکرین هیڅ کولپ نه دی ټاکل شوی، نو د خلاصولو لپاره هیڅ شی نشته. ستاسو د وسیلې تنظیماتو کې یو PIN، نمونه، پټنوم، یا بایومیټریک وټاکئ، بیا LocaPeer بیا پرانیزئ.</string>
     <string name="backup_key_needs_password">د خپل خصوصي کلي د شاملولو لپاره پټنوم وټاکئ. یو غیر کوډ شوی کلي فایل کولی شي هر چا ته اجازه ورکړي چې ستاسو پیژندنه ونیسي.</string>
+    <string name="settings_category_location_privacy_subtitle">شریکول، مهالویش، جیو فینسونه، خبرتیاوې</string>
+    <string name="settings_category_security_subtitle">د اپلیکیشن لاک، اجازه، د نظارت حالت</string>
+    <string name="settings_category_map_subtitle">د پیل نقطه، زوم، د پن رنګ</string>
+    <string name="settings_category_performance_subtitle">د تازه کولو سرعت او دقت فلټرونه</string>
+    <string name="settings_category_units_subtitle">سرعت، واټن، لوړوالی، وخت</string>
+    <string name="settings_category_retention_subtitle">په دې وسیله کې معلومات تر کومه وخته ساتل کیږي</string>
+    <string name="settings_category_appearance_subtitle">تیم، رنګ، نیویګیشن، ژبه</string>
+    <string name="settings_category_backup_subtitle">صادرول، واردول، د هویت کلید</string>
+    <string name="contacts_add_contact">اړیکه اضافه کړئ</string>
+    <string name="map_location_off_title">ځای بند دی</string>
+    <string name="map_location_off_message">ستاسو موقعیت نشي تازه کیدی یا شریک کیدی تر هغه چې تاسو د وسیلې موقعیت فعال نه کړئ.</string>
+    <string name="map_location_off_action">ترتیبات خلاص کړئ</string>
+    <string name="map_live">● ژوندی</string>
+    <plurals name="about_pending_message_count">
+        <item quantity="one">%1$d په قطار کې پیغام</item>
+        <item quantity="other">%1$d په قطار کې پیغامونه</item>
+    </plurals>
 </resources>
