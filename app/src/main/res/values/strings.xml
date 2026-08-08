@@ -41,7 +41,7 @@
     <string name="motion_driving">Driving</string>
 
     <!-- ── Backup sections ────────────────────────────────────────────────── -->
-    <string name="backup_section_private_key">Identity key</string>
+    <string name="backup_section_private_key">Identity Key</string>
     <string name="backup_section_contacts">Contacts</string>
     <string name="backup_section_geofences">Geofences</string>
     <string name="backup_section_settings">Settings</string>
@@ -125,7 +125,7 @@
     <string name="settings_update_cadence">Update Cadence</string>
     <string name="settings_update_cadence_subtitle">Adjust how often your location is broadcasted</string>
     <string name="settings_update_cadence_dialog_message">Control how often your location is updated based on your activity. Frequent updates use more battery.</string>
-    <string name="settings_update_cadence_reset">Reset to defaults</string>
+    <string name="settings_update_cadence_reset">Reset to Defaults</string>
     <string name="settings_min_distance_filtering">Minimum Distance Filtering</string>
     <string name="settings_min_distance_filtering_subtitle">Only show points that are at least this far from the previous one.</string>
     <string name="settings_discard_low_accuracy">Discard Low-Accuracy Fixes</string>
@@ -207,7 +207,7 @@
     <string name="settings_export_backup_subtitle">Save your identity key and contacts to a file. Keep this file secure!</string>
     <string name="settings_import_backup">Import Backup</string>
     <string name="settings_import_backup_subtitle">Restore from a previously exported file</string>
-    <string name="settings_view_private_key">Show my identity key</string>
+    <string name="settings_view_private_key">Show My Identity Key</string>
     <string name="settings_view_private_key_subtitle">The secret code that is your identity. Like a password — keep it private.</string>
 
     <!-- About -->
@@ -220,7 +220,7 @@
     <string name="settings_my_invite_qr">My Invite QR</string>
     <string name="settings_invite_qr_subtitle">Others can scan this to start tracking you.</string>
     <string name="settings_invite_qr_cd">Invite QR</string>
-    <string name="settings_private_key_title">Your identity key</string>
+    <string name="settings_private_key_title">Your Identity Key</string>
     <string name="settings_private_key_warning">Treat this like a password. Anyone who has it can pretend to be you — never share it, and store it somewhere safe.</string>
     <string name="settings_clear_location_title">Clear Location History?</string>
     <string name="settings_clear_location_message">All stored location pings will be permanently deleted.</string>
@@ -233,7 +233,7 @@
     <string name="settings_export_password_hint">Optionally set a password to encrypt your backup file.</string>
     <string name="settings_backup_password_optional">Backup Password (Optional)</string>
     <string name="settings_select_sections">Select sections to include:</string>
-    <string name="settings_choose_file_location">Choose file location</string>
+    <string name="settings_choose_file_location">Choose File Location</string>
     <string name="settings_not_in_backup">Not in this backup</string>
     <string name="settings_enable_supervised_title">Enable Supervised Mode</string>
     <string name="settings_enable_supervised_message">Choose a peer who will act as supervisor. They must approve access to settings from their device.</string>
