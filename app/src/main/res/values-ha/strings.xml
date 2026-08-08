@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Dakatar Da Rabawa</string>
     <string name="peer_pause_sub">Dakatar da aika wurin ku zuwa ga %1$s na ɗan lokaci</string>
     <string name="peer_precision">Ingancin Wuri</string>
-    <string name="peer_precision_exact_sub">Madaidaicin wurin GPS</string>
-    <string name="peer_precision_suburb_sub">Wurin da ke kusa (matsayin Suburb)</string>
+
+
     <string name="peer_always_sharing">Yana rabawa a kowane lokaci</string>
     <plurals name="peer_active_rules">
         <item quantity="one">Dokar rabawa %1$d tana aiki</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Kuna karɓa da amincewa da buƙatun buɗewa daga %1$s</string>
     <string name="peer_supervise_off">Bada izinin %1$s ya aiko muku da buƙatun buɗewa a yanayin sa ido</string>
     <string name="peer_messaging_sub">Kunna/kashe saƙonnin hira daga %1$s</string>
-    <string name="peer_section_history">Tarihin Motsi</string>
+
     <string name="peer_location_history">Tarihin Wuri</string>
     <string name="peer_location_history_sub">Duba tarihin motsi da rahoton taswira na %1$s</string>
     <string name="peer_section_retention">Riƙewar Bayanan Nesa</string>

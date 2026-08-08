@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Delen pauzeren</string>
     <string name="peer_pause_sub">Stop tijdelijk met je locatie naar %1$s te sturen</string>
     <string name="peer_precision">Locatienauwkeurigheid</string>
-    <string name="peer_precision_exact_sub">Exacte gps-coördinaten</string>
-    <string name="peer_precision_suburb_sub">Locatie bij benadering (wijkniveau)</string>
+
+
     <string name="peer_always_sharing">Altijd delen</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d actieve deelregel</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Je ontvangt en keurt ontgrendelverzoeken van %1$s goed</string>
     <string name="peer_supervise_off">Sta %1$s toe je ontgrendelverzoeken voor de toezichtmodus te sturen</string>
     <string name="peer_messaging_sub">Chatberichten van %1$s in-/uitschakelen</string>
-    <string name="peer_section_history">Bewegingsgeschiedenis</string>
+
     <string name="peer_location_history">Locatiegeschiedenis</string>
     <string name="peer_location_history_sub">Bekijk bewegingsgeschiedenis en kaartrapport van %1$s</string>
     <string name="peer_section_retention">Bewaartermijn op afstand</string>

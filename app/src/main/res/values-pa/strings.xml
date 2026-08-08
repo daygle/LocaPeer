@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">ਸਾਂਝਾ ਕਰਨਾ ਰੋਕੋ</string>
     <string name="peer_pause_sub">ਕੁਝ ਸਮੇਂ ਲਈ %1$s ਨੂੰ ਆਪਣਾ ਟਿਕਾਣਾ ਭੇਜਣਾ ਬੰਦ ਕਰੋ</string>
     <string name="peer_precision">ਟਿਕਾਣਾ ਸ਼ੁੱਧਤਾ</string>
-    <string name="peer_precision_exact_sub">ਸਹੀ GPS ਕੋਆਰਡੀਨੇਟ</string>
-    <string name="peer_precision_suburb_sub">ਲਗਭਗ ਟਿਕਾਣਾ (ਇਲਾਕਾ ਪੱਧਰ)</string>
+
+
     <string name="peer_always_sharing">ਹਮੇਸ਼ਾ ਸਾਂਝਾ ਕਰ ਰਿਹਾ ਹੈ</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d ਸਰਗਰਮ ਸਾਂਝਾਕਰਨ ਨਿਯਮ</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">ਤੁਸੀਂ %1$s ਤੋਂ ਅਨਲੌਕ ਬੇਨਤੀਆਂ ਪ੍ਰਾਪਤ ਕਰਦੇ ਹੋ ਅਤੇ ਸਵੀਕਾਰ ਕਰਦੇ ਹੋ</string>
     <string name="peer_supervise_off">%1$s ਨੂੰ ਨਿਗਰਾਨੀ-ਮੋਡ ਅਨਲੌਕ ਬੇਨਤੀਆਂ ਭੇਜਣ ਦੀ ਆਗਿਆ ਦਿਓ</string>
     <string name="peer_messaging_sub">%1$s ਤੋਂ ਚੈਟ ਸੁਨੇਹੇ ਸਮਰੱਥ/ਅਸਮਰੱਥ ਕਰੋ</string>
-    <string name="peer_section_history">ਹਰਕਤ ਦਾ ਇਤਿਹਾਸ</string>
+
     <string name="peer_location_history">ਟਿਕਾਣਾ ਇਤਿਹਾਸ</string>
     <string name="peer_location_history_sub">%1$s ਲਈ ਹਰਕਤ ਦਾ ਇਤਿਹਾਸ ਅਤੇ ਨਕਸ਼ਾ ਰਿਪੋਰਟ ਦੇਖੋ</string>
     <string name="peer_section_retention">ਰਿਮੋਟ ਡਾਟਾ ਰੱਖਣ ਦੀ ਮਿਆਦ</string>

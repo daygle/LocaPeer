@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">শেয়ারিং সাময়িক বন্ধ করুন</string>
     <string name="peer_pause_sub">সাময়িকভাবে %1$s-কে আপনার অবস্থান পাঠানো বন্ধ করুন</string>
     <string name="peer_precision">অবস্থানের নির্ভুলতা</string>
-    <string name="peer_precision_exact_sub">সঠিক GPS স্থানাঙ্ক</string>
-    <string name="peer_precision_suburb_sub">আনুমানিক অবস্থান (এলাকা স্তর)</string>
+
+
     <string name="peer_always_sharing">সবসময় শেয়ার হচ্ছে</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d সক্রিয় শেয়ারিং নিয়ম</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">আপনি %1$s থেকে আনলক অনুরোধ গ্রহণ ও অনুমোদন করেন</string>
     <string name="peer_supervise_off">%1$s-কে আপনার কাছে তত্ত্বাবধায়িত-মোড আনলক অনুরোধ পাঠানোর অনুমতি দিন</string>
     <string name="peer_messaging_sub">%1$s থেকে চ্যাট বার্তা চালু/বন্ধ করুন</string>
-    <string name="peer_section_history">চলাচলের ইতিহাস</string>
+
     <string name="peer_location_history">অবস্থানের ইতিহাস</string>
     <string name="peer_location_history_sub">%1$s-এর চলাচলের ইতিহাস ও ম্যাপ রিপোর্ট দেখুন</string>
     <string name="peer_section_retention">দূরবর্তী ডেটা সংরক্ষণ</string>

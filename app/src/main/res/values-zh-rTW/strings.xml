@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">暫停分享</string>
     <string name="peer_pause_sub">暫時停止向 %1$s 傳送您的位置</string>
     <string name="peer_precision">位置精確度</string>
-    <string name="peer_precision_exact_sub">精確的 GPS 座標</string>
-    <string name="peer_precision_suburb_sub">大約位置（社區層級）</string>
+
+
     <string name="peer_always_sharing">永遠分享中</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d 條生效的分享規則</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">您會收到並核准來自 %1$s 的解鎖要求</string>
     <string name="peer_supervise_off">允許 %1$s 向您傳送受監督模式解鎖要求</string>
     <string name="peer_messaging_sub">啟用/停用來自 %1$s 的聊天訊息</string>
-    <string name="peer_section_history">移動紀錄</string>
+
     <string name="peer_location_history">位置紀錄</string>
     <string name="peer_location_history_sub">檢視 %1$s 的移動紀錄與地圖報告</string>
     <string name="peer_section_retention">遠端資料保留</string>

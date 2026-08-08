@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">Dá Ìpínpín Dúró</string>
     <string name="peer_pause_sub">Dá ipò rẹ dúró fún ìgbà díẹ̀ fún %1$s</string>
     <string name="peer_precision">Nkenke Ipò</string>
-    <string name="peer_precision_exact_sub">Ipò GPS dunjú</string>
-    <string name="peer_precision_suburb_sub">Ipò tí ó sún mọ́ ọn (ọkwa Suburb)</string>
+
+
     <string name="peer_always_sharing">Ń pín ní gbogbo ìgbà</string>
     <plurals name="peer_active_rules">
         <item quantity="other">Òfin %1$d ń ṣiṣẹ́</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">Wàá gba àti fọwọ́ sí ìbéèrè mmeghe sitere na %1$s</string>
     <string name="peer_supervise_off">Gba %1$s láyè láti rán ìbéèrè mmeghe ipo ìbójútó sí ọ</string>
     <string name="peer_messaging_sub">Gbanye/Gbanyụọ ozi chat site na %1$s</string>
-    <string name="peer_section_history">Ìtàn Mmegharị</string>
+
     <string name="peer_location_history">Ìtàn Ipò</string>
     <string name="peer_location_history_sub">Lelee akụkọ mmegharị na máàpù fún %1$s</string>
     <string name="peer_section_retention">Njide Data Dị Anya</string>

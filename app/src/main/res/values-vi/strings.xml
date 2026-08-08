@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">Tạm dừng chia sẻ</string>
     <string name="peer_pause_sub">Tạm thời ngừng gửi vị trí của bạn tới %1$s</string>
     <string name="peer_precision">Độ chính xác vị trí</string>
-    <string name="peer_precision_exact_sub">Tọa độ GPS chính xác</string>
-    <string name="peer_precision_suburb_sub">Vị trí gần đúng (cấp khu phố)</string>
+
+
     <string name="peer_always_sharing">Luôn chia sẻ</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d quy tắc chia sẻ đang hoạt động</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">Bạn nhận và phê duyệt các yêu cầu mở khóa từ %1$s</string>
     <string name="peer_supervise_off">Cho phép %1$s gửi cho bạn yêu cầu mở khóa chế độ được giám sát</string>
     <string name="peer_messaging_sub">Bật/tắt tin nhắn trò chuyện từ %1$s</string>
-    <string name="peer_section_history">Lịch sử di chuyển</string>
+
     <string name="peer_location_history">Lịch sử vị trí</string>
     <string name="peer_location_history_sub">Xem lịch sử di chuyển và báo cáo bản đồ của %1$s</string>
     <string name="peer_section_retention">Lưu trữ dữ liệu từ xa</string>

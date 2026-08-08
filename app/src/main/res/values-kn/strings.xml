@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">ಹಂಚಿಕೆಯನ್ನು ವಿರಾಮಗೊಳಿಸಿ</string>
     <string name="peer_pause_sub">ನಿಮ್ಮ ಸ್ಥಳವನ್ನು %1$s ಅವರಿಗೆ ಕಳುಹಿಸುವುದನ್ನು ತಾತ್ಕಾಲಿಕವಾಗಿ ನಿಲ್ಲಿಸಿ</string>
     <string name="peer_precision">ಸ್ಥಳದ ನಿಖರತೆ</string>
-    <string name="peer_precision_exact_sub">ನಿಖರವಾದ GPS ನಿರ್ದೇಶಾಂಕಗಳು</string>
-    <string name="peer_precision_suburb_sub">ಅಂದಾಜು ಸ್ಥಳ (ಉಪನಗರ ಮಟ್ಟ)</string>
+
+
     <string name="peer_always_sharing">ಯಾವಾಗಲೂ ಹಂಚಿಕೊಳ್ಳಲಾಗುತ್ತಿದೆ</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d ಸಕ್ರಿಯ ಹಂಚಿಕೆ ನಿಯಮ</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">ನೀವು %1$s ರಿಂದ ಅನ್‌ಲಾಕ್ ವಿನಂತಿಗಳನ್ನು ಸ್ವೀಕರಿಸುತ್ತೀರಿ ಮತ್ತು ಅನುಮೋದಿಸುತ್ತೀರಿ</string>
     <string name="peer_supervise_off">ಮೇಲ್ವಿಚಾರಣಾ-ಮೋಡ್ ಅನ್‌ಲಾಕ್ ವಿನಂತಿಗಳನ್ನು ನಿಮಗೆ ಕಳುಹಿಸಲು %1$s ರನ್ನು ಅನುಮತಿಸಿ</string>
     <string name="peer_messaging_sub">%1$s ರವರಿಂದ ಚಾಟ್ ಸಂದೇಶಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ/ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
-    <string name="peer_section_history">ಚಲನೆಯ ಇತಿಹಾಸ</string>
+
     <string name="peer_location_history">ಸ್ಥಳದ ಇತಿಹಾಸ</string>
     <string name="peer_location_history_sub">%1$s ರ ಚಲನೆಯ ಇತಿಹಾಸ ಮತ್ತು ಮ್ಯಾಪ್ ವರದಿಯನ್ನು ವೀಕ್ಷಿಸಿ</string>
     <string name="peer_section_retention">ರಿಮೋಟ್ ಡೇಟಾ ಧಾರಣ</string>

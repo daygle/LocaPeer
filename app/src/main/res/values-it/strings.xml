@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Sospendi condivisione</string>
     <string name="peer_pause_sub">Interrompi temporaneamente l\'invio della tua posizione a %1$s</string>
     <string name="peer_precision">Precisione posizione</string>
-    <string name="peer_precision_exact_sub">Coordinate GPS esatte</string>
-    <string name="peer_precision_suburb_sub">Posizione approssimativa (livello suburbano)</string>
+
+
     <string name="peer_always_sharing">Sempre in condivisione</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d regola di condivisione attiva</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Ricevi e approvi le richieste di sblocco da %1$s</string>
     <string name="peer_supervise_off">Consenti a %1$s di inviarti richieste di sblocco in modalità supervisionata</string>
     <string name="peer_messaging_sub">Abilita/disabilita i messaggi di chat da %1$s</string>
-    <string name="peer_section_history">Cronologia spostamenti</string>
+
     <string name="peer_location_history">Cronologia posizioni</string>
     <string name="peer_location_history_sub">Visualizza cronologia spostamenti e report mappa per %1$s</string>
     <string name="peer_section_retention">Conservazione dati remota</string>

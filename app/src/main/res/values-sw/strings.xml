@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Sitisha Kushiriki</string>
     <string name="peer_pause_sub">Acha kutuma eneo lako kwa %1$s kwa muda</string>
     <string name="peer_precision">Usahihi wa Mahali</string>
-    <string name="peer_precision_exact_sub">Viwianishi vya GPS halisi</string>
-    <string name="peer_precision_suburb_sub">Mahali takriban (ngazi ya Mtaa)</string>
+
+
     <string name="peer_always_sharing">Inashiriki wakati wote</string>
     <plurals name="peer_active_rules">
         <item quantity="one">Sheria %1$d ya kushiriki inayofanya kazi</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Unapokea na kuidhinisha maombi ya kufungua kutoka kwa %1$s</string>
     <string name="peer_supervise_off">Mruhusu %1$s akutumie maombi ya kufungua njia iliyosimamiwa</string>
     <string name="peer_messaging_sub">Washa/zima ujumbe wa gumzo kutoka kwa %1$s</string>
-    <string name="peer_section_history">Historia ya Mwendo</string>
+
     <string name="peer_location_history">Historia ya Mahali</string>
     <string name="peer_location_history_sub">Angalia historia ya mwendo na ripoti ya ramani kwa %1$s</string>
     <string name="peer_section_retention">Uhifadhi wa Data ya Mbali</string>

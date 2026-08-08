@@ -55,17 +55,26 @@ class LocaPeerApplication : Application(), Configuration.Provider {
             }
             .launchIn(appScope)
 
-        // Offload heavy initialization (disk I/O, networking setup, WorkManager) to background
+        // Configure osmdroid before any Activity can create a MapView. Doing this from the
+        // background startup coroutine races the first frame: a map opened immediately after
+        // launch can construct its tile provider with the default (unconfigured) cache/user-agent
+        // settings and remain stuck showing grey tile placeholders.
+        try {
+            org.osmdroid.config.Configuration.getInstance().apply {
+                userAgentValue = packageName
+                osmdroidBasePath = filesDir
+                osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
+                // Load configuration from shared preferences (recommended by OSMDroid)
+                load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to configure osmdroid", e)
+        }
+
+        // Offload the remaining heavy initialization (networking setup and WorkManager) to
+        // background so it cannot delay the first UI frame.
         appScope.launch(Dispatchers.IO) {
             try {
-                org.osmdroid.config.Configuration.getInstance().apply {
-                    userAgentValue = packageName
-                    osmdroidBasePath = filesDir
-                    osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
-                    // Load configuration from shared preferences (recommended by OSMDroid)
-                    load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
-                }
-
                 heartbeatReceiver.start()
 
                 val workManager = try {

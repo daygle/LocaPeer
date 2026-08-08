@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Paylaşımı Duraklat</string>
     <string name="peer_pause_sub">Konumunuzu %1$s kişisine göndermeyi geçici olarak durdurun</string>
     <string name="peer_precision">Konum Hassasiyeti</string>
-    <string name="peer_precision_exact_sub">Tam GPS koordinatları</string>
-    <string name="peer_precision_suburb_sub">Yaklaşık konum (semt düzeyi)</string>
+
+
     <string name="peer_always_sharing">Her zaman paylaşılıyor</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d etkin paylaşım kuralı</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">%1$s kişisinden gelen kilit açma isteklerini alır ve onaylarsınız</string>
     <string name="peer_supervise_off">%1$s kişisinin size denetimli mod kilit açma istekleri göndermesine izin verin</string>
     <string name="peer_messaging_sub">%1$s kişisinden sohbet mesajlarını aç/kapat</string>
-    <string name="peer_section_history">Hareket Geçmişi</string>
+
     <string name="peer_location_history">Konum Geçmişi</string>
     <string name="peer_location_history_sub">%1$s için hareket geçmişini ve harita raporunu görüntüleyin</string>
     <string name="peer_section_retention">Uzak Veri Saklama</string>

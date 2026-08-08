@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">Jeda Berbagi</string>
     <string name="peer_pause_sub">Berhenti sementara mengirim lokasi Anda ke %1$s</string>
     <string name="peer_precision">Presisi Lokasi</string>
-    <string name="peer_precision_exact_sub">Koordinat GPS persis</string>
-    <string name="peer_precision_suburb_sub">Lokasi perkiraan (tingkat lingkungan)</string>
+
+
     <string name="peer_always_sharing">Selalu berbagi</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d aturan berbagi aktif</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">Anda menerima dan menyetujui permintaan buka kunci dari %1$s</string>
     <string name="peer_supervise_off">Izinkan %1$s mengirimi Anda permintaan buka kunci mode terawasi</string>
     <string name="peer_messaging_sub">Aktifkan/nonaktifkan pesan obrolan dari %1$s</string>
-    <string name="peer_section_history">Riwayat Pergerakan</string>
+
     <string name="peer_location_history">Riwayat Lokasi</string>
     <string name="peer_location_history_sub">Lihat riwayat pergerakan dan laporan peta untuk %1$s</string>
     <string name="peer_section_retention">Retensi Data Jarak Jauh</string>

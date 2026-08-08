@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">شریکول ودروئ</string>
     <string name="peer_pause_sub">د لږ وخت لپاره له %1$s سره د ځای شریکول بند کړئ</string>
     <string name="peer_precision">د ځای دقیقیت</string>
-    <string name="peer_precision_exact_sub">دقیق GPS همغږي</string>
-    <string name="peer_precision_suburb_sub">تقریبي ځای (د سیمې په کچه)</string>
+
+
     <string name="peer_always_sharing">تل شریکیږي</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d د شریکولو فعاله قاعده</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">تاسو له %1$s څخه د خلاصولو غوښتنې ترلاسه کوئ او منئ یې</string>
     <string name="peer_supervise_off">اجازه ورکړئ چې %1$s تاسو ته د څارنې حالت د خلاصولو غوښتنې واستوي</string>
     <string name="peer_messaging_sub">له %1$s څخه د چاټ پیغامونه فعال/بند کړئ</string>
-    <string name="peer_section_history">د حرکت تاریخچه</string>
+
     <string name="peer_location_history">د ځای تاریخچه</string>
     <string name="peer_location_history_sub">د %1$s د حرکت تاریخچه او د نقشې راپور وګورئ</string>
     <string name="peer_section_retention">د معلوماتو د لیرې ساتلو موده</string>

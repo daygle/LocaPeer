@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">പങ്കിടൽ താൽക്കാലികമായി നിർത്തുക</string>
     <string name="peer_pause_sub">%1$s-ലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ അയയ്ക്കുന്നത് താൽക്കാലികമായി നിർത്തുക</string>
     <string name="peer_precision">ലൊക്കേഷൻ കൃത്യത</string>
-    <string name="peer_precision_exact_sub">കൃത്യമായ GPS കോർഡിനേറ്റുകൾ</string>
-    <string name="peer_precision_suburb_sub">ഏകദേശ ലൊക്കേഷൻ (സബർബ് നില)</string>
+
+
     <string name="peer_always_sharing">എപ്പോഴും പങ്കിടുന്നു</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d സജീവ പങ്കിടൽ നിയമം</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">നിങ്ങൾ %1$s-ൽ നിന്ന് അൺലോക്ക് അഭ്യർത്ഥനകൾ സ്വീകരിക്കുകയും അംഗീകരിക്കുകയും ചെയ്യുന്നു</string>
     <string name="peer_supervise_off">മേൽനോട്ട-മോഡ് അൺലോക്ക് അഭ്യർത്ഥനകൾ നിങ്ങൾക്ക് അയയ്ക്കാൻ %1$s-നെ അനുവദിക്കുക</string>
     <string name="peer_messaging_sub">%1$s-ൽ നിന്നുള്ള ചാറ്റ് സന്ദേശങ്ങൾ പ്രവർത്തനക്ഷമമാക്കുക/അപ്രാപ്തമാക്കുക</string>
-    <string name="peer_section_history">ചലന ചരിത്രം</string>
+
     <string name="peer_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
     <string name="peer_location_history_sub">%1$s-ന്റെ ചലന ചരിത്രവും മാപ്പ് റിപ്പോർട്ടും കാണുക</string>
     <string name="peer_section_retention">റിമോട്ട് ഡാറ്റ നിലനിർത്തൽ</string>

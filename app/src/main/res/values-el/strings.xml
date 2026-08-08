@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Παύση κοινοποίησης</string>
     <string name="peer_pause_sub">Προσωρινή διακοπή αποστολής της τοποθεσίας σας στον/στην %1$s</string>
     <string name="peer_precision">Ακρίβεια τοποθεσίας</string>
-    <string name="peer_precision_exact_sub">Ακριβείς συντεταγμένες GPS</string>
-    <string name="peer_precision_suburb_sub">Κατά προσέγγιση τοποθεσία (επίπεδο συνοικίας)</string>
+
+
     <string name="peer_always_sharing">Πάντα σε κοινοποίηση</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d ενεργός κανόνας κοινοποίησης</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Λαμβάνετε και εγκρίνετε αιτήματα ξεκλειδώματος από τον/την %1$s</string>
     <string name="peer_supervise_off">Επιτρέψτε στον/στην %1$s να σας στέλνει αιτήματα ξεκλειδώματος εποπτευόμενης λειτουργίας</string>
     <string name="peer_messaging_sub">Ενεργοποίηση/απενεργοποίηση μηνυμάτων συνομιλίας από τον/την %1$s</string>
-    <string name="peer_section_history">Ιστορικό μετακινήσεων</string>
+
     <string name="peer_location_history">Ιστορικό τοποθεσίας</string>
     <string name="peer_location_history_sub">Προβολή ιστορικού μετακινήσεων και αναφοράς χάρτη για τον/την %1$s</string>
     <string name="peer_section_retention">Απομακρυσμένη διατήρηση δεδομένων</string>

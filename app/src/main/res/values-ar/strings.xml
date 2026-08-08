@@ -416,8 +416,8 @@
     <string name="peer_pause_sharing">إيقاف المشاركة مؤقتًا</string>
     <string name="peer_pause_sub">التوقف مؤقتًا عن إرسال موقعك إلى %1$s</string>
     <string name="peer_precision">دقة الموقع</string>
-    <string name="peer_precision_exact_sub">إحداثيات GPS الدقيقة</string>
-    <string name="peer_precision_suburb_sub">موقع تقريبي (على مستوى الحي)</string>
+
+
     <string name="peer_always_sharing">مشاركة دائمة</string>
     <plurals name="peer_active_rules">
         <item quantity="zero">لا قواعد مشاركة نشطة</item>
@@ -450,7 +450,7 @@
     <string name="peer_supervise_on">تستقبل وتوافق على طلبات إلغاء القفل من %1$s</string>
     <string name="peer_supervise_off">السماح لـ %1$s بإرسال طلبات إلغاء قفل الوضع الخاضع للإشراف إليك</string>
     <string name="peer_messaging_sub">تفعيل/إيقاف رسائل الدردشة من %1$s</string>
-    <string name="peer_section_history">سجلّ التنقّل</string>
+
     <string name="peer_location_history">سجلّ المواقع</string>
     <string name="peer_location_history_sub">عرض سجلّ التنقّل وتقرير الخريطة لـ %1$s</string>
     <string name="peer_section_retention">الاحتفاظ بالبيانات عن بُعد</string>

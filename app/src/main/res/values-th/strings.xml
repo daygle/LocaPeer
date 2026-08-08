@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">หยุดแชร์ชั่วคราว</string>
     <string name="peer_pause_sub">หยุดส่งตำแหน่งของคุณให้ %1$s ชั่วคราว</string>
     <string name="peer_precision">ความแม่นยำของตำแหน่ง</string>
-    <string name="peer_precision_exact_sub">พิกัด GPS ที่แน่นอน</string>
-    <string name="peer_precision_suburb_sub">ตำแหน่งโดยประมาณ (ระดับย่าน)</string>
+
+
     <string name="peer_always_sharing">แชร์ตลอดเวลา</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d กฎการแชร์ที่ทำงานอยู่</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">คุณรับและอนุมัติคำขอปลดล็อกจาก %1$s</string>
     <string name="peer_supervise_off">อนุญาตให้ %1$s ส่งคำขอปลดล็อกโหมดถูกกำกับดูแลถึงคุณ</string>
     <string name="peer_messaging_sub">เปิด/ปิดข้อความแชทจาก %1$s</string>
-    <string name="peer_section_history">ประวัติการเดินทาง</string>
+
     <string name="peer_location_history">ประวัติตำแหน่ง</string>
     <string name="peer_location_history_sub">ดูประวัติการเดินทางและรายงานแผนที่ของ %1$s</string>
     <string name="peer_section_retention">การเก็บข้อมูลระยะไกล</string>

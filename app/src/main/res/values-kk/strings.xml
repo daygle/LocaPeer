@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Бөлісуді тоқтата тұру</string>
     <string name="peer_pause_sub">Орналасқан жеріңізді %1$s-ге жіберуді уақытша тоқтату</string>
     <string name="peer_precision">Орын дәлдігі</string>
-    <string name="peer_precision_exact_sub">Нақты GPS координаттары</string>
-    <string name="peer_precision_suburb_sub">Жуықтап алғандағы орын (аудан деңгейі)</string>
+
+
     <string name="peer_always_sharing">Әрқашан бөлісуде</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d белсенді бөлісу ережесі</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Сіз %1$s-ден құлыпты ашу сұрауларын аласыз және мақұлдайсыз</string>
     <string name="peer_supervise_off">%1$s-ге бақылау режимінде құлыпты ашу сұрауларын жіберуге рұқсат беріңіз</string>
     <string name="peer_messaging_sub">%1$s-ден келетін чат хабарламаларын қосу/өшіру</string>
-    <string name="peer_section_history">Қозғалыс тарихы</string>
+
     <string name="peer_location_history">Орын тарихы</string>
     <string name="peer_location_history_sub">%1$s үшін қозғалыс тарихын және карта есебін көру</string>
     <string name="peer_section_retention">Қашықтан деректерді сақтау</string>

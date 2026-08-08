@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Baham ko‘rishni to‘xtatib turish</string>
     <string name="peer_pause_sub">Joylashuvingizni %1$s-ga yuborishni vaqtincha to‘xtatish</string>
     <string name="peer_precision">Joylashuv aniqligi</string>
-    <string name="peer_precision_exact_sub">Aniq GPS koordinatalari</string>
-    <string name="peer_precision_suburb_sub">Taxminiy joylashuv (tuman darajasi)</string>
+
+
     <string name="peer_always_sharing">Har doim baham ko‘rilmoqda</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d faol baham ko‘rish qoidasi</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Siz %1$s-dan qulfdan chiqarish so‘rovlarini olasiz va tasdiqlaysiz</string>
     <string name="peer_supervise_off">%1$s-ga nazorat rejimida qulfdan chiqarish so‘rovlarini yuborishga ruxsat bering</string>
     <string name="peer_messaging_sub">%1$s-dan keladigan chat xabarlarini yoqish/o‘chirish</string>
-    <string name="peer_section_history">Harakat tarixi</string>
+
     <string name="peer_location_history">Joylashuv tarixi</string>
     <string name="peer_location_history_sub">%1$s-ning harakat tarixi va xarita hisobotini ko‘rish</string>
     <string name="peer_section_retention">Masofadan ma’lumotlarni saqlash</string>

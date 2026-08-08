@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">பகிர்வை நிறுத்து</string>
     <string name="peer_pause_sub">%1$s-க்கு உங்கள் இருப்பிடத்தை அனுப்புவதை தற்காலிகமாக நிறுத்துங்கள்</string>
     <string name="peer_precision">இருப்பிடத் துல்லியம்</string>
-    <string name="peer_precision_exact_sub">துல்லியமான GPS ஆயத்தொலைவுகள்</string>
-    <string name="peer_precision_suburb_sub">தோராயமான இருப்பிடம் (நகர்ப்புற நிலை)</string>
+
+
     <string name="peer_always_sharing">எப்போதும் பகிரப்படுகிறது</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d செயலில் உள்ள பகிர்வு விதி</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">%1$s இடமிருந்து திறத்தல் கோரிக்கைகளைப் பெற்று அங்கீகரிக்கிறீர்கள்</string>
     <string name="peer_supervise_off">மேற்பார்வை-பயன்முறை திறத்தல் கோரிக்கைகளை உங்களுக்கு அனுப்ப %1$s-ஐ அனுமதிக்கவும்</string>
     <string name="peer_messaging_sub">%1$s இடமிருந்து சாட் செய்திகளை இயக்கு/முடக்கு</string>
-    <string name="peer_section_history">இயக்க வரலாறு</string>
+
     <string name="peer_location_history">இருப்பிட வரலாறு</string>
     <string name="peer_location_history_sub">%1$s க்கான இயக்க வரலாறு மற்றும் வரைபட அறிக்கையைப் பார்</string>
     <string name="peer_section_retention">தொலைநிலை தரவு தக்கவைப்பு</string>

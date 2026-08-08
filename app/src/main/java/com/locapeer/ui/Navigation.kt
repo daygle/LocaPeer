@@ -110,6 +110,13 @@ internal fun navTabLabel(routeId: String): String =
     SCREEN_BY_ROUTE[routeId]?.let { stringResource(it.labelRes) }
         ?: routeId.replaceFirstChar { it.uppercaseChar() }
 
+private val SETTINGS_DETAIL_ROUTES = setOf(
+    "about",
+    "permissions",
+    "customize-nav",
+    "relays"
+)
+
 private val fadeEnter = fadeIn(tween(220))
 private val fadeExit = fadeOut(tween(180))
 private val slideEnter = slideInHorizontally(tween(280)) { it / 3 } + fadeIn(tween(280))
@@ -142,7 +149,16 @@ fun LocaPeerNavHost(
         if (bottomNavItems.any { it.route == preferred }) preferred else Screen.Map.route
     }
 
-    val showBottomBar = bottomNavItems.any { currentRoute?.substringBefore('?') == it.route }
+    val baseRoute = currentRoute?.substringBefore('?')
+    // Keep the primary navigation available while drilling through user and peer settings. These
+    // screens are still part of the settings flow, and hiding the nav leaves users forced to back
+    // out to the landing page before switching to another primary section. Detail flows elsewhere
+    // (chat, history reports, etc.) retain their focused full-screen layout.
+
+    val showBottomBar = bottomNavItems.any { baseRoute == it.route } ||
+        baseRoute in SETTINGS_DETAIL_ROUTES ||
+        baseRoute?.startsWith("settings/") == true ||
+        baseRoute?.startsWith("peer-sharing/") == true
 
     // Deep-link from notification
     LaunchedEffect(initialNavTarget) {

@@ -393,8 +393,8 @@
     <string name="peer_pause_sharing">Suspendre le partage</string>
     <string name="peer_pause_sub">Arrêter temporairement d\'envoyer votre localisation à %1$s</string>
     <string name="peer_precision">Précision de la localisation</string>
-    <string name="peer_precision_exact_sub">Coordonnées GPS exactes</string>
-    <string name="peer_precision_suburb_sub">Localisation approximative (niveau quartier)</string>
+
+
     <string name="peer_always_sharing">Partage permanent</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d règle de partage active</item>
@@ -419,7 +419,7 @@
     <string name="peer_supervise_on">Vous recevez et approuvez les demandes de déverrouillage de %1$s</string>
     <string name="peer_supervise_off">Autoriser %1$s à vous envoyer des demandes de déverrouillage en mode supervisé</string>
     <string name="peer_messaging_sub">Activer/désactiver les messages de chat de %1$s</string>
-    <string name="peer_section_history">Historique des mouvements</string>
+
     <string name="peer_location_history">Historique de localisation</string>
     <string name="peer_location_history_sub">Voir l\'historique des mouvements et le rapport cartographique pour %1$s</string>
     <string name="peer_section_retention">Rétention des données à distance</string>

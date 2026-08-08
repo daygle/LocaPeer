@@ -404,8 +404,8 @@
     <string name="peer_pause_sharing">Wstrzymaj udostępnianie</string>
     <string name="peer_pause_sub">Tymczasowo przestań wysyłać swoją lokalizację do %1$s</string>
     <string name="peer_precision">Dokładność lokalizacji</string>
-    <string name="peer_precision_exact_sub">Dokładne współrzędne GPS</string>
-    <string name="peer_precision_suburb_sub">Przybliżona lokalizacja (poziom dzielnicy)</string>
+
+
     <string name="peer_always_sharing">Zawsze udostępniane</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktywna reguła udostępniania</item>
@@ -434,7 +434,7 @@
     <string name="peer_supervise_on">Otrzymujesz i zatwierdzasz prośby o odblokowanie od %1$s</string>
     <string name="peer_supervise_off">Zezwól %1$s na wysyłanie próśb o odblokowanie trybu nadzorowanego</string>
     <string name="peer_messaging_sub">Włącz/wyłącz wiadomości czatu od %1$s</string>
-    <string name="peer_section_history">Historia przemieszczania</string>
+
     <string name="peer_location_history">Historia lokalizacji</string>
     <string name="peer_location_history_sub">Zobacz historię przemieszczania i raport mapowy dla %1$s</string>
     <string name="peer_section_retention">Przechowywanie danych zdalnych</string>

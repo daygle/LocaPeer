@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">ଅଂଶୀଦାର ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="peer_pause_sub">ସାମୟିକ ଭାବରେ %1$s କୁ ଆପଣଙ୍କର ସ୍ଥାନ ପଠାଇବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="peer_precision">ସ୍ଥାନ ସଠିକତା</string>
-    <string name="peer_precision_exact_sub">ସଠିକ୍ GPS ସଂଯୋଜକ</string>
-    <string name="peer_precision_suburb_sub">ଆନୁମାନିକ ସ୍ଥାନ (ସବ୍‌ଅର୍ବ ସ୍ତର)</string>
+
+
     <string name="peer_always_sharing">ସର୍ବଦା ଅଂଶୀଦାର କରାଯାଉଛି</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d ସକ୍ରିୟ ଅଂଶୀଦାର ନିୟମ</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">ଆପଣ %1$s ଙ୍କ ଠାରୁ ଅନଲକ୍ ଅନୁରୋଧ ଗ୍ରହଣ ଏବଂ ଅନୁମୋଦନ କରନ୍ତି</string>
     <string name="peer_supervise_off">ତଦାରଖ ମୋଡ୍ ଅନଲକ୍ ଅନୁରୋଧ ପଠାଇବାକୁ %1$s କୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="peer_messaging_sub">%1$s ଙ୍କ ଠାରୁ ଚାଟ୍ ବାର୍ତ୍ତା ସକ୍ଷମ/ଅକ୍ଷମ କରନ୍ତୁ</string>
-    <string name="peer_section_history">ଗତିବିଧି ଇତିହାସ</string>
+
     <string name="peer_location_history">ସ୍ଥାନ ଇତିହାସ</string>
     <string name="peer_location_history_sub">%1$s ପାଇଁ ଗତିବିଧି ଇତିହାସ ଏବଂ ମାନଚିତ୍ର ରିପୋର୍ଟ ଦେଖନ୍ତୁ</string>
     <string name="peer_section_retention">ଦୂରବର୍ତ୍ତୀ ଡାଟା ଧାରଣ</string>

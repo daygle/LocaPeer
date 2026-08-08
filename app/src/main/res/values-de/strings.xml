@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Freigabe pausieren</string>
     <string name="peer_pause_sub">Senden Ihres Standorts an %1$s vorübergehend stoppen</string>
     <string name="peer_precision">Standortgenauigkeit</string>
-    <string name="peer_precision_exact_sub">Exakte GPS-Koordinaten</string>
-    <string name="peer_precision_suburb_sub">Ungefährer Standort (Stadtteilebene)</string>
+
+
     <string name="peer_always_sharing">Immer teilen</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktive Freigaberegel</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Sie empfangen und genehmigen Entsperranfragen von %1$s</string>
     <string name="peer_supervise_off">%1$s erlauben, Ihnen Entsperranfragen im Überwachungsmodus zu senden</string>
     <string name="peer_messaging_sub">Chat-Nachrichten von %1$s aktivieren/deaktivieren</string>
-    <string name="peer_section_history">Bewegungsverlauf</string>
+
     <string name="peer_location_history">Standortverlauf</string>
     <string name="peer_location_history_sub">Bewegungsverlauf und Kartenbericht für %1$s anzeigen</string>
     <string name="peer_section_retention">Remote-Datenaufbewahrung</string>

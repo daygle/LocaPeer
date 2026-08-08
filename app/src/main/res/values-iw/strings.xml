@@ -398,8 +398,8 @@
     <string name="peer_pause_sharing">השהה שיתוף</string>
     <string name="peer_pause_sub">הפסק זמנית לשלוח את מיקומך ל-%1$s</string>
     <string name="peer_precision">דיוק מיקום</string>
-    <string name="peer_precision_exact_sub">קואורדינטות GPS מדויקות</string>
-    <string name="peer_precision_suburb_sub">מיקום משוער (ברמת שכונה)</string>
+
+
     <string name="peer_always_sharing">משתף תמיד</string>
     <plurals name="peer_active_rules">
         <item quantity="one">כלל שיתוף פעיל %1$d</item>
@@ -426,7 +426,7 @@
     <string name="peer_supervise_on">אתה מקבל ומאשר בקשות ביטול נעילה מ-%1$s</string>
     <string name="peer_supervise_off">אפשר ל-%1$s לשלוח לך בקשות ביטול נעילה של מצב מפוקח</string>
     <string name="peer_messaging_sub">הפעל/השבת הודעות צ׳אט מ-%1$s</string>
-    <string name="peer_section_history">היסטוריית תנועה</string>
+
     <string name="peer_location_history">היסטוריית מיקום</string>
     <string name="peer_location_history_sub">צפה בהיסטוריית התנועה ובדוח המפה של %1$s</string>
     <string name="peer_section_retention">שמירת נתונים מרוחקת</string>

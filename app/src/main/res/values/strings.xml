@@ -433,8 +433,8 @@
     <string name="peer_pause_sharing">Pause Sharing</string>
     <string name="peer_pause_sub">Temporarily stop sending your location to %1$s</string>
     <string name="peer_precision">Location Precision</string>
-    <string name="peer_precision_exact_sub">Exact GPS coordinates</string>
-    <string name="peer_precision_suburb_sub">Approximate location (Suburb level)</string>
+
+
     <string name="peer_always_sharing">Always sharing</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d active sharing rule</item>
@@ -459,7 +459,7 @@
     <string name="peer_supervise_on">You receive and approve unlock requests from %1$s</string>
     <string name="peer_supervise_off">Allow %1$s to send you supervised-mode unlock requests</string>
     <string name="peer_messaging_sub">Enable/disable chat messages from %1$s</string>
-    <string name="peer_section_history">Movement History</string>
+
     <string name="peer_location_history">Location History</string>
     <string name="peer_location_history_sub">View movement history and map report for %1$s</string>
     <string name="peer_section_retention">Remote Data Retention</string>

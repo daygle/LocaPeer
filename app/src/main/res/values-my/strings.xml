@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">မျှဝေခြင်းကို ခေတ္တရပ်ရန်</string>
     <string name="peer_pause_sub">%1$s ထံသို့ သင့်တည်နေရာ ပေးပို့ခြင်းကို ခေတ္တရပ်ထားရန်</string>
     <string name="peer_precision">တည်နေရာ တိကျမှု</string>
-    <string name="peer_precision_exact_sub">တိကျသော GPS ကိုဩဒိနိတ်များ</string>
-    <string name="peer_precision_suburb_sub">အနီးစပ်ဆုံး တည်နေရာ (ရပ်ကွက် အဆင့်)</string>
+
+
     <string name="peer_always_sharing">အမြဲတမ်း မျှဝေနေသည်</string>
     <plurals name="peer_active_rules">
         <item quantity="other">အလုပ်လုပ်နေသော မျှဝေမှု စည်းမျဉ်း %1$d ခု</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">သင်သည် %1$s ထံမှ သော့ဖွင့်ခွင့် တောင်းဆိုချက်များကို လက်ခံရရှိပြီး အတည်ပြုပေးရပါမည်</string>
     <string name="peer_supervise_off">ကြီးကြပ်မှုမုဒ် သော့ဖွင့်ခွင့် တောင်းဆိုချက်များ ပေးပို့ရန် %1$s အား ခွင့်ပြုပါ</string>
     <string name="peer_messaging_sub">%1$s ထံမှ ချတ်မက်ဆေ့ဂျ်များကို ဖွင့်ရန်/ပိတ်ရန်</string>
-    <string name="peer_section_history">လှုပ်ရှားမှု မှတ်တမ်း</string>
+
     <string name="peer_location_history">တည်နေရာ မှတ်တမ်း</string>
     <string name="peer_location_history_sub">%1$s ၏ လှုပ်ရှားမှုမှတ်တမ်းနှင့် မြေပုံကို ကြည့်ရန်</string>
     <string name="peer_section_retention">အဝေးမှ ဒေတာ ထိန်းသိမ်းမှု</string>

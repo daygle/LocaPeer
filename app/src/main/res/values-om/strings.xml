@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Qoodiinsa Dhaabi</string>
     <string name="peer_pause_sub">Bakka jirtu %1$s-f erguu yeroof dhaabi</string>
     <string name="peer_precision">Sirrummaa Bakka Jiranii</string>
-    <string name="peer_precision_exact_sub">Qunnamtiiwwan GPS dunjú</string>
-    <string name="peer_precision_suburb_sub">Bakka dhihoo (sadarkaa Suburb)</string>
+
+
     <string name="peer_always_sharing">Yeroo hunda qoodamaa jira</string>
     <plurals name="peer_active_rules">
         <item quantity="one">Seera qoodiinsaa %1$d hojjetaa jira</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Ati gaaffiiwwan baninsaa %1$s irraa dhufan ni fudhatta, ni mirkanessitas</string>
     <string name="peer_supervise_off">Bila %1$s daxwazên vekirina moda çavdêriyê ji we re bişîne</string>
     <string name="peer_messaging_sub">Ergaawwan chat-ii %1$s irraa dhufan ban/cufi</string>
-    <string name="peer_section_history">Seenaa Sochii</string>
+
     <string name="peer_location_history">Seenaa Bakka Jiranii</string>
     <string name="peer_location_history_sub">Seenaa sochii fi rapora kaartaa %1$s ilaali</string>
     <string name="peer_section_retention">Data Duubaa Tursiisuu</string>

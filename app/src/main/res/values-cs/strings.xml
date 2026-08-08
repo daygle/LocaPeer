@@ -404,8 +404,8 @@
     <string name="peer_pause_sharing">Pozastavit sdílení</string>
     <string name="peer_pause_sub">Dočasně přestat odesílat svou polohu uživateli %1$s</string>
     <string name="peer_precision">Přesnost polohy</string>
-    <string name="peer_precision_exact_sub">Přesné GPS souřadnice</string>
-    <string name="peer_precision_suburb_sub">Přibližná poloha (úroveň čtvrti)</string>
+
+
     <string name="peer_always_sharing">Vždy se sdílí</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktivní pravidlo sdílení</item>
@@ -434,7 +434,7 @@
     <string name="peer_supervise_on">Přijímáte a schvalujete žádosti o odemčení od %1$s</string>
     <string name="peer_supervise_off">Povolit uživateli %1$s posílat vám žádosti o odemčení režimu pod dohledem</string>
     <string name="peer_messaging_sub">Zapnout/vypnout zprávy chatu od %1$s</string>
-    <string name="peer_section_history">Historie pohybu</string>
+
     <string name="peer_location_history">Historie polohy</string>
     <string name="peer_location_history_sub">Zobrazit historii pohybu a mapový přehled pro %1$s</string>
     <string name="peer_section_retention">Uchovávání dat na vzdáleném zařízení</string>

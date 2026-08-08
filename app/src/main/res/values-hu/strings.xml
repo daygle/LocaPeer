@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Megosztás szüneteltetése</string>
     <string name="peer_pause_sub">Ideiglenesen ne küldje helyzetét %1$s részére</string>
     <string name="peer_precision">Helymeghatározás pontossága</string>
-    <string name="peer_precision_exact_sub">Pontos GPS-koordináták</string>
-    <string name="peer_precision_suburb_sub">Hozzávetőleges hely (városrész szintű)</string>
+
+
     <string name="peer_always_sharing">Mindig megosztva</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktív megosztási szabály</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Fogadja és jóváhagyja %1$s feloldási kérelmeit</string>
     <string name="peer_supervise_off">Engedélyezze, hogy %1$s felügyelt módú feloldási kérelmeket küldjön Önnek</string>
     <string name="peer_messaging_sub">Csevegőüzenetek be-/kikapcsolása %1$s partnertől</string>
-    <string name="peer_section_history">Mozgáselőzmények</string>
+
     <string name="peer_location_history">Helyelőzmények</string>
     <string name="peer_location_history_sub">%1$s mozgáselőzményeinek és térképes jelentésének megtekintése</string>
     <string name="peer_section_retention">Távoli adatmegőrzés</string>

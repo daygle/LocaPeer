@@ -398,8 +398,8 @@
     <string name="peer_pause_sharing">Suspendați partajarea</string>
     <string name="peer_pause_sub">Opriți temporar trimiterea locației dvs. către %1$s</string>
     <string name="peer_precision">Precizia locației</string>
-    <string name="peer_precision_exact_sub">Coordonate GPS exacte</string>
-    <string name="peer_precision_suburb_sub">Locație aproximativă (nivel de cartier)</string>
+
+
     <string name="peer_always_sharing">Se partajează mereu</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d regulă de partajare activă</item>
@@ -426,7 +426,7 @@
     <string name="peer_supervise_on">Primiți și aprobați cererile de deblocare de la %1$s</string>
     <string name="peer_supervise_off">Permiteți lui %1$s să vă trimită cereri de deblocare în modul supravegheat</string>
     <string name="peer_messaging_sub">Activați/dezactivați mesajele de chat de la %1$s</string>
-    <string name="peer_section_history">Istoricul deplasărilor</string>
+
     <string name="peer_location_history">Istoricul locațiilor</string>
     <string name="peer_location_history_sub">Vizualizați istoricul deplasărilor și raportul pe hartă pentru %1$s</string>
     <string name="peer_section_retention">Păstrarea datelor la distanță</string>

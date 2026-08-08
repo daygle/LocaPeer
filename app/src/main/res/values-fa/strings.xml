@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">توقف موقت اشتراک‌گذاری</string>
     <string name="peer_pause_sub">ارسال موقعیت به %1$s را موقتاً متوقف کنید</string>
     <string name="peer_precision">دقت موقعیت</string>
-    <string name="peer_precision_exact_sub">مختصات دقیق GPS</string>
-    <string name="peer_precision_suburb_sub">موقعیت تقریبی (در حد محله)</string>
+
+
     <string name="peer_always_sharing">همیشه در حال اشتراک‌گذاری</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d قاعده اشتراک‌گذاری فعال</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">درخواست‌های بازکردن قفل %1$s را دریافت و تأیید می‌کنید</string>
     <string name="peer_supervise_off">به %1$s اجازه دهید درخواست‌های بازکردن قفل حالت تحت نظارت را برایتان بفرستد</string>
     <string name="peer_messaging_sub">فعال/غیرفعال‌کردن پیام‌های گفتگو از %1$s</string>
-    <string name="peer_section_history">تاریخچه جابه‌جایی</string>
+
     <string name="peer_location_history">تاریخچه موقعیت</string>
     <string name="peer_location_history_sub">مشاهده تاریخچه جابه‌جایی و گزارش نقشه %1$s</string>
     <string name="peer_section_retention">نگهداری داده در دستگاه مقابل</string>

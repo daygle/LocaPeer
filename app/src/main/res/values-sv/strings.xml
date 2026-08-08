@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Pausa delning</string>
     <string name="peer_pause_sub">Sluta tillfälligt skicka din plats till %1$s</string>
     <string name="peer_precision">Platsprecision</string>
-    <string name="peer_precision_exact_sub">Exakta GPS-koordinater</string>
-    <string name="peer_precision_suburb_sub">Ungefärlig plats (stadsdelsnivå)</string>
+
+
     <string name="peer_always_sharing">Delar alltid</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktiv delningsregel</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Du tar emot och godkänner upplåsningsförfrågningar från %1$s</string>
     <string name="peer_supervise_off">Tillåt %1$s att skicka upplåsningsförfrågningar för övervakat läge till dig</string>
     <string name="peer_messaging_sub">Aktivera/inaktivera chattmeddelanden från %1$s</string>
-    <string name="peer_section_history">Rörelsehistorik</string>
+
     <string name="peer_location_history">Platshistorik</string>
     <string name="peer_location_history_sub">Visa rörelsehistorik och kartrapport för %1$s</string>
     <string name="peer_section_retention">Fjärrdatalagring</string>

@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">షేరింగ్‌ని ఆపివేయి</string>
     <string name="peer_pause_sub">%1$s కి మీ స్థానాన్ని పంపడాన్ని తాత్కాలికంగా ఆపివేయండి</string>
     <string name="peer_precision">స్థాన ఖచ్చితత్వం</string>
-    <string name="peer_precision_exact_sub">ఖచ్చితమైన GPS కోఆర్డినేట్లు</string>
-    <string name="peer_precision_suburb_sub">సుమారుగా స్థానం (సబర్బ్ స్థాయి)</string>
+
+
     <string name="peer_always_sharing">ఎల్లప్పుడూ పంచుకుంటున్నారు</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d సక్రియ షేరింగ్ నియమం</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">మీరు %1$s నుండి అన్‌లాక్ అభ్యర్థనలను స్వీకరిస్తారు మరియు ఆమోదిస్తారు</string>
     <string name="peer_supervise_off">పర్యవేక్షణ-మోడ్ అన్‌లాక్ అభ్యర్థనలను మీకు పంపడానికి %1$s ని అనుమతించండి</string>
     <string name="peer_messaging_sub">%1$s నుండి చాట్ సందేశాలను ప్రారంభించండి/నిలిపివేయండి</string>
-    <string name="peer_section_history">కదలిక చరిత్ర</string>
+
     <string name="peer_location_history">స్థాన చరిత్ర</string>
     <string name="peer_location_history_sub">%1$s కోసం కదలిక చరిత్ర మరియు మ్యాప్ నివేదికను చూడండి</string>
     <string name="peer_section_retention">రిమోట్ డేటా ధారణ</string>

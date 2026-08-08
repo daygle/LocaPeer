@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">共有を一時停止</string>
     <string name="peer_pause_sub">%1$sへの位置情報の送信を一時的に停止します</string>
     <string name="peer_precision">位置情報の精度</string>
-    <string name="peer_precision_exact_sub">正確なGPS座標</string>
-    <string name="peer_precision_suburb_sub">おおよその位置（市区町村レベル）</string>
+
+
     <string name="peer_always_sharing">常に共有</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d 個の有効な共有ルール</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">%1$sからのロック解除リクエストを受信して承認します</string>
     <string name="peer_supervise_off">%1$sが監視モードのロック解除リクエストを送信することを許可する</string>
     <string name="peer_messaging_sub">%1$sからのチャットメッセージを有効/無効にする</string>
-    <string name="peer_section_history">移動履歴</string>
+
     <string name="peer_location_history">位置履歴</string>
     <string name="peer_location_history_sub">%1$sの移動履歴とマップレポートを表示</string>
     <string name="peer_section_retention">リモートデータの保持</string>

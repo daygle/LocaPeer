@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">I-pause ang Pagbabahagi</string>
     <string name="peer_pause_sub">Pansamantalang ihinto ang pagpapadala ng iyong lokasyon kay %1$s</string>
     <string name="peer_precision">Katumpakan ng Lokasyon</string>
-    <string name="peer_precision_exact_sub">Eksaktong GPS coordinate</string>
-    <string name="peer_precision_suburb_sub">Tinatayang lokasyon (antas ng barangay)</string>
+
+
     <string name="peer_always_sharing">Laging nagbabahagi</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d aktibong panuntunan sa pagbabahagi</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Tumatanggap at umaapruba ka ng mga kahilingang mag-unlock mula kay %1$s</string>
     <string name="peer_supervise_off">Payagan si %1$s na magpadala sa iyo ng mga kahilingang mag-unlock ng supervised mode</string>
     <string name="peer_messaging_sub">I-enable/i-disable ang mga mensahe ng chat mula kay %1$s</string>
-    <string name="peer_section_history">Kasaysayan ng Paggalaw</string>
+
     <string name="peer_location_history">Kasaysayan ng Lokasyon</string>
     <string name="peer_location_history_sub">Tingnan ang kasaysayan ng paggalaw at ulat sa mapa para kay %1$s</string>
     <string name="peer_section_retention">Remote na Pagpapanatili ng Data</string>

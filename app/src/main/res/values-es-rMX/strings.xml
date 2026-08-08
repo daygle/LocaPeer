@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Pausar uso compartido</string>
     <string name="peer_pause_sub">Detener temporalmente el envío de su ubicación a %1$s</string>
     <string name="peer_precision">Precisión de la ubicación</string>
-    <string name="peer_precision_exact_sub">Coordenadas GPS exactas</string>
-    <string name="peer_precision_suburb_sub">Ubicación aproximada (nivel de suburbio)</string>
+
+
     <string name="peer_always_sharing">Siempre compartiendo</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d regla de uso compartido activa</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Recibe y aprueba solicitudes de desbloqueo de %1$s</string>
     <string name="peer_supervise_off">Permitir que %1$s le envíe solicitudes de desbloqueo en modo supervisado</string>
     <string name="peer_messaging_sub">Activar/desactivar mensajes de chat de %1$s</string>
-    <string name="peer_section_history">Historial de movimiento</string>
+
     <string name="peer_location_history">Historial de ubicación</string>
     <string name="peer_location_history_sub">Ver el historial de movimiento y el informe del mapa de %1$s</string>
     <string name="peer_section_retention">Retención de datos remota</string>

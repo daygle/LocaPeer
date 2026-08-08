@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">Kwụsịtụ Nkekọrịta</string>
     <string name="peer_pause_sub">Kwụsị iziga ebe ị nọ na %1$s nwa oge</string>
     <string name="peer_precision">Nkenke Ebe</string>
-    <string name="peer_precision_exact_sub">Kpọmkwem GPS nhazi</string>
-    <string name="peer_precision_suburb_sub">Ebe dị nso (ọkwa Suburb)</string>
+
+
     <string name="peer_always_sharing">Na-ekere oge niile</string>
     <plurals name="peer_active_rules">
         <item quantity="other">Iwu nkekọrịta %1$d na-arụ ọrụ</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">Ị na-anata ma na-akwado arịrịọ mmeghe site na %1$s</string>
     <string name="peer_supervise_off">Mruhusu %1$s akutumie ma ọ bụrụ na ị chọrọ imeghe ọnọdụ nlekọta</string>
     <string name="peer_messaging_sub">Gbanye/Gbanyụọ ozi chat site na %1$s</string>
-    <string name="peer_section_history">Akụkọ Mmegharị</string>
+
     <string name="peer_location_history">Akụkọ Ebe</string>
     <string name="peer_location_history_sub">Lelee akụkọ mmegharị na akụkọ map maka %1$s</string>
     <string name="peer_section_retention">Njide Data Dị Anya</string>

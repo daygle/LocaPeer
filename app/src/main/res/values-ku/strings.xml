@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">Parvekirinê Rawestîne</string>
     <string name="peer_pause_sub">Ji bo demekê şandina cihê xwe ji %1$s re rawestîne</string>
     <string name="peer_precision">Rastiya Cih</string>
-    <string name="peer_precision_exact_sub">Koordînatên GPS ên rast</string>
-    <string name="peer_precision_suburb_sub">Cihê texmînî (Asta taxê)</string>
+
+
     <string name="peer_always_sharing">Her tim parve dike</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d rêzika parvekirinê ya çalak</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">Hûn daxwazên vekirinê ji %1$s distînin û dipejirînin</string>
     <string name="peer_supervise_off">Bila %1$s daxwazên vekirina moda çavdêriyê ji we re bişîne</string>
     <string name="peer_messaging_sub">Peyamên chatê yên ji %1$s çalak/seqet bike</string>
-    <string name="peer_section_history">Dîroka Tevgerê</string>
+
     <string name="peer_location_history">Dîroka Cih</string>
     <string name="peer_location_history_sub">Dîroka tevgerê û rapora nexşeyê ji bo %1$s bibîne</string>
     <string name="peer_section_retention">Girtina Daneyan a Dûr</string>

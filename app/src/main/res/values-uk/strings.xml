@@ -404,8 +404,8 @@
     <string name="peer_pause_sharing">Призупинити обмін</string>
     <string name="peer_pause_sub">Тимчасово не надсилати місцезнаходження %1$s</string>
     <string name="peer_precision">Точність місцезнаходження</string>
-    <string name="peer_precision_exact_sub">Точні GPS-координати</string>
-    <string name="peer_precision_suburb_sub">Приблизне місцезнаходження (на рівні району)</string>
+
+
     <string name="peer_always_sharing">Обмін завжди ввімкнено</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d активне правило обміну</item>
@@ -434,7 +434,7 @@
     <string name="peer_supervise_on">Ви отримуєте та схвалюєте запити на розблокування від %1$s</string>
     <string name="peer_supervise_off">Дозволити %1$s надсилати вам запити на розблокування контрольованого режиму</string>
     <string name="peer_messaging_sub">Увімкнути або вимкнути повідомлення чату від %1$s</string>
-    <string name="peer_section_history">Історія переміщень</string>
+
     <string name="peer_location_history">Історія місцезнаходжень</string>
     <string name="peer_location_history_sub">Історія переміщень і звіт на мапі для %1$s</string>
     <string name="peer_section_retention">Зберігання даних на віддаленому пристрої</string>

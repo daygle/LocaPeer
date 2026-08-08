@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">اشتراک روکیں</string>
     <string name="peer_pause_sub">%1$s کو اپنا مقام بھیجنا عارضی طور پر بند کریں</string>
     <string name="peer_precision">مقام کی درستگی</string>
-    <string name="peer_precision_exact_sub">درست GPS کوآرڈینیٹس</string>
-    <string name="peer_precision_suburb_sub">تخمینی مقام (محلے کی سطح)</string>
+
+
     <string name="peer_always_sharing">ہمیشہ شیئر ہو رہا ہے</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d فعال اشتراک قاعدہ</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">آپ %1$s سے ان لاک درخواستیں وصول اور منظور کرتے ہیں</string>
     <string name="peer_supervise_off">%1$s کو آپ کو زیرِ نگرانی موڈ ان لاک درخواستیں بھیجنے کی اجازت دیں</string>
     <string name="peer_messaging_sub">%1$s سے چیٹ پیغامات آن/بند کریں</string>
-    <string name="peer_section_history">نقل و حرکت کی تاریخ</string>
+
     <string name="peer_location_history">مقام کی تاریخ</string>
     <string name="peer_location_history_sub">%1$s کی نقل و حرکت کی تاریخ اور نقشہ رپورٹ دیکھیں</string>
     <string name="peer_section_retention">دور دراز ڈیٹا برقراری</string>

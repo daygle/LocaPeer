@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">शेअरिंग थांबवा</string>
     <string name="peer_pause_sub">%1$s ला तुमचे स्थान पाठवणे तात्पुरते थांबवा</string>
     <string name="peer_precision">स्थान अचूकता</string>
-    <string name="peer_precision_exact_sub">अचूक GPS को-ऑर्डिनेट्स</string>
-    <string name="peer_precision_suburb_sub">अंदाजे स्थान (उपनगर स्तर)</string>
+
+
     <string name="peer_always_sharing">नेहमी शेअर करत आहे</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d सक्रिय शेअरिंग नियम</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">तुम्ही %1$s कडून अनल़ॉक विनंत्या प्राप्त करता आणि मंजूर करता</string>
     <string name="peer_supervise_off">देखरेख-मोड अनलॉक विनंत्या तुम्हाला पाठवण्यासाठी %1$s ला परवानगी द्या</string>
     <string name="peer_messaging_sub">%1$s कडून येणारे चॅट संदेश सक्षम/अक्षम करा</string>
-    <string name="peer_section_history">हालचाल इतिहास</string>
+
     <string name="peer_location_history">स्थान इतिहास</string>
     <string name="peer_location_history_sub">%1$s साठी हालचाल इतिहास आणि नकाशा अहवाल पहा</string>
     <string name="peer_section_retention">रिमोट डेटा टिकवून ठेवणे</string>

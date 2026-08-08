@@ -386,8 +386,8 @@
     <string name="peer_pause_sharing">暂停共享</string>
     <string name="peer_pause_sub">暂时停止向 %1$s 发送您的位置</string>
     <string name="peer_precision">位置精度</string>
-    <string name="peer_precision_exact_sub">精确 GPS 坐标</string>
-    <string name="peer_precision_suburb_sub">大概位置 (郊区级别)</string>
+
+
     <string name="peer_always_sharing">始终共享</string>
     <plurals name="peer_active_rules">
         <item quantity="other">%1$d 条有效共享规则</item>
@@ -410,7 +410,7 @@
     <string name="peer_supervise_on">您接收并批准来自 %1$s 的解锁请求</string>
     <string name="peer_supervise_off">允许 %1$s 向您发送监管模式解锁请求</string>
     <string name="peer_messaging_sub">启用/禁用来自 %1$s 的聊天消息</string>
-    <string name="peer_section_history">移动历史</string>
+
     <string name="peer_location_history">位置历史</string>
     <string name="peer_location_history_sub">查看 %1$s 的移动历史和地图报告</string>
     <string name="peer_section_retention">远程数据保留</string>

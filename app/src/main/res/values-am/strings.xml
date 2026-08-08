@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">ማጋራትን አቁም</string>
     <string name="peer_pause_sub">ለጊዜው አካባቢዎን ለ%1$s መላክ ያቁሙ</string>
     <string name="peer_precision">የአካባቢ ትክክለኛነት</string>
-    <string name="peer_precision_exact_sub">ትክክለኛ የጂፒኤስ መጋጠሚያዎች</string>
-    <string name="peer_precision_suburb_sub">ግምታዊ አካባቢ (ቀበሌ ደረጃ)</string>
+
+
     <string name="peer_always_sharing">ሁልጊዜ እያጋሩ ነው</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d ንቁ የማጋሪያ ደንብ</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">ከ%1$s የመክፈቻ ጥያቄዎችን ይቀበላሉ እና ያጸድቃሉ</string>
     <string name="peer_supervise_off">%1$s የቁጥጥር ሁነታ የመክፈቻ ጥያቄዎችን እንዲልክልዎ ይፍቀዱ</string>
     <string name="peer_messaging_sub">ከ%1$s የሚላኩ የቻት መልእክቶችን አንቃ/አጥፋ</string>
-    <string name="peer_section_history">የእንቅስቃሴ ታሪክ</string>
+
     <string name="peer_location_history">የአካባቢ ታሪክ</string>
     <string name="peer_location_history_sub">የ%1$sን የእንቅስቃሴ ታሪክ እና የካርታ ሪፖርት ይመልከቱ</string>
     <string name="peer_section_retention">የርቀት ውሂብ ማቆያ</string>

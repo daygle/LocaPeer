@@ -392,8 +392,8 @@
     <string name="peer_pause_sharing">साझाकरण रोकें</string>
     <string name="peer_pause_sub">%1$s को अपना स्थान भेजना अस्थायी रूप से बंद करें</string>
     <string name="peer_precision">स्थान परिशुद्धता</string>
-    <string name="peer_precision_exact_sub">सटीक GPS निर्देशांक</string>
-    <string name="peer_precision_suburb_sub">अनुमानित स्थान (मोहल्ला स्तर)</string>
+
+
     <string name="peer_always_sharing">हमेशा साझा हो रहा है</string>
     <plurals name="peer_active_rules">
         <item quantity="one">%1$d सक्रिय साझाकरण नियम</item>
@@ -418,7 +418,7 @@
     <string name="peer_supervise_on">आप %1$s के अनलॉक अनुरोध प्राप्त और स्वीकृत करते हैं</string>
     <string name="peer_supervise_off">%1$s को आपको पर्यवेक्षित-मोड अनलॉक अनुरोध भेजने की अनुमति दें</string>
     <string name="peer_messaging_sub">%1$s से चैट संदेश चालू/बंद करें</string>
-    <string name="peer_section_history">आवागमन इतिहास</string>
+
     <string name="peer_location_history">स्थान इतिहास</string>
     <string name="peer_location_history_sub">%1$s का आवागमन इतिहास और नक्शा रिपोर्ट देखें</string>
     <string name="peer_section_retention">दूरस्थ डेटा प्रतिधारण</string>
