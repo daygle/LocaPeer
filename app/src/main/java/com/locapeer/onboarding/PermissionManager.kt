@@ -5,11 +5,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import androidx.core.net.toUri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.core.content.ContextCompat
+import androidx.core.location.LocationManagerCompat
 
 object PermissionManager {
 
@@ -45,6 +47,34 @@ object PermissionManager {
         } else {
             true
         }
+    }
+
+    fun hasLocationPermission(context: Context): Boolean =
+        ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+
+    /**
+     * Whether the device's location (GPS/network) master switch is on. This is independent of the
+     * app's location permission: a user can grant the permission yet leave the system location
+     * toggle off, in which case no fixes are ever produced and the app would otherwise appear to do
+     * nothing. Surfaced to the user so they can turn it back on.
+     */
+    fun isLocationServicesEnabled(context: Context): Boolean {
+        val lm = context.getSystemService(Context.LOCATION_SERVICE) as? LocationManager ?: return false
+        return LocationManagerCompat.isLocationEnabled(lm)
+    }
+
+    /** Open the system Location settings screen so the user can flip the master toggle on. */
+    fun openLocationSettings(context: Context) {
+        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
     }
 
     fun isIgnoringBatteryOptimizations(context: Context): Boolean {

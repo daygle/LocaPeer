@@ -92,6 +92,17 @@ fun ContactsScreen(
 
     Scaffold(
         snackbarHost = { androidx.compose.material3.SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+            // "Add contact" lives on the list itself (the familiar place for it) rather than only
+            // as an icon in the top bar. Hidden during multi-select, where the bottom bar takes over.
+            if (!isSelectionMode) {
+                ExtendedFloatingActionButton(
+                    onClick = onNavigateToInvite,
+                    icon = { Icon(Icons.Default.PersonAdd, contentDescription = null) },
+                    text = { Text(stringResource(R.string.contacts_add_contact)) }
+                )
+            }
+        },
         topBar = {
             if (isSelectionMode) {
                 TopAppBar(
@@ -152,9 +163,6 @@ fun ContactsScreen(
                         }
                         IconButton(onClick = { selectedIds = allIds }) {
                             Icon(Icons.Default.CheckBoxOutlineBlank, contentDescription = stringResource(R.string.contacts_cd_select_all))
-                        }
-                        IconButton(onClick = onNavigateToInvite) {
-                            Icon(Icons.Default.QrCode, contentDescription = stringResource(R.string.contacts_cd_qr_invite))
                         }
                         BadgedBox(
                             badge = { if (pendingCount > 0) Badge { Text("$pendingCount") } }
@@ -233,7 +241,11 @@ fun ContactsScreen(
                     }
                 }
             } else {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    // Keep the last row clear of the "Add contact" FAB.
+                    contentPadding = PaddingValues(bottom = 88.dp)
+                ) {
                     items(displayList, key = { it.peer.deviceId }) { item ->
                         val isSelected = item.peer.deviceId in selectedIds
                         ContactRow(

@@ -41,7 +41,7 @@
     <string name="motion_driving">Driving</string>
 
     <!-- ── Backup sections ────────────────────────────────────────────────── -->
-    <string name="backup_section_private_key">Private Key</string>
+    <string name="backup_section_private_key">Identity key</string>
     <string name="backup_section_contacts">Contacts</string>
     <string name="backup_section_geofences">Geofences</string>
     <string name="backup_section_settings">Settings</string>
@@ -61,7 +61,7 @@
     <string name="settings_section_units_display">Units &amp; Display</string>
     <string name="settings_section_retention">Retention (This Device)</string>
     <string name="settings_section_appearance">Appearance</string>
-    <string name="settings_section_backup_keys">Backup &amp; Keys</string>
+    <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
     <string name="settings_section_about">About</string>
 
     <!-- Profile -->
@@ -194,11 +194,11 @@
 
     <!-- Backup &amp; Keys -->
     <string name="settings_export_backup">Export Backup</string>
-    <string name="settings_export_backup_subtitle">Save your private key and contacts to a file. Keep this file secure!</string>
+    <string name="settings_export_backup_subtitle">Save your identity key and contacts to a file. Keep this file secure!</string>
     <string name="settings_import_backup">Import Backup</string>
     <string name="settings_import_backup_subtitle">Restore from a previously exported file</string>
-    <string name="settings_view_private_key">View Private Key</string>
-    <string name="settings_view_private_key_subtitle">Show your 64-character hex identity key</string>
+    <string name="settings_view_private_key">Show my identity key</string>
+    <string name="settings_view_private_key_subtitle">The secret code that is your identity. Like a password — keep it private.</string>
 
     <!-- About -->
     <string name="settings_about_locapeer">About LocaPeer</string>
@@ -210,8 +210,8 @@
     <string name="settings_my_invite_qr">My Invite QR</string>
     <string name="settings_invite_qr_subtitle">Others can scan this to start tracking you.</string>
     <string name="settings_invite_qr_cd">Invite QR</string>
-    <string name="settings_private_key_title">Private Key</string>
-    <string name="settings_private_key_warning">Keep this safe. Anyone with this key can impersonate you.</string>
+    <string name="settings_private_key_title">Your identity key</string>
+    <string name="settings_private_key_warning">Treat this like a password. Anyone who has it can pretend to be you — never share it, and store it somewhere safe.</string>
     <string name="settings_clear_location_title">Clear Location History?</string>
     <string name="settings_clear_location_message">All stored location pings will be permanently deleted.</string>
     <string name="settings_clear_messages_title">Clear Message History?</string>
@@ -252,6 +252,7 @@
     <string name="contacts_cd_select_all">Select all</string>
     <string name="contacts_cd_deselect_all">Deselect all</string>
     <string name="contacts_cd_qr_invite">QR / Invite</string>
+    <string name="contacts_add_contact">Add contact</string>
     <string name="contacts_cd_pending_requests">Pending Requests</string>
     <string name="contacts_supervisor_locked">You can\'t remove your supervisor while supervised mode is on. Turn off supervised mode first.</string>
     <string name="peer_sharing_supervisor_locked">Supervised mode is on, so location sharing with your supervisor can\'t be turned off here.</string>
@@ -566,6 +567,9 @@
     <string name="common_close">Close</string>
 
     <!-- ── Map screen ─────────────────────────────────────────────────────── -->
+    <string name="map_location_off_title">Location is turned off</string>
+    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
+    <string name="map_location_off_action">Turn on</string>
     <string name="map_sos_activate_title">Activate SOS?</string>
     <string name="map_sos_deactivate_title">Deactivate SOS?</string>
     <string name="map_sos_activate_msg">This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated.</string>
