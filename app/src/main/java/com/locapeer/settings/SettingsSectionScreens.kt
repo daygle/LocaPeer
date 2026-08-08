@@ -771,7 +771,6 @@ fun RetentionSettingsScreen(
 fun AppearanceSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToCustomizeNav: () -> Unit,
-    onNavigateToRelays: () -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
@@ -808,12 +807,6 @@ fun AppearanceSettingsScreen(
                 title = stringResource(R.string.settings_customize_nav),
                 subtitle = stringResource(R.string.settings_customize_nav_subtitle),
                 onClick = onNavigateToCustomizeNav
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_relays),
-                subtitle = stringResource(R.string.settings_relays_subtitle),
-                onClick = onNavigateToRelays
             )
             CardDivider()
             SettingsRow(
@@ -866,6 +859,27 @@ fun AppearanceSettingsScreen(
             onSelected = { AppLanguage.apply(it); showLanguageDialog = false },
             onDismiss = { showLanguageDialog = false }
         )
+    }
+}
+
+// ─── Connection ────────────────────────────────────────────────────────────────
+
+@Composable
+fun ConnectionSettingsScreen(
+    onNavigateBack: () -> Unit,
+    onNavigateToRelays: () -> Unit,
+) {
+    SettingsSubScreen(stringResource(R.string.settings_section_connection), onNavigateBack) {
+        SettingsCard(
+            headerIcon = Icons.Default.Wifi,
+            headerTitle = stringResource(R.string.settings_section_connection)
+        ) {
+            SettingsRow(
+                title = stringResource(R.string.settings_relays),
+                subtitle = stringResource(R.string.settings_relays_subtitle),
+                onClick = onNavigateToRelays
+            )
+        }
     }
 }
 
@@ -1094,4 +1108,3 @@ private fun BackupSectionItem(
         }
     }
 }
-

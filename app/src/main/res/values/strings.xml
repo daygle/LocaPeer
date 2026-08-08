@@ -61,6 +61,7 @@
     <string name="settings_section_units_display">Units &amp; Display</string>
     <string name="settings_section_retention">Retention (This Device)</string>
     <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_connection">Connection</string>
     <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
 
     <!-- Settings landing category subtitles -->
@@ -71,6 +72,7 @@
     <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
     <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_connection_subtitle">Relays and network transport</string>
     <string name="settings_category_backup_subtitle">Export, import, identity key</string>
 
     <!-- Profile -->

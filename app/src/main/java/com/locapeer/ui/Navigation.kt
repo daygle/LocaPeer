@@ -42,6 +42,7 @@ import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppearanceSettingsScreen
 import com.locapeer.settings.BackupSettingsScreen
+import com.locapeer.settings.ConnectionSettingsScreen
 import com.locapeer.settings.LocationPrivacySettingsScreen
 import com.locapeer.settings.MapSettingsScreen
 import com.locapeer.settings.PerformanceSettingsScreen
@@ -311,6 +312,7 @@ fun LocaPeerNavHost(
                     onNavigateToUnits = { navController.navigate("settings/units") },
                     onNavigateToRetention = { navController.navigate("settings/retention") },
                     onNavigateToAppearance = { navController.navigate("settings/appearance") },
+                    onNavigateToConnection = { navController.navigate("settings/connection") },
                     onNavigateToBackup = { navController.navigate("settings/backup") },
                 )
             }
@@ -386,6 +388,17 @@ fun LocaPeerNavHost(
                 AppearanceSettingsScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToCustomizeNav = { navController.navigate("customize-nav") },
+                )
+            }
+            composable(
+                "settings/connection",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                ConnectionSettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
                     onNavigateToRelays = { navController.navigate("relays") },
                 )
             }

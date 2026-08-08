@@ -47,6 +47,7 @@ fun SettingsScreen(
     onNavigateToUnits: () -> Unit = {},
     onNavigateToRetention: () -> Unit = {},
     onNavigateToAppearance: () -> Unit = {},
+    onNavigateToConnection: () -> Unit = {},
     onNavigateToBackup: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
 ) {
@@ -275,6 +276,13 @@ fun SettingsScreen(
                             title = stringResource(R.string.settings_section_appearance),
                             subtitle = stringResource(R.string.settings_category_appearance_subtitle),
                             onClick = onNavigateToAppearance
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Wifi,
+                            title = stringResource(R.string.settings_section_connection),
+                            subtitle = stringResource(R.string.settings_category_connection_subtitle),
+                            onClick = onNavigateToConnection
                         )
                         CardDivider()
                         CategoryRow(
