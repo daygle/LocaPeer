@@ -64,6 +64,16 @@
     <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
     <string name="settings_section_about">About</string>
 
+    <!-- Settings landing category subtitles -->
+    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
+    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
+    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
+    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
+    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
+
     <!-- Profile -->
     <string name="settings_edit_name">Edit Name</string>
     <string name="settings_my_qr">My QR</string>
