@@ -866,7 +866,6 @@
     <string name="map_location_off_action">Open settings</string>
     <string name="map_live">● Live</string>
     <plurals name="about_pending_message_count">
-        <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
 </resources>
