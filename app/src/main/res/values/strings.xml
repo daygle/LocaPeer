@@ -62,7 +62,6 @@
     <string name="settings_section_retention">Retention (This Device)</string>
     <string name="settings_section_appearance">Appearance</string>
     <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
-    <string name="settings_section_about">About</string>
 
     <!-- Settings landing category subtitles -->
     <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
@@ -355,17 +354,6 @@
     <string name="onboarding_start_using">Start Using LocaPeer</string>
 
     <string name="common_try_again">Try Again</string>
-
-    <!-- ── Scan invite screen ─────────────────────────────────────────────── -->
-    <string name="scan_title">Scan Invite</string>
-    <string name="scan_camera_needed">Camera permission is needed to scan QR codes.</string>
-    <string name="scan_grant_permission">Grant Permission</string>
-    <string name="scan_add_contact_title">Add contact?</string>
-    <string name="scan_add_contact_message">This will connect you with %1$s and start sharing your location with each other.</string>
-    <string name="scan_add_share">Add &amp; Share</string>
-    <string name="scan_request_sent_title">Request Sent!</string>
-    <string name="scan_request_sent_message">A request has been sent to %1$s. You\'ll be connected once they accept.</string>
-    <string name="scan_failed">Scan failed: %1$s</string>
 
     <string name="cd_back">Back</string>
     <string name="common_review">Review</string>

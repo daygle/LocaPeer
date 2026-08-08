@@ -163,7 +163,7 @@ dependencies {
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
     // published CVEs. Only the low-level crypto.* primitives (SHA-256, ChaCha20, HKDF,
     // HMAC) are used here, and their API is stable across these versions.
-    implementation("org.bouncycastle:bcprov-jdk18on:1.85")
+    implementation("org.bouncycastle:bcprov-jdk18on:1.85.2")
 
     // QR Code
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
