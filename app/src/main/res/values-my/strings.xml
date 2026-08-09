@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">ဟက်စ် (hex) ပုံစံ မမှန်ကန်ပါ။</string>
     <string name="onboarding_error_import_failed">ကီးကို ထည့်သွင်းခြင်း မအောင်မြင်ပါ- %1$s</string>
     <string name="settings_queued_none">တန်းစီစောင့်နေသော မက်ဆေ့ချ်မရှိပါ</string>
+    <string name="settings_queued_none_subtitle">အဖြစ်အပျက်အားလုံးကို ရီလေးများထံ ပို့ဆောင်ပြီးပါပြီ</string>
     <string name="settings_queued_messages">တန်းစီစောင့်နေသော မက်ဆေ့ချ်များ</string>
     <string name="app_lock_activity_unsupported">အက်ပ်လော့ခ်အတွက် စနစ်၏ prompt ကို ပံ့ပိုးသည့် host လိုအပ်သည်။ အက်ပ်ကို အပ်ဒိတ်လုပ်ပါ။</string>
     <string name="app_lock_prompt_subtitle">ဇီဝအချက်အလက် သို့မဟုတ် စက်၏ PIN ကိုသုံးပါ</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ရီလေးများသို့ ရောက်ရန် စောင့်ဆိုင်းနေသော အဖြစ်အပျက်များ</string>
     <string name="queued_messages_title">စောင့်ဆိုင်းနေသော မက်ဆေ့ချ်များ</string>
-    <string name="queued_message_kind">အဖြစ်အပျက် အမျိုးအစား %1$d</string>
+    <string name="queued_message_kind">အဖြစ်အပျက် %1$d</string>
     <string name="queued_message_queued_at">စောင့်ဆိုင်းနေသည် %1$s</string>
     <string name="queued_message_view">အဖြစ်အပျက်ကို ကြည့်ပါ</string>
     <string name="queued_message_hide">ဝှက်ပါ</string>

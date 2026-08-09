@@ -748,6 +748,7 @@
     <string name="peer_purge_messages_sent">已向 %1$s 发送远程删除全部消息的命令</string>
     <string name="peer_role_change_sent">已向 %1$s 发送角色变更请求</string>
     <string name="settings_queued_none">没有排队的消息</string>
+    <string name="settings_queued_none_subtitle">所有事件都已发送到中继</string>
     <string name="settings_queued_messages">排队的消息</string>
     <string name="app_lock_activity_unsupported">应用锁需要支持系统提示的宿主。请更新应用。</string>
     <string name="app_lock_prompt_subtitle">使用生物识别或设备 PIN 码</string>
@@ -888,7 +889,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">等待发送到中继的事件</string>
     <string name="queued_messages_title">排队的消息</string>
-    <string name="queued_message_kind">事件类型 %1$d</string>
+    <string name="queued_message_kind">事件 %1$d</string>
     <string name="queued_message_queued_at">排队 %1$s</string>
     <string name="queued_message_view">查看事件</string>
     <string name="queued_message_hide">隐藏</string>

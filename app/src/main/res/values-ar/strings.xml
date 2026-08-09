@@ -824,6 +824,7 @@
     <string name="onboarding_error_hex">تنسيق سداسي عشري غير صالح.</string>
     <string name="onboarding_error_import_failed">فشل استيراد المفتاح: %1$s</string>
     <string name="settings_queued_none">لا توجد رسائل في قائمة الانتظار</string>
+    <string name="settings_queued_none_subtitle">تم تسليم جميع الأحداث إلى المُرحّلات</string>
     <string name="settings_queued_messages">رسائل في قائمة الانتظار</string>
     <string name="app_lock_activity_unsupported">يتطلب قفل التطبيق مضيفًا يدعم مطالبة النظام. حدّث التطبيق.</string>
     <string name="app_lock_prompt_subtitle">استخدم القياسات الحيوية أو رمز PIN للجهاز</string>
@@ -965,7 +966,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">أحداث في انتظار الوصول إلى المُرحّلات</string>
     <string name="queued_messages_title">الرسائل في قائمة الانتظار</string>
-    <string name="queued_message_kind">نوع الحدث %1$d</string>
+    <string name="queued_message_kind">الحدث %1$d</string>
     <string name="queued_message_queued_at">في قائمة الانتظار %1$s</string>
     <string name="queued_message_view">عرض الحدث</string>
     <string name="queued_message_hide">إخفاء</string>

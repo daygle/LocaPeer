@@ -116,7 +116,10 @@ private val SETTINGS_DETAIL_ROUTES = setOf(
     "about",
     "permissions",
     "customize-nav",
-    "relays"
+    "relays",
+    "queued-messages",
+    "geofences",
+    "schedule"
 )
 
 private val fadeEnter = fadeIn(tween(220))

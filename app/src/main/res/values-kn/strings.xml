@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">ಅಮಾನ್ಯ ಹೆಕ್ಸ್ ಸ್ವರೂಪ.</string>
     <string name="onboarding_error_import_failed">ಕೀಲಿಯನ್ನು ಆಮದು ಮಾಡಿಕೊಳ್ಳಲು ವಿಫಲವಾಗಿದೆ: %1$s</string>
     <string name="settings_queued_none">ಸಾಲಿನಲ್ಲಿ ಸಂದೇಶಗಳಿಲ್ಲ</string>
+    <string name="settings_queued_none_subtitle">ಎಲ್ಲಾ ಈವೆಂಟ್‌ಗಳನ್ನು ರಿಲೇಗಳಿಗೆ ತಲುಪಿಸಲಾಗಿದೆ</string>
     <string name="settings_queued_messages">ಸಾಲಿನಲ್ಲಿರುವ ಸಂದೇಶಗಳು</string>
     <string name="app_lock_activity_unsupported">ಆ್ಯಪ್ ಲಾಕ್‌ಗೆ ಸಿಸ್ಟಂ ಪ್ರಾಂಪ್ಟ್ ಬೆಂಬಲಿಸುವ ಹೋಸ್ಟ್ ಅಗತ್ಯವಿದೆ. ಆ್ಯಪ್ ಅನ್ನು ನವೀಕರಿಸಿ.</string>
     <string name="app_lock_prompt_subtitle">ಬಯೋಮೆಟ್ರಿಕ್ ಅಥವಾ ಸಾಧನದ PIN ಬಳಸಿ</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ರಿಲೇಗಳನ್ನು ತಲುಪಲು ಕಾಯುತ್ತಿರುವ ಈವೆಂಟ್‌ಗಳು</string>
     <string name="queued_messages_title">ಕ್ಯೂನಲ್ಲಿರುವ ಸಂದೇಶಗಳು</string>
-    <string name="queued_message_kind">ಈವೆಂಟ್ ಪ್ರಕಾರ %1$d</string>
+    <string name="queued_message_kind">ಈವೆಂಟ್ %1$d</string>
     <string name="queued_message_queued_at">ಕ್ಯೂನಲ್ಲಿ %1$s</string>
     <string name="queued_message_view">ಈವೆಂಟ್ ವೀಕ್ಷಿಸಿ</string>
     <string name="queued_message_hide">ಮರೆಮಾಡಿ</string>

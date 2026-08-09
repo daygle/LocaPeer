@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">தவறான ஹெக்ஸ் வடிவம்.</string>
     <string name="onboarding_error_import_failed">விசையை இறக்குமதி செய்ய முடியவில்லை: %1$s</string>
     <string name="settings_queued_none">வரிசையில் செய்திகள் இல்லை</string>
+    <string name="settings_queued_none_subtitle">அனைத்து நிகழ்வுகளும் ரிலேக்களுக்கு வழங்கப்பட்டன</string>
     <string name="settings_queued_messages">வரிசையில் உள்ள செய்திகள்</string>
     <string name="app_lock_activity_unsupported">பயன்பாட்டுப் பூட்டுக்கு கணினி வேண்டுகோளை ஆதரிக்கும் ஹோஸ்ட் தேவை. பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
     <string name="app_lock_prompt_subtitle">பயோமெட்ரிக் அல்லது சாதன PIN ஐப் பயன்படுத்தவும்</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ரிலேக்களை அடைய காத்திருக்கும் நிகழ்வுகள்</string>
     <string name="queued_messages_title">வரிசையில் உள்ள செய்திகள்</string>
-    <string name="queued_message_kind">நிகழ்வு வகை %1$d</string>
+    <string name="queued_message_kind">நிகழ்வு %1$d</string>
     <string name="queued_message_queued_at">வரிசையில் %1$s</string>
     <string name="queued_message_view">நிகழ்வைப் பார்</string>
     <string name="queued_message_hide">மறை</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Bifa hex dogoggora.</string>
     <string name="onboarding_error_import_failed">Kii galchuun hin milkoofne: %1$s</string>
     <string name="settings_queued_none">Ergaan sarara keessa hin jiru</string>
+    <string name="settings_queued_none_subtitle">Ta\'eeleen hunda gara riileyootaatti ergamaniiru</string>
     <string name="settings_queued_messages">Ergaawwan sarara keessa jiran</string>
     <string name="app_lock_activity_unsupported">Cufaan appii keessummeessaa gaaffii sirna deeggaru barbaada. Appii haaromsi.</string>
     <string name="app_lock_prompt_subtitle">Biometrik ykn PIN meeshaa fayyadami</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Ta\'eelee gara riileyootaatti ga\'uu eeggachaa jiran</string>
     <string name="queued_messages_title">Ergaalee hiriiroo keessa jiran</string>
-    <string name="queued_message_kind">Gosa ta\'ee %1$d</string>
+    <string name="queued_message_kind">Ta\'ee %1$d</string>
     <string name="queued_message_queued_at">Hiriiroo keessa %1$s</string>
     <string name="queued_message_view">Ta\'ee ilaali</string>
     <string name="queued_message_hide">Dhoksu</string>

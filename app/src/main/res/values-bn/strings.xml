@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">অবৈধ হেক্স বিন্যাস।</string>
     <string name="onboarding_error_import_failed">কী ইম্পোর্ট ব্যর্থ: %1$s</string>
     <string name="settings_queued_none">সারিতে কোনো বার্তা নেই</string>
+    <string name="settings_queued_none_subtitle">সব ইভেন্ট রিলেতে পৌঁছে দেওয়া হয়েছে</string>
     <string name="settings_queued_messages">সারিতে থাকা বার্তা</string>
     <string name="app_lock_activity_unsupported">অ্যাপ লকের জন্য এমন একটি হোস্ট প্রয়োজন যা সিস্টেম প্রম্পট সমর্থন করে। অ্যাপটি আপডেট করুন।</string>
     <string name="app_lock_prompt_subtitle">বায়োমেট্রিক বা ডিভাইসের পিন ব্যবহার করুন</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">রিলেতে পৌঁছানোর অপেক্ষায় থাকা ইভেন্ট</string>
     <string name="queued_messages_title">সারিবদ্ধ বার্তা</string>
-    <string name="queued_message_kind">ইভেন্টের ধরন %1$d</string>
+    <string name="queued_message_kind">ইভেন্ট %1$d</string>
     <string name="queued_message_queued_at">সারিবদ্ধ %1$s</string>
     <string name="queued_message_view">ইভেন্ট দেখুন</string>
     <string name="queued_message_hide">লুকান</string>

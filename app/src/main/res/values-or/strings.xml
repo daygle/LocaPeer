@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">ଅବୈଧ ହେକ୍ସ ଫର୍ମାଟ୍ ।</string>
     <string name="onboarding_error_import_failed">କି ଆମଦାନୀ କରିବାରେ ବିଫଳ: %1$s</string>
     <string name="settings_queued_none">ଧାଡ଼ିରେ କୌଣସି ବାର୍ତ୍ତା ନାହିଁ</string>
+    <string name="settings_queued_none_subtitle">ସବୁ ଇଭେଣ୍ଟ ରିଲେରେ ପହଞ୍ଚାଇ ଦିଆଯାଇଛି</string>
     <string name="settings_queued_messages">ଧାଡ଼ିରେ ଥିବା ବାର୍ତ୍ତା</string>
     <string name="app_lock_activity_unsupported">ଆପ୍ ଲକ୍ ପାଇଁ ସିଷ୍ଟମ୍ ପ୍ରମ୍ପ୍ଟ ସମର୍ଥନ କରୁଥିବା ହୋଷ୍ଟ ଆବଶ୍ୟକ। ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
     <string name="app_lock_prompt_subtitle">ବାୟୋମେଟ୍ରିକ୍ କିମ୍ବା ଡିଭାଇସ୍ PIN ବ୍ୟବହାର କରନ୍ତୁ</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ରିଲେରେ ପହଞ୍ଚିବାକୁ ଅପେକ୍ଷା କରୁଥିବା ଇଭେଣ୍ଟ</string>
     <string name="queued_messages_title">ଧାଡିରେ ଥିବା ବାର୍ତ୍ତା</string>
-    <string name="queued_message_kind">ଇଭେଣ୍ଟ ପ୍ରକାର %1$d</string>
+    <string name="queued_message_kind">ଇଭେଣ୍ଟ %1$d</string>
     <string name="queued_message_queued_at">ଧାଡିରେ %1$s</string>
     <string name="queued_message_view">ଇଭେଣ୍ଟ ଦେଖନ୍ତୁ</string>
     <string name="queued_message_hide">ଲୁଚାନ୍ତୁ</string>

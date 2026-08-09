@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">Format heksadesimal tidak valid.</string>
     <string name="onboarding_error_import_failed">Gagal mengimpor kunci: %1$s</string>
     <string name="settings_queued_none">Tidak ada pesan dalam antrean</string>
+    <string name="settings_queued_none_subtitle">Semua peristiwa telah terkirim ke relay</string>
     <string name="settings_queued_messages">Pesan dalam antrean</string>
     <string name="app_lock_activity_unsupported">Kunci aplikasi memerlukan host yang mendukung prompt sistem. Perbarui aplikasi.</string>
     <string name="app_lock_prompt_subtitle">Gunakan biometrik atau PIN perangkat</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Peristiwa yang menunggu untuk mencapai relay</string>
     <string name="queued_messages_title">Pesan dalam Antrean</string>
-    <string name="queued_message_kind">Jenis peristiwa %1$d</string>
+    <string name="queued_message_kind">Peristiwa %1$d</string>
     <string name="queued_message_queued_at">Dalam antrean %1$s</string>
     <string name="queued_message_view">Lihat peristiwa</string>
     <string name="queued_message_hide">Sembunyikan</string>

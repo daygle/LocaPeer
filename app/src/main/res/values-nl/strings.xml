@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Ongeldig hexadecimaal formaat.</string>
     <string name="onboarding_error_import_failed">Sleutel importeren mislukt: %1$s</string>
     <string name="settings_queued_none">Geen berichten in wachtrij</string>
+    <string name="settings_queued_none_subtitle">Alle gebeurtenissen zijn aan de relays bezorgd</string>
     <string name="settings_queued_messages">Berichten in wachtrij</string>
     <string name="app_lock_activity_unsupported">App-vergrendeling vereist een host die de systeemprompt ondersteunt. Werk de app bij.</string>
     <string name="app_lock_prompt_subtitle">Gebruik biometrie of de pincode van je apparaat</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Gebeurtenissen die wachten om relays te bereiken</string>
     <string name="queued_messages_title">Wachtende berichten</string>
-    <string name="queued_message_kind">Gebeurtenistype %1$d</string>
+    <string name="queued_message_kind">Gebeurtenis %1$d</string>
     <string name="queued_message_queued_at">In wachtrij %1$s</string>
     <string name="queued_message_view">Gebeurtenis bekijken</string>
     <string name="queued_message_hide">Verbergen</string>

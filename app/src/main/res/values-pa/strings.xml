@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">ਅਵੈਧ ਹੈਕਸ ਫਾਰਮੈਟ।</string>
     <string name="onboarding_error_import_failed">ਕੀ ਇੰਪੋਰਟ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ: %1$s</string>
     <string name="settings_queued_none">ਕਤਾਰ ਵਿੱਚ ਕੋਈ ਸੁਨੇਹਾ ਨਹੀਂ</string>
+    <string name="settings_queued_none_subtitle">ਸਾਰੀਆਂ ਘਟਨਾਵਾਂ ਰਿਲੇ ਤੱਕ ਪਹੁੰਚਾ ਦਿੱਤੀਆਂ ਗਈਆਂ ਹਨ</string>
     <string name="settings_queued_messages">ਕਤਾਰ ਵਿਚਲੇ ਸੁਨੇਹੇ</string>
     <string name="app_lock_activity_unsupported">ਐਪ ਲਾਕ ਲਈ ਸਿਸਟਮ ਪ੍ਰੋਂਪਟ ਦਾ ਸਮਰਥਨ ਕਰਨ ਵਾਲਾ ਹੋਸਟ ਲੋੜੀਂਦਾ ਹੈ। ਐਪ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।</string>
     <string name="app_lock_prompt_subtitle">ਬਾਇਓਮੈਟ੍ਰਿਕ ਜਾਂ ਡਿਵਾਈਸ PIN ਵਰਤੋ</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ਰਿਲੇ ਤੱਕ ਪਹੁੰਚਣ ਦੀ ਉਡੀਕ ਕਰ ਰਹੀਆਂ ਘਟਨਾਵਾਂ</string>
     <string name="queued_messages_title">ਕਤਾਰ ਵਿੱਚ ਸੁਨੇਹੇ</string>
-    <string name="queued_message_kind">ਇਵੈਂਟ ਕਿਸਮ %1$d</string>
+    <string name="queued_message_kind">ਇਵੈਂਟ %1$d</string>
     <string name="queued_message_queued_at">ਕਤਾਰ ਵਿੱਚ %1$s</string>
     <string name="queued_message_view">ਇਵੈਂਟ ਦੇਖੋ</string>
     <string name="queued_message_hide">ਲੁਕਾਓ</string>

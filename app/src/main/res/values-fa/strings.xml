@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">قالب هگز نامعتبر است.</string>
     <string name="onboarding_error_import_failed">درون‌ریزی کلید ناموفق بود: %1$s</string>
     <string name="settings_queued_none">پیامی در صف نیست</string>
+    <string name="settings_queued_none_subtitle">همه رویدادها به رله‌ها تحویل داده شدند</string>
     <string name="settings_queued_messages">پیام‌های در صف</string>
     <string name="app_lock_activity_unsupported">قفل برنامه به میزبانی نیاز دارد که از درخواست سیستم پشتیبانی کند. برنامه را به‌روزرسانی کنید.</string>
     <string name="app_lock_prompt_subtitle">از زیست‌سنجی یا پین دستگاه استفاده کنید</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">رویدادهایی که در انتظار رسیدن به رله‌ها هستند</string>
     <string name="queued_messages_title">پیام‌های در صف</string>
-    <string name="queued_message_kind">نوع رویداد %1$d</string>
+    <string name="queued_message_kind">رویداد %1$d</string>
     <string name="queued_message_queued_at">در صف %1$s</string>
     <string name="queued_message_view">مشاهده رویداد</string>
     <string name="queued_message_hide">پنهان کردن</string>

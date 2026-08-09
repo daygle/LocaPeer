@@ -764,6 +764,7 @@
     <string name="peer_purge_messages_sent">Commande de suppression à distance de TOUS les messages envoyée à %1$s</string>
     <string name="peer_role_change_sent">Demande de changement de rôle envoyée à %1$s</string>
     <string name="settings_queued_none">Aucun message en file d\'attente</string>
+    <string name="settings_queued_none_subtitle">Tous les événements ont été envoyés aux relais</string>
     <string name="settings_queued_messages">Messages en file d\'attente</string>
     <string name="app_lock_activity_unsupported">Le verrouillage de l\'app nécessite un hôte compatible avec l\'invite système. Mettez l\'app à jour.</string>
     <string name="app_lock_prompt_subtitle">Utilisez la biométrie ou le code de l\'appareil</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Événements en attente d\'envoi aux relais</string>
     <string name="queued_messages_title">Messages en attente</string>
-    <string name="queued_message_kind">Type d\'événement %1$d</string>
+    <string name="queued_message_kind">Événement %1$d</string>
     <string name="queued_message_queued_at">En attente %1$s</string>
     <string name="queued_message_view">Voir l\'événement</string>
     <string name="queued_message_hide">Masquer</string>

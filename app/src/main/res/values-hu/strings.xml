@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Érvénytelen hexadecimális formátum.</string>
     <string name="onboarding_error_import_failed">A kulcs importálása sikertelen: %1$s</string>
     <string name="settings_queued_none">Nincs üzenet a sorban</string>
+    <string name="settings_queued_none_subtitle">Minden eseményt kézbesítettünk a relayeknek</string>
     <string name="settings_queued_messages">Sorban álló üzenetek</string>
     <string name="app_lock_activity_unsupported">Az alkalmazászár rendszerkérést támogató gazdakörnyezetet igényel. Frissítsd az alkalmazást.</string>
     <string name="app_lock_prompt_subtitle">Használj biometrikus azonosítást vagy az eszköz PIN-kódját</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Relayekre váró események</string>
     <string name="queued_messages_title">Várakozó üzenetek</string>
-    <string name="queued_message_kind">Eseménytípus %1$d</string>
+    <string name="queued_message_kind">Esemény %1$d</string>
     <string name="queued_message_queued_at">Várólistán %1$s</string>
     <string name="queued_message_view">Esemény megtekintése</string>
     <string name="queued_message_hide">Elrejtés</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">અમાન્ય હેક્સ ફોર્મેટ.</string>
     <string name="onboarding_error_import_failed">કી આયાત કરવામાં નિષ્ફળ: %1$s</string>
     <string name="settings_queued_none">કતારમાં કોઈ સંદેશ નથી</string>
+    <string name="settings_queued_none_subtitle">બધી ઇવેન્ટ્સ રિલેને પહોંચાડી દેવામાં આવી છે</string>
     <string name="settings_queued_messages">કતારમાંના સંદેશા</string>
     <string name="app_lock_activity_unsupported">એપ લોક માટે સિસ્ટમ પ્રોમ્પ્ટને સપોર્ટ કરતું હોસ્ટ જરૂરી છે. એપ અપડેટ કરો.</string>
     <string name="app_lock_prompt_subtitle">બાયોમેટ્રિક અથવા ડિવાઇસ PIN વાપરો</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">રિલે સુધી પહોંચવાની રાહ જોતી ઇવેન્ટ્સ</string>
     <string name="queued_messages_title">કતારમાં રાહ જોતા સંદેશા</string>
-    <string name="queued_message_kind">ઇવેન્ટ પ્રકાર %1$d</string>
+    <string name="queued_message_kind">ઇવેન્ટ %1$d</string>
     <string name="queued_message_queued_at">કતારમાં %1$s</string>
     <string name="queued_message_view">ઇવેન્ટ જુઓ</string>
     <string name="queued_message_hide">છુપાવો</string>

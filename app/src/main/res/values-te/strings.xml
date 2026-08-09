@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">అమాన్యమైన హెక్స్ ఫార్మాట్.</string>
     <string name="onboarding_error_import_failed">కీని దిగుమతి చేయడంలో విఫలమైంది: %1$s</string>
     <string name="settings_queued_none">క్యూలో సందేశాలు లేవు</string>
+    <string name="settings_queued_none_subtitle">అన్ని ఈవెంట్‌లు రిలేలకు అందించబడ్డాయి</string>
     <string name="settings_queued_messages">క్యూలో ఉన్న సందేశాలు</string>
     <string name="app_lock_activity_unsupported">యాప్ లాక్‌కు సిస్టమ్ ప్రాంప్ట్‌ను మద్దతిచ్చే హోస్ట్ అవసరం. యాప్‌ను నవీకరించండి.</string>
     <string name="app_lock_prompt_subtitle">బయోమెట్రిక్ లేదా పరికర PINను ఉపయోగించండి</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">రిలేలకు చేరడానికి వేచి ఉన్న ఈవెంట్‌లు</string>
     <string name="queued_messages_title">క్యూలో ఉన్న సందేశాలు</string>
-    <string name="queued_message_kind">ఈవెంట్ రకం %1$d</string>
+    <string name="queued_message_kind">ఈవెంట్ %1$d</string>
     <string name="queued_message_queued_at">క్యూలో %1$s</string>
     <string name="queued_message_view">ఈవెంట్ చూడండి</string>
     <string name="queued_message_hide">దాచు</string>

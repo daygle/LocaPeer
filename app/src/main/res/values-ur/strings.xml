@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">غلط ہیکس فارمیٹ۔</string>
     <string name="onboarding_error_import_failed">کلید امپورٹ ناکام: %1$s</string>
     <string name="settings_queued_none">قطار میں کوئی پیغام نہیں</string>
+    <string name="settings_queued_none_subtitle">تمام واقعات ریلوں تک پہنچا دیے گئے</string>
     <string name="settings_queued_messages">قطار میں پیغامات</string>
     <string name="app_lock_activity_unsupported">ایپ لاک کے لیے ایسا ہوسٹ درکار ہے جو سسٹم پرامپٹ کو سپورٹ کرے۔ ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="app_lock_prompt_subtitle">بایومیٹرک یا آلے کا PIN استعمال کریں</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ریلوں تک پہنچنے کا انتظار کر رہے واقعات</string>
     <string name="queued_messages_title">قطار میں موجود پیغامات</string>
-    <string name="queued_message_kind">واقعہ کی قسم %1$d</string>
+    <string name="queued_message_kind">واقعہ %1$d</string>
     <string name="queued_message_queued_at">قطار میں %1$s</string>
     <string name="queued_message_view">واقعہ دیکھیں</string>
     <string name="queued_message_hide">چھپائیں</string>

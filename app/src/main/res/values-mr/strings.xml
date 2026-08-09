@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">अवैध हेक्स स्वरूप.</string>
     <string name="onboarding_error_import_failed">की आयात करणे अयशस्वी: %1$s</string>
     <string name="settings_queued_none">रांगेत संदेश नाहीत</string>
+    <string name="settings_queued_none_subtitle">सर्व घटना रिलेपर्यंत पोहोचवल्या गेल्या</string>
     <string name="settings_queued_messages">रांगेतील संदेश</string>
     <string name="app_lock_activity_unsupported">अ‍ॅप लॉकसाठी सिस्टम प्रॉम्प्टला समर्थन देणारा होस्ट आवश्यक आहे. अ‍ॅप अद्ययावत करा.</string>
     <string name="app_lock_prompt_subtitle">बायोमेट्रिक किंवा डिव्हाइस PIN वापरा</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">रिलेपर्यंत पोहोचण्याची वाट पाहणाऱ्या घटना</string>
     <string name="queued_messages_title">रांगेत असलेले संदेश</string>
-    <string name="queued_message_kind">इव्हेंट प्रकार %1$d</string>
+    <string name="queued_message_kind">इव्हेंट %1$d</string>
     <string name="queued_message_queued_at">रांगेत %1$s</string>
     <string name="queued_message_view">इव्हेंट पहा</string>
     <string name="queued_message_hide">लपवा</string>

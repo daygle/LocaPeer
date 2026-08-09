@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">十六進位格式無效。</string>
     <string name="onboarding_error_import_failed">匯入金鑰失敗：%1$s</string>
     <string name="settings_queued_none">沒有排隊的訊息</string>
+    <string name="settings_queued_none_subtitle">所有事件都已傳送到中繼</string>
     <string name="settings_queued_messages">排隊的訊息</string>
     <string name="app_lock_activity_unsupported">應用程式鎖需要支援系統提示的宿主。請更新應用程式。</string>
     <string name="app_lock_prompt_subtitle">使用生物辨識或裝置 PIN 碼</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">等待傳送到中繼的事件</string>
     <string name="queued_messages_title">佇列中的訊息</string>
-    <string name="queued_message_kind">事件類型 %1$d</string>
+    <string name="queued_message_kind">事件 %1$d</string>
     <string name="queued_message_queued_at">佇列中 %1$s</string>
     <string name="queued_message_view">檢視事件</string>
     <string name="queued_message_hide">隱藏</string>

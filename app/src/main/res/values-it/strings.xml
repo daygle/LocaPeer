@@ -763,6 +763,7 @@
     <string name="peer_purge_messages_sent">Comando di eliminazione remota di TUTTI i messaggi inviato a %1$s</string>
     <string name="peer_role_change_sent">Richiesta di cambio ruolo inviata a %1$s</string>
     <string name="settings_queued_none">Nessun messaggio in coda</string>
+    <string name="settings_queued_none_subtitle">Tutti gli eventi sono stati consegnati ai relay</string>
     <string name="settings_queued_messages">Messaggi in coda</string>
     <string name="app_lock_activity_unsupported">Il blocco dell\'app richiede un host che supporti la richiesta di sistema. Aggiorna l\'app.</string>
     <string name="app_lock_prompt_subtitle">Usa la biometria o il PIN del dispositivo</string>
@@ -904,7 +905,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Eventi in attesa di raggiungere i relay</string>
     <string name="queued_messages_title">Messaggi in coda</string>
-    <string name="queued_message_kind">Tipo di evento %1$d</string>
+    <string name="queued_message_kind">Evento %1$d</string>
     <string name="queued_message_queued_at">In coda %1$s</string>
     <string name="queued_message_view">Visualizza evento</string>
     <string name="queued_message_hide">Nascondi</string>

@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">Usoro hex kò dára.</string>
     <string name="onboarding_error_import_failed">Ịbubata igodo dara: %1$s</string>
     <string name="settings_queued_none">Kò sí ìránṣẹ́ tó ń dúró ní ìlà</string>
+    <string name="settings_queued_none_subtitle">Gbogbo àwọn ìṣẹ̀lẹ̀ ni a ti fi ránṣẹ́ sí àwọn relay</string>
     <string name="settings_queued_messages">Àwọn ìránṣẹ́ tó ń dúró ní ìlà</string>
     <string name="app_lock_activity_unsupported">Ìtìpa app nílò olùgbàlejò tó ń ṣàtìlẹ́yìn fún ìbéèrè ètò. Ṣe ìmúdójúìwọ̀n app.</string>
     <string name="app_lock_prompt_subtitle">Lo biometric tàbí PIN ẹ̀rọ</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Àwọn ìṣẹ̀lẹ̀ tí ń dúró láti dé ọ̀dọ̀ àwọn relay</string>
     <string name="queued_messages_title">Àwọn ifiranṣẹ́ tó wà ní ìsàlẹ̀</string>
-    <string name="queued_message_kind">Iru iṣẹlẹ %1$d</string>
+    <string name="queued_message_kind">Iṣẹlẹ %1$d</string>
     <string name="queued_message_queued_at">Ní ìsàlẹ̀ %1$s</string>
     <string name="queued_message_view">Wo iṣẹlẹ náà</string>
     <string name="queued_message_hide">Fi pamọ́</string>

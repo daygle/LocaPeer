@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Geçersiz onaltılık biçim.</string>
     <string name="onboarding_error_import_failed">Anahtar içe aktarılamadı: %1$s</string>
     <string name="settings_queued_none">Sırada mesaj yok</string>
+    <string name="settings_queued_none_subtitle">Tüm olaylar relaylere teslim edildi</string>
     <string name="settings_queued_messages">Sıradaki mesajlar</string>
     <string name="app_lock_activity_unsupported">Uygulama kilidi, sistem istemini destekleyen bir ortam gerektirir. Uygulamayı güncelleyin.</string>
     <string name="app_lock_prompt_subtitle">Biyometri veya cihaz PIN\'ini kullanın</string>
@@ -904,7 +905,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Relaylere ulaşmayı bekleyen olaylar</string>
     <string name="queued_messages_title">Kuyruktaki Mesajlar</string>
-    <string name="queued_message_kind">Olay türü %1$d</string>
+    <string name="queued_message_kind">Olay %1$d</string>
     <string name="queued_message_queued_at">Kuyrukta %1$s</string>
     <string name="queued_message_view">Olayı görüntüle</string>
     <string name="queued_message_hide">Gizle</string>

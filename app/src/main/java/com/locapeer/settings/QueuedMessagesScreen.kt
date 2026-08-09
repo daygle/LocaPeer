@@ -22,6 +22,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.locapeer.R
 import com.locapeer.data.entity.PendingMessageEntity
+import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -65,18 +66,12 @@ fun QueuedMessagesScreen(
         }
     ) { padding ->
         if (messages.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    stringResource(R.string.settings_queued_none),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
+            EmptyState(
+                icon = Icons.Default.Inbox,
+                title = stringResource(R.string.settings_queued_none),
+                subtitle = stringResource(R.string.settings_queued_none_subtitle),
+                modifier = Modifier.padding(padding)
+            )
         } else {
             LazyColumn(
                 modifier = Modifier

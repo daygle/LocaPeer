@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">Format heks tidak sah.</string>
     <string name="onboarding_error_import_failed">Gagal mengimport kunci: %1$s</string>
     <string name="settings_queued_none">Tiada mesej dalam baris gilir</string>
+    <string name="settings_queued_none_subtitle">Semua peristiwa telah dihantar ke relay</string>
     <string name="settings_queued_messages">Mesej dalam baris gilir</string>
     <string name="app_lock_activity_unsupported">Kunci apl memerlukan hos yang menyokong gesaan sistem. Kemas kini apl.</string>
     <string name="app_lock_prompt_subtitle">Gunakan biometrik atau PIN peranti</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Peristiwa yang menunggu untuk sampai ke relay</string>
     <string name="queued_messages_title">Mesej dalam Baris Giliran</string>
-    <string name="queued_message_kind">Jenis peristiwa %1$d</string>
+    <string name="queued_message_kind">Peristiwa %1$d</string>
     <string name="queued_message_queued_at">Dalam giliran %1$s</string>
     <string name="queued_message_view">Lihat peristiwa</string>
     <string name="queued_message_hide">Sembunyi</string>

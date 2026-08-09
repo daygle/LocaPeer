@@ -765,6 +765,7 @@
     <string name="onboarding_error_hex">ልክ ያልሆነ የሄክስ ቅርጸት።</string>
     <string name="onboarding_error_import_failed">ቁልፍ ማስገባት አልተሳካም፡ %1$s</string>
     <string name="settings_queued_none">በወረፋ ላይ ምንም መልእክት የለም</string>
+    <string name="settings_queued_none_subtitle">ሁሉም ክስተቶች ወደ ማስተላለፊያዎቻቸው ተደርሰዋል</string>
     <string name="settings_queued_messages">በወረፋ ላይ ያሉ መልእክቶች</string>
     <string name="app_lock_activity_unsupported">የመተግበሪያ ቁልፍ የስርዓት መጠየቂያን የሚደግፍ አስተናጋጅ ይፈልጋል። መተግበሪያውን ያዘምኑ።</string>
     <string name="app_lock_prompt_subtitle">ባዮሜትሪክ ወይም የመሣሪያ ፒን ይጠቀሙ</string>
@@ -906,7 +907,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">ወደ ማስተላለፊያዎች ለመድረስ የሚጠባበቁ ክስተቶች</string>
     <string name="queued_messages_title">የተደረደሩ መልዕክቶች</string>
-    <string name="queued_message_kind">የክስተት ዓይነት %1$d</string>
+    <string name="queued_message_kind">ክስተት %1$d</string>
     <string name="queued_message_queued_at">የተደረደረው %1$s</string>
     <string name="queued_message_view">ክስተቱን ይመልከቱ</string>
     <string name="queued_message_hide">ደብቅ</string>

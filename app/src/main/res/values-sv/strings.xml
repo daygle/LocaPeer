@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Ogiltigt hexformat.</string>
     <string name="onboarding_error_import_failed">Kunde inte importera nyckeln: %1$s</string>
     <string name="settings_queued_none">Inga köade meddelanden</string>
+    <string name="settings_queued_none_subtitle">Alla händelser har levererats till reläerna</string>
     <string name="settings_queued_messages">Köade meddelanden</string>
     <string name="app_lock_activity_unsupported">Applåset kräver en värd som stöder systemuppmaningen. Uppdatera appen.</string>
     <string name="app_lock_prompt_subtitle">Använd biometri eller enhetens PIN-kod</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Händelser som väntar på att nå reläerna</string>
     <string name="queued_messages_title">Väntande meddelanden</string>
-    <string name="queued_message_kind">Händelsetyp %1$d</string>
+    <string name="queued_message_kind">Händelse %1$d</string>
     <string name="queued_message_queued_at">I kö %1$s</string>
     <string name="queued_message_view">Visa händelse</string>
     <string name="queued_message_hide">Dölj</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Muundo wa hex batili.</string>
     <string name="onboarding_error_import_failed">Imeshindwa kuingiza ufunguo: %1$s</string>
     <string name="settings_queued_none">Hakuna ujumbe kwenye foleni</string>
+    <string name="settings_queued_none_subtitle">Matukio yote yamewasilishwa kwa rele</string>
     <string name="settings_queued_messages">Ujumbe kwenye foleni</string>
     <string name="app_lock_activity_unsupported">Kufuli la programu linahitaji mwenyeji anayeauni kidokezo cha mfumo. Sasisha programu.</string>
     <string name="app_lock_prompt_subtitle">Tumia biometriki au PIN ya kifaa</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Matukio yanayosubiri kufika kwenye rele</string>
     <string name="queued_messages_title">Ujumbe Unaosubiri</string>
-    <string name="queued_message_kind">Aina ya tukio %1$d</string>
+    <string name="queued_message_kind">Tukio %1$d</string>
     <string name="queued_message_queued_at">Katika foleni %1$s</string>
     <string name="queued_message_view">Angalia tukio</string>
     <string name="queued_message_hide">Ficha</string>

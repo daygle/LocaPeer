@@ -762,6 +762,7 @@
     <string name="peer_purge_messages_sent">Comando de exclusão remota de TODAS as mensagens enviado para %1$s</string>
     <string name="peer_role_change_sent">Solicitação de mudança de função enviada para %1$s</string>
     <string name="settings_queued_none">Sem mensagens na fila</string>
+    <string name="settings_queued_none_subtitle">Todos os eventos foram entregues aos relays</string>
     <string name="settings_queued_messages">Mensagens na fila</string>
     <string name="app_lock_activity_unsupported">O bloqueio do app requer um host compatível com o aviso do sistema. Atualize o app.</string>
     <string name="app_lock_prompt_subtitle">Use biometria ou o PIN do dispositivo</string>
@@ -903,7 +904,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Eventos aguardando para chegar aos relays</string>
     <string name="queued_messages_title">Mensagens na Fila</string>
-    <string name="queued_message_kind">Tipo de evento %1$d</string>
+    <string name="queued_message_kind">Evento %1$d</string>
     <string name="queued_message_queued_at">Na fila %1$s</string>
     <string name="queued_message_view">Ver evento</string>
     <string name="queued_message_hide">Ocultar</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Usoro hex kò dára.</string>
     <string name="onboarding_error_import_failed">Mayar da maɓalli ya gaza: %1$s</string>
     <string name="settings_queued_none">Babu saƙon da ke jira</string>
+    <string name="settings_queued_none_subtitle">An isar da dukkan abubuwan ga relays</string>
     <string name="settings_queued_messages">Saƙonnin da ke jira</string>
     <string name="app_lock_activity_unsupported">Kulle-app yana buƙatar mai masaukin da ke goyon bayan tambayar tsarin. Sabunta app.</string>
     <string name="app_lock_prompt_subtitle">Yi amfani da biometric ko PIN na na\'ura</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Abubuwan da ke jiran isa ga relays</string>
     <string name="queued_messages_title">Saƙonni da ke jira</string>
-    <string name="queued_message_kind">Nau\'in aukuwa %1$d</string>
+    <string name="queued_message_kind">Aukuwa %1$d</string>
     <string name="queued_message_queued_at">A jera %1$s</string>
     <string name="queued_message_view">Duba aukuwa</string>
     <string name="queued_message_hide">Ɓoye</string>

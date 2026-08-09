@@ -763,6 +763,7 @@
     <string name="peer_purge_messages_sent">Fernlöschbefehl für ALLE Nachrichten an %1$s gesendet</string>
     <string name="peer_role_change_sent">Anfrage zur Rollenänderung an %1$s gesendet</string>
     <string name="settings_queued_none">Keine Nachrichten in der Warteschlange</string>
+    <string name="settings_queued_none_subtitle">Alle Ereignisse wurden an die Relays übermittelt</string>
     <string name="settings_queued_messages">Nachrichten in der Warteschlange</string>
     <string name="app_lock_activity_unsupported">Die App-Sperre erfordert einen Host, der die Systemabfrage unterstützt. Aktualisiere die App.</string>
     <string name="app_lock_prompt_subtitle">Biometrie oder Geräte-PIN verwenden</string>
@@ -904,7 +905,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Ereignisse, die auf Relays warten</string>
     <string name="queued_messages_title">Wartende Nachrichten</string>
-    <string name="queued_message_kind">Ereignistyp %1$d</string>
+    <string name="queued_message_kind">Ereignis %1$d</string>
     <string name="queued_message_queued_at">Eingereiht %1$s</string>
     <string name="queued_message_view">Ereignis anzeigen</string>
     <string name="queued_message_hide">Ausblenden</string>

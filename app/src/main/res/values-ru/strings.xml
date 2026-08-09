@@ -794,6 +794,7 @@
     <string name="onboarding_error_hex">Неверный шестнадцатеричный формат.</string>
     <string name="onboarding_error_import_failed">Не удалось импортировать ключ: %1$s</string>
     <string name="settings_queued_none">Нет сообщений в очереди</string>
+    <string name="settings_queued_none_subtitle">Все события доставлены на реле</string>
     <string name="settings_queued_messages">Сообщения в очереди</string>
     <string name="app_lock_activity_unsupported">Для блокировки приложения нужна среда с поддержкой системного запроса. Обновите приложение.</string>
     <string name="app_lock_prompt_subtitle">Используйте биометрию или PIN-код устройства</string>
@@ -937,7 +938,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">События, ожидающие отправки на реле</string>
     <string name="queued_messages_title">Сообщения в очереди</string>
-    <string name="queued_message_kind">Тип события %1$d</string>
+    <string name="queued_message_kind">Событие %1$d</string>
     <string name="queued_message_queued_at">В очереди %1$s</string>
     <string name="queued_message_view">Просмотреть событие</string>
     <string name="queued_message_hide">Скрыть</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Formata heks a nederbasdar.</string>
     <string name="onboarding_error_import_failed">Hawirdekirina mifteyê bi ser neket: %1$s</string>
     <string name="settings_queued_none">Peyamek li benda nîne</string>
+    <string name="settings_queued_none_subtitle">Hemî bûyer hatin gihandin relayan</string>
     <string name="settings_queued_messages">Peyamên li benda</string>
     <string name="app_lock_activity_unsupported">Kilîta sepanê hewceyî hostek e ku daxwaza sîstemê piştgirî bike. Sepanê nû bike.</string>
     <string name="app_lock_prompt_subtitle">Biyometrî an PIN-a cîhazê bikar bîne</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Bûyerên li benda gihîştina relayan</string>
     <string name="queued_messages_title">Peyamên li benda rêzê</string>
-    <string name="queued_message_kind">Cûreya bûyerê %1$d</string>
+    <string name="queued_message_kind">Bûyer %1$d</string>
     <string name="queued_message_queued_at">Di rêzê de %1$s</string>
     <string name="queued_message_view">Bûyerê bibîne</string>
     <string name="queued_message_hide">Veşêre</string>

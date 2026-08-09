@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Di-wastong hex format.</string>
     <string name="onboarding_error_import_failed">Nabigong i-import ang key: %1$s</string>
     <string name="settings_queued_none">Walang mensaheng naka-queue</string>
+    <string name="settings_queued_none_subtitle">Naihatid na ang lahat ng kaganapan sa mga relay</string>
     <string name="settings_queued_messages">Mga mensaheng naka-queue</string>
     <string name="app_lock_activity_unsupported">Kailangan ng app lock ng host na sumusuporta sa system prompt. I-update ang app.</string>
     <string name="app_lock_prompt_subtitle">Gumamit ng biometric o PIN ng device</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Mga kaganapang naghihintay na makarating sa mga relay</string>
     <string name="queued_messages_title">Mga Mensaheng Nakapila</string>
-    <string name="queued_message_kind">Uri ng kaganapan %1$d</string>
+    <string name="queued_message_kind">Kaganapan %1$d</string>
     <string name="queued_message_queued_at">Nakapila %1$s</string>
     <string name="queued_message_view">Tingnan ang kaganapan</string>
     <string name="queued_message_hide">Itago</string>

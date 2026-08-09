@@ -779,6 +779,7 @@
     <string name="onboarding_error_hex">תבנית הקסדצימלית לא חוקית.</string>
     <string name="onboarding_error_import_failed">ייבוא המפתח נכשל: %1$s</string>
     <string name="settings_queued_none">אין הודעות בתור</string>
+    <string name="settings_queued_none_subtitle">כל האירועים נמסרו לממסרים</string>
     <string name="settings_queued_messages">הודעות בתור</string>
     <string name="app_lock_activity_unsupported">נעילת האפליקציה דורשת מארח התומך בבקשת המערכת. עדכן את האפליקציה.</string>
     <string name="app_lock_prompt_subtitle">השתמש בביומטריה או בקוד PIN של המכשיר</string>
@@ -920,7 +921,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">אירועים שממתינים להגיע לממסרים</string>
     <string name="queued_messages_title">הודעות בהמתנה</string>
-    <string name="queued_message_kind">סוג אירוע %1$d</string>
+    <string name="queued_message_kind">אירוע %1$d</string>
     <string name="queued_message_queued_at">בהמתנה %1$s</string>
     <string name="queued_message_view">צפה באירוע</string>
     <string name="queued_message_hide">הסתר</string>

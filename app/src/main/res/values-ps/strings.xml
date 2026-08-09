@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">بې اعتباره هیکس بڼه.</string>
     <string name="onboarding_error_import_failed">د کیلي واردول ناکام شول: %1$s</string>
     <string name="settings_queued_none">قطار میں کوئی پیغام نہیں</string>
+    <string name="settings_queued_none_subtitle">ټولې پیښې ریلو ته سپارل شوې دي</string>
     <string name="settings_queued_messages">قطار میں پیغامات</string>
     <string name="app_lock_activity_unsupported">ایپ لاک کے لیے ایسا ہوسٹ درکار ہے جو سسٹم پرامپٹ کو سپورٹ کرے۔ ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="app_lock_prompt_subtitle">بایومیٹرک یا آلے کا PIN استعمال کریں</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">هغه پیښې چې ریلو ته د رسیدو په تمه دي</string>
     <string name="queued_messages_title">په کتار کې پیغامونه</string>
-    <string name="queued_message_kind">د پېښې ډول %1$d</string>
+    <string name="queued_message_kind">پېښه %1$d</string>
     <string name="queued_message_queued_at">په کتار کې %1$s</string>
     <string name="queued_message_view">پېښه وګورئ</string>
     <string name="queued_message_hide">پټول</string>

@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">잘못된 16진수 형식입니다.</string>
     <string name="onboarding_error_import_failed">키 가져오기 실패: %1$s</string>
     <string name="settings_queued_none">대기 중인 메시지 없음</string>
+    <string name="settings_queued_none_subtitle">모든 이벤트가 릴레이에 전달되었습니다</string>
     <string name="settings_queued_messages">대기 중인 메시지</string>
     <string name="app_lock_activity_unsupported">앱 잠금은 시스템 프롬프트를 지원하는 호스트가 필요합니다. 앱을 업데이트하세요.</string>
     <string name="app_lock_prompt_subtitle">생체 인증 또는 기기 PIN 사용</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">릴레이에 도달하기를 기다리는 이벤트</string>
     <string name="queued_messages_title">대기 중인 메시지</string>
-    <string name="queued_message_kind">이벤트 종류 %1$d</string>
+    <string name="queued_message_kind">이벤트 %1$d</string>
     <string name="queued_message_queued_at">대기 중 %1$s</string>
     <string name="queued_message_view">이벤트 보기</string>
     <string name="queued_message_hide">숨기기</string>

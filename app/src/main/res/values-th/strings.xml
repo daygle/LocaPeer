@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">รูปแบบฐานสิบหกไม่ถูกต้อง</string>
     <string name="onboarding_error_import_failed">นำเข้ากุญแจล้มเหลว: %1$s</string>
     <string name="settings_queued_none">ไม่มีข้อความในคิว</string>
+    <string name="settings_queued_none_subtitle">ส่งเหตุการณ์ทั้งหมดไปยังรีเลย์แล้ว</string>
     <string name="settings_queued_messages">ข้อความในคิว</string>
     <string name="app_lock_activity_unsupported">การล็อกแอปต้องใช้โฮสต์ที่รองรับพร้อมต์ของระบบ โปรดอัปเดตแอป</string>
     <string name="app_lock_prompt_subtitle">ใช้ไบโอเมตริกหรือ PIN ของอุปกรณ์</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">เหตุการณ์ที่รอส่งถึงรีเลย์</string>
     <string name="queued_messages_title">ข้อความที่รอส่ง</string>
-    <string name="queued_message_kind">ประเภทเหตุการณ์ %1$d</string>
+    <string name="queued_message_kind">เหตุการณ์ %1$d</string>
     <string name="queued_message_queued_at">รอส่ง %1$s</string>
     <string name="queued_message_view">ดูเหตุการณ์</string>
     <string name="queued_message_hide">ซ่อน</string>

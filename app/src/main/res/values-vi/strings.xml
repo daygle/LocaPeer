@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">Định dạng hex không hợp lệ.</string>
     <string name="onboarding_error_import_failed">Nhập khóa thất bại: %1$s</string>
     <string name="settings_queued_none">Không có tin nhắn trong hàng đợi</string>
+    <string name="settings_queued_none_subtitle">Tất cả sự kiện đã được gửi đến relay</string>
     <string name="settings_queued_messages">Tin nhắn trong hàng đợi</string>
     <string name="app_lock_activity_unsupported">Khóa ứng dụng cần một máy chủ hỗ trợ lời nhắc hệ thống. Hãy cập nhật ứng dụng.</string>
     <string name="app_lock_prompt_subtitle">Dùng sinh trắc học hoặc mã PIN của thiết bị</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Sự kiện đang chờ đến relay</string>
     <string name="queued_messages_title">Tin nhắn đang chờ</string>
-    <string name="queued_message_kind">Loại sự kiện %1$d</string>
+    <string name="queued_message_kind">Sự kiện %1$d</string>
     <string name="queued_message_queued_at">Đang chờ %1$s</string>
     <string name="queued_message_view">Xem sự kiện</string>
     <string name="queued_message_hide">Ẩn</string>

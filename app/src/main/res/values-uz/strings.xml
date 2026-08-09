@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Yaroqsiz heks formati.</string>
     <string name="onboarding_error_import_failed">Kalitni import qilib bo‘lmadi: %1$s</string>
     <string name="settings_queued_none">Navbatda xabar yo\'q</string>
+    <string name="settings_queued_none_subtitle">Barcha hodisalar relelarga yetkazildi</string>
     <string name="settings_queued_messages">Navbatdagi xabarlar</string>
     <string name="app_lock_activity_unsupported">Ilova qulfi tizim so\'rovini qo\'llab-quvvatlaydigan muhitni talab qiladi. Ilovani yangilang.</string>
     <string name="app_lock_prompt_subtitle">Biometriya yoki qurilma PIN-kodidan foydalaning</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Relelardarga yetishishni kutayotgan hodisalar</string>
     <string name="queued_messages_title">Navbatdagi xabarlar</string>
-    <string name="queued_message_kind">Hodisa turi %1$d</string>
+    <string name="queued_message_kind">Hodisa %1$d</string>
     <string name="queued_message_queued_at">Navbatda %1$s</string>
     <string name="queued_message_view">Hodisani ko‘rish</string>
     <string name="queued_message_hide">Yashirish</string>

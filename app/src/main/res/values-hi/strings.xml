@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">अमान्य हेक्स प्रारूप।</string>
     <string name="onboarding_error_import_failed">कुंजी आयात विफल: %1$s</string>
     <string name="settings_queued_none">कतार में कोई संदेश नहीं</string>
+    <string name="settings_queued_none_subtitle">सभी इवेंट रिले तक पहुंचा दिए गए हैं</string>
     <string name="settings_queued_messages">कतार में संदेश</string>
     <string name="app_lock_activity_unsupported">ऐप लॉक के लिए ऐसे होस्ट की ज़रूरत है जो सिस्टम प्रॉम्प्ट का समर्थन करे। ऐप अपडेट करें।</string>
     <string name="app_lock_prompt_subtitle">बायोमेट्रिक या डिवाइस PIN का उपयोग करें</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">रिले तक पहुंचने का इंतज़ार कर रहे इवेंट</string>
     <string name="queued_messages_title">कतार में लंबित संदेश</string>
-    <string name="queued_message_kind">इवेंट प्रकार %1$d</string>
+    <string name="queued_message_kind">इवेंट %1$d</string>
     <string name="queued_message_queued_at">कतार में %1$s</string>
     <string name="queued_message_view">इवेंट देखें</string>
     <string name="queued_message_hide">छिपाएं</string>

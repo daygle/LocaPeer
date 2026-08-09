@@ -749,6 +749,7 @@
     <string name="onboarding_error_hex">Usoro hex na-adịghị mma.</string>
     <string name="onboarding_error_import_failed">Ịbubata igodo dara: %1$s</string>
     <string name="settings_queued_none">Enweghị ozi nọ n\'ahịrị</string>
+    <string name="settings_queued_none_subtitle">Ebuferela ihe omume niile na relays</string>
     <string name="settings_queued_messages">Ozi nọ n\'ahịrị</string>
     <string name="app_lock_activity_unsupported">Mkpọchi ngwa chọrọ onye ọbịa na-akwado arịrịọ sistemụ. Melite ngwa ahụ.</string>
     <string name="app_lock_prompt_subtitle">Jiri biometric ma ọ bụ PIN ngwaọrụ</string>
@@ -889,7 +890,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Ihe omume na-echere iru relays</string>
     <string name="queued_messages_title">Ozi ndị nọ n\'ahịrị</string>
-    <string name="queued_message_kind">Ụdị ihe omume %1$d</string>
+    <string name="queued_message_kind">Ihe omume %1$d</string>
     <string name="queued_message_queued_at">Nọ n\'ahịrị %1$s</string>
     <string name="queued_message_view">Lee ihe omume</string>
     <string name="queued_message_hide">Zoo</string>

@@ -764,6 +764,7 @@
     <string name="onboarding_error_hex">Жарамсыз хекс форматы.</string>
     <string name="onboarding_error_import_failed">Кілтті импорттау мүмкін болмады: %1$s</string>
     <string name="settings_queued_none">Кезекте хабар жоқ</string>
+    <string name="settings_queued_none_subtitle">Барлық оқиғалар релелерге жеткізілді</string>
     <string name="settings_queued_messages">Кезектегі хабарлар</string>
     <string name="app_lock_activity_unsupported">Қолданба құлпы жүйелік сұрауды қолдайтын ортаны қажет етеді. Қолданбаны жаңартыңыз.</string>
     <string name="app_lock_prompt_subtitle">Биометрияны немесе құрылғы PIN-кодын қолданыңыз</string>
@@ -905,7 +906,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Релелерге жетуді күтіп тұрған оқиғалар</string>
     <string name="queued_messages_title">Кезектегі хабарламалар</string>
-    <string name="queued_message_kind">Оқиға түрі %1$d</string>
+    <string name="queued_message_kind">Оқиға %1$d</string>
     <string name="queued_message_queued_at">Кезекте %1$s</string>
     <string name="queued_message_view">Оқиғаны қарау</string>
     <string name="queued_message_hide">Жасыру</string>

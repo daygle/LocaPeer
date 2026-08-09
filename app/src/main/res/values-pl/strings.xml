@@ -794,6 +794,7 @@
     <string name="onboarding_error_hex">Nieprawidłowy format szesnastkowy.</string>
     <string name="onboarding_error_import_failed">Nie udało się zaimportować klucza: %1$s</string>
     <string name="settings_queued_none">Brak wiadomości w kolejce</string>
+    <string name="settings_queued_none_subtitle">Wszystkie zdarzenia zostały dostarczone do przekaźników</string>
     <string name="settings_queued_messages">Wiadomości w kolejce</string>
     <string name="app_lock_activity_unsupported">Blokada aplikacji wymaga hosta obsługującego monit systemowy. Zaktualizuj aplikację.</string>
     <string name="app_lock_prompt_subtitle">Użyj biometrii lub kodu PIN urządzenia</string>
@@ -937,7 +938,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Zdarzenia oczekujące na dotarcie do przekaźników</string>
     <string name="queued_messages_title">Wiadomości w kolejce</string>
-    <string name="queued_message_kind">Typ zdarzenia %1$d</string>
+    <string name="queued_message_kind">Zdarzenie %1$d</string>
     <string name="queued_message_queued_at">W kolejce %1$s</string>
     <string name="queued_message_view">Zobacz zdarzenie</string>
     <string name="queued_message_hide">Ukryj</string>

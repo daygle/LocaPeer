@@ -748,6 +748,7 @@
     <string name="peer_purge_messages_sent">すべてのメッセージのリモート削除コマンドを %1$s に送信しました</string>
     <string name="peer_role_change_sent">ロール変更リクエストを %1$s に送信しました</string>
     <string name="settings_queued_none">キューにメッセージはありません</string>
+    <string name="settings_queued_none_subtitle">すべてのイベントがリレーに配信されました</string>
     <string name="settings_queued_messages">キュー内のメッセージ</string>
     <string name="app_lock_activity_unsupported">アプリロックには、システムプロンプトに対応したホストが必要です。アプリを更新してください。</string>
     <string name="app_lock_prompt_subtitle">生体認証またはデバイスのPINを使用</string>
@@ -888,7 +889,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">リレーへの送信待ちイベント</string>
     <string name="queued_messages_title">送信待ちメッセージ</string>
-    <string name="queued_message_kind">イベント種別 %1$d</string>
+    <string name="queued_message_kind">イベント %1$d</string>
     <string name="queued_message_queued_at">%1$s 送信待ち</string>
     <string name="queued_message_view">イベントを表示</string>
     <string name="queued_message_hide">非表示</string>

@@ -49,13 +49,14 @@
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
     <string name="settings_queued_messages">Queued Messages</string>
     <string name="settings_queued_none">No queued messages</string>
+    <string name="settings_queued_none_subtitle">All events have been delivered to their relays</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
     <string name="settings_queued_messages_subtitle">Events waiting to reach relays</string>
     <string name="queued_messages_title">Queued Messages</string>
-    <string name="queued_message_kind">Event kind %1$d</string>
+    <string name="queued_message_kind">Event %1$d</string>
     <string name="queued_message_queued_at">Queued %1$s</string>
     <string name="queued_message_view">View Event</string>
     <string name="queued_message_hide">Hide</string>

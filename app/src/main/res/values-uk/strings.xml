@@ -794,6 +794,7 @@
     <string name="onboarding_error_hex">Неправильний шістнадцятковий формат.</string>
     <string name="onboarding_error_import_failed">Не вдалося імпортувати ключ: %1$s</string>
     <string name="settings_queued_none">Немає повідомлень у черзі</string>
+    <string name="settings_queued_none_subtitle">Усі події доставлено до реле</string>
     <string name="settings_queued_messages">Повідомлення в черзі</string>
     <string name="app_lock_activity_unsupported">Для блокування застосунку потрібне середовище з підтримкою системного запиту. Оновіть застосунок.</string>
     <string name="app_lock_prompt_subtitle">Використайте біометрію або PIN-код пристрою</string>
@@ -936,7 +937,7 @@
     </plurals>
     <string name="settings_queued_messages_subtitle">Події, що очікують на доставку до реле</string>
     <string name="queued_messages_title">Повідомлення в черзі</string>
-    <string name="queued_message_kind">Тип події %1$d</string>
+    <string name="queued_message_kind">Подія %1$d</string>
     <string name="queued_message_queued_at">У черзі %1$s</string>
     <string name="queued_message_view">Переглянути подію</string>
     <string name="queued_message_hide">Приховати</string>
