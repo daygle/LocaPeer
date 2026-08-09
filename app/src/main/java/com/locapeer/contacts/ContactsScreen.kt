@@ -70,7 +70,7 @@ fun ContactsScreen(
     // Search / sort
     var showSearch by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
-    var sortOrder by remember { mutableStateOf(SortOrder.LAST_SEEN) }
+    var sortOrder by remember { mutableStateOf(SortOrder.NAME) }
     var showSortMenu by remember { mutableStateOf(false) }
 
     // Selection
