@@ -616,8 +616,8 @@
     <string name="map_cd_go_location">Go to location</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ON</string>
-    <string name="map_overdue">Overdue - no recent update</string>
-    <string name="map_stat_last_seen">Last seen</string>
+    <string name="map_overdue">No Recent Update</string>
+    <string name="map_stat_last_seen">Last Seen</string>
     <string name="map_stat_battery">Battery</string>
     <string name="map_stat_accuracy">Accuracy</string>
     <string name="map_stat_motion">Motion</string>

@@ -502,7 +502,7 @@
     <string name="map_cd_go_location">位置に移動</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOSオン</string>
-    <string name="map_overdue">遅延 - 最近の更新なし</string>
+    <string name="map_overdue">最近の更新なし</string>
     <string name="map_stat_last_seen">最終確認</string>
     <string name="map_stat_battery">バッテリー</string>
     <string name="map_stat_accuracy">精度</string>

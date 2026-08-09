@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Ir a la ubicación</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ACTIVADO</string>
-    <string name="map_overdue">Atrasado - sin actualización reciente</string>
+    <string name="map_overdue">Sin actualización reciente</string>
     <string name="map_stat_last_seen">Visto por última vez</string>
     <string name="map_stat_battery">Batería</string>
     <string name="map_stat_accuracy">Precisión</string>

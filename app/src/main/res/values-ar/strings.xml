@@ -547,7 +547,7 @@
     <string name="map_cd_go_location">الانتقال إلى الموقع</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS مفعّل</string>
-    <string name="map_overdue">متأخر - لا يوجد تحديث حديث</string>
+    <string name="map_overdue">لا يوجد تحديث حديث</string>
     <string name="map_stat_last_seen">آخر ظهور</string>
     <string name="map_stat_battery">البطارية</string>
     <string name="map_stat_accuracy">الدقة</string>

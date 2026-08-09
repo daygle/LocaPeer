@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Here cih</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS VEKIRÎ</string>
-    <string name="map_overdue">Dereng mayî - nûvekirina dawî tune</string>
+    <string name="map_overdue">Nûvekirina dawî tune</string>
     <string name="map_stat_last_seen">Cara dawî hat dîtin</string>
     <string name="map_stat_battery">Pîl</string>
     <string name="map_stat_accuracy">Rastî</string>

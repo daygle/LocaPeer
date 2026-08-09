@@ -502,7 +502,7 @@
     <string name="map_cd_go_location">တည်နေရာသို့ သွားရန်</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ဖွင့်ထားသည်</string>
-    <string name="map_overdue">အချိန်လွန်နေသည် - အပ်ဒိတ် မရှိပါ</string>
+    <string name="map_overdue">အပ်ဒိတ် မရှိပါ</string>
     <string name="map_stat_last_seen">နောက်ဆုံးတွေ့ရှိမှု</string>
     <string name="map_stat_battery">ဘက်ထရီ</string>
     <string name="map_stat_accuracy">တိကျမှု</string>

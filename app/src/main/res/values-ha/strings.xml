@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Jeka wurin</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS A KUNNE</string>
-    <string name="map_overdue">Ya wuce lokaci - babu sabon bayani</string>
+    <string name="map_overdue">Babu sabon bayani</string>
     <string name="map_stat_last_seen">Lokaci na ƙarshe da aka gani</string>
     <string name="map_stat_battery">Baturi</string>
     <string name="map_stat_accuracy">Inganci</string>

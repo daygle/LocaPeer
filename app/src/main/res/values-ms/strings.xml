@@ -502,7 +502,7 @@
     <string name="map_cd_go_location">Pergi ke lokasi</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS HIDUP</string>
-    <string name="map_overdue">Tertunggak - tiada kemas kini terkini</string>
+    <string name="map_overdue">Tiada kemas kini terkini</string>
     <string name="map_stat_last_seen">Kali terakhir dilihat</string>
     <string name="map_stat_battery">Bateri</string>
     <string name="map_stat_accuracy">Ketepatan</string>

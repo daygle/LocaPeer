@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">অবস্থানে যান</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS চালু</string>
-    <string name="map_overdue">বিলম্বিত - কোনো সাম্প্রতিক আপডেট নেই</string>
+    <string name="map_overdue">কোনো সাম্প্রতিক আপডেট নেই</string>
     <string name="map_stat_last_seen">সর্বশেষ দেখা</string>
     <string name="map_stat_battery">ব্যাটারি</string>
     <string name="map_stat_accuracy">নির্ভুলতা</string>

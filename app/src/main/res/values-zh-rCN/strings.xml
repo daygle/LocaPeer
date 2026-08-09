@@ -502,7 +502,7 @@
     <string name="map_cd_go_location">前往位置</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS 开启</string>
-    <string name="map_overdue">超期 - 无最新更新</string>
+    <string name="map_overdue">无最新更新</string>
     <string name="map_stat_last_seen">最后上线</string>
     <string name="map_stat_battery">电池</string>
     <string name="map_stat_accuracy">精度</string>

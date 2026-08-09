@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Nenda mahali</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS IMEWASHWA</string>
-    <string name="map_overdue">Imechelewa - hakuna sasisho la hivi karibuni</string>
+    <string name="map_overdue">Hakuna sasisho la hivi karibuni</string>
     <string name="map_stat_last_seen">Imeonekana mara ya mwisho</string>
     <string name="map_stat_battery">Betri</string>
     <string name="map_stat_accuracy">Usahihi</string>

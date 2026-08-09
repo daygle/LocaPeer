@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">ወደ ቦታው ሂድ</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS በርቷል</string>
-    <string name="map_overdue">ጊዜ አልፎበታል - የቅርብ ጊዜ ዝመና የለም</string>
+    <string name="map_overdue">የቅርብ ጊዜ ዝመና የለም</string>
     <string name="map_stat_last_seen">ለመጨረሻ ጊዜ የታየው</string>
     <string name="map_stat_battery">ባትሪ</string>
     <string name="map_stat_accuracy">ትክክለኛነት</string>

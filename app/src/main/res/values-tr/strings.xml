@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Konuma git</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS AÇIK</string>
-    <string name="map_overdue">Gecikti - yakın zamanda güncelleme yok</string>
+    <string name="map_overdue">Yakın zamanda güncelleme yok</string>
     <string name="map_stat_last_seen">Son görülme</string>
     <string name="map_stat_battery">Pil</string>
     <string name="map_stat_accuracy">Doğruluk</string>

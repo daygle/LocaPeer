@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">مقام پر جائیں</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS آن</string>
-    <string name="map_overdue">تاخیر - کوئی حالیہ اپ ڈیٹ نہیں</string>
+    <string name="map_overdue">کوئی حالیہ اپ ڈیٹ نہیں</string>
     <string name="map_stat_last_seen">آخری بار دیکھا گیا</string>
     <string name="map_stat_battery">بیٹری</string>
     <string name="map_stat_accuracy">درستگی</string>

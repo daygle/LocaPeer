@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Ugrás a helyhez</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS BE</string>
-    <string name="map_overdue">Késésben - nincs friss frissítés</string>
+    <string name="map_overdue">Nincs friss frissítés</string>
     <string name="map_stat_last_seen">Utoljára látva</string>
     <string name="map_stat_battery">Akkumulátor</string>
     <string name="map_stat_accuracy">Pontosság</string>

@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Орынға өту</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ҚОСУЛЫ</string>
-    <string name="map_overdue">Кешіктірілген - соңғы жаңарту жоқ</string>
+    <string name="map_overdue">Соңғы жаңарту жоқ</string>
     <string name="map_stat_last_seen">Соңғы рет қашан көрінді</string>
     <string name="map_stat_battery">Батарея</string>
     <string name="map_stat_accuracy">Дәлдік</string>

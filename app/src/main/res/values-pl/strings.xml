@@ -529,7 +529,7 @@
     <string name="map_cd_go_location">Przejdź do lokalizacji</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS WŁ.</string>
-    <string name="map_overdue">Zaległe - brak niedawnej aktualizacji</string>
+    <string name="map_overdue">Brak niedawnej aktualizacji</string>
     <string name="map_stat_last_seen">Ostatnio widziano</string>
     <string name="map_stat_battery">Bateria</string>
     <string name="map_stat_accuracy">Dokładność</string>

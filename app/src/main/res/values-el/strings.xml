@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Μετάβαση στην τοποθεσία</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ΕΝΕΡΓΟ</string>
-    <string name="map_overdue">Καθυστέρηση - καμία πρόσφατη ενημέρωση</string>
+    <string name="map_overdue">Καμία πρόσφατη ενημέρωση</string>
     <string name="map_stat_last_seen">Τελευταία εμφάνιση</string>
     <string name="map_stat_battery">Μπαταρία</string>
     <string name="map_stat_accuracy">Ακρίβεια</string>

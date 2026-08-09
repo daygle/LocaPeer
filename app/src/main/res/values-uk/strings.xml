@@ -529,7 +529,7 @@
     <string name="map_cd_go_location">До місцезнаходження</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS УВІМК</string>
-    <string name="map_overdue">Прострочено - давно немає оновлень</string>
+    <string name="map_overdue">Давно немає оновлень</string>
     <string name="map_stat_last_seen">Останній сигнал</string>
     <string name="map_stat_battery">Батарея</string>
     <string name="map_stat_accuracy">Точність</string>

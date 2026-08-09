@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Naar locatie</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS AAN</string>
-    <string name="map_overdue">Achterstallig - geen recente update</string>
+    <string name="map_overdue">Geen recente update</string>
     <string name="map_stat_last_seen">Laatst gezien</string>
     <string name="map_stat_battery">Batterij</string>
     <string name="map_stat_accuracy">Nauwkeurigheid</string>

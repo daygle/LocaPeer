@@ -511,7 +511,7 @@
     <string name="map_cd_go_location">Joylashuvga o‘tish</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS YOQILGAN</string>
-    <string name="map_overdue">Kechikkan - so‘nggi yangilanish yo‘q</string>
+    <string name="map_overdue">So‘nggi yangilanish yo‘q</string>
     <string name="map_stat_last_seen">Oxirgi marta ko‘rilgan</string>
     <string name="map_stat_battery">Batareya</string>
     <string name="map_stat_accuracy">Aniqlik</string>

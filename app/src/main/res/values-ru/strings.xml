@@ -529,7 +529,7 @@
     <string name="map_cd_go_location">К местоположению</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ВКЛ</string>
-    <string name="map_overdue">Просрочено - давно нет обновлений</string>
+    <string name="map_overdue">Давно нет обновлений</string>
     <string name="map_stat_last_seen">Последний сигнал</string>
     <string name="map_stat_battery">Батарея</string>
     <string name="map_stat_accuracy">Точность</string>

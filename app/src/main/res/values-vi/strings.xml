@@ -502,7 +502,7 @@
     <string name="map_cd_go_location">Đến vị trí</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS BẬT</string>
-    <string name="map_overdue">Quá hạn - không có cập nhật gần đây</string>
+    <string name="map_overdue">Không có cập nhật gần đây</string>
     <string name="map_stat_last_seen">Hoạt động gần nhất</string>
     <string name="map_stat_battery">Pin</string>
     <string name="map_stat_accuracy">Độ chính xác</string>

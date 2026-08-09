@@ -520,7 +520,7 @@
     <string name="map_cd_go_location">עבור למיקום</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">‏SOS פועל</string>
-    <string name="map_overdue">באיחור - אין עדכון אחרון</string>
+    <string name="map_overdue">אין עדכון אחרון</string>
     <string name="map_stat_last_seen">נראה לאחרונה</string>
     <string name="map_stat_battery">סוללה</string>
     <string name="map_stat_accuracy">דיוק</string>

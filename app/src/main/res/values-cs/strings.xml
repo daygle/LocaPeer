@@ -529,7 +529,7 @@
     <string name="map_cd_go_location">Přejít na polohu</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ZAP</string>
-    <string name="map_overdue">Zpožděno - žádná nedávná aktualizace</string>
+    <string name="map_overdue">Žádná nedávná aktualizace</string>
     <string name="map_stat_last_seen">Naposledy online</string>
     <string name="map_stat_battery">Baterie</string>
     <string name="map_stat_accuracy">Přesnost</string>
