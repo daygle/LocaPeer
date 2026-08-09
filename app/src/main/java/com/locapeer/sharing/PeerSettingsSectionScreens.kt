@@ -155,27 +155,9 @@ fun PeerSharingControlsScreen(
     val state by vm.uiState.collectAsStateWithLifecycle()
     val cfg = state.config
     val sharingEnabled = cfg?.sharingEnabled ?: true
-    val isPaused = !sharingEnabled
     val supervisorLocked = state.supervisorLocked
-    val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
     val scheduleRules = cfg?.scheduleRules() ?: emptyList()
     val role = state.peer?.locationRole
-    val tempShareEndsAt = cfg?.temporaryShareEndsAtEpochSeconds
-    // Tick the clock only while a temp share is pending; ticking unconditionally would
-    // recompose the whole screen every second even when there's nothing to count down.
-    var nowSec by remember { mutableLongStateOf(System.currentTimeMillis() / 1000L) }
-    LaunchedEffect(tempShareEndsAt) {
-        val endsAt = tempShareEndsAt ?: return@LaunchedEffect
-        while (true) {
-            val wallSec = System.currentTimeMillis() / 1000L
-            nowSec = wallSec
-            if (wallSec >= endsAt) break
-            kotlinx.coroutines.delay(1.seconds)
-        }
-    }
-    val tempShareActive = tempShareEndsAt?.takeIf { it > nowSec }
-
-    var showPrecisionDialog by remember { mutableStateOf(value = false) }
 
     // The "request sent" confirmation is transient state on this screen's own ViewModel
     // instance (each nav destination gets a fresh PeerSharingViewModel), so it is consumed
@@ -223,13 +205,6 @@ fun PeerSharingControlsScreen(
             )
             CardDivider()
             SettingsRow(
-                title = stringResource(R.string.peer_precision),
-                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
-                enabled = sharingEnabled,
-                onClick = { showPrecisionDialog = true }
-            )
-            CardDivider()
-            SettingsRow(
                 title = stringResource(R.string.settings_sharing_schedule),
                 value = if (scheduleRules.isEmpty()) stringResource(R.string.peer_always_sharing)
                 else pluralStringResource(R.plurals.peer_active_rules, scheduleRules.size, scheduleRules.size),
@@ -237,11 +212,54 @@ fun PeerSharingControlsScreen(
                 onClick = onNavigateToSchedule
             )
         }
+    }
+}
 
+// ─── Privacy ─────────────────────────────────────────────────────────────────
+
+@Composable
+fun PeerPrivacyScreen(
+    peerId: String,
+    peerName: String,
+    onNavigateBack: () -> Unit,
+    vm: PeerSharingViewModel = hiltViewModel(),
+) {
+    LaunchedEffect(peerId) { vm.init(peerId) }
+    val state by vm.uiState.collectAsStateWithLifecycle()
+    val cfg = state.config
+    val sharingEnabled = cfg?.sharingEnabled ?: true
+    val isPaused = !sharingEnabled
+    val supervisorLocked = state.supervisorLocked
+    val precisionMode = cfg?.precisionMode ?: PrecisionMode.EXACT.name
+    val tempShareEndsAt = cfg?.temporaryShareEndsAtEpochSeconds
+    // Tick the clock only while a temp share is pending; ticking unconditionally would
+    // recompose the whole screen every second even when there's nothing to count down.
+    var nowSec by remember { mutableLongStateOf(System.currentTimeMillis() / 1000L) }
+    LaunchedEffect(tempShareEndsAt) {
+        val endsAt = tempShareEndsAt ?: return@LaunchedEffect
+        while (true) {
+            val wallSec = System.currentTimeMillis() / 1000L
+            nowSec = wallSec
+            if (wallSec >= endsAt) break
+            kotlinx.coroutines.delay(1.seconds)
+        }
+    }
+    val tempShareActive = tempShareEndsAt?.takeIf { it > nowSec }
+
+    var showPrecisionDialog by remember { mutableStateOf(value = false) }
+
+    PeerSharingSubScreen(stringResource(R.string.peer_category_privacy_title), onNavigateBack) {
         SettingsCard(
-            headerIcon = Icons.Default.Settings,
+            headerIcon = Icons.Default.PrivacyTip,
             headerTitle = stringResource(R.string.peer_section_privacy)
         ) {
+            SettingsRow(
+                title = stringResource(R.string.peer_precision),
+                value = if (precisionMode == PrecisionMode.EXACT.name) stringResource(R.string.peer_precision_exact) else stringResource(R.string.peer_precision_suburb),
+                enabled = sharingEnabled,
+                onClick = { showPrecisionDialog = true }
+            )
+            CardDivider()
             SwitchRow(
                 title = stringResource(R.string.peer_pause_sharing),
                 subtitle = stringResource(R.string.peer_pause_sub, peerName),

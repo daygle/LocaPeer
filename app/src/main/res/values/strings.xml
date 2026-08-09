@@ -427,7 +427,9 @@
     <string name="peer_receive_off">You don\'t have access to %1$s\'s location</string>
     <string name="peer_section_privacy">Privacy &amp; Sharing Controls</string>
     <string name="peer_category_sharing_title">Sharing Controls</string>
-    <string name="peer_category_sharing_subtitle">Roles, precision, and schedule</string>
+    <string name="peer_category_sharing_subtitle">Send and receive roles, and schedule</string>
+    <string name="peer_category_privacy_title">Privacy</string>
+    <string name="peer_category_privacy_subtitle">Precision, pause, and temporary sharing</string>
     <string name="peer_category_safety_title">Safety &amp; Alerts</string>
     <string name="peer_category_safety_subtitle">SOS, missed updates, and proximity alerts</string>
     <string name="peer_category_security_title">Security</string>

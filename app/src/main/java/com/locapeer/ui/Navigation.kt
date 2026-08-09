@@ -58,6 +58,7 @@ import com.locapeer.circles.CircleEditScreen
 import com.locapeer.circles.GroupChatScreen
 import com.locapeer.sharing.PeerSharingScreen
 import com.locapeer.sharing.PeerSharingControlsScreen
+import com.locapeer.sharing.PeerPrivacyScreen
 import com.locapeer.sharing.PeerSafetyAlertsScreen
 import com.locapeer.sharing.PeerSecurityScreen
 import com.locapeer.sharing.PeerZonesHistoryScreen
@@ -564,6 +565,9 @@ fun LocaPeerNavHost(
                     onNavigateToControls = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/controls")
                     },
+                    onNavigateToPrivacy = {
+                        navController.navigate("peer-sharing/$peerId/$encodedName/privacy")
+                    },
                     onNavigateToAlerts = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/alerts")
                     },
@@ -604,6 +608,25 @@ fun LocaPeerNavHost(
                     onNavigateToSchedule = {
                         navController.navigate("schedule?scope=peer&peerId=$peerId&peerName=${Uri.encode(peerName)}")
                     }
+                )
+            }
+            composable(
+                route = "peer-sharing/{peerId}/{peerName}/privacy",
+                arguments = listOf(
+                    navArgument("peerId") { type = NavType.StringType },
+                    navArgument("peerName") { type = NavType.StringType }
+                ),
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) { entry ->
+                val peerId = entry.arguments?.getString("peerId") ?: ""
+                val peerName = entry.arguments?.getString("peerName") ?: ""
+                PeerPrivacyScreen(
+                    peerId = peerId,
+                    peerName = peerName,
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
             composable(
