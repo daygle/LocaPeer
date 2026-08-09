@@ -27,8 +27,6 @@
     <string name="common_deny">拒絕</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">地理圍欄和移動紀錄</string>
-    <string name="peer_category_history_title">區域與紀錄</string>
     <string name="peer_category_messaging_subtitle">允許或封鎖聊天訊息</string>
     <string name="peer_category_messaging_title">訊息</string>
     <string name="peer_category_retention_subtitle">遠端紀錄和清除</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS、錯過的更新、接近提醒、監督</string>
     <string name="peer_category_safety_title">安全與警示</string>
     <string name="peer_category_sharing_subtitle">角色、精確度和排程</string>
-    <string name="peer_category_sharing_title">分享控制</string>
+    <string name="peer_category_privacy_title">隱私</string>
+    <string name="peer_category_privacy_subtitle">精確度、暫停和臨時分享</string>
+    <string name="peer_category_security_title">安全性</string>
+    <string name="peer_category_security_subtitle">監督控制</string>
+    <string name="peer_category_sharing_title">位置</string>
     <string name="scan_add_share">新增並分享</string>
     <string name="scan_grant_permission">授予權限</string>
     <string name="scan_request_sent_title">請求已傳送</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">設定</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">位置與隱私</string>
+    <string name="settings_section_location">位置</string>
+    <string name="settings_section_privacy">隱私</string>
+    <string name="settings_section_connection">連線</string>
+    <string name="settings_section_language">語言</string>
+    <string name="settings_category_location_subtitle">分享、排程、紀錄和精確度</string>
+    <string name="settings_category_privacy_subtitle">追蹤提醒</string>
+    <string name="settings_category_connection_subtitle">中繼和網路傳輸</string>
+    <string name="settings_category_language_subtitle">選擇應用程式語言</string>
     <string name="settings_section_security">安全性</string>
     <string name="settings_section_map">地圖</string>
-    <string name="settings_section_battery_performance">電池與效能</string>
     <string name="settings_section_units_display">單位與顯示</string>
     <string name="settings_section_retention">保留 (此裝置)</string>
     <string name="settings_section_appearance">外觀</string>
@@ -382,7 +390,7 @@
     <string name="peer_receive_title">接收 %1$s 的位置</string>
     <string name="peer_receive_on">您可以看到 %1$s 的位置</string>
     <string name="peer_receive_off">您無法存取 %1$s 的位置</string>
-    <string name="peer_section_privacy">隱私與分享控制</string>
+    <string name="peer_section_privacy">隱私</string>
     <string name="peer_pause_sharing">暫停分享</string>
     <string name="peer_pause_sub">暫時停止向 %1$s 傳送您的位置</string>
     <string name="peer_precision">位置精確度</string>
@@ -399,6 +407,7 @@
     <string name="peer_missed_on">當 %1$s 停止回報位置時通知我</string>
     <string name="peer_requires_access">需要存取 %1$s 的位置</string>
     <string name="peer_proximity_alert">鄰近警示</string>
+    <string name="peer_proximity_alerts_title">鄰近警示</string>
     <string name="peer_proximity_sub">當 %1$s 在附近時通知我</string>
     <string name="peer_alert_radius">警示半徑</string>
     <string name="peer_alert_schedule">警示排程</string>
@@ -739,9 +748,8 @@
     <string name="onboarding_error_key_range">私鑰無效 - 超出曲線範圍。</string>
     <string name="onboarding_error_hex">十六進位格式無效。</string>
     <string name="onboarding_error_import_failed">匯入金鑰失敗：%1$s</string>
-    <string name="about_diagnostics">網路</string>
-    <string name="about_no_pending">沒有排隊的訊息</string>
-    <string name="about_pending_messages">排隊的訊息</string>
+    <string name="settings_queued_none">沒有排隊的訊息</string>
+    <string name="settings_queued_messages">排隊的訊息</string>
     <string name="app_lock_activity_unsupported">應用程式鎖需要支援系統提示的宿主。請更新應用程式。</string>
     <string name="app_lock_prompt_subtitle">使用生物辨識或裝置 PIN 碼</string>
     <string name="app_lock_prompt_title">解鎖 LocaPeer</string>
@@ -865,10 +873,8 @@
     <string name="settings_temporary_location_share">暫時位置分享</string>
     <string name="app_lock_no_credential">此裝置未設定螢幕鎖定，因此沒有可用於解鎖的方式。請在裝置設定中設定 PIN、圖形、密碼或生物辨識，然後重新開啟 LocaPeer。</string>
     <string name="backup_key_needs_password">設定密碼以包含你的私密金鑰。未加密的金鑰檔案可能會讓任何人接管你的身分。</string>
-    <string name="settings_category_location_privacy_subtitle">共享、計畫、地理圍欄、警報</string>
     <string name="settings_category_security_subtitle">應用鎖、權限、受監護模式</string>
     <string name="settings_category_map_subtitle">起點、縮放、圖釘顏色</string>
-    <string name="settings_category_performance_subtitle">更新頻率和精度過濾</string>
     <string name="settings_category_units_subtitle">速度、距離、高度、時間</string>
     <string name="settings_category_retention_subtitle">數據在設備上的保留時間</string>
     <string name="settings_category_appearance_subtitle">主題、顏色、導航、語言</string>
@@ -878,7 +884,14 @@
     <string name="map_location_off_message">在開啟設備位置之前，無法更新或共享您的位置。</string>
     <string name="map_location_off_action">開啟設定</string>
     <string name="map_live">● 實況</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d 個待發訊息</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">等待傳送到中繼的事件</string>
+    <string name="queued_messages_title">佇列中的訊息</string>
+    <string name="queued_message_kind">事件類型 %1$d</string>
+    <string name="queued_message_queued_at">佇列中 %1$s</string>
+    <string name="queued_message_view">檢視事件</string>
+    <string name="queued_message_hide">隱藏</string>
+    <string name="queued_messages_flush">立即傳送</string>
 </resources>

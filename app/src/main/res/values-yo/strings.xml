@@ -27,8 +27,6 @@
     <string name="common_deny">Kọ̀ ọ́</string>
 
     <!-- ── Awọn aami taabu lilọ kiri ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geofences àti ìtàn ìrìnà</string>
-    <string name="peer_category_history_title">Àwọn Àgbègbè &amp; Ìtàn</string>
     <string name="peer_category_messaging_subtitle">Gbà láàyè tàbí dènà àwọn ifiranṣẹ́ ìfọ̀rọ̀wérọ̀</string>
     <string name="peer_category_messaging_title">Ozi</string>
     <string name="peer_category_retention_subtitle">Ìtàn jíjìn àti ìmúkúrò</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, àwọn ìmúdójú tí ó ṣẹ́, ìsúnmọ́, àbójútó</string>
     <string name="peer_category_safety_title">Ààbò &amp; Ìkìlọ̀</string>
     <string name="peer_category_sharing_subtitle">Àwọn ipa, ìpele pípé, àti ìtòlẹ́sẹ̀</string>
-    <string name="peer_category_sharing_title">Àwọn Ìṣàkóso Ìpínpín</string>
+    <string name="peer_category_privacy_title">Àṣírí</string>
+    <string name="peer_category_privacy_subtitle">Ìpele pípé, ìdádúró àti pínpín ìgbà díẹ̀</string>
+    <string name="peer_category_security_title">Ààbò</string>
+    <string name="peer_category_security_subtitle">Àwọn ìṣàkóso ìbójútó</string>
+    <string name="peer_category_sharing_title">Ipò</string>
     <string name="scan_add_share">Fi kún &amp; Pín</string>
     <string name="scan_grant_permission">Fún ní ìyọ̀ǹda</string>
     <string name="scan_request_sent_title">A ti fi ìbéèrè ránṣẹ́</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Ètò</string>
 
     <!-- Awọn aami apakan -->
-    <string name="settings_section_location_privacy">Ipò &amp; Àṣírí</string>
+    <string name="settings_section_location">Ipò</string>
+    <string name="settings_section_privacy">Àṣírí</string>
+    <string name="settings_section_connection">Ìsopọ̀</string>
+    <string name="settings_section_language">Èdè</string>
+    <string name="settings_category_location_subtitle">Pínpín, ìtòlẹ́sẹẹsẹ, ìtàn àti ìpele pípé</string>
+    <string name="settings_category_privacy_subtitle">Àwọn ìkìlọ̀ ìtọpasẹ̀</string>
+    <string name="settings_category_connection_subtitle">Awọn relay àti gbigbe nẹtiwọọki</string>
+    <string name="settings_category_language_subtitle">Yan èdè app náà</string>
     <string name="settings_section_security">Ààbò</string>
     <string name="settings_section_map">Máàpù</string>
-    <string name="settings_section_battery_performance">Bátìrì &amp; Iṣẹ́</string>
     <string name="settings_section_units_display">Ìwọ̀n &amp; Ìfarahàn</string>
     <string name="settings_section_retention">Ìdádúró (Ẹ̀rọ yìí)</string>
     <string name="settings_section_appearance">Ìfarahàn</string>
@@ -382,7 +390,7 @@
     <string name="peer_receive_title">Gba ipò %1$s</string>
     <string name="peer_receive_on">O le rí ipò %1$s</string>
     <string name="peer_receive_off">O kò ní àyè láti rí ipò %1$s</string>
-    <string name="peer_section_privacy">Njikwa Nzuzo &amp; Nkekọrịta</string>
+    <string name="peer_section_privacy">Àṣírí</string>
     <string name="peer_pause_sharing">Dá Ìpínpín Dúró</string>
     <string name="peer_pause_sub">Dá ipò rẹ dúró fún ìgbà díẹ̀ fún %1$s</string>
     <string name="peer_precision">Nkenke Ipò</string>
@@ -399,6 +407,7 @@
     <string name="peer_missed_on">Sọ fún mi bí %1$s kò bá sọ ipò rẹ̀ mọ́</string>
     <string name="peer_requires_access">Chọrọ ịnweta ebe %1$s nọ</string>
     <string name="peer_proximity_alert">Ìkìlọ̀ Ìsúnmọ́</string>
+    <string name="peer_proximity_alerts_title">Àwọn ìkìlọ̀ Ìsúnmọ́</string>
     <string name="peer_proximity_sub">Sọ fún mi mgbe %1$s nọ nso</string>
     <string name="peer_alert_radius">Radius Ìkìlọ̀</string>
     <string name="peer_alert_schedule">Oge Ìkìlọ̀</string>
@@ -648,8 +657,8 @@
     <string name="about_open_source">Àwọn ibi ìpamọ́ orísun ṣíṣí</string>
     <string name="about_lib_osmdroid_desc">Máàpù OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket fún Nostr relay</string>
-    <string name="about_lib_compose_desc">UI framework</string>
-    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_compose_desc">Àgbékalẹ̀ UI</string>
+    <string name="about_lib_hilt_desc">Ìfakọsẹ̀ ìgbára</string>
     <string name="about_lib_room_desc">Ibi ìpamọ́ data agbègbè</string>
     <string name="about_map_attribution">Data máàpù © ndị nyere aka na OpenStreetMap</string>
 
@@ -739,9 +748,8 @@
     <string name="onboarding_error_key_range">Kókó ìkọ̀kọ̀ kò dára.</string>
     <string name="onboarding_error_hex">Usoro hex kò dára.</string>
     <string name="onboarding_error_import_failed">Ịbubata igodo dara: %1$s</string>
-    <string name="about_diagnostics">Nẹtiwọọki</string>
-    <string name="about_no_pending">Kò sí ìránṣẹ́ tó ń dúró ní ìlà</string>
-    <string name="about_pending_messages">Àwọn ìránṣẹ́ tó ń dúró ní ìlà</string>
+    <string name="settings_queued_none">Kò sí ìránṣẹ́ tó ń dúró ní ìlà</string>
+    <string name="settings_queued_messages">Àwọn ìránṣẹ́ tó ń dúró ní ìlà</string>
     <string name="app_lock_activity_unsupported">Ìtìpa app nílò olùgbàlejò tó ń ṣàtìlẹ́yìn fún ìbéèrè ètò. Ṣe ìmúdójúìwọ̀n app.</string>
     <string name="app_lock_prompt_subtitle">Lo biometric tàbí PIN ẹ̀rọ</string>
     <string name="app_lock_prompt_title">Ṣí LocaPeer</string>
@@ -865,10 +873,8 @@
     <string name="settings_temporary_location_share">Pinpin ipo fun igba diẹ</string>
     <string name="app_lock_no_credential">Ko si titiipa iboju ti a ṣeto sori ẹrọ yii, nitorina ko si ohun ti a le fi ṣii. Ṣeto PIN, apẹẹrẹ, ọrọ igbaniwọle, tabi biometric ninu awọn eto ẹrọ rẹ, lẹhinna tun ṣii LocaPeer.</string>
     <string name="backup_key_needs_password">Ṣeto ọrọ igbaniwọle lati ni bọtini ikọkọ rẹ. Faili bọtini ti a ko fi pamọ le jẹ ki ẹnikẹni gba idanimọ rẹ.</string>
-    <string name="settings_category_location_privacy_subtitle">Pínpín, ìtòlẹ́sẹẹsẹ, geofences, àwọn ìkìlọ̀</string>
     <string name="settings_category_security_subtitle">Títìpa ìṣàfilọ́lẹ̀, àwọn ìyọ̀ǹda, ipò alábojútó</string>
     <string name="settings_category_map_subtitle">Ojú-ìtẹ̀mọ́lẹ̀ ìbẹ̀rẹ̀, sísúnmọ́, àwọ̀ pin</string>
-    <string name="settings_category_performance_subtitle">Ìyárakánkán ìsọdọ̀tun àti àwọn asẹ́ kíkún</string>
     <string name="settings_category_units_subtitle">Ìyárakánkán, ìjìnnà, gíga, àkókò</string>
     <string name="settings_category_retention_subtitle">Báwo ni a ṣe tọ́jú data lórí ẹ̀rọ yìí fún ìgbà pípẹ́</string>
     <string name="settings_category_appearance_subtitle">Akòrí, àwọ̀, ìtọ́sọ́nà, èdè</string>
@@ -878,7 +884,14 @@
     <string name="map_location_off_message">Ipò rẹ kò le ṣe ìsọdọ̀tun tàbí kí o pín títí di ìgbà tí o bá tan ibùdó ẹ̀rọ rẹ.</string>
     <string name="map_location_off_action">Ṣí àwọn ètò</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">Àwọn iṣẹ́ ìránṣẹ́ %1$d nínú ìlà</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Àwọn ìṣẹ̀lẹ̀ tí ń dúró láti dé ọ̀dọ̀ àwọn relay</string>
+    <string name="queued_messages_title">Àwọn ifiranṣẹ́ tó wà ní ìsàlẹ̀</string>
+    <string name="queued_message_kind">Iru iṣẹlẹ %1$d</string>
+    <string name="queued_message_queued_at">Ní ìsàlẹ̀ %1$s</string>
+    <string name="queued_message_view">Wo iṣẹlẹ náà</string>
+    <string name="queued_message_hide">Fi pamọ́</string>
+    <string name="queued_messages_flush">Ránṣẹ́ nísinsin yìí</string>
 </resources>

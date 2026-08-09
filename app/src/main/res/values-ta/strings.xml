@@ -27,8 +27,6 @@
     <string name="common_deny">மறுக்கவும்</string>
 
     <!-- ── வழிசெலுத்தல் தாவல் லேபிள்கள் ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">ஜியோஃபென்ஸ்கள் மற்றும் இயக்க வரலாறு</string>
-    <string name="peer_category_history_title">மண்டலங்கள் &amp; வரலாறு</string>
     <string name="peer_category_messaging_subtitle">அரட்டை செய்திகளை அனுமதிக்கவும் அல்லது தடுக்கவும்</string>
     <string name="peer_category_messaging_title">செய்தியிடல்</string>
     <string name="peer_category_retention_subtitle">தொலைநிலை வரலாறு மற்றும் அழித்தல்</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, தவறிய புதுப்பிப்புகள், அருகாமை, மேற்பார்வை</string>
     <string name="peer_category_safety_title">பாதுகாப்பு &amp; எச்சரிக்கைகள்</string>
     <string name="peer_category_sharing_subtitle">பங்குகள், துல்லியம் மற்றும் அட்டவணை</string>
-    <string name="peer_category_sharing_title">பகிர்வு கட்டுப்பாடுகள்</string>
+    <string name="peer_category_privacy_title">தனியுரிமை</string>
+    <string name="peer_category_privacy_subtitle">துல்லியம், இடைநிறுத்தம் மற்றும் தற்காலிகப் பகிர்வு</string>
+    <string name="peer_category_security_title">பாதுகாப்பு</string>
+    <string name="peer_category_security_subtitle">மேற்பார்வை கட்டுப்பாடுகள்</string>
+    <string name="peer_category_sharing_title">இருப்பிடம்</string>
     <string name="scan_add_share">சேர்க்கவும் &amp; பகிரவும்</string>
     <string name="scan_grant_permission">அனுமதி வழங்கவும்</string>
     <string name="scan_request_sent_title">கோரிக்கை அனுப்பப்பட்டது</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">அமைப்புகள்</string>
 
     <!-- பிரிவு லேபிள்கள் -->
-    <string name="settings_section_location_privacy">இருப்பிடம் &amp; தனியுரிமை</string>
+    <string name="settings_section_location">இருப்பிடம்</string>
+    <string name="settings_section_privacy">தனியுரிமை</string>
+    <string name="settings_section_connection">இணைப்பு</string>
+    <string name="settings_section_language">மொழி</string>
+    <string name="settings_category_location_subtitle">பகிர்வு, அட்டவணை, வரலாறு மற்றும் துல்லியம்</string>
+    <string name="settings_category_privacy_subtitle">கண்காணிப்பு எச்சரிக்கைகள்</string>
+    <string name="settings_category_connection_subtitle">ரிலேக்கள் மற்றும் நெட்வொர்க் போக்குவரத்து</string>
+    <string name="settings_category_language_subtitle">ஆப் மொழியைத் தேர்ந்தெடுக்கவும்</string>
     <string name="settings_section_security">பாதுகாப்பு</string>
     <string name="settings_section_map">வரைபடம்</string>
-    <string name="settings_section_battery_performance">பேட்டரி &amp; செயல்திறன்</string>
     <string name="settings_section_units_display">அலகுகள் &amp; காட்சி</string>
     <string name="settings_section_retention">தக்கவைப்பு (இந்தச் சாதனம்)</string>
     <string name="settings_section_appearance">தோற்றம்</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s இன் இருப்பிடத்தைப் பெறு</string>
     <string name="peer_receive_on">%1$s இன் இருப்பிடத்தை உங்களால் பார்க்க முடியும்</string>
     <string name="peer_receive_off">%1$s இன் இருப்பிடத்திற்கான அணுகல் உங்களிடம் இல்லை</string>
-    <string name="peer_section_privacy">தனியுரிமை &amp; பகிர்வு கட்டுப்பாடுகள்</string>
+    <string name="peer_section_privacy">தனியுரிமை</string>
     <string name="peer_pause_sharing">பகிர்வை நிறுத்து</string>
     <string name="peer_pause_sub">%1$s-க்கு உங்கள் இருப்பிடத்தை அனுப்புவதை தற்காலிகமாக நிறுத்துங்கள்</string>
     <string name="peer_precision">இருப்பிடத் துல்லியம்</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">%1$s தனது இருப்பிடத்தைப் புகாரளிப்பதை நிறுத்தினால் எனக்குத் தெரிவிக்கவும்</string>
     <string name="peer_requires_access">%1$s இன் இருப்பிடத்திற்கான அணுகல் தேவை</string>
     <string name="peer_proximity_alert">அருகாமை எச்சரிக்கை</string>
+    <string name="peer_proximity_alerts_title">அருகாமை எச்சரிக்கைகள்</string>
     <string name="peer_proximity_sub">%1$s அருகில் வரும்போது எனக்குத் தெரிவிக்கவும்</string>
     <string name="peer_alert_radius">எச்சரிக்கை ஆரம்</string>
     <string name="peer_alert_schedule">எச்சரிக்கை அட்டவணை</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">தவறான தனிப்பட்ட விசை.</string>
     <string name="onboarding_error_hex">தவறான ஹெக்ஸ் வடிவம்.</string>
     <string name="onboarding_error_import_failed">விசையை இறக்குமதி செய்ய முடியவில்லை: %1$s</string>
-    <string name="about_diagnostics">நெட்வொர்க்</string>
-    <string name="about_no_pending">வரிசையில் செய்திகள் இல்லை</string>
-    <string name="about_pending_messages">வரிசையில் உள்ள செய்திகள்</string>
+    <string name="settings_queued_none">வரிசையில் செய்திகள் இல்லை</string>
+    <string name="settings_queued_messages">வரிசையில் உள்ள செய்திகள்</string>
     <string name="app_lock_activity_unsupported">பயன்பாட்டுப் பூட்டுக்கு கணினி வேண்டுகோளை ஆதரிக்கும் ஹோஸ்ட் தேவை. பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
     <string name="app_lock_prompt_subtitle">பயோமெட்ரிக் அல்லது சாதன PIN ஐப் பயன்படுத்தவும்</string>
     <string name="app_lock_prompt_title">LocaPeer ஐத் திறக்கவும்</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">தற்காலிக இருப்பிடப் பகிர்வு</string>
     <string name="app_lock_no_credential">இந்தச் சாதனத்தில் திரைப் பூட்டு அமைக்கப்படவில்லை, எனவே திறக்க எதுவும் இல்லை. உங்கள் சாதன அமைப்புகளில் ஒரு PIN, வடிவம், கடவுச்சொல், அல்லது பயோமெட்ரிக் அமைத்து, பிறகு LocaPeer ஐ மீண்டும் திறக்கவும்.</string>
     <string name="backup_key_needs_password">உங்கள் தனிப்பட்ட விசையைச் சேர்க்க ஒரு கடவுச்சொல்லை அமைக்கவும். குறியாக்கம் செய்யப்படாத விசைக் கோப்பு யாரையும் உங்கள் அடையாளத்தைக் கைப்பற்ற அனுமதிக்கலாம்.</string>
-    <string name="settings_category_location_privacy_subtitle">பகிர்வு, கால அட்டவணை, ஜியோஃபென்ஸ்கள், விழிப்பூட்டல்கள்</string>
     <string name="settings_category_security_subtitle">ஆப் லாக், அனுமதிகள், மேற்பார்வை முறை</string>
     <string name="settings_category_map_subtitle">தொடக்கப் புள்ளி, ஜூம், பின் நிறம்</string>
-    <string name="settings_category_performance_subtitle">புதுப்பிப்பு வேகம் மற்றும் துல்லிய வடிப்பான்கள்</string>
     <string name="settings_category_units_subtitle">வேகம், தூரம், உயரம், நேரம்</string>
     <string name="settings_category_retention_subtitle">இந்தச் சாதனத்தில் தரவு எவ்வளவு காலம் வைக்கப்படுகிறது</string>
     <string name="settings_category_appearance_subtitle">தீம், நிறம், வழிசெலுத்தல், மொழி</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">சாதன இருப்பிடத்தை நீங்கள் ஆன் செய்யும் வரை உங்கள் நிலையைப் புதுப்பிக்கவோ பகிரவோ முடியாது.</string>
     <string name="map_location_off_action">அமைப்புகளைத் திற</string>
     <string name="map_live">● நேரலை</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d வரிசைப்படுத்தப்பட்ட செய்தி</item>
         <item quantity="other">%1$d வரிசைப்படுத்தப்பட்ட செய்திகள்</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">ரிலேக்களை அடைய காத்திருக்கும் நிகழ்வுகள்</string>
+    <string name="queued_messages_title">வரிசையில் உள்ள செய்திகள்</string>
+    <string name="queued_message_kind">நிகழ்வு வகை %1$d</string>
+    <string name="queued_message_queued_at">வரிசையில் %1$s</string>
+    <string name="queued_message_view">நிகழ்வைப் பார்</string>
+    <string name="queued_message_hide">மறை</string>
+    <string name="queued_messages_flush">இப்போது அனுப்பு</string>
 </resources>

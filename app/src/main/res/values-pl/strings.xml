@@ -27,8 +27,6 @@
     <string name="common_deny">Odmów</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geoogrodzenia i historia przemieszczania</string>
-    <string name="peer_category_history_title">Strefy i historia</string>
     <string name="peer_category_messaging_subtitle">Zezwól na wiadomości czatu lub blokuj je</string>
     <string name="peer_category_messaging_title">Wiadomości</string>
     <string name="peer_category_retention_subtitle">Zdalna historia i usuwanie</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, pominięte aktualizacje, bliskość, nadzór</string>
     <string name="peer_category_safety_title">Bezpieczeństwo i alerty</string>
     <string name="peer_category_sharing_subtitle">Role, dokładność i harmonogram</string>
-    <string name="peer_category_sharing_title">Kontrola udostępniania</string>
+    <string name="peer_category_privacy_title">Prywatność</string>
+    <string name="peer_category_privacy_subtitle">Dokładność, wstrzymanie i tymczasowe udostępnianie</string>
+    <string name="peer_category_security_title">Bezpieczeństwo</string>
+    <string name="peer_category_security_subtitle">Kontrola nadzoru</string>
+    <string name="peer_category_sharing_title">Lokalizacja</string>
     <string name="scan_add_share">Dodaj i udostępnij</string>
     <string name="scan_grant_permission">Udziel pozwolenia</string>
     <string name="scan_request_sent_title">Wysłano prośbę</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Ustawienia</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Lokalizacja i prywatność</string>
+    <string name="settings_section_location">Lokalizacja</string>
+    <string name="settings_section_privacy">Prywatność</string>
+    <string name="settings_section_connection">Połączenie</string>
+    <string name="settings_section_language">Język</string>
+    <string name="settings_category_location_subtitle">Udostępnianie, harmonogram, historia i dokładność</string>
+    <string name="settings_category_privacy_subtitle">Alerty śledzenia</string>
+    <string name="settings_category_connection_subtitle">Przekaźniki i transport sieciowy</string>
+    <string name="settings_category_language_subtitle">Wybierz język aplikacji</string>
     <string name="settings_section_security">Bezpieczeństwo</string>
     <string name="settings_section_map">Mapa</string>
-    <string name="settings_section_battery_performance">Bateria i wydajność</string>
     <string name="settings_section_units_display">Jednostki i wyświetlanie</string>
     <string name="settings_section_retention">Retencja (To urządzenie)</string>
     <string name="settings_section_appearance">Wygląd</string>
@@ -400,7 +408,7 @@
     <string name="peer_receive_title">Odbieraj lokalizację %1$s</string>
     <string name="peer_receive_on">Widzisz lokalizację %1$s</string>
     <string name="peer_receive_off">Nie masz dostępu do lokalizacji %1$s</string>
-    <string name="peer_section_privacy">Prywatność i udostępnianie</string>
+    <string name="peer_section_privacy">Prywatność</string>
     <string name="peer_pause_sharing">Wstrzymaj udostępnianie</string>
     <string name="peer_pause_sub">Tymczasowo przestań wysyłać swoją lokalizację do %1$s</string>
     <string name="peer_precision">Dokładność lokalizacji</string>
@@ -420,6 +428,7 @@
     <string name="peer_missed_on">Powiadom mnie, jeśli %1$s przestanie zgłaszać lokalizację</string>
     <string name="peer_requires_access">Wymaga dostępu do lokalizacji %1$s</string>
     <string name="peer_proximity_alert">Alert zbliżeniowy</string>
+    <string name="peer_proximity_alerts_title">Alerty zbliżeniowe</string>
     <string name="peer_proximity_sub">Powiadom mnie, gdy %1$s będzie w pobliżu</string>
     <string name="peer_alert_radius">Promień alertu</string>
     <string name="peer_alert_schedule">Harmonogram alertów</string>
@@ -784,9 +793,8 @@
     <string name="onboarding_error_key_range">Nieprawidłowy klucz prywatny - poza zakresem krzywej.</string>
     <string name="onboarding_error_hex">Nieprawidłowy format szesnastkowy.</string>
     <string name="onboarding_error_import_failed">Nie udało się zaimportować klucza: %1$s</string>
-    <string name="about_diagnostics">Sieć</string>
-    <string name="about_no_pending">Brak wiadomości w kolejce</string>
-    <string name="about_pending_messages">Wiadomości w kolejce</string>
+    <string name="settings_queued_none">Brak wiadomości w kolejce</string>
+    <string name="settings_queued_messages">Wiadomości w kolejce</string>
     <string name="app_lock_activity_unsupported">Blokada aplikacji wymaga hosta obsługującego monit systemowy. Zaktualizuj aplikację.</string>
     <string name="app_lock_prompt_subtitle">Użyj biometrii lub kodu PIN urządzenia</string>
     <string name="app_lock_prompt_title">Odblokuj LocaPeer</string>
@@ -910,10 +918,8 @@
     <string name="settings_temporary_location_share">Tymczasowe udostępnianie lokalizacji</string>
     <string name="app_lock_no_credential">Na tym urządzeniu nie ustawiono blokady ekranu, więc nie ma czym odblokować. Ustaw kod PIN, wzór, hasło lub dane biometryczne w ustawieniach urządzenia, a następnie ponownie otwórz LocaPeer.</string>
     <string name="backup_key_needs_password">Ustaw hasło, aby dołączyć klucz prywatny. Niezaszyfrowany plik klucza może pozwolić każdemu przejąć Twoją tożsamość.</string>
-    <string name="settings_category_location_privacy_subtitle">Udostępnianie, harmonogram, geofencing, alerty</string>
     <string name="settings_category_security_subtitle">Blokada aplikacji, uprawnienia, tryb nadzoru</string>
     <string name="settings_category_map_subtitle">Punkt startowy, powiększenie, kolor pinezki</string>
-    <string name="settings_category_performance_subtitle">Częstotliwość aktualizacji i filtry dokładności</string>
     <string name="settings_category_units_subtitle">Prędkość, odległość, wysokość, czas</string>
     <string name="settings_category_retention_subtitle">Jak długo dane są przechowywane na tym urządzeniu</string>
     <string name="settings_category_appearance_subtitle">Motyw, kolor, nawigacja, język</string>
@@ -923,10 +929,17 @@
     <string name="map_location_off_message">Twoja pozycja nie może być aktualizowana ani udostępniana, dopóki nie włączysz lokalizacji w urządzeniu.</string>
     <string name="map_location_off_action">Otwórz ustawienia</string>
     <string name="map_live">● Na żywo</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d wiadomość w kolejce</item>
         <item quantity="few">%1$d wiadomości w kolejce</item>
         <item quantity="many">%1$d wiadomości w kolejce</item>
         <item quantity="other">%1$d wiadomości w kolejce</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Zdarzenia oczekujące na dotarcie do przekaźników</string>
+    <string name="queued_messages_title">Wiadomości w kolejce</string>
+    <string name="queued_message_kind">Typ zdarzenia %1$d</string>
+    <string name="queued_message_queued_at">W kolejce %1$s</string>
+    <string name="queued_message_view">Zobacz zdarzenie</string>
+    <string name="queued_message_hide">Ukryj</string>
+    <string name="queued_messages_flush">Wyślij teraz</string>
 </resources>

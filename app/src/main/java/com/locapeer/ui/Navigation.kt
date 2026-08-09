@@ -27,10 +27,8 @@ import com.locapeer.R
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import androidx.navigation.navArgument
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.NavTarget
 import com.locapeer.about.AboutScreen
-import com.locapeer.about.AboutViewModel
 import com.locapeer.geofence.GeofenceListScreen
 import com.locapeer.invite.IncomingShareRequestScreen
 import com.locapeer.invite.InviteScreen
@@ -42,10 +40,11 @@ import com.locapeer.history.HistoryReportScreen
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppearanceSettingsScreen
 import com.locapeer.settings.BackupSettingsScreen
+import com.locapeer.settings.LanguageSettingsScreen
 import com.locapeer.settings.ConnectionSettingsScreen
+import com.locapeer.settings.QueuedMessagesScreen
 import com.locapeer.settings.LocationSettingsScreen
 import com.locapeer.settings.MapSettingsScreen
-import com.locapeer.settings.PerformanceSettingsScreen
 import com.locapeer.settings.PermissionsScreen
 import com.locapeer.settings.PrivacySettingsScreen
 import com.locapeer.settings.RelaySettingsScreen
@@ -61,7 +60,6 @@ import com.locapeer.sharing.PeerSharingControlsScreen
 import com.locapeer.sharing.PeerPrivacyScreen
 import com.locapeer.sharing.PeerSafetyAlertsScreen
 import com.locapeer.sharing.PeerSecurityScreen
-import com.locapeer.sharing.PeerZonesHistoryScreen
 import com.locapeer.sharing.PeerMessagingScreen
 import com.locapeer.sharing.PeerRetentionScreen
 import com.locapeer.sharing.ScheduleScreen
@@ -309,13 +307,15 @@ fun LocaPeerNavHost(
                     },
                     onNavigateToAbout = { navController.navigate("about") },
                     onNavigateToLocation = { navController.navigate("settings/location") },
+                    onNavigateToLocationHistory = { pubkeyHex -> navController.navigate("history-report?peerId=$pubkeyHex") },
+                    onNavigateToGeofences = { navController.navigate("geofences") },
                     onNavigateToPrivacy = { navController.navigate("settings/privacy") },
                     onNavigateToSecurity = { navController.navigate("settings/security") },
                     onNavigateToMap = { navController.navigate("settings/map") },
-                    onNavigateToPerformance = { navController.navigate("settings/performance") },
                     onNavigateToUnits = { navController.navigate("settings/units") },
                     onNavigateToRetention = { navController.navigate("settings/retention") },
                     onNavigateToAppearance = { navController.navigate("settings/appearance") },
+                    onNavigateToLanguage = { navController.navigate("settings/language") },
                     onNavigateToConnection = { navController.navigate("settings/connection") },
                     onNavigateToBackup = { navController.navigate("settings/backup") },
                 )
@@ -330,7 +330,6 @@ fun LocaPeerNavHost(
                 LocationSettingsScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
-                    onNavigateToGeofences = { navController.navigate("geofences") },
                 )
             }
             composable(
@@ -341,8 +340,7 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 PrivacySettingsScreen(
-                    onNavigateBack = { navController.popBackStack() },
-                    onNavigateToMyHistory = { pubkeyHex -> navController.navigate("history-report?peerId=$pubkeyHex") },
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
             composable(
@@ -365,15 +363,6 @@ fun LocaPeerNavHost(
                 popExitTransition = { slidePopExit }
             ) {
                 MapSettingsScreen(onNavigateBack = { navController.popBackStack() })
-            }
-            composable(
-                "settings/performance",
-                enterTransition = { slideEnter },
-                exitTransition = { slideExit },
-                popEnterTransition = { slidePopEnter },
-                popExitTransition = { slidePopExit }
-            ) {
-                PerformanceSettingsScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 "settings/units",
@@ -406,6 +395,15 @@ fun LocaPeerNavHost(
                 )
             }
             composable(
+                "settings/language",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                LanguageSettingsScreen(onNavigateBack = { navController.popBackStack() })
+            }
+            composable(
                 "settings/connection",
                 enterTransition = { slideEnter },
                 exitTransition = { slideExit },
@@ -415,7 +413,17 @@ fun LocaPeerNavHost(
                 ConnectionSettingsScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToRelays = { navController.navigate("relays") },
+                    onNavigateToQueuedMessages = { navController.navigate("queued-messages") },
                 )
+            }
+            composable(
+                "queued-messages",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                QueuedMessagesScreen(onNavigateBack = { navController.popBackStack() })
             }
             composable(
                 "settings/backup",
@@ -529,9 +537,7 @@ fun LocaPeerNavHost(
                 popEnterTransition = { slidePopEnter },
                 popExitTransition = { slidePopExit }
             ) {
-                val aboutVm: AboutViewModel = hiltViewModel()
                 AboutScreen(
-                    aboutVm = aboutVm,
                     onNavigateBack = { navController.popBackStack() },
                     versionName = com.locapeer.BuildConfig.VERSION_NAME,
                     versionCode = com.locapeer.BuildConfig.VERSION_CODE
@@ -574,8 +580,8 @@ fun LocaPeerNavHost(
                     onNavigateToSecurity = {
                         navController.navigate("peer-sharing/$peerId/$encodedName/security")
                     },
-                    onNavigateToZonesHistory = {
-                        navController.navigate("peer-sharing/$peerId/$encodedName/zones-history")
+                    onNavigateToGeofences = {
+                        navController.navigate("geofences?peerId=$peerId")
                     },
                     onNavigateToLocationHistory = {
                         navController.navigate("history-report?peerId=$peerId")
@@ -665,28 +671,6 @@ fun LocaPeerNavHost(
                     peerId = peerId,
                     peerName = peerName,
                     onNavigateBack = { navController.popBackStack() }
-                )
-            }
-            composable(
-                route = "peer-sharing/{peerId}/{peerName}/zones-history",
-                arguments = listOf(
-                    navArgument("peerId") { type = NavType.StringType },
-                    navArgument("peerName") { type = NavType.StringType }
-                ),
-                enterTransition = { slideEnter },
-                exitTransition = { slideExit },
-                popEnterTransition = { slidePopEnter },
-                popExitTransition = { slidePopExit }
-            ) { entry ->
-                val peerId = entry.arguments?.getString("peerId") ?: ""
-                val peerName = entry.arguments?.getString("peerName") ?: ""
-                PeerZonesHistoryScreen(
-                    peerId = peerId,
-                    peerName = peerName,
-                    onNavigateBack = { navController.popBackStack() },
-                    onNavigateToGeofences = { id ->
-                        navController.navigate("geofences?peerId=$id")
-                    }
                 )
             }
             composable(

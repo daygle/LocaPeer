@@ -27,8 +27,6 @@
     <string name="common_deny">Nafi</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geopagar dan sejarah pergerakan</string>
-    <string name="peer_category_history_title">Zon &amp; Sejarah</string>
     <string name="peer_category_messaging_subtitle">Benarkan atau sekat mesej sembang</string>
     <string name="peer_category_messaging_title">Pemesejan</string>
     <string name="peer_category_retention_subtitle">Sejarah jauh dan pembersihan</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, kemas kini terlepas, jarak dekat, penyeliaan</string>
     <string name="peer_category_safety_title">Keselamatan &amp; Amaran</string>
     <string name="peer_category_sharing_subtitle">Peranan, ketepatan dan jadual</string>
-    <string name="peer_category_sharing_title">Kawalan Perkongsian</string>
+    <string name="peer_category_privacy_title">Privasi</string>
+    <string name="peer_category_privacy_subtitle">Ketepatan, jeda dan perkongsian sementara</string>
+    <string name="peer_category_security_title">Keselamatan</string>
+    <string name="peer_category_security_subtitle">Kawalan penyeliaan</string>
+    <string name="peer_category_sharing_title">Lokasi</string>
     <string name="scan_add_share">Tambah &amp; Kongsi</string>
     <string name="scan_grant_permission">Beri Kebenaran</string>
     <string name="scan_request_sent_title">Permintaan Dihantar</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Tetapan</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Lokasi &amp; Privasi</string>
+    <string name="settings_section_location">Lokasi</string>
+    <string name="settings_section_privacy">Privasi</string>
+    <string name="settings_section_connection">Sambungan</string>
+    <string name="settings_section_language">Bahasa</string>
+    <string name="settings_category_location_subtitle">Perkongsian, jadual, sejarah dan ketepatan</string>
+    <string name="settings_category_privacy_subtitle">Amaran penjejakan</string>
+    <string name="settings_category_connection_subtitle">Geganti dan pengangkutan rangkaian</string>
+    <string name="settings_category_language_subtitle">Pilih bahasa aplikasi</string>
     <string name="settings_section_security">Keselamatan</string>
     <string name="settings_section_map">Peta</string>
-    <string name="settings_section_battery_performance">Bateri &amp; Prestasi</string>
     <string name="settings_section_units_display">Unit &amp; Paparan</string>
     <string name="settings_section_retention">Pengekalan (Peranti Ini)</string>
     <string name="settings_section_appearance">Rupa</string>
@@ -382,7 +390,7 @@
     <string name="peer_receive_title">Terima Lokasi %1$s</string>
     <string name="peer_receive_on">Anda boleh melihat lokasi %1$s</string>
     <string name="peer_receive_off">Anda tiada akses kepada lokasi %1$s</string>
-    <string name="peer_section_privacy">Privasi &amp; Kawalan Perkongsian</string>
+    <string name="peer_section_privacy">Privasi</string>
     <string name="peer_pause_sharing">Jeda Perkongsian</string>
     <string name="peer_pause_sub">Berhenti sementara menghantar lokasi anda kepada %1$s</string>
     <string name="peer_precision">Kepersisan Lokasi</string>
@@ -399,6 +407,7 @@
     <string name="peer_missed_on">Maklumkan saya jika %1$s berhenti melaporkan lokasinya</string>
     <string name="peer_requires_access">Memerlukan akses kepada lokasi %1$s</string>
     <string name="peer_proximity_alert">Amaran Jarak Dekat</string>
+    <string name="peer_proximity_alerts_title">Amaran Jarak Dekat</string>
     <string name="peer_proximity_sub">Maklumkan saya apabila %1$s berdekatan</string>
     <string name="peer_alert_radius">Jejari Amaran</string>
     <string name="peer_alert_schedule">Jadual Amaran</string>
@@ -739,9 +748,8 @@
     <string name="onboarding_error_key_range">Kunci peribadi tidak sah - di luar julat lengkung.</string>
     <string name="onboarding_error_hex">Format heks tidak sah.</string>
     <string name="onboarding_error_import_failed">Gagal mengimport kunci: %1$s</string>
-    <string name="about_diagnostics">Jaringan</string>
-    <string name="about_no_pending">Tiada mesej dalam baris gilir</string>
-    <string name="about_pending_messages">Mesej dalam baris gilir</string>
+    <string name="settings_queued_none">Tiada mesej dalam baris gilir</string>
+    <string name="settings_queued_messages">Mesej dalam baris gilir</string>
     <string name="app_lock_activity_unsupported">Kunci apl memerlukan hos yang menyokong gesaan sistem. Kemas kini apl.</string>
     <string name="app_lock_prompt_subtitle">Gunakan biometrik atau PIN peranti</string>
     <string name="app_lock_prompt_title">Buka kunci LocaPeer</string>
@@ -865,20 +873,25 @@
     <string name="settings_temporary_location_share">Perkongsian lokasi sementara</string>
     <string name="app_lock_no_credential">Tiada kunci skrin ditetapkan pada peranti ini, jadi tiada apa untuk membuka kunci. Tetapkan PIN, corak, kata laluan, atau biometrik dalam tetapan peranti anda, kemudian buka semula LocaPeer.</string>
     <string name="backup_key_needs_password">Tetapkan kata laluan untuk menyertakan kunci peribadi anda. Fail kunci yang tidak disulitkan boleh membenarkan sesiapa sahaja mengambil alih identiti anda.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Kunci apl, keizinan, mod diselia</string>
+    <string name="settings_category_map_subtitle">Titik permulaan, zum, warna pin</string>
+    <string name="settings_category_units_subtitle">Kelajuan, jarak, ketinggian, masa</string>
+    <string name="settings_category_retention_subtitle">Berapa lama data disimpan pada peranti ini</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Eksport, import, kunci peribadi</string>
+    <string name="contacts_add_contact">Tambah kenalan</string>
+    <string name="map_location_off_title">Lokasi dimatikan</string>
+    <string name="map_location_off_message">Lokasi anda tidak boleh dikemas kini atau dikongsi sehingga anda menghidupkan lokasi peranti.</string>
+    <string name="map_location_off_action">Buka tetapan</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Peristiwa yang menunggu untuk sampai ke relay</string>
+    <string name="queued_messages_title">Mesej dalam Baris Giliran</string>
+    <string name="queued_message_kind">Jenis peristiwa %1$d</string>
+    <string name="queued_message_queued_at">Dalam giliran %1$s</string>
+    <string name="queued_message_view">Lihat peristiwa</string>
+    <string name="queued_message_hide">Sembunyi</string>
+    <string name="queued_messages_flush">Hantar sekarang</string>
 </resources>

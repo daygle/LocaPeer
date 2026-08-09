@@ -27,8 +27,6 @@
     <string name="common_deny">Elutasítás</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geokerítések és mozgáselőzmények</string>
-    <string name="peer_category_history_title">Zónák és előzmények</string>
     <string name="peer_category_messaging_subtitle">Csevegőüzenetek engedélyezése vagy tiltása</string>
     <string name="peer_category_messaging_title">Üzenetküldés</string>
     <string name="peer_category_retention_subtitle">Távoli előzmények és törlés</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, kimaradt frissítések, közelség, felügyelet</string>
     <string name="peer_category_safety_title">Biztonság és riasztások</string>
     <string name="peer_category_sharing_subtitle">Szerepek, pontosság és ütemezés</string>
-    <string name="peer_category_sharing_title">Megosztásvezérlés</string>
+    <string name="peer_category_privacy_title">Adatvédelem</string>
+    <string name="peer_category_privacy_subtitle">Pontosság, szüneteltetés és ideiglenes megosztás</string>
+    <string name="peer_category_security_title">Biztonság</string>
+    <string name="peer_category_security_subtitle">Felügyeleti vezérlők</string>
+    <string name="peer_category_sharing_title">Helyszín</string>
     <string name="scan_add_share">Hozzáadás és megosztás</string>
     <string name="scan_grant_permission">Engedély megadása</string>
     <string name="scan_request_sent_title">Kérés elküldve</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Beállítások</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Helyszín és adatvédelem</string>
+    <string name="settings_section_location">Helyszín</string>
+    <string name="settings_section_privacy">Adatvédelem</string>
+    <string name="settings_section_connection">Kapcsolat</string>
+    <string name="settings_section_language">Nyelv</string>
+    <string name="settings_category_location_subtitle">Megosztás, ütemezés, előzmények és pontosság</string>
+    <string name="settings_category_privacy_subtitle">Nyomkövetési értesítések</string>
+    <string name="settings_category_connection_subtitle">Relék és hálózati átvitel</string>
+    <string name="settings_category_language_subtitle">Válassza ki az alkalmazás nyelvét</string>
     <string name="settings_section_security">Biztonság</string>
     <string name="settings_section_map">Térkép</string>
-    <string name="settings_section_battery_performance">Akku és teljesítmény</string>
     <string name="settings_section_units_display">Egységek és megjelenítés</string>
     <string name="settings_section_retention">Megőrzés (ezen az eszközön)</string>
     <string name="settings_section_appearance">Megjelenés</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s helyzetének fogadása</string>
     <string name="peer_receive_on">Láthatja %1$s helyzetét</string>
     <string name="peer_receive_off">Nincs hozzáférése %1$s helyzetéhez</string>
-    <string name="peer_section_privacy">Adatvédelem és megosztásvezérlés</string>
+    <string name="peer_section_privacy">Adatvédelem</string>
     <string name="peer_pause_sharing">Megosztás szüneteltetése</string>
     <string name="peer_pause_sub">Ideiglenesen ne küldje helyzetét %1$s részére</string>
     <string name="peer_precision">Helymeghatározás pontossága</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Értesítsen, ha %1$s nem jelenti tovább a helyzetét</string>
     <string name="peer_requires_access">Hozzáférés szükséges %1$s helyzetéhez</string>
     <string name="peer_proximity_alert">Közelségi riasztás</string>
+    <string name="peer_proximity_alerts_title">Közelségi riasztások</string>
     <string name="peer_proximity_sub">Értesítsen, ha %1$s a közelben van</string>
     <string name="peer_alert_radius">Riasztási sugár</string>
     <string name="peer_alert_schedule">Riasztási ütemterv</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Érvénytelen privát kulcs - a görbe tartományán kívül esik.</string>
     <string name="onboarding_error_hex">Érvénytelen hexadecimális formátum.</string>
     <string name="onboarding_error_import_failed">A kulcs importálása sikertelen: %1$s</string>
-    <string name="about_diagnostics">Hálózat</string>
-    <string name="about_no_pending">Nincs üzenet a sorban</string>
-    <string name="about_pending_messages">Sorban álló üzenetek</string>
+    <string name="settings_queued_none">Nincs üzenet a sorban</string>
+    <string name="settings_queued_messages">Sorban álló üzenetek</string>
     <string name="app_lock_activity_unsupported">Az alkalmazászár rendszerkérést támogató gazdakörnyezetet igényel. Frissítsd az alkalmazást.</string>
     <string name="app_lock_prompt_subtitle">Használj biometrikus azonosítást vagy az eszköz PIN-kódját</string>
     <string name="app_lock_prompt_title">LocaPeer feloldása</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">Ideiglenes helymegosztás</string>
     <string name="app_lock_no_credential">Ezen az eszközön nincs beállítva képernyőzár, így nincs mivel feloldani. Állíts be PIN-kódot, mintát, jelszót vagy biometriát az eszköz beállításaiban, majd nyisd meg újra a LocaPeert.</string>
     <string name="backup_key_needs_password">Állíts be jelszót a privát kulcsod belefoglalásához. Egy titkosítatlan kulcsfájl bárkinek lehetővé teheti, hogy átvegye a személyazonosságodat.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Alkalmazászár, engedélyek, felügyelt mód</string>
+    <string name="settings_category_map_subtitle">Kiindulási pont, nagyítás, térképtű színe</string>
+    <string name="settings_category_units_subtitle">Sebesség, távolság, magasság, idő</string>
+    <string name="settings_category_retention_subtitle">Mennyi ideig tárolják az adatokat ezen az eszközön</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Exportálás, importálás, privát kulcs</string>
+    <string name="contacts_add_contact">Névjegy hozzáadása</string>
+    <string name="map_location_off_title">A helyszín ki van kapcsolva</string>
+    <string name="map_location_off_message">A helyzeted nem frissíthető és nem osztható meg, amíg be nem kapcsolod az eszköz helymeghatározását.</string>
+    <string name="map_location_off_action">Beállítások megnyitása</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Relayekre váró események</string>
+    <string name="queued_messages_title">Várakozó üzenetek</string>
+    <string name="queued_message_kind">Eseménytípus %1$d</string>
+    <string name="queued_message_queued_at">Várólistán %1$s</string>
+    <string name="queued_message_view">Esemény megtekintése</string>
+    <string name="queued_message_hide">Elrejtés</string>
+    <string name="queued_messages_flush">Küldés most</string>
 </resources>

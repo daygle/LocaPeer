@@ -40,7 +40,7 @@ fun PeerSharingScreen(
     onNavigateToPrivacy: () -> Unit = {},
     onNavigateToAlerts: () -> Unit = {},
     onNavigateToSecurity: () -> Unit = {},
-    onNavigateToZonesHistory: () -> Unit = {},
+    onNavigateToGeofences: () -> Unit = {},
     onNavigateToLocationHistory: () -> Unit = {},
     onNavigateToMessaging: () -> Unit = {},
     onNavigateToRetention: () -> Unit = {},
@@ -166,10 +166,10 @@ fun PeerSharingScreen(
                         )
                         CardDivider()
                         CategoryRow(
-                            icon = Icons.Default.PrivacyTip,
-                            title = stringResource(R.string.peer_category_privacy_title),
-                            subtitle = stringResource(R.string.peer_category_privacy_subtitle),
-                            onClick = onNavigateToPrivacy
+                            icon = Icons.Default.History,
+                            title = stringResource(R.string.peer_location_history),
+                            subtitle = stringResource(R.string.peer_location_history_sub, peerName),
+                            onClick = onNavigateToLocationHistory
                         )
                         CardDivider()
                         CategoryRow(
@@ -180,24 +180,17 @@ fun PeerSharingScreen(
                         )
                         CardDivider()
                         CategoryRow(
-                            icon = Icons.Default.Security,
-                            title = stringResource(R.string.peer_category_security_title),
-                            subtitle = stringResource(R.string.peer_category_security_subtitle),
-                            onClick = onNavigateToSecurity
-                        )
-                        CardDivider()
-                        CategoryRow(
                             icon = Icons.Default.Fence,
                             title = stringResource(R.string.settings_geofences),
                             subtitle = stringResource(R.string.peer_geofences_sub, peerName),
-                            onClick = onNavigateToZonesHistory
+                            onClick = onNavigateToGeofences
                         )
                         CardDivider()
                         CategoryRow(
-                            icon = Icons.Default.History,
-                            title = stringResource(R.string.peer_location_history),
-                            subtitle = stringResource(R.string.peer_location_history_sub, peerName),
-                            onClick = onNavigateToLocationHistory
+                            icon = Icons.Default.PrivacyTip,
+                            title = stringResource(R.string.peer_category_privacy_title),
+                            subtitle = stringResource(R.string.peer_category_privacy_subtitle),
+                            onClick = onNavigateToPrivacy
                         )
                         CardDivider()
                         CategoryRow(
@@ -212,6 +205,13 @@ fun PeerSharingScreen(
                             title = stringResource(R.string.peer_category_retention_title),
                             subtitle = stringResource(R.string.peer_category_retention_subtitle),
                             onClick = onNavigateToRetention
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Security,
+                            title = stringResource(R.string.peer_category_security_title),
+                            subtitle = stringResource(R.string.peer_category_security_subtitle),
+                            onClick = onNavigateToSecurity
                         )
                     }
                 }

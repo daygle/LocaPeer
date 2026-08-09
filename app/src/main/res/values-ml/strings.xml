@@ -27,8 +27,6 @@
     <string name="common_deny">നിരസിക്കുക</string>
 
     <!-- ── നാവിഗേഷൻ ടാബ് ലേബലുകൾ ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">ജിയോഫെൻസുകളും ചലന ചരിത്രവും</string>
-    <string name="peer_category_history_title">സോണുകളും ചരിത്രവും</string>
     <string name="peer_category_messaging_subtitle">ചാറ്റ് സന്ദേശങ്ങൾ അനുവദിക്കുക അല്ലെങ്കിൽ തടയുക</string>
     <string name="peer_category_messaging_title">മെസേജിംഗ്</string>
     <string name="peer_category_retention_subtitle">റിമോട്ട് ചരിത്രവും ശുദ്ധീകരണവും</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, നഷ്ടപ്പെട്ട അപ്ഡേറ്റുകൾ, സാമീപ്യം, നിരീക്ഷണം</string>
     <string name="peer_category_safety_title">സുരക്ഷയും അലേർട്ടുകളും</string>
     <string name="peer_category_sharing_subtitle">റോളുകൾ, കൃത്യത, ഷെഡ്യൂൾ</string>
-    <string name="peer_category_sharing_title">പങ്കിടൽ നിയന്ത്രണങ്ങൾ</string>
+    <string name="peer_category_privacy_title">സ്വകാര്യത</string>
+    <string name="peer_category_privacy_subtitle">കൃത്യത, താൽക്കാലിക നിർത്തൽ, താൽക്കാലിക പങ്കിടൽ</string>
+    <string name="peer_category_security_title">സുരക്ഷ</string>
+    <string name="peer_category_security_subtitle">മേൽനോട്ട നിയന്ത്രണങ്ങൾ</string>
+    <string name="peer_category_sharing_title">ലൊക്കേഷൻ</string>
     <string name="scan_add_share">ചേർക്കുകയും പങ്കിടുകയും ചെയ്യുക</string>
     <string name="scan_grant_permission">അനുമതി നൽകുക</string>
     <string name="scan_request_sent_title">അഭ്യർത്ഥന അയച്ചു</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ക്രമീകരണങ്ങൾ</string>
 
     <!-- വിഭാഗം ലേബലുകൾ -->
-    <string name="settings_section_location_privacy">ലൊക്കേഷനും സ്വകാര്യതയും</string>
+    <string name="settings_section_location">ലൊക്കേഷൻ</string>
+    <string name="settings_section_privacy">സ്വകാര്യത</string>
+    <string name="settings_section_connection">കണക്ഷൻ</string>
+    <string name="settings_section_language">ഭാഷ</string>
+    <string name="settings_category_location_subtitle">പങ്കിടൽ, ഷെഡ്യൂൾ, ചരിത്രം, കൃത്യത</string>
+    <string name="settings_category_privacy_subtitle">ട്രാക്കിംഗ് അലേർട്ടുകൾ</string>
+    <string name="settings_category_connection_subtitle">റിലേകളും നെറ്റ്‌വർക്ക് ട്രാൻസ്പോർട്ടും</string>
+    <string name="settings_category_language_subtitle">ആപ്പിന്റെ ഭാഷ തിരഞ്ഞെടുക്കുക</string>
     <string name="settings_section_security">സുരക്ഷ</string>
     <string name="settings_section_map">മാപ്പ്</string>
-    <string name="settings_section_battery_performance">ബാറ്ററിയും പ്രകടനവും</string>
     <string name="settings_section_units_display">യൂണിറ്റുകളും പ്രദർശനവും</string>
     <string name="settings_section_retention">നിലനിർത്തൽ (ഈ ഉപകരണത്തിൽ)</string>
     <string name="settings_section_appearance">രൂപഭാവം</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s-ന്റെ ലൊക്കേഷൻ സ്വീകരിക്കുക</string>
     <string name="peer_receive_on">നിങ്ങൾക്ക് %1$s-ന്റെ ലൊക്കേഷൻ കാണാൻ കഴിയും</string>
     <string name="peer_receive_off">നിങ്ങൾക്ക് %1$s-ന്റെ ലൊക്കേഷനിലേക്ക് ആക്സസ് ഇല്ല</string>
-    <string name="peer_section_privacy">സ്വകാര്യത &amp; പങ്കിടൽ നിയന്ത്രണങ്ങൾ</string>
+    <string name="peer_section_privacy">സ്വകാര്യത</string>
     <string name="peer_pause_sharing">പങ്കിടൽ താൽക്കാലികമായി നിർത്തുക</string>
     <string name="peer_pause_sub">%1$s-ലേക്ക് നിങ്ങളുടെ ലൊക്കേഷൻ അയയ്ക്കുന്നത് താൽക്കാലികമായി നിർത്തുക</string>
     <string name="peer_precision">ലൊക്കേഷൻ കൃത്യത</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">%1$s അവരുടെ ലൊക്കേഷൻ റിപ്പോർട്ട് ചെയ്യുന്നത് നിർത്തിയാൽ എന്നെ അറിയിക്കുക</string>
     <string name="peer_requires_access">%1$s-ന്റെ ലൊക്കേഷനിലേക്ക് ആക്സസ് ആവശ്യമാണ്</string>
     <string name="peer_proximity_alert">സാമീപ്യ അലേർട്ട്</string>
+    <string name="peer_proximity_alerts_title">സാമീപ്യ അലേർട്ടുകൾ</string>
     <string name="peer_proximity_sub">%1$s അടുത്തുവരുമ്പോൾ എന്നെ അറിയിക്കുക</string>
     <string name="peer_alert_radius">അലേർട്ട് ആരം</string>
     <string name="peer_alert_schedule">അലേർട്ട് ഷെഡ്യൂൾ</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">അസാധുവായ സ്വകാര്യ കീ.</string>
     <string name="onboarding_error_hex">അസാധുവായ ഹെക്സ് ഫോർമാറ്റ്.</string>
     <string name="onboarding_error_import_failed">കീ ഇറക്കുമതി ചെയ്യുന്നതിൽ പരാജയപ്പെട്ടു: %1$s</string>
-    <string name="about_diagnostics">നെറ്റ്‌വർക്ക്</string>
-    <string name="about_no_pending">ക്യൂവിൽ സന്ദേശങ്ങളില്ല</string>
-    <string name="about_pending_messages">ക്യൂവിലുള്ള സന്ദേശങ്ങൾ</string>
+    <string name="settings_queued_none">ക്യൂവിൽ സന്ദേശങ്ങളില്ല</string>
+    <string name="settings_queued_messages">ക്യൂവിലുള്ള സന്ദേശങ്ങൾ</string>
     <string name="app_lock_activity_unsupported">ആപ്പ് ലോക്കിന് സിസ്റ്റം പ്രോംപ്റ്റ് പിന്തുണയ്ക്കുന്ന ഹോസ്റ്റ് ആവശ്യമാണ്. ആപ്പ് അപ്ഡേറ്റ് ചെയ്യുക.</string>
     <string name="app_lock_prompt_subtitle">ബയോമെട്രിക് അല്ലെങ്കിൽ ഉപകരണ PIN ഉപയോഗിക്കുക</string>
     <string name="app_lock_prompt_title">LocaPeer അൺലോക്ക് ചെയ്യുക</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">താൽക്കാലിക ലൊക്കേഷൻ പങ്കിടൽ</string>
     <string name="app_lock_no_credential">ഈ ഉപകരണത്തിൽ സ്ക്രീൻ ലോക്ക് സജ്ജീകരിച്ചിട്ടില്ല, അതിനാൽ അൺലോക്ക് ചെയ്യാൻ ഒന്നുമില്ല. നിങ്ങളുടെ ഉപകരണ ക്രമീകരണങ്ങളിൽ ഒരു PIN, പാറ്റേൺ, പാസ്‌വേഡ്, അല്ലെങ്കിൽ ബയോമെട്രിക് സജ്ജീകരിച്ച ശേഷം LocaPeer വീണ്ടും തുറക്കുക.</string>
     <string name="backup_key_needs_password">നിങ്ങളുടെ സ്വകാര്യ കീ ഉൾപ്പെടുത്താൻ ഒരു പാസ്‌വേഡ് സജ്ജീകരിക്കുക. എൻക്രിപ്റ്റ് ചെയ്യാത്ത ഒരു കീ ഫയൽ ആർക്കും നിങ്ങളുടെ ഐഡന്റിറ്റി ഏറ്റെടുക്കാൻ അനുവദിച്ചേക്കാം.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">ആപ്പ് ലോക്ക്, അനുമതികൾ, മേൽനോട്ട മോഡ്</string>
+    <string name="settings_category_map_subtitle">തുടക്ക പോയിന്റ്, സൂം, പിൻ നിറം</string>
+    <string name="settings_category_units_subtitle">വേഗത, ദൂരം, ഉയരം, സമയം</string>
+    <string name="settings_category_retention_subtitle">ഈ ഉപകരണത്തിൽ ഡാറ്റ എത്ര കാലം സൂക്ഷിക്കുന്നു</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">കയറ്റുമതി, ഇറക്കുമതി, സ്വകാര്യ കീ</string>
+    <string name="contacts_add_contact">കോൺടാക്റ്റ് ചേർക്കുക</string>
+    <string name="map_location_off_title">ലൊക്കേഷൻ ഓഫാണ്</string>
+    <string name="map_location_off_message">നിങ്ങൾ ഉപകരണ ലൊക്കേഷൻ ഓണാക്കുന്നത് വരെ നിങ്ങളുടെ സ്ഥാനം അപ്ഡേറ്റ് ചെയ്യാനോ പങ്കിടാനോ കഴിയില്ല.</string>
+    <string name="map_location_off_action">ക്രമീകരണങ്ങൾ തുറക്കുക</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">റിലേകളിൽ എത്താൻ കാത്തിരിക്കുന്ന ഇവന്റുകൾ</string>
+    <string name="queued_messages_title">ക്യൂവിലുള്ള സന്ദേശങ്ങൾ</string>
+    <string name="queued_message_kind">ഇവന്റ് തരം %1$d</string>
+    <string name="queued_message_queued_at">ക്യൂവിൽ %1$s</string>
+    <string name="queued_message_view">ഇവന്റ് കാണുക</string>
+    <string name="queued_message_hide">മറയ്ക്കുക</string>
+    <string name="queued_messages_flush">ഇപ്പോൾ അയയ്ക്കുക</string>
 </resources>

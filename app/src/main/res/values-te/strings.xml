@@ -27,8 +27,6 @@
     <string name="common_deny">తిరస్కరించు</string>
 
     <!-- ── నావిగేషన్ ట్యాబ్ లేబుల్‌లు ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">జియోఫెన్సులు మరియు కదలిక చరిత్ర</string>
-    <string name="peer_category_history_title">జోన్‌లు &amp; చరిత్ర</string>
     <string name="peer_category_messaging_subtitle">చాట్ సందేశాలను అనుమతించండి లేదా నిరోధించండి</string>
     <string name="peer_category_messaging_title">మెసేజింగ్</string>
     <string name="peer_category_retention_subtitle">రిమోట్ చరిత్ర మరియు శుభ్రపరచడం</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, తప్పిన నవీకరణలు, సామీప్యత, పర్యవేక్షణ</string>
     <string name="peer_category_safety_title">భద్రత &amp; అలర్ట్‌లు</string>
     <string name="peer_category_sharing_subtitle">పాత్రలు, ఖచ్చితత్వం మరియు షెడ్యూల్</string>
-    <string name="peer_category_sharing_title">షేరింగ్ నియంత్రణలు</string>
+    <string name="peer_category_privacy_title">గోప్యత</string>
+    <string name="peer_category_privacy_subtitle">ఖచ్చితత్వం, విరామం మరియు తాత్కాలిక భాగస్వామ్యం</string>
+    <string name="peer_category_security_title">భద్రత</string>
+    <string name="peer_category_security_subtitle">పర్యవేక్షణ నియంత్రణలు</string>
+    <string name="peer_category_sharing_title">స్థానం</string>
     <string name="scan_add_share">జోడించండి &amp; షేర్ చేయండి</string>
     <string name="scan_grant_permission">అనుమతి మంజూరు చేయండి</string>
     <string name="scan_request_sent_title">అభ్యర్థన పంపబడింది</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">సెట్టింగ్‌లు</string>
 
     <!-- విభాగం లేబుల్‌లు -->
-    <string name="settings_section_location_privacy">స్థానం &amp; గోప్యత</string>
+    <string name="settings_section_location">స్థానం</string>
+    <string name="settings_section_privacy">గోప్యత</string>
+    <string name="settings_section_connection">కనెక్షన్</string>
+    <string name="settings_section_language">భాష</string>
+    <string name="settings_category_location_subtitle">భాగస్వామ్యం, షెడ్యూల్, చరిత్ర మరియు ఖచ్చితత్వం</string>
+    <string name="settings_category_privacy_subtitle">ట్రాకింగ్ హెచ్చరికలు</string>
+    <string name="settings_category_connection_subtitle">రిలేలు మరియు నెట్‌వర్క్ రవాణా</string>
+    <string name="settings_category_language_subtitle">యాప్ భాషను ఎంచుకోండి</string>
     <string name="settings_section_security">భద్రత</string>
     <string name="settings_section_map">మ్యాప్</string>
-    <string name="settings_section_battery_performance">బ్యాటరీ &amp; పనితీరు</string>
     <string name="settings_section_units_display">యూనిట్లు &amp; ప్రదర్శన</string>
     <string name="settings_section_retention">ధారణ (ఈ పరికరంలో)</string>
     <string name="settings_section_appearance">రూపం</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s స్థానాన్ని స్వీకరించు</string>
     <string name="peer_receive_on">మీరు %1$s స్థానాన్ని చూడగలరు</string>
     <string name="peer_receive_off">మీకు %1$s స్థానానికి ప్రాప్యత లేదు</string>
-    <string name="peer_section_privacy">గోప్యత &amp; షేరింగ్ నియంత్రణలు</string>
+    <string name="peer_section_privacy">గోప్యత</string>
     <string name="peer_pause_sharing">షేరింగ్‌ని ఆపివేయి</string>
     <string name="peer_pause_sub">%1$s కి మీ స్థానాన్ని పంపడాన్ని తాత్కాలికంగా ఆపివేయండి</string>
     <string name="peer_precision">స్థాన ఖచ్చితత్వం</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">%1$s వారి స్థానాన్ని నివేదించడం ఆపివేస్తే నాకు తెలియజేయండి</string>
     <string name="peer_requires_access">%1$s స్థానానికి ప్రాప్యత అవసరం</string>
     <string name="peer_proximity_alert">సామీప్య హెచ్చరిక</string>
+    <string name="peer_proximity_alerts_title">సామీప్య హెచ్చరికలు</string>
     <string name="peer_proximity_sub">%1$s సమీపంలో ఉన్నప్పుడు నాకు తెలియజేయండి</string>
     <string name="peer_alert_radius">అలర్ట్ వ్యాసార్థం</string>
     <string name="peer_alert_schedule">అలర్ట్ షెడ్యూల్</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">అమాన్యమైన ప్రైవేట్ కీ.</string>
     <string name="onboarding_error_hex">అమాన్యమైన హెక్స్ ఫార్మాట్.</string>
     <string name="onboarding_error_import_failed">కీని దిగుమతి చేయడంలో విఫలమైంది: %1$s</string>
-    <string name="about_diagnostics">నెట్‌వర్క్</string>
-    <string name="about_no_pending">క్యూలో సందేశాలు లేవు</string>
-    <string name="about_pending_messages">క్యూలో ఉన్న సందేశాలు</string>
+    <string name="settings_queued_none">క్యూలో సందేశాలు లేవు</string>
+    <string name="settings_queued_messages">క్యూలో ఉన్న సందేశాలు</string>
     <string name="app_lock_activity_unsupported">యాప్ లాక్‌కు సిస్టమ్ ప్రాంప్ట్‌ను మద్దతిచ్చే హోస్ట్ అవసరం. యాప్‌ను నవీకరించండి.</string>
     <string name="app_lock_prompt_subtitle">బయోమెట్రిక్ లేదా పరికర PINను ఉపయోగించండి</string>
     <string name="app_lock_prompt_title">LocaPeerను అన్‌లాక్ చేయండి</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">తాత్కాలిక స్థాన భాగస్వామ్యం</string>
     <string name="app_lock_no_credential">ఈ పరికరంలో స్క్రీన్ లాక్ సెట్ చేయలేదు, కాబట్టి అన్‌లాక్ చేయడానికి ఏమీ లేదు. మీ పరికర సెట్టింగ్‌లలో ఒక PIN, ప్యాటర్న్, పాస్‌వర్డ్, లేదా బయోమెట్రిక్‌ను సెట్ చేసి, ఆపై LocaPeer ను మళ్లీ తెరవండి.</string>
     <string name="backup_key_needs_password">మీ ప్రైవేట్ కీని చేర్చడానికి ఒక పాస్‌వర్డ్‌ను సెట్ చేయండి. ఎన్‌క్రిప్ట్ చేయని కీ ఫైల్ ఎవరైనా మీ గుర్తింపును స్వాధీనం చేసుకోవడానికి అనుమతించవచ్చు.</string>
-    <string name="settings_category_location_privacy_subtitle">భాగస్వామ్యం, షెడ్యూల్, జియోఫెన్సులు, హెచ్చరికలు</string>
     <string name="settings_category_security_subtitle">యాప్ లాక్, అనుమతులు, పర్యవేక్షణ మోడ్</string>
     <string name="settings_category_map_subtitle">ప్రారంభ స్థానం, జూమ్, పిన్ రంగు</string>
-    <string name="settings_category_performance_subtitle">అప్‌డేట్ వేగం మరియు ఖచ్చితత్వ ఫిల్టర్లు</string>
     <string name="settings_category_units_subtitle">వేగం, దూరం, ఎత్తు, సమయం</string>
     <string name="settings_category_retention_subtitle">ఈ పరికరంలో డేటా ఎంతకాలం ఉంచబడుతుంది</string>
     <string name="settings_category_appearance_subtitle">థీమ్, రంగు, నావిగేషన్, భాష</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">మీరు పరికర స్థానాన్ని ఆన్ చేసే వరకు మీ స్థానం అప్‌డేట్ చేయబడదు లేదా భాగస్వామ్యం చేయబడదు.</string>
     <string name="map_location_off_action">సెట్టింగ్‌లను తెరువు</string>
     <string name="map_live">● ప్రత్యక్ష ప్రసారం</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d క్యూలో ఉన్న సందేశం</item>
         <item quantity="other">%1$d క్యూలో ఉన్న సందేశాలు</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">రిలేలకు చేరడానికి వేచి ఉన్న ఈవెంట్‌లు</string>
+    <string name="queued_messages_title">క్యూలో ఉన్న సందేశాలు</string>
+    <string name="queued_message_kind">ఈవెంట్ రకం %1$d</string>
+    <string name="queued_message_queued_at">క్యూలో %1$s</string>
+    <string name="queued_message_view">ఈవెంట్ చూడండి</string>
+    <string name="queued_message_hide">దాచు</string>
+    <string name="queued_messages_flush">ఇప్పుడు పంపండి</string>
 </resources>

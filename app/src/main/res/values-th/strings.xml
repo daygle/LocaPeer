@@ -27,8 +27,6 @@
     <string name="common_deny">ปฏิเสธ</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">รั้วเสมือนและประวัติการเดินทาง</string>
-    <string name="peer_category_history_title">โซนและประวัติ</string>
     <string name="peer_category_messaging_subtitle">อนุญาตหรือบล็อกข้อความแชท</string>
     <string name="peer_category_messaging_title">การส่งข้อความ</string>
     <string name="peer_category_retention_subtitle">ประวัติระยะไกลและการล้างข้อมูล</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS การอัปเดตที่ไม่ได้รับ ความใกล้ชิด การกำกับดูแล</string>
     <string name="peer_category_safety_title">ความปลอดภัยและการแจ้งเตือน</string>
     <string name="peer_category_sharing_subtitle">บทบาท ความแม่นยำ และกำหนดการ</string>
-    <string name="peer_category_sharing_title">การควบคุมการแชร์</string>
+    <string name="peer_category_privacy_title">ความเป็นส่วนตัว</string>
+    <string name="peer_category_privacy_subtitle">ความแม่นยำ การหยุดชั่วคราว และการแชร์ชั่วคราว</string>
+    <string name="peer_category_security_title">ความปลอดภัย</string>
+    <string name="peer_category_security_subtitle">การควบคุมการกำกับดูแล</string>
+    <string name="peer_category_sharing_title">ตำแหน่ง</string>
     <string name="scan_add_share">เพิ่มและแชร์</string>
     <string name="scan_grant_permission">ให้สิทธิ์</string>
     <string name="scan_request_sent_title">ส่งคำขอแล้ว</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ตั้งค่า</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">ตำแหน่งและความเป็นส่วนตัว</string>
+    <string name="settings_section_location">ตำแหน่ง</string>
+    <string name="settings_section_privacy">ความเป็นส่วนตัว</string>
+    <string name="settings_section_connection">การเชื่อมต่อ</string>
+    <string name="settings_section_language">ภาษา</string>
+    <string name="settings_category_location_subtitle">การแชร์ กำหนดการ ประวัติ และความแม่นยำ</string>
+    <string name="settings_category_privacy_subtitle">การแจ้งเตือนการติดตาม</string>
+    <string name="settings_category_connection_subtitle">รีเลย์และการส่งผ่านเครือข่าย</string>
+    <string name="settings_category_language_subtitle">เลือกภาษาของแอป</string>
     <string name="settings_section_security">ความปลอดภัย</string>
     <string name="settings_section_map">แผนที่</string>
-    <string name="settings_section_battery_performance">แบตเตอรี่และประสิทธิภาพ</string>
     <string name="settings_section_units_display">หน่วยและการแสดงผล</string>
     <string name="settings_section_retention">การเก็บรักษา (อุปกรณ์นี้)</string>
     <string name="settings_section_appearance">รูปลักษณ์</string>
@@ -382,7 +390,7 @@
     <string name="peer_receive_title">รับตำแหน่งของ %1$s</string>
     <string name="peer_receive_on">คุณเห็นตำแหน่งของ %1$s ได้</string>
     <string name="peer_receive_off">คุณไม่มีสิทธิ์เห็นตำแหน่งของ %1$s</string>
-    <string name="peer_section_privacy">ความเป็นส่วนตัวและการควบคุมการแชร์</string>
+    <string name="peer_section_privacy">ความเป็นส่วนตัว</string>
     <string name="peer_pause_sharing">หยุดแชร์ชั่วคราว</string>
     <string name="peer_pause_sub">หยุดส่งตำแหน่งของคุณให้ %1$s ชั่วคราว</string>
     <string name="peer_precision">ความแม่นยำของตำแหน่ง</string>
@@ -399,6 +407,7 @@
     <string name="peer_missed_on">แจ้งฉันหาก %1$s หยุดรายงานตำแหน่ง</string>
     <string name="peer_requires_access">ต้องมีสิทธิ์เข้าถึงตำแหน่งของ %1$s</string>
     <string name="peer_proximity_alert">การเตือนระยะใกล้</string>
+    <string name="peer_proximity_alerts_title">การเตือนระยะใกล้</string>
     <string name="peer_proximity_sub">แจ้งฉันเมื่อ %1$s อยู่ใกล้</string>
     <string name="peer_alert_radius">รัศมีการเตือน</string>
     <string name="peer_alert_schedule">กำหนดการเตือน</string>
@@ -739,9 +748,8 @@
     <string name="onboarding_error_key_range">กุญแจส่วนตัวไม่ถูกต้อง - อยู่นอกช่วงของเส้นโค้ง</string>
     <string name="onboarding_error_hex">รูปแบบฐานสิบหกไม่ถูกต้อง</string>
     <string name="onboarding_error_import_failed">นำเข้ากุญแจล้มเหลว: %1$s</string>
-    <string name="about_diagnostics">เครือข่าย</string>
-    <string name="about_no_pending">ไม่มีข้อความในคิว</string>
-    <string name="about_pending_messages">ข้อความในคิว</string>
+    <string name="settings_queued_none">ไม่มีข้อความในคิว</string>
+    <string name="settings_queued_messages">ข้อความในคิว</string>
     <string name="app_lock_activity_unsupported">การล็อกแอปต้องใช้โฮสต์ที่รองรับพร้อมต์ของระบบ โปรดอัปเดตแอป</string>
     <string name="app_lock_prompt_subtitle">ใช้ไบโอเมตริกหรือ PIN ของอุปกรณ์</string>
     <string name="app_lock_prompt_title">ปลดล็อก LocaPeer</string>
@@ -865,10 +873,8 @@
     <string name="settings_temporary_location_share">การแชร์ตำแหน่งชั่วคราว</string>
     <string name="app_lock_no_credential">อุปกรณ์นี้ไม่ได้ตั้งค่าการล็อกหน้าจอ จึงไม่มีสิ่งใดใช้ปลดล็อก โปรดตั้งค่า PIN รูปแบบ รหัสผ่าน หรือไบโอเมตริกในการตั้งค่าอุปกรณ์ของคุณ แล้วเปิด LocaPeer อีกครั้ง</string>
     <string name="backup_key_needs_password">ตั้งรหัสผ่านเพื่อรวมคีย์ส่วนตัวของคุณ ไฟล์คีย์ที่ไม่ได้เข้ารหัสอาจทำให้ใครก็ตามเข้าควบคุมตัวตนของคุณได้</string>
-    <string name="settings_category_location_privacy_subtitle">การแชร์, กำหนดการ, จีโอเฟนซ์, การแจ้งเตือน</string>
     <string name="settings_category_security_subtitle">ล็อกแอป, การอนุญาต, โหมดควบคุมดูแล</string>
     <string name="settings_category_map_subtitle">จุดเริ่มต้น, ซูม, สีของหมุด</string>
-    <string name="settings_category_performance_subtitle">ความถี่ในการอัปเดตและตัวกรองความแม่นยำ</string>
     <string name="settings_category_units_subtitle">ความเร็ว, ระยะทาง, ระดับความสูง, เวลา</string>
     <string name="settings_category_retention_subtitle">ระยะเวลาการเก็บข้อมูลในอุปกรณ์นี้</string>
     <string name="settings_category_appearance_subtitle">ธีม, สี, การนำทาง, ภาษา</string>
@@ -878,7 +884,14 @@
     <string name="map_location_off_message">ตำแหน่งของคุณไม่สามารถอัปเดตหรือแชร์ได้จนกว่าคุณจะเปิดตำแหน่งของอุปกรณ์</string>
     <string name="map_location_off_action">เปิดการตั้งค่า</string>
     <string name="map_live">● สด</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d ข้อความที่รอคิว</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">เหตุการณ์ที่รอส่งถึงรีเลย์</string>
+    <string name="queued_messages_title">ข้อความที่รอส่ง</string>
+    <string name="queued_message_kind">ประเภทเหตุการณ์ %1$d</string>
+    <string name="queued_message_queued_at">รอส่ง %1$s</string>
+    <string name="queued_message_view">ดูเหตุการณ์</string>
+    <string name="queued_message_hide">ซ่อน</string>
+    <string name="queued_messages_flush">ส่งตอนนี้</string>
 </resources>

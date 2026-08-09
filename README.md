@@ -5,7 +5,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 ## Features
 
 - **Real-time Location Sharing** - Broadcast your location on a configurable schedule or continuously; contacts see your live position on an interactive map. "Live View" (kind 1060) automatically boosts your update cadence when a contact is actively viewing the map. Both sending and requesting these boosts can be toggled in Settings.
-- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary), detected by a custom GPS speed engine fused with Android Activity Recognition, saving power during low battery and while stationary without sacrificing accuracy. Per-motion intervals are user-tunable (Settings → Update Cadence) with sensible defaults from the engagement table below.
+- **Motion-Adaptive Heartbeats** - Update frequency scales automatically with your activity (driving/running/cycling/walking/stationary), detected by a custom GPS speed engine fused with Android Activity Recognition, saving power during low battery and while stationary without sacrificing accuracy. Per-motion intervals are user-tunable (Settings → Location → Update Cadence) with sensible defaults from the engagement table below.
 - **Sender-Side Quality Gates** - Drop incoming fixes coarser than a configurable accuracy radius before broadcast or storage (SOS is never gated). Pair with a separate history-only accuracy filter and a minimum-distance spacer to declutter long timelines without losing data.
 - **Modern End-to-End Encryption** - All location data, messages, and control payloads use **NIP-44 v2** (ChaCha20-HMAC-SHA256) with full support for the standard bucketing padding scheme and extended length payloads (>64KiB). Relays store only opaque ciphertext for application events and cannot read your location or message content.
 - **Per-Contact Privacy Controls** - Choose `EXACT` or `SUBURB` precision per contact, and `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` for the relationship role independently. Set independent location and message retention windows; old data is automatically purged from your contact's device via encrypted remote purge requests.
@@ -35,13 +35,33 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 - **Backup & Restore** - Export and selectively restore your identity, contacts, geofences, and settings to a local JSON file, optionally password-encrypted (AES-256-GCM with a PBKDF2-HMAC-SHA256 derived key). Newly created accounts are gently nudged to back up their private key during onboarding, before anything that could be lost exists.
 - **Screenshot Protection** - `FLAG_SECURE` prevents UI capture of sensitive screens (maps, private key, profile QR).
 
+## Settings
+
+Settings are organised into focused sub-screens reached from a category list, ordered roughly by how often each is used (most-used first). The top-level **global settings** menu lists:
+
+1. **Location** - sharing on/off, update cadence, sharing schedule, live-boost toggles, distance/accuracy filters
+2. **Location History** - browse your own location timeline
+3. **Geofences** - manage your own arrival/departure zones
+4. **Privacy** - tracking alerts
+5. **Map** - starting point, zoom level, pin colour
+6. **Security** - app lock, permissions, supervised mode
+7. **Appearance** - theme, dynamic colour, navigation, start page
+8. **Language** - in-app language picker
+9. **Units & Display** - speed/distance/elevation units and clock format
+10. **Connection** - relays and network transport
+11. **Retention** - how long data is kept on this device
+12. **Backup & Recovery** - export/restore identity, contacts, geofences and settings
+13. **About** - app info, relay status, open-source attributions
+
+Each contact has its own **per-contact settings** screen with the same most-used-first ordering: **Location** (share role, schedule), **Location History**, **Safety** (proximity alerts), **Geofences**, **Privacy** (precision, pause, temporary sharing), **Messaging**, **Retention**, and **Security** (supervised mode).
+
 ## How It Works
 
 ### Identities
 Each device generates a unique Nostr keypair on first launch. Your public key is your identity - no email, phone number, or account required. The private key is stored in the **Android Keystore** and persisted via **Jetpack DataStore**.
 
 ### Connecting
-Share your **Invite QR code** or **Invite Link** (`locapeer://invite?data=<base64>`) found in Settings → My Profile. When a contact scans it, both devices exchange `TRACK_REQUEST` / `TRACK_ACCEPT` events to negotiate initial roles and begin subscribing to each other's encrypted location events.
+Share your **Invite QR code** or **Invite Link** (`locapeer://invite?data=<base64>`) found in the profile header at the top of Settings. When a contact scans it, both devices exchange `TRACK_REQUEST` / `TRACK_ACCEPT` events to negotiate initial roles and begin subscribing to each other's encrypted location events.
 
 ### Location Events
 When sharing is enabled, the app publishes a `HEARTBEAT` event encrypted individually for each subscriber. Heartbeat frequency is motion-adaptive:

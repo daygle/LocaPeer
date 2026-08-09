@@ -27,8 +27,6 @@
     <string name="common_deny">ପ୍ରତ୍ୟାଖ୍ୟାନ କରନ୍ତୁ</string>
 
     <!-- ── ନେଭିଗେସନ୍ ଟ୍ୟାବ୍ ଲେବଲ୍ ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">ଜିଓଫେନ୍ସ ଏବଂ ଗତିବିଧି ଇତିହାସ</string>
-    <string name="peer_category_history_title">ଜୋନ୍ ଏବଂ ଇତିହାସ</string>
     <string name="peer_category_messaging_subtitle">ଚାଟ୍ ବାର୍ତ୍ତାକୁ ଅନୁମତି ଦିଅନ୍ତୁ କିମ୍ବା ଅବରୋଧ କରନ୍ତୁ</string>
     <string name="peer_category_messaging_title">ମେସେଜିଂ</string>
     <string name="peer_category_retention_subtitle">ଦୂରବର୍ତ୍ତୀ ଇତିହାସ ଏବଂ ପରିଷ୍କାର</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, ହଜିଯାଇଥିବା ଅପଡେଟ୍, ନିକଟତା, ତଦାରଖ</string>
     <string name="peer_category_safety_title">ସୁରକ୍ଷା ଏବଂ ସତର୍କତା</string>
     <string name="peer_category_sharing_subtitle">ଭୂମିକା, ସଠିକତା ଏବଂ କାର୍ଯ୍ୟସୂଚୀ</string>
-    <string name="peer_category_sharing_title">ଅଂଶୀଦାର ନିୟନ୍ତ୍ରଣ</string>
+    <string name="peer_category_privacy_title">ଗୋପନୀୟତା</string>
+    <string name="peer_category_privacy_subtitle">ସଠିକତା, ବିରତି ଏବଂ ସାମୟିକ ଅଂଶୀଦାର</string>
+    <string name="peer_category_security_title">ସୁରକ୍ଷା</string>
+    <string name="peer_category_security_subtitle">ତଦାରଖ ନିୟନ୍ତ୍ରଣ</string>
+    <string name="peer_category_sharing_title">ସ୍ଥାନ</string>
     <string name="scan_add_share">ଯୋଡନ୍ତୁ ଏବଂ ଅଂଶୀଦାର କରନ୍ତୁ</string>
     <string name="scan_grant_permission">ଅନୁମତି ଦିଅନ୍ତୁ</string>
     <string name="scan_request_sent_title">ଅନୁରୋଧ ପଠାଯାଇଛି</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ସେଟିଂସମୂହ</string>
 
     <!-- ବିଭାଗ ଲେବଲ୍ -->
-    <string name="settings_section_location_privacy">ସ୍ଥାନ ଏବଂ ଗୋପନୀୟତା</string>
+    <string name="settings_section_location">ସ୍ଥାନ</string>
+    <string name="settings_section_privacy">ଗୋପନୀୟତା</string>
+    <string name="settings_section_connection">ସଂଯୋଗ</string>
+    <string name="settings_section_language">ଭାଷା</string>
+    <string name="settings_category_location_subtitle">ଅଂଶୀଦାର, କାର୍ଯ୍ୟସୂଚୀ, ଇତିହାସ ଏବଂ ସଠିକତା</string>
+    <string name="settings_category_privacy_subtitle">ଟ୍ରାକିଂ ଆଲର୍ଟ</string>
+    <string name="settings_category_connection_subtitle">ରିଲେ ଏବଂ ନେଟ୍‌ୱର୍କ ପରିବହନ</string>
+    <string name="settings_category_language_subtitle">ଆପ୍‌ର ଭାଷା ଚୟନ କରନ୍ତୁ</string>
     <string name="settings_section_security">ସୁରକ୍ଷା</string>
     <string name="settings_section_map">ମାନଚିତ୍ର</string>
-    <string name="settings_section_battery_performance">ବ୍ୟାଟେରୀ ଏବଂ ପ୍ରଦର୍ଶନ</string>
     <string name="settings_section_units_display">ୟୁନିଟ୍ ଏବଂ ପ୍ରଦର୍ଶନ</string>
     <string name="settings_section_retention">ଧାରଣ (ଏହି ଡିଭାଇସରେ)</string>
     <string name="settings_section_appearance">ରୂପ</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s ଙ୍କ ସ୍ଥାନ ପ୍ରାପ୍ତ କରନ୍ତୁ</string>
     <string name="peer_receive_on">ଆପଣ %1$s ଙ୍କ ସ୍ଥାନ ଦେଖିପାରିବେ</string>
     <string name="peer_receive_off">ଆପଣଙ୍କର %1$s ଙ୍କ ସ୍ଥାନର ପ୍ରବେଶ ନାହିଁ</string>
-    <string name="peer_section_privacy">ଗୋପନୀୟତା ଏବଂ ଅଂଶୀଦାର ନିୟନ୍ତ୍ରଣ</string>
+    <string name="peer_section_privacy">ଗୋପନୀୟତା</string>
     <string name="peer_pause_sharing">ଅଂଶୀଦାର ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="peer_pause_sub">ସାମୟିକ ଭାବରେ %1$s କୁ ଆପଣଙ୍କର ସ୍ଥାନ ପଠାଇବା ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="peer_precision">ସ୍ଥାନ ସଠିକତା</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">ଯଦି %1$s ସେମାନଙ୍କର ସ୍ଥାନ ରିପୋର୍ଟ କରିବା ବନ୍ଦ କରନ୍ତି ତେବେ ମୋତେ ଜଣାନ୍ତୁ</string>
     <string name="peer_requires_access">%1$s ଙ୍କ ସ୍ଥାନର ପ୍ରବେଶ ଆବଶ୍ୟକ</string>
     <string name="peer_proximity_alert">ନିକଟତରତା ସତର୍କତା</string>
+    <string name="peer_proximity_alerts_title">ନିକଟତରତା ସତର୍କତା</string>
     <string name="peer_proximity_sub">ଯେତେବେଳେ %1$s ନିକଟରେ ଥାନ୍ତି ମୋତେ ଜଣାନ୍ତୁ</string>
     <string name="peer_alert_radius">ସତର୍କତା ବ୍ୟାସାର୍ଦ୍ଧ</string>
     <string name="peer_alert_schedule">ସତର୍କତା କାର୍ଯ୍ୟସୂଚୀ</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">ଅବୈଧ ବ୍ୟକ୍ତିଗତ କି ।</string>
     <string name="onboarding_error_hex">ଅବୈଧ ହେକ୍ସ ଫର୍ମାଟ୍ ।</string>
     <string name="onboarding_error_import_failed">କି ଆମଦାନୀ କରିବାରେ ବିଫଳ: %1$s</string>
-    <string name="about_diagnostics">ନେଟୱାର୍କ</string>
-    <string name="about_no_pending">ଧାଡ଼ିରେ କୌଣସି ବାର୍ତ୍ତା ନାହିଁ</string>
-    <string name="about_pending_messages">ଧାଡ଼ିରେ ଥିବା ବାର୍ତ୍ତା</string>
+    <string name="settings_queued_none">ଧାଡ଼ିରେ କୌଣସି ବାର୍ତ୍ତା ନାହିଁ</string>
+    <string name="settings_queued_messages">ଧାଡ଼ିରେ ଥିବା ବାର୍ତ୍ତା</string>
     <string name="app_lock_activity_unsupported">ଆପ୍ ଲକ୍ ପାଇଁ ସିଷ୍ଟମ୍ ପ୍ରମ୍ପ୍ଟ ସମର୍ଥନ କରୁଥିବା ହୋଷ୍ଟ ଆବଶ୍ୟକ। ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
     <string name="app_lock_prompt_subtitle">ବାୟୋମେଟ୍ରିକ୍ କିମ୍ବା ଡିଭାଇସ୍ PIN ବ୍ୟବହାର କରନ୍ତୁ</string>
     <string name="app_lock_prompt_title">LocaPeer ଅନଲକ୍ କରନ୍ତୁ</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">ଅସ୍ଥାୟୀ ଅବସ୍ଥାନ ଅଂଶୀଦାର</string>
     <string name="app_lock_no_credential">ଏହି ଉପକରଣରେ କୌଣସି ସ୍କ୍ରିନ୍ ଲକ୍ ସେଟ୍ କରାଯାଇନାହିଁ, ତେଣୁ ଅନଲକ୍ କରିବା ପାଇଁ କିଛି ନାହିଁ। ଆପଣଙ୍କ ଉପକରଣ ସେଟିଂସ୍‌ରେ ଏକ PIN, ପ୍ୟାଟର୍ନ, ପାସୱାର୍ଡ, କିମ୍ବା ବାୟୋମେଟ୍ରିକ୍ ସେଟ୍ କରନ୍ତୁ, ତାପରେ LocaPeer ପୁନର୍ବାର ଖୋଲନ୍ତୁ।</string>
     <string name="backup_key_needs_password">ଆପଣଙ୍କ ବ୍ୟକ୍ତିଗତ କୀ ଅନ୍ତର୍ଭୁକ୍ତ କରିବା ପାଇଁ ଏକ ପାସୱାର୍ଡ ସେଟ୍ କରନ୍ତୁ। ଏକ ଏନକ୍ରିପ୍ଟ ହୋଇନଥିବା କୀ ଫାଇଲ୍ ଯେକୌଣସି ବ୍ୟକ୍ତିଙ୍କୁ ଆପଣଙ୍କ ପରିଚୟ ଦଖଲ କରିବାକୁ ଅନୁମତି ଦେଇପାରେ।</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">ଆପ୍ ଲକ୍, ଅନୁମତି, ତଦାରଖ ମୋଡ୍</string>
+    <string name="settings_category_map_subtitle">ଆରମ୍ଭ ବିନ୍ଦୁ, ଜୁମ୍, ପିନ୍ ରଙ୍ଗ</string>
+    <string name="settings_category_units_subtitle">ଗତି, ଦୂରତା, ଉଚ୍ଚତା, ସମୟ</string>
+    <string name="settings_category_retention_subtitle">ଏହି ଡିଭାଇସରେ ଡାଟା କେତେ ସମୟ ରଖାଯାଏ</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">ରପ୍ତାନି, ଆମଦାନୀ, ବ୍ୟକ୍ତିଗତ କି</string>
+    <string name="contacts_add_contact">ସମ୍ପର୍କ ଯୋଡନ୍ତୁ</string>
+    <string name="map_location_off_title">ସ୍ଥାନ ବନ୍ଦ ଅଛି</string>
+    <string name="map_location_off_message">ଆପଣ ଡିଭାଇସ୍ ସ୍ଥାନ ଚାଲୁ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ସ୍ଥାନ ଅପଡେଟ୍ କିମ୍ବା ସେୟାର କରାଯାଇ ପାରିବ ନାହିଁ।</string>
+    <string name="map_location_off_action">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">ରିଲେରେ ପହଞ୍ଚିବାକୁ ଅପେକ୍ଷା କରୁଥିବା ଇଭେଣ୍ଟ</string>
+    <string name="queued_messages_title">ଧାଡିରେ ଥିବା ବାର୍ତ୍ତା</string>
+    <string name="queued_message_kind">ଇଭେଣ୍ଟ ପ୍ରକାର %1$d</string>
+    <string name="queued_message_queued_at">ଧାଡିରେ %1$s</string>
+    <string name="queued_message_view">ଇଭେଣ୍ଟ ଦେଖନ୍ତୁ</string>
+    <string name="queued_message_hide">ଲୁଚାନ୍ତୁ</string>
+    <string name="queued_messages_flush">ବର୍ତ୍ତମାନ ପଠାନ୍ତୁ</string>
 </resources>

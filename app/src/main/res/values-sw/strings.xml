@@ -27,8 +27,6 @@
     <string name="common_deny">Kataa</string>
 
     <!-- ── Lebo za Vichupo vya Urambazaji ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Maeneo ya Kijiografia na historia ya mwendo</string>
-    <string name="peer_category_history_title">Kanda na Historia</string>
     <string name="peer_category_messaging_subtitle">Ruhusu au zuia ujumbe wa gumzo</string>
     <string name="peer_category_messaging_title">Ujumbe</string>
     <string name="peer_category_retention_subtitle">Historia ya mbali na usafishaji</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, masasisho yaliyokosekana, ukaribu, usimamizi</string>
     <string name="peer_category_safety_title">Usalama na Arifa</string>
     <string name="peer_category_sharing_subtitle">Majukumu, usahihi na ratiba</string>
-    <string name="peer_category_sharing_title">Udhibiti wa Kushiriki</string>
+    <string name="peer_category_privacy_title">Faragha</string>
+    <string name="peer_category_privacy_subtitle">Usahihi, kusitisha na kushiriki kwa muda</string>
+    <string name="peer_category_security_title">Usalama</string>
+    <string name="peer_category_security_subtitle">Vidhibiti vya usimamizi</string>
+    <string name="peer_category_sharing_title">Mahali</string>
     <string name="scan_add_share">Ongeza na Shiriki</string>
     <string name="scan_grant_permission">Toa Ruhusa</string>
     <string name="scan_request_sent_title">Ombi Limetumwa</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Mipangilio</string>
 
     <!-- Lebo za sehemu -->
-    <string name="settings_section_location_privacy">Mahali &amp; Faragha</string>
+    <string name="settings_section_location">Mahali</string>
+    <string name="settings_section_privacy">Faragha</string>
+    <string name="settings_section_connection">Muunganisho</string>
+    <string name="settings_section_language">Lugha</string>
+    <string name="settings_category_location_subtitle">Kushiriki, ratiba, historia na usahihi</string>
+    <string name="settings_category_privacy_subtitle">Arifa za ufuatiliaji</string>
+    <string name="settings_category_connection_subtitle">Rele na usafirishaji wa mtandao</string>
+    <string name="settings_category_language_subtitle">Chagua lugha ya programu</string>
     <string name="settings_section_security">Usalama</string>
     <string name="settings_section_map">Ramani</string>
-    <string name="settings_section_battery_performance">Betri &amp; Utendaji</string>
     <string name="settings_section_units_display">Vitengo &amp; Maonyesho</string>
     <string name="settings_section_retention">Uhifadhi (Kifaa Hiki)</string>
     <string name="settings_section_appearance">Muonekano</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Pokea Mahali pa %1$s</string>
     <string name="peer_receive_on">Unaweza kuona eneo la %1$s</string>
     <string name="peer_receive_off">Hauna ufikiaji wa eneo la %1$s</string>
-    <string name="peer_section_privacy">Udhibiti wa Faragha &amp; Kushiriki</string>
+    <string name="peer_section_privacy">Faragha</string>
     <string name="peer_pause_sharing">Sitisha Kushiriki</string>
     <string name="peer_pause_sub">Acha kutuma eneo lako kwa %1$s kwa muda</string>
     <string name="peer_precision">Usahihi wa Mahali</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Niarifu ikiwa %1$s ataacha kuripoti eneo lake</string>
     <string name="peer_requires_access">Inahitaji ufikiaji wa eneo la %1$s</string>
     <string name="peer_proximity_alert">Arifa ya Ukaribu</string>
+    <string name="peer_proximity_alerts_title">Arifa za Ukaribu</string>
     <string name="peer_proximity_sub">Niarifu %1$s akiwa karibu</string>
     <string name="peer_alert_radius">Radius ya Arifa</string>
     <string name="peer_alert_schedule">Ratiba ya Arifa</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Ufunguo wa kibinafsi batili - nje ya safu ya mkunjo.</string>
     <string name="onboarding_error_hex">Muundo wa hex batili.</string>
     <string name="onboarding_error_import_failed">Imeshindwa kuingiza ufunguo: %1$s</string>
-    <string name="about_diagnostics">Mtandao</string>
-    <string name="about_no_pending">Hakuna ujumbe kwenye foleni</string>
-    <string name="about_pending_messages">Ujumbe kwenye foleni</string>
+    <string name="settings_queued_none">Hakuna ujumbe kwenye foleni</string>
+    <string name="settings_queued_messages">Ujumbe kwenye foleni</string>
     <string name="app_lock_activity_unsupported">Kufuli la programu linahitaji mwenyeji anayeauni kidokezo cha mfumo. Sasisha programu.</string>
     <string name="app_lock_prompt_subtitle">Tumia biometriki au PIN ya kifaa</string>
     <string name="app_lock_prompt_title">Fungua LocaPeer</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">Kushiriki eneo kwa muda</string>
     <string name="app_lock_no_credential">Hakuna ufunguo wa skrini uliowekwa kwenye kifaa hiki, kwa hivyo hakuna cha kufungulia. Weka PIN, mchoro, nenosiri, au biometriki katika mipangilio ya kifaa chako, kisha ufungue tena LocaPeer.</string>
     <string name="backup_key_needs_password">Weka nenosiri ili kujumuisha ufunguo wako wa faragha. Faili ya ufunguo isiyosimbwa inaweza kumruhusu mtu yeyote kuchukua utambulisho wako.</string>
-    <string name="settings_category_location_privacy_subtitle">Kushiriki, ratiba, geofences, arifa</string>
     <string name="settings_category_security_subtitle">Kufunga programu, ruhusa, hali ya usimamizi</string>
     <string name="settings_category_map_subtitle">Hatua ya kuanzia, kukuza, rangi ya pini</string>
-    <string name="settings_category_performance_subtitle">Kasi ya kusasisha na vichujio vya usahihi</string>
     <string name="settings_category_units_subtitle">Kasi, umbali, mwinuko, wakati</string>
     <string name="settings_category_retention_subtitle">Muda gani data huwekwa kwenye kifaa hiki</string>
     <string name="settings_category_appearance_subtitle">Mandhari, rangi, urambazaji, lugha</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">Nafasi yako haiwezi kusasishwa au kushirikiwa hadi uwashe mahali kwenye kifaa.</string>
     <string name="map_location_off_action">Fungua mipangilio</string>
     <string name="map_live">● Moja kwa moja</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">Ujumbe %1$d kwenye foleni</item>
         <item quantity="other">Jumbe %1$d kwenye foleni</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Matukio yanayosubiri kufika kwenye rele</string>
+    <string name="queued_messages_title">Ujumbe Unaosubiri</string>
+    <string name="queued_message_kind">Aina ya tukio %1$d</string>
+    <string name="queued_message_queued_at">Katika foleni %1$s</string>
+    <string name="queued_message_view">Angalia tukio</string>
+    <string name="queued_message_hide">Ficha</string>
+    <string name="queued_messages_flush">Tuma sasa</string>
 </resources>

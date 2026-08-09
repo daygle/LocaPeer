@@ -27,8 +27,6 @@
     <string name="common_deny">Refuser</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Clôtures virtuelles et historique des mouvements</string>
-    <string name="peer_category_history_title">Zones et historique</string>
     <string name="peer_category_messaging_subtitle">Autoriser ou bloquer les messages de discussion</string>
     <string name="peer_category_messaging_title">Messagerie</string>
     <string name="peer_category_retention_subtitle">Historique distant et purge</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, mises à jour manquées, proximité, supervision</string>
     <string name="peer_category_safety_title">Sécurité et alertes</string>
     <string name="peer_category_sharing_subtitle">Rôles, précision et planification</string>
-    <string name="peer_category_sharing_title">Contrôles de partage</string>
+    <string name="peer_category_privacy_title">Confidentialité</string>
+    <string name="peer_category_privacy_subtitle">Précision, pause et partage temporaire</string>
+    <string name="peer_category_security_title">Sécurité</string>
+    <string name="peer_category_security_subtitle">Contrôles de supervision</string>
+    <string name="peer_category_sharing_title">Localisation</string>
     <string name="scan_add_share">Ajouter et partager</string>
     <string name="scan_grant_permission">Accorder l\'autorisation</string>
     <string name="scan_request_sent_title">Demande envoyée</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Paramètres</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Localisation et confidentialité</string>
+    <string name="settings_section_location">Localisation</string>
+    <string name="settings_section_privacy">Confidentialité</string>
+    <string name="settings_section_connection">Connexion</string>
+    <string name="settings_section_language">Langue</string>
+    <string name="settings_category_location_subtitle">Partage, planification, historique et précision</string>
+    <string name="settings_category_privacy_subtitle">Alertes de suivi</string>
+    <string name="settings_category_connection_subtitle">Relais et transport réseau</string>
+    <string name="settings_category_language_subtitle">Choisissez la langue de l\'application</string>
     <string name="settings_section_security">Sécurité</string>
     <string name="settings_section_map">Carte</string>
-    <string name="settings_section_battery_performance">Batterie et performance</string>
     <string name="settings_section_units_display">Unités et affichage</string>
     <string name="settings_section_retention">Rétention (cet appareil)</string>
     <string name="settings_section_appearance">Apparence</string>
@@ -389,7 +397,7 @@
     <string name="peer_receive_title">Recevoir la localisation de %1$s</string>
     <string name="peer_receive_on">Vous pouvez voir la localisation de %1$s</string>
     <string name="peer_receive_off">Vous n\'avez pas accès à la localisation de %1$s</string>
-    <string name="peer_section_privacy">Commandes de confidentialité et de partage</string>
+    <string name="peer_section_privacy">Confidentialité</string>
     <string name="peer_pause_sharing">Suspendre le partage</string>
     <string name="peer_pause_sub">Arrêter temporairement d\'envoyer votre localisation à %1$s</string>
     <string name="peer_precision">Précision de la localisation</string>
@@ -407,6 +415,7 @@
     <string name="peer_missed_on">Me notifier si %1$s arrête de signaler sa localisation</string>
     <string name="peer_requires_access">Nécessite l\'accès à la localisation de %1$s</string>
     <string name="peer_proximity_alert">Alerte de proximité</string>
+    <string name="peer_proximity_alerts_title">Alertes de proximité</string>
     <string name="peer_proximity_sub">Me notifier quand %1$s est à proximité</string>
     <string name="peer_alert_radius">Rayon d\'alerte</string>
     <string name="peer_alert_schedule">Horaire d\'alerte</string>
@@ -657,7 +666,7 @@
     <string name="customize_cd_move_down">Descendre</string>
 
     <!-- ── About screen ───────────────────────────────────────────────────── -->
-    <string name="about_version">Version %1$s (build %2$d)</string>
+    <string name="about_version">Version %1$s (compilation %2$d)</string>
     <string name="about_tagline">Partage de localisation privé avec les personnes de confiance. Sans comptes, sans cloud, sans suivi de notre part.</string>
     <string name="about_open_source">Bibliothèques open source</string>
     <string name="about_lib_osmdroid_desc">Rendu cartographique basé sur OpenStreetMap</string>
@@ -754,9 +763,8 @@
     <string name="peer_purge_location_sent">Commande de suppression à distance de TOUTES les positions envoyée à %1$s</string>
     <string name="peer_purge_messages_sent">Commande de suppression à distance de TOUS les messages envoyée à %1$s</string>
     <string name="peer_role_change_sent">Demande de changement de rôle envoyée à %1$s</string>
-    <string name="about_diagnostics">Réseau</string>
-    <string name="about_no_pending">Aucun message en file d\'attente</string>
-    <string name="about_pending_messages">Messages en file d\'attente</string>
+    <string name="settings_queued_none">Aucun message en file d\'attente</string>
+    <string name="settings_queued_messages">Messages en file d\'attente</string>
     <string name="app_lock_activity_unsupported">Le verrouillage de l\'app nécessite un hôte compatible avec l\'invite système. Mettez l\'app à jour.</string>
     <string name="app_lock_prompt_subtitle">Utilisez la biométrie ou le code de l\'appareil</string>
     <string name="app_lock_prompt_title">Déverrouiller LocaPeer</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">Partage de position temporaire</string>
     <string name="app_lock_no_credential">Aucun verrouillage d\'écran n\'est configuré sur cet appareil, il n\'y a donc rien pour déverrouiller. Définissez un code PIN, un schéma, un mot de passe ou une donnée biométrique dans les paramètres de votre appareil, puis rouvrez LocaPeer.</string>
     <string name="backup_key_needs_password">Définissez un mot de passe pour inclure votre clé privée. Un fichier de clé non chiffré pourrait permettre à quiconque de s\'emparer de votre identité.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Verrouillage de l\'app, autorisations, mode supervisé</string>
+    <string name="settings_category_map_subtitle">Point de départ, zoom, couleur de l\'épingle</string>
+    <string name="settings_category_units_subtitle">Vitesse, distance, altitude, heure</string>
+    <string name="settings_category_retention_subtitle">Combien de temps les données sont conservées sur cet appareil</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Exporter, importer, clé privée</string>
+    <string name="contacts_add_contact">Ajouter un contact</string>
+    <string name="map_location_off_title">La localisation est désactivée</string>
+    <string name="map_location_off_message">Votre position ne peut pas être mise à jour ni partagée tant que vous n\'activez pas la localisation de l\'appareil.</string>
+    <string name="map_location_off_action">Ouvrir les paramètres</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Événements en attente d\'envoi aux relais</string>
+    <string name="queued_messages_title">Messages en attente</string>
+    <string name="queued_message_kind">Type d\'événement %1$d</string>
+    <string name="queued_message_queued_at">En attente %1$s</string>
+    <string name="queued_message_view">Voir l\'événement</string>
+    <string name="queued_message_hide">Masquer</string>
+    <string name="queued_messages_flush">Envoyer maintenant</string>
 </resources>

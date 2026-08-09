@@ -27,8 +27,6 @@
     <string name="common_deny">नकार द्या</string>
 
     <!-- ── नेव्हिगेशन टॅब लेबले ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">जिओफेन्सेस आणि हालचाल इतिहास</string>
-    <string name="peer_category_history_title">झोन आणि इतिहास</string>
     <string name="peer_category_messaging_subtitle">चॅट संदेशांना परवानगी द्या किंवा ब्लॉक करा</string>
     <string name="peer_category_messaging_title">मेसेजिंग</string>
     <string name="peer_category_retention_subtitle">रिमोट इतिहास आणि साफ करणे</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, चुकलेले अपडेट, जवळीक, देखरेख</string>
     <string name="peer_category_safety_title">सुरक्षा आणि अलर्ट</string>
     <string name="peer_category_sharing_subtitle">भूमिका, अचूकता आणि वेळापत्रक</string>
-    <string name="peer_category_sharing_title">शेअरिंग नियंत्रणे</string>
+    <string name="peer_category_privacy_title">गोपनीयता</string>
+    <string name="peer_category_privacy_subtitle">अचूकता, थांबवणे आणि तात्पुरते शेअरिंग</string>
+    <string name="peer_category_security_title">सुरक्षा</string>
+    <string name="peer_category_security_subtitle">देखरेख नियंत्रणे</string>
+    <string name="peer_category_sharing_title">स्थान</string>
     <string name="scan_add_share">जोडा आणि शेअर करा</string>
     <string name="scan_grant_permission">परवानगी द्या</string>
     <string name="scan_request_sent_title">विनंती पाठवली</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">सेटिंग्ज</string>
 
     <!-- विभाग लेबले -->
-    <string name="settings_section_location_privacy">स्थान आणि गोपनीयता</string>
+    <string name="settings_section_location">स्थान</string>
+    <string name="settings_section_privacy">गोपनीयता</string>
+    <string name="settings_section_connection">कनेक्शन</string>
+    <string name="settings_section_language">भाषा</string>
+    <string name="settings_category_location_subtitle">शेअरिंग, शेड्यूल, इतिहास आणि अचूकता</string>
+    <string name="settings_category_privacy_subtitle">ट्रॅकिंग अलर्ट</string>
+    <string name="settings_category_connection_subtitle">रिले आणि नेटवर्क वाहतूक</string>
+    <string name="settings_category_language_subtitle">अॅपची भाषा निवडा</string>
     <string name="settings_section_security">सुरक्षा</string>
     <string name="settings_section_map">नकाशा</string>
-    <string name="settings_section_battery_performance">बॅटरी आणि कार्यक्षमता</string>
     <string name="settings_section_units_display">युनिट्स आणि डिस्प्ले</string>
     <string name="settings_section_retention">डेटा टिकवून ठेवणे (या डिव्हाइसवर)</string>
     <string name="settings_section_appearance">स्वरूप</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s चे स्थान मिळवा</string>
     <string name="peer_receive_on">तुम्ही %1$s चे स्थान पाहू शकता</string>
     <string name="peer_receive_off">तुम्हाला %1$s च्या स्थानाचा प्रवेश नाही</string>
-    <string name="peer_section_privacy">गोपनीयता आणि शेअरिंग नियंत्रणे</string>
+    <string name="peer_section_privacy">गोपनीयता</string>
     <string name="peer_pause_sharing">शेअरिंग थांबवा</string>
     <string name="peer_pause_sub">%1$s ला तुमचे स्थान पाठवणे तात्पुरते थांबवा</string>
     <string name="peer_precision">स्थान अचूकता</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">जर %1$s ने त्यांचे स्थान कळवणे बंद केले तर मला कळवा</string>
     <string name="peer_requires_access">%1$s च्या स्थानाचा प्रवेश आवश्यक आहे</string>
     <string name="peer_proximity_alert">प्रॉक्सिमिटी अलर्ट</string>
+    <string name="peer_proximity_alerts_title">प्रॉक्सिमिटी अलर्ट</string>
     <string name="peer_proximity_sub">%1$s जवळ असताना मला कळवा</string>
     <string name="peer_alert_radius">अलर्ट त्रिज्या</string>
     <string name="peer_alert_schedule">अलर्ट वेळापत्रक</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">अवैध खाजगी की.</string>
     <string name="onboarding_error_hex">अवैध हेक्स स्वरूप.</string>
     <string name="onboarding_error_import_failed">की आयात करणे अयशस्वी: %1$s</string>
-    <string name="about_diagnostics">नेटवर्क</string>
-    <string name="about_no_pending">रांगेत संदेश नाहीत</string>
-    <string name="about_pending_messages">रांगेतील संदेश</string>
+    <string name="settings_queued_none">रांगेत संदेश नाहीत</string>
+    <string name="settings_queued_messages">रांगेतील संदेश</string>
     <string name="app_lock_activity_unsupported">अ‍ॅप लॉकसाठी सिस्टम प्रॉम्प्टला समर्थन देणारा होस्ट आवश्यक आहे. अ‍ॅप अद्ययावत करा.</string>
     <string name="app_lock_prompt_subtitle">बायोमेट्रिक किंवा डिव्हाइस PIN वापरा</string>
     <string name="app_lock_prompt_title">LocaPeer अनलॉक करा</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">तात्पुरते स्थान सामायिकरण</string>
     <string name="app_lock_no_credential">या डिव्हाइसवर कोणतेही स्क्रीन लॉक सेट केलेले नाही, त्यामुळे अनलॉक करण्यासाठी काहीही नाही. तुमच्या डिव्हाइस सेटिंग्जमध्ये एक PIN, पॅटर्न, पासवर्ड, किंवा बायोमेट्रिक सेट करा, नंतर LocaPeer पुन्हा उघडा.</string>
     <string name="backup_key_needs_password">तुमची खाजगी की समाविष्ट करण्यासाठी एक पासवर्ड सेट करा. एन्क्रिप्ट न केलेली की फाइल कोणालाही तुमची ओळख ताब्यात घेऊ देऊ शकते.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">अॅप लॉक, परवानग्या, देखरेख मोड</string>
+    <string name="settings_category_map_subtitle">सुरुवातीचा बिंदू, झूम, पिन रंग</string>
+    <string name="settings_category_units_subtitle">वेग, अंतर, उंची, वेळ</string>
+    <string name="settings_category_retention_subtitle">या डिव्हाइसवर डेटा किती काळ ठेवला जातो</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">निर्यात, आयात, खाजगी की</string>
+    <string name="contacts_add_contact">संपर्क जोडा</string>
+    <string name="map_location_off_title">स्थान बंद आहे</string>
+    <string name="map_location_off_message">तुम्ही डिव्हाइसचे स्थान चालू करेपर्यंत तुमचे स्थान अद्यतनित किंवा सामायिक केले जाऊ शकत नाही.</string>
+    <string name="map_location_off_action">सेटिंग्ज उघडा</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">रिलेपर्यंत पोहोचण्याची वाट पाहणाऱ्या घटना</string>
+    <string name="queued_messages_title">रांगेत असलेले संदेश</string>
+    <string name="queued_message_kind">इव्हेंट प्रकार %1$d</string>
+    <string name="queued_message_queued_at">रांगेत %1$s</string>
+    <string name="queued_message_view">इव्हेंट पहा</string>
+    <string name="queued_message_hide">लपवा</string>
+    <string name="queued_messages_flush">आता पाठवा</string>
 </resources>

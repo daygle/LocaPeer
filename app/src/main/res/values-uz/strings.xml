@@ -27,8 +27,6 @@
     <string name="common_deny">Rad etish</string>
 
     <!-- ── Navigatsiya tablari yorliqlari ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geozonalar va harakat tarixi</string>
-    <string name="peer_category_history_title">Zonalar va tarix</string>
     <string name="peer_category_messaging_subtitle">Chat xabarlariga ruxsat berish yoki bloklash</string>
     <string name="peer_category_messaging_title">Xabarlar</string>
     <string name="peer_category_retention_subtitle">Masofaviy tarix va tozalash</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, o‘tkazib yuborilgan yangilanishlar, yaqinlik, nazorat</string>
     <string name="peer_category_safety_title">Xavfsizlik va ogohlantirishlar</string>
     <string name="peer_category_sharing_subtitle">Rollar, aniqlik va jadval</string>
-    <string name="peer_category_sharing_title">Baham ko‘rishni boshqarish</string>
+    <string name="peer_category_privacy_title">Maxfiylik</string>
+    <string name="peer_category_privacy_subtitle">Aniqlik, pauza va vaqtinchalik ulashish</string>
+    <string name="peer_category_security_title">Xavfsizlik</string>
+    <string name="peer_category_security_subtitle">Nazorat boshqaruvlari</string>
+    <string name="peer_category_sharing_title">Joylashuv</string>
     <string name="scan_add_share">Qo‘shish va baham ko‘rish</string>
     <string name="scan_grant_permission">Ruxsat berish</string>
     <string name="scan_request_sent_title">So‘rov yuborildi</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Sozlamalar</string>
 
     <!-- Bo‘lim yorliqlari -->
-    <string name="settings_section_location_privacy">Joylashuv va maxfiylik</string>
+    <string name="settings_section_location">Joylashuv</string>
+    <string name="settings_section_privacy">Maxfiylik</string>
+    <string name="settings_section_connection">Ulanish</string>
+    <string name="settings_section_language">Til</string>
+    <string name="settings_category_location_subtitle">Ulashish, jadval, tarix va aniqlik</string>
+    <string name="settings_category_privacy_subtitle">Kuzatuv ogohlantirishlari</string>
+    <string name="settings_category_connection_subtitle">Relelar va tarmoq uzatish</string>
+    <string name="settings_category_language_subtitle">Ilova tilini tanlang</string>
     <string name="settings_section_security">Xavfsizlik</string>
     <string name="settings_section_map">Xarita</string>
-    <string name="settings_section_battery_performance">Batareya va unumdorlik</string>
     <string name="settings_section_units_display">Birliklar va displey</string>
     <string name="settings_section_retention">Saqlash (ushbu qurilmada)</string>
     <string name="settings_section_appearance">Ko‘rinish</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s-ning joylashuvini olish</string>
     <string name="peer_receive_on">Siz %1$s-ning joylashuvini ko‘ra olasiz</string>
     <string name="peer_receive_off">Sizda %1$s-ning joylashuviga kirish ruxsati yo‘q</string>
-    <string name="peer_section_privacy">Maxfiylik va baham ko‘rishni boshqarish</string>
+    <string name="peer_section_privacy">Maxfiylik</string>
     <string name="peer_pause_sharing">Baham ko‘rishni to‘xtatib turish</string>
     <string name="peer_pause_sub">Joylashuvingizni %1$s-ga yuborishni vaqtincha to‘xtatish</string>
     <string name="peer_precision">Joylashuv aniqligi</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Agar %1$s o‘z joylashuvini yubormay qo‘ysa, menga xabar bering</string>
     <string name="peer_requires_access">%1$s-ning joylashuviga kirish ruxsati kerak</string>
     <string name="peer_proximity_alert">Yaqinlik ogohlantirishi</string>
+    <string name="peer_proximity_alerts_title">Yaqinlik ogohlantirishlari</string>
     <string name="peer_proximity_sub">%1$s yaqin joyda bo‘lganda menga xabar bering</string>
     <string name="peer_alert_radius">Ogohlantirish radiusi</string>
     <string name="peer_alert_schedule">Ogohlantirish jadvali</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Yaroqsiz maxfiy kalit.</string>
     <string name="onboarding_error_hex">Yaroqsiz heks formati.</string>
     <string name="onboarding_error_import_failed">Kalitni import qilib bo‘lmadi: %1$s</string>
-    <string name="about_diagnostics">Tarmoq</string>
-    <string name="about_no_pending">Navbatda xabar yo\'q</string>
-    <string name="about_pending_messages">Navbatdagi xabarlar</string>
+    <string name="settings_queued_none">Navbatda xabar yo\'q</string>
+    <string name="settings_queued_messages">Navbatdagi xabarlar</string>
     <string name="app_lock_activity_unsupported">Ilova qulfi tizim so\'rovini qo\'llab-quvvatlaydigan muhitni talab qiladi. Ilovani yangilang.</string>
     <string name="app_lock_prompt_subtitle">Biometriya yoki qurilma PIN-kodidan foydalaning</string>
     <string name="app_lock_prompt_title">LocaPeer qulfini oching</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">Vaqtinchalik joylashuvni ulashish</string>
     <string name="app_lock_no_credential">Bu qurilmada ekran qulfi o\'rnatilmagan, shuning uchun ochish uchun hech narsa yo\'q. Qurilma sozlamalarida PIN, grafik kalit, parol yoki biometrika o\'rnating, so\'ng LocaPeer\'ni qayta oching.</string>
     <string name="backup_key_needs_password">Shaxsiy kalitingizni kiritish uchun parol o\'rnating. Shifrlanmagan kalit fayli har kimga sizning shaxsingizni egallashga imkon berishi mumkin.</string>
-    <string name="settings_category_location_privacy_subtitle">Ulashish, jadval, geozonalar, ogohlantirishlar</string>
     <string name="settings_category_security_subtitle">Ilova qulfi, ruxsatnomalar, nazorat rejimi</string>
     <string name="settings_category_map_subtitle">Boshlang\'ich nuqta, masshtab, belgi rangi</string>
-    <string name="settings_category_performance_subtitle">Yangilanish chastotasi va aniqlik filtrlari</string>
     <string name="settings_category_units_subtitle">Tezlik, masofa, balandlik, vaqt</string>
     <string name="settings_category_retention_subtitle">Ma\'lumotlar ushbu qurilmada qancha muddat saqlanadi</string>
     <string name="settings_category_appearance_subtitle">Mavzu, rang, navigatsiya, til</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">Qurilmaning joylashuv xizmatini yoqmaguningizcha, joylashuvingiz yangilanmaydi va ulashilmaydi.</string>
     <string name="map_location_off_action">Sozlamalarni ochish</string>
     <string name="map_live">● Jonli</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">Navbatda %1$d ta xabar</item>
         <item quantity="other">Navbatda %1$d ta xabar</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Relelardarga yetishishni kutayotgan hodisalar</string>
+    <string name="queued_messages_title">Navbatdagi xabarlar</string>
+    <string name="queued_message_kind">Hodisa turi %1$d</string>
+    <string name="queued_message_queued_at">Navbatda %1$s</string>
+    <string name="queued_message_view">Hodisani ko‘rish</string>
+    <string name="queued_message_hide">Yashirish</string>
+    <string name="queued_messages_flush">Hozir yuborish</string>
 </resources>

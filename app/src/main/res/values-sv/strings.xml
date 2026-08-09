@@ -27,8 +27,6 @@
     <string name="common_deny">Neka</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geostaket och rörelsehistorik</string>
-    <string name="peer_category_history_title">Zoner och historik</string>
     <string name="peer_category_messaging_subtitle">Tillåt eller blockera chattmeddelanden</string>
     <string name="peer_category_messaging_title">Meddelanden</string>
     <string name="peer_category_retention_subtitle">Fjärrhistorik och rensning</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, missade uppdateringar, närhet, övervakning</string>
     <string name="peer_category_safety_title">Säkerhet och larm</string>
     <string name="peer_category_sharing_subtitle">Roller, precision och schema</string>
-    <string name="peer_category_sharing_title">Delningskontroller</string>
+    <string name="peer_category_privacy_title">Integritet</string>
+    <string name="peer_category_privacy_subtitle">Precision, paus och tillfällig delning</string>
+    <string name="peer_category_security_title">Säkerhet</string>
+    <string name="peer_category_security_subtitle">Övervakningskontroller</string>
+    <string name="peer_category_sharing_title">Plats</string>
     <string name="scan_add_share">Lägg till och dela</string>
     <string name="scan_grant_permission">Bevilja behörighet</string>
     <string name="scan_request_sent_title">Förfrågan skickad</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Inställningar</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Plats &amp; Integritet</string>
+    <string name="settings_section_location">Plats</string>
+    <string name="settings_section_privacy">Integritet</string>
+    <string name="settings_section_connection">Anslutning</string>
+    <string name="settings_section_language">Språk</string>
+    <string name="settings_category_location_subtitle">Delning, schema, historik och noggrannhet</string>
+    <string name="settings_category_privacy_subtitle">Spårningsvarningar</string>
+    <string name="settings_category_connection_subtitle">Reläer och nätverkstransport</string>
+    <string name="settings_category_language_subtitle">Välj appens språk</string>
     <string name="settings_section_security">Säkerhet</string>
     <string name="settings_section_map">Karta</string>
-    <string name="settings_section_battery_performance">Batteri &amp; Prestanda</string>
     <string name="settings_section_units_display">Enheter &amp; Visning</string>
     <string name="settings_section_retention">Lagring (Denna enhet)</string>
     <string name="settings_section_appearance">Utseende</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Ta emot %1$s plats</string>
     <string name="peer_receive_on">Du kan se %1$s plats</string>
     <string name="peer_receive_off">Du har inte åtkomst till %1$s plats</string>
-    <string name="peer_section_privacy">Integritets- och delningskontroller</string>
+    <string name="peer_section_privacy">Integritet</string>
     <string name="peer_pause_sharing">Pausa delning</string>
     <string name="peer_pause_sub">Sluta tillfälligt skicka din plats till %1$s</string>
     <string name="peer_precision">Platsprecision</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Meddela mig om %1$s slutar rapportera sin plats</string>
     <string name="peer_requires_access">Kräver åtkomst till %1$s plats</string>
     <string name="peer_proximity_alert">Närhetslarm</string>
+    <string name="peer_proximity_alerts_title">Närhetslarm</string>
     <string name="peer_proximity_sub">Meddela mig när %1$s är i närheten</string>
     <string name="peer_alert_radius">Larmradie</string>
     <string name="peer_alert_schedule">Larmschema</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Ogiltig privat nyckel - utanför kurvans intervall.</string>
     <string name="onboarding_error_hex">Ogiltigt hexformat.</string>
     <string name="onboarding_error_import_failed">Kunde inte importera nyckeln: %1$s</string>
-    <string name="about_diagnostics">Nätverk</string>
-    <string name="about_no_pending">Inga köade meddelanden</string>
-    <string name="about_pending_messages">Köade meddelanden</string>
+    <string name="settings_queued_none">Inga köade meddelanden</string>
+    <string name="settings_queued_messages">Köade meddelanden</string>
     <string name="app_lock_activity_unsupported">Applåset kräver en värd som stöder systemuppmaningen. Uppdatera appen.</string>
     <string name="app_lock_prompt_subtitle">Använd biometri eller enhetens PIN-kod</string>
     <string name="app_lock_prompt_title">Lås upp LocaPeer</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">Tillfällig platsdelning</string>
     <string name="app_lock_no_credential">Ingen skärmlåsning är inställd på den här enheten, så det finns inget att låsa upp med. Ställ in en PIN-kod, ett mönster, ett lösenord eller biometri i enhetens inställningar och öppna sedan LocaPeer igen.</string>
     <string name="backup_key_needs_password">Ange ett lösenord för att inkludera din privata nyckel. En okrypterad nyckelfil kan låta vem som helst ta över din identitet.</string>
-    <string name="settings_category_location_privacy_subtitle">Delning, schema, geofängsel, varningar</string>
     <string name="settings_category_security_subtitle">Applås, behörigheter, övervakat läge</string>
     <string name="settings_category_map_subtitle">Startpunkt, zoom, färg på nål</string>
-    <string name="settings_category_performance_subtitle">Uppdateringsfrekvens och noggrannhetsfilter</string>
     <string name="settings_category_units_subtitle">Hastighet, avstånd, höjd, tid</string>
     <string name="settings_category_retention_subtitle">Hur länge data sparas på den här enheten</string>
     <string name="settings_category_appearance_subtitle">Tema, färg, navigering, språk</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">Din position kan inte uppdateras eller delas förrän du slår på enhetens plats.</string>
     <string name="map_location_off_action">Öppna inställningar</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d köat meddelande</item>
         <item quantity="other">%1$d köade meddelanden</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Händelser som väntar på att nå reläerna</string>
+    <string name="queued_messages_title">Väntande meddelanden</string>
+    <string name="queued_message_kind">Händelsetyp %1$d</string>
+    <string name="queued_message_queued_at">I kö %1$s</string>
+    <string name="queued_message_view">Visa händelse</string>
+    <string name="queued_message_hide">Dölj</string>
+    <string name="queued_messages_flush">Skicka nu</string>
 </resources>

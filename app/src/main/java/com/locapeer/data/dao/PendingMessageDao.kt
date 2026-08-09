@@ -11,9 +11,13 @@ interface PendingMessageDao {
     suspend fun getForRelay(relayUrl: String): List<PendingMessageEntity>
 
     /** Observable total of queued messages across all relays, surfaced in the relay status
-     *  chip / About diagnostics so users see "N messages stuck" beyond the connected/disconnected dot. */
+     *  chip / Connection settings so users see "N messages stuck" beyond the connected/disconnected dot. */
     @Query("SELECT COUNT(*) FROM pending_messages")
     fun countAll(): Flow<Int>
+
+    /** Observable list of every queued message (oldest first), used by the drill-in queue screen. */
+    @Query("SELECT * FROM pending_messages ORDER BY id ASC")
+    fun getAll(): Flow<List<PendingMessageEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(msg: PendingMessageEntity)

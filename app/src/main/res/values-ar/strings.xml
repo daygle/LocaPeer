@@ -27,8 +27,6 @@
     <string name="common_deny">رفض</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">الأسوار الجغرافية وسجل التنقّل</string>
-    <string name="peer_category_history_title">المناطق والسجل</string>
     <string name="peer_category_messaging_subtitle">السماح برسائل المحادثة أو حظرها</string>
     <string name="peer_category_messaging_title">المراسلة</string>
     <string name="peer_category_retention_subtitle">السجل عن بُعد والحذف</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS والتحديثات المفقودة والقرب والإشراف</string>
     <string name="peer_category_safety_title">السلامة والتنبيهات</string>
     <string name="peer_category_sharing_subtitle">الأدوار والدقة والجدول الزمني</string>
-    <string name="peer_category_sharing_title">عناصر التحكم بالمشاركة</string>
+    <string name="peer_category_privacy_title">الخصوصية</string>
+    <string name="peer_category_privacy_subtitle">الدقة والإيقاف المؤقت والمشاركة المؤقتة</string>
+    <string name="peer_category_security_title">الأمان</string>
+    <string name="peer_category_security_subtitle">أدوات التحكم في الإشراف</string>
+    <string name="peer_category_sharing_title">الموقع</string>
     <string name="scan_add_share">إضافة ومشاركة</string>
     <string name="scan_grant_permission">منح الإذن</string>
     <string name="scan_request_sent_title">تم إرسال الطلب</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">الإعدادات</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">الموقع والخصوصية</string>
+    <string name="settings_section_location">الموقع</string>
+    <string name="settings_section_privacy">الخصوصية</string>
+    <string name="settings_section_connection">الاتصال</string>
+    <string name="settings_section_language">اللغة</string>
+    <string name="settings_category_location_subtitle">المشاركة والجدول الزمني والسجل والدقة</string>
+    <string name="settings_category_privacy_subtitle">تنبيهات التتبع</string>
+    <string name="settings_category_connection_subtitle">المُرحّلات ونقل الشبكة</string>
+    <string name="settings_category_language_subtitle">اختر لغة التطبيق</string>
     <string name="settings_section_security">الأمان</string>
     <string name="settings_section_map">الخريطة</string>
-    <string name="settings_section_battery_performance">البطارية والأداء</string>
     <string name="settings_section_units_display">الوحدات والعرض</string>
     <string name="settings_section_retention">الاحتفاظ (هذا الجهاز)</string>
     <string name="settings_section_appearance">المظهر</string>
@@ -412,7 +420,7 @@
     <string name="peer_receive_title">استقبال موقع %1$s</string>
     <string name="peer_receive_on">يمكنك رؤية موقع %1$s</string>
     <string name="peer_receive_off">ليس لديك وصول إلى موقع %1$s</string>
-    <string name="peer_section_privacy">الخصوصية وعناصر التحكم بالمشاركة</string>
+    <string name="peer_section_privacy">الخصوصية</string>
     <string name="peer_pause_sharing">إيقاف المشاركة مؤقتًا</string>
     <string name="peer_pause_sub">التوقف مؤقتًا عن إرسال موقعك إلى %1$s</string>
     <string name="peer_precision">دقة الموقع</string>
@@ -434,6 +442,7 @@
     <string name="peer_missed_on">أعلمني إذا توقف %1$s عن الإبلاغ عن موقعه</string>
     <string name="peer_requires_access">يتطلب الوصول إلى موقع %1$s</string>
     <string name="peer_proximity_alert">تنبيه القرب</string>
+    <string name="peer_proximity_alerts_title">تنبيهات القرب</string>
     <string name="peer_proximity_sub">أعلمني عندما يكون %1$s قريبًا</string>
     <string name="peer_alert_radius">نصف قطر التنبيه</string>
     <string name="peer_alert_schedule">جدول التنبيهات</string>
@@ -814,9 +823,8 @@
     <string name="onboarding_error_key_range">مفتاح خاص غير صالح - خارج نطاق المنحنى.</string>
     <string name="onboarding_error_hex">تنسيق سداسي عشري غير صالح.</string>
     <string name="onboarding_error_import_failed">فشل استيراد المفتاح: %1$s</string>
-    <string name="about_diagnostics">الشبكة</string>
-    <string name="about_no_pending">لا توجد رسائل في قائمة الانتظار</string>
-    <string name="about_pending_messages">رسائل في قائمة الانتظار</string>
+    <string name="settings_queued_none">لا توجد رسائل في قائمة الانتظار</string>
+    <string name="settings_queued_messages">رسائل في قائمة الانتظار</string>
     <string name="app_lock_activity_unsupported">يتطلب قفل التطبيق مضيفًا يدعم مطالبة النظام. حدّث التطبيق.</string>
     <string name="app_lock_prompt_subtitle">استخدم القياسات الحيوية أو رمز PIN للجهاز</string>
     <string name="app_lock_prompt_title">فتح LocaPeer</string>
@@ -940,21 +948,26 @@
     <string name="settings_temporary_location_share">مشاركة الموقع المؤقتة</string>
     <string name="app_lock_no_credential">لا يوجد قفل شاشة مضبوط على هذا الجهاز، لذا لا يوجد ما يمكن فتح القفل به. اضبط رمز PIN أو نمطًا أو كلمة مرور أو قياسًا حيويًا في إعدادات جهازك، ثم أعد فتح LocaPeer.</string>
     <string name="backup_key_needs_password">اضبط كلمة مرور لتضمين مفتاحك الخاص. قد يسمح ملف المفتاح غير المشفّر لأي شخص بالاستيلاء على هويتك.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">قفل التطبيق، الأذونات، الوضع الخاضع للإشراف</string>
+    <string name="settings_category_map_subtitle">نقطة البداية، التكبير، لون الدبوس</string>
+    <string name="settings_category_units_subtitle">السرعة، المسافة، الارتفاع، الوقت</string>
+    <string name="settings_category_retention_subtitle">مدة الاحتفاظ بالبيانات على هذا الجهاز</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">تصدير، استيراد، المفتاح الخاص</string>
+    <string name="contacts_add_contact">إضافة جهة اتصال</string>
+    <string name="map_location_off_title">الموقع متوقف</string>
+    <string name="map_location_off_message">لا يمكن تحديث موقعك أو مشاركته حتى تقوم بتشغيل موقع الجهاز.</string>
+    <string name="map_location_off_action">افتح الإعدادات</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">أحداث في انتظار الوصول إلى المُرحّلات</string>
+    <string name="queued_messages_title">الرسائل في قائمة الانتظار</string>
+    <string name="queued_message_kind">نوع الحدث %1$d</string>
+    <string name="queued_message_queued_at">في قائمة الانتظار %1$s</string>
+    <string name="queued_message_view">عرض الحدث</string>
+    <string name="queued_message_hide">إخفاء</string>
+    <string name="queued_messages_flush">إرسال الآن</string>
 </resources>

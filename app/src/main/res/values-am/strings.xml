@@ -27,8 +27,6 @@
     <string name="common_deny">ከልክል</string>
 
     <!-- ── የአሰሳ ታብ መሰየሚያዎች ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">ጂኦፌንሶች እና የእንቅስቃሴ ታሪክ</string>
-    <string name="peer_category_history_title">ዞኖች እና ታሪክ</string>
     <string name="peer_category_messaging_subtitle">የውይይት መልእክቶችን ፍቀድ ወይም ከልክል</string>
     <string name="peer_category_messaging_title">መልእክት</string>
     <string name="peer_category_retention_subtitle">የርቀት ታሪክ እና ማጽዳት</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS፣ ያመለጡ ዝማኔዎች፣ ቅርበት፣ ክትትል</string>
     <string name="peer_category_safety_title">ደህንነት እና ማስጠንቀቂያዎች</string>
     <string name="peer_category_sharing_subtitle">ሚናዎች፣ ትክክለኛነት እና መርሃ ግብር</string>
-    <string name="peer_category_sharing_title">የማጋሪያ መቆጣጠሪያዎች</string>
+    <string name="peer_category_privacy_title">ግላዊነት</string>
+    <string name="peer_category_privacy_subtitle">ትክክለኛነት፣ ማቆም እና ጊዜያዊ ማጋራት</string>
+    <string name="peer_category_security_title">ደህንነት</string>
+    <string name="peer_category_security_subtitle">የቁጥጥር መቆጣጠሪያዎች</string>
+    <string name="peer_category_sharing_title">አካባቢ</string>
     <string name="scan_add_share">አክል እና አጋራ</string>
     <string name="scan_grant_permission">ፈቃድ ስጥ</string>
     <string name="scan_request_sent_title">ጥያቄ ተልኳል</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ቅንብሮች</string>
 
     <!-- የክፍል መሰየሚያዎች -->
-    <string name="settings_section_location_privacy">አካባቢ እና ግላዊነት</string>
+    <string name="settings_section_location">አካባቢ</string>
+    <string name="settings_section_privacy">ግላዊነት</string>
+    <string name="settings_section_connection">ግንኙነት</string>
+    <string name="settings_section_language">ቋንቋ</string>
+    <string name="settings_category_location_subtitle">ማጋራት፣ መርሃ ግብር፣ ታሪክ እና ትክክለኛነት</string>
+    <string name="settings_category_privacy_subtitle">የክትትል ማንቂያዎች</string>
+    <string name="settings_category_connection_subtitle">ማስተላለፊያዎች እና የአውታረ መረብ ትራንስፖርት</string>
+    <string name="settings_category_language_subtitle">የመተግበሪያውን ቋንቋ ይምረጡ</string>
     <string name="settings_section_security">ደህንነት</string>
     <string name="settings_section_map">ካርታ</string>
-    <string name="settings_section_battery_performance">ባትሪ እና አፈጻጸም</string>
     <string name="settings_section_units_display">ዩኒቶች እና ማሳያ</string>
     <string name="settings_section_retention">ማቆያ (በዚህ መሣሪያ ላይ)</string>
     <string name="settings_section_appearance">መልክ</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">የ%1$sን አካባቢ ተቀበል</string>
     <string name="peer_receive_on">የ%1$sን አካባቢ ማየት ይችላሉ</string>
     <string name="peer_receive_off">የ%1$sን አካባቢ ማየት አይችሉም</string>
-    <string name="peer_section_privacy">የግላዊነት እና የማጋሪያ መቆጣጠሪያዎች</string>
+    <string name="peer_section_privacy">ግላዊነት</string>
     <string name="peer_pause_sharing">ማጋራትን አቁም</string>
     <string name="peer_pause_sub">ለጊዜው አካባቢዎን ለ%1$s መላክ ያቁሙ</string>
     <string name="peer_precision">የአካባቢ ትክክለኛነት</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">%1$s አካባቢያቸውን ሪፖርት ማድረግ ካቆሙ አሳውቀኝ</string>
     <string name="peer_requires_access">ወደ %1$s አካባቢ መድረስን ይጠይቃል</string>
     <string name="peer_proximity_alert">የቅርበት ማስጠንቀቂያ</string>
+    <string name="peer_proximity_alerts_title">የቅርበት ማስጠንቀቂያዎች</string>
     <string name="peer_proximity_sub">%1$s በአቅራቢያ ሲሆኑ አሳውቀኝ</string>
     <string name="peer_alert_radius">የማስጠንቀቂያ ራዲየስ</string>
     <string name="peer_alert_schedule">የማስጠንቀቂያ መርሃ ግብር</string>
@@ -755,9 +764,8 @@
     <string name="onboarding_error_key_range">ልክ ያልሆነ የግል ቁልፍ።</string>
     <string name="onboarding_error_hex">ልክ ያልሆነ የሄክስ ቅርጸት።</string>
     <string name="onboarding_error_import_failed">ቁልፍ ማስገባት አልተሳካም፡ %1$s</string>
-    <string name="about_diagnostics">አውታረ መረብ</string>
-    <string name="about_no_pending">በወረፋ ላይ ምንም መልእክት የለም</string>
-    <string name="about_pending_messages">በወረፋ ላይ ያሉ መልእክቶች</string>
+    <string name="settings_queued_none">በወረፋ ላይ ምንም መልእክት የለም</string>
+    <string name="settings_queued_messages">በወረፋ ላይ ያሉ መልእክቶች</string>
     <string name="app_lock_activity_unsupported">የመተግበሪያ ቁልፍ የስርዓት መጠየቂያን የሚደግፍ አስተናጋጅ ይፈልጋል። መተግበሪያውን ያዘምኑ።</string>
     <string name="app_lock_prompt_subtitle">ባዮሜትሪክ ወይም የመሣሪያ ፒን ይጠቀሙ</string>
     <string name="app_lock_prompt_title">LocaPeer ክፈት</string>
@@ -881,10 +889,8 @@
     <string name="settings_temporary_location_share">ጊዜያዊ የአካባቢ ማጋራት</string>
     <string name="app_lock_no_credential">በዚህ መሣሪያ ላይ ምንም የማያ ገጽ መቆለፊያ አልተዋቀረም፣ ስለዚህ የሚከፍት ምንም ነገር የለም። በመሣሪያዎ ቅንብሮች ውስጥ PIN፣ ስርዓተ ጥለት፣ የይለፍ ቃል፣ ወይም ባዮሜትሪክ ያዋቅሩ፣ ከዚያ LocaPeer ን እንደገና ይክፈቱ።</string>
     <string name="backup_key_needs_password">የግል ቁልፍዎን ለማካተት የይለፍ ቃል ያዋቅሩ። ያልተመሰጠረ የቁልፍ ፋይል ማንኛውም ሰው ማንነትዎን እንዲይዝ ሊፈቅድ ይችላል።</string>
-    <string name="settings_category_location_privacy_subtitle">ማጋራት፣ የጊዜ ሰሌዳ፣ ጂኦፌንሶች፣ ማንቂያዎች</string>
     <string name="settings_category_security_subtitle">የመተግበሪያ ቁልፍ፣ ፈቃዶች፣ ቁጥጥር የሚደረግበት ሁኔታ</string>
     <string name="settings_category_map_subtitle">መነሻ ነጥብ፣ ማጉላት፣ የፒን ቀለም</string>
-    <string name="settings_category_performance_subtitle">የዝማኔ ድግግሞሽ እና የትክክለኛነት ማጣሪያዎች</string>
     <string name="settings_category_units_subtitle">ፍጥነት፣ ርቀት፣ ከፍታ፣ ጊዜ</string>
     <string name="settings_category_retention_subtitle">መረጃ በዚህ መሣሪያ ላይ ለምን ያህል ጊዜ እንደሚቀመጥ</string>
     <string name="settings_category_appearance_subtitle">ገጽታ፣ ቀለም፣ አሰሳ፣ ቋንቋ</string>
@@ -894,8 +900,15 @@
     <string name="map_location_off_message">የመሣሪያ ቦታ እስኪያበሩ ድረስ የእርስዎ አቋም ሊዘመን ወይም ሊጋራ አይችልም።</string>
     <string name="map_location_off_action">ቅንብሮችን ክፈት</string>
     <string name="map_live">● ቀጥታ</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d በመጠባበቅ ላይ ያለ መልዕክት</item>
         <item quantity="other">%1$d በመጠባበቅ ላይ ያሉ መልዕክቶች</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">ወደ ማስተላለፊያዎች ለመድረስ የሚጠባበቁ ክስተቶች</string>
+    <string name="queued_messages_title">የተደረደሩ መልዕክቶች</string>
+    <string name="queued_message_kind">የክስተት ዓይነት %1$d</string>
+    <string name="queued_message_queued_at">የተደረደረው %1$s</string>
+    <string name="queued_message_view">ክስተቱን ይመልከቱ</string>
+    <string name="queued_message_hide">ደብቅ</string>
+    <string name="queued_messages_flush">አሁን ላክ</string>
 </resources>

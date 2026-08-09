@@ -41,13 +41,15 @@ fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToAbout: () -> Unit = {},
     onNavigateToLocation: () -> Unit = {},
+    onNavigateToLocationHistory: (pubkeyHex: String) -> Unit = {},
+    onNavigateToGeofences: () -> Unit = {},
     onNavigateToPrivacy: () -> Unit = {},
     onNavigateToSecurity: () -> Unit = {},
     onNavigateToMap: () -> Unit = {},
-    onNavigateToPerformance: () -> Unit = {},
     onNavigateToUnits: () -> Unit = {},
     onNavigateToRetention: () -> Unit = {},
     onNavigateToAppearance: () -> Unit = {},
+    onNavigateToLanguage: () -> Unit = {},
     onNavigateToConnection: () -> Unit = {},
     onNavigateToBackup: () -> Unit = {},
     vm: SettingsViewModel = hiltViewModel(),
@@ -238,17 +240,24 @@ fun SettingsScreen(
                         )
                         CardDivider()
                         CategoryRow(
+                            icon = Icons.Default.Timeline,
+                            title = stringResource(R.string.settings_my_location_history),
+                            subtitle = stringResource(R.string.settings_my_location_history_subtitle),
+                            onClick = { if (publicKeyHex.isNotBlank()) onNavigateToLocationHistory(publicKeyHex) }
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Fence,
+                            title = stringResource(R.string.settings_geofences),
+                            subtitle = stringResource(R.string.settings_geofences_subtitle),
+                            onClick = onNavigateToGeofences
+                        )
+                        CardDivider()
+                        CategoryRow(
                             icon = Icons.Default.PrivacyTip,
                             title = stringResource(R.string.settings_section_privacy),
                             subtitle = stringResource(R.string.settings_category_privacy_subtitle),
                             onClick = onNavigateToPrivacy
-                        )
-                        CardDivider()
-                        CategoryRow(
-                            icon = Icons.Default.Shield,
-                            title = stringResource(R.string.settings_section_security),
-                            subtitle = stringResource(R.string.settings_category_security_subtitle),
-                            onClick = onNavigateToSecurity
                         )
                         CardDivider()
                         CategoryRow(
@@ -259,24 +268,10 @@ fun SettingsScreen(
                         )
                         CardDivider()
                         CategoryRow(
-                            icon = Icons.Default.Timer,
-                            title = stringResource(R.string.settings_section_battery_performance),
-                            subtitle = stringResource(R.string.settings_category_performance_subtitle),
-                            onClick = onNavigateToPerformance
-                        )
-                        CardDivider()
-                        CategoryRow(
-                            icon = Icons.Default.Straighten,
-                            title = stringResource(R.string.settings_section_units_display),
-                            subtitle = stringResource(R.string.settings_category_units_subtitle),
-                            onClick = onNavigateToUnits
-                        )
-                        CardDivider()
-                        CategoryRow(
-                            icon = Icons.Default.History,
-                            title = stringResource(R.string.settings_section_retention),
-                            subtitle = stringResource(R.string.settings_category_retention_subtitle),
-                            onClick = onNavigateToRetention
+                            icon = Icons.Default.Shield,
+                            title = stringResource(R.string.settings_section_security),
+                            subtitle = stringResource(R.string.settings_category_security_subtitle),
+                            onClick = onNavigateToSecurity
                         )
                         CardDivider()
                         CategoryRow(
@@ -287,10 +282,31 @@ fun SettingsScreen(
                         )
                         CardDivider()
                         CategoryRow(
+                            icon = Icons.Default.Translate,
+                            title = stringResource(R.string.settings_section_language),
+                            subtitle = stringResource(R.string.settings_category_language_subtitle),
+                            onClick = onNavigateToLanguage
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Straighten,
+                            title = stringResource(R.string.settings_section_units_display),
+                            subtitle = stringResource(R.string.settings_category_units_subtitle),
+                            onClick = onNavigateToUnits
+                        )
+                        CardDivider()
+                        CategoryRow(
                             icon = Icons.Default.Wifi,
                             title = stringResource(R.string.settings_section_connection),
                             subtitle = stringResource(R.string.settings_category_connection_subtitle),
                             onClick = onNavigateToConnection
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.History,
+                            title = stringResource(R.string.settings_section_retention),
+                            subtitle = stringResource(R.string.settings_category_retention_subtitle),
+                            onClick = onNavigateToRetention
                         )
                         CardDivider()
                         CategoryRow(

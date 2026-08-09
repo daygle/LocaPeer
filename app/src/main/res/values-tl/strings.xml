@@ -22,13 +22,11 @@
     <string name="common_restore">I-restore</string>
     <string name="common_unlock">I-unlock</string>
     <string name="common_password">Password</string>
-    <string name="common_off">Off</string>
+    <string name="common_off">Naka-off</string>
     <string name="common_approve">Aprubahan</string>
     <string name="common_deny">Tanggihan</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Mga Geofence at kasaysayan ng paggalaw</string>
-    <string name="peer_category_history_title">Mga Sona at Kasaysayan</string>
     <string name="peer_category_messaging_subtitle">Payagan o i-block ang mga chat message</string>
     <string name="peer_category_messaging_title">Pagmemensahe</string>
     <string name="peer_category_retention_subtitle">Remote na kasaysayan at paglilinis</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, mga napalampas na update, kalapitan, pangangasiwa</string>
     <string name="peer_category_safety_title">Kaligtasan at Mga Alerto</string>
     <string name="peer_category_sharing_subtitle">Mga papel, katumpakan, at iskedyul</string>
-    <string name="peer_category_sharing_title">Mga Kontrol sa Pagbabahagi</string>
+    <string name="peer_category_privacy_title">Privacy</string>
+    <string name="peer_category_privacy_subtitle">Katumpakan, pag-pause, at pansamantalang pagbabahagi</string>
+    <string name="peer_category_security_title">Seguridad</string>
+    <string name="peer_category_security_subtitle">Mga kontrol sa pangangasiwa</string>
+    <string name="peer_category_sharing_title">Lokasyon</string>
     <string name="scan_add_share">Idagdag at Ibahagi</string>
     <string name="scan_grant_permission">Magbigay ng Pahintulot</string>
     <string name="scan_request_sent_title">Naipadala ang Kahilingan</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Mga Setting</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Lokasyon at Privacy</string>
+    <string name="settings_section_location">Lokasyon</string>
+    <string name="settings_section_privacy">Privacy</string>
+    <string name="settings_section_connection">Koneksyon</string>
+    <string name="settings_section_language">Wika</string>
+    <string name="settings_category_location_subtitle">Pagbabahagi, iskedyul, kasaysayan at katumpakan</string>
+    <string name="settings_category_privacy_subtitle">Mga alerto sa pagsubaybay</string>
+    <string name="settings_category_connection_subtitle">Mga relay at transportasyon ng network</string>
+    <string name="settings_category_language_subtitle">Piliin ang wika ng app</string>
     <string name="settings_section_security">Seguridad</string>
     <string name="settings_section_map">Mapa</string>
-    <string name="settings_section_battery_performance">Baterya at Performance</string>
     <string name="settings_section_units_display">Mga Unit at Display</string>
     <string name="settings_section_retention">Retention (Device na Ito)</string>
     <string name="settings_section_appearance">Hitsura</string>
@@ -104,7 +112,7 @@
     <string name="settings_supervision_active">Aktibo ang Pangangasiwa</string>
     <string name="settings_supervision_active_subtitle">Nangangailangan ng pag-apruba ng superbisor ang mga setting</string>
     <string name="settings_disable_supervised">I-disable ang Supervised Mode</string>
-    <string name="settings_supervised_mode">Supervised Mode</string>
+    <string name="settings_supervised_mode">Mode na pinangangasiwaan</string>
     <string name="settings_supervised_mode_subtitle">Mangailangan ng pag-apruba ng superbisor para ma-access ang mga setting</string>
 
     <!-- Map -->
@@ -149,7 +157,7 @@
     <string name="perm_background_location_title">Lokasyon sa Background</string>
     <string name="perm_background_location_granted">Patuloy ang pagbabahagi ng lokasyon kapag sarado ang app</string>
     <string name="perm_background_location_denied">I-tap para payagan ang access na \'Payagan sa lahat ng oras\' sa mga setting</string>
-    <string name="perm_camera_title">Camera</string>
+    <string name="perm_camera_title">Kamera</string>
     <string name="perm_camera_granted">Ginagamit para mag-scan ng mga invite QR code</string>
     <string name="perm_camera_denied">I-tap para payagan ang camera</string>
     <string name="perm_notifications_title">Mga Notification</string>
@@ -184,7 +192,7 @@
     <string name="settings_start_page">Panimulang Pahina</string>
     <string name="settings_language">Wika</string>
     <string name="settings_language_title">Wika ng App</string>
-    <string name="settings_language_system">System Default</string>
+    <string name="settings_language_system">Default ng system</string>
 
     <!-- Backup &amp; Keys -->
     <string name="settings_export_backup">I-export ang Backup</string>
@@ -200,10 +208,10 @@
 
     <!-- Dialogs -->
     <string name="settings_edit_display_name">I-edit ang Display Name</string>
-    <string name="settings_display_name_label">Display Name</string>
+    <string name="settings_display_name_label">Ipapakitang pangalan</string>
     <string name="settings_my_invite_qr">Aking Invite QR</string>
     <string name="settings_invite_qr_subtitle">Maaaring i-scan ito ng iba para simulan kang tuntunin.</string>
-    <string name="settings_invite_qr_cd">Invite QR</string>
+    <string name="settings_invite_qr_cd">QR ng imbitasyon</string>
     <string name="settings_private_key_title">Pribadong Susi</string>
     <string name="settings_private_key_warning">Panatilihin itong ligtas. Kahit sino na may susing ito ay maaaring magpanggap na ikaw.</string>
     <string name="settings_clear_location_title">I-clear ang Kasaysayan ng Lokasyon?</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Tumanggap ng Lokasyon ni %1$s</string>
     <string name="peer_receive_on">Makikita mo ang lokasyon ni %1$s</string>
     <string name="peer_receive_off">Wala kang access sa lokasyon ni %1$s</string>
-    <string name="peer_section_privacy">Mga Kontrol sa Privacy at Pagbabahagi</string>
+    <string name="peer_section_privacy">Privacy</string>
     <string name="peer_pause_sharing">I-pause ang Pagbabahagi</string>
     <string name="peer_pause_sub">Pansamantalang ihinto ang pagpapadala ng iyong lokasyon kay %1$s</string>
     <string name="peer_precision">Katumpakan ng Lokasyon</string>
@@ -400,12 +408,13 @@
         <item quantity="other">%1$d na aktibong panuntunan sa pagbabahagi</item>
     </plurals>
     <string name="peer_section_alerts">Mga Alerto at Pagsubaybay</string>
-    <string name="peer_sos_contact">SOS Contact</string>
+    <string name="peer_sos_contact">Kontak sa SOS</string>
     <string name="peer_sos_sub">Tumatanggap ng iyong mga emergency alert kahit naka-pause ang pagbabahagi</string>
     <string name="peer_missed_alert">Alerto sa Nawalang Lokasyon</string>
     <string name="peer_missed_on">Abisuhan ako kung tumigil si %1$s sa pag-uulat ng kanyang lokasyon</string>
     <string name="peer_requires_access">Kailangan ng access sa lokasyon ni %1$s</string>
     <string name="peer_proximity_alert">Alerto sa Proximity</string>
+    <string name="peer_proximity_alerts_title">Mga Alerto sa Proximity</string>
     <string name="peer_proximity_sub">Abisuhan ako kapag malapit si %1$s</string>
     <string name="peer_alert_radius">Radius ng Alerto</string>
     <string name="peer_alert_schedule">Iskedyul ng Alerto</string>
@@ -508,7 +517,7 @@
     <string name="map_stat_accuracy">Katumpakan</string>
     <string name="map_stat_motion">Galaw</string>
     <string name="map_stat_speed">Bilis</string>
-    <string name="map_stat_elevation">Elevation</string>
+    <string name="map_stat_elevation">Altitud</string>
 
     <string name="common_ok">OK</string>
 
@@ -533,7 +542,7 @@
     </plurals>
     <string name="history_cd_dismiss">Isara</string>
     <string name="history_accuracy_label">±%1$s na katumpakan</string>
-    <string name="history_emergency_sos">Emergency SOS signal</string>
+    <string name="history_emergency_sos">Senyas ng emergency SOS</string>
     <string name="history_detail_location">Lokasyon</string>
     <string name="history_detail_coordinates">Mga Coordinate</string>
     <string name="history_within">sa loob ng ±%1$s</string>
@@ -661,8 +670,8 @@
     <string name="about_open_source">Mga Open Source Library</string>
     <string name="about_lib_osmdroid_desc">Pag-render ng mapa batay sa OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">WebSocket transport para sa Nostr relay</string>
-    <string name="about_lib_compose_desc">UI framework</string>
-    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_compose_desc">Framework ng UI</string>
+    <string name="about_lib_hilt_desc">Pag-iniksyon ng dependency</string>
     <string name="about_lib_room_desc">Lokal na database</string>
     <string name="about_map_attribution">Data ng mapa © mga contributor ng OpenStreetMap</string>
 
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Di-wastong pribadong key - labas sa saklaw ng curve.</string>
     <string name="onboarding_error_hex">Di-wastong hex format.</string>
     <string name="onboarding_error_import_failed">Nabigong i-import ang key: %1$s</string>
-    <string name="about_diagnostics">Network</string>
-    <string name="about_no_pending">Walang mensaheng naka-queue</string>
-    <string name="about_pending_messages">Mga mensaheng naka-queue</string>
+    <string name="settings_queued_none">Walang mensaheng naka-queue</string>
+    <string name="settings_queued_messages">Mga mensaheng naka-queue</string>
     <string name="app_lock_activity_unsupported">Kailangan ng app lock ng host na sumusuporta sa system prompt. I-update ang app.</string>
     <string name="app_lock_prompt_subtitle">Gumamit ng biometric o PIN ng device</string>
     <string name="app_lock_prompt_title">I-unlock ang LocaPeer</string>
@@ -778,7 +786,7 @@
     <string name="chat_delivery_state_sending">Ipinapadala…</string>
     <string name="chat_delivery_state_sent">Naipadala (tinanggap ng relay)</string>
     <string name="chat_preview_photo">📷 Larawan</string>
-    <string name="chat_preview_voice">🎤 Voice message</string>
+    <string name="chat_preview_voice">🎤 Mensaheng boses</string>
     <string name="chat_recording">Nagre-record…</string>
     <string name="chat_shared_location">Ibinahaging lokasyon</string>
     <string name="chat_tap_to_open_map">I-tap para buksan ang mapa</string>
@@ -820,7 +828,7 @@
     <string name="peer_temp_share_chip_until_tomorrow">Hanggang bukas ng 8 ng umaga</string>
     <string name="peer_temp_share_stop">Ihinto na ngayon</string>
     <string name="peer_temp_share_subtitle">Magbahagi sa limitadong oras, pagkatapos ay awtomatikong hihinto.</string>
-    <string name="settings_app_lock">App Lock</string>
+    <string name="settings_app_lock">Pag-lock ng app</string>
     <string name="settings_app_lock_subtitle">Mangailangan ng biometric o PIN para buksan ang LocaPeer</string>
     <string name="settings_app_lock_timeout">Muling i-lock pagkatapos ng</string>
     <string name="settings_app_lock_timeout_1m">Pagkatapos ng 1 minuto</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">Pansamantalang pagbabahagi ng lokasyon</string>
     <string name="app_lock_no_credential">Walang naka-set na screen lock sa device na ito, kaya walang panuklas. Mag-set ng PIN, pattern, password, o biometric sa mga setting ng iyong device, pagkatapos ay muling buksan ang LocaPeer.</string>
     <string name="backup_key_needs_password">Mag-set ng password upang isama ang iyong pribadong key. Ang hindi naka-encrypt na key file ay maaaring magpahintulot sa sinuman na kunin ang iyong pagkakakilanlan.</string>
-    <string name="settings_category_location_privacy_subtitle">Pagbabahagi, iskedyul, mga geofence, mga alerto</string>
     <string name="settings_category_security_subtitle">Lock ng app, mga pahintulot, supervised mode</string>
     <string name="settings_category_map_subtitle">Simulang punto, zoom, kulay ng pin</string>
-    <string name="settings_category_performance_subtitle">Bilis ng pag-update at mga filter ng katumpakan</string>
     <string name="settings_category_units_subtitle">Bilis, distansya, elebasyon, oras</string>
     <string name="settings_category_retention_subtitle">Gaano katagal itatago ang data sa device na ito</string>
     <string name="settings_category_appearance_subtitle">Tema, kulay, nabigasyon, wika</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">Hindi ma-update o maibahagi ang iyong posisyon hangga\'t hindi mo binubuksan ang lokasyon ng device.</string>
     <string name="map_location_off_action">Buksan ang mga setting</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d mensaheng nakapila</item>
         <item quantity="other">%1$d na mensaheng nakapila</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Mga kaganapang naghihintay na makarating sa mga relay</string>
+    <string name="queued_messages_title">Mga Mensaheng Nakapila</string>
+    <string name="queued_message_kind">Uri ng kaganapan %1$d</string>
+    <string name="queued_message_queued_at">Nakapila %1$s</string>
+    <string name="queued_message_view">Tingnan ang kaganapan</string>
+    <string name="queued_message_hide">Itago</string>
+    <string name="queued_messages_flush">Ipadala ngayon</string>
 </resources>

@@ -27,8 +27,6 @@
     <string name="common_deny">ਇਨਕਾਰ ਕਰੋ</string>
 
     <!-- ── ਨੇਵੀਗੇਸ਼ਨ ਟੈਬ ਲੇਬਲ ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">ਜੀਓਫੈਂਸ ਅਤੇ ਹਰਕਤ ਦਾ ਇਤਿਹਾਸ</string>
-    <string name="peer_category_history_title">ਜ਼ੋਨ ਅਤੇ ਇਤਿਹਾਸ</string>
     <string name="peer_category_messaging_subtitle">ਚੈਟ ਸੁਨੇਹਿਆਂ ਦੀ ਇਜਾਜ਼ਤ ਦਿਓ ਜਾਂ ਬਲੌਕ ਕਰੋ</string>
     <string name="peer_category_messaging_title">ਸੁਨੇਹਾ ਭੇਜਣਾ</string>
     <string name="peer_category_retention_subtitle">ਰਿਮੋਟ ਇਤਿਹਾਸ ਅਤੇ ਸਫਾਈ</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, ਖੁੰਝੇ ਅੱਪਡੇਟ, ਨੇੜਤਾ, ਨਿਗਰਾਨੀ</string>
     <string name="peer_category_safety_title">ਸੁਰੱਖਿਆ ਅਤੇ ਅਲਰਟ</string>
     <string name="peer_category_sharing_subtitle">ਭੂਮਿਕਾਵਾਂ, ਸ਼ੁੱਧਤਾ ਅਤੇ ਸਮਾਂ-ਸਾਰਣੀ</string>
-    <string name="peer_category_sharing_title">ਸਾਂਝਾ ਕਰਨ ਦੇ ਨਿਯੰਤਰਣ</string>
+    <string name="peer_category_privacy_title">ਨਿੱਜਤਾ</string>
+    <string name="peer_category_privacy_subtitle">ਸ਼ੁੱਧਤਾ, ਰੋਕੋ ਅਤੇ ਅਸਥਾਈ ਸਾਂਝਾਕਰਨ</string>
+    <string name="peer_category_security_title">ਸੁਰੱਖਿਆ</string>
+    <string name="peer_category_security_subtitle">ਨਿਗਰਾਨੀ ਨਿਯੰਤਰਣ</string>
+    <string name="peer_category_sharing_title">ਟਿਕਾਣਾ</string>
     <string name="scan_add_share">ਸ਼ਾਮਲ ਕਰੋ ਅਤੇ ਸਾਂਝਾ ਕਰੋ</string>
     <string name="scan_grant_permission">ਇਜਾਜ਼ਤ ਦਿਓ</string>
     <string name="scan_request_sent_title">ਬੇਨਤੀ ਭੇਜੀ ਗਈ</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ਸੈਟਿੰਗਾਂ</string>
 
     <!-- ਸੈਕਸ਼ਨ ਲੇਬਲ -->
-    <string name="settings_section_location_privacy">ਟਿਕਾਣਾ ਅਤੇ ਨਿੱਜਤਾ</string>
+    <string name="settings_section_location">ਟਿਕਾਣਾ</string>
+    <string name="settings_section_privacy">ਨਿੱਜਤਾ</string>
+    <string name="settings_section_connection">ਕਨੈਕਸ਼ਨ</string>
+    <string name="settings_section_language">ਭਾਸ਼ਾ</string>
+    <string name="settings_category_location_subtitle">ਸਾਂਝਾ ਕਰਨਾ, ਸਮਾਂ-ਸਾਰਣੀ, ਇਤਿਹਾਸ ਅਤੇ ਸ਼ੁੱਧਤਾ</string>
+    <string name="settings_category_privacy_subtitle">ਟ੍ਰੈਕਿੰਗ ਚੇਤਾਵਨੀਆਂ</string>
+    <string name="settings_category_connection_subtitle">ਰਿਲੇ ਅਤੇ ਨੈੱਟਵਰਕ ਟ੍ਰਾਂਸਪੋਰਟ</string>
+    <string name="settings_category_language_subtitle">ਐਪ ਦੀ ਭਾਸ਼ਾ ਚੁਣੋ</string>
     <string name="settings_section_security">ਸੁਰੱਖਿਆ</string>
     <string name="settings_section_map">ਨਕਸ਼ਾ</string>
-    <string name="settings_section_battery_performance">ਬੈਟਰੀ ਅਤੇ ਪ੍ਰਦਰਸ਼ਨ</string>
     <string name="settings_section_units_display">ਇਕਾਈਆਂ ਅਤੇ ਡਿਸਪਲੇ</string>
     <string name="settings_section_retention">ਡਾਟਾ ਰੱਖਣ ਦੀ ਮਿਆਦ (ਇਸ ਡਿਵਾਈਸ ਤੇ)</string>
     <string name="settings_section_appearance">ਦਿੱਖ</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s ਦਾ ਟਿਕਾਣਾ ਪ੍ਰਾਪਤ ਕਰੋ</string>
     <string name="peer_receive_on">ਤੁਸੀਂ %1$s ਦਾ ਟਿਕਾਣਾ ਦੇਖ ਸਕਦੇ ਹੋ</string>
     <string name="peer_receive_off">ਤੁਹਾਡੇ ਕੋਲ %1$s ਦੇ ਟਿਕਾਣੇ ਤੱਕ ਪਹੁੰਚ ਨਹੀਂ ਹੈ</string>
-    <string name="peer_section_privacy">ਨਿੱਜਤਾ ਅਤੇ ਸਾਂਝਾ ਕਰਨ ਦੇ ਨਿਯੰਤਰਣ</string>
+    <string name="peer_section_privacy">ਨਿੱਜਤਾ</string>
     <string name="peer_pause_sharing">ਸਾਂਝਾ ਕਰਨਾ ਰੋਕੋ</string>
     <string name="peer_pause_sub">ਕੁਝ ਸਮੇਂ ਲਈ %1$s ਨੂੰ ਆਪਣਾ ਟਿਕਾਣਾ ਭੇਜਣਾ ਬੰਦ ਕਰੋ</string>
     <string name="peer_precision">ਟਿਕਾਣਾ ਸ਼ੁੱਧਤਾ</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">ਜੇਕਰ %1$s ਆਪਣਾ ਟਿਕਾਣਾ ਦੱਸਣਾ ਬੰਦ ਕਰ ਦਿੰਦਾ ਹੈ ਤਾਂ ਮੈਨੂੰ ਸੂਚਿਤ ਕਰੋ</string>
     <string name="peer_requires_access">%1$s ਦੇ ਟਿਕਾਣੇ ਤੱਕ ਪਹੁੰਚ ਦੀ ਲੋੜ ਹੈ</string>
     <string name="peer_proximity_alert">ਨੇੜਤਾ ਅਲਰਟ</string>
+    <string name="peer_proximity_alerts_title">ਨੇੜਤਾ ਅਲਰਟ</string>
     <string name="peer_proximity_sub">ਜਦੋਂ %1$s ਨੇੜੇ ਹੋਵੇ ਤਾਂ ਮੈਨੂੰ ਸੂਚਿਤ ਕਰੋ</string>
     <string name="peer_alert_radius">ਅਲਰਟ ਘੇਰਾ</string>
     <string name="peer_alert_schedule">ਅਲਰਟ ਸਮਾਂ-ਸਾਰਣੀ</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">ਅਵੈਧ ਪ੍ਰਾਈਵੇਟ ਕੀ।</string>
     <string name="onboarding_error_hex">ਅਵੈਧ ਹੈਕਸ ਫਾਰਮੈਟ।</string>
     <string name="onboarding_error_import_failed">ਕੀ ਇੰਪੋਰਟ ਕਰਨਾ ਅਸਫਲ ਰਿਹਾ: %1$s</string>
-    <string name="about_diagnostics">ਨੈੱਟਵਰਕ</string>
-    <string name="about_no_pending">ਕਤਾਰ ਵਿੱਚ ਕੋਈ ਸੁਨੇਹਾ ਨਹੀਂ</string>
-    <string name="about_pending_messages">ਕਤਾਰ ਵਿਚਲੇ ਸੁਨੇਹੇ</string>
+    <string name="settings_queued_none">ਕਤਾਰ ਵਿੱਚ ਕੋਈ ਸੁਨੇਹਾ ਨਹੀਂ</string>
+    <string name="settings_queued_messages">ਕਤਾਰ ਵਿਚਲੇ ਸੁਨੇਹੇ</string>
     <string name="app_lock_activity_unsupported">ਐਪ ਲਾਕ ਲਈ ਸਿਸਟਮ ਪ੍ਰੋਂਪਟ ਦਾ ਸਮਰਥਨ ਕਰਨ ਵਾਲਾ ਹੋਸਟ ਲੋੜੀਂਦਾ ਹੈ। ਐਪ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।</string>
     <string name="app_lock_prompt_subtitle">ਬਾਇਓਮੈਟ੍ਰਿਕ ਜਾਂ ਡਿਵਾਈਸ PIN ਵਰਤੋ</string>
     <string name="app_lock_prompt_title">LocaPeer ਅਨਲਾਕ ਕਰੋ</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">ਅਸਥਾਈ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ</string>
     <string name="app_lock_no_credential">ਇਸ ਡੀਵਾਈਸ ਉੱਤੇ ਕੋਈ ਸਕ੍ਰੀਨ ਲਾਕ ਸੈੱਟ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਅਨਲਾਕ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ। ਆਪਣੀਆਂ ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇੱਕ PIN, ਪੈਟਰਨ, ਪਾਸਵਰਡ, ਜਾਂ ਬਾਇਓਮੈਟ੍ਰਿਕ ਸੈੱਟ ਕਰੋ, ਫਿਰ LocaPeer ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
     <string name="backup_key_needs_password">ਆਪਣੀ ਨਿੱਜੀ ਕੁੰਜੀ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ। ਇੱਕ ਅਣ-ਐਨਕ੍ਰਿਪਟਿਡ ਕੁੰਜੀ ਫਾਈਲ ਕਿਸੇ ਨੂੰ ਵੀ ਤੁਹਾਡੀ ਪਛਾਣ ਉੱਤੇ ਕਬਜ਼ਾ ਕਰਨ ਦੇ ਸਕਦੀ ਹੈ।</string>
-    <string name="settings_category_location_privacy_subtitle">ਸਾਂਝਾ ਕਰਨਾ, ਸਮਾਂ-ਸਾਰਣੀ, ਜੀਓਫੈਂਸ, ਅਲਰਟ</string>
     <string name="settings_category_security_subtitle">ਐਪ ਲਾਕ, ਇਜਾਜ਼ਤਾਂ, ਨਿગਰਾਨੀ ਮੋਡ</string>
     <string name="settings_category_map_subtitle">ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ, ਜ਼ੂਮ, ਪਿੰਨ ਦਾ ਰੰਗ</string>
-    <string name="settings_category_performance_subtitle">ਅੱਪਡੇਟ ਅੰਤਰਾਲ ਅਤੇ ਸ਼ੁੱਧਤਾ ਫਿਲਟਰ</string>
     <string name="settings_category_units_subtitle">ਗਤੀ, ਦੂਰੀ, ਉਚਾਈ, ਸਮਾਂ</string>
     <string name="settings_category_retention_subtitle">ਇਸ ਡਿਵਾਈਸ ਤੇ ਡਾਟਾ ਕਿੰਨੀ ਦੇર ਰੱਖਿਆ ਜਾਣਾ ਹੈ</string>
     <string name="settings_category_appearance_subtitle">ਥੀਮ, ਰੰਗ, ਨੇਵੀਗੇਸ਼ਨ, ਭਾਸ਼ਾ</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">ਜਦੋਂ ਤੱਕ ਤੁਸੀਂ ਡਿਵਾਈਸ ਟਿਕาਣਾ ਚਾਲੂ ਨਹੀਂ ਕਰਦੇ, ਤੁਹਾਡੀ ਸਥਿਤੀ ਅੱਪਡੇਟ ਜਾਂ ਸਾਂਝੀ ਨਹੀਂ ਕੀਤੀ ਜਾ ਸਕਦੀ।</string>
     <string name="map_location_off_action">ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ</string>
     <string name="map_live">● ਲਾਈਵ</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d ਕਤਾਰਬੱਧ ਸੁਨੇਹਾ</item>
         <item quantity="other">%1$d ਕਤਾਰਬੱਧ ਸੁਨੇਹੇ</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">ਰਿਲੇ ਤੱਕ ਪਹੁੰਚਣ ਦੀ ਉਡੀਕ ਕਰ ਰਹੀਆਂ ਘਟਨਾਵਾਂ</string>
+    <string name="queued_messages_title">ਕਤਾਰ ਵਿੱਚ ਸੁਨੇਹੇ</string>
+    <string name="queued_message_kind">ਇਵੈਂਟ ਕਿਸਮ %1$d</string>
+    <string name="queued_message_queued_at">ਕਤਾਰ ਵਿੱਚ %1$s</string>
+    <string name="queued_message_view">ਇਵੈਂਟ ਦੇਖੋ</string>
+    <string name="queued_message_hide">ਲੁਕਾਓ</string>
+    <string name="queued_messages_flush">ਹੁਣ ਭੇਜੋ</string>
 </resources>

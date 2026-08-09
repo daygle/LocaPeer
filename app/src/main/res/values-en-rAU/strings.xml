@@ -34,7 +34,7 @@
     <string name="peer_temp_share_chip_6h">6 hours</string>
     <string name="peer_temp_share_chip_12h">12 hours</string>
     <string name="peer_temp_share_chip_until_tomorrow">Until tomorrow 8am</string>
-    <string name="peer_temp_share_stop">Stop now</string>
+    <string name="peer_temp_share_stop">Stop Now</string>
     <string name="chat_delivery_state_sending">Sending…</string>
     <string name="chat_delivery_state_sent">Sent (relay accepted)</string>
     <string name="chat_delivery_state_delivered">Delivered to recipient\'s device</string>
@@ -47,11 +47,17 @@
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_dynamic_color">Material You colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
-    <string name="about_diagnostics">Network</string>
-    <string name="about_pending_messages">Queued messages</string>
-    <string name="about_no_pending">No queued messages</string>
-    <plurals name="about_pending_message_count">
+    <string name="settings_queued_messages">Queued Messages</string>
+    <string name="settings_queued_none">No queued messages</string>
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Events waiting to reach relays</string>
+    <string name="queued_messages_title">Queued Messages</string>
+    <string name="queued_message_kind">Event kind %1$d</string>
+    <string name="queued_message_queued_at">Queued %1$s</string>
+    <string name="queued_message_view">View Event</string>
+    <string name="queued_message_hide">Hide</string>
+    <string name="queued_messages_flush">Flush Now</string>
 </resources>

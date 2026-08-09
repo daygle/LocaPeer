@@ -27,8 +27,6 @@
     <string name="common_deny">ردول</string>
 
     <!-- ── د نیویګیشن ټب لیبلونه ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">جیو فینسونه او د حرکت تاریخچه</string>
-    <string name="peer_category_history_title">زونونه او تاریخچه</string>
     <string name="peer_category_messaging_subtitle">د چیټ پیغامونو اجازه ورکول یا بندول</string>
     <string name="peer_category_messaging_title">پیغام رسول</string>
     <string name="peer_category_retention_subtitle">لیرې تاریخچه او پاکول</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS، له لاسه ورکړل شوي تازه معلومات، نږدېوالی، څارنه</string>
     <string name="peer_category_safety_title">خوندیتوب او خبرتیاوې</string>
     <string name="peer_category_sharing_subtitle">رولونه، دقیقیت او مهالویش</string>
-    <string name="peer_category_sharing_title">د شریکولو کنټرولونه</string>
+    <string name="peer_category_privacy_title">محرمیت</string>
+    <string name="peer_category_privacy_subtitle">دقت، وقفه او لنډمهاله شریکول</string>
+    <string name="peer_category_security_title">امنیت</string>
+    <string name="peer_category_security_subtitle">د څارنې کنټرولونه</string>
+    <string name="peer_category_sharing_title">ځای</string>
     <string name="scan_add_share">اضافه کول او شریکول</string>
     <string name="scan_grant_permission">اجازه ورکول</string>
     <string name="scan_request_sent_title">غوښتنه واستول شوه</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">ترتیبات</string>
 
     <!-- د برخې لیبلونه -->
-    <string name="settings_section_location_privacy">ځای او محرمیت</string>
+    <string name="settings_section_location">ځای</string>
+    <string name="settings_section_privacy">محرمیت</string>
+    <string name="settings_section_connection">اړیکه</string>
+    <string name="settings_section_language">ژبه</string>
+    <string name="settings_category_location_subtitle">شریکول، مهالویش، تاریخچه او دقت</string>
+    <string name="settings_category_privacy_subtitle">د تعقیب خبرتیاوې</string>
+    <string name="settings_category_connection_subtitle">ریلې ګانې او د شبکې لېږد</string>
+    <string name="settings_category_language_subtitle">د اپلیکیشن ژبه غوره کړئ</string>
     <string name="settings_section_security">امنیت</string>
     <string name="settings_section_map">نقشه</string>
-    <string name="settings_section_battery_performance">بیټرۍ او فعالیت</string>
     <string name="settings_section_units_display">واحدونه او ښودنه</string>
     <string name="settings_section_retention">ساتل (په دې وسیله کې)</string>
     <string name="settings_section_appearance">بڼه</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">د %1$s ځای ترلاسه کړئ</string>
     <string name="peer_receive_on">تاسو د %1$s ځای لیدلی شئ</string>
     <string name="peer_receive_off">تاسو د %1$s ځای ته لاسرسی نه لرئ</string>
-    <string name="peer_section_privacy">د محرمیت او شریکولو کنټرولونه</string>
+    <string name="peer_section_privacy">محرمیت</string>
     <string name="peer_pause_sharing">شریکول ودروئ</string>
     <string name="peer_pause_sub">د لږ وخت لپاره له %1$s سره د ځای شریکول بند کړئ</string>
     <string name="peer_precision">د ځای دقیقیت</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">که %1$s خپل ځای ښودل بند کړي نو ماته خبر راکړئ</string>
     <string name="peer_requires_access">د %1$s ځای ته لاسرسي ته اړتیا لري</string>
     <string name="peer_proximity_alert">د نږدېوالي خبرتیا</string>
+    <string name="peer_proximity_alerts_title">د نږدېوالي خبرتیاوې</string>
     <string name="peer_proximity_sub">کله چې %1$s نږدې وي خبر راکړئ</string>
     <string name="peer_alert_radius">د خبرتیا وړانګه</string>
     <string name="peer_alert_schedule">د خبرتیا مهالویش</string>
@@ -662,7 +671,7 @@
     <string name="about_lib_osmdroid_desc">د نقشې رینډرینګ د OpenStreetMap پر بنسټ</string>
     <string name="about_lib_okhttp_desc">د Nostr ریلی لپاره د WebSocket لیږد</string>
     <string name="about_lib_compose_desc">UI چوکاټ</string>
-    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_hilt_desc">تزریق انحصار</string>
     <string name="about_lib_room_desc">محلي ډیټابیس</string>
     <string name="about_map_attribution">د نقشې ډاټا © د OpenStreetMap مرسته کونکي</string>
 
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">بې اعتباره شخصي کیلي.</string>
     <string name="onboarding_error_hex">بې اعتباره هیکس بڼه.</string>
     <string name="onboarding_error_import_failed">د کیلي واردول ناکام شول: %1$s</string>
-    <string name="about_diagnostics">نیٹ ورک</string>
-    <string name="about_no_pending">قطار میں کوئی پیغام نہیں</string>
-    <string name="about_pending_messages">قطار میں پیغامات</string>
+    <string name="settings_queued_none">قطار میں کوئی پیغام نہیں</string>
+    <string name="settings_queued_messages">قطار میں پیغامات</string>
     <string name="app_lock_activity_unsupported">ایپ لاک کے لیے ایسا ہوسٹ درکار ہے جو سسٹم پرامپٹ کو سپورٹ کرے۔ ایپ کو اپ ڈیٹ کریں۔</string>
     <string name="app_lock_prompt_subtitle">بایومیٹرک یا آلے کا PIN استعمال کریں</string>
     <string name="app_lock_prompt_title">LocaPeer کو ان لاک کریں</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">د موقعیت لنډمهاله شریکول</string>
     <string name="app_lock_no_credential">په دې وسیله کې د سکرین هیڅ کولپ نه دی ټاکل شوی، نو د خلاصولو لپاره هیڅ شی نشته. ستاسو د وسیلې تنظیماتو کې یو PIN، نمونه، پټنوم، یا بایومیټریک وټاکئ، بیا LocaPeer بیا پرانیزئ.</string>
     <string name="backup_key_needs_password">د خپل خصوصي کلي د شاملولو لپاره پټنوم وټاکئ. یو غیر کوډ شوی کلي فایل کولی شي هر چا ته اجازه ورکړي چې ستاسو پیژندنه ونیسي.</string>
-    <string name="settings_category_location_privacy_subtitle">شریکول، مهالویش، جیو فینسونه، خبرتیاوې</string>
     <string name="settings_category_security_subtitle">د اپلیکیشن لاک، اجازه، د نظارت حالت</string>
     <string name="settings_category_map_subtitle">د پیل نقطه، زوم، د پن رنګ</string>
-    <string name="settings_category_performance_subtitle">د تازه کولو سرعت او دقت فلټرونه</string>
     <string name="settings_category_units_subtitle">سرعت، واټن، لوړوالی، وخت</string>
     <string name="settings_category_retention_subtitle">په دې وسیله کې معلومات تر کومه وخته ساتل کیږي</string>
     <string name="settings_category_appearance_subtitle">تیم، رنګ، نیویګیشن، ژبه</string>
@@ -893,8 +899,15 @@
     <string name="map_location_off_message">ستاسو موقعیت نشي تازه کیدی یا شریک کیدی تر هغه چې تاسو د وسیلې موقعیت فعال نه کړئ.</string>
     <string name="map_location_off_action">ترتیبات خلاص کړئ</string>
     <string name="map_live">● ژوندی</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d په قطار کې پیغام</item>
         <item quantity="other">%1$d په قطار کې پیغامونه</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">هغه پیښې چې ریلو ته د رسیدو په تمه دي</string>
+    <string name="queued_messages_title">په کتار کې پیغامونه</string>
+    <string name="queued_message_kind">د پېښې ډول %1$d</string>
+    <string name="queued_message_queued_at">په کتار کې %1$s</string>
+    <string name="queued_message_view">پېښه وګورئ</string>
+    <string name="queued_message_hide">پټول</string>
+    <string name="queued_messages_flush">اوس ولېږئ</string>
 </resources>

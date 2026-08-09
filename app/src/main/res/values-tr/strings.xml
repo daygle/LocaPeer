@@ -27,8 +27,6 @@
     <string name="common_deny">Reddet</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Coğrafi çitler ve hareket geçmişi</string>
-    <string name="peer_category_history_title">Bölgeler ve Geçmiş</string>
     <string name="peer_category_messaging_subtitle">Sohbet mesajlarına izin ver veya engelle</string>
     <string name="peer_category_messaging_title">Mesajlaşma</string>
     <string name="peer_category_retention_subtitle">Uzak geçmiş ve temizleme</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, kaçırılan güncellemeler, yakınlık, gözetim</string>
     <string name="peer_category_safety_title">Güvenlik ve Uyarılar</string>
     <string name="peer_category_sharing_subtitle">Roller, hassasiyet ve zamanlama</string>
-    <string name="peer_category_sharing_title">Paylaşım Denetimleri</string>
+    <string name="peer_category_privacy_title">Gizlilik</string>
+    <string name="peer_category_privacy_subtitle">Hassasiyet, duraklatma ve geçici paylaşım</string>
+    <string name="peer_category_security_title">Güvenlik</string>
+    <string name="peer_category_security_subtitle">Denetim kontrolleri</string>
+    <string name="peer_category_sharing_title">Konum</string>
     <string name="scan_add_share">Ekle ve Paylaş</string>
     <string name="scan_grant_permission">İzin Ver</string>
     <string name="scan_request_sent_title">İstek Gönderildi</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Ayarlar</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Konum ve Gizlilik</string>
+    <string name="settings_section_location">Konum</string>
+    <string name="settings_section_privacy">Gizlilik</string>
+    <string name="settings_section_connection">Bağlantı</string>
+    <string name="settings_section_language">Dil</string>
+    <string name="settings_category_location_subtitle">Paylaşım, program, geçmiş ve doğruluk</string>
+    <string name="settings_category_privacy_subtitle">Takip bildirimleri</string>
+    <string name="settings_category_connection_subtitle">Röleler ve ağ aktarımı</string>
+    <string name="settings_category_language_subtitle">Uygulama dilini seçin</string>
     <string name="settings_section_security">Güvenlik</string>
     <string name="settings_section_map">Harita</string>
-    <string name="settings_section_battery_performance">Pil ve Performans</string>
     <string name="settings_section_units_display">Birimler ve Ekran</string>
     <string name="settings_section_retention">Saklama (Bu Cihaz)</string>
     <string name="settings_section_appearance">Görünüm</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">%1$s Konumunu Al</string>
     <string name="peer_receive_on">%1$s kişisinin konumunu görebilirsiniz</string>
     <string name="peer_receive_off">%1$s kişisinin konumuna erişiminiz yok</string>
-    <string name="peer_section_privacy">Gizlilik ve Paylaşım Denetimleri</string>
+    <string name="peer_section_privacy">Gizlilik</string>
     <string name="peer_pause_sharing">Paylaşımı Duraklat</string>
     <string name="peer_pause_sub">Konumunuzu %1$s kişisine göndermeyi geçici olarak durdurun</string>
     <string name="peer_precision">Konum Hassasiyeti</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">%1$s konum bildirmeyi bırakırsa beni uyar</string>
     <string name="peer_requires_access">%1$s kişisinin konumuna erişim gerektirir</string>
     <string name="peer_proximity_alert">Yakınlık Uyarısı</string>
+    <string name="peer_proximity_alerts_title">Yakınlık Uyarıları</string>
     <string name="peer_proximity_sub">%1$s yakında olduğunda beni uyar</string>
     <string name="peer_alert_radius">Uyarı Yarıçapı</string>
     <string name="peer_alert_schedule">Uyarı Programı</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Geçersiz özel anahtar - eğri aralığının dışında.</string>
     <string name="onboarding_error_hex">Geçersiz onaltılık biçim.</string>
     <string name="onboarding_error_import_failed">Anahtar içe aktarılamadı: %1$s</string>
-    <string name="about_diagnostics">Ağ</string>
-    <string name="about_no_pending">Sırada mesaj yok</string>
-    <string name="about_pending_messages">Sıradaki mesajlar</string>
+    <string name="settings_queued_none">Sırada mesaj yok</string>
+    <string name="settings_queued_messages">Sıradaki mesajlar</string>
     <string name="app_lock_activity_unsupported">Uygulama kilidi, sistem istemini destekleyen bir ortam gerektirir. Uygulamayı güncelleyin.</string>
     <string name="app_lock_prompt_subtitle">Biyometri veya cihaz PIN\'ini kullanın</string>
     <string name="app_lock_prompt_title">LocaPeer kilidini aç</string>
@@ -880,10 +888,8 @@
     <string name="settings_temporary_location_share">Geçici konum paylaşımı</string>
     <string name="app_lock_no_credential">Bu cihazda ekran kilidi ayarlanmadığından kilidi açacak bir şey yok. Cihaz ayarlarınızda bir PIN, desen, parola veya biyometri ayarlayın ve ardından LocaPeer\'i yeniden açın.</string>
     <string name="backup_key_needs_password">Özel anahtarınızı dahil etmek için bir parola ayarlayın. Şifrelenmemiş bir anahtar dosyası, herhangi birinin kimliğinizi ele geçirmesine izin verebilir.</string>
-    <string name="settings_category_location_privacy_subtitle">Paylaşım, program, coğrafi sınırlar, uyarılar</string>
     <string name="settings_category_security_subtitle">Uygulama kilidi, izinler, denetimli mod</string>
     <string name="settings_category_map_subtitle">Başlangıç noktası, yakınlaştırma, iğne rengi</string>
-    <string name="settings_category_performance_subtitle">Güncelleme sıklığı ve doğruluk filtreleri</string>
     <string name="settings_category_units_subtitle">Hız, mesafe, rakım, saat</string>
     <string name="settings_category_retention_subtitle">Verilerin bu cihazda ne kadar süre tutulacağı</string>
     <string name="settings_category_appearance_subtitle">Tema, renk, navigasyon, dil</string>
@@ -893,7 +899,14 @@
     <string name="map_location_off_message">Cihaz konumunu açana kadar konumunuz güncellenemez veya paylaşılamaz.</string>
     <string name="map_location_off_action">Ayarları aç</string>
     <string name="map_live">● Canlı</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d kuyruğa alınmış mesaj</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Relaylere ulaşmayı bekleyen olaylar</string>
+    <string name="queued_messages_title">Kuyruktaki Mesajlar</string>
+    <string name="queued_message_kind">Olay türü %1$d</string>
+    <string name="queued_message_queued_at">Kuyrukta %1$s</string>
+    <string name="queued_message_view">Olayı görüntüle</string>
+    <string name="queued_message_hide">Gizle</string>
+    <string name="queued_messages_flush">Şimdi gönder</string>
 </resources>

@@ -27,8 +27,6 @@
     <string name="common_deny">Απόρριψη</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Γεωφράκτες και ιστορικό μετακινήσεων</string>
-    <string name="peer_category_history_title">Ζώνες και ιστορικό</string>
     <string name="peer_category_messaging_subtitle">Να επιτρέπονται ή να αποκλείονται τα μηνύματα συνομιλίας</string>
     <string name="peer_category_messaging_title">Μηνύματα</string>
     <string name="peer_category_retention_subtitle">Απομακρυσμένο ιστορικό και διαγραφή</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, χαμένες ενημερώσεις, εγγύτητα, επίβλεψη</string>
     <string name="peer_category_safety_title">Ασφάλεια και ειδοποιήσεις</string>
     <string name="peer_category_sharing_subtitle">Ρόλοι, ακρίβεια και πρόγραμμα</string>
-    <string name="peer_category_sharing_title">Έλεγχοι κοινοποίησης</string>
+    <string name="peer_category_privacy_title">Απόρρητο</string>
+    <string name="peer_category_privacy_subtitle">Ακρίβεια, παύση και προσωρινή κοινοποίηση</string>
+    <string name="peer_category_security_title">Ασφάλεια</string>
+    <string name="peer_category_security_subtitle">Στοιχεία ελέγχου εποπτείας</string>
+    <string name="peer_category_sharing_title">Τοποθεσία</string>
     <string name="scan_add_share">Προσθήκη και κοινοποίηση</string>
     <string name="scan_grant_permission">Χορήγηση άδειας</string>
     <string name="scan_request_sent_title">Η αίτηση στάλθηκε</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Ρυθμίσεις</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Τοποθεσία &amp; Απόρρητο</string>
+    <string name="settings_section_location">Τοποθεσία</string>
+    <string name="settings_section_privacy">Απόρρητο</string>
+    <string name="settings_section_connection">Σύνδεση</string>
+    <string name="settings_section_language">Γλώσσα</string>
+    <string name="settings_category_location_subtitle">Κοινοποίηση, πρόγραμμα, ιστορικό και ακρίβεια</string>
+    <string name="settings_category_privacy_subtitle">Ειδοποιήσεις παρακολούθησης</string>
+    <string name="settings_category_connection_subtitle">Αναμεταδότες και μεταφορά δικτύου</string>
+    <string name="settings_category_language_subtitle">Επιλέξτε τη γλώσσα της εφαρμογής</string>
     <string name="settings_section_security">Ασφάλεια</string>
     <string name="settings_section_map">Χάρτης</string>
-    <string name="settings_section_battery_performance">Μπαταρία &amp; Απόδοση</string>
     <string name="settings_section_units_display">Μονάδες &amp; Εμφάνιση</string>
     <string name="settings_section_retention">Διατήρηση (Αυτή η συσκευή)</string>
     <string name="settings_section_appearance">Εμφάνιση</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Λήψη τοποθεσίας του/της %1$s</string>
     <string name="peer_receive_on">Μπορείτε να βλέπετε την τοποθεσία του/της %1$s</string>
     <string name="peer_receive_off">Δεν έχετε πρόσβαση στην τοποθεσία του/της %1$s</string>
-    <string name="peer_section_privacy">Απόρρητο και έλεγχοι κοινοποίησης</string>
+    <string name="peer_section_privacy">Απόρρητο</string>
     <string name="peer_pause_sharing">Παύση κοινοποίησης</string>
     <string name="peer_pause_sub">Προσωρινή διακοπή αποστολής της τοποθεσίας σας στον/στην %1$s</string>
     <string name="peer_precision">Ακρίβεια τοποθεσίας</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Ειδοποίησέ με αν ο/η %1$s σταματήσει να αναφέρει την τοποθεσία του/της</string>
     <string name="peer_requires_access">Απαιτεί πρόσβαση στην τοποθεσία του/της %1$s</string>
     <string name="peer_proximity_alert">Ειδοποίηση εγγύτητας</string>
+    <string name="peer_proximity_alerts_title">Ειδοποιήσεις εγγύτητας</string>
     <string name="peer_proximity_sub">Ειδοποίησέ με όταν ο/η %1$s είναι κοντά</string>
     <string name="peer_alert_radius">Ακτίνα ειδοποίησης</string>
     <string name="peer_alert_schedule">Πρόγραμμα ειδοποιήσεων</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Μη έγκυρο ιδιωτικό κλειδί - εκτός εύρους καμπύλης.</string>
     <string name="onboarding_error_hex">Μη έγκυρη δεκαεξαδική μορφή.</string>
     <string name="onboarding_error_import_failed">Η εισαγωγή του κλειδιού απέτυχε: %1$s</string>
-    <string name="about_diagnostics">Δίκτυο</string>
-    <string name="about_no_pending">Δεν υπάρχουν μηνύματα σε αναμονή</string>
-    <string name="about_pending_messages">Μηνύματα σε αναμονή</string>
+    <string name="settings_queued_none">Δεν υπάρχουν μηνύματα σε αναμονή</string>
+    <string name="settings_queued_messages">Μηνύματα σε αναμονή</string>
     <string name="app_lock_activity_unsupported">Το κλείδωμα εφαρμογής απαιτεί περιβάλλον που υποστηρίζει το μήνυμα συστήματος. Ενημερώστε την εφαρμογή.</string>
     <string name="app_lock_prompt_subtitle">Χρησιμοποιήστε βιομετρικά ή το PIN της συσκευής</string>
     <string name="app_lock_prompt_title">Ξεκλείδωμα LocaPeer</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">Προσωρινή κοινοποίηση τοποθεσίας</string>
     <string name="app_lock_no_credential">Δεν έχει οριστεί κλείδωμα οθόνης σε αυτή τη συσκευή, επομένως δεν υπάρχει τίποτα για ξεκλείδωμα. Ορίστε έναν κωδικό PIN, μοτίβο, κωδικό πρόσβασης ή βιομετρικά στοιχεία στις ρυθμίσεις της συσκευής σας και μετά ανοίξτε ξανά το LocaPeer.</string>
     <string name="backup_key_needs_password">Ορίστε έναν κωδικό πρόσβασης για να συμπεριλάβετε το ιδιωτικό σας κλειδί. Ένα μη κρυπτογραφημένο αρχείο κλειδιού θα μπορούσε να επιτρέψει σε οποιονδήποτε να αναλάβει την ταυτότητά σας.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Κλείδωμα εφαρμογής, άδειες, εποπτευόμενη λειτουργία</string>
+    <string name="settings_category_map_subtitle">Σημείο εκκίνησης, εστίαση, χρώμα πινέζας</string>
+    <string name="settings_category_units_subtitle">Ταχύτητα, απόσταση, υψόμετρο, ώρα</string>
+    <string name="settings_category_retention_subtitle">Πόσο καιρό διατηρούνται τα δεδομένα σε αυτή τη συσκευή</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Εξαγωγή, εισαγωγή, ιδιωτικό κλειδί</string>
+    <string name="contacts_add_contact">Προσθήκη επαφής</string>
+    <string name="map_location_off_title">Η τοποθεσία είναι απενεργοποιημένη</string>
+    <string name="map_location_off_message">Η τοποθεσία σας δεν μπορεί να ενημερωθεί ή να κοινοποιηθεί έως ότου ενεργοποιήσετε την τοποθεσία της συσκευής.</string>
+    <string name="map_location_off_action">Άνοιγμα ρυθμίσεων</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Συμβάντα που περιμένουν να φτάσουν στους αναμεταδότες</string>
+    <string name="queued_messages_title">Μηνύματα σε αναμονή</string>
+    <string name="queued_message_kind">Τύπος συμβάντος %1$d</string>
+    <string name="queued_message_queued_at">Σε αναμονή %1$s</string>
+    <string name="queued_message_view">Προβολή συμβάντος</string>
+    <string name="queued_message_hide">Απόκρυψη</string>
+    <string name="queued_messages_flush">Αποστολή τώρα</string>
 </resources>

@@ -27,8 +27,6 @@
     <string name="common_deny">דחה</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">גדרות גאוגרפיות והיסטוריית תנועה</string>
-    <string name="peer_category_history_title">אזורים והיסטוריה</string>
     <string name="peer_category_messaging_subtitle">אפשר או חסום הודעות צ\'אט</string>
     <string name="peer_category_messaging_title">הודעות</string>
     <string name="peer_category_retention_subtitle">היסטוריה מרחוק ומחיקה</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, עדכונים שהוחמצו, קרבה, פיקוח</string>
     <string name="peer_category_safety_title">בטיחות והתראות</string>
     <string name="peer_category_sharing_subtitle">תפקידים, דיוק ולוח זמנים</string>
-    <string name="peer_category_sharing_title">בקרות שיתוף</string>
+    <string name="peer_category_privacy_title">פרטיות</string>
+    <string name="peer_category_privacy_subtitle">דיוק, השהיה ושיתוף זמני</string>
+    <string name="peer_category_security_title">אבטחה</string>
+    <string name="peer_category_security_subtitle">בקרות פיקוח</string>
+    <string name="peer_category_sharing_title">מיקום</string>
     <string name="scan_add_share">הוסף ושתף</string>
     <string name="scan_grant_permission">הענק הרשאה</string>
     <string name="scan_request_sent_title">הבקשה נשלחה</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">הגדרות</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">מיקום ופרטיות</string>
+    <string name="settings_section_location">מיקום</string>
+    <string name="settings_section_privacy">פרטיות</string>
+    <string name="settings_section_connection">חיבור</string>
+    <string name="settings_section_language">שפה</string>
+    <string name="settings_category_location_subtitle">שיתוף, לוח זמנים, היסטוריה ודיוק</string>
+    <string name="settings_category_privacy_subtitle">התראות מעקב</string>
+    <string name="settings_category_connection_subtitle">ממסרים והולכת רשת</string>
+    <string name="settings_category_language_subtitle">בחר את שפת האפליקציה</string>
     <string name="settings_section_security">אבטחה</string>
     <string name="settings_section_map">מפה</string>
-    <string name="settings_section_battery_performance">סוללה וביצועים</string>
     <string name="settings_section_units_display">יחידות ותצוגה</string>
     <string name="settings_section_retention">שמירת נתונים (מכשיר זה)</string>
     <string name="settings_section_appearance">מראה</string>
@@ -394,7 +402,7 @@
     <string name="peer_receive_title">קבל את המיקום של %1$s</string>
     <string name="peer_receive_on">אתה יכול לראות את המיקום של %1$s</string>
     <string name="peer_receive_off">אין לך גישה למיקום של %1$s</string>
-    <string name="peer_section_privacy">פרטיות ובקרות שיתוף</string>
+    <string name="peer_section_privacy">פרטיות</string>
     <string name="peer_pause_sharing">השהה שיתוף</string>
     <string name="peer_pause_sub">הפסק זמנית לשלוח את מיקומך ל-%1$s</string>
     <string name="peer_precision">דיוק מיקום</string>
@@ -413,6 +421,7 @@
     <string name="peer_missed_on">הודע לי אם %1$s יפסיק לדווח על מיקומו</string>
     <string name="peer_requires_access">דורש גישה למיקום של %1$s</string>
     <string name="peer_proximity_alert">התראת קרבה</string>
+    <string name="peer_proximity_alerts_title">התראות קרבה</string>
     <string name="peer_proximity_sub">הודע לי כאשר %1$s נמצא בקרבת מקום</string>
     <string name="peer_alert_radius">רדיוס התראה</string>
     <string name="peer_alert_schedule">לוח זמנים להתראות</string>
@@ -769,9 +778,8 @@
     <string name="onboarding_error_key_range">מפתח פרטי לא חוקי - מחוץ לטווח העקומה.</string>
     <string name="onboarding_error_hex">תבנית הקסדצימלית לא חוקית.</string>
     <string name="onboarding_error_import_failed">ייבוא המפתח נכשל: %1$s</string>
-    <string name="about_diagnostics">רשת</string>
-    <string name="about_no_pending">אין הודעות בתור</string>
-    <string name="about_pending_messages">הודעות בתור</string>
+    <string name="settings_queued_none">אין הודעות בתור</string>
+    <string name="settings_queued_messages">הודעות בתור</string>
     <string name="app_lock_activity_unsupported">נעילת האפליקציה דורשת מארח התומך בבקשת המערכת. עדכן את האפליקציה.</string>
     <string name="app_lock_prompt_subtitle">השתמש בביומטריה או בקוד PIN של המכשיר</string>
     <string name="app_lock_prompt_title">ביטול נעילת LocaPeer</string>
@@ -895,21 +903,26 @@
     <string name="settings_temporary_location_share">שיתוף מיקום זמני</string>
     <string name="app_lock_no_credential">לא הוגדר נעילת מסך במכשיר הזה, ולכן אין במה לבטל את הנעילה. הגדר קוד PIN, קו ביטול נעילה, סיסמה או אמצעי ביומטרי בהגדרות המכשיר, ולאחר מכן פתח מחדש את LocaPeer.</string>
     <string name="backup_key_needs_password">הגדר סיסמה כדי לכלול את המפתח הפרטי שלך. קובץ מפתח לא מוצפן עלול לאפשר לכל אחד להשתלט על הזהות שלך.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">נעילת אפליקציה, הרשאות, מצב מפוקח</string>
+    <string name="settings_category_map_subtitle">נקודת התחלה, זום, צבע סיכה</string>
+    <string name="settings_category_units_subtitle">מהירות, מרחק, גובה, שעה</string>
+    <string name="settings_category_retention_subtitle">כמה זמן נשמרים הנתונים במכשיר זה</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">ייצוא, ייבוא, מפתח פרטי</string>
+    <string name="contacts_add_contact">הוסף איש קשר</string>
+    <string name="map_location_off_title">המיקום כבוי</string>
+    <string name="map_location_off_message">לא ניתן לעדכן או לשתף את המיקום שלך עד שתפעיל את מיקום המכשיר.</string>
+    <string name="map_location_off_action">פתח הגדרות</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">אירועים שממתינים להגיע לממסרים</string>
+    <string name="queued_messages_title">הודעות בהמתנה</string>
+    <string name="queued_message_kind">סוג אירוע %1$d</string>
+    <string name="queued_message_queued_at">בהמתנה %1$s</string>
+    <string name="queued_message_view">צפה באירוע</string>
+    <string name="queued_message_hide">הסתר</string>
+    <string name="queued_messages_flush">שלח עכשיו</string>
 </resources>

@@ -27,8 +27,6 @@
     <string name="common_deny">Denegar</string>
 
     <!-- ── Etiquetas de las pestañas de navegación ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geovallas e historial de movimiento</string>
-    <string name="peer_category_history_title">Zonas e historial</string>
     <string name="peer_category_messaging_subtitle">Permitir o bloquear mensajes de chat</string>
     <string name="peer_category_messaging_title">Mensajería</string>
     <string name="peer_category_retention_subtitle">Historial remoto y depuración</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, actualizaciones omitidas, proximidad, supervisión</string>
     <string name="peer_category_safety_title">Seguridad y alertas</string>
     <string name="peer_category_sharing_subtitle">Roles, precisión y programación</string>
-    <string name="peer_category_sharing_title">Controles de uso compartido</string>
+    <string name="peer_category_privacy_title">Privacidad</string>
+    <string name="peer_category_privacy_subtitle">Precisión, pausa y uso compartido temporal</string>
+    <string name="peer_category_security_title">Seguridad</string>
+    <string name="peer_category_security_subtitle">Controles de supervisión</string>
+    <string name="peer_category_sharing_title">Ubicación</string>
     <string name="scan_add_share">Agregar y compartir</string>
     <string name="scan_grant_permission">Conceder permiso</string>
     <string name="scan_request_sent_title">Solicitud enviada</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Ajustes</string>
 
     <!-- Etiquetas de sección -->
-    <string name="settings_section_location_privacy">Ubicación y privacidad</string>
+    <string name="settings_section_location">Ubicación</string>
+    <string name="settings_section_privacy">Privacidad</string>
+    <string name="settings_section_connection">Conexión</string>
+    <string name="settings_section_language">Idioma</string>
+    <string name="settings_category_location_subtitle">Compartir, programación, historial y precisión</string>
+    <string name="settings_category_privacy_subtitle">Alertas de seguimiento</string>
+    <string name="settings_category_connection_subtitle">Relays y transporte de red</string>
+    <string name="settings_category_language_subtitle">Elige el idioma de la app</string>
     <string name="settings_section_security">Seguridad</string>
     <string name="settings_section_map">Mapa</string>
-    <string name="settings_section_battery_performance">Batería y rendimiento</string>
     <string name="settings_section_units_display">Unidades y visualización</string>
     <string name="settings_section_retention">Retención (Este dispositivo)</string>
     <string name="settings_section_appearance">Apariencia</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Recibir la ubicación de %1$s</string>
     <string name="peer_receive_on">Puede ver la ubicación de %1$s</string>
     <string name="peer_receive_off">No tiene acceso a la ubicación de %1$s</string>
-    <string name="peer_section_privacy">Controles de privacidad y uso compartido</string>
+    <string name="peer_section_privacy">Privacidad</string>
     <string name="peer_pause_sharing">Pausar uso compartido</string>
     <string name="peer_pause_sub">Detener temporalmente el envío de su ubicación a %1$s</string>
     <string name="peer_precision">Precisión de la ubicación</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Notificarme si %1$s deja de informar su ubicación</string>
     <string name="peer_requires_access">Requiere acceso a la ubicación de %1$s</string>
     <string name="peer_proximity_alert">Alerta de proximidad</string>
+    <string name="peer_proximity_alerts_title">Alertas de proximidad</string>
     <string name="peer_proximity_sub">Notificarme cuando %1$s esté cerca</string>
     <string name="peer_alert_radius">Radio de alerta</string>
     <string name="peer_alert_schedule">Horario de alerta</string>
@@ -753,9 +762,8 @@
     <string name="peer_purge_location_sent">Comando de eliminación remota de TODAS las ubicaciones enviado a %1$s</string>
     <string name="peer_purge_messages_sent">Comando de eliminación remota de TODOS los mensajes enviado a %1$s</string>
     <string name="peer_role_change_sent">Solicitud de cambio de rol enviada a %1$s</string>
-    <string name="about_diagnostics">Red</string>
-    <string name="about_no_pending">No hay mensajes en cola</string>
-    <string name="about_pending_messages">Mensajes en cola</string>
+    <string name="settings_queued_none">No hay mensajes en cola</string>
+    <string name="settings_queued_messages">Mensajes en cola</string>
     <string name="app_lock_activity_unsupported">El bloqueo de la app requiere un host compatible con el aviso del sistema. Actualiza la app.</string>
     <string name="app_lock_prompt_subtitle">Usa datos biométricos o el PIN del dispositivo</string>
     <string name="app_lock_prompt_title">Desbloquear LocaPeer</string>
@@ -879,21 +887,26 @@
     <string name="settings_temporary_location_share">Compartir ubicación temporalmente</string>
     <string name="app_lock_no_credential">No hay ningún bloqueo de pantalla configurado en este dispositivo, así que no hay nada con qué desbloquear. Configura un PIN, patrón, contraseña o dato biométrico en los ajustes de tu dispositivo y vuelve a abrir LocaPeer.</string>
     <string name="backup_key_needs_password">Establece una contraseña para incluir tu clave privada. Un archivo de clave sin cifrar podría permitir que cualquiera se apropie de tu identidad.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Bloqueo de la app, permisos, modo supervisado</string>
+    <string name="settings_category_map_subtitle">Punto de partida, zoom, color del pin</string>
+    <string name="settings_category_units_subtitle">Velocidad, distancia, elevación, hora</string>
+    <string name="settings_category_retention_subtitle">Cuánto tiempo se conservan los datos en este dispositivo</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Exportar, importar, clave privada</string>
+    <string name="contacts_add_contact">Agregar contacto</string>
+    <string name="map_location_off_title">La ubicación está desactivada</string>
+    <string name="map_location_off_message">Tu ubicación no se puede actualizar ni compartir hasta que actives la ubicación del dispositivo.</string>
+    <string name="map_location_off_action">Abrir ajustes</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Eventos esperando llegar a los relays</string>
+    <string name="queued_messages_title">Mensajes en cola</string>
+    <string name="queued_message_kind">Tipo de evento %1$d</string>
+    <string name="queued_message_queued_at">En cola %1$s</string>
+    <string name="queued_message_view">Ver evento</string>
+    <string name="queued_message_hide">Ocultar</string>
+    <string name="queued_messages_flush">Enviar ahora</string>
 </resources>

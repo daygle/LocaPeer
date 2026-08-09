@@ -54,28 +54,26 @@
     <string name="settings_title">Settings</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Location &amp; Privacy</string>
     <string name="settings_section_location">Location</string>
     <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_security">Security</string>
     <string name="settings_section_map">Map</string>
-    <string name="settings_section_battery_performance">Battery &amp; Performance</string>
     <string name="settings_section_units_display">Units &amp; Display</string>
     <string name="settings_section_retention">Retention</string>
     <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_section_language">Language</string>
     <string name="settings_section_connection">Connection</string>
     <string name="settings_section_backup_keys">Backup &amp; Recovery</string>
 
     <!-- Settings landing category subtitles -->
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_location_subtitle">Sharing, schedule, and geofences</string>
-    <string name="settings_category_privacy_subtitle">Tracking alerts and location history</string>
+    <string name="settings_category_location_subtitle">Sharing, schedule, history, and accuracy</string>
+    <string name="settings_category_privacy_subtitle">Tracking alerts</string>
     <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
     <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
     <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
     <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
-    <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
+    <string name="settings_category_appearance_subtitle">Theme, colour, navigation</string>
+    <string name="settings_category_language_subtitle">Choose the app\'s language</string>
     <string name="settings_category_connection_subtitle">Relays and network transport</string>
     <string name="settings_category_backup_subtitle">Export, import, identity key</string>
 
@@ -315,7 +313,7 @@
     <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
     <string name="onboarding_restore_title">Restore from Backup</string>
     <string name="onboarding_restore_message">Paste your 64-character hex private key to restore your identity and contacts.</string>
-    <string name="onboarding_private_key_hex">Private key (hex)</string>
+    <string name="onboarding_private_key_hex">Private Key (Hex)</string>
     <string name="onboarding_tagline">Private location sharing with contacts.\nNo accounts. No proprietary servers.</string>
     <string name="onboarding_feature_e2e_title">End-to-End Encrypted</string>
     <string name="onboarding_feature_e2e_subtitle">Your location is encrypted on-device</string>
@@ -329,11 +327,11 @@
     <string name="onboarding_restore_from_backup">Restore From Backup</string>
     <string name="onboarding_key_note">Your private key is generated locally and never leaves this device.</string>
     <!-- Onboarding: proactive identity backup -->
-    <string name="onboarding_backup_title">Back up your identity</string>
+    <string name="onboarding_backup_title">Back Up Your Identity</string>
     <string name="onboarding_backup_desc">Your identity is a private key stored only on this device. There is no account and no password reset - if you lose this phone without a backup, your identity and contacts are gone for good.</string>
     <string name="onboarding_backup_warning">Anyone with this key can impersonate you and read your messages. Store it somewhere private - a password manager, not a screenshot.</string>
-    <string name="onboarding_backup_reveal">Reveal my private key</string>
-    <string name="onboarding_backup_copy">Copy key</string>
+    <string name="onboarding_backup_reveal">Reveal My Private Key</string>
+    <string name="onboarding_backup_copy">Copy Key</string>
     <string name="onboarding_backup_copied">Key copied to clipboard</string>
     <string name="onboarding_backup_confirm">I\'ve saved my private key somewhere safe</string>
     <string name="onboarding_backup_continue">Continue</string>
@@ -341,7 +339,7 @@
     <string name="onboarding_backup_note">You can export an encrypted backup any time in Settings → Backup &amp; Keys.</string>
     <string name="onboarding_permissions_title">Permissions</string>
     <string name="onboarding_permissions_desc">LocaPeer needs location access to share your position, camera access to scan invite codes, and notification access for background status. Physical activity access is optional - it helps label your movement (walking, driving) more accurately.</string>
-    <string name="onboarding_before_ask_title">Before we ask</string>
+    <string name="onboarding_before_ask_title">Before We Ask</string>
     <string name="onboarding_before_ask_intro">You\'ll see a few system prompts next:</string>
     <string name="onboarding_before_ask_location">• Location - required, to share your position.</string>
     <string name="onboarding_before_ask_camera">• Camera - to scan invite codes.</string>
@@ -406,9 +404,9 @@
     <string name="incoming_update_subtitle">%1$s wants to update how you share. Review the settings below.</string>
     <string name="incoming_new_subtitle">%1$s added you as a contact! You can now choose what to share back.</string>
     <string name="incoming_section_location">Location</string>
-    <string name="incoming_share_my_location">Share my location with %1$s</string>
+    <string name="incoming_share_my_location">Share My Location with %1$s</string>
     <string name="incoming_share_my_location_sub">They will be able to see where you are</string>
-    <string name="incoming_see_their_location">See %1$s\'s location</string>
+    <string name="incoming_see_their_location">See %1$s\'s Location</string>
     <string name="incoming_see_their_location_sub">You will be able to see where they are</string>
     <string name="incoming_section_messaging">Messaging</string>
     <string name="incoming_allow_messages">Allow Messages</string>
@@ -425,8 +423,8 @@
     <string name="peer_receive_title">Receive %1$s\'s Location</string>
     <string name="peer_receive_on">You can see %1$s\'s location</string>
     <string name="peer_receive_off">You don\'t have access to %1$s\'s location</string>
-    <string name="peer_section_privacy">Privacy &amp; Sharing Controls</string>
-    <string name="peer_category_sharing_title">Sharing Controls</string>
+    <string name="peer_section_privacy">Privacy</string>
+    <string name="peer_category_sharing_title">Location</string>
     <string name="peer_category_sharing_subtitle">Send and receive roles, and schedule</string>
     <string name="peer_category_privacy_title">Privacy</string>
     <string name="peer_category_privacy_subtitle">Precision, pause, and temporary sharing</string>
@@ -434,8 +432,6 @@
     <string name="peer_category_safety_subtitle">SOS, missed updates, and proximity alerts</string>
     <string name="peer_category_security_title">Security</string>
     <string name="peer_category_security_subtitle">Supervision controls</string>
-    <string name="peer_category_history_title">Zones &amp; History</string>
-    <string name="peer_category_history_subtitle">Geofences and movement history</string>
     <string name="peer_category_retention_title">Data Retention</string>
     <string name="peer_category_retention_subtitle">Remote history and purging</string>
     <string name="peer_category_messaging_title">Messaging</string>
@@ -457,6 +453,7 @@
     <string name="peer_missed_on">Notify me if %1$s stops reporting their location</string>
     <string name="peer_requires_access">Requires access to %1$s\'s location</string>
     <string name="peer_proximity_alert">Proximity Alert</string>
+    <string name="peer_proximity_alerts_title">Proximity Alerts</string>
     <string name="peer_proximity_sub">Notify me when %1$s is nearby</string>
     <string name="peer_alert_radius">Alert Radius</string>
     <string name="peer_alert_schedule">Alert Schedule</string>
@@ -493,7 +490,7 @@
     <string name="peer_temp_share_chip_6h">6 hours</string>
     <string name="peer_temp_share_chip_12h">12 hours</string>
     <string name="peer_temp_share_chip_until_tomorrow">Until tomorrow 8am</string>
-    <string name="peer_temp_share_stop">Stop now</string>
+    <string name="peer_temp_share_stop">Stop Now</string>
 
     <!-- Chat delivery state tooltip / sheet -->
     <string name="chat_delivery_state_sending">Sending…</string>
@@ -527,14 +524,20 @@
     <string name="settings_dynamic_color">Material You Colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
 
-    <!-- About diagnostics -->
-    <string name="about_diagnostics">Network</string>
-    <string name="about_pending_messages">Queued messages</string>
-    <string name="about_no_pending">No queued messages</string>
-    <plurals name="about_pending_message_count">
+    <!-- Queued messages (relay outbox) -->
+    <string name="settings_queued_messages">Queued Messages</string>
+    <string name="settings_queued_none">No queued messages</string>
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Events waiting to reach relays</string>
+    <string name="queued_messages_title">Queued Messages</string>
+    <string name="queued_message_kind">Event kind %1$d</string>
+    <string name="queued_message_queued_at">Queued %1$s</string>
+    <string name="queued_message_view">View Event</string>
+    <string name="queued_message_hide">Hide</string>
+    <string name="queued_messages_flush">Flush Now</string>
 
     <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
     <plurals name="conv_delete_count">
@@ -590,7 +593,7 @@
     <!-- ── Map screen ─────────────────────────────────────────────────────── -->
     <string name="map_location_off_title">Location is turned off</string>
     <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="map_location_off_action">Open Settings</string>
     <string name="map_sos_activate_title">Activate SOS?</string>
     <string name="map_sos_deactivate_title">Deactivate SOS?</string>
     <string name="map_sos_activate_msg">This will broadcast your location every 15 seconds to your designated SOS contacts until deactivated.</string>

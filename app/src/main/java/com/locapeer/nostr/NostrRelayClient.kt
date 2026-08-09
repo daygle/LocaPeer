@@ -272,6 +272,22 @@ class NostrRelayClient @Inject constructor(
         pendingMessageDao.capHeartbeats(relayUrl, HEARTBEAT_QUEUE_PATTERN, HEARTBEAT_QUEUE_MAX_PER_RELAY)
     }
 
+    /**
+     * Force a retry of every queued message right now: flushes pending events to
+     * connected relays (deleting them on success) and kicks disconnected relays to
+     * reconnect immediately, which flushes their queue when the socket opens.
+     * Exposed for the Queued Messages settings screen's "Flush now" action.
+     */
+    fun flushAllPending() {
+        relays.values.forEach { relay ->
+            if (relay.isConnected) {
+                flushPendingTo(relay)
+            } else {
+                relay.reconnectNow()
+            }
+        }
+    }
+
     private fun flushPendingTo(relay: RelayConnection) {
         scope.launch {
             val pending = pendingMessageDao.getForRelay(relay.url)

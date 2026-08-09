@@ -387,7 +387,7 @@ fun PeerSafetyAlertsScreen(
 
         SettingsCard(
             headerIcon = Icons.Default.NearMe,
-            headerTitle = stringResource(R.string.peer_proximity_alert)
+            headerTitle = stringResource(R.string.peer_proximity_alerts_title)
         ) {
             // takeIf keeps the non-null entity in scope below without relying on a smart-cast
             // implied by a separate Boolean (which breaks the moment that Boolean becomes a var).
@@ -472,36 +472,6 @@ fun PeerSecurityScreen(
                 subtitle = if (isMySupervised) stringResource(R.string.peer_supervise_on, peerName) else stringResource(R.string.peer_supervise_off, peerName),
                 checked = isMySupervised,
                 onCheckedChange = { vm.setIsMySupervised(it) }
-            )
-        }
-    }
-}
-
-// ─── Zones & History ─────────────────────────────────────────────────────────
-
-@Composable
-fun PeerZonesHistoryScreen(
-    peerId: String,
-    peerName: String,
-    onNavigateBack: () -> Unit,
-    onNavigateToGeofences: (String) -> Unit,
-    vm: PeerSharingViewModel = hiltViewModel(),
-) {
-    LaunchedEffect(peerId) { vm.init(peerId) }
-    val state by vm.uiState.collectAsStateWithLifecycle()
-    val role = state.peer?.locationRole
-    val receivesLocation = role == PeerEntity.ROLE_RECEIVE || role == PeerEntity.ROLE_SEND_RECEIVE
-
-    PeerSharingSubScreen(stringResource(R.string.peer_category_history_title), onNavigateBack) {
-        SettingsCard(
-            headerIcon = Icons.Default.Fence,
-            headerTitle = stringResource(R.string.settings_geofences)
-        ) {
-            SettingsRow(
-                title = stringResource(R.string.settings_geofences),
-                subtitle = stringResource(R.string.peer_geofences_sub, peerName),
-                enabled = receivesLocation,
-                onClick = { onNavigateToGeofences(peerId) }
             )
         }
     }

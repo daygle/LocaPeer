@@ -27,8 +27,6 @@
     <string name="common_deny">거부</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">지오펜스 및 이동 기록</string>
-    <string name="peer_category_history_title">구역 및 기록</string>
     <string name="peer_category_messaging_subtitle">채팅 메시지 허용 또는 차단</string>
     <string name="peer_category_messaging_title">메시지</string>
     <string name="peer_category_retention_subtitle">원격 기록 및 삭제</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, 놓친 업데이트, 근접성, 감독</string>
     <string name="peer_category_safety_title">안전 및 알림</string>
     <string name="peer_category_sharing_subtitle">역할, 정확도 및 일정</string>
-    <string name="peer_category_sharing_title">공유 제어</string>
+    <string name="peer_category_privacy_title">개인정보</string>
+    <string name="peer_category_privacy_subtitle">정확도, 일시중지 및 임시 공유</string>
+    <string name="peer_category_security_title">보안</string>
+    <string name="peer_category_security_subtitle">감독 제어</string>
+    <string name="peer_category_sharing_title">위치</string>
     <string name="scan_add_share">추가 및 공유</string>
     <string name="scan_grant_permission">권한 부여</string>
     <string name="scan_request_sent_title">요청 전송됨</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">설정</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">위치 및 개인정보</string>
+    <string name="settings_section_location">위치</string>
+    <string name="settings_section_privacy">개인정보</string>
+    <string name="settings_section_connection">연결</string>
+    <string name="settings_section_language">언어</string>
+    <string name="settings_category_location_subtitle">공유, 일정, 기록 및 정확도</string>
+    <string name="settings_category_privacy_subtitle">추적 알림</string>
+    <string name="settings_category_connection_subtitle">릴레이 및 네트워크 전송</string>
+    <string name="settings_category_language_subtitle">앱 언어 선택</string>
     <string name="settings_section_security">보안</string>
     <string name="settings_section_map">지도</string>
-    <string name="settings_section_battery_performance">배터리 및 성능</string>
     <string name="settings_section_units_display">단위 및 표시</string>
     <string name="settings_section_retention">보관 (이 기기)</string>
     <string name="settings_section_appearance">모양</string>
@@ -382,7 +390,7 @@
     <string name="peer_receive_title">%1$s 님의 위치 받기</string>
     <string name="peer_receive_on">%1$s 님의 위치를 볼 수 있습니다</string>
     <string name="peer_receive_off">%1$s 님의 위치에 접근할 수 없습니다</string>
-    <string name="peer_section_privacy">개인정보 및 공유 제어</string>
+    <string name="peer_section_privacy">개인정보</string>
     <string name="peer_pause_sharing">공유 일시중지</string>
     <string name="peer_pause_sub">%1$s 님에게 위치 전송을 일시적으로 중단</string>
     <string name="peer_precision">위치 정밀도</string>
@@ -399,6 +407,7 @@
     <string name="peer_missed_on">%1$s 님이 위치 보고를 중단하면 알림</string>
     <string name="peer_requires_access">%1$s 님의 위치 접근이 필요합니다</string>
     <string name="peer_proximity_alert">근접 알림</string>
+    <string name="peer_proximity_alerts_title">근접 알림</string>
     <string name="peer_proximity_sub">%1$s 님이 근처에 있으면 알림</string>
     <string name="peer_alert_radius">알림 반경</string>
     <string name="peer_alert_schedule">알림 일정</string>
@@ -739,9 +748,8 @@
     <string name="onboarding_error_key_range">잘못된 개인 키 - 곡선 범위를 벗어났습니다.</string>
     <string name="onboarding_error_hex">잘못된 16진수 형식입니다.</string>
     <string name="onboarding_error_import_failed">키 가져오기 실패: %1$s</string>
-    <string name="about_diagnostics">네트워크</string>
-    <string name="about_no_pending">대기 중인 메시지 없음</string>
-    <string name="about_pending_messages">대기 중인 메시지</string>
+    <string name="settings_queued_none">대기 중인 메시지 없음</string>
+    <string name="settings_queued_messages">대기 중인 메시지</string>
     <string name="app_lock_activity_unsupported">앱 잠금은 시스템 프롬프트를 지원하는 호스트가 필요합니다. 앱을 업데이트하세요.</string>
     <string name="app_lock_prompt_subtitle">생체 인증 또는 기기 PIN 사용</string>
     <string name="app_lock_prompt_title">LocaPeer 잠금 해제</string>
@@ -865,20 +873,25 @@
     <string name="settings_temporary_location_share">임시 위치 공유</string>
     <string name="app_lock_no_credential">이 기기에 화면 잠금이 설정되어 있지 않아 잠금을 해제할 수단이 없습니다. 기기 설정에서 PIN, 패턴, 비밀번호 또는 생체 인증을 설정한 다음 LocaPeer를 다시 여세요.</string>
     <string name="backup_key_needs_password">개인 키를 포함하려면 비밀번호를 설정하세요. 암호화되지 않은 키 파일은 누구나 여러분의 신원을 탈취할 수 있게 만들 수 있습니다.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">앱 잠금, 권한, 감독 모드</string>
+    <string name="settings_category_map_subtitle">시작 지점, 확대, 핀 색상</string>
+    <string name="settings_category_units_subtitle">속도, 거리, 고도, 시간</string>
+    <string name="settings_category_retention_subtitle">이 기기에 데이터가 보관되는 기간</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">내보내기, 가져오기, 개인 키</string>
+    <string name="contacts_add_contact">연락처 추가</string>
+    <string name="map_location_off_title">위치가 꺼져 있습니다</string>
+    <string name="map_location_off_message">기기 위치를 켤 때까지 내 위치를 업데이트하거나 공유할 수 없습니다.</string>
+    <string name="map_location_off_action">설정 열기</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">릴레이에 도달하기를 기다리는 이벤트</string>
+    <string name="queued_messages_title">대기 중인 메시지</string>
+    <string name="queued_message_kind">이벤트 종류 %1$d</string>
+    <string name="queued_message_queued_at">대기 중 %1$s</string>
+    <string name="queued_message_view">이벤트 보기</string>
+    <string name="queued_message_hide">숨기기</string>
+    <string name="queued_messages_flush">지금 보내기</string>
 </resources>

@@ -27,8 +27,6 @@
     <string name="common_deny">رد کردن</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">حصارهای جغرافیایی و تاریخچه جابه‌جایی</string>
-    <string name="peer_category_history_title">مناطق و تاریخچه</string>
     <string name="peer_category_messaging_subtitle">اجازه دادن یا مسدود کردن پیام‌های گفتگو</string>
     <string name="peer_category_messaging_title">پیام‌رسانی</string>
     <string name="peer_category_retention_subtitle">تاریخچه از راه دور و پاک‌سازی</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS، به‌روزرسانی‌های از دست رفته، نزدیکی، نظارت</string>
     <string name="peer_category_safety_title">ایمنی و هشدارها</string>
     <string name="peer_category_sharing_subtitle">نقش‌ها، دقت و زمان‌بندی</string>
-    <string name="peer_category_sharing_title">کنترل‌های اشتراک‌گذاری</string>
+    <string name="peer_category_privacy_title">حریم خصوصی</string>
+    <string name="peer_category_privacy_subtitle">دقت، توقف موقت و اشتراک‌گذاری موقت</string>
+    <string name="peer_category_security_title">امنیت</string>
+    <string name="peer_category_security_subtitle">کنترل‌های نظارت</string>
+    <string name="peer_category_sharing_title">مکان</string>
     <string name="scan_add_share">افزودن و اشتراک‌گذاری</string>
     <string name="scan_grant_permission">اعطای مجوز</string>
     <string name="scan_request_sent_title">درخواست ارسال شد</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">تنظیمات</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">مکان و حریم خصوصی</string>
+    <string name="settings_section_location">مکان</string>
+    <string name="settings_section_privacy">حریم خصوصی</string>
+    <string name="settings_section_connection">اتصال</string>
+    <string name="settings_section_language">زبان</string>
+    <string name="settings_category_location_subtitle">اشتراک‌گذاری، برنامه، تاریخچه و دقت</string>
+    <string name="settings_category_privacy_subtitle">هشدارهای ردیابی</string>
+    <string name="settings_category_connection_subtitle">رله‌ها و انتقال شبکه</string>
+    <string name="settings_category_language_subtitle">زبان برنامه را انتخاب کنید</string>
     <string name="settings_section_security">امنیت</string>
     <string name="settings_section_map">نقشه</string>
-    <string name="settings_section_battery_performance">باتری و عملکرد</string>
     <string name="settings_section_units_display">واحدها و نمایش</string>
     <string name="settings_section_retention">نگهداری (این دستگاه)</string>
     <string name="settings_section_appearance">ظاهر</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">دریافت موقعیت %1$s</string>
     <string name="peer_receive_on">می‌توانید موقعیت %1$s را ببینید</string>
     <string name="peer_receive_off">به موقعیت %1$s دسترسی ندارید</string>
-    <string name="peer_section_privacy">حریم خصوصی و کنترل‌های اشتراک‌گذاری</string>
+    <string name="peer_section_privacy">حریم خصوصی</string>
     <string name="peer_pause_sharing">توقف موقت اشتراک‌گذاری</string>
     <string name="peer_pause_sub">ارسال موقعیت به %1$s را موقتاً متوقف کنید</string>
     <string name="peer_precision">دقت موقعیت</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">اگر %1$s گزارش موقعیت را متوقف کرد، به من اطلاع بده</string>
     <string name="peer_requires_access">به دسترسی به موقعیت %1$s نیاز دارد</string>
     <string name="peer_proximity_alert">هشدار مجاورت</string>
+    <string name="peer_proximity_alerts_title">هشدارهای مجاورت</string>
     <string name="peer_proximity_sub">وقتی %1$s نزدیک است به من اطلاع بده</string>
     <string name="peer_alert_radius">شعاع هشدار</string>
     <string name="peer_alert_schedule">زمان‌بندی هشدار</string>
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">کلید خصوصی نامعتبر - خارج از محدوده منحنی.</string>
     <string name="onboarding_error_hex">قالب هگز نامعتبر است.</string>
     <string name="onboarding_error_import_failed">درون‌ریزی کلید ناموفق بود: %1$s</string>
-    <string name="about_diagnostics">شبکه</string>
-    <string name="about_no_pending">پیامی در صف نیست</string>
-    <string name="about_pending_messages">پیام‌های در صف</string>
+    <string name="settings_queued_none">پیامی در صف نیست</string>
+    <string name="settings_queued_messages">پیام‌های در صف</string>
     <string name="app_lock_activity_unsupported">قفل برنامه به میزبانی نیاز دارد که از درخواست سیستم پشتیبانی کند. برنامه را به‌روزرسانی کنید.</string>
     <string name="app_lock_prompt_subtitle">از زیست‌سنجی یا پین دستگاه استفاده کنید</string>
     <string name="app_lock_prompt_title">باز کردن قفل LocaPeer</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">اشتراک‌گذاری موقت موقعیت مکانی</string>
     <string name="app_lock_no_credential">روی این دستگاه هیچ قفل صفحه‌ای تنظیم نشده است، بنابراین چیزی برای بازکردن قفل وجود ندارد. در تنظیمات دستگاهتان یک پین، الگو، رمز عبور یا زیست‌سنجی تنظیم کنید و سپس LocaPeer را دوباره باز کنید.</string>
     <string name="backup_key_needs_password">برای گنجاندن کلید خصوصی‌تان یک رمز عبور تنظیم کنید. یک فایل کلید رمزگذاری‌نشده می‌تواند به هرکسی اجازه دهد هویت شما را تصاحب کند.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">قفل برنامه، مجوزها، حالت تحت نظارت</string>
+    <string name="settings_category_map_subtitle">نقطه شروع، بزرگ‌نمایی، رنگ پین</string>
+    <string name="settings_category_units_subtitle">سرعت، فاصله، ارتفاع، زمان</string>
+    <string name="settings_category_retention_subtitle">مدت زمان نگهداری داده‌ها در این دستگاه</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">برون‌بری، درون‌ریزی، کلید خصوصی</string>
+    <string name="contacts_add_contact">افزودن مخاطب</string>
+    <string name="map_location_off_title">مکان خاموش است</string>
+    <string name="map_location_off_message">موقعیت شما تا زمانی که موقعیت دستگاه را روشن نکنید، قابل به‌روزرسانی یا اشتراک‌گذاری نیست.</string>
+    <string name="map_location_off_action">باز کردن تنظیمات</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">رویدادهایی که در انتظار رسیدن به رله‌ها هستند</string>
+    <string name="queued_messages_title">پیام‌های در صف</string>
+    <string name="queued_message_kind">نوع رویداد %1$d</string>
+    <string name="queued_message_queued_at">در صف %1$s</string>
+    <string name="queued_message_view">مشاهده رویداد</string>
+    <string name="queued_message_hide">پنهان کردن</string>
+    <string name="queued_messages_flush">ارسال اکنون</string>
 </resources>

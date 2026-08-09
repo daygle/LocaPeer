@@ -27,8 +27,6 @@
     <string name="common_deny">Ƙi</string>
 
     <!-- ── Alamar shafin kewayawa ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Geofences da tarihin motsi</string>
-    <string name="peer_category_history_title">Yankuna &amp; Tarihi</string>
     <string name="peer_category_messaging_subtitle">Ƙyale ko toshe saƙonnin taɗi</string>
     <string name="peer_category_messaging_title">Saƙonni</string>
     <string name="peer_category_retention_subtitle">Tarihin nesa da sharewa</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, sabuntawa da suka ɓace, kusanci, sa ido</string>
     <string name="peer_category_safety_title">Tsaro &amp; Gargaɗi</string>
     <string name="peer_category_sharing_subtitle">Matsayi, daidaito, da jadawali</string>
-    <string name="peer_category_sharing_title">Ikon Rabawa</string>
+    <string name="peer_category_privacy_title">Sirri</string>
+    <string name="peer_category_privacy_subtitle">Daidaito, dakatarwa da raba na ɗan lokaci</string>
+    <string name="peer_category_security_title">Tsaro</string>
+    <string name="peer_category_security_subtitle">Sarrafin Sa Ido</string>
+    <string name="peer_category_sharing_title">Wuri</string>
     <string name="scan_add_share">Ƙara &amp; Raba</string>
     <string name="scan_grant_permission">Ba da izini</string>
     <string name="scan_request_sent_title">An aika buƙatar</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Saituna</string>
 
     <!-- Alamomin sashe -->
-    <string name="settings_section_location_privacy">Wuri &amp; Sirri</string>
+    <string name="settings_section_location">Wuri</string>
+    <string name="settings_section_privacy">Sirri</string>
+    <string name="settings_section_connection">Haɗi</string>
+    <string name="settings_section_language">Harshe</string>
+    <string name="settings_category_location_subtitle">Raba, jadawali, tarihi da daidaito</string>
+    <string name="settings_category_privacy_subtitle">Faɗakarwar bin diddigi</string>
+    <string name="settings_category_connection_subtitle">Relays da jigilar hanyar sadarwa</string>
+    <string name="settings_category_language_subtitle">Zaɓi harshen app</string>
     <string name="settings_section_security">Tsaro</string>
     <string name="settings_section_map">Taswira</string>
-    <string name="settings_section_battery_performance">Baturi &amp; Aiki</string>
     <string name="settings_section_units_display">Raka\'a &amp; Nunawa</string>
     <string name="settings_section_retention">Riƙewa (Wannan Na\'urar)</string>
     <string name="settings_section_appearance">Kamanni</string>
@@ -388,7 +396,7 @@
     <string name="peer_receive_title">Karɓi Wurin %1$s</string>
     <string name="peer_receive_on">Zaku iya ganin wurin %1$s</string>
     <string name="peer_receive_off">Ba kwa samun damar shiga wurin %1$s</string>
-    <string name="peer_section_privacy">Ikon Sirri &amp; Rabawa</string>
+    <string name="peer_section_privacy">Sirri</string>
     <string name="peer_pause_sharing">Dakatar Da Rabawa</string>
     <string name="peer_pause_sub">Dakatar da aika wurin ku zuwa ga %1$s na ɗan lokaci</string>
     <string name="peer_precision">Ingancin Wuri</string>
@@ -406,6 +414,7 @@
     <string name="peer_missed_on">Sanar da ni idan %1$s ya daina bayar da rahoton wurinsa</string>
     <string name="peer_requires_access">Chọrọ ịnweta ebe %1$s nọ</string>
     <string name="peer_proximity_alert">Gargaɗin Kusanci</string>
+    <string name="peer_proximity_alerts_title">Gargaɗin Kusanci</string>
     <string name="peer_proximity_sub">Sanar da ni lokacin da %1$s yake kusa</string>
     <string name="peer_alert_radius">Radius Na Gargaɗi</string>
     <string name="peer_alert_schedule">Tsarin Gargaɗi</string>
@@ -428,7 +437,7 @@
     <string name="peer_purge_messages">Share Dukkan Saƙonni Daga %1$s</string>
     <string name="peer_precision_exact">GPS Madaidaici</string>
     <string name="peer_precision_exact_desc">Madaidaicin haɗin gwiwa</string>
-    <string name="peer_precision_suburb">Suburb (~1km)</string>
+    <string name="peer_precision_suburb">Ɔauye (~1km)</string>
     <string name="peer_precision_suburb_desc">Matsayin maƙwabta kawai</string>
 
     <!-- ── Conversation list (Messages) screen ────────────────────────────── -->
@@ -661,8 +670,8 @@
     <string name="about_open_source">Laburaren tushe na fili</string>
     <string name="about_lib_osmdroid_desc">Nunin taswira dangane da OpenStreetMap</string>
     <string name="about_lib_okhttp_desc">Sufurin WebSocket don relay Nostr</string>
-    <string name="about_lib_compose_desc">UI framework</string>
-    <string name="about_lib_hilt_desc">Dependency injection</string>
+    <string name="about_lib_compose_desc">Tsarin UI</string>
+    <string name="about_lib_hilt_desc">Shigar da dogaro</string>
     <string name="about_lib_room_desc">Rumbun bayanai na gida</string>
     <string name="about_map_attribution">Bayanin taswira © masu ba da gudummawa ga OpenStreetMap</string>
 
@@ -754,9 +763,8 @@
     <string name="onboarding_error_key_range">Maɓallin sirri ba daidai ba.</string>
     <string name="onboarding_error_hex">Usoro hex kò dára.</string>
     <string name="onboarding_error_import_failed">Mayar da maɓalli ya gaza: %1$s</string>
-    <string name="about_diagnostics">Cibiyar sadarwa</string>
-    <string name="about_no_pending">Babu saƙon da ke jira</string>
-    <string name="about_pending_messages">Saƙonnin da ke jira</string>
+    <string name="settings_queued_none">Babu saƙon da ke jira</string>
+    <string name="settings_queued_messages">Saƙonnin da ke jira</string>
     <string name="app_lock_activity_unsupported">Kulle-app yana buƙatar mai masaukin da ke goyon bayan tambayar tsarin. Sabunta app.</string>
     <string name="app_lock_prompt_subtitle">Yi amfani da biometric ko PIN na na\'ura</string>
     <string name="app_lock_prompt_title">Buɗe LocaPeer</string>
@@ -880,21 +888,26 @@
     <string name="settings_temporary_location_share">Raba wuri na wucin gadi</string>
     <string name="app_lock_no_credential">Babu kullen allo da aka saita a wannan na\'urar, don haka babu abin da za a bude da shi. Saita PIN, tsari, kalmar sirri, ko biometric a cikin saitunan na\'urarka, sannan ka sake bude LocaPeer.</string>
     <string name="backup_key_needs_password">Saita kalmar sirri don hada da makullin sirrinka. Fayil na makulli mara boyewa zai iya bar kowa ya karbe asalinka.</string>
-    <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
-    <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
-    <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
-    <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
-    <string name="settings_category_units_subtitle">Speed, distance, elevation, time</string>
-    <string name="settings_category_retention_subtitle">How long data is kept on this device</string>
+    <string name="settings_category_security_subtitle">Kulle-app, izini, yanayin sa ido</string>
+    <string name="settings_category_map_subtitle">Wurin farawa, zuƙowa, launin pin</string>
+    <string name="settings_category_units_subtitle">Sauri, nisa, tsawo, lokaci</string>
+    <string name="settings_category_retention_subtitle">Tsawon lokacin da ake adana bayanai akan wannan na\'ura</string>
     <string name="settings_category_appearance_subtitle">Theme, colour, navigation, language</string>
-    <string name="settings_category_backup_subtitle">Export, import, identity key</string>
-    <string name="contacts_add_contact">Add contact</string>
-    <string name="map_location_off_title">Location is turned off</string>
-    <string name="map_location_off_message">Your position can\'t update or be shared until you turn on device location.</string>
-    <string name="map_location_off_action">Open settings</string>
+    <string name="settings_category_backup_subtitle">Fitarwa, shigowa, maɓallin sirri</string>
+    <string name="contacts_add_contact">Ƙara lamba</string>
+    <string name="map_location_off_title">An kashe wurin</string>
+    <string name="map_location_off_message">Ba za a iya sabunta wurinka ko raba shi ba sai kun kunna wurin na\'urar.</string>
+    <string name="map_location_off_action">Buɗe saitunan</string>
     <string name="map_live">● Live</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Abubuwan da ke jiran isa ga relays</string>
+    <string name="queued_messages_title">Saƙonni da ke jira</string>
+    <string name="queued_message_kind">Nau\'in aukuwa %1$d</string>
+    <string name="queued_message_queued_at">A jera %1$s</string>
+    <string name="queued_message_view">Duba aukuwa</string>
+    <string name="queued_message_hide">Ɓoye</string>
+    <string name="queued_messages_flush">Aika yanzu</string>
 </resources>

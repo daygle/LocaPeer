@@ -80,10 +80,11 @@ private fun SettingsSubScreen(
 fun LocationSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToGlobalSchedule: () -> Unit,
-    onNavigateToGeofences: () -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
+
+    var showIntervalsDialog by remember { mutableStateOf(false) }
 
     SettingsSubScreen(stringResource(R.string.settings_section_location), onNavigateBack) {
         SettingsCard(
@@ -98,18 +99,84 @@ fun LocationSettingsScreen(
             )
             CardDivider()
             SettingsRow(
+                title = stringResource(R.string.settings_update_cadence),
+                subtitle = stringResource(R.string.settings_update_cadence_subtitle),
+                onClick = { showIntervalsDialog = true }
+            )
+            CardDivider()
+            SettingsRow(
                 title = stringResource(R.string.settings_sharing_schedule),
                 value = if (settings.globalScheduleRules.isEmpty()) stringResource(R.string.settings_always_on)
                 else androidx.compose.ui.res.pluralStringResource(R.plurals.settings_schedule_rule_count, settings.globalScheduleRules.size, settings.globalScheduleRules.size),
                 onClick = onNavigateToGlobalSchedule
             )
             CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_geofences),
-                subtitle = stringResource(R.string.settings_geofences_subtitle),
-                onClick = onNavigateToGeofences
+            SwitchRow(
+                title = stringResource(R.string.settings_allow_live_boost),
+                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
+                checked = settings.allowLiveBoost,
+                onCheckedChange = { vm.setAllowLiveBoost(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_request_live_boost),
+                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
+                checked = settings.requestLiveBoost,
+                onCheckedChange = { vm.setRequestLiveBoost(it) }
+            )
+            CardDivider()
+            MetresFilterSliderRow(
+                title = stringResource(R.string.settings_min_distance_filtering),
+                subtitle = stringResource(R.string.settings_min_distance_filtering_subtitle),
+                valueMeters = settings.historyMinDistanceMeters,
+                onCommit = { vm.setHistoryMinDistanceMeters(it) }
+            )
+            CardDivider()
+            MetresFilterSliderRow(
+                title = stringResource(R.string.settings_discard_low_accuracy),
+                subtitle = stringResource(R.string.settings_discard_low_accuracy_subtitle),
+                valueMeters = settings.sendMaxAccuracyMeters,
+                onCommit = { vm.setSendMaxAccuracyMeters(it) }
+            )
+            CardDivider()
+            MetresFilterSliderRow(
+                title = stringResource(R.string.settings_hide_low_accuracy),
+                subtitle = stringResource(R.string.settings_hide_low_accuracy_subtitle),
+                valueMeters = settings.historyMaxAccuracyMeters,
+                onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
             )
         }
+    }
+
+    if (showIntervalsDialog) {
+        AlertDialog(
+            onDismissRequest = { showIntervalsDialog = false },
+            title = { Text(stringResource(R.string.settings_update_cadence)) },
+            text = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    Text(stringResource(R.string.settings_update_cadence_dialog_message),
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+
+                    IntervalSlider(stringResource(R.string.motion_stationary), settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
+                    IntervalSlider(stringResource(R.string.motion_walking), settings.walkingIntervalMinutes, 1f..15f, 13) { vm.updateIntervals(walking = it) }
+                    IntervalSlider(stringResource(R.string.motion_running), settings.runningIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(running = it) }
+                    IntervalSlider(stringResource(R.string.motion_cycling), settings.cyclingIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(cycling = it) }
+                    IntervalSlider(stringResource(R.string.motion_driving), settings.drivingIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(driving = it) }
+                    IntervalSlider(stringResource(R.string.settings_low_battery), settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
+
+                    TextButton(
+                        onClick = { vm.resetIntervals() },
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    ) { Text(stringResource(R.string.settings_update_cadence_reset)) }
+                }
+            },
+            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } }
+        )
     }
 }
 
@@ -118,11 +185,9 @@ fun LocationSettingsScreen(
 @Composable
 fun PrivacySettingsScreen(
     onNavigateBack: () -> Unit,
-    onNavigateToMyHistory: (pubkeyHex: String) -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
-    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
 
     SettingsSubScreen(stringResource(R.string.settings_section_privacy), onNavigateBack) {
         SettingsCard(
@@ -134,12 +199,6 @@ fun PrivacySettingsScreen(
                 subtitle = stringResource(R.string.settings_notify_when_tracked_subtitle),
                 checked = settings.notifyOnTrackingAlerts,
                 onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_my_location_history),
-                subtitle = stringResource(R.string.settings_my_location_history_subtitle),
-                onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
             )
         }
     }
@@ -424,16 +483,16 @@ fun MapSettingsScreen(
                                 }
                             }
                         }
-                        CardDivider()
-                        SwitchRow(
-                            title = stringResource(R.string.settings_lookup_addresses),
-                            subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
-                            checked = settings.reverseGeocodingEnabled,
-                            onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
-                        )
                     }
                 }
             }
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_lookup_addresses),
+                subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
+                checked = settings.reverseGeocodingEnabled,
+                onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
+            )
         }
     }
 
@@ -471,96 +530,6 @@ private val PIN_COLOR_OPTIONS = listOf(
     "#00897B", "#0097A7", "#1976D2", "#303F9F",
     "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
-
-// ─── Battery & Performance ────────────────────────────────────────────────────
-
-@Composable
-fun PerformanceSettingsScreen(
-    onNavigateBack: () -> Unit,
-    vm: SettingsViewModel = hiltViewModel(),
-) {
-    val settings by vm.settings.collectAsStateWithLifecycle()
-    var showIntervalsDialog by remember { mutableStateOf(false) }
-
-    SettingsSubScreen(stringResource(R.string.settings_section_battery_performance), onNavigateBack) {
-        SettingsCard(
-            headerIcon = Icons.Default.Timer,
-            headerTitle = stringResource(R.string.settings_section_battery_performance)
-        ) {
-            SwitchRow(
-                title = stringResource(R.string.settings_allow_live_boost),
-                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
-                checked = settings.allowLiveBoost,
-                onCheckedChange = { vm.setAllowLiveBoost(it) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_request_live_boost),
-                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
-                checked = settings.requestLiveBoost,
-                onCheckedChange = { vm.setRequestLiveBoost(it) }
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_update_cadence),
-                subtitle = stringResource(R.string.settings_update_cadence_subtitle),
-                onClick = { showIntervalsDialog = true }
-            )
-            CardDivider()
-            MetresFilterSliderRow(
-                title = stringResource(R.string.settings_min_distance_filtering),
-                subtitle = stringResource(R.string.settings_min_distance_filtering_subtitle),
-                valueMeters = settings.historyMinDistanceMeters,
-                onCommit = { vm.setHistoryMinDistanceMeters(it) }
-            )
-            CardDivider()
-            MetresFilterSliderRow(
-                title = stringResource(R.string.settings_discard_low_accuracy),
-                subtitle = stringResource(R.string.settings_discard_low_accuracy_subtitle),
-                valueMeters = settings.sendMaxAccuracyMeters,
-                onCommit = { vm.setSendMaxAccuracyMeters(it) }
-            )
-            CardDivider()
-            MetresFilterSliderRow(
-                title = stringResource(R.string.settings_hide_low_accuracy),
-                subtitle = stringResource(R.string.settings_hide_low_accuracy_subtitle),
-                valueMeters = settings.historyMaxAccuracyMeters,
-                onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
-            )
-        }
-    }
-
-    if (showIntervalsDialog) {
-        AlertDialog(
-            onDismissRequest = { showIntervalsDialog = false },
-            title = { Text(stringResource(R.string.settings_update_cadence)) },
-            text = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    Text(stringResource(R.string.settings_update_cadence_dialog_message),
-                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-
-                    IntervalSlider(stringResource(R.string.motion_stationary), settings.stationaryIntervalMinutes, 5f..60f, 10) { vm.updateIntervals(stationary = it) }
-                    IntervalSlider(stringResource(R.string.motion_walking), settings.walkingIntervalMinutes, 1f..15f, 13) { vm.updateIntervals(walking = it) }
-                    IntervalSlider(stringResource(R.string.motion_running), settings.runningIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(running = it) }
-                    IntervalSlider(stringResource(R.string.motion_cycling), settings.cyclingIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(cycling = it) }
-                    IntervalSlider(stringResource(R.string.motion_driving), settings.drivingIntervalMinutes, 1f..10f, 8) { vm.updateIntervals(driving = it) }
-                    IntervalSlider(stringResource(R.string.settings_low_battery), settings.lowBatteryIntervalMinutes, 15f..120f, 6) { vm.updateIntervals(lowBattery = it) }
-
-                    TextButton(
-                        onClick = { vm.resetIntervals() },
-                        modifier = Modifier.align(Alignment.CenterHorizontally)
-                    ) { Text(stringResource(R.string.settings_update_cadence_reset)) }
-                }
-            },
-            confirmButton = { TextButton(onClick = { showIntervalsDialog = false }) { Text(stringResource(R.string.common_done)) } }
-        )
-    }
-}
 
 /**
  * A labelled 0-500 m slider used for the distance/accuracy filters. Shows "Off" at 0 and the
@@ -782,6 +751,41 @@ fun RetentionSettingsScreen(
     }
 }
 
+// ─── Language ────────────────────────────────────────────────────────────────
+
+@Composable
+fun LanguageSettingsScreen(
+    onNavigateBack: () -> Unit,
+) {
+    var showLanguageDialog by remember { mutableStateOf(false) }
+
+    SettingsSubScreen(stringResource(R.string.settings_section_language), onNavigateBack) {
+        val currentLanguage = AppLanguage.current()
+        SettingsCard(
+            headerIcon = Icons.Default.Translate,
+            headerTitle = stringResource(R.string.settings_section_language)
+        ) {
+            SettingsRow(
+                title = stringResource(R.string.settings_language),
+                value = currentLanguage.nativeName ?: stringResource(R.string.settings_language_system),
+                onClick = { showLanguageDialog = true }
+            )
+        }
+    }
+
+    if (showLanguageDialog) {
+        val current = AppLanguage.current()
+        val options = AppLanguage.entries.map { ChoiceOption(it, it.nativeName ?: stringResource(R.string.settings_language_system)) }
+        SingleChoiceDialog(
+            title = stringResource(R.string.settings_language_title),
+            options = options,
+            isSelected = { current == it },
+            onSelected = { AppLanguage.apply(it); showLanguageDialog = false },
+            onDismiss = { showLanguageDialog = false }
+        )
+    }
+}
+
 // ─── Appearance ───────────────────────────────────────────────────────────────
 
 @Composable
@@ -794,7 +798,6 @@ fun AppearanceSettingsScreen(
 
     var showThemeDialog by remember { mutableStateOf(false) }
     var showStartPageDialog by remember { mutableStateOf(false) }
-    var showLanguageDialog by remember { mutableStateOf(false) }
 
     SettingsSubScreen(stringResource(R.string.settings_section_appearance), onNavigateBack) {
         val currentThemeLabel = when (settings.themeMode) {
@@ -802,7 +805,6 @@ fun AppearanceSettingsScreen(
             "DARK" -> stringResource(R.string.settings_theme_dark)
             else -> stringResource(R.string.settings_theme_system)
         }
-        val currentLanguage = AppLanguage.current()
         SettingsCard(
             headerIcon = Icons.Default.Palette,
             headerTitle = stringResource(R.string.settings_section_appearance)
@@ -830,12 +832,6 @@ fun AppearanceSettingsScreen(
                 title = stringResource(R.string.settings_start_page),
                 value = navTabLabel(settings.startRoute),
                 onClick = { showStartPageDialog = true }
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_language),
-                value = currentLanguage.nativeName ?: stringResource(R.string.settings_language_system),
-                onClick = { showLanguageDialog = true }
             )
         }
     }
@@ -865,18 +861,6 @@ fun AppearanceSettingsScreen(
             onDismiss = { showStartPageDialog = false }
         )
     }
-
-    if (showLanguageDialog) {
-        val current = AppLanguage.current()
-        val options = AppLanguage.entries.map { ChoiceOption(it, it.nativeName ?: stringResource(R.string.settings_language_system)) }
-        SingleChoiceDialog(
-            title = stringResource(R.string.settings_language_title),
-            options = options,
-            isSelected = { current == it },
-            onSelected = { AppLanguage.apply(it); showLanguageDialog = false },
-            onDismiss = { showLanguageDialog = false }
-        )
-    }
 }
 
 // ─── Connection ────────────────────────────────────────────────────────────────
@@ -885,7 +869,11 @@ fun AppearanceSettingsScreen(
 fun ConnectionSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToRelays: () -> Unit,
+    onNavigateToQueuedMessages: () -> Unit,
+    vm: QueuedMessagesViewModel = hiltViewModel(),
 ) {
+    val pendingCount by vm.pendingCount.collectAsStateWithLifecycle()
+
     SettingsSubScreen(stringResource(R.string.settings_section_connection), onNavigateBack) {
         SettingsCard(
             headerIcon = Icons.Default.Wifi,
@@ -895,6 +883,14 @@ fun ConnectionSettingsScreen(
                 title = stringResource(R.string.settings_relays),
                 subtitle = stringResource(R.string.settings_relays_subtitle),
                 onClick = onNavigateToRelays
+            )
+            CardDivider()
+            SettingsRow(
+                title = stringResource(R.string.settings_queued_messages),
+                subtitle = stringResource(R.string.settings_queued_messages_subtitle),
+                value = if (pendingCount == 0) stringResource(R.string.settings_queued_none)
+                else androidx.compose.ui.res.pluralStringResource(R.plurals.settings_queued_message_count, pendingCount, pendingCount),
+                onClick = onNavigateToQueuedMessages
             )
         }
     }

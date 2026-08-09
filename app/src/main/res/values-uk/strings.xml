@@ -27,8 +27,6 @@
     <string name="common_deny">Відхилити</string>
 
     <!-- ── Navigation tab labels ──────────────────────────────────────────── -->
-    <string name="peer_category_history_subtitle">Геозони та історія переміщень</string>
-    <string name="peer_category_history_title">Зони та історія</string>
     <string name="peer_category_messaging_subtitle">Дозволити або блокувати повідомлення чату</string>
     <string name="peer_category_messaging_title">Повідомлення</string>
     <string name="peer_category_retention_subtitle">Віддалена історія та очищення</string>
@@ -36,7 +34,11 @@
     <string name="peer_category_safety_subtitle">SOS, пропущені оновлення, близькість, нагляд</string>
     <string name="peer_category_safety_title">Безпека та оповіщення</string>
     <string name="peer_category_sharing_subtitle">Ролі, точність і розклад</string>
-    <string name="peer_category_sharing_title">Керування обміном</string>
+    <string name="peer_category_privacy_title">Приватність</string>
+    <string name="peer_category_privacy_subtitle">Точність, пауза та тимчасовий спільний доступ</string>
+    <string name="peer_category_security_title">Безпека</string>
+    <string name="peer_category_security_subtitle">Контроль нагляду</string>
+    <string name="peer_category_sharing_title">Локація</string>
     <string name="scan_add_share">Додати та поділитися</string>
     <string name="scan_grant_permission">Надати дозвіл</string>
     <string name="scan_request_sent_title">Запит надіслано</string>
@@ -67,10 +69,16 @@
     <string name="settings_title">Налаштування</string>
 
     <!-- Section labels -->
-    <string name="settings_section_location_privacy">Локація та приватність</string>
+    <string name="settings_section_location">Локація</string>
+    <string name="settings_section_privacy">Приватність</string>
+    <string name="settings_section_connection">Підключення</string>
+    <string name="settings_section_language">Мова</string>
+    <string name="settings_category_location_subtitle">Спільний доступ, розклад, історія та точність</string>
+    <string name="settings_category_privacy_subtitle">Сповіщення про відстеження</string>
+    <string name="settings_category_connection_subtitle">Реле та мережева передача</string>
+    <string name="settings_category_language_subtitle">Виберіть мову застосунку</string>
     <string name="settings_section_security">Безпека</string>
     <string name="settings_section_map">Карта</string>
-    <string name="settings_section_battery_performance">Батарея та продуктивність</string>
     <string name="settings_section_units_display">Одиниці та відображення</string>
     <string name="settings_section_retention">Зберігання (Цей пристрій)</string>
     <string name="settings_section_appearance">Зовнішній вигляд</string>
@@ -400,7 +408,7 @@
     <string name="peer_receive_title">Отримувати місцезнаходження %1$s</string>
     <string name="peer_receive_on">Ви бачите місцезнаходження %1$s</string>
     <string name="peer_receive_off">У вас немає доступу до місцезнаходження %1$s</string>
-    <string name="peer_section_privacy">Приватність і обмін</string>
+    <string name="peer_section_privacy">Приватність</string>
     <string name="peer_pause_sharing">Призупинити обмін</string>
     <string name="peer_pause_sub">Тимчасово не надсилати місцезнаходження %1$s</string>
     <string name="peer_precision">Точність місцезнаходження</string>
@@ -420,6 +428,7 @@
     <string name="peer_missed_on">Сповіщати, якщо %1$s перестане повідомляти місцезнаходження</string>
     <string name="peer_requires_access">Потрібен доступ до місцезнаходження %1$s</string>
     <string name="peer_proximity_alert">Оповіщення про наближення</string>
+    <string name="peer_proximity_alerts_title">Оповіщення про наближення</string>
     <string name="peer_proximity_sub">Сповіщати, коли %1$s поблизу</string>
     <string name="peer_alert_radius">Радіус оповіщення</string>
     <string name="peer_alert_schedule">Розклад оповіщень</string>
@@ -784,9 +793,8 @@
     <string name="onboarding_error_key_range">Недійсний закритий ключ - поза діапазоном кривої.</string>
     <string name="onboarding_error_hex">Неправильний шістнадцятковий формат.</string>
     <string name="onboarding_error_import_failed">Не вдалося імпортувати ключ: %1$s</string>
-    <string name="about_diagnostics">Мережа</string>
-    <string name="about_no_pending">Немає повідомлень у черзі</string>
-    <string name="about_pending_messages">Повідомлення в черзі</string>
+    <string name="settings_queued_none">Немає повідомлень у черзі</string>
+    <string name="settings_queued_messages">Повідомлення в черзі</string>
     <string name="app_lock_activity_unsupported">Для блокування застосунку потрібне середовище з підтримкою системного запиту. Оновіть застосунок.</string>
     <string name="app_lock_prompt_subtitle">Використайте біометрію або PIN-код пристрою</string>
     <string name="app_lock_prompt_title">Розблокувати LocaPeer</string>
@@ -910,10 +918,8 @@
     <string name="settings_temporary_location_share">Тимчасове надсилання місцезнаходження</string>
     <string name="app_lock_no_credential">На цьому пристрої не встановлено блокування екрана, тож розблокувати нічим. Установіть PIN-код, графічний ключ, пароль або біометрію в налаштуваннях пристрою, а потім знову відкрийте LocaPeer.</string>
     <string name="backup_key_needs_password">Установіть пароль, щоб включити ваш приватний ключ. Незашифрований файл ключа може дозволити будь-кому заволодіти вашою особистістю.</string>
-    <string name="settings_category_location_privacy_subtitle">Спільний доступ, розклад, геозони, сповіщення</string>
     <string name="settings_category_security_subtitle">Блокування додатка, дозволи, режим контролю</string>
     <string name="settings_category_map_subtitle">Точка старту, масштаб, колір мітки</string>
-    <string name="settings_category_performance_subtitle">Частота оновлення та фільтри точності</string>
     <string name="settings_category_units_subtitle">Швидкість, відстань, висота, час</string>
     <string name="settings_category_retention_subtitle">Як довго дані зберігаються на цьому пристрої</string>
     <string name="settings_category_appearance_subtitle">Тема, колір, навігація, мова</string>
@@ -923,9 +929,16 @@
     <string name="map_location_off_message">Ваше місцезнаходження не може бути оновлено або передано, поки ви не ввімкнете геолокацію на пристрої.</string>
     <string name="map_location_off_action">Відкрити налаштування</string>
     <string name="map_live">● Наживо</string>
-    <plurals name="about_pending_message_count">
+    <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d повідомлення в черзі</item>
         <item quantity="few">%1$d повідомлення в черзі</item>
         <item quantity="many">%1$d повідомлень у черзі</item>
     </plurals>
+    <string name="settings_queued_messages_subtitle">Події, що очікують на доставку до реле</string>
+    <string name="queued_messages_title">Повідомлення в черзі</string>
+    <string name="queued_message_kind">Тип події %1$d</string>
+    <string name="queued_message_queued_at">У черзі %1$s</string>
+    <string name="queued_message_view">Переглянути подію</string>
+    <string name="queued_message_hide">Приховати</string>
+    <string name="queued_messages_flush">Надіслати зараз</string>
 </resources>
