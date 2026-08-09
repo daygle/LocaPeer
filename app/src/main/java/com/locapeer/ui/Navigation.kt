@@ -43,10 +43,11 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppearanceSettingsScreen
 import com.locapeer.settings.BackupSettingsScreen
 import com.locapeer.settings.ConnectionSettingsScreen
-import com.locapeer.settings.LocationPrivacySettingsScreen
+import com.locapeer.settings.LocationSettingsScreen
 import com.locapeer.settings.MapSettingsScreen
 import com.locapeer.settings.PerformanceSettingsScreen
 import com.locapeer.settings.PermissionsScreen
+import com.locapeer.settings.PrivacySettingsScreen
 import com.locapeer.settings.RelaySettingsScreen
 import com.locapeer.settings.RetentionSettingsScreen
 import com.locapeer.settings.SecuritySettingsScreen
@@ -306,7 +307,8 @@ fun LocaPeerNavHost(
                         navController.navigate("peer-sharing/$peerId/${Uri.encode(peerName.ifBlank { "Person" })}")
                     },
                     onNavigateToAbout = { navController.navigate("about") },
-                    onNavigateToLocationPrivacy = { navController.navigate("settings/location") },
+                    onNavigateToLocation = { navController.navigate("settings/location") },
+                    onNavigateToPrivacy = { navController.navigate("settings/privacy") },
                     onNavigateToSecurity = { navController.navigate("settings/security") },
                     onNavigateToMap = { navController.navigate("settings/map") },
                     onNavigateToPerformance = { navController.navigate("settings/performance") },
@@ -324,10 +326,21 @@ fun LocaPeerNavHost(
                 popEnterTransition = { slidePopEnter },
                 popExitTransition = { slidePopExit }
             ) {
-                LocationPrivacySettingsScreen(
+                LocationSettingsScreen(
                     onNavigateBack = { navController.popBackStack() },
                     onNavigateToGlobalSchedule = { navController.navigate("schedule?scope=global") },
                     onNavigateToGeofences = { navController.navigate("geofences") },
+                )
+            }
+            composable(
+                "settings/privacy",
+                enterTransition = { slideEnter },
+                exitTransition = { slideExit },
+                popEnterTransition = { slidePopEnter },
+                popExitTransition = { slidePopExit }
+            ) {
+                PrivacySettingsScreen(
+                    onNavigateBack = { navController.popBackStack() },
                     onNavigateToMyHistory = { pubkeyHex -> navController.navigate("history-report?peerId=$pubkeyHex") },
                 )
             }

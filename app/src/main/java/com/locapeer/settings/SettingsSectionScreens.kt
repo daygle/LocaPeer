@@ -74,23 +74,21 @@ private fun SettingsSubScreen(
     }
 }
 
-// ─── Location & Privacy ──────────────────────────────────────────────────────
+// ─── Location ────────────────────────────────────────────────────────────────
 
 @Composable
-fun LocationPrivacySettingsScreen(
+fun LocationSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToGlobalSchedule: () -> Unit,
     onNavigateToGeofences: () -> Unit,
-    onNavigateToMyHistory: (pubkeyHex: String) -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
-    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
 
-    SettingsSubScreen(stringResource(R.string.settings_section_location_privacy), onNavigateBack) {
+    SettingsSubScreen(stringResource(R.string.settings_section_location), onNavigateBack) {
         SettingsCard(
             headerIcon = Icons.Default.LocationOn,
-            headerTitle = stringResource(R.string.settings_section_location_privacy)
+            headerTitle = stringResource(R.string.settings_section_location)
         ) {
             SwitchRow(
                 title = stringResource(R.string.settings_share_location),
@@ -111,7 +109,26 @@ fun LocationPrivacySettingsScreen(
                 subtitle = stringResource(R.string.settings_geofences_subtitle),
                 onClick = onNavigateToGeofences
             )
-            CardDivider()
+        }
+    }
+}
+
+// ─── Privacy ─────────────────────────────────────────────────────────────────
+
+@Composable
+fun PrivacySettingsScreen(
+    onNavigateBack: () -> Unit,
+    onNavigateToMyHistory: (pubkeyHex: String) -> Unit,
+    vm: SettingsViewModel = hiltViewModel(),
+) {
+    val settings by vm.settings.collectAsStateWithLifecycle()
+    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
+
+    SettingsSubScreen(stringResource(R.string.settings_section_privacy), onNavigateBack) {
+        SettingsCard(
+            headerIcon = Icons.Default.PrivacyTip,
+            headerTitle = stringResource(R.string.settings_section_privacy)
+        ) {
             SwitchRow(
                 title = stringResource(R.string.settings_notify_when_tracked),
                 subtitle = stringResource(R.string.settings_notify_when_tracked_subtitle),

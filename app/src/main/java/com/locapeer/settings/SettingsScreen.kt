@@ -40,7 +40,8 @@ import kotlin.time.Duration.Companion.seconds
 fun SettingsScreen(
     onNavigateToPeerSharing: (peerId: String, peerName: String) -> Unit = { _, _ -> },
     onNavigateToAbout: () -> Unit = {},
-    onNavigateToLocationPrivacy: () -> Unit = {},
+    onNavigateToLocation: () -> Unit = {},
+    onNavigateToPrivacy: () -> Unit = {},
     onNavigateToSecurity: () -> Unit = {},
     onNavigateToMap: () -> Unit = {},
     onNavigateToPerformance: () -> Unit = {},
@@ -231,9 +232,16 @@ fun SettingsScreen(
                     Column(modifier = Modifier.padding(vertical = 4.dp)) {
                         CategoryRow(
                             icon = Icons.Default.LocationOn,
-                            title = stringResource(R.string.settings_section_location_privacy),
-                            subtitle = stringResource(R.string.settings_category_location_privacy_subtitle),
-                            onClick = onNavigateToLocationPrivacy
+                            title = stringResource(R.string.settings_section_location),
+                            subtitle = stringResource(R.string.settings_category_location_subtitle),
+                            onClick = onNavigateToLocation
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.PrivacyTip,
+                            title = stringResource(R.string.settings_section_privacy),
+                            subtitle = stringResource(R.string.settings_category_privacy_subtitle),
+                            onClick = onNavigateToPrivacy
                         )
                         CardDivider()
                         CategoryRow(

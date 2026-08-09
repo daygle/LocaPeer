@@ -55,6 +55,8 @@
 
     <!-- Section labels -->
     <string name="settings_section_location_privacy">Location &amp; Privacy</string>
+    <string name="settings_section_location">Location</string>
+    <string name="settings_section_privacy">Privacy</string>
     <string name="settings_section_security">Security</string>
     <string name="settings_section_map">Map</string>
     <string name="settings_section_battery_performance">Battery &amp; Performance</string>
@@ -66,6 +68,8 @@
 
     <!-- Settings landing category subtitles -->
     <string name="settings_category_location_privacy_subtitle">Sharing, schedule, geofences, alerts</string>
+    <string name="settings_category_location_subtitle">Sharing, schedule, and geofences</string>
+    <string name="settings_category_privacy_subtitle">Tracking alerts and location history</string>
     <string name="settings_category_security_subtitle">App lock, permissions, supervised mode</string>
     <string name="settings_category_map_subtitle">Starting point, zoom, pin colour</string>
     <string name="settings_category_performance_subtitle">Update cadence and accuracy filters</string>
