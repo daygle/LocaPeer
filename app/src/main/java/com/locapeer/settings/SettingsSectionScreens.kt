@@ -74,23 +74,21 @@ private fun SettingsSubScreen(
     }
 }
 
-// ─── Location & Privacy ──────────────────────────────────────────────────────
+// ─── Location ────────────────────────────────────────────────────────────────
 
 @Composable
-fun LocationPrivacySettingsScreen(
+fun LocationSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToGlobalSchedule: () -> Unit,
     onNavigateToGeofences: () -> Unit,
-    onNavigateToMyHistory: (pubkeyHex: String) -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
-    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
 
-    SettingsSubScreen(stringResource(R.string.settings_section_location_privacy), onNavigateBack) {
+    SettingsSubScreen(stringResource(R.string.settings_section_location), onNavigateBack) {
         SettingsCard(
             headerIcon = Icons.Default.LocationOn,
-            headerTitle = stringResource(R.string.settings_section_location_privacy)
+            headerTitle = stringResource(R.string.settings_section_location)
         ) {
             SwitchRow(
                 title = stringResource(R.string.settings_share_location),
@@ -111,7 +109,26 @@ fun LocationPrivacySettingsScreen(
                 subtitle = stringResource(R.string.settings_geofences_subtitle),
                 onClick = onNavigateToGeofences
             )
-            CardDivider()
+        }
+    }
+}
+
+// ─── Privacy ─────────────────────────────────────────────────────────────────
+
+@Composable
+fun PrivacySettingsScreen(
+    onNavigateBack: () -> Unit,
+    onNavigateToMyHistory: (pubkeyHex: String) -> Unit,
+    vm: SettingsViewModel = hiltViewModel(),
+) {
+    val settings by vm.settings.collectAsStateWithLifecycle()
+    val publicKeyHex by vm.publicKeyHex.collectAsStateWithLifecycle()
+
+    SettingsSubScreen(stringResource(R.string.settings_section_privacy), onNavigateBack) {
+        SettingsCard(
+            headerIcon = Icons.Default.PrivacyTip,
+            headerTitle = stringResource(R.string.settings_section_privacy)
+        ) {
             SwitchRow(
                 title = stringResource(R.string.settings_notify_when_tracked),
                 subtitle = stringResource(R.string.settings_notify_when_tracked_subtitle),
@@ -123,27 +140,6 @@ fun LocationPrivacySettingsScreen(
                 title = stringResource(R.string.settings_my_location_history),
                 subtitle = stringResource(R.string.settings_my_location_history_subtitle),
                 onClick = { if (publicKeyHex.isNotBlank()) onNavigateToMyHistory(publicKeyHex) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_lookup_addresses),
-                subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
-                checked = settings.reverseGeocodingEnabled,
-                onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_allow_live_boost),
-                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
-                checked = settings.allowLiveBoost,
-                onCheckedChange = { vm.setAllowLiveBoost(it) }
-            )
-            CardDivider()
-            SwitchRow(
-                title = stringResource(R.string.settings_request_live_boost),
-                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
-                checked = settings.requestLiveBoost,
-                onCheckedChange = { vm.setRequestLiveBoost(it) }
             )
         }
     }
@@ -428,6 +424,13 @@ fun MapSettingsScreen(
                                 }
                             }
                         }
+                        CardDivider()
+                        SwitchRow(
+                            title = stringResource(R.string.settings_lookup_addresses),
+                            subtitle = stringResource(R.string.settings_lookup_addresses_subtitle),
+                            checked = settings.reverseGeocodingEnabled,
+                            onCheckedChange = { vm.setReverseGeocodingEnabled(it) }
+                        )
                     }
                 }
             }
@@ -484,6 +487,20 @@ fun PerformanceSettingsScreen(
             headerIcon = Icons.Default.Timer,
             headerTitle = stringResource(R.string.settings_section_battery_performance)
         ) {
+            SwitchRow(
+                title = stringResource(R.string.settings_allow_live_boost),
+                subtitle = stringResource(R.string.settings_allow_live_boost_subtitle),
+                checked = settings.allowLiveBoost,
+                onCheckedChange = { vm.setAllowLiveBoost(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_request_live_boost),
+                subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
+                checked = settings.requestLiveBoost,
+                onCheckedChange = { vm.setRequestLiveBoost(it) }
+            )
+            CardDivider()
             SettingsRow(
                 title = stringResource(R.string.settings_update_cadence),
                 subtitle = stringResource(R.string.settings_update_cadence_subtitle),
@@ -771,7 +788,6 @@ fun RetentionSettingsScreen(
 fun AppearanceSettingsScreen(
     onNavigateBack: () -> Unit,
     onNavigateToCustomizeNav: () -> Unit,
-    onNavigateToRelays: () -> Unit,
     vm: SettingsViewModel = hiltViewModel(),
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
@@ -808,12 +824,6 @@ fun AppearanceSettingsScreen(
                 title = stringResource(R.string.settings_customize_nav),
                 subtitle = stringResource(R.string.settings_customize_nav_subtitle),
                 onClick = onNavigateToCustomizeNav
-            )
-            CardDivider()
-            SettingsRow(
-                title = stringResource(R.string.settings_relays),
-                subtitle = stringResource(R.string.settings_relays_subtitle),
-                onClick = onNavigateToRelays
             )
             CardDivider()
             SettingsRow(
@@ -866,6 +876,27 @@ fun AppearanceSettingsScreen(
             onSelected = { AppLanguage.apply(it); showLanguageDialog = false },
             onDismiss = { showLanguageDialog = false }
         )
+    }
+}
+
+// ─── Connection ────────────────────────────────────────────────────────────────
+
+@Composable
+fun ConnectionSettingsScreen(
+    onNavigateBack: () -> Unit,
+    onNavigateToRelays: () -> Unit,
+) {
+    SettingsSubScreen(stringResource(R.string.settings_section_connection), onNavigateBack) {
+        SettingsCard(
+            headerIcon = Icons.Default.Wifi,
+            headerTitle = stringResource(R.string.settings_section_connection)
+        ) {
+            SettingsRow(
+                title = stringResource(R.string.settings_relays),
+                subtitle = stringResource(R.string.settings_relays_subtitle),
+                onClick = onNavigateToRelays
+            )
+        }
     }
 }
 
@@ -1094,5 +1125,3 @@ private fun BackupSectionItem(
         }
     }
 }
-
-

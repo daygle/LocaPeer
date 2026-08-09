@@ -37,8 +37,11 @@ fun PeerSharingScreen(
     onNavigateBack: () -> Unit,
     onNavigateToMap: (Double, Double) -> Unit = { _, _ -> },
     onNavigateToControls: () -> Unit = {},
+    onNavigateToPrivacy: () -> Unit = {},
     onNavigateToAlerts: () -> Unit = {},
+    onNavigateToSecurity: () -> Unit = {},
     onNavigateToZonesHistory: () -> Unit = {},
+    onNavigateToLocationHistory: () -> Unit = {},
     onNavigateToMessaging: () -> Unit = {},
     onNavigateToRetention: () -> Unit = {},
     vm: PeerSharingViewModel = hiltViewModel(),
@@ -163,6 +166,13 @@ fun PeerSharingScreen(
                         )
                         CardDivider()
                         CategoryRow(
+                            icon = Icons.Default.PrivacyTip,
+                            title = stringResource(R.string.peer_category_privacy_title),
+                            subtitle = stringResource(R.string.peer_category_privacy_subtitle),
+                            onClick = onNavigateToPrivacy
+                        )
+                        CardDivider()
+                        CategoryRow(
                             icon = Icons.Default.Shield,
                             title = stringResource(R.string.peer_category_safety_title),
                             subtitle = stringResource(R.string.peer_category_safety_subtitle),
@@ -170,10 +180,24 @@ fun PeerSharingScreen(
                         )
                         CardDivider()
                         CategoryRow(
-                            icon = Icons.Default.Map,
-                            title = stringResource(R.string.peer_category_history_title),
-                            subtitle = stringResource(R.string.peer_category_history_subtitle),
+                            icon = Icons.Default.Security,
+                            title = stringResource(R.string.peer_category_security_title),
+                            subtitle = stringResource(R.string.peer_category_security_subtitle),
+                            onClick = onNavigateToSecurity
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.Fence,
+                            title = stringResource(R.string.settings_geofences),
+                            subtitle = stringResource(R.string.peer_geofences_sub, peerName),
                             onClick = onNavigateToZonesHistory
+                        )
+                        CardDivider()
+                        CategoryRow(
+                            icon = Icons.Default.History,
+                            title = stringResource(R.string.peer_location_history),
+                            subtitle = stringResource(R.string.peer_location_history_sub, peerName),
+                            onClick = onNavigateToLocationHistory
                         )
                         CardDivider()
                         CategoryRow(
