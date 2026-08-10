@@ -205,7 +205,7 @@ dependencies {
         implementation("org.apache.commons:commons-lang3:3.20.0") {
             because("CVE-2022-42889 (Recursion vulnerability)")
         }
-        implementation("org.bouncycastle:bcpkix-jdk18on:1.85.2") {
+        implementation("org.bouncycastle:bcpkix-jdk18on:1.85") {
             because("Security fixes in latest Bouncy Castle")
         }
     }
@@ -237,7 +237,8 @@ configurations.all {
             // Force all Bouncy Castle artifacts to the jdk18on line and latest version
             if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk"))) {
                 val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else "bcpkix-jdk18on"
-                useTarget("org.bouncycastle:$artifact:1.85.2")
+                val version = if (artifact == "bcprov-jdk18on") "1.85.2" else "1.85"
+                useTarget("org.bouncycastle:$artifact:$version")
                 because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
             }
             // Align all Netty modules to a safe version
