@@ -1,6 +1,6 @@
 # Security Policy
 
-LocaPeer is a privacy-focused app: location data, messages, and control payloads are end-to-end encrypted before they leave the device. We take security reports seriously and ask that you do too — please **do not** file public issues or open PRs for suspected vulnerabilities.
+LocaPeer is a privacy-focused app: location data, messages, and control payloads are end-to-end encrypted before they leave the device. We take security reports seriously and ask that you do too - please **do not** file public issues or open PRs for suspected vulnerabilities.
 
 ## Reporting a Vulnerability
 
@@ -8,7 +8,7 @@ Use GitHub's **private vulnerability reporting** to disclose issues confidential
 
 **[Report a vulnerability](https://github.com/daygle/LocaPeer/security/advisories/new)**
 
-Only the maintainers can see private reports — nothing is made public until a fix is available.
+Only the maintainers can see private reports - nothing is made public until a fix is available.
 
 Please include:
 
