@@ -183,15 +183,15 @@ dependencies {
 
     // Security Hardening: Force safe versions for transitive dependencies
     constraints {
-        implementation("io.netty:netty-codec-http2:4.1.112.Final") {
+        implementation("io.netty:netty-codec-http2:4.1.136.Final") {
             because("CVE-2023-44487 (Rapid Reset) and other Netty vulnerabilities")
         }
-        implementation("io.netty:netty-handler:4.1.112.Final")
-        implementation("io.netty:netty-codec-http:4.1.112.Final")
-        implementation("io.netty:netty-common:4.1.112.Final")
-        implementation("io.netty:netty-buffer:4.1.112.Final")
-        implementation("io.netty:netty-resolver:4.1.112.Final")
-        implementation("io.netty:netty-transport:4.1.112.Final")
+        implementation("io.netty:netty-handler:4.1.136.Final")
+        implementation("io.netty:netty-codec-http:4.1.136.Final")
+        implementation("io.netty:netty-common:4.1.136.Final")
+        implementation("io.netty:netty-buffer:4.1.136.Final")
+        implementation("io.netty:netty-resolver:4.1.136.Final")
+        implementation("io.netty:netty-transport:4.1.136.Final")
         
         implementation("org.jdom:jdom2:2.0.6.1") {
             because("CVE-2021-33813 (XXE vulnerability)")
