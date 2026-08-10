@@ -2,9 +2,6 @@
 # Docs: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options
 version: 2
 
-# Project pins everything inline in app/build.gradle.kts (no gradle/libs.versions.toml),
-# so a single "/" directory covers both the root project (plugins) and the :app module.
-
 updates:
   # -----------------------------------------------------------------------------------------
   # Gradle ecosystem: AGP + Kotlin toolchain plugins + all app dependencies.
@@ -17,41 +14,46 @@ updates:
       time: "09:00"
       timezone: "UTC"
     target-branch: main
-    # Limit is shared across all groups, not per group. 10 leaves headroom so a slow-to-merge
-    # group doesn't queue an unrelated security fix behind it.
     open-pull-requests-limit: 10
     rebase-strategy: "auto"
     labels:
       - "dependencies"
       - "gradle"
-    # Cap unrelated bumps so a stale lib doesn't gate an urgent security fix.
+    
+    # Standardizes commit messages for a cleaner git history
+    commit-message:
+      prefix: "chore(deps):"
+      include: "scope"
+
     versioning-strategy: increase
-    # `directory: "/"` lets the gradle ecosystem find every build.gradle* across the project
-    # AND auto-tracks gradle-wrapper.properties (no separate wrapper entry needed).
+    
     groups:
-      # Kotlin compiler, KSP, kotlinx libs all co-evolve. Keep these in one
-      # PR so a Kotlin bump can land alongside the matching KSP/serialization update.
+      # Kotlin compiler, KSP, and kotlinx libs co-evolve.
       kotlin-stack:
         patterns:
           - "org.jetbrains.kotlin*"
           - "org.jetbrains.kotlinx*"
           - "com.google.devtools.ksp*"
 
-      # Android Gradle Plugin (`id("com.android.application")`) and any future
-      # com.android.* tooling plugin declared in a root build.gradle.kts.
+      # Android Gradle Plugin and Android tools
       android-tools-build:
         patterns:
           - "com.android*"
 
-      # Single PR for everything androidx.* (Compose, Lifecycle, Navigation, Room,
-      # WorkManager, DataStore, Hilt-Navigation, Biometric, Camera, AppCompat, ...).
+      # Jetpack Compose specific group (often uses a single BOM bump)
+      compose:
+        patterns:
+          - "androidx.compose*"
+
+      # General AndroidX libraries excluding Compose and Tests
       androidx:
         patterns:
           - "androidx*"
         exclude-patterns:
           - "androidx.test*"
+          - "androidx.compose*"
 
-      # Google components: Hilt/Dagger compiler, Material, Play Services Location, Accompanist.
+      # Google components: Material, Play Services, Hilt, Accompanist
       google-stack:
         patterns:
           - "com.google.android.material*"
@@ -59,8 +61,7 @@ updates:
           - "com.google.dagger*"
           - "com.google.accompanist*"
 
-      # Third-party JVM/security/network: most touch NIP-44 crypto, WebSocket relay
-      # transport, or QR/Map rendering, so reviewers benefit from seeing them together.
+      # Security & Networking third-party libs
       third-party:
         patterns:
           - "org.bouncycastle*"
@@ -70,8 +71,7 @@ updates:
           - "com.journeyapps*"
           - "org.osmdroid*"
 
-      # JVM unit + instrumentation tests stay in their own group so test-only bumps
-      # don't queue behind application dependency churn.
+      # Test-only dependencies
       tests:
         patterns:
           - "junit*"
@@ -79,7 +79,7 @@ updates:
           - "androidx.test*"
 
   # -----------------------------------------------------------------------------------------
-  # GitHub Actions ecosystem: keep CI actions fresh (security advisories land here too).
+  # GitHub Actions ecosystem: keep CI actions fresh
   # -----------------------------------------------------------------------------------------
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -94,3 +94,5 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
+    commit-message:
+      prefix: "chore(deps-ci):"
