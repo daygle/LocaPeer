@@ -181,6 +181,35 @@ dependencies {
     // Kotlin Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 
+    // Security Hardening: Force safe versions for transitive dependencies
+    constraints {
+        implementation("io.netty:netty-codec-http2:4.1.112.Final") {
+            because("CVE-2023-44487 (Rapid Reset) and other Netty vulnerabilities")
+        }
+        implementation("io.netty:netty-handler:4.1.112.Final")
+        implementation("io.netty:netty-codec-http:4.1.112.Final")
+        implementation("io.netty:netty-common:4.1.112.Final")
+        implementation("io.netty:netty-buffer:4.1.112.Final")
+        implementation("io.netty:netty-resolver:4.1.112.Final")
+        implementation("io.netty:netty-transport:4.1.112.Final")
+        
+        implementation("org.jdom:jdom2:2.0.6.1") {
+            because("CVE-2021-33813 (XXE vulnerability)")
+        }
+        implementation("org.apache.httpcomponents:httpclient:4.5.14") {
+            because("CVE-2020-13956 and other HttpClient vulnerabilities")
+        }
+        implementation("org.bitbucket.b_c:jose4j:0.9.6") {
+            because("CVE-2023-31582 (DoS via compressed JWE)")
+        }
+        implementation("org.apache.commons:commons-lang3:3.20.0") {
+            because("CVE-2022-42889 (Recursion vulnerability)")
+        }
+        implementation("org.bouncycastle:bcpkix-jdk18on:1.85.2") {
+            because("Security fixes in latest Bouncy Castle")
+        }
+    }
+
     // CameraX for QR scanning
     val cameraVersion = "1.6.1"
     implementation("androidx.camera:camera-camera2:$cameraVersion")
@@ -199,4 +228,23 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.3.0")
     androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.room:room-testing:2.8.4")
+}
+
+// Global resolution strategy to align versions and swap vulnerable artifact lines
+configurations.all {
+    resolutionStrategy {
+        eachDependency {
+            // Force all Bouncy Castle artifacts to the jdk18on line and latest version
+            if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk"))) {
+                val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else "bcpkix-jdk18on"
+                useTarget("org.bouncycastle:$artifact:1.85.2")
+                because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
+            }
+            // Align all Netty modules to a safe version
+            if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
+                useVersion("4.1.112.Final")
+                because("Apply security patches for HTTP/2 Rapid Reset and other vulnerabilities")
+            }
+        }
+    }
 }
