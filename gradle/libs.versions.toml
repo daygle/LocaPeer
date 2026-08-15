@@ -10,7 +10,6 @@ bouncycastleProv = "1.85.2"
 
 # Project versions
 agp = "9.3.1"
-kotlin = "2.4.20-RC"
 composeBom = "2026.08.00"
 hilt = "2.60.1"
 room = "2.8.4"
@@ -37,7 +36,4 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

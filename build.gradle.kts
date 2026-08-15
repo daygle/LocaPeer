@@ -17,6 +17,16 @@ buildscript {
                 if (requested.group == "org.jdom" && requested.name == "jdom2") {
                     useVersion("2.0.6.1")
                 }
+                // AGP pulls commons-lang3 (via com.android.tools:repository -> commons-compress)
+                // and jose4j (via bundletool) into the build classpath at vulnerable versions.
+                if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
+                    useVersion("3.20.0")
+                    because("CVE-2025-48924: uncontrolled recursion DoS in ClassUtils.getClass")
+                }
+                if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
+                    useVersion("0.9.6")
+                    because("CVE-2024-29371: DoS via compressed JWE content")
+                }
             }
         }
     }
@@ -24,9 +34,9 @@ buildscript {
 
 plugins {
     alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.kotlin.android) apply false
-    alias(libs.plugins.kotlin.compose) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
+    id("org.jetbrains.kotlin.android") apply false
+    id("org.jetbrains.kotlin.plugin.compose") apply false
+    id("org.jetbrains.kotlin.plugin.serialization") apply false
     alias(libs.plugins.hilt.android) apply false
     id("com.google.devtools.ksp") version "2.3.11" apply false
 }

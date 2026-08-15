@@ -23,15 +23,6 @@ jobs:
       matrix:
         language: [ 'java-kotlin' ]
 
-    env:
-      # Bypass strict version check for Kotlin 2.4.20-RC which is too new for the current extractor
-      # We use all known variants and as system properties to ensure the extractor picks them up
-      CODEQL_EXTRACTOR_KOTLIN_OPTION_SKIP_VERSION_CHECK: true
-      CODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK: true
-      CODEQL_EXTRACTOR_JAVA_SKIP_KOTLIN_VERSION_CHECK: true
-      CODEQL_SKIP_KOTLIN_VERSION_CHECK: true
-      CODEQL_EXTRACTOR_JAVA_KOTLIN_VERSION_TOO_RECENT_IS_ERROR: false
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
@@ -47,27 +38,20 @@ jobs:
       uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
-        # Use latest tools to pick up support for Kotlin 2.4.20-RC
+        # Use latest tools to pick up the newest Kotlin support as soon as it ships.
         tools: latest
         # manual build mode is required for Android
         build-mode: manual
 
     - name: Build project
-      env:
-        # Re-assert bypass variables at the step level for the Gradle runner
-        CODEQL_EXTRACTOR_KOTLIN_OPTION_SKIP_VERSION_CHECK: true
-        CODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK: true
-        CODEQL_EXTRACTOR_JAVA_SKIP_KOTLIN_VERSION_CHECK: true
-        CODEQL_SKIP_KOTLIN_VERSION_CHECK: true
-        CODEQL_EXTRACTOR_JAVA_KOTLIN_VERSION_TOO_RECENT_IS_ERROR: false
       run: |
         chmod +x gradlew
-        # Force a full clean build to ensure CodeQL sees all source files.
-        # We also pass the flags as system properties to the JVM in case the tracer checks them there.
-        ./gradlew clean assembleDebug --no-daemon \
-          -DCODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK=true \
-          -DCODEQL_EXTRACTOR_KOTLIN_OPTION_SKIP_VERSION_CHECK=true \
-          -DCODEQL_EXTRACTOR_JAVA_KOTLIN_VERSION_TOO_RECENT_IS_ERROR=false
+        # CodeQL's Kotlin extractor hard-rejects Kotlin >= 2.4.20 at compile time
+        # (KotlinVersionTooRecentError); there is no supported env var or system
+        # property to skip that check. Keep the app on the latest Kotlin for normal
+        # builds, but compile here with the newest CodeQL-supported release (2.4.10)
+        # so the scan produces a database.
+        ./gradlew clean assembleDebug --no-daemon -PkotlinVersion=2.4.10
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
