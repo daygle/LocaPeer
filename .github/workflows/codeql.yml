@@ -25,9 +25,11 @@ jobs:
 
     env:
       # Bypass strict version check for Kotlin 2.4.20-RC which is too new for the current extractor
+      # We use all known variants of this variable to ensure compatibility with different CLI versions
+      CODEQL_EXTRACTOR_KOTLIN_OPTION_SKIP_VERSION_CHECK: true
       CODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK: true
-      # Alternate name used by some versions
       CODEQL_EXTRACTOR_JAVA_SKIP_KOTLIN_VERSION_CHECK: true
+      CODEQL_SKIP_KOTLIN_VERSION_CHECK: true
 
     steps:
     - name: Checkout repository
@@ -41,7 +43,7 @@ jobs:
         cache: 'gradle'
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
         # Use latest tools to pick up support for Kotlin 2.4.20-RC
@@ -50,13 +52,18 @@ jobs:
         build-mode: manual
 
     - name: Build project
+      env:
+        # Re-assert bypass variables at the step level for the Gradle runner
+        CODEQL_EXTRACTOR_KOTLIN_OPTION_SKIP_VERSION_CHECK: true
+        CODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK: true
+        CODEQL_EXTRACTOR_JAVA_SKIP_KOTLIN_VERSION_CHECK: true
+        CODEQL_SKIP_KOTLIN_VERSION_CHECK: true
       run: |
         chmod +x gradlew
         # Force a full clean build to ensure CodeQL sees all source files.
-        # UP-TO-DATE tasks are invisible to the CodeQL tracer.
         ./gradlew clean assembleDebug --no-daemon
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"
