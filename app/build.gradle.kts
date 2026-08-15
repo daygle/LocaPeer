@@ -180,15 +180,15 @@ dependencies {
 
     // Security Hardening: Force safe versions for transitive dependencies
     constraints {
-        implementation("io.netty:netty-codec-http2:4.1.136.Final") {
+        implementation("io.netty:netty-codec-http2:4.1.137.Final") {
             because("CVE-2023-44487 (Rapid Reset) and other Netty vulnerabilities")
         }
-        implementation("io.netty:netty-handler:4.1.136.Final")
-        implementation("io.netty:netty-codec-http:4.1.136.Final")
-        implementation("io.netty:netty-common:4.1.136.Final")
-        implementation("io.netty:netty-buffer:4.1.136.Final")
-        implementation("io.netty:netty-resolver:4.1.136.Final")
-        implementation("io.netty:netty-transport:4.1.136.Final")
+        implementation("io.netty:netty-handler:4.1.137.Final")
+        implementation("io.netty:netty-codec-http:4.1.137.Final")
+        implementation("io.netty:netty-common:4.1.137.Final")
+        implementation("io.netty:netty-buffer:4.1.137.Final")
+        implementation("io.netty:netty-resolver:4.1.137.Final")
+        implementation("io.netty:netty-transport:4.1.137.Final")
         
         implementation("org.jdom:jdom2:2.0.6.1") {
             because("CVE-2021-33813 (XXE vulnerability)")
@@ -205,6 +205,8 @@ dependencies {
         implementation("org.bouncycastle:bcpkix-jdk18on:1.85") {
             because("Security fixes in latest Bouncy Castle")
         }
+        implementation("org.bouncycastle:bcutil-jdk18on:1.85")
+        implementation("org.bouncycastle:bcprov-jdk18on:1.85.2")
     }
 
     // CameraX for QR scanning
@@ -232,16 +234,29 @@ configurations.all {
     resolutionStrategy {
         eachDependency {
             // Force all Bouncy Castle artifacts to the jdk18on line and latest version
-            if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk"))) {
-                val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else "bcpkix-jdk18on"
+            if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk") || requested.name.startsWith("bcutil-jdk"))) {
+                val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
                 val version = if (artifact == "bcprov-jdk18on") "1.85.2" else "1.85"
                 useTarget("org.bouncycastle:$artifact:$version")
                 because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
             }
             // Align all Netty modules to a safe version
             if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
-                useVersion("4.1.112.Final")
+                useVersion("4.1.137.Final")
                 because("Apply security patches for HTTP/2 Rapid Reset and other vulnerabilities")
+            }
+            // Force latest versions for other vulnerable components
+            if (requested.group == "org.jdom" && requested.name == "jdom2") {
+                useVersion("2.0.6.1")
+            }
+            if (requested.group == "org.apache.httpcomponents" && requested.name == "httpclient") {
+                useVersion("4.5.14")
+            }
+            if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
+                useVersion("0.9.6")
+            }
+            if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
+                useVersion("3.20.0")
             }
         }
     }
