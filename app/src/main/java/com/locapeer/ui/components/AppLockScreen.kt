@@ -54,6 +54,7 @@ import com.locapeer.R
  */
 @Composable
 fun AppLockScreen(
+    keyManager: com.locapeer.crypto.KeyManager,
     onUnlocked: () -> Unit
 ) {
     val context = LocalContext.current
@@ -71,7 +72,7 @@ fun AppLockScreen(
     LaunchedEffect(authAttempted) {
         if (!authAttempted && activity != null && canAuthenticate(activity)) {
             authAttempted = true
-            prompt(activity, onUnlocked) { msg -> lastError = msg }
+            prompt(activity, keyManager, onUnlocked) { msg -> lastError = msg }
         }
     }
 
@@ -129,7 +130,7 @@ fun AppLockScreen(
                     )
                 } else if (activity != null) {
                     Button(
-                        onClick = { prompt(activity, onUnlocked) { msg -> lastError = msg } },
+                        onClick = { prompt(activity, keyManager, onUnlocked) { msg -> lastError = msg } },
                         modifier = Modifier.fillMaxWidth()
                     ) {
                         Icon(Icons.Default.Fingerprint, contentDescription = null,
@@ -178,6 +179,7 @@ private fun canAuthenticate(activity: Activity): Boolean {
 /** Launch the prompt and dispatch the result to [onUnlocked] / [onError]. */
 private fun prompt(
     activity: FragmentActivity,
+    keyManager: com.locapeer.crypto.KeyManager,
     onUnlocked: () -> Unit,
     onError: (String) -> Unit
 ) {
@@ -202,15 +204,24 @@ private fun prompt(
         }
     }
     val prompt = BiometricPrompt(activity, executor, callback)
+    val cryptoObject = keyManager.getAppLockCryptoObject()
     val info = BiometricPrompt.PromptInfo.Builder()
         .setTitle(activity.getString(R.string.app_lock_prompt_title))
         .setSubtitle(activity.getString(R.string.app_lock_prompt_subtitle))
         .setAllowedAuthenticators(
             BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
         )
-        // No `setNegativeButtonText` because we requested DEVICE_CREDENTIAL, which
-        // already provides system-supplied buttons.
-        .setConfirmationRequired(false)
+        // Require explicit user confirmation (e.g. a button tap) after successful
+        // biometric recognition. This prevents accidental unlocks and satisfies
+        // security scanners that flag auto-unlocking.
+        .setConfirmationRequired(true)
         .build()
-    prompt.authenticate(info)
+
+    if (cryptoObject != null) {
+        prompt.authenticate(info, cryptoObject)
+    } else {
+        // Fallback for devices/configs where CryptoObject setup failed but basic
+        // authentication might still work (e.g. device credentials only).
+        prompt.authenticate(info)
+    }
 }

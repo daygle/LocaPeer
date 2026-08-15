@@ -574,13 +574,14 @@ class HeartbeatService : LifecycleService() {
             // dropped. Inexact remains the fallback for the pulse-catch-up case.
             // When battery is low, we prefer inexact alarms to save power unless SOS is active.
             val useExact = !lowBattery || isSos
+            val pi = pulseCheckIntent()
             if (useExact && (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms())) {
                 alarmManager.setExactAndAllowWhileIdle(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pulseCheckIntent()
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pi
                 )
             } else {
                 alarmManager.setAndAllowWhileIdle(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pulseCheckIntent()
+                    AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pi
                 )
             }
         } catch (e: Exception) {
@@ -588,12 +589,17 @@ class HeartbeatService : LifecycleService() {
         }
     }
 
-    private fun pulseCheckIntent(): PendingIntent =
-        PendingIntent.getForegroundService(
+    private fun pulseCheckIntent(): PendingIntent {
+        val intent = Intent(this, HeartbeatService::class.java).apply {
+            setPackage(packageName)
+            action = ACTION_PULSE_CHECK
+        }
+        return PendingIntent.getForegroundService(
             this, 0,
-            Intent(this, HeartbeatService::class.java).setAction(ACTION_PULSE_CHECK),
+            intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -902,12 +908,17 @@ class HeartbeatService : LifecycleService() {
         Build.VERSION.SDK_INT < Build.VERSION_CODES.Q ||
             ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED
 
-    private fun activityTransitionIntent(): PendingIntent =
-        PendingIntent.getForegroundService(
+    private fun activityTransitionIntent(): PendingIntent {
+        val intent = Intent(this, HeartbeatService::class.java).apply {
+            setPackage(packageName)
+            action = ACTION_ACTIVITY_TRANSITION
+        }
+        return PendingIntent.getForegroundService(
             this, 1,
-            Intent(this, HeartbeatService::class.java).setAction(ACTION_ACTIVITY_TRANSITION),
+            intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+    }
 
     /**
      * Subscribe to Activity Recognition transitions so a sensor-based motion reading
@@ -1282,7 +1293,9 @@ class HeartbeatService : LifecycleService() {
     }
 
     private fun buildNotification(): Notification {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java).apply {
+            setPackage(packageName)
+        }
         val pendingIntent = PendingIntent.getActivity(
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )

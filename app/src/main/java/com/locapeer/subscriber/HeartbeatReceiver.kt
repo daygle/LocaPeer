@@ -538,7 +538,9 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private fun sendSosNotification(name: String, payload: HeartbeatPayload) {
-        val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+        }
         val pi = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         // Public (device-lock-screen) version: keep the urgency - who is in trouble - but
         // drop the raw coordinates from the private text, which the full notification below
@@ -843,12 +845,14 @@ class HeartbeatReceiver @Inject constructor(
 
         val notifId = event.pubkey.hashCode() + 70000
         val acceptIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
+            setPackage(context.packageName)
             action = ACTION_SUPERVISED_REGISTER_ACCEPT
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
             putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
             putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
         }
         val declineIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
+            setPackage(context.packageName)
             action = ACTION_SUPERVISED_REGISTER_DECLINE
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
             putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
@@ -863,6 +867,7 @@ class HeartbeatReceiver @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("navigateTo", "contacts")
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, event.pubkey)
@@ -902,6 +907,7 @@ class HeartbeatReceiver @Inject constructor(
         if (payload.devicePubkeyHex != pubHex) return
 
         val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("navigateTo", "settings")
         }
@@ -956,6 +962,7 @@ class HeartbeatReceiver @Inject constructor(
         // every member - and never the 1:1 chat with the sender. "openCircle" carries the circle
         // id the same way "openChat" carries a peer id for 1:1 notifications.
         val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             putExtra("navigateTo", "groupchat")
             putExtra("openCircle", circleId)
             putExtra("circleName", circleName)
@@ -983,6 +990,7 @@ class HeartbeatReceiver @Inject constructor(
 
     private fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             putExtra("navigateTo", "chat")
             putExtra("openChat", peerId)
             putExtra("peerName", senderName)
@@ -1097,6 +1105,7 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val pi = PendingIntent.getActivity(context, NOTIF_ID_TRACKING_ALERT, intent, PendingIntent.FLAG_IMMUTABLE)
@@ -1188,6 +1197,7 @@ class HeartbeatReceiver @Inject constructor(
             )
         )
         val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("navigateTo", "share-request")
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
@@ -1199,6 +1209,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_TRACK_REQUEST)
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
+            setPackage(context.packageName)
             action = ACTION_TRACK_DECLINE
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
@@ -1333,6 +1344,7 @@ class HeartbeatReceiver @Inject constructor(
 
     private fun sendAcceptanceNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             putExtra("navigateTo", "contacts")
         }
         val notifId = pubkey.hashCode() + 30000
@@ -1350,6 +1362,7 @@ class HeartbeatReceiver @Inject constructor(
 
     private fun sendDeclineNotification(pubkey: String, name: String) {
         val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             putExtra("navigateTo", "contacts")
         }
         val notifId = pubkey.hashCode() + 40000

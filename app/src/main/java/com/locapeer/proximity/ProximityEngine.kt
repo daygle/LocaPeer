@@ -183,6 +183,7 @@ class ProximityEngine @Inject constructor(
         val displayDistance = com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
@@ -196,6 +197,7 @@ class ProximityEngine @Inject constructor(
         )
 
         val mapIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("navigateTo", "map")
             putExtra("highlightPeer", personDeviceId)

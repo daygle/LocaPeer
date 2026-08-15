@@ -31,6 +31,7 @@ import javax.inject.Singleton
 private val Context.keyStore by preferencesDataStore(name = "locapeer_keys")
 private const val TAG = "KeyManager"
 private const val KEYSTORE_ALIAS = "locapeer_private_key"
+private const val APPLOCK_KEYSTORE_ALIAS = "locapeer_applock_key"
 private const val ANDROID_KEYSTORE = "AndroidKeyStore"
 private const val AES_GCM = "AES/GCM/NoPadding"
 private const val GCM_TAG_BITS = 128
@@ -151,5 +152,40 @@ class KeyManager @Inject constructor(
             val pubHex = crypto.bytesToHex(crypto.getXOnlyPublicKey(normalizedPriv))
             saveKeypair(normalizedHex, pubHex)
         }
+    }
+
+    /**
+     * Returns a [androidx.biometric.BiometricPrompt.CryptoObject] for the app lock.
+     * Uses a dedicated Keystore key that requires user authentication.
+     */
+    fun getAppLockCryptoObject(): androidx.biometric.BiometricPrompt.CryptoObject? {
+        return try {
+            val key = getOrCreateAppLockKey()
+            val cipher = Cipher.getInstance(AES_GCM)
+            cipher.init(Cipher.ENCRYPT_MODE, key)
+            androidx.biometric.BiometricPrompt.CryptoObject(cipher)
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to create app lock CryptoObject", e)
+            null
+        }
+    }
+
+    private fun getOrCreateAppLockKey(): SecretKey {
+        val ks = KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }
+        (ks.getKey(APPLOCK_KEYSTORE_ALIAS, null) as? SecretKey)?.let { return it }
+        val keyGen = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
+        val spec = KeyGenParameterSpec.Builder(
+            APPLOCK_KEYSTORE_ALIAS,
+            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+        )
+            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+            .setKeySize(256)
+            .setUserAuthenticationRequired(true)
+            // Invalidates the key if a new biometric is enrolled, for maximum security.
+            .setInvalidatedByBiometricEnrollment(true)
+            .build()
+        keyGen.init(spec)
+        return keyGen.generateKey()
     }
 }

@@ -73,8 +73,10 @@ class MissedHeartbeatWorker @AssistedInject constructor(
                 // Unique data URI: extras don't participate in PendingIntent matching
                 // (Intent.filterEquals), so without it a requestCode hash collision
                 // between two peers would silently share one PendingIntent.
-                val intent = Intent(applicationContext, MainActivity::class.java)
-                    .setData("locapeer-notif://missed/${peer.deviceId}".toUri())
+                val intent = Intent(applicationContext, MainActivity::class.java).apply {
+                    setPackage(applicationContext.packageName)
+                    data = "locapeer-notif://missed/${peer.deviceId}".toUri()
+                }
                 val pi = PendingIntent.getActivity(
                     applicationContext, peer.deviceId.hashCode(), intent, PendingIntent.FLAG_IMMUTABLE
                 )
@@ -121,9 +123,12 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
         if (!hasLocation) return
         try {
+            val intent = Intent(ctx, HeartbeatService::class.java).apply {
+                setPackage(ctx.packageName)
+            }
             val pi = PendingIntent.getForegroundService(
                 ctx, 0,
-                Intent(ctx, HeartbeatService::class.java),
+                intent,
                 PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             )
             val alarmManager = ctx.getSystemService(Context.ALARM_SERVICE) as AlarmManager

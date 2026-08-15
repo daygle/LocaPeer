@@ -98,7 +98,10 @@ class MainActivity : AppCompatActivity() {
                 // successful BiometricPrompt unlocks the rest of the tree instantly.
                 val unlocked by appLockManager.unlocked.collectAsState()
                 if (!unlocked) {
-                    AppLockScreen(onUnlocked = { appLockManager.setUnlocked(unlocked = true) })
+                    AppLockScreen(
+                        keyManager = keyManager,
+                        onUnlocked = { appLockManager.setUnlocked(unlocked = true) }
+                    )
                     return@LocaPeerTheme
                 }
 

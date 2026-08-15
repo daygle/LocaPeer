@@ -193,6 +193,7 @@ class GeofenceEngine @Inject constructor(
         // share one PendingIntent and FLAG_UPDATE_CURRENT would overwrite the other
         // notification's extras, routing its tap to the wrong fence/person.
         val openMapIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             data = "locapeer-notif://geofence/${fence.id}/$personDeviceId/map".toUri()
             putExtra("navigateTo", "map")
@@ -204,6 +205,7 @@ class GeofenceEngine @Inject constructor(
         )
 
         val chatIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             data = "locapeer-notif://geofence/${fence.id}/$personDeviceId/chat".toUri()
             putExtra("navigateTo", "chat")
