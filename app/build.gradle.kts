@@ -105,56 +105,56 @@ ksp {
 dependencies {
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation("com.google.android.material:material:1.14.0")
-    implementation("androidx.compose.material:material-icons-extended")
-    debugImplementation("androidx.compose.ui:ui-tooling")
+    implementation(libs.compose.ui)
+    implementation(libs.compose.ui.graphics)
+    implementation(libs.compose.ui.tooling.preview)
+    implementation(libs.compose.material3)
+    implementation(libs.material)
+    implementation(libs.compose.material.icons.extended)
+    debugImplementation(libs.compose.ui.tooling)
 
     // Core AndroidX
-    implementation("androidx.core:core-ktx:1.19.0")
+    implementation(libs.androidx.core.ktx)
     // AppCompat provides the per-app language backport (AppCompatDelegate.setApplicationLocales)
     // for API < 33; on API 33+ it delegates to the framework LocaleManager.
-    implementation("androidx.appcompat:appcompat:1.8.0")
-    implementation("androidx.activity:activity-compose:1.13.0")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
-    implementation("androidx.lifecycle:lifecycle-service:2.11.0")
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.service)
 
     // Navigation
-    implementation("androidx.navigation:navigation-compose:2.9.8")
+    implementation(libs.androidx.navigation.compose)
 
     // Biometric / device-credential prompt for the optional app-lock screen
-    implementation("androidx.biometric:biometric:1.1.0")
+    implementation(libs.androidx.biometric)
     // ProcessLifecycleOwner for "app actually backgrounded" events (vs. per-Activity
     // ON_STOP, which fires on rotation and transient system dialogs)
-    implementation("androidx.lifecycle:lifecycle-process:2.11.0")
+    implementation(libs.androidx.lifecycle.process)
 
     // Hilt DI
-    implementation("com.google.dagger:hilt-android:2.60.1")
-    ksp("com.google.dagger:hilt-compiler:2.60.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.4.0")
-    implementation("androidx.hilt:hilt-work:1.4.0")
-    ksp("androidx.hilt:hilt-compiler:1.4.0")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    ksp(libs.androidx.hilt.compiler)
 
     // Room
-    implementation("androidx.room:room-runtime:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
-    ksp("androidx.room:room-compiler:2.8.4")
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // WorkManager
-    implementation("androidx.work:work-runtime-ktx:2.11.2")
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Location + Activity Recognition
-    implementation("com.google.android.gms:play-services-location:21.4.0")
+    implementation(libs.play.services.location)
 
     // OkHttp WebSocket
-    implementation("com.squareup.okhttp3:okhttp:5.4.0")
+    implementation(libs.okhttp)
 
     // secp256k1 crypto (ACINQ KMP)
-    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.24.0")
+    implementation(libs.secp256k1)
 
     // Bouncy Castle for fallback crypto (AES, SHA, ECDH helpers).
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
@@ -163,14 +163,14 @@ dependencies {
     implementation(libs.bcprov)
 
     // QR Code
-    implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
-    implementation("com.google.zxing:core:3.5.4")
+    implementation(libs.zxing.android.embedded) { isTransitive = false }
+    implementation(libs.zxing.core)
 
     // OSMDroid map
-    implementation("org.osmdroid:osmdroid-android:6.1.20")
+    implementation(libs.osmdroid)
 
     // DataStore Preferences
-    implementation("androidx.datastore:datastore-preferences:1.2.1")
+    implementation(libs.androidx.datastore.preferences)
 
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -203,23 +203,22 @@ dependencies {
     }
 
     // CameraX for QR scanning
-    val cameraVersion = "1.6.1"
-    implementation("androidx.camera:camera-camera2:$cameraVersion")
-    implementation("androidx.camera:camera-lifecycle:$cameraVersion")
-    implementation("androidx.camera:camera-view:$cameraVersion")
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
 
     // Accompanist permissions
-    implementation("com.google.accompanist:accompanist-permissions:0.37.3")
+    implementation(libs.accompanist.permissions)
 
     // Unit tests
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
     // Mockito for limited mocked-AppPreferences coverage of AppLockManager (only the
     // unlocked StateFlow default + setUnlocked() flip is meaningful without a real
     // DataStore; lifecycle observer and pref-driven coroutines stay covered by inspection).
-    testImplementation("org.mockito:mockito-core:5.23.0")
-    androidTestImplementation("androidx.test.ext:junit:1.3.0")
-    androidTestImplementation("androidx.test:runner:1.7.0")
-    androidTestImplementation("androidx.room:room-testing:2.8.4")
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.room.testing)
 }
 
 // Global resolution strategy to align versions and swap vulnerable artifact lines
