@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Set up JDK 17
       uses: actions/setup-java@v5
@@ -38,10 +38,15 @@ jobs:
       uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
+        # Use latest tools to pick up support for Kotlin 2.4.20-RC
+        tools: latest
         # manual build mode is required for Android
         build-mode: manual
 
     - name: Build project
+      env:
+        # Bypass strict version check for Kotlin 2.4.20-RC which is too new for the current extractor
+        CODEQL_EXTRACTOR_JAVA_KOTLIN_SKIP_VERSION_CHECK: true
       run: |
         chmod +x gradlew
         # Force a full clean build to ensure CodeQL sees all source files.
