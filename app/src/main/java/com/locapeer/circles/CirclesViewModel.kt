@@ -58,10 +58,10 @@ class CirclesViewModel @Inject constructor(
         viewModelScope.launch {
             val id = UUID.randomUUID().toString()
             val (_, myPubHex) = keyManager.ensureKeypair()
-            circleDao.upsertCircle(
-                CircleEntity(id = id, name = name.trim().ifBlank { "Circle" }, creatorPubkey = myPubHex)
+            circleDao.createCircle(
+                CircleEntity(id = id, name = name.trim().ifBlank { "Circle" }, creatorPubkey = myPubHex),
+                memberPubkeys
             )
-            circleDao.replaceMembers(id, memberPubkeys)
         }
     }
 

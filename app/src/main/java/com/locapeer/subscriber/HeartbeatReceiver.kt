@@ -185,7 +185,6 @@ class HeartbeatReceiver @Inject constructor(
     private val batchMutex = Mutex()
     private val pendingHeartbeats = mutableListOf<HeartbeatEntity>()
     private val pendingKeys = HashSet<String>()
-    private val pendingRetentionDays = HashMap<String, Int>()
     private var flushJob: Job? = null
 
     fun start() {
@@ -449,7 +448,7 @@ class HeartbeatReceiver @Inject constructor(
             )
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
-            enqueueHeartbeat(entity, payload.retentionDays)
+            enqueueHeartbeat(entity)
             // Replayed (old) heartbeats are history backfill: recording them is correct,
             // but alerting on them is not - the situation they describe is long over.
             // The bulk of a catch-up burst is stale, so this side-effect path (and its
@@ -495,14 +494,12 @@ class HeartbeatReceiver @Inject constructor(
      * Add a heartbeat to the pending batch. Flushes immediately once HB_BATCH_MAX_SIZE
      * are queued; otherwise arms a timer so a trickle of live heartbeats still lands
      * within HB_BATCH_MAX_DELAY_MS. Callers must have de-duplicated via
-     * [isDuplicateHeartbeat] first. retentionDays (>0) records the sender's retention so
-     * the flush can prune old history for that device in the same transaction window.
+     * [isDuplicateHeartbeat] first.
      */
-    private suspend fun enqueueHeartbeat(entity: HeartbeatEntity, retentionDays: Int) {
+    private suspend fun enqueueHeartbeat(entity: HeartbeatEntity) {
         val flushNow = batchMutex.withLock {
             pendingHeartbeats.add(entity)
             pendingKeys.add(hbKey(entity.deviceId, entity.timestamp))
-            if (retentionDays > 0) pendingRetentionDays[entity.deviceId] = retentionDays
             if (flushJob == null) {
                 flushJob = scope.launch {
                     delay(HB_BATCH_MAX_DELAY_MS)
@@ -521,27 +518,20 @@ class HeartbeatReceiver @Inject constructor(
      */
     private suspend fun flushBatch(fromTimer: Boolean) {
         val batch: List<HeartbeatEntity>
-        val retention: Map<String, Int>
         batchMutex.withLock {
             if (!fromTimer) flushJob?.cancel()
             flushJob = null
             if (pendingHeartbeats.isEmpty()) return
             batch = pendingHeartbeats.toList()
-            retention = pendingRetentionDays.toMap()
             pendingHeartbeats.clear()
             pendingKeys.clear()
-            pendingRetentionDays.clear()
         }
         try {
+            // Transactional insert of the whole batch reduces Room invalidation churn.
+            // Retention cleanup is omitted here: doing it on every batch (seconds apart)
+            // is expensive and redundant with the daily RetentionEnforcementWorker and
+            // the explicit PURGE_REQUEST events.
             heartbeatDao.insertAll(batch)
-            if (retention.isNotEmpty()) {
-                val now = System.currentTimeMillis()
-                retention.forEach { (deviceId, days) ->
-                    // days.toLong() first: days * 24 * 3600 would overflow Int for large,
-                    // peer-supplied retention values before the trailing 1000L widened it.
-                    heartbeatDao.deleteOlderThanForDevice(deviceId, now - days.toLong() * 24 * 3600 * 1000)
-                }
-            }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to flush heartbeat batch (${batch.size})", e)
         }

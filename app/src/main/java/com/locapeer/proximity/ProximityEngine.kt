@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import androidx.core.app.NotificationCompat
 import com.locapeer.MainActivity
 import com.locapeer.R
@@ -28,6 +29,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.concurrent.ConcurrentHashMap
@@ -62,29 +64,34 @@ class ProximityEngine @Inject constructor(
     // nearby doesn't re-alert every cooldown period; leaving re-arms the alert.
     private val wasNearby = ConcurrentHashMap<String, Boolean>()
 
+    // Cache of proximity alerts per peer device ID.
+    private val alertsCache = ConcurrentHashMap<String, com.locapeer.data.entity.ProximityAlertEntity?>()
+
+    // Cache our own location to avoid redundant FusedLocation calls when multiple peers pulse at once.
+    @Volatile private var cachedOwnLocation: android.location.Location? = null
+    @Volatile private var lastOwnLocationFetchAt = 0L
+    private val ownLocationMutex = kotlinx.coroutines.sync.Mutex()
+
+    init {
+        scope.launch {
+            proximityAlertDao.getAll().collect {
+                alertsCache.clear()
+            }
+        }
+    }
+
     @SuppressLint("MissingPermission")
     suspend fun evaluate(peerHeartbeat: HeartbeatEntity) {
-        val alert = proximityAlertDao.getForPeer(peerHeartbeat.deviceId) ?: return
+        val alert = if (alertsCache.containsKey(peerHeartbeat.deviceId)) {
+            alertsCache[peerHeartbeat.deviceId]
+        } else {
+            val a = proximityAlertDao.getForPeer(peerHeartbeat.deviceId)
+            alertsCache[peerHeartbeat.deviceId] = a
+            a
+        } ?: return
         if (!alert.active) return
 
-        val ownLocation = try {
-            suspendCancellableCoroutine<android.location.Location?> { cont ->
-                fusedLocation.lastLocation
-                    .addOnSuccessListener { cont.resume(it) }
-                    .addOnFailureListener {
-                        if (isDeadObject(it)) {
-                            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
-                        }
-                        cont.resume(null)
-                    }
-                    .addOnCanceledListener { cont.resume(null) }
-            }
-        } catch (e: Exception) {
-            if (isDeadObject(e)) {
-                fusedLocation = LocationServices.getFusedLocationProviderClient(context)
-            }
-            null
-        } ?: return
+        val ownLocation = getFreshOwnLocation() ?: return
 
         // A stale own position only proves where we *were*; skip rather than
         // raise a "nearby" alert against it.
@@ -217,5 +224,37 @@ class ProximityEngine @Inject constructor(
             cause = cause.cause
         }
         return false
+    }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun getFreshOwnLocation(): android.location.Location? = ownLocationMutex.withLock {
+        val now = SystemClock.elapsedRealtime()
+        if (now - lastOwnLocationFetchAt < 30_000L && cachedOwnLocation != null) {
+            return@withLock cachedOwnLocation
+        }
+
+        val location = try {
+            suspendCancellableCoroutine<android.location.Location?> { cont ->
+                fusedLocation.lastLocation
+                    .addOnSuccessListener { cont.resume(it) }
+                    .addOnFailureListener {
+                        if (isDeadObject(it)) {
+                            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+                        }
+                        cont.resume(null)
+                    }
+                    .addOnCanceledListener { cont.resume(null) }
+            }
+        } catch (e: Exception) {
+            if (isDeadObject(e)) {
+                fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+            }
+            null
+        }
+        if (location != null) {
+            cachedOwnLocation = location
+            lastOwnLocationFetchAt = now
+        }
+        location
     }
 }

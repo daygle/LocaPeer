@@ -763,6 +763,7 @@ class MessagingViewModel @Inject constructor(
      */
     private var recordTarget: RecordTarget? = null
     private var recordTimeoutJob: Job? = null
+    private var playbackJob: Job? = null
     /**
      * Active [MediaPlayer] instances keyed by voice-note message id. Per-id temp files plus
      * per-id players mean a second message can be tapped mid-playback and replaces only the
@@ -934,7 +935,7 @@ class MessagingViewModel @Inject constructor(
             return
         }
         stopAudio()
-        viewModelScope.launch {
+        playbackJob = viewModelScope.launch {
             try {
                 val bytes = MediaUtils.decodeBase64(base64) ?: return@launch
                 val file = withContext(Dispatchers.IO) {
@@ -957,6 +958,8 @@ class MessagingViewModel @Inject constructor(
     }
 
     fun stopAudio() {
+        playbackJob?.cancel(null)
+        playbackJob = null
         // Release every active player regardless of who started it - a single audio session in
         // a decentralised messaging app might still happen to overlap briefly across screens if
         // the user keeps tapping, so the safe default is "always tear them all down".

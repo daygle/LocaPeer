@@ -13,6 +13,7 @@ import com.locapeer.peer.PeerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -46,9 +47,9 @@ class ContactsViewModel @Inject constructor(
     val messages: kotlinx.coroutines.flow.SharedFlow<Int> = _messages
 
     val contacts = combine(
-        peerDao.getAllPeers(),
-        heartbeatDao.getLatestHeartbeatPerDevice(),
-        sharingConfigDao.observeAll()
+        peerDao.getAllPeers().distinctUntilChanged(),
+        heartbeatDao.getLatestHeartbeatPerDevice().distinctUntilChanged(),
+        sharingConfigDao.observeAll().distinctUntilChanged()
     ) { peers, heartbeats, configs ->
         val hbMap = heartbeats.associateBy { it.deviceId }
         val cfgMap = configs.associateBy { it.peerDeviceId }

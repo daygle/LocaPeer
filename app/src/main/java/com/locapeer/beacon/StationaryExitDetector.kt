@@ -103,7 +103,7 @@ class StationaryExitDetector {
         }
         if (candidateSet) {
             val dtSec = (elapsedRealtimeNs - candidateElapsedNs) / 1_000_000_000f
-            if (dtSec > 0f) {
+            if (dtSec >= LocationFilter.MIN_DT_SEC) {
                 val fromCandidateM =
                     GeoMath.haversineMetres(candidateLat, candidateLng, lat, lng).toFloat()
                 val impliedSpeed =

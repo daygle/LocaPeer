@@ -1,9 +1,6 @@
 package com.locapeer.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.locapeer.data.entity.CircleEntity
 import com.locapeer.data.entity.CircleMemberEntity
 import kotlinx.coroutines.flow.Flow
@@ -67,9 +64,17 @@ interface CircleDao {
     suspend fun removeMemberFromAllCircles(memberPubkey: String)
 
     /** Replaces the whole membership of a circle. */
+    @Transaction
     suspend fun replaceMembers(circleId: String, memberPubkeys: List<String>) {
         clearMembers(circleId)
         memberPubkeys.forEach { addMember(CircleMemberEntity(circleId, it)) }
+    }
+
+    /** Creates a circle and its membership in one transaction. */
+    @Transaction
+    suspend fun createCircle(circle: CircleEntity, memberPubkeys: List<String>) {
+        upsertCircle(circle)
+        replaceMembers(circle.id, memberPubkeys)
     }
 
     /**
@@ -81,6 +86,7 @@ interface CircleDao {
      * name or membership; a message from any other member is still delivered (the caller inserts it)
      * but is not allowed to silently rewrite who is in the circle on this device.
      */
+    @Transaction
     suspend fun materialiseFromRemote(
         circleId: String,
         name: String,

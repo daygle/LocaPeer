@@ -12,8 +12,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -47,7 +48,7 @@ class KeyManager @Inject constructor(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
     private val _publicKeyFlow = MutableStateFlow<String?>(null)
-    val publicKeyHexFlow: Flow<String?> = _publicKeyFlow
+    val publicKeyHexFlow: StateFlow<String?> = _publicKeyFlow.asStateFlow()
 
     init {
         scope.launch {

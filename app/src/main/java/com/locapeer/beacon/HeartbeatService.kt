@@ -512,7 +512,7 @@ class HeartbeatService : LifecycleService() {
                 "Pulse: gps=$currentMotionState cadence=$appliedCadenceState " +
                     "ar=${arMotionState?.name ?: "none"}${if (arIsStale()) "(stale)" else ""} " +
                     "sos=$isSos battery=$batteryNow low=$lowNow acc=${lastAccuracy}m " +
-                    diagnostics.summarizeAndReset()
+                    diagnostics.summarizeAndReset(),
             )
 
             val scheduleActive = isSos || SharingSchedule.isActive(currentSettings.globalScheduleRules)
@@ -566,12 +566,15 @@ class HeartbeatService : LifecycleService() {
         try {
             val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
             val triggerAt = SystemClock.elapsedRealtime() + delayMs + PULSE_BACKSTOP_SLACK_MS
+            val lowBattery = intervalManager.isLowBattery()
             // Exact when permitted: on Android 12+ only exact-alarm delivery grants the
             // temporary allowlist that allows the revive-if-died foreground-service
             // start; an inexact alarm still reaches the running service but its
             // allowlist forbids the FGS start, so the revival would be silently
             // dropped. Inexact remains the fallback for the pulse-catch-up case.
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()) {
+            // When battery is low, we prefer inexact alarms to save power unless SOS is active.
+            val useExact = !lowBattery || isSos
+            if (useExact && (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms())) {
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP, triggerAt, pulseCheckIntent()
                 )
@@ -615,29 +618,24 @@ class HeartbeatService : LifecycleService() {
                 val previous = currentSettings
                 currentSettings = settings
                 if (!isStarted) return@collect
+
+                var needsRequestUpdate = false
+                var needsReschedule = false
+
                 if (settings.globalScheduleRules != previous.globalScheduleRules) {
-                    // Schedule edits must apply NOW, not at the next pulse: while
-                    // suspended, the pending pulse can be an entire off-window away, so
-                    // a user deleting their schedule (expecting sharing to resume) would
-                    // otherwise wait hours. Rebuild the request (which suspends or
-                    // resumes GPS as the new rules dictate) and re-anchor the pulse -
-                    // after a long suspension the elapsed interval makes it fire at
-                    // once, and the fresh-fix hold keeps that pulse honest.
-                    updateLocationRequest()
-                    reschedulePulse()
-                } else if (settings.allowLiveBoost != previous.allowLiveBoost) {
-                    // Toggle applied immediately: if boost is turned OFF while someone
-                    // is watching, GPS must relax to low power now rather than at the
-                    // next 5s pulse.
-                    updateLocationRequest()
-                    reschedulePulse()
-                } else if (
-                    intervalManager.getIntervalMillis(settings) != intervalManager.getIntervalMillis(previous)
-                ) {
-                    // Re-anchor the pending pulse when an interval setting changes so the
-                    // new cadence applies now rather than after the next heartbeat.
-                    reschedulePulse()
+                    needsRequestUpdate = true
+                    needsReschedule = true
                 }
+                if (settings.allowLiveBoost != previous.allowLiveBoost) {
+                    needsRequestUpdate = true
+                    needsReschedule = true
+                }
+                if (intervalManager.getIntervalMillis(settings) != intervalManager.getIntervalMillis(previous)) {
+                    needsReschedule = true
+                }
+
+                if (needsRequestUpdate) updateLocationRequest()
+                if (needsReschedule) reschedulePulse()
             }
         }
         lifecycleScope.launch {
@@ -825,8 +823,15 @@ class HeartbeatService : LifecycleService() {
             cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
             else -> 30_000L
         }
+        val maxDelayMs = when {
+            isSos || liveView || boosting || anchorBoosting -> 0L
+            lowBattery -> pollIntervalMs * 2
+            cadenceState == MotionState.STATIONARY -> pollIntervalMs * 2
+            else -> pollIntervalMs
+        }
         return LocationRequest.Builder(priority, pollIntervalMs)
             .setMinUpdateIntervalMillis(pollIntervalMs / 2)
+            .setMaxUpdateDelayMillis(maxDelayMs)
             // Hold briefly for a sharper first fix after each request reboot instead of
             // returning the first coarse one; the reboot happens on every state change.
             .setWaitForAccurateLocation(true)
@@ -1120,10 +1125,12 @@ class HeartbeatService : LifecycleService() {
                         expectedIntervalSeconds = expectedIntervalSec
                     )
                 )
-                val retentionDays = settings.localLocationRetentionDays
-                if (retentionDays > 0) {
-                    val cutoff = nowMs - retentionDays * 24 * 60 * 60 * 1000L
-                    heartbeatDao.deleteOlderThanForDevice(pubHex, cutoff)
+
+                // Skip remote broadcast if there's no network connection to avoid
+                // wasting battery on failed radio activity and crypto.
+                if (!relayClient.isOnline) {
+                    Log.d(TAG, "Heartbeat broadcast skipped: no network connection")
+                    return@launch
                 }
 
                 val (dayIndex, currentMinute) = SharingSchedule.nowDayMinute()
@@ -1133,21 +1140,22 @@ class HeartbeatService : LifecycleService() {
                     return@launch
                 }
 
-                // Recipients: 
-                // 1. In SOS mode: send ONLY to contacts marked as SOS contacts.
-                // 2. In Normal mode: send to all contacts who receive our location.
-                val allPeers = peerDao.getAllPeers().first()
-                val configMap = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
-                
-                val targetRecipients = allPeers.filter { peer ->
-                    val cfg = configMap[peer.deviceId]
-                    if (isSos) {
-                        cfg?.isSosContact == true
-                    } else {
-                        val roleAllows = peer.locationRole == PeerEntity.ROLE_SEND || 
-                                        peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE
-                        roleAllows && (cfg?.sharingEnabled ?: true)
+                // Move peer fetching and target filtering to IO dispatcher to keep the
+                // main thread free for UI and location processing.
+                val (targetRecipients, configMap) = withContext(Dispatchers.IO) {
+                    val allPeers = peerDao.getAllPeers().first()
+                    val configs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
+                    val filtered = allPeers.filter { peer ->
+                        val cfg = configs[peer.deviceId]
+                        if (isSos) {
+                            cfg?.isSosContact == true
+                        } else {
+                            val roleAllows = peer.locationRole == PeerEntity.ROLE_SEND ||
+                                            peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE
+                            roleAllows && (cfg?.sharingEnabled ?: true)
+                        }
                     }
+                    filtered to configs
                 }
 
                 if (targetRecipients.isEmpty()) {

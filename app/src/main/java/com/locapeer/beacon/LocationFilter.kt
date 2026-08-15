@@ -51,6 +51,9 @@ class LocationFilter {
 
         /** With no acceptance for this long, take the next fix unconditionally. */
         const val STALE_ACCEPT_MS = 5 * 60_000L
+
+        /** Minimum time delta between fixes to compute a plausible speed. */
+        const val MIN_DT_SEC = 0.05f
     }
 
     private var hasAccepted = false
@@ -137,6 +140,7 @@ class LocationFilter {
         lat2: Double, lng2: Double, acc2M: Float,
         dtSec: Float
     ): Float {
+        if (dtSec < MIN_DT_SEC) return 0f
         val distM = GeoMath.haversineMetres(lat1, lng1, lat2, lng2).toFloat()
         return (distM - acc1M - acc2M).coerceAtLeast(0f) / dtSec
     }

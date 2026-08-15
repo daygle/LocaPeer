@@ -23,8 +23,8 @@ internal class EventIdDedupCache(
     private val senderCap: Int = 500,
     private val globalCap: Int = 2000,
 ) {
-    // Per-sender FIFO windows (insertion order = arrival order).
-    private val bySender = HashMap<String, ArrayDeque<String>>()
+    // Per-sender FIFO windows using LinkedHashSet for O(1) lookups and O(1) insertion/removal.
+    private val bySender = HashMap<String, MutableSet<String>>()
     // Pre-restart ids restored from persistence; O(1) lookups, trimmed first.
     private val restored = HashSet<String>()
 
@@ -39,10 +39,16 @@ internal class EventIdDedupCache(
      */
     fun record(sender: String, eventId: String): Boolean {
         if (isKnown(sender, eventId)) return false
-        val bucket = bySender.getOrPut(sender) { ArrayDeque() }
-        bucket.addLast(eventId)
+        val bucket = bySender.getOrPut(sender) { LinkedHashSet() }
+        bucket.add(eventId)
         // Per-sender cap: the flooder's own window pays first.
-        while (bucket.size > senderCap) bucket.removeFirst()
+        while (bucket.size > senderCap) {
+            val it = bucket.iterator()
+            if (it.hasNext()) {
+                it.next()
+                it.remove()
+            }
+        }
         trimToGlobalCap()
         return true
     }
@@ -79,8 +85,11 @@ internal class EventIdDedupCache(
             // Otherwise evict from the largest contributor so a flood can only shrink
             // its own window, not another sender's.
             val largest = bySender.maxByOrNull { it.value.size } ?: break
-            if (largest.value.isNotEmpty()) {
-                largest.value.removeFirst()
+            val bucket = largest.value
+            if (bucket.isNotEmpty()) {
+                val it = bucket.iterator()
+                it.next()
+                it.remove()
                 total--
             } else {
                 bySender.remove(largest.key)

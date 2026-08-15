@@ -15,47 +15,45 @@ import com.locapeer.util.GeoMath
 object HistoryThinning {
 
     /**
-     * Display-time accuracy filter: hides points whose reported accuracy radius is
-     * larger than [maxAccuracyM], so a coarse cell fix doesn't drag the trail off to
-     * a spot the device never really was. Non-destructive like [thin] - every ping
-     * stays stored, and SOS pings are always kept whatever their accuracy.
-     * 0 (or negative) shows every point.
+     * Applies accuracy filtering and distance thinning in a single pass to minimize
+     * allocations. [points] must be in chronological order.
      */
-    fun filterByAccuracy(points: List<HeartbeatEntity>, maxAccuracyM: Int): List<HeartbeatEntity> {
-        if (maxAccuracyM <= 0) return points
-        // The common case is that nothing is coarse enough to drop, so scan first and
-        // return the original list untouched - no allocation, and downstream
-        // distinctUntilChanged / == checks can short-circuit on identity.
-        val firstDrop = points.indexOfFirst { !it.isSos && it.accuracy > maxAccuracyM }
-        if (firstDrop < 0) return points
-        val kept = ArrayList<HeartbeatEntity>(points.size)
-        kept.addAll(points.subList(0, firstDrop))
-        for (i in firstDrop + 1 until points.size) {
-            val p = points[i]
-            if (p.isSos || p.accuracy <= maxAccuracyM) kept += p
-        }
-        return kept
-    }
+    fun process(
+        points: List<HeartbeatEntity>,
+        maxAccuracyM: Int,
+        minDistanceM: Int
+    ): List<HeartbeatEntity> {
+        if (points.isEmpty()) return emptyList()
+        val filterAcc = maxAccuracyM > 0
+        val filterDist = minDistanceM > 0
+        if (!filterAcc && !filterDist) return points
 
-    /** [points] must be in chronological order, as the history queries return them. */
-    fun thin(points: List<HeartbeatEntity>, minDistanceM: Int): List<HeartbeatEntity> {
-        if (minDistanceM <= 0 || points.size <= 1) return points
         val kept = ArrayList<HeartbeatEntity>(points.size)
-        var anchor = points.first()
-        kept += anchor
-        for (i in 1 until points.size) {
+        var anchor: HeartbeatEntity? = null
+
+        for (i in points.indices) {
             val p = points[i]
-            // SOS pings are never hidden, whatever their spacing.
-            if (p.isSos ||
-                GeoMath.haversineMetres(anchor.lat, anchor.lng, p.lat, p.lng) >= minDistanceM
-            ) {
+            val isLast = i == points.size - 1
+            
+            // SOS and the very last point (latest position) are always kept.
+            if (p.isSos || isLast) {
                 kept += p
                 anchor = p
+                continue
             }
+
+            // Accuracy filter: skip coarse points.
+            if (filterAcc && p.accuracy > maxAccuracyM) continue
+
+            // Distance thinning: skip points too close to the last kept one.
+            if (filterDist && anchor != null) {
+                val dist = GeoMath.haversineMetres(anchor.lat, anchor.lng, p.lat, p.lng)
+                if (dist < minDistanceM) continue
+            }
+
+            kept += p
+            anchor = p
         }
-        // The newest ping is the device's latest known position; always show it
-        // even when it hasn't cleared the distance threshold yet.
-        if (kept.last() !== points.last()) kept += points.last()
         return kept
     }
 }

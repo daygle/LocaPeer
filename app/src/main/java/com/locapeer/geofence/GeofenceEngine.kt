@@ -59,8 +59,23 @@ class GeofenceEngine @Inject constructor(
     // one transition rather than inventing one.
     private val insideState = ConcurrentHashMap<String, Boolean>()
 
+    // Cache of active geofences per tracked device ID.
+    private val fencesCache = ConcurrentHashMap<String, List<ActiveGeofence>>()
+
+    init {
+        scope.launch {
+            // Re-fetch everything whenever ANY geofence or assignment changes.
+            // This ensures the engine always has fresh data without reading DB on every heartbeat.
+            geofenceAssignmentDao.observeAll().collect {
+                fencesCache.clear()
+            }
+        }
+    }
+
     suspend fun evaluate(current: HeartbeatEntity, previous: HeartbeatEntity?) {
-        val fences = geofenceAssignmentDao.getActiveGeofencesForDevice(current.deviceId)
+        val fences = fencesCache.getOrPut(current.deviceId) {
+            geofenceAssignmentDao.getActiveGeofencesForDevice(current.deviceId)
+        }
         fences.forEach { fence ->
             val key = "${fence.id}:${current.deviceId}"
             val wasInside = insideState[key]

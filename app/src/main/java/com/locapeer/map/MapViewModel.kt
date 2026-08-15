@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -62,6 +63,16 @@ data class GeofenceOnMap(
 data class MapUiState(
     val pins: List<PinData> = emptyList(),
     val geofences: List<GeofenceOnMap> = emptyList()
+)
+
+// Holds the latest raw data from the five DB/key flows so the ticker can combine
+// with it without nesting six incompatible types in a single combine call.
+private data class UiSnapshot(
+    val peers: List<PeerEntity>,
+    val heartbeats: List<HeartbeatEntity>,
+    val fences: List<GeofenceEntity>,
+    val assignments: List<com.locapeer.data.entity.GeofenceAssignmentEntity>,
+    val myPubkey: String?
 )
 
 @HiltViewModel
@@ -257,30 +268,38 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    // Holds the latest raw data from the five DB/key flows so the ticker can combine
-    // with it without nesting six incompatible types in a single combine call.
-    private data class UiSnapshot(
-        val peers: List<PeerEntity>,
-        val heartbeats: List<HeartbeatEntity>,
-        val fences: List<GeofenceEntity>,
-        val assignments: List<com.locapeer.data.entity.GeofenceAssignmentEntity>,
-        val myPubkey: String?
-    )
+
+
+    private val snapshotFlow = combine(
+        peerDao.getReceiveContacts(),
+        heartbeatDao.getLatestHeartbeatPerDevice(),
+        geofenceDao.getAllGeofences(),
+        geofenceAssignmentDao.observeAll(),
+        // Cached public-key flow instead of ensureKeypair() so a new heartbeat doesn't
+        // trigger an Android Keystore decrypt on every emission just to filter own pin.
+        keyManager.publicKeyHexFlow
+    ) { peers, heartbeats, fences, assignments, myPubkey ->
+        UiSnapshot(peers, heartbeats, fences, assignments, myPubkey)
+    }.distinctUntilChanged()
+
+    private val geofencesFlow = snapshotFlow.map { snapshot ->
+        val nameByDevice = snapshot.peers.associate { it.deviceId to it.displayName }
+        val assignmentsByFence = snapshot.assignments.groupBy { it.geofenceId }
+        val unknownLabel = appContext.getString(com.locapeer.R.string.geo_unknown)
+        val unassignedLabel = appContext.getString(com.locapeer.R.string.geo_unassigned)
+        snapshot.fences.map { fence ->
+            val names = assignmentsByFence[fence.id].orEmpty()
+                .map { nameByDevice[it.trackedDeviceId] ?: unknownLabel }
+                .distinct()
+            GeofenceOnMap(fence, if (names.isEmpty()) unassignedLabel else names.joinToString(", "))
+        }
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
     val uiState: StateFlow<MapUiState> = combine(
-        combine(
-            peerDao.getReceiveContacts(),
-            heartbeatDao.getLatestHeartbeatPerDevice(),
-            geofenceDao.getAllGeofences(),
-            geofenceAssignmentDao.observeAll(),
-            // Cached public-key flow instead of ensureKeypair() so a new heartbeat doesn't
-            // trigger an Android Keystore decrypt on every emission just to filter own pin.
-            keyManager.publicKeyHexFlow
-        ) { peers, heartbeats, fences, assignments, myPubkey ->
-            UiSnapshot(peers, heartbeats, fences, assignments, myPubkey)
-        },
+        snapshotFlow,
+        geofencesFlow,
         tickerFlow
-    ) { snapshot, _ ->
+    ) { snapshot, fences, _ ->
         val heartbeatMap = snapshot.heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
         val pins = snapshot.peers.filter { it.deviceId != snapshot.myPubkey }.map { peer ->
@@ -298,17 +317,7 @@ class MapViewModel @Inject constructor(
                 (now - hb.receivedAt) < com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS * 4
             PinData(peer, hb, overdue, live)
         }
-        val nameByDevice = snapshot.peers.associate { it.deviceId to it.displayName }
-        val assignmentsByFence = snapshot.assignments.groupBy { it.geofenceId }
-        val unknownLabel = appContext.getString(com.locapeer.R.string.geo_unknown)
-        val unassignedLabel = appContext.getString(com.locapeer.R.string.geo_unassigned)
-        val fencesOnMap = snapshot.fences.map { fence ->
-            val names = assignmentsByFence[fence.id].orEmpty()
-                .map { nameByDevice[it.trackedDeviceId] ?: unknownLabel }
-                .distinct()
-            GeofenceOnMap(fence, if (names.isEmpty()) unassignedLabel else names.joinToString(", "))
-        }
-        MapUiState(pins = pins, geofences = fencesOnMap)
+        MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     companion object {

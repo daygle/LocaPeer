@@ -96,7 +96,9 @@ class SupervisedModeManager @Inject constructor(
         scope.launch {
             val settings = prefs.settings.first()
             val (privHex, pubHex) = keyManager.ensureKeypair()
-            val myRelay = HARDCODED_RELAYS.first()
+            // Prefer the first connected relay, fall back to the first hardcoded one.
+            val myRelay = relayClient.relayStatus.value.filter { it.value }.keys.firstOrNull()
+                ?: HARDCODED_RELAYS.first()
             val payload = json.encodeToString(
                 SupervisedRegisterPayload(
                     devicePubkeyHex = pubHex,

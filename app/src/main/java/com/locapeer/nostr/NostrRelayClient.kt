@@ -35,7 +35,6 @@ import kotlinx.serialization.json.encodeToJsonElement
 import okhttp3.ConnectionSpec
 import okhttp3.EventListener
 import okhttp3.Handshake
-import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
@@ -78,7 +77,9 @@ class NostrRelayClient @Inject constructor(
     }
     private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
 
-    @Volatile private var isGloballyConnected = false
+    @Volatile private var isStarted = false
+    @Volatile var isOnline = false
+        private set
 
     private val client by lazy {
         OkHttpClient.Builder()
@@ -89,7 +90,7 @@ class NostrRelayClient @Inject constructor(
             .connectionSpecs(listOf(
                 ConnectionSpec.MODERN_TLS,
                 ConnectionSpec.COMPATIBLE_TLS, // Added for broader self-hosted compatibility
-                ConnectionSpec.CLEARTEXT
+                ConnectionSpec.CLEARTEXT,
             ))
             .hostnameVerifier(NostrHostnameVerifier())
             .eventListenerFactory(NostrConnectionListener.Factory())
@@ -127,9 +128,15 @@ class NostrRelayClient @Inject constructor(
      */
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
-            if (!isGloballyConnected) return
+            isOnline = true
+            if (!isStarted) return
             Log.d(TAG, "Network available; nudging relays to reconnect")
             relays.values.forEach { it.reconnectNow() }
+        }
+
+        override fun onLost(network: Network) {
+            isOnline = false
+            Log.d(TAG, "Network lost")
         }
     }
 
@@ -177,11 +184,11 @@ class NostrRelayClient @Inject constructor(
     private fun isValidRelayUrl(url: String): Boolean {
         val uri = try { java.net.URI(url) } catch (_: Exception) { return false }
         // URI() accepts scheme-less strings (scheme == null), so the safe-call is load-bearing.
-        return uri.scheme?.equals("wss", ignoreCase = true) == true && !uri.host.isNullOrBlank()
+        return (uri.scheme?.equals("wss", ignoreCase = true) == true) && !uri.host.isNullOrBlank()
     }
 
     private fun updateRelays(urls: List<String>) {
-        val newUrls = urls.map { it.trimEnd('/') }.toSet()
+        val newUrls = urls.asSequence().map { it.trimEnd('/') }.toSet()
         val currentUrls = relays.keys
 
         // Remove relays no longer in the list
@@ -199,14 +206,14 @@ class NostrRelayClient @Inject constructor(
             relays[url] = conn
             _relayStatus.update { it + (url to false) }
             // If we are currently in "connected" mode, connect this new relay immediately
-            if (isGloballyConnected) {
+            if (isStarted) {
                 conn.connect()
             }
         }
     }
 
     fun connect() {
-        isGloballyConnected = true
+        isStarted = true
         relays.values.forEach { it.connect() }
     }
 
@@ -217,7 +224,7 @@ class NostrRelayClient @Inject constructor(
             _relayStatus.update { it + (normalized to false) }
             RelayConnection(normalized)
         }
-        if (isGloballyConnected) {
+        if (isStarted) {
             conn.connect()
         }
     }
@@ -390,7 +397,7 @@ class NostrRelayClient @Inject constructor(
                     val waitMs = (baseDelay + jitter).coerceAtLeast(1_000L)
                     Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${attempt + 1})")
                     delay(waitMs.milliseconds)
-                    if (!isGloballyConnected) return@launch
+                    if (!isStarted) return@launch
                     // Don't overwrite if another connection attempt started in the meantime
                     if (isConnected || webSocket != null) return@launch
                     synchronized(reconnectLock) { reconnectAttempts++ }
