@@ -478,9 +478,12 @@ class NostrRelayClient @Inject constructor(
                         Log.e(TAG, "Relay $url rejected connection (403 Forbidden). Check User-Agent or authentication.")
                     }
                     t is javax.net.ssl.SSLHandshakeException || t is SSLPeerUnverifiedException -> {
-                        val handshakeInfo = listener?.lastHandshake?.let { h ->
+                        val h = listener?.lastHandshake
+                        val handshakeInfo = if (h != null) {
                             "Cipher: ${h.cipherSuite}, Protocol: ${h.tlsVersion}, Peer: ${h.peerPrincipal}"
-                        } ?: "No handshake data"
+                        } else {
+                            "No handshake data"
+                        }
                         Log.e(TAG, "Relay $url TLS failure: ${t.message}. $handshakeInfo")
                         Log.e(TAG, "Possible causes: Missing intermediate certs on server, or untrusted CA.")
                     }
@@ -558,7 +561,7 @@ private class NostrConnectionListener(private val url: String) : EventListener()
  * Ensures SNI hostname matching is clearly audited for self-hosted relays.
  */
 private class NostrHostnameVerifier : HostnameVerifier {
-    private val delegate = okhttp3.internal.tls.OkHostnameVerifier
+    private val delegate = javax.net.ssl.HttpsURLConnection.getDefaultHostnameVerifier()
 
     override fun verify(hostname: String, session: SSLSession): Boolean {
         val result = delegate.verify(hostname, session)
