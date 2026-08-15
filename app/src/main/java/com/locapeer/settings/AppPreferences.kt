@@ -297,15 +297,21 @@ class AppPreferences @Inject constructor(
         .shareIn(scope, SharingStarted.WhileSubscribed(5_000), replay = 1)
 
     suspend fun updateDisplayName(name: String) {
-        context.settingsStore.edit { it[KEY_DISPLAY_NAME] = name }
+        context.settingsStore.edit {
+            if (it[KEY_DISPLAY_NAME] != name) it[KEY_DISPLAY_NAME] = name
+        }
     }
 
     suspend fun setHeartbeatEnabled(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_HEARTBEAT_ENABLED] = enabled }
+        context.settingsStore.edit {
+            if (it[KEY_HEARTBEAT_ENABLED] != enabled) it[KEY_HEARTBEAT_ENABLED] = enabled
+        }
     }
 
     suspend fun setOnboardingComplete(complete: Boolean) {
-        context.settingsStore.edit { it[KEY_ONBOARDING_COMPLETE] = complete }
+        context.settingsStore.edit {
+            if (it[KEY_ONBOARDING_COMPLETE] != complete) it[KEY_ONBOARDING_COMPLETE] = complete
+        }
     }
 
     suspend fun setSupervisedMode(enabled: Boolean, supervisorPubkey: String) {
@@ -320,7 +326,9 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun setStartRoute(route: String) {
-        context.settingsStore.edit { it[KEY_START_ROUTE] = route }
+        context.settingsStore.edit {
+            if (it[KEY_START_ROUTE] != route) it[KEY_START_ROUTE] = route
+        }
     }
 
     suspend fun setRelayEnabled(url: String, enabled: Boolean) {
@@ -358,19 +366,27 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun setPinColor(hex: String) {
-        context.settingsStore.edit { it[KEY_PIN_COLOR] = hex }
+        context.settingsStore.edit {
+            if (it[KEY_PIN_COLOR] != hex) it[KEY_PIN_COLOR] = hex
+        }
     }
 
     suspend fun setSosActive(active: Boolean) {
-        context.settingsStore.edit { it[KEY_SOS_ACTIVE] = active }
+        context.settingsStore.edit {
+            if (it[KEY_SOS_ACTIVE] != active) it[KEY_SOS_ACTIVE] = active
+        }
     }
 
     suspend fun setMapStartZoom(zoom: Double) {
-        context.settingsStore.edit { it[KEY_MAP_START_ZOOM] = zoom }
+        context.settingsStore.edit {
+            if (it[KEY_MAP_START_ZOOM] != zoom) it[KEY_MAP_START_ZOOM] = zoom
+        }
     }
 
     suspend fun setMapStartingPoint(mode: String) {
-        context.settingsStore.edit { it[KEY_MAP_STARTING_POINT] = mode }
+        context.settingsStore.edit {
+            if (it[KEY_MAP_STARTING_POINT] != mode) it[KEY_MAP_STARTING_POINT] = mode
+        }
     }
 
     suspend fun setUseImperialSpeed(imperial: Boolean) {
@@ -398,23 +414,34 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun setReverseGeocodingEnabled(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_REVERSE_GEOCODING] = enabled }
+        context.settingsStore.edit {
+            if (it[KEY_REVERSE_GEOCODING] != enabled) it[KEY_REVERSE_GEOCODING] = enabled
+        }
     }
 
     suspend fun setAppLockEnabled(enabled: Boolean) {
-        context.settingsStore.edit { it[KEY_APP_LOCK_ENABLED] = enabled }
+        context.settingsStore.edit {
+            if (it[KEY_APP_LOCK_ENABLED] != enabled) it[KEY_APP_LOCK_ENABLED] = enabled
+        }
     }
 
     suspend fun setAppLockTimeoutSeconds(seconds: Int) {
-        context.settingsStore.edit { it[KEY_APP_LOCK_TIMEOUT_SECONDS] = seconds.coerceAtLeast(0) }
+        context.settingsStore.edit {
+            val s = seconds.coerceAtLeast(0)
+            if (it[KEY_APP_LOCK_TIMEOUT_SECONDS] != s) it[KEY_APP_LOCK_TIMEOUT_SECONDS] = s
+        }
     }
 
     suspend fun setThemeMode(mode: ThemeMode) {
-        context.settingsStore.edit { it[KEY_THEME_MODE] = mode.name }
+        context.settingsStore.edit {
+            if (it[KEY_THEME_MODE] != mode.name) it[KEY_THEME_MODE] = mode.name
+        }
     }
 
     suspend fun setUseDynamicColor(use: Boolean) {
-        context.settingsStore.edit { it[KEY_USE_DYNAMIC_COLOR] = use }
+        context.settingsStore.edit {
+            if (it[KEY_USE_DYNAMIC_COLOR] != use) it[KEY_USE_DYNAMIC_COLOR] = use
+        }
     }
 
     suspend fun setAllowLiveBoost(enabled: Boolean) {

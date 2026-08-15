@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -180,8 +181,8 @@ class SettingsViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     val activeTempShares: StateFlow<List<Pair<PeerEntity, PeerSharingConfig>>> = combine(
-        peerDao.getAllPeers(),
-        sharingConfigDao.observeAll()
+        peerDao.getAllPeers().distinctUntilChanged(),
+        sharingConfigDao.observeAll().distinctUntilChanged()
     ) { peers, configs ->
         val nowSec = System.currentTimeMillis() / 1000L
         val configMap = configs.associateBy { it.peerDeviceId }

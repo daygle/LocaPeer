@@ -150,15 +150,18 @@ class ScanViewModel @Inject constructor(
 
     fun processInviteLink(input: String) {
         try {
-            val base64 = if (input.startsWith("locapeer://")) {
+            val data = if (input.startsWith("locapeer://")) {
                 val uri = input.toUri()
-                uri.getQueryParameter("data") ?: throw Exception("Invalid URL")
+                uri.getQueryParameter("data") ?: throw Exception("Missing data parameter")
             } else {
                 input
             }
-            val raw = String(android.util.Base64.decode(base64, android.util.Base64.URL_SAFE))
+            // URL_SAFE + NO_WRAP covers the Base64.getUrlEncoder().withoutPadding() output.
+            val decodedBytes = android.util.Base64.decode(data, android.util.Base64.URL_SAFE or android.util.Base64.NO_WRAP)
+            val raw = String(decodedBytes, Charsets.UTF_8)
             processQrCode(raw)
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.e("ScanViewModel", "Invite link processing failed", e)
             _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_invalid_link))
         }
     }

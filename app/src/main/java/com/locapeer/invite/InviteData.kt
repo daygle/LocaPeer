@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class InviteData(
-    val publicKeyHex: String,
-    val displayName: String,
-    val relayUrl: String,
-    val deviceId: String
+    @kotlinx.serialization.SerialName("p") val publicKeyHex: String,
+    @kotlinx.serialization.SerialName("n") val displayName: String,
+    @kotlinx.serialization.SerialName("r") val relayUrl: String,
+    @kotlinx.serialization.SerialName("d") val deviceId: String
 )
 
 /** Sent by the scanner to the scannee asking to track them back. */

@@ -7,6 +7,7 @@ import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,21 +38,30 @@ class OnboardingViewModel @Inject constructor(
     @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
     private val keyManager: KeyManager,
     private val prefs: AppPreferences,
-    private val crypto: com.locapeer.crypto.CryptoUtils
+    private val crypto: com.locapeer.crypto.CryptoUtils,
+    private val savedStateHandle: androidx.lifecycle.SavedStateHandle
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(OnboardingState())
+    private val KEY_STEP = "onboarding_step"
+    private val KEY_NAME = "onboarding_name"
+
+    private val _state = MutableStateFlow(OnboardingState(
+        step = savedStateHandle.get<OnboardingStep>(KEY_STEP) ?: OnboardingStep.IDENTITY,
+        displayName = savedStateHandle.get<String>(KEY_NAME) ?: ""
+    ))
     val state: StateFlow<OnboardingState> = _state
 
     init {
         viewModelScope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
-            _state.value = OnboardingState(publicKeyHex = pubHex, isLoading = false)
+            _state.update { it.copy(publicKeyHex = pubHex, isLoading = false) }
         }
     }
 
     fun setDisplayName(name: String) {
-        _state.value = _state.value.copy(displayName = name, showPermissionDeniedError = false)
+        val cleaned = name.trim()
+        savedStateHandle[KEY_NAME] = cleaned
+        _state.update { it.copy(displayName = cleaned, showPermissionDeniedError = false) }
     }
 
     fun nextStep() {
@@ -66,7 +76,8 @@ class OnboardingViewModel @Inject constructor(
             OnboardingStep.BATTERY -> OnboardingStep.DONE
             OnboardingStep.DONE -> OnboardingStep.DONE
         }
-        _state.value = _state.value.copy(step = next, showPermissionDeniedError = false)
+        savedStateHandle[KEY_STEP] = next
+        _state.update { it.copy(step = next, showPermissionDeniedError = false) }
     }
 
     fun setPermissionDenied(denied: Boolean) {
