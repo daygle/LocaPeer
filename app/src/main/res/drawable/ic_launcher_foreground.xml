@@ -7,8 +7,8 @@
 
     <!-- Scaled to keep the pin inside the 66dp adaptive-icon safe zone -->
     <group
-        android:scaleX="0.94"
-        android:scaleY="0.94"
+        android:scaleX="0.8"
+        android:scaleY="0.8"
         android:pivotX="54"
         android:pivotY="54">
 
