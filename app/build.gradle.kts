@@ -104,7 +104,7 @@ ksp {
 
 dependencies {
     // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2026.08.00"))
+    implementation(platform(libs.androidx.compose.bom))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -119,7 +119,7 @@ dependencies {
     // for API < 33; on API 33+ it delegates to the framework LocaleManager.
     implementation("androidx.appcompat:appcompat:1.8.0")
     implementation("androidx.activity:activity-compose:1.13.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
+    implementation(libs.androidx.lifecycle.runtime)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
     implementation("androidx.lifecycle:lifecycle-service:2.11.0")
 
@@ -160,7 +160,7 @@ dependencies {
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
     // published CVEs. Only the low-level crypto.* primitives (SHA-256, ChaCha20, HKDF,
     // HMAC) are used here, and their API is stable across these versions.
-    implementation("org.bouncycastle:bcprov-jdk18on:1.85.2")
+    implementation(libs.bcprov)
 
     // QR Code
     implementation("com.journeyapps:zxing-android-embedded:4.3.0") { isTransitive = false }
@@ -173,40 +173,33 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.2.1")
 
     // Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0")
+    implementation(libs.kotlinx.coroutines.android)
 
     // Kotlin Serialization
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+    implementation(libs.kotlinx.serialization.json)
 
     // Security Hardening: Force safe versions for transitive dependencies
     constraints {
-        implementation("io.netty:netty-codec-http2:4.1.137.Final") {
+        implementation(libs.netty.codec.http2) {
             because("CVE-2023-44487 (Rapid Reset) and other Netty vulnerabilities")
         }
-        implementation("io.netty:netty-handler:4.1.137.Final")
-        implementation("io.netty:netty-codec-http:4.1.137.Final")
-        implementation("io.netty:netty-common:4.1.137.Final")
-        implementation("io.netty:netty-buffer:4.1.137.Final")
-        implementation("io.netty:netty-resolver:4.1.137.Final")
-        implementation("io.netty:netty-transport:4.1.137.Final")
-        
-        implementation("org.jdom:jdom2:2.0.6.1") {
+        implementation(libs.jdom2) {
             because("CVE-2021-33813 (XXE vulnerability)")
         }
-        implementation("org.apache.httpcomponents:httpclient:4.5.14") {
+        implementation(libs.httpclient) {
             because("CVE-2020-13956 and other HttpClient vulnerabilities")
         }
-        implementation("org.bitbucket.b_c:jose4j:0.9.6") {
+        implementation(libs.jose4j) {
             because("CVE-2023-31582 (DoS via compressed JWE)")
         }
-        implementation("org.apache.commons:commons-lang3:3.20.0") {
+        implementation(libs.commons.lang3) {
             because("CVE-2022-42889 (Recursion vulnerability)")
         }
-        implementation("org.bouncycastle:bcpkix-jdk18on:1.85") {
+        implementation(libs.bcpkix) {
             because("Security fixes in latest Bouncy Castle")
         }
-        implementation("org.bouncycastle:bcutil-jdk18on:1.85")
-        implementation("org.bouncycastle:bcprov-jdk18on:1.85.2")
+        implementation(libs.bcutil)
+        implementation(libs.bcprov)
     }
 
     // CameraX for QR scanning
