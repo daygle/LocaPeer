@@ -23,7 +23,7 @@ object HistoryThinning {
         maxAccuracyM: Int,
         minDistanceM: Int
     ): List<HeartbeatEntity> {
-        if (points.isEmpty()) return emptyList()
+        if (points.size <= 1) return points
         val filterAcc = maxAccuracyM > 0
         val filterDist = minDistanceM > 0
         if (!filterAcc && !filterDist) return points

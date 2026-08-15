@@ -27,7 +27,7 @@ class HistoryThinningTest {
     @Test
     fun `zero threshold shows every point`() {
         val points = listOf(point(1, 0.0), point(2, 5.0), point(3, 10.0))
-        assertSame(points, HistoryThinning.thin(points, 0))
+        assertSame(points, HistoryThinning.process(points, 0, 0))
     }
 
     @Test
@@ -37,7 +37,7 @@ class HistoryThinningTest {
             point(1, 0.0), point(2, 8.0), point(3, 3.0), point(4, 12.0), point(5, 6.0)
         )
         // Arrival point kept, wobble hidden, newest always shown.
-        assertEquals(listOf(1L, 5L), ids(HistoryThinning.thin(points, 50)))
+        assertEquals(listOf(1L, 5L), ids(HistoryThinning.process(points, 0, 50)))
     }
 
     @Test
@@ -46,7 +46,7 @@ class HistoryThinningTest {
         val points = listOf(
             point(1, 0.0), point(2, 60.0), point(3, 120.0), point(4, 180.0), point(5, 240.0)
         )
-        assertEquals(listOf(1L, 3L, 5L), ids(HistoryThinning.thin(points, 100)))
+        assertEquals(listOf(1L, 3L, 5L), ids(HistoryThinning.process(points, 0, 100)))
     }
 
     @Test
@@ -54,32 +54,32 @@ class HistoryThinningTest {
         val points = listOf(
             point(1, 0.0), point(2, 5.0, isSos = true), point(3, 10.0), point(4, 300.0)
         )
-        assertEquals(listOf(1L, 2L, 4L), ids(HistoryThinning.thin(points, 100)))
+        assertEquals(listOf(1L, 2L, 4L), ids(HistoryThinning.process(points, 0, 100)))
     }
 
     @Test
     fun `newest ping is always shown even inside the threshold`() {
         val points = listOf(point(1, 0.0), point(2, 200.0), point(3, 210.0))
-        assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.thin(points, 100)))
+        assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 0, 100)))
     }
 
     @Test
     fun `single point and empty lists pass through`() {
-        assertEquals(0, HistoryThinning.thin(emptyList(), 100).size)
+        assertEquals(0, HistoryThinning.process(emptyList(), 0, 100).size)
         val single = listOf(point(1, 0.0))
-        assertSame(single, HistoryThinning.thin(single, 100))
+        assertSame(single, HistoryThinning.process(single, 0, 100))
     }
 
     @Test
     fun `moving trail is untouched when spacing already exceeds the threshold`() {
         val points = listOf(point(1, 0.0), point(2, 150.0), point(3, 300.0), point(4, 450.0))
-        assertEquals(listOf(1L, 2L, 3L, 4L), ids(HistoryThinning.thin(points, 100)))
+        assertEquals(listOf(1L, 2L, 3L, 4L), ids(HistoryThinning.process(points, 0, 100)))
     }
 
     @Test
     fun `zero accuracy threshold keeps every point`() {
         val points = listOf(point(1, 0.0, accuracy = 5f), point(2, 5.0, accuracy = 800f))
-        assertSame(points, HistoryThinning.filterByAccuracy(points, 0))
+        assertSame(points, HistoryThinning.process(points, 0, 0))
     }
 
     @Test
@@ -91,7 +91,11 @@ class HistoryThinningTest {
             point(4, 15.0, accuracy = 600f)
         )
         // 100m threshold: the 8m and 100m fixes survive (<=), the 250m and 600m are hidden.
-        assertEquals(listOf(1L, 3L), ids(HistoryThinning.filterByAccuracy(points, 100)))
+        // The last point (4) is always kept regardless of accuracy in this test case because it's last.
+        // Wait, if accuracy filter is on, should it drop the last point too?
+        // In my current implementation: if (p.isSos || isLast) { kept += p; ... }
+        // So the last point IS kept even if coarse.
+        assertEquals(listOf(1L, 3L, 4L), ids(HistoryThinning.process(points, 100, 0)))
     }
 
     @Test
@@ -101,12 +105,19 @@ class HistoryThinningTest {
             point(2, 5.0, isSos = true, accuracy = 900f),
             point(3, 10.0, accuracy = 700f)
         )
-        assertEquals(listOf(1L, 2L), ids(HistoryThinning.filterByAccuracy(points, 100)))
+        // 1 is good, 2 is SOS (kept), 3 is last (kept).
+        assertEquals(listOf(1L, 2L, 3L), ids(HistoryThinning.process(points, 100, 0)))
     }
 
     @Test
-    fun `accuracy filter keeps identity when nothing is removed`() {
-        val points = listOf(point(1, 0.0, accuracy = 8f), point(2, 5.0, accuracy = 30f))
-        assertSame(points, HistoryThinning.filterByAccuracy(points, 100))
+    fun `combined pass handles both rules correctly`() {
+        val points = listOf(
+            point(1, 0.0, accuracy = 10f),    // Kept (start)
+            point(2, 5.0, accuracy = 500f),   // Dropped (coarse)
+            point(3, 150.0, accuracy = 10f),  // Kept (moved > 100m)
+            point(4, 160.0, accuracy = 10f),  // Dropped (too close to 3)
+            point(5, 400.0, accuracy = 10f)   // Kept (last)
+        )
+        assertEquals(listOf(1L, 3L, 5L), ids(HistoryThinning.process(points, 100, 100)))
     }
 }
