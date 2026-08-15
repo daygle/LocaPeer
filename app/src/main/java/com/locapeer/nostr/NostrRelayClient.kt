@@ -32,16 +32,25 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.encodeToJsonElement
+import okhttp3.ConnectionSpec
+import okhttp3.EventListener
+import okhttp3.Handshake
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import java.net.InetAddress
+import java.net.Proxy
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 import javax.inject.Inject
 import javax.inject.Singleton
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLPeerUnverifiedException
+import javax.net.ssl.SSLSession
 
 private const val TAG = "NostrRelayClient"
 
@@ -77,6 +86,13 @@ class NostrRelayClient @Inject constructor(
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
+            .connectionSpecs(listOf(
+                ConnectionSpec.MODERN_TLS,
+                ConnectionSpec.COMPATIBLE_TLS, // Added for broader self-hosted compatibility
+                ConnectionSpec.CLEARTEXT
+            ))
+            .hostnameVerifier(NostrHostnameVerifier())
+            .eventListenerFactory(NostrConnectionListener.Factory())
             .build()
     }
 
@@ -165,8 +181,8 @@ class NostrRelayClient @Inject constructor(
     }
 
     private fun updateRelays(urls: List<String>) {
+        val newUrls = urls.map { it.trimEnd('/') }.toSet()
         val currentUrls = relays.keys
-        val newUrls = urls.toSet()
 
         // Remove relays no longer in the list
         (currentUrls - newUrls).forEach { url ->
@@ -195,10 +211,11 @@ class NostrRelayClient @Inject constructor(
     }
 
     fun connect(url: String) {
-        if (!isValidRelayUrl(url)) return
-        val conn = relays.getOrPut(url) {
-            _relayStatus.update { it + (url to false) }
-            RelayConnection(url)
+        val normalized = url.trimEnd('/')
+        if (!isValidRelayUrl(normalized)) return
+        val conn = relays.getOrPut(normalized) {
+            _relayStatus.update { it + (normalized to false) }
+            RelayConnection(normalized)
         }
         if (isGloballyConnected) {
             conn.connect()
@@ -317,7 +334,11 @@ class NostrRelayClient @Inject constructor(
             _relayStatus.update { it + (url to false) }
             try {
                 Log.d(TAG, "Connecting to $url")
-                webSocket = client.newWebSocket(Request.Builder().url(url).build(), Listener())
+                val request = Request.Builder()
+                    .url(url)
+                    .header("User-Agent", "LocaPeer/${com.locapeer.BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)")
+                    .build()
+                webSocket = client.newWebSocket(request, Listener())
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to connect to $url: ${e.message}")
                 isConnected = false
@@ -449,7 +470,20 @@ class NostrRelayClient @Inject constructor(
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
                 val code = response?.code
+                val message = response?.message
+                val listener = NostrConnectionListener.getFor(url)
+                
                 when {
+                    code == 403 -> {
+                        Log.e(TAG, "Relay $url rejected connection (403 Forbidden). Check User-Agent or authentication.")
+                    }
+                    t is javax.net.ssl.SSLHandshakeException || t is SSLPeerUnverifiedException -> {
+                        val handshakeInfo = listener?.lastHandshake?.let { h ->
+                            "Cipher: ${h.cipherSuite}, Protocol: ${h.tlsVersion}, Peer: ${h.peerPrincipal}"
+                        } ?: "No handshake data"
+                        Log.e(TAG, "Relay $url TLS failure: ${t.message}. $handshakeInfo")
+                        Log.e(TAG, "Possible causes: Missing intermediate certs on server, or untrusted CA.")
+                    }
                     code == 502 || t.message?.contains("502") == true -> {
                         Log.d(TAG, "Relay $url is temporarily offline (502 Bad Gateway)")
                     }
@@ -463,7 +497,8 @@ class NostrRelayClient @Inject constructor(
                         Log.d(TAG, "Relay $url connection attempt timed out")
                     }
                     else -> {
-                        Log.w(TAG, "Relay $url connection issue: ${t.message ?: "Unknown error"}")
+                        Log.w(TAG, "Relay $url connection issue: ${t.message ?: "Unknown error"}${if (code != null) " (Code: $code $message)" else ""}")
+                        if (code == null) Log.d(TAG, "Connection failure details for $url", t)
                     }
                 }
                 isConnected = false
@@ -480,5 +515,63 @@ class NostrRelayClient @Inject constructor(
                 if (code != 1000) scheduleReconnect()
             }
         }
+    }
+}
+
+/**
+ * A specialized listener that captures TLS handshake details per relay connection.
+ * Used to diagnose self-hosted relay certificate chain issues and SNI mismatches.
+ */
+private class NostrConnectionListener(private val url: String) : EventListener() {
+    var lastHandshake: Handshake? = null
+        private set
+
+    override fun secureConnectEnd(call: okhttp3.Call, handshake: Handshake?) {
+        lastHandshake = handshake
+    }
+
+    override fun connectFailed(
+        call: okhttp3.Call,
+        inetSocketAddress: java.net.InetSocketAddress,
+        proxy: Proxy,
+        protocol: okhttp3.Protocol?,
+        ioe: java.io.IOException
+    ) {
+        Log.d("NostrRelayClient", "Connect failed to $url: ${ioe.message}")
+    }
+
+    class Factory : EventListener.Factory {
+        override fun create(call: okhttp3.Call): EventListener {
+            val url = call.request().url.toString()
+            return listeners.getOrPut(url) { NostrConnectionListener(url) }
+        }
+    }
+
+    companion object {
+        private val listeners = ConcurrentHashMap<String, NostrConnectionListener>()
+        fun getFor(url: String): NostrConnectionListener? = listeners[url]
+    }
+}
+
+/**
+ * Descriptive hostname verifier that logs failure details.
+ * Ensures SNI hostname matching is clearly audited for self-hosted relays.
+ */
+private class NostrHostnameVerifier : HostnameVerifier {
+    private val delegate = okhttp3.internal.tls.OkHostnameVerifier
+
+    override fun verify(hostname: String, session: SSLSession): Boolean {
+        val result = delegate.verify(hostname, session)
+        if (!result) {
+            val certs = try {
+                session.peerCertificates.joinToString { cert ->
+                    (cert as? java.security.cert.X509Certificate)?.subjectDN?.name ?: "UnknownCert"
+                }
+            } catch (e: Exception) {
+                "Unable to retrieve certificates: ${e.message}"
+            }
+            Log.e("NostrRelayClient", "Hostname verification failed for $hostname. Session host: ${session.peerHost}. Certs: $certs")
+        }
+        return result
     }
 }
