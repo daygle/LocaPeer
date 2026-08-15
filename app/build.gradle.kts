@@ -104,7 +104,7 @@ ksp {
 
 dependencies {
     // Compose BOM
-    implementation(platform("androidx.compose:compose-bom:2026.06.01"))
+    implementation(platform("androidx.compose:compose-bom:2026.08.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -117,7 +117,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.19.0")
     // AppCompat provides the per-app language backport (AppCompatDelegate.setApplicationLocales)
     // for API < 33; on API 33+ it delegates to the framework LocaleManager.
-    implementation("androidx.appcompat:appcompat:1.7.1")
+    implementation("androidx.appcompat:appcompat:1.8.0")
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.11.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
@@ -154,7 +154,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:5.4.0")
 
     // secp256k1 crypto (ACINQ KMP)
-    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.23.0")
+    implementation("fr.acinq.secp256k1:secp256k1-kmp-jni-android:0.24.0")
 
     // Bouncy Castle for fallback crypto (AES, SHA, ECDH helpers).
     // jdk18on is the maintained artifact line; 1.70/jdk15on (2021) is EOL and carries
