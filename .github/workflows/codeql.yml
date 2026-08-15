@@ -28,26 +28,27 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: 'gradle'
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
+      uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
-        # Switch to manual build mode for Android projects
+        # manual build mode is required for Android
         build-mode: manual
 
     - name: Build project
       run: |
         chmod +x gradlew
-        # Build only the debug variant to save time and resources during analysis
-        ./gradlew assembleDebug --no-daemon
+        # Force a full clean build to ensure CodeQL sees all source files.
+        # UP-TO-DATE tasks are invisible to the CodeQL tracer.
+        ./gradlew clean assembleDebug --no-daemon
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
+      uses: github/codeql-action/analyze@v4
       with:
         category: "/language:${{matrix.language}}"
