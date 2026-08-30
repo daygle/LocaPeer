@@ -9,6 +9,9 @@ bouncycastle = "1.85"
 bouncycastleProv = "1.85.2"
 
 # Project versions
+kotlin = "2.4.20-RC"
+ksp = "2.3.11"
+foojay = "1.0.0"
 agp = "9.3.1"
 composeBom = "2026.08.00"
 hilt = "2.60.1"
@@ -117,4 +120,9 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "foojay" }
