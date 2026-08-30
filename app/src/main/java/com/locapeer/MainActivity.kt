@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
                 // content before the lock screen appears.
                 val unlocked by appLockManager.unlocked.collectAsState()
                 when (unlocked) {
-                    null -> { /* loading placeholder — blank frame while DataStore warms */
+                    null -> { /* loading placeholder - blank frame while DataStore warms */
                         return@LocaPeerTheme
                     }
                     false -> {

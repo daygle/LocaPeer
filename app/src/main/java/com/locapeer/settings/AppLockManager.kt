@@ -50,7 +50,7 @@ class AppLockManager @Inject constructor(
      * Kick off the initial preference read and lifecycle observer without blocking the
      * main thread. The first frame composes with `unlocked == null` (a loading
      * placeholder) and switches to the correct lock/unlock state once the DataStore
-     * read resolves — typically a single-digit millisecond disk read on cold start.
+     * read resolves - typically a single-digit millisecond disk read on cold start.
      */
     fun onAppStart() {
         scope.launch {

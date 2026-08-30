@@ -11,7 +11,7 @@ import org.mockito.Mockito.mock
  * Tiny coverage of [AppLockManager]'s observable behaviour. Goals:
  *
  *  1. Confirm the unlocked StateFlow defaults to null on construction (lock state
- *     not yet read from disk — the UI shows a loading placeholder until
+ *     not yet read from disk - the UI shows a loading placeholder until
  *     [AppLockManager.onAppStart] resolves the preference asynchronously).
  *  2. Confirm [AppLockManager.setUnlocked] flips the StateFlow immediately and is
  *     reversible. The bulk of the manager's logic (ProcessLifecycleOwner observer,
