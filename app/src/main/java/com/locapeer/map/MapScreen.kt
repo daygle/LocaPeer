@@ -271,7 +271,14 @@ fun MapScreen(
                         showFriendList = false
                     },
                     onSelectFriend = { pin ->
+                        // Pressing the contact name navigates to the contact on the map:
+                        // close the panel and center the viewport on their pin. The info
+                        // sheet stays reachable via the map pin tap.
                         showFriendList = false
+                        pin.heartbeat?.let { hb ->
+                            centerOnPin = GeoPoint(hb.lat, hb.lng)
+                            isFollowingUser = false
+                        }
                         selectedPin = pin
                     },
                     onMessageFriend = { peerId, peerName ->
