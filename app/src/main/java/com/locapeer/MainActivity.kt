@@ -96,13 +96,23 @@ class MainActivity : AppCompatActivity() {
                 // the lock renders OVER everything (including during onboarding and
                 // supervised-mode remote approval). The state is observed here so a
                 // successful BiometricPrompt unlocks the rest of the tree instantly.
+                //
+                // `null` = lock preference not yet read from disk on cold start; show a
+                // neutral loading placeholder so the user never sees a flash of unlocked
+                // content before the lock screen appears.
                 val unlocked by appLockManager.unlocked.collectAsState()
-                if (!unlocked) {
-                    AppLockScreen(
-                        keyManager = keyManager,
-                        onUnlocked = { appLockManager.setUnlocked(unlocked = true) }
-                    )
-                    return@LocaPeerTheme
+                when (unlocked) {
+                    null -> { /* loading placeholder — blank frame while DataStore warms */
+                        return@LocaPeerTheme
+                    }
+                    false -> {
+                        AppLockScreen(
+                            keyManager = keyManager,
+                            onUnlocked = { appLockManager.setUnlocked(unlocked = true) }
+                        )
+                        return@LocaPeerTheme
+                    }
+                    true -> { /* fall through to app content */ }
                 }
 
                 val onboardingComplete by remember(prefs) {

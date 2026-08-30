@@ -5,8 +5,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 /**
  * Process-singleton gate for the app-lock screen.
@@ -29,9 +32,12 @@ class AppLockManager @Inject constructor(
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    private val _unlocked = MutableStateFlow(true)
-    /** False means the AppLockScreen should be shown over the rest of the UI. */
-    val unlocked: StateFlow<Boolean> = _unlocked.asStateFlow()
+    private val _unlocked = MutableStateFlow<Boolean?>(null)
+    /**
+     * `null` = lock state not yet read from disk (first frame should show a loading
+     * placeholder, not content or the lock screen). `true` = unlocked, `false` = locked.
+     */
+    val unlocked: StateFlow<Boolean?> = _unlocked.asStateFlow()
 
     // Written and read from coroutines dispatched off the two ProcessLifecycleOwner
     // callbacks (ON_STOP/ON_START), which run on different Dispatchers.Default threads.
@@ -41,24 +47,16 @@ class AppLockManager @Inject constructor(
     private var observerInstalled = false
 
     /**
-     * Read the current snapshot of preferences synchronously so the very first frame
-     * composes the right lock state, then start reacting to subsequent changes.
-     *
-     * The previous implementation launched a coroutine and set [_unlocked] from inside
-     * its body, which let MainActivity compose a frame with `_unlocked = true` (the
-     * default) before the DataStore read resolved. With the lock enabled, that produced
-     * a visible flash of the unlocked UI before snapping to the AppLockScreen.
-     *
-     * Run-blocking on the main thread here is safe: DataStore caches the most-recently
-     * emitted [AppSettings] in memory after the first read, so subsequent `first()` calls
-     * resolve in microseconds - the cost is the equivalent of a getter call rather than a
-     * disk read.
+     * Kick off the initial preference read and lifecycle observer without blocking the
+     * main thread. The first frame composes with `unlocked == null` (a loading
+     * placeholder) and switches to the correct lock/unlock state once the DataStore
+     * read resolves — typically a single-digit millisecond disk read on cold start.
      */
     fun onAppStart() {
-        val initialLocked = runBlocking { prefs.settings.first().appLockEnabled }
-        _unlocked.value = !initialLocked
-
         scope.launch {
+            val initialLocked = prefs.settings.first().appLockEnabled
+            _unlocked.value = !initialLocked
+
             // React to runtime pref changes - the user toggling the lock off while the app
             // is open should immediately drop back to the unlocked state. Locking-on-enable
             // is intentionally NOT modelled here so we don't re-lock the user mid-session;
@@ -66,7 +64,7 @@ class AppLockManager @Inject constructor(
             prefs.settings
                 .map { it.appLockEnabled }
                 .distinctUntilChanged()
-                .drop(1) // skip the value we just applied synchronously
+                .drop(1) // skip the value we just applied above
                 .collect { enabled ->
                     if (!enabled) _unlocked.value = true
                 }
