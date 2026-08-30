@@ -34,9 +34,15 @@ buildscript {
 
 plugins {
     alias(libs.plugins.android.application) apply false
-    id("org.jetbrains.kotlin.android") version "2.4.20-RC" apply false
-    id("org.jetbrains.kotlin.plugin.compose") version "2.4.20-RC" apply false
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.4.20-RC" apply false
+    // The three Kotlin plugin versions float with the `kotlinVersion` Gradle property
+    // (default 2.4.20-RC in gradle.properties). settings.gradle.kts declares them in
+    // pluginManagement.plugins { }, and the CodeQL workflow overrides the property with
+    // -PkotlinVersion (e.g. 2.4.10) because its Kotlin extractor hard-rejects newer
+    // releases. Pinning an explicit version here would bypass that default and break
+    // the override, so they must stay version-less.
+    id("org.jetbrains.kotlin.android") apply false
+    id("org.jetbrains.kotlin.plugin.compose") apply false
+    id("org.jetbrains.kotlin.plugin.serialization") apply false
     id("com.google.dagger.hilt.android") version "2.60.1" apply false
     id("com.google.devtools.ksp") version "2.3.11" apply false
 }

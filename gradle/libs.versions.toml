@@ -9,7 +9,10 @@ bouncycastle = "1.85"
 bouncycastleProv = "1.85.2"
 
 # Project versions
-kotlin = "2.4.20-RC"
+# Kotlin has no catalog entry: the Kotlin Gradle plugin version lives in
+# gradle.properties (`kotlinVersion`) and is wired via settings.gradle.kts's
+# pluginManagement block so the CodeQL workflow can override it with -PkotlinVersion.
+# A catalog alias here would silently pin the version and break that override.
 ksp = "2.3.11"
 foojay = "1.0.0"
 agp = "9.3.1"
@@ -120,9 +123,6 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "foojay" }

@@ -152,7 +152,7 @@ fun IncomingShareRequestScreen(
 
             Button(
                 onClick = {
-                    vm.accept(senderPubkey, senderName, senderRelay, derivedRole, messagingEnabled)
+                    vm.accept(senderPubkey, derivedRole, messagingEnabled)
                 },
                 enabled = state !is IncomingRequestState.Loading,
                 modifier = Modifier.fillMaxWidth()
@@ -169,7 +169,7 @@ fun IncomingShareRequestScreen(
             }
 
             OutlinedButton(
-                onClick = { vm.decline(senderPubkey, senderRelay, isRoleChange) },
+                onClick = { vm.decline(senderPubkey) },
                 enabled = state !is IncomingRequestState.Loading,
                 modifier = Modifier.fillMaxWidth()
             ) {

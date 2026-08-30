@@ -39,7 +39,9 @@ class BackupSerializationTest {
                     retentionDaysLocation = 7,
                     retentionDaysMessages = 14,
                     isMySupervised = true,
-                    notifyOnMissedHeartbeat = true
+                    notifyOnMissedHeartbeat = true,
+                    // Non-null so the round-trip proves an active temp share survives.
+                    temporaryShareEndsAtEpochSeconds = 9999L
                 )
             )
         ),
@@ -47,7 +49,10 @@ class BackupSerializationTest {
             GeofenceBackup("g1", "Home", 51.5, -0.1, 150)
         ),
         geofenceAssignments = listOf(
-            GeofenceAssignmentBackup("a1", "g1", "dev1", "BOTH", false)
+            GeofenceAssignmentBackup(
+                "a1", "g1", "dev1", "BOTH", false,
+                scheduleRules = """[{"id":"r1","days":3,"startMinute":60,"endMinute":120}]"""
+            )
         ),
         settings = SettingsBackup(
             displayName = "Me",
@@ -98,6 +103,29 @@ class BackupSerializationTest {
         val cfg = contact.sharingConfig!!
         assertEquals(true, cfg.isMySupervised)
         assertEquals(true, cfg.notifyOnMissedHeartbeat)
+        assertEquals(9999L, cfg.temporaryShareEndsAtEpochSeconds)
+        // Geofence assignment schedule rules must survive, not default away.
+        val assignment = restored.geofenceAssignments!!.single()
+        assertEquals("""[{"id":"r1","days":3,"startMinute":60,"endMinute":120}]""", assignment.scheduleRules)
+    }
+
+    @Test
+    fun `geofence assignment without scheduleRules decodes as always-on`() {
+        val legacyJson = """
+            {
+              "version": 2,
+              "geofences": [
+                { "id": "g1", "name": "Home", "lat": 51.5, "lng": -0.1, "radiusMetres": 150 }
+              ],
+              "geofenceAssignments": [
+                { "id": "a1", "geofenceId": "g1", "trackedDeviceId": "dev1", "triggerOn": "BOTH", "active": true }
+              ]
+            }
+        """.trimIndent()
+
+        val restored = jsonImport.decodeFromString<LocaPeerBackup>(legacyJson)
+        // "[]" is the always-active default, matching the entity's own default.
+        assertEquals("[]", restored.geofenceAssignments!!.single().scheduleRules)
     }
 
     @Test

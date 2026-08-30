@@ -35,7 +35,7 @@ class IncomingShareRequestViewModel @Inject constructor(
     // actions below require that row and take the peer's relay URL and name from it - a
     // crafted intent can neither invent a request nor override a real one's relay.
 
-    fun accept(senderPubkey: String, senderName: String, senderRelay: String, locationRole: String, messagingEnabled: Boolean) {
+    fun accept(senderPubkey: String, locationRole: String, messagingEnabled: Boolean) {
         notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
@@ -61,7 +61,7 @@ class IncomingShareRequestViewModel @Inject constructor(
         }
     }
 
-    fun decline(senderPubkey: String, senderRelay: String, isRoleChange: Boolean = false) {
+    fun decline(senderPubkey: String) {
         notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading

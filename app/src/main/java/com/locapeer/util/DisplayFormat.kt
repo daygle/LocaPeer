@@ -119,7 +119,9 @@ object DisplayFormat {
         val mins = totalMin % 60
         return buildString {
             if (days > 0) append("${days}d ")
-            if (days > 0 || hours > 0) append("${hours}h ")
+            // Don't render a zero hour slot ("1d 0h 5m" reads as an error); a day-long
+            // remaining window shows "1d 5m" directly.
+            if (hours > 0) append("${hours}h ")
             append("${mins}m")
         }.trim()
     }

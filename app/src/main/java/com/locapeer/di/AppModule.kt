@@ -24,10 +24,6 @@ object AppModule {
     fun provideNotificationManager(@ApplicationContext context: Context): NotificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    /**
-     * AppLockManager is a @Singleton @Inject already; we don't provide it explicitly
-     * because Hilt's constructor injection handles construction. This module exists so
-     * a future migration to a non-injectable lock backend (e.g. an externally owned
-     * AuthRequiredActivity) can drop in a provider here without touching call sites.
-     */
+    // AppLockManager is already constructed via Hilt constructor injection, so no provider
+    // is needed here.
 }

@@ -44,8 +44,8 @@ object MediaUtils {
 
     /**
      * Reads [uri] into memory only if it is at most [MAX_FILE_BYTES], resolving a display name and
-     * MIME type along the way. Reads at most one byte past the cap so an accidentally-picked huge
-     * file is rejected without being fully loaded. Call off the main thread.
+     * MIME type along the way. At most one chunk is read past the cap - enough to know the file
+     * won't fit, without loading it fully. Call off the main thread.
      */
     fun readFileCapped(context: Context, uri: Uri): FileReadResult {
         val name = displayName(context, uri)

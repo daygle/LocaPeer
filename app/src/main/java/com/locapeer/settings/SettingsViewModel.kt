@@ -108,7 +108,9 @@ data class GeofenceAssignmentBackup(
     val geofenceId: String,
     val trackedDeviceId: String,
     val triggerOn: String,
-    val active: Boolean
+    val active: Boolean,
+    /** JSON-encoded schedule rules; older backups lack this field and default to always-on. */
+    val scheduleRules: String = "[]"
 )
 
 @Serializable
@@ -327,7 +329,8 @@ class SettingsViewModel @Inject constructor(
                                         retentionDaysLocation = it.retentionDaysLocation,
                                         retentionDaysMessages = it.retentionDaysMessages,
                                         isMySupervised = it.isMySupervised,
-                                        notifyOnMissedHeartbeat = it.notifyOnMissedHeartbeat
+                                        notifyOnMissedHeartbeat = it.notifyOnMissedHeartbeat,
+                                        temporaryShareEndsAtEpochSeconds = it.temporaryShareEndsAtEpochSeconds
                                     )
                                 }
                             )
@@ -339,7 +342,7 @@ class SettingsViewModel @Inject constructor(
                         } else null,
                     geofenceAssignments = if (BackupSection.GEOFENCES in sections)
                         geofenceAssignmentDao.observeAll().first().map { a ->
-                            GeofenceAssignmentBackup(a.id, a.geofenceId, a.trackedDeviceId, a.triggerOn, a.active)
+                            GeofenceAssignmentBackup(a.id, a.geofenceId, a.trackedDeviceId, a.triggerOn, a.active, a.scheduleRules)
                         } else null,
                     settings = if (BackupSection.SETTINGS in sections)
                         SettingsBackup(
@@ -558,7 +561,8 @@ class SettingsViewModel @Inject constructor(
                                     geofenceId = a.geofenceId,
                                     trackedDeviceId = a.trackedDeviceId,
                                     triggerOn = a.triggerOn,
-                                    active = a.active
+                                    active = a.active,
+                                    scheduleRules = a.scheduleRules
                                 )
                             )
                         }
