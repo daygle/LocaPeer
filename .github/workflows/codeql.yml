@@ -58,7 +58,13 @@ jobs:
         # property to skip that check. Keep the app on the latest Kotlin for normal
         # builds, but compile here with the newest CodeQL-supported release (2.4.10)
         # so the scan produces a database.
-        ./gradlew clean assembleDebug --no-daemon -PkotlinVersion=2.4.10
+        #
+        # --no-build-cache is required: setup-gradle caches the Gradle *build* cache
+        # (org.gradle.caching=true), so on a scheduled rerun of the same commit every
+        # compile task resolves FROM-CACHE and kotlinc/javac never actually execute.
+        # CodeQL observes the compiler to build its database, sees no invocations, and
+        # finalize fails with "didn't build any of it". Compilation must be real.
+        ./gradlew clean assembleDebug --no-daemon --no-build-cache -PkotlinVersion=2.4.10
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4
