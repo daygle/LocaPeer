@@ -269,6 +269,7 @@ class ProximityEngine @Inject constructor(
         location
     }
 
+    @SuppressLint("MissingPermission")
     private suspend fun fetchLastLocation(): android.location.Location? = try {
         suspendCancellableCoroutine<android.location.Location?> { cont ->
             fusedLocation.lastLocation
