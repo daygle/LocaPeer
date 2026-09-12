@@ -252,7 +252,18 @@ class HeartbeatService : LifecycleService() {
                             beginClassificationBoost()
                             refreshCadenceState()
                             updateLocationRequest()
-                            reschedulePulse()
+                            // Broadcast the exit immediately instead of waiting out the
+                            // remaining interval since the last pulse: a confirmed exit is
+                            // a rare, high-signal relocation (two corroborating fixes past
+                            // a 150m buffer), not the state flap reschedulePulse's
+                            // no-immediate-broadcast rule exists for. Without this, a
+                            // departure one minute after a scheduled pulse sat on the exit
+                            // fix for almost the whole next stationary interval - geofence
+                            // EXIT alerts and watchers' pins alike. pulseNow() runs after
+                            // this callback returns, so lastLat/lastLng already hold the
+                            // corroborating fix (accepted via movement below), and the
+                            // runnable re-posts itself at the new cadence afterwards.
+                            pulseNow()
                             // Fall through: this corroborating fix is processed normally
                             // (with STATIONARY exited, the selector takes it via movement).
                         }
@@ -826,7 +837,13 @@ class HeartbeatService : LifecycleService() {
             // an exit candidate is pending its corroborating fix.
             anchorBoosting -> 15_000L
             boosting -> 15_000L
-            cadenceState == MotionState.STATIONARY -> 300_000L // 5 min for stationary
+            // 30s for stationary: these are low-power (network-grade) fixes, so the
+            // cost is small, and the poll interval is the floor under how fast a
+            // departure from a settled place can even be *detected* - the exit
+            // candidate needs a fix past the anchor threshold before it can be
+            // corroborated (see StationaryExitDetector). At the previous 5-minute
+            // poll a drive could be 5-10 minutes old before anyone was told.
+            cadenceState == MotionState.STATIONARY -> 30_000L
             else -> 30_000L
         }
         val maxDelayMs = when {

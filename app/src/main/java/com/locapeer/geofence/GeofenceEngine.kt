@@ -37,6 +37,13 @@ import javax.inject.Singleton
 private const val COOLDOWN_MS = 5 * 60 * 1000L // 5 minutes per fence
 // Minimum hysteresis buffer past the fence radius before an exit counts.
 private const val MIN_EXIT_BUFFER_M = 50.0
+// ENTER fixes up to this multiple of the fence radius in accuracy are trusted (see
+// evaluate): a fix within 2x the radius of the centre genuinely puts the person inside
+// the fence, so waiting for a sharper one only delays the arrival alert. Small fences
+// get a floor so tiny fences aren't unmalertable, while the suburb-precision ~1.1km
+// accuracy stays excluded unless the fence is genuinely district-sized.
+private const val ENTER_ACCURACY_FACTOR = 2.0
+private const val ENTER_ACCURACY_FLOOR_M = 100.0
 // Paired with a per fence+person tag (notify(tag, id, ...)) since two peers/fences' hashCodes
 // can collide and silently overwrite each other's notification.
 private const val NOTIF_ID_GEOFENCE = 60000
@@ -83,15 +90,33 @@ class GeofenceEngine @Inject constructor(
                     ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres.toDouble() }
 
             val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
-            val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
+            // The sender already withholds fixes worse than its accuracy gate, so a coarse
+            // fix that arrives is a real position. Hysteresis-buffering an EXIT past the
+            // radius by the full accuracy circle (often 200-400m for network fixes) pushes
+            // the measured boundary far outside the drawn fence and delays departure
+            // alerts - sometimes past the next heartbeat. For EXIT/BOTH fences the buffer
+            // is the minimum only; ENTER-only fences keep the full-accuracy buffer since
+            // they never fire on the borderline fixes it exists to absorb.
+            val exitSensitive = fence.triggerOn == "EXIT" || fence.triggerOn == "BOTH"
+            val buffer = if (exitSensitive)
+                MIN_EXIT_BUFFER_M
+            else
+                maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
 
             // A fix coarser than the fence itself can't reliably tell inside from outside -
-            // this keeps suburb-precision peers from tripping street-sized fences.
-            // However, we only enforce this for "inside" results; if a fix is far enough
-            // away to be "outside" even with its accuracy buffer, we accept it so that
-            // EXIT alerts fire even during poor GPS reception.
-            if (inNow && wasInside != true && current.accuracy > fence.radiusMetres.toFloat()) return@forEach
+            // this keeps suburb-precision peers from tripping street-sized fences. Fences
+            // large enough to accept a fix within ENTER_ACCURACY_FACTOR x the radius alert
+            // on the arrival ping instead of waiting (possibly several heartbeats) for a
+            // sharper fix. Only "inside" is gated; if a fix is far enough away to be
+            // "outside" even with its accuracy buffer, it is accepted so EXIT alerts fire
+            // even during poor GPS reception.
+            if (inNow && wasInside != true &&
+                current.accuracy > maxOf(
+                    fence.radiusMetres * ENTER_ACCURACY_FACTOR,
+                    ENTER_ACCURACY_FLOOR_M
+                )
+            ) return@forEach
 
             insideState[key] = inNow
             // First reliable observation for this fence+person: seed only - we don't

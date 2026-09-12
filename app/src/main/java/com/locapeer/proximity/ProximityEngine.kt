@@ -40,6 +40,12 @@ import kotlin.coroutines.resume
 private const val COOLDOWN_MS = 10 * 60 * 1000L // 10 minutes per peer
 // Our own cached position older than this can't prove the peer is near *us* now.
 private const val MAX_OWN_FIX_AGE_MS = 10 * 60 * 1000L
+// Reuse a freshly fetched own position for this long before fetching again (cost
+// guard when several peers' heartbeats land in the same moment).
+private const val OWN_FIX_CACHE_MS = 30_000L
+// A passive (lastLocation) fix older than this is refreshed with one bounded active
+// fetch before proximity is judged on it; see getFreshOwnLocation.
+private const val OWN_FIX_STALE_MS = 60_000L
 // Minimum hysteresis buffer past the alert radius before the peer counts as gone.
 private const val MIN_EXIT_BUFFER_M = 100.0
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
@@ -115,8 +121,15 @@ class ProximityEngine @Inject constructor(
         // If the uncertainty is larger than the radius, we can't reliably confirm
         // a NEW entry. However, if we are currently "outside" even with the buffer,
         // we allow the state to update to "outside" so that future entry alerts
-        // can fire when accuracy improves.
-        if (inside && wasInside != true && uncertainty > alert.radiusMetres.toDouble()) return
+        // can fire when accuracy improves. Exception: when the measured distance is
+        // so small that even the full uncertainty circle stays inside the radius,
+        // the peer is PROVABLY nearby - alert on this heartbeat instead of dropping
+        // every reading until a sharper fix happens to land (with a 300 m radius and
+        // network-grade fixes, the old gate could stay closed for an entire visit).
+        if (inside && wasInside != true &&
+            uncertainty > alert.radiusMetres.toDouble() &&
+            distanceMetres + uncertainty > alert.radiusMetres.toDouble()
+        ) return
 
         wasNearby[peerId] = inside
         // First observation since process start: seed only. A peer who was already
@@ -231,32 +244,79 @@ class ProximityEngine @Inject constructor(
     @SuppressLint("MissingPermission")
     private suspend fun getFreshOwnLocation(): android.location.Location? = ownLocationMutex.withLock {
         val now = SystemClock.elapsedRealtime()
-        if (now - lastOwnLocationFetchAt < 30_000L && cachedOwnLocation != null) {
-            return@withLock cachedOwnLocation
+        val cached = cachedOwnLocation
+        if (cached != null && now - lastOwnLocationFetchAt < OWN_FIX_CACHE_MS) {
+            return@withLock cached
         }
 
-        val location = try {
-            suspendCancellableCoroutine<android.location.Location?> { cont ->
-                fusedLocation.lastLocation
-                    .addOnSuccessListener { cont.resume(it) }
-                    .addOnFailureListener {
-                        if (isDeadObject(it)) {
-                            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
-                        }
-                        cont.resume(null)
-                    }
-                    .addOnCanceledListener { cont.resume(null) }
-            }
-        } catch (e: Exception) {
-            if (isDeadObject(e)) {
-                fusedLocation = LocationServices.getFusedLocationProviderClient(context)
-            }
-            null
+        // Passive fused cache first (free). If it is missing or stale - common on a
+        // device whose own heartbeat service isn't broadcasting, where nothing else
+        // refreshes the cache - pay for one bounded active fetch so proximity is
+        // judged on a current position rather than skipped until some other app
+        // happens to update the cache.
+        val passive = fetchLastLocation()
+        val location = if (passive != null &&
+            System.currentTimeMillis() - passive.time <= OWN_FIX_STALE_MS
+        ) {
+            passive
+        } else {
+            fetchCurrentLocation() ?: passive
         }
         if (location != null) {
             cachedOwnLocation = location
             lastOwnLocationFetchAt = now
         }
         location
+    }
+
+    private suspend fun fetchLastLocation(): android.location.Location? = try {
+        suspendCancellableCoroutine<android.location.Location?> { cont ->
+            fusedLocation.lastLocation
+                .addOnSuccessListener { cont.resume(it) }
+                .addOnFailureListener {
+                    if (isDeadObject(it)) {
+                        fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+                    }
+                    cont.resume(null)
+                }
+                .addOnCanceledListener { cont.resume(null) }
+        }
+    } catch (e: Exception) {
+        if (isDeadObject(e)) {
+            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+        }
+        null
+    }
+
+    /**
+     * One bounded active fix for proximity judgements: balanced power (proximity is
+     * a coarse-radius judgement, not a pin), accepts a system-cached fix up to
+     * [OWN_FIX_STALE_MS] old instantly, and gives up after 15s so a burst of peer
+     * heartbeats can't hold the evaluation mutex waiting on a cold GPS. Null on any
+     * failure; the caller falls back to the passive fix (age-gated at the call site).
+     */
+    @SuppressLint("MissingPermission")
+    private suspend fun fetchCurrentLocation(): android.location.Location? = try {
+        suspendCancellableCoroutine<android.location.Location?> { cont ->
+            val request = com.google.android.gms.location.CurrentLocationRequest.Builder()
+                .setPriority(com.google.android.gms.location.Priority.PRIORITY_BALANCED_POWER_ACCURACY)
+                .setMaxUpdateAgeMillis(OWN_FIX_STALE_MS)
+                .setDurationMillis(15_000L)
+                .build()
+            fusedLocation.getCurrentLocation(request, null)
+                .addOnSuccessListener { cont.resume(it) }
+                .addOnFailureListener {
+                    if (isDeadObject(it)) {
+                        fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+                    }
+                    cont.resume(null)
+                }
+                .addOnCanceledListener { cont.resume(null) }
+        }
+    } catch (e: Exception) {
+        if (isDeadObject(e)) {
+            fusedLocation = LocationServices.getFusedLocationProviderClient(context)
+        }
+        null
     }
 }
