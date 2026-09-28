@@ -21,6 +21,8 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
+private const val MAX_INVITE_NAME_LENGTH = 64
+
 data class ScanState(
     val success: Boolean = false,
     val addedName: String = "",
@@ -76,9 +78,16 @@ class ScanViewModel @Inject constructor(
             // Nostr serializes pubkeys as lowercase hex; normalize so the stored peer row
             // matches later events (and dedupes against an existing lowercase row).
             val canonicalKey = invite.publicKeyHex.lowercase()
-            pendingInvite = invite.copy(publicKeyHex = canonicalKey, deviceId = canonicalKey)
+            // The display name is attacker-controlled (a deep link can carry anything); bound it
+            // before it reaches the confirmation dialog, the contact row and notifications.
+            pendingInvite = invite.copy(
+                publicKeyHex = canonicalKey,
+                deviceId = canonicalKey,
+                displayName = invite.displayName.trim().take(MAX_INVITE_NAME_LENGTH),
+            )
             _scanState.value = ScanState(
-                pendingName = invite.displayName.ifBlank { context.getString(com.locapeer.R.string.scan_fallback_contact) }
+                pendingName = pendingInvite?.displayName?.ifBlank { null }
+                    ?: context.getString(com.locapeer.R.string.scan_fallback_contact)
             )
         } catch (e: Exception) {
             _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
@@ -91,6 +100,13 @@ class ScanViewModel @Inject constructor(
         val invite = pendingInvite ?: return
         viewModelScope.launch {
             try {
+                // Adding yourself would make every heartbeat and message loop back to this device.
+                if (invite.publicKeyHex == keyManager.ensureKeypair().second) {
+                    pendingInvite = null
+                    processed = false
+                    _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_own_invite))
+                    return@launch
+                }
                 val existing = peerDao.getPeer(invite.deviceId)
                 val peer = PeerEntity(
                     deviceId = invite.deviceId,

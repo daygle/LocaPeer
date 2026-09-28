@@ -168,11 +168,12 @@ class RetentionEnforcementWorker @AssistedInject constructor(
             val request = PeriodicWorkRequestBuilder<RetentionEnforcementWorker>(1, TimeUnit.DAYS)
                 .setConstraints(constraints)
                 .build()
-            // UPDATE keeps the current periodic schedule and run
-            // history, it only re-applies the (now constrained) work spec.
+            // UPDATE keeps the current periodic schedule and run history but re-applies the
+            // work spec, so installs that enqueued this before the battery constraint existed
+            // pick it up (KEEP silently left them on the old, unconstrained spec).
             workManager.enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.UPDATE,
                 request
             )
         }

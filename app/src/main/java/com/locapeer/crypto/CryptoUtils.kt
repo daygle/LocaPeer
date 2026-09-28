@@ -24,6 +24,7 @@ class CryptoUtils @Inject constructor() {
 
     companion object {
         private val CURVE_ORDER = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
+        private val HEX_DIGITS = "0123456789abcdef".toCharArray()
     }
 
     fun generatePrivateKey(): ByteArray {
@@ -98,14 +99,36 @@ class CryptoUtils @Inject constructor() {
     fun sha256(data: ByteArray): ByteArray =
         MessageDigest.getInstance("SHA-256").digest(data)
 
-    fun bytesToHex(bytes: ByteArray): String =
-        bytes.joinToString("") { "%02x".format(it) }
+    /** Lowercase hex. Table-driven: this runs for every event id, signature and key on the
+     *  relay hot path, where a per-byte String.format was a measurable allocation cost. */
+    fun bytesToHex(bytes: ByteArray): String {
+        val out = CharArray(bytes.size * 2)
+        bytes.forEachIndexed { i, b ->
+            val v = b.toInt() and 0xFF
+            out[i * 2] = HEX_DIGITS[v ushr 4]
+            out[(i * 2) + 1] = HEX_DIGITS[v and 0x0F]
+        }
+        return String(out)
+    }
 
+    /** Strict hex decode: rejects odd lengths and any non-hex character (String.toInt(16)
+     *  would otherwise accept sign characters such as "+f" or "-1" inside peer input). */
     fun hexToBytes(hex: String): ByteArray {
         require((hex.length % 2) == 0) { "Hex string must have even length" }
         return ByteArray(hex.length / 2) { i ->
-            hex.substring(i * 2, (i * 2) + 2).toInt(16).toByte()
+            val hi = hexValue(hex[i * 2])
+            val lo = hexValue(hex[(i * 2) + 1])
+            require(hi >= 0 && lo >= 0) { "Invalid hex character" }
+            ((hi shl 4) or lo).toByte()
         }
+    }
+
+    /** ASCII-only hex digit value (Character.digit would also accept non-ASCII digits). */
+    private fun hexValue(c: Char): Int = when (c) {
+        in '0'..'9' -> c - '0'
+        in 'a'..'f' -> c - 'a' + 10
+        in 'A'..'F' -> c - 'A' + 10
+        else -> -1
     }
 
     /** NIP-44 v2: Encrypts plaintext for a recipient. */
@@ -238,7 +261,8 @@ class CryptoUtils @Inject constructor() {
             firstShort to 2
         }
 
-        if (len > padded.size - headerSize) throw SecurityException("Invalid padding length")
+        // len < 1 also catches an extended length above Int.MAX_VALUE, which wraps negative.
+        if (len < 1 || len > padded.size - headerSize) throw SecurityException("Invalid padding length")
         val data = ByteArray(len)
         buffer[data]
         return String(data, StandardCharsets.UTF_8)

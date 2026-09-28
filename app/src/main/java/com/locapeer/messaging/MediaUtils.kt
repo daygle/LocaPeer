@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.OpenableColumns
 import android.util.Base64
+import android.util.LruCache
 import android.webkit.MimeTypeMap
 import java.io.ByteArrayOutputStream
 import java.util.Locale
@@ -167,12 +168,54 @@ object MediaUtils {
         return Base64.encodeToString(bytes, Base64.NO_WRAP)
     }
 
-    fun decodeBase64ToBitmap(data: String): Bitmap? = try {
+    /** Longest side a received image is decoded at for the full-screen viewer. */
+    const val MAX_VIEW_DIM = 2048
+    /** Longest side for the in-chat thumbnail (shown at most 240x320 dp). */
+    const val THUMBNAIL_DIM = 720
+
+    // Decoded thumbnails, so scrolling a conversation back and forth doesn't re-decode every
+    // photo bubble. Keyed by the Base64 payload (String caches its hash after first use).
+    private val thumbnailCache = object : LruCache<String, Bitmap>(16 * 1024 * 1024) {
+        override fun sizeOf(key: String, value: Bitmap): Int = value.byteCount
+    }
+
+    fun cachedThumbnail(data: String): Bitmap? = thumbnailCache.get(data)
+
+    /** Decodes a chat thumbnail (off the main thread) and caches it. */
+    fun decodeThumbnail(data: String): Bitmap? =
+        cachedThumbnail(data) ?: decodeBase64ToBitmap(data, THUMBNAIL_DIM)?.also { thumbnailCache.put(data, it) }
+
+    /**
+     * Decodes a received Base64 image, downsampled so its longest side is at most [maxDim].
+     * The bytes come from a remote contact: a small, highly compressible JPEG can declare
+     * enormous dimensions, and decoding it at full size would exhaust the heap. Reading the
+     * bounds first and sub-sampling during decode keeps memory proportional to [maxDim].
+     */
+    fun decodeBase64ToBitmap(data: String, maxDim: Int = MAX_VIEW_DIM): Bitmap? = try {
         val bytes = Base64.decode(data, Base64.NO_WRAP)
-        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) {
+            null
+        } else {
+            var sample = 1
+            while (bounds.outWidth / (sample * 2) >= maxDim || bounds.outHeight / (sample * 2) >= maxDim) sample *= 2
+            // A pathological aspect ratio can still be huge after sub-sampling; refuse it.
+            if (bounds.outWidth.toLong() / sample * (bounds.outHeight.toLong() / sample) > MAX_DECODED_PIXELS) {
+                null
+            } else {
+                BitmapFactory.decodeByteArray(
+                    bytes, 0, bytes.size, BitmapFactory.Options().apply { inSampleSize = sample }
+                )
+            }
+        }
     } catch (e: Exception) {
         null
+    } catch (e: OutOfMemoryError) {
+        null
     }
+
+    private const val MAX_DECODED_PIXELS = 4096L * 4096L
 
     fun encodeBase64(bytes: ByteArray): String = Base64.encodeToString(bytes, Base64.NO_WRAP)
 

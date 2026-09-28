@@ -116,7 +116,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <!-- Boot receiver to restart heartbeat service -->
+        <!-- Boot / app-update receiver to restart heartbeat service -->
         <receiver
             android:name=".beacon.BootReceiver"
             android:enabled="true"
@@ -124,6 +124,9 @@
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 

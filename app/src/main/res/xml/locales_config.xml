@@ -17,12 +17,12 @@
     <locale android:name="pt" />
     <locale android:name="pt-BR" />
     <locale android:name="ja" />
-    <locale android:name="zh-rCN" />
+    <locale android:name="zh-CN" />
     <locale android:name="hi" />
     <locale android:name="ru" />
     <locale android:name="ko" />
     <locale android:name="ar" />
-    <locale android:name="zh-rTW" />
+    <locale android:name="zh-TW" />
     <locale android:name="nl" />
     <locale android:name="pl" />
     <locale android:name="tr" />

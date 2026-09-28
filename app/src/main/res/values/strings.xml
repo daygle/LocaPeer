@@ -895,6 +895,7 @@
     <string name="scan_error_key_mismatch">Invalid invite: key mismatch</string>
     <string name="scan_error_unknown">Unknown error</string>
     <string name="scan_error_invalid_link">Invalid invite link</string>
+    <string name="scan_error_own_invite">This is your own invite code</string>
     <string name="scan_fallback_contact">this contact</string>
     <string name="backup_saved">Backup saved: %1$s</string>
     <string name="backup_saved_encrypted">Backup saved (encrypted): %1$s</string>

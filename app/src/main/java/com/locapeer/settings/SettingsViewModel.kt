@@ -374,28 +374,34 @@ class SettingsViewModel @Inject constructor(
                         ) else null
                 )
 
-                val finalBackup = if (!password.isNullOrBlank()) {
-                    val plainJson = jsonExport.encodeToString(plainBackup)
-                    val salt = ByteArray(16).also { java.security.SecureRandom().nextBytes(it) }
-                    val iv = ByteArray(12).also { java.security.SecureRandom().nextBytes(it) }
-                    val key = crypto.deriveBackupKey(password, salt)
-                    val encrypted = crypto.aesEncrypt(plainJson.toByteArray(Charsets.UTF_8), key, iv)
-                    LocaPeerBackup(
-                        version = 3,
-                        ciphertext = android.util.Base64.encodeToString(encrypted, android.util.Base64.NO_WRAP),
-                        iv = android.util.Base64.encodeToString(iv, android.util.Base64.NO_WRAP),
-                        salt = android.util.Base64.encodeToString(salt, android.util.Base64.NO_WRAP)
-                    )
-                } else {
-                    plainBackup
+                // PBKDF2 at 600k iterations takes seconds on a phone: run it (and the
+                // serialisation) on Default, never on the main thread viewModelScope uses.
+                val json = withContext(Dispatchers.Default) {
+                    val finalBackup = if (!password.isNullOrBlank()) {
+                        val plainJson = jsonExport.encodeToString(plainBackup)
+                        val random = java.security.SecureRandom()
+                        val salt = ByteArray(16).also { random.nextBytes(it) }
+                        val iv = ByteArray(12).also { random.nextBytes(it) }
+                        val key = crypto.deriveBackupKey(password, salt)
+                        val encrypted = crypto.aesEncrypt(plainJson.toByteArray(Charsets.UTF_8), key, iv)
+                        LocaPeerBackup(
+                            version = 3,
+                            ciphertext = android.util.Base64.encodeToString(encrypted, android.util.Base64.NO_WRAP),
+                            iv = android.util.Base64.encodeToString(iv, android.util.Base64.NO_WRAP),
+                            salt = android.util.Base64.encodeToString(salt, android.util.Base64.NO_WRAP)
+                        )
+                    } else {
+                        plainBackup
+                    }
+                    jsonExport.encodeToString(finalBackup)
                 }
-
-                val json = jsonExport.encodeToString(finalBackup)
-                val output = context.contentResolver.openOutputStream(uri) ?: run {
+                val written = withContext(Dispatchers.IO) {
+                    context.contentResolver.openOutputStream(uri)?.use { it.write(json.toByteArray()) } != null
+                }
+                if (!written) {
                     _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_write_file), isError = true)
                     return@launch
                 }
-                output.use { it.write(json.toByteArray()) }
                 val parts = sections.joinToString(", ") { context.getString(sectionLabelRes(it)) }
                 _backupResult.value = BackupResult(context.getString(
                     if (!password.isNullOrBlank()) com.locapeer.R.string.backup_saved_encrypted
@@ -413,8 +419,10 @@ class SettingsViewModel @Inject constructor(
     fun loadBackupForRestore(uri: Uri) {
         viewModelScope.launch {
             try {
-                val json = context.contentResolver.openInputStream(uri)?.use {
-                    it.readBytes().toString(Charsets.UTF_8)
+                val json = withContext(Dispatchers.IO) {
+                    context.contentResolver.openInputStream(uri)?.use {
+                        it.readBytes().toString(Charsets.UTF_8)
+                    }
                 } ?: run {
                     _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_read_file), isError = true)
                     return@launch
@@ -514,7 +522,20 @@ class SettingsViewModel @Inject constructor(
                 }
                 if (BackupSection.CONTACTS in sections && backup.contacts != null) {
                     try {
-                        backup.contacts.forEach { c ->
+                        // A contact row is keyed by its Nostr key; skip entries whose key is
+                        // malformed or whose deviceId disagrees with it, which a hand-edited
+                        // backup could otherwise use to point a contact at the wrong key.
+                        val validContacts = backup.contacts
+                            .filter { c ->
+                                PUBKEY_REGEX.matches(c.publicKeyHex.lowercase()) &&
+                                    c.deviceId.equals(c.publicKeyHex, ignoreCase = true)
+                            }
+                            // Relay events carry lowercase pubkeys; store rows the same way.
+                            .map { c -> c.copy(deviceId = c.deviceId.lowercase(), publicKeyHex = c.publicKeyHex.lowercase()) }
+                        if (validContacts.size != backup.contacts.size) {
+                            Log.w(TAG, "Skipped ${backup.contacts.size - validContacts.size} malformed contact(s) in backup")
+                        }
+                        validContacts.forEach { c ->
                             peerDao.upsertPeer(PeerEntity(
                                 deviceId = c.deviceId,
                                 displayName = c.displayName,
@@ -542,7 +563,7 @@ class SettingsViewModel @Inject constructor(
                             }
                         }
                         restored += context.resources.getQuantityString(
-                            com.locapeer.R.plurals.restore_contacts_count, backup.contacts.size, backup.contacts.size
+                            com.locapeer.R.plurals.restore_contacts_count, validContacts.size, validContacts.size
                         )
                     } catch (e: Exception) {
                         Log.e(TAG, "Contacts restore failed", e)
@@ -599,10 +620,7 @@ class SettingsViewModel @Inject constructor(
                         prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
                         // Reapply the in-app language (stored outside AppSettings). Skip when
                         // the backup predates this field so existing backups don't reset it.
-                        s.appLanguageTag?.let { tag ->
-                            val lang = AppLanguage.entries.firstOrNull { it.tag == tag } ?: AppLanguage.SYSTEM
-                            AppLanguage.apply(lang)
-                        }
+                        s.appLanguageTag?.let { tag -> AppLanguage.apply(AppLanguage.fromTag(tag)) }
                         settingsRestored = true
                         restored += context.getString(com.locapeer.R.string.backup_section_settings)
                     } catch (e: Exception) {
@@ -777,6 +795,8 @@ class SettingsViewModel @Inject constructor(
         private val jsonImport = Json { ignoreUnknownKeys = true }
         /** A restorable identity is a 32-byte secp256k1 scalar written as 64 lowercase hex chars. */
         private val PRIVATE_KEY_REGEX = Regex("^[0-9a-f]{64}$")
+        /** Nostr pubkeys are serialised as 64 lowercase hex chars. */
+        private val PUBKEY_REGEX = Regex("^[0-9a-f]{64}$")
 
         private fun sectionLabelRes(section: BackupSection): Int = when (section) {
             BackupSection.PRIVATE_KEY -> com.locapeer.R.string.backup_section_private_key

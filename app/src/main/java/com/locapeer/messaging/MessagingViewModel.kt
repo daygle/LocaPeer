@@ -712,22 +712,24 @@ class MessagingViewModel @Inject constructor(
                         crypto = crypto
                     )
                 }
-                relayClient.publishEvent(event)
-                
+                // Store the row BEFORE publishing: a relay's OK can arrive within milliseconds,
+                // and if it lands before the insert the SENDING -> SENT update matches nothing
+                // and the message shows "sending" forever.
+                messageDao.insert(
+                    MessageEntity(
+                        id = event.id,
+                        peerId = peerId,
+                        senderPublicKeyHex = pubHex,
+                        content = content,
+                        timestamp = System.currentTimeMillis(),
+                        isMine = true,
+                        deliveryState = DeliveryState.SENDING.name,
+                        nostrEventId = event.id
+                    )
+                )
                 // Auto-unarchive peer on send
                 peerDao.unarchive(peerId)
-
-                val msg = MessageEntity(
-                    id = event.id,
-                    peerId = peerId,
-                    senderPublicKeyHex = pubHex,
-                    content = content,
-                    timestamp = System.currentTimeMillis(),
-                    isMine = true,
-                    deliveryState = DeliveryState.SENDING.name,
-                    nostrEventId = event.id
-                )
-                messageDao.insert(msg)
+                relayClient.publishEvent(event)
             } catch (e: Exception) {
                 android.util.Log.e("MessagingViewModel", "sendMessage failed", e)
             }
@@ -770,6 +772,8 @@ class MessagingViewModel @Inject constructor(
      * previous one cleanly (no shared `play.m4a` race). Cleared in [stopAudio] / [onCleared].
      */
     private val players: MutableMap<String, MediaPlayer> = mutableMapOf()
+    /** Decrypted voice-note temp files backing [players]; deleted as soon as playback stops. */
+    private val playbackFiles: MutableMap<String, File> = mutableMapOf()
 
     /** Compresses and sends an image picked from the gallery as an inline IMAGE message. */
     fun sendImage(peerId: String, uri: Uri) {
@@ -841,8 +845,8 @@ class MessagingViewModel @Inject constructor(
      *  to the right send pipeline without holding the call site's UI state for that. */
     fun startRecording(target: RecordTarget) {
         if (_isRecording.value) return
+        val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
         try {
-            val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
             val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
                 else @Suppress("DEPRECATION") MediaRecorder()
             rec.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -866,6 +870,7 @@ class MessagingViewModel @Inject constructor(
         } catch (e: Exception) {
             Log.e("MessagingViewModel", "startRecording failed", e)
             releaseRecorder()
+            file.delete()
             _isRecording.value = false
         }
     }
@@ -943,12 +948,14 @@ class MessagingViewModel @Inject constructor(
                     // never overwrites the active file mid-stream.
                     File(context.cacheDir, "play_${messageId}.m4a").apply { writeBytes(bytes) }
                 }
+                playbackFiles[messageId] = file
                 val mp = MediaPlayer()
+                // Registered before prepare() so a failure below still gets released by stopAudio.
+                players[messageId] = mp
                 mp.setDataSource(file.absolutePath)
                 mp.setOnCompletionListener { stopAudio() }
                 mp.prepare()
                 mp.start()
-                players[messageId] = mp
                 _playingMessageId.value = messageId
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "audio playback failed", e)
@@ -968,6 +975,10 @@ class MessagingViewModel @Inject constructor(
             try { mp.release() } catch (_: Exception) {}
         }
         players.clear()
+        // The staged file is a plaintext copy of an encrypted-at-rest message; don't leave it
+        // in the cache once nothing is playing it.
+        playbackFiles.values.forEach { it.delete() }
+        playbackFiles.clear()
         _playingMessageId.value = null
     }
 
@@ -1040,8 +1051,7 @@ class MessagingViewModel @Inject constructor(
                         crypto = crypto
                     )
                 }
-                relayClient.publishEvent(event)
-                peerDao.unarchive(peerId)
+                // Insert before publishing so the relay OK always finds the row (see sendMessage).
                 messageDao.insert(
                     MessageEntity(
                         id = event.id,
@@ -1059,6 +1069,8 @@ class MessagingViewModel @Inject constructor(
                         mediaMimeType = media.mimeType
                     )
                 )
+                peerDao.unarchive(peerId)
+                relayClient.publishEvent(event)
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "sendMediaMessage failed", e)
             }
@@ -1104,15 +1116,11 @@ class MessagingViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
-        // Relay OK → SENDING → SENT (relay confirmed it received the event)
+        // Relay OK → SENDING → SENT (relay confirmed it received the event). Never regresses a
+        // message a recipient already acknowledged: see MessageDao.markSentByNostrEventId.
         okEventsJob?.cancel()
         okEventsJob = relayClient.okEvents
-            .onEach { confirmedEventId ->
-                messageDao.updateDeliveryStateByNostrEventId(
-                    confirmedEventId,
-                    DeliveryState.SENT.name
-                )
-            }
+            .onEach { confirmedEventId -> messageDao.markSentByNostrEventId(confirmedEventId) }
             .launchIn(viewModelScope)
     }
 
@@ -1121,10 +1129,8 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch {
             val sender = peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
             if (!sender.messagingEnabled) return@launch  // suppress typing from disabled contacts
-            // Verify the signature so an unrelated party can't forge a "contact is typing"
-            // indicator by publishing an unsigned event carrying the contact's pubkey.
-            // Schnorr verification is CPU-heavy, so keep it off the Main dispatcher.
-            if (!withContext(Dispatchers.Default) { NostrEvent.verify(event, crypto) }) return@launch
+            // No signature check needed here: NostrRelayClient verifies every event before it
+            // reaches the events flow, so a forged "contact is typing" never gets this far.
             _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
             typingClearJobs[fromPubkey]?.cancel()
             typingClearJobs[fromPubkey] = viewModelScope.launch {
@@ -1136,7 +1142,8 @@ class MessagingViewModel @Inject constructor(
 
     private fun processDeletionEvent(event: NostrEvent) {
         viewModelScope.launch {
-            if (!NostrEvent.verify(event, crypto)) return@launch
+            // Signature already verified by NostrRelayClient before emission; re-verifying
+            // here only repeated the Schnorr check on the main thread.
             val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
             targetEventIds.forEach { eventId ->
                 val msg = messageDao.getByNostrEventId(eventId)
@@ -1188,7 +1195,8 @@ class MessagingViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        recordTimeoutJob?.cancel()
+        // Discards (and deletes) an in-progress recording instead of leaking its temp file.
+        cancelRecording()
         releaseRecorder()
         stopAudio()
         myListeningPubkey?.let { pubkey ->

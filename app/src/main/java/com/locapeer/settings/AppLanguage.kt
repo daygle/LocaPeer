@@ -2,6 +2,7 @@ package com.locapeer.settings
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import java.util.Locale
 
 /**
  * The languages LocaPeer offers in its in-app language selector.
@@ -31,12 +32,12 @@ enum class AppLanguage(val tag: String, val nativeName: String?) {
     PORTUGUESE("pt", "Português"),
     PORTUGUESE_BRAZIL("pt-BR", "Português (Brasil)"),
     JAPANESE("ja", "日本語"),
-    CHINESE_SIMPLIFIED("zh-rCN", "简体中文"),
+    CHINESE_SIMPLIFIED("zh-CN", "简体中文"),
     HINDI("hi", "हिन्दी"),
     RUSSIAN("ru", "Русский"),
     KOREAN("ko", "한국어"),
     ARABIC("ar", "العربية"),
-    CHINESE_TRADITIONAL("zh-rTW", "繁體中文"),
+    CHINESE_TRADITIONAL("zh-TW", "繁體中文"),
     DUTCH("nl", "Nederlands"),
     POLISH("pl", "Polski"),
     TURKISH("tr", "Türkçe"),
@@ -75,18 +76,31 @@ enum class AppLanguage(val tag: String, val nativeName: String?) {
     OROMO("om", "Afaan Oromoo"),
     ODIA("or", "ଓଡ଼ିଆ");
 
+    /** Parsed form of [tag], used for normalised comparisons in [current]. */
+    val locale: Locale by lazy { Locale.forLanguageTag(tag) }
+
     companion object {
         /** The currently applied language, resolved from the persisted app locale. */
         fun current(): AppLanguage {
             val locales = AppCompatDelegate.getApplicationLocales()
             if (locales.isEmpty) return SYSTEM
             val locale = locales[0] ?: return SYSTEM
-            // Match the full BCP-47 tag first (e.g. "pt-BR", "zh-Hant") so region/script
-            // variants resolve, then fall back to the primary language subtag (e.g. "pt").
-            val fullTag = locale.toLanguageTag()
-            return entries.firstOrNull { it.tag.isNotEmpty() && it.tag.equals(fullTag, ignoreCase = true) }
-                ?: entries.firstOrNull { it.tag.isNotEmpty() && it.tag.equals(locale.language, ignoreCase = true) }
+            // Compare parsed Locales rather than raw tag strings: the platform normalises
+            // legacy codes ("in"/"id", "iw"/"he") and tag casing, so string equality missed
+            // Indonesian and Hebrew. Match language + region first (e.g. "pt-BR", "zh-TW"),
+            // then fall back to a region-less entry for the primary language (e.g. "pt").
+            return entries.firstOrNull { it.tag.isNotEmpty() && it.locale.language == locale.language && it.locale.country == locale.country }
+                ?: entries.firstOrNull { it.tag.isNotEmpty() && it.locale.language == locale.language && it.locale.country.isEmpty() }
                 ?: SYSTEM
+        }
+
+        /**
+         * Resolves a stored tag (e.g. from a backup) to a language, accepting the resource-style
+         * "zh-rCN" / "zh-rTW" tags that earlier versions wrote. Unknown tags map to [SYSTEM].
+         */
+        fun fromTag(tag: String): AppLanguage {
+            val normalized = tag.replace("-r", "-")
+            return entries.firstOrNull { it.tag.equals(normalized, ignoreCase = true) } ?: SYSTEM
         }
 
         /**

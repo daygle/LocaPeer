@@ -165,43 +165,51 @@ fun LocaPeerNavHost(
         baseRoute?.startsWith("settings/") == true ||
         baseRoute?.startsWith("peer-sharing/") == true
 
-    // Deep-link from notification
+    // Deep-link from notification. MainActivity is exported and the locapeer:// scheme is
+    // BROWSABLE, so every value here may come from another app or a web page: encode each
+    // dynamic segment (an embedded '/', '?' or '&' must not reshape the route) and treat a
+    // route that still fails to resolve as ignorable rather than letting navigate() crash.
     LaunchedEffect(initialNavTarget) {
         val target = initialNavTarget ?: return@LaunchedEffect
-        when (target.route) {
-            "chat" -> {
-                val peerId = target.peerId ?: return@LaunchedEffect
-                navController.navigate("chat/$peerId/${Uri.encode(target.peerName.ifBlank { "Chat" })}")
-            }
-            "groupchat" -> {
-                // peerId carries the circle id (see MainActivity.handleNavIntent). Opening the
-                // group thread keeps a tapped circle message - and any reply - inside the circle.
-                val circleId = target.peerId ?: return@LaunchedEffect
-                navController.navigate("groupchat/$circleId")
-            }
-            "map" -> {
-                val peerId = target.peerId
-                if (peerId != null) {
-                    navController.navigate("${Screen.Map.route}?peerId=$peerId")
-                } else {
-                    navController.navigate(Screen.Map.route) {
-                        popUpTo(Screen.Map.route) { inclusive = true }
+        try {
+            when (target.route) {
+                "chat" -> {
+                    val peerId = target.peerId ?: return@LaunchedEffect
+                    navController.navigate("chat/${Uri.encode(peerId)}/${Uri.encode(target.peerName.ifBlank { "Chat" })}")
+                }
+                "groupchat" -> {
+                    // peerId carries the circle id (see MainActivity.handleNavIntent). Opening the
+                    // group thread keeps a tapped circle message - and any reply - inside the circle.
+                    val circleId = target.peerId ?: return@LaunchedEffect
+                    navController.navigate("groupchat/${Uri.encode(circleId)}")
+                }
+                "map" -> {
+                    val peerId = target.peerId
+                    if (peerId != null) {
+                        navController.navigate("${Screen.Map.route}?peerId=${Uri.encode(peerId)}")
+                    } else {
+                        navController.navigate(Screen.Map.route) {
+                            popUpTo(Screen.Map.route) { inclusive = true }
+                        }
                     }
                 }
+                "scan" -> {
+                    val data = target.peerId ?: ""
+                    navController.navigate("${Screen.Invite.route}?inviteData=${Uri.encode(data)}")
+                }
+                "share-request" -> {
+                    val pubkey = Uri.encode(target.peerId ?: return@LaunchedEffect)
+                    val name = Uri.encode(target.peerName.ifBlank { "Unknown" })
+                    val relay = Uri.encode(target.extra ?: "")
+                    val requestedRole = Uri.encode(target.requestedRole ?: "")
+                    navController.navigate("share-request?pubkey=$pubkey&name=$name&relay=$relay&isRoleChange=${target.isRoleChange}&requestedRole=$requestedRole")
+                }
             }
-            "scan" -> {
-                val data = target.peerId ?: ""
-                navController.navigate("${Screen.Invite.route}?inviteData=$data")
-            }
-            "share-request" -> {
-                val pubkey = target.peerId ?: return@LaunchedEffect
-                val name = Uri.encode(target.peerName.ifBlank { "Unknown" })
-                val relay = Uri.encode(target.extra ?: "")
-                val requestedRole = Uri.encode(target.requestedRole ?: "")
-                navController.navigate("share-request?pubkey=$pubkey&name=$name&relay=$relay&isRoleChange=${target.isRoleChange}&requestedRole=$requestedRole")
-            }
+        } catch (e: IllegalArgumentException) {
+            android.util.Log.w("Navigation", "Ignoring unresolvable deep link to ${target.route}", e)
+        } finally {
+            onNavTargetConsumed()
         }
-        onNavTargetConsumed()
     }
 
     Scaffold(

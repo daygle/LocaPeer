@@ -752,13 +752,22 @@ internal fun ChatInputBar(
 /** Inline image thumbnail; tap to open the full-screen viewer. */
 @Composable
 internal fun ImageMessageContent(base64: String?, onView: () -> Unit) {
-    val bitmap = remember(base64) { base64?.let { MediaUtils.decodeBase64ToBitmap(it) } }
-    if (bitmap == null) {
+    // Decode off the main thread: a list of photo bubbles decoded synchronously during
+    // composition dropped frames while scrolling. Cached thumbnails render immediately.
+    val bitmap by produceState(initialValue = base64?.let { MediaUtils.cachedThumbnail(it) }, base64) {
+        if (value == null && base64 != null) {
+            value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                MediaUtils.decodeThumbnail(base64)
+            }
+        }
+    }
+    val image = bitmap
+    if (image == null) {
         Text(stringResource(R.string.chat_preview_photo), style = MaterialTheme.typography.bodyMedium)
         return
     }
     Image(
-        bitmap = bitmap.asImageBitmap(),
+        bitmap = image.asImageBitmap(),
         contentDescription = stringResource(R.string.chat_cd_view_image),
         contentScale = ContentScale.Fit,
         modifier = Modifier
@@ -843,7 +852,11 @@ internal fun FileMessageContent(
 /** Full-screen image viewer shown when a photo message is tapped. */
 @Composable
 internal fun ImageViewerDialog(base64: String, onDismiss: () -> Unit) {
-    val bitmap = remember(base64) { MediaUtils.decodeBase64ToBitmap(base64) }
+    val bitmap by produceState<android.graphics.Bitmap?>(initialValue = null, base64) {
+        value = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+            MediaUtils.decodeBase64ToBitmap(base64)
+        }
+    }
     Dialog(onDismissRequest = onDismiss, properties = DialogProperties(usePlatformDefaultWidth = false)) {
         Box(
             modifier = Modifier
@@ -852,9 +865,9 @@ internal fun ImageViewerDialog(base64: String, onDismiss: () -> Unit) {
                 .clickable(onClick = onDismiss),
             contentAlignment = Alignment.Center
         ) {
-            if (bitmap != null) {
+            bitmap?.let { image ->
                 Image(
-                    bitmap = bitmap.asImageBitmap(),
+                    bitmap = image.asImageBitmap(),
                     contentDescription = null,
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.fillMaxSize().padding(16.dp)

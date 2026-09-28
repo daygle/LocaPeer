@@ -115,6 +115,11 @@ private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
 // A live-view request older than this (by the sender's own clock, tolerant of skew both
 // ways) is a stale replay and must not silently re-arm the fast broadcast cadence.
 private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
+// Ceiling on a decrypted DM. The largest legitimate payload is a capped image nested in a
+// circle envelope (~210 KB of Base64 + JSON); anything far beyond that is hostile. Without a
+// bound, a contact could store a multi-megabyte row that overflows Android's 2 MB
+// CursorWindow and crashes every screen that loads the conversation.
+private const val MAX_DM_PLAINTEXT_CHARS = 512 * 1024
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -446,16 +451,19 @@ class HeartbeatReceiver @Inject constructor(
                 // suppress their own missed-location alerts by claiming a huge interval.
                 expectedIntervalSeconds = payload.expectedIntervalSeconds.coerceIn(0L, MAX_EXPECTED_INTERVAL_S)
             )
-            // Buffer the insert; the batch flusher persists it transactionally so a
-            // catch-up burst produces a handful of Room invalidations, not hundreds.
-            enqueueHeartbeat(entity)
             // Replayed (old) heartbeats are history backfill: recording them is correct,
             // but alerting on them is not - the situation they describe is long over.
             // The bulk of a catch-up burst is stale, so this side-effect path (and its
             // extra DB read for the previous position) is skipped for the common case.
             val isFresh = System.currentTimeMillis() - timestampMs < FRESH_HEARTBEAT_MS
+            // Read the previous position BEFORE buffering this one: a size-triggered flush
+            // inside enqueueHeartbeat would otherwise make this very ping the "previous"
+            // one, and the geofence engine would then never see the transition.
+            val prevHeartbeat = if (isFresh) heartbeatDao.getLatestHeartbeat(canonicalDeviceId) else null
+            // Buffer the insert; the batch flusher persists it transactionally so a
+            // catch-up burst produces a handful of Room invalidations, not hundreds.
+            enqueueHeartbeat(entity)
             if (isFresh) {
-                val prevHeartbeat = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
                 if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
                 geofenceEngine.evaluate(entity, prevHeartbeat)
                 proximityEngine.evaluate(entity)
@@ -586,13 +594,18 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processDmInBackground(event: NostrEvent) {
-        if (messageDao.getByNostrEventId(event.id) != null) return
+        // Received rows are keyed by the event id itself, so this is an indexed PK lookup.
+        if (messageDao.existsById(event.id)) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
         val isBlocked = !sender.messagingEnabled
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
+        if (plaintext.length > MAX_DM_PLAINTEXT_CHARS) {
+            Log.w(TAG, "Dropping oversized DM ${event.id.take(16)} from ${event.pubkey}: ${plaintext.length} chars")
+            return
+        }
 
         // Circle (group) message: materialise the circle locally and thread by circle id. Only
         // accepted from known, non-blocked contacts (same trust gate as 1:1), so a stranger can't
@@ -776,7 +789,7 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
         receipt.eventIds.forEach { eventId ->
-            messageDao.updateDeliveryStateByNostrEventIdForPeer(eventId, event.pubkey, DeliveryState.READ.name)
+            messageDao.markReadForPeer(eventId, event.pubkey)
         }
     }
 
@@ -787,7 +800,7 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<DeliveryAckPayload>(plaintext) } catch (e: Exception) { return }
-        messageDao.updateDeliveryStateByNostrEventIdForPeer(payload.eventId, event.pubkey, DeliveryState.DELIVERED.name)
+        messageDao.markDeliveredForPeer(payload.eventId, event.pubkey)
     }
 
     private suspend fun processUnlockRequest(event: NostrEvent) {
@@ -1293,19 +1306,12 @@ class HeartbeatReceiver @Inject constructor(
             else -> PeerEntity.ROLE_SEND_RECEIVE
         }
 
-        val peer = PeerEntity(
-            deviceId = existingPeer.deviceId,
-            displayName = existingPeer.displayName,
-            publicKeyHex = existingPeer.publicKeyHex,
-            relayUrl = payload.acceptorRelayUrl,
-            locationRole = newLocationRole,
-            messagingEnabled = existingPeer.messagingEnabled,
-            isArchived = existingPeer.isArchived,
-            archivedAt = existingPeer.archivedAt,
-            addedAt = existingPeer.addedAt
-        )
-        peerDao.upsertPeer(peer)
-        relayClient.connect(payload.acceptorRelayUrl)
+        // Keep the known relay when the payload's is not a usable wss:// URL; the relay client
+        // would refuse it anyway, leaving the contact with no reachable relay on record.
+        val relayUrl = payload.acceptorRelayUrl.takeIf { it.startsWith("wss://", ignoreCase = true) }
+            ?: existingPeer.relayUrl
+        peerDao.upsertPeer(existingPeer.copy(relayUrl = relayUrl, locationRole = newLocationRole))
+        relayClient.connect(relayUrl)
         // Only notify if this is a new connection or a role change - not on catch-up re-delivery.
         // Show the locally-stored contact name, not the payload's (remote-controlled) name, so a
         // peer can't spoof the name rendered in the system notification.
@@ -1318,7 +1324,7 @@ class HeartbeatReceiver @Inject constructor(
 
     private suspend fun processTrackDecline(event: NostrEvent) {
         // Only act if we actually sent a request to this peer (peer exists optimistically)
-        peerDao.getPeer(event.pubkey) ?: return
+        val peer = peerDao.getPeer(event.pubkey) ?: return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -1337,9 +1343,14 @@ class HeartbeatReceiver @Inject constructor(
         // For new-request declines, remove the optimistically-added peer entry.
         // Role-change declines should leave the existing contact relationship intact.
         if (!payload.isRoleChange) {
+            // A removal is irreversible, so apply the same replay guard as PEER_REMOVED: an
+            // old decline redelivered by a relay must not wipe a since-re-added contact.
+            if (isStalePeerCommand(event, peer)) return
             peerManager.handleRemovalByPeer(event.pubkey)
         }
-        sendDeclineNotification(event.pubkey, payload.declinerDisplayName)
+        // Prefer the locally stored name over the payload's remote-controlled one, as the
+        // accept path does, so a peer can't choose the name shown in the notification.
+        sendDeclineNotification(event.pubkey, peer.displayName.ifBlank { payload.declinerDisplayName })
     }
 
     private fun sendAcceptanceNotification(pubkey: String, name: String) {
