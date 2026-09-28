@@ -220,8 +220,6 @@ private fun prompt(
     if (cryptoObject != null) {
         prompt.authenticate(info, cryptoObject)
     } else {
-        // Fallback for devices/configs where CryptoObject setup failed but basic
-        // authentication might still work (e.g. device credentials only).
-        prompt.authenticate(info)
+        onError(activity.getString(R.string.app_lock_crypto_failed))
     }
 }

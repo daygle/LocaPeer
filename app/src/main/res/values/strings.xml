@@ -515,6 +515,7 @@
     <string name="app_lock_prompt_subtitle">Use biometric or device PIN</string>
     <string name="app_lock_activity_unsupported">App lock requires a host that supports the system prompt. Update the app.</string>
     <string name="app_lock_no_credential">No screen lock is set on this device, so there\'s nothing to unlock with. Set a PIN, pattern, password, or biometric in your device settings, then reopen LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Failed to initialize secure authentication key.</string>
 
     <!-- Theme -->
     <string name="settings_theme_mode">Theme</string>
