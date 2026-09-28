@@ -52,6 +52,9 @@ class RelaySettingsViewModel @Inject constructor(
     }
 
     private fun isValidWssUrl(url: String): Boolean {
+        // Custom relays are persisted as one comma-separated string, so a comma inside a URL
+        // (legal in a URI path) would split into two bogus entries on the next read.
+        if (',' in url || url.any { it.isWhitespace() }) return false
         val uri = try { java.net.URI(url) } catch (_: Exception) { return false }
         return (uri.scheme?.equals("wss", ignoreCase = true) == true) && !uri.host.isNullOrBlank()
     }

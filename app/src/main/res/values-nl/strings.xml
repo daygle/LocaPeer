@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Toewijzen</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Nabijheidsmeldingen</string>
-    <string name="prox_empty_title">Geen gevolgde personen</string>
-    <string name="prox_empty_sub">Scan iemands uitnodigings-QR via het tabblad Scannen\nom diens locatie te volgen</string>
-    <string name="prox_intro">Ontvang een melding wanneer een gevolgd persoon binnen een gekozen afstand van je komt.</string>
-    <string name="prox_alert_within">Melden binnen %1$s</string>
-    <string name="prox_alerts_off">Meldingen uit</string>
-    <string name="prox_alert_radius">Meldingsradius</string>
-    <string name="prox_edit_schedule">Schema bewerken</string>
     <string name="prox_rules">Regels</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

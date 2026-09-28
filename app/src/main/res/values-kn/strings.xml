@@ -608,14 +608,6 @@
     <string name="geo_assign_action">ನಿಯೋಜಿಸಿ</string>
 
     <!-- ── ಸಾಮೀಪ್ಯ ಎಚ್ಚರಿಕೆಗಳ ಪರದೆ ────────────────────────────────────────── -->
-    <string name="prox_title">ಸಾಮೀಪ್ಯ ಎಚ್ಚರಿಕೆಗಳು</string>
-    <string name="prox_empty_title">ಯಾವುದೇ ಟ್ರ್ಯಾಕ್ ಮಾಡಲಾದ ವ್ಯಕ್ತಿಗಳಿಲ್ಲ</string>
-    <string name="prox_empty_sub">ಅವರ ಸ್ಥಳವನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಲು ಪ್ರಾರಂಭಿಸಲು ಸ್ಕ್ಯಾನ್ ಟ್ಯಾಬ್‌ನಿಂದ\nಯಾರದ್ದಾದರೂ ಆಹ್ವಾನ QR ಅನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ</string>
-    <string name="prox_intro">ಟ್ರ್ಯಾಕ್ ಮಾಡಲಾದ ವ್ಯಕ್ತಿಯು ನಿಮ್ಮ ಆಯ್ದ ದೂರದೊಳಗೆ ಬಂದಾಗ ಅಧಿಸೂಚನೆ ಪಡೆಯಿರಿ.</string>
-    <string name="prox_alert_within">%1$s ಒಳಗೆ ಇದ್ದಾಗ ಎಚ್ಚರಿಸಿ</string>
-    <string name="prox_alerts_off">ಎಚ್ಚರಿಕೆಗಳು ಆಫ್ ಆಗಿವೆ</string>
-    <string name="prox_alert_radius">ಎಚ್ಚರಿಕೆ ತ್ರಿಜ್ಯ</string>
-    <string name="prox_edit_schedule">ವೇಳಾಪಟ್ಟಿಯನ್ನು ಬದಲಿಸಿ</string>
     <string name="prox_rules">ನಿಯಮಗಳು</string>
 
     <!-- ── ವೇಳಾಪಟ್ಟಿ ಪರದೆ / ನಿಯಮ ಸಂಪಾದಕ ──────────────────────────────────── -->

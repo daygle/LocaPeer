@@ -596,14 +596,6 @@
     <string name="geo_assign_action">Kenye</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Mkpu Ịnọ Nso</string>
-    <string name="prox_empty_title">Enweghị ndị a na-achọ</string>
-    <string name="prox_empty_sub">Nyochaa QR òkù mmadụ site na taabụ nyocha\ni malite ịchọ ebe ha nọ</string>
-    <string name="prox_intro">Nweta ọkwa mgbe onye a na-achọ bịara n\'ebe dị anya ị họọrọ.</string>
-    <string name="prox_alert_within">Kpọtụrụ mgbe nọ n\'ime %1$s</string>
-    <string name="prox_alerts_off">Mkpu gbanyụrụ</string>
-    <string name="prox_alert_radius">Radius mkpu</string>
-    <string name="prox_edit_schedule">Dezie Oge</string>
     <string name="prox_rules">Iwu</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

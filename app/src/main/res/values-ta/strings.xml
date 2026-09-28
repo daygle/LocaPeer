@@ -608,14 +608,6 @@
     <string name="geo_assign_action">ஒதுக்கு</string>
 
     <!-- ── அருகாமை எச்சரிக்கைகள் திரை ────────────────────────────────────────── -->
-    <string name="prox_title">அருகாமை எச்சரிக்கைகள்</string>
-    <string name="prox_empty_title">கண்காணிக்கப்படும் நபர்கள் இல்லை</string>
-    <string name="prox_empty_sub">அவர்களின் இருப்பிடத்தைக் கண்காணிக்கத் தொடங்க ஸ்கேன் தாவலில் இருந்து\nஒருவரின் அழைப்பு QR-ஐ ஸ்கேன் செய்யவும்</string>
-    <string name="prox_intro">கண்காணிக்கப்படும் நபர் நீங்கள் தேர்ந்தெடுத்த தூரத்திற்குள் வரும்போது அறிவிப்பைப் பெறுங்கள்.</string>
-    <string name="prox_alert_within">%1$s-க்குள் வரும்போது எச்சரி</string>
-    <string name="prox_alerts_off">எச்சரிக்கைகள் அணைக்கப்பட்டுள்ளன</string>
-    <string name="prox_alert_radius">எச்சரிக்கை ஆரம்</string>
-    <string name="prox_edit_schedule">அட்டவணையைத் தொகு</string>
     <string name="prox_rules">விதிகள்</string>
 
     <!-- ── அட்டவணை திரை / விதி திருத்தி ──────────────────────────────────── -->

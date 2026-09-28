@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Тағайындау</string>
 
     <!-- ── Жақындық ескертулері экраны ────────────────────────────────────────── -->
-    <string name="prox_title">Жақындық ескертулері</string>
-    <string name="prox_empty_title">Бақыланатын адамдар жоқ</string>
-    <string name="prox_empty_sub">Біреудің орналасқан жерін бақылауды бастау үшін\nсканерлеу қойындысынан олардың шақыру QR-ын сканерлеңіз</string>
-    <string name="prox_intro">Бақыланатын адам сіз таңдаған қашықтыққа жақындағанда хабарландыру алыңыз.</string>
-    <string name="prox_alert_within">%1$s ішінде болғанда ескерту</string>
-    <string name="prox_alerts_off">Ескертулер өшірулі</string>
-    <string name="prox_alert_radius">Ескерту радиусы</string>
-    <string name="prox_edit_schedule">Кестені өзгерту</string>
     <string name="prox_rules">Ережелер</string>
 
     <!-- ── Кесте экраны / ереже редакторы ──────────────────────────────────── -->

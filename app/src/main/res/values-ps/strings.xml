@@ -608,14 +608,6 @@
     <string name="geo_assign_action">ټاکل</string>
 
     <!-- ── د نږدېوالي خبرتیاو سکرین ────────────────────────────────────────── -->
-    <string name="prox_title">د نږدېوالي خبرتیاوې</string>
-    <string name="prox_empty_title">هیڅ تعقیب شوي کسان نشته</string>
-    <string name="prox_empty_sub">د چا د ځای تعقیب پیل کولو لپاره له سکین ټب څخه\nد هغوی د بلنې QR سکین کړئ</string>
-    <string name="prox_intro">کله چې تعقیب شوی کس ستاسو ټاکل شوي واټن ته راشي نو خبرتیا ترلاسه کړئ.</string>
-    <string name="prox_alert_within">خبر راکړئ کله چې په %1$s کې وي</string>
-    <string name="prox_alerts_off">خبرتیاوې بندې دي</string>
-    <string name="prox_alert_radius">د خبرتیا وړانګه</string>
-    <string name="prox_edit_schedule">مهالویش بدل کړئ</string>
     <string name="prox_rules">قواعد</string>
 
     <!-- ── د مهالویش سکرین / د قاعدې ایډیټر ──────────────────────────────────── -->

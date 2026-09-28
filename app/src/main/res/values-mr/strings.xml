@@ -608,14 +608,6 @@
     <string name="geo_assign_action">नियुक्त करा</string>
 
     <!-- ── प्रॉक्सिमिटी अलर्ट स्क्रीन ────────────────────────────────────────── -->
-    <string name="prox_title">प्रॉक्सिमिटी अलर्ट</string>
-    <string name="prox_empty_title">ट्रॅक केलेले कोणीही नाही</string>
-    <string name="prox_empty_sub">कोणाचेही स्थान ट्रॅक करणे सुरू करण्यासाठी स्कॅन टॅबवरून\nत्यांचे आमंत्रण QR स्कॅन करा</string>
-    <string name="prox_intro">ट्रॅक केलेली व्यक्ती तुमच्या निवडलेल्या अंतराच्या आत आल्यावर सूचना मिळवा.</string>
-    <string name="prox_alert_within">%1$s च्या आत असताना अलर्ट करा</string>
-    <string name="prox_alerts_off">अलर्ट बंद</string>
-    <string name="prox_alert_radius">अलर्ट त्रिज्या</string>
-    <string name="prox_edit_schedule">वेळापत्रक संपादित करा</string>
     <string name="prox_rules">नियम</string>
 
     <!-- ── वेळापत्रक स्क्रीन / नियम संपादक ──────────────────────────────────── -->

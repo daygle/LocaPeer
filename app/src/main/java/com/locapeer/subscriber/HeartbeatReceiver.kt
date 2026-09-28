@@ -1,6 +1,7 @@
 package com.locapeer.subscriber
 
 import android.app.NotificationChannel
+import com.locapeer.util.backgroundScope
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -56,10 +57,7 @@ import com.locapeer.nostr.NostrFilter
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -120,6 +118,9 @@ private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
 // bound, a contact could store a multi-megabyte row that overflows Android's 2 MB
 // CursorWindow and crashes every screen that loads the conversation.
 private const val MAX_DM_PLAINTEXT_CHARS = 512 * 1024
+// Bounds on the sender-controlled parts of a circle envelope that get persisted.
+private const val MAX_CIRCLE_MEMBERS = 256
+private const val MAX_CIRCLE_NAME_CHARS = 100
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -170,7 +171,7 @@ class HeartbeatReceiver @Inject constructor(
     private val trackResponseSender: com.locapeer.invite.TrackResponseSender,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope(TAG)
     private val json = Json { ignoreUnknownKeys = true }
 
     /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
@@ -464,9 +465,20 @@ class HeartbeatReceiver @Inject constructor(
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
             if (isFresh) {
-                if (payload.isSos) sendSosNotification(broadcaster.displayName, payload)
-                geofenceEngine.evaluate(entity, prevHeartbeat)
-                proximityEngine.evaluate(entity)
+                if (payload.isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
+                // Alerts name the contact as saved locally, not by the payload's
+                // self-reported (peer-controlled) display name.
+                val alertEntity = entity.copy(displayName = broadcaster.displayName.ifBlank { entity.displayName })
+                geofenceEngine.evaluate(alertEntity, prevHeartbeat)
+                // Proximity may wait up to 15s for an own-location fix; run it beside the
+                // event pipeline so it can't stall every other incoming event meanwhile.
+                scope.launch {
+                    try {
+                        proximityEngine.evaluate(alertEntity)
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Proximity evaluation failed", e)
+                    }
+                }
             }
             advanceHeartbeatBaseline(event.createdAt)
         } catch (e: Exception) {
@@ -545,7 +557,7 @@ class HeartbeatReceiver @Inject constructor(
         }
     }
 
-    private fun sendSosNotification(name: String, payload: HeartbeatPayload) {
+    private fun sendSosNotification(senderPubkey: String, name: String, payload: HeartbeatPayload) {
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
         }
@@ -572,7 +584,9 @@ class HeartbeatReceiver @Inject constructor(
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .setPublicVersion(publicVersion)
             .build()
-        notificationManager.notify(payload.deviceId, NOTIF_ID_SOS, notification)
+        // Tag by the signer, never the payload's self-declared deviceId: a contact could
+        // otherwise name another contact's id and replace that contact's live SOS alert.
+        notificationManager.notify(senderPubkey, NOTIF_ID_SOS, notification)
     }
 
     /** Maps a [com.locapeer.messaging.MediaKind] to its stored [MessageType], or null for an
@@ -653,9 +667,13 @@ class HeartbeatReceiver @Inject constructor(
                 Log.w(TAG, "Dropping new circle ${group.gid}: circle cap reached")
                 return
             }
+            if (group.members.size > MAX_CIRCLE_MEMBERS) {
+                Log.w(TAG, "Dropping circle message for ${group.gid}: ${group.members.size} members")
+                return
+            }
             circleDao.materialiseFromRemote(
                 circleId = group.gid,
-                name = group.gname,
+                name = group.gname.take(MAX_CIRCLE_NAME_CHARS),
                 creatorPubkey = group.creator,
                 senderPubkey = event.pubkey,
                 // Never store our own pubkey as a member row: locally created circles keep only

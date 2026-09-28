@@ -1,16 +1,14 @@
 package com.locapeer.supervised
 
 import com.locapeer.crypto.CryptoUtils
+import com.locapeer.util.backgroundScope
 import com.locapeer.crypto.KeyManager
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,7 +38,7 @@ class SupervisedModeManager @Inject constructor(
     private val _unlockState = MutableStateFlow<UnlockState>(UnlockState.Idle)
     val unlockState: StateFlow<UnlockState> = _unlockState
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope("SupervisedModeManager")
     private val json = Json { ignoreUnknownKeys = true }
     private var timeoutJob: Job? = null
 

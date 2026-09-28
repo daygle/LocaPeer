@@ -221,7 +221,7 @@ class SettingsViewModel @Inject constructor(
                     deviceId = pubHex
                 )
             )
-            _profileQr.value = qrGenerator.generate(json)
+            _profileQr.value = withContext(Dispatchers.Default) { qrGenerator.generate(json) }
         }
     }
 

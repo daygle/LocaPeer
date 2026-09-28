@@ -609,14 +609,6 @@
     <string name="geo_assign_action">Assigner</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Alertes de proximité</string>
-    <string name="prox_empty_title">Aucune personne suivie</string>
-    <string name="prox_empty_sub">Scannez le QR d\'invitation de quelqu\'un depuis l\'onglet Scanner\npour commencer à suivre sa localisation</string>
-    <string name="prox_intro">Soyez notifié quand une personne suivie s\'approche d\'une distance choisie de vous.</string>
-    <string name="prox_alert_within">Alerter à moins de %1$s</string>
-    <string name="prox_alerts_off">Alertes désactivées</string>
-    <string name="prox_alert_radius">Rayon d\'alerte</string>
-    <string name="prox_edit_schedule">Modifier l\'horaire</string>
     <string name="prox_rules">Règles</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

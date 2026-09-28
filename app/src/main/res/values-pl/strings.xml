@@ -632,14 +632,6 @@
     <string name="geo_assign_action">Przypisz</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Alerty zbliżeniowe</string>
-    <string name="prox_empty_title">Brak śledzonych osób</string>
-    <string name="prox_empty_sub">Zeskanuj czyjś kod QR z karty Skanuj,\naby zacząć śledzić jego lokalizację</string>
-    <string name="prox_intro">Otrzymuj powiadomienia, gdy śledzona osoba znajdzie się w wybranej odległości od Ciebie.</string>
-    <string name="prox_alert_within">Alert w promieniu %1$s</string>
-    <string name="prox_alerts_off">Alerty wyłączone</string>
-    <string name="prox_alert_radius">Promień alertu</string>
-    <string name="prox_edit_schedule">Edytuj harmonogram</string>
     <string name="prox_rules">Reguły</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

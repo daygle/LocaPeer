@@ -81,7 +81,7 @@ class ContactsViewModel @Inject constructor(
 
     fun renamePeer(peer: PeerEntity, newName: String) {
         viewModelScope.launch {
-            peerDao.upsertPeer(peer.copy(displayName = newName.trim()))
+            peerDao.rename(peer.deviceId, newName.trim())
         }
     }
 

@@ -632,14 +632,6 @@
     <string name="geo_assign_action">Přiřadit</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Upozornění na blízkost</string>
-    <string name="prox_empty_title">Žádné sledované osoby</string>
-    <string name="prox_empty_sub">Naskenujte něčí zvací QR na kartě Skenovat,\nabyste začali sledovat jeho polohu</string>
-    <string name="prox_intro">Dostávejte oznámení, když se sledovaná osoba přiblíží na zvolenou vzdálenost.</string>
-    <string name="prox_alert_within">Upozornit do %1$s</string>
-    <string name="prox_alerts_off">Upozornění vypnuta</string>
-    <string name="prox_alert_radius">Poloměr upozornění</string>
-    <string name="prox_edit_schedule">Upravit rozvrh</string>
     <string name="prox_rules">Pravidla</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

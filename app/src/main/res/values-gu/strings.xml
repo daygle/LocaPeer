@@ -608,14 +608,6 @@
     <string name="geo_assign_action">સોંપો</string>
 
     <!-- ── નિકટતા ચેતવણી સ્ક્રીન ────────────────────────────────────────── -->
-    <string name="prox_title">નિકટતા ચેતવણીઓ</string>
-    <string name="prox_empty_title">ટ્રેક કરેલ કોઈ વ્યક્તિ નથી</string>
-    <string name="prox_empty_sub">કોઈનું સ્થાન ટ્રેક કરવાનું શરૂ કરવા માટે સ્કેન ટેબમાંથી\nતેમનો આમંત્રણ QR સ્કેન કરો</string>
-    <string name="prox_intro">જ્યારે ટ્રેક કરેલ વ્યક્તિ તમારા પસંદ કરેલા અંતરની અંદર આવે ત્યારે સૂચના મેળવો.</string>
-    <string name="prox_alert_within">%1$s ની અંદર હોય ત્યારે ચેતવણી આપો</string>
-    <string name="prox_alerts_off">ચેતવણીઓ બંધ</string>
-    <string name="prox_alert_radius">ચેતવણી ત્રિજ્યા</string>
-    <string name="prox_edit_schedule">શેડ્યૂલ સંપાદિત કરો</string>
     <string name="prox_rules">નિયમો</string>
 
     <!-- ── શેડ્યૂલ સ્ક્રીન / નિયમ સંપાદક ──────────────────────────────────── -->

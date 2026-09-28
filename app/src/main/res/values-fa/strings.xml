@@ -608,14 +608,6 @@
     <string name="geo_assign_action">اختصاص</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">هشدارهای مجاورت</string>
-    <string name="prox_empty_title">فردی ردیابی نمی‌شود</string>
-    <string name="prox_empty_sub">کد QR دعوت کسی را از زبانه اسکن، اسکن کنید\nتا ردیابی موقعیتش آغاز شود</string>
-    <string name="prox_intro">وقتی فرد ردیابی‌شده به فاصله انتخابی شما می‌رسد، اعلان دریافت کنید.</string>
-    <string name="prox_alert_within">هشدار در فاصله %1$s</string>
-    <string name="prox_alerts_off">هشدارها خاموش</string>
-    <string name="prox_alert_radius">شعاع هشدار</string>
-    <string name="prox_edit_schedule">ویرایش زمان‌بندی</string>
     <string name="prox_rules">قواعد</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

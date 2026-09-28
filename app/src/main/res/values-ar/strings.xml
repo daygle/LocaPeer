@@ -656,14 +656,6 @@
     <string name="geo_assign_action">تعيين</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">تنبيهات القرب</string>
-    <string name="prox_empty_title">لا يوجد أشخاص مُتتبَّعون</string>
-    <string name="prox_empty_sub">امسح رمز QR لدعوة شخص ما من علامة تبويب المسح\nلبدء تتبّع موقعه</string>
-    <string name="prox_intro">احصل على إشعار عندما يقترب شخص مُتتبَّع منك ضمن مسافة تختارها.</string>
-    <string name="prox_alert_within">تنبيه عند الاقتراب ضمن %1$s</string>
-    <string name="prox_alerts_off">التنبيهات متوقفة</string>
-    <string name="prox_alert_radius">نصف قطر التنبيه</string>
-    <string name="prox_edit_schedule">تعديل الجدول</string>
     <string name="prox_rules">القواعد</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

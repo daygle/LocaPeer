@@ -608,14 +608,6 @@
     <string name="geo_assign_action">നിശ്ചയിക്കുക</string>
 
     <!-- ── സാമീപ്യ അലേർട്ടുകൾ സ്ക്രീൻ ────────────────────────────────────────── -->
-    <string name="prox_title">സാമീപ്യ അലേർട്ടുകൾ</string>
-    <string name="prox_empty_title">ട്രാക്ക് ചെയ്യുന്ന ആരുമില്ല</string>
-    <string name="prox_empty_sub">ഒരാളുടെ ലൊക്കേഷൻ ട്രാക്ക് ചെയ്യാൻ തുടങ്ങുന്നതിനായി സ്കാൻ ടാബിൽ നിന്ന്\nഅവരുടെ ക്ഷണ QR സ്കാൻ ചെയ്യുക</string>
-    <string name="prox_intro">ട്രാക്ക് ചെയ്യുന്ന ഒരാൾ നിങ്ങൾ തിരഞ്ഞെടുത്ത ദൂരത്തിനുള്ളിൽ വരുമ്പോൾ അറിയിപ്പ് നേടുക.</string>
-    <string name="prox_alert_within">%1$s ദൂരത്തിനുള്ളിൽ വരുമ്പോൾ അറിയിക്കുക</string>
-    <string name="prox_alerts_off">അലേർട്ടുകൾ ഓഫാണ്</string>
-    <string name="prox_alert_radius">അലേർട്ട് ആരം</string>
-    <string name="prox_edit_schedule">ഷെഡ്യൂൾ എഡിറ്റ് ചെയ്യുക</string>
     <string name="prox_rules">നിയമങ്ങൾ</string>
 
     <!-- ── ഷെഡ്യൂൾ സ്ക്രീൻ / നിയമ എഡിറ്റർ ──────────────────────────────────── -->

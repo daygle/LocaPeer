@@ -596,14 +596,6 @@
     <string name="geo_assign_action">할당</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">근접 알림</string>
-    <string name="prox_empty_title">추적 중인 사람 없음</string>
-    <string name="prox_empty_sub">스캔 탭에서 다른 사람의 초대 QR을 스캔하여\n위치 추적을 시작하세요</string>
-    <string name="prox_intro">추적 중인 사람이 선택한 거리 안에 들어오면 알림을 받습니다.</string>
-    <string name="prox_alert_within">%1$s 이내일 때 알림</string>
-    <string name="prox_alerts_off">알림 꺼짐</string>
-    <string name="prox_alert_radius">알림 반경</string>
-    <string name="prox_edit_schedule">일정 편집</string>
     <string name="prox_rules">규칙</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

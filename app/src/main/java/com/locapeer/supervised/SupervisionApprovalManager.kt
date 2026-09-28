@@ -1,13 +1,11 @@
 package com.locapeer.supervised
 
 import com.locapeer.crypto.CryptoUtils
+import com.locapeer.util.backgroundScope
 import com.locapeer.crypto.KeyManager
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -27,7 +25,7 @@ class SupervisionApprovalManager @Inject constructor(
     private val _pending = MutableStateFlow<PendingRequest?>(null)
     val pending: StateFlow<PendingRequest?> = _pending
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope("SupervisionApproval")
     private val json = Json { ignoreUnknownKeys = true }
 
     fun setPending(request: PendingRequest) {
@@ -38,20 +36,25 @@ class SupervisionApprovalManager @Inject constructor(
         val request = _pending.value ?: return
         _pending.value = null
         scope.launch {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = json.encodeToString(
-                UnlockResponsePayload(requestId = request.requestId, approved = approved)
-            )
-            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), request.fromPubkey, payload)
-            val event = NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
-                content = encrypted,
-                tags = listOf(listOf("p", request.fromPubkey)),
-                crypto = crypto
-            )
-            relayClient.publishEvent(event)
+            // An uncaught throw in this bare scope would crash the process.
+            try {
+                val (privHex, pubHex) = keyManager.ensureKeypair()
+                val payload = json.encodeToString(
+                    UnlockResponsePayload(requestId = request.requestId, approved = approved)
+                )
+                val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), request.fromPubkey, payload)
+                val event = NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.SUPERVISED_UNLOCK_RESPONSE,
+                    content = encrypted,
+                    tags = listOf(listOf("p", request.fromPubkey)),
+                    crypto = crypto
+                )
+                relayClient.publishEvent(event)
+            } catch (e: Exception) {
+                android.util.Log.w("SupervisionApproval", "Failed to send unlock response", e)
+            }
         }
     }
 }

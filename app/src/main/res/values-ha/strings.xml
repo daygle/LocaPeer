@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Sanya</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Gargaɗin Kusanci</string>
-    <string name="prox_empty_title">Babu mutanen da ake bibiya</string>
-    <string name="prox_empty_sub">Duba QR na gayyatar wani daga shafin duba\ndon fara bibiyar wurinsa</string>
-    <string name="prox_intro">Sami sanarwa lokacin da mutumin da ake bibiya ya zo tsakanin nisan da kuka zaɓa.</string>
-    <string name="prox_alert_within">Yi gargaɗi lokacin nesa a cikin %1$s</string>
-    <string name="prox_alerts_off">Gargaɗi a kashe</string>
-    <string name="prox_alert_radius">Radius na gargaɗi</string>
-    <string name="prox_edit_schedule">Shirya Lokaci</string>
     <string name="prox_rules">Dokoki</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

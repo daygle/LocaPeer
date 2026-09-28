@@ -620,14 +620,6 @@
     <string name="geo_assign_action">שייך</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">התראות קרבה</string>
-    <string name="prox_empty_title">אין אנשים במעקב</string>
-    <string name="prox_empty_sub">סרוק את קוד ה-QR של ההזמנה של מישהו מכרטיסיית הסריקה\nכדי להתחיל לעקוב אחר מיקומו</string>
-    <string name="prox_intro">קבל התראה כאשר אדם במעקב מתקרב אליך למרחק שבחרת.</string>
-    <string name="prox_alert_within">התרע בטווח %1$s</string>
-    <string name="prox_alerts_off">התראות כבויות</string>
-    <string name="prox_alert_radius">רדיוס התראה</string>
-    <string name="prox_edit_schedule">ערוך לוח זמנים</string>
     <string name="prox_rules">כללים</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

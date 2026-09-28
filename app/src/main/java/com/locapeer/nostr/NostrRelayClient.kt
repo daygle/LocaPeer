@@ -1,6 +1,7 @@
 package com.locapeer.nostr
 
 import android.content.Context
+import com.locapeer.util.backgroundScope
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
@@ -11,10 +12,7 @@ import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,7 +72,7 @@ class NostrRelayClient @Inject constructor(
             explicitNulls = false
         }
     }
-    private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
+    private val scope by lazy { backgroundScope(TAG) }
 
     @Volatile private var isStarted = false
     @Volatile var isOnline = false
@@ -229,12 +227,17 @@ class NostrRelayClient @Inject constructor(
         }
     }
 
-    fun publishEvent(event: NostrEvent) {
+    /**
+     * Publish [event] to every relay. Undeliverable events are queued for a later flush unless
+     * [queueIfUndelivered] is false - used for ephemeral signals (typing, live-view requests)
+     * that are worthless by the time a connection returns and would only bloat the outbox.
+     */
+    fun publishEvent(event: NostrEvent, queueIfUndelivered: Boolean = true) {
         val msg = buildJsonArray {
             add(JsonPrimitive("EVENT"))
             add(json.encodeToJsonElement(event))
         }.toString()
-        sendToAll(msg, isEvent = true)
+        sendToAll(msg, isEvent = true, queueIfUndelivered = queueIfUndelivered)
     }
 
     fun subscribe(subscriptionId: String, filter: NostrFilter) {
@@ -260,25 +263,26 @@ class NostrRelayClient @Inject constructor(
         sendToAll(msg, isEvent = false)
     }
 
-    private fun sendToAll(msg: String, isEvent: Boolean) {
+    private fun sendToAll(msg: String, isEvent: Boolean, queueIfUndelivered: Boolean = isEvent) {
+        val queue = isEvent && queueIfUndelivered
         val disconnectedRelays = mutableListOf<RelayConnection>()
 
         relays.values.forEach { relay ->
             if (relay.isConnected) {
                 val success = relay.send(msg)
                 if (!success && isEvent) {
-                    scope.launch { queuePending(relay.url, msg) }
+                    if (queue) scope.launch { queuePending(relay.url, msg) }
                     relay.scheduleReconnect()
                 }
             } else {
-                if (isEvent) {
+                if (queue) {
                     disconnectedRelays.add(relay)
                 }
                 relay.ensureConnecting()
             }
         }
 
-        if (isEvent && disconnectedRelays.isNotEmpty()) {
+        if (disconnectedRelays.isNotEmpty()) {
             scope.launch {
                 disconnectedRelays.forEach { relay -> queuePending(relay.url, msg) }
             }

@@ -596,14 +596,6 @@
     <string name="geo_assign_action">Tugaskan</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Amaran Jarak Dekat</string>
-    <string name="prox_empty_title">Tiada orang dijejaki</string>
-    <string name="prox_empty_sub">Imbas QR jemputan seseorang daripada tab Imbas\nuntuk mula menjejaki lokasinya</string>
-    <string name="prox_intro">Dapatkan pemberitahuan apabila orang yang dijejaki berada dalam jarak yang dipilih daripada anda.</string>
-    <string name="prox_alert_within">Amaran apabila dalam %1$s</string>
-    <string name="prox_alerts_off">Amaran dimatikan</string>
-    <string name="prox_alert_radius">Jejari amaran</string>
-    <string name="prox_edit_schedule">Sunting Jadual</string>
     <string name="prox_rules">Peraturan</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

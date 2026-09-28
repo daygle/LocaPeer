@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Ata</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Yakınlık Uyarıları</string>
-    <string name="prox_empty_title">Takip edilen kişi yok</string>
-    <string name="prox_empty_sub">Konumunu takip etmeye başlamak için\nTara sekmesinden birinin davet QR kodunu tarayın</string>
-    <string name="prox_intro">Takip edilen bir kişi size seçilen mesafeden daha yakına geldiğinde bildirim alın.</string>
-    <string name="prox_alert_within">%1$s içindeyken uyar</string>
-    <string name="prox_alerts_off">Uyarılar kapalı</string>
-    <string name="prox_alert_radius">Uyarı yarıçapı</string>
-    <string name="prox_edit_schedule">Programı Düzenle</string>
     <string name="prox_rules">Kurallar</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

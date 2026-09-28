@@ -1,6 +1,7 @@
 package com.locapeer
 
 import android.app.Application
+import com.locapeer.util.backgroundScope
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
@@ -11,9 +12,7 @@ import com.locapeer.subscriber.MissedHeartbeatWorker
 import com.locapeer.subscriber.RetentionEnforcementWorker
 import com.locapeer.util.DisplayFormat
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     @Inject lateinit var appPreferences: AppPreferences
     @Inject lateinit var appLockManager: com.locapeer.settings.AppLockManager
 
-    private val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+    private val appScope = backgroundScope(TAG, Dispatchers.Default)
 
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()

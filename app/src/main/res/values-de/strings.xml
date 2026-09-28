@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Zuweisen</string>
 
     <!-- ── Annäherungswarnungen ────────────────────────────────────────── -->
-    <string name="prox_title">Annäherungswarnungen</string>
-    <string name="prox_empty_title">Keine verfolgten Personen</string>
-    <string name="prox_empty_sub">Scannen Sie die Einladungs-QR-Code von jemandem im Scan-Tab,\num deren Standort zu verfolgen</string>
-    <string name="prox_intro">Lassen Sie sich benachrichtigen, wenn eine verfolgte Person Ihnen bis auf eine gewählte Entfernung nahe kommt.</string>
-    <string name="prox_alert_within">Warnen bei Annäherung auf %1$s</string>
-    <string name="prox_alerts_off">Warnungen aus</string>
-    <string name="prox_alert_radius">Warnradius</string>
-    <string name="prox_edit_schedule">Zeitplan bearbeiten</string>
     <string name="prox_rules">Regeln</string>
 
     <!-- ── Zeitplan / Regel-Editor ──────────────────────────────────── -->

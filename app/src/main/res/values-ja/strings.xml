@@ -596,14 +596,6 @@
     <string name="geo_assign_action">割り当て</string>
 
     <!-- ── 近接アラート画面 ────────────────────────────────────────── -->
-    <string name="prox_title">近接アラート</string>
-    <string name="prox_empty_title">追跡している人はいません</string>
-    <string name="prox_empty_sub">スキャンタブから相手の招待QRをスキャンして\n位置情報の追跡を開始しましょう</string>
-    <string name="prox_intro">追跡している人が指定した距離以内に来たときに通知を受け取ります。</string>
-    <string name="prox_alert_within">%1$s 以内に来たら通知</string>
-    <string name="prox_alerts_off">アラートオフ</string>
-    <string name="prox_alert_radius">アラート半径</string>
-    <string name="prox_edit_schedule">スケジュールを編集</string>
     <string name="prox_rules">ルール</string>
 
     <!-- ── スケジュール画面 / ルールエディタ ──────────────────────────────────── -->

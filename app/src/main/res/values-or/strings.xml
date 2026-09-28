@@ -608,14 +608,6 @@
     <string name="geo_assign_action">ଧାର୍ଯ୍ୟ କରନ୍ତୁ</string>
 
     <!-- ── ନିକଟତରତା ସତର୍କତା ସ୍କ୍ରିନ୍ ────────────────────────────────────────── -->
-    <string name="prox_title">ନିକଟତରତା ସତର୍କତା</string>
-    <string name="prox_empty_title">କୌଣସି ଟ୍ରାକିଂ ହେଉଥିବା ବ୍ୟକ୍ତି ନାହାଁନ୍ତି</string>
-    <string name="prox_empty_sub">କାହାର ସ୍ଥାନ ଟ୍ରାକ୍ କରିବା ଆରମ୍ଭ କରିବା ପାଇଁ ସ୍କାନ ଟ୍ୟାବରୁ\nଜଣଙ୍କର ନିମନ୍ତ୍ରଣ QR ସ୍କାନ କରନ୍ତୁ</string>
-    <string name="prox_intro">ଟ୍ରାକ୍ କରାଯାଉଥିବା ବ୍ୟକ୍ତି ଆପଣଙ୍କର ମନୋନୀତ ଦୂରତା ମଧ୍ୟକୁ ଆସିଲେ ବିଜ୍ଞପ୍ତି ପାଆନ୍ତୁ ।</string>
-    <string name="prox_alert_within">%1$s ମଧ୍ୟରେ ଥିବା ବେଳେ ସତର୍କ କରନ୍ତୁ</string>
-    <string name="prox_alerts_off">ସତର୍କତା ବନ୍ଦ ଅଛି</string>
-    <string name="prox_alert_radius">ସତର୍କତା ବ୍ୟାସାର୍ଦ୍ଧ</string>
-    <string name="prox_edit_schedule">କାର୍ଯ୍ୟସୂଚୀ ସଂପାଦନ କରନ୍ତୁ</string>
     <string name="prox_rules">ନିୟମଗୁଡ଼ିକ</string>
 
     <!-- ── କାର୍ଯ୍ୟସୂଚୀ ସ୍କ୍ରିନ୍ / ନିୟମ ସଂପାଦକ ──────────────────────────────────── -->

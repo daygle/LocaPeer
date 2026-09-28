@@ -608,14 +608,6 @@
     <string name="geo_assign_action">కేటాయించు</string>
 
     <!-- ── సామీప్య అలర్ట్‌ల స్క్రీన్ ────────────────────────────────────────── -->
-    <string name="prox_title">సామీప్య అలర్ట్‌లు</string>
-    <string name="prox_empty_title">ట్రాక్ చేయబడిన వ్యక్తులు లేరు</string>
-    <string name="prox_empty_sub">ఎవరి స్థానాన్నైనా ట్రాక్ చేయడం ప్రారంభించడానికి స్కాన్ ట్యాబ్ నుండి\nవారి ఆహ్వాన QR ని స్కాన్ చేయండి</string>
-    <string name="prox_intro">ట్రాక్ చేయబడిన వ్యక్తి మీరు ఎంచుకున్న దూరంలోకి వచ్చినప్పుడు నోటిఫికేషన్ పొందండి.</string>
-    <string name="prox_alert_within">%1$s పరిధిలోకి వచ్చినప్పుడు అలర్ట్ చేయి</string>
-    <string name="prox_alerts_off">అలర్ట్‌లు ఆఫ్</string>
-    <string name="prox_alert_radius">అలర్ట్ వ్యాసార్థం</string>
-    <string name="prox_edit_schedule">షెడ్యూల్‌ను సవరించు</string>
     <string name="prox_rules">నియమాలు</string>
 
     <!-- ── షెడ్యూల్ స్క్రీన్ / నియమ ఎడిటర్ ──────────────────────────────────── -->

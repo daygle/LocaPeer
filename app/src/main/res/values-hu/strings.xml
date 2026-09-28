@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Hozzárendelés</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Közelségi riasztások</string>
-    <string name="prox_empty_title">Nincs követett személy</string>
-    <string name="prox_empty_sub">Olvassa be valaki meghívó QR-kódját a Beolvasás lapon,\nhogy követni kezdje a helyzetét</string>
-    <string name="prox_intro">Kapjon értesítést, ha egy követett személy a kiválasztott távolságon belülre ér.</string>
-    <string name="prox_alert_within">Riasztás %1$s távolságon belül</string>
-    <string name="prox_alerts_off">Riasztások kikapcsolva</string>
-    <string name="prox_alert_radius">Riasztási sugár</string>
-    <string name="prox_edit_schedule">Ütemterv szerkesztése</string>
     <string name="prox_rules">Szabályok</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
