@@ -1,11 +1,9 @@
 package com.locapeer.invite
 
-import android.app.NotificationManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PendingRequestDao
-import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PendingRequestEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,10 +18,8 @@ sealed class IncomingRequestState {
 
 @HiltViewModel
 class IncomingShareRequestViewModel @Inject constructor(
-    private val peerDao: PeerDao,
     private val pendingRequestDao: PendingRequestDao,
-    private val trackResponseSender: TrackResponseSender,
-    private val notificationManager: NotificationManager
+    private val actions: PendingRequestActions,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<IncomingRequestState>(IncomingRequestState.Idle)
@@ -36,41 +32,21 @@ class IncomingShareRequestViewModel @Inject constructor(
     // crafted intent can neither invent a request nor override a real one's relay.
 
     fun accept(senderPubkey: String, locationRole: String, messagingEnabled: Boolean) {
-        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
-        viewModelScope.launch {
-            _state.value = IncomingRequestState.Loading
-            val request = pendingRequestDao.getByPubkey(senderPubkey) ?: run {
-                _state.value = IncomingRequestState.Done
-                return@launch
-            }
-            val existing = peerDao.getPeer(senderPubkey)
-            peerDao.upsertPeer(
-                PeerEntity(
-                    deviceId = senderPubkey,
-                    displayName = existing?.displayName ?: request.senderName,
-                    publicKeyHex = senderPubkey,
-                    relayUrl = request.senderRelayUrl,
-                    locationRole = locationRole,
-                    messagingEnabled = messagingEnabled,
-                    addedAt = existing?.addedAt ?: System.currentTimeMillis()
-                )
-            )
-            trackResponseSender.sendAccept(senderPubkey, request.senderRelayUrl, locationRole)
-            pendingRequestDao.deleteByPubkey(senderPubkey)
-            _state.value = IncomingRequestState.Done
-        }
+        respond(senderPubkey) { actions.accept(it, locationRole, messagingEnabled) }
     }
 
     fun decline(senderPubkey: String) {
-        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
+        respond(senderPubkey) { actions.decline(it) }
+    }
+
+    private fun respond(senderPubkey: String, action: suspend (PendingRequestEntity) -> Unit) {
         viewModelScope.launch {
             _state.value = IncomingRequestState.Loading
-            val request = pendingRequestDao.getByPubkey(senderPubkey)
-            if (request != null) {
-                trackResponseSender.sendDecline(senderPubkey, request.senderRelayUrl, request.isRoleChange)
-                pendingRequestDao.deleteByPubkey(senderPubkey)
+            try {
+                pendingRequestDao.getByPubkey(senderPubkey)?.let { action(it) }
+            } finally {
+                _state.value = IncomingRequestState.Done
             }
-            _state.value = IncomingRequestState.Done
         }
     }
 }

@@ -59,6 +59,11 @@ interface MessageDao {
     @Query("SELECT * FROM messages WHERE nostrEventId = :eventId LIMIT 1")
     suspend fun getByNostrEventId(eventId: String): MessageEntity?
 
+    /** Primary-key existence check. Received rows use the Nostr event id as their [MessageEntity.id],
+     *  so this is the indexed way to dedupe an incoming event (nostrEventId has no index). */
+    @Query("SELECT EXISTS(SELECT 1 FROM messages WHERE id = :id)")
+    suspend fun existsById(id: String): Boolean
+
     // --- Group / circle conversations. A group message stores the circle id in both peerId
     // (thread key, so getMessagesForPeer works unchanged) and groupId (marker). ---
 
@@ -85,8 +90,16 @@ interface MessageDao {
     @Query("SELECT * FROM messages WHERE groupId = :groupId AND isMine = 1")
     suspend fun getMineForGroup(groupId: String): List<MessageEntity>
 
-    @Query("UPDATE messages SET deliveryState = :state WHERE nostrEventId = :nostrEventId AND nostrEventId != ''")
-    suspend fun updateDeliveryStateByNostrEventId(nostrEventId: String, state: String)
+    /**
+     * Relay acknowledgement (OK true): SENDING -> SENT only. Every relay that accepts the event
+     * sends its own OK, often after the recipient's delivery ack or read receipt has already
+     * landed, so an unconditional update would regress DELIVERED/READ back to SENT.
+     */
+    @Query(
+        "UPDATE messages SET deliveryState = 'SENT' " +
+            "WHERE nostrEventId = :nostrEventId AND nostrEventId != '' AND deliveryState = 'SENDING'"
+    )
+    suspend fun markSentByNostrEventId(nostrEventId: String)
 
     /**
      * Scoped variant used when a peer reports delivery/read state (DELIVERY_ACK / READ_RECEIPT).
@@ -95,10 +108,18 @@ interface MessageDao {
      * event ids it observed on the relay.
      */
     @Query(
-        "UPDATE messages SET deliveryState = :state " +
+        "UPDATE messages SET deliveryState = 'DELIVERED' " +
+            "WHERE nostrEventId = :nostrEventId AND nostrEventId != '' AND peerId = :peerId AND isMine = 1 " +
+            "AND deliveryState != 'READ'"
+    )
+    suspend fun markDeliveredForPeer(nostrEventId: String, peerId: String)
+
+    /** READ is terminal, so it may overwrite any earlier state. Scoped like [markDeliveredForPeer]. */
+    @Query(
+        "UPDATE messages SET deliveryState = 'READ' " +
             "WHERE nostrEventId = :nostrEventId AND nostrEventId != '' AND peerId = :peerId AND isMine = 1"
     )
-    suspend fun updateDeliveryStateByNostrEventIdForPeer(nostrEventId: String, peerId: String, state: String)
+    suspend fun markReadForPeer(nostrEventId: String, peerId: String)
 
     @Query("SELECT * FROM messages WHERE peerId = :peerId AND isMine = 0 AND isRead = 0 AND isBlocked = 0")
     suspend fun getUnreadFromPeer(peerId: String): List<MessageEntity>

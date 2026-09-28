@@ -10,7 +10,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.Base64
@@ -48,7 +50,7 @@ class InviteViewModel @Inject constructor(
                 val base64 = Base64.getUrlEncoder().withoutPadding().encodeToString(json.toByteArray())
                 val inviteLink = "locapeer://invite?data=$base64"
 
-                val bitmap = qrGenerator.generate(json)
+                val bitmap = withContext(Dispatchers.Default) { qrGenerator.generate(json) }
                 if (bitmap != null) {
                     _state.value = InviteUiState(
                         publicKeyHex = pubHex,

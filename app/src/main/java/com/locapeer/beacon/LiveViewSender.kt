@@ -1,6 +1,7 @@
 package com.locapeer.beacon
 
 import android.util.Log
+import com.locapeer.util.backgroundScope
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
@@ -8,10 +9,7 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
@@ -46,7 +44,7 @@ class LiveViewSender @Inject constructor(
     private val peerDao: PeerDao,
     private val prefs: com.locapeer.settings.AppPreferences
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope(TAG)
     private val json = Json { ignoreUnknownKeys = true }
 
     // Non-null while the map is open. Reference count guards against a start/stop race
@@ -118,7 +116,8 @@ class LiveViewSender @Inject constructor(
                     tags = listOf(listOf("p", recipient.publicKeyHex)),
                     crypto = crypto
                 )
-                relayClient.publishEvent(event)
+                // A live-view request expires within a minute; never queue it for later.
+                relayClient.publishEvent(event, queueIfUndelivered = false)
             } catch (e: Exception) {
                 Log.w(TAG, "Failed to send live-view request to ${recipient.deviceId}", e)
             }

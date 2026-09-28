@@ -608,14 +608,6 @@
     <string name="geo_assign_action">असाइन करें</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">निकटता अलर्ट</string>
-    <string name="prox_empty_title">कोई ट्रैक किया व्यक्ति नहीं</string>
-    <string name="prox_empty_sub">किसी का स्थान ट्रैक करना शुरू करने के लिए\nस्कैन टैब से उनका आमंत्रण QR स्कैन करें</string>
-    <string name="prox_intro">जब कोई ट्रैक किया गया व्यक्ति आपसे चुनी हुई दूरी के भीतर आए तो सूचना पाएँ।</string>
-    <string name="prox_alert_within">%1$s के भीतर होने पर अलर्ट</string>
-    <string name="prox_alerts_off">अलर्ट बंद</string>
-    <string name="prox_alert_radius">अलर्ट दायरा</string>
-    <string name="prox_edit_schedule">शेड्यूल संपादित करें</string>
     <string name="prox_rules">नियम</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

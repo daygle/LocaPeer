@@ -24,6 +24,11 @@ interface PeerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertPeer(peer: PeerEntity)
 
+    /** Targeted rename, so a UI snapshot of the row can't overwrite fields (role, relay,
+     *  archive state) that changed in the background since the screen loaded it. */
+    @Query("UPDATE peers SET displayName = :displayName WHERE deviceId = :deviceId")
+    suspend fun rename(deviceId: String, displayName: String)
+
     @Query("DELETE FROM peers WHERE deviceId = :deviceId")
     suspend fun deletePeerById(deviceId: String)
 

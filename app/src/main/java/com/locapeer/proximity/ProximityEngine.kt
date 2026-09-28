@@ -1,6 +1,7 @@
 package com.locapeer.proximity
 
 import android.annotation.SuppressLint
+import com.locapeer.util.backgroundScope
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -23,9 +24,6 @@ import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import com.google.android.gms.location.LocationServices
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -62,7 +60,7 @@ class ProximityEngine @Inject constructor(
     private val crypto: CryptoUtils,
     private val prefs: AppPreferences
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope("ProximityEngine")
     private var fusedLocation = LocationServices.getFusedLocationProviderClient(context)
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
     // Whether each peer is currently within their alert radius, with hysteresis.
@@ -228,6 +226,8 @@ class ProximityEngine @Inject constructor(
             .setContentIntent(mapPi)
             .addAction(R.drawable.ic_notif_message, context.getString(R.string.notif_message_person, personName), chatPi)
             .setAutoCancel(true)
+            // Who is near you is location data: redact it on a locked screen.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify(personDeviceId, NOTIF_ID_PROXIMITY, notification)
     }

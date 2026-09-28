@@ -596,14 +596,6 @@
     <string name="geo_assign_action">分配</string>
 
     <!-- ── 距离警报屏幕 ────────────────────────────────────────── -->
-    <string name="prox_title">距离警报</string>
-    <string name="prox_empty_title">无追踪人员</string>
-    <string name="prox_empty_sub">从“扫描”标签扫描他人的邀请二维码\n以开始追踪其位置</string>
-    <string name="prox_intro">当被追踪人员进入您选定的距离范围内时获得通知。</string>
-    <string name="prox_alert_within">在 %1$s 内时警报</string>
-    <string name="prox_alerts_off">警报关闭</string>
-    <string name="prox_alert_radius">警报半径</string>
-    <string name="prox_edit_schedule">编辑计划</string>
     <string name="prox_rules">规则</string>
 
     <!-- ── 计划屏幕 / 规则编辑器 ──────────────────────────────────── -->

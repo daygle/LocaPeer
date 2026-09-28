@@ -608,14 +608,6 @@
     <string name="geo_assign_action">መድብ</string>
 
     <!-- ── የቅርበት ማስጠንቀቂያዎች ማያ ገጽ ────────────────────────────────────────── -->
-    <string name="prox_title">የቅርበት ማስጠንቀቂያዎች</string>
-    <string name="prox_empty_title">ምንም የሚከታተሉት ሰው የለም</string>
-    <string name="prox_empty_sub">የአንድን ሰው የግብዣ QR በመፈተሽ\nአካባቢያቸውን መከታተል ይጀምሩ</string>
-    <string name="prox_intro">የሚከታተሉት ሰው እርስዎ ወደመረጡት ርቀት ሲመጣ ማሳወቂያ ያግኙ።</string>
-    <string name="prox_alert_within">በ%1$s ውስጥ ሲሆኑ አሳውቀኝ</string>
-    <string name="prox_alerts_off">ማስጠንቀቂያዎች ጠፍተዋል</string>
-    <string name="prox_alert_radius">የማስጠንቀቂያ ራዲየስ</string>
-    <string name="prox_edit_schedule">መርሃ ግብር ይቀይሩ</string>
     <string name="prox_rules">ደንቦች</string>
 
     <!-- ── የመርሃ ግብር ማያ ገጽ / የደንብ አርታዒ ──────────────────────────────────── -->

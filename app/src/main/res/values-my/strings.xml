@@ -596,14 +596,6 @@
     <string name="geo_assign_action">သတ်မှတ်ရန်</string>
 
     <!-- ── အနီးအနားရှိခြင်း သတိပေးချက်များ မျက်နှာပြင် ────────────────────────────────────────── -->
-    <string name="prox_title">အနီးအနားရှိခြင်း သတိပေးချက်များ</string>
-    <string name="prox_empty_title">ခြေရာခံထားသူ မရှိပါ</string>
-    <string name="prox_empty_sub">တစ်ဦးတစ်ယောက်၏ တည်နေရာကို ခြေရာခံရန်\nစကင်န်တက်ဘ်မှ သူတို့၏ ဖိတ်ကြားချက် QR ကို စကင်န်ဖတ်ပါ</string>
-    <string name="prox_intro">ခြေရာခံထားသူတစ်ဦး သင်ရွေးချယ်ထားသော အကွာအဝေးအတွင်း ရောက်ရှိလာပါက အသိပေးချက် ရယူပါ။</string>
-    <string name="prox_alert_within">%1$s အတွင်းရှိပါက သတိပေးရန်</string>
-    <string name="prox_alerts_off">သတိပေးချက်များ ပိတ်ထားသည်</string>
-    <string name="prox_alert_radius">သတိပေးချက် အချင်းဝက်</string>
-    <string name="prox_edit_schedule">အချိန်ဇယား ပြင်ဆင်ရန်</string>
     <string name="prox_rules">စည်းမျဉ်းများ</string>
 
     <!-- ── အချိန်ဇယား မျက်နှာပြင် / စည်းမျဉ်း တည်းဖြတ်သူ ──────────────────────────────────── -->

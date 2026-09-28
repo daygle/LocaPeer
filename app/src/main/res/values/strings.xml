@@ -715,14 +715,6 @@
     <string name="geo_assign_action">Assign</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Proximity Alerts</string>
-    <string name="prox_empty_title">No tracked people</string>
-    <string name="prox_empty_sub">Scan someone\'s invite QR from the Scan tab\nto start tracking their location</string>
-    <string name="prox_intro">Get notified when a tracked person comes within a chosen distance of you.</string>
-    <string name="prox_alert_within">Alert when within %1$s</string>
-    <string name="prox_alerts_off">Alerts off</string>
-    <string name="prox_alert_radius">Alert radius</string>
-    <string name="prox_edit_schedule">Edit Schedule</string>
     <string name="prox_rules">Rules</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
@@ -895,6 +887,7 @@
     <string name="scan_error_key_mismatch">Invalid invite: key mismatch</string>
     <string name="scan_error_unknown">Unknown error</string>
     <string name="scan_error_invalid_link">Invalid invite link</string>
+    <string name="scan_error_own_invite">This is your own invite code</string>
     <string name="scan_fallback_contact">this contact</string>
     <string name="backup_saved">Backup saved: %1$s</string>
     <string name="backup_saved_encrypted">Backup saved (encrypted): %1$s</string>

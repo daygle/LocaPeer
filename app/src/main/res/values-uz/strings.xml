@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Tayinlash</string>
 
     <!-- ── Yaqinlik ogohlantirishlari ekrani ────────────────────────────────────────── -->
-    <string name="prox_title">Yaqinlik ogohlantirishlari</string>
-    <string name="prox_empty_title">Kuzatiladigan shaxslar yo‘q</string>
-    <string name="prox_empty_sub">Biron bir kishining joylashuvini kuzatishni boshlash uchun\nskanerlash tabidan ularning taklif QR kodini skanerlang</string>
-    <string name="prox_intro">Kuzatilayotgan shaxs siz tanlagan masofaga yaqinlashganda bildirishnoma oling.</string>
-    <string name="prox_alert_within">%1$s ichida bo‘lganda ogohlantirish</string>
-    <string name="prox_alerts_off">Ogohlantirishlar o‘chirilgan</string>
-    <string name="prox_alert_radius">Ogohlantirish radiusi</string>
-    <string name="prox_edit_schedule">Jadvalni o‘zgartirish</string>
     <string name="prox_rules">Qoidalar</string>
 
     <!-- ── Jadval ekrani / qoida redaktori ──────────────────────────────────── -->

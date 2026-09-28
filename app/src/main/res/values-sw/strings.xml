@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Panga</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Arifa za Ukaribu</string>
-    <string name="prox_empty_title">Hakuna watu wanaofuatiliwa</string>
-    <string name="prox_empty_sub">Changanua mwaliko wa mtu wa QR kutoka kwa kichupo cha Changanua\nilianze kufuatilia eneo lao</string>
-    <string name="prox_intro">Pata arifa wakati mtu anayefuatiliwa anapofika umbali uliochaguliwa kutoka kwako.</string>
-    <string name="prox_alert_within">Arifu ukiwa ndani ya %1$s</string>
-    <string name="prox_alerts_off">Arifa zimezimwa</string>
-    <string name="prox_alert_radius">Radius ya arifa</string>
-    <string name="prox_edit_schedule">Hariri Ratiba</string>
     <string name="prox_rules">Sheria</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

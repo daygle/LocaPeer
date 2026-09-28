@@ -12,6 +12,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -33,6 +34,9 @@ import java.util.concurrent.TimeUnit
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
 private const val NOTIF_ID_MISSED_HEARTBEAT = 5000
+// Remembers, per contact, the heartbeat row an alert was already raised for, so one silence
+// episode alerts once instead of on every 15-minute run until the contact reappears.
+private const val ALERT_STATE_PREFS = "missed_heartbeat_alerts"
 
 @HiltWorker
 class MissedHeartbeatWorker @AssistedInject constructor(
@@ -54,6 +58,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
         val alertConfigs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
+        val alertState = applicationContext.getSharedPreferences(ALERT_STATE_PREFS, Context.MODE_PRIVATE)
 
         for (peer in receiveContacts) {
             if (isStopped) return Result.retry()
@@ -68,7 +73,10 @@ class MissedHeartbeatWorker @AssistedInject constructor(
             // Use receivedAt (stamped by the receiver's own clock at insertion) rather than
             // timestamp (the sender's clock) to avoid false alerts from inter-device clock skew.
             val elapsed = now - latest.receivedAt
-            if (elapsed > expected * 2) {
+            // Already alerted for this exact last-known ping: the contact is still silent, so
+            // don't re-alert. A newer ping (they came back, then went quiet again) differs.
+            if (elapsed > expected * 2 && alertState.getLong(peer.deviceId, -1L) != latest.id) {
+                alertState.edit { putLong(peer.deviceId, latest.id) }
                 val minutesAgo = elapsed / 60_000
                 // Unique data URI: extras don't participate in PendingIntent matching
                 // (Intent.filterEquals), so without it a requestCode hash collision

@@ -1,15 +1,13 @@
 package com.locapeer.sos
 
 import android.content.Context
+import com.locapeer.util.backgroundScope
 import android.content.Intent
 import com.locapeer.beacon.ACTION_SOS_OFF
 import com.locapeer.beacon.ACTION_SOS_ON
 import com.locapeer.beacon.HeartbeatService
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,14 +21,17 @@ class SosManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val prefs: AppPreferences
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope("SosManager")
     private val _isSosActive = MutableStateFlow(false)
     val isSosActive: StateFlow<Boolean> = _isSosActive.asStateFlow()
+    /** Set by an explicit activate/deactivate so the async restore below can't undo it. */
+    @Volatile private var commandIssued = false
 
     init {
         // Restore SOS state after process death (service is sticky, so it may restart mid-SOS)
         scope.launch {
-            _isSosActive.value = prefs.settings.first().sosActive
+            val persisted = prefs.settings.first().sosActive
+            if (!commandIssued) _isSosActive.value = persisted
         }
     }
 
@@ -41,12 +42,14 @@ class SosManager @Inject constructor(
             // Can't start service without location permission
             return
         }
+        commandIssued = true
         _isSosActive.value = true
         scope.launch { prefs.setSosActive(true) }
         startService(Intent(context, HeartbeatService::class.java).apply { action = ACTION_SOS_ON })
     }
 
     fun deactivateSos() {
+        commandIssued = true
         _isSosActive.value = false
         scope.launch { prefs.setSosActive(false) }
         startService(Intent(context, HeartbeatService::class.java).apply { action = ACTION_SOS_OFF })

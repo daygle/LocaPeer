@@ -596,14 +596,6 @@
     <string name="geo_assign_action">指派</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">鄰近警示</string>
-    <string name="prox_empty_title">沒有追蹤中的人員</string>
-    <string name="prox_empty_sub">在「掃描」分頁掃描他人的邀請 QR 碼\n即可開始追蹤位置</string>
-    <string name="prox_intro">當追蹤中的人員進入您選擇的距離內時收到通知。</string>
-    <string name="prox_alert_within">在 %1$s 內時警示</string>
-    <string name="prox_alerts_off">警示關閉</string>
-    <string name="prox_alert_radius">警示半徑</string>
-    <string name="prox_edit_schedule">編輯排程</string>
     <string name="prox_rules">規則</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

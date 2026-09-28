@@ -2,6 +2,7 @@ package com.locapeer.crypto
 
 import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.KeyProperties
 import android.util.Base64
 import android.util.Log
@@ -12,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,6 +23,8 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.security.KeyStore
+import java.security.UnrecoverableKeyException
+import javax.crypto.AEADBadTagException
 import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
@@ -36,6 +40,8 @@ private const val ANDROID_KEYSTORE = "AndroidKeyStore"
 private const val AES_GCM = "AES/GCM/NoPadding"
 private const val GCM_TAG_BITS = 128
 private const val IV_LENGTH = 12
+private const val KEY_DECRYPT_ATTEMPTS = 3
+private const val KEY_DECRYPT_RETRY_MS = 250L
 
 @Singleton
 class KeyManager @Inject constructor(
@@ -102,11 +108,9 @@ class KeyManager @Inject constructor(
             val pubHex = prefs[KEY_PUBLIC_METADATA]
 
             if (encryptedPriv != null && pubHex != null) {
-                try {
-                    val privHex = decrypt(encryptedPriv)
-                    if (privHex.length == 64 && pubHex.length == 64) return@withContext privHex to pubHex
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to decrypt stored key, will regenerate", e)
+                val privHex = decryptStoredKey(encryptedPriv)
+                if (privHex != null && privHex.length == 64 && pubHex.length == 64) {
+                    return@withContext privHex to pubHex
                 }
             }
 
@@ -114,6 +118,39 @@ class KeyManager @Inject constructor(
             generateAndSaveKeypair()
         }
     }
+
+    /**
+     * Decrypts the stored identity blob. Returns null only when the blob is provably
+     * unrecoverable (the wrapping Keystore key is gone or the ciphertext fails
+     * authentication), in which case the caller regenerates. Any other failure - the
+     * Keystore daemon being briefly unavailable after boot, a binder hiccup - is retried
+     * and then rethrown: silently replacing the identity on a transient error would
+     * permanently orphan every contact relationship built on the old key.
+     */
+    private suspend fun decryptStoredKey(encoded: String): String? {
+        var lastError: Exception? = null
+        repeat(KEY_DECRYPT_ATTEMPTS) { attempt ->
+            try {
+                return decrypt(encoded)
+            } catch (e: Exception) {
+                if (isPermanentKeyFailure(e)) {
+                    Log.e(TAG, "Stored key is unrecoverable, will regenerate", e)
+                    return null
+                }
+                lastError = e
+                Log.w(TAG, "Transient failure decrypting stored key (attempt ${attempt + 1})", e)
+                delay(KEY_DECRYPT_RETRY_MS * (attempt + 1))
+            }
+        }
+        throw IllegalStateException("Keystore unavailable; refusing to replace identity", lastError)
+    }
+
+    private fun isPermanentKeyFailure(e: Exception): Boolean =
+        e is AEADBadTagException ||
+            e is UnrecoverableKeyException ||
+            e is KeyPermanentlyInvalidatedException ||
+            e is IllegalArgumentException || // malformed Base64
+            e is IndexOutOfBoundsException // blob shorter than the IV
 
     private suspend fun saveKeypair(privHex: String, pubHex: String) {
         context.keyStore.edit { prefs ->

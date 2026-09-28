@@ -608,14 +608,6 @@
     <string name="geo_assign_action">ਨਿਰਧਾਰਤ ਕਰੋ</string>
 
     <!-- ── ਨੇੜਤਾ ਅਲਰਟ ਸਕ੍ਰੀਨ ────────────────────────────────────────── -->
-    <string name="prox_title">ਨੇੜਤਾ ਅਲਰਟ</string>
-    <string name="prox_empty_title">ਕੋਈ ਟਰੈਕ ਕੀਤੇ ਵਿਅਕਤੀ ਨਹੀਂ ਹਨ</string>
-    <string name="prox_empty_sub">ਕਿਸੇ ਦਾ ਟਿਕਾਣਾ ਟਰੈਕ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਸਕੈਨ ਟੈਬ ਤੋਂ\nਉਹਨਾਂ ਦਾ ਸੱਦਾ QR ਸਕੈਨ ਕਰੋ</string>
-    <string name="prox_intro">ਜਦੋਂ ਕੋਈ ਟਰੈਕ ਕੀਤਾ ਵਿਅਕਤੀ ਤੁਹਾਡੇ ਚੁਣੇ ਹੋਏ ਫਾਸਲੇ ਦੇ ਅੰਦਰ ਆਉਂਦਾ ਹੈ ਤਾਂ ਨੋਟੀਫਿਕੇਸ਼ਨ ਪ੍ਰਾਪਤ ਕਰੋ।</string>
-    <string name="prox_alert_within">ਅਲਰਟ ਕਰੋ ਜਦੋਂ %1$s ਦੇ ਅੰਦਰ ਹੋਵੇ</string>
-    <string name="prox_alerts_off">ਅਲਰਟ ਬੰਦ ਹਨ</string>
-    <string name="prox_alert_radius">ਅਲਰਟ ਘੇਰਾ</string>
-    <string name="prox_edit_schedule">ਸਮਾਂ-ਸਾਰਣੀ ਸੋਧੋ</string>
     <string name="prox_rules">ਨਿਯਮ</string>
 
     <!-- ── ਸਮਾਂ-ਸਾਰਣੀ ਸਕ੍ਰੀਨ / ਨਿਯਮ ਸੰਪਾਦਕ ──────────────────────────────────── -->

@@ -249,6 +249,8 @@ class PeerSharingViewModel @Inject constructor(
 
     fun sendRoleChangeRequest(requestedRole: String? = null) {
         viewModelScope.launch {
+          // A key or crypto failure must surface as a log line, not crash the screen.
+          try {
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val settings = prefs.settings.first()
@@ -279,6 +281,9 @@ class PeerSharingViewModel @Inject constructor(
             )
             _roleChangeResult.value =
                 context.getString(com.locapeer.R.string.peer_role_change_sent, peer.displayName)
+          } catch (e: Exception) {
+            android.util.Log.e("PeerSharingViewModel", "Failed to send role change request", e)
+          }
         }
     }
 
@@ -324,7 +329,13 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             val nowSec = System.currentTimeMillis() / 1000L
             val endsAtSec = nowSec + durationMinutes.coerceAtLeast(1) * 60L
-            configDao.setTemporaryShareEndsAt(currentPeerId, endsAtSec)
+            // setTemporaryShareEndsAt is an UPDATE: for a contact that has never had a
+            // config row it matched nothing and the temporary share silently never started.
+            if (configDao.getForPeer(currentPeerId) != null) {
+                configDao.setTemporaryShareEndsAt(currentPeerId, endsAtSec)
+            } else {
+                configDao.upsert(defaultConfig().copy(temporaryShareEndsAtEpochSeconds = endsAtSec))
+            }
 
             // Cancel any previous expiry worker for this peer - the latest call wins.
             // REPLACE in enqueueUniqueWork also handles the case where the user extended

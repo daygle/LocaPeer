@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Tayîni</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Akeekkachiisa Dhiheenyaa</string>
-    <string name="prox_empty_title">Namni hordofamu hin jiru</string>
-    <string name="prox_empty_sub">Nama hordofuu jalqabuuf koodii QR afeerraa isaanii sakatta\'aa</string>
-    <string name="prox_intro">Namni ati hordoftu fageenya ati filattetti yoo dhufe si beeksisa.</string>
-    <string name="prox_alert_within">Yeroo %1$s keessa jiru beeksisi</string>
-    <string name="prox_alerts_off">Akeekkachiisni cufameera</string>
-    <string name="prox_alert_radius">Raadiyasii akeekkachiisaa</string>
-    <string name="prox_edit_schedule">Sagantaa Sirreessi</string>
     <string name="prox_rules">Seera</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

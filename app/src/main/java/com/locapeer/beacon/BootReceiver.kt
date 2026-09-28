@@ -22,7 +22,12 @@ class BootReceiver : BroadcastReceiver() {
     @Inject lateinit var prefs: AppPreferences
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action != Intent.ACTION_BOOT_COMPLETED) return
+        // MY_PACKAGE_REPLACED: an app update kills the running service, and without this it
+        // stayed down until the user next opened the app. Both broadcasts are exempt from
+        // the background foreground-service start restrictions.
+        if (intent.action != Intent.ACTION_BOOT_COMPLETED &&
+            intent.action != Intent.ACTION_MY_PACKAGE_REPLACED
+        ) return
         val pending = goAsync()
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -42,6 +47,7 @@ class BootReceiver : BroadcastReceiver() {
                     if (hasLocation && hasBackgroundLocation) {
                         val serviceIntent = Intent(context, HeartbeatService::class.java)
                         context.startForegroundService(serviceIntent)
+                        Log.i("BootReceiver", "Heartbeat service restarted after ${intent.action}")
                     } else {
                         Log.w(
                             "BootReceiver",
@@ -50,6 +56,10 @@ class BootReceiver : BroadcastReceiver() {
                         )
                     }
                 }
+            } catch (e: Exception) {
+                // e.g. ForegroundServiceStartNotAllowedException; an uncaught throw here would
+                // crash the process from a coroutine with no handler.
+                Log.e("BootReceiver", "Failed to restart heartbeat service", e)
             } finally {
                 pending.finish()
             }

@@ -1,6 +1,7 @@
 package com.locapeer.geofence
 
 import android.app.NotificationManager
+import com.locapeer.util.backgroundScope
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -22,9 +23,6 @@ import com.locapeer.sharing.toScheduleRules
 import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
@@ -58,7 +56,7 @@ class GeofenceEngine @Inject constructor(
     private val crypto: CryptoUtils,
     private val prefs: AppPreferences
 ) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+    private val scope = backgroundScope("GeofenceEngine")
     // Tracks the last time a notification was sent per fenceId to prevent GPS-jitter spam
     private val lastNotifiedAt = ConcurrentHashMap<String, Long>()
     // Inside/outside membership per fence+person, with hysteresis. In-memory: after a
@@ -253,6 +251,8 @@ class GeofenceEngine @Inject constructor(
             .setContentIntent(openMapPi)
             .addAction(R.drawable.ic_notif_message, context.getString(R.string.notif_message_person, personName), chatPi)
             .setAutoCancel(true)
+            // Who arrived where is location data: redact it on a locked screen.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify("${fence.id}:$personDeviceId", NOTIF_ID_GEOFENCE, notification)
     }

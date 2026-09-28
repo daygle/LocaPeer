@@ -19,7 +19,6 @@ import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
-import com.locapeer.data.dao.PendingMessageDao
 import com.locapeer.data.entity.CircleEntity
 import com.locapeer.data.entity.DeliveryState
 import com.locapeer.data.entity.MessageEntity
@@ -51,7 +50,6 @@ class MessagingViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val peerDao: PeerDao,
     private val circleDao: CircleDao,
-    private val pendingMessageDao: PendingMessageDao,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
     private val relayClient: NostrRelayClient,
@@ -61,9 +59,19 @@ class MessagingViewModel @Inject constructor(
 
     private val json = Json { ignoreUnknownKeys = true }
 
+    // Room flows shared by every derived list below. Each Room flow re-runs its query on every
+    // invalidation of its tables, and the conversation-summary query is a correlated subquery per
+    // thread; collecting the same DAO flow separately for each derived state ran it (and the
+    // peers / unread queries) several times per incoming message.
+    private val allPeers: Flow<List<PeerEntity>> = peerDao.getAllPeers().shareWhileSubscribed()
+    private val conversationSummaries: Flow<List<MessageEntity>> =
+        messageDao.getConversationSummaries().shareWhileSubscribed()
+    private val unreadByPeer: Flow<Map<String, Int>> = messageDao.getUnreadCountsPerPeer()
+        .map { rows -> rows.associate { it.peerId to it.cnt } }
+        .shareWhileSubscribed()
+
     val peers: StateFlow<List<PeerEntity>> =
-        peerDao.getAllPeers()
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        allPeers.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     /**
      * This device's own pubkey. Used by the circle screens to tell whether the local user owns a
@@ -81,51 +89,19 @@ class MessagingViewModel @Inject constructor(
     val sortOrder: StateFlow<SortOrder> = _sortOrder
 
     val conversations: StateFlow<List<ConversationSummary>?> =
-        combine(
-            messageDao.getConversationSummaries(),
-            peerDao.getAllPeers(),
-            _searchQuery,
-            _sortOrder,
-            messageDao.getUnreadCountsPerPeer().map { rows -> rows.associate { it.peerId to it.cnt } }
-        ) { msgs, peers, query, sort, unreadCounts ->
-            val peerMap = peers.associateBy { it.deviceId }
-            val base = msgs.mapNotNull { msg ->
-                val peer = peerMap[msg.peerId] ?: return@mapNotNull null
-                if (peer.isArchived) return@mapNotNull null
-                ConversationSummary(peer = peer, lastMessage = msg)
-            }
-            
-            val filtered = if (query.isBlank()) base
-            else base.filter {
-                it.peer.displayName.contains(query, ignoreCase = true) ||
-                it.lastMessage.content.contains(query, ignoreCase = true)
-            }
-            
-            when (sort) {
-                SortOrder.DATE -> filtered.sortedByDescending { it.lastMessage.timestamp }
-                SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase(Locale.ROOT) }
-                SortOrder.UNREAD -> filtered.sortedWith(
-                    compareByDescending<ConversationSummary> { (unreadCounts[it.peer.deviceId] ?: 0) > 0 }
-                        .thenByDescending { it.lastMessage.timestamp }
-                )
-            }
-        }
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+        conversationList(archived = false).stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+    /** Same search/sort pipeline as [conversations], restricted to archived peers, so the
+     *  Archived tab offers the same search-and-sort affordances as Chats. */
     val archivedConversations: StateFlow<List<ConversationSummary>> =
-        combine(
-            messageDao.getConversationSummaries(),
-            peerDao.getAllPeers(),
-            _searchQuery,
-            _sortOrder,
-            messageDao.getUnreadCountsPerPeer().map { rows -> rows.associate { it.peerId to it.cnt } }
-        ) { msgs, peers, query, sort, unreadCounts ->
-            // Mirrors the [conversations] search/sort pipeline exactly, but keeps only archived
-            // peers, so the Archived tab offers the same search-and-sort affordances as Chats.
+        conversationList(archived = true).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    private fun conversationList(archived: Boolean): Flow<List<ConversationSummary>> =
+        combine(conversationSummaries, allPeers, _searchQuery, _sortOrder, unreadByPeer) { msgs, peers, query, sort, unreadCounts ->
             val peerMap = peers.associateBy { it.deviceId }
             val base = msgs.mapNotNull { msg ->
                 val peer = peerMap[msg.peerId] ?: return@mapNotNull null
-                if (!peer.isArchived) return@mapNotNull null
+                if (peer.isArchived != archived) return@mapNotNull null
                 ConversationSummary(peer = peer, lastMessage = msg)
             }
             val filtered = if (query.isBlank()) base
@@ -141,14 +117,12 @@ class MessagingViewModel @Inject constructor(
                         .thenByDescending { it.lastMessage.timestamp }
                 )
             }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        }
 
     fun observePeer(peerId: String): Flow<PeerEntity?> = peerDao.observePeer(peerId)
 
     val unreadCounts: StateFlow<Map<String, Int>> =
-        messageDao.getUnreadCountsPerPeer()
-            .map { rows -> rows.associate { it.peerId to it.cnt } }
-            .stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
+        unreadByPeer.stateIn(viewModelScope, SharingStarted.Lazily, emptyMap())
 
     /**
      * Total unread across all non-archived 1:1 chats, driving the badge on the Chats sub-tab so
@@ -157,24 +131,10 @@ class MessagingViewModel @Inject constructor(
      * regardless of any active search.
      */
     val chatsUnreadTotal: StateFlow<Int> =
-        combine(peerDao.getAllPeers(), messageDao.getUnreadCountsPerPeer()) { peers, rows ->
+        combine(allPeers, unreadByPeer) { peers, unread ->
             val archived = peers.filter { it.isArchived }.map { it.deviceId }.toSet()
-            rows.filterNot { it.peerId in archived }.sumOf { it.cnt }
+            unread.filterKeys { it !in archived }.values.sum()
         }.stateIn(viewModelScope, SharingStarted.Lazily, 0)
-
-    /** Total unread across all non-archived circles, driving the badge on the Circles sub-tab. */
-    val circlesUnreadTotal: StateFlow<Int> =
-        combine(circleDao.observeCircles(), messageDao.getUnreadCountsPerGroup()) { circles, rows ->
-            val active = circles.filterNot { it.isArchived }.map { it.id }.toSet()
-            rows.filter { it.peerId in active }.sumOf { it.cnt }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, 0)
-
-    /** Count of messages queued in the relay outbox (sent but not yet acknowledged by any
-     *  relay). Surfaced on the chat list and AboutScreen so outbox backups are visible
-     *  beyond the simple connected/disconnected dot. */
-    val pendingMessageCount: StateFlow<Int> =
-        pendingMessageDao.countAll()
-            .stateIn(viewModelScope, SharingStarted.Lazily, 0)
 
     private val _typingPeers = MutableStateFlow<Map<String, Long>>(emptyMap())
     /** Maps peerDeviceId (= pubkey) to the millisecond timestamp of the last typing event. */
@@ -203,6 +163,29 @@ class MessagingViewModel @Inject constructor(
     // ----- Circles (client-side groups) -----
 
     /**
+     * Per-circle summary rows (unfiltered, unsorted), shared by the active and archived circle
+     * lists and the Circles badge so their four Room queries run once per change.
+     */
+    private val circleSummaries: Flow<List<GroupConversationSummary>> =
+        combine(
+            circleDao.observeCircles(),
+            messageDao.getGroupConversationSummaries(),
+            circleDao.observeMemberCounts(),
+            messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
+        ) { circles, lastMsgs, counts, unread ->
+            val lastByGid = lastMsgs.associateBy { it.groupId }
+            val countByGid = counts.associate { it.circleId to it.cnt }
+            circles.map { c ->
+                GroupConversationSummary(
+                    circle = c,
+                    lastMessage = lastByGid[c.id],
+                    memberCount = countByGid[c.id] ?: 0,
+                    unread = unread[c.id] ?: 0
+                )
+            }
+        }.shareWhileSubscribed()
+
+    /**
      * Group conversation rows, one per non-archived circle, filtered by [_searchQuery]
      * and ordered by [_sortOrder]. Mirrors exactly how [conversations] threads query
      * and sort for 1:1 chats, so the Circles / Archived tabs can offer the same
@@ -212,77 +195,23 @@ class MessagingViewModel @Inject constructor(
      * EMPTY (no circles exist yet). See [com.locapeer.messaging.ConversationListScreen].
      */
     val groupConversations: StateFlow<List<GroupConversationSummary>?> =
-        combine(
-            // Stage 1: build the unfiltered, unsorted per-circle summary rows from the
-            // underlying DAO flows. The standard typed `combine` overload tops out at 5
-            // arguments and adding `_searchQuery` + `_sortOrder` here would exceed that,
-            // so the search/sort stage is chained as a second combine below instead.
-            combine(
-                circleDao.observeCircles(),
-                messageDao.getGroupConversationSummaries(),
-                circleDao.observeMemberCounts(),
-                messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
-            ) { circles, lastMsgs, counts, unread ->
-                val lastByGid = lastMsgs.associateBy { it.groupId }
-                val countByGid = counts.associate { it.circleId to it.cnt }
-                circles.filterNot { it.isArchived }.map { c ->
-                    GroupConversationSummary(
-                        circle = c,
-                        lastMessage = lastByGid[c.id],
-                        memberCount = countByGid[c.id] ?: 0,
-                        unread = unread[c.id] ?: 0
-                    )
-                }
-            },
-            _searchQuery,
-            _sortOrder,
-        ) { list, query, sort ->
-            // Search matches the circle name OR the last-message preview (mirrors how
-            // 1:1 chat search matches `displayName` + `lastMessage.content`). `lastMessage`
-            // is nullable, hence the explicit null-safe chain.
-            val filtered = if (query.isBlank()) list
-            else list.filter {
-                it.circle.name.contains(query, ignoreCase = true) ||
-                    (it.lastMessage?.content?.contains(query, ignoreCase = true) ?: false)
-            }
-            when (sort) {
-                SortOrder.DATE -> filtered.sortedByDescending {
-                    it.lastMessage?.timestamp ?: it.circle.createdAt
-                }
-                SortOrder.NAME -> filtered.sortedBy { it.circle.name.lowercase(Locale.ROOT) }
-                SortOrder.UNREAD -> filtered.sortedWith(
-                    compareByDescending<GroupConversationSummary> { it.unread > 0 }
-                        .thenByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
-                )
-            }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+        groupConversationList(archived = false).stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-    /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations. Applies
-     *  the same search/sort pipeline as [groupConversations] so the Archived tab's search-and-sort
-     *  covers circles too. Two-stage combine because the base combine already uses 4 flows and
-     *  adding query + sort would exceed the typed `combine` overload's 5-argument limit. */
+    /** Archived circles, shown on the Archived tab alongside archived 1:1 conversations, with the
+     *  same search/sort pipeline as [groupConversations]. */
     val archivedGroupConversations: StateFlow<List<GroupConversationSummary>> =
-        combine(
-            combine(
-                circleDao.observeCircles(),
-                messageDao.getGroupConversationSummaries(),
-                circleDao.observeMemberCounts(),
-                messageDao.getUnreadCountsPerGroup().map { rows -> rows.associate { it.peerId to it.cnt } }
-            ) { circles, lastMsgs, counts, unread ->
-                val lastByGid = lastMsgs.associateBy { it.groupId }
-                val countByGid = counts.associate { it.circleId to it.cnt }
-                circles.filter { it.isArchived }.map { c ->
-                    GroupConversationSummary(
-                        circle = c,
-                        lastMessage = lastByGid[c.id],
-                        memberCount = countByGid[c.id] ?: 0,
-                        unread = unread[c.id] ?: 0
-                    )
-                }
-            },
-            _searchQuery,
-            _sortOrder,
-        ) { list, query, sort ->
+        groupConversationList(archived = true).stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+
+    /** Total unread across all non-archived circles, driving the badge on the Circles sub-tab. */
+    val circlesUnreadTotal: StateFlow<Int> =
+        circleSummaries.map { rows -> rows.filterNot { it.circle.isArchived }.sumOf { it.unread } }
+            .stateIn(viewModelScope, SharingStarted.Lazily, 0)
+
+    private fun groupConversationList(archived: Boolean): Flow<List<GroupConversationSummary>> =
+        combine(circleSummaries, _searchQuery, _sortOrder) { all, query, sort ->
+            val list = all.filter { it.circle.isArchived == archived }
+            // Search matches the circle name OR the last-message preview (mirrors how
+            // 1:1 chat search matches `displayName` + `lastMessage.content`).
             val filtered = if (query.isBlank()) list
             else list.filter {
                 it.circle.name.contains(query, ignoreCase = true) ||
@@ -296,7 +225,10 @@ class MessagingViewModel @Inject constructor(
                         .thenByDescending { it.lastMessage?.timestamp ?: it.circle.createdAt }
                 )
             }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        }
+
+    private fun <T> Flow<T>.shareWhileSubscribed(): Flow<T> =
+        shareIn(viewModelScope, SharingStarted.WhileSubscribed(5_000, replayExpirationMillis = 0), replay = 1)
 
     /** Archive/unarchive a circle - the group counterpart of [archiveConversation]. */
     fun archiveCircle(circleId: String, archived: Boolean) {
@@ -712,22 +644,24 @@ class MessagingViewModel @Inject constructor(
                         crypto = crypto
                     )
                 }
-                relayClient.publishEvent(event)
-                
+                // Store the row BEFORE publishing: a relay's OK can arrive within milliseconds,
+                // and if it lands before the insert the SENDING -> SENT update matches nothing
+                // and the message shows "sending" forever.
+                messageDao.insert(
+                    MessageEntity(
+                        id = event.id,
+                        peerId = peerId,
+                        senderPublicKeyHex = pubHex,
+                        content = content,
+                        timestamp = System.currentTimeMillis(),
+                        isMine = true,
+                        deliveryState = DeliveryState.SENDING.name,
+                        nostrEventId = event.id
+                    )
+                )
                 // Auto-unarchive peer on send
                 peerDao.unarchive(peerId)
-
-                val msg = MessageEntity(
-                    id = event.id,
-                    peerId = peerId,
-                    senderPublicKeyHex = pubHex,
-                    content = content,
-                    timestamp = System.currentTimeMillis(),
-                    isMine = true,
-                    deliveryState = DeliveryState.SENDING.name,
-                    nostrEventId = event.id
-                )
-                messageDao.insert(msg)
+                relayClient.publishEvent(event)
             } catch (e: Exception) {
                 android.util.Log.e("MessagingViewModel", "sendMessage failed", e)
             }
@@ -770,6 +704,8 @@ class MessagingViewModel @Inject constructor(
      * previous one cleanly (no shared `play.m4a` race). Cleared in [stopAudio] / [onCleared].
      */
     private val players: MutableMap<String, MediaPlayer> = mutableMapOf()
+    /** Decrypted voice-note temp files backing [players]; deleted as soon as playback stops. */
+    private val playbackFiles: MutableMap<String, File> = mutableMapOf()
 
     /** Compresses and sends an image picked from the gallery as an inline IMAGE message. */
     fun sendImage(peerId: String, uri: Uri) {
@@ -841,8 +777,8 @@ class MessagingViewModel @Inject constructor(
      *  to the right send pipeline without holding the call site's UI state for that. */
     fun startRecording(target: RecordTarget) {
         if (_isRecording.value) return
+        val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
         try {
-            val file = File(context.cacheDir, "voice_${System.currentTimeMillis()}.m4a")
             val rec = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) MediaRecorder(context)
                 else @Suppress("DEPRECATION") MediaRecorder()
             rec.setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -866,6 +802,7 @@ class MessagingViewModel @Inject constructor(
         } catch (e: Exception) {
             Log.e("MessagingViewModel", "startRecording failed", e)
             releaseRecorder()
+            file.delete()
             _isRecording.value = false
         }
     }
@@ -943,12 +880,14 @@ class MessagingViewModel @Inject constructor(
                     // never overwrites the active file mid-stream.
                     File(context.cacheDir, "play_${messageId}.m4a").apply { writeBytes(bytes) }
                 }
+                playbackFiles[messageId] = file
                 val mp = MediaPlayer()
+                // Registered before prepare() so a failure below still gets released by stopAudio.
+                players[messageId] = mp
                 mp.setDataSource(file.absolutePath)
                 mp.setOnCompletionListener { stopAudio() }
                 mp.prepare()
                 mp.start()
-                players[messageId] = mp
                 _playingMessageId.value = messageId
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "audio playback failed", e)
@@ -968,6 +907,10 @@ class MessagingViewModel @Inject constructor(
             try { mp.release() } catch (_: Exception) {}
         }
         players.clear()
+        // The staged file is a plaintext copy of an encrypted-at-rest message; don't leave it
+        // in the cache once nothing is playing it.
+        playbackFiles.values.forEach { it.delete() }
+        playbackFiles.clear()
         _playingMessageId.value = null
     }
 
@@ -1040,8 +983,7 @@ class MessagingViewModel @Inject constructor(
                         crypto = crypto
                     )
                 }
-                relayClient.publishEvent(event)
-                peerDao.unarchive(peerId)
+                // Insert before publishing so the relay OK always finds the row (see sendMessage).
                 messageDao.insert(
                     MessageEntity(
                         id = event.id,
@@ -1059,6 +1001,8 @@ class MessagingViewModel @Inject constructor(
                         mediaMimeType = media.mimeType
                     )
                 )
+                peerDao.unarchive(peerId)
+                relayClient.publishEvent(event)
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "sendMediaMessage failed", e)
             }
@@ -1104,15 +1048,11 @@ class MessagingViewModel @Inject constructor(
             }
             .launchIn(viewModelScope)
 
-        // Relay OK → SENDING → SENT (relay confirmed it received the event)
+        // Relay OK → SENDING → SENT (relay confirmed it received the event). Never regresses a
+        // message a recipient already acknowledged: see MessageDao.markSentByNostrEventId.
         okEventsJob?.cancel()
         okEventsJob = relayClient.okEvents
-            .onEach { confirmedEventId ->
-                messageDao.updateDeliveryStateByNostrEventId(
-                    confirmedEventId,
-                    DeliveryState.SENT.name
-                )
-            }
+            .onEach { confirmedEventId -> messageDao.markSentByNostrEventId(confirmedEventId) }
             .launchIn(viewModelScope)
     }
 
@@ -1121,10 +1061,8 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch {
             val sender = peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
             if (!sender.messagingEnabled) return@launch  // suppress typing from disabled contacts
-            // Verify the signature so an unrelated party can't forge a "contact is typing"
-            // indicator by publishing an unsigned event carrying the contact's pubkey.
-            // Schnorr verification is CPU-heavy, so keep it off the Main dispatcher.
-            if (!withContext(Dispatchers.Default) { NostrEvent.verify(event, crypto) }) return@launch
+            // No signature check needed here: NostrRelayClient verifies every event before it
+            // reaches the events flow, so a forged "contact is typing" never gets this far.
             _typingPeers.update { it + (fromPubkey to System.currentTimeMillis()) }
             typingClearJobs[fromPubkey]?.cancel()
             typingClearJobs[fromPubkey] = viewModelScope.launch {
@@ -1136,7 +1074,8 @@ class MessagingViewModel @Inject constructor(
 
     private fun processDeletionEvent(event: NostrEvent) {
         viewModelScope.launch {
-            if (!NostrEvent.verify(event, crypto)) return@launch
+            // Signature already verified by NostrRelayClient before emission; re-verifying
+            // here only repeated the Schnorr check on the main thread.
             val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
             targetEventIds.forEach { eventId ->
                 val msg = messageDao.getByNostrEventId(eventId)
@@ -1184,11 +1123,13 @@ class MessagingViewModel @Inject constructor(
                 crypto = crypto
             )
         }
-        relayClient.publishEvent(event)
+        // Typing is ephemeral: a queued indicator delivered after reconnect would be wrong.
+        relayClient.publishEvent(event, queueIfUndelivered = false)
     }
 
     override fun onCleared() {
-        recordTimeoutJob?.cancel()
+        // Discards (and deletes) an in-progress recording instead of leaking its temp file.
+        cancelRecording()
         releaseRecorder()
         stopAudio()
         myListeningPubkey?.let { pubkey ->

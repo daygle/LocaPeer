@@ -12,6 +12,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.util.Geocoding
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,6 +22,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.map
@@ -86,6 +88,8 @@ class HistoryReportViewModel @Inject constructor(
             ) { pings, (minDistanceM, maxAccuracyM) ->
                 HistoryThinning.process(pings, maxAccuracyM, minDistanceM)
             }
+            // A full day of pings is thinned with distance math per point; keep it off Main.
+            .flowOn(Dispatchers.Default)
             .stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
 
     private val _addresses = MutableStateFlow<Map<Long, String>>(emptyMap())

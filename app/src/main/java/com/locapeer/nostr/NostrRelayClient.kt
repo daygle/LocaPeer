@@ -1,6 +1,7 @@
 package com.locapeer.nostr
 
 import android.content.Context
+import com.locapeer.util.backgroundScope
 import android.net.ConnectivityManager
 import android.net.Network
 import android.util.Log
@@ -11,10 +12,7 @@ import com.locapeer.data.entity.PendingMessageEntity
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,7 +38,6 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
-import java.net.InetAddress
 import java.net.Proxy
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.TimeUnit
@@ -75,7 +72,7 @@ class NostrRelayClient @Inject constructor(
             explicitNulls = false
         }
     }
-    private val scope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.IO) }
+    private val scope by lazy { backgroundScope(TAG) }
 
     @Volatile private var isStarted = false
     @Volatile var isOnline = false
@@ -87,10 +84,11 @@ class NostrRelayClient @Inject constructor(
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
+            // TLS only: isValidRelayUrl already restricts targets to wss://, and leaving
+            // CLEARTEXT out means no code path can ever open an unencrypted relay socket.
             .connectionSpecs(listOf(
                 ConnectionSpec.MODERN_TLS,
                 ConnectionSpec.COMPATIBLE_TLS, // Added for broader self-hosted compatibility
-                ConnectionSpec.CLEARTEXT,
             ))
             .hostnameVerifier(NostrHostnameVerifier())
             .eventListenerFactory(NostrConnectionListener.Factory())
@@ -229,12 +227,17 @@ class NostrRelayClient @Inject constructor(
         }
     }
 
-    fun publishEvent(event: NostrEvent) {
+    /**
+     * Publish [event] to every relay. Undeliverable events are queued for a later flush unless
+     * [queueIfUndelivered] is false - used for ephemeral signals (typing, live-view requests)
+     * that are worthless by the time a connection returns and would only bloat the outbox.
+     */
+    fun publishEvent(event: NostrEvent, queueIfUndelivered: Boolean = true) {
         val msg = buildJsonArray {
             add(JsonPrimitive("EVENT"))
             add(json.encodeToJsonElement(event))
         }.toString()
-        sendToAll(msg, isEvent = true)
+        sendToAll(msg, isEvent = true, queueIfUndelivered = queueIfUndelivered)
     }
 
     fun subscribe(subscriptionId: String, filter: NostrFilter) {
@@ -260,25 +263,26 @@ class NostrRelayClient @Inject constructor(
         sendToAll(msg, isEvent = false)
     }
 
-    private fun sendToAll(msg: String, isEvent: Boolean) {
+    private fun sendToAll(msg: String, isEvent: Boolean, queueIfUndelivered: Boolean = isEvent) {
+        val queue = isEvent && queueIfUndelivered
         val disconnectedRelays = mutableListOf<RelayConnection>()
 
         relays.values.forEach { relay ->
             if (relay.isConnected) {
                 val success = relay.send(msg)
                 if (!success && isEvent) {
-                    scope.launch { queuePending(relay.url, msg) }
+                    if (queue) scope.launch { queuePending(relay.url, msg) }
                     relay.scheduleReconnect()
                 }
             } else {
-                if (isEvent) {
+                if (queue) {
                     disconnectedRelays.add(relay)
                 }
                 relay.ensureConnecting()
             }
         }
 
-        if (isEvent && disconnectedRelays.isNotEmpty()) {
+        if (disconnectedRelays.isNotEmpty()) {
             scope.launch {
                 disconnectedRelays.forEach { relay -> queuePending(relay.url, msg) }
             }
@@ -314,14 +318,15 @@ class NostrRelayClient @Inject constructor(
 
     private fun flushPendingTo(relay: RelayConnection) {
         scope.launch {
+            // Re-subscribe first so inbound delivery resumes immediately; a long offline
+            // backlog queued ahead of the REQs would otherwise delay every incoming event.
+            val subs = synchronized(subsLock) { activeSubscriptions.values.toList() }
+            subs.forEach { relay.send(it) }
             val pending = pendingMessageDao.getForRelay(relay.url)
             pending.forEach { entity ->
                 if (relay.send(entity.content)) {
                     pendingMessageDao.delete(entity)
                 }
-            }
-            synchronized(subsLock) {
-                activeSubscriptions.values.forEach { relay.send(it) }
             }
         }
     }
@@ -329,6 +334,13 @@ class NostrRelayClient @Inject constructor(
     private inner class RelayConnection(val url: String) {
         @Volatile var webSocket: WebSocket? = null
         @Volatile var isConnected = false
+        /** Set once this relay is dropped from the live set; its late socket callbacks and
+         *  pending backoff must then never resurrect a connection nobody tracks any more. */
+        @Volatile private var removed = false
+        // Serialises the connected/connecting check-then-act in [connect]; without it two
+        // threads (a publish on IO plus the network callback) could both see no socket
+        // and open duplicate WebSockets, leaking one.
+        private val connectLock = Any()
         // Touched from OkHttp callback threads, sendToAll callers and the reconnect
         // coroutine; guarded by reconnectLock so concurrent scheduleReconnect calls
         // can't both pass the isActive check and arm duplicate backoff timers.
@@ -337,33 +349,49 @@ class NostrRelayClient @Inject constructor(
         private var reconnectAttempts = 0
 
         fun connect() {
-            if (isConnected || (webSocket != null)) return
-            _relayStatus.update { it + (url to false) }
-            try {
-                Log.d(TAG, "Connecting to $url")
-                val request = Request.Builder()
-                    .url(url)
-                    .header("User-Agent", "LocaPeer/${com.locapeer.BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)")
-                    .build()
-                webSocket = client.newWebSocket(request, Listener())
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to connect to $url: ${e.message}")
-                isConnected = false
-                webSocket = null
-                scheduleReconnect()
+            synchronized(connectLock) {
+                if (removed || isConnected || (webSocket != null)) return
+                _relayStatus.update { it + (url to false) }
+                try {
+                    Log.d(TAG, "Connecting to $url")
+                    val request = Request.Builder()
+                        .url(url)
+                        .header("User-Agent", "LocaPeer/${com.locapeer.BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)")
+                        .build()
+                    webSocket = client.newWebSocket(request, Listener())
+                    return
+                } catch (e: Exception) {
+                    Log.e(TAG, "Failed to connect to $url: ${e.message}")
+                    isConnected = false
+                    webSocket = null
+                }
             }
+            scheduleReconnect()
         }
 
         fun disconnect() {
+            removed = true
             synchronized(reconnectLock) {
                 reconnectJob?.cancel()
                 reconnectJob = null
                 reconnectAttempts = 0
             }
-            webSocket?.close(1000, "Disconnecting")
+            val socket = synchronized(connectLock) {
+                webSocket.also {
+                    webSocket = null
+                    isConnected = false
+                }
+            }
+            socket?.close(1000, "Disconnecting")
+        }
+
+        /** Clears connection state if [socket] is still the current one. Callbacks from a
+         *  superseded socket must not clobber the state of its replacement. */
+        private fun markClosed(socket: WebSocket): Boolean = synchronized(connectLock) {
+            if (webSocket !== socket) return false
             webSocket = null
             isConnected = false
-            _relayStatus.update { it + (url to false) }
+            true
         }
 
         fun ensureConnecting() {
@@ -387,6 +415,7 @@ class NostrRelayClient @Inject constructor(
             if (isConnected) webSocket?.send(msg) ?: false else false
 
         fun scheduleReconnect() {
+            if (removed) return
             synchronized(reconnectLock) {
                 if (reconnectJob?.isActive == true) return
                 reconnectJob = scope.launch {
@@ -408,8 +437,15 @@ class NostrRelayClient @Inject constructor(
 
         private inner class Listener : WebSocketListener() {
             override fun onOpen(webSocket: WebSocket, response: Response) {
+                synchronized(connectLock) {
+                    if (this@RelayConnection.webSocket !== webSocket) {
+                        // Superseded or removed while the handshake was in flight.
+                        webSocket.close(1000, "Superseded")
+                        return
+                    }
+                    isConnected = true
+                }
                 Log.d(TAG, "Connected to $url")
-                isConnected = true
                 synchronized(reconnectLock) { reconnectAttempts = 0 }
                 _relayStatus.update { it + (url to true) }
                 flushPendingTo(this@RelayConnection)
@@ -511,16 +547,14 @@ class NostrRelayClient @Inject constructor(
                         if (code == null) Log.d(TAG, "Connection failure details for $url", t)
                     }
                 }
-                isConnected = false
-                this@RelayConnection.webSocket = null
+                if (!markClosed(webSocket)) return
                 _relayStatus.update { it + (url to false) }
                 scheduleReconnect()
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 Log.d(TAG, "Closed $url: $code $reason")
-                isConnected = false
-                this@RelayConnection.webSocket = null
+                if (!markClosed(webSocket)) return
                 _relayStatus.update { it + (url to false) }
                 if (code != 1000) scheduleReconnect()
             }
@@ -533,7 +567,7 @@ class NostrRelayClient @Inject constructor(
  * Used to diagnose self-hosted relay certificate chain issues and SNI mismatches.
  */
 private class NostrConnectionListener(private val url: String) : EventListener() {
-    var lastHandshake: Handshake? = null
+    @Volatile var lastHandshake: Handshake? = null
         private set
 
     override fun secureConnectEnd(call: okhttp3.Call, handshake: Handshake?) {
@@ -552,14 +586,19 @@ private class NostrConnectionListener(private val url: String) : EventListener()
 
     class Factory : EventListener.Factory {
         override fun create(call: okhttp3.Call): EventListener {
-            val url = call.request().url.toString()
-            return listeners.getOrPut(url) { NostrConnectionListener(url) }
+            // Keyed by host: OkHttp rewrites a wss:// request URL to https:// (with a trailing
+            // path), so the relay URL string never matched and handshake diagnostics were lost.
+            val requestUrl = call.request().url
+            return listeners.getOrPut(requestUrl.host) { NostrConnectionListener(requestUrl.toString()) }
         }
     }
 
     companion object {
         private val listeners = ConcurrentHashMap<String, NostrConnectionListener>()
-        fun getFor(url: String): NostrConnectionListener? = listeners[url]
+        fun getFor(relayUrl: String): NostrConnectionListener? {
+            val host = try { java.net.URI(relayUrl).host } catch (_: Exception) { null } ?: return null
+            return listeners[host]
+        }
     }
 }
 

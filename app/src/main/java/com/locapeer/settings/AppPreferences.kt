@@ -20,6 +20,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
@@ -290,6 +291,10 @@ class AppPreferences @Inject constructor(
                 requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true
             )
         }
+        // The store also holds sync bookkeeping (dedup event ids, catch-up epochs) that is
+        // rewritten constantly in the background; without this every such write re-emitted an
+        // identical AppSettings to every collector (service reschedules, UI recompositions).
+        .distinctUntilChanged()
         // replay = 1 caches the latest settings so newly-mounted screens get it immediately
         // (no spinner flash) without re-reading disk; WhileSubscribed lets the upstream stop
         // when nothing is observing. No synthetic initial value is emitted, so the existing
@@ -509,6 +514,7 @@ class AppPreferences @Inject constructor(
         .map { prefs ->
             prefs[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
         }
+        .distinctUntilChanged()
 
     suspend fun addLeftCircleId(gid: String) {
         context.settingsStore.edit {

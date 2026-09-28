@@ -632,14 +632,6 @@
     <string name="geo_assign_action">Назначить</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Оповещения о близости</string>
-    <string name="prox_empty_title">Никто не отслеживается</string>
-    <string name="prox_empty_sub">Отсканируйте чей-нибудь QR-код на вкладке «Сканировать»,\nчтобы начать отслеживать местоположение</string>
-    <string name="prox_intro">Получайте уведомления, когда отслеживаемый человек оказывается ближе выбранного расстояния.</string>
-    <string name="prox_alert_within">Оповещать в пределах %1$s</string>
-    <string name="prox_alerts_off">Оповещения выключены</string>
-    <string name="prox_alert_radius">Радиус оповещения</string>
-    <string name="prox_edit_schedule">Изменить расписание</string>
     <string name="prox_rules">Правила</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

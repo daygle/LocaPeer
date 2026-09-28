@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Tayîn Bike</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Hişyariyên Nêzîkbûnê</string>
-    <string name="prox_empty_title">Kesek nayê şopandin</string>
-    <string name="prox_empty_sub">Ji tabê Scanê koda QR ya kesekî bixwînin\nda ku dest bi şopandina cihê wan bikin</string>
-    <string name="prox_intro">Dema ku kesek tê şopandin nêzîkî we bibe (di dûrahiya hilbijartî de) agahdar bibin.</string>
-    <string name="prox_alert_within">Dema di nav %1$s de be hişyar bike</string>
-    <string name="prox_alerts_off">Hişyarî girtî ne</string>
-    <string name="prox_alert_radius">Radyusa hişyariyê</string>
-    <string name="prox_edit_schedule">Bernameyê Biguhere</string>
     <string name="prox_rules">Rêzik</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->

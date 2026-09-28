@@ -83,27 +83,28 @@ class AppLockManager @Inject constructor(
      * biometric/device-credential prompt will fire at the next rendering.
      */
     private fun onProcessForeground() {
+        // Capture (and clear) the background timestamp synchronously on the lifecycle
+        // callback, before any suspension: the guard below needs to distinguish "no
+        // background was recorded" from "just came back".
+        val backgroundedAt = backgroundedAtMs
+        backgroundedAtMs = 0L
+        // No recorded background time means the process never went away (cold start
+        // handled by [onAppStart]). Don't auto-relock.
+        if (backgroundedAt == 0L) return
         scope.launch {
             val current = prefs.settings.first()
-            // Capture the recorded background timestamp before clearing it: the guard
-            // below needs to distinguish "no background was recorded" from "just came
-            // back", and that state lives in this field, not in the reset value.
-            val backgroundedAt = backgroundedAtMs
-            backgroundedAtMs = 0L
-            // No recorded background time means the process never went away (cold
-            // start handled by [onAppStart]). Don't auto-relock.
-            if (!current.appLockEnabled || backgroundedAt == 0L) return@launch
+            if (!current.appLockEnabled) return@launch
             val timeoutMs = current.appLockTimeoutSeconds * 1000L
             if (System.currentTimeMillis() - backgroundedAt >= timeoutMs) _unlocked.value = false
         }
     }
 
     private fun onProcessBackground() {
-        scope.launch {
-            val current = prefs.settings.first()
-            if (!current.appLockEnabled) return@launch
-            backgroundedAtMs = System.currentTimeMillis()
-        }
+        // Recorded synchronously (and unconditionally - the enabled check happens on
+        // return). Stamping it from a coroutine after a DataStore read let a quick
+        // background -> foreground switch run the foreground check first, see no
+        // timestamp, and skip the relock entirely - an "Immediate" lock bypass.
+        backgroundedAtMs = System.currentTimeMillis()
     }
 
     private fun installObserverIfNeeded() {

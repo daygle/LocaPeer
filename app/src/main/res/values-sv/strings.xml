@@ -608,14 +608,6 @@
     <string name="geo_assign_action">Tilldela</string>
 
     <!-- ── Proximity alerts screen ────────────────────────────────────────── -->
-    <string name="prox_title">Närhetslarm</string>
-    <string name="prox_empty_title">Inga spårade personer</string>
-    <string name="prox_empty_sub">Skanna någons inbjudnings-QR från fliken Skanna\nför att börja spåra dennes plats</string>
-    <string name="prox_intro">Få en avisering när en spårad person kommer inom ett valt avstånd från dig.</string>
-    <string name="prox_alert_within">Larma inom %1$s</string>
-    <string name="prox_alerts_off">Larm av</string>
-    <string name="prox_alert_radius">Larmradie</string>
-    <string name="prox_edit_schedule">Redigera schema</string>
     <string name="prox_rules">Regler</string>
 
     <!-- ── Schedule screen / rule editor ──────────────────────────────────── -->
