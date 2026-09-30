@@ -45,7 +45,7 @@
     <string name="settings_theme_system">Follow System</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
-    <string name="settings_dynamic_color">Material You colours</string>
+    <string name="settings_dynamic_color">Material You Colours</string>
     <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
     <string name="settings_queued_messages">Queued Messages</string>
     <string name="settings_queued_none">No queued messages</string>
