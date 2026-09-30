@@ -628,7 +628,7 @@ private fun OsmdroidMapView(
     AndroidView(
         factory = { ctx ->
             MapView(ctx).apply {
-                setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT)
+                MapTileSources.apply(this, isDark)
                 setMultiTouchControls(true)
                 isVerticalMapRepetitionEnabled = false
                 val scaleBar = ScaleBarOverlay(this).apply {
@@ -663,8 +663,7 @@ private fun OsmdroidMapView(
             }
         },
         update = { mapView ->
-            val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT
-            if (mapView.tileProvider.tileSource != targetTileSource) mapView.setTileSource(targetTileSource)
+            MapTileSources.apply(mapView, isDark)
             mapView.overlays.filterIsInstance<CompassOverlay>().firstOrNull()?.let { compass ->
                 val density = mapView.context.resources.displayMetrics.density
                 compass.setCompassCenter(mapView.width - 45f * density, 40f * density)

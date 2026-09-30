@@ -443,7 +443,7 @@ private fun HistoryMapTab(
             factory = { ctx ->
                 @Suppress("DEPRECATION")
                 MapView(ctx).apply {
-                    setTileSource(if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT)
+                    MapTileSources.apply(this, isDark)
                     setBuiltInZoomControls(false)
                     setMultiTouchControls(true)
                     isVerticalMapRepetitionEnabled = false
@@ -474,10 +474,7 @@ private fun HistoryMapTab(
                 }
             },
             update = { mapView ->
-                val targetTileSource = if (isDark) MapTileSources.CARTO_DARK else MapTileSources.LIGHT
-                if (mapView.tileProvider.tileSource != targetTileSource) {
-                    mapView.setTileSource(targetTileSource)
-                }
+                MapTileSources.apply(mapView, isDark)
 
                 // rebuilding markers is expensive; only do it if the data (or pin selection) actually changes.
                 val selectedId = selectedPing?.id
