@@ -265,6 +265,7 @@ class MessagingViewModel @Inject constructor(
                     messageDao.deleteAllForGroup(circleId)
                     circleDao.clearMembers(circleId)
                     circleDao.deleteCircle(circleId)
+                    MediaCache.clearDecryptedMedia(context)
                     return@launch
                 }
                 // Tell the owner we left so they remove us from the circle's membership.
@@ -294,6 +295,7 @@ class MessagingViewModel @Inject constructor(
                 messageDao.deleteAllForGroup(circleId)
                 circleDao.clearMembers(circleId)
                 circleDao.deleteCircle(circleId)
+                MediaCache.clearDecryptedMedia(context)
             } catch (e: Exception) {
                 Log.e("MessagingViewModel", "leaveCircle failed", e)
             }
@@ -907,7 +909,7 @@ class MessagingViewModel @Inject constructor(
             try { mp.release() } catch (_: Exception) {}
         }
         players.clear()
-        // The staged file is a plaintext copy of an encrypted-at-rest message; don't leave it
+        // The staged file is a plaintext copy of a private message; don't leave it
         // in the cache once nothing is playing it.
         playbackFiles.values.forEach { it.delete() }
         playbackFiles.clear()
@@ -1081,6 +1083,7 @@ class MessagingViewModel @Inject constructor(
                 val msg = messageDao.getByNostrEventId(eventId)
                 if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
                     messageDao.delete(msg)
+                    MediaCache.clearDecryptedMedia(context)
                 }
             }
         }

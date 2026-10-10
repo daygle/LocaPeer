@@ -11,7 +11,7 @@ import java.io.File
  *  - `cacheDir/attachments/<name>`  (files opened via FileProvider in `openFile`)
  *  - `cacheDir/play_<messageId>.m4a` (voice notes staged for `MediaPlayer`)
  *
- * These are derived, recreated on demand from the encrypted-at-rest DB row, so wiping
+ * These are derived, recreated on demand from the private DB row, so wiping
  * them wholesale on any message/contact deletion is safe. Without this, a message
  * deleted by retention, a purge request, or a contact removal left its decrypted bytes
  * sitting in the cache until Android happened to evict them - defeating the deletion the
@@ -20,6 +20,7 @@ import java.io.File
 object MediaCache {
 
     fun clearDecryptedMedia(context: Context) {
+        MediaUtils.clearThumbnailCache()
         try {
             File(context.cacheDir, "attachments").listFiles()?.forEach { it.delete() }
             context.cacheDir.listFiles { _, name -> name.startsWith("play_") && name.endsWith(".m4a") }

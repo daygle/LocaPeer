@@ -130,7 +130,7 @@ class ScanViewModel @Inject constructor(
     }
 
     private fun isValidPubKeyHex(hex: String): Boolean =
-        hex.length == 64 && hex.all { it.isDigit() || (it.lowercaseChar() in 'a'..'f') }
+        hex.length == 64 && hex.all { it in '0'..'9' || it.lowercaseChar() in 'a'..'f' }
 
     private suspend fun sendTrackRequest(target: InviteData) {
         try {

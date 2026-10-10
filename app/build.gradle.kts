@@ -147,9 +147,6 @@ dependencies {
     implementation(libs.osmdroid)
     implementation(libs.zxing.android.embedded) { isTransitive = false }
     implementation(libs.zxing.core)
-    implementation(libs.camera.camera2)
-    implementation(libs.camera.lifecycle)
-    implementation(libs.camera.view)
     implementation(libs.androidx.biometric)
     implementation(libs.accompanist.permissions)
 
@@ -184,7 +181,7 @@ configurations.all {
             // Force all Bouncy Castle artifacts to the jdk18on line and latest version
             if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk") || requested.name.startsWith("bcutil-jdk"))) {
                 val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
-                val version = if (artifact == "bcprov-jdk18on") "1.85.2" else "1.85"
+                val version = "1.86"
                 useTarget("org.bouncycastle:$artifact:$version")
                 because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
             }

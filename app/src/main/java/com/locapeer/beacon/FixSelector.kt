@@ -77,6 +77,10 @@ class FixSelector {
         elapsedRealtimeNs: Long,
         stationaryHold: Boolean = false,
     ): Boolean {
+        if (lat !in -90.0..90.0 || lng !in -180.0..180.0 ||
+            !accuracyM.isFinite() || accuracyM < 0f || elapsedRealtimeNs < 0L ||
+            (hasSelected && elapsedRealtimeNs <= selElapsedNs)
+        ) return false
         if (!hasSelected || accuracyM <= selAccM) {
             record(lat, lng, accuracyM, elapsedRealtimeNs)
             return true

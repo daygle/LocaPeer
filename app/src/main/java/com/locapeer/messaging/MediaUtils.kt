@@ -165,7 +165,7 @@ object MediaUtils {
             quality -= 10
         }
         bmp.recycle()
-        return Base64.encodeToString(bytes, Base64.NO_WRAP)
+        return if (bytes.size <= MAX_IMAGE_BYTES) Base64.encodeToString(bytes, Base64.NO_WRAP) else null
     }
 
     /** Longest side a received image is decoded at for the full-screen viewer. */
@@ -178,6 +178,9 @@ object MediaUtils {
     private val thumbnailCache = object : LruCache<String, Bitmap>(16 * 1024 * 1024) {
         override fun sizeOf(key: String, value: Bitmap): Int = value.byteCount
     }
+
+    /** Evict plaintext image data after deletion; visible bitmaps must not be recycled here. */
+    fun clearThumbnailCache() = thumbnailCache.evictAll()
 
     fun cachedThumbnail(data: String): Bitmap? = thumbnailCache.get(data)
 
