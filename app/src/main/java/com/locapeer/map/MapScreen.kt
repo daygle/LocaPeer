@@ -27,7 +27,6 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -38,13 +37,8 @@ import com.locapeer.util.DisplayFormat
 import com.locapeer.util.GeoMath
 import com.locapeer.util.Geocoding
 import com.locapeer.ui.theme.*
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Polygon
-import org.osmdroid.views.overlay.ScaleBarOverlay
-import org.osmdroid.views.overlay.compass.CompassOverlay
-import org.osmdroid.views.overlay.compass.InternalCompassOrientationProvider
+import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.geometry.LatLng
 
 
 
@@ -74,7 +68,7 @@ fun MapScreen(
     val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
-    var centerOnPin by remember { mutableStateOf<GeoPoint?>(null) }
+    var centerOnPin by remember { mutableStateOf<LatLng?>(null) }
     var selectedPinAddress by remember { mutableStateOf<String?>(null) }
     val systemDark = isSystemInDarkTheme()
     var mapStyle by remember { mutableStateOf(if (systemDark) "DARK" else "LIGHT") }
@@ -142,7 +136,7 @@ fun MapScreen(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        OsmdroidMapView(
+        MainMapView(
                 pins = uiState.pins,
                 geofences = if (showGeofences) uiState.geofences else emptyList(),
                 userLocation = userLocation,
@@ -276,7 +270,7 @@ fun MapScreen(
                         // sheet stays reachable via the map pin tap.
                         showFriendList = false
                         pin.heartbeat?.let { hb ->
-                            centerOnPin = GeoPoint(hb.lat, hb.lng)
+                            centerOnPin = LatLng(hb.lat, hb.lng)
                             isFollowingUser = false
                         }
                         selectedPin = pin
@@ -287,7 +281,7 @@ fun MapScreen(
                     },
                     onLocateFriend = { pin ->
                         pin.heartbeat?.let { hb ->
-                            centerOnPin = GeoPoint(hb.lat, hb.lng)
+                            centerOnPin = LatLng(hb.lat, hb.lng)
                             isFollowingUser = false
                             showFriendList = false
                         }
@@ -389,7 +383,7 @@ private fun LocationOffBanner(visible: Boolean, onEnable: () -> Unit, modifier: 
 private fun FriendListPanel(
     pins: List<PinData>,
     myDisplayName: String,
-    userLocation: GeoPoint?,
+    userLocation: LatLng?,
     onDismiss: () -> Unit,
     onLocateMe: () -> Unit,
     onSelectFriend: (PinData) -> Unit,
@@ -527,13 +521,13 @@ private fun SosButton(isActive: Boolean, onClick: () -> Unit, modifier: Modifier
 }
 
 @Composable
-private fun OsmdroidMapView(
+private fun MainMapView(
     pins: List<PinData>,
     geofences: List<GeofenceOnMap>,
-    userLocation: GeoPoint?,
+    userLocation: LatLng?,
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
-    centerOnPin: GeoPoint?,
+    centerOnPin: LatLng?,
     isDark: Boolean,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
@@ -548,8 +542,10 @@ private fun OsmdroidMapView(
     mapFixedLat: Double = 0.0,
     mapFixedLng: Double = 0.0
 ) {
+    // Zoom values from settings and the saved position are in the legacy (osmdroid) scale;
+    // MapGeometry converts them at this boundary.
     val lifecycleOwner = LocalLifecycleOwner.current
-    var mapViewRef by remember { mutableStateOf<MapView?>(null) }
+    var map by remember { mutableStateOf<LocaMapController?>(null) }
     var initialCenterDone by remember(mapStartingPoint, mapFixedLat, mapFixedLng, lastMapCenter) {
         mutableStateOf(
             (mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0) ||
@@ -558,197 +554,140 @@ private fun OsmdroidMapView(
     }
     var fitAllDone by remember { mutableStateOf(false) }
     var explicitCenterDone by remember { mutableStateOf(false) }
-    val currentCenterOnPin by rememberUpdatedState(centerOnPin)
     val isFitAll = mapStartingPoint == "FIT_ALL"
+    // Latest settled camera, saved when the screen pauses or leaves (the MapView itself may
+    // already be torn down by then, so it is not queried at that point).
+    val lastCamera = remember { arrayOfNulls<Triple<Double, Double, Double>>(1) }
+    val saveMapPosition by rememberUpdatedState(onSaveMapPosition)
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
-                Lifecycle.Event.ON_PAUSE -> {
-                    mapViewRef?.let { mv ->
-                        val c = mv.mapCenter
-                        onSaveMapPosition(c.latitude, c.longitude, mv.zoomLevelDouble)
-                        mv.onPause()
-                    }
-                }
-                else -> {}
-            }
+            if (event == Lifecycle.Event.ON_PAUSE) lastCamera[0]?.let { (lat, lng, zoom) -> saveMapPosition(lat, lng, zoom) }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            mapViewRef?.apply {
-                onSaveMapPosition(mapCenter.latitude, mapCenter.longitude, zoomLevelDouble)
-                onPause()
-                onDetach()
-            }
-            mapViewRef = null
+            lastCamera[0]?.let { (lat, lng, zoom) -> saveMapPosition(lat, lng, zoom) }
         }
     }
 
-    LaunchedEffect(userLocation, centerOnUser, mapViewRef) {
-        if (centerOnUser && userLocation != null && mapViewRef != null) {
-            mapViewRef?.controller?.animateTo(userLocation)
+    LaunchedEffect(userLocation, centerOnUser, map) {
+        val mv = map ?: return@LaunchedEffect
+        if (centerOnUser && userLocation != null) {
+            mv.animateTo(userLocation.latitude, userLocation.longitude)
             onCenteredOnUser()
         }
     }
 
-    LaunchedEffect(userLocation, mapViewRef) {
-        if (userLocation != null && mapViewRef != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
-            mapViewRef?.controller?.setCenter(userLocation)
+    LaunchedEffect(userLocation, map) {
+        val mv = map ?: return@LaunchedEffect
+        if (userLocation != null && !initialCenterDone && !explicitCenterDone && centerOnPin == null) {
+            mv.moveTo(userLocation.latitude, userLocation.longitude)
             initialCenterDone = true
         }
     }
 
-    LaunchedEffect(centerOnPin, mapViewRef) {
-        if (centerOnPin != null && mapViewRef != null) {
+    LaunchedEffect(centerOnPin, map) {
+        val mv = map ?: return@LaunchedEffect
+        if (centerOnPin != null) {
             explicitCenterDone = true
             initialCenterDone = true
             fitAllDone = true
-            mapViewRef?.controller?.animateTo(centerOnPin)
+            mv.animateTo(centerOnPin.latitude, centerOnPin.longitude)
             onCenteredOnPin()
         }
     }
 
-    LaunchedEffect(pins, isFitAll, mapViewRef) {
-        val mv = mapViewRef ?: return@LaunchedEffect
+    LaunchedEffect(pins, isFitAll, map) {
+        val mv = map ?: return@LaunchedEffect
         if (!isFitAll || fitAllDone || explicitCenterDone || centerOnPin != null) return@LaunchedEffect
-        val points = pins.mapNotNull { it.heartbeat?.let { hb -> GeoPoint(hb.lat, hb.lng) } }
+        val points = pins.mapNotNull { it.heartbeat?.let { hb -> LatLng(hb.lat, hb.lng) } }
         if (points.isEmpty()) return@LaunchedEffect
         fitAllDone = true
         initialCenterDone = true
-        if (points.size == 1) mv.controller.animateTo(points.first())
-        else {
-            val box = org.osmdroid.util.BoundingBox(points.maxOf { it.latitude }, points.maxOf { it.longitude }, points.minOf { it.latitude }, points.minOf { it.longitude })
-            mv.post { if (!explicitCenterDone && currentCenterOnPin == null) mv.zoomToBoundingBox(box, true, 150) }
-        }
+        mv.fit(points, paddingPx = 150, animate = true, singlePointZoom = mv.zoom)
     }
 
-    AndroidView(
-        factory = { ctx ->
-            MapView(ctx).apply {
-                MapTileSources.apply(this, isDark)
-                setMultiTouchControls(true)
-                isVerticalMapRepetitionEnabled = false
-                val scaleBar = ScaleBarOverlay(this).apply {
-                    val density = ctx.resources.displayMetrics.density
-                    setCentred(false)
-                    setAlignRight(true)
-                    setScaleBarOffset((20 * density).toInt(), (20 * density).toInt())
-                }
-                overlays.add(scaleBar)
-                val compass = CompassOverlay(ctx, InternalCompassOrientationProvider(ctx), this).apply { enableCompass() }
-                overlays.add(compass)
-                when {
-                    isFitAll -> controller.setZoom(mapStartZoom)
-                    mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 -> {
-                        controller.setZoom(mapStartZoom)
-                        controller.setCenter(GeoPoint(mapFixedLat, mapFixedLng))
-                    }
-                    lastMapCenter != null -> {
-                        val (lat, lng, zoom) = lastMapCenter
-                        controller.setZoom(zoom)
-                        controller.setCenter(GeoPoint(lat, lng))
-                    }
-                    else -> controller.setZoom(mapStartZoom)
-                }
-            }.also {
-                mapViewRef = it
-                // This screen can be entered while the Activity is already RESUMED, so do not
-                // wait for a future lifecycle callback to start osmdroid's tile loader.
-                if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                    it.onResume()
-                }
+    val geofenceStroke = GeofenceBoth
+    val fenceFillArgb = android.graphics.Color.argb(30, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
+    val fenceStrokeArgb = android.graphics.Color.argb(200, (geofenceStroke.red * 255).toInt(), (geofenceStroke.green * 255).toInt(), (geofenceStroke.blue * 255).toInt())
+    val circles = remember(geofences) {
+        geofences.map { MapCircle(it.fence.lat, it.fence.lng, it.fence.radiusMetres.toDouble(), fenceFillArgb, fenceStrokeArgb, strokeWidthDp = 1.5f) }
+    }
+    val pinMarkers = remember(pins, geofences) {
+        val labels = geofences.mapIndexed { index, geofenceOnMap ->
+            val fence = geofenceOnMap.fence
+            MapMarker(
+                id = "fence-$index",
+                lat = GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()),
+                lng = fence.lng,
+                icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, fenceStrokeArgb).bitmap,
+                clickable = false
+            )
+        }
+        val contacts = pins.mapNotNull { pinData ->
+            pinData.heartbeat?.let { hb ->
+                MapMarker(
+                    id = "pin-${pinData.peer.deviceId}",
+                    lat = hb.lat,
+                    lng = hb.lng,
+                    icon = MarkerIconFactory.create(
+                        context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor,
+                        bearingDegrees = hb.bearing,
+                        // Show a heading arrow only for a contact that is genuinely
+                        // moving (matches the speed-chip gate) and whose fix is current;
+                        // a stale/overdue pin must not imply a live direction.
+                        showDirection = !pinData.isOverdue && hb.speed > 0f &&
+                            !hb.motionState.equals("STATIONARY", ignoreCase = true),
+                        isLive = pinData.isLive
+                    ).bitmap,
+                    zIndex = 1f
+                )
             }
+        }
+        labels + contacts
+    }
+    // My own position updates often (GPS jitter), so it is kept apart from the contact pins.
+    val myMarker = userLocation?.let { loc ->
+        MapMarker(
+            id = "me",
+            lat = loc.latitude,
+            lng = loc.longitude,
+            icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive).bitmap,
+            anchor = MarkerAnchor.CENTER,
+            clickable = false,
+            zIndex = 2f
+        )
+    }
+    val currentPins by rememberUpdatedState(pins)
+
+    LocaMap(
+        modifier = modifier,
+        isDark = isDark,
+        markers = if (myMarker != null) pinMarkers + myMarker else pinMarkers,
+        circles = circles,
+        showScaleBar = true,
+        showCompass = true,
+        onMarkerClick = { id ->
+            currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
         },
-        update = { mapView ->
-            MapTileSources.apply(mapView, isDark)
-            mapView.overlays.filterIsInstance<CompassOverlay>().firstOrNull()?.let { compass ->
-                val density = mapView.context.resources.displayMetrics.density
-                compass.setCompassCenter(mapView.width - 45f * density, 40f * density)
-            }
-
-            // Only rebuild markers/geofences if the underlying contact data has actually changed.
-            // We exclude userLocation from this hash so that frequent GPS jitter doesn't
-            // trigger a full (expensive) clear and re-add of all overlays.
-            val dataHash = listOf(
-                pins.map { listOf(it.peer.deviceId, it.heartbeat?.timestamp, it.isOverdue, it.isLive) },
-                geofences,
-                isSosActive,
-                myPinColor
-            ).hashCode()
-
-            if (mapView.getTag(R.id.map_data_hash) != dataHash) {
-                mapView.setTag(R.id.map_data_hash, dataHash)
-                mapView.overlays.removeAll { it is Marker || it is Polygon }
-                geofences.forEach { geofenceOnMap ->
-                    val fence = geofenceOnMap.fence
-                    val strokeColor = GeofenceBoth
-                    val circle = Polygon().apply {
-                        points = Polygon.pointsAsCircle(GeoPoint(fence.lat, fence.lng), fence.radiusMetres.toDouble())
-                        fillPaint.color = android.graphics.Color.argb(30, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
-                        outlinePaint.color = android.graphics.Color.argb(200, (strokeColor.red * 255).toInt(), (strokeColor.green * 255).toInt(), (strokeColor.blue * 255).toInt())
-                        outlinePaint.strokeWidth = 4f
-                        title = fence.name
-                    }
-                    mapView.overlays.add(circle)
-                    val label = Marker(mapView).apply {
-                        position = GeoPoint(GeoMath.offsetLatitude(fence.lat, fence.radiusMetres.toDouble()), fence.lng)
-                        icon = MarkerIconFactory.createGeofenceLabel(context, fence.name, geofenceOnMap.assignedLabel, circle.outlinePaint.color)
-                        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                        infoWindow = null
-                        setOnMarkerClickListener { _, _ -> true }
-                    }
-                    mapView.overlays.add(label)
-                }
-                pins.forEach { pinData ->
-                    pinData.heartbeat?.let { hb ->
-                        val marker = Marker(mapView).apply {
-                            position = GeoPoint(hb.lat, hb.lng)
-                            title = pinData.peer.displayName
-                            setIcon(
-                                MarkerIconFactory.create(
-                                    context, pinData.peer.displayName, pinData.isOverdue, hb.isSos, hb.pinColor,
-                                    bearingDegrees = hb.bearing,
-                                    // Show a heading arrow only for a contact that is genuinely
-                                    // moving (matches the speed-chip gate) and whose fix is current;
-                                    // a stale/overdue pin must not imply a live direction.
-                                    showDirection = !pinData.isOverdue && hb.speed > 0f &&
-                                        !hb.motionState.equals("STATIONARY", ignoreCase = true),
-                                    isLive = pinData.isLive
-                                )
-                            )
-                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            infoWindow = null
-                            setOnMarkerClickListener { _, _ -> onPinTapped(pinData); true }
-                        }
-                        mapView.overlays.add(marker)
-                    }
-                }
-            }
-
-            // Always update my location marker position separately if userLocation changed
-            userLocation?.let { loc ->
-                val myLocationLabel = context.getString(R.string.map_you)
-                val myMarker = mapView.overlays.filterIsInstance<Marker>()
-                    .firstOrNull { it.title == myLocationLabel }
-                    ?: Marker(mapView).apply {
-                        title = myLocationLabel
-                        setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                        infoWindow = null
-                        mapView.overlays.add(this)
-                    }
-                myMarker.position = loc
-                myMarker.icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive)
-            } ?: run {
-                val myLocationLabel = context.getString(R.string.map_you)
-                mapView.overlays.removeAll { it is Marker && it.title == myLocationLabel }
-            }
-
-            mapView.invalidate()
+        onCameraIdle = { target, zoom ->
+            lastCamera[0] = Triple(target.latitude, target.longitude, MapGeometry.toLegacyZoom(zoom))
         },
-        modifier = modifier
+        onReady = { controller ->
+            val startZoom = MapGeometry.fromLegacyZoom(mapStartZoom)
+            when {
+                isFitAll -> controller.map.moveCamera(CameraUpdateFactory.zoomTo(startZoom))
+                mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0 ->
+                    controller.moveTo(mapFixedLat, mapFixedLng, startZoom)
+                lastMapCenter != null -> {
+                    val (lat, lng, zoom) = lastMapCenter
+                    controller.moveTo(lat, lng, MapGeometry.fromLegacyZoom(zoom))
+                }
+                else -> controller.map.moveCamera(CameraUpdateFactory.zoomTo(startZoom))
+            }
+            map = controller
+        }
     )
 }
 

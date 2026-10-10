@@ -15,8 +15,9 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 
-# OSMDroid
--keep class org.osmdroid.** { *; }
+# MapLibre ships its own consumer rules; keep the JNI-facing classes in full.
+-keep class org.maplibre.android.** { *; }
+-dontwarn org.maplibre.android.**
 
 # ZXing
 -keep class com.google.zxing.** { *; }

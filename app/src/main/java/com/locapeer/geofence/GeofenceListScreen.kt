@@ -38,7 +38,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
@@ -65,15 +64,13 @@ import com.locapeer.util.Geocoding
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.BoundingBox
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.CustomZoomButtonsController
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.MapEventsOverlay
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Polygon
+import org.maplibre.android.geometry.LatLng
+import com.locapeer.map.LocaMap
+import com.locapeer.map.LocaMapController
+import com.locapeer.map.MapCircle
+import com.locapeer.map.MapGeometry
+import com.locapeer.map.MapMarker
+import androidx.core.graphics.drawable.toBitmap
 import kotlin.math.roundToInt
 
 @Composable
@@ -513,7 +510,7 @@ private fun GeofenceAreaDialog(
     var radiusText by remember { mutableStateOf((existing?.radiusMetres ?: 500).toString()) }
     var submitted by remember { mutableStateOf(false) }
     var loadingMyLocation by remember { mutableStateOf(false) }
-    var recenterTo by remember { mutableStateOf<GeoPoint?>(null) }
+    var recenterTo by remember { mutableStateOf<LatLng?>(null) }
 
     // Address search (forward geocoding). Hidden while the "Look Up Addresses" opt-in
     // is off (queries go to the OS geocoding backend) and when the device has no
@@ -558,7 +555,7 @@ private fun GeofenceAreaDialog(
         lng != null && lng in -180.0..180.0 &&
         radiusValue != null && radiusValue in MIN_RADIUS_M..MAX_RADIUS_M
 
-    val initialCamera = remember { existing?.let { GeoPoint(it.lat, it.lng) } }
+    val initialCamera = remember { existing?.let { LatLng(it.lat, it.lng) } }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -643,7 +640,7 @@ private fun GeofenceAreaDialog(
                                     if (loc != null) {
                                         latText = formatCoord(loc.latitude)
                                         lngText = formatCoord(loc.longitude)
-                                        recenterTo = GeoPoint(loc.latitude, loc.longitude)
+                                        recenterTo = LatLng(loc.latitude, loc.longitude)
                                     }
                                 }.addOnFailureListener { loadingMyLocation = false }
                             },
@@ -734,7 +731,7 @@ private fun GeofenceAreaDialog(
                                     onClick = {
                                         latText = formatCoord(match.lat)
                                         lngText = formatCoord(match.lng)
-                                        recenterTo = GeoPoint(match.lat, match.lng)
+                                        recenterTo = LatLng(match.lat, match.lng)
                                         addressQuery = match.label
                                         searchResults = emptyList()
                                         searchAttempted = false
@@ -1041,8 +1038,8 @@ private fun stepRadius(current: Int, up: Boolean): Int {
 }
 
 /**
- * An osmdroid map for picking a geofence centre:
- * - tap or long-press (or drag the pin) sets the centre,
+ * A map for picking a geofence centre:
+ * - tap or long-press sets the centre,
  * - pinch zooms the map; the radius is edited via the field/slider below.
  */
 @Composable
@@ -1050,119 +1047,62 @@ private fun GeofencePickerMap(
     lat: Double?,
     lng: Double?,
     radiusMetres: Int,
-    initialCamera: GeoPoint?,
-    recenterTo: GeoPoint?,
+    initialCamera: LatLng?,
+    recenterTo: LatLng?,
     onRecentered: () -> Unit,
     onPointSelected: (Double, Double) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var mapView by remember { mutableStateOf<MapView?>(null) }
+    val context = LocalContext.current
+    var map by remember { mutableStateOf<LocaMapController?>(null) }
 
-    // Gesture callbacks are captured once in the factory; keep them reading the latest values.
-    val pointCb by rememberUpdatedState(onPointSelected)
-
-    DisposableEffect(Unit) {
-        onDispose {
-            mapView?.onPause()
-            mapView?.onDetach()
-            mapView = null
-        }
-    }
-
-    LaunchedEffect(recenterTo, mapView) {
-        val mv = mapView ?: return@LaunchedEffect
+    LaunchedEffect(recenterTo, map) {
+        val mv = map ?: return@LaunchedEffect
         val target = recenterTo ?: return@LaunchedEffect
-        mv.controller.setZoom(15.0)
-        mv.controller.animateTo(target)
+        mv.animateTo(target.latitude, target.longitude, MapGeometry.fromLegacyZoom(15.0))
         onRecentered()
     }
 
-    AndroidView(
-        factory = { ctx ->
-            MapView(ctx).apply {
-                setTileSource(TileSourceFactory.MAPNIK)
-                clipToOutline = true
-                setMultiTouchControls(true)
-                zoomController.setVisibility(CustomZoomButtonsController.Visibility.SHOW_AND_FADEOUT)
-                isVerticalMapRepetitionEnabled = false
+    val strokeColor = GeofenceBoth
+    val fillArgb = android.graphics.Color.argb(40,
+        (strokeColor.red * 255).toInt(),
+        (strokeColor.green * 255).toInt(),
+        (strokeColor.blue * 255).toInt())
+    val strokeArgb = android.graphics.Color.argb(220,
+        (strokeColor.red * 255).toInt(),
+        (strokeColor.green * 255).toInt(),
+        (strokeColor.blue * 255).toInt())
+    // Themed pin, tinted to match the circle outline.
+    val pin = remember(strokeArgb) {
+        ContextCompat.getDrawable(context, R.drawable.ic_notif_location)?.let {
+            val wrapped = DrawableCompat.wrap(it).mutate()
+            DrawableCompat.setTint(wrapped, strokeArgb)
+            wrapped.toBitmap()
+        }
+    }
 
-                val receiver = object : MapEventsReceiver {
-                    override fun singleTapConfirmedHelper(p: GeoPoint): Boolean {
-                        pointCb(p.latitude, p.longitude)
-                        return true
-                    }
-                    override fun longPressHelper(p: GeoPoint): Boolean {
-                        pointCb(p.latitude, p.longitude)
-                        return true
-                    }
-                }
-                overlays.add(MapEventsOverlay(receiver))
-
-                if (initialCamera != null) {
-                    // Frame the whole geofence circle rather than a fixed zoom, so a large
-                    // radius isn't cut off. zoomToBoundingBox needs the view to be measured,
-                    // so defer it to the first layout pass (width/height are 0 in the factory).
-                    controller.setCenter(initialCamera)
-                    val bounds = BoundingBox.fromGeoPoints(
-                        Polygon.pointsAsCircle(initialCamera, radiusMetres.toDouble())
-                    )
-                    addOnFirstLayoutListener { _, _, _, _, _ ->
-                        zoomToBoundingBox(bounds, false, MAP_FIT_PADDING_PX)
-                    }
-                } else {
-                    controller.setZoom(4.0)
-                }
-                onResume()
-            }.also { mapView = it }
-        },
-        update = { mv ->
-            mv.overlays.removeAll { it is Marker || it is Polygon }
-            if (lat != null && lng != null) {
-                val center = GeoPoint(lat, lng)
-                val strokeColor = GeofenceBoth
-                val fillArgb = android.graphics.Color.argb(40,
-                    (strokeColor.red * 255).toInt(),
-                    (strokeColor.green * 255).toInt(),
-                    (strokeColor.blue * 255).toInt())
-                val strokeArgb = android.graphics.Color.argb(220,
-                    (strokeColor.red * 255).toInt(),
-                    (strokeColor.green * 255).toInt(),
-                    (strokeColor.blue * 255).toInt())
-                val circle = Polygon().apply {
-                    points = Polygon.pointsAsCircle(center, radiusMetres.toDouble())
-                    fillPaint.color = fillArgb
-                    outlinePaint.color = strokeArgb
-                    outlinePaint.strokeWidth = 5f
-                }
-                mv.overlays.add(circle)
-
-                val marker = Marker(mv).apply {
-                    position = center
-                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-
-                    // Modern themed pin
-                    val icon = ContextCompat.getDrawable(mv.context, R.drawable.ic_notif_location)?.apply {
-                        val wrapped = DrawableCompat.wrap(this).mutate()
-                        DrawableCompat.setTint(wrapped, strokeArgb)
-                    }
-                    if (icon != null) {
-                        this.icon = icon
-                    }
-
-                    infoWindow = null
-                    isDraggable = true
-                    setOnMarkerDragListener(object : Marker.OnMarkerDragListener {
-                        override fun onMarkerDrag(m: Marker) {}
-                        override fun onMarkerDragEnd(m: Marker) {
-                            pointCb(m.position.latitude, m.position.longitude)
-                        }
-                        override fun onMarkerDragStart(m: Marker) {}
-                    })
-                }
-                mv.overlays.add(marker)
+    val hasCentre = lat != null && lng != null
+    LocaMap(
+        modifier = modifier,
+        circles = if (hasCentre) listOf(
+            MapCircle(lat!!, lng!!, radiusMetres.toDouble(), fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
+        ) else emptyList(),
+        markers = if (hasCentre && pin != null) listOf(
+            MapMarker(id = "centre", lat = lat!!, lng = lng!!, icon = pin, clickable = false)
+        ) else emptyList(),
+        onMapClick = { p -> onPointSelected(p.latitude, p.longitude); true },
+        onMapLongClick = { p -> onPointSelected(p.latitude, p.longitude); true },
+        onReady = { controller ->
+            map = controller
+            if (initialCamera != null) {
+                // Frame the whole geofence circle rather than a fixed zoom, so a large radius
+                // isn't cut off.
+                val ring = MapGeometry.circle(initialCamera.latitude, initialCamera.longitude, radiusMetres.toDouble())
+                    .map { (la, ln) -> LatLng(la, ln) }
+                controller.fit(ring, MAP_FIT_PADDING_PX, animate = false, singlePointZoom = MapGeometry.fromLegacyZoom(15.0))
+            } else {
+                controller.moveTo(0.0, 0.0, MapGeometry.fromLegacyZoom(4.0))
             }
-            mv.invalidate()
-        },
-        modifier = modifier
+        }
     )
 }

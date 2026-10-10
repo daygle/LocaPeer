@@ -151,11 +151,6 @@
             </intent-filter>
         </receiver>
 
-        <!-- OSMDroid tile cache path (optional) -->
-        <meta-data
-            android:name="osmdroid.cachepath"
-            android:value="osmdroid" />
-
         <!-- Persists the per-app language on API < 33 (AppCompat backport). On API 33+ the
              framework LocaleManager stores it and this service is ignored. -->
         <service

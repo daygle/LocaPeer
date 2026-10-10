@@ -54,27 +54,34 @@ class LocaPeerApplication : Application(), Configuration.Provider {
             }
             .launchIn(appScope)
 
-        // Configure osmdroid before any Activity can create a MapView. Doing this from the
-        // background startup coroutine races the first frame: a map opened immediately after
-        // launch can construct its tile provider with the default (unconfigured) cache/user-agent
-        // settings and remain stuck showing grey tile placeholders.
+        // Initialise MapLibre before any screen can create a MapView, and send the app's own
+        // User-Agent with tile requests: the OpenStreetMap tile usage policy requires clients
+        // to identify themselves, and generic agents can be blocked.
         try {
-            org.osmdroid.config.Configuration.getInstance().apply {
-                // Identify the app to public OSM tile servers; a generic/default user-agent
-                // can be rejected and leaves osmdroid showing only its tile grid.
-                userAgentValue = "LocaPeer/${BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)"
-                osmdroidBasePath = filesDir
-                osmdroidTileCache = java.io.File(filesDir, "osmdroid/tiles")
-                // Load configuration from shared preferences (recommended by OSMDroid)
-                load(applicationContext, getSharedPreferences("osmdroid", MODE_PRIVATE))
-            }
+            org.maplibre.android.MapLibre.getInstance(applicationContext)
+            val userAgent = "LocaPeer/${BuildConfig.VERSION_NAME} (https://github.com/daygle/LocaPeer)"
+            org.maplibre.android.module.http.HttpRequestUtil.setOkHttpClient(
+                okhttp3.OkHttpClient.Builder()
+                    .addInterceptor { chain ->
+                        chain.proceed(chain.request().newBuilder().header("User-Agent", userAgent).build())
+                    }
+                    .build()
+            )
         } catch (e: Exception) {
-            Log.e(TAG, "Failed to configure osmdroid", e)
+            Log.e(TAG, "Failed to initialise MapLibre", e)
         }
 
         // Offload the remaining heavy initialization (networking setup and WorkManager) to
         // background so it cannot delay the first UI frame.
         appScope.launch(Dispatchers.IO) {
+            // One-time cleanup after the move from osmdroid to MapLibre: its tile cache and
+            // settings are no longer read. MapLibre keeps its own cache.
+            try {
+                java.io.File(filesDir, "osmdroid").takeIf { it.exists() }?.deleteRecursively()
+                deleteSharedPreferences("osmdroid")
+            } catch (e: Exception) {
+                Log.w(TAG, "Failed to remove the old osmdroid cache", e)
+            }
             try {
                 heartbeatReceiver.start()
 
