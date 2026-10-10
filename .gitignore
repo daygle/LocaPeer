@@ -25,6 +25,3 @@ captures/
 # AI coding-agent session data (tool-internal scratch space; never user content)
 .freebuff/
 .artifacts/
-
-# Local audit toolchain and verification logs
-.audit-tools/
