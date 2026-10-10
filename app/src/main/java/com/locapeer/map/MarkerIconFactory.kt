@@ -20,15 +20,12 @@ private val PIN_COLORS = listOf(
 
 object MarkerIconFactory {
 
-    private val cache = LruCache<String, BitmapDrawable>(64)
+    private val cache = LruCache<String, Bitmap>(64)
 
     /**
-     * Creates a colored circle with initials as an OSMDroid marker icon. When
-     * [showDirection] is set, a small heading arrow is drawn on the ring pointing along
-     * [bearingDegrees] (0 = north, clockwise), so a moving contact's direction is visible
-     * at a glance. The arrow fits within enlarged top/side margins and the existing tail
-     * region, so the tail tip stays at the bitmap's bottom-centre and the caller's
-     * ANCHOR_CENTER / ANCHOR_BOTTOM placement is unchanged.
+     * Creates a colored circle with initials as a marker icon. When [showDirection] is set,
+     * a small heading arrow is drawn on the ring pointing along [bearingDegrees] (0 = north,
+     * clockwise), so a moving contact's direction is visible at a glance.
      */
     fun create(
         context: Context,
@@ -42,25 +39,14 @@ object MarkerIconFactory {
         isLive: Boolean = false
     ): BitmapDrawable {
         val density = context.resources.displayMetrics.density
-        // A live contact gets a green ring; suppress it while SOS/overdue own the colour so
-        // those states stay unambiguous.
         val showLive = isLive && !isSos && !isOverdue
-        // Quantise the bearing in the cache key so continuous heading changes reuse a
-        // small, bounded set of bitmaps instead of thrashing the LRU cache.
         val quantBearing = if (showDirection) (Math.round(bearingDegrees / 15f) * 15) % 360 else 0
         val key = "$displayName-$isOverdue-$isSos-$pinColor-$isSelected-$showDirection-$quantBearing-$showLive"
-        cache.get(key)?.let { return it }
+        cache.get(key)?.let { return it.toDrawable(context.resources) }
 
-        // Selected pins render larger so the tapped marker stands out on the history map
         val sizePx = (density * if (isSelected) 60 else 48).toInt()
         val radius = sizePx / 2f - 2f
-        // A moving pin gets a heading arrow on the ring, which needs clearance beyond the
-        // circle on every side. The bottom clearance is folded into the tail length so the
-        // tail tip still lands at the bitmap's bottom-centre and the caller's ANCHOR_BOTTOM
-        // keeps pointing the pin at the exact coordinate (no anchor change needed).
         val arrowReach = if (showDirection) density * 9f else 0f
-        // The live ring sits just outside the white border and needs a little clearance so
-        // it isn't clipped by the bitmap edge.
         val liveReach = if (showLive) density * 4f else 0f
         val sideTopPad = density * 4f + maxOf(arrowReach, liveReach)
         val tailDrop = maxOf(density * 9f, arrowReach + density * 2f)
@@ -71,7 +57,6 @@ object MarkerIconFactory {
             val cx = width / 2f
             val cy = sideTopPad + radius
 
-            // SOS/overdue override first; then user's chosen colour; then deterministic fallback
             val fillColor = when {
                 isSos -> "#D32F2F".toColorInt()
                 isOverdue -> "#9E9E9E".toColorInt()
@@ -79,9 +64,6 @@ object MarkerIconFactory {
                 else -> PIN_COLORS[Math.abs(displayName.hashCode()) % PIN_COLORS.size].toColorInt()
             }
 
-            // Heading arrow, drawn first so the circle and its white border cap the base,
-            // leaving a clean outward-pointing chevron. bearing 0 = north (screen up), so
-            // the direction unit vector is (sin, -cos) and its perpendicular is (-uy, ux).
             if (showDirection) {
                 val rad = Math.toRadians(bearingDegrees.toDouble())
                 val ux = Math.sin(rad).toFloat()
@@ -125,9 +107,6 @@ object MarkerIconFactory {
             }
             drawCircle(cx, cy, radius - 1, borderPaint)
 
-            // Live ring: a green halo just outside the white border marking a contact who is
-            // streaming location live right now. Drawn before the tail so the tail caps its
-            // lower edge cleanly.
             if (showLive) {
                 drawCircle(cx, cy, radius + density * 2.5f, Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     color = "#00C853".toColorInt()
@@ -160,15 +139,14 @@ object MarkerIconFactory {
             drawPath(path, tailPaint)
         }
 
-        val drawable = bitmap.toDrawable(context.resources)
-        cache.put(key, drawable)
-        return drawable
+        cache.put(key, bitmap)
+        return bitmap.toDrawable(context.resources)
     }
 
     /** Small filled circle for intermediate waypoint markers on the history map. */
     fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false, isSelected: Boolean = false): BitmapDrawable {
         val key = "dot-$pinColor-$isSos-$isSelected"
-        cache.get(key)?.let { return it }
+        cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val dp = context.resources.displayMetrics.density
         val dotPx = (dp * if (isSelected) 20 else 14).toInt()
@@ -186,7 +164,6 @@ object MarkerIconFactory {
             }
 
             if (isSelected) {
-                // Translucent halo behind the dot so the tapped pin stands out from its neighbours
                 drawCircle(cx, cx, cx, Paint(Paint.ANTI_ALIAS_FLAG).apply {
                     color = (fillColor and 0x00FFFFFF) or 0x55000000
                 })
@@ -200,9 +177,8 @@ object MarkerIconFactory {
             })
         }
 
-        val drawable = bitmap.toDrawable(context.resources)
-        cache.put(key, drawable)
-        return drawable
+        cache.put(key, bitmap)
+        return bitmap.toDrawable(context.resources)
     }
 
     /**
@@ -211,7 +187,7 @@ object MarkerIconFactory {
      */
     fun createGeofenceLabel(context: Context, title: String, subtitle: String, color: Int): BitmapDrawable {
         val key = "gflabel-$title-$subtitle-$color"
-        cache.get(key)?.let { return it }
+        cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val dp = context.resources.displayMetrics.density
         val padH = dp * 8
@@ -241,7 +217,6 @@ object MarkerIconFactory {
         val bitmap = createBitmap(width, height, Bitmap.Config.ARGB_8888)
         bitmap.applyCanvas {
             val rect = android.graphics.RectF(dp, dp, width - dp, height - dp)
-            // Opaque white card so it stays legible over the tinted fence fill.
             drawRoundRect(rect, dp * 6, dp * 6, Paint(Paint.ANTI_ALIAS_FLAG).apply {
                 this.color = 0xF2FFFFFF.toInt()
             })
@@ -258,17 +233,16 @@ object MarkerIconFactory {
             drawText(subtitleText, textX, subBaseline, subtitlePaint)
         }
 
-        val drawable = bitmap.toDrawable(context.resources)
-        cache.put(key, drawable)
-        return drawable
+        cache.put(key, bitmap)
+        return bitmap.toDrawable(context.resources)
     }
 
-    private var myLocationCache: Pair<String, BitmapDrawable>? = null
+    private var myLocationCache: Pair<String, Bitmap>? = null
 
     /** Creates a pulsing dot for the user's own location, using their chosen pin colour. */
     fun createMyLocationIcon(context: Context, pinColor: String = "", isSos: Boolean = false): BitmapDrawable {
         val cacheKey = "$pinColor-$isSos"
-        myLocationCache?.takeIf { it.first == cacheKey }?.let { return it.second }
+        myLocationCache?.takeIf { it.first == cacheKey }?.let { return it.second.toDrawable(context.resources) }
         val dp = context.resources.displayMetrics.density
         val sizePx = (dp * 48).toInt()
         val bitmap = createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
@@ -292,8 +266,7 @@ object MarkerIconFactory {
             })
         }
 
-        val drawable = bitmap.toDrawable(context.resources)
-        myLocationCache = cacheKey to drawable
-        return drawable
+        myLocationCache = cacheKey to bitmap
+        return bitmap.toDrawable(context.resources)
     }
 }

@@ -173,14 +173,14 @@ class KeyManager @Inject constructor(
     }
 
     suspend fun getPublicKeyHex(): String? = withContext(Dispatchers.IO) {
-        try { context.keyStore.data.first()[KEY_PUBLIC_METADATA] }
+        _publicKeyFlow.value ?: try { context.keyStore.data.first()[KEY_PUBLIC_METADATA] }
         catch (e: Exception) { Log.e(TAG, "Failed to get public key", e); null }
     }
 
     suspend fun getPrivateKeyHex(): String? = withContext(Dispatchers.IO) {
         try {
             val enc = context.keyStore.data.first()[KEY_PRIVATE_ENCRYPTED] ?: return@withContext null
-            decrypt(enc)
+            decryptStoredKey(enc)
         } catch (e: Exception) { Log.e(TAG, "Failed to read private key", e); null }
     }
 

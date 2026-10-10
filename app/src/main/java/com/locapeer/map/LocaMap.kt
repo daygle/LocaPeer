@@ -270,7 +270,9 @@ fun LocaMap(
         }
         style.getSourceAs<GeoJsonSource>(MARKER_SOURCE)?.setGeoJson(FeatureCollection.fromFeatures(features))
         // Icons are regenerated as pins change; drop the ones no marker uses any more.
-        (registeredImages - used).forEach { style.removeImage(it); registeredImages.remove(it) }
+        val toRemove = registeredImages - used
+        registeredImages.removeAll(toRemove)
+        toRemove.forEach { style.removeImage(it) }
     }
     LaunchedEffect(loaded, circles) {
         val style = loaded?.second ?: return@LaunchedEffect

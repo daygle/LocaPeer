@@ -193,6 +193,9 @@ class MapViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     init {
+        viewModelScope.launch {
+            keyManager.ensureKeypair()
+        }
         // Observe navigation arguments. We use flows because if the user is already on the map
         // and taps a "show on map" button elsewhere, the same ViewModel instance may be
         // reused (due to launchSingleTop), and SavedStateHandle will be updated with new args.

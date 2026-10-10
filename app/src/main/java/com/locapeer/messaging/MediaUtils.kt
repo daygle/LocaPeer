@@ -143,6 +143,14 @@ object MediaUtils {
             BitmapFactory.decodeStream(it, null, decodeOpts)
         } ?: return null
 
+        val rotation = getExifRotation(context, uri)
+        if (rotation != 0f) {
+            val matrix = android.graphics.Matrix().apply { postRotate(rotation) }
+            val rotated = Bitmap.createBitmap(bmp, 0, 0, bmp.width, bmp.height, matrix, true)
+            if (rotated !== bmp) bmp.recycle()
+            bmp = rotated
+        }
+
         val longest = maxOf(bmp.width, bmp.height)
         if (longest > MAX_IMAGE_DIM) {
             val scale = MAX_IMAGE_DIM.toFloat() / longest
@@ -166,6 +174,22 @@ object MediaUtils {
         }
         bmp.recycle()
         return if (bytes.size <= MAX_IMAGE_BYTES) Base64.encodeToString(bytes, Base64.NO_WRAP) else null
+    }
+
+    private fun getExifRotation(context: Context, uri: Uri): Float {
+        return try {
+            context.contentResolver.openInputStream(uri)?.use { stream ->
+                val exif = android.media.ExifInterface(stream)
+                when (exif.getAttributeInt(android.media.ExifInterface.TAG_ORIENTATION, android.media.ExifInterface.ORIENTATION_NORMAL)) {
+                    android.media.ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                    android.media.ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    android.media.ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                    else -> 0f
+                }
+            } ?: 0f
+        } catch (_: Exception) {
+            0f
+        }
     }
 
     /** Longest side a received image is decoded at for the full-screen viewer. */

@@ -109,11 +109,13 @@ class AppLockManager @Inject constructor(
 
     private fun installObserverIfNeeded() {
         if (observerInstalled) return
-        val owner: LifecycleOwner = ProcessLifecycleOwner.get()
-        owner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-            override fun onStart(owner: LifecycleOwner) = onProcessForeground()
-            override fun onStop(owner: LifecycleOwner) = onProcessBackground()
-        })
         observerInstalled = true
+        android.os.Handler(android.os.Looper.getMainLooper()).post {
+            val owner: LifecycleOwner = ProcessLifecycleOwner.get()
+            owner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+                override fun onStart(owner: LifecycleOwner) = onProcessForeground()
+                override fun onStop(owner: LifecycleOwner) = onProcessBackground()
+            })
+        }
     }
 }

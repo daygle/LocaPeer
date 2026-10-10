@@ -75,6 +75,9 @@ object DatabaseEncryption {
      * any earlier point leaves a usable (still unencrypted) database to retry on the next launch.
      */
     private fun encryptExisting(dbFile: File, tmpFile: File, rawKey: ByteArray) {
+        dbFile.parentFile?.mkdirs()
+        if (tmpFile.exists()) tmpFile.delete()
+        tmpFile.createNewFile()
         val plain = SQLiteDatabase.openDatabase(dbFile.path, "", null, SQLiteDatabase.OPEN_READWRITE, null, null)
         try {
             // sqlcipher_export copies the schema and data but not user_version, which Room
