@@ -1081,14 +1081,15 @@ private fun GeofencePickerMap(
         }
     }
 
-    val hasCentre = lat != null && lng != null
+    val centreLat = lat
+    val centreLng = lng
     LocaMap(
         modifier = modifier,
-        circles = if (hasCentre) listOf(
-            MapCircle(lat!!, lng!!, radiusMetres.toDouble(), fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
+        circles = if (centreLat != null && centreLng != null) listOf(
+            MapCircle(centreLat, centreLng, radiusMetres.toDouble(), fillArgb = fillArgb, strokeArgb = strokeArgb, strokeWidthDp = 2f)
         ) else emptyList(),
-        markers = if (hasCentre && pin != null) listOf(
-            MapMarker(id = "centre", lat = lat!!, lng = lng!!, icon = pin, clickable = false)
+        markers = if (centreLat != null && centreLng != null && pin != null) listOf(
+            MapMarker(id = "centre", lat = centreLat, lng = centreLng, icon = pin, clickable = false)
         ) else emptyList(),
         onMapClick = { p -> onPointSelected(p.latitude, p.longitude); true },
         onMapLongClick = { p -> onPointSelected(p.latitude, p.longitude); true },

@@ -99,7 +99,7 @@ internal fun BoxScope.DeviceCompass() {
             }
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
-        if (sensor != null) sensors?.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
+        if (sensor != null) sensors.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_UI)
         onDispose { sensors?.unregisterListener(listener) }
     }
 
@@ -133,7 +133,7 @@ internal fun BoxScope.DeviceCompass() {
 private fun displayRotation(context: Context): Int =
     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
         // getDisplay() throws for a context not tied to a display; treat that as portrait.
-        runCatching { context.display?.rotation }.getOrNull() ?: Surface.ROTATION_0
+        runCatching { context.display.rotation }.getOrNull() ?: Surface.ROTATION_0
     } else {
         (context.getSystemService(Context.WINDOW_SERVICE) as? WindowManager)?.defaultDisplay?.rotation ?: Surface.ROTATION_0
     }
