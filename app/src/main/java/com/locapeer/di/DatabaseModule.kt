@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
+import com.locapeer.data.DatabaseEncryption
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
@@ -21,10 +22,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+
+    private const val DB_NAME = "locapeer.db"
 
     /** v2: per-contact opt-in for missed-location alerts. */
     private val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -258,7 +262,10 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
+        Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+            // Encrypted at rest with SQLCipher; prepare() converts an unencrypted database from
+            // an earlier version on first open. See DatabaseEncryption.
+            .openHelperFactory(SupportOpenHelperFactory(DatabaseEncryption.prepare(context, DB_NAME)))
             // The app is live with testers, so every schema change from here on
             // must bump the version and ship a Migration - in-place edits to an
             // existing version leave installed devices with a mismatched schema
