@@ -95,7 +95,7 @@ class AppLockManager @Inject constructor(
             val current = prefs.settings.first()
             if (!current.appLockEnabled) return@launch
             val timeoutMs = current.appLockTimeoutSeconds * 1000L
-            if (System.currentTimeMillis() - backgroundedAt >= timeoutMs) _unlocked.value = false
+            if (android.os.SystemClock.elapsedRealtime() - backgroundedAt >= timeoutMs) _unlocked.value = false
         }
     }
 
@@ -104,7 +104,7 @@ class AppLockManager @Inject constructor(
         // return). Stamping it from a coroutine after a DataStore read let a quick
         // background -> foreground switch run the foreground check first, see no
         // timestamp, and skip the relock entirely - an "Immediate" lock bypass.
-        backgroundedAtMs = System.currentTimeMillis()
+        backgroundedAtMs = android.os.SystemClock.elapsedRealtime()
     }
 
     private fun installObserverIfNeeded() {

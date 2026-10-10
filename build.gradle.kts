@@ -8,7 +8,7 @@ buildscript {
             eachDependency {
                 if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk") || requested.name.startsWith("bcutil-jdk"))) {
                     val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
-                    val version = if (artifact == "bcprov-jdk18on") "1.85.2" else "1.85"
+                    val version = "1.86"
                     useTarget("org.bouncycastle:$artifact:$version")
                 }
                 if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {

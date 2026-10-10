@@ -37,6 +37,15 @@ object GroupWire {
      *  for a group message. */
     private const val MAGIC = "LPG1"
 
+    private val circleIdPattern = Regex("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
+    private val pubkeyPattern = Regex("[0-9a-f]{64}")
+
+    /** Circle IDs must stay in a separate namespace from 64-hex 1:1 peer thread IDs. */
+    internal fun isValid(message: GroupMessage): Boolean =
+        circleIdPattern.matches(message.gid) && message.members.size in 1..256 &&
+            message.members.all { pubkeyPattern.matches(it) } &&
+            (message.creator.isEmpty() || pubkeyPattern.matches(message.creator))
+
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     fun encode(message: GroupMessage): String = MAGIC + json.encodeToString(GroupMessage.serializer(), message)
@@ -45,7 +54,7 @@ object GroupWire {
     fun decode(plaintext: String): GroupMessage? {
         if (!plaintext.startsWith(MAGIC)) return null
         return try {
-            json.decodeFromString(GroupMessage.serializer(), plaintext.substring(MAGIC.length))
+            json.decodeFromString(GroupMessage.serializer(), plaintext.substring(MAGIC.length)).takeIf { isValid(it) }
         } catch (e: Exception) {
             null
         }

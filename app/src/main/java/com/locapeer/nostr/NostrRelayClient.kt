@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonPrimitive
@@ -44,9 +46,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
 import javax.inject.Inject
 import javax.inject.Singleton
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLPeerUnverifiedException
-import javax.net.ssl.SSLSession
 
 private const val TAG = "NostrRelayClient"
 
@@ -90,7 +90,6 @@ class NostrRelayClient @Inject constructor(
                 ConnectionSpec.MODERN_TLS,
                 ConnectionSpec.COMPATIBLE_TLS, // Added for broader self-hosted compatibility
             ))
-            .hostnameVerifier(NostrHostnameVerifier())
             .eventListenerFactory(NostrConnectionListener.Factory())
             .build()
     }
@@ -318,13 +317,14 @@ class NostrRelayClient @Inject constructor(
 
     private fun flushPendingTo(relay: RelayConnection) {
         scope.launch {
-            // Re-subscribe first so inbound delivery resumes immediately; a long offline
-            // backlog queued ahead of the REQs would otherwise delay every incoming event.
-            val subs = synchronized(subsLock) { activeSubscriptions.values.toList() }
-            subs.forEach { relay.send(it) }
-            val pending = pendingMessageDao.getForRelay(relay.url)
-            pending.forEach { entity ->
-                if (relay.send(entity.content)) {
+            relay.flushMutex.withLock {
+                // Re-subscribe before flushing the outbox so inbound delivery resumes first.
+                val subs = synchronized(subsLock) { activeSubscriptions.values.toList() }
+                subs.forEach { relay.send(it) }
+                val pending = pendingMessageDao.getForRelay(relay.url)
+                for (entity in pending) {
+                    // Stop at backpressure/disconnect; preserve ordering and unsent rows.
+                    if (!relay.send(entity.content)) break
                     pendingMessageDao.delete(entity)
                 }
             }
@@ -332,6 +332,7 @@ class NostrRelayClient @Inject constructor(
     }
 
     private inner class RelayConnection(val url: String) {
+        val flushMutex = Mutex()
         @Volatile var webSocket: WebSocket? = null
         @Volatile var isConnected = false
         /** Set once this relay is dropped from the live set; its late socket callbacks and
@@ -429,7 +430,11 @@ class NostrRelayClient @Inject constructor(
                     if (!isStarted) return@launch
                     // Don't overwrite if another connection attempt started in the meantime
                     if (isConnected || webSocket != null) return@launch
-                    synchronized(reconnectLock) { reconnectAttempts++ }
+                    synchronized(reconnectLock) {
+                        reconnectAttempts++
+                        // A synchronous connect failure must be able to arm the next retry.
+                        reconnectJob = null
+                    }
                     connect()
                 }
             }
@@ -452,6 +457,10 @@ class NostrRelayClient @Inject constructor(
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
+                if (removed || this@RelayConnection.webSocket !== webSocket) return
+                // Bound parser/signature work before building a JSON tree. Legitimate inline
+                // media envelopes fit well below this limit.
+                if (text.length > 2 * 1024 * 1024) return
                 try {
                     val arr = json.parseToJsonElement(text) as? JsonArray ?: return
                     if (arr.isEmpty()) return
@@ -552,11 +561,16 @@ class NostrRelayClient @Inject constructor(
                 scheduleReconnect()
             }
 
+            override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
+                // Reply to the peer's close frame so OkHttp releases the socket and calls onClosed.
+                webSocket.close(code, reason)
+            }
+
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 Log.d(TAG, "Closed $url: $code $reason")
                 if (!markClosed(webSocket)) return
                 _relayStatus.update { it + (url to false) }
-                if (code != 1000) scheduleReconnect()
+                scheduleReconnect() // A relay-initiated normal close is not a request to stay offline.
             }
         }
     }
@@ -599,28 +613,5 @@ private class NostrConnectionListener(private val url: String) : EventListener()
             val host = try { java.net.URI(relayUrl).host } catch (_: Exception) { null } ?: return null
             return listeners[host]
         }
-    }
-}
-
-/**
- * Descriptive hostname verifier that logs failure details.
- * Ensures SNI hostname matching is clearly audited for self-hosted relays.
- */
-private class NostrHostnameVerifier : HostnameVerifier {
-    private val delegate = javax.net.ssl.HttpsURLConnection.getDefaultHostnameVerifier()
-
-    override fun verify(hostname: String, session: SSLSession): Boolean {
-        val result = delegate.verify(hostname, session)
-        if (!result) {
-            val certs = try {
-                session.peerCertificates.joinToString { cert ->
-                    (cert as? java.security.cert.X509Certificate)?.subjectDN?.name ?: "UnknownCert"
-                }
-            } catch (e: Exception) {
-                "Unable to retrieve certificates: ${e.message}"
-            }
-            Log.e("NostrRelayClient", "Hostname verification failed for $hostname. Session host: ${session.peerHost}. Certs: $certs")
-        }
-        return result
     }
 }

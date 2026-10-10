@@ -23,6 +23,10 @@ class CryptoUtils @Inject constructor() {
     private val random = SecureRandom()
 
     companion object {
+        // App resource ceiling, not a protocol limit: comfortably above inline media envelopes.
+        internal const val MAX_NIP44_PLAINTEXT_BYTES = 1024 * 1024
+        private const val MAX_NIP44_PAYLOAD_BYTES = MAX_NIP44_PLAINTEXT_BYTES + 6 + 65
+        private const val MAX_NIP44_BASE64_CHARS = ((MAX_NIP44_PAYLOAD_BYTES + 2) / 3) * 4
         private val CURVE_ORDER = BigInteger("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141", 16)
         private val HEX_DIGITS = "0123456789abcdef".toCharArray()
     }
@@ -84,6 +88,7 @@ class CryptoUtils @Inject constructor() {
 
     /** Parses a 64-char hex public key into 33-byte compressed form (prepend 0x02). */
     fun xOnlyHexToCompressed(xOnlyHex: String): ByteArray {
+        require(xOnlyHex.length == 64) { "Public key must be 32 bytes" }
         val x = hexToBytes(xOnlyHex)
         return byteArrayOf(0x02) + x
     }
@@ -162,12 +167,13 @@ class CryptoUtils @Inject constructor() {
 
     /** NIP-44 v2: Decrypts a base64 payload. */
     fun nip44Decrypt(recipientPrivKey: ByteArray, senderXOnlyHex: String, payloadB64: String): String {
+        require(payloadB64.length in 132..MAX_NIP44_BASE64_CHARS) { "Invalid NIP-44 payload size" }
         val payload = try {
             Base64.getDecoder().decode(payloadB64)
         } catch (_: Exception) {
             throw SecurityException("Invalid base64 payload")
         }
-        require(payload.size >= (1 + 32 + 32)) { "Invalid NIP-44 payload size" }
+        require(payload.size in 99..MAX_NIP44_PAYLOAD_BYTES) { "Invalid NIP-44 payload size" }
         require(payload[0] == 0x02.toByte()) { "Unsupported NIP-44 version" }
 
         val nonce = payload.copyOfRange(1, 33)
@@ -226,15 +232,14 @@ class CryptoUtils @Inject constructor() {
         )
     }
 
-    private fun nip44Pad(plaintext: String): ByteArray {
+    internal fun nip44Pad(plaintext: String): ByteArray {
         val data = plaintext.toByteArray(StandardCharsets.UTF_8)
         val len = data.size
-        // NIP-44 v2 supports up to u32 max length
-        require(len > 0) { "Plaintext cannot be empty" }
+        require(len in 1..MAX_NIP44_PLAINTEXT_BYTES) { "Invalid plaintext size" }
 
-        val isExtended = len >= 65535
+        val isExtended = len >= 65536
         val headerSize = if (isExtended) 6 else 2
-        val out = ByteBuffer.allocate(headerSize + len)
+        val out = ByteBuffer.allocate(headerSize + calcNip44Padding(len))
         
         if (isExtended) {
             out.putShort(0)
@@ -244,11 +249,10 @@ class CryptoUtils @Inject constructor() {
         }
         out.put(data)
         
-        val paddedLen = headerSize + calcNip44Padding(len)
-        return out.array().copyOf(paddedLen)
+        return out.array()
     }
 
-    private fun nip44Unpad(padded: ByteArray): String {
+    internal fun nip44Unpad(padded: ByteArray): String {
         if (padded.size < 2) throw SecurityException("Invalid padded data")
         val buffer = ByteBuffer.wrap(padded)
         val firstShort = buffer.short.toInt() and 0xFFFF
@@ -256,13 +260,18 @@ class CryptoUtils @Inject constructor() {
         val (len, headerSize) = if (firstShort == 0) {
             if (padded.size < 6) throw SecurityException("Invalid extended padded data")
             val extendedLen = buffer.int.toLong() and 0xFFFFFFFFL
+            if (extendedLen !in 65536L..MAX_NIP44_PLAINTEXT_BYTES.toLong()) {
+                throw SecurityException("Invalid extended padding length")
+            }
             extendedLen.toInt() to 6
         } else {
             firstShort to 2
         }
 
-        // len < 1 also catches an extended length above Int.MAX_VALUE, which wraps negative.
-        if (len < 1 || len > padded.size - headerSize) throw SecurityException("Invalid padding length")
+        // Reject noncanonical bucket lengths before allocating the plaintext.
+        if (len !in 1..MAX_NIP44_PLAINTEXT_BYTES ||
+            len > padded.size - headerSize || padded.size != headerSize + calcNip44Padding(len)
+        ) throw SecurityException("Invalid padding length")
         val data = ByteArray(len)
         buffer[data]
         return String(data, StandardCharsets.UTF_8)
@@ -285,7 +294,7 @@ class CryptoUtils @Inject constructor() {
         val keyLength = 256
         val factory = javax.crypto.SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256")
         val spec = javax.crypto.spec.PBEKeySpec(password.toCharArray(), salt, iterations, keyLength)
-        return factory.generateSecret(spec).encoded
+        return try { factory.generateSecret(spec).encoded } finally { spec.clearPassword() }
     }
 
     /** Encrypts data for backup using AES-256-GCM. */

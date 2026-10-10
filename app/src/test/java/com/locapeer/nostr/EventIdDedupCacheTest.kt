@@ -6,6 +6,19 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class EventIdDedupCacheTest {
+    @Test
+    fun `many one-event senders cannot leave unbounded empty buckets`() {
+        val cache = EventIdDedupCache(senderCap = 5, globalCap = 20)
+        repeat(2000) { cache.record("sender$it", "event$it") }
+        assertTrue(cache.senderCount <= 20)
+        assertTrue(cache.snapshot().size <= 20)
+    }
+
+    @Test(expected = IllegalArgumentException::class)
+    fun `zero capacity is rejected`() {
+        EventIdDedupCache(senderCap = 0)
+    }
+
 
     @Test
     fun `records and recognises new ids per sender`() {

@@ -68,22 +68,24 @@ class RetentionEnforcementWorker @AssistedInject constructor(
         if (!hasLocalWork && !hasRemoteWork) return Result.success()
 
         return try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-
             // Local retention (always global, applies to data we've received)
             if (settings.localLocationRetentionDays > 0) {
-                val cutoffMs = System.currentTimeMillis() - settings.localLocationRetentionDays * 24 * 3600 * 1000L
+                val cutoffMs = System.currentTimeMillis() - settings.localLocationRetentionDays * 86_400_000L
                 heartbeatDao.deleteOlderThan(cutoffMs)
                 Log.d(TAG, "Purged local location data older than ${settings.localLocationRetentionDays} days")
             }
 
             if (settings.localMessageRetentionDays > 0) {
-                val cutoffMs = System.currentTimeMillis() - settings.localMessageRetentionDays * 24 * 3600 * 1000L
+                val cutoffMs = System.currentTimeMillis() - settings.localMessageRetentionDays * 86_400_000L
                 messageDao.deleteOlderThan(cutoffMs)
                 // Purge decrypted media staged in the cache for any now-deleted message.
                 MediaCache.clearDecryptedMedia(applicationContext)
                 Log.d(TAG, "Purged local messages older than ${settings.localMessageRetentionDays} days")
             }
+
+            // Local deletion must not depend on the Keystore being available.
+            if (!hasRemoteWork) return Result.success()
+            val (privHex, pubHex) = keyManager.ensureKeypair()
 
             // Per-peer remote purges
             for (cfg in configs) {
@@ -94,7 +96,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
                 if (cfg.retentionDaysLocation > 0 &&
                     (peer.locationRole == PeerEntity.ROLE_SEND || peer.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
                 ) {
-                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysLocation * 24 * 3600 * 1000L
+                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysLocation * 86_400_000L
                     publishPurge(
                         recipientPubKeyHex = peer.publicKeyHex,
                         deleteOlderThanMs = cutoffMs,
@@ -106,7 +108,7 @@ class RetentionEnforcementWorker @AssistedInject constructor(
 
                 // Message purge: any peer we have chatted with could be holding messages
                 if (cfg.retentionDaysMessages > 0) {
-                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysMessages * 24 * 3600 * 1000L
+                    val cutoffMs = System.currentTimeMillis() - cfg.retentionDaysMessages * 86_400_000L
                     publishPurge(
                         recipientPubKeyHex = peer.publicKeyHex,
                         deleteOlderThanMs = cutoffMs,

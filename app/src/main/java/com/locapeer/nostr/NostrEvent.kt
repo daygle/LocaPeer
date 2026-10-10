@@ -107,6 +107,13 @@ data class NostrEvent(
             // malformed field (non-hex sig/pubkey, odd-length hex) must be rejected as an
             // invalid event rather than propagating and cancelling the event collector.
             return try {
+                if (event.id.length != 64 || event.pubkey.length != 64 || event.sig.length != 128 ||
+                    event.kind !in 0..65535 || event.createdAt < 0 ||
+                    event.createdAt > Long.MAX_VALUE / 1000L ||
+                    !event.id.all { it in '0'..'9' || it in 'a'..'f' } ||
+                    !event.pubkey.all { it in '0'..'9' || it in 'a'..'f' } ||
+                    !event.sig.all { it in '0'..'9' || it in 'a'..'f' }
+                ) return false
                 val serialized = serializeForId(event.pubkey, event.createdAt, event.kind, event.tags, event.content)
                 val idBytes = crypto.sha256(serialized.toByteArray(StandardCharsets.UTF_8))
                 val idHex = crypto.bytesToHex(idBytes)

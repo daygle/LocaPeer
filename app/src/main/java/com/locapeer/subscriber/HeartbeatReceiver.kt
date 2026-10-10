@@ -133,6 +133,11 @@ private const val NOTIF_ID_DECLINE = 40000
 private const val NOTIF_ID_TRACKING_ALERT = 80000
 const val NOTIF_ID_SUPERVISED_REGISTER = 70000
 
+/** Never turn receive-only access into outbound location sharing without consent. */
+internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boolean): Boolean =
+    if (isRoleChange) existingRole != null
+    else existingRole != PeerEntity.ROLE_SEND && existingRole != PeerEntity.ROLE_SEND_RECEIVE
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -289,12 +294,12 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_REGISTER -> scope.launch { processRegisterRequest(event) }
                     NostrEventKind.SUPERVISED_REGISTER_ACCEPT -> scope.launch { processRegisterResponse(event, accepted = true) }
                     NostrEventKind.SUPERVISED_REGISTER_DECLINE -> scope.launch { processRegisterResponse(event, accepted = false) }
-                    NostrEventKind.TRACK_REQUEST -> scope.launch { processTrackRequest(event) }
+                    NostrEventKind.TRACK_REQUEST -> processTrackRequest(event)
                     NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
-                    NostrEventKind.TRACK_DECLINE -> scope.launch { processTrackDecline(event) }
-                    NostrEventKind.PEER_REMOVED -> scope.launch { processPeerRemoved(event) }
-                    NostrEventKind.DELETE_MY_MESSAGES -> scope.launch { processDeleteMyMessages(event) }
-                    NostrEventKind.DELETE_MY_LOCATION -> scope.launch { processDeleteMyLocation(event) }
+                    NostrEventKind.TRACK_DECLINE -> processTrackDecline(event)
+                    NostrEventKind.PEER_REMOVED -> processPeerRemoved(event)
+                    NostrEventKind.DELETE_MY_MESSAGES -> processDeleteMyMessages(event)
+                    NostrEventKind.DELETE_MY_LOCATION -> processDeleteMyLocation(event)
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
                     NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
@@ -315,6 +320,7 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
         messageDao.deleteOlderThanFromSender(payload.deviceId, payload.deleteOlderThanMs)
+        com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
         Log.d(TAG, "Purged messages from ${payload.deviceId} before ${payload.deleteOlderThanMs}ms")
     }
 
@@ -326,6 +332,7 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<PurgeRequestPayload>(plaintext) } catch (e: Exception) { return }
         if (payload.deviceId != event.pubkey) return
+        discardPendingHeartbeats(payload.deviceId, payload.deleteOlderThanMs)
         heartbeatDao.deleteOlderThanForDevice(payload.deviceId, payload.deleteOlderThanMs)
         Log.d(TAG, "Purged ${payload.deviceId} heartbeats before ${payload.deleteOlderThanMs}ms")
     }
@@ -358,7 +365,8 @@ class HeartbeatReceiver @Inject constructor(
         // Anti-spoof: the payload identity must match the signer.
         if (payload.deviceId != event.pubkey) return
         // Freshness guard against replays of an old request.
-        if (kotlin.math.abs(System.currentTimeMillis() - payload.sentAtMs) > LIVE_VIEW_FRESHNESS_MS) return
+        val now = System.currentTimeMillis()
+        if (payload.sentAtMs !in (now - LIVE_VIEW_FRESHNESS_MS)..(now + LIVE_VIEW_FRESHNESS_MS)) return
 
         // grant() reports the inactive -> active transition; only then must we wake the
         // service, since while already live it re-reads the registry every 5s on its own.
@@ -460,7 +468,13 @@ class HeartbeatReceiver @Inject constructor(
             // Read the previous position BEFORE buffering this one: a size-triggered flush
             // inside enqueueHeartbeat would otherwise make this very ping the "previous"
             // one, and the geofence engine would then never see the transition.
-            val prevHeartbeat = if (isFresh) heartbeatDao.getLatestHeartbeat(canonicalDeviceId) else null
+            val prevHeartbeat = if (isFresh) {
+                val buffered = batchMutex.withLock {
+                    pendingHeartbeats.filter { it.deviceId == canonicalDeviceId }.maxByOrNull { it.timestamp }
+                }
+                val stored = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
+                listOfNotNull(buffered, stored).maxByOrNull { it.timestamp }
+            } else null
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
@@ -494,9 +508,19 @@ class HeartbeatReceiver @Inject constructor(
      * picks up where we left off rather than re-requesting the same 7 days of history.
      */
     private suspend fun advanceHeartbeatBaseline(eventEpoch: Long) {
-        if (eventEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
-            lastPersistedHbEpoch = eventEpoch
-            prefs.setLastHeartbeatSubEpoch(eventEpoch)
+        val safeEpoch = eventEpoch.coerceAtMost(Instant.now().epochSecond)
+        if (safeEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
+            lastPersistedHbEpoch = safeEpoch
+            prefs.setLastHeartbeatSubEpoch(safeEpoch)
+        }
+    }
+
+    /** Coordinate deletions with an in-flight commit so buffered history cannot reappear. */
+    private suspend fun discardPendingHeartbeats(deviceId: String, before: Long? = null) {
+        batchMutex.withLock {
+            pendingHeartbeats.removeAll { it.deviceId == deviceId && (before == null || it.timestamp < before) }
+            pendingKeys.clear()
+            pendingHeartbeats.forEach { pendingKeys.add(hbKey(it.deviceId, it.timestamp)) }
         }
     }
 
@@ -537,23 +561,25 @@ class HeartbeatReceiver @Inject constructor(
      * still-sleeping timer so it can't double-flush an empty buffer.
      */
     private suspend fun flushBatch(fromTimer: Boolean) {
-        val batch: List<HeartbeatEntity>
         batchMutex.withLock {
             if (!fromTimer) flushJob?.cancel()
             flushJob = null
             if (pendingHeartbeats.isEmpty()) return
-            batch = pendingHeartbeats.toList()
-            pendingHeartbeats.clear()
-            pendingKeys.clear()
-        }
-        try {
-            // Transactional insert of the whole batch reduces Room invalidation churn.
-            // Retention cleanup is omitted here: doing it on every batch (seconds apart)
-            // is expensive and redundant with the daily RetentionEnforcementWorker and
-            // the explicit PURGE_REQUEST events.
-            heartbeatDao.insertAll(batch)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to flush heartbeat batch (${batch.size})", e)
+            try {
+                // Keep dedup keys visible until commit; a timer flush must not open a gap
+                // where the event collector queues an already-in-flight heartbeat again.
+                heartbeatDao.insertAll(pendingHeartbeats.toList())
+                pendingHeartbeats.clear()
+                pendingKeys.clear()
+            } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
+                Log.e(TAG, "Failed to flush heartbeat batch (${pendingHeartbeats.size})", e)
+                // Retain the data on failure, and retry without requiring another arrival.
+                flushJob = scope.launch {
+                    delay(HB_BATCH_MAX_DELAY_MS)
+                    flushBatch(fromTimer = true)
+                }
+            }
         }
     }
 
@@ -1072,6 +1098,7 @@ class HeartbeatReceiver @Inject constructor(
         try {
             json.decodeFromString<PeerRemovedPayload>(plaintext)
         } catch (e: Exception) { return }
+        discardPendingHeartbeats(event.pubkey)
         peerManager.handleRemovalByPeer(event.pubkey)
     }
 
@@ -1092,6 +1119,7 @@ class HeartbeatReceiver @Inject constructor(
         try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
+        discardPendingHeartbeats(event.pubkey)
         peerManager.handleDeleteMyLocation(event.pubkey)
     }
 
@@ -1182,22 +1210,10 @@ class HeartbeatReceiver @Inject constructor(
 
         val existing = peerDao.getPeer(event.pubkey)
 
-        if (!payload.isRoleChange) {
-            // For new requests only: skip if already sharing; auto-promote RECEIVE → SEND_RECEIVE
-            if (existing?.locationRole == PeerEntity.ROLE_SEND || existing?.locationRole == PeerEntity.ROLE_SEND_RECEIVE) return
-            if (existing != null && existing.locationRole == PeerEntity.ROLE_RECEIVE) {
-                peerDao.upsertPeer(existing.copy(locationRole = PeerEntity.ROLE_SEND_RECEIVE))
-                try {
-                    trackResponseSender.sendAccept(
-                        payload.senderPublicKeyHex, payload.senderRelayUrl, PeerEntity.ROLE_SEND_RECEIVE
-                    )
-                } catch (e: Exception) {
-                    Log.e(TAG, "Failed to send track accept response", e)
-                }
-                Log.i(TAG, "Promoted ${existing.displayName} to SEND_RECEIVE")
-                return
-            }
-        }
+        // A receive-only relationship is not consent to send our location back.
+        // All new sharing grants must go through the existing review/accept screen.
+        // A stranger cannot bypass the flood cap by claiming a role change either.
+        if (!shouldReviewTrackRequest(existing?.locationRole, payload.isRoleChange)) return
 
         // Flood cap: a stranger cycling keys sends signed-but-unsolicited new requests from
         // ever-changing pubkeys. Once the backlog is full, drop further NEW ones (a repeat
@@ -1364,6 +1380,7 @@ class HeartbeatReceiver @Inject constructor(
             // A removal is irreversible, so apply the same replay guard as PEER_REMOVED: an
             // old decline redelivered by a relay must not wipe a since-re-added contact.
             if (isStalePeerCommand(event, peer)) return
+            discardPendingHeartbeats(event.pubkey)
             peerManager.handleRemovalByPeer(event.pubkey)
         }
         // Prefer the locally stored name over the payload's remote-controlled one, as the

@@ -76,6 +76,9 @@ class LocationFilter {
      * untouched (except for jump-candidate bookkeeping).
      */
     fun accept(lat: Double, lng: Double, accuracyM: Float, elapsedRealtimeNs: Long): Boolean {
+        if (lat !in -90.0..90.0 || lng !in -180.0..180.0 ||
+            !accuracyM.isFinite() || accuracyM < 0f || elapsedRealtimeNs < 0L
+        ) return false
         if (!hasAccepted) {
             recordAccepted(lat, lng, accuracyM, elapsedRealtimeNs)
             return true

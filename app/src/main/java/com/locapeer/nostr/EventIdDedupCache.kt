@@ -23,6 +23,12 @@ internal class EventIdDedupCache(
     private val senderCap: Int = 500,
     private val globalCap: Int = 2000,
 ) {
+    init {
+        require(senderCap > 0 && globalCap > 0) { "Dedup capacities must be positive" }
+    }
+
+    internal val senderCount: Int get() = bySender.size
+
     // Per-sender FIFO windows using LinkedHashSet for O(1) lookups and O(1) insertion/removal.
     private val bySender = HashMap<String, MutableSet<String>>()
     // Pre-restart ids restored from persistence; O(1) lookups, trimmed first.
@@ -91,6 +97,7 @@ internal class EventIdDedupCache(
                 it.next()
                 it.remove()
                 total--
+                if (bucket.isEmpty()) bySender.remove(largest.key)
             } else {
                 bySender.remove(largest.key)
             }

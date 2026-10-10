@@ -421,13 +421,13 @@ class SettingsViewModel @Inject constructor(
             try {
                 val json = withContext(Dispatchers.IO) {
                     context.contentResolver.openInputStream(uri)?.use {
-                        it.readBytes().toString(Charsets.UTF_8)
+                        com.locapeer.util.readCapped(it, MAX_BACKUP_BYTES).toString(Charsets.UTF_8)
                     }
                 } ?: run {
                     _backupResult.value = BackupResult(context.getString(com.locapeer.R.string.backup_could_not_read_file), isError = true)
                     return@launch
                 }
-                val backup = jsonImport.decodeFromString<LocaPeerBackup>(json)
+                val backup = withContext(Dispatchers.Default) { jsonImport.decodeFromString<LocaPeerBackup>(json) }
                 
                 if (backup.ciphertext != null) {
                     // This is an encrypted backup, we need a password before we can show available sections
@@ -467,7 +467,7 @@ class SettingsViewModel @Inject constructor(
                     String(decryptedBytes, Charsets.UTF_8)
                 }
 
-                val decryptedBackup = jsonImport.decodeFromString<LocaPeerBackup>(decryptedJson)
+                val decryptedBackup = withContext(Dispatchers.Default) { jsonImport.decodeFromString<LocaPeerBackup>(decryptedJson) }
                 val available = buildSet {
                     if (decryptedBackup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
                     if (!decryptedBackup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
@@ -794,6 +794,7 @@ class SettingsViewModel @Inject constructor(
         private val jsonExport = Json { encodeDefaults = true }
         private val jsonImport = Json { ignoreUnknownKeys = true }
         /** A restorable identity is a 32-byte secp256k1 scalar written as 64 lowercase hex chars. */
+        private const val MAX_BACKUP_BYTES = 16 * 1024 * 1024
         private val PRIVATE_KEY_REGEX = Regex("^[0-9a-f]{64}$")
         /** Nostr pubkeys are serialised as 64 lowercase hex chars. */
         private val PUBKEY_REGEX = Regex("^[0-9a-f]{64}$")
