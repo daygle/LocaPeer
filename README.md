@@ -159,6 +159,47 @@ cd LocaPeer
 ./gradlew assembleDebug
 ```
 
+### Signed release APK (GitHub Actions)
+
+Signed release builds run on CI (`.github/workflows/android-release.yml`), so the Android Studio
+*Generate Signed APK* wizard is no longer needed. Bump `appVersionCode` in `gradle.properties`
+(and `appVersionName`, though a tag overrides it), then push a version tag - or run the workflow
+manually from the Actions tab:
+
+```bash
+git tag v1.1.46
+git push origin v1.1.46
+```
+
+A tag build pins `versionName` to the tag, attaches the signed APK to a GitHub Release and uploads
+it as a workflow artifact. A manual (`workflow_dispatch`) run only uploads the artifact.
+
+Add your signing key to **Settings -> Secrets and variables -> Actions** - use the *same keystore*
+you have been signing with, so the APK signature is unchanged and existing installs keep updating
+in place:
+
+| Secret | Value |
+| --- | --- |
+| `KEYSTORE_BASE64` | the keystore file, base64-encoded (command below) |
+| `KEYSTORE_PASSWORD` | keystore password |
+| `KEY_ALIAS` | key alias |
+| `KEY_PASSWORD` | key password |
+
+```bash
+# Linux/macOS; paste the single-line output as KEYSTORE_BASE64
+base64 -w0 ~/keystores/locapeer-release.jks
+```
+
+Local builds are unaffected: without those values `assembleRelease` just produces an unsigned APK,
+and the Android Studio wizard still signs with the keystore you select. To sign from the command
+line instead, pass the same values as Gradle properties:
+
+```bash
+./gradlew assembleRelease \
+  -PlocapeerKeystoreFile=/path/to/release.jks \
+  -PlocapeerKeystorePassword=*** -PlocapeerKeyAlias=*** -PlocapeerKeyPassword=***
+```
+
 **Public relays**: `wss://relay.daygle.net`, `wss://nos.lol`, `wss://relay.damus.io`, `wss://relay.snort.social`
 
 ## Privacy & Security
