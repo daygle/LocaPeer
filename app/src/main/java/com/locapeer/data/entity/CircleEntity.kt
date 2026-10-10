@@ -36,5 +36,13 @@ data class CircleEntity(
      * Relays deliver catch-up history newest first, so without this an older message processed
      * later would roll the membership back. 0 = none applied yet (any creator message wins).
      */
-    val membershipUpdatedAt: Long = 0
+    val membershipUpdatedAt: Long = 0,
+    /**
+     * Latest creator-signed version of this circle's name and membership (see
+     * [com.locapeer.messaging.GroupControl]); 0 = never signed. Once set, unsigned updates are
+     * ignored and only a higher signed version is applied.
+     */
+    val controlVersion: Long = 0,
+    /** The creator's signature for [controlVersion], forwarded in our own group messages. */
+    val controlSig: String = ""
 )

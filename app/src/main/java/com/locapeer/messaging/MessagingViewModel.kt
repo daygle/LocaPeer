@@ -331,7 +331,7 @@ class MessagingViewModel @Inject constructor(
                         members = fullMembers,
                         text = content,
                         creator = circle.creatorPubkey
-                    )
+                    ).withControl(circle, pubHex, privBytes)
                 )
                 // Capture each successfully built event id keyed by recipient pubkey while the
                 // fanout runs. Captured BEFORE publish so a partial network failure doesn't
@@ -377,6 +377,26 @@ class MessagingViewModel @Inject constructor(
                 Log.e("MessagingViewModel", "sendGroupMessage failed", e)
             }
         }
+    }
+
+    /**
+     * Attach the creator-signed circle state ([GroupControl]) to an outgoing group message.
+     * As creator, re-sign with a newer version whenever the name or membership changed since the
+     * last signature. As a member, forward the creator's latest signature, but only while it still
+     * matches what this device holds; otherwise send unsigned rather than a signature that fails.
+     */
+    private suspend fun GroupMessage.withControl(circle: CircleEntity, myPubHex: String, myPriv: ByteArray): GroupMessage {
+        if (circle.creatorPubkey.isBlank()) return this
+        val matches = circle.controlSig.isNotEmpty() && GroupControl.verify(
+            crypto, circle.controlSig, gid, circle.creatorPubkey, circle.controlVersion, members, gname
+        )
+        if (matches) return copy(cver = circle.controlVersion, csig = circle.controlSig)
+        if (circle.creatorPubkey != myPubHex) return this
+        // Milliseconds keep versions increasing across reinstalls; +1 covers a clock set back.
+        val version = maxOf(circle.controlVersion + 1, System.currentTimeMillis())
+        val sig = GroupControl.sign(crypto, myPriv, gid, myPubHex, version, members, gname)
+        circleDao.setControl(gid, version, sig)
+        return copy(cver = version, csig = sig)
     }
 
     /** Share the current location with a whole circle: a group message whose body is an OSM pin URL. */
@@ -450,7 +470,7 @@ class MessagingViewModel @Inject constructor(
                         members = fullMembers,
                         text = innerMediaEnvelope,
                         creator = circle.creatorPubkey,
-                    )
+                    ).withControl(circle, pubHex, privBytes)
                 )
                 // Same per-member event-id capture as [sendGroupMessage] - the map is what
                 // [deleteMessageFromRemote] reads to fan out NIP-09 deletions for media rows.

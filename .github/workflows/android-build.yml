@@ -52,6 +52,16 @@ jobs:
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
+      # Room's KSP step rewrites app/schemas on every build. A diff here means a schema
+      # change was made without committing its exported JSON (needed for migrations).
+      - name: Check Room Schemas Are Committed
+        run: |
+          git add -N app/schemas
+          if ! git diff --exit-code -- app/schemas; then
+            echo "::error::Room schema JSON in app/schemas is out of date; build locally and commit it."
+            exit 1
+          fi
+
       - name: Upload Lint Report
         uses: actions/upload-artifact@v7
         if: always()

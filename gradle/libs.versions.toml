@@ -20,6 +20,7 @@ composeBom = "2026.09.00"
 hilt = "2.60.1"
 androidxHilt = "1.4.0"
 room = "2.8.5"
+sqlcipher = "4.19.1"
 lifecycle = "2.11.0"
 coroutines = "1.11.0"
 serialization = "1.11.0"
@@ -93,6 +94,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+sqlcipher-android = { group = "net.zetetic", name = "sqlcipher-android", version.ref = "sqlcipher" }
 
 # Networking, location, maps
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }

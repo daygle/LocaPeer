@@ -3,6 +3,7 @@ package com.locapeer.data.dao
 import androidx.room.*
 import com.locapeer.data.entity.CircleEntity
 import com.locapeer.data.entity.CircleMemberEntity
+import com.locapeer.messaging.GroupControl
 import kotlinx.coroutines.flow.Flow
 
 data class CircleMemberCount(val circleId: String, val cnt: Int)
@@ -80,17 +81,24 @@ interface CircleDao {
         replaceMembers(circle.id, memberPubkeys)
     }
 
+    @Query("UPDATE circles SET controlVersion = :version, controlSig = :sig WHERE id = :circleId")
+    suspend fun setControl(circleId: String, version: Long, sig: String)
+
+    @Query("UPDATE circles SET creatorPubkey = :creatorPubkey WHERE id = :circleId")
+    suspend fun setCreator(circleId: String, creatorPubkey: String)
+
     /**
      * Creates the circle (if missing) and sets its membership from a received group message, so a
      * recipient sees the same circle the sender defined without a separate invite.
      *
-     * Creator-authoritative: on first sight the claimed [creatorPubkey] is recorded (trust on first
-     * use). Thereafter only a message whose [senderPubkey] equals that stored creator may change the
-     * name or membership; a message from any other member is still delivered (the caller inserts it)
-     * but is not allowed to silently rewrite who is in the circle on this device.
+     * [signedVersion] / [signedSig] are the message's creator-signed state, already verified by
+     * the caller (0 / "" when unsigned). A signed message proves who the creator is, so the circle
+     * can be created from any member's copy, and only a newer signed version updates it. Unsigned
+     * messages (older app versions) keep the earlier rules: the claimed creator is recorded on
+     * first sight, then only that creator may change the name or membership, never with a message
+     * older than the last applied one ([eventCreatedAt]). See [GroupControl.decide].
      *
-     * [eventCreatedAt] orders creator updates: one older than the last applied update is ignored,
-     * so out-of-order delivery (catch-up arrives newest first) can't roll membership back.
+     * A message that may not update the circle is still delivered; the caller inserts it.
      */
     @Transaction
     suspend fun materialiseFromRemote(
@@ -99,24 +107,47 @@ interface CircleDao {
         creatorPubkey: String,
         senderPubkey: String,
         memberPubkeys: List<String>,
-        eventCreatedAt: Long
+        eventCreatedAt: Long,
+        signedVersion: Long = 0,
+        signedSig: String = ""
     ) {
         val existing = getCircle(circleId)
         if (existing == null) {
-            // A non-creator's copy may carry a stale view, so only a creator message sets the
-            // ordering baseline; otherwise the creator's next message (of any age) still applies.
+            // A non-creator's unsigned copy may carry a stale view, so only a creator message sets
+            // the ordering baseline; otherwise the creator's next message (of any age) still applies.
             val baseline = if (creatorPubkey.isBlank() || senderPubkey == creatorPubkey) eventCreatedAt else 0L
-            upsertCircle(CircleEntity(id = circleId, name = name, creatorPubkey = creatorPubkey, membershipUpdatedAt = baseline))
+            upsertCircle(
+                CircleEntity(
+                    id = circleId, name = name, creatorPubkey = creatorPubkey, membershipUpdatedAt = baseline,
+                    controlVersion = signedVersion, controlSig = if (signedVersion > 0) signedSig else ""
+                )
+            )
             replaceMembers(circleId, memberPubkeys)
             return
         }
-        // Only the recorded creator may mutate membership/name. Fall back to the sender when no
-        // creator was ever recorded (circle predates this field), preserving prior behaviour.
-        val authority = existing.creatorPubkey.ifBlank { senderPubkey }
-        if (senderPubkey == authority && eventCreatedAt >= existing.membershipUpdatedAt) {
-            if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
-            replaceMembers(circleId, memberPubkeys)
-            setMembershipUpdatedAt(circleId, eventCreatedAt)
+        when (
+            GroupControl.decide(
+                knownCreator = existing.creatorPubkey,
+                knownVersion = existing.controlVersion,
+                knownUpdatedAt = existing.membershipUpdatedAt,
+                senderPubkey = senderPubkey,
+                claimedCreator = creatorPubkey,
+                signedVersion = signedVersion,
+                eventCreatedAt = eventCreatedAt,
+            )
+        ) {
+            GroupControl.Update.APPLY_SIGNED -> {
+                if (existing.creatorPubkey.isBlank()) setCreator(circleId, creatorPubkey)
+                if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
+                replaceMembers(circleId, memberPubkeys)
+                setControl(circleId, signedVersion, signedSig)
+            }
+            GroupControl.Update.APPLY_UNSIGNED -> {
+                if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
+                replaceMembers(circleId, memberPubkeys)
+                setMembershipUpdatedAt(circleId, eventCreatedAt)
+            }
+            GroupControl.Update.IGNORE -> Unit
         }
     }
 }

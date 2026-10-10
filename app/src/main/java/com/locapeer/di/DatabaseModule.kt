@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
+import com.locapeer.data.DatabaseEncryption
 import com.locapeer.data.dao.CircleDao
 import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
@@ -21,10 +22,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
+
+    private const val DB_NAME = "locapeer.db"
 
     /** v2: per-contact opt-in for missed-location alerts. */
     private val MIGRATION_1_2 = object : Migration(1, 2) {
@@ -238,16 +242,30 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v13: creator-signed circle state (see GroupControl). Existing circles start unsigned
+     * (version 0) and keep the earlier rules until their creator's first signed message.
+     */
+    private val MIGRATION_12_13 = object : Migration(12, 13) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL("ALTER TABLE circles ADD COLUMN controlVersion INTEGER NOT NULL DEFAULT 0")
+            db.execSQL("ALTER TABLE circles ADD COLUMN controlSig TEXT NOT NULL DEFAULT ''")
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
         MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11,
-        MIGRATION_11_12
+        MIGRATION_11_12, MIGRATION_12_13
     )
 
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): AppDatabase =
-        Room.databaseBuilder(context, AppDatabase::class.java, "locapeer.db")
+        Room.databaseBuilder(context, AppDatabase::class.java, DB_NAME)
+            // Encrypted at rest with SQLCipher; prepare() converts an unencrypted database from
+            // an earlier version on first open. See DatabaseEncryption.
+            .openHelperFactory(SupportOpenHelperFactory(DatabaseEncryption.prepare(context, DB_NAME)))
             // The app is live with testers, so every schema change from here on
             // must bump the version and ship a Migration - in-place edits to an
             // existing version leave installed devices with a mismatched schema
