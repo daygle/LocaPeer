@@ -1,6 +1,8 @@
 package com.locapeer.ui.components
 
 import android.app.Activity
+import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.layout.Arrangement
@@ -168,13 +170,22 @@ fun AppLockScreen(
     }
 }
 
-/** True when the device can satisfy BiometricPrompt with our chosen authenticator
- *  set; the Authenticator set should also suffice since Android 11 (API 30) onwards. */
-private fun canAuthenticate(activity: Activity): Boolean {
-    val manager = BiometricManager.from(activity)
-    val result = manager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL)
-    return result == BiometricManager.BIOMETRIC_SUCCESS
-}
+/**
+ * Android 11 (API 30) is the first release where a device PIN/pattern/password can authorise
+ * a per-use Keystore key, so only there is the unlock bound to a CryptoObject. Earlier
+ * releases reject a CryptoObject alongside device credentials (and BIOMETRIC_STRONG plus
+ * DEVICE_CREDENTIAL entirely on API 28-29), so they use the plain prompt.
+ */
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
+private val cryptoBoundUnlock = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+
+private val allowedAuthenticators =
+    if (cryptoBoundUnlock) BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+    else BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+
+/** True when the device can satisfy BiometricPrompt with [allowedAuthenticators]. */
+private fun canAuthenticate(activity: Activity): Boolean =
+    BiometricManager.from(activity).canAuthenticate(allowedAuthenticators) == BiometricManager.BIOMETRIC_SUCCESS
 
 /** Launch the prompt and dispatch the result to [onUnlocked] / [onError]. */
 private fun prompt(
@@ -186,7 +197,15 @@ private fun prompt(
     val executor = ContextCompat.getMainExecutor(activity)
     val callback = object : BiometricPrompt.AuthenticationCallback() {
         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-            onUnlocked()
+            if (!cryptoBoundUnlock) {
+                onUnlocked()
+            } else if (keyManager.verifyAppLockCryptoObject(result.cryptoObject)) {
+                // The success callback alone is not proof: unlock only once the Keystore
+                // has let us use the key that this authentication was bound to.
+                onUnlocked()
+            } else {
+                onError(activity.getString(R.string.app_lock_crypto_failed))
+            }
         }
         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
             // ERROR_USER_CANCELED / NEGATIVE_BUTTON fire when the user dismisses the
@@ -204,19 +223,22 @@ private fun prompt(
         }
     }
     val prompt = BiometricPrompt(activity, executor, callback)
-    val cryptoObject = keyManager.getAppLockCryptoObject()
     val info = BiometricPrompt.PromptInfo.Builder()
         .setTitle(activity.getString(R.string.app_lock_prompt_title))
         .setSubtitle(activity.getString(R.string.app_lock_prompt_subtitle))
-        .setAllowedAuthenticators(
-            BiometricManager.Authenticators.BIOMETRIC_STRONG or BiometricManager.Authenticators.DEVICE_CREDENTIAL
-        )
+        .setAllowedAuthenticators(allowedAuthenticators)
         // Require explicit user confirmation (e.g. a button tap) after successful
         // biometric recognition. This prevents accidental unlocks and satisfies
         // security scanners that flag auto-unlocking.
         .setConfirmationRequired(true)
         .build()
 
+    // Spelled out (not cryptoBoundUnlock) so lint's API check sees the guard.
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+        prompt.authenticate(info)
+        return
+    }
+    val cryptoObject = keyManager.getAppLockCryptoObject()
     if (cryptoObject != null) {
         prompt.authenticate(info, cryptoObject)
     } else {
