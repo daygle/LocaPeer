@@ -2,7 +2,7 @@
 <data-extraction-rules>
     <!-- Keep the file domain excluded (matching legacy backup_rules.xml): filesDir holds the
          DataStore preference files (including the Keystore-wrapped private key blob and the
-         supervisor pubkey) and the osmdroid tile cache, whose tiles map out the locations the
+         supervisor pubkey) and the MapLibre tile cache, whose tiles map out the locations the
          user has visited. None of that may leave the device via cloud backup or transfer. -->
     <cloud-backup>
         <exclude domain="root" />

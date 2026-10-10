@@ -81,6 +81,7 @@ android {
             keepDebugSymbols += "**/libandroidx.graphics.path.so"
             keepDebugSymbols += "**/libdatastore_shared_counter.so"
             keepDebugSymbols += "**/libimage_processing_util_jni.so"
+            keepDebugSymbols += "**/libmaplibre.so"
             keepDebugSymbols += "**/libsecp256k1-jni.so"
             keepDebugSymbols += "**/libsurface_util_jni.so"
         }
@@ -145,7 +146,7 @@ dependencies {
 
     // Location, Maps, QR, Camera
     implementation(libs.play.services.location)
-    implementation(libs.osmdroid)
+    implementation(libs.maplibre.android)
     implementation(libs.zxing.android.embedded) { isTransitive = false }
     implementation(libs.zxing.core)
     implementation(libs.androidx.biometric)

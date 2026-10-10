@@ -69,7 +69,8 @@ updates:
           - "com.squareup.okhttp3*"
           - "com.google.zxing*"
           - "com.journeyapps*"
-          - "org.osmdroid*"
+          - "org.maplibre*"
+          - "net.zetetic*"
 
       # Test-only dependencies
       tests:

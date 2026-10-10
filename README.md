@@ -139,7 +139,7 @@ Custom application events (kinds 1040-1060) are tagged with the recipient's publ
 | **Secure Storage** | Android Keystore + DataStore (AES/GCM) |
 | **Networking** | WebSockets via OkHttp |
 | **Cryptography** | `secp256k1-kmp` (BIP-340 Schnorr) + Bouncy Castle (NIP-44 v2 ChaCha20-HMAC-SHA256) |
-| **Maps** | OSMDroid (OpenStreetMap) |
+| **Maps** | MapLibre Native (OpenStreetMap raster tiles) |
 | **Location** | Google Play services: FusedLocationProviderClient + Activity Recognition |
 | **Motion Classification** | Custom GPS speed engine (MotionMath) fused with Activity Recognition (MotionFusion) |
 | **Background Work** | WorkManager (retention enforcement, missed-heartbeat watchdog) + boot receiver |
@@ -179,7 +179,7 @@ cd LocaPeer
 - **Cross-Relay Suppression Defense**: Recent event IDs are cached only AFTER their Schnorr signature verifies, so a forged-event attack can't poison the cache and silence a genuine event that arrives later. Recent-ID cache is size-bounded (LRU, 2 000 entries) and persisted in DataStore every 100 events.
 - **App Lock**: Optional biometric or device-credential prompt at launch, with a user-chosen re-lock grace period. Whole-process backgrounding (via `ProcessLifecycleOwner`) - not per-Activity stop - controls re-lock, so a transient system permission dialog doesn't sign you out mid-task. No static PIN to compromise; the device's own biometrics are the only keys. On Android 11+ the unlock is bound to a per-use Android Keystore key: the app opens only after that key has actually been used, so a spoofed "success" callback isn't enough. Android 8–10 can't bind a device PIN to a key, so there the system prompt's result is trusted.
 - **UI Hardening**: `FLAG_SECURE` prevents screenshots and screen recordings on sensitive screens; private-key reveal notices this hiding is best-effort only.
-- **Open Attributions**: The About screen lists the open-source libraries the app depends on (OSMDroid, OkHttp, Jetpack Compose, Hilt, Room) and credits OpenStreetMap / CartoDB for map data.
+- **Open Attributions**: The About screen lists the open-source libraries the app depends on (MapLibre, OkHttp, Jetpack Compose, Hilt, Room) and credits OpenStreetMap / CartoDB for map data.
 
 ## License
 

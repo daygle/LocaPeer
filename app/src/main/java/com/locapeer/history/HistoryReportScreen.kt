@@ -23,25 +23,23 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.LocalLifecycleOwner
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.graphics.toColorInt
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import com.locapeer.R
-import com.locapeer.map.MapTileSources
+import com.locapeer.map.LocaMap
+import com.locapeer.map.LocaMapController
+import com.locapeer.map.MapGeometry
+import com.locapeer.map.MapLine
+import com.locapeer.map.MapMarker
+import com.locapeer.map.MarkerAnchor
 import com.locapeer.beacon.MotionState
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
 import com.locapeer.util.DisplayFormat
-import org.osmdroid.util.BoundingBox
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Polyline
+import org.maplibre.android.geometry.LatLng
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -400,172 +398,108 @@ private fun HistoryMapTab(
         return
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    var mapViewRef by remember { mutableStateOf<MapView?>(null) }
+    val context = LocalContext.current
+    var map by remember { mutableStateOf<LocaMapController?>(null) }
     var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
     val timestampFormat = remember(DisplayFormat.use24HourTime) {
         SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
     }
 
-    // Keep one lifecycle observer for the whole MapView lifetime. Keying this effect on
-    // mapViewRef makes it restart when AndroidView creates the view; the old cleanup can then
-    // race with osmdroid's tile writer and shut down the freshly created map.
-    DisposableEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            when (event) {
-                Lifecycle.Event.ON_RESUME -> mapViewRef?.onResume()
-                Lifecycle.Event.ON_PAUSE -> mapViewRef?.onPause()
-                else -> {}
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-
-        onDispose {
-            lifecycleOwner.lifecycle.removeObserver(observer)
-            mapViewRef?.onPause()
-            mapViewRef?.onDetach()
-            mapViewRef = null
-        }
-    }
-
     // Recenter the map on the tapped ping so its location is brought into view
     // (the bottom detail card covers the lower part of the map, so nudge the
     // target upward slightly to keep the pin clear of the card).
-    LaunchedEffect(selectedPing, mapViewRef) {
+    LaunchedEffect(selectedPing, map) {
         val ping = selectedPing ?: return@LaunchedEffect
-        val mapView = mapViewRef ?: return@LaunchedEffect
-        val latOffset = mapView.boundingBox.latitudeSpan * 0.2
-        mapView.controller.animateTo(GeoPoint(ping.lat - latOffset, ping.lng))
+        val mv = map ?: return@LaunchedEffect
+        val latOffset = mv.map.projection.visibleRegion.latLngBounds.latitudeSpan * 0.2
+        mv.animateTo(ping.lat - latOffset, ping.lng)
+    }
+
+    // Only fit the viewport when the day's data changes - selecting a pin must not yank the
+    // camera back out. A single fix has no bounds to fit, so it gets a useful neighbourhood view.
+    LaunchedEffect(heartbeats, map) {
+        val mv = map ?: return@LaunchedEffect
+        mv.fit(
+            heartbeats.map { LatLng(it.lat, it.lng) },
+            paddingPx = 64,
+            animate = false,
+            singlePointZoom = MapGeometry.fromLegacyZoom(14.0)
+        )
+    }
+
+    val selectedId = selectedPing?.id
+    val lines = remember(heartbeats) {
+        val pinColor = heartbeats.last().pinColor
+        val lineArgb = if (pinColor.isNotEmpty())
+            pinColor.toColorInt().let {
+                android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
+            }
+        else android.graphics.Color.argb(200, 66, 133, 244)
+        listOf(MapLine(heartbeats.map { LatLng(it.lat, it.lng) }, lineArgb, widthDp = 3f))
+    }
+    val markers = remember(heartbeats, selectedId) {
+        heartbeats.mapIndexed { index, ping ->
+            val isLatest = index == heartbeats.lastIndex
+            val isSelected = ping.id == selectedId
+            val icon = if (isLatest) {
+                MarkerIconFactory.create(
+                    context = context,
+                    displayName = ping.displayName,
+                    isOverdue = false,
+                    isSos = ping.isSos,
+                    pinColor = ping.pinColor,
+                    isSelected = isSelected
+                )
+            } else {
+                MarkerIconFactory.createDotIcon(
+                    context = context,
+                    pinColor = ping.pinColor,
+                    isSos = ping.isSos,
+                    isSelected = isSelected
+                )
+            }
+            MapMarker(
+                id = ping.id.toString(),
+                lat = ping.lat,
+                lng = ping.lng,
+                icon = icon.bitmap,
+                anchor = if (isLatest) MarkerAnchor.BOTTOM else MarkerAnchor.CENTER,
+                zIndex = when {
+                    isSelected -> 2f
+                    isLatest -> 1f
+                    else -> 0f
+                }
+            )
+        }
     }
 
     Box(modifier = modifier.clipToBounds()) {
-        AndroidView(
-            factory = { ctx ->
-                @Suppress("DEPRECATION")
-                MapView(ctx).apply {
-                    MapTileSources.apply(this, isDark)
-                    setBuiltInZoomControls(false)
-                    setMultiTouchControls(true)
-                    isVerticalMapRepetitionEnabled = false
-                    // Keep the initial view broad enough for tile loading and orientation.
-                    controller.setZoom(13.0)
-                    setOnTouchListener { v, event ->
-                        when (event.action) {
-                            android.view.MotionEvent.ACTION_DOWN,
-                            android.view.MotionEvent.ACTION_MOVE ->
-                                v.parent?.requestDisallowInterceptTouchEvent(true)
-                            android.view.MotionEvent.ACTION_UP,
-                            android.view.MotionEvent.ACTION_CANCEL -> {
-                                v.parent?.requestDisallowInterceptTouchEvent(false)
-                                if (event.action == android.view.MotionEvent.ACTION_UP) {
-                                    v.performClick()
-                                }
+        LocaMap(
+            modifier = Modifier.fillMaxSize(),
+            isDark = isDark,
+            markers = markers,
+            lines = lines,
+            onMarkerClick = { id -> selectedPing = heartbeats.firstOrNull { it.id.toString() == id } },
+            onReady = { map = it },
+            configureView = { view ->
+                // The map sits inside a scrolling/paging screen: keep the parent from stealing
+                // pan gestures while a finger is on the map.
+                view.setOnTouchListener { v, event ->
+                    when (event.action) {
+                        android.view.MotionEvent.ACTION_DOWN,
+                        android.view.MotionEvent.ACTION_MOVE ->
+                            v.parent?.requestDisallowInterceptTouchEvent(true)
+                        android.view.MotionEvent.ACTION_UP,
+                        android.view.MotionEvent.ACTION_CANCEL -> {
+                            v.parent?.requestDisallowInterceptTouchEvent(false)
+                            if (event.action == android.view.MotionEvent.ACTION_UP) {
+                                v.performClick()
                             }
                         }
-                        false
                     }
-                }.also {
-                    mapViewRef = it
-                    // The Activity may already be RESUMED when this tab creates its MapView;
-                    // no future ON_RESUME event is guaranteed in that case.
-                    if (lifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                        it.onResume()
-                    }
+                    false
                 }
-            },
-            update = { mapView ->
-                MapTileSources.apply(mapView, isDark)
-
-                // rebuilding markers is expensive; only do it if the data (or pin selection) actually changes.
-                val selectedId = selectedPing?.id
-                val dataHash = listOf(heartbeats, addresses, isDark, selectedId).hashCode()
-                if (mapView.getTag(R.id.map_data_hash) == dataHash) {
-                    mapView.invalidate()
-                    return@AndroidView
-                }
-                mapView.setTag(R.id.map_data_hash, dataHash)
-
-                // Target only overlays this screen owns.
-                mapView.overlays.removeAll { it is Marker || it is Polyline }
-                if (heartbeats.isEmpty()) return@AndroidView
-
-                // Read the selection here so the overlays rebuild (and the tapped pin is
-                // re-drawn highlighted) whenever it changes.
-                // selectedId already captured in dataHash above
-
-                val pinColor = heartbeats.last().pinColor
-                val lineArgb = if (pinColor.isNotEmpty())
-                    pinColor.toColorInt().let {
-                        android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))
-                    }
-                else android.graphics.Color.argb(200, 66, 133, 244)
-
-                val polyline = Polyline().apply {
-                    setPoints(heartbeats.map { GeoPoint(it.lat, it.lng) })
-                    outlinePaint.color = lineArgb
-                    outlinePaint.strokeWidth = 6f
-                    outlinePaint.isAntiAlias = true
-                }
-                mapView.overlays.add(polyline)
-
-                heartbeats.forEachIndexed { index, ping ->
-                    val isLatest = index == heartbeats.lastIndex
-                    val isSelected = ping.id == selectedId
-                    val marker = Marker(mapView).apply {
-                        position = GeoPoint(ping.lat, ping.lng)
-                        infoWindow = null
-                        if (isLatest) {
-                            val icon = MarkerIconFactory.create(
-                                context = mapView.context,
-                                displayName = ping.displayName,
-                                isOverdue = false,
-                                isSos = ping.isSos,
-                                pinColor = ping.pinColor,
-                                isSelected = isSelected
-                            )
-                            setIcon(icon)
-                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                        } else {
-                            val icon = MarkerIconFactory.createDotIcon(
-                                context = mapView.context,
-                                pinColor = ping.pinColor,
-                                isSos = ping.isSos,
-                                isSelected = isSelected
-                            )
-                            setIcon(icon)
-                            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                        }
-                        setOnMarkerClickListener { _, _ ->
-                            selectedPing = ping
-                            true
-                        }
-                    }
-                    mapView.overlays.add(marker)
-                }
-
-                // Only fit the viewport when the day's data changes - selecting a pin
-                // rebuilds the overlays and must not yank the camera back out.
-                val boundsKey = heartbeats.hashCode()
-                if (mapView.tag != boundsKey) {
-                    mapView.tag = boundsKey
-                    val points = heartbeats.map { GeoPoint(it.lat, it.lng) }
-                    val bounds = BoundingBox.fromGeoPoints(points)
-                    if (points.size == 1 || (bounds.latitudeSpan < 1e-4 && bounds.longitudeSpanWithDateLine < 1e-4)) {
-                        // A single fix has no bounds to fit; use a useful neighbourhood view
-                        // instead of zooming so far in that the map appears to be a blank grid.
-                        mapView.controller.setZoom(14.0)
-                        mapView.controller.setCenter(GeoPoint(bounds.centerLatitude, bounds.centerLongitude))
-                    } else if (mapView.width > 0) {
-                        mapView.zoomToBoundingBox(bounds, false, 64)
-                    } else {
-                        mapView.addOnFirstLayoutListener { _, _, _, _, _ ->
-                            mapView.zoomToBoundingBox(bounds, false, 64)
-                        }
-                    }
-                }
-                mapView.invalidate()
-            },
-            modifier = Modifier.fillMaxSize()
+            }
         )
 
         selectedPing?.let { ping ->

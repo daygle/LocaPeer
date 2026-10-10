@@ -36,7 +36,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import org.osmdroid.util.GeoPoint
+import org.maplibre.android.geometry.LatLng
 import javax.inject.Inject
 
 private val Context.mapPrefs by preferencesDataStore(name = "map_prefs")
@@ -162,11 +162,11 @@ class MapViewModel @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val userLocation: StateFlow<GeoPoint?> = keyManager.publicKeyHexFlow
+    val userLocation: StateFlow<LatLng?> = keyManager.publicKeyHexFlow
         .flatMapLatest { myPubkey ->
             if (myPubkey == null) flowOf(null)
             else heartbeatDao.observeLatestHeartbeat(myPubkey).map { hb ->
-                hb?.let { GeoPoint(it.lat, it.lng) }
+                hb?.let { LatLng(it.lat, it.lng) }
             }
         }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
@@ -177,14 +177,14 @@ class MapViewModel @Inject constructor(
     // visible on the screen's first composition, before the async collectors below run.
     // Otherwise the map's own start-up centering can win the race and jump to the user's
     // location instead of the requested contact location.
-    private val _centerOnArgs = MutableStateFlow<GeoPoint?>(
+    private val _centerOnArgs = MutableStateFlow<LatLng?>(
         run {
             val lat = savedStateHandle.get<String>("lat")?.toDoubleOrNull()
             val lng = savedStateHandle.get<String>("lng")?.toDoubleOrNull()
-            if (lat != null && lng != null) GeoPoint(lat, lng) else null
+            if (lat != null && lng != null) LatLng(lat, lng) else null
         }
     )
-    val centerOnArgs: StateFlow<GeoPoint?> = _centerOnArgs.asStateFlow()
+    val centerOnArgs: StateFlow<LatLng?> = _centerOnArgs.asStateFlow()
 
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
 
@@ -206,10 +206,10 @@ class MapViewModel @Inject constructor(
                     val lat = latStr?.toDoubleOrNull()
                     val lng = lngStr?.toDoubleOrNull()
                     if (lat != null && lng != null) {
-                        _centerOnArgs.value = GeoPoint(lat, lng)
+                        _centerOnArgs.value = LatLng(lat, lng)
                     } else if (peerId != null) {
                         heartbeatDao.getLatestHeartbeat(peerId)?.let { hb ->
-                            _centerOnArgs.value = GeoPoint(hb.lat, hb.lng)
+                            _centerOnArgs.value = LatLng(hb.lat, hb.lng)
                         }
                     }
                 }

@@ -103,7 +103,7 @@ fun AboutScreen(
                         color = MaterialTheme.colorScheme.primary
                     )
                     listOf(
-                        "OSMDroid" to stringResource(R.string.about_lib_osmdroid_desc),
+                        "MapLibre" to stringResource(R.string.about_lib_osmdroid_desc),
                         "OkHttp" to stringResource(R.string.about_lib_okhttp_desc),
                         "Jetpack Compose" to stringResource(R.string.about_lib_compose_desc),
                         "Hilt" to stringResource(R.string.about_lib_hilt_desc),
