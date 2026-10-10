@@ -35,9 +35,13 @@ import javax.inject.Singleton
 private val Context.keyStore by preferencesDataStore(name = "locapeer_keys")
 private const val TAG = "KeyManager"
 private const val KEYSTORE_ALIAS = "locapeer_private_key"
-private const val APPLOCK_KEYSTORE_ALIAS = "locapeer_applock_key"
+// v2: per-use key that a device PIN/pattern/password can also authorise (API 30+). The v1
+// key was biometric-only, so a credential unlock could never use it; it is deleted on sight.
+private const val APPLOCK_KEYSTORE_ALIAS = "locapeer_applock_key_v2"
+private const val APPLOCK_KEYSTORE_ALIAS_V1 = "locapeer_applock_key"
 private const val ANDROID_KEYSTORE = "AndroidKeyStore"
 private const val AES_GCM = "AES/GCM/NoPadding"
+private val APPLOCK_CHALLENGE = "locapeer-app-lock".toByteArray()
 private const val GCM_TAG_BITS = 128
 private const val IV_LENGTH = 12
 private const val KEY_DECRYPT_ATTEMPTS = 3
@@ -192,14 +196,24 @@ class KeyManager @Inject constructor(
     }
 
     /**
-     * Returns a [androidx.biometric.BiometricPrompt.CryptoObject] for the app lock.
-     * Uses a dedicated Keystore key that requires user authentication.
+     * Returns a [androidx.biometric.BiometricPrompt.CryptoObject] for the app lock (API 30+).
+     * Its cipher only works after the user authenticates for this one operation, so the
+     * unlock is proven by using it ([verifyAppLockCryptoObject]), not by the prompt callback.
      */
+    @androidx.annotation.RequiresApi(30)
     fun getAppLockCryptoObject(): androidx.biometric.BiometricPrompt.CryptoObject? {
         return try {
-            val key = getOrCreateAppLockKey()
             val cipher = Cipher.getInstance(AES_GCM)
-            cipher.init(Cipher.ENCRYPT_MODE, key)
+            try {
+                cipher.init(Cipher.ENCRYPT_MODE, getOrCreateAppLockKey())
+            } catch (e: KeyPermanentlyInvalidatedException) {
+                // A biometric was added or the screen lock removed since the key was made.
+                // Replace it: the new key still needs a fresh authentication before it works,
+                // so this only recovers from an otherwise permanent lockout.
+                Log.w(TAG, "App lock key invalidated; generating a new one", e)
+                deleteAppLockKey(APPLOCK_KEYSTORE_ALIAS)
+                cipher.init(Cipher.ENCRYPT_MODE, getOrCreateAppLockKey())
+            }
             androidx.biometric.BiometricPrompt.CryptoObject(cipher)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to create app lock CryptoObject", e)
@@ -207,8 +221,25 @@ class KeyManager @Inject constructor(
         }
     }
 
+    /**
+     * True only if [cryptoObject] (from a successful prompt's result) holds a cipher the
+     * Keystore lets us use, i.e. the user really authenticated for it. A hooked or spoofed
+     * success callback without that authentication fails here.
+     */
+    fun verifyAppLockCryptoObject(cryptoObject: androidx.biometric.BiometricPrompt.CryptoObject?): Boolean {
+        val cipher = cryptoObject?.cipher ?: return false
+        return try {
+            cipher.doFinal(APPLOCK_CHALLENGE).isNotEmpty()
+        } catch (e: Exception) {
+            Log.w(TAG, "App lock cipher rejected after authentication", e)
+            false
+        }
+    }
+
+    @androidx.annotation.RequiresApi(30)
     private fun getOrCreateAppLockKey(): SecretKey {
         val ks = KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }
+        if (ks.containsAlias(APPLOCK_KEYSTORE_ALIAS_V1)) ks.deleteEntry(APPLOCK_KEYSTORE_ALIAS_V1)
         (ks.getKey(APPLOCK_KEYSTORE_ALIAS, null) as? SecretKey)?.let { return it }
         val keyGen = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEYSTORE)
         val spec = KeyGenParameterSpec.Builder(
@@ -219,10 +250,23 @@ class KeyManager @Inject constructor(
             .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
             .setKeySize(256)
             .setUserAuthenticationRequired(true)
-            // Invalidates the key if a new biometric is enrolled, for maximum security.
+            // Timeout 0 = authenticate for every use; accept the same authenticators the
+            // prompt offers, so a PIN/pattern/password unlock can use the key too.
+            .setUserAuthenticationParameters(
+                0,
+                KeyProperties.AUTH_BIOMETRIC_STRONG or KeyProperties.AUTH_DEVICE_CREDENTIAL
+            )
             .setInvalidatedByBiometricEnrollment(true)
             .build()
         keyGen.init(spec)
         return keyGen.generateKey()
+    }
+
+    private fun deleteAppLockKey(alias: String) {
+        try {
+            KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }.deleteEntry(alias)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to delete app lock key $alias", e)
+        }
     }
 }
