@@ -690,6 +690,18 @@ class HeartbeatReceiver @Inject constructor(
             val (_, myPubHex) = keyManager.ensureKeypair()
             // Drop our own fan-out copy echoed back by a relay, and ignore a group we're not in.
             if (event.pubkey == myPubHex || !group.members.contains(myPubHex)) return
+            // Creator-signed circle state: a bad signature is a forgery or corruption, so drop the
+            // message rather than deliver it into a circle whose creator it misrepresents.
+            val signedVersion = if (group.csig.isEmpty()) 0L else {
+                if (!com.locapeer.messaging.GroupControl.verify(
+                        crypto, group.csig, group.gid, group.creator, group.cver, group.members, group.gname
+                    )
+                ) {
+                    Log.w(TAG, "Dropping circle message for ${group.gid} from ${event.pubkey}: invalid creator signature")
+                    return
+                }
+                group.cver
+            }
             // If the user explicitly left this circle, don't let a straggler re-create it. A message
             // from the circle's creator that still lists us is treated as a re-invite: clear the
             // "left" flag and rejoin. Any other sender (a member still fanning to us before the
@@ -735,7 +747,9 @@ class HeartbeatReceiver @Inject constructor(
                 // created and materialised circles. Send-side fan-out re-appends self on the wire.
                 memberPubkeys = group.members.filter { it != myPubHex },
                 // Clamped to now: a creator with a fast clock must not freeze later updates.
-                eventCreatedAt = minOf(event.createdAt, Instant.now().epochSecond)
+                eventCreatedAt = minOf(event.createdAt, Instant.now().epochSecond),
+                signedVersion = signedVersion,
+                signedSig = group.csig
             )
             // Auto-unarchive on receive, mirroring the 1:1 peer path: a fresh message pulls the
             // circle back onto the Circles tab, but a late-arriving/queued message that predates

@@ -28,7 +28,11 @@ data class GroupMessage(
      * thereafter only honours name/membership changes carried by messages from this creator, so a
      * non-creator member can't silently rewrite the circle on everyone else's device.
      */
-    val creator: String = ""
+    val creator: String = "",
+    /** Creator-signed version of [gname] + [members] (see [GroupControl]); 0 = unsigned. */
+    val cver: Long = 0,
+    /** Creator's BIP-340 signature over that version, as 128 hex chars; empty when unsigned. */
+    val csig: String = ""
 )
 
 object GroupWire {
@@ -39,12 +43,14 @@ object GroupWire {
 
     private val circleIdPattern = Regex("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
     private val pubkeyPattern = Regex("[0-9a-f]{64}")
+    private val sigPattern = Regex("[0-9a-f]{128}")
 
     /** Circle IDs must stay in a separate namespace from 64-hex 1:1 peer thread IDs. */
     internal fun isValid(message: GroupMessage): Boolean =
         circleIdPattern.matches(message.gid) && message.members.size in 1..256 &&
             message.members.all { pubkeyPattern.matches(it) } &&
-            (message.creator.isEmpty() || pubkeyPattern.matches(message.creator))
+            (message.creator.isEmpty() || pubkeyPattern.matches(message.creator)) &&
+            message.cver >= 0 && (message.csig.isEmpty() || sigPattern.matches(message.csig))
 
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
