@@ -30,5 +30,11 @@ data class CircleEntity(
     val isArchived: Boolean = false,
     /** When the circle was last archived (ms). Used to keep a late-arriving message that
      *  predates an explicit archive action from silently un-archiving the circle. */
-    val archivedAt: Long = 0
+    val archivedAt: Long = 0,
+    /**
+     * Nostr `created_at` (seconds) of the creator message whose name/membership was last applied.
+     * Relays deliver catch-up history newest first, so without this an older message processed
+     * later would roll the membership back. 0 = none applied yet (any creator message wins).
+     */
+    val membershipUpdatedAt: Long = 0
 )

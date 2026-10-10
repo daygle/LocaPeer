@@ -67,15 +67,20 @@ rotating-sender dedup bounds. 151 unit tests pass, none skipped.
 1. Room stores plaintext history/messages in app-private storage. Encrypted-at-rest
    storage requires a deliberate key-lifecycle design and tested migration. App lock is
    a UI gate, not database encryption.
-2. Queued rows are deleted on socket send acceptance, not relay `OK true`. A disconnect
-   can still lose a copy. A durable acknowledged outbox needs event-ID tracking,
-   resend/expiry semantics and protocol integration tests.
+2. *Addressed in follow-up:* queued events now stay queued until the relay's `OK`
+   (`OutboxAckTracker`); a socket drop before the answer resends them. Remaining: a live
+   send awaiting its `OK` is held in memory, so a process kill inside that window (normally
+   well under a second) can still lose it, and two-relay integration tests are still needed.
 3. Relay size checks run after OkHttp assembles a text frame; they bound parsing/crypto
    work, not all transport receive allocations or signed-event flood rates.
-4. Group ownership is trust-on-first-use. Delayed signed membership payloads can roll
-   back membership without a versioned group-control protocol.
-5. Local removal/retention are separate from the receiver's buffer; remote deletion
-   coordination is improved, but comprehensive cross-producer race tests remain needed.
+4. Group ownership is trust-on-first-use. *Rollback addressed in follow-up:* creator
+   updates are ordered by `created_at` (schema v12), so older payloads delivered later are
+   ignored. Remaining: the creator recorded on first sight is still the sender's claim; a
+   signed group-control protocol would be needed to remove that trust.
+5. *Addressed in follow-up:* buffered heartbeats are only written for contacts that still
+   exist, checked in the insert transaction, so a local removal can't leave orphaned
+   history. Failed flushes back off and give up after 5 attempts; the buffer is capped.
+   Device-level race tests are still needed.
 6. Broad exception handling and background state machines need lifecycle/cancellation
    tests. UI-only supervision guards are not a hardware security boundary.
 7. Conversation/history queries, indexes and rendering require representative device

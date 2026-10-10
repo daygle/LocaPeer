@@ -35,6 +35,9 @@ interface CircleDao {
     @Query("UPDATE circles SET name = :name WHERE id = :circleId")
     suspend fun renameCircle(circleId: String, name: String)
 
+    @Query("UPDATE circles SET membershipUpdatedAt = :createdAt WHERE id = :circleId")
+    suspend fun setMembershipUpdatedAt(circleId: String, createdAt: Long)
+
     @Query(
         "UPDATE circles SET isArchived = :archived, " +
             "archivedAt = CASE WHEN :archived = 1 THEN :now ELSE archivedAt END " +
@@ -85,6 +88,9 @@ interface CircleDao {
      * use). Thereafter only a message whose [senderPubkey] equals that stored creator may change the
      * name or membership; a message from any other member is still delivered (the caller inserts it)
      * but is not allowed to silently rewrite who is in the circle on this device.
+     *
+     * [eventCreatedAt] orders creator updates: one older than the last applied update is ignored,
+     * so out-of-order delivery (catch-up arrives newest first) can't roll membership back.
      */
     @Transaction
     suspend fun materialiseFromRemote(
@@ -92,20 +98,25 @@ interface CircleDao {
         name: String,
         creatorPubkey: String,
         senderPubkey: String,
-        memberPubkeys: List<String>
+        memberPubkeys: List<String>,
+        eventCreatedAt: Long
     ) {
         val existing = getCircle(circleId)
         if (existing == null) {
-            upsertCircle(CircleEntity(id = circleId, name = name, creatorPubkey = creatorPubkey))
+            // A non-creator's copy may carry a stale view, so only a creator message sets the
+            // ordering baseline; otherwise the creator's next message (of any age) still applies.
+            val baseline = if (creatorPubkey.isBlank() || senderPubkey == creatorPubkey) eventCreatedAt else 0L
+            upsertCircle(CircleEntity(id = circleId, name = name, creatorPubkey = creatorPubkey, membershipUpdatedAt = baseline))
             replaceMembers(circleId, memberPubkeys)
             return
         }
         // Only the recorded creator may mutate membership/name. Fall back to the sender when no
         // creator was ever recorded (circle predates this field), preserving prior behaviour.
         val authority = existing.creatorPubkey.ifBlank { senderPubkey }
-        if (senderPubkey == authority) {
+        if (senderPubkey == authority && eventCreatedAt >= existing.membershipUpdatedAt) {
             if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
             replaceMembers(circleId, memberPubkeys)
+            setMembershipUpdatedAt(circleId, eventCreatedAt)
         }
     }
 }

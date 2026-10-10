@@ -17,6 +17,21 @@ interface HeartbeatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(heartbeats: List<HeartbeatEntity>)
 
+    @Query("SELECT deviceId FROM peers WHERE deviceId IN (:deviceIds)")
+    suspend fun existingPeerIds(deviceIds: List<String>): List<String>
+
+    /**
+     * [insertAll], minus rows for devices that are no longer contacts. Buffered heartbeats
+     * can outlive a contact removal by up to one flush window; checking inside the same
+     * transaction means a removal either lands first (rows dropped here) or after (rows
+     * wiped by the removal), so a removed contact's history can't reappear as orphans.
+     */
+    @Transaction
+    suspend fun insertAllForExistingPeers(heartbeats: List<HeartbeatEntity>) {
+        val known = existingPeerIds(heartbeats.map { it.deviceId }.distinct()).toSet()
+        insertAll(heartbeats.filter { it.deviceId in known })
+    }
+
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :dayStart AND timestamp < :dayEnd ORDER BY timestamp ASC")
     fun getHeartbeatsForDay(deviceId: String, dayStart: Long, dayEnd: Long): Flow<List<HeartbeatEntity>>
 
