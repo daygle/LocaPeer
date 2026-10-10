@@ -314,7 +314,7 @@ private fun markerAt(map: MapLibreMap, point: LatLng): String? {
 
 private fun baseStyle(): Style.Builder {
     val tiles = TileSet("2.2.0", OSM_TILE_URL).apply {
-        setAttribution(OSM_ATTRIBUTION)
+        attribution = OSM_ATTRIBUTION
         setMaxZoom(OSM_MAX_ZOOM)
     }
     return Style.Builder()
