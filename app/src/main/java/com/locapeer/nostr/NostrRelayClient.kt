@@ -28,6 +28,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.buildJsonArray
 import kotlinx.serialization.json.decodeFromJsonElement
@@ -56,6 +57,9 @@ private const val TAG = "NostrRelayClient"
 private const val HEARTBEAT_QUEUE_PATTERN = "%\"kind\":${NostrEventKind.HEARTBEAT}%"
 private const val HEARTBEAT_QUEUE_MAX_AGE_MS = 6 * 60 * 60_000L // 6h
 private const val HEARTBEAT_QUEUE_MAX_PER_RELAY = 30
+// How long a sent event waits for the relay's OK before it is assumed delivered (relays that
+// never answer must not keep events queued forever). See OutboxAckTracker.
+private const val OUTBOX_ACK_TIMEOUT_MS = 30_000L
 
 @Singleton
 class NostrRelayClient @Inject constructor(
@@ -236,7 +240,7 @@ class NostrRelayClient @Inject constructor(
             add(JsonPrimitive("EVENT"))
             add(json.encodeToJsonElement(event))
         }.toString()
-        sendToAll(msg, isEvent = true, queueIfUndelivered = queueIfUndelivered)
+        sendToAll(msg, isEvent = true, queueIfUndelivered = queueIfUndelivered, eventId = event.id)
     }
 
     fun subscribe(subscriptionId: String, filter: NostrFilter) {
@@ -262,13 +266,15 @@ class NostrRelayClient @Inject constructor(
         sendToAll(msg, isEvent = false)
     }
 
-    private fun sendToAll(msg: String, isEvent: Boolean, queueIfUndelivered: Boolean = isEvent) {
+    private fun sendToAll(msg: String, isEvent: Boolean, queueIfUndelivered: Boolean = isEvent, eventId: String? = null) {
         val queue = isEvent && queueIfUndelivered
         val disconnectedRelays = mutableListOf<RelayConnection>()
 
         relays.values.forEach { relay ->
             if (relay.isConnected) {
-                val success = relay.send(msg)
+                // Queueable events stay tracked until the relay's OK, so a socket that dies
+                // after buffering the frame re-queues them instead of losing them.
+                val success = if (queue && eventId != null) relay.sendTracked(eventId, msg, null) else relay.send(msg)
                 if (!success && isEvent) {
                     if (queue) scope.launch { queuePending(relay.url, msg) }
                     relay.scheduleReconnect()
@@ -323,16 +329,29 @@ class NostrRelayClient @Inject constructor(
                 subs.forEach { relay.send(it) }
                 val pending = pendingMessageDao.getForRelay(relay.url)
                 for (entity in pending) {
+                    // Already sent on this connection and awaiting the relay's OK.
+                    if (relay.acks.isRowInFlight(entity.id)) continue
+                    val eventId = eventIdOf(entity.content)
                     // Stop at backpressure/disconnect; preserve ordering and unsent rows.
-                    if (!relay.send(entity.content)) break
-                    pendingMessageDao.delete(entity)
+                    // The row itself is deleted once the relay answers OK (see onMessage).
+                    if (eventId == null) {
+                        if (!relay.send(entity.content)) break
+                        pendingMessageDao.delete(entity)
+                    } else if (!relay.sendTracked(eventId, entity.content, entity.id)) break
                 }
             }
         }
     }
 
+    /** The event id of a queued `["EVENT", {...}]` message, or null if it can't be read. */
+    private fun eventIdOf(message: String): String? = try {
+        ((json.parseToJsonElement(message) as? JsonArray)?.getOrNull(1) as? JsonObject)
+            ?.get("id")?.let { (it as? JsonPrimitive)?.content }
+    } catch (_: Exception) { null }
+
     private inner class RelayConnection(val url: String) {
         val flushMutex = Mutex()
+        val acks = OutboxAckTracker(OUTBOX_ACK_TIMEOUT_MS)
         @Volatile var webSocket: WebSocket? = null
         @Volatile var isConnected = false
         /** Set once this relay is dropped from the live set; its late socket callbacks and
@@ -414,6 +433,42 @@ class NostrRelayClient @Inject constructor(
 
         fun send(msg: String): Boolean =
             if (isConnected) webSocket?.send(msg) ?: false else false
+
+        /** [send], tracking [eventId] until the relay answers. Tracked before sending so a
+         *  fast OK can't arrive before the entry exists. [pendingRowId] is the outbox row
+         *  being flushed, or null for a live send. */
+        fun sendTracked(eventId: String, msg: String, pendingRowId: Long?): Boolean {
+            removeExpiredAcks()
+            acks.sent(eventId, msg, pendingRowId, System.currentTimeMillis())
+            val ok = send(msg)
+            if (!ok) acks.acknowledged(eventId)
+            return ok
+        }
+
+        /** Events unanswered past the timeout are assumed delivered: drop their outbox rows. */
+        private fun removeExpiredAcks() {
+            val rows = acks.expire(System.currentTimeMillis()).mapNotNull { it.pendingRowId }
+            if (rows.isNotEmpty()) scope.launch { rows.forEach { pendingMessageDao.deleteById(it) } }
+        }
+
+        /** The relay answered OK for [eventId]: settle its outbox row, or keep it for retry. */
+        fun onRelayAnswer(eventId: String, accepted: Boolean, message: String) {
+            val entry = acks.acknowledged(eventId) ?: return
+            if (accepted || OutboxAckTracker.isFinalRejection(message)) {
+                entry.pendingRowId?.let { id -> scope.launch { pendingMessageDao.deleteById(id) } }
+            } else if (entry.pendingRowId == null) {
+                // Transient rejection (e.g. rate-limited) of a live send: queue it for retry.
+                scope.launch { queuePending(url, entry.message) }
+            }
+        }
+
+        /** The socket closed: live sends still awaiting an OK go to the outbox; flushed rows
+         *  are still there and will be resent on the next connection. */
+        private fun requeueUnacknowledged() {
+            removeExpiredAcks()
+            val live = acks.drainOnClose().filter { it.pendingRowId == null }
+            if (live.isNotEmpty()) scope.launch { live.forEach { queuePending(url, it.message) } }
+        }
 
         fun scheduleReconnect() {
             if (removed) return
@@ -507,6 +562,7 @@ class NostrRelayClient @Inject constructor(
                             val eventId = (arr[1] as? JsonPrimitive)?.content ?: return
                             val accepted = (arr[2] as? JsonPrimitive)?.content?.toBooleanStrictOrNull() ?: false
                             val message = if (arr.size > 3) (arr[3] as? JsonPrimitive)?.content ?: "" else ""
+                            onRelayAnswer(eventId, accepted, message)
                             if (accepted) {
                                 scope.launch { _okEvents.emit(eventId) }
                                 Log.i(TAG, "OK from $url: accepted $eventId")
@@ -557,6 +613,7 @@ class NostrRelayClient @Inject constructor(
                     }
                 }
                 if (!markClosed(webSocket)) return
+                requeueUnacknowledged()
                 _relayStatus.update { it + (url to false) }
                 scheduleReconnect()
             }
@@ -569,6 +626,7 @@ class NostrRelayClient @Inject constructor(
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                 Log.d(TAG, "Closed $url: $code $reason")
                 if (!markClosed(webSocket)) return
+                requeueUnacknowledged()
                 _relayStatus.update { it + (url to false) }
                 scheduleReconnect() // A relay-initiated normal close is not a request to stay offline.
             }

@@ -89,6 +89,15 @@ private const val HB_CATCHUP_LIMIT = 1000
 // once HB_BATCH_MAX_SIZE are queued, whichever comes first.
 private const val HB_BATCH_MAX_SIZE = 20
 private const val HB_BATCH_MAX_DELAY_MS = 500L
+// Upper bound on buffered heartbeats while flushes are failing (oldest dropped first).
+private const val HB_PENDING_MAX = 500
+private const val HB_FLUSH_MAX_ATTEMPTS = 5
+
+/** Backoff before retrying a failed heartbeat flush (500 ms, 1 s, 2 s, 4 s), or null
+ *  once [HB_FLUSH_MAX_ATTEMPTS] consecutive flushes have failed and the batch is dropped. */
+internal fun hbFlushRetryDelayMs(failures: Int): Long? =
+    if (failures !in 1 until HB_FLUSH_MAX_ATTEMPTS) null
+    else HB_BATCH_MAX_DELAY_MS shl (failures - 1)
 // Side effects (SOS alarm, geofence/proximity alerts) only fire for heartbeats this
 // recent; older ones are history backfill and must not raise stale alerts.
 private const val FRESH_HEARTBEAT_MS = 10 * 60_000L
@@ -197,6 +206,7 @@ class HeartbeatReceiver @Inject constructor(
     private val pendingHeartbeats = mutableListOf<HeartbeatEntity>()
     private val pendingKeys = HashSet<String>()
     private var flushJob: Job? = null
+    private var flushFailures = 0
 
     fun start() {
         createAlertChannel()
@@ -305,6 +315,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
                 }
               } catch (e: Exception) {
+                if (e is kotlinx.coroutines.CancellationException) throw e
                 Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
               }
             }
@@ -542,6 +553,12 @@ class HeartbeatReceiver @Inject constructor(
      */
     private suspend fun enqueueHeartbeat(entity: HeartbeatEntity) {
         val flushNow = batchMutex.withLock {
+            // The buffer only grows past HB_BATCH_MAX_SIZE while flushes are failing;
+            // bound it so a stuck database can't turn a catch-up burst into a memory leak.
+            if (pendingHeartbeats.size >= HB_PENDING_MAX) {
+                val oldest = pendingHeartbeats.removeAt(0)
+                pendingKeys.remove(hbKey(oldest.deviceId, oldest.timestamp))
+            }
             pendingHeartbeats.add(entity)
             pendingKeys.add(hbKey(entity.deviceId, entity.timestamp))
             if (flushJob == null) {
@@ -568,15 +585,26 @@ class HeartbeatReceiver @Inject constructor(
             try {
                 // Keep dedup keys visible until commit; a timer flush must not open a gap
                 // where the event collector queues an already-in-flight heartbeat again.
-                heartbeatDao.insertAll(pendingHeartbeats.toList())
+                heartbeatDao.insertAllForExistingPeers(pendingHeartbeats.toList())
                 pendingHeartbeats.clear()
                 pendingKeys.clear()
+                flushFailures = 0
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
-                Log.e(TAG, "Failed to flush heartbeat batch (${pendingHeartbeats.size})", e)
+                flushFailures++
+                val retryMs = hbFlushRetryDelayMs(flushFailures)
+                if (retryMs == null) {
+                    // A write that keeps failing (e.g. disk full) must not retry forever.
+                    Log.e(TAG, "Dropping heartbeat batch (${pendingHeartbeats.size}) after $flushFailures failed flushes", e)
+                    pendingHeartbeats.clear()
+                    pendingKeys.clear()
+                    flushFailures = 0
+                    return
+                }
+                Log.e(TAG, "Failed to flush heartbeat batch (${pendingHeartbeats.size}), retrying in ${retryMs}ms", e)
                 // Retain the data on failure, and retry without requiring another arrival.
                 flushJob = scope.launch {
-                    delay(HB_BATCH_MAX_DELAY_MS)
+                    delay(retryMs)
                     flushBatch(fromTimer = true)
                 }
             }
@@ -705,7 +733,9 @@ class HeartbeatReceiver @Inject constructor(
                 // Never store our own pubkey as a member row: locally created circles keep only
                 // the OTHER participants, so counts and the edit screen stay consistent across
                 // created and materialised circles. Send-side fan-out re-appends self on the wire.
-                memberPubkeys = group.members.filter { it != myPubHex }
+                memberPubkeys = group.members.filter { it != myPubHex },
+                // Clamped to now: a creator with a fast clock must not freeze later updates.
+                eventCreatedAt = minOf(event.createdAt, Instant.now().epochSecond)
             )
             // Auto-unarchive on receive, mirroring the 1:1 peer path: a fresh message pulls the
             // circle back onto the Circles tab, but a late-arriving/queued message that predates
