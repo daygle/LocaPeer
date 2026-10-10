@@ -214,7 +214,7 @@ fun LocaMap(
                 isTiltGesturesEnabled = false
                 isCompassEnabled = false
                 isLogoEnabled = false
-                isAttributionEnabled = true
+                isAttributionEnabled = false
             }
             map.setMaxZoomPreference(MAP_MAX_ZOOM)
             map.addOnCameraMoveListener { camera = map.cameraPosition.let { (it.target?.latitude ?: 0.0) to it.zoom } }
