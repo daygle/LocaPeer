@@ -15,7 +15,7 @@ class DatabaseEncryptionTest {
     }
 
     @Test fun `empty or short files are not treated as unencrypted databases`() {
-        val file = File.createTempFile("db", null)
+        val file = File.createTempFile("dbheader", null)
         try {
             assertFalse(DatabaseEncryption.isPlaintextSqlite(file))
             file.writeBytes("SQLite".toByteArray())
