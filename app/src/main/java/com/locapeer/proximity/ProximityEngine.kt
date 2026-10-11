@@ -68,8 +68,10 @@ class ProximityEngine @Inject constructor(
     // nearby doesn't re-alert every cooldown period; leaving re-arms the alert.
     private val wasNearby = ConcurrentHashMap<String, Boolean>()
 
-    // Cache of proximity alerts per peer device ID.
-    private val alertsCache = ConcurrentHashMap<String, com.locapeer.data.entity.ProximityAlertEntity?>()
+    // Cache of proximity alerts per peer device ID. Wrapped because ConcurrentHashMap rejects
+    // null values, and "this peer has no alert" (the common case) must be cached too.
+    private class CachedAlert(val alert: com.locapeer.data.entity.ProximityAlertEntity?)
+    private val alertsCache = ConcurrentHashMap<String, CachedAlert>()
 
     // Cache our own location to avoid redundant FusedLocation calls when multiple peers pulse at once.
     @Volatile private var cachedOwnLocation: android.location.Location? = null
@@ -86,13 +88,10 @@ class ProximityEngine @Inject constructor(
 
     @SuppressLint("MissingPermission")
     suspend fun evaluate(peerHeartbeat: HeartbeatEntity) {
-        val alert = if (alertsCache.containsKey(peerHeartbeat.deviceId)) {
-            alertsCache[peerHeartbeat.deviceId]
-        } else {
-            val a = proximityAlertDao.getForPeer(peerHeartbeat.deviceId)
-            alertsCache[peerHeartbeat.deviceId] = a
-            a
-        } ?: return
+        val alert = (alertsCache[peerHeartbeat.deviceId]
+            ?: CachedAlert(proximityAlertDao.getForPeer(peerHeartbeat.deviceId))
+                .also { alertsCache[peerHeartbeat.deviceId] = it }
+            ).alert ?: return
         if (!alert.active) return
 
         val ownLocation = getFreshOwnLocation() ?: return
