@@ -9,7 +9,8 @@ enum class DeliveryState { SENDING, SENT, DELIVERED, READ }
 
 @Entity(
     tableName = "messages",
-    indices = [Index("peerId"), Index("timestamp"), Index("groupId")]
+    // nostrEventId is looked up for every delivery ack, read receipt, relay OK and deletion.
+    indices = [Index("peerId"), Index("timestamp"), Index("groupId"), Index("nostrEventId")]
 )
 data class MessageEntity(
     @PrimaryKey val id: String,

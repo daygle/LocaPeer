@@ -71,4 +71,14 @@ class MigrationTest {
         }
         helper.runMigrationsAndValidate(TEST_DB, 6, true, *DatabaseModule.ALL_MIGRATIONS)
     }
+
+    /** v13 -> v14: index changes only, validated against schemas/.../14.json. */
+    @Test
+    @Throws(IOException::class)
+    fun migrate13To14() {
+        helper.createDatabase(TEST_DB, 13).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 14, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
 }
