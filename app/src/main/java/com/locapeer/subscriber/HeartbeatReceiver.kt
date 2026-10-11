@@ -204,7 +204,6 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val peerManager: PeerManager,
-    private val trackResponseSender: com.locapeer.invite.TrackResponseSender,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
     private val scope = backgroundScope(TAG)
