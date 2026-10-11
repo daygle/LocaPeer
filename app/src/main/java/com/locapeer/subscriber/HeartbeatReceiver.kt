@@ -742,8 +742,14 @@ class HeartbeatReceiver @Inject constructor(
             // could keep injecting messages into a thread the user believes is circle-private.
             // Circles that predate the creator field (blank creator) keep the old open behaviour.
             val knownCircle = circleDao.getCircle(group.gid)
+            // The signer of a valid creator signature is the proven creator. If the recorded
+            // creator is only another member's unconfirmed claim, let them through so their signed
+            // state can replace it (see GroupControl.decide).
+            val provenCreatorOverridingClaim = knownCircle != null && signedVersion > 0 &&
+                event.pubkey == group.creator && knownCircle.controlVersion == 0L &&
+                knownCircle.membershipUpdatedAt == 0L && knownCircle.creatorPubkey != myPubHex
             if (knownCircle != null && knownCircle.creatorPubkey.isNotBlank() &&
-                event.pubkey != knownCircle.creatorPubkey &&
+                event.pubkey != knownCircle.creatorPubkey && !provenCreatorOverridingClaim &&
                 !circleDao.getMemberPubkeys(group.gid).contains(event.pubkey)
             ) {
                 Log.w(TAG, "Dropping circle message for ${group.gid} from non-member ${event.pubkey}")
@@ -772,7 +778,8 @@ class HeartbeatReceiver @Inject constructor(
                 // Clamped to now: a creator with a fast clock must not freeze later updates.
                 eventCreatedAt = minOf(event.createdAt, Instant.now().epochSecond),
                 signedVersion = signedVersion,
-                signedSig = group.csig
+                signedSig = group.csig,
+                selfPubkey = myPubHex
             )
             // Auto-unarchive on receive, mirroring the 1:1 peer path: a fresh message pulls the
             // circle back onto the Circles tab, but a late-arriving/queued message that predates

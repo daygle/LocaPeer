@@ -109,7 +109,8 @@ interface CircleDao {
         memberPubkeys: List<String>,
         eventCreatedAt: Long,
         signedVersion: Long = 0,
-        signedSig: String = ""
+        signedSig: String = "",
+        selfPubkey: String = ""
     ) {
         val existing = getCircle(circleId)
         if (existing == null) {
@@ -130,6 +131,9 @@ interface CircleDao {
                 knownCreator = existing.creatorPubkey,
                 knownVersion = existing.controlVersion,
                 knownUpdatedAt = existing.membershipUpdatedAt,
+                // A creator message has been applied (it sets the baseline), or the circle is ours.
+                knownCreatorConfirmed = existing.membershipUpdatedAt > 0 ||
+                    (selfPubkey.isNotEmpty() && existing.creatorPubkey == selfPubkey),
                 senderPubkey = senderPubkey,
                 claimedCreator = creatorPubkey,
                 signedVersion = signedVersion,
@@ -137,7 +141,7 @@ interface CircleDao {
             )
         ) {
             GroupControl.Update.APPLY_SIGNED -> {
-                if (existing.creatorPubkey.isBlank()) setCreator(circleId, creatorPubkey)
+                if (existing.creatorPubkey != creatorPubkey) setCreator(circleId, creatorPubkey)
                 if (existing.name != name && name.isNotBlank()) renameCircle(circleId, name)
                 replaceMembers(circleId, memberPubkeys)
                 setControl(circleId, signedVersion, signedSig)

@@ -50,7 +50,10 @@ object GroupControl {
     /**
      * Decides whether a message updates a known circle. [signedVersion] is the message's verified
      * version (0 when unsigned). A signed update applies when its creator matches the recorded one
-     * (or none is recorded yet) and its version is newer. Once a circle holds a signed version,
+     * (or none is recorded yet) and its version is newer. A creator recorded only from another
+     * member's unsigned claim ([knownCreatorConfirmed] false: never heard from that creator, and
+     * not us) is unverified, so a signature, which proves the creator, replaces it; otherwise
+     * the first contact to name a fake creator could freeze the real creator out for good. Once a circle holds a signed version,
      * unsigned updates are ignored; before that, the earlier rules apply: only the recorded creator
      * (or the sender, for circles that never recorded one) and never older than the last applied.
      */
@@ -58,13 +61,15 @@ object GroupControl {
         knownCreator: String,
         knownVersion: Long,
         knownUpdatedAt: Long,
+        knownCreatorConfirmed: Boolean,
         senderPubkey: String,
         claimedCreator: String,
         signedVersion: Long,
         eventCreatedAt: Long,
     ): Update {
         if (signedVersion > 0) {
-            val creatorMatches = knownCreator.isBlank() || knownCreator == claimedCreator
+            val creatorMatches = knownCreator.isBlank() || knownCreator == claimedCreator ||
+                (knownVersion == 0L && !knownCreatorConfirmed)
             return if (creatorMatches && signedVersion > knownVersion) Update.APPLY_SIGNED else Update.IGNORE
         }
         if (knownVersion > 0) return Update.IGNORE
