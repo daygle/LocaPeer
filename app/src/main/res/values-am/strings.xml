@@ -728,6 +728,7 @@
     <string name="scan_error_key_mismatch">ልክ ያልሆነ ግብዣ፡ ቁልፎቹ አይዛመዱም</string>
     <string name="scan_error_unknown">ያልታወቀ ስህተት</string>
     <string name="scan_error_invalid_link">ልክ ያልሆነ የግብዣ ሊንክ</string>
+    <string name="scan_error_own_invite">ይህ የራስዎ የግብዣ ኮድ ነው</string>
     <string name="scan_fallback_contact">ይህ እውቂያ</string>
     <string name="backup_saved">መጠባበቂያ ተቀምጧል፡ %1$s</string>
     <string name="backup_saved_encrypted">መጠባበቂያ ተቀምጧል (የተመሰጠረ)፡ %1$s</string>
@@ -881,6 +882,7 @@
     <string name="peer_sharing_supervisor_locked">የክትትል ሁነታ በርቷል፣ ስለዚህ ከተቆጣጣሪዎ ጋር የአካባቢ ማጋራትን እዚህ ማጥፋት አይቻልም።</string>
     <string name="settings_temporary_location_share">ጊዜያዊ የአካባቢ ማጋራት</string>
     <string name="app_lock_no_credential">በዚህ መሣሪያ ላይ ምንም የማያ ገጽ መቆለፊያ አልተዋቀረም፣ ስለዚህ የሚከፍት ምንም ነገር የለም። በመሣሪያዎ ቅንብሮች ውስጥ PIN፣ ስርዓተ ጥለት፣ የይለፍ ቃል፣ ወይም ባዮሜትሪክ ያዋቅሩ፣ ከዚያ LocaPeer ን እንደገና ይክፈቱ።</string>
+    <string name="app_lock_crypto_failed">ደህንነቱ የተጠበቀ የማረጋገጫ ቁልፍ ማስጀመር አልተቻለም።</string>
     <string name="backup_key_needs_password">የግል ቁልፍዎን ለማካተት የይለፍ ቃል ያዋቅሩ። ያልተመሰጠረ የቁልፍ ፋይል ማንኛውም ሰው ማንነትዎን እንዲይዝ ሊፈቅድ ይችላል።</string>
     <string name="settings_category_security_subtitle">የመተግበሪያ ቁልፍ፣ ፈቃዶች፣ ቁጥጥር የሚደረግበት ሁኔታ</string>
     <string name="settings_category_map_subtitle">መነሻ ነጥብ፣ ማጉላት፣ የፒን ቀለም</string>

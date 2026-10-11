@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">ଅବୈଧ ନିମନ୍ତ୍ରଣ: କି ମେଳ ଖାଉନାହିଁ</string>
     <string name="scan_error_unknown">ଅଜ୍ଞାତ ତ୍ରୁଟି</string>
     <string name="scan_error_invalid_link">ଅବୈଧ ନିମନ୍ତ୍ରଣ ଲିଙ୍କ୍</string>
+    <string name="scan_error_own_invite">ଏହା ଆପଣଙ୍କ ନିଜର ନିମନ୍ତ୍ରଣ କୋଡ୍</string>
     <string name="scan_fallback_contact">ଏହି ସମ୍ପର୍କ</string>
     <string name="backup_saved">ବ୍ୟାକଅପ୍ ସେଭ୍ ହୋଇଛି: %1$s</string>
     <string name="backup_saved_encrypted">ବ୍ୟାକଅପ୍ ସେଭ୍ ହୋଇଛି (ଏନକ୍ରିପ୍ଟ ହୋଇଛି): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">ତତ୍ତ୍ୱାବଧାନ ମୋଡ୍ ଚାଲୁ ଅଛି, ତେଣୁ ଆପଣଙ୍କ ତତ୍ତ୍ୱାବଧାରକଙ୍କ ସହିତ ଅବସ୍ଥାନ ଅଂଶୀଦାର ଏଠାରେ ବନ୍ଦ କରାଯାଇପାରିବ ନାହିଁ।</string>
     <string name="settings_temporary_location_share">ଅସ୍ଥାୟୀ ଅବସ୍ଥାନ ଅଂଶୀଦାର</string>
     <string name="app_lock_no_credential">ଏହି ଉପକରଣରେ କୌଣସି ସ୍କ୍ରିନ୍ ଲକ୍ ସେଟ୍ କରାଯାଇନାହିଁ, ତେଣୁ ଅନଲକ୍ କରିବା ପାଇଁ କିଛି ନାହିଁ। ଆପଣଙ୍କ ଉପକରଣ ସେଟିଂସ୍‌ରେ ଏକ PIN, ପ୍ୟାଟର୍ନ, ପାସୱାର୍ଡ, କିମ୍ବା ବାୟୋମେଟ୍ରିକ୍ ସେଟ୍ କରନ୍ତୁ, ତାପରେ LocaPeer ପୁନର୍ବାର ଖୋଲନ୍ତୁ।</string>
+    <string name="app_lock_crypto_failed">ସୁରକ୍ଷିତ ପ୍ରମାଣୀକରଣ କି ଆରମ୍ଭ କରିବାରେ ବିଫଳ।</string>
     <string name="backup_key_needs_password">ଆପଣଙ୍କ ବ୍ୟକ୍ତିଗତ କୀ ଅନ୍ତର୍ଭୁକ୍ତ କରିବା ପାଇଁ ଏକ ପାସୱାର୍ଡ ସେଟ୍ କରନ୍ତୁ। ଏକ ଏନକ୍ରିପ୍ଟ ହୋଇନଥିବା କୀ ଫାଇଲ୍ ଯେକୌଣସି ବ୍ୟକ୍ତିଙ୍କୁ ଆପଣଙ୍କ ପରିଚୟ ଦଖଲ କରିବାକୁ ଅନୁମତି ଦେଇପାରେ।</string>
     <string name="settings_category_security_subtitle">ଆପ୍ ଲକ୍, ଅନୁମତି, ତଦାରଖ ମୋଡ୍</string>
     <string name="settings_category_map_subtitle">ଆରମ୍ଭ ବିନ୍ଦୁ, ଜୁମ୍, ପିନ୍ ରଙ୍ଗ</string>

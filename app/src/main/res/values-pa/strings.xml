@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">ਅਵੈਧ ਸੱਦਾ: ਚਾਬੀਆਂ ਮੇਲ ਨਹੀਂ ਖਾਂਦੀਆਂ</string>
     <string name="scan_error_unknown">ਅਣਜਾਣ ਗਲਤੀ</string>
     <string name="scan_error_invalid_link">ਅਵੈਧ ਸੱਦਾ ਲਿੰਕ</string>
+    <string name="scan_error_own_invite">ਇਹ ਤੁਹਾਡਾ ਆਪਣਾ ਸੱਦਾ ਕੋਡ ਹੈ</string>
     <string name="scan_fallback_contact">ਇਹ ਸੰਪਰਕ</string>
     <string name="backup_saved">ਬੈਕਅੱਪ ਸੇਵ ਹੋ ਗਿਆ: %1$s</string>
     <string name="backup_saved_encrypted">ਬੈਕਅੱਪ ਸੇਵ ਹੋ ਗਿਆ (ਏਨਕ੍ਰਿਪਟਡ): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">ਨਿਗਰਾਨੀ ਮੋਡ ਚਾਲੂ ਹੈ, ਇਸ ਲਈ ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਨਾਲ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ ਇੱਥੇ ਬੰਦ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।</string>
     <string name="settings_temporary_location_share">ਅਸਥਾਈ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨਾ</string>
     <string name="app_lock_no_credential">ਇਸ ਡੀਵਾਈਸ ਉੱਤੇ ਕੋਈ ਸਕ੍ਰੀਨ ਲਾਕ ਸੈੱਟ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਅਨਲਾਕ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ। ਆਪਣੀਆਂ ਡੀਵਾਈਸ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਇੱਕ PIN, ਪੈਟਰਨ, ਪਾਸਵਰਡ, ਜਾਂ ਬਾਇਓਮੈਟ੍ਰਿਕ ਸੈੱਟ ਕਰੋ, ਫਿਰ LocaPeer ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।</string>
+    <string name="app_lock_crypto_failed">ਸੁਰੱਖਿਅਤ ਪ੍ਰਮਾਣੀਕਰਨ ਕੁੰਜੀ ਸ਼ੁਰੂ ਕਰਨ ਵਿੱਚ ਅਸਫਲ।</string>
     <string name="backup_key_needs_password">ਆਪਣੀ ਨਿੱਜੀ ਕੁੰਜੀ ਸ਼ਾਮਲ ਕਰਨ ਲਈ ਇੱਕ ਪਾਸਵਰਡ ਸੈੱਟ ਕਰੋ। ਇੱਕ ਅਣ-ਐਨਕ੍ਰਿਪਟਿਡ ਕੁੰਜੀ ਫਾਈਲ ਕਿਸੇ ਨੂੰ ਵੀ ਤੁਹਾਡੀ ਪਛਾਣ ਉੱਤੇ ਕਬਜ਼ਾ ਕਰਨ ਦੇ ਸਕਦੀ ਹੈ।</string>
     <string name="settings_category_security_subtitle">ਐਪ ਲਾਕ, ਇਜਾਜ਼ਤਾਂ, ਨਿગਰਾਨੀ ਮੋਡ</string>
     <string name="settings_category_map_subtitle">ਸ਼ੁਰੂਆਤੀ ਬਿੰਦੂ, ਜ਼ੂਮ, ਪਿੰਨ ਦਾ ਰੰਗ</string>

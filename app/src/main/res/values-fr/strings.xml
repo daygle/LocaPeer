@@ -747,6 +747,7 @@
     <string name="onboarding_error_key_range">Clé privée invalide : hors de la plage de la courbe.</string>
     <string name="onboarding_error_import_failed">Échec de l\'importation de la clé : %1$s</string>
     <string name="scan_error_invalid_link">Lien d\'invitation invalide</string>
+    <string name="scan_error_own_invite">Ceci est votre propre code d\'invitation</string>
     <string name="scan_error_bad_pubkey">Invitation invalide : clé publique incorrecte</string>
     <string name="scan_error_key_mismatch">Invitation invalide : les clés ne correspondent pas</string>
     <string name="scan_error_unknown">Erreur inconnue</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Le mode supervisé est activé ; le partage de position avec votre superviseur ne peut donc pas être désactivé ici.</string>
     <string name="settings_temporary_location_share">Partage de position temporaire</string>
     <string name="app_lock_no_credential">Aucun verrouillage d\'écran n\'est configuré sur cet appareil, il n\'y a donc rien pour déverrouiller. Définissez un code PIN, un schéma, un mot de passe ou une donnée biométrique dans les paramètres de votre appareil, puis rouvrez LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Impossible d\'initialiser la clé d\'authentification sécurisée.</string>
     <string name="backup_key_needs_password">Définissez un mot de passe pour inclure votre clé privée. Un fichier de clé non chiffré pourrait permettre à quiconque de s\'emparer de votre identité.</string>
     <string name="settings_category_security_subtitle">Verrouillage de l\'app, autorisations, mode supervisé</string>
     <string name="settings_category_map_subtitle">Point de départ, zoom, couleur de l\'épingle</string>

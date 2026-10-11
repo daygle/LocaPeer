@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">ಅಮಾನ್ಯ ಆಹ್ವಾನ: ಕೀಲಿಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ</string>
     <string name="scan_error_unknown">ಅಜ್ಞಾತ ದೋಷ</string>
     <string name="scan_error_invalid_link">ಅಮಾನ್ಯ ಆಹ್ವಾನ ಲಿಂಕ್</string>
+    <string name="scan_error_own_invite">ಇದು ನಿಮ್ಮದೇ ಆಹ್ವಾನ ಕೋಡ್</string>
     <string name="scan_fallback_contact">ಈ ಸಂಪರ್ಕ</string>
     <string name="backup_saved">ಬ್ಯಾಕಪ್ ಉಳಿಸಲಾಗಿದೆ: %1$s</string>
     <string name="backup_saved_encrypted">ಬ್ಯಾಕಪ್ ಉಳಿಸಲಾಗಿದೆ (ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಲಾಗಿದೆ): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್ ಆನ್ ಆಗಿದೆ, ಆದ್ದರಿಂದ ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರೊಂದಿಗೆ ಸ್ಥಳ ಹಂಚಿಕೆಯನ್ನು ಇಲ್ಲಿ ಆಫ್ ಮಾಡಲಾಗುವುದಿಲ್ಲ.</string>
     <string name="settings_temporary_location_share">ತಾತ್ಕಾಲಿಕ ಸ್ಥಳ ಹಂಚಿಕೆ</string>
     <string name="app_lock_no_credential">ಈ ಸಾಧನದಲ್ಲಿ ಯಾವುದೇ ಸ್ಕ್ರೀನ್ ಲಾಕ್ ಹೊಂದಿಸಿಲ್ಲ, ಆದ್ದರಿಂದ ಅನ್‌ಲಾಕ್ ಮಾಡಲು ಏನೂ ಇಲ್ಲ. ನಿಮ್ಮ ಸಾಧನ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಒಂದು PIN, ಪ್ಯಾಟರ್ನ್, ಪಾಸ್‌ವರ್ಡ್, ಅಥವಾ ಬಯೋಮೆಟ್ರಿಕ್ ಹೊಂದಿಸಿ, ನಂತರ LocaPeer ಅನ್ನು ಮತ್ತೆ ತೆರೆಯಿರಿ.</string>
+    <string name="app_lock_crypto_failed">ಸುರಕ್ಷಿತ ದೃಢೀಕರಣ ಕೀ ಪ್ರಾರಂಭಿಸಲು ವಿಫಲವಾಗಿದೆ.</string>
     <string name="backup_key_needs_password">ನಿಮ್ಮ ಖಾಸಗಿ ಕೀಯನ್ನು ಸೇರಿಸಲು ಒಂದು ಪಾಸ್‌ವರ್ಡ್ ಹೊಂದಿಸಿ. ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡದ ಕೀ ಫೈಲ್ ಯಾರಾದರೂ ನಿಮ್ಮ ಗುರುತನ್ನು ವಶಪಡಿಸಿಕೊಳ್ಳಲು ಅವಕಾಶ ನೀಡಬಹುದು.</string>
     <string name="settings_category_security_subtitle">ಅಪ್ಲಿಕೇಶನ್ ಲಾಕ್, ಅನುಮತಿಗಳು, ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್</string>
     <string name="settings_category_map_subtitle">ಪ್ರಾರಂಭದ ಹಂತ, ಜೂಮ್, ಪಿನ್ ಬಣ್ಣ</string>

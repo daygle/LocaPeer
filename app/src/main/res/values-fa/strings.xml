@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">دعوت نامعتبر: کلیدها منطبق نیستند</string>
     <string name="scan_error_unknown">خطای ناشناخته</string>
     <string name="scan_error_invalid_link">پیوند دعوت نامعتبر</string>
+    <string name="scan_error_own_invite">این کد دعوت خودتان است</string>
     <string name="scan_fallback_contact">این مخاطب</string>
     <string name="backup_saved">پشتیبان ذخیره شد: %1$s</string>
     <string name="backup_saved_encrypted">پشتیبان ذخیره شد (رمزگذاری‌شده): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">حالت تحت نظارت روشن است، بنابراین اشتراک‌گذاری موقعیت مکانی با ناظرتان را نمی‌توان از اینجا خاموش کرد.</string>
     <string name="settings_temporary_location_share">اشتراک‌گذاری موقت موقعیت مکانی</string>
     <string name="app_lock_no_credential">روی این دستگاه هیچ قفل صفحه‌ای تنظیم نشده است، بنابراین چیزی برای بازکردن قفل وجود ندارد. در تنظیمات دستگاهتان یک پین، الگو، رمز عبور یا زیست‌سنجی تنظیم کنید و سپس LocaPeer را دوباره باز کنید.</string>
+    <string name="app_lock_crypto_failed">راه‌اندازی کلید احراز هویت امن ناموفق بود.</string>
     <string name="backup_key_needs_password">برای گنجاندن کلید خصوصی‌تان یک رمز عبور تنظیم کنید. یک فایل کلید رمزگذاری‌نشده می‌تواند به هرکسی اجازه دهد هویت شما را تصاحب کند.</string>
     <string name="settings_category_security_subtitle">قفل برنامه، مجوزها، حالت تحت نظارت</string>
     <string name="settings_category_map_subtitle">نقطه شروع، بزرگ‌نمایی، رنگ پین</string>

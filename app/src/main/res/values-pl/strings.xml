@@ -753,6 +753,7 @@
     <string name="scan_error_key_mismatch">Nieprawidłowe zaproszenie: klucze się nie zgadzają</string>
     <string name="scan_error_unknown">Nieznany błąd</string>
     <string name="scan_error_invalid_link">Nieprawidłowy link z zaproszeniem</string>
+    <string name="scan_error_own_invite">To jest Twój własny kod zaproszenia</string>
     <string name="scan_fallback_contact">ten kontakt</string>
     <string name="backup_saved">Kopia zapasowa zapisana: %1$s</string>
     <string name="backup_saved_encrypted">Kopia zapasowa zapisana (zaszyfrowana): %1$s</string>
@@ -910,6 +911,7 @@
     <string name="peer_sharing_supervisor_locked">Tryb nadzorowany jest włączony, więc udostępniania lokalizacji opiekunowi nie można tutaj wyłączyć.</string>
     <string name="settings_temporary_location_share">Tymczasowe udostępnianie lokalizacji</string>
     <string name="app_lock_no_credential">Na tym urządzeniu nie ustawiono blokady ekranu, więc nie ma czym odblokować. Ustaw kod PIN, wzór, hasło lub dane biometryczne w ustawieniach urządzenia, a następnie ponownie otwórz LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Nie udało się zainicjować bezpiecznego klucza uwierzytelniania.</string>
     <string name="backup_key_needs_password">Ustaw hasło, aby dołączyć klucz prywatny. Niezaszyfrowany plik klucza może pozwolić każdemu przejąć Twoją tożsamość.</string>
     <string name="settings_category_security_subtitle">Blokada aplikacji, uprawnienia, tryb nadzoru</string>
     <string name="settings_category_map_subtitle">Punkt startowy, powiększenie, kolor pinezki</string>

@@ -731,6 +731,7 @@
     <string name="onboarding_error_key_range">私钥无效-超出曲线范围。</string>
     <string name="onboarding_error_import_failed">导入密钥失败：%1$s</string>
     <string name="scan_error_invalid_link">邀请链接无效</string>
+    <string name="scan_error_own_invite">这是你自己的邀请码</string>
     <string name="scan_error_bad_pubkey">邀请无效：公钥错误</string>
     <string name="scan_error_key_mismatch">邀请无效：密钥不匹配</string>
     <string name="scan_error_unknown">未知错误</string>
@@ -864,6 +865,7 @@
     <string name="peer_sharing_supervisor_locked">监督模式已开启，因此无法在此处关闭与监督者的位置共享。</string>
     <string name="settings_temporary_location_share">临时位置共享</string>
     <string name="app_lock_no_credential">此设备未设置屏幕锁定，因此没有可用于解锁的方式。请在设备设置中设置 PIN、图案、密码或生物识别，然后重新打开 LocaPeer。</string>
+    <string name="app_lock_crypto_failed">无法初始化安全身份验证密钥。</string>
     <string name="backup_key_needs_password">设置密码以包含你的私钥。未加密的密钥文件可能会让任何人接管你的身份。</string>
     <string name="settings_category_security_subtitle">应用锁、权限、受监护模式</string>
     <string name="settings_category_map_subtitle">起点、缩放、图钉颜色</string>

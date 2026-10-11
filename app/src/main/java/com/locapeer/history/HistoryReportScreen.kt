@@ -1,5 +1,6 @@
 package com.locapeer.history
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -381,6 +382,9 @@ private fun HistoryListTab(
     }
 }
 
+// MapView is a library view we can't subclass to override performClick; the touch listener
+// only toggles parent interception, returns false, and calls performClick on ACTION_UP.
+@SuppressLint("ClickableViewAccessibility")
 @Composable
 private fun HistoryMapTab(
     heartbeats: List<HeartbeatEntity>,

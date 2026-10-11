@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">অবৈধ আমন্ত্রণ: কী মিলছে না</string>
     <string name="scan_error_unknown">অজানা ত্রুটি</string>
     <string name="scan_error_invalid_link">অবৈধ আমন্ত্রণ লিংক</string>
+    <string name="scan_error_own_invite">এটি আপনার নিজের আমন্ত্রণ কোড</string>
     <string name="scan_fallback_contact">এই পরিচিতি</string>
     <string name="backup_saved">ব্যাকআপ সংরক্ষিত: %1$s</string>
     <string name="backup_saved_encrypted">ব্যাকআপ সংরক্ষিত (এনক্রিপ্ট করা): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">তত্ত্বাবধান মোড চালু আছে, তাই আপনার তত্ত্বাবধায়কের সঙ্গে অবস্থান শেয়ারিং এখানে বন্ধ করা যাবে না।</string>
     <string name="settings_temporary_location_share">অস্থায়ী অবস্থান শেয়ারিং</string>
     <string name="app_lock_no_credential">এই ডিভাইসে কোনো স্ক্রিন লক সেট করা নেই, তাই আনলক করার মতো কিছু নেই। আপনার ডিভাইস সেটিংসে একটি PIN, প্যাটার্ন, পাসওয়ার্ড, বা বায়োমেট্রিক সেট করুন, তারপর LocaPeer আবার খুলুন।</string>
+    <string name="app_lock_crypto_failed">নিরাপদ প্রমাণীকরণ কী চালু করা যায়নি।</string>
     <string name="backup_key_needs_password">আপনার ব্যক্তিগত কী অন্তর্ভুক্ত করতে একটি পাসওয়ার্ড সেট করুন। একটি এনক্রিপ্ট না-করা কী ফাইল যে কাউকে আপনার পরিচয় দখল করতে দিতে পারে।</string>
     <string name="settings_category_security_subtitle">অ্যাপ লক, অনুমতি, তত্ত্বাবধায়িত মোড</string>
     <string name="settings_category_map_subtitle">শুরুর পয়েন্ট, জুম, পিনের রং</string>

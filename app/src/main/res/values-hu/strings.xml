@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Érvénytelen meghívó: a kulcsok nem egyeznek</string>
     <string name="scan_error_unknown">Ismeretlen hiba</string>
     <string name="scan_error_invalid_link">Érvénytelen meghívólink</string>
+    <string name="scan_error_own_invite">Ez az Ön saját meghívókódja</string>
     <string name="scan_fallback_contact">ez a névjegy</string>
     <string name="backup_saved">Biztonsági mentés elmentve: %1$s</string>
     <string name="backup_saved_encrypted">Biztonsági mentés elmentve (titkosítva): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">A felügyelt mód be van kapcsolva, ezért a helymegosztás a felügyelőddel itt nem kapcsolható ki.</string>
     <string name="settings_temporary_location_share">Ideiglenes helymegosztás</string>
     <string name="app_lock_no_credential">Ezen az eszközön nincs beállítva képernyőzár, így nincs mivel feloldani. Állíts be PIN-kódot, mintát, jelszót vagy biometriát az eszköz beállításaiban, majd nyisd meg újra a LocaPeert.</string>
+    <string name="app_lock_crypto_failed">Nem sikerült inicializálni a biztonságos hitelesítési kulcsot.</string>
     <string name="backup_key_needs_password">Állíts be jelszót a privát kulcsod belefoglalásához. Egy titkosítatlan kulcsfájl bárkinek lehetővé teheti, hogy átvegye a személyazonosságodat.</string>
     <string name="settings_category_security_subtitle">Alkalmazászár, engedélyek, felügyelt mód</string>
     <string name="settings_category_map_subtitle">Kiindulási pont, nagyítás, térképtű színe</string>

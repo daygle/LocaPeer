@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Òkù kò dára: kókó kò dọ́gba</string>
     <string name="scan_error_unknown">Njehie a na-amaghị</string>
     <string name="scan_error_invalid_link">Link ìpè kò dára</string>
+    <string name="scan_error_own_invite">Wannan lambar gayyatarka ce ta kanka</string>
     <string name="scan_fallback_contact">wannan lambar</string>
     <string name="backup_saved">An ajiye hifadi: %1$s</string>
     <string name="backup_saved_encrypted">An ajiye hifadi (mai kalmar sirri): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Yanayin kulawa yana kunne, don haka ba a iya kashe raba wuri da mai kula da kai a nan.</string>
     <string name="settings_temporary_location_share">Raba wuri na wucin gadi</string>
     <string name="app_lock_no_credential">Babu kullen allo da aka saita a wannan na\'urar, don haka babu abin da za a bude da shi. Saita PIN, tsari, kalmar sirri, ko biometric a cikin saitunan na\'urarka, sannan ka sake bude LocaPeer.</string>
+    <string name="app_lock_crypto_failed">An kasa fara maɓallin tantancewa mai tsaro.</string>
     <string name="backup_key_needs_password">Saita kalmar sirri don hada da makullin sirrinka. Fayil na makulli mara boyewa zai iya bar kowa ya karbe asalinka.</string>
     <string name="settings_category_security_subtitle">Kulle-app, izini, yanayin sa ido</string>
     <string name="settings_category_map_subtitle">Wurin farawa, zuƙowa, launin pin</string>

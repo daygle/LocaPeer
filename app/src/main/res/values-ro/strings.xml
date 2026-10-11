@@ -740,6 +740,7 @@
     <string name="scan_error_key_mismatch">Invitație nevalidă: cheile nu se potrivesc</string>
     <string name="scan_error_unknown">Eroare necunoscută</string>
     <string name="scan_error_invalid_link">Link de invitație nevalid</string>
+    <string name="scan_error_own_invite">Acesta este propriul dumneavoastră cod de invitație</string>
     <string name="scan_fallback_contact">acest contact</string>
     <string name="backup_saved">Copie de rezervă salvată: %1$s</string>
     <string name="backup_saved_encrypted">Copie de rezervă salvată (criptată): %1$s</string>
@@ -895,6 +896,7 @@
     <string name="peer_sharing_supervisor_locked">Modul supravegheat este activat, așa că partajarea locației cu supraveghetorul tău nu poate fi dezactivată aici.</string>
     <string name="settings_temporary_location_share">Partajare temporară a locației</string>
     <string name="app_lock_no_credential">Pe acest dispozitiv nu este setată nicio blocare a ecranului, așa că nu există nimic cu care să deblochezi. Setează un PIN, model, parolă sau date biometrice în setările dispozitivului, apoi redeschide LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Nu s-a putut inițializa cheia de autentificare securizată.</string>
     <string name="backup_key_needs_password">Setează o parolă pentru a include cheia ta privată. Un fișier de cheie necriptat ar putea permite oricui să îți preia identitatea.</string>
     <string name="settings_category_security_subtitle">Blocare aplicație, permisiuni, mod supravegheat</string>
     <string name="settings_category_map_subtitle">Punct de pornire, zoom, culoarea pinului</string>

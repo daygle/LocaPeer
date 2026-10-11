@@ -746,6 +746,7 @@
     <string name="onboarding_error_key_range">Chiave privata non valida: fuori dall\'intervallo della curva.</string>
     <string name="onboarding_error_import_failed">Importazione della chiave non riuscita: %1$s</string>
     <string name="scan_error_invalid_link">Link di invito non valido</string>
+    <string name="scan_error_own_invite">Questo è il tuo codice di invito</string>
     <string name="scan_error_bad_pubkey">Invito non valido: chiave pubblica errata</string>
     <string name="scan_error_key_mismatch">Invito non valido: le chiavi non corrispondono</string>
     <string name="scan_error_unknown">Errore sconosciuto</string>
@@ -879,6 +880,7 @@
     <string name="peer_sharing_supervisor_locked">La modalità supervisionata è attiva, quindi la condivisione della posizione con il tuo supervisore non può essere disattivata qui.</string>
     <string name="settings_temporary_location_share">Condivisione posizione temporanea</string>
     <string name="app_lock_no_credential">Su questo dispositivo non è impostato alcun blocco schermo, quindi non c\'è nulla con cui sbloccare. Imposta un PIN, una sequenza, una password o un dato biometrico nelle impostazioni del dispositivo, poi riapri LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Impossibile inizializzare la chiave di autenticazione sicura.</string>
     <string name="backup_key_needs_password">Imposta una password per includere la tua chiave privata. Un file di chiave non crittografato potrebbe permettere a chiunque di impossessarsi della tua identità.</string>
     <string name="settings_category_security_subtitle">Blocco dell\'app, autorizzazioni, modalità supervisionata</string>
     <string name="settings_category_map_subtitle">Punto di partenza, zoom, colore del pin</string>

@@ -731,6 +731,7 @@
     <string name="onboarding_error_key_range">秘密鍵が無効です。曲線の範囲外です。</string>
     <string name="onboarding_error_import_failed">キーのインポートに失敗しました：%1$s</string>
     <string name="scan_error_invalid_link">招待リンクが無効です</string>
+    <string name="scan_error_own_invite">これはあなた自身の招待コードです</string>
     <string name="scan_error_bad_pubkey">無効な招待：公開鍵が不正です</string>
     <string name="scan_error_key_mismatch">無効な招待：鍵が一致しません</string>
     <string name="scan_error_unknown">不明なエラー</string>
@@ -864,6 +865,7 @@
     <string name="peer_sharing_supervisor_locked">監督モードが有効なため、監督者との位置情報の共有をここでオフにすることはできません。</string>
     <string name="settings_temporary_location_share">一時的な位置情報の共有</string>
     <string name="app_lock_no_credential">この端末には画面ロックが設定されていないため、ロック解除に使えるものがありません。端末の設定で PIN、パターン、パスワード、または生体認証を設定してから、LocaPeer を再度開いてください。</string>
+    <string name="app_lock_crypto_failed">安全な認証キーを初期化できませんでした。</string>
     <string name="backup_key_needs_password">秘密鍵を含めるにはパスワードを設定してください。暗号化されていない鍵ファイルは、誰でもあなたの身元を乗っ取れるようにしてしまう可能性があります。</string>
     <string name="settings_category_security_subtitle">アプリロック、権限、監視モード</string>
     <string name="settings_category_map_subtitle">開始地点、ズーム、ピンの色</string>

@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Ogiltig inbjudan: nycklarna matchar inte</string>
     <string name="scan_error_unknown">Okänt fel</string>
     <string name="scan_error_invalid_link">Ogiltig inbjudningslänk</string>
+    <string name="scan_error_own_invite">Det här är din egen inbjudningskod</string>
     <string name="scan_fallback_contact">denna kontakt</string>
     <string name="backup_saved">Säkerhetskopia sparad: %1$s</string>
     <string name="backup_saved_encrypted">Säkerhetskopia sparad (krypterad): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Övervakat läge är på, så platsdelning med din handledare kan inte stängas av här.</string>
     <string name="settings_temporary_location_share">Tillfällig platsdelning</string>
     <string name="app_lock_no_credential">Ingen skärmlåsning är inställd på den här enheten, så det finns inget att låsa upp med. Ställ in en PIN-kod, ett mönster, ett lösenord eller biometri i enhetens inställningar och öppna sedan LocaPeer igen.</string>
+    <string name="app_lock_crypto_failed">Det gick inte att initiera den säkra autentiseringsnyckeln.</string>
     <string name="backup_key_needs_password">Ange ett lösenord för att inkludera din privata nyckel. En okrypterad nyckelfil kan låta vem som helst ta över din identitet.</string>
     <string name="settings_category_security_subtitle">Applås, behörigheter, övervakat läge</string>
     <string name="settings_category_map_subtitle">Startpunkt, zoom, färg på nål</string>

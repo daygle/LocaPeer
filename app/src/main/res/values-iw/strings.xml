@@ -740,6 +740,7 @@
     <string name="scan_error_key_mismatch">הזמנה לא חוקית: אי-התאמת מפתחות</string>
     <string name="scan_error_unknown">שגיאה לא ידועה</string>
     <string name="scan_error_invalid_link">קישור הזמנה לא חוקי</string>
+    <string name="scan_error_own_invite">זהו קוד ההזמנה שלך</string>
     <string name="scan_fallback_contact">איש קשר זה</string>
     <string name="backup_saved">הגיבוי נשמר: %1$s</string>
     <string name="backup_saved_encrypted">הגיבוי נשמר (מוצפן): %1$s</string>
@@ -895,6 +896,7 @@
     <string name="peer_sharing_supervisor_locked">המצב המפוקח פעיל, ולכן לא ניתן לכבות כאן את שיתוף המיקום עם המפקח שלך.</string>
     <string name="settings_temporary_location_share">שיתוף מיקום זמני</string>
     <string name="app_lock_no_credential">לא הוגדר נעילת מסך במכשיר הזה, ולכן אין במה לבטל את הנעילה. הגדר קוד PIN, קו ביטול נעילה, סיסמה או אמצעי ביומטרי בהגדרות המכשיר, ולאחר מכן פתח מחדש את LocaPeer.</string>
+    <string name="app_lock_crypto_failed">אתחול מפתח האימות המאובטח נכשל.</string>
     <string name="backup_key_needs_password">הגדר סיסמה כדי לכלול את המפתח הפרטי שלך. קובץ מפתח לא מוצפן עלול לאפשר לכל אחד להשתלט על הזהות שלך.</string>
     <string name="settings_category_security_subtitle">נעילת אפליקציה, הרשאות, מצב מפוקח</string>
     <string name="settings_category_map_subtitle">נקודת התחלה, זום, צבע סיכה</string>

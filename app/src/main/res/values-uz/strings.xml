@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Yaroqsiz taklif: kalitlar mos emas</string>
     <string name="scan_error_unknown">Noma’lum xatolik</string>
     <string name="scan_error_invalid_link">Yaroqsiz taklif havolasi</string>
+    <string name="scan_error_own_invite">Bu sizning shaxsiy taklif kodingiz</string>
     <string name="scan_fallback_contact">ushbu kontakt</string>
     <string name="backup_saved">Rezerv nusxa saqlandi: %1$s</string>
     <string name="backup_saved_encrypted">Rezerv nusxa saqlandi (shifrlangan): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Nazorat rejimi yoqilgan, shuning uchun nazoratchingiz bilan joylashuvni ulashishni bu yerda o\'chirib bo\'lmaydi.</string>
     <string name="settings_temporary_location_share">Vaqtinchalik joylashuvni ulashish</string>
     <string name="app_lock_no_credential">Bu qurilmada ekran qulfi o\'rnatilmagan, shuning uchun ochish uchun hech narsa yo\'q. Qurilma sozlamalarida PIN, grafik kalit, parol yoki biometrika o\'rnating, so\'ng LocaPeer\'ni qayta oching.</string>
+    <string name="app_lock_crypto_failed">Xavfsiz autentifikatsiya kalitini ishga tushirib bo\'lmadi.</string>
     <string name="backup_key_needs_password">Shaxsiy kalitingizni kiritish uchun parol o\'rnating. Shifrlanmagan kalit fayli har kimga sizning shaxsingizni egallashga imkon berishi mumkin.</string>
     <string name="settings_category_security_subtitle">Ilova qulfi, ruxsatnomalar, nazorat rejimi</string>
     <string name="settings_category_map_subtitle">Boshlang\'ich nuqta, masshtab, belgi rangi</string>

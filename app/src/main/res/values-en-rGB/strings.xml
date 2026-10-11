@@ -61,4 +61,5 @@
     <string name="queued_message_view">View Event</string>
     <string name="queued_message_hide">Hide</string>
     <string name="queued_messages_flush">Flush Now</string>
+    <string name="app_lock_crypto_failed">Failed to initialise secure authentication key.</string>
 </resources>

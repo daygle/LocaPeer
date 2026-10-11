@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Ongeldige uitnodiging: sleutels komen niet overeen</string>
     <string name="scan_error_unknown">Onbekende fout</string>
     <string name="scan_error_invalid_link">Ongeldige uitnodigingslink</string>
+    <string name="scan_error_own_invite">Dit is je eigen uitnodigingscode</string>
     <string name="scan_fallback_contact">dit contact</string>
     <string name="backup_saved">Back-up opgeslagen: %1$s</string>
     <string name="backup_saved_encrypted">Back-up opgeslagen (versleuteld): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">De begeleide modus staat aan, dus het delen van locatie met je begeleider kan hier niet worden uitgeschakeld.</string>
     <string name="settings_temporary_location_share">Tijdelijk locatie delen</string>
     <string name="app_lock_no_credential">Op dit apparaat is geen schermvergrendeling ingesteld, dus er is niets om mee te ontgrendelen. Stel een pincode, patroon, wachtwoord of biometrie in bij je apparaatinstellingen en open LocaPeer daarna opnieuw.</string>
+    <string name="app_lock_crypto_failed">Kan de beveiligde authenticatiesleutel niet initialiseren.</string>
     <string name="backup_key_needs_password">Stel een wachtwoord in om je privésleutel op te nemen. Een niet-versleuteld sleutelbestand kan iedereen je identiteit laten overnemen.</string>
     <string name="settings_category_security_subtitle">App-vergrendeling, machtigingen, toezichtmodus</string>
     <string name="settings_category_map_subtitle">Startpunt, zoom, speldkleur</string>

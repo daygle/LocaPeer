@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">અમાન્ય આમંત્રણ: કી મેળ ખાતી નથી</string>
     <string name="scan_error_unknown">અજ્ઞાત ભૂલ</string>
     <string name="scan_error_invalid_link">અમાન્ય આમંત્રણ લિંક</string>
+    <string name="scan_error_own_invite">આ તમારો પોતાનો આમંત્રણ કોડ છે</string>
     <string name="scan_fallback_contact">આ સંપર્ક</string>
     <string name="backup_saved">બેકઅપ સાચવવામાં આવ્યું: %1$s</string>
     <string name="backup_saved_encrypted">બેકઅપ સાચવવામાં આવ્યું (એનક્રિપ્ટેડ): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">દેખરેખ મોડ ચાલુ છે, તેથી તમારા દેખરેખકાર સાથે સ્થાન શેરિંગ અહીં બંધ કરી શકાતું નથી.</string>
     <string name="settings_temporary_location_share">કામચલાઉ સ્થાન શેરિંગ</string>
     <string name="app_lock_no_credential">આ ઉપકરણ પર કોઈ સ્ક્રીન લૉક સેટ નથી, તેથી અનલૉક કરવા માટે કંઈ નથી. તમારા ઉપકરણ સેટિંગ્સમાં એક PIN, પેટર્ન, પાસવર્ડ, અથવા બાયોમેટ્રિક સેટ કરો, પછી LocaPeer ફરીથી ખોલો.</string>
+    <string name="app_lock_crypto_failed">સુરક્ષિત પ્રમાણીકરણ કી શરૂ કરવામાં નિષ્ફળ.</string>
     <string name="backup_key_needs_password">તમારી ખાનગી કી શામેલ કરવા માટે એક પાસવર્ડ સેટ કરો. એન્ક્રિપ્ટ ન કરેલી કી ફાઇલ કોઈને પણ તમારી ઓળખ પર કબજો કરવા દઈ શકે છે.</string>
     <string name="settings_category_security_subtitle">એપ લોક, પરવાનગીઓ, સુપરવાઇઝ્ડ મોડ</string>
     <string name="settings_category_map_subtitle">શરૂઆતનું બિંદુ, ઝૂમ, પિન રંગ</string>

@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Μη έγκυρη πρόσκληση: τα κλειδιά δεν ταιριάζουν</string>
     <string name="scan_error_unknown">Άγνωστο σφάλμα</string>
     <string name="scan_error_invalid_link">Μη έγκυρος σύνδεσμος πρόσκλησης</string>
+    <string name="scan_error_own_invite">Αυτός είναι ο δικός σας κωδικός πρόσκλησης</string>
     <string name="scan_fallback_contact">αυτή η επαφή</string>
     <string name="backup_saved">Το αντίγραφο ασφαλείας αποθηκεύτηκε: %1$s</string>
     <string name="backup_saved_encrypted">Το αντίγραφο ασφαλείας αποθηκεύτηκε (κρυπτογραφημένο): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Η εποπτευόμενη λειτουργία είναι ενεργή, οπότε η κοινοποίηση τοποθεσίας με τον επόπτη σας δεν μπορεί να απενεργοποιηθεί εδώ.</string>
     <string name="settings_temporary_location_share">Προσωρινή κοινοποίηση τοποθεσίας</string>
     <string name="app_lock_no_credential">Δεν έχει οριστεί κλείδωμα οθόνης σε αυτή τη συσκευή, επομένως δεν υπάρχει τίποτα για ξεκλείδωμα. Ορίστε έναν κωδικό PIN, μοτίβο, κωδικό πρόσβασης ή βιομετρικά στοιχεία στις ρυθμίσεις της συσκευής σας και μετά ανοίξτε ξανά το LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Αποτυχία προετοιμασίας του ασφαλούς κλειδιού ταυτοποίησης.</string>
     <string name="backup_key_needs_password">Ορίστε έναν κωδικό πρόσβασης για να συμπεριλάβετε το ιδιωτικό σας κλειδί. Ένα μη κρυπτογραφημένο αρχείο κλειδιού θα μπορούσε να επιτρέψει σε οποιονδήποτε να αναλάβει την ταυτότητά σας.</string>
     <string name="settings_category_security_subtitle">Κλείδωμα εφαρμογής, άδειες, εποπτευόμενη λειτουργία</string>
     <string name="settings_category_map_subtitle">Σημείο εκκίνησης, εστίαση, χρώμα πινέζας</string>

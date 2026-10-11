@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">അസാധുവായ ക്ഷണം: കീകൾ പൊരുത്തപ്പെടുന്നില്ല</string>
     <string name="scan_error_unknown">അജ്ഞാത പിശക്</string>
     <string name="scan_error_invalid_link">അസാധുവായ ക്ഷണ ലിങ്ക്</string>
+    <string name="scan_error_own_invite">ഇത് നിങ്ങളുടെ സ്വന്തം ക്ഷണ കോഡാണ്</string>
     <string name="scan_fallback_contact">ഈ കോൺടാക്റ്റ്</string>
     <string name="backup_saved">ബാക്കപ്പ് സംരക്ഷിച്ചു: %1$s</string>
     <string name="backup_saved_encrypted">ബാക്കപ്പ് സംരക്ഷിച്ചു (എൻക്രിപ്റ്റ് ചെയ്തത്): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">മേൽനോട്ട മോഡ് ഓണാണ്, അതിനാൽ നിങ്ങളുടെ മേൽനോട്ടക്കാരനുമായുള്ള ലൊക്കേഷൻ പങ്കിടൽ ഇവിടെ ഓഫാക്കാൻ കഴിയില്ല.</string>
     <string name="settings_temporary_location_share">താൽക്കാലിക ലൊക്കേഷൻ പങ്കിടൽ</string>
     <string name="app_lock_no_credential">ഈ ഉപകരണത്തിൽ സ്ക്രീൻ ലോക്ക് സജ്ജീകരിച്ചിട്ടില്ല, അതിനാൽ അൺലോക്ക് ചെയ്യാൻ ഒന്നുമില്ല. നിങ്ങളുടെ ഉപകരണ ക്രമീകരണങ്ങളിൽ ഒരു PIN, പാറ്റേൺ, പാസ്‌വേഡ്, അല്ലെങ്കിൽ ബയോമെട്രിക് സജ്ജീകരിച്ച ശേഷം LocaPeer വീണ്ടും തുറക്കുക.</string>
+    <string name="app_lock_crypto_failed">സുരക്ഷിത പ്രാമാണീകരണ കീ ആരംഭിക്കാനായില്ല.</string>
     <string name="backup_key_needs_password">നിങ്ങളുടെ സ്വകാര്യ കീ ഉൾപ്പെടുത്താൻ ഒരു പാസ്‌വേഡ് സജ്ജീകരിക്കുക. എൻക്രിപ്റ്റ് ചെയ്യാത്ത ഒരു കീ ഫയൽ ആർക്കും നിങ്ങളുടെ ഐഡന്റിറ്റി ഏറ്റെടുക്കാൻ അനുവദിച്ചേക്കാം.</string>
     <string name="settings_category_security_subtitle">ആപ്പ് ലോക്ക്, അനുമതികൾ, മേൽനോട്ട മോഡ്</string>
     <string name="settings_category_map_subtitle">തുടക്ക പോയിന്റ്, സൂം, പിൻ നിറം</string>

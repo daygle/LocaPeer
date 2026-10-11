@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">غلط دعوت: کلیدیں مماثل نہیں</string>
     <string name="scan_error_unknown">نامعلوم خرابی</string>
     <string name="scan_error_invalid_link">غلط دعوتی لنک</string>
+    <string name="scan_error_own_invite">یہ آپ کا اپنا دعوتی کوڈ ہے</string>
     <string name="scan_fallback_contact">یہ رابطہ</string>
     <string name="backup_saved">بیک اپ محفوظ ہو گیا: %1$s</string>
     <string name="backup_saved_encrypted">بیک اپ محفوظ ہو گیا (خفیہ کردہ): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">زیر نگرانی موڈ آن ہے، اس لیے اپنے نگران کے ساتھ مقام کی اشتراک کاری یہاں بند نہیں کی جا سکتی۔</string>
     <string name="settings_temporary_location_share">عارضی مقام کی اشتراک کاری</string>
     <string name="app_lock_no_credential">اس آلے پر کوئی اسکرین لاک سیٹ نہیں ہے، اس لیے کھولنے کے لیے کچھ نہیں ہے۔ اپنے آلے کی ترتیبات میں ایک PIN، پیٹرن، پاس ورڈ، یا بایومیٹرک سیٹ کریں، پھر LocaPeer دوبارہ کھولیں۔</string>
+    <string name="app_lock_crypto_failed">محفوظ تصدیقی کلید شروع کرنے میں ناکامی۔</string>
     <string name="backup_key_needs_password">اپنی نجی کلید شامل کرنے کے لیے ایک پاس ورڈ سیٹ کریں۔ ایک غیر خفیہ کردہ کلید فائل کسی کو भी آپ کی شناخت پر قبضہ کرنے دے سکتی ہے۔</string>
     <string name="settings_category_security_subtitle">ایپ لاک، اجازتیں، نگرانی کا موڈ</string>
     <string name="settings_category_map_subtitle">نقطہ آغاز، زوم، پن کا رنگ</string>

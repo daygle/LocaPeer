@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">అమాన్యమైన ఆహ్వానం: కీలు సరిపోలడం లేదు</string>
     <string name="scan_error_unknown">తెలియని లోపం</string>
     <string name="scan_error_invalid_link">అమాన్యమైన ఆహ్వాన లింక్</string>
+    <string name="scan_error_own_invite">ఇది మీ స్వంత ఆహ్వాన కోడ్</string>
     <string name="scan_fallback_contact">ఈ పరిచయం</string>
     <string name="backup_saved">బ్యాకప్ సేవ్ చేయబడింది: %1$s</string>
     <string name="backup_saved_encrypted">బ్యాకప్ సేవ్ చేయబడింది (ఎన్‌క్రిప్ట్ చేయబడింది): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">పర్యవేక్షిత మోడ్ ఆన్‌లో ఉంది, కాబట్టి మీ పర్యవేక్షకుడితో స్థాన భాగస్వామ్యాన్ని ఇక్కడ ఆఫ్ చేయలేరు.</string>
     <string name="settings_temporary_location_share">తాత్కాలిక స్థాన భాగస్వామ్యం</string>
     <string name="app_lock_no_credential">ఈ పరికరంలో స్క్రీన్ లాక్ సెట్ చేయలేదు, కాబట్టి అన్‌లాక్ చేయడానికి ఏమీ లేదు. మీ పరికర సెట్టింగ్‌లలో ఒక PIN, ప్యాటర్న్, పాస్‌వర్డ్, లేదా బయోమెట్రిక్‌ను సెట్ చేసి, ఆపై LocaPeer ను మళ్లీ తెరవండి.</string>
+    <string name="app_lock_crypto_failed">సురక్షిత ప్రామాణీకరణ కీని ప్రారంభించడం విఫలమైంది.</string>
     <string name="backup_key_needs_password">మీ ప్రైవేట్ కీని చేర్చడానికి ఒక పాస్‌వర్డ్‌ను సెట్ చేయండి. ఎన్‌క్రిప్ట్ చేయని కీ ఫైల్ ఎవరైనా మీ గుర్తింపును స్వాధీనం చేసుకోవడానికి అనుమతించవచ్చు.</string>
     <string name="settings_category_security_subtitle">యాప్ లాక్, అనుమతులు, పర్యవేక్షణ మోడ్</string>
     <string name="settings_category_map_subtitle">ప్రారంభ స్థానం, జూమ్, పిన్ రంగు</string>

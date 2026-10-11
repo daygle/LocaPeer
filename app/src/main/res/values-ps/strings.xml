@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">بې اعتباره بلنه: کیليګانې سره سمون نه خوري</string>
     <string name="scan_error_unknown">نامعلومه تېروتنه</string>
     <string name="scan_error_invalid_link">بې اعتباره د بلنې لینک</string>
+    <string name="scan_error_own_invite">دا ستاسو خپل د بلنې کوډ دی</string>
     <string name="scan_fallback_contact">دا اړیکه</string>
     <string name="backup_saved">بیک اپ خوندي شو: %1$s</string>
     <string name="backup_saved_encrypted">بیک اپ خوندي شو (شفر شوی): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">څارل شوی حالت فعال دی، نو له خپل څارونکي سره د موقعیت شریکول دلته نشي بندیدلی.</string>
     <string name="settings_temporary_location_share">د موقعیت لنډمهاله شریکول</string>
     <string name="app_lock_no_credential">په دې وسیله کې د سکرین هیڅ کولپ نه دی ټاکل شوی، نو د خلاصولو لپاره هیڅ شی نشته. ستاسو د وسیلې تنظیماتو کې یو PIN، نمونه، پټنوم، یا بایومیټریک وټاکئ، بیا LocaPeer بیا پرانیزئ.</string>
+    <string name="app_lock_crypto_failed">د خوندي تصدیق کیلي پیلول ناکام شول.</string>
     <string name="backup_key_needs_password">د خپل خصوصي کلي د شاملولو لپاره پټنوم وټاکئ. یو غیر کوډ شوی کلي فایل کولی شي هر چا ته اجازه ورکړي چې ستاسو پیژندنه ونیسي.</string>
     <string name="settings_category_security_subtitle">د اپلیکیشن لاک، اجازه، د نظارت حالت</string>
     <string name="settings_category_map_subtitle">د پیل نقطه، زوم، د پن رنګ</string>

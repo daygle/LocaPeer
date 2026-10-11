@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">अवैध आमंत्रण: की जुळत नाही</string>
     <string name="scan_error_unknown">अज्ञात त्रुटी</string>
     <string name="scan_error_invalid_link">अवैध आमंत्रण लिंक</string>
+    <string name="scan_error_own_invite">हा तुमचाच आमंत्रण कोड आहे</string>
     <string name="scan_fallback_contact">हा संपर्क</string>
     <string name="backup_saved">बॅकअप जतन केला: %1$s</string>
     <string name="backup_saved_encrypted">बॅकअप जतन केला (एनक्रिप्टेड): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">पर्यवेक्षित मोड चालू आहे, त्यामुळे तुमच्या पर्यवेक्षकासोबत स्थान सामायिकरण येथे बंद करता येणार नाही.</string>
     <string name="settings_temporary_location_share">तात्पुरते स्थान सामायिकरण</string>
     <string name="app_lock_no_credential">या डिव्हाइसवर कोणतेही स्क्रीन लॉक सेट केलेले नाही, त्यामुळे अनलॉक करण्यासाठी काहीही नाही. तुमच्या डिव्हाइस सेटिंग्जमध्ये एक PIN, पॅटर्न, पासवर्ड, किंवा बायोमेट्रिक सेट करा, नंतर LocaPeer पुन्हा उघडा.</string>
+    <string name="app_lock_crypto_failed">सुरक्षित प्रमाणीकरण की सुरू करण्यात अयशस्वी.</string>
     <string name="backup_key_needs_password">तुमची खाजगी की समाविष्ट करण्यासाठी एक पासवर्ड सेट करा. एन्क्रिप्ट न केलेली की फाइल कोणालाही तुमची ओळख ताब्यात घेऊ देऊ शकते.</string>
     <string name="settings_category_security_subtitle">अॅप लॉक, परवानग्या, देखरेख मोड</string>
     <string name="settings_category_map_subtitle">सुरुवातीचा बिंदू, झूम, पिन रंग</string>
