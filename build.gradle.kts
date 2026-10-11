@@ -3,6 +3,8 @@ buildscript {
         google()
         mavenCentral()
     }
+    // Version catalog accessors aren't available in buildscript {}: keep these versions in sync
+    // with the "Security-hardened versions" block in gradle/libs.versions.toml.
     configurations.all {
         resolutionStrategy {
             eachDependency {
@@ -20,11 +22,11 @@ buildscript {
                 // AGP pulls commons-lang3 (via com.android.tools:repository -> commons-compress)
                 // and jose4j (via bundletool) into the build classpath at vulnerable versions.
                 if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
-                    useVersion("3.20.0")
+                    useVersion("3.21.0")
                     because("CVE-2025-48924: uncontrolled recursion DoS in ClassUtils.getClass")
                 }
                 if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
-                    useVersion("0.9.6")
+                    useVersion("0.9.7")
                     because("CVE-2024-29371: DoS via compressed JWE content")
                 }
             }

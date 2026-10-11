@@ -212,34 +212,41 @@ dependencies {
     androidTestImplementation(libs.room.testing)
 }
 
-// Global resolution strategy to align versions and swap vulnerable artifact lines
+// Global resolution strategy to align versions and swap vulnerable artifact lines.
+// Versions come from the catalog's "Security-hardened versions" block so they can't drift.
+val pinnedBouncyCastle = libs.versions.bouncycastle.get()
+val pinnedBcprov = libs.versions.bouncycastleProv.get()
+val pinnedNetty = libs.versions.netty.get()
+val pinnedJdom2 = libs.versions.jdom2.get()
+val pinnedHttpclient = libs.versions.httpclient.get()
+val pinnedJose4j = libs.versions.jose4j.get()
+val pinnedCommonsLang3 = libs.versions.commonsLang3.get()
 configurations.all {
     resolutionStrategy {
         eachDependency {
             // Force all Bouncy Castle artifacts to the jdk18on line and latest version
             if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk") || requested.name.startsWith("bcutil-jdk"))) {
                 val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
-                val version = "1.86"
-                useTarget("org.bouncycastle:$artifact:$version")
+                useTarget("org.bouncycastle:$artifact:${if (artifact == "bcprov-jdk18on") pinnedBcprov else pinnedBouncyCastle}")
                 because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
             }
             // Align all Netty modules to a safe version
             if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
-                useVersion("4.1.137.Final")
+                useVersion(pinnedNetty)
                 because("Apply security patches for HTTP/2 Rapid Reset and other vulnerabilities")
             }
             // Force latest versions for other vulnerable components
             if (requested.group == "org.jdom" && requested.name == "jdom2") {
-                useVersion("2.0.6.1")
+                useVersion(pinnedJdom2)
             }
             if (requested.group == "org.apache.httpcomponents" && requested.name == "httpclient") {
-                useVersion("4.5.14")
+                useVersion(pinnedHttpclient)
             }
             if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
-                useVersion("0.9.6")
+                useVersion(pinnedJose4j)
             }
             if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
-                useVersion("3.20.0")
+                useVersion(pinnedCommonsLang3)
             }
         }
     }
