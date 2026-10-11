@@ -147,6 +147,27 @@ internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boole
     if (isRoleChange) existingRole != null
     else existingRole != PeerEntity.ROLE_SEND && existingRole != PeerEntity.ROLE_SEND_RECEIVE
 
+/**
+ * Our location role after a contact's TRACK_ACCEPT granting them [acceptedRole]. The acceptor
+ * decides whether they send to us (our RECEIVE), but sending OUR location is only ever enabled
+ * locally (scanning an invite, or the per-contact send toggle). So an accept can keep or drop
+ * our SEND, never add it: otherwise any existing contact could switch on sharing of our
+ * location with an unsolicited accept.
+ */
+internal fun roleAfterTrackAccept(currentRole: String, acceptedRole: String?): String {
+    // Their RECEIVE is our SEND and vice versa; a missing or unknown value means they accepted both.
+    val theyReceive = acceptedRole != PeerEntity.ROLE_SEND && acceptedRole != PeerEntity.ROLE_NONE
+    val theySend = acceptedRole != PeerEntity.ROLE_RECEIVE && acceptedRole != PeerEntity.ROLE_NONE
+    val weSent = currentRole == PeerEntity.ROLE_SEND || currentRole == PeerEntity.ROLE_SEND_RECEIVE
+    val send = theyReceive && weSent
+    return when {
+        send && theySend -> PeerEntity.ROLE_SEND_RECEIVE
+        send -> PeerEntity.ROLE_SEND
+        theySend -> PeerEntity.ROLE_RECEIVE
+        else -> PeerEntity.ROLE_NONE
+    }
+}
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -1376,13 +1397,9 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         Log.i(TAG, "Received track acceptance from ${payload.acceptorDisplayName} (${event.pubkey})")
-        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
-        val newLocationRole = when (payload.acceptedRole) {
-            PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
-            PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
-            PeerEntity.ROLE_NONE -> PeerEntity.ROLE_NONE
-            else -> PeerEntity.ROLE_SEND_RECEIVE
-        }
+        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them) -
+        // but only if we were already sending; see roleAfterTrackAccept.
+        val newLocationRole = roleAfterTrackAccept(existingPeer.locationRole, payload.acceptedRole)
 
         // Keep the known relay when the payload's is not a usable wss:// URL; the relay client
         // would refuse it anyway, leaving the contact with no reachable relay on record.
