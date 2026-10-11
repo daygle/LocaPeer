@@ -140,6 +140,13 @@ class PeerManager @Inject constructor(
 
     /** Called when we receive a PEER_REMOVED event - remove the sender silently. */
     suspend fun handleRemovalByPeer(senderDeviceId: String) {
+        // The supervisor ending the relationship ends supervision: they have dropped this
+        // device too and ignore its unlock requests, so staying supervised would lock the
+        // gated settings for good.
+        if (isProtectedSupervisor(senderDeviceId)) {
+            prefs.clearSupervisedMode()
+            Log.i(TAG, "Supervised mode ended: supervisor $senderDeviceId removed this device")
+        }
         wipeAllPeerData(senderDeviceId)
         Log.i(TAG, "Removed peer $senderDeviceId after they removed us")
     }
