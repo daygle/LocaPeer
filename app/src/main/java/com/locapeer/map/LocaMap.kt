@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -167,6 +168,7 @@ fun LocaMap(
     overlay: @Composable BoxScope.() -> Unit = {},
 ) {
     val context = LocalContext.current
+    val densityDpi = LocalResources.current.displayMetrics.densityDpi
     val lifecycleOwner = LocalLifecycleOwner.current
     val markerClick by rememberUpdatedState(onMarkerClick)
     val mapClick by rememberUpdatedState(onMapClick)
@@ -250,13 +252,12 @@ fun LocaMap(
     }
     LaunchedEffect(loaded, markers) {
         val style = loaded?.second ?: return@LaunchedEffect
-        val density = context.resources.displayMetrics.densityDpi
         val used = HashSet<String>()
         val features = markers.map { m ->
             val key = "icon-" + System.identityHashCode(m.icon)
             if (used.add(key) && !registeredImages.contains(key)) {
                 // MapLibre sizes images by bitmap density; an unset density would draw them at 0 px.
-                if (m.icon.density == Bitmap.DENSITY_NONE) m.icon.density = density
+                if (m.icon.density == Bitmap.DENSITY_NONE) m.icon.density = densityDpi
                 style.addImage(key, m.icon)
                 registeredImages.add(key)
             }

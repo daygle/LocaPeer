@@ -46,6 +46,9 @@ android {
         disable += "MissingTranslation"
         disable += "ImpliedQuantity"
         disable += "MissingQuantity"
+        // Timber's lint jar arrives transitively, but the app logs with android.util.Log
+        // and doesn't depend on Timber.
+        disable += "LogNotTimber"
 
         // Ensure we still fail on other real code errors
         abortOnError = true
@@ -148,6 +151,7 @@ dependencies {
 
     // Core AndroidX & Lifecycle
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.lifecycle.runtime)

@@ -3,6 +3,7 @@ package com.locapeer.messaging
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.core.graphics.scale
+import androidx.exifinterface.media.ExifInterface
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.OpenableColumns
@@ -179,11 +180,11 @@ object MediaUtils {
     private fun getExifRotation(context: Context, uri: Uri): Float {
         return try {
             context.contentResolver.openInputStream(uri)?.use { stream ->
-                val exif = android.media.ExifInterface(stream)
-                when (exif.getAttributeInt(android.media.ExifInterface.TAG_ORIENTATION, android.media.ExifInterface.ORIENTATION_NORMAL)) {
-                    android.media.ExifInterface.ORIENTATION_ROTATE_90 -> 90f
-                    android.media.ExifInterface.ORIENTATION_ROTATE_180 -> 180f
-                    android.media.ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                val exif = ExifInterface(stream)
+                when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+                    ExifInterface.ORIENTATION_ROTATE_90 -> 90f
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
                     else -> 0f
                 }
             } ?: 0f
