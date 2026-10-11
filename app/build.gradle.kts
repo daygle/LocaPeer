@@ -10,6 +10,23 @@ kotlin {
     jvmToolchain(17)
 }
 
+// Release signing. Android Studio's "Generate Signed APK/Bundle" wizard injects the keystore
+// interactively, which can't happen on CI, so the release variant reads the same keystore from
+// Gradle properties (or LOCAPEER_* environment variables) instead - see
+// .github/workflows/android-release.yml. When any value is missing the release variant simply
+// stays unsigned: local `assembleRelease` still works, and the Android Studio wizard keeps
+// injecting its own signing config as before.
+val releaseKeystoreFile = providers.gradleProperty("locapeerKeystoreFile").orNull
+    ?: System.getenv("LOCAPEER_KEYSTORE_FILE").orEmpty()
+val releaseKeystorePassword = providers.gradleProperty("locapeerKeystorePassword").orNull
+    ?: System.getenv("LOCAPEER_KEYSTORE_PASSWORD").orEmpty()
+val releaseKeyAlias = providers.gradleProperty("locapeerKeyAlias").orNull
+    ?: System.getenv("LOCAPEER_KEY_ALIAS").orEmpty()
+val releaseKeyPassword = providers.gradleProperty("locapeerKeyPassword").orNull
+    ?: System.getenv("LOCAPEER_KEY_PASSWORD").orEmpty()
+val hasReleaseSigning = listOf(releaseKeystoreFile, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword)
+    .all { it.isNotBlank() }
+
 android {
     namespace = "com.locapeer"
     compileSdk = 37
@@ -34,8 +51,23 @@ android {
         abortOnError = true
     }
 
+    signingConfigs {
+        if (hasReleaseSigning) {
+            create("release") {
+                // Absolute on CI; relative paths resolve against this module directory.
+                storeFile = file(releaseKeystoreFile)
+                storePassword = releaseKeystorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
