@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">نگرانی فعال ہے</string>
     <string name="settings_supervision_active_subtitle">ترتیبات کے لیے نگران کی منظوری درکار ہے</string>
+    <string name="settings_supervision_pending">نگرانی کی درخواست کی گئی</string>
+    <string name="settings_supervision_pending_subtitle">آپ کے نگران کی منظوری کا انتظار ہے۔ تب تک ترتیبات غیر مقفل رہیں گی۔</string>
     <string name="settings_disable_supervised">زیرِ نگرانی موڈ بند کریں</string>
     <string name="settings_supervised_mode">زیرِ نگرانی موڈ</string>
     <string name="settings_supervised_mode_subtitle">ترتیبات تک رسائی کے لیے نگران کی منظوری لازمی کریں</string>

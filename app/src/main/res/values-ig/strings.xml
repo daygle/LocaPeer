@@ -110,6 +110,8 @@
     <!-- Nchebe -->
     <string name="settings_supervision_active">Nlekọta na-arụ ọrụ</string>
     <string name="settings_supervision_active_subtitle">Ntọala chọrọ nnabata onye nlekọta</string>
+    <string name="settings_supervision_pending">Arịọla nlekọta</string>
+    <string name="settings_supervision_pending_subtitle">Na-eche ka onye nlekọta gị nabata. Ntọala ga-anọgide na-emeghe ruo mgbe ahụ.</string>
     <string name="settings_disable_supervised">Gbanyụọ Ọnọdụ Nlekọta</string>
     <string name="settings_supervised_mode">Ọnọdụ Nlekọta</string>
     <string name="settings_supervised_mode_subtitle">Chọọ nnabata onye nlekọta iji nweta ntọala</string>

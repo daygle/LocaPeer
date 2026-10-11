@@ -113,6 +113,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Dohled aktivní</string>
     <string name="settings_supervision_active_subtitle">Nastavení vyžaduje schválení dohlížitele</string>
+    <string name="settings_supervision_pending">Dohled vyžádán</string>
+    <string name="settings_supervision_pending_subtitle">Čeká se na přijetí dohledem. Do té doby zůstane nastavení odemčené.</string>
     <string name="settings_disable_supervised">Vypnout režim pod dohledem</string>
     <string name="settings_supervised_mode">Režim pod dohledem</string>
     <string name="settings_supervised_mode_subtitle">Vyžadovat schválení dohlížitele pro přístup k nastavení</string>

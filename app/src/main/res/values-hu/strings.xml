@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Felügyelet aktív</string>
     <string name="settings_supervision_active_subtitle">A beállításokhoz felügyelői jóváhagyás szükséges</string>
+    <string name="settings_supervision_pending">Felügyelet kérelmezve</string>
+    <string name="settings_supervision_pending_subtitle">Várakozás a felügyelő elfogadására. Addig a beállítások zárolatlanok maradnak.</string>
     <string name="settings_disable_supervised">Felügyelt mód kikapcsolása</string>
     <string name="settings_supervised_mode">Felügyelt mód</string>
     <string name="settings_supervised_mode_subtitle">Felügyelői jóváhagyás megkövetelése a beállítások eléréséhez</string>

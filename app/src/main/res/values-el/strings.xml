@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Εποπτεία ενεργή</string>
     <string name="settings_supervision_active_subtitle">Οι ρυθμίσεις απαιτούν έγκριση επόπτη</string>
+    <string name="settings_supervision_pending">Ζητήθηκε επίβλεψη</string>
+    <string name="settings_supervision_pending_subtitle">Αναμονή για αποδοχή από τον επιβλέποντα. Έως τότε οι ρυθμίσεις παραμένουν ξεκλείδωτες.</string>
     <string name="settings_disable_supervised">Απενεργοποίηση εποπτευόμενης λειτουργίας</string>
     <string name="settings_supervised_mode">Εποπτευόμενη λειτουργία</string>
     <string name="settings_supervised_mode_subtitle">Απαιτείται έγκριση επόπτη για πρόσβαση στις ρυθμίσεις</string>

@@ -111,6 +111,8 @@
     <!-- Tsaro -->
     <string name="settings_supervision_active">Sa Ido Na Aiki</string>
     <string name="settings_supervision_active_subtitle">Saituna suna buƙatar amincewar mai sa ido</string>
+    <string name="settings_supervision_pending">An nemi kulawa</string>
+    <string name="settings_supervision_pending_subtitle">Ana jiran mai kula da kai ya karɓa. Saituna za su kasance a buɗe har zuwa lokacin.</string>
     <string name="settings_disable_supervised">Kashe Yanayin Sa Ido</string>
     <string name="settings_supervised_mode">Yanayin Sa Ido</string>
     <string name="settings_supervised_mode_subtitle">Ana buƙatar amincewar mai sa ido don shiga saituna</string>

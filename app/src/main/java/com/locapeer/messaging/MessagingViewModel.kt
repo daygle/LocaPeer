@@ -540,15 +540,21 @@ class MessagingViewModel @Inject constructor(
                 // processDeletionEvent match (`msg.senderPublicKeyHex == event.pubkey` + tag
                 // `e` matches the message's own nostrEventId) then succeeds. NIP-09 events
                 // without a matching recipient side are a harmless no-op.
-                val targets = mutableListOf<String>()
-                if (msg.nostrEventId.isNotEmpty()) targets.add(msg.nostrEventId)
+                // Each target pairs the event id with the recipient that holds it, or null when
+                // the recipient isn't recorded. Recipients subscribe to deletions by `p` tag, so a
+                // kind-5 without one never reaches them.
+                val targets = mutableListOf<Pair<String, String?>>()
+                if (msg.nostrEventId.isNotEmpty()) {
+                    targets.add(msg.nostrEventId to (if (msg.groupId == null) msg.peerId else null))
+                }
                 if (msg.nostrEventIdsByMember.isNotEmpty()) {
                     // Format: `memberPubHex:eventIdHex` pairs separated by ','. Bounded split
                     // because every entry is strict lowercase hex so substringAfter never finds
                     // a stray `:` inside the value halves.
                     msg.nostrEventIdsByMember.split(",").forEach { pair ->
+                        val member = pair.substringBefore(":", "")
                         val eventId = pair.substringAfter(":", "")
-                        if (eventId.isNotEmpty()) targets.add(eventId)
+                        if (eventId.isNotEmpty()) targets.add(eventId to member.ifEmpty { null })
                     }
                 }
                 if (targets.isEmpty()) {
@@ -563,13 +569,13 @@ class MessagingViewModel @Inject constructor(
                     )
                     return@launch
                 }
-                targets.forEach { targetEventId ->
+                targets.forEach { (targetEventId, recipient) ->
                     val event = NostrEvent.build(
                         privKeyHex = privHex,
                         pubKeyHex = pubHex,
                         kind = NostrEventKind.EVENT_DELETION,
                         content = "Deleting message",
-                        tags = listOf(listOf("e", targetEventId)),
+                        tags = listOfNotNull(listOf("e", targetEventId), recipient?.let { listOf("p", it) }),
                         crypto = crypto
                     )
                     relayClient.publishEvent(event)
@@ -1035,19 +1041,15 @@ class MessagingViewModel @Inject constructor(
         if (myListeningPubkey == myPubHex && eventsJob?.isActive == true) return
         myListeningPubkey = myPubHex
         viewModelScope.launch {
-            // Only the two kinds the always-on HeartbeatReceiver does NOT handle are
-            // subscribed here: TYPING (ephemeral, needs live UI handling) and EVENT_DELETION
-            // (NIP-09). Incoming DMs, read receipts and delivery acks are stored/notified by
-            // HeartbeatReceiver, and this screen reflects them through Room flows - handling
-            // them here too was pure duplication (double acks, redundant work).
+            // Only TYPING (ephemeral, needs live UI handling) is subscribed here. Incoming DMs,
+            // receipts, acks and NIP-09 deletions are handled by the always-on HeartbeatReceiver
+            // (so they apply even while this screen is closed), and this screen reflects them
+            // through Room flows.
             val since = (System.currentTimeMillis() / 1000L) - (24 * 60 * 60)
             relayClient.subscribe(
                 "lp-dm-${myPubHex.take(16)}",
                 NostrFilter(
-                    kinds = listOf(
-                        NostrEventKind.TYPING,
-                        NostrEventKind.EVENT_DELETION
-                    ),
+                    kinds = listOf(NostrEventKind.TYPING),
                     pTags = listOf(myPubHex),
                     since = since
                 )
@@ -1062,7 +1064,6 @@ class MessagingViewModel @Inject constructor(
               try {
                 when (event.kind) {
                     NostrEventKind.TYPING -> processTypingEvent(event)
-                    NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
                 Log.w("MessagingViewModel", "Failed to handle event ${event.id} (kind ${event.kind})", e)
@@ -1094,40 +1095,27 @@ class MessagingViewModel @Inject constructor(
         }
     }
 
-    private fun processDeletionEvent(event: NostrEvent) {
-        viewModelScope.launch {
-            // Signature already verified by NostrRelayClient before emission; re-verifying
-            // here only repeated the Schnorr check on the main thread.
-            val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
-            targetEventIds.forEach { eventId ->
-                val msg = messageDao.getByNostrEventId(eventId)
-                if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
-                    messageDao.delete(msg)
-                    MediaCache.clearDecryptedMedia(context)
-                }
-            }
-        }
-    }
-
     private suspend fun sendReadReceipt(peerPubkey: String, eventIds: List<String>) {
         if (eventIds.isEmpty()) return
         val peer = peerDao.getPeer(peerPubkey) ?: return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
-        val payload = json.encodeToString(ReadReceiptPayload(eventIds))
-
-        val event = withContext(Dispatchers.Default) {
-            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
-            NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.READ_RECEIPT,
-                content = encrypted,
-                tags = listOf(listOf("p", peer.publicKeyHex)),
-                crypto = crypto
-            )
+        // Receivers bound how many ids one receipt may carry, so a large backlog is split.
+        eventIds.chunked(ReadReceiptPayload.SEND_CHUNK).forEach { chunk ->
+            val payload = json.encodeToString(ReadReceiptPayload(chunk))
+            val event = withContext(Dispatchers.Default) {
+                val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.READ_RECEIPT,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+            }
+            relayClient.publishEvent(event)
         }
-        relayClient.publishEvent(event)
     }
 
     private suspend fun sendTypingEvent(peerPubkey: String) {

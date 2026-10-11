@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">نظارت فعال است</string>
     <string name="settings_supervision_active_subtitle">تنظیمات به تأیید ناظر نیاز دارد</string>
+    <string name="settings_supervision_pending">نظارت درخواست شد</string>
+    <string name="settings_supervision_pending_subtitle">در انتظار پذیرش ناظر شما. تا آن زمان تنظیمات قفل نمی‌شوند.</string>
     <string name="settings_disable_supervised">غیرفعال‌کردن حالت تحت نظارت</string>
     <string name="settings_supervised_mode">حالت تحت نظارت</string>
     <string name="settings_supervised_mode_subtitle">برای دسترسی به تنظیمات تأیید ناظر لازم باشد</string>

@@ -110,6 +110,8 @@
     <!-- セキュリティ -->
     <string name="settings_supervision_active">監視が有効</string>
     <string name="settings_supervision_active_subtitle">設定には監視者の承認が必要です</string>
+    <string name="settings_supervision_pending">監督をリクエスト済み</string>
+    <string name="settings_supervision_pending_subtitle">監督者の承認を待っています。それまで設定はロックされません。</string>
     <string name="settings_disable_supervised">監視モードを無効にする</string>
     <string name="settings_supervised_mode">監視モード</string>
     <string name="settings_supervised_mode_subtitle">設定へのアクセスに監視者の承認を必要とする</string>

@@ -113,6 +113,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Нагляд активний</string>
     <string name="settings_supervision_active_subtitle">Для налаштувань потрібне схвалення наглядача</string>
+    <string name="settings_supervision_pending">Нагляд запитано</string>
+    <string name="settings_supervision_pending_subtitle">Очікування підтвердження від наглядача. До того налаштування залишаються розблокованими.</string>
     <string name="settings_disable_supervised">Вимкнути контрольований режим</string>
     <string name="settings_supervised_mode">Контрольований режим</string>
     <string name="settings_supervised_mode_subtitle">Вимагати схвалення наглядача для доступу до налаштувань</string>

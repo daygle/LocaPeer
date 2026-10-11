@@ -111,6 +111,8 @@
     <!-- ደህንነት -->
     <string name="settings_supervision_active">ቁጥጥር ንቁ ነው</string>
     <string name="settings_supervision_active_subtitle">ቅንብሮች ተቆጣጣሪ ፈቃድ ያስፈልጋቸዋል</string>
+    <string name="settings_supervision_pending">ክትትል ተጠይቋል</string>
+    <string name="settings_supervision_pending_subtitle">ተቆጣጣሪዎ እስኪቀበል በመጠበቅ ላይ። እስከዚያ ድረስ ቅንብሮች ክፍት ሆነው ይቆያሉ።</string>
     <string name="settings_disable_supervised">የቁጥጥር ሁነታን አጥፋ</string>
     <string name="settings_supervised_mode">የቁጥጥር ሁነታ</string>
     <string name="settings_supervised_mode_subtitle">ወደ ቅንብሮች ለመግባት የተቆጣጣሪ ፈቃድ ያስፈልጋል</string>

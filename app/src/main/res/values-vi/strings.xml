@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Giám sát đang hoạt động</string>
     <string name="settings_supervision_active_subtitle">Cài đặt cần được người giám sát phê duyệt</string>
+    <string name="settings_supervision_pending">Đã yêu cầu giám sát</string>
+    <string name="settings_supervision_pending_subtitle">Đang chờ người giám sát chấp nhận. Cho đến lúc đó, cài đặt vẫn không bị khóa.</string>
     <string name="settings_disable_supervised">Tắt chế độ được giám sát</string>
     <string name="settings_supervised_mode">Chế độ được giám sát</string>
     <string name="settings_supervised_mode_subtitle">Yêu cầu người giám sát phê duyệt để truy cập cài đặt</string>

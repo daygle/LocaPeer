@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">감독 활성화됨</string>
     <string name="settings_supervision_active_subtitle">설정에 감독자 승인이 필요합니다</string>
+    <string name="settings_supervision_pending">감독 요청됨</string>
+    <string name="settings_supervision_pending_subtitle">감독자의 수락을 기다리는 중입니다. 그때까지 설정은 잠기지 않습니다.</string>
     <string name="settings_disable_supervised">감독 모드 끄기</string>
     <string name="settings_supervised_mode">감독 모드</string>
     <string name="settings_supervised_mode_subtitle">설정 접근에 감독자 승인 요구</string>

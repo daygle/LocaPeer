@@ -111,6 +111,8 @@
     <!-- Nageenya -->
     <string name="settings_supervision_active">To\'annoon hojjechaa jira</string>
     <string name="settings_supervision_active_subtitle">Sajataawwan hayyama to\'ata findu</string>
+    <string name="settings_supervision_pending">Hordoffiin gaafatameera</string>
+    <string name="settings_supervision_pending_subtitle">Hordofaan kee akka fudhatu eegaa jira. Hanga sanatti qindaa\'inni banaa ta\'ee tura.</string>
     <string name="settings_disable_supervised">Modii To\'annoo Dhaabi</string>
     <string name="settings_supervised_mode">Modii To\'annoo</string>
     <string name="settings_supervised_mode_subtitle">Sajataawwan seenuuf hayyama to\'ataa gaafata</string>

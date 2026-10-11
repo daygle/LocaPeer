@@ -14,7 +14,6 @@ bouncycastleProv = "1.86"
 # pluginManagement block so the CodeQL workflow can override it with -PkotlinVersion.
 # A catalog alias here would silently pin the version and break that override.
 ksp = "2.3.12"
-foojay = "1.0.0"
 agp = "9.4.1"
 composeBom = "2026.09.00"
 hilt = "2.60.1"
@@ -25,7 +24,7 @@ lifecycle = "2.11.0"
 coroutines = "1.11.0"
 serialization = "1.11.0"
 coreKtx = "1.19.1"
-exifinterface = "1.4.1"
+exifinterface = "1.4.2"
 appcompat = "1.8.0"
 activityCompose = "1.13.0"
 navigationCompose = "2.10.2"
@@ -123,4 +122,3 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 android-application = { id = "com.android.application", version.ref = "agp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", version.ref = "foojay" }

@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "heartbeats",
-    indices = [Index("deviceId"), Index("timestamp")]
+    // (deviceId, timestamp) serves the per-contact lookups (duplicate check, latest position,
+    // day history) and plain deviceId filters alike; timestamp alone serves retention deletes.
+    indices = [Index("deviceId", "timestamp"), Index("timestamp")]
 )
 data class HeartbeatEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,

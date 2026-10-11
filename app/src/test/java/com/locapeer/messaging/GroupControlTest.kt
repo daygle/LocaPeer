@@ -35,8 +35,13 @@ class GroupControlTest {
         assertEquals(Update.IGNORE, decide(knownVersion = 10, sender = creator, signedVersion = 9))
     }
 
-    @Test fun `a signature from a different creator never takes over a circle`() {
-        assertEquals(Update.IGNORE, decide(claimed = other, sender = other, signedVersion = 99))
+    @Test fun `a signature from a different creator never takes over a confirmed or signed circle`() {
+        assertEquals(Update.IGNORE, decide(confirmed = true, claimed = other, sender = other, signedVersion = 99))
+        assertEquals(Update.IGNORE, decide(knownVersion = 3, claimed = other, sender = other, signedVersion = 99))
+    }
+
+    @Test fun `a signed creator replaces an unconfirmed creator claim`() {
+        assertEquals(Update.APPLY_SIGNED, decide(knownCreator = other, confirmed = false, claimed = creator, sender = member, signedVersion = 1))
     }
 
     @Test fun `a legacy circle without a recorded creator adopts the signed one`() {
@@ -67,9 +72,10 @@ class GroupControlTest {
         knownCreator: String = creator,
         knownVersion: Long = 0,
         updatedAt: Long = 0,
+        confirmed: Boolean = updatedAt > 0,
         sender: String,
         claimed: String = creator,
         signedVersion: Long = 0,
         createdAt: Long = 0,
-    ) = GroupControl.decide(knownCreator, knownVersion, updatedAt, sender, claimed, signedVersion, createdAt)
+    ) = GroupControl.decide(knownCreator, knownVersion, updatedAt, confirmed, sender, claimed, signedVersion, createdAt)
 }

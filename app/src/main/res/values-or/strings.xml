@@ -111,6 +111,8 @@
     <!-- ସୁରକ୍ଷା -->
     <string name="settings_supervision_active">ତଦାରଖ ସକ୍ରିୟ ଅଛି</string>
     <string name="settings_supervision_active_subtitle">ସେଟିଂସମୂହ ପାଇଁ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ଆବଶ୍ୟକ</string>
+    <string name="settings_supervision_pending">ତତ୍ତ୍ୱାବଧାନ ଅନୁରୋଧ କରାଯାଇଛି</string>
+    <string name="settings_supervision_pending_subtitle">ଆପଣଙ୍କ ତତ୍ତ୍ୱାବଧାୟକ ଗ୍ରହଣ କରିବା ପର୍ଯ୍ୟନ୍ତ ଅପେକ୍ଷା। ସେପର୍ଯ୍ୟନ୍ତ ସେଟିଂସ ଅନଲକ ରହିବ।</string>
     <string name="settings_disable_supervised">ତଦାରଖ ମୋଡ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>
     <string name="settings_supervised_mode">ତଦାରଖ ମୋଡ୍</string>
     <string name="settings_supervised_mode_subtitle">ସେଟିଂସମୂହରେ ପ୍ରବେଶ କରିବା ପାଇଁ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁମୋଦନ ଆବଶ୍ୟକ</string>

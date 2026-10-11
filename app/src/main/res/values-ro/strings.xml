@@ -112,6 +112,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Supraveghere activă</string>
     <string name="settings_supervision_active_subtitle">Setările necesită aprobarea supraveghetorului</string>
+    <string name="settings_supervision_pending">Supraveghere solicitată</string>
+    <string name="settings_supervision_pending_subtitle">Se așteaptă acceptarea supraveghetorului. Până atunci, setările rămân deblocate.</string>
     <string name="settings_disable_supervised">Dezactivați modul supravegheat</string>
     <string name="settings_supervised_mode">Mod supravegheat</string>
     <string name="settings_supervised_mode_subtitle">Necesită aprobarea supraveghetorului pentru accesul la setări</string>

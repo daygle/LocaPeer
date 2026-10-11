@@ -108,6 +108,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>
     <string name="settings_supervision_active_subtitle">Settings require supervisor approval</string>
+    <string name="settings_supervision_pending">Supervision Requested</string>
+    <string name="settings_supervision_pending_subtitle">Waiting for your supervisor to accept. Settings stay unlocked until then.</string>
     <string name="settings_disable_supervised">Disable Supervised Mode</string>
     <string name="settings_supervised_mode">Supervised Mode</string>
     <string name="settings_supervised_mode_subtitle">Require supervisor approval to access settings</string>

@@ -111,6 +111,8 @@
     <!-- ಭದ್ರತೆ -->
     <string name="settings_supervision_active">ಮೇಲ್ವಿಚಾರಣೆ ಸಕ್ರಿಯವಾಗಿದೆ</string>
     <string name="settings_supervision_active_subtitle">ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಗೆ ಮೇಲ್ವಿಚಾರಕರ ಅನುಮೋದನೆ ಅಗತ್ಯವಿದೆ</string>
+    <string name="settings_supervision_pending">ಮೇಲ್ವಿಚಾರಣೆಗೆ ವಿನಂತಿಸಲಾಗಿದೆ</string>
+    <string name="settings_supervision_pending_subtitle">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ಒಪ್ಪಿಕೊಳ್ಳುವವರೆಗೆ ಕಾಯಲಾಗುತ್ತಿದೆ. ಅಲ್ಲಿಯವರೆಗೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಅನ್‌ಲಾಕ್ ಆಗಿರುತ್ತವೆ.</string>
     <string name="settings_disable_supervised">ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>
     <string name="settings_supervised_mode">ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್</string>
     <string name="settings_supervised_mode_subtitle">ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಪ್ರವೇಶಿಸಲು ಮೇಲ್ವಿಚಾರಕರ ಅನುಮೋದನೆಯ ಅಗತ್ಯವಿದೆ</string>

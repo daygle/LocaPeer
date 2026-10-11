@@ -112,6 +112,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Supervision active</string>
     <string name="settings_supervision_active_subtitle">Les paramètres nécessitent l\'approbation du superviseur</string>
+    <string name="settings_supervision_pending">Supervision demandée</string>
+    <string name="settings_supervision_pending_subtitle">En attente de l\'acceptation de votre superviseur. Les paramètres restent déverrouillés d\'ici là.</string>
     <string name="settings_disable_supervised">Désactiver le mode supervisé</string>
     <string name="settings_supervised_mode">Mode supervisé</string>
     <string name="settings_supervised_mode_subtitle">Nécessite l\'approbation du superviseur pour accéder aux paramètres</string>

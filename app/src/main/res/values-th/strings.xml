@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">การกำกับดูแลทำงานอยู่</string>
     <string name="settings_supervision_active_subtitle">การตั้งค่าต้องได้รับการอนุมัติจากผู้ดูแล</string>
+    <string name="settings_supervision_pending">ขอการดูแลแล้ว</string>
+    <string name="settings_supervision_pending_subtitle">กำลังรอผู้ดูแลยอมรับ จนกว่าจะถึงตอนนั้นการตั้งค่าจะไม่ถูกล็อก</string>
     <string name="settings_disable_supervised">ปิดโหมดถูกกำกับดูแล</string>
     <string name="settings_supervised_mode">โหมดถูกกำกับดูแล</string>
     <string name="settings_supervised_mode_subtitle">ต้องได้รับการอนุมัติจากผู้ดูแลจึงจะเข้าถึงการตั้งค่าได้</string>

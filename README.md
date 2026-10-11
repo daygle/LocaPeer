@@ -99,7 +99,7 @@ Temporary shares use the same per-peer configuration the regular sharing uses, b
 
 ### Supervised Mode
 1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions.
-2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active.
+2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active. Until then the request shows as pending and settings stay unlocked, so a supervisor who never answers can't lock the device.
 3. **Unlock**: When the user needs settings access, a `SUPERVISED_UNLOCK_REQUEST` is sent. The supervisor approves or denies via a real-time notification; the result is reflected on the supervised device within 60 seconds (timeout).
 
 ## Nostr Event Kinds
@@ -130,7 +130,7 @@ Temporary shares use the same per-peer configuration the regular sharing uses, b
 | 1059 | `CIRCLE_LEAVE` | Notify circle owner of member departure |
 | 1060 | `LIVE_VIEW_REQUEST` | Request a short-term location update boost |
 
-Custom application events (kinds 1040-1060) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
+Custom application events (kinds 1040-1060) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag, plus the recipient via a `p` tag so their subscription receives it.
 
 ## Technical Architecture
 

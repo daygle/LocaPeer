@@ -111,6 +111,8 @@
     <!-- Sicherheit -->
     <string name="settings_supervision_active">Überwachung aktiv</string>
     <string name="settings_supervision_active_subtitle">Einstellungen erfordern Genehmigung des Betreuers</string>
+    <string name="settings_supervision_pending">Aufsicht angefordert</string>
+    <string name="settings_supervision_pending_subtitle">Warten auf die Annahme durch Ihre Aufsichtsperson. Bis dahin bleiben die Einstellungen entsperrt.</string>
     <string name="settings_disable_supervised">Überwachungsmodus deaktivieren</string>
     <string name="settings_supervised_mode">Überwachungsmodus</string>
     <string name="settings_supervised_mode_subtitle">Genehmigung des Betreuers für Zugriff auf Einstellungen erforderlich</string>

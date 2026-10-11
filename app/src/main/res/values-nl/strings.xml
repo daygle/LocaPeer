@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Toezicht actief</string>
     <string name="settings_supervision_active_subtitle">Instellingen vereisen goedkeuring van de toezichthouder</string>
+    <string name="settings_supervision_pending">Toezicht aangevraagd</string>
+    <string name="settings_supervision_pending_subtitle">Wachten tot je toezichthouder accepteert. Tot die tijd blijven de instellingen ontgrendeld.</string>
     <string name="settings_disable_supervised">Toezichtmodus uitschakelen</string>
     <string name="settings_supervised_mode">Toezichtmodus</string>
     <string name="settings_supervised_mode_subtitle">Goedkeuring van toezichthouder vereisen voor toegang tot instellingen</string>

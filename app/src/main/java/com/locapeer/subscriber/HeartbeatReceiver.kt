@@ -119,6 +119,8 @@ private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
 private const val MAX_EXPECTED_INTERVAL_S = 24 * 60 * 60L
 // Throttle for persisting the heartbeat sync baseline as live events arrive.
 private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
+// Clock-skew allowance when matching a supervisor's accept to the request it answers.
+private const val SUPERVISION_RESPONSE_SKEW_S = 3600L
 // A live-view request older than this (by the sender's own clock, tolerant of skew both
 // ways) is a stale replay and must not silently re-arm the fast broadcast cadence.
 private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
@@ -147,6 +149,27 @@ internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boole
     if (isRoleChange) existingRole != null
     else existingRole != PeerEntity.ROLE_SEND && existingRole != PeerEntity.ROLE_SEND_RECEIVE
 
+/**
+ * Our location role after a contact's TRACK_ACCEPT granting them [acceptedRole]. The acceptor
+ * decides whether they send to us (our RECEIVE), but sending OUR location is only ever enabled
+ * locally (scanning an invite, or the per-contact send toggle). So an accept can keep or drop
+ * our SEND, never add it: otherwise any existing contact could switch on sharing of our
+ * location with an unsolicited accept.
+ */
+internal fun roleAfterTrackAccept(currentRole: String, acceptedRole: String?): String {
+    // Their RECEIVE is our SEND and vice versa; a missing or unknown value means they accepted both.
+    val theyReceive = acceptedRole != PeerEntity.ROLE_SEND && acceptedRole != PeerEntity.ROLE_NONE
+    val theySend = acceptedRole != PeerEntity.ROLE_RECEIVE && acceptedRole != PeerEntity.ROLE_NONE
+    val weSent = currentRole == PeerEntity.ROLE_SEND || currentRole == PeerEntity.ROLE_SEND_RECEIVE
+    val send = theyReceive && weSent
+    return when {
+        send && theySend -> PeerEntity.ROLE_SEND_RECEIVE
+        send -> PeerEntity.ROLE_SEND
+        theySend -> PeerEntity.ROLE_RECEIVE
+        else -> PeerEntity.ROLE_NONE
+    }
+}
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -160,7 +183,8 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
     NostrEventKind.SUPERVISED_REGISTER_DECLINE,
     NostrEventKind.TRACKING_ALERT,
-    NostrEventKind.CIRCLE_LEAVE
+    NostrEventKind.CIRCLE_LEAVE,
+    NostrEventKind.EVENT_DELETION
 )
 
 @Singleton
@@ -182,7 +206,6 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val peerManager: PeerManager,
-    private val trackResponseSender: com.locapeer.invite.TrackResponseSender,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
     private val scope = backgroundScope(TAG)
@@ -244,7 +267,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_LOCATION,
                         NostrEventKind.TRACKING_ALERT,
                         NostrEventKind.CIRCLE_LEAVE,
-                        NostrEventKind.LIVE_VIEW_REQUEST
+                        NostrEventKind.LIVE_VIEW_REQUEST,
+                        NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(pubHex),
                     since = nowEpoch
@@ -305,14 +329,17 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_REGISTER_ACCEPT -> scope.launch { processRegisterResponse(event, accepted = true) }
                     NostrEventKind.SUPERVISED_REGISTER_DECLINE -> scope.launch { processRegisterResponse(event, accepted = false) }
                     NostrEventKind.TRACK_REQUEST -> processTrackRequest(event)
-                    NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
+                    // Handled in order (not launched) so an accept and a later removal or
+                    // decline from the same contact can't apply out of order.
+                    NostrEventKind.TRACK_ACCEPT -> processTrackAccept(event)
                     NostrEventKind.TRACK_DECLINE -> processTrackDecline(event)
                     NostrEventKind.PEER_REMOVED -> processPeerRemoved(event)
                     NostrEventKind.DELETE_MY_MESSAGES -> processDeleteMyMessages(event)
                     NostrEventKind.DELETE_MY_LOCATION -> processDeleteMyLocation(event)
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
-                    NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
+                    NostrEventKind.CIRCLE_LEAVE -> processCircleLeave(event)
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
+                    NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
@@ -674,6 +701,10 @@ class HeartbeatReceiver @Inject constructor(
             Log.w(TAG, "Dropping oversized DM ${event.id.take(16)} from ${event.pubkey}: ${plaintext.length} chars")
             return
         }
+        // The signed created_at is the sender's clock. Clamp it to arrival time so a contact with
+        // a fast (or deliberately future) clock can't pin their conversation to the top of the
+        // list or slip a message past an archive, mirroring the heartbeat future-skew clamp.
+        val messageTimestampMs = minOf(event.createdAt * 1000L, System.currentTimeMillis())
 
         // Circle (group) message: materialise the circle locally and thread by circle id. Only
         // accepted from known, non-blocked contacts (same trust gate as 1:1), so a stranger can't
@@ -719,8 +750,14 @@ class HeartbeatReceiver @Inject constructor(
             // could keep injecting messages into a thread the user believes is circle-private.
             // Circles that predate the creator field (blank creator) keep the old open behaviour.
             val knownCircle = circleDao.getCircle(group.gid)
+            // The signer of a valid creator signature is the proven creator. If the recorded
+            // creator is only another member's unconfirmed claim, let them through so their signed
+            // state can replace it (see GroupControl.decide).
+            val provenCreatorOverridingClaim = knownCircle != null && signedVersion > 0 &&
+                event.pubkey == group.creator && knownCircle.controlVersion == 0L &&
+                knownCircle.membershipUpdatedAt == 0L && knownCircle.creatorPubkey != myPubHex
             if (knownCircle != null && knownCircle.creatorPubkey.isNotBlank() &&
-                event.pubkey != knownCircle.creatorPubkey &&
+                event.pubkey != knownCircle.creatorPubkey && !provenCreatorOverridingClaim &&
                 !circleDao.getMemberPubkeys(group.gid).contains(event.pubkey)
             ) {
                 Log.w(TAG, "Dropping circle message for ${group.gid} from non-member ${event.pubkey}")
@@ -749,13 +786,14 @@ class HeartbeatReceiver @Inject constructor(
                 // Clamped to now: a creator with a fast clock must not freeze later updates.
                 eventCreatedAt = minOf(event.createdAt, Instant.now().epochSecond),
                 signedVersion = signedVersion,
-                signedSig = group.csig
+                signedSig = group.csig,
+                selfPubkey = myPubHex
             )
             // Auto-unarchive on receive, mirroring the 1:1 peer path: a fresh message pulls the
             // circle back onto the Circles tab, but a late-arriving/queued message that predates
             // an explicit archive action doesn't silently undo it.
             circleDao.getCircle(group.gid)?.let { circleRow ->
-                if (!circleRow.isArchived || event.createdAt * 1000L > circleRow.archivedAt) {
+                if (!circleRow.isArchived || messageTimestampMs > circleRow.archivedAt) {
                     circleDao.unarchive(group.gid)
                 }
             }
@@ -774,7 +812,7 @@ class HeartbeatReceiver @Inject constructor(
                         peerId = group.gid,
                         senderPublicKeyHex = event.pubkey,
                         content = preview,
-                        timestamp = event.createdAt * 1000L,
+                        timestamp = messageTimestampMs,
                         isMine = false,
                         deliveryState = DeliveryState.DELIVERED.name,
                         nostrEventId = event.id,
@@ -802,7 +840,7 @@ class HeartbeatReceiver @Inject constructor(
                     peerId = group.gid,
                     senderPublicKeyHex = event.pubkey,
                     content = content,
-                    timestamp = event.createdAt * 1000L,
+                    timestamp = messageTimestampMs,
                     isMine = false,
                     deliveryState = DeliveryState.DELIVERED.name,
                     nostrEventId = event.id,
@@ -824,7 +862,7 @@ class HeartbeatReceiver @Inject constructor(
                 peerId = event.pubkey,
                 senderPublicKeyHex = event.pubkey,
                 content = preview,
-                timestamp = event.createdAt * 1000L,
+                timestamp = messageTimestampMs,
                 isMine = false,
                 deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
                 nostrEventId = event.id,
@@ -851,7 +889,7 @@ class HeartbeatReceiver @Inject constructor(
             peerId = event.pubkey,
             senderPublicKeyHex = event.pubkey,
             content = plaintext,
-            timestamp = event.createdAt * 1000L,
+            timestamp = messageTimestampMs,
             isMine = false,
             deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
             nostrEventId = event.id,
@@ -869,6 +907,24 @@ class HeartbeatReceiver @Inject constructor(
         }
     }
 
+    /**
+     * NIP-09 deletion: remove each referenced message, but only one the signer sent us. The
+     * signature was verified by the relay client, and the sender match means nobody can delete
+     * messages they didn't write.
+     */
+    private suspend fun processDeletionEvent(event: NostrEvent) {
+        val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
+        var deleted = false
+        targetEventIds.forEach { eventId ->
+            val msg = messageDao.getByNostrEventId(eventId)
+            if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
+                messageDao.delete(msg)
+                deleted = true
+            }
+        }
+        if (deleted) com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
+    }
+
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
         val privHex = keyManager.getPrivateKeyHex() ?: return
@@ -876,7 +932,8 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
-        receipt.eventIds.forEach { eventId ->
+        // Bounded: each id is a database update, and the list is contact-controlled.
+        receipt.eventIds.asSequence().distinct().take(ReadReceiptPayload.MAX_IDS).forEach { eventId ->
             messageDao.markReadForPeer(eventId, event.pubkey)
         }
     }
@@ -994,9 +1051,20 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
-        if (event.createdAt < Instant.now().epochSecond - 86400) return
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
+        val now = Instant.now().epochSecond
+        if (accepted) {
+            // An accept only matters while our request is pending. Honour it across the whole
+            // catch-up window (this device may have been offline when it arrived), but never one
+            // answering an earlier request, which would activate supervision nobody accepted.
+            if (!settings.supervisionPending) return
+            if (event.createdAt < settings.supervisionRequestedAt - SUPERVISION_RESPONSE_SKEW_S) return
+            if (event.createdAt < now - MAX_CATCHUP_SECONDS) return
+        } else if (event.createdAt < now - 86400) {
+            // A replayed old decline would end supervision, so it keeps the tight window.
+            return
+        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -1017,6 +1085,7 @@ class HeartbeatReceiver @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         if (accepted) {
+            prefs.setSupervisionAccepted()
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
                 .setContentTitle(context.getString(R.string.notif_supervised_active_title))
@@ -1376,13 +1445,9 @@ class HeartbeatReceiver @Inject constructor(
         }
 
         Log.i(TAG, "Received track acceptance from ${payload.acceptorDisplayName} (${event.pubkey})")
-        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them).
-        val newLocationRole = when (payload.acceptedRole) {
-            PeerEntity.ROLE_RECEIVE -> PeerEntity.ROLE_SEND
-            PeerEntity.ROLE_SEND -> PeerEntity.ROLE_RECEIVE
-            PeerEntity.ROLE_NONE -> PeerEntity.ROLE_NONE
-            else -> PeerEntity.ROLE_SEND_RECEIVE
-        }
+        // e.g. if they accepted RECEIVE (they receive from us), we become SEND (we send to them) -
+        // but only if we were already sending; see roleAfterTrackAccept.
+        val newLocationRole = roleAfterTrackAccept(existingPeer.locationRole, payload.acceptedRole)
 
         // Keep the known relay when the payload's is not a usable wss:// URL; the relay client
         // would refuse it anyway, leaving the contact with no reachable relay on record.

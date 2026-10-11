@@ -91,7 +91,7 @@ class PeerSharingViewModel @Inject constructor(
             val alertFlow = proximityAlertDao.observeForPeer(peerId)
             val heartbeatFlow = heartbeatDao.observeLatestHeartbeat(peerId)
             val supervisorLockedFlow = prefs.settings.map {
-                it.supervisedModeEnabled && it.supervisorPubkey.equals(peerId, ignoreCase = true)
+                it.supervisionActive && it.supervisorPubkey.equals(peerId, ignoreCase = true)
             }
 
             combine(peerFlow, configFlow, alertFlow, heartbeatFlow, supervisorLockedFlow) {
@@ -119,7 +119,7 @@ class PeerSharingViewModel @Inject constructor(
      *  location-sharing controls toward that peer are then locked (see supervisorLocked). */
     private suspend fun isSupervisorLocked(): Boolean {
         val settings = prefs.settings.first()
-        return settings.supervisedModeEnabled &&
+        return settings.supervisionActive &&
             settings.supervisorPubkey.equals(currentPeerId, ignoreCase = true)
     }
 

@@ -110,6 +110,8 @@
     <!-- Ààbò -->
     <string name="settings_supervision_active">Ìbójútó Ń Ṣiṣẹ́</string>
     <string name="settings_supervision_active_subtitle">Ètò nílò ìfọwọ́sí olùbójútó</string>
+    <string name="settings_supervision_pending">A ti béèrè fún àbójútó</string>
+    <string name="settings_supervision_pending_subtitle">Ń dúró de olùbójútó rẹ láti gbà. Àwọn ètò yóò wà ní ṣíṣí títí di ìgbà náà.</string>
     <string name="settings_disable_supervised">Pa Ìbójútó Rẹ́</string>
     <string name="settings_supervised_mode">Ipo Ìbójútó</string>
     <string name="settings_supervised_mode_subtitle">Nílò ìfọwọ́sí olùbójútó láti rí ètò</string>

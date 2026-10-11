@@ -44,6 +44,12 @@ class AppLockManager @Inject constructor(
     // @Volatile guarantees each foreground read sees the timestamp the last background
     // write published.
     @Volatile private var backgroundedAtMs: Long = 0L
+
+    // Latest lock settings, mirrored from DataStore so the foreground check can decide
+    // synchronously. Reading them in a coroutine on return let the unlocked content render for
+    // a frame or two before the relock landed. Null until the first read completes.
+    private data class LockConfig(val enabled: Boolean, val timeoutSeconds: Int)
+    @Volatile private var lockConfig: LockConfig? = null
     private var observerInstalled = false
 
     /**
@@ -54,13 +60,17 @@ class AppLockManager @Inject constructor(
      */
     fun onAppStart() {
         scope.launch {
-            val initialLocked = prefs.settings.first().appLockEnabled
-            _unlocked.value = !initialLocked
+            val initial = prefs.settings.first()
+            lockConfig = LockConfig(initial.appLockEnabled, initial.appLockTimeoutSeconds)
+            _unlocked.value = !initial.appLockEnabled
 
             // React to runtime pref changes - the user toggling the lock off while the app
             // is open should immediately drop back to the unlocked state. Locking-on-enable
             // is intentionally NOT modelled here so we don't re-lock the user mid-session;
             // re-locking happens through the foreground/background observer below.
+            launch {
+                prefs.settings.collect { lockConfig = LockConfig(it.appLockEnabled, it.appLockTimeoutSeconds) }
+            }
             prefs.settings
                 .map { it.appLockEnabled }
                 .distinctUntilChanged()
@@ -91,11 +101,17 @@ class AppLockManager @Inject constructor(
         // No recorded background time means the process never went away (cold start
         // handled by [onAppStart]). Don't auto-relock.
         if (backgroundedAt == 0L) return
+        val elapsed = android.os.SystemClock.elapsedRealtime() - backgroundedAt
+        val config = lockConfig
+        if (config != null) {
+            // Decided here, on the lifecycle callback, so the lock is up before the next frame.
+            if (config.enabled && elapsed >= config.timeoutSeconds * 1000L) _unlocked.value = false
+            return
+        }
+        // Settings not read yet (only possible right at start-up): fall back to reading them.
         scope.launch {
             val current = prefs.settings.first()
-            if (!current.appLockEnabled) return@launch
-            val timeoutMs = current.appLockTimeoutSeconds * 1000L
-            if (android.os.SystemClock.elapsedRealtime() - backgroundedAt >= timeoutMs) _unlocked.value = false
+            if (current.appLockEnabled && elapsed >= current.appLockTimeoutSeconds * 1000L) _unlocked.value = false
         }
     }
 

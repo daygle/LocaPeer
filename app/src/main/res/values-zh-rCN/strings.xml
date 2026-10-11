@@ -110,6 +110,8 @@
     <!-- 安全 -->
     <string name="settings_supervision_active">监管已激活</string>
     <string name="settings_supervision_active_subtitle">设置需要监管人批准</string>
+    <string name="settings_supervision_pending">已请求监督</string>
+    <string name="settings_supervision_pending_subtitle">正在等待监督者接受。在此之前设置保持解锁。</string>
     <string name="settings_disable_supervised">禁用监管模式</string>
     <string name="settings_supervised_mode">监管模式</string>
     <string name="settings_supervised_mode_subtitle">访问设置需要监管人批准</string>

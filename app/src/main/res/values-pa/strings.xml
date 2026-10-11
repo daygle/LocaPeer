@@ -111,6 +111,8 @@
     <!-- ਸੁਰੱਖਿਆ -->
     <string name="settings_supervision_active">ਨਿਗਰਾਨੀ ਸਰਗਰਮ ਹੈ</string>
     <string name="settings_supervision_active_subtitle">ਸੈਟਿੰਗਾਂ ਲਈ ਨਿਗਰਾਨ ਦੀ ਪ੍ਰਵਾਨਗੀ ਦੀ ਲੋੜ ਹੈ</string>
+    <string name="settings_supervision_pending">ਨਿਗਰਾਨੀ ਦੀ ਬੇਨਤੀ ਕੀਤੀ ਗਈ</string>
+    <string name="settings_supervision_pending_subtitle">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਦੇ ਸਵੀਕਾਰ ਕਰਨ ਦੀ ਉਡੀਕ ਹੈ। ਉਦੋਂ ਤੱਕ ਸੈਟਿੰਗਾਂ ਅਨਲੌਕ ਰਹਿਣਗੀਆਂ।</string>
     <string name="settings_disable_supervised">ਨਿਗਰਾਨੀ ਮੋਡ ਨੂੰ ਅਸਮਰੱਥ ਕਰੋ</string>
     <string name="settings_supervised_mode">ਨਿਗਰਾਨੀ ਮੋਡ</string>
     <string name="settings_supervised_mode_subtitle">ਸੈਟਿੰਗਾਂ ਤੱਕ ਪਹੁੰਚ ਲਈ ਨਿਗਰਾਨ ਦੀ ਪ੍ਰਵਾਨਗੀ ਦੀ ਲੋੜ ਹੈ</string>

@@ -111,6 +111,8 @@
     <!-- Usalama -->
     <string name="settings_supervision_active">Usimamizi Umewashwa</string>
     <string name="settings_supervision_active_subtitle">Mipangilio inahitaji idhini ya msimamizi</string>
+    <string name="settings_supervision_pending">Usimamizi umeombwa</string>
+    <string name="settings_supervision_pending_subtitle">Inasubiri msimamizi wako akubali. Hadi wakati huo mipangilio itabaki wazi.</string>
     <string name="settings_disable_supervised">Zima Njia ya Kusimamiwa</string>
     <string name="settings_supervised_mode">Njia ya Kusimamiwa</string>
     <string name="settings_supervised_mode_subtitle">Inahitaji idhini ya msimamizi ili kufikia mipangilio</string>

@@ -24,9 +24,6 @@ captures/
 .externalNativeBuild
 .cxx
 
-# Translation helpers (regenerate via Google Translate; not user artifacts)
-.translate_locales.py
-
 # AI coding-agent session data (tool-internal scratch space; never user content)
 .freebuff/
 .artifacts/

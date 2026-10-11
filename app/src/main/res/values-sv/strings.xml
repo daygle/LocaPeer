@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Tillsyn aktiv</string>
     <string name="settings_supervision_active_subtitle">Inställningar kräver tillsynspersonens godkännande</string>
+    <string name="settings_supervision_pending">Tillsyn begärd</string>
+    <string name="settings_supervision_pending_subtitle">Väntar på att din tillsynsperson godkänner. Tills dess förblir inställningarna olåsta.</string>
     <string name="settings_disable_supervised">Inaktivera övervakat läge</string>
     <string name="settings_supervised_mode">Övervakat läge</string>
     <string name="settings_supervised_mode_subtitle">Kräv tillsynspersonens godkännande för åtkomst till inställningar</string>

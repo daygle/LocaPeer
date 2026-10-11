@@ -110,6 +110,8 @@
     <!-- လုံခြုံရေး -->
     <string name="settings_supervision_active">ကြီးကြပ်မှု အလုပ်လုပ်နေသည်</string>
     <string name="settings_supervision_active_subtitle">ဆက်တင်များအတွက် ကြီးကြပ်သူ၏ အတည်ပြုချက် လိုအပ်သည်</string>
+    <string name="settings_supervision_pending">ကြီးကြပ်မှု တောင်းဆိုထားသည်</string>
+    <string name="settings_supervision_pending_subtitle">သင့်ကြီးကြပ်သူ လက်ခံရန် စောင့်နေသည်။ ထိုအချိန်အထိ ဆက်တင်များ သော့မခတ်ပါ။</string>
     <string name="settings_disable_supervised">ကြီးကြပ်မှုမုဒ်ကို ပိတ်ရန်</string>
     <string name="settings_supervised_mode">ကြီးကြပ်မှုမုဒ်</string>
     <string name="settings_supervised_mode_subtitle">ဆက်တင်များ ဝင်ရောက်ရန် ကြီးကြပ်သူ၏ အတည်ပြုချက် လိုအပ်သည်</string>

@@ -259,11 +259,17 @@ fun SecuritySettingsScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            stringResource(R.string.settings_supervision_active),
+                            stringResource(
+                                if (settings.supervisionPending) R.string.settings_supervision_pending
+                                else R.string.settings_supervision_active
+                            ),
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Text(
-                            stringResource(R.string.settings_supervision_active_subtitle),
+                            stringResource(
+                                if (settings.supervisionPending) R.string.settings_supervision_pending_subtitle
+                                else R.string.settings_supervision_active_subtitle
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.padding(top = 2.dp)
