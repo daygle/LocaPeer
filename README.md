@@ -130,7 +130,7 @@ Temporary shares use the same per-peer configuration the regular sharing uses, b
 | 1059 | `CIRCLE_LEAVE` | Notify circle owner of member departure |
 | 1060 | `LIVE_VIEW_REQUEST` | Request a short-term location update boost |
 
-Custom application events (kinds 1040-1060) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag.
+Custom application events (kinds 1040-1060) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag, plus the recipient via a `p` tag so their subscription receives it.
 
 ## Technical Architecture
 

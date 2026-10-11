@@ -181,7 +181,8 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
     NostrEventKind.SUPERVISED_REGISTER_DECLINE,
     NostrEventKind.TRACKING_ALERT,
-    NostrEventKind.CIRCLE_LEAVE
+    NostrEventKind.CIRCLE_LEAVE,
+    NostrEventKind.EVENT_DELETION
 )
 
 @Singleton
@@ -265,7 +266,8 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.DELETE_MY_LOCATION,
                         NostrEventKind.TRACKING_ALERT,
                         NostrEventKind.CIRCLE_LEAVE,
-                        NostrEventKind.LIVE_VIEW_REQUEST
+                        NostrEventKind.LIVE_VIEW_REQUEST,
+                        NostrEventKind.EVENT_DELETION
                     ),
                     pTags = listOf(pubHex),
                     since = nowEpoch
@@ -334,6 +336,7 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
                     NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
+                    NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }
               } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
@@ -888,6 +891,24 @@ class HeartbeatReceiver @Inject constructor(
             sendBackgroundMessageNotification(sender.displayName, plaintext, event.pubkey)
             sendDeliveryAck(event.pubkey, event.id)
         }
+    }
+
+    /**
+     * NIP-09 deletion: remove each referenced message, but only one the signer sent us. The
+     * signature was verified by the relay client, and the sender match means nobody can delete
+     * messages they didn't write.
+     */
+    private suspend fun processDeletionEvent(event: NostrEvent) {
+        val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
+        var deleted = false
+        targetEventIds.forEach { eventId ->
+            val msg = messageDao.getByNostrEventId(eventId)
+            if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
+                messageDao.delete(msg)
+                deleted = true
+            }
+        }
+        if (deleted) com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
     }
 
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
