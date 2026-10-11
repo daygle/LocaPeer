@@ -162,8 +162,7 @@ cd LocaPeer
 ### Signed release APK (GitHub Actions)
 
 Signed release builds run on CI (`.github/workflows/android-release.yml`), so the Android Studio
-*Generate Signed APK* wizard is no longer needed. Bump `appVersionCode` in `gradle.properties`
-(and `appVersionName`, though a tag overrides it), then push a version tag - or run the workflow
+*Generate Signed APK* wizard is no longer needed. Push a version tag - or run the workflow
 manually from the Actions tab:
 
 ```bash
@@ -171,8 +170,11 @@ git tag v1.1.46
 git push origin v1.1.46
 ```
 
-A tag build pins `versionName` to the tag, attaches the signed APK to a GitHub Release and uploads
-it as a workflow artifact. A manual (`workflow_dispatch`) run only uploads the artifact.
+A tag build derives both versions from the tag, so no file needs editing: `v1.1.46` gives
+`versionName` 1.1.46 and `versionCode` 10146 (major x 10000 + minor x 100 + patch; minor and patch
+must stay below 100). It attaches the signed APK to a GitHub Release and uploads it as a workflow
+artifact. A manual (`workflow_dispatch`) run uses the values in `gradle.properties` and only uploads
+the artifact.
 
 Add your signing key to **Settings -> Secrets and variables -> Actions** - use the *same keystore*
 you have been signing with, so the APK signature is unchanged and existing installs keep updating
