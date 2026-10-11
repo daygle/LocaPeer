@@ -45,7 +45,7 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "::error::Repository secret KEYSTORE_BASE64 is not set (see README, 'Signing for CI')."
+            echo "::error::Repository secret KEYSTORE_BASE64 is not set (see README, 'Signed release APK & AAB')."
             exit 1
           fi
           printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/locapeer-release.jks"
