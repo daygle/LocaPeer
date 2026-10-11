@@ -13,6 +13,7 @@ import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.ActiveGeofence
 import com.locapeer.data.dao.GeofenceAssignmentDao
+import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -24,6 +25,7 @@ import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -50,6 +52,7 @@ private const val NOTIF_ID_GEOFENCE = 60000
 class GeofenceEngine @Inject constructor(
     @ApplicationContext private val context: Context,
     private val geofenceAssignmentDao: GeofenceAssignmentDao,
+    private val geofenceDao: GeofenceDao,
     private val notificationManager: NotificationManager,
     private val relayClient: NostrRelayClient,
     private val keyManager: KeyManager,
@@ -69,9 +72,10 @@ class GeofenceEngine @Inject constructor(
 
     init {
         scope.launch {
-            // Re-fetch everything whenever ANY geofence or assignment changes.
+            // Re-fetch everything whenever ANY geofence or assignment changes. Both tables
+            // matter: editing an area's centre or radius only touches geofences.
             // This ensures the engine always has fresh data without reading DB on every heartbeat.
-            geofenceAssignmentDao.observeAll().collect {
+            merge(geofenceAssignmentDao.observeAll(), geofenceDao.getAllGeofences()).collect {
                 fencesCache.clear()
             }
         }
