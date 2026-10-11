@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   release:
-    name: Build Signed Release APK
+    name: Build Signed Release APK & AAB
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -51,7 +51,7 @@ jobs:
           printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/locapeer-release.jks"
           chmod 600 "$RUNNER_TEMP/locapeer-release.jks"
 
-      - name: Build Signed Release APK
+      - name: Build Signed Release APK & AAB
         env:
           LOCAPEER_KEYSTORE_FILE: ${{ runner.temp }}/locapeer-release.jks
           LOCAPEER_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -76,9 +76,9 @@ jobs:
             fi
             VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
             echo "versionName=$VERSION versionCode=$VERSION_CODE"
-            ./gradlew assembleRelease -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
+            ./gradlew assembleRelease bundleRelease -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
           else
-            ./gradlew assembleRelease
+            ./gradlew assembleRelease bundleRelease
           fi
 
       # Fail loudly rather than shipping an unsigned or unexpectedly-signed APK.
@@ -94,11 +94,39 @@ jobs:
           APKSIGNER=$(find "$SDK_ROOT/build-tools" -name apksigner -type f | sort -V | tail -n 1)
           "$APKSIGNER" verify --print-certs "$APK"
 
+      # The AAB is what Google Play takes; it is signed with the same key (Play uses it as
+      # the upload key). apksigner can't read bundles, so check it with jarsigner.
+      - name: Verify AAB Signature
+        run: |
+          AAB=app/build/outputs/bundle/release/app-release.aab
+          if [ ! -f "$AAB" ]; then
+            echo "::error::No signed AAB at $AAB. Contents:"
+            ls -l app/build/outputs/bundle/release/ || true
+            exit 1
+          fi
+          OUT=$(jarsigner -verify -certs "$AAB")
+          echo "$OUT" | tail -n 5
+          if ! echo "$OUT" | grep -q "jar verified"; then
+            echo "::error::AAB at $AAB is not signed."
+            exit 1
+          fi
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v7
         with:
           name: LocaPeer-release-apk
           path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      # Upload the AAB to Play Console; mapping.txt lets Play deobfuscate R8-shrunk crash traces.
+      - name: Upload AAB Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: LocaPeer-release-aab
+          path: |
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/mapping/release/mapping.txt
           if-no-files-found: error
           retention-days: 30
 
@@ -108,8 +136,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           APK=app/build/outputs/apk/release/app-release.apk
+          AAB=app/build/outputs/bundle/release/app-release.aab
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" "$APK" --clobber
+            gh release upload "$GITHUB_REF_NAME" "$APK" "$AAB" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes "$APK"
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes "$APK" "$AAB"
           fi

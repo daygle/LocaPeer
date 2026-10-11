@@ -159,7 +159,7 @@ cd LocaPeer
 ./gradlew assembleDebug
 ```
 
-### Signed release APK (GitHub Actions)
+### Signed release APK & AAB (GitHub Actions)
 
 Signed release builds run on CI (`.github/workflows/android-release.yml`), so the Android Studio
 *Generate Signed APK* wizard is no longer needed. Push a version tag - or run the workflow
@@ -172,9 +172,11 @@ git push origin v1.1.46
 
 A tag build derives both versions from the tag, so no file needs editing: `v1.1.46` gives
 `versionName` 1.1.46 and `versionCode` 10146 (major x 10000 + minor x 100 + patch; minor and patch
-must stay below 100). It attaches the signed APK to a GitHub Release and uploads it as a workflow
-artifact. A manual (`workflow_dispatch`) run uses the values in `gradle.properties` and only uploads
-the artifact.
+must stay below 100). It builds both a signed APK (for direct installs) and a signed AAB (for
+Google Play), attaches both to a GitHub Release and uploads them as workflow artifacts. The
+`LocaPeer-release-aab` artifact also carries R8's `mapping.txt`; upload it in Play Console alongside
+the bundle so crash traces are deobfuscated. A manual (`workflow_dispatch`) run uses the values in
+`gradle.properties` and only uploads the artifacts.
 
 Add your signing key to **Settings -> Secrets and variables -> Actions** - use the *same keystore*
 you have been signing with, so the APK signature is unchanged and existing installs keep updating
