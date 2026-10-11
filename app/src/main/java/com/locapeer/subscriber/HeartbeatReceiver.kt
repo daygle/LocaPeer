@@ -327,13 +327,15 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_REGISTER_ACCEPT -> scope.launch { processRegisterResponse(event, accepted = true) }
                     NostrEventKind.SUPERVISED_REGISTER_DECLINE -> scope.launch { processRegisterResponse(event, accepted = false) }
                     NostrEventKind.TRACK_REQUEST -> processTrackRequest(event)
-                    NostrEventKind.TRACK_ACCEPT -> scope.launch { processTrackAccept(event) }
+                    // Handled in order (not launched) so an accept and a later removal or
+                    // decline from the same contact can't apply out of order.
+                    NostrEventKind.TRACK_ACCEPT -> processTrackAccept(event)
                     NostrEventKind.TRACK_DECLINE -> processTrackDecline(event)
                     NostrEventKind.PEER_REMOVED -> processPeerRemoved(event)
                     NostrEventKind.DELETE_MY_MESSAGES -> processDeleteMyMessages(event)
                     NostrEventKind.DELETE_MY_LOCATION -> processDeleteMyLocation(event)
                     NostrEventKind.TRACKING_ALERT -> scope.launch { processTrackingAlert(event) }
-                    NostrEventKind.CIRCLE_LEAVE -> scope.launch { processCircleLeave(event) }
+                    NostrEventKind.CIRCLE_LEAVE -> processCircleLeave(event)
                     NostrEventKind.LIVE_VIEW_REQUEST -> scope.launch { processLiveViewRequest(event) }
                     NostrEventKind.EVENT_DELETION -> processDeletionEvent(event)
                 }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -102,6 +103,10 @@ class NostrRelayClient @Inject constructor(
 
     private val _events by lazy { MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256) }
     val events: SharedFlow<NostrEvent> by lazy { _events }
+    // Verified events queue here and one coroutine emits them, so collectors see them in arrival
+    // order. A coroutine per event (as before) could emit them out of order, e.g. a delivery ack
+    // or deletion ahead of the message it refers to. Unbounded like those coroutines were.
+    private val inboundEvents = Channel<NostrEvent>(Channel.UNLIMITED)
 
     private val _relayStatus by lazy { MutableStateFlow(emptyMap<String, Boolean>()) }
     /** Maps relay URL → connected. Updated on every connect/disconnect event. */
@@ -142,6 +147,7 @@ class NostrRelayClient @Inject constructor(
     }
 
     init {
+        scope.launch { for (event in inboundEvents) _events.emit(event) }
         try {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             cm?.registerDefaultNetworkCallback(networkCallback)
@@ -552,7 +558,7 @@ class NostrRelayClient @Inject constructor(
                                     val snapshot = synchronized(recentEventLock) { dedupCache.snapshot() }
                                     scope.launch { prefs.saveRecentEventIds(snapshot) }
                                 }
-                                scope.launch { _events.emit(event) }
+                                inboundEvents.trySend(event)
                             }
                         }
                         "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
