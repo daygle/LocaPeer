@@ -697,6 +697,10 @@ class HeartbeatReceiver @Inject constructor(
             Log.w(TAG, "Dropping oversized DM ${event.id.take(16)} from ${event.pubkey}: ${plaintext.length} chars")
             return
         }
+        // The signed created_at is the sender's clock. Clamp it to arrival time so a contact with
+        // a fast (or deliberately future) clock can't pin their conversation to the top of the
+        // list or slip a message past an archive, mirroring the heartbeat future-skew clamp.
+        val messageTimestampMs = minOf(event.createdAt * 1000L, System.currentTimeMillis())
 
         // Circle (group) message: materialise the circle locally and thread by circle id. Only
         // accepted from known, non-blocked contacts (same trust gate as 1:1), so a stranger can't
@@ -785,7 +789,7 @@ class HeartbeatReceiver @Inject constructor(
             // circle back onto the Circles tab, but a late-arriving/queued message that predates
             // an explicit archive action doesn't silently undo it.
             circleDao.getCircle(group.gid)?.let { circleRow ->
-                if (!circleRow.isArchived || event.createdAt * 1000L > circleRow.archivedAt) {
+                if (!circleRow.isArchived || messageTimestampMs > circleRow.archivedAt) {
                     circleDao.unarchive(group.gid)
                 }
             }
@@ -804,7 +808,7 @@ class HeartbeatReceiver @Inject constructor(
                         peerId = group.gid,
                         senderPublicKeyHex = event.pubkey,
                         content = preview,
-                        timestamp = event.createdAt * 1000L,
+                        timestamp = messageTimestampMs,
                         isMine = false,
                         deliveryState = DeliveryState.DELIVERED.name,
                         nostrEventId = event.id,
@@ -832,7 +836,7 @@ class HeartbeatReceiver @Inject constructor(
                     peerId = group.gid,
                     senderPublicKeyHex = event.pubkey,
                     content = content,
-                    timestamp = event.createdAt * 1000L,
+                    timestamp = messageTimestampMs,
                     isMine = false,
                     deliveryState = DeliveryState.DELIVERED.name,
                     nostrEventId = event.id,
@@ -854,7 +858,7 @@ class HeartbeatReceiver @Inject constructor(
                 peerId = event.pubkey,
                 senderPublicKeyHex = event.pubkey,
                 content = preview,
-                timestamp = event.createdAt * 1000L,
+                timestamp = messageTimestampMs,
                 isMine = false,
                 deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
                 nostrEventId = event.id,
@@ -881,7 +885,7 @@ class HeartbeatReceiver @Inject constructor(
             peerId = event.pubkey,
             senderPublicKeyHex = event.pubkey,
             content = plaintext,
-            timestamp = event.createdAt * 1000L,
+            timestamp = messageTimestampMs,
             isMine = false,
             deliveryState = if (isBlocked) DeliveryState.SENT.name else DeliveryState.DELIVERED.name,
             nostrEventId = event.id,
@@ -924,7 +928,8 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val receipt = try { json.decodeFromString<ReadReceiptPayload>(plaintext) } catch (e: Exception) { return }
-        receipt.eventIds.forEach { eventId ->
+        // Bounded: each id is a database update, and the list is contact-controlled.
+        receipt.eventIds.asSequence().distinct().take(ReadReceiptPayload.MAX_IDS).forEach { eventId ->
             messageDao.markReadForPeer(eventId, event.pubkey)
         }
     }

@@ -1100,20 +1100,22 @@ class MessagingViewModel @Inject constructor(
         val peer = peerDao.getPeer(peerPubkey) ?: return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val privBytes = crypto.hexToBytes(privHex)
-        val payload = json.encodeToString(ReadReceiptPayload(eventIds))
-
-        val event = withContext(Dispatchers.Default) {
-            val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
-            NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.READ_RECEIPT,
-                content = encrypted,
-                tags = listOf(listOf("p", peer.publicKeyHex)),
-                crypto = crypto
-            )
+        // Receivers bound how many ids one receipt may carry, so a large backlog is split.
+        eventIds.chunked(ReadReceiptPayload.SEND_CHUNK).forEach { chunk ->
+            val payload = json.encodeToString(ReadReceiptPayload(chunk))
+            val event = withContext(Dispatchers.Default) {
+                val encrypted = crypto.nip44Encrypt(privBytes, peer.publicKeyHex, payload)
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = NostrEventKind.READ_RECEIPT,
+                    content = encrypted,
+                    tags = listOf(listOf("p", peer.publicKeyHex)),
+                    crypto = crypto
+                )
+            }
+            relayClient.publishEvent(event)
         }
-        relayClient.publishEvent(event)
     }
 
     private suspend fun sendTypingEvent(peerPubkey: String) {
