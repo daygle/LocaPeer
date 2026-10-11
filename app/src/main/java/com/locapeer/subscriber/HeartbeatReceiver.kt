@@ -119,6 +119,8 @@ private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
 private const val MAX_EXPECTED_INTERVAL_S = 24 * 60 * 60L
 // Throttle for persisting the heartbeat sync baseline as live events arrive.
 private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
+// Clock-skew allowance when matching a supervisor's accept to the request it answers.
+private const val SUPERVISION_RESPONSE_SKEW_S = 3600L
 // A live-view request older than this (by the sender's own clock, tolerant of skew both
 // ways) is a stale replay and must not silently re-arm the fast broadcast cadence.
 private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
@@ -1049,9 +1051,20 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
-        if (event.createdAt < Instant.now().epochSecond - 86400) return
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
+        val now = Instant.now().epochSecond
+        if (accepted) {
+            // An accept only matters while our request is pending. Honour it across the whole
+            // catch-up window (this device may have been offline when it arrived), but never one
+            // answering an earlier request, which would activate supervision nobody accepted.
+            if (!settings.supervisionPending) return
+            if (event.createdAt < settings.supervisionRequestedAt - SUPERVISION_RESPONSE_SKEW_S) return
+            if (event.createdAt < now - MAX_CATCHUP_SECONDS) return
+        } else if (event.createdAt < now - 86400) {
+            // A replayed old decline would end supervision, so it keeps the tight window.
+            return
+        }
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)

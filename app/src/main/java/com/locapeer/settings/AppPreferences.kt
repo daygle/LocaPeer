@@ -100,6 +100,8 @@ data class AppSettings(
     val supervisorPubkey: String = "",
     /** Supervised mode was requested but the supervisor hasn't accepted yet. */
     val supervisionPending: Boolean = false,
+    /** When the current supervision request was sent (epoch seconds), 0 if none. */
+    val supervisionRequestedAt: Long = 0,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = DEFAULT_NAV_TAB_IDS,
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
@@ -203,6 +205,7 @@ class AppPreferences @Inject constructor(
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
     private val KEY_SUPERVISION_PENDING = booleanPreferencesKey("supervision_pending")
+    private val KEY_SUPERVISION_REQUESTED_AT = longPreferencesKey("supervision_requested_at")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
@@ -260,6 +263,7 @@ class AppPreferences @Inject constructor(
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
                 supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
                 supervisionPending = prefs[KEY_SUPERVISION_PENDING] ?: false,
+                supervisionRequestedAt = prefs[KEY_SUPERVISION_REQUESTED_AT] ?: 0L,
                 navTabIds = prefs[KEY_NAV_TAB_IDS]
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
@@ -336,6 +340,7 @@ class AppPreferences @Inject constructor(
             it[KEY_SUPERVISOR_PUBKEY] = supervisorPubkey
             // A new request waits for the supervisor's acceptance before it gates anything.
             it[KEY_SUPERVISION_PENDING] = enabled
+            it[KEY_SUPERVISION_REQUESTED_AT] = if (enabled) System.currentTimeMillis() / 1000 else 0L
         }
     }
 
