@@ -753,6 +753,7 @@
     <string name="scan_error_key_mismatch">Недійсне запрошення: ключі не збігаються</string>
     <string name="scan_error_unknown">Невідома помилка</string>
     <string name="scan_error_invalid_link">Недійсне посилання-запрошення</string>
+    <string name="scan_error_own_invite">Це ваш власний код запрошення</string>
     <string name="scan_fallback_contact">цей контакт</string>
     <string name="backup_saved">Резервну копію збережено: %1$s</string>
     <string name="backup_saved_encrypted">Резервну копію збережено (зашифровано): %1$s</string>
@@ -910,6 +911,7 @@
     <string name="peer_sharing_supervisor_locked">Контрольований режим увімкнено, тож тут не можна вимкнути надсилання місцезнаходження вашому керівнику.</string>
     <string name="settings_temporary_location_share">Тимчасове надсилання місцезнаходження</string>
     <string name="app_lock_no_credential">На цьому пристрої не встановлено блокування екрана, тож розблокувати нічим. Установіть PIN-код, графічний ключ, пароль або біометрію в налаштуваннях пристрою, а потім знову відкрийте LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Не вдалося ініціалізувати захищений ключ автентифікації.</string>
     <string name="backup_key_needs_password">Установіть пароль, щоб включити ваш приватний ключ. Незашифрований файл ключа може дозволити будь-кому заволодіти вашою особистістю.</string>
     <string name="settings_category_security_subtitle">Блокування додатка, дозволи, режим контролю</string>
     <string name="settings_category_map_subtitle">Точка старту, масштаб, колір мітки</string>

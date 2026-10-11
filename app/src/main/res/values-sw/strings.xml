@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Mwaliko batili: ufunguo haulingani</string>
     <string name="scan_error_unknown">Hitilafu isiyojulikana</string>
     <string name="scan_error_invalid_link">Kiungo cha mwaliko batili</string>
+    <string name="scan_error_own_invite">Hii ni msimbo wako mwenyewe wa mwaliko</string>
     <string name="scan_fallback_contact">anwani hii</string>
     <string name="backup_saved">Hifadhi nakala imehifadhiwa: %1$s</string>
     <string name="backup_saved_encrypted">Hifadhi nakala imehifadhiwa (imesimbwa): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Hali ya usimamizi imewashwa, kwa hivyo kushiriki eneo na msimamizi wako hakuwezi kuzimwa hapa.</string>
     <string name="settings_temporary_location_share">Kushiriki eneo kwa muda</string>
     <string name="app_lock_no_credential">Hakuna ufunguo wa skrini uliowekwa kwenye kifaa hiki, kwa hivyo hakuna cha kufungulia. Weka PIN, mchoro, nenosiri, au biometriki katika mipangilio ya kifaa chako, kisha ufungue tena LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Imeshindwa kuanzisha ufunguo salama wa uthibitishaji.</string>
     <string name="backup_key_needs_password">Weka nenosiri ili kujumuisha ufunguo wako wa faragha. Faili ya ufunguo isiyosimbwa inaweza kumruhusu mtu yeyote kuchukua utambulisho wako.</string>
     <string name="settings_category_security_subtitle">Kufunga programu, ruhusa, hali ya usimamizi</string>
     <string name="settings_category_map_subtitle">Hatua ya kuanzia, kukuza, rangi ya pini</string>

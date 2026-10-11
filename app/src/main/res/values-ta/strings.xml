@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">தவறான அழைப்பு: விசைகள் பொருந்தவில்லை</string>
     <string name="scan_error_unknown">தெரியாத பிழை</string>
     <string name="scan_error_invalid_link">தவறான அழைப்பு இணைப்பு</string>
+    <string name="scan_error_own_invite">இது உங்கள் சொந்த அழைப்புக் குறியீடு</string>
     <string name="scan_fallback_contact">இந்தத் தொடர்பு</string>
     <string name="backup_saved">காப்புப்பிரதி சேமிக்கப்பட்டது: %1$s</string>
     <string name="backup_saved_encrypted">காப்புப்பிரதி சேமிக்கப்பட்டது (மறைக்குறியிடப்பட்டது): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">கண்காணிப்பு பயன்முறை இயக்கத்தில் உள்ளது, எனவே உங்கள் மேற்பார்வையாளருடன் இருப்பிடப் பகிர்வை இங்கே முடக்க முடியாது.</string>
     <string name="settings_temporary_location_share">தற்காலிக இருப்பிடப் பகிர்வு</string>
     <string name="app_lock_no_credential">இந்தச் சாதனத்தில் திரைப் பூட்டு அமைக்கப்படவில்லை, எனவே திறக்க எதுவும் இல்லை. உங்கள் சாதன அமைப்புகளில் ஒரு PIN, வடிவம், கடவுச்சொல், அல்லது பயோமெட்ரிக் அமைத்து, பிறகு LocaPeer ஐ மீண்டும் திறக்கவும்.</string>
+    <string name="app_lock_crypto_failed">பாதுகாப்பான அங்கீகார விசையைத் தொடங்க முடியவில்லை.</string>
     <string name="backup_key_needs_password">உங்கள் தனிப்பட்ட விசையைச் சேர்க்க ஒரு கடவுச்சொல்லை அமைக்கவும். குறியாக்கம் செய்யப்படாத விசைக் கோப்பு யாரையும் உங்கள் அடையாளத்தைக் கைப்பற்ற அனுமதிக்கலாம்.</string>
     <string name="settings_category_security_subtitle">ஆப் லாக், அனுமதிகள், மேற்பார்வை முறை</string>
     <string name="settings_category_map_subtitle">தொடக்கப் புள்ளி, ஜூம், பின் நிறம்</string>

@@ -714,6 +714,7 @@
     <string name="scan_error_key_mismatch">Lời mời không hợp lệ: khóa không khớp</string>
     <string name="scan_error_unknown">Lỗi không xác định</string>
     <string name="scan_error_invalid_link">Liên kết mời không hợp lệ</string>
+    <string name="scan_error_own_invite">Đây là mã mời của chính bạn</string>
     <string name="scan_fallback_contact">liên hệ này</string>
     <string name="backup_saved">Đã lưu bản sao lưu: %1$s</string>
     <string name="backup_saved_encrypted">Đã lưu bản sao lưu (đã mã hóa): %1$s</string>
@@ -865,6 +866,7 @@
     <string name="peer_sharing_supervisor_locked">Chế độ giám sát đang bật nên không thể tắt việc chia sẻ vị trí với người giám sát của bạn ở đây.</string>
     <string name="settings_temporary_location_share">Chia sẻ vị trí tạm thời</string>
     <string name="app_lock_no_credential">Thiết bị này chưa đặt khóa màn hình nên không có gì để mở khóa. Hãy đặt mã PIN, hình mở khóa, mật khẩu hoặc sinh trắc học trong cài đặt thiết bị, rồi mở lại LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Không thể khởi tạo khóa xác thực bảo mật.</string>
     <string name="backup_key_needs_password">Đặt mật khẩu để bao gồm khóa riêng tư của bạn. Tệp khóa không được mã hóa có thể cho phép bất kỳ ai chiếm đoạt danh tính của bạn.</string>
     <string name="settings_category_security_subtitle">Khóa ứng dụng, quyền hạn, chế độ giám sát</string>
     <string name="settings_category_map_subtitle">Điểm xuất phát, thu phóng, màu ghim</string>

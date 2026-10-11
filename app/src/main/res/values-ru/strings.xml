@@ -753,6 +753,7 @@
     <string name="scan_error_key_mismatch">Недействительное приглашение: ключи не совпадают</string>
     <string name="scan_error_unknown">Неизвестная ошибка</string>
     <string name="scan_error_invalid_link">Недействительная ссылка-приглашение</string>
+    <string name="scan_error_own_invite">Это ваш собственный код приглашения</string>
     <string name="scan_fallback_contact">этот контакт</string>
     <string name="backup_saved">Резервная копия сохранена: %1$s</string>
     <string name="backup_saved_encrypted">Резервная копия сохранена (зашифрована): %1$s</string>
@@ -910,6 +911,7 @@
     <string name="peer_sharing_supervisor_locked">Контролируемый режим включён, поэтому здесь нельзя отключить передачу местоположения вашему супервайзеру.</string>
     <string name="settings_temporary_location_share">Временная передача местоположения</string>
     <string name="app_lock_no_credential">На этом устройстве не установлена блокировка экрана, поэтому разблокировать нечем. Установите PIN-код, графический ключ, пароль или биометрию в настройках устройства, затем снова откройте LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Не удалось инициализировать защищённый ключ аутентификации.</string>
     <string name="backup_key_needs_password">Установите пароль, чтобы включить закрытый ключ. Незашифрованный файл ключа может позволить кому угодно завладеть вашей личностью.</string>
     <string name="settings_category_security_subtitle">Блокировка приложения, разрешения, режим контроля</string>
     <string name="settings_category_map_subtitle">Точка старта, масштаб, цвет метки</string>

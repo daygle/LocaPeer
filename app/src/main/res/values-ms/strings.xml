@@ -714,6 +714,7 @@
     <string name="scan_error_key_mismatch">Jemputan tidak sah: kunci tidak sepadan</string>
     <string name="scan_error_unknown">Ralat tidak diketahui</string>
     <string name="scan_error_invalid_link">Pautan jemputan tidak sah</string>
+    <string name="scan_error_own_invite">Ini ialah kod jemputan anda sendiri</string>
     <string name="scan_fallback_contact">kenalan ini</string>
     <string name="backup_saved">Sandaran disimpan: %1$s</string>
     <string name="backup_saved_encrypted">Sandaran disimpan (disulitkan): %1$s</string>
@@ -865,6 +866,7 @@
     <string name="peer_sharing_supervisor_locked">Mod diselia dihidupkan, jadi perkongsian lokasi dengan penyelia anda tidak boleh dimatikan di sini.</string>
     <string name="settings_temporary_location_share">Perkongsian lokasi sementara</string>
     <string name="app_lock_no_credential">Tiada kunci skrin ditetapkan pada peranti ini, jadi tiada apa untuk membuka kunci. Tetapkan PIN, corak, kata laluan, atau biometrik dalam tetapan peranti anda, kemudian buka semula LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Gagal memulakan kunci pengesahan selamat.</string>
     <string name="backup_key_needs_password">Tetapkan kata laluan untuk menyertakan kunci peribadi anda. Fail kunci yang tidak disulitkan boleh membenarkan sesiapa sahaja mengambil alih identiti anda.</string>
     <string name="settings_category_security_subtitle">Kunci apl, keizinan, mod diselia</string>
     <string name="settings_category_map_subtitle">Titik permulaan, zum, warna pin</string>

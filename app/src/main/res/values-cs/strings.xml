@@ -753,6 +753,7 @@
     <string name="scan_error_key_mismatch">Neplatná pozvánka: klíče se neshodují</string>
     <string name="scan_error_unknown">Neznámá chyba</string>
     <string name="scan_error_invalid_link">Neplatný zvací odkaz</string>
+    <string name="scan_error_own_invite">Toto je váš vlastní kód pozvánky</string>
     <string name="scan_fallback_contact">tento kontakt</string>
     <string name="backup_saved">Záloha uložena: %1$s</string>
     <string name="backup_saved_encrypted">Záloha uložena (šifrovaná): %1$s</string>
@@ -910,6 +911,7 @@
     <string name="peer_sharing_supervisor_locked">Dohlížený režim je zapnutý, takže sdílení polohy s vaším dohlížitelem zde nelze vypnout.</string>
     <string name="settings_temporary_location_share">Dočasné sdílení polohy</string>
     <string name="app_lock_no_credential">V tomto zařízení není nastaven žádný zámek obrazovky, takže není čím odemknout. Nastavte v nastavení zařízení PIN, gesto, heslo nebo biometrii a poté znovu otevřete LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Nepodařilo se inicializovat zabezpečený ověřovací klíč.</string>
     <string name="backup_key_needs_password">Nastavte heslo, abyste zahrnuli svůj soukromý klíč. Nešifrovaný soubor klíče by mohl komukoli umožnit převzít vaši identitu.</string>
     <string name="settings_category_security_subtitle">Zámek aplikace, oprávnění, režim pod dohledem</string>
     <string name="settings_category_map_subtitle">Výchozí bod, přiblížení, barva špendlíku</string>

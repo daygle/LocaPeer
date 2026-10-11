@@ -714,6 +714,7 @@
     <string name="scan_error_key_mismatch">邀請無效：金鑰不符</string>
     <string name="scan_error_unknown">未知錯誤</string>
     <string name="scan_error_invalid_link">邀請連結無效</string>
+    <string name="scan_error_own_invite">這是你自己的邀請碼</string>
     <string name="scan_fallback_contact">此聯絡人</string>
     <string name="backup_saved">備份已儲存：%1$s</string>
     <string name="backup_saved_encrypted">備份已儲存（已加密）：%1$s</string>
@@ -865,6 +866,7 @@
     <string name="peer_sharing_supervisor_locked">監督模式已開啟，因此無法在此處關閉與監督者的位置分享。</string>
     <string name="settings_temporary_location_share">暫時位置分享</string>
     <string name="app_lock_no_credential">此裝置未設定螢幕鎖定，因此沒有可用於解鎖的方式。請在裝置設定中設定 PIN、圖形、密碼或生物辨識，然後重新開啟 LocaPeer。</string>
+    <string name="app_lock_crypto_failed">無法初始化安全驗證金鑰。</string>
     <string name="backup_key_needs_password">設定密碼以包含你的私密金鑰。未加密的金鑰檔案可能會讓任何人接管你的身分。</string>
     <string name="settings_category_security_subtitle">應用鎖、權限、受監護模式</string>
     <string name="settings_category_map_subtitle">起點、縮放、圖釘顏色</string>

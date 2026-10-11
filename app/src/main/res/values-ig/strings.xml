@@ -714,6 +714,7 @@
     <string name="scan_error_key_mismatch">Òkù na-adịghị mma: igodo adabaghị</string>
     <string name="scan_error_unknown">Njehie a na-amaghị</string>
     <string name="scan_error_invalid_link">Link òkù na-adịghị mma</string>
+    <string name="scan_error_own_invite">Nke a bụ koodu òkù nke gị</string>
     <string name="scan_fallback_contact">kọntaktị a</string>
     <string name="backup_saved">Echekwara nkwado ndabere: %1$s</string>
     <string name="backup_saved_encrypted">Echekwara nkwado ndabere (ezoro ezo): %1$s</string>
@@ -865,6 +866,7 @@
     <string name="peer_sharing_supervisor_locked">Ọnọdụ nlekọta gbanyere, ya mere enweghị ike ịgbanyụ ịkọrọ ọnọdụ gị na onye nlekọta gị ebe a.</string>
     <string name="settings_temporary_location_share">Ịkọrọ ọnọdụ nwa oge</string>
     <string name="app_lock_no_credential">Enweghị mkpọchi ihuenyo edobere na ngwaọrụ a, yabụ ọ nweghị ihe ị ga-eji mepee. Debe PIN, ụkpụrụ, okwuntughe, ma ọ bụ biometric na ntọala ngwaọrụ gị, wee meghee LocaPeer ọzọ.</string>
+    <string name="app_lock_crypto_failed">Enweghị ike ịmalite igodo nyocha echedoro.</string>
     <string name="backup_key_needs_password">Debe okwuntughe iji tinye igodo nzuzo gị. Faịlụ igodo na-ezoghị ezo nwere ike ikwe ka onye ọ bụla weghara njirimara gị.</string>
     <string name="settings_category_security_subtitle">Mkpọchi ngwa, ikike, ọnọdụ nlekọta</string>
     <string name="settings_category_map_subtitle">Ebe mmalite, mbugharị, agba pin</string>

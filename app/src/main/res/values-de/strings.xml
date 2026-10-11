@@ -746,6 +746,7 @@
     <string name="onboarding_error_key_range">Ungültiger privater Schlüssel - außerhalb des Kurvenbereichs.</string>
     <string name="onboarding_error_import_failed">Schlüsselimport fehlgeschlagen: %1$s</string>
     <string name="scan_error_invalid_link">Ungültiger Einladungslink</string>
+    <string name="scan_error_own_invite">Das ist Ihr eigener Einladungscode</string>
     <string name="scan_error_bad_pubkey">Ungültige Einladung: fehlerhafter öffentlicher Schlüssel</string>
     <string name="scan_error_key_mismatch">Ungültige Einladung: Schlüssel stimmen nicht überein</string>
     <string name="scan_error_unknown">Unbekannter Fehler</string>
@@ -879,6 +880,7 @@
     <string name="peer_sharing_supervisor_locked">Der überwachte Modus ist aktiv, daher kann die Standortfreigabe an deinen Supervisor hier nicht deaktiviert werden.</string>
     <string name="settings_temporary_location_share">Temporäre Standortfreigabe</string>
     <string name="app_lock_no_credential">Auf diesem Gerät ist keine Bildschirmsperre eingerichtet, daher gibt es nichts zum Entsperren. Richte in den Geräteeinstellungen eine PIN, ein Muster, ein Passwort oder biometrische Daten ein und öffne LocaPeer dann erneut.</string>
+    <string name="app_lock_crypto_failed">Sicherer Authentifizierungsschlüssel konnte nicht initialisiert werden.</string>
     <string name="backup_key_needs_password">Lege ein Passwort fest, um deinen privaten Schlüssel einzuschließen. Eine unverschlüsselte Schlüsseldatei könnte es jedem ermöglichen, deine Identität zu übernehmen.</string>
     <string name="settings_category_security_subtitle">App-Sperre, Berechtigungen, Überwachungsmodus</string>
     <string name="settings_category_map_subtitle">Startpunkt, Zoom, Pin-Farbe</string>

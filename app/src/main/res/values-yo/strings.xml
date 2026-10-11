@@ -714,6 +714,7 @@
     <string name="scan_error_key_mismatch">Òkù kò dára: kókó kò dọ́gba</string>
     <string name="scan_error_unknown">Njehie a na-amaghị</string>
     <string name="scan_error_invalid_link">Link ìpè kò dára</string>
+    <string name="scan_error_own_invite">Èyí ni kóòdù ìpè tìrẹ</string>
     <string name="scan_fallback_contact">ojúlùmọ̀ yìí</string>
     <string name="backup_saved">Echekwara nkwado ndabere: %1$s</string>
     <string name="backup_saved_encrypted">Echekwara nkwado ndabere (ezoro ezo): %1$s</string>
@@ -865,6 +866,7 @@
     <string name="peer_sharing_supervisor_locked">Ipo abojuto wa ni ṣiṣi, nitorina pinpin ipo pẹlu alabojuto rẹ ko le paarẹ nibi.</string>
     <string name="settings_temporary_location_share">Pinpin ipo fun igba diẹ</string>
     <string name="app_lock_no_credential">Ko si titiipa iboju ti a ṣeto sori ẹrọ yii, nitorina ko si ohun ti a le fi ṣii. Ṣeto PIN, apẹẹrẹ, ọrọ igbaniwọle, tabi biometric ninu awọn eto ẹrọ rẹ, lẹhinna tun ṣii LocaPeer.</string>
+    <string name="app_lock_crypto_failed">Kò ṣeé ṣe láti bẹ̀rẹ̀ kọ́kọ́rọ́ ìjẹ́rìísí aláàbò.</string>
     <string name="backup_key_needs_password">Ṣeto ọrọ igbaniwọle lati ni bọtini ikọkọ rẹ. Faili bọtini ti a ko fi pamọ le jẹ ki ẹnikẹni gba idanimọ rẹ.</string>
     <string name="settings_category_security_subtitle">Títìpa ìṣàfilọ́lẹ̀, àwọn ìyọ̀ǹda, ipò alábojútó</string>
     <string name="settings_category_map_subtitle">Ojú-ìtẹ̀mọ́lẹ̀ ìbẹ̀rẹ̀, sísúnmọ́, àwọ̀ pin</string>

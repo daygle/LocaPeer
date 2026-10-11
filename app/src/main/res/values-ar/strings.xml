@@ -779,6 +779,7 @@
     <string name="scan_error_key_mismatch">دعوة غير صالحة: المفاتيح غير متطابقة</string>
     <string name="scan_error_unknown">خطأ غير معروف</string>
     <string name="scan_error_invalid_link">رابط دعوة غير صالح</string>
+    <string name="scan_error_own_invite">هذا رمز الدعوة الخاص بك</string>
     <string name="scan_fallback_contact">جهة الاتصال هذه</string>
     <string name="backup_saved">حُفظت النسخة الاحتياطية: %1$s</string>
     <string name="backup_saved_encrypted">حُفظت النسخة الاحتياطية (مشفّرة): %1$s</string>
@@ -940,6 +941,7 @@
     <string name="peer_sharing_supervisor_locked">الوضع الخاضع للإشراف مفعّل، لذا لا يمكن إيقاف مشاركة الموقع مع المشرف من هنا.</string>
     <string name="settings_temporary_location_share">مشاركة الموقع المؤقتة</string>
     <string name="app_lock_no_credential">لا يوجد قفل شاشة مضبوط على هذا الجهاز، لذا لا يوجد ما يمكن فتح القفل به. اضبط رمز PIN أو نمطًا أو كلمة مرور أو قياسًا حيويًا في إعدادات جهازك، ثم أعد فتح LocaPeer.</string>
+    <string name="app_lock_crypto_failed">تعذّرت تهيئة مفتاح المصادقة الآمن.</string>
     <string name="backup_key_needs_password">اضبط كلمة مرور لتضمين مفتاحك الخاص. قد يسمح ملف المفتاح غير المشفّر لأي شخص بالاستيلاء على هويتك.</string>
     <string name="settings_category_security_subtitle">قفل التطبيق، الأذونات، الوضع الخاضع للإشراف</string>
     <string name="settings_category_map_subtitle">نقطة البداية، التكبير، لون الدبوس</string>

@@ -727,6 +727,7 @@
     <string name="scan_error_key_mismatch">Afeerraa dogoggoraa: kiin wal hin madaalle</string>
     <string name="scan_error_unknown">Dogoggora hin beekamne</string>
     <string name="scan_error_invalid_link">Liinkii afeerraa dogoggoraa</string>
+    <string name="scan_error_own_invite">Kun koodii afeerraa keessan mataa keessanii ti</string>
     <string name="scan_fallback_contact">quunnamtii kana</string>
     <string name="backup_saved">Backupiib olkaa\'ameera: %1$s</string>
     <string name="backup_saved_encrypted">Backupiib olkaa\'ameera (icciteeffame): %1$s</string>
@@ -880,6 +881,7 @@
     <string name="peer_sharing_supervisor_locked">Haalli toʼannaa banaadha, kanaafuu bakka jireenyaa toʼataa kee waliin qooduun asitti cufamuu hin dandaʼu.</string>
     <string name="settings_temporary_location_share">Bakka yeroo qooduu</string>
     <string name="app_lock_no_credential">Meeshaa kana irratti cufaan iskiriinii hin qindeeffamne, kanaafuu wanti ittiin banan hin jiru. Qindaaʼina meeshaa kee keessatti PIN, faayidaa, jecha darbii, ykn biometric qindeessi, ergasii LocaPeer irra deebiʼii bani.</string>
+    <string name="app_lock_crypto_failed">Furtuu mirkaneessaa nageenya qabu jalqabsiisuun hin danda\'amne.</string>
     <string name="backup_key_needs_password">Furtuu dhuunfaa kee dabaluuf jecha darbii qindeessi. Faayilii furtuu hin iccitaaʼin namni kamiyyuu eenyummaa kee akka fudhatu gochuu dandaʼa.</string>
     <string name="settings_category_security_subtitle">Cufaa appii, hayyamawwan, modii to\'annoo</string>
     <string name="settings_category_map_subtitle">Bakka jalqabaa, zuumi, halluu piinii</string>
