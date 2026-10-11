@@ -111,6 +111,8 @@
     <!-- सुरक्षा -->
     <string name="settings_supervision_active">देखरेख सक्रिय आहे</string>
     <string name="settings_supervision_active_subtitle">सेटिंग्जसाठी पर्यवेक्षकाची मंजुरी आवश्यक आहे</string>
+    <string name="settings_supervision_pending">पर्यवेक्षणाची विनंती केली</string>
+    <string name="settings_supervision_pending_subtitle">तुमच्या पर्यवेक्षकाच्या स्वीकृतीची प्रतीक्षा आहे. तोपर्यंत सेटिंग्ज अनलॉक राहतील.</string>
     <string name="settings_disable_supervised">देखरेख मोड अक्षम करा</string>
     <string name="settings_supervised_mode">देखरेख मोड</string>
     <string name="settings_supervised_mode_subtitle">सेटिंग्जमध्ये प्रवेश करण्यासाठी पर्यवेक्षकाची मंजुरी आवश्यक आहे</string>

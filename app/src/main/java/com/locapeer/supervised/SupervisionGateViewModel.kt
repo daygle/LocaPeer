@@ -16,8 +16,9 @@ class SupervisionGateViewModel @Inject constructor(
     private val manager: SupervisedModeManager
 ) : ViewModel() {
 
+    /** Whether supervised-mode gates apply: requested AND accepted by the supervisor. */
     val supervisedModeEnabled: StateFlow<Boolean> = prefs.settings
-        .map { it.supervisedModeEnabled }
+        .map { it.supervisionActive }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val unlockState = manager.unlockState

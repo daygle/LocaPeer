@@ -111,6 +111,8 @@
     <!-- Ewlehî -->
     <string name="settings_supervision_active">Çavdêrî Çalak e</string>
     <string name="settings_supervision_active_subtitle">Sazkirin pejirandina çavdêr hewce dikin</string>
+    <string name="settings_supervision_pending">Çavdêrî hat xwestin</string>
+    <string name="settings_supervision_pending_subtitle">Li benda pejirandina çavdêrê te ye. Heta wê demê mîheng vekirî dimînin.</string>
     <string name="settings_disable_supervised">Moda Çavdêriyê Seqet Bike</string>
     <string name="settings_supervised_mode">Moda Çavdêriyê</string>
     <string name="settings_supervised_mode_subtitle">Ji bo gihîştina sazkirinê pejirandina çavdêr hewce ye</string>

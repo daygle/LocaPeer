@@ -111,6 +111,8 @@
     <!-- பாதுகாப்பு -->
     <string name="settings_supervision_active">மேற்பார்வை செயலில் உள்ளது</string>
     <string name="settings_supervision_active_subtitle">அமைப்புகளுக்கு மேற்பார்வையாளர் ஒப்புதல் தேவை</string>
+    <string name="settings_supervision_pending">கண்காணிப்பு கோரப்பட்டது</string>
+    <string name="settings_supervision_pending_subtitle">உங்கள் கண்காணிப்பாளர் ஏற்கும் வரை காத்திருக்கிறது. அதுவரை அமைப்புகள் பூட்டப்படாது.</string>
     <string name="settings_disable_supervised">மேற்பார்வை பயன்முறையை முடக்கு</string>
     <string name="settings_supervised_mode">மேற்பார்வை பயன்முறை</string>
     <string name="settings_supervised_mode_subtitle">அமைப்புகளை அணுக மேற்பார்வையாளர் ஒப்புதல் தேவை</string>

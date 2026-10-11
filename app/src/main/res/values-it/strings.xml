@@ -111,6 +111,8 @@
     <!-- Sicurezza -->
     <string name="settings_supervision_active">Supervisione attiva</string>
     <string name="settings_supervision_active_subtitle">Le impostazioni richiedono l\'approvazione del supervisore</string>
+    <string name="settings_supervision_pending">Supervisione richiesta</string>
+    <string name="settings_supervision_pending_subtitle">In attesa che il supervisore accetti. Fino ad allora le impostazioni restano sbloccate.</string>
     <string name="settings_disable_supervised">Disabilita modalità supervisionata</string>
     <string name="settings_supervised_mode">Modalità supervisionata</string>
     <string name="settings_supervised_mode_subtitle">Richiedi l\'approvazione del supervisore per accedere alle impostazioni</string>

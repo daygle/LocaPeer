@@ -111,6 +111,8 @@
     <!-- భద్రత -->
     <string name="settings_supervision_active">పర్యవేక్షణ సక్రియంగా ఉంది</string>
     <string name="settings_supervision_active_subtitle">సెట్టింగ్‌లకు పర్యవేక్షకుని ఆమోదం అవసరం</string>
+    <string name="settings_supervision_pending">పర్యవేక్షణ అభ్యర్థించబడింది</string>
+    <string name="settings_supervision_pending_subtitle">మీ పర్యవేక్షకుడు అంగీకరించే వరకు వేచి ఉంది. అప్పటి వరకు సెట్టింగ్‌లు అన్‌లాక్‌లోనే ఉంటాయి.</string>
     <string name="settings_disable_supervised">పర్యవేక్షణ మోడ్‌ను నిలిపివేయి</string>
     <string name="settings_supervised_mode">పర్యవేక్షణ మోడ్</string>
     <string name="settings_supervised_mode_subtitle">సెట్టింగ్‌లను యాక్సెస్ చేయడానికి పర్యవేక్షకుని ఆమోదం అవసరం</string>

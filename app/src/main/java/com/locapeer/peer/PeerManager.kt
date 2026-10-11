@@ -66,6 +66,13 @@ class PeerManager @Inject constructor(
      */
     private suspend fun isProtectedSupervisor(deviceId: String): Boolean {
         val settings = prefs.settings.first()
+        return settings.supervisionActive &&
+            settings.supervisorPubkey.equals(deviceId, ignoreCase = true)
+    }
+
+    /** True when [deviceId] is the supervisor this device has requested or is under. */
+    private suspend fun isSupervisor(deviceId: String): Boolean {
+        val settings = prefs.settings.first()
         return settings.supervisedModeEnabled &&
             settings.supervisorPubkey.equals(deviceId, ignoreCase = true)
     }
@@ -143,7 +150,7 @@ class PeerManager @Inject constructor(
         // The supervisor ending the relationship ends supervision: they have dropped this
         // device too and ignore its unlock requests, so staying supervised would lock the
         // gated settings for good.
-        if (isProtectedSupervisor(senderDeviceId)) {
+        if (isSupervisor(senderDeviceId)) {
             prefs.clearSupervisedMode()
             Log.i(TAG, "Supervised mode ended: supervisor $senderDeviceId removed this device")
         }

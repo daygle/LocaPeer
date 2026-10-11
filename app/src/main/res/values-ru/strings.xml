@@ -113,6 +113,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Наблюдение активно</string>
     <string name="settings_supervision_active_subtitle">Для настроек требуется одобрение супервизора</string>
+    <string name="settings_supervision_pending">Контроль запрошен</string>
+    <string name="settings_supervision_pending_subtitle">Ожидание подтверждения от контролирующего. До этого настройки остаются разблокированными.</string>
     <string name="settings_disable_supervised">Выключить контролируемый режим</string>
     <string name="settings_supervised_mode">Контролируемый режим</string>
     <string name="settings_supervised_mode_subtitle">Требовать одобрение супервизора для доступа к настройкам</string>

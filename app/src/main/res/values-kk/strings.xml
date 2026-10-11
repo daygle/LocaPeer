@@ -111,6 +111,8 @@
     <!-- Қауіпсіздік -->
     <string name="settings_supervision_active">Бақылау белсенді</string>
     <string name="settings_supervision_active_subtitle">Параметрлер бақылаушының мақұлдауын талап етеді</string>
+    <string name="settings_supervision_pending">Бақылау сұралды</string>
+    <string name="settings_supervision_pending_subtitle">Бақылаушының қабылдауы күтілуде. Оған дейін параметрлер құлыпталмайды.</string>
     <string name="settings_disable_supervised">Бақылау режимін өшіру</string>
     <string name="settings_supervised_mode">Бақылау режимі</string>
     <string name="settings_supervised_mode_subtitle">Параметрлерге кіру үшін бақылаушының мақұлдауы қажет</string>

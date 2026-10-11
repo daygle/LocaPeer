@@ -1058,6 +1058,7 @@ class HeartbeatReceiver @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         if (accepted) {
+            prefs.setSupervisionAccepted()
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
                 .setContentTitle(context.getString(R.string.notif_supervised_active_title))

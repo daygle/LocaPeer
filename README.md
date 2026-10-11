@@ -99,7 +99,7 @@ Temporary shares use the same per-peer configuration the regular sharing uses, b
 
 ### Supervised Mode
 1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions.
-2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active.
+2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active. Until then the request shows as pending and settings stay unlocked, so a supervisor who never answers can't lock the device.
 3. **Unlock**: When the user needs settings access, a `SUPERVISED_UNLOCK_REQUEST` is sent. The supervisor approves or denies via a real-time notification; the result is reflected on the supervised device within 60 seconds (timeout).
 
 ## Nostr Event Kinds

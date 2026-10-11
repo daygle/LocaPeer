@@ -111,6 +111,8 @@
     <!-- امنیت -->
     <string name="settings_supervision_active">څارنه فعاله ده</string>
     <string name="settings_supervision_active_subtitle">ترتیبات د څارونکي تصویب ته اړتیا لري</string>
+    <string name="settings_supervision_pending">د څارنې غوښتنه شوې</string>
+    <string name="settings_supervision_pending_subtitle">ستاسو د څارونکي د منلو په تمه. تر هغه وخته پورې امستنې خلاصې پاتې کیږي.</string>
     <string name="settings_disable_supervised">د څارنې حالت بند کړئ</string>
     <string name="settings_supervised_mode">د څارنې حالت</string>
     <string name="settings_supervised_mode_subtitle">ترتیباتو ته د لاسرسي لپاره د څارونکي تصویب ته اړتیا ده</string>

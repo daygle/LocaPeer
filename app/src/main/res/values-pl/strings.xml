@@ -113,6 +113,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Nadzór aktywny</string>
     <string name="settings_supervision_active_subtitle">Ustawienia wymagają zgody opiekuna</string>
+    <string name="settings_supervision_pending">Poproszono o nadzór</string>
+    <string name="settings_supervision_pending_subtitle">Oczekiwanie na akceptację opiekuna. Do tego czasu ustawienia pozostają odblokowane.</string>
     <string name="settings_disable_supervised">Wyłącz tryb nadzorowany</string>
     <string name="settings_supervised_mode">Tryb nadzorowany</string>
     <string name="settings_supervised_mode_subtitle">Wymagaj zgody opiekuna na dostęp do ustawień</string>

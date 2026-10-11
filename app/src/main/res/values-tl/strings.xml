@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Aktibo ang Pangangasiwa</string>
     <string name="settings_supervision_active_subtitle">Nangangailangan ng pag-apruba ng superbisor ang mga setting</string>
+    <string name="settings_supervision_pending">Hiniling ang pangangasiwa</string>
+    <string name="settings_supervision_pending_subtitle">Naghihintay na tanggapin ng iyong superbisor. Hanggang doon, mananatiling naka-unlock ang mga setting.</string>
     <string name="settings_disable_supervised">I-disable ang Supervised Mode</string>
     <string name="settings_supervised_mode">Mode na pinangangasiwaan</string>
     <string name="settings_supervised_mode_subtitle">Mangailangan ng pag-apruba ng superbisor para ma-access ang mga setting</string>

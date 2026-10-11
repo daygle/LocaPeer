@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Denetim Etkin</string>
     <string name="settings_supervision_active_subtitle">Ayarlar için denetleyici onayı gerekir</string>
+    <string name="settings_supervision_pending">Denetim istendi</string>
+    <string name="settings_supervision_pending_subtitle">Denetleyicinizin kabul etmesi bekleniyor. O zamana kadar ayarlar kilitlenmez.</string>
     <string name="settings_disable_supervised">Denetimli Modu Kapat</string>
     <string name="settings_supervised_mode">Denetimli Mod</string>
     <string name="settings_supervised_mode_subtitle">Ayarlara erişim için denetleyici onayı iste</string>

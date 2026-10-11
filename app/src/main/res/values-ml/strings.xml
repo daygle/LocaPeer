@@ -111,6 +111,8 @@
     <!-- സുരക്ഷ -->
     <string name="settings_supervision_active">മേൽനോട്ടം സജീവമാണ്</string>
     <string name="settings_supervision_active_subtitle">ക്രമീകരണങ്ങൾക്ക് മേൽനോട്ടക്കാരന്റെ അംഗീകാരം ആവശ്യമാണ്</string>
+    <string name="settings_supervision_pending">മേൽനോട്ടം അഭ്യർത്ഥിച്ചു</string>
+    <string name="settings_supervision_pending_subtitle">നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ അംഗീകരിക്കുന്നതിനായി കാത്തിരിക്കുന്നു. അതുവരെ ക്രമീകരണങ്ങൾ അൺലോക്ക് ആയിരിക്കും.</string>
     <string name="settings_disable_supervised">മേൽനോട്ട മോഡ് അപ്രാപ്തമാക്കുക</string>
     <string name="settings_supervised_mode">മേൽനോട്ട മോഡ്</string>
     <string name="settings_supervised_mode_subtitle">ക്രമീകരണങ്ങൾ ആക്സസ് ചെയ്യുന്നതിന് മേൽനോട്ടക്കാരന്റെ അംഗീകാരം ആവശ്യമാണ്</string>

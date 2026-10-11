@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">監督已啟用</string>
     <string name="settings_supervision_active_subtitle">設定需要監督者核准</string>
+    <string name="settings_supervision_pending">已要求監督</string>
+    <string name="settings_supervision_pending_subtitle">正在等待監督者接受。在此之前設定保持解鎖。</string>
     <string name="settings_disable_supervised">停用受監督模式</string>
     <string name="settings_supervised_mode">受監督模式</string>
     <string name="settings_supervised_mode_subtitle">存取設定需要監督者核准</string>

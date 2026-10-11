@@ -61,7 +61,7 @@ fun SettingsScreen(
 
     val unlockState by vm.unlockState.collectAsStateWithLifecycle()
     var sessionUnlocked by remember { mutableStateOf(false) }
-    if (settings.supervisedModeEnabled && !sessionUnlocked) {
+    if (settings.supervisionActive && !sessionUnlocked) {
         SupervisionGate(
             unlockState = unlockState,
             onRequestAccess = { vm.requestSettingsUnlock() },

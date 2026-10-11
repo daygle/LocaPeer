@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">তত্ত্বাবধান সক্রিয়</string>
     <string name="settings_supervision_active_subtitle">সেটিংসের জন্য তত্ত্বাবধায়কের অনুমোদন প্রয়োজন</string>
+    <string name="settings_supervision_pending">তত্ত্বাবধানের অনুরোধ করা হয়েছে</string>
+    <string name="settings_supervision_pending_subtitle">আপনার তত্ত্বাবধায়কের গ্রহণের অপেক্ষায়। ততক্ষণ সেটিংস আনলক থাকবে।</string>
     <string name="settings_disable_supervised">তত্ত্বাবধায়িত মোড বন্ধ করুন</string>
     <string name="settings_supervised_mode">তত্ত্বাবধায়িত মোড</string>
     <string name="settings_supervised_mode_subtitle">সেটিংসে অ্যাক্সেসের জন্য তত্ত্বাবধায়কের অনুমোদন প্রয়োজন করুন</string>

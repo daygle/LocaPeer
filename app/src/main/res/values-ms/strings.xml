@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Penyeliaan Aktif</string>
     <string name="settings_supervision_active_subtitle">Tetapan memerlukan kelulusan penyelia</string>
+    <string name="settings_supervision_pending">Penyeliaan diminta</string>
+    <string name="settings_supervision_pending_subtitle">Menunggu penyelia anda menerima. Tetapan kekal tidak dikunci sehingga itu.</string>
     <string name="settings_disable_supervised">Matikan Mod Diselia</string>
     <string name="settings_supervised_mode">Mod Diselia</string>
     <string name="settings_supervised_mode_subtitle">Perlukan kelulusan penyelia untuk mengakses tetapan</string>

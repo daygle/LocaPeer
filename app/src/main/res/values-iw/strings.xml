@@ -112,6 +112,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">פיקוח פעיל</string>
     <string name="settings_supervision_active_subtitle">ההגדרות דורשות אישור מפקח</string>
+    <string name="settings_supervision_pending">התבקש פיקוח</string>
+    <string name="settings_supervision_pending_subtitle">ממתין לאישור המפקח שלך. עד אז ההגדרות יישארו לא נעולות.</string>
     <string name="settings_disable_supervised">השבת מצב מפוקח</string>
     <string name="settings_supervised_mode">מצב מפוקח</string>
     <string name="settings_supervised_mode_subtitle">דרוש אישור מפקח לגישה להגדרות</string>

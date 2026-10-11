@@ -111,6 +111,8 @@
     <!-- Xavfsizlik -->
     <string name="settings_supervision_active">Nazorat faol</string>
     <string name="settings_supervision_active_subtitle">Sozlamalar nazoratchi tasdig‘ini talab qiladi</string>
+    <string name="settings_supervision_pending">Nazorat so\'raldi</string>
+    <string name="settings_supervision_pending_subtitle">Nazoratchingiz qabul qilishi kutilmoqda. Shu paytgacha sozlamalar qulflanmaydi.</string>
     <string name="settings_disable_supervised">Nazorat rejimini o‘chirish</string>
     <string name="settings_supervised_mode">Nazorat rejimi</string>
     <string name="settings_supervised_mode_subtitle">Sozlamalarga kirish uchun nazoratchi tasdig‘i kerak</string>

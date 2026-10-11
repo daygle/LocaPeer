@@ -110,6 +110,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">Pengawasan Aktif</string>
     <string name="settings_supervision_active_subtitle">Setelan memerlukan persetujuan pengawas</string>
+    <string name="settings_supervision_pending">Pengawasan diminta</string>
+    <string name="settings_supervision_pending_subtitle">Menunggu pengawas Anda menerima. Setelan tetap tidak terkunci hingga saat itu.</string>
     <string name="settings_disable_supervised">Nonaktifkan Mode Terawasi</string>
     <string name="settings_supervised_mode">Mode Terawasi</string>
     <string name="settings_supervised_mode_subtitle">Wajibkan persetujuan pengawas untuk mengakses setelan</string>

@@ -98,6 +98,8 @@ data class AppSettings(
     val sendMaxAccuracyMeters: Int = 0,
     val supervisedModeEnabled: Boolean = false,
     val supervisorPubkey: String = "",
+    /** Supervised mode was requested but the supervisor hasn't accepted yet. */
+    val supervisionPending: Boolean = false,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = DEFAULT_NAV_TAB_IDS,
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
@@ -166,7 +168,14 @@ data class AppSettings(
      * If true, ask contacts for faster updates when viewing them on the map.
      */
     val requestLiveBoost: Boolean = true
-)
+) {
+    /**
+     * True once the supervisor has accepted this device. Until then supervision is only
+     * requested: the supervisor's app ignores unlock requests from a device it hasn't
+     * accepted, so gating settings while pending could lock them for good.
+     */
+    val supervisionActive: Boolean get() = supervisedModeEnabled && !supervisionPending
+}
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }
 
@@ -193,6 +202,7 @@ class AppPreferences @Inject constructor(
     private val KEY_GLOBAL_SCHEDULE_RULES = stringPreferencesKey("global_schedule_rules")
     private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
     private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
+    private val KEY_SUPERVISION_PENDING = booleanPreferencesKey("supervision_pending")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
@@ -249,6 +259,7 @@ class AppPreferences @Inject constructor(
                 globalScheduleRules = prefs[KEY_GLOBAL_SCHEDULE_RULES]?.toScheduleRules() ?: emptyList(),
                 supervisedModeEnabled = prefs[KEY_SUPERVISED_MODE] ?: false,
                 supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
+                supervisionPending = prefs[KEY_SUPERVISION_PENDING] ?: false,
                 navTabIds = prefs[KEY_NAV_TAB_IDS]
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
@@ -323,7 +334,14 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit {
             it[KEY_SUPERVISED_MODE] = enabled
             it[KEY_SUPERVISOR_PUBKEY] = supervisorPubkey
+            // A new request waits for the supervisor's acceptance before it gates anything.
+            it[KEY_SUPERVISION_PENDING] = enabled
         }
+    }
+
+    /** The supervisor accepted this device: supervision is now in force. */
+    suspend fun setSupervisionAccepted() {
+        context.settingsStore.edit { it[KEY_SUPERVISION_PENDING] = false }
     }
 
     suspend fun setNavTabIds(ids: List<String>) {
@@ -484,6 +502,7 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit {
             it[KEY_SUPERVISED_MODE] = false
             it[KEY_SUPERVISOR_PUBKEY] = ""
+            it[KEY_SUPERVISION_PENDING] = false
         }
     }
 

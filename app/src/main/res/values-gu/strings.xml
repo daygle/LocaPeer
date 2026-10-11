@@ -111,6 +111,8 @@
     <!-- સુરક્ષા -->
     <string name="settings_supervision_active">દેખરેખ સક્રિય છે</string>
     <string name="settings_supervision_active_subtitle">સેટિંગ્સ માટે સુપરવાઇઝરની મંજૂરી જરૂરી છે</string>
+    <string name="settings_supervision_pending">દેખરેખની વિનંતી કરી</string>
+    <string name="settings_supervision_pending_subtitle">તમારા સુપરવાઇઝર સ્વીકારે તેની રાહ જોવાઈ રહી છે. ત્યાં સુધી સેટિંગ્સ અનલૉક રહેશે.</string>
     <string name="settings_disable_supervised">સુપરવાઇઝ્ડ મોડ નિષ્ક્રિય કરો</string>
     <string name="settings_supervised_mode">સુપરવાઇઝ્ડ મોડ</string>
     <string name="settings_supervised_mode_subtitle">સેટિંગ્સ ઍક્સેસ કરવા માટે સુપરવાઇઝરની મંજૂરીની જરૂર છે</string>

@@ -111,6 +111,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">पर्यवेक्षण सक्रिय</string>
     <string name="settings_supervision_active_subtitle">सेटिंग्स के लिए पर्यवेक्षक की स्वीकृति आवश्यक है</string>
+    <string name="settings_supervision_pending">पर्यवेक्षण का अनुरोध किया गया</string>
+    <string name="settings_supervision_pending_subtitle">आपके पर्यवेक्षक के स्वीकार करने की प्रतीक्षा है। तब तक सेटिंग्स अनलॉक रहेंगी।</string>
     <string name="settings_disable_supervised">पर्यवेक्षित मोड बंद करें</string>
     <string name="settings_supervised_mode">पर्यवेक्षित मोड</string>
     <string name="settings_supervised_mode_subtitle">सेटिंग्स तक पहुँच के लिए पर्यवेक्षक की स्वीकृति आवश्यक करें</string>

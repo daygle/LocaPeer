@@ -115,6 +115,8 @@
     <!-- Security -->
     <string name="settings_supervision_active">الإشراف مفعّل</string>
     <string name="settings_supervision_active_subtitle">تتطلب الإعدادات موافقة المشرف</string>
+    <string name="settings_supervision_pending">تم طلب الإشراف</string>
+    <string name="settings_supervision_pending_subtitle">في انتظار موافقة المشرف. تبقى الإعدادات غير مقفلة حتى ذلك الحين.</string>
     <string name="settings_disable_supervised">إيقاف الوضع الخاضع للإشراف</string>
     <string name="settings_supervised_mode">الوضع الخاضع للإشراف</string>
     <string name="settings_supervised_mode_subtitle">طلب موافقة المشرف للوصول إلى الإعدادات</string>
