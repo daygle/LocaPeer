@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Notification channels & foreground service ─────────────────────── -->
+    <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Трансляция местоположения</string>
     <string name="channel_desc_heartbeat">Транслирует ваше местоположение одобренным контактам</string>
     <string name="channel_name_alerts">Оповещения</string>
@@ -939,4 +939,68 @@
     <string name="queued_message_view">Просмотреть событие</string>
     <string name="queued_message_hide">Скрыть</string>
     <string name="queued_messages_flush">Отправить сейчас</string>
+    <string name="change_generic">• Изменена настройка обмена</string>
+    <string name="change_notif_title">Устройством под присмотром изменены настройки</string>
+    <string name="change_pause">• Передача %1$s приостановлена</string>
+    <string name="change_precision">• Точность локации изменена на %1$s</string>
+    <string name="change_resume">• Передача %1$s возобновлена</string>
+    <string name="change_role">• Роль передачи изменена на %1$s</string>
+    <string name="change_schedule">• Изменён общий график передачи</string>
+    <string name="change_schedule_peer">• Изменён график передачи для %1$s</string>
+    <string name="change_sos">• Статус SOS контакта изменён на %1$s</string>
+    <string name="change_temp_end">• Временная передача завершена</string>
+    <string name="change_temp_start">• Временная передача начата с %1$s</string>
+    <string name="circle_leave_supervised">Для выхода из этого круга нужен ваш присмотрщик: попросите его удалить вас на вашем устройстве.</string>
+    <string name="contact_add_request_message">Ваше подопечное устройство просит добавить «%1$s» как новый контакт обмена локацией. Одобрение начнет установку связи с ним.</string>
+    <string name="contact_add_request_title">Разрешить новый контакт?</string>
+    <string name="conv_cd_muted">Уведомления отключены</string>
+    <string name="conv_mute">Отключить уведомления</string>
+    <string name="conv_unmute">Включить уведомления</string>
+    <string name="incoming_awaiting_approval">Ожидание одобрения присмотрщика…</string>
+    <string name="notif_supervised_invite_text">Примите, чтобы заблокировать настройки этого устройства под ваше одобрение. Позже всегда можно попросить снять блокировку.</string>
+    <string name="notif_supervised_invite_title">%1$s хочет стать вашим присмотрщиком</string>
+    <string name="notif_supervised_wipe_text">Подопечное устройство отправило запрос стирания и удалило свою идентичность. Ожидайте тихих предупреждений; удалите контакт, когда будете готовы.</string>
+    <string name="notif_supervised_wipe_title">Устройство под присмотром стерто</string>
+    <string name="notif_supervision_ended_text">Ваш присмотрщик завершил присмотр за этим устройством. Настройки разблокированы.</string>
+    <string name="notif_supervision_ended_title">Присмотр завершен</string>
+    <string name="notif_supervisor_unknown_request_text">Устройство, подающее запрос, отсутствует в ваших контактах. Сначала добавьте его как контакт и попросите повторить запрос присмотра.</string>
+    <string name="notif_supervisor_unknown_request_title">Запрос присмотра от неизвестного устройства</string>
+    <string name="onboarding_bg_location_hint">На Android 11 и новее фоновая локация выдаётся только в системных настройках — приложение не запрашивает её само.</string>
+    <string name="onboarding_bg_open_settings">Открыть системные настройки</string>
+    <string name="onboarding_bg_skip">Пока пропустить</string>
+    <string name="peer_supervise_disable_confirm">Прекратить присмотр</string>
+    <string name="peer_supervise_disable_message">Устройство %1$s будет разблокировано и уведомлено. Его тихие предупреждения снова выключатся.</string>
+    <string name="peer_supervise_disable_title">Прекратить присмотр?</string>
+    <string name="peer_supervise_enable_message">%1$s должен принять запрос на устройстве, прежде чем настройки заблокируются под ваше одобрение. Тихие предупреждения будут включены.</string>
+    <string name="peer_supervise_enable_title">Взять под присмотр?</string>
+    <string name="pending_awaiting_approval">Ожидание одобрения присмотрщика…</string>
+    <string name="scan_add_denied">Ваш присмотрщик отклонил добавление контакта.</string>
+    <string name="scan_add_waiting">Ожидание присмотрщика…</string>
+    <string name="scan_add_waiting_subtitle">Под присмотром добавление контакта требует одобрения. Решение скоро придёт.</string>
+    <string name="settings_alert_notifications">Предупреждения локации</string>
+    <string name="settings_alert_notifications_subtitle">Предупреждения геозон, близости и потери локации. Сигналы SOS остаются активными.</string>
+    <string name="settings_disable_cancel">Отменить запрос</string>
+    <string name="settings_disable_denied">Присмотрщик отклонил запрос на разблокировку.</string>
+    <string name="settings_disable_timed_out">Ответа вовремя нет. Возможно, присмотрщик офлайн — попробуйте позже.</string>
+    <string name="settings_disable_waiting">Ожидание одобрения присмотрщика…</string>
+    <string name="settings_erase_identity">Удалить личность &amp; стереть все данные</string>
+    <string name="settings_erase_identity_card">Опасная зона</string>
+    <string name="settings_erase_identity_confirm">Стереть и перезапустить</string>
+    <string name="settings_erase_identity_final_message">Стереть всё и начать заново с новой личностью? Это необратимо. Если ещё захотите эту личность, сначала сделайте зашифрованную резервную копию.</string>
+    <string name="settings_erase_identity_final_title">Финальное подтверждение</string>
+    <string name="settings_erase_identity_message">Будут безвозвратно удалены ваши ключи Nostr, все контакты, ограды, история локации, сообщения и настройки этого устройства. Контакты не уведомляются, их копии не затрагиваются. Запрос об удалении не отправляется — чтобы предупредить доверенное лицо, используйте «Удалить контакт и данные» отдельно у каждого.</string>
+    <string name="settings_erase_identity_subtitle">Удаляет ключ личности, контакты, историю локации, сообщения и настройки этого устройства и перезапускает первичную настройку</string>
+    <string name="settings_erase_identity_title">Удалить личность и стереть всё?</string>
+    <string name="settings_message_notifications">Уведомления сообщений</string>
+    <string name="settings_message_notifications_subtitle">Показывать уведомление о новых сообщениях чата или круга</string>
+    <string name="settings_notifications_title">Уведомления</string>
+    <string name="settings_quiet_hours_start">Тихие часы с</string>
+    <string name="settings_quiet_hours_subtitle">Отключает на время окна уведомления сообщений и предупреждений. SOS остаётся включенным.</string>
+    <string name="settings_quiet_hours">Тихие часы</string>
+    <string name="settings_quiet_hours_end">До</string>
+    <string name="supervision_disable_request_message">%1$s просит отключить режим присмотра. Одобрение навсегда разблокирует настройки до новой заявки на присмотр.</string>
+    <string name="supervision_disable_request_title">Разблокировать устройство?</string>
+    <string name="toast_already_supervised">Смотритель уже есть — отклоните запрос</string>
+    <string name="toast_declined_supervision_invite">Заявка на присмотр от %1$s отклонена</string>
+    <string name="toast_now_supervised">Присмотрщик: %1$s</string>
 </resources>

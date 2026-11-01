@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Notification channels & foreground service ─────────────────────── -->
+    <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Locatie-uitzending</string>
     <string name="channel_desc_heartbeat">Zendt uw locatie uit naar uw goedgekeurde contacten</string>
     <string name="channel_name_alerts">Meldingen</string>
@@ -907,4 +907,68 @@
     <string name="queued_message_view">Gebeurtenis bekijken</string>
     <string name="queued_message_hide">Verbergen</string>
     <string name="queued_messages_flush">Nu verzenden</string>
+    <string name="change_generic">• Instelling delen gewijzigd</string>
+    <string name="change_notif_title">Begeleid apparaat heeft instellingen gewijzigd</string>
+    <string name="change_pause">• Delen van %1$s gepauzeerd</string>
+    <string name="change_precision">• Nauwkeurigheid gewijzigd naar %1$s</string>
+    <string name="change_resume">• Delen van %1$s hervat</string>
+    <string name="change_role">• Deelrol gewijzigd naar %1$s</string>
+    <string name="change_schedule">• Algemeen delingsschema gewijzigd</string>
+    <string name="change_schedule_peer">• Delingsschema met %1$s gewijzigd</string>
+    <string name="change_sos">• SOS-status van contact gewijzigd naar %1$s</string>
+    <string name="change_temp_end">• Tijdelijk delen beëindigd</string>
+    <string name="change_temp_start">• Tijdelijk delen gestart met %1$s</string>
+    <string name="circle_leave_supervised">Het verlaten van deze kring vereist je begeleider: vraag hen om je op je apparaat te verwijderen.</string>
+    <string name="contact_add_request_message">Je begeleide apparaat vraagt om “%1$s” toe te voegen als nieuw locatie-deelcontact. Goedkeuring start het delen.</string>
+    <string name="contact_add_request_title">Nieuw contact toestaan?</string>
+    <string name="conv_cd_muted">Meldingen gedempt</string>
+    <string name="conv_mute">Meldingen dempen</string>
+    <string name="conv_unmute">Meldingen weer aanzetten</string>
+    <string name="incoming_awaiting_approval">Wachten op goedkeuring van je begeleider…</string>
+    <string name="notif_supervised_invite_text">Accepteer om de instellingen van dit apparaat achter jouw goedkeuring te vergrendelen. Ontgrendelen kun je daarna altijd aanvragen.</string>
+    <string name="notif_supervised_invite_title">%1$s wil jou begeleiden</string>
+    <string name="notif_supervised_wipe_text">Een begeleid apparaat stuurde een verzoek om te wissen en verwijderde zijn identiteit. Verwacht stille meldingen; verwijder het contact wanneer je er klaar voor bent.</string>
+    <string name="notif_supervised_wipe_title">Begeleid apparaat gewist</string>
+    <string name="notif_supervision_ended_text">Je begeleider heeft begeleiding van dit apparaat beëindigd. De instellingen zijn ontgrendeld.</string>
+    <string name="notif_supervision_ended_title">Begeleiding beëindigd</string>
+    <string name="notif_supervisor_unknown_request_text">Het verzoekende apparaat staat niet in je contacten. Voeg het eerst toe als contact en vraag het om het verzoek te herhalen.</string>
+    <string name="notif_supervisor_unknown_request_title">Verzoek tot begeleiding van onbekend apparaat</string>
+    <string name="onboarding_bg_location_hint">Op Android 11 en nieuwer wordt locatie op de achtergrond alleen verleend via de systeeminstellingen - de app kan er niet zelf om vragen.</string>
+    <string name="onboarding_bg_open_settings">Systeeminstellingen openen</string>
+    <string name="onboarding_bg_skip">Nu overslaan</string>
+    <string name="peer_supervise_disable_confirm">Begeleiding stoppen</string>
+    <string name="peer_supervise_disable_message">Het apparaat van %1$s wordt ontgrendeld en op de hoogte gesteld. De stille waarschuwingen worden weer uitgezet.</string>
+    <string name="peer_supervise_disable_title">Begeleiding stoppen?</string>
+    <string name="peer_supervise_enable_message">%1$s moet het verzoek op het eigen apparaat accepteren voordat de instellingen achter jouw goedkeuring worden vergrendeld. Stille waarschuwingen worden aangezet.</string>
+    <string name="peer_supervise_enable_title">Dit apparaat begeleiden?</string>
+    <string name="pending_awaiting_approval">Wachten op goedkeuring van begeleider…</string>
+    <string name="scan_add_denied">Je begeleider heeft het toevoegen van dit contact geweigerd.</string>
+    <string name="scan_add_waiting">Wachten op je begeleider…</string>
+    <string name="scan_add_waiting_subtitle">Onder begeleiding vereist het toevoegen van een contact goedkeuring. De beslissing komt snel.</string>
+    <string name="settings_alert_notifications">Locatiewaarschuwingen</string>
+    <string name="settings_alert_notifications_subtitle">Waarschuwingen voor geofence-uitgang, nabijheid en verloren locatie. SOS-meldingen blijven actief.</string>
+    <string name="settings_disable_cancel">Verzoek annuleren</string>
+    <string name="settings_disable_denied">Je begeleider heeft het verzoek om te ontgrendelen geweigerd.</string>
+    <string name="settings_disable_timed_out">Geen reactie op tijd. Je begeleider is mogelijk offline - probeer later opnieuw.</string>
+    <string name="settings_disable_waiting">Wachten op goedkeuring van je begeleider…</string>
+    <string name="settings_erase_identity">Identiteit verwijderen &amp; alle data wissen</string>
+    <string name="settings_erase_identity_card">Gevaarzone</string>
+    <string name="settings_erase_identity_confirm">Wissen en opnieuw beginnen</string>
+    <string name="settings_erase_identity_final_message">Alles wissen en opnieuw beginnen met een nieuwe identiteit? Dit kan niet ongedaan worden gemaakt. Als je deze identiteit later nog wilt, exporteer dan eerst een versleutelde back-up.</string>
+    <string name="settings_erase_identity_final_title">Laatste bevestiging</string>
+    <string name="settings_erase_identity_message">Dit wist uw Nostr-sleutelpaar, alle contacten, geofences, locatiehistorie, berichten en instellingen van dit apparaat onherroepelijk. Contacten worden niet op de hoogte gesteld en hun kopieën worden niet gewijzigd. Er wordt geen verwijderverzoek gestuurd - om een vertrouwenspersoon te waarschuwen gebruik je eerst \'Contact en gegevens verwijderen\' bij elk contact.</string>
+    <string name="settings_erase_identity_subtitle">Verwijdert de identiteitssleutel, contacten, locatiehistorie, berichten en instellingen van dit apparaat en start de eerste instelling opnieuw</string>
+    <string name="settings_erase_identity_title">Identiteit verwijderen en alles wissen?</string>
+    <string name="settings_message_notifications">Berichtmeldingen</string>
+    <string name="settings_message_notifications_subtitle">Toon een melding wanneer een chat- of kringbericht aankomt</string>
+    <string name="settings_notifications_title">Meldingen</string>
+    <string name="settings_quiet_hours">Stille uren</string>
+    <string name="settings_quiet_hours_end">Tot</string>
+    <string name="settings_quiet_hours_start">Dempen vanaf</string>
+    <string name="settings_quiet_hours_subtitle">Dempt bericht- en waarschuwingsmeldingen binnen het aangegeven venster. SOS blijft aan.</string>
+    <string name="supervision_disable_request_message">%1$s vraagt om de begeleide modus uit te schakelen. Goedkeuring ontgrendelt de instellingen permanent tot een nieuwe aanvraag.</string>
+    <string name="supervision_disable_request_title">Dit apparaat ontgrendelen?</string>
+    <string name="toast_already_supervised">Al onder begeleiding - weiger dit verzoek liever</string>
+    <string name="toast_declined_supervision_invite">Verzoek van %1$s geweigerd</string>
+    <string name="toast_now_supervised">Wordt begeleid door %1$s</string>
 </resources>

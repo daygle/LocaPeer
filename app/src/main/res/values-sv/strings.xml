@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">LocaPeer</string>
 
-    <!-- ── Notification channels & foreground service ─────────────────────── -->
+    <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Platssändning</string>
     <string name="channel_desc_heartbeat">Sänder din plats till dina godkända kontakter</string>
     <string name="channel_name_alerts">Varningar</string>
@@ -907,4 +907,68 @@
     <string name="queued_message_view">Visa händelse</string>
     <string name="queued_message_hide">Dölj</string>
     <string name="queued_messages_flush">Skicka nu</string>
+    <string name="change_generic">• Delningsinställning ändrad</string>
+    <string name="change_notif_title">Övervakad enhet ändrade inställningar</string>
+    <string name="change_pause">• Delning med %1$s pausad</string>
+    <string name="change_precision">• Precisionsläget ändrat till %1$s</string>
+    <string name="change_resume">• Delning med %1$s återupptagen</string>
+    <string name="change_role">• Delningsroll ändrad till %1$s</string>
+    <string name="change_schedule">• Globalt delningsschema ändrat</string>
+    <string name="change_schedule_peer">• Delningsschema med %1$s ändrat</string>
+    <string name="change_sos">• Kontakts SOS-status ändrad till %1$s</string>
+    <string name="change_temp_end">• Temporär delning avslutad</string>
+    <string name="change_temp_start">• Temporär delning påbörjad med %1$s</string>
+    <string name="circle_leave_supervised">Att lämna denna cirkel kräver din övervakare: be hen att ta bort dig på din enhet.</string>
+    <string name="contact_add_request_message">Din övervakade enhet begär att lägga till “%1$s” som ny platsdelningskontakt. Godkännande startar delningen med hen.</string>
+    <string name="contact_add_request_title">Tillåta ny kontakt?</string>
+    <string name="conv_cd_muted">Aviseringar dämpade</string>
+    <string name="conv_mute">Dämpa aviseringar</string>
+    <string name="conv_unmute">Slå på aviseringar igen</string>
+    <string name="incoming_awaiting_approval">Väntar på din övervakares godkännande…</string>
+    <string name="notif_supervised_invite_text">Godkänn för att låsa enhetens inställningar bakom ditt godkännande. Upplåsning kan du begära senare när som helst.</string>
+    <string name="notif_supervised_invite_title">%1$s vill övervaka dig</string>
+    <string name="notif_supervised_wipe_text">En övervakad enhet skickade en raderingsförfrågan och tog bort sin identitet. Vänta stumma varsel; ta bort kontakten när du är redo.</string>
+    <string name="notif_supervised_wipe_title">Övervakad enhet raderad</string>
+    <string name="notif_supervision_ended_text">Din övervakare har avslutat övervakningen av denna enhet. Inställningarna är upplåsta.</string>
+    <string name="notif_supervision_ended_title">Övervakning avslutad</string>
+    <string name="notif_supervisor_unknown_request_text">Den begärande enheten finns inte bland dina kontakter. Lägg till den som kontakt först och be om att övervakningsbegäran upprepas.</string>
+    <string name="notif_supervisor_unknown_request_title">Övervakningsbegäran från okänd enhet</string>
+    <string name="onboarding_bg_location_hint">På Android 11 och senare ges platstjänster i bakgrunden endast via systeminställningarna — appen kan inte begära det själv.</string>
+    <string name="onboarding_bg_open_settings">Öppna systeminställningar</string>
+    <string name="onboarding_bg_skip">Hoppa över för tillfället</string>
+    <string name="peer_supervise_disable_confirm">Avsluta övervakning</string>
+    <string name="peer_supervise_disable_message">%1$:s enhet låses upp och meddelas. Deras tysta varsel slås åter av.</string>
+    <string name="peer_supervise_disable_title">Avsluta övervakning?</string>
+    <string name="peer_supervise_enable_message">%1$s måste godkänna begäran på sin egen enhet innan dess inställningar låses bakom ditt godkännande. Tysta varsel slås på.</string>
+    <string name="peer_supervise_enable_title">Övervaka denna enhet?</string>
+    <string name="pending_awaiting_approval">Väntar på övervakarens godkännande…</string>
+    <string name="scan_add_denied">Din övervakare avslog att lägga till denna kontakt.</string>
+    <string name="scan_add_waiting">Väntar på din övervakare…</string>
+    <string name="scan_add_waiting_subtitle">Under övervakning kräver att lägga till en kontakt godkännande. Beslut kommer snart.</string>
+    <string name="settings_alert_notifications">Platsvarningar</string>
+    <string name="settings_alert_notifications_subtitle">Varningar för geofence-läge, närhet och förlorad plats. SOS-varningar förblir aktiva.</string>
+    <string name="settings_disable_cancel">Avbryt begäran</string>
+    <string name="settings_disable_denied">Din övervakare avslog begäran om upplåsning.</string>
+    <string name="settings_disable_timed_out">Inget svar i tid. Din övervakare kan vara offline - försök igen senare.</string>
+    <string name="settings_disable_waiting">Väntar på övervakarens godkännande…</string>
+    <string name="settings_erase_identity">Ta bort identitet &amp; radera all data</string>
+    <string name="settings_erase_identity_card">Farozon</string>
+    <string name="settings_erase_identity_confirm">Radera och börja om</string>
+    <string name="settings_erase_identity_final_message">Radera allt och börja om med ny identitet? Detta kan inte ångras. Om du fortfarande kan vilja ha identiteten, exportera först en krypterad säkerhetskopia.</string>
+    <string name="settings_erase_identity_final_title">Slutgiltig bekräftelse</string>
+    <string name="settings_erase_identity_message">Detta raderar permanent ditt Nostr-nyckelpar, alla kontakter, geofences, platshistorik, meddelanden och inställningar på denna enhet. Kontakter meddelas inte och deras kopior påverkas inte. Ingen borttagningsbegäran skickas — för att varna en betrodd person, använd \'Ta bort kontakt och data\' separat för varje.</string>
+    <string name="settings_erase_identity_subtitle">Tar bort identitetens nyckel, kontakter, platshistorik, meddelanden och inställningar på denna enhet och startar om den inledande konfigureringen</string>
+    <string name="settings_erase_identity_title">Ta bort identitet och radera allt?</string>
+    <string name="settings_message_notifications">Meddelandeaviseringar</string>
+    <string name="settings_message_notifications_subtitle">Visa en avisering när chatt- eller cirkelmeddelande anländer</string>
+    <string name="settings_notifications_title">Aviseringar</string>
+    <string name="settings_quiet_hours">Tysta timmar</string>
+    <string name="settings_quiet_hours_end">Till</string>
+    <string name="settings_quiet_hours_start">Dämpa från</string>
+    <string name="settings_quiet_hours_subtitle">Dämpar meddelande- och varningsaviseringar under de angivna timmarna. SOS förblir på.</string>
+    <string name="supervision_disable_request_message">%1$s begär att stänga av övervakat läge. Godkännande låser upp inställningar permanent fram till en ny ansökan.</string>
+    <string name="supervision_disable_request_title">Låsa upp denna enhet?</string>
+    <string name="toast_already_supervised">Redan under övervakning — avslå denna begäran istället</string>
+    <string name="toast_declined_supervision_invite">Avslog övervakningsbegäran från %1$s</string>
+    <string name="toast_now_supervised">Övervakas nu av %1$s</string>
 </resources>
