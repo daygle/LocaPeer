@@ -891,4 +891,73 @@
     <string name="queued_message_view">Lihat peristiwa</string>
     <string name="queued_message_hide">Sembunyi</string>
     <string name="queued_messages_flush">Hantar sekarang</string>
+
+    <string name="change_notif_title">Peranti yang dipantau telah mengubah tetapan</string>
+    <string name="change_pause">• Perkongsian dengan %1$s dijeda</string>
+    <string name="change_resume">• Perkongsian dengan %1$s disambung semula</string>
+    <string name="change_precision">• Ketepatan lokasi diubah ke %1$s</string>
+    <string name="change_role">• Peranan perkongsian diubah ke %1$s</string>
+    <string name="change_temp_start">• Perkongsian sementara dimulakan dengan %1$s</string>
+    <string name="change_temp_end">• Perkongsian sementara tamat</string>
+    <string name="change_sos">• Status SOS kenalan diubah ke %1$s</string>
+    <string name="change_schedule">• Jadual perkongsian keseluruhan diubah</string>
+    <string name="change_schedule_peer">• Jadual perkongsian dengan %1$s diubah</string>
+    <string name="change_generic">• Satu tetapan perkongsian lokasi telah diubah</string>
+
+    <string name="conv_mute">Senyapkan pemberitahuan</string>
+    <string name="conv_unmute">Hidupkan semula pemberitahuan</string>
+    <string name="conv_cd_muted">Pemberitahuan disenyapkan</string>
+    <string name="notif_supervised_invite_title">%1$s ingin menyelia anda</string>
+    <string name="notif_supervised_invite_text">Terima agar tetapan peranti ini dikunci di sebalik kelulusan anda. Anda selalu boleh meminta pembukaan kunci nanti.</string>
+    <string name="notif_supervision_ended_title">Penyeliaan berakhir</string>
+    <string name="notif_supervision_ended_text">Penyelia anda menamatkan penyeliaan terhadap peranti ini. Tetapannya sudah dibuka kunci.</string>
+    <string name="notif_supervised_wipe_title">Peranti dipantau dipadamkan</string>
+    <string name="notif_supervised_wipe_text">Peranti dipantau mengirim pemberitahuan pemadaman dan memadam identitinya sendiri. Tunggu amaran senyap; buang kenalan apabila anda sedia.</string>
+    <string name="notif_supervisor_unknown_request_title">Permintaan penyeliaan dari peranti tidak dikenali</string>
+    <string name="notif_supervisor_unknown_request_text">Peranti pengirim permintaan tiada dalam senarai kenalan anda. Tambahkan sebagai kenalan dahulu, kemudian minta dia mengulangi permintaan penyeliaan.</string>
+    <string name="contact_add_request_title">Benarkan kenalan baharu?</string>
+    <string name="contact_add_request_message">Peranti dipantau anda meminta menambah “%1$s” sebagai kenalan perkongsian lokasi baharu. Meluluskannya memulakan perkongsian dengannya.</string>
+    <string name="incoming_awaiting_approval">Menunggu kelulusan penyelia…</string>
+    <string name="circle_leave_supervised">Untuk keluar dari bulatan ini anda memerlukan penyelia anda: minta dia membuang anda pada peranti anda sendiri.</string>
+
+    <string name="peer_supervise_enable_title">Menyelia peranti ini?</string>
+    <string name="peer_supervise_enable_message">%1$s perlu menerima permintaan pada perantinya sendiri sebelum tetapannya dikunci di sebalik kelulusan anda. Amaran senyapnya akan dihidupkan.</string>
+    <string name="peer_supervise_disable_title">Berhenti menyelia?</string>
+    <string name="peer_supervise_disable_message">Peranti %1$s akan dibuka kunci dan diberitahu. Amaran senyapnya akan dimatikan semula.</string>
+    <string name="peer_supervise_disable_confirm">Berhenti menyelia</string>
+    <string name="scan_add_waiting">Menunggu penyelia…</string>
+    <string name="scan_add_waiting_subtitle">Dalam penyeliaan, menambah kenalan memerlukan kelulusannya. Keputusan akan tiba sebentar lagi.</string>
+    <string name="scan_add_denied">Penyelia anda menolak penambahan kenalan ini.</string>
+    <string name="pending_awaiting_approval">Menunggu kelulusan penyelia…</string>
+    <string name="onboarding_bg_open_settings">Buka tetapan sistem</string>
+    <string name="onboarding_bg_skip">Langkau buat masa ini</string>
+    <string name="onboarding_bg_location_hint">Pada Android 11 atau lebih baharu, lokasi latar belakang hanya boleh diberikan dalam tetapan sistem; aplikasi tidak boleh memintanya secara langsung.</string>
+
+    <string name="settings_notifications_title">Pemberitahuan</string>
+    <string name="settings_message_notifications">Pemberitahuan mesej</string>
+    <string name="settings_message_notifications_subtitle">Tunjukkan pemberitahuan bila mesej sembang atau bulatan tiba</string>
+    <string name="settings_alert_notifications">Amaran lokasi</string>
+    <string name="settings_alert_notifications_subtitle">Amaran keluar geofence, kedekatan dan kehilangan lokasi. Amaran SOS kekal aktif.</string>
+    <string name="settings_quiet_hours">Jam senyap</string>
+    <string name="settings_quiet_hours_subtitle">Menyenyapkan pemberitahuan mesej dan amaran sepanjang tempoh yang ditetapkan. Hanya SOS didengar.</string>
+    <string name="settings_quiet_hours_start">Senyap bermula</string>
+    <string name="settings_quiet_hours_end">Hingga</string>
+    <string name="settings_disable_waiting">Menunggu kelulusan penyelia…</string>
+    <string name="settings_disable_cancel">Batalkan permintaan</string>
+    <string name="settings_disable_denied">Penyelia anda menolak permintaan pembukaan kunci.</string>
+    <string name="settings_disable_timed_out">Tiada jawapan tepat pada masanya. Penyelia anda mungkin luar talian; cuba lagi nanti.</string>
+
+    <string name="settings_erase_identity_card">Zon bahaya</string>
+    <string name="settings_erase_identity">Buang identiti &amp; padam semua data</string>
+    <string name="settings_erase_identity_subtitle">Membuang kunci identiti, kenalan, sejarah lokasi, mesej dan tetapan peranti ini, kemudian memulakan semula penyediaan awal</string>
+    <string name="settings_erase_identity_title">Buang identiti dan padam semua data?</string>
+    <string name="settings_erase_identity_message">Tindakan ini memadam kekal pasangan kunci Nostr anda, semua kenalan, semua geofence, sejarah lokasi, mesej dan tetapan peranti ini. Kenalan tidak dimaklumkan dan salinan mereka tidak terjejas. Tiada permintaan pemadaman dihantar; untuk memberi amaran kepada kenalan, gunakan "Buang kenalan dan data" pada setiap kenalan lebih dahulu.</string>
+    <string name="settings_erase_identity_final_title">Pengesahan akhir</string>
+    <string name="settings_erase_identity_final_message">Padam semua dan mulakan semula dengan identiti baharu? Ini tidak boleh dibatalkan. Jika mungkin anda masih perlukan identiti ini, eksport sandaran disulitkan terlebih dahulu.</string>
+    <string name="settings_erase_identity_confirm">Padam dan mulakan semula</string>
+    <string name="toast_now_supervised">Kini diselia oleh %1$s</string>
+    <string name="toast_already_supervised">Anda sudah diselia; tolak sahaja permintaan ini</string>
+    <string name="toast_declined_supervision_invite">Permintaan penyeliaan daripada %1$s ditolak</string>
+    <string name="supervision_disable_request_title">Buka kunci peranti ini?</string>
+    <string name="supervision_disable_request_message">%1$s meminta mematikan mod dipantau. Meluluskannya membuka kunci tetapan secara kekal sehingga permintaan penyeliaan baharu diluluskan.</string>
 </resources>
