@@ -891,4 +891,73 @@
     <string name="queued_message_view">အဖြစ်အပျက်ကို ကြည့်ပါ</string>
     <string name="queued_message_hide">ဝှက်ပါ</string>
     <string name="queued_messages_flush">ယခု ပို့ပါ</string>
+
+    <string name="change_notif_title">ကြီးကြပ်မှုအောက်ရှိ စက်ပစ္စည်းက ဆက်တင်များကို ပြောင်းခဲ့သည်</string>
+    <string name="change_pause">• %1$s နှင့် မျှဝေခြင်းကို ခေတ္တရပ်ခဲ့သည်</string>
+    <string name="change_resume">• %1$s နှင့် မျှဝေခြင်းကို ပြန်လည်စတင်ခဲ့သည်</string>
+    <string name="change_precision">• တည်နေရာ တိကျမှုကို %1$s သို့ ပြောင်းခဲ့သည်</string>
+    <string name="change_role">• မျှဝေခြင်း အခန်းကဏ္ဍကို %1$s သို့ ပြောင်းခဲ့သည်</string>
+    <string name="change_temp_start">• %1$s နှင့် ယာယီမျှဝေခြင်း စတင်ခဲ့သည်</string>
+    <string name="change_temp_end">• ယာယီမျှဝေခြင်း ပြီးဆုံးခဲ့သည်</string>
+    <string name="change_sos">• အဆက်အသွယ်၏ SOS အခြေအနေကို %1$s သို့ ပြောင်းခဲ့သည်</string>
+    <string name="change_schedule">• စုစုပေါင်း မျှဝေခြင်း အချိန်ဇယားကို ပြောင်းခဲ့သည်</string>
+    <string name="change_schedule_peer">• %1$s နှင့် မျှဝေခြင်း အချိန်ဇယားကို ပြောင်းခဲ့သည်</string>
+    <string name="change_generic">• တည်နေရာမျှဝေခြင်း ဆက်တင်တစ်ခု ပြောင်းခဲ့သည်</string>
+
+    <string name="conv_mute">အသိပေးချက်များ အသံပိတ်မည်</string>
+    <string name="conv_unmute">အသိပေးချက်များ ပြန်ဖွင့်မည်</string>
+    <string name="conv_cd_muted">အသိပေးချက်များ အသံပိတ်ထားသည်</string>
+    <string name="notif_supervised_invite_title">%1$s က သင့်ကို ကြီးကြပ်လိုသည်</string>
+    <string name="notif_supervised_invite_text">ဤစက်ပစ္စည်း၏ ဆက်တင်များကို သင့်ခွင့်ပြုချက်နောက်တွင် လော့ခ်ချထားရန် လက်ခံပါ။ နောက်ပိုင်း မည်သည့်အချိန်မဆို လော့ခ်ဖွင့်ရန် တောင်းဆိုနိုင်သည်။</string>
+    <string name="notif_supervision_ended_title">ကြီးကြပ်မှု အဆုံးသတ်ခဲ့သည်</string>
+    <string name="notif_supervision_ended_text">သင့်ကြီးကြပ်သူက ဤစက်ပစ္စည်း၏ ကြီးကြပ်မှုကို အဆုံးသတ်ခဲ့သည်။ ဆက်တင်များ ယခု လော့ခ်ဖွင့်ထားသည်။</string>
+    <string name="notif_supervised_wipe_title">ကြီးကြပ်မှုအောက်ရှိ စက်ပစ္စည်း ဖျက်ပစ်ခံခဲ့ရသည်</string>
+    <string name="notif_supervised_wipe_text">ကြီးကြပ်မှုအောက်ရှိ စက်ပစ္စည်းက ဖျက်ပစ်ရေး အသိပေးချက် ပေးပို့ပြီး ၎င်း၏ အထောက်အထားကို ဖျက်ပစ်ခဲ့သည်။ တိတ်ဆိတ်သော သတိပေးချက်များကို စောင့်ပြီး အဆင်သင့်ဖြစ်သောအခါ အဆက်အသွယ်ကို ဖယ်ရှားပါ။</string>
+    <string name="notif_supervisor_unknown_request_title">မသိသော စက်ပစ္စည်းမှ ကြီးကြပ်မှု တောင်းဆိုချက်</string>
+    <string name="notif_supervisor_unknown_request_text">တောင်းဆိုချက် ပေးပို့သော စက်ပစ္စည်းသည် သင့်အဆက်အသွယ်များတွင် မရှိပါ။ ဦးစွာ ၎င်းကို အဆက်အသွယ်အဖြစ် ထည့်ပါ၊ ထို့နောက် ကြီးကြပ်မှု တောင်းဆိုချက်ကို ထပ်မံပို့ရန် တောင်းဆိုပါ။</string>
+    <string name="contact_add_request_title">အဆက်အသွယ်အသစ်ကို ခွင့်ပြုမည်လား။</string>
+    <string name="contact_add_request_message">သင့်ကြီးကြပ်မှုအောက်ရှိ စက်ပစ္စည်းက “%1$s” ကို တည်နေရာမျှဝေခြင်း၏ အဆက်အသွယ်အသစ်အဖြစ် ထည့်ရန် တောင်းဆိုနေသည်။ ခွင့်ပြုပါက သူတို့နှင့် မျှဝေခြင်း စတင်မည်။</string>
+    <string name="incoming_awaiting_approval">ကြီးကြပ်သူ၏ ခွင့်ပြုချက်ကို စောင့်နေသည်…</string>
+    <string name="circle_leave_supervised">ဤအဝိုင်းမှ ထွက်ရန် သင့်ကြီးကြပ်သူ လိုအပ်သည်။ သင့်ကိုယ်ပိုင်စက်ပစ္စည်းမှ သင့်ကို ဖယ်ရှားပေးရန် သူတို့ကို တောင်းဆိုပါ။</string>
+
+    <string name="peer_supervise_enable_title">ဤစက်ပစ္စည်းကို ကြီးကြပ်မည်လား။</string>
+    <string name="peer_supervise_enable_message">သူတို့၏ ဆက်တင်များ သင့်ခွင့်ပြုချက်နောက်တွင် လော့ခ်မချမီ %1$s က မိမိစက်ပစ္စည်းတွင် တောင်းဆိုချက်ကို လက်ခံရမည်။ သူတို့၏ တိတ်ဆိတ်သော သတိပေးချက်များ ဖွင့်သွားမည်။</string>
+    <string name="peer_supervise_disable_title">ကြီးကြပ်မှု ရပ်မည်လား။</string>
+    <string name="peer_supervise_disable_message">%1$s ၏ စက်ပစ္စည်း လော့ခ်ဖွင့်သွားမည်ဖြစ်ပြီး သူတို့ကို အသိပေးမည်။ သူတို့၏ တိတ်ဆိတ်သော သတိပေးချက်များ ပြန်ပိတ်သွားမည်။</string>
+    <string name="peer_supervise_disable_confirm">ကြီးကြပ်မှု ရပ်မည်</string>
+    <string name="scan_add_waiting">သင့်ကြီးကြပ်သူကို စောင့်နေသည်…</string>
+    <string name="scan_add_waiting_subtitle">ကြီးကြပ်မှုအောက်တွင် အဆက်အသွယ် ထည့်ရန် သူတို့၏ ခွင့်ပြုချက် လိုအပ်သည်။ ဆုံးဖြတ်ချက် မကြာမီ ရောက်လာမည်။</string>
+    <string name="scan_add_denied">သင့်ကြီးကြပ်သူက ဤအဆက်အသွယ် ထည့်ရန် ငြင်းပယ်ခဲ့သည်။</string>
+    <string name="pending_awaiting_approval">ကြီးကြပ်သူ၏ ခွင့်ပြုချက်ကို စောင့်နေသည်…</string>
+    <string name="onboarding_bg_open_settings">စနစ်ဆက်တင်များ ဖွင့်မည်</string>
+    <string name="onboarding_bg_skip">ယခု ကျော်သွားမည်</string>
+    <string name="onboarding_bg_location_hint">Android 11 နှင့် အထက်၌ နောက်ခံတည်နေရာ ခွင့်ပြုချက်ကို စနစ်ဆက်တင်များမှသာ ပေးနိုင်သည်။ အက်ပ်က ၎င်းကို တိုက်ရိုက် တောင်းဆို၍ မရပါ။</string>
+
+    <string name="settings_notifications_title">အသိပေးချက်များ</string>
+    <string name="settings_message_notifications">မက်ဆေ့ချ် အသိပေးချက်များ</string>
+    <string name="settings_message_notifications_subtitle">ချတ် သို့မဟုတ် အဝိုင်း မက်ဆေ့ချ် ရောက်လာသောအခါ အသိပေးချက် ပြမည်</string>
+    <string name="settings_alert_notifications">တည်နေရာ သတိပေးချက်များ</string>
+    <string name="settings_alert_notifications_subtitle">ဧရိယာမှ ထွက်ခွာခြင်း၊ နီးကပ်လာခြင်းနှင့် တည်နေရာ ပျောက်ဆုံးခြင်း သတိပေးချက်များ။ SOS သတိပေးချက်များ အမြဲဖွင့်ထားသည်။</string>
+    <string name="settings_quiet_hours">တိတ်ဆိတ်သော အချိန်များ</string>
+    <string name="settings_quiet_hours_subtitle">ရွေးချယ်ထားသော အချိန်အတွင်း မက်ဆေ့ချ်နှင့် သတိပေးချက် အသိပေးချက်များကို အသံပိတ်သည်။ SOS သာ ကြားရမည်။</string>
+    <string name="settings_quiet_hours_start">အသံပိတ်ချိန် စတင်</string>
+    <string name="settings_quiet_hours_end">အထိ</string>
+    <string name="settings_disable_waiting">ကြီးကြပ်သူ၏ ခွင့်ပြုချက်ကို စောင့်နေသည်…</string>
+    <string name="settings_disable_cancel">တောင်းဆိုချက် ပယ်ဖျက်မည်</string>
+    <string name="settings_disable_denied">သင့်ကြီးကြပ်သူက လော့ခ်ဖွင့်ရန် တောင်းဆိုချက်ကို ငြင်းပယ်ခဲ့သည်။</string>
+    <string name="settings_disable_timed_out">အချိန်မီ အဖြေ မရောက်လာပါ။ သင့်ကြီးကြပ်သူ အော့ဖ်လိုင်း ဖြစ်နေနိုင်သည်။ နောက်မှ ထပ်စမ်းကြည့်ပါ။</string>
+
+    <string name="settings_erase_identity_card">အန္တရာယ်ရှိသော ဧရိယာ</string>
+    <string name="settings_erase_identity">အထောက်အထား ဖယ်ရှားပြီး ဒေတာအားလုံး ဖျက်မည်</string>
+    <string name="settings_erase_identity_subtitle">အထောက်အထား သော့၊ အဆက်အသွယ်များ၊ တည်နေရာ မှတ်တမ်း၊ မက်ဆေ့ချ်များနှင့် ဤစက်ပစ္စည်း၏ ဆက်တင်များကို ဖယ်ရှားပြီး ကနဦး သတ်မှတ်မှုကို ပြန်လည် စတင်သည်</string>
+    <string name="settings_erase_identity_title">အထောက်အထား ဖယ်ရှားပြီး အားလုံး ဖျက်မည်လား။</string>
+    <string name="settings_erase_identity_message">ဤအရာသည် သင့် Nostr သော့အတွဲ၊ အဆက်အသွယ်အားလုံး၊ ဧရိယာအားလုံး၊ တည်နေရာ မှတ်တမ်း၊ မက်ဆေ့ချ်များနှင့် ဤစက်ပစ္စည်း၏ ဆက်တင်များကို အပြီးအပိုင် ဖျက်ပစ်မည်။ အဆက်အသွယ်များကို အသိပေးမည် မဟုတ်ပါ၊ သူတို့၏ မိတ္တူများ ထိခိုက်မည် မဟုတ်ပါ။ ဖျက်ပစ်ရေး တောင်းဆိုချက် မပို့ပါ။ အဆက်အသွယ်ကို သတိပေးလိုပါက ဦးစွာ တစ်ဦးချင်းစီအတွက် “အဆက်အသွယ်နှင့် ဒေတာ ဖယ်ရှားမည်” ကို အသုံးပြုပါ။</string>
+    <string name="settings_erase_identity_final_title">နောက်ဆုံး အတည်ပြုချက်</string>
+    <string name="settings_erase_identity_final_message">အားလုံးကို ဖျက်ပြီး အထောက်အထားအသစ်ဖြင့် ပြန်စမည်လား။ ဤအရာကို ပြန်လည်ရယူ၍ မရပါ။ ဤအထောက်အထားကို နောက်ပိုင်း လိုအပ်နိုင်သည်ဟု ထင်ပါက ဦးစွာ စာဝှက်ထားသော အရန်သိမ်းဆည်းမှု ထုတ်ယူပါ။</string>
+    <string name="settings_erase_identity_confirm">ဖျက်ပြီး ပြန်စမည်</string>
+    <string name="toast_now_supervised">ယခု %1$s က ကြီးကြပ်နေသည်</string>
+    <string name="toast_already_supervised">ရှိပြီးသား ကြီးကြပ်မှုအောက်တွင် ရှိနေသည်။ ယင်းအစား ဤတောင်းဆိုချက်ကို ငြင်းပယ်ပါ</string>
+    <string name="toast_declined_supervision_invite">%1$s ထံမှ ကြီးကြပ်မှု တောင်းဆိုချက်ကို ငြင်းပယ်ခဲ့သည်</string>
+    <string name="supervision_disable_request_title">ဤစက်ပစ္စည်း လော့ခ်ဖွင့်မည်လား။</string>
+    <string name="supervision_disable_request_message">%1$s က ကြီးကြပ်မှု မုဒ်ကို ပိတ်ရန် တောင်းဆိုနေသည်။ ခွင့်ပြုပါက ကြီးကြပ်မှု တောင်းဆိုချက်အသစ် လက်ခံသည်အထိ ဆက်တင်များ အပြီးအပိုင် လော့ခ်ဖွင့်သွားမည်။</string>
 </resources>
