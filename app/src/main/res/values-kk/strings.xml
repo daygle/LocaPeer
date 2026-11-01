@@ -907,4 +907,16 @@
     <string name="queued_message_view">Оқиғаны қарау</string>
     <string name="queued_message_hide">Жасыру</string>
     <string name="queued_messages_flush">Қазір жіберу</string>
+
+    <string name="change_notif_title">Бақыланатын құрылғы баптауларды өзгертті</string>
+    <string name="change_pause">• Ортақтастық %1$s уақытша кідіртілді</string>
+    <string name="change_resume">• Ортақтастық %1$s қайта жалғасты</string>
+    <string name="change_precision">• Орналасқаны дәлдігі %1$s дейін өзгерді</string>
+    <string name="change_role">• Ортақтастық рөлі %1$s дейін өзгерді</string>
+    <string name="change_temp_start">• Уақытша ортақтастық %1$s басталды</string>
+    <string name="change_temp_end">• Уақытша ортақтастық аяқталды</string>
+    <string name="change_sos">• Контактінің SOS мәртебесі %1$s дейін өзгерді</string>
+    <string name="change_schedule">• Ортақтастық жалпы кестесі өзгерді</string>
+    <string name="change_schedule_peer">• Ортақтастық кестесі %1$s өзгерді</string>
+    <string name="change_generic">• Орналасқаны ортақтастық баптауы өзгерді</string>
 </resources>

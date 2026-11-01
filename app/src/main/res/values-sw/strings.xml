@@ -907,4 +907,73 @@
     <string name="queued_message_view">Angalia tukio</string>
     <string name="queued_message_hide">Ficha</string>
     <string name="queued_messages_flush">Tuma sasa</string>
+
+    <string name="change_notif_title">Kifaa kinachodhibitiwa kimebadilisha mipangilio</string>
+    <string name="change_pause">• Kushiriki na %1$s kumepumzishwa</string>
+    <string name="change_resume">• Kushiriki na %1$s kumeendelea</string>
+    <string name="change_precision">• Usahihi wa mahali ulibadilishwa kuwa %1$s</string>
+    <string name="change_role">• Wadhifa wa kushiriki ulibadilishwa kuwa %1$s</string>
+    <string name="change_temp_start">• Kushiriki kwa muda kumeanza na %1$s</string>
+    <string name="change_temp_end">• Kushiriki kwa muda kumekwisha</string>
+    <string name="change_sos">• Hali ya SOS ya anwani ilibadilishwa kuwa %1$s</string>
+    <string name="change_schedule">• Ratiba ya jumla ya kushiriki ulibadilishwa</string>
+    <string name="change_schedule_peer">• Ratiba ya kushiriki na %1$s ulibadilishwa</string>
+    <string name="change_generic">• Mpangilio wa kushiriki mahali ulibadilishwa</string>
+
+    <string name="conv_mute">Zima sauti ya arifa</string>
+    <string name="conv_unmute">Washa tena sauti ya arifa</string>
+    <string name="conv_cd_muted">Arifa zimezimwa sauti</string>
+    <string name="notif_supervised_invite_title">%1$s anataka kukusimamia</string>
+    <string name="notif_supervised_invite_text">Kubili ili mipangilio ya kifaa hiki ifungwe nyuma ya kibali chako. Baadaye unaweza omba kufungua wakati wowote.</string>
+    <string name="notif_supervision_ended_title">Uchunguzi umeisha</string>
+    <string name="notif_supervision_ended_text">Msimamizi wako amemaliza kumchunga kifaa hiki. Mipangilio imefunguliwa.</string>
+    <string name="notif_supervised_wipe_title">Kifaa kinachodhibitiwa kimefutwa</string>
+    <string name="notif_supervised_wipe_text">Kifaa kinachodhibitiwa kimetuma taarifa ya kufuta na kimefuta utambulisho wake. Subiri arifa zisizoza sauti; futa anwani ukiwa tayari.</string>
+    <string name="notif_supervisor_unknown_request_title">Maombi ya usimamizi kutoka kifaa kisichojulikana</string>
+    <string name="notif_supervisor_unknown_request_text">Kifaa kilichotuma maombi hakipo kwenye anwani zako. Ongeza kwanza kama anwani kisha umwombe arudishe maombi ya usimamizi.</string>
+    <string name="contact_add_request_title">Kuibali anwani mpya?</string>
+    <string name="contact_add_request_message">Kifaa chako kinachodhibitiwa kinaomba kuongeza “%1$s” kama anwani mpya wa kushiriki mahali. Ukikubali, kushiriki naye kuanza.</string>
+    <string name="incoming_awaiting_approval">Inasubiri kibali cha msimamizi…</string>
+    <string name="circle_leave_supervised">Kutoka katikati ya mzunguko huu unahitaji msimamizi wako: mwombe akueondoe kwenye kifaa chako.</string>
+
+    <string name="peer_supervise_enable_title">Kumsimamia kifaa hiki?</string>
+    <string name="peer_supervise_enable_message">%1$s lazima akubali ombi kwenye kifaa chake kabla mipangilio yake ifungwe nyuma ya kibali chako. Arifa zake za kimyamya zitawashwa.</string>
+    <string name="peer_supervise_disable_title">Sitisha usimamizi?</string>
+    <string name="peer_supervise_disable_message">Kifaa cha %1$s kitafunguliwa na kupewa taarifa. Arifa zake za kimyamya zitazimwa tena.</string>
+    <string name="peer_supervise_disable_confirm">Sitisha usimamizi</string>
+    <string name="scan_add_waiting">Inasubiri msimamizi…</string>
+    <string name="scan_add_waiting_subtitle">Katika usimamizi, kuongeza anwani kunahitaji kibali chake. Uamuzi utafika hivi karibuni.</string>
+    <string name="scan_add_denied">Msimamizi wako amekataa kuongeza anwani hii.</string>
+    <string name="pending_awaiting_approval">Inasubiri kibali cha msimamizi…</string>
+    <string name="onboarding_bg_open_settings">Fungua mipangilio ya mfumo</string>
+    <string name="onboarding_bg_skip">Ruka kwa sasa</string>
+    <string name="onboarding_bg_location_hint">Kwenye Android 11 au toleo mpya zaidi, mahali ya mandhari nyuma kunapewa ruhusa kupitia mipangilio ya mfumo pekee; programu haiwezi kuomba yenyewe.</string>
+
+    <string name="settings_notifications_title">Arifa</string>
+    <string name="settings_message_notifications">Arifa za ujumbe</string>
+    <string name="settings_message_notifications_subtitle">Onyesha arifa ujumbe wa mazungumzo au mzunguko unafika</string>
+    <string name="settings_alert_notifications">Taarifa za mahali</string>
+    <string name="settings_alert_notifications_subtitle">Taarifa za kutoka nje ya eneo, ukaribuni na kupoteza mahali. Taarifa za SOS zinaendelea kuwa tayari.</string>
+    <string name="settings_quiet_hours">Saa tulivu</string>
+    <string name="settings_quiet_hours_subtitle">Inazuia arifa za ujumbe na taarifa ndani ya muda uliopangwa. Taarifa za SOS zinapita.</string>
+    <string name="settings_quiet_hours_start">Kimya kuanzia</string>
+    <string name="settings_quiet_hours_end">Hadi</string>
+    <string name="settings_disable_waiting">Inasubiri kibali cha msimamizi…</string>
+    <string name="settings_disable_cancel">Ghairi ombi</string>
+    <string name="settings_disable_denied">Msimamizi wako amekataa ombi la kufungua.</string>
+    <string name="settings_disable_timed_out">Hakuna jibu kwa wakati. Msimamizi wako pengine yupo nje ya mtandao; jaribu tena baadaye.</string>
+
+    <string name="settings_erase_identity_card">Eneo la hatari</string>
+    <string name="settings_erase_identity">Futa utambulisho &amp; safisha data zote</string>
+    <string name="settings_erase_identity_subtitle">Inafuta funguo la utambulisho, anwani, historia ya mahali, ujumbe na mipangilio ya kifaa hiki kisha inaanza upya usanidi wa awali</string>
+    <string name="settings_erase_identity_title">Futa utambulisho na safisha yote?</string>
+    <string name="settings_erase_identity_message">Hii itafuta kabisa jozi ya funguo zako za Nostr, anwani zote, maeneo yote, historia ya mahali, ujumbe na mipangilio ya kifaa hiki. Anwani hazitajulishwa wala kuathiriwa kwenye nakala zao. Hakuna ombi la kufuta litakalotumwa; kuwataharifu anwani, tumia kwanza "Futa anwani na data" kwa kila mmoja.</string>
+    <string name="settings_erase_identity_final_title">Uthibitisho wa mwisho</string>
+    <string name="settings_erase_identity_final_message">Safisha yote na uanze upya na utambulisho mpya? Hii haiwezi kutenduliwa. Kama bado unaweza kuhitaji utambulisho huu, hamisha chelezo kilichofichwa kwanza.</string>
+    <string name="settings_erase_identity_confirm">Safisha na anza upya</string>
+    <string name="toast_now_supervised">Sasa unadhibitiwa na %1$s</string>
+    <string name="toast_already_supervised">Unadhibitiwa tayari; ghairi ombi hili badala yake</string>
+    <string name="toast_declined_supervision_invite">Ombi la usimamizi kutoka %1$s limekataliwa</string>
+    <string name="supervision_disable_request_title">Fungua kifaa hiki?</string>
+    <string name="supervision_disable_request_message">%1$s anaomba kuzima hali ya kudhibitiwa. Kukubali kufungua mipangilio milele hadi maombi mapya ya udhibiti ikubaliwe.</string>
 </resources>

@@ -907,4 +907,73 @@
     <string name="queued_message_view">Tingnan ang kaganapan</string>
     <string name="queued_message_hide">Itago</string>
     <string name="queued_messages_flush">Ipadala ngayon</string>
+
+    <string name="change_notif_title">Binago ng sinusubaybayang device ang mga setting</string>
+    <string name="change_pause">• Nakapahinto ang pagbabahagi kay %1$s</string>
+    <string name="change_resume">• Ipinagpatuloy muli ang pagbabahagi kay %1$s</string>
+    <string name="change_precision">• Binago ang katumpakan ng lokasyon tungong %1$s</string>
+    <string name="change_role">• Binago ang tungkulin sa pagbabahagi tungong %1$s</string>
+    <string name="change_temp_start">• Nagsimula ang pansamantalang pagbabahagi kay %1$s</string>
+    <string name="change_temp_end">• Nagtapos ang pansamantalang pagbabahagi</string>
+    <string name="change_sos">• Binago ang kalagayang SOS ng contact tungong %1$s</string>
+    <string name="change_schedule">• Binago ang kabuuang iskedyul ng pagbabahagi</string>
+    <string name="change_schedule_peer">• Binago ang iskedyul ng pagbabahagi kay %1$s</string>
+    <string name="change_generic">• May nabagong setting sa pagbabahagi ng lokasyon</string>
+
+    <string name="conv_mute">I-mute ang mga notification</string>
+    <string name="conv_unmute">I-on muli ang mga notification</string>
+    <string name="conv_cd_muted">Naka-mute ang mga notification</string>
+    <string name="notif_supervised_invite_title">Gusto kang subaybayan ni %1$s</string>
+    <string name="notif_supervised_invite_text">Tanggapin para nang maitanim ang mga setting ng device na ito sa iyong pag-apruba. Kaya mong hingin ang pag-alis nito sa susunod.</string>
+    <string name="notif_supervision_ended_title">Tapos na ang pagsubaybay</string>
+    <string name="notif_supervision_ended_text">Tapos na ang pagsubaybay ng supervisor sa device na ito. Bukas na ang mga setting.</string>
+    <string name="notif_supervised_wipe_title">Nabura ang sinusubaybayang device</string>
+    <string name="notif_supervised_wipe_text">May sinusubaybayang device na nagpadala ng abiso ng pagbura at binura ang sariling identity. Hintayin ang mga tahimik na babala; tanggalin ang contact kapag handa ka na.</string>
+    <string name="notif_supervisor_unknown_request_title">Hiling sa pagsubaybay mula sa hindi kilalang device</string>
+    <string name="notif_supervisor_unknown_request_text">Wala sa iyong mga contact ang device na nagpadala ng hiling. Idagdag muna ito bilang contact, tapos hingin na iulit ang hiling ng pagsubaybay.</string>
+    <string name="contact_add_request_title">Payagan ang bagong contact?</string>
+    <string name="contact_add_request_message">Hinihiling ng sinusubaybayang device mo na idagdag ang “%1$s” bilang bagong contact sa pagbabahagi ng lokasyon. Kapag inaprubahan ito, sisimulan ang pagbabahagi sa kanila.</string>
+    <string name="incoming_awaiting_approval">Naghihintay sa pag-apruba ng supervisor…</string>
+    <string name="circle_leave_supervised">Ang pag-alis sa bilog na ito ay kailangan ng iyong supervisor: hingin sa kanya na alisin ka sa iyong device.</string>
+
+    <string name="peer_supervise_enable_title">Subaybayan ang device na ito?</string>
+    <string name="peer_supervise_enable_message">Kinakailangan ni %1$s na tumanggap sa sariling device niya bago maisama ang mga setting niya sa iyong pag-apruba. Bubuksan ang mga tahimik na babala niya.</string>
+    <string name="peer_supervise_disable_title">Ititigil ang pagsubaybay?</string>
+    <string name="peer_supervise_disable_message">Ang device ni %1$s ay bubuksan at aabisuhan. Ang mga tahimik na babala nito ay babalik sa sarado.</string>
+    <string name="peer_supervise_disable_confirm">Itigil ang pagsubaybay</string>
+    <string name="scan_add_waiting">Naghintay sa supervisor…</string>
+    <string name="scan_add_waiting_subtitle">Sa maitatampok na pagsubaybay, ang pagdagdag ng contact ay kailangan ng pag-apruba nito. Ang pagpapasya ay darating sa lalong madaling panahon.</string>
+    <string name="scan_add_denied">Tinanggihan ng supervisor mo ang pagdaragdag ng contact na ito.</string>
+    <string name="pending_awaiting_approval">Naghihintay sa pag-apruba ng supervisor…</string>
+    <string name="onboarding_bg_open_settings">Buksan ang mga setting ng sistema</string>
+    <string name="onboarding_bg_skip">Laktawan muna</string>
+    <string name="onboarding_bg_location_hint">Sa Android 11 o mas bago, ang lokasyon sa background ay binibigyan lang sa mga setting ng sistema—hindi maaaring hingin ng app nang diretso.</string>
+
+    <string name="settings_notifications_title">Mga notification</string>
+    <string name="settings_message_notifications">Mga notification sa mensahe</string>
+    <string name="settings_message_notifications_subtitle">Magpakita ng notification kapag may dumating na mensahe mula sa chat o bilog</string>
+    <string name="settings_alert_notifications">Babala sa lokasyon</string>
+    <string name="settings_alert_notifications_subtitle">Mga babala sa paglabas sa geofence, kalapitan at pagkawala ng lokasyon. Mananatiling bukas ang mga babala sa SOS.</string>
+    <string name="settings_quiet_hours">Tahimik na mga oras</string>
+    <string name="settings_quiet_hours_subtitle">Nakamute ang mga notification at babala sa napiling oras. Ganap na naririnig pa rin ang SOS.</string>
+    <string name="settings_quiet_hours_start">Manahimik mula sa</string>
+    <string name="settings_quiet_hours_end">Hanggang</string>
+    <string name="settings_disable_waiting">Naghihintay sa pag-apruba ng supervisor mo…</string>
+    <string name="settings_disable_cancel">Kanselahin ang hiling</string>
+    <string name="settings_disable_denied">Tinanggihan ng supervisor mo ang hiling na pagbukas.</string>
+    <string name="settings_disable_timed_out">Walang sagot sa takdang oras. Maaaring offline ang supervisor mo; subukan muli mamaya.</string>
+
+    <string name="settings_erase_identity_card">Mapanganib na lugar</string>
+    <string name="settings_erase_identity">Alisin ang identity &amp; burahin ang lahat ng data</string>
+    <string name="settings_erase_identity_subtitle">Buburahin nito ang identity key, mga contact, history ng lokasyon, mga mensahe at mga setting ng device na ito, saka sisimulan muli ang unang setup</string>
+    <string name="settings_erase_identity_title">Aalisin ang identity at buburahin ang lahat ng data?</string>
+    <string name="settings_erase_identity_message">Permanenteng buburahin nito ang iyong Nostr key pair, lahat ng contact, lahat ng geofence, history ng lokasyon, mga mensahe at mga setting ng device na ito. Hindi mapapaalam ang mga contact at hindi maaapektuhan ang mga kopya nila. Walang ipapadalang hiling ng pagbura — para bigyan ng babala ang isang contact, gamitin muna ang "Burahin ang contact at data" sa bawat isa.</string>
+    <string name="settings_erase_identity_final_title">Panghuling pagkumpirma</string>
+    <string name="settings_erase_identity_final_message">Buburahin ang lahat at magsisimula muli sa bagong identity? Hindi na maibabalik ito. Kung maaaring kailanganin mo pa ito, mag-export muna ng naka-encrypt na backup.</string>
+    <string name="settings_erase_identity_confirm">Burahin at magsimulang muli</string>
+    <string name="toast_now_supervised">Ngayon ay sinusubaybayan ka na ni %1$s</string>
+    <string name="toast_already_supervised">Nakasubaybay na ang iyong device; tanggihan na lang ang hiling</string>
+    <string name="toast_declined_supervision_invite">Tinanggihan ang hiling sa pagsubaybay mula kay %1$s</string>
+    <string name="supervision_disable_request_title">Bubuksan ang device na ito?</string>
+    <string name="supervision_disable_request_message">Hinihiling ni %1$s na patayin ang naka-subaybay na mode. Kapag inaprubahan, bubuksan nang tuluyan ang mga setting hanggang sa may bagong hiling ng pagsubaybay na matanggap.</string>
 </resources>

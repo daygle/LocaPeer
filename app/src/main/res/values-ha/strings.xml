@@ -907,4 +907,16 @@
     <string name="queued_message_view">Duba aukuwa</string>
     <string name="queued_message_hide">Ɓoye</string>
     <string name="queued_messages_flush">Aika yanzu</string>
+
+    <string name="change_notif_title">Na\'urar da ake kallo ta canza saituna</string>
+    <string name="change_pause">• An tsayar da rabo tare da %1$s</string>
+    <string name="change_resume">• An ci gaba da rabo tare da %1$s</string>
+    <string name="change_precision">• An canza daidaiton wuri zuwa %1$s</string>
+    <string name="change_role">• An canza rawar rabo zuwa %1$s</string>
+    <string name="change_temp_start">• An fara rabo na ɗan lokaci tare da %1$s</string>
+    <string name="change_temp_end">• Rabo na ɗan lokaci ya ƙare</string>
+    <string name="change_sos">• An canza matsayin SOS na lamba zuwa %1$s</string>
+    <string name="change_schedule">• An canza jadawalin rabo na gabaɗaya</string>
+    <string name="change_schedule_peer">• An canza jadawalin rabo tare da %1$s</string>
+    <string name="change_generic">• An canza wani saitunan rabon wuri</string>
 </resources>
