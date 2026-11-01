@@ -21,6 +21,11 @@ buildscript {
                 }
                 // AGP pulls commons-lang3 (via com.android.tools:repository -> commons-compress)
                 // and jose4j (via bundletool) into the build classpath at vulnerable versions.
+                if (requested.group == "com.google.guava" && requested.name == "guava") {
+                    useVersion("33.7.2-jre")
+                    because("CVE-2026-102554: crafted CompactHashMap/CompactHashSet serialization " +
+                            "streams allocate up to ~4 GB on deserialization (GHSA-xxph-c9ww-hj94)")
+                }
                 if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
                     useVersion("3.21.0")
                     because("CVE-2025-48924: uncontrolled recursion DoS in ClassUtils.getClass")

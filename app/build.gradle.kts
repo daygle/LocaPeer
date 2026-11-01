@@ -217,6 +217,7 @@ dependencies {
 // Versions come from the catalog's "Security-hardened versions" block so they can't drift.
 val pinnedBouncyCastle = libs.versions.bouncycastle.get()
 val pinnedBcprov = libs.versions.bouncycastleProv.get()
+val pinnedGuava = libs.versions.guava.get()
 val pinnedNetty = libs.versions.netty.get()
 val pinnedJdom2 = libs.versions.jdom2.get()
 val pinnedHttpclient = libs.versions.httpclient.get()
@@ -230,6 +231,15 @@ configurations.all {
                 val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
                 useTarget("org.bouncycastle:$artifact:${if (artifact == "bcprov-jdk18on") pinnedBcprov else pinnedBouncyCastle}")
                 because("Consolidate on maintained jdk18on artifact line and patch critical vulnerabilities")
+            }
+            // Force the patched Guava release (the Hilt/Dagger compiler chain resolves
+            // 33.6.0-jre, inside the CVE-2026-102554 affected range).
+            // Annotation-processing classpath only, but forced so nothing anywhere in the
+            // graph resolves it unpatched.
+            if (requested.group == "com.google.guava" && requested.name == "guava") {
+                useVersion(pinnedGuava)
+                because("CVE-2026-102554: crafted CompactHashMap/CompactHashSet serialization " +
+                        "streams allocate up to ~4 GB on deserialization (GHSA-xxph-c9ww-hj94)")
             }
             // Align all Netty modules to a safe version
             if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
