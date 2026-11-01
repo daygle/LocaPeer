@@ -967,4 +967,73 @@
     <string name="queued_message_view">عرض الحدث</string>
     <string name="queued_message_hide">إخفاء</string>
     <string name="queued_messages_flush">إرسال الآن</string>
+
+    <string name="change_notif_title">الجهاز الخاضع للإشراف غيّر الإعدادات</string>
+    <string name="change_pause">• أُوقفت المشاركة مع %1$s</string>
+    <string name="change_resume">• استُؤنفت المشاركة مع %1$s</string>
+    <string name="change_precision">• تغيّرت دقة الموقع إلى %1$s</string>
+    <string name="change_role">• تغيّر دور المشاركة إلى %1$s</string>
+    <string name="change_temp_start">• بدأت المشاركة المؤقتة مع %1$s</string>
+    <string name="change_temp_end">• انتهت المشاركة المؤقتة</string>
+    <string name="change_sos">• تغيّرت حالة SOS لجهة الاتصال إلى %1$s</string>
+    <string name="change_schedule">• تغيّر جدول المشاركة العام</string>
+    <string name="change_schedule_peer">• تغيّر جدول المشاركة مع %1$s</string>
+    <string name="change_generic">• تغيّر إعداد واحد من إعدادات مشاركة الموقع</string>
+
+    <string name="conv_mute">اكتم الإشعارات</string>
+    <string name="conv_unmute">أعد تشغيل الإشعارات</string>
+    <string name="conv_cd_muted">الإشعارات مكتومة</string>
+    <string name="notif_supervised_invite_title">يريد %1$s أن يشرف عليك</string>
+    <string name="notif_supervised_invite_text">اقبل لتُقفل إعدادات هذا الجهاز وراء موافقتك. يمكنك دائمًا طلب رفع القفل لاحقًا.</string>
+    <string name="notif_supervision_ended_title">انتهى الإشراف</string>
+    <string name="notif_supervision_ended_text">أنهى مُشرفك الإشراف على هذا الجهاز. الإعدادات غير مقفلة الآن.</string>
+    <string name="notif_supervised_wipe_title">تم مسح جهاز خاضع للإشراف</string>
+    <string name="notif_supervised_wipe_text">أرسل جهاز خاضع للإشراف إشعار المسح ومحا هويته. انتظر التنبيهات الصامتة؛ واحذف جهة الاتصال عندما تصبح جاهزًا.</string>
+    <string name="notif_supervisor_unknown_request_title">طلب إشراف من جهاز غير معروف</string>
+    <string name="notif_supervisor_unknown_request_text">الجهاز المرسل للطلب ليس ضمن جهات اتصالك. أضفه كجهة اتصال أولًا ثم اطلب منه إعادة إرسال طلب الإشراف.</string>
+    <string name="contact_add_request_title">هل تسمح بجهة الاتصال الجديدة؟</string>
+    <string name="contact_add_request_message">يطلب جهازك الخاضع للإشراف إضافة «%1$s» كجهة اتصال جديدة لمشاركة الموقع. الموافقة ستبدأ المشاركة معه.</string>
+    <string name="incoming_awaiting_approval">بانتظار موافقة المُشرف…</string>
+    <string name="circle_leave_supervised">الخروج من هذه الدائرة يتطلب مُشرفك: اطلب منه إزالتك من جهازك.</string>
+
+    <string name="peer_supervise_enable_title">هل تشرف على هذا الجهاز؟</string>
+    <string name="peer_supervise_enable_message">على %1$s قبول الطلب على جهازه قبل أن تُقفل إعداداته وراء موافقتك. وستُشغَّل تنبيهاته الصامتة.</string>
+    <string name="peer_supervise_disable_title">هل توقف الإشراف؟</string>
+    <string name="peer_supervise_disable_message">سيُفك قفل جهاز %1$s وسيُبلَّغ بذلك. وستُعاد تنبيهاته الصامتة إلى الإيقاف.</string>
+    <string name="peer_supervise_disable_confirm">إيقاف الإشراف</string>
+    <string name="scan_add_waiting">بانتظار مُشرفك…</string>
+    <string name="scan_add_waiting_subtitle">تحت الإشراف، تتطلب إضافة جهة اتصال موافقته. سيصل القرار قريبًا.</string>
+    <string name="scan_add_denied">رفض مُشرفك إضافة جهة الاتصال هذه.</string>
+    <string name="pending_awaiting_approval">بانتظار موافقة المُشرف…</string>
+    <string name="onboarding_bg_open_settings">افتح إعدادات النظام</string>
+    <string name="onboarding_bg_skip">تخطَّ الآن</string>
+    <string name="onboarding_bg_location_hint">في Android 11 أو أحدث، لا تُمنح صلاحية الموقع في الخلفية إلا من إعدادات النظام؛ ولا يمكن للتطبيق طلبها مباشرة.</string>
+
+    <string name="settings_notifications_title">الإشعارات</string>
+    <string name="settings_message_notifications">إشعارات الرسائل</string>
+    <string name="settings_message_notifications_subtitle">أظهر إشعارًا عند وصول رسالة دردشة أو رسالة من الدائرة</string>
+    <string name="settings_alert_notifications">تنبيهات الموقع</string>
+    <string name="settings_alert_notifications_subtitle">تنبيهات الخروج من النطاق والقرب وفقدان الموقع. تبقى تنبيهات SOS مفعّلة دائمًا.</string>
+    <string name="settings_quiet_hours">ساعات الهدوء</string>
+    <string name="settings_quiet_hours_subtitle">يكتم إشعارات الرسائل والتنبيهات خلال الفترة المحددة. ولا يمر إلا SOS.</string>
+    <string name="settings_quiet_hours_start">اكتم ابتداءً من</string>
+    <string name="settings_quiet_hours_end">حتى</string>
+    <string name="settings_disable_waiting">بانتظار موافقة مُشرفك…</string>
+    <string name="settings_disable_cancel">إلغاء الطلب</string>
+    <string name="settings_disable_denied">رفض مُشرفك طلب رفع القفل.</string>
+    <string name="settings_disable_timed_out">لم يصل رد في الوقت المناسب. قد يكون مُشرفك غير متصل؛ حاول لاحقًا.</string>
+
+    <string name="settings_erase_identity_card">منطقة الخطر</string>
+    <string name="settings_erase_identity">حذف الهوية &amp; مسح كل البيانات</string>
+    <string name="settings_erase_identity_subtitle">يحذف مفتاح الهوية وجهات الاتصال وسجل الموقع والرسائل وإعدادات هذا الجهاز، ثم يعيد بدء الإعداد الأولي</string>
+    <string name="settings_erase_identity_title">هل تحذف الهوية وتمسح كل شيء؟</string>
+    <string name="settings_erase_identity_message">هذا يمسح نهائيًا زوج مفاتيح Nostr الخاص بك، وكل جهات الاتصال، وكل النطاقات، وسجل الموقع، والرسائل، وإعدادات هذا الجهاز. لن تُبلَّغ جهات الاتصال ولن تتأثر نسخها. لن يُرسل أي طلب حذف؛ لتحذير جهة اتصال، استخدم «حذف جهة الاتصال والبيانات» لكل واحدة أولًا.</string>
+    <string name="settings_erase_identity_final_title">التأكيد الأخير</string>
+    <string name="settings_erase_identity_final_message">هل تمسح كل شيء وتبدأ من جديد بهوية جديدة؟ لا يمكن التراجع عن ذلك. إن كنت قد تحتاج هذه الهوية لاحقًا، فصدّر نسخة احتياطية مشفّرة أولًا.</string>
+    <string name="settings_erase_identity_confirm">امسح وابدأ من جديد</string>
+    <string name="toast_now_supervised">أنت الآن تحت إشراف %1$s</string>
+    <string name="toast_already_supervised">الجهاز خاضع للإشراف بالفعل؛ ارفض هذا الطلب بدلًا من ذلك</string>
+    <string name="toast_declined_supervision_invite">تم رفض طلب الإشراف من %1$s</string>
+    <string name="supervision_disable_request_title">هل ترفع قفل هذا الجهاز؟</string>
+    <string name="supervision_disable_request_message">يطلب %1$s إيقاف الوضع الخاضع للإشراف. الموافقة ترفع قفل الإعدادات نهائيًا حتى تُقبل طلب إشراف جديد.</string>
 </resources>

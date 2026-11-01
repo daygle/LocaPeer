@@ -907,4 +907,73 @@
     <string name="queued_message_view">مشاهده رویداد</string>
     <string name="queued_message_hide">پنهان کردن</string>
     <string name="queued_messages_flush">ارسال اکنون</string>
+
+    <string name="change_notif_title">دستگاه تحت نظارت تنظیمات را تغییر داد</string>
+    <string name="change_pause">• اشتراک‌گذاری با %1$s موقتاً متوقف شد</string>
+    <string name="change_resume">• اشتراک‌گذاری با %1$s از سر گرفته شد</string>
+    <string name="change_precision">• دقت موقعیت به %1$s تغییر کرد</string>
+    <string name="change_role">• نقش اشتراک‌گذاری به %1$s تغییر کرد</string>
+    <string name="change_temp_start">• اشتراک‌گذاری موقت با %1$s آغاز شد</string>
+    <string name="change_temp_end">• اشتراک‌گذاری موقت پایان یافت</string>
+    <string name="change_sos">• وضعیت SOS مخاطب به %1$s تغییر کرد</string>
+    <string name="change_schedule">• برنامه کلی اشتراک‌گذاری تغییر کرد</string>
+    <string name="change_schedule_peer">• برنامه اشتراک‌گذاری با %1$s تغییر کرد</string>
+    <string name="change_generic">• یک تنظیم اشتراک‌گذاری موقعیت تغییر کرد</string>
+
+    <string name="conv_mute">بی‌صدا کردن اعلان‌ها</string>
+    <string name="conv_unmute">روشن کردن دوباره اعلان‌ها</string>
+    <string name="conv_cd_muted">اعلان‌ها بی‌صدا شده‌اند</string>
+    <string name="notif_supervised_invite_title">%1$s می‌خواهد بر شما نظارت کند</string>
+    <string name="notif_supervised_invite_text">بپذیرید تا تنظیمات این دستگاه پشت تأیید شما قفل شود. همیشه می‌توانید بعداً درخواست باز کردن قفل کنید.</string>
+    <string name="notif_supervision_ended_title">نظارت پایان یافت</string>
+    <string name="notif_supervision_ended_text">ناظر شما نظارت بر این دستگاه را پایان داد. تنظیمات اکنون باز است.</string>
+    <string name="notif_supervised_wipe_title">دستگاه تحت نظارت پاک شد</string>
+    <string name="notif_supervised_wipe_text">یک دستگاه تحت نظارت اعلان پاک‌سازی فرستاد و هویت خودش را پاک کرد. مراقب هشدارهای بی‌صدا باشید و وقتی آماده شدید مخاطب را حذف کنید.</string>
+    <string name="notif_supervisor_unknown_request_title">درخواست نظارت از دستگاهی ناشناس</string>
+    <string name="notif_supervisor_unknown_request_text">دستگاهی که درخواست فرستاده در مخاطبان شما نیست. نخست آن را به‌عنوان مخاطب اضافه کنید و سپس بخواهید درخواست نظارت را دوباره بفرستد.</string>
+    <string name="contact_add_request_title">اجازه دادن به مخاطب جدید؟</string>
+    <string name="contact_add_request_message">دستگاه تحت نظارت شما درخواست می‌کند «%1$s» به‌عنوان مخاطب جدید اشتراک‌گذاری موقعیت اضافه شود. تأیید، اشتراک‌گذاری با او را آغاز می‌کند.</string>
+    <string name="incoming_awaiting_approval">در انتظار تأیید ناظر…</string>
+    <string name="circle_leave_supervised">خروج از این حلقه به ناظر شما نیاز دارد: از او بخواهید شما را از دستگاه خودتان حذف کند.</string>
+
+    <string name="peer_supervise_enable_title">بر این دستگاه نظارت شود؟</string>
+    <string name="peer_supervise_enable_message">%1$s باید درخواست را روی دستگاه خودش بپذیرد تا تنظیماتش پشت تأیید شما قفل شود. هشدارهای بی‌صدای او روشن می‌شوند.</string>
+    <string name="peer_supervise_disable_title">نظارت پایان یابد؟</string>
+    <string name="peer_supervise_disable_message">دستگاه %1$s باز می‌شود و به او اطلاع داده می‌شود. هشدارهای بی‌صدای او دوباره خاموش می‌شوند.</string>
+    <string name="peer_supervise_disable_confirm">پایان نظارت</string>
+    <string name="scan_add_waiting">در انتظار ناظر شما…</string>
+    <string name="scan_add_waiting_subtitle">در حالت نظارت، افزودن مخاطب به تأیید ناظر نیاز دارد. تصمیم به‌زودی می‌رسد.</string>
+    <string name="scan_add_denied">ناظر شما افزودن این مخاطب را رد کرد.</string>
+    <string name="pending_awaiting_approval">در انتظار تأیید ناظر…</string>
+    <string name="onboarding_bg_open_settings">باز کردن تنظیمات سیستم</string>
+    <string name="onboarding_bg_skip">فعلاً رد کن</string>
+    <string name="onboarding_bg_location_hint">در Android ۱۱ و بالاتر، مجوز موقعیت در پس‌زمینه فقط از تنظیمات سیستم داده می‌شود؛ برنامه نمی‌تواند مستقیم آن را درخواست کند.</string>
+
+    <string name="settings_notifications_title">اعلان‌ها</string>
+    <string name="settings_message_notifications">اعلان پیام‌ها</string>
+    <string name="settings_message_notifications_subtitle">وقتی پیام گفتگو یا حلقه می‌رسد اعلان نشان بده</string>
+    <string name="settings_alert_notifications">هشدارهای موقعیت</string>
+    <string name="settings_alert_notifications_subtitle">هشدار خروج از محدوده، نزدیکی و از دست رفتن موقعیت. هشدارهای SOS همیشه روشن می‌مانند.</string>
+    <string name="settings_quiet_hours">ساعات آرام</string>
+    <string name="settings_quiet_hours_subtitle">در بازه تعیین‌شده اعلان‌های پیام و هشدارها را بی‌صدا می‌کند. فقط SOS شنیده می‌شود.</string>
+    <string name="settings_quiet_hours_start">بی‌صدا از</string>
+    <string name="settings_quiet_hours_end">تا</string>
+    <string name="settings_disable_waiting">در انتظار تأیید ناظر شما…</string>
+    <string name="settings_disable_cancel">لغو درخواست</string>
+    <string name="settings_disable_denied">ناظر شما درخواست باز کردن قفل را رد کرد.</string>
+    <string name="settings_disable_timed_out">پاسخی به‌موقع نرسید. شاید ناظر شما آفلاین است؛ بعداً دوباره تلاش کنید.</string>
+
+    <string name="settings_erase_identity_card">منطقه خطر</string>
+    <string name="settings_erase_identity">حذف هویت &amp; پاک کردن همه داده‌ها</string>
+    <string name="settings_erase_identity_subtitle">کلید هویت، مخاطبان، تاریخچه موقعیت، پیام‌ها و تنظیمات این دستگاه را پاک می‌کند و راه‌اندازی اولیه را از نو آغاز می‌کند</string>
+    <string name="settings_erase_identity_title">هویت حذف و همه‌چیز پاک شود؟</string>
+    <string name="settings_erase_identity_message">این کار جفت‌کلید Nostr شما، همه مخاطبان، همه محدوده‌ها، تاریخچه موقعیت، پیام‌ها و تنظیمات این دستگاه را برای همیشه پاک می‌کند. به مخاطبان اطلاع داده نمی‌شود و نسخه‌های آن‌ها آسیب نمی‌بیند. هیچ درخواست حذفی فرستاده نمی‌شود؛ برای هشدار دادن به یک مخاطب، نخست برای هرکدام «حذف مخاطب و داده‌ها» را به کار ببرید.</string>
+    <string name="settings_erase_identity_final_title">تأیید نهایی</string>
+    <string name="settings_erase_identity_final_message">همه‌چیز پاک شود و با هویتی تازه از نو شروع کنید؟ این کار برگشت‌پذیر نیست. اگر ممکن است بعداً به این هویت نیاز داشته باشید، نخست یک پشتیبان رمزگذاری‌شده صادر کنید.</string>
+    <string name="settings_erase_identity_confirm">پاک کن و از نو شروع کن</string>
+    <string name="toast_now_supervised">اکنون %1$s بر شما نظارت می‌کند</string>
+    <string name="toast_already_supervised">از قبل تحت نظارت است؛ در عوض این درخواست را رد کنید</string>
+    <string name="toast_declined_supervision_invite">درخواست نظارت از %1$s رد شد</string>
+    <string name="supervision_disable_request_title">قفل این دستگاه باز شود؟</string>
+    <string name="supervision_disable_request_message">%1$s درخواست خاموش کردن حالت تحت نظارت را دارد. تأیید، تنظیمات را تا زمان پذیرش درخواست نظارت تازه، برای همیشه باز می‌کند.</string>
 </resources>
