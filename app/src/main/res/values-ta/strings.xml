@@ -907,4 +907,73 @@
     <string name="queued_message_view">நிகழ்வைப் பார்</string>
     <string name="queued_message_hide">மறை</string>
     <string name="queued_messages_flush">இப்போது அனுப்பு</string>
+
+    <string name="change_notif_title">மேற்பார்வையில் உள்ள சாதனம் அமைப்புகளை மாற்றியது</string>
+    <string name="change_pause">• %1$s உடன் பங்கீடு இடைநிறுத்தப்பட்டது</string>
+    <string name="change_resume">• %1$s உடன் பங்கீடு மீண்டும் தொடங்கியது</string>
+    <string name="change_precision">• இருப்பிடத் துல்லியம் %1$s ஆக மாற்றப்பட்டது</string>
+    <string name="change_role">• பங்கீட்டுப் பங்கு %1$s ஆக மாற்றப்பட்டது</string>
+    <string name="change_temp_start">• %1$s உடன் தற்காலிகப் பங்கீடு தொடங்கியது</string>
+    <string name="change_temp_end">• தற்காலிகப் பங்கீடு முடிந்தது</string>
+    <string name="change_sos">• தொடர்பின் SOS நிலை %1$s ஆக மாற்றப்பட்டது</string>
+    <string name="change_schedule">• ஒட்டுமொத்தப் பங்கீட்டு அட்டவணை மாற்றப்பட்டது</string>
+    <string name="change_schedule_peer">• %1$s உடன் பங்கீட்டு அட்டவணை மாற்றப்பட்டது</string>
+    <string name="change_generic">• இருப்பிடப் பங்கீட்டு அமைப்பு ஒன்று மாற்றப்பட்டது</string>
+
+    <string name="conv_mute">அறிவிப்புகளை ஒலியடக்கு</string>
+    <string name="conv_unmute">அறிவிப்புகளை மீண்டும் இயக்கு</string>
+    <string name="conv_cd_muted">அறிவிப்புகள் ஒலியடக்கப்பட்டுள்ளன</string>
+    <string name="notif_supervised_invite_title">%1$s உங்களை மேற்பார்வையிட விரும்புகிறார்</string>
+    <string name="notif_supervised_invite_text">இந்தச் சாதனத்தின் அமைப்புகள் உங்கள் ஒப்புதலுக்குப் பின்னால் பூட்டப்பட ஏற்கவும். பின்னர் எப்போதும் திறக்கக் கேட்கலாம்.</string>
+    <string name="notif_supervision_ended_title">மேற்பார்வை முடிந்தது</string>
+    <string name="notif_supervision_ended_text">உங்கள் மேற்பார்வையாளர் இந்தச் சாதனத்தின் மேற்பார்வையை முடித்தார். அமைப்புகள் இப்போது திறக்கப்பட்டுள்ளன.</string>
+    <string name="notif_supervised_wipe_title">மேற்பார்வையில் உள்ள சாதனம் அழிக்கப்பட்டது</string>
+    <string name="notif_supervised_wipe_text">மேற்பார்வையில் உள்ள சாதனம் அழிப்பு அறிவிப்பை அனுப்பி அதன் சொந்த அடையாளத்தை அழித்தது. அமைதியான எச்சரிக்கைகளுக்காகக் காத்திருந்து, தயாராகும்போது தொடர்பை நீக்குங்கள்.</string>
+    <string name="notif_supervisor_unknown_request_title">தெரியாத சாதனத்திலிருந்து மேற்பார்வைக் கோரிக்கை</string>
+    <string name="notif_supervisor_unknown_request_text">கோரிக்கையை அனுப்பிய சாதனம் உங்கள் தொடர்புகளில் இல்லை. முதலில் அதைத் தொடர்பாகச் சேர்த்து, மேற்பார்வைக் கோரிக்கையை மீண்டும் அனுப்பச் சொல்லுங்கள்.</string>
+    <string name="contact_add_request_title">புதிய தொடர்பை அனுமதிக்கவா?</string>
+    <string name="contact_add_request_message">உங்கள் மேற்பார்வையில் உள்ள சாதனம் “%1$s” அவர்களை இருப்பிடப் பங்கீட்டின் புதிய தொடர்பாகச் சேர்க்கக் கேட்கிறது. அனுமதித்தால் அவர்களுடன் பங்கீடு தொடங்கும்.</string>
+    <string name="incoming_awaiting_approval">மேற்பார்வையாளரின் ஒப்புதலுக்காகக் காத்திருக்கிறது…</string>
+    <string name="circle_leave_supervised">இந்த வட்டத்திலிருந்து வெளியேற உங்கள் மேற்பார்வையாளர் தேவை: உங்கள் சொந்தச் சாதனத்திலிருந்து உங்களை நீக்கச் சொல்லுங்கள்.</string>
+
+    <string name="peer_supervise_enable_title">இந்தச் சாதனத்தை மேற்பார்வையிடவா?</string>
+    <string name="peer_supervise_enable_message">%1$s அவர்களின் அமைப்புகள் உங்கள் ஒப்புதலுக்குப் பின்னால் பூட்டப்படும் முன் அவர்கள் தங்கள் சொந்தச் சாதனத்தில் கோரிக்கையை ஏற்க வேண்டும். அவர்களின் அமைதியான எச்சரிக்கைகள் இயக்கப்படும்.</string>
+    <string name="peer_supervise_disable_title">மேற்பார்வையை நிறுத்தவா?</string>
+    <string name="peer_supervise_disable_message">%1$s அவர்களின் சாதனம் திறக்கப்பட்டு அவர்களுக்குத் தெரிவிக்கப்படும். அவர்களின் அமைதியான எச்சரிக்கைகள் மீண்டும் அணைக்கப்படும்.</string>
+    <string name="peer_supervise_disable_confirm">மேற்பார்வையை நிறுத்து</string>
+    <string name="scan_add_waiting">உங்கள் மேற்பார்வையாளருக்காகக் காத்திருக்கிறது…</string>
+    <string name="scan_add_waiting_subtitle">மேற்பார்வையின் கீழ், தொடர்பைச் சேர்க்க அவர்களின் ஒப்புதல் தேவை. முடிவு விரைவில் வரும்.</string>
+    <string name="scan_add_denied">உங்கள் மேற்பார்வையாளர் இந்தத் தொடர்பைச் சேர்ப்பதை மறுத்தார்.</string>
+    <string name="pending_awaiting_approval">மேற்பார்வையாளரின் ஒப்புதலுக்காகக் காத்திருக்கிறது…</string>
+    <string name="onboarding_bg_open_settings">கணினி அமைப்புகளைத் திற</string>
+    <string name="onboarding_bg_skip">இப்போது தவிர்</string>
+    <string name="onboarding_bg_location_hint">Android 11 அல்லது அதற்குப் பிறகு, பின்னணி இருப்பிட அனுமதி கணினி அமைப்புகளில் மட்டுமே வழங்கப்படும்; செயலி அதை நேரடியாகக் கேட்க முடியாது.</string>
+
+    <string name="settings_notifications_title">அறிவிப்புகள்</string>
+    <string name="settings_message_notifications">செய்தி அறிவிப்புகள்</string>
+    <string name="settings_message_notifications_subtitle">அரட்டை அல்லது வட்டச் செய்தி வரும்போது அறிவிப்பைக் காட்டு</string>
+    <string name="settings_alert_notifications">இருப்பிட எச்சரிக்கைகள்</string>
+    <string name="settings_alert_notifications_subtitle">பகுதியை விட்டு வெளியேறுதல், அண்மை மற்றும் இருப்பிடம் இழப்பதற்கான எச்சரிக்கைகள். SOS எச்சரிக்கைகள் எப்போதும் இயக்கத்தில் இருக்கும்.</string>
+    <string name="settings_quiet_hours">அமைதியான நேரங்கள்</string>
+    <string name="settings_quiet_hours_subtitle">தேர்ந்தெடுத்த காலத்தில் செய்தி மற்றும் எச்சரிக்கை அறிவிப்புகளை ஒலியடக்கும். SOS மட்டும் ஒலிக்கும்.</string>
+    <string name="settings_quiet_hours_start">ஒலியடக்கம் தொடங்கும்</string>
+    <string name="settings_quiet_hours_end">வரை</string>
+    <string name="settings_disable_waiting">உங்கள் மேற்பார்வையாளரின் ஒப்புதலுக்காகக் காத்திருக்கிறது…</string>
+    <string name="settings_disable_cancel">கோரிக்கையை ரத்துசெய்</string>
+    <string name="settings_disable_denied">உங்கள் மேற்பார்வையாளர் திறப்புக் கோரிக்கையை மறுத்தார்.</string>
+    <string name="settings_disable_timed_out">சரியான நேரத்தில் பதில் இல்லை. உங்கள் மேற்பார்வையாளர் இணைப்பில்லாமல் இருக்கலாம்; பின்னர் மீண்டும் முயலுங்கள்.</string>
+
+    <string name="settings_erase_identity_card">ஆபத்தான பகுதி</string>
+    <string name="settings_erase_identity">அடையாளத்தை நீக்கு &amp; அனைத்துத் தரவையும் அழி</string>
+    <string name="settings_erase_identity_subtitle">அடையாள விசை, தொடர்புகள், இருப்பிட வரலாறு, செய்திகள் மற்றும் இந்தச் சாதனத்தின் அமைப்புகளை நீக்கி, ஆரம்ப அமைப்பை மீண்டும் தொடங்குகிறது</string>
+    <string name="settings_erase_identity_title">அடையாளத்தை நீக்கி அனைத்தையும் அழிக்கவா?</string>
+    <string name="settings_erase_identity_message">இது உங்கள் Nostr விசை இணையை, அனைத்துத் தொடர்புகளையும், அனைத்துப் பகுதிகளையும், இருப்பிட வரலாற்றையும், செய்திகளையும், இந்தச் சாதனத்தின் அமைப்புகளையும் நிரந்தரமாக அழிக்கும். தொடர்புகளுக்குத் தெரிவிக்கப்படாது, அவர்களின் நகல்கள் பாதிக்கப்படாது. அழிப்புக் கோரிக்கை எதுவும் அனுப்பப்படாது; ஒரு தொடர்பை எச்சரிக்க, முதலில் ஒவ்வொருவரிடமும் “தொடர்பையும் தரவையும் நீக்கு” பயன்படுத்துங்கள்.</string>
+    <string name="settings_erase_identity_final_title">இறுதி உறுதிப்படுத்தல்</string>
+    <string name="settings_erase_identity_final_message">அனைத்தையும் அழித்து புதிய அடையாளத்துடன் மீண்டும் தொடங்கவா? இதை மீட்க முடியாது. இந்த அடையாளம் பின்னர் தேவைப்படலாம் எனில், முதலில் மறையாக்கப்பட்ட காப்புப்பிரதியை ஏற்றுமதி செய்யுங்கள்.</string>
+    <string name="settings_erase_identity_confirm">அழித்து மீண்டும் தொடங்கு</string>
+    <string name="toast_now_supervised">இப்போது %1$s மேற்பார்வையிடுகிறார்</string>
+    <string name="toast_already_supervised">ஏற்கனவே மேற்பார்வையில் உள்ளது; அதற்குப் பதிலாக இந்தக் கோரிக்கையை மறுக்கவும்</string>
+    <string name="toast_declined_supervision_invite">%1$s அவர்களின் மேற்பார்வைக் கோரிக்கை மறுக்கப்பட்டது</string>
+    <string name="supervision_disable_request_title">இந்தச் சாதனத்தைத் திறக்கவா?</string>
+    <string name="supervision_disable_request_message">%1$s மேற்பார்வைப் பயன்முறையை அணைக்கக் கேட்கிறார். ஒப்புதல் அமைப்புகளை நிரந்தரமாகத் திறக்கும், புதிய மேற்பார்வைக் கோரிக்கை ஏற்கப்படும் வரை.</string>
 </resources>
