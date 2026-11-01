@@ -890,4 +890,73 @@
     <string name="queued_message_view">查看事件</string>
     <string name="queued_message_hide">隐藏</string>
     <string name="queued_messages_flush">立即发送</string>
+
+    <string name="change_notif_title">受监督设备更改了设置</string>
+    <string name="change_pause">• 已暂停与 %1$s 的分享</string>
+    <string name="change_resume">• 已恢复与 %1$s 的分享</string>
+    <string name="change_precision">• 位置精度已改为 %1$s</string>
+    <string name="change_role">• 分享角色已改为 %1$s</string>
+    <string name="change_temp_start">• 已开始与 %1$s 的临时分享</string>
+    <string name="change_temp_end">• 临时分享已结束</string>
+    <string name="change_sos">• 联系人的 SOS 状态已改为 %1$s</string>
+    <string name="change_schedule">• 全局分享时间表已更改</string>
+    <string name="change_schedule_peer">• 与 %1$s 的分享时间表已更改</string>
+    <string name="change_generic">• 有一项位置分享设置发生了更改</string>
+
+    <string name="conv_mute">静音通知</string>
+    <string name="conv_unmute">重新开启通知</string>
+    <string name="conv_cd_muted">通知已静音</string>
+    <string name="notif_supervised_invite_title">%1$s 想要监督你</string>
+    <string name="notif_supervised_invite_text">接受后，此设备的设置将锁定在须经你批准之后。之后你随时可以申请解锁。</string>
+    <string name="notif_supervision_ended_title">监督已结束</string>
+    <string name="notif_supervision_ended_text">你的监督人已结束对此设备的监督。设置现已解锁。</string>
+    <string name="notif_supervised_wipe_title">受监督设备已抹除</string>
+    <string name="notif_supervised_wipe_text">一台受监督设备发送了清除通知，并抹除了自己的身份。等待静默提醒；准备好后再删除该联系人。</string>
+    <string name="notif_supervisor_unknown_request_title">来自未知设备的监督请求</string>
+    <string name="notif_supervisor_unknown_request_text">发送请求的设备不在你的联系人中。请先将其添加为联系人，然后让对方重新发送监督请求。</string>
+    <string name="contact_add_request_title">允许新联系人？</string>
+    <string name="contact_add_request_message">你的受监督设备请求添加“%1$s”作为新的位置分享联系人。批准后将开始与对方分享。</string>
+    <string name="incoming_awaiting_approval">正在等待监督人的批准…</string>
+    <string name="circle_leave_supervised">退出此圈子需要得到你的监督人：请让他在你自己的设备上移除你。</string>
+
+    <string name="peer_supervise_enable_title">监督该设备？</string>
+    <string name="peer_supervise_enable_message">%1$s 需先在其自己的设备上接受该请求，其设置才会锁定为须经你批准。其静默提醒将被开启。</string>
+    <string name="peer_supervise_disable_title">停止监督？</string>
+    <string name="peer_supervise_disable_message">%1$s 的设备将解锁并收到告知，其静默提醒也会重新关闭。</string>
+    <string name="peer_supervise_disable_confirm">停止监督</string>
+    <string name="scan_add_waiting">正在等待你的监督人…</string>
+    <string name="scan_add_waiting_subtitle">处于监督之下时，添加联系人需要其批准。决定很快会送达。</string>
+    <string name="scan_add_denied">你的监督人拒绝了添加此联系人。</string>
+    <string name="pending_awaiting_approval">正在等待监督人批准…</string>
+    <string name="onboarding_bg_open_settings">打开系统设置</string>
+    <string name="onboarding_bg_skip">暂时跳过</string>
+    <string name="onboarding_bg_location_hint">在 Android 11 及更高版本上，后台定位权限只能在系统设置中授予，应用无法直接发起请求。</string>
+
+    <string name="settings_notifications_title">通知</string>
+    <string name="settings_message_notifications">消息通知</string>
+    <string name="settings_message_notifications_subtitle">收到聊天或圈子消息时显示通知</string>
+    <string name="settings_alert_notifications">位置提醒</string>
+    <string name="settings_alert_notifications_subtitle">离开地理围栏、靠近和丢失位置的提醒。SOS 提醒始终保持开启。</string>
+    <string name="settings_quiet_hours">静音时段</string>
+    <string name="settings_quiet_hours_subtitle">在设定的时间段内将消息通知和提醒静音。只有 SOS 仍会响铃。</string>
+    <string name="settings_quiet_hours_start">静音从</string>
+    <string name="settings_quiet_hours_end">结束于</string>
+    <string name="settings_disable_waiting">正在等待你的监督人批准…</string>
+    <string name="settings_disable_cancel">取消请求</string>
+    <string name="settings_disable_denied">你的监督人拒绝了解锁请求。</string>
+    <string name="settings_disable_timed_out">未及时收到答复。你的监督人可能已离线，请稍后再试。</string>
+
+    <string name="settings_erase_identity_card">危险区域</string>
+    <string name="settings_erase_identity">删除身份 &amp; 清除全部数据</string>
+    <string name="settings_erase_identity_subtitle">删除身份密钥、联系人、位置历史、消息以及此设备的设置，然后重新开始初始设置</string>
+    <string name="settings_erase_identity_title">删除身份并清除所有数据？</string>
+    <string name="settings_erase_identity_message">此操作将永久删除你的 Nostr 密钥对、全部联系人、地理围栏、位置历史、消息以及此设备的设置。联系人不会收到通知，其副本也不受影响。不会发送任何删除请求；想提醒某位联系人时，请先对每位联系人使用“删除联系人及数据”。</string>
+    <string name="settings_erase_identity_final_title">最终确认</string>
+    <string name="settings_erase_identity_final_message">清除所有内容并以新身份重新开始？此操作无法撤销。如果你之后可能还需要这个身份，请先导出一份加密备份。</string>
+    <string name="settings_erase_identity_confirm">清除并重新开始</string>
+    <string name="toast_now_supervised">现在由 %1$s 监督</string>
+    <string name="toast_already_supervised">已处于监督之下；请改为拒绝此请求</string>
+    <string name="toast_declined_supervision_invite">已拒绝 %1$s 的监督请求</string>
+    <string name="supervision_disable_request_title">解锁此设备？</string>
+    <string name="supervision_disable_request_message">%1$s 请求关闭受监督模式。批准后，设置将永久解锁，直到接受新的监督请求为止。</string>
 </resources>

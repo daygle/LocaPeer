@@ -891,4 +891,73 @@
     <string name="queued_message_view">ดูเหตุการณ์</string>
     <string name="queued_message_hide">ซ่อน</string>
     <string name="queued_messages_flush">ส่งตอนนี้</string>
+
+    <string name="change_notif_title">อุปกรณ์ที่ถูกกำกับดูแลได้เปลี่ยนการตั้งค่า</string>
+    <string name="change_pause">• หยุดการแบ่งปันกับ %1$s ชั่วคราว</string>
+    <string name="change_resume">• เริ่มการแบ่งปันกับ %1$s ต่อ</string>
+    <string name="change_precision">• เปลี่ยนความละเอียดตำแหน่งเป็น %1$s</string>
+    <string name="change_role">• เปลี่ยนบทบาทการแบ่งปันเป็น %1$s</string>
+    <string name="change_temp_start">• เริ่มการแบ่งปันชั่วคราวกับ %1$s</string>
+    <string name="change_temp_end">• การแบ่งปันชั่วคราวสิ้นสุดแล้ว</string>
+    <string name="change_sos">• เปลี่ยนสถานะ SOS ของผู้ติดต่อเป็น %1$s</string>
+    <string name="change_schedule">• เปลี่ยนตารางเวลาการแบ่งปันทั่วไป</string>
+    <string name="change_schedule_peer">• เปลี่ยนตารางเวลาการแบ่งปันกับ %1$s</string>
+    <string name="change_generic">• มีการเปลี่ยนการตั้งค่าการแบ่งปันตำแหน่ง</string>
+
+    <string name="conv_mute">ปิดเสียงการแจ้งเตือน</string>
+    <string name="conv_unmute">เปิดเสียงการแจ้งเตือนอีกครั้ง</string>
+    <string name="conv_cd_muted">ปิดเสียงแจ้งเตือนอยู่</string>
+    <string name="notif_supervised_invite_title">%1$s ต้องการกำกับดูแลคุณ</string>
+    <string name="notif_supervised_invite_text">ยอมรับเพื่อล็อกการตั้งค่าของอุปกรณ์นี้ไว้หลังการอนุมัติของคุณ ต่อมาคุณสามารถขอปลดล็อกได้เสมอ</string>
+    <string name="notif_supervision_ended_title">การกำกับดูแลสิ้นสุด</string>
+    <string name="notif_supervision_ended_text">ผู้กำกับดูแลของคุณได้หยุดการกำกับดูแลอุปกรณ์นี้ การตั้งค่าถูกปลดล็อก</string>
+    <string name="notif_supervised_wipe_title">อุปกรณ์ที่ถูกกำกับดูแลถูกลบ</string>
+    <string name="notif_supervised_wipe_text">อุปกรณ์ที่ถูกกำกับดูแลส่งข้อความแจ้งการลบ และลบตัวตนของตัวเอง ให้คอยการแจ้งเตือนแบบเงียบ; ลบผู้ติดต่อเมื่อคุณพร้อม</string>
+    <string name="notif_supervisor_unknown_request_title">คำขอกำกับดูแลจากอุปกรณ์ที่ไม่รู้จัก</string>
+    <string name="notif_supervisor_unknown_request_text">อุปกรณ์ที่ส่งคำขอไม่อยู่ในรายชื่อผู้ติดต่อของคุณ เพิ่มเป็นผู้ติดต่อก่อน จากนั้นให้เขาส่งคำขอกำกับดูแลซ้ำ</string>
+    <string name="contact_add_request_title">อนุญาตผู้ติดต่อใหม่หรือไม่?</string>
+    <string name="contact_add_request_message">อุปกรณ์ที่ถูกกำกับดูแลของคุณขอเพิ่ม “%1$s” เป็นผู้ติดต่อการแบ่งปันตำแหน่งรายใหม่ หากอนุมัติ จะเริ่มการแบ่งปันกับเขา</string>
+    <string name="incoming_awaiting_approval">กำลังรอการอนุมัติจากผู้กำกับดูแล…</string>
+    <string name="circle_leave_supervised">การออกจากวงกลมนี้ต้องขออนุญาตจากผู้กำกับดูแลของคุณ: ขอให้เขาลบคุณออกจากอุปกรณ์ของคุณ</string>
+
+    <string name="peer_supervise_enable_title">จะทำการกำกับดูแลอุปกรณ์นี้หรือไม่?</string>
+    <string name="peer_supervise_enable_message">%1$s ต้องยอมรับคำขอบนอุปกรณ์ของตัวเอง ก่อนที่การตั้งค่าของเขาจะถูกล็อกไว้หลังการอนุมัติของคุณ การแจ้งเตือนแบบเงียบจะเปิดขึ้น</string>
+    <string name="peer_supervise_disable_title">หยุดการกำกับดูแลหรือไม่?</string>
+    <string name="peer_supervise_disable_message">อุปกรณ์ของ %1$s จะถูกปลดล็อกและได้รับแจ้ง การแจ้งเตือนแบบเงียบของเขาจะปิดกลับ</string>
+    <string name="peer_supervise_disable_confirm">หยุดการกำกับดูแล</string>
+    <string name="scan_add_waiting">กำลังรอผู้กำกับดูแล…</string>
+    <string name="scan_add_waiting_subtitle">การเพิ่มผู้ติดต่อภายใต้การกำกับดูแลต้องได้รับการอนุมัติเสียก่อน คำตัดสินจะมาเร็ว ๆ นี้</string>
+    <string name="scan_add_denied">ผู้กำกับดูแลของคุณปฏิเสธการเพิ่มผู้ติดต่อนี้</string>
+    <string name="pending_awaiting_approval">กำลังรอการอนุมัติจากผู้กำกับดูแล…</string>
+    <string name="onboarding_bg_open_settings">เปิดการตั้งค่าระบบ</string>
+    <string name="onboarding_bg_skip">ข้ามไปก่อน</string>
+    <string name="onboarding_bg_location_hint">บน Android 11 ขึ้นไป ตำแหน่งฉากหลังจะได้รับสิทธิ์ผ่านการตั้งค่าของระบบเท่านั้น แอปจึงขอเองโดยตรงไม่ได้</string>
+
+    <string name="settings_notifications_title">การแจ้งเตือน</string>
+    <string name="settings_message_notifications">การแจ้งเตือนข้อความ</string>
+    <string name="settings_message_notifications_subtitle">แสดงการแจ้งเตือนเมื่อมีข้อความจากแชทหรือวงกลมเข้ามา</string>
+    <string name="settings_alert_notifications">การแจ้งเตือนตำแหน่ง</string>
+    <string name="settings_alert_notifications_subtitle">การแจ้งเตือนออกจากพื้นที่, โดยใกล้ชิด และการสูญเสียตำแหน่ง การแจ้งเตือนของ SOS ยังเปิดใช้งานอยู่</string>
+    <string name="settings_quiet_hours">ชั่วโมงเงียบ</string>
+    <string name="settings_quiet_hours_subtitle">ปิดเสียงการแจ้งเตือนข้อความและการแจ้งเตือนตามช่วงเวลาที่ตั้งไว้ ทุกอย่างที่ไม่ใช่ SOS จะเงียบ</string>
+    <string name="settings_quiet_hours_start">ปิดเสียงตั้งแต่</string>
+    <string name="settings_quiet_hours_end">ถึง</string>
+    <string name="settings_disable_waiting">กำลังรอการอนุมัติจากผู้กำกับดูแล…</string>
+    <string name="settings_disable_cancel">ยกเลิกคำขอ</string>
+    <string name="settings_disable_denied">ผู้กำกับดูแลของคุณปฏิเสธคำขอปลดล็อก</string>
+    <string name="settings_disable_timed_out">ไม่มีการตอบกลับทันเวลา ผู้กำกับดูแลของคุณอาจออฟไลน์อยู่ ลองอีกครั้งภายหลัง</string>
+
+    <string name="settings_erase_identity_card">โซนอันตราย</string>
+    <string name="settings_erase_identity">ลบตัวตน &amp; ล้างข้อมูลทั้งหมด</string>
+    <string name="settings_erase_identity_subtitle">ลบคีย์ตัวตน ผู้ติดต่อ ประวัติตำแหน่ง ข้อความ และการตั้งค่าอุปกรณ์นี้ แล้วเริ่มการตั้งค่าครั้งแรกใหม่</string>
+    <string name="settings_erase_identity_title">ลบตัวตนและล้างทั้งหมด?</string>
+    <string name="settings_erase_identity_message">การดำเนินการนี้จะลบคีย์คู่ Nostr ของคุณ ผู้ติดต่อทั้งหมด พื้นที่ที่กำหนด ประวัติตำแหน่ง ข้อความ และการตั้งค่าอุปกรณ์นี้อย่างถาวร ผู้ติดต่อจะไม่ได้รับแจ้งและสำเนาของพวกเขาไม่ได้รับผลกระทบ จะไม่มีการส่งคำขอการลบ หากต้องการเตือนผู้ติดต่อ ให้ใช้ “ลบผู้ติดต่อและข้อมูล” กับทุกคนก่อน</string>
+    <string name="settings_erase_identity_final_title">ยืนยันครั้งสุดท้าย</string>
+    <string name="settings_erase_identity_final_message">ล้างทั้งหมดและเริ่มต้นใหม่ด้วยตัวตนใหม่? ย้อนกลับไม่ได้ ถ้ายังอาจจำเป็นต้องใช้ตัวตนนี้ ให้ส่งออกสำรองข้อมูลที่เข้ารหัสไว้ก่อน</string>
+    <string name="settings_erase_identity_confirm">ล้างและเริ่มใหม่</string>
+    <string name="toast_now_supervised">ถูกกำกับดูแลโดย %1$s แล้ว</string>
+    <string name="toast_already_supervised">ถูกกำกับดูแลอยู่แล้ว ปฏิเสธคำขอนี้แทน</string>
+    <string name="toast_declined_supervision_invite">ปฏิเสธคำขอกำกับดูแลจาก %1$s</string>
+    <string name="supervision_disable_request_title">ปลดล็อกอุปกรณ์นี้?</string>
+    <string name="supervision_disable_request_message">%1$s ขอปิดโหมดที่ถูกกำกับดูแล การอนุมัติจะปลดล็อกการตั้งค่าอย่างถาวร จนกว่าจะมีการยอมรับคำขอกำกับดูแลใหม่</string>
 </resources>

@@ -907,4 +907,73 @@
     <string name="queued_message_view">Προβολή συμβάντος</string>
     <string name="queued_message_hide">Απόκρυψη</string>
     <string name="queued_messages_flush">Αποστολή τώρα</string>
+
+    <string name="change_notif_title">Εποπτευόμενη συσκευή άλλαξε ρυθμίσεις</string>
+    <string name="change_pause">• Η κοινή χρήση με %1$s τέθηκε σε παύση</string>
+    <string name="change_resume">• Η κοινή χρήση με %1$s συνεχίστηκε</string>
+    <string name="change_precision">• Η ακρίβεια τοποθεσίας άλλαξε σε %1$s</string>
+    <string name="change_role">• Ο ρόλος κοινής χρήσης άλλαξε σε %1$s</string>
+    <string name="change_temp_start">• Ξεκίνησε προσωρινή κοινή χρήση με %1$s</string>
+    <string name="change_temp_end">• Η προσωρινή κοινή χρήση τελείωσε</string>
+    <string name="change_sos">• Η κατάσταση SOS της επαφής άλλαξε σε %1$s</string>
+    <string name="change_schedule">• Άλλαξε το καθολικό πρόγραμμα κοινής χρήσης</string>
+    <string name="change_schedule_peer">• Άλλαξε το πρόγραμμα κοινής χρήσης με %1$s</string>
+    <string name="change_generic">• Άλλαξε μια ρύθμιση κοινής χρήσης τοποθεσίας</string>
+
+    <string name="conv_mute">Σίγαση ειδοποιήσεων</string>
+    <string name="conv_unmute">Επαναφορά ήχου ειδοποιήσεων</string>
+    <string name="conv_cd_muted">Οι ειδοποιήσεις σε σίγαση</string>
+    <string name="notif_supervised_invite_title">%1$s θέλει να γίνει επόπτης</string>
+    <string name="notif_supervised_invite_text">Αποδέξου ώστε οι ρυθμίσεις αυτής της συσκευής να κλειδωθούν πίσω από την έγκρισή σου. Αργότερα μπορείς πάντα να ζητήσεις ξεκλείδωμα.</string>
+    <string name="notif_supervision_ended_title">Η εποπτεία τελείωσε</string>
+    <string name="notif_supervision_ended_text">Ο επόπτης σου τερμάτισε την εποπτεία αυτής της συσκευής. Οι ρυθμίσεις είναι ξεκλειδωμένες.</string>
+    <string name="notif_supervised_wipe_title">Εποπτευόμενη συσκευή διαγράφηκε</string>
+    <string name="notif_supervised_wipe_text">Μια εποπτευόμενη συσκευή έστειλε ειδοποίηση διαγραφής και διέγραψε την ταυτότητά της. Περιμένε τις αθόρυβες ειδοποιήσεις· σβήσε την επαφή όταν είσαι έτοιμος.</string>
+    <string name="notif_supervisor_unknown_request_title">Αίτημα εποπτείας από άγνωστη συσκευή</string>
+    <string name="notif_supervisor_unknown_request_text">Η συσκευή που έστειλε το αίτημα δεν βρίσκεται στις επαφές σου. Πρόσθεσέ την πρώτα ως επαφή και ζήτησέ της να επαναλάβει το αίτημα εποπτείας.</string>
+    <string name="contact_add_request_title">Επιτρέπεται η νέα επαφή;</string>
+    <string name="contact_add_request_message">Η εποπτευόμενη συσκευή σου ζητά να προσθέσει την ή τον «%1$s» ως νέα επαφή για κοινή χρήση τοποθεσίας. Η έγκριση ξεκινά την κοινή χρήση μαζί της ή μαζί του.</string>
+    <string name="incoming_awaiting_approval">Αναμονή έγκρισης από τον επόπτη…</string>
+    <string name="circle_leave_supervised">Η αποχώρηση από αυτόν τον κύκλο απαιτεί τον επόπτη σου: ζήτησέ του να σε διαγράψει από τη δική σου συσκευή.</string>
+
+    <string name="peer_supervise_enable_title">Εποπτεία αυτής της συσκευής;</string>
+    <string name="peer_supervise_enable_message">Ο/Η %1$s πρέπει να αποδεχτεί το αίτημα στη δική του συσκευή, ώστε οι ρυθμίσεις της να κλειδώσουν πίσω από την έγκρισή σου. Οι αθόρυβες ειδοποιήσεις θα ενεργοποιηθούν.</string>
+    <string name="peer_supervise_disable_title">Παύση της εποπτείας;</string>
+    <string name="peer_supervise_disable_message">Η συσκευή του %1$s θα ξεκλειδώσει και θα ενημερωθεί. Οι αθόρυβες ειδοποιήσεις της θα σβήσουν ξανά.</string>
+    <string name="peer_supervise_disable_confirm">Παύση εποπτείας</string>
+    <string name="scan_add_waiting">Αναμονή του επόπτη…</string>
+    <string name="scan_add_waiting_subtitle">Υπό εποπτεία, η προσθήκη επαφής απαιτεί την έγκρισή του. Η απόφαση θα έρθει σύντομα.</string>
+    <string name="scan_add_denied">Ο επόπτης σου αρνήθηκε την προσθήκη αυτής της επαφής.</string>
+    <string name="pending_awaiting_approval">Αναμονή έγκρισης από τον επόπτη…</string>
+    <string name="onboarding_bg_open_settings">Άνοιγμα ρυθμίσεων συστήματος</string>
+    <string name="onboarding_bg_skip">Παράλειψη προς το παρόν</string>
+    <string name="onboarding_bg_location_hint">Σε Android 11 ή νεότερη έκδοση, η τοποθεσία στο παρασκήνιο χορηγείται μόνο από τις ρυθμίσεις του συστήματος· η εφαρμογή δεν μπορεί να την ζητήσει απευθείας.</string>
+
+    <string name="settings_notifications_title">Ειδοποιήσεις</string>
+    <string name="settings_message_notifications">Ειδοποιήσεις για μηνύματα</string>
+    <string name="settings_message_notifications_subtitle">Εμφάνιση μιας ειδοποίησης όταν φτάνει μήνυμα συνομιλίας ή από κύκλο</string>
+    <string name="settings_alert_notifications">Ειδοποιήσεις για την τοποθεσία</string>
+    <string name="settings_alert_notifications_subtitle">Ειδοποιήσεις για έξοδο από πεδίο, εγγύτητα και απώλεια τοποθεσίας. Οι ειδοποιήσεις SOS παραμένουν ενεργές.</string>
+    <string name="settings_quiet_hours">Ώρες ησυχίας</string>
+    <string name="settings_quiet_hours_subtitle">Σιγάζει τις ειδοποιήσεις για μηνύματα και τις ειδοποιήσεις για την τοποθεσία στο διάστημα που ορίζεις. Μόνο ο SOS διαπερνά.</string>
+    <string name="settings_quiet_hours_start">Σίγαση από</string>
+    <string name="settings_quiet_hours_end">Έως</string>
+    <string name="settings_disable_waiting">Αναμονή έγκρισης από τον επόπτη…</string>
+    <string name="settings_disable_cancel">Ακύρωση αιτήματος</string>
+    <string name="settings_disable_denied">Ο επόπτης σου απέρριψε το αίτημα ξεκλειδώματος.</string>
+    <string name="settings_disable_timed_out">Δεν ήρθε απάντηση εγκαίρως. Ο επόπτης σου μπορεί να είναι εκτός σύνδεσης· δοκίμασε ξανά αργότερα.</string>
+
+    <string name="settings_erase_identity_card">Επικίνδυνη ζώνη</string>
+    <string name="settings_erase_identity">Διαγραφή ταυτότητας &amp; σβήσιμο όλων των δεδομένων</string>
+    <string name="settings_erase_identity_subtitle">Διαγράφει το κλειδί ταυτότητας, τις επαφές, το ιστορικό τοποθεσίας, τα μηνύματα και τις ρυθμίσεις αυτής της συσκευής και ξεκινά από την αρχική ρύθμιση</string>
+    <string name="settings_erase_identity_title">Διαγράφεις την ταυτότητα και σβήνεις όλα;</string>
+    <string name="settings_erase_identity_message">Με αυτό διαγράφεται οριστικά το ζεύγος κλειδιών Nostr σου, όλες οι επαφές, τα πεδία, το ιστορικό τοποθεσίας, τα μηνύματα και οι ρυθμίσεις αυτής της συσκευής. Οι επαφές δεν ενημερώνονται και αντίγραφά τους δεν επηρεάζονται. Κανένα αίτημα διαγραφής δεν αποστέλλεται· για να προειδοποιήσεις μια επαφή, χρησιμοποίησε πρώτα την «Διαγραφή επαφής και δεδομένων» για καθένα.</string>
+    <string name="settings_erase_identity_final_title">Τελευταία επιβεβαίωση</string>
+    <string name="settings_erase_identity_final_message">Σβήνεις τα πάντα και ξεκινάς με νέα ταυτότητα; Αυτό δεν αναιρείται. Αν δεν αποκλείεται να χρειαστείς ξανά αυτή την ταυτότητα, εξάγε πρώτα ένα κρυπτογραφημένο αντίγραφο ασφαλείας.</string>
+    <string name="settings_erase_identity_confirm">Σβήσιμο και επανεκκίνηση</string>
+    <string name="toast_now_supervised">Επόπτης σου είναι πλέον ο/η %1$s</string>
+    <string name="toast_already_supervised">Είσαι ήδη υπό εποπτεία· αρνήσου καλύτερα το αίτημα</string>
+    <string name="toast_declined_supervision_invite">Απορρίφθηκε το αίτημα εποπτείας από %1$s</string>
+    <string name="supervision_disable_request_title">Ξεκλειδώνεις αυτή τη συσκευή;</string>
+    <string name="supervision_disable_request_message">%1$s ζητά την απενεργοποίηση της εποπτευόμενης λειτουργίας. Η έγκριση ξεκλειδώνει τις ρυθμίσεις οριστικά μέχρι να γίνει αποδεκτό νέο αίτημα εποπτείας.</string>
 </resources>

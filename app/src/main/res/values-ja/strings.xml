@@ -890,4 +890,73 @@
     <string name="queued_message_view">イベントを表示</string>
     <string name="queued_message_hide">非表示</string>
     <string name="queued_messages_flush">今すぐ送信</string>
+
+    <string name="change_notif_title">監視対象の端末が設定を変更しました</string>
+    <string name="change_pause">• %1$s との共有を一時停止しました</string>
+    <string name="change_resume">• %1$s との共有を再開しました</string>
+    <string name="change_precision">• 位置情報の精度を %1$s に変更しました</string>
+    <string name="change_role">• 共有ロールを %1$s に変更しました</string>
+    <string name="change_temp_start">• %1$s との一時共有を開始しました</string>
+    <string name="change_temp_end">• 一時共有が終了しました</string>
+    <string name="change_sos">• 連絡先のSOSステータスを %1$s に変更しました</string>
+    <string name="change_schedule">• 全体の共有スケジュールが変更されました</string>
+    <string name="change_schedule_peer">• %1$s との共有スケジュールが変更されました</string>
+    <string name="change_generic">• 位置情報共有の設定が1件変更されました</string>
+
+    <string name="conv_mute">通知をミュート</string>
+    <string name="conv_unmute">通知を再度オンにする</string>
+    <string name="conv_cd_muted">通知はミュート中です</string>
+    <string name="notif_supervised_invite_title">%1$s があなたの監視を希望しています</string>
+    <string name="notif_supervised_invite_text">承認すると、この端末の設定があなたの承認のもとロックされます。後からいつでも解除を依頼できます。</string>
+    <string name="notif_supervision_ended_title">監視が終了しました</string>
+    <string name="notif_supervision_ended_text">監視者がこの端末の監視を終了しました。設定はロック解除されています。</string>
+    <string name="notif_supervised_wipe_title">監視対象の端末が消去されました</string>
+    <string name="notif_supervised_wipe_text">監視対象の端末が消去の通知を送り、自身の識別情報を消去しました。サイレントの警告を待ち、準備ができたら連絡先を削除してください。</string>
+    <string name="notif_supervisor_unknown_request_title">未知の端末からの監視リクエスト</string>
+    <string name="notif_supervisor_unknown_request_text">リクエストを送った端末はあなたの連絡先にありません。まず連絡先として追加し、監視リクエストをもう一度依頼してください。</string>
+    <string name="contact_add_request_title">新しい連絡先を許可しますか?</string>
+    <string name="contact_add_request_message">監視対象の端末が、「%1$s」を新しい位置情報共有の連絡先として追加したいと依頼しています。承認すると共有が始まります。</string>
+    <string name="incoming_awaiting_approval">監視者の承認を待っています…</string>
+    <string name="circle_leave_supervised">このサークルを退出するには、あなたを監視している人の許可が必要です。自分の端末で削除するようお願いしてください。</string>
+
+    <string name="peer_supervise_enable_title">この端末を監視しますか?</string>
+    <string name="peer_supervise_enable_message">%1$s は、設定があなたの承認のもとロックされる前に、自分の端末でリクエストを承認する必要があります。サイレントの警告がオンになります。</string>
+    <string name="peer_supervise_disable_title">監視を終了しますか?</string>
+    <string name="peer_supervise_disable_message">%1$s の端末はロック解除され、通知されます。サイレントの警告は再びオフになります。</string>
+    <string name="peer_supervise_disable_confirm">監視を終了</string>
+    <string name="scan_add_waiting">監視者を待っています…</string>
+    <string name="scan_add_waiting_subtitle">監視下では、連絡先の追加には承認が必要です。判定はまもなく届きます。</string>
+    <string name="scan_add_denied">監視者がこの連絡先の追加を拒否しました。</string>
+    <string name="pending_awaiting_approval">監視者の承認を待っています…</string>
+    <string name="onboarding_bg_open_settings">システム設定を開く</string>
+    <string name="onboarding_bg_skip">今はスキップ</string>
+    <string name="onboarding_bg_location_hint">Android 11 以降では、バックグラウンド位置情報はシステム設定からのみ許可できます。アプリ自身が直接要求することはできません。</string>
+
+    <string name="settings_notifications_title">通知</string>
+    <string name="settings_message_notifications">メッセージの通知</string>
+    <string name="settings_message_notifications_subtitle">チャットまたはサークルのメッセージが届いたら通知を表示</string>
+    <string name="settings_alert_notifications">位置情報の警告</string>
+    <string name="settings_alert_notifications_subtitle">ジオフェンス外への移動・接近・位置情報喪失の警告。SOSの警告は常に有効です。</string>
+    <string name="settings_quiet_hours">サイレント時間帯</string>
+    <string name="settings_quiet_hours_subtitle">指定した時間帯はメッセージと警告の通知をミュートします。SOSだけは鳴り続けます。</string>
+    <string name="settings_quiet_hours_start">サイレント開始</string>
+    <string name="settings_quiet_hours_end">終了</string>
+    <string name="settings_disable_waiting">監視者の承認を待っています…</string>
+    <string name="settings_disable_cancel">リクエストをキャンセル</string>
+    <string name="settings_disable_denied">監視者がロック解除のリクエストを拒否しました。</string>
+    <string name="settings_disable_timed_out">時間内に応答がありませんでした。監視者がオフラインの可能性があるため、後でもう一度お試しください。</string>
+
+    <string name="settings_erase_identity_card">危険ゾーン</string>
+    <string name="settings_erase_identity">IDを削除 &amp; 全データを消去</string>
+    <string name="settings_erase_identity_subtitle">IDの鍵、連絡先、位置情報の履歴、メッセージ、この端末の設定を削除し、初期設定をやり直します</string>
+    <string name="settings_erase_identity_title">IDを削除してすべて消去しますか?</string>
+    <string name="settings_erase_identity_message">この操作により、Nostrの鍵ペア、すべての連絡先、ジオフェンス、位置情報の履歴、メッセージ、この端末の設定が完全に消去されます。連絡先には通知されず、そのコピーにも影響しません。削除リクエストは送られません。連絡先に知らせたい場合は、事前に「連絡先とデータを削除」を各連絡先で実行してください。</string>
+    <string name="settings_erase_identity_final_title">最終確認</string>
+    <string name="settings_erase_identity_final_message">すべて消去して新しいIDでやり直しますか? この操作は取り消せません。このIDが後で必要になる可能性があるなら、先に暗号化バックアップを書き出してください。</string>
+    <string name="settings_erase_identity_confirm">消去してやり直す</string>
+    <string name="toast_now_supervised">%1$s があなたを監視しています</string>
+    <string name="toast_already_supervised">すでに監視されています。代わりにこのリクエストを拒否してください</string>
+    <string name="toast_declined_supervision_invite">%1$s からの監視リクエストを拒否しました</string>
+    <string name="supervision_disable_request_title">この端末のロックを解除しますか?</string>
+    <string name="supervision_disable_request_message">%1$s が監視モードのオフを求めています。承認すると、新しい監視リクエストが承諾されるまで設定は恒久的にロック解除されます。</string>
 </resources>

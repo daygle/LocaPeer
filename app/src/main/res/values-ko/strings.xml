@@ -891,4 +891,73 @@
     <string name="queued_message_view">이벤트 보기</string>
     <string name="queued_message_hide">숨기기</string>
     <string name="queued_messages_flush">지금 보내기</string>
+
+    <string name="change_notif_title">감독 대상 기기에서 설정을 변경했어요</string>
+    <string name="change_pause">• %1$s 와의 공유를 일시 중지했어요</string>
+    <string name="change_resume">• %1$s 와의 공유를 다시 시작했어요</string>
+    <string name="change_precision">• 위치 정확도를 %1$s 로 변경했어요</string>
+    <string name="change_role">• 공유 역할을 %1$s 로 변경했어요</string>
+    <string name="change_temp_start">• %1$s 와의 임시 공유를 시작했어요</string>
+    <string name="change_temp_end">• 임시 공유가 종료되었어요</string>
+    <string name="change_sos">• 연락처의 SOS 상태가 %1$s 로 변경되었어요</string>
+    <string name="change_schedule">• 전체 공유 일정이 변경되었어요</string>
+    <string name="change_schedule_peer">• %1$s 와의 공유 일정이 변경되었어요</string>
+    <string name="change_generic">• 위치 공유 설정이 한 가지 변경되었어요</string>
+
+    <string name="conv_mute">알림 음소거</string>
+    <string name="conv_unmute">알림 다시 켜기</string>
+    <string name="conv_cd_muted">알림이 음소거됨</string>
+    <string name="notif_supervised_invite_title">%1$s 님이 당신을 감독하려고 해요</string>
+    <string name="notif_supervised_invite_text">수락하면 이 기기의 설정이 승인을 받아야만 바꿀 수 있도록 잠겨요. 나중에 언제든 잠금 해제를 요청할 수 있어요.</string>
+    <string name="notif_supervision_ended_title">감독이 종료되었어요</string>
+    <string name="notif_supervision_ended_text">감독자가 이 기기에 대한 감독을 끝냈어요. 설정이 잠금 해제되었어요.</string>
+    <string name="notif_supervised_wipe_title">감독 대상 기기가 삭제됨</string>
+    <string name="notif_supervised_wipe_text">감독 대상 기기가 삭제 통지를 보내고 자기 신원을 지웠어요. 조용한 경고를 기다렸다가 준비되면 연락처를 삭제하세요.</string>
+    <string name="notif_supervisor_unknown_request_title">알 수 없는 기기에서 온 감독 요청</string>
+    <string name="notif_supervisor_unknown_request_text">요청을 보낸 기기가 연락처에 없어요. 먼저 연락처로 추가하고, 감독 요청을 다시 보내 달라고 하세요.</string>
+    <string name="contact_add_request_title">새 연락처를 허용할까요?</string>
+    <string name="contact_add_request_message">감독 대상 기기가 “%1$s”을(를) 새로운 위치 공유 연락처로 추가해 달라고 요청해요. 승인하면 공유가 시작돼요.</string>
+    <string name="incoming_awaiting_approval">감독자의 승인을 기다리는 중…</string>
+    <string name="circle_leave_supervised">이 서클을 나가려면 당신을 감독하는 사람의 허가가 필요해요. 자기 기기에서 당신을 삭제해 달라고 부탁하세요.</string>
+
+    <string name="peer_supervise_enable_title">이 기기를 감독할까요?</string>
+    <string name="peer_supervise_enable_message">%1$s 가 설정이 승인을 받아야 잠기기 전에 자기 기기에서 요청을 수락해야 해요. 그 사람의 조용한 경고가 켜져요.</string>
+    <string name="peer_supervise_disable_title">감독을 중단할까요?</string>
+    <string name="peer_supervise_disable_message">%1$s 의 기기가 잠금 해제되고 알림을 받아요. 그 사람의 조용한 경고는 다시 꺼져요.</string>
+    <string name="peer_supervise_disable_confirm">감독 중단</string>
+    <string name="scan_add_waiting">감독자를 기다리는 중…</string>
+    <string name="scan_add_waiting_subtitle">감독 중에는 연락처 추가에 승인이 필요해요. 결정이 곧 도착해요.</string>
+    <string name="scan_add_denied">감독자가 이 연락처 추가를 거부했어요.</string>
+    <string name="pending_awaiting_approval">감독자의 승인을 기다리는 중…</string>
+    <string name="onboarding_bg_open_settings">시스템 설정 열기</string>
+    <string name="onboarding_bg_skip">지금은 건너뛰기</string>
+    <string name="onboarding_bg_location_hint">Android 11 이상에서는 백그라운드 위치 권한을 시스템 설정에서만 부여할 수 있어요. 앱이 직접 요청할 수는 없어요.</string>
+
+    <string name="settings_notifications_title">알림</string>
+    <string name="settings_message_notifications">메시지 알림</string>
+    <string name="settings_message_notifications_subtitle">채팅이나 서클 메시지가 도착하면 알림 표시</string>
+    <string name="settings_alert_notifications">위치 경고</string>
+    <string name="settings_alert_notifications_subtitle">지역 이탈·근접·위치 분실 경고. SOS 경고는 항상 켜져 있어요.</string>
+    <string name="settings_quiet_hours">조용한 시간</string>
+    <string name="settings_quiet_hours_subtitle">선택한 시간 동안 메시지와 경고 알림을 음소거해요. SOS만 울려요.</string>
+    <string name="settings_quiet_hours_start">음소거 시작</string>
+    <string name="settings_quiet_hours_end">까지</string>
+    <string name="settings_disable_waiting">감독자의 승인을 기다리는 중…</string>
+    <string name="settings_disable_cancel">요청 취소</string>
+    <string name="settings_disable_denied">감독자가 잠금 해제 요청을 거부했어요.</string>
+    <string name="settings_disable_timed_out">제시간에 답장이 없어요. 감독자가 오프라인일 수 있으니 나중에 다시 시도하세요.</string>
+
+    <string name="settings_erase_identity_card">위험 구역</string>
+    <string name="settings_erase_identity">신원 삭제 &amp; 모든 데이터 지우기</string>
+    <string name="settings_erase_identity_subtitle">신원 키, 연락처, 위치 기록, 메시지, 이 기기의 설정을 삭제하고 초기 설정을 다시 시작해요</string>
+    <string name="settings_erase_identity_title">신원을 삭제하고 모두 지울까요?</string>
+    <string name="settings_erase_identity_message">이 작업은 Nostr 키 쌍, 모든 연락처, 지오펜스, 위치 기록, 메시지, 이 기기의 설정을 영구적으로 지워요. 연락처에는 알리지 않고 그들의 사본도 영향을 받지 않아요. 삭제 요청은 보내지 않아요. 연락처에게 알리려면 먼저 각 연락처에서 "연락처 및 데이터 삭제"를 사용하세요.</string>
+    <string name="settings_erase_identity_final_title">최종 확인</string>
+    <string name="settings_erase_identity_final_message">모든 것을 지우고 새 신원으로 다시 시작할까요? 되돌릴 수 없어요. 이 신원이 나중에 필요할 수도 있다면 먼저 암호화된 백업을 내보내세요.</string>
+    <string name="settings_erase_identity_confirm">지우고 다시 시작</string>
+    <string name="toast_now_supervised">지금 %1$s 이(가) 감독하고 있어요</string>
+    <string name="toast_already_supervised">이미 감독 중이에요. 대신 이 요청을 거부하세요</string>
+    <string name="toast_declined_supervision_invite">%1$s 의 감독 요청을 거부했어요</string>
+    <string name="supervision_disable_request_title">이 기기의 잠금을 해제할까요?</string>
+    <string name="supervision_disable_request_message">%1$s 가 감독 모드를 끄길 원해요. 승인하면 새 감독 요청을 수락할 때까지 설정이 영구적으로 잠금 해제돼요.</string>
 </resources>
