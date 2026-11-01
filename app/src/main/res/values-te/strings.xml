@@ -907,4 +907,73 @@
     <string name="queued_message_view">ఈవెంట్ చూడండి</string>
     <string name="queued_message_hide">దాచు</string>
     <string name="queued_messages_flush">ఇప్పుడు పంపండి</string>
+
+    <string name="change_notif_title">పర్యవేక్షణలో ఉన్న పరికరం సెట్టింగ్‌లను మార్చింది</string>
+    <string name="change_pause">• %1$s తో షేరింగ్ నిలిపివేయబడింది</string>
+    <string name="change_resume">• %1$s తో షేరింగ్ మళ్లీ ప్రారంభమైంది</string>
+    <string name="change_precision">• లొకేషన్ ఖచ్చితత్వం %1$s కి మార్చబడింది</string>
+    <string name="change_role">• షేరింగ్ పాత్ర %1$s కి మార్చబడింది</string>
+    <string name="change_temp_start">• %1$s తో తాత్కాలిక షేరింగ్ ప్రారంభమైంది</string>
+    <string name="change_temp_end">• తాత్కాలిక షేరింగ్ ముగిసింది</string>
+    <string name="change_sos">• కాంటాక్ట్ SOS స్థితి %1$s కి మార్చబడింది</string>
+    <string name="change_schedule">• మొత్తం షేరింగ్ షెడ్యూల్ మార్చబడింది</string>
+    <string name="change_schedule_peer">• %1$s తో షేరింగ్ షెడ్యూల్ మార్చబడింది</string>
+    <string name="change_generic">• లొకేషన్ షేరింగ్ సెట్టింగ్ ఒకటి మార్చబడింది</string>
+
+    <string name="conv_mute">నోటిఫికేషన్‌లను మ్యూట్ చేయి</string>
+    <string name="conv_unmute">నోటిఫికేషన్‌లను మళ్లీ ఆన్ చేయి</string>
+    <string name="conv_cd_muted">నోటిఫికేషన్‌లు మ్యూట్‌లో ఉన్నాయి</string>
+    <string name="notif_supervised_invite_title">%1$s మీను పర్యవేక్షించాలనుకుంటున్నారు</string>
+    <string name="notif_supervised_invite_text">ఈ పరికరం సెట్టింగ్‌లు మీ ఆమోదం వెనుక లాక్ కావడానికి అంగీకరించండి. తర్వాత ఎప్పుడైనా అన్‌లాక్ కోసం అడగవచ్చు.</string>
+    <string name="notif_supervision_ended_title">పర్యవేక్షణ ముగిసింది</string>
+    <string name="notif_supervision_ended_text">మీ పర్యవేక్షకుడు ఈ పరికరం పర్యవేక్షణను ముగించారు. సెట్టింగ్‌లు ఇప్పుడు అన్‌లాక్ అయ్యాయి.</string>
+    <string name="notif_supervised_wipe_title">పర్యవేక్షణలో ఉన్న పరికరం తుడిచివేయబడింది</string>
+    <string name="notif_supervised_wipe_text">పర్యవేక్షణలో ఉన్న పరికరం తుడిచివేత నోటిఫికేషన్ పంపి తన గుర్తింపును తుడిచివేసింది. నిశ్శబ్ద హెచ్చరికల కోసం వేచి ఉండి, సిద్ధమైనప్పుడు కాంటాక్ట్‌ను తీసివేయండి.</string>
+    <string name="notif_supervisor_unknown_request_title">తెలియని పరికరం నుండి పర్యవేక్షణ అభ్యర్థన</string>
+    <string name="notif_supervisor_unknown_request_text">అభ్యర్థన పంపిన పరికరం మీ కాంటాక్ట్‌లలో లేదు. మొదట దాన్ని కాంటాక్ట్‌గా జోడించి, పర్యవేక్షణ అభ్యర్థనను మళ్లీ పంపమని అడగండి.</string>
+    <string name="contact_add_request_title">కొత్త కాంటాక్ట్‌ను అనుమతించాలా?</string>
+    <string name="contact_add_request_message">మీ పర్యవేక్షణలో ఉన్న పరికరం “%1$s” ను లొకేషన్ షేరింగ్‌కు కొత్త కాంటాక్ట్‌గా జోడించమని అడుగుతోంది. ఆమోదిస్తే వారితో షేరింగ్ ప్రారంభమవుతుంది.</string>
+    <string name="incoming_awaiting_approval">పర్యవేక్షకుడి ఆమోదం కోసం వేచి ఉంది…</string>
+    <string name="circle_leave_supervised">ఈ సర్కిల్ నుండి నిష్క్రమించడానికి మీ పర్యవేక్షకుడు అవసరం: మీ సొంత పరికరం నుండి మిమ్మల్ని తీసివేయమని ఆయనను అడగండి.</string>
+
+    <string name="peer_supervise_enable_title">ఈ పరికరాన్ని పర్యవేక్షించాలా?</string>
+    <string name="peer_supervise_enable_message">%1$s సెట్టింగ్‌లు మీ ఆమోదం వెనుక లాక్ అయ్యే ముందు వారు తమ పరికరంలో అభ్యర్థనను అంగీకరించాలి. వారి నిశ్శబ్ద హెచ్చరికలు ఆన్ అవుతాయి.</string>
+    <string name="peer_supervise_disable_title">పర్యవేక్షణ ఆపివేయాలా?</string>
+    <string name="peer_supervise_disable_message">%1$s పరికరం అన్‌లాక్ అవుతుంది మరియు వారికి తెలియజేయబడుతుంది. వారి నిశ్శబ్ద హెచ్చరికలు మళ్లీ ఆఫ్ అవుతాయి.</string>
+    <string name="peer_supervise_disable_confirm">పర్యవేక్షణ ఆపివేయి</string>
+    <string name="scan_add_waiting">మీ పర్యవేక్షకుడి కోసం వేచి ఉంది…</string>
+    <string name="scan_add_waiting_subtitle">పర్యవేక్షణలో కాంటాక్ట్ జోడించడానికి ఆమోదం అవసరం. నిర్ణయం త్వరలో వస్తుంది.</string>
+    <string name="scan_add_denied">మీ పర్యవేక్షకుడు ఈ కాంటాక్ట్‌ను జోడించడాన్ని తిరస్కరించారు.</string>
+    <string name="pending_awaiting_approval">పర్యవేక్షకుడి ఆమోదం కోసం వేచి ఉంది…</string>
+    <string name="onboarding_bg_open_settings">సిస్టమ్ సెట్టింగ్‌లను తెరవండి</string>
+    <string name="onboarding_bg_skip">ఇప్పుడు దాటవేయి</string>
+    <string name="onboarding_bg_location_hint">Android 11 లేదా ఆ తర్వాత, బ్యాక్‌గ్రౌండ్ లొకేషన్ అనుమతి సిస్టమ్ సెట్టింగ్‌లలో మాత్రమే ఇవ్వబడుతుంది; యాప్ దాన్ని నేరుగా అడగలేదు.</string>
+
+    <string name="settings_notifications_title">నోటిఫికేషన్‌లు</string>
+    <string name="settings_message_notifications">సందేశ నోటిఫికేషన్‌లు</string>
+    <string name="settings_message_notifications_subtitle">చాట్ లేదా సర్కిల్ సందేశం వచ్చినప్పుడు నోటిఫికేషన్ చూపించు</string>
+    <string name="settings_alert_notifications">లొకేషన్ హెచ్చరికలు</string>
+    <string name="settings_alert_notifications_subtitle">ప్రాంతం నుండి బయటకు వెళ్లడం, సమీపం మరియు లొకేషన్ పోవడంపై హెచ్చరికలు. SOS హెచ్చరికలు ఎప్పుడూ ఆన్‌లో ఉంటాయి.</string>
+    <string name="settings_quiet_hours">నిశ్శబ్ద సమయాలు</string>
+    <string name="settings_quiet_hours_subtitle">ఎంచుకున్న వ్యవధిలో సందేశ మరియు హెచ్చరిక నోటిఫికేషన్‌లను మ్యూట్ చేస్తుంది. SOS మాత్రమే వినిపిస్తుంది.</string>
+    <string name="settings_quiet_hours_start">మ్యూట్ ప్రారంభం</string>
+    <string name="settings_quiet_hours_end">వరకు</string>
+    <string name="settings_disable_waiting">మీ పర్యవేక్షకుడి ఆమోదం కోసం వేచి ఉంది…</string>
+    <string name="settings_disable_cancel">అభ్యర్థనను రద్దు చేయి</string>
+    <string name="settings_disable_denied">మీ పర్యవేక్షకుడు అన్‌లాక్ అభ్యర్థనను తిరస్కరించారు.</string>
+    <string name="settings_disable_timed_out">సమయానికి సమాధానం లేదు. మీ పర్యవేక్షకుడు ఆఫ్‌లైన్‌లో ఉండవచ్చు; తర్వాత మళ్లీ ప్రయత్నించండి.</string>
+
+    <string name="settings_erase_identity_card">ప్రమాదకర ప్రాంతం</string>
+    <string name="settings_erase_identity">గుర్తింపును తొలగించు &amp; మొత్తం డేటాను తుడిచివేయి</string>
+    <string name="settings_erase_identity_subtitle">గుర్తింపు కీ, కాంటాక్ట్‌లు, లొకేషన్ చరిత్ర, సందేశాలు మరియు ఈ పరికరం సెట్టింగ్‌లను తొలగించి, ప్రారంభ సెటప్‌ను మళ్లీ ప్రారంభిస్తుంది</string>
+    <string name="settings_erase_identity_title">గుర్తింపును తొలగించి అన్నీ తుడిచివేయాలా?</string>
+    <string name="settings_erase_identity_message">ఇది మీ Nostr కీ జతను, అన్ని కాంటాక్ట్‌లను, అన్ని ప్రాంతాలను, లొకేషన్ చరిత్రను, సందేశాలను మరియు ఈ పరికరం సెట్టింగ్‌లను శాశ్వతంగా తుడిచివేస్తుంది. కాంటాక్ట్‌లకు తెలియజేయబడదు, వారి కాపీలు ప్రభావితం కావు. తొలగింపు అభ్యర్థన ఏదీ పంపబడదు; కాంటాక్ట్‌ను హెచ్చరించాలంటే మొదట ప్రతి ఒక్కరికీ “కాంటాక్ట్ మరియు డేటాను తొలగించు” వాడండి.</string>
+    <string name="settings_erase_identity_final_title">చివరి నిర్ధారణ</string>
+    <string name="settings_erase_identity_final_message">అన్నీ తుడిచి కొత్త గుర్తింపుతో మళ్లీ ప్రారంభించాలా? దీన్ని వెనక్కి తీసుకోలేరు. ఈ గుర్తింపు తర్వాత అవసరం కావచ్చనుకుంటే, మొదట ఎన్‌క్రిప్ట్ చేసిన బ్యాకప్‌ను ఎగుమతి చేయండి.</string>
+    <string name="settings_erase_identity_confirm">తుడిచి మళ్లీ ప్రారంభించు</string>
+    <string name="toast_now_supervised">ఇప్పుడు %1$s పర్యవేక్షిస్తున్నారు</string>
+    <string name="toast_already_supervised">ఇప్పటికే పర్యవేక్షణలో ఉంది; బదులుగా ఈ అభ్యర్థనను తిరస్కరించండి</string>
+    <string name="toast_declined_supervision_invite">%1$s నుండి పర్యవేక్షణ అభ్యర్థన తిరస్కరించబడింది</string>
+    <string name="supervision_disable_request_title">ఈ పరికరాన్ని అన్‌లాక్ చేయాలా?</string>
+    <string name="supervision_disable_request_message">%1$s పర్యవేక్షణ మోడ్‌ను ఆఫ్ చేయమని అడుగుతున్నారు. ఆమోదిస్తే కొత్త పర్యవేక్షణ అభ్యర్థన అంగీకరించే వరకు సెట్టింగ్‌లు శాశ్వతంగా అన్‌లాక్ అవుతాయి.</string>
 </resources>
