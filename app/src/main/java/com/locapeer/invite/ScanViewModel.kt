@@ -4,15 +4,9 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
-import com.locapeer.data.dao.PeerDao
-import com.locapeer.data.entity.PeerEntity
-import com.locapeer.nostr.NostrEvent
-import com.locapeer.settings.HARDCODED_RELAYS
-import com.locapeer.nostr.NostrEventKind
-import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
+import com.locapeer.supervised.ContactAddApprovalManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -29,16 +23,17 @@ data class ScanState(
     val error: String? = null,
     /** Name of a parsed-but-not-yet-confirmed invite awaiting explicit user approval. */
     val pendingName: String? = null,
+    /** True while the supervisor is deciding a supervised contact-add request (kind 1067). */
+    val awaitingSupervisor: Boolean = false,
 )
 
 @HiltViewModel
 class ScanViewModel @Inject constructor(
     @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context,
-    private val peerDao: PeerDao,
     private val keyManager: KeyManager,
-    private val relayClient: NostrRelayClient,
-    private val crypto: CryptoUtils,
     private val prefs: AppPreferences,
+    private val contactAddApprovalManager: ContactAddApprovalManager,
+    private val executor: ContactAddExecutor,
 ) : ViewModel() {
 
     private val _scanState = MutableStateFlow(ScanState())
@@ -95,7 +90,11 @@ class ScanViewModel @Inject constructor(
         }
     }
 
-    /** Commit the staged invite: add the contact and send the track request. */
+    /** Commit the staged invite: add the contact and send the track request.
+     *  While supervised this is a per-action decision: the supervisor is asked (kind
+     *  1067) to approve adding THIS contact by name, and the add only happens after
+     *  their answer - scanning a QR can no longer create a new sharing destination
+     *  behind their back. */
     fun confirmAdd() {
         val invite = pendingInvite ?: return
         viewModelScope.launch {
@@ -107,21 +106,33 @@ class ScanViewModel @Inject constructor(
                     _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_own_invite))
                     return@launch
                 }
-                val existing = peerDao.getPeer(invite.deviceId)
-                val peer = PeerEntity(
-                    deviceId = invite.deviceId,
-                    displayName = existing?.displayName ?: invite.displayName,
-                    publicKeyHex = invite.publicKeyHex,
-                    relayUrl = invite.relayUrl,
-                    locationRole = PeerEntity.ROLE_SEND_RECEIVE,
-                    messagingEnabled = existing?.messagingEnabled ?: true,
-                    addedAt = existing?.addedAt ?: System.currentTimeMillis(),
-                )
-                peerDao.upsertPeer(peer)
-                relayClient.connect(invite.relayUrl)
-                sendTrackRequest(invite)
-                pendingInvite = null
-                _scanState.value = ScanState(success = true, addedName = invite.displayName)
+                if (prefs.settings.first().supervisionActive) {
+                    contactAddApprovalManager.requestAdd(
+                        contactPubkeyHex = invite.publicKeyHex,
+                        contactName = invite.displayName,
+                        action = ContactAddApprovalManager.AddAction.OutboundScan(invite),
+                    ) { approved ->
+                        // UI feedback only: the durable add runs in the approval manager
+                        // (ContactAddExecutor), so navigation or a process kill mid-wait
+                        // cannot orphan an approved add.
+                        if (approved) {
+                            pendingInvite = null
+                            processed = true
+                            _scanState.value = ScanState(success = true, addedName = invite.displayName)
+                        } else {
+                            processed = false
+                            _scanState.value = ScanState(
+                                error = context.getString(com.locapeer.R.string.scan_add_denied)
+                            )
+                        }
+                    }
+                    _scanState.value = ScanState(awaitingSupervisor = true)
+                } else {
+                    executor.performOutboundAdd(invite)
+                    pendingInvite = null
+                    processed = true
+                    _scanState.value = ScanState(success = true, addedName = invite.displayName)
+                }
             } catch (e: Exception) {
                 _scanState.value = ScanState(error = e.message ?: context.getString(com.locapeer.R.string.scan_error_unknown))
                 processed = false
@@ -131,38 +142,6 @@ class ScanViewModel @Inject constructor(
 
     private fun isValidPubKeyHex(hex: String): Boolean =
         hex.length == 64 && hex.all { it in '0'..'9' || it.lowercaseChar() in 'a'..'f' }
-
-    private suspend fun sendTrackRequest(target: InviteData) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val settings = prefs.settings.first()
-            val myRelay = HARDCODED_RELAYS.first()
-            val myDisplayName = settings.displayName.ifBlank { "Someone" }
-
-            val payload = TrackRequestPayload(
-                senderPublicKeyHex = pubHex,
-                senderDisplayName = myDisplayName,
-                senderDeviceId = pubHex,
-                senderRelayUrl = myRelay,
-            )
-            val encrypted = crypto.nip44Encrypt(
-                crypto.hexToBytes(privHex),
-                target.publicKeyHex,
-                json.encodeToString(payload),
-            )
-            val event = NostrEvent.build(
-                privKeyHex = privHex,
-                pubKeyHex = pubHex,
-                kind = NostrEventKind.TRACK_REQUEST,
-                content = encrypted,
-                tags = listOf(listOf("p", target.publicKeyHex)),
-                crypto = crypto,
-            )
-            relayClient.publishEvent(event)
-        } catch (e: Exception) {
-            Log.w("ScanViewModel", "Failed to send track request", e)
-        }
-    }
 
     fun processInviteLink(input: String) {
         try {

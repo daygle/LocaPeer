@@ -1,6 +1,7 @@
 package com.locapeer.sharing
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
@@ -23,6 +24,9 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
+import com.locapeer.supervised.SupervisedInvitePayload
+import com.locapeer.supervised.SupervisedSupervisorEndPayload
+import com.locapeer.supervised.SupervisionChangeReporter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
@@ -32,6 +36,8 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
+private const val TAG = "PeerSharingViewModel"
 
 data class PeerSharingUiState(
     val peer: PeerEntity? = null,
@@ -64,8 +70,12 @@ class PeerSharingViewModel @Inject constructor(
     private val relayClient: NostrRelayClient,
     private val prefs: AppPreferences,
     private val peerManager: PeerManager,
-    private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao
+    private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
+    private val changeReporter: SupervisionChangeReporter
 ) : ViewModel() {
+
+    /** Display name of the peer this VM is bound to (for change summaries). */
+    private suspend fun peerName(): String? = peerDao.getPeer(currentPeerId)?.displayName
 
     private val json = Json { ignoreUnknownKeys = true }
     private var currentPeerId: String = ""
@@ -112,6 +122,11 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setSharingEnabled(currentPeerId, enabled)
             else configDao.upsert(defaultConfig().copy(sharingEnabled = enabled))
+            // Visibility: the supervisor sees pause/resume of a destination.
+            changeReporter.report(
+                if (enabled) SupervisionChangeReporter.Areas.RESUME else SupervisionChangeReporter.Areas.PAUSE,
+                peerName()
+            )
         }
     }
 
@@ -128,6 +143,7 @@ class PeerSharingViewModel @Inject constructor(
             val peer = peerDao.getPeer(currentPeerId) ?: return@launch
             peerDao.upsertPeer(peer.copy(messagingEnabled = enabled))
             if (enabled) messageDao.unblockMessagesFromPeer(currentPeerId)
+            // Messaging is not location visibility; no summary entry.
         }
     }
 
@@ -136,6 +152,7 @@ class PeerSharingViewModel @Inject constructor(
             val existing = configDao.getForPeer(currentPeerId)
             if (existing != null) configDao.setPrecisionMode(currentPeerId, mode.name)
             else configDao.upsert(defaultConfig().copy(precisionMode = mode.name))
+            changeReporter.report(SupervisionChangeReporter.Areas.PRECISION, peerName())
         }
     }
 
@@ -143,14 +160,101 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             val cfg = configDao.getForPeer(currentPeerId) ?: defaultConfig()
             configDao.upsert(cfg.copy(isSosContact = enabled))
+            changeReporter.report(SupervisionChangeReporter.Areas.SOS_CONTACT, peerName())
         }
     }
 
+    /**
+     * Start (enable=true) or end (enable=false) supervising the current peer.
+     *
+     * Both directions are in-band from here on: enabling applies the same side effects
+     * the registration-notification accept path applies (missed-heartbeat alerts on,
+     * receive role promoted) AND sends a kind-1061 invite the device must consent to;
+     * disabling sends kind-1063 so the far device clears its supervised state instead
+     * of being orphaned behind an unlock gate that can never be answered again.
+     */
     fun setIsMySupervised(enabled: Boolean) {
         viewModelScope.launch {
-            val existing = configDao.getForPeer(currentPeerId)
-            if (existing != null) configDao.setIsMySupervised(currentPeerId, enabled)
-            else configDao.upsert(defaultConfig().copy(isMySupervised = enabled))
+            val peer = peerDao.getPeer(currentPeerId) ?: return@launch
+            if (enabled) {
+                val existing = configDao.getForPeer(currentPeerId)
+                if (existing != null) {
+                    configDao.setIsMySupervised(currentPeerId, true)
+                    configDao.setNotifyOnMissedHeartbeat(currentPeerId, true)
+                } else {
+                    configDao.upsert(
+                        PeerSharingConfig(
+                            peerDeviceId = currentPeerId,
+                            isMySupervised = true,
+                            notifyOnMissedHeartbeat = true
+                        )
+                    )
+                }
+                val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
+                if (promotedRole != peer.locationRole) {
+                    peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
+                }
+                sendSupervisionInvite(peer)
+            } else {
+                val existing = configDao.getForPeer(currentPeerId)
+                if (existing != null) {
+                    configDao.setIsMySupervised(currentPeerId, false)
+                    // Explicitly release the forced-on alert, bypassing the toggle guard
+                    // that keeps setNotifyOnMissedHeartbeat(false) blocked while supervised.
+                    configDao.setNotifyOnMissedHeartbeat(currentPeerId, false)
+                }
+                sendSupervisionEnded(peer)
+            }
+        }
+    }
+
+    /** Kind 1061: ask the peer to consent to being supervised by us. */
+    private suspend fun sendSupervisionInvite(peer: PeerEntity) {
+        try {
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val settings = prefs.settings.first()
+            val myRelay = relayClient.relayStatus.value.filter { it.value }.keys.firstOrNull()
+                ?: HARDCODED_RELAYS.first()
+            val payload = json.encodeToString(
+                SupervisedInvitePayload(
+                    supervisorName = settings.displayName.ifBlank { pubHex.take(8) },
+                    supervisorRelayUrl = myRelay
+                )
+            )
+            publishSupervisedEvent(peer.publicKeyHex, NostrEventKind.SUPERVISED_INVITE, payload)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to send supervision invite", e)
+        }
+    }
+
+    /** Kind 1063: tell the peer we stopped supervising them. */
+    private suspend fun sendSupervisionEnded(peer: PeerEntity) {
+        try {
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val payload = json.encodeToString(SupervisedSupervisorEndPayload(supervisorPubkeyHex = pubHex))
+            publishSupervisedEvent(peer.publicKeyHex, NostrEventKind.SUPERVISED_SUPERVISOR_END, payload)
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to send supervision-ended notice", e)
+        }
+    }
+
+    /** Shared sign+encrypt+publish for the supervision control kinds. */
+    private suspend fun publishSupervisedEvent(toPubkey: String, kind: Int, content: String) {
+        try {
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), toPubkey, content)
+            relayClient.publishEvent(
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = kind,
+                    content = encrypted,
+                    tags = listOf(listOf("p", toPubkey)),
+                    crypto = crypto
+                )
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to publish supervised event kind=$kind", e)
         }
     }
 
@@ -239,6 +343,7 @@ class PeerSharingViewModel @Inject constructor(
             if (wasSharing && !nowSharing) {
                 peerManager.sendDeleteMyLocation(currentPeerId)
             }
+            changeReporter.report(SupervisionChangeReporter.Areas.ROLE, peerName())
         }
     }
 
@@ -353,6 +458,7 @@ class PeerSharingViewModel @Inject constructor(
                 ExistingWorkPolicy.REPLACE,
                 request
             )
+            changeReporter.report(SupervisionChangeReporter.Areas.TEMP_SHARE_START, peerName())
         }
     }
 
@@ -364,6 +470,7 @@ class PeerSharingViewModel @Inject constructor(
         viewModelScope.launch {
             configDao.setTemporaryShareEndsAt(currentPeerId, null)
             workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(currentPeerId))
+            changeReporter.report(SupervisionChangeReporter.Areas.TEMP_SHARE_END, peerName())
         }
     }
 }

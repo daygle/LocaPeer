@@ -7,6 +7,7 @@ import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.data.entity.scheduleRules
 import com.locapeer.settings.AppPreferences
+import com.locapeer.supervised.SupervisionChangeReporter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,6 +21,7 @@ class ScheduleViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val prefs: AppPreferences,
     private val configDao: PeerSharingConfigDao,
+    private val changeReporter: SupervisionChangeReporter,
 ) : ViewModel() {
 
     val scope: String = savedStateHandle.get<String>("scope") ?: "global"
@@ -52,6 +54,12 @@ class ScheduleViewModel @Inject constructor(
                 } else {
                     configDao.upsert(PeerSharingConfig(peerDeviceId = peerId, scheduleRulesJson = rulesJson))
                 }
+            }
+            // Visibility: schedule changes control when location flows, so summarize them.
+            if (scope == "global") {
+                changeReporter.report(SupervisionChangeReporter.Areas.GLOBAL_SCHEDULE)
+            } else {
+                changeReporter.report(SupervisionChangeReporter.Areas.SCHEDULE_PEER, peerName.take(32))
             }
         }
     }

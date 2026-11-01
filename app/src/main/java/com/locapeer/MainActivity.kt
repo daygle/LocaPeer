@@ -125,10 +125,26 @@ class MainActivity : AppCompatActivity() {
                 // Capture-by-val doesn't smart-cast a `by`-delegated StateFlow read, so we
                 // route the deviceName through a safe call directly into stringResource.
                 pendingApproval?.let { req ->
+                    val approvalTitle = when (req.type) {
+                        com.locapeer.supervised.SupervisionApprovalManager.RequestType.DISABLE ->
+                            R.string.supervision_disable_request_title
+                        com.locapeer.supervised.SupervisionApprovalManager.RequestType.CONTACT_ADD ->
+                            R.string.contact_add_request_title
+                        else -> R.string.supervision_request_title
+                    }
+                    val approvalMessage = when (req.type) {
+                        com.locapeer.supervised.SupervisionApprovalManager.RequestType.DISABLE ->
+                            R.string.supervision_disable_request_message
+                        com.locapeer.supervised.SupervisionApprovalManager.RequestType.CONTACT_ADD ->
+                            R.string.contact_add_request_message
+                        else -> R.string.supervision_request_message
+                    }
                     AlertDialog(
                         onDismissRequest = { approvalManager.respond(approved = false) },
-                        title = { Text(stringResource(R.string.supervision_request_title)) },
-                        text = { Text(stringResource(R.string.supervision_request_message, req.deviceName)) },
+                        title = { Text(stringResource(approvalTitle)) },
+                        text = {
+                            Text(stringResource(approvalMessage, req.deviceName))
+                        },
                         confirmButton = {
                             Button(onClick = { approvalManager.respond(approved = true) }) {
                                 Text(stringResource(R.string.common_approve))

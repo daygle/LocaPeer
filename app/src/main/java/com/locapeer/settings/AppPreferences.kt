@@ -565,6 +565,22 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { it[KEY_LAST_HEARTBEAT_SUB_EPOCH] = epoch }
     }
 
+    /** Persisted contact-add intents for the supervised approval queue (JSON string; see
+     *  ContactAddApprovalManager). Survives process death so a decision that lands right
+     *  after a restart can still complete the queued add. */
+    private val KEY_CONTACT_ADD_INTENTS = stringPreferencesKey("contact_add_intents")
+
+    suspend fun getContactAddIntentsJson(): String? {
+        val prefs = context.settingsStore.data.first()
+        return prefs[KEY_CONTACT_ADD_INTENTS]
+    }
+
+    suspend fun setContactAddIntentsJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_CONTACT_ADD_INTENTS) else prefs[KEY_CONTACT_ADD_INTENTS] = json
+        }
+    }
+
     /**
      * Full settings wipe for "Delete identity & erase all data": every key in the settings
      * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync

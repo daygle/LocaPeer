@@ -39,6 +39,8 @@ import com.locapeer.invite.EXTRA_SENDER_PUBKEY
 import com.locapeer.invite.EXTRA_SENDER_RELAY
 import com.locapeer.invite.TrackRequestPayload
 import com.locapeer.invite.TrackRequestReceiver
+import com.locapeer.supervised.ACTION_SUPERVISED_INVITE_ACCEPT
+import com.locapeer.supervised.ACTION_SUPERVISED_INVITE_DECLINE
 import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_ACCEPT
 import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_DECLINE
 import com.locapeer.supervised.EXTRA_REQUESTER_NAME
@@ -47,8 +49,20 @@ import com.locapeer.supervised.EXTRA_REQUESTER_RELAY
 import com.locapeer.supervised.SupervisedModeManager
 import com.locapeer.supervised.SupervisedRegisterReceiver
 import com.locapeer.supervised.SupervisionApprovalManager
+import com.locapeer.supervised.ContactAddApprovalManager
+import com.locapeer.supervised.ContactAddRequestPayload
+import com.locapeer.supervised.ContactAddResponsePayload
+import com.locapeer.supervised.SettingsChangeSummaryPayload
+import com.locapeer.supervised.SupervisionChangeReporter
+import com.locapeer.supervised.SupervisedInvitePayload
+import com.locapeer.supervised.SupervisedInviteReceiver
+import com.locapeer.supervised.SupervisedInviteResponsePayload
 import com.locapeer.supervised.SupervisedRegisterPayload
 import com.locapeer.supervised.SupervisedRegisterResponsePayload
+import com.locapeer.supervised.SupervisedSupervisorEndPayload
+import com.locapeer.supervised.SupervisedDisableRequestPayload
+import com.locapeer.supervised.SupervisedDisableResponsePayload
+import com.locapeer.supervised.SupervisedWipePayload
 import com.locapeer.supervised.UnlockRequestPayload
 import com.locapeer.supervised.UnlockResponsePayload
 import com.locapeer.nostr.NostrEvent
@@ -146,6 +160,17 @@ private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
 private const val NOTIF_ID_TRACKING_ALERT = 80000
 const val NOTIF_ID_SUPERVISED_REGISTER = 70000
+const val NOTIF_ID_SUPERVISED_INVITE = 75000
+private const val NOTIF_ID_SUPERVISED_CHANGE = 85000
+
+// Cooldown between approval dialogs (unlock / disable requests) per sender. A retrying
+// supervised device can re-request every few seconds, and each request pops a dialog that
+// must be answered first; 60 s keeps the interruption meaningful without dropping the flow.
+private const val SUPERVISION_DIALOG_COOLDOWN_MS = 60_000L
+private const val SUPERVISION_EVENT_MAX_AGE_S = 86400L
+// Freshness window for supervision state-change kinds (invite, invite decline, supervisor
+// end, wipe notice): older than a day is relay catch-up replay, not a fresh decision -
+// the same window the register-decline handler uses.
 
 /** Never turn receive-only access into outbound location sharing without consent. */
 internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boolean): Boolean =
@@ -185,6 +210,15 @@ private val CONTROL_KINDS = listOf(
     NostrEventKind.SUPERVISED_REGISTER,
     NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
     NostrEventKind.SUPERVISED_REGISTER_DECLINE,
+    NostrEventKind.SUPERVISED_INVITE,
+    NostrEventKind.SUPERVISED_INVITE_RESPONSE,
+    NostrEventKind.SUPERVISED_SUPERVISOR_END,
+    NostrEventKind.SUPERVISED_DISABLE_REQUEST,
+    NostrEventKind.SUPERVISED_DISABLE_RESPONSE,
+    NostrEventKind.SUPERVISED_WIPE_NOTICE,
+    NostrEventKind.CONTACT_ADD_REQUEST,
+    NostrEventKind.CONTACT_ADD_RESPONSE,
+    NostrEventKind.SETTINGS_CHANGE_SUMMARY,
     NostrEventKind.TRACKING_ALERT,
     NostrEventKind.CIRCLE_LEAVE,
     NostrEventKind.EVENT_DELETION
@@ -208,6 +242,7 @@ class HeartbeatReceiver @Inject constructor(
     private val notificationManager: NotificationManager,
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
+    private val contactAddApprovalManager: ContactAddApprovalManager,
     private val peerManager: PeerManager,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
@@ -223,6 +258,22 @@ class HeartbeatReceiver @Inject constructor(
      * user left, so that path never touches DataStore.
      */
     @Volatile private var leftCircleIds: Set<String> = emptySet()
+
+    /** Last time an approval dialog (unlock / disable request) was surfaced per sender.
+     *  In-memory on purpose: the cooldown guards a burst within one session only, and a
+     *  process restart must reset it (the user could legitimately retry immediately). */
+    private val dialogCooldowns = HashMap<String, Long>()
+
+    private fun approvalDialogOnCooldown(key: String): Boolean =
+        System.currentTimeMillis() - (dialogCooldowns[key] ?: 0L) < SUPERVISION_DIALOG_COOLDOWN_MS
+
+    private fun markApprovalDialogShown(key: String) {
+        dialogCooldowns[key] = System.currentTimeMillis()
+    }
+
+    /** Last time a "unknown device requested supervision" info notification was shown,
+     *  per sender pubkey (epoch seconds; in-memory, per-session). */
+    private val unknownRegisterNotifiedAt = HashMap<String, Long>()
 
     // Buffer for batched heartbeat inserts (see HB_BATCH_* constants). Guarded by
     // batchMutex. pendingKeys mirrors the buffer's (deviceId, timestamp) pairs so a
@@ -262,6 +313,15 @@ class HeartbeatReceiver @Inject constructor(
                         NostrEventKind.SUPERVISED_REGISTER,
                         NostrEventKind.SUPERVISED_REGISTER_ACCEPT,
                         NostrEventKind.SUPERVISED_REGISTER_DECLINE,
+                        NostrEventKind.SUPERVISED_INVITE,
+                        NostrEventKind.SUPERVISED_INVITE_RESPONSE,
+                        NostrEventKind.SUPERVISED_SUPERVISOR_END,
+                        NostrEventKind.SUPERVISED_DISABLE_REQUEST,
+                        NostrEventKind.SUPERVISED_DISABLE_RESPONSE,
+                        NostrEventKind.SUPERVISED_WIPE_NOTICE,
+                        NostrEventKind.CONTACT_ADD_REQUEST,
+                        NostrEventKind.CONTACT_ADD_RESPONSE,
+                        NostrEventKind.SETTINGS_CHANGE_SUMMARY,
                         NostrEventKind.TRACK_REQUEST,
                         NostrEventKind.TRACK_ACCEPT,
                         NostrEventKind.TRACK_DECLINE,
@@ -331,6 +391,15 @@ class HeartbeatReceiver @Inject constructor(
                     NostrEventKind.SUPERVISED_REGISTER -> scope.launch { processRegisterRequest(event) }
                     NostrEventKind.SUPERVISED_REGISTER_ACCEPT -> scope.launch { processRegisterResponse(event, accepted = true) }
                     NostrEventKind.SUPERVISED_REGISTER_DECLINE -> scope.launch { processRegisterResponse(event, accepted = false) }
+                    NostrEventKind.SUPERVISED_INVITE -> scope.launch { processSupervisedInvite(event) }
+                    NostrEventKind.SUPERVISED_INVITE_RESPONSE -> scope.launch { processSupervisedInviteResponse(event) }
+                    NostrEventKind.SUPERVISED_SUPERVISOR_END -> scope.launch { processSupervisedSupervisorEnd(event) }
+                    NostrEventKind.SUPERVISED_DISABLE_REQUEST -> scope.launch { processSupervisedDisableRequest(event) }
+                    NostrEventKind.SUPERVISED_DISABLE_RESPONSE -> scope.launch { processSupervisedDisableResponse(event) }
+                    NostrEventKind.SUPERVISED_WIPE_NOTICE -> scope.launch { processSupervisedWipeNotice(event) }
+                    NostrEventKind.CONTACT_ADD_REQUEST -> scope.launch { processContactAddRequest(event) }
+                    NostrEventKind.CONTACT_ADD_RESPONSE -> scope.launch { processContactAddResponse(event) }
+                    NostrEventKind.SETTINGS_CHANGE_SUMMARY -> scope.launch { processSettingsChangeSummary(event) }
                     NostrEventKind.TRACK_REQUEST -> processTrackRequest(event)
                     // Handled in order (not launched) so an accept and a later removal or
                     // decline from the same contact can't apply out of order.
@@ -965,6 +1034,10 @@ class HeartbeatReceiver @Inject constructor(
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
         } catch (e: Exception) { return }
         val payload = try { json.decodeFromString<UnlockRequestPayload>(plaintext) } catch (e: Exception) { return }
+        // A supervised user can re-request as fast as they can tap; without a cooldown each
+        // request would machine-gun the approval dialog while the previous one is pending.
+        if (approvalDialogOnCooldown("unlock:${event.pubkey}")) return
+        markApprovalDialogShown("unlock:${event.pubkey}")
         supervisionApprovalManager.setPending(
             SupervisionApprovalManager.PendingRequest(
                 fromPubkey = event.pubkey,
@@ -992,9 +1065,35 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processRegisterRequest(event: NostrEvent) {
         // Ignore requests older than 24 hours - supervisor must be reachable within a day
         if (event.createdAt < Instant.now().epochSecond - 86400) return
-        peerDao.getPeer(event.pubkey) ?: return
-        // Don't re-notify if the supervisor already accepted this device
-        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised == true) return
+        val peer = peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised == true) {
+            // Already supervising this device: answer the (re)registration in-band with an
+            // accept instead of another dialog. This closes the supervisor-initiated invite
+            // loop (its 1062 accept step triggers this register request) and repairs the
+            // handshake after our own process death without needing the supervisor again.
+            autoAcceptRegistration(peer)
+            return
+        }
+        // A stranger we've never added asked us to supervise them: previously this was a
+        // silent drop, which left the requesting device in pending/unlocked forever. Now
+        // it surfaces once per session as an informational notification, and the request
+        // can only proceed after the user adds them as a contact.
+        val nowS = Instant.now().epochSecond
+        if (unknownRegisterNotifiedAt[event.pubkey]?.let { nowS - it < 86400L } != true) {
+            unknownRegisterNotifiedAt[event.pubkey] = nowS
+            notificationManager.notify(
+                event.pubkey,
+                NOTIF_ID_SUPERVISED_REGISTER,
+                NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                    .setSmallIcon(R.drawable.ic_notif_alert)
+                    .setContentTitle(context.getString(R.string.notif_supervisor_unknown_request_title))
+                    .setContentText(context.getString(R.string.notif_supervisor_unknown_request_text))
+                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                    .setAutoCancel(true)
+                    .build()
+            )
+            return
+        }
         // Suppress relay retransmissions if the notification is still active
         if (notificationManager.activeNotifications.any {
                 it.id == NOTIF_ID_SUPERVISED_REGISTER && it.tag == event.pubkey }) return
@@ -1114,6 +1213,355 @@ class HeartbeatReceiver @Inject constructor(
                 .build()
             notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
         }
+    }
+
+    // ── Supervised-mode state changes (kinds 1061-1066) ─────────────────────────────
+
+    /** Sign, encrypt and publish a supervised-mode control event to [toPubkey]. */
+    private suspend fun sendSupervisedEvent(toPubkey: String, kind: Int, payload: String) {
+        try {
+            val (privHex, pubHex) = keyManager.ensureKeypair()
+            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), toPubkey, payload)
+            relayClient.publishEvent(
+                NostrEvent.build(
+                    privKeyHex = privHex,
+                    pubKeyHex = pubHex,
+                    kind = kind,
+                    content = encrypted,
+                    tags = listOf(listOf("p", toPubkey)),
+                    crypto = crypto
+                )
+            )
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to send supervised event kind=$kind to $toPubkey", e)
+        }
+    }
+
+    /** Answer a supervised registration we already agreed to (isMySupervised): promote
+     *  received location capability + missed-heartbeat alerts and reply in-band. Closes
+     *  the supervisor-initiated invite loop (its 1062 accept step triggers the 1055
+     *  register request that lands here) and re-answers after our process death. */
+    private suspend fun autoAcceptRegistration(peer: PeerEntity) {
+        val deviceId = peer.deviceId
+        val cfg = sharingConfigDao.getForPeer(deviceId)
+        if (cfg == null) {
+            sharingConfigDao.upsert(
+                com.locapeer.data.entity.PeerSharingConfig(
+                    peerDeviceId = deviceId,
+                    isMySupervised = true,
+                    notifyOnMissedHeartbeat = true
+                )
+            )
+        } else {
+            sharingConfigDao.setIsMySupervised(deviceId, true)
+            sharingConfigDao.setNotifyOnMissedHeartbeat(deviceId, true)
+        }
+        // Supervising a device implies receiving its location (promote role, keep SEND).
+        val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
+        if (promotedRole != peer.locationRole) {
+            peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
+        }
+        val payload = json.encodeToString(
+            SupervisedRegisterResponsePayload(devicePubkeyHex = deviceId, accepted = true)
+        )
+        if (peer.relayUrl.isNotBlank()) relayClient.connect(peer.relayUrl)
+        sendSupervisedEvent(deviceId, NostrEventKind.SUPERVISED_REGISTER_ACCEPT, payload)
+        Log.d(TAG, "Auto-answered supervised registration from $deviceId")
+    }
+
+    /** Device side (kind 1061): a supervisor has asked to supervise this device. */
+    private suspend fun processSupervisedInvite(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        // Only a peer this device already knows can ask; invites from strangers are
+        // dropped (registration as a stranger was never surfaced either).
+        peerDao.getPeer(event.pubkey) ?: return
+        // Supervision is one-to-one and cannot be changed while active or pending.
+        if (prefs.settings.first().supervisedModeEnabled) return
+        // Suppress relay retransmissions while the invite notification is still active.
+        if (notificationManager.activeNotifications.any {
+                it.id == NOTIF_ID_SUPERVISED_INVITE && it.tag == event.pubkey }) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedInvitePayload>(plaintext)
+        } catch (e: Exception) { return }
+        val supervisorName = payload.supervisorName.take(MAX_PEER_DISPLAY_NAME_CHARS)
+        val acceptIntent = Intent(context, SupervisedInviteReceiver::class.java).apply {
+            setPackage(context.packageName)
+            action = ACTION_SUPERVISED_INVITE_ACCEPT
+            putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
+            putExtra(EXTRA_REQUESTER_NAME, supervisorName)
+        }
+        val declineIntent = Intent(context, SupervisedInviteReceiver::class.java).apply {
+            setPackage(context.packageName)
+            action = ACTION_SUPERVISED_INVITE_DECLINE
+            putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
+            putExtra(EXTRA_REQUESTER_NAME, supervisorName)
+        }
+        val baseId = event.pubkey.hashCode() + NOTIF_ID_SUPERVISED_INVITE
+        val acceptPi = PendingIntent.getBroadcast(
+            context, baseId, acceptIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val declinePi = PendingIntent.getBroadcast(
+            context, baseId + 1, declineIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        notificationManager.notify(
+            event.pubkey,
+            NOTIF_ID_SUPERVISED_INVITE,
+            NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle(context.getString(R.string.notif_supervised_invite_title, supervisorName))
+                .setContentText(context.getString(R.string.notif_supervised_invite_text))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(false)
+                .addAction(0, context.getString(R.string.notif_action_accept), acceptPi)
+                .addAction(0, context.getString(R.string.common_decline), declinePi)
+                .build()
+        )
+    }
+
+    /** Supervisor side (kind 1062): answer to an invite we sent. */
+    private suspend fun processSupervisedInviteResponse(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        // Invite answers only exist in our supervisor role (device-side 1057 decline is
+        // handled by processRegisterResponse, which requires OUR supervisor pubkey).
+        if (prefs.settings.first().supervisorPubkey.isNotEmpty()) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedInviteResponsePayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (!payload.devicePubkeyHex.equals(event.pubkey, ignoreCase = true)) return
+        // Acceptance arrives through the 1055/1056 register handshake (auto-answered
+        // above); a decline is the real state change here and releases the claim the
+        // "Supervise" toggle made when it sent the invite.
+        if (!payload.accepted) {
+            sharingConfigDao.setIsMySupervised(event.pubkey, false)
+            sharingConfigDao.setNotifyOnMissedHeartbeat(event.pubkey, false)
+            Log.i(TAG, "Supervision invite declined by ${event.pubkey}")
+        }
+    }
+
+    /** Device side (kind 1063): the supervisor released supervision without deleting us. */
+    private suspend fun processSupervisedSupervisorEnd(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty()) return
+        if (!settings.supervisorPubkey.equals(event.pubkey, ignoreCase = true)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), settings.supervisorPubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedSupervisorEndPayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (!payload.supervisorPubkeyHex.equals(event.pubkey, ignoreCase = true)) return
+        // The other side decided; clear whatever state we had (pending or active) and
+        // tell the user explicitly instead of leaving them to discover it in Settings.
+        prefs.clearSupervisedMode()
+        supervisedModeManager.reset()
+        Log.i(TAG, "Supervised mode ended by the supervisor")
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            context, "supervised_ended".hashCode(), openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        notificationManager.notify(
+            "supervised_ended",
+            NOTIF_ID_SUPERVISED_REGISTER,
+            NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle(context.getString(R.string.notif_supervision_ended_title))
+                .setContentText(context.getString(R.string.notif_supervision_ended_text))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build()
+        )
+    }
+
+    /** Supervisor side (kind 1064): the supervised device asked to release supervision. */
+    private suspend fun processSupervisedDisableRequest(event: NostrEvent) {
+        // Same gating as unlock requests: fresh, known contact, explicitly supervised;
+        // any other peer can send the kind but it never reaches the dialog.
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedDisableRequestPayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (approvalDialogOnCooldown("disable:${event.pubkey}")) return
+        markApprovalDialogShown("disable:${event.pubkey}")
+        supervisionApprovalManager.setPending(
+            SupervisionApprovalManager.PendingRequest(
+                fromPubkey = event.pubkey,
+                deviceName = payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS),
+                requestId = payload.requestId,
+                type = SupervisionApprovalManager.RequestType.DISABLE
+            )
+        )
+    }
+
+    /** Device side (kind 1065): the supervisor answered our disable request. */
+    private suspend fun processSupervisedDisableResponse(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty() ||
+            !settings.supervisorPubkey.equals(event.pubkey, ignoreCase = true)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), settings.supervisorPubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedDisableResponsePayload>(plaintext)
+        } catch (e: Exception) { return }
+        supervisedModeManager.handleDisableResponse(payload.requestId, payload.approved)
+    }
+
+    /** Supervisor side (kind 1066): this supervised device erased its own identity. */
+    private suspend fun processSupervisedWipeNotice(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - SUPERVISION_EVENT_MAX_AGE_S) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SupervisedWipePayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (!payload.devicePubkeyHex.equals(event.pubkey, ignoreCase = true)) return
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            context, "supervised_wipe".hashCode(), openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        notificationManager.notify(
+            "supervised_wipe:${event.pubkey}",
+            NOTIF_ID_SUPERVISED_REGISTER,
+            NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle(context.getString(R.string.notif_supervised_wipe_title))
+                .setContentText(context.getString(R.string.notif_supervised_wipe_text))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build()
+        )
+    }
+
+    /** Supervisor side (kind 1067): the supervised device asked to add a new sharing
+     *  destination. Same gating as unlock/disable requests - the requester must be an
+     *  explicitly supervised contact; the dialog shows the PROPOSED CONTACT's name. */
+    private suspend fun processContactAddRequest(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<ContactAddRequestPayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (approvalDialogOnCooldown("contact:${event.pubkey}")) return
+        markApprovalDialogShown("contact:${event.pubkey}")
+        supervisionApprovalManager.setPending(
+            SupervisionApprovalManager.PendingRequest(
+                fromPubkey = event.pubkey,
+                // The dialog "deviceName" slot carries the proposed contact's bound name.
+                deviceName = payload.contactName.take(MAX_PEER_DISPLAY_NAME_CHARS),
+                requestId = payload.requestId,
+                type = SupervisionApprovalManager.RequestType.CONTACT_ADD
+            )
+        )
+    }
+
+    /** Child side (kind 1068): the supervisor answered our contact-add request. */
+    private suspend fun processContactAddResponse(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        val settings = prefs.settings.first()
+        if (settings.supervisorPubkey.isEmpty() ||
+            !settings.supervisorPubkey.equals(event.pubkey, ignoreCase = true)) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), settings.supervisorPubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<ContactAddResponsePayload>(plaintext)
+        } catch (e: Exception) { return }
+        contactAddApprovalManager.handleResponse(payload.requestId, payload.approved)
+    }
+
+    /** Supervisor side (kind 1069): batched summary of settings changes the supervised
+     *  device made while under an approved unlock, rendered as one notification. */
+    private suspend fun processSettingsChangeSummary(event: NostrEvent) {
+        if (event.createdAt < Instant.now().epochSecond - 300) return
+        peerDao.getPeer(event.pubkey) ?: return
+        if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised != true) return
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        val payload = try {
+            json.decodeFromString<SettingsChangeSummaryPayload>(plaintext)
+        } catch (e: Exception) { return }
+        if (payload.entries.isEmpty()) return
+        val lines = payload.entries.take(8).joinToString("\n") { entry ->
+            val peer = entry.peerName
+            val resId = when (entry.area) {
+                SupervisionChangeReporter.Areas.PAUSE -> R.string.change_pause
+                SupervisionChangeReporter.Areas.RESUME -> R.string.change_resume
+                SupervisionChangeReporter.Areas.PRECISION -> R.string.change_precision
+                SupervisionChangeReporter.Areas.ROLE -> R.string.change_role
+                SupervisionChangeReporter.Areas.TEMP_SHARE_START -> R.string.change_temp_start
+                SupervisionChangeReporter.Areas.TEMP_SHARE_END -> R.string.change_temp_end
+                SupervisionChangeReporter.Areas.SOS_CONTACT -> R.string.change_sos
+                SupervisionChangeReporter.Areas.GLOBAL_SCHEDULE -> R.string.change_schedule
+                SupervisionChangeReporter.Areas.SCHEDULE_PEER -> R.string.change_schedule_peer
+                else -> R.string.change_generic
+            }
+            if (peer != null) context.getString(resId, peer) else context.getString(R.string.change_generic)
+        }
+        val openAppIntent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pi = PendingIntent.getActivity(
+            context, "supervised_changes".hashCode(), openAppIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        notificationManager.notify(
+            event.pubkey,
+            NOTIF_ID_SUPERVISED_CHANGE,
+            NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle(context.getString(R.string.change_notif_title))
+                .setContentText(lines)
+                .setStyle(NotificationCompat.BigTextStyle().bigText(lines))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                .build()
+        )
     }
 
     private suspend fun sendDeliveryAck(toPubkey: String, deliveredEventId: String) {

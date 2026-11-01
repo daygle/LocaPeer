@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -150,11 +151,30 @@ fun IncomingShareRequestScreen(
 
             Spacer(Modifier.weight(1f))
 
+            if (state is IncomingRequestState.WaitingApproval) {
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircularProgressIndicator(modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                        Text(
+                            stringResource(R.string.incoming_awaiting_approval),
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
+            }
+
             Button(
                 onClick = {
                     vm.accept(senderPubkey, derivedRole, messagingEnabled)
                 },
-                enabled = state !is IncomingRequestState.Loading,
+                enabled = state !is IncomingRequestState.Loading && state !is IncomingRequestState.WaitingApproval,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 if (state is IncomingRequestState.Loading) {
@@ -170,7 +190,7 @@ fun IncomingShareRequestScreen(
 
             OutlinedButton(
                 onClick = { vm.decline(senderPubkey) },
-                enabled = state !is IncomingRequestState.Loading,
+                enabled = state !is IncomingRequestState.Loading && state !is IncomingRequestState.WaitingApproval,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(stringResource(R.string.common_decline))

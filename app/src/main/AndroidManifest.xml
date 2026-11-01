@@ -151,6 +151,17 @@
             </intent-filter>
         </receiver>
 
+        <!-- Notification action receiver for supervision invites (supervisor-initiated) -->
+        <receiver
+            android:name=".supervised.SupervisedInviteReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.locapeer.SUPERVISED_INVITE_ACCEPT" />
+                <action android:name="com.locapeer.SUPERVISED_INVITE_DECLINE" />
+            </intent-filter>
+        </receiver>
+
         <!-- Persists the per-app language on API < 33 (AppCompat backport). On API 33+ the
              framework LocaleManager stores it and this service is ignored. -->
         <service

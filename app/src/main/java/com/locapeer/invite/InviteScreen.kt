@@ -227,6 +227,27 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
             SuccessView(scanState.addedName, onDone, vm)
         } else if (scanState.pendingName != null) {
             ConfirmView(scanState.pendingName!!, vm)
+        } else if (scanState.awaitingSupervisor) {
+            // Supervised devices: the add is a per-action decision. The supervisor sees
+            // THIS contact's name and approves or denies it before anything is stored.
+            Column(
+                modifier = Modifier.padding(32.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                CircularProgressIndicator()
+                Text(
+                    stringResource(R.string.scan_add_waiting),
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    stringResource(R.string.scan_add_waiting_subtitle),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+            }
         } else {
             // Scanner View
             Box(modifier = Modifier.height(300.dp).fillMaxWidth()) {

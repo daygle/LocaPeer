@@ -944,4 +944,56 @@
     <string name="onboarding_error_key_range">Invalid private key - out of curve range.</string>
     <string name="onboarding_error_hex">Invalid hex format.</string>
     <string name="onboarding_error_import_failed">Failed to import key: %1$s</string>
+
+    <!-- ── Supervised mode: two-sided state changes (kinds 1061-1066) ─────── -->
+    <string name="notif_supervised_invite_title">%1$s wants to supervise you</string>
+    <string name="notif_supervised_invite_text">Accept to let this device\'s settings be locked behind their approval. You can always request release later.</string>
+    <string name="toast_now_supervised">Now supervised by %1$s</string>
+    <string name="toast_already_supervised">Already supervised - decline the request instead</string>
+    <string name="toast_declined_supervision_invite">Declined the supervision request from %1$s</string>
+    <string name="notif_supervision_ended_title">Supervision ended</string>
+    <string name="notif_supervision_ended_text">Your supervisor removed the supervision of this device. Settings are unlocked.</string>
+    <string name="supervision_disable_request_title">Release this device?</string>
+    <string name="supervision_disable_request_message">%1$s asks to turn off supervised mode. Approving unlocks its settings permanently until a new supervised request is accepted.</string>
+    <string name="notif_supervised_wipe_title">Supervised device erased itself</string>
+    <string name="notif_supervised_wipe_text">A supervised device sent an erase notice and deleted its own identity. Expect missed-heartbeat alerts and remove the contact when you\'re ready.</string>
+    <string name="notif_supervisor_unknown_request_title">Unknown device requested supervision</string>
+    <string name="notif_supervisor_unknown_request_text">The asking device is not in your contacts. Add it as a contact first, then have it request supervision again.</string>
+    <string name="settings_disable_waiting">Waiting for your supervisor\'s approval…</string>
+    <string name="settings_disable_cancel">Cancel request</string>
+    <string name="settings_disable_denied">Your supervisor denied the release request.</string>
+    <string name="settings_disable_timed_out">No answer in time. Your supervisor may be offline - try again later.</string>
+    <string name="peer_supervise_enable_title">Supervise this device?</string>
+    <string name="peer_supervise_enable_message">%1$s must accept the request on their device before their settings get locked behind your approval. Missed-heartbeat alerts will be enabled for them.</string>
+    <string name="peer_supervise_disable_title">Stop supervising?</string>
+    <string name="peer_supervise_disable_message">%1$s\'s device will unlock its settings and be notified. Missed-heartbeat alerts for them are turned back off.</string>
+    <string name="peer_supervise_disable_confirm">Stop supervising</string>
+
+    <!-- ── Supervised mode: per-action contact-add approval (kinds 1067/1068) ─ -->
+    <string name="contact_add_request_title">Approve new sharing contact?</string>
+    <string name="contact_add_request_message">Your supervised device asks to add “%1$s” as a new location-sharing contact. Approving starts the tracking handshake with them.</string>
+    <string name="scan_add_waiting">Waiting for your supervisor…</string>
+    <string name="scan_add_waiting_subtitle">Adding a contact while supervised needs their approval. They will decide shortly.</string>
+    <string name="scan_add_denied">Your supervisor declined adding this contact.</string>
+    <string name="incoming_awaiting_approval">Waiting for your supervisor to approve this request…</string>
+    <string name="pending_awaiting_approval">Waiting for supervisor approval…</string>
+    <string name="circle_leave_supervised">Leaving this circle needs your supervisor — ask them to remove it from your device.</string>
+
+    <!-- ── Supervised mode: settings-change summaries (kind 1069) ───────────── -->
+    <string name="change_notif_title">Supervised device changed settings</string>
+    <string name="change_pause">• Paused sharing with %1$s</string>
+    <string name="change_resume">• Resumed sharing with %1$s</string>
+    <string name="change_precision">• Changed location precision toward %1$s</string>
+    <string name="change_role">• Changed the share role toward %1$s</string>
+    <string name="change_temp_start">• Started a temporary share with %1$s</string>
+    <string name="change_temp_end">• Ended a temporary share</string>
+    <string name="change_sos">• Changed SOS-contact status for %1$s</string>
+    <string name="change_schedule">• Changed the global sharing schedule</string>
+    <string name="change_schedule_peer">• Changed the sharing schedule with %1$s</string>
+    <string name="change_generic">• Changed a sharing setting</string>
+
+    <!-- ── Onboarding: background location (settings-based grant on Android 11+) -->
+    <string name="onboarding_bg_open_settings">Open system settings</string>
+    <string name="onboarding_bg_skip">Skip for now</string>
+    <string name="onboarding_bg_location_hint">On Android 11 and newer, background location is granted in system settings only - the app cannot ask for it directly.</string>
 </resources>

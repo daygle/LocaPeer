@@ -19,8 +19,7 @@ object PermissionManager {
      *  silently change what other screens request. */
     val REQUIRED_PERMISSIONS: List<String> = mutableListOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.CAMERA
+        Manifest.permission.ACCESS_COARSE_LOCATION
     ).apply {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             add(Manifest.permission.POST_NOTIFICATIONS)
@@ -29,16 +28,19 @@ object PermissionManager {
 
     /**
      * Permissions we request alongside the required set but do not gate on: the app
-     * works without them. ACTIVITY_RECOGNITION (Android 10+) lets Activity Recognition
-     * refine motion classification; if denied, tracking falls back to GPS-only. Below
-     * API 29 it is an install-time permission and needs no runtime request.
+     * works without them. CAMERA is only needed to scan QR invites (the invite screen
+     * re-checks and asks for it on demand), ACTIVITY_RECOGNITION (Android 10+) lets
+     * Activity Recognition refine motion classification with a GPS-only fallback.
+     * Below API 29 ACTIVITY_RECOGNITION is an install-time permission and needs no
+     * runtime request.
      */
     val OPTIONAL_PERMISSIONS: List<String> =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            listOf(Manifest.permission.ACTIVITY_RECOGNITION)
-        } else {
-            emptyList()
-        }
+        (listOf(Manifest.permission.CAMERA) +
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                listOf(Manifest.permission.ACTIVITY_RECOGNITION)
+            } else {
+                emptyList()
+            })
 
     fun hasBackgroundLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -76,6 +78,17 @@ object PermissionManager {
     fun openLocationSettings(context: Context) {
         val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
+
+    /** Open the app's own system-settings page, where "Allow all the time" (background
+     *  location) lives on Android 11+. A runtime request for the background permission
+     *  is silently denied there, so settings is the only reliable route. */
+    fun openAppDetailsSettings(context: Context) {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            "package:${context.packageName}".toUri()
+        ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 

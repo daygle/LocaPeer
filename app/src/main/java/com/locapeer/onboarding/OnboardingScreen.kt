@@ -18,6 +18,9 @@ import androidx.compose.material.icons.automirrored.filled.FactCheck
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,15 +83,22 @@ fun OnboardingScreen(
                 OnboardingStep.BACKUP -> BackupStep(state, vm)
                 OnboardingStep.PERMISSIONS -> PermissionsStep(basicPermissionsState) { vm.nextStep() }
                 OnboardingStep.BACKGROUND_LOCATION -> BackgroundLocationStep(
-                    showError = state.showPermissionDeniedError
-                ) {
-                    vm.setPermissionDenied(false)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-                    } else {
+                    showError = state.showPermissionDeniedError,
+                    onOpenSettings = {
+                        vm.setPermissionDenied(false)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            // Android 11+ silently denies a runtime background-location
+                            // request; "Allow all the time" only exists in system settings.
+                            PermissionManager.openAppDetailsSettings(context)
+                        } else {
+                            backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                        }
+                    },
+                    onNext = {
+                        vm.setPermissionDenied(false)
                         vm.nextStep()
                     }
-                }
+                )
                 OnboardingStep.BATTERY -> BatteryStep {
                     PermissionManager.requestBatteryOptimizationExemption(context)
                     vm.nextStep()
@@ -446,7 +456,28 @@ private fun PermissionsStep(
 }
 
 @Composable
-private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
+private fun BackgroundLocationStep(
+    showError: Boolean,
+    onOpenSettings: () -> Unit,
+    onNext: () -> Unit
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    // Background location is a settings-only grant on Android 11+ ("Allow all the time"
+    // lives in the system settings page, not in a runtime dialog), so re-read the grant
+    // each time we return to the foreground. Without a skip button the old loop (request
+    // -> silently denied -> error) stranded onboarding there.
+    var bgGranted by remember { mutableStateOf(PermissionManager.hasBackgroundLocation(context)) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                bgGranted = PermissionManager.hasBackgroundLocation(context)
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
     StepHeader(
         icon = Icons.Default.LocationOn,
         title = stringResource(R.string.onboarding_bg_location_title),
@@ -461,16 +492,39 @@ private fun BackgroundLocationStep(showError: Boolean, onNext: () -> Unit) {
             style = MaterialTheme.typography.bodySmall,
             textAlign = TextAlign.Center
         )
+        Spacer(Modifier.height(8.dp))
+        Text(
+            stringResource(R.string.onboarding_bg_location_hint),
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center
+        )
     }
 
     Spacer(Modifier.height(48.dp))
 
-    Button(
-        onClick = onNext,
-        modifier = Modifier.fillMaxWidth().height(56.dp),
-        shape = RoundedCornerShape(16.dp)
-    ) {
-        Text(stringResource(R.string.onboarding_configure_location), style = MaterialTheme.typography.titleMedium)
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        Button(
+            onClick = if (bgGranted) onNext else onOpenSettings,
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text(
+                if (bgGranted) stringResource(R.string.common_continue)
+                else stringResource(R.string.onboarding_bg_open_settings),
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        // Background sharing is optional - "while using the app" keeps tracking working
+        // whenever the app is open, and the service degrades gracefully without it.
+        // Never trap onboarding on this grant.
+        if (!bgGranted) {
+            TextButton(
+                onClick = onNext,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(stringResource(R.string.onboarding_bg_skip))
+            }
+        }
     }
 }
 

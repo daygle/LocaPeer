@@ -2,11 +2,12 @@ package com.locapeer.invite
 
 import android.app.NotificationManager
 import android.util.Log
-import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.dao.PendingRequestDao
-import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PendingRequestEntity
+import com.locapeer.settings.AppPreferences
 import com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST
+import com.locapeer.supervised.ContactAddApprovalManager
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,41 +20,36 @@ private const val TAG = "PendingRequestActions"
  */
 @Singleton
 class PendingRequestActions @Inject constructor(
-    private val peerDao: PeerDao,
     private val pendingRequestDao: PendingRequestDao,
     private val trackResponseSender: TrackResponseSender,
     private val notificationManager: NotificationManager,
+    private val prefs: AppPreferences,
+    private val contactAddApprovalManager: ContactAddApprovalManager,
+    private val executor: ContactAddExecutor,
 ) {
     /**
      * Adds (or updates) the requester as a contact with [locationRole], answers with a
-     * TRACK_ACCEPT and clears the request. An existing contact keeps its name, archive state and
-     * added-at time; only the role, messaging flag and relay change.
+     * TRACK_ACCEPT and clears the request.
+     *
+     * While supervised, accepting an inbound track request establishes a NEW sharing
+     * destination, so it goes through the supervisor's per-action approval queue (kind
+     * 1067/1068): the queued intent is durable, and the actual accept is executed by
+     * [ContactAddExecutor] once the supervisor answers (or straight away when unsupervised).
      */
     suspend fun accept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
-        notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
-        val existing = peerDao.getPeer(request.senderPubkey)
-        peerDao.upsertPeer(
-            existing?.copy(
-                relayUrl = request.senderRelayUrl,
-                locationRole = locationRole,
-                messagingEnabled = messagingEnabled,
-            ) ?: PeerEntity(
-                deviceId = request.senderPubkey,
-                displayName = request.senderName,
-                publicKeyHex = request.senderPubkey,
-                relayUrl = request.senderRelayUrl,
-                locationRole = locationRole,
-                messagingEnabled = messagingEnabled,
-            )
-        )
-        // The contact is saved either way; a failed send (offline events are queued by the
-        // relay client, so this is a key/crypto failure) must not crash the caller.
-        try {
-            trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to send track accept", e)
+        if (prefs.settings.first().supervisionActive) {
+            contactAddApprovalManager.requestAdd(
+                contactPubkeyHex = request.senderPubkey,
+                contactName = request.senderName,
+                action = ContactAddApprovalManager.AddAction.InboundAccept(
+                    senderPubkey = request.senderPubkey,
+                    locationRole = locationRole,
+                    messagingEnabled = messagingEnabled
+                ),
+            ) { /* UI feedback comes from the queue badge + Room flows; no screen callback */ }
+            return
         }
-        pendingRequestDao.deleteByPubkey(request.senderPubkey)
+        executor.completeInboundAccept(request.senderPubkey, locationRole, messagingEnabled)
     }
 
     /** Answers with a TRACK_DECLINE and clears the request. */

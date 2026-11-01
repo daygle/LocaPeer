@@ -34,6 +34,7 @@ fun PendingRequestsScreen(
     vm: PendingRequestsViewModel = hiltViewModel()
 ) {
     val requests by vm.requests.collectAsStateWithLifecycle()
+    val awaitingApprovalKeys by vm.awaitingApprovalKeys.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -78,6 +79,7 @@ fun PendingRequestsScreen(
                 items(requests, key = { it.senderPubkey }) { request ->
                     PendingRequestRow(
                         request = request,
+                        awaitingApproval = request.senderPubkey in awaitingApprovalKeys,
                         onReview = {
                             onOpenRequest(
                                 request.senderPubkey,
@@ -102,6 +104,7 @@ fun PendingRequestsScreen(
 @Composable
 private fun PendingRequestRow(
     request: PendingRequestEntity,
+    awaitingApproval: Boolean,
     onReview: () -> Unit,
     onDecline: () -> Unit
 ) {
@@ -123,7 +126,19 @@ private fun PendingRequestRow(
 
     ListItem(
         headlineContent = { Text(request.senderName) },
-        supportingContent = { Text(subtitle, style = MaterialTheme.typography.bodySmall) },
+        supportingContent = {
+            Column {
+                Text(subtitle, style = MaterialTheme.typography.bodySmall)
+                if (awaitingApproval) {
+                    // Supervised device: accept tapped; the supervisor is deciding.
+                    Text(
+                        stringResource(R.string.pending_awaiting_approval),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        },
         leadingContent = {
             Icon(
                 if (request.isRoleChange) Icons.Default.SwapHoriz else Icons.Default.PersonAdd,

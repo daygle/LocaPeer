@@ -194,11 +194,14 @@ class SettingsViewModel @Inject constructor(
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
     private val supervisedModeManager: SupervisedModeManager,
+    private val changeReporter: com.locapeer.supervised.SupervisionChangeReporter,
     private val workManager: WorkManager,
     private val appDatabase: com.locapeer.data.AppDatabase
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
+    /** Progress of the "turn supervised mode off" request the supervisor must answer. */
+    val disableState = supervisedModeManager.disableState
 
     val settings: StateFlow<AppSettings> = prefs.settings
         .stateIn(viewModelScope, SharingStarted.Lazily, AppSettings())
@@ -754,6 +757,13 @@ class SettingsViewModel @Inject constructor(
         _erasingAllData.value = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                // 0. Best-effort in-band notice to the supervisor (kind 1066) that this
+                //    identity is being erased, signed while the key still exists. This
+                //    doesn't gate the wipe (erase must remain an unblockable escape and
+                //    uninstall is out of the app's control anyway) - it just makes the
+                //    silence that follows explainable instead of a mystery.
+                supervisedModeManager.sendWipeNotice()
+
                 // 1. Stop anything that would write after the deletions: the beacon service
                 //    (its own SOS restore path reads files), WorkManager jobs, notifications.
                 context.startService(Intent(context, HeartbeatService::class.java).apply { action = ACTION_STOP })
@@ -817,12 +827,22 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    /** Turning supervised mode off mirrors the registration handshake while supervision
+     *  is active: the device asks (kind 1064) and the supervisor answers (kind 1065;
+     *  approval clears the mode, denial keeps the gate). Only a pending (never-accepted)
+     *  request is still cancellable locally - nothing was in force yet. */
     fun disableSupervisedMode() {
         viewModelScope.launch {
-            prefs.clearSupervisedMode()
-            supervisedModeManager.reset()
+            if (prefs.settings.first().supervisionActive) {
+                supervisedModeManager.requestDisable()
+            } else {
+                prefs.clearSupervisedMode()
+                supervisedModeManager.reset()
+            }
         }
     }
+
+    fun cancelDisableRequest() = supervisedModeManager.cancelDisableRequest()
 
     fun requestSettingsUnlock() = supervisedModeManager.requestAccess()
 
@@ -943,6 +963,10 @@ class SettingsViewModel @Inject constructor(
             // too. The worker's clear is already idempotent, so this only keeps the pending
             // job list tidy - never a correctness issue.
             workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(peerDeviceId))
+            changeReporter.report(
+                com.locapeer.supervised.SupervisionChangeReporter.Areas.TEMP_SHARE_END,
+                peerDao.getPeer(peerDeviceId)?.displayName
+            )
         }
     }
 

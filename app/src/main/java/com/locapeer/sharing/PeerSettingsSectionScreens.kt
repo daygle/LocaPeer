@@ -461,6 +461,8 @@ fun PeerSecurityScreen(
     LaunchedEffect(peerId) { vm.init(peerId) }
     val state by vm.uiState.collectAsStateWithLifecycle()
     val isMySupervised = state.config?.isMySupervised ?: false
+    var showSuperviseEnableConfirm by remember { mutableStateOf(false) }
+    var showSuperviseDisableConfirm by remember { mutableStateOf(false) }
 
     PeerSharingSubScreen(stringResource(R.string.peer_category_security_title), onNavigateBack) {
         SettingsCard(
@@ -471,9 +473,50 @@ fun PeerSecurityScreen(
                 title = stringResource(R.string.peer_supervise),
                 subtitle = if (isMySupervised) stringResource(R.string.peer_supervise_on, peerName) else stringResource(R.string.peer_supervise_off, peerName),
                 checked = isMySupervised,
-                onCheckedChange = { vm.setIsMySupervised(it) }
+                // Both directions are disruptive to the far device now (they must consent
+                // to being supervised, or lose their lock when this ends), so confirm them.
+                onCheckedChange = { want ->
+                    if (want) showSuperviseEnableConfirm = true else showSuperviseDisableConfirm = true
+                }
             )
         }
+    }
+
+    if (showSuperviseEnableConfirm) {
+        AlertDialog(
+            onDismissRequest = { showSuperviseEnableConfirm = false },
+            title = { Text(stringResource(R.string.peer_supervise_enable_title)) },
+            text = { Text(stringResource(R.string.peer_supervise_enable_message, peerName)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    showSuperviseEnableConfirm = false
+                    vm.setIsMySupervised(true)
+                }) { Text(stringResource(R.string.common_continue)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showSuperviseEnableConfirm = false }) { Text(stringResource(R.string.common_cancel)) }
+            }
+        )
+    }
+
+    if (showSuperviseDisableConfirm) {
+        AlertDialog(
+            onDismissRequest = { showSuperviseDisableConfirm = false },
+            title = { Text(stringResource(R.string.peer_supervise_disable_title)) },
+            text = { Text(stringResource(R.string.peer_supervise_disable_message, peerName)) },
+            confirmButton = {
+                TextButton(
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                    onClick = {
+                        showSuperviseDisableConfirm = false
+                        vm.setIsMySupervised(false)
+                    }
+                ) { Text(stringResource(R.string.peer_supervise_disable_confirm)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showSuperviseDisableConfirm = false }) { Text(stringResource(R.string.common_cancel)) }
+            }
+        )
     }
 }
 

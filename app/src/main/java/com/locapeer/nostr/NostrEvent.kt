@@ -38,6 +38,42 @@ object NostrEventKind {
     // location at a fast "live" cadence for a short lease. Purely a rate hint - it never
     // grants access the recipient's role/pause settings don't already allow.
     const val LIVE_VIEW_REQUEST = 1060
+
+    // ── Supervised-mode state changes (1061-1066) ─────────────────────────———
+    // Every supervision state change after establishment is now in-band and two-sided:
+    // the handshake kinds (1055-1057) remain the primary path, these act on the edges.
+
+    /** Supervisor -> device: "I would like to supervise you". Requires device consent (1062 or 1055). */
+    const val SUPERVISED_INVITE = 1061
+
+    /** Device -> supervisor: answer to a 1061 invite (accepted=false is the meaningful signal;
+     *  accepted=true is immediately followed by a 1055 register request which activates it). */
+    const val SUPERVISED_INVITE_RESPONSE = 1062
+
+    /** Supervisor -> device: supervision ended from the supervisor side without removing the contact. */
+    const val SUPERVISED_SUPERVISOR_END = 1063
+
+    /** Device -> supervisor: request to disable supervised mode (mirrors the 1049/1050 unlock flow). */
+    const val SUPERVISED_DISABLE_REQUEST = 1064
+
+    /** Supervisor -> device: answer to a 1064 disable request. */
+    const val SUPERVISED_DISABLE_RESPONSE = 1065
+
+    /** Device -> supervisor: best-effort notice that this identity was erased (wipes keys). */
+    const val SUPERVISED_WIPE_NOTICE = 1066
+
+    /** Device -> supervisor (kind 1067): per-action request to add a NEW sharing destination
+     *  (outbound scan/invite confirm, or accepting an inbound tracking request). This is the
+     *  real consent point of supervised mode - the supervisor sees the contact's name and
+     *  approves or denies the add itself. */
+    const val CONTACT_ADD_REQUEST = 1067
+
+    /** Supervisor -> device (kind 1068): answer to a 1067 contact-add request. */
+    const val CONTACT_ADD_RESPONSE = 1068
+
+    /** Device -> supervisor (kind 1069): batched summary of settings changes the supervised
+     *  device made while under an approved unlock, so "what changed" is always visible. */
+    const val SETTINGS_CHANGE_SUMMARY = 1069
 }
 
 @Serializable

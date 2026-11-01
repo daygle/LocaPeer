@@ -271,6 +271,26 @@ class MessagingViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val circle = circleDao.getCircle(circleId) ?: return@launch
+                // On a supervised device, leaving a circle is a supervision bypass when it
+                // severs the family/adult circle: the owner IS the supervisor, or the
+                // supervisor is a member. Everything else (school clubs and such) stays
+                // free - only relationships involving the supervisor are protected.
+                val settingsSnapshot = prefs.settings.first()
+                if (settingsSnapshot.supervisionActive) {
+                    val supervisor = settingsSnapshot.supervisorPubkey
+                    val circleBlocksLeave = supervisor.isNotBlank() && (
+                        circle.creatorPubkey.equals(supervisor, ignoreCase = true) ||
+                            circleDao.getMemberPubkeys(circleId).any { it.equals(supervisor, ignoreCase = true) }
+                        )
+                    if (circleBlocksLeave) {
+                        android.widget.Toast.makeText(
+                            context,
+                            context.getString(com.locapeer.R.string.circle_leave_supervised),
+                            android.widget.Toast.LENGTH_LONG
+                        ).show()
+                        return@launch
+                    }
+                }
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val owner = circle.creatorPubkey
                 if (owner.isBlank() || owner == pubHex) {

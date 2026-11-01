@@ -283,6 +283,7 @@ fun SecuritySettingsScreen(
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
     val peers by vm.peers.collectAsStateWithLifecycle()
+    val disableState by vm.disableState.collectAsStateWithLifecycle()
 
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
@@ -354,6 +355,56 @@ fun SecuritySettingsScreen(
                     destructive = true,
                     onClick = { showDisableSupervisedConfirm = true }
                 )
+                // Progress of the disable request the supervisor must answer. Only an
+                // active (accepted) supervision goes through it; a pending request can
+                // be cancelled locally, so no state row is shown then.
+                if (!settings.supervisionPending) {
+                    CardDivider()
+                    when (val st = disableState) {
+                        is com.locapeer.supervised.SupervisedModeManager.DisableState.Requesting -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)
+                            ) {
+                                Text(
+                                    stringResource(R.string.settings_disable_waiting),
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
+                                TextButton(onClick = { vm.cancelDisableRequest() }) {
+                                    Text(stringResource(R.string.settings_disable_cancel))
+                                }
+                            }
+                        }
+                        com.locapeer.supervised.SupervisedModeManager.DisableState.Denied -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)
+                            ) {
+                                Text(
+                                    stringResource(R.string.settings_disable_denied),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                                TextButton(onClick = { showDisableSupervisedConfirm = true }) {
+                                    Text(stringResource(R.string.common_try_again))
+                                }
+                            }
+                        }
+                        com.locapeer.supervised.SupervisedModeManager.DisableState.TimedOut -> {
+                            Column(
+                                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)
+                            ) {
+                                Text(
+                                    stringResource(R.string.settings_disable_timed_out),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                                TextButton(onClick = { showDisableSupervisedConfirm = true }) {
+                                    Text(stringResource(R.string.common_try_again))
+                                }
+                            }
+                        }
+                        com.locapeer.supervised.SupervisedModeManager.DisableState.Idle -> {}
+                    }
+                }
             } else {
                 SwitchRow(
                     title = stringResource(R.string.settings_supervised_mode),

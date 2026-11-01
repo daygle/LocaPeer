@@ -99,9 +99,11 @@ Circles are a client-side grouping of contacts you've already added. The creator
 Temporary shares use the same per-peer configuration the regular sharing uses, but add an `endsAt` epoch second that's enforced by a one-shot WorkManager job (`TempShareExpiryWorker`). Starting a temporary share on a contact the user has paused (sharingEnabled = false) is a no-op - the pause is the authoritative gate and must not be silently overwritten.
 
 ### Supervised Mode
-1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions.
+1. **Registration**: The supervised device sends a `SUPERVISED_REGISTER` event to the supervisor's pubkey. The supervisor receives a persistent notification with **Accept** and **Decline** actions. (A supervisor can also flip the "Supervise" switch on a contact: their device applies the same accept side effects locally and sends a `SUPERVISED_INVITE` the device must accept on its side, so both directions of the handshake need two-sided consent.)
 2. **Acceptance**: On accept, the supervisor's device records the relationship (`isMySupervised = true`) and sends `SUPERVISED_REGISTER_ACCEPT` back. The supervised device is notified and supervised mode becomes active. Until then the request shows as pending and settings stay unlocked, so a supervisor who never answers can't lock the device.
 3. **Unlock**: When the user needs settings access, a `SUPERVISED_UNLOCK_REQUEST` is sent. The supervisor approves or denies via a real-time notification; the result is reflected on the supervised device within 60 seconds (timeout).
+4. **New sharing destinations**: adding a contact is a per-action decision, not a screen unlock. Both doors a supervised device has - scanning someone's invite, and accepting an inbound tracking request after someone scanned theirs - send a `CONTACT_ADD_REQUEST` (kind 1067) naming the proposed contact; only a supervisor approval (kind 1068) performs the add and starts the tracking handshake. Denials leave nothing stored. Several adds can be decided independently (a persistent queue survives a process kill for the supervisor's 5-minute answer window), and leaving a circle that the supervisor owns or belongs to is refused with an explanation (circles not involving the supervisor stay free). While under an approved unlock, sharing-relevant changes - pausing peers, precision, roles, SOS contacts, temporary shares, schedules - are batched and reported to the supervisor as a `SETTINGS_CHANGE_SUMMARY` (kind 1069), so "what changed" is always visible.
+4. **Lifetime & release**: every state change after establishment is in-band and two-sided. Turning supervised mode off sends a `SUPERVISED_DISABLE_REQUEST` the supervisor must approve or deny (denials keep the gate); the supervisor stopping supervision without deleting the contact sends `SUPERVISED_SUPERVISOR_END`, which unlocks the device and notifies its user. Both sides also fall back to the "detect and notify" guarantee (locked-on missed-heartbeat alerts) for unblockable escapes: the device can't prevent uninstall/force-stop/permission revoke, and "Delete Identity & Erase All Data" sends a best-effort `SUPERVISED_WIPE_NOTICE` before it wipes itself. Approval dialogs are rate-limited so a retrying device can't machine-gun them.
 
 ## Nostr Event Kinds
 
@@ -130,8 +132,17 @@ Temporary shares use the same per-peer configuration the regular sharing uses, b
 | 1058 | `TRACKING_ALERT` | Notifies peer when someone receives an alert about them |
 | 1059 | `CIRCLE_LEAVE` | Notify circle owner of member departure |
 | 1060 | `LIVE_VIEW_REQUEST` | Request a short-term location update boost |
+| 1061 | `SUPERVISED_INVITE` | Supervisor proposes supervising a device (needs device consent) |
+| 1062 | `SUPERVISED_INVITE_RESPONSE` | Device answers an invite (declines release the supervisor-side claim) |
+| 1063 | `SUPERVISED_SUPERVISOR_END` | Supervisor ends supervision without deleting the contact |
+| 1064 | `SUPERVISED_DISABLE_REQUEST` | Supervised device asks to turn supervised mode off |
+| 1065 | `SUPERVISED_DISABLE_RESPONSE` | Supervisor approves or denies a disable request |
+| 1066 | `SUPERVISED_WIPE_NOTICE` | Best-effort notice that a supervised device erased its identity |
+| 1067 | `CONTACT_ADD_REQUEST` | Supervised device asks to approve a NEW sharing contact (by name) |
+| 1068 | `CONTACT_ADD_RESPONSE` | Supervisor approves or denies a contact-add request |
+| 1069 | `SETTINGS_CHANGE_SUMMARY` | Batched summary of settings changes made under an approved unlock |
 
-Custom application events (kinds 1040-1060) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag, plus the recipient via a `p` tag so their subscription receives it.
+Custom application events (kinds 1040-1066) are tagged with the recipient's public key (`p` tag) and NIP-44 encrypted so only the intended recipient can decrypt them. The exception is kind 5 (`EVENT_DELETION`), which follows the standard NIP-09 format: its content is a plaintext deletion reason and it references the target event via an `e` tag, plus the recipient via a `p` tag so their subscription receives it.
 
 ## Technical Architecture
 
