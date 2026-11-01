@@ -546,7 +546,11 @@ private fun MainMapView(
     // MapGeometry converts them at this boundary.
     val lifecycleOwner = LocalLifecycleOwner.current
     var map by remember { mutableStateOf<LocaMapController?>(null) }
-    var initialCenterDone by remember(mapStartingPoint, mapFixedLat, mapFixedLng, lastMapCenter) {
+    // Keyed on `lastMapCenter != null` (not the value itself): the saved-position read lands
+    // asynchronously after the first composition, and keying on the value would RE-CREATE this
+    // state when it arrives, resetting a flag that was already consumed - then the next own
+    // heartbeat would re-center the user's already-panned map onto their own pin.
+    var initialCenterDone by remember(mapStartingPoint, mapFixedLat, mapFixedLng, lastMapCenter != null) {
         mutableStateOf(
             (mapStartingPoint == "FIXED_LOCATION" && mapFixedLat != 0.0 && mapFixedLng != 0.0) ||
             (mapStartingPoint != "OWN_PIN" && mapStartingPoint != "FIT_ALL" && lastMapCenter != null)

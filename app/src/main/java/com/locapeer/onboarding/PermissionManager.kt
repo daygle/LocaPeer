@@ -15,7 +15,9 @@ import androidx.core.location.LocationManagerCompat
 
 object PermissionManager {
 
-    val REQUIRED_PERMISSIONS = mutableListOf(
+    /** Exposed as an immutable List: a public mutable list lets any caller add to it and
+     *  silently change what other screens request. */
+    val REQUIRED_PERMISSIONS: List<String> = mutableListOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.CAMERA

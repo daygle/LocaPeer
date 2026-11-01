@@ -2,7 +2,6 @@
 -keep class com.locapeer.nostr.** { *; }
 -keep class com.locapeer.beacon.HeartbeatPayload { *; }
 -keep class com.locapeer.invite.InviteData { *; }
--keep class com.locapeer.invite.InviteResponse { *; }
 
 # secp256k1
 -keep class fr.acinq.secp256k1.** { *; }

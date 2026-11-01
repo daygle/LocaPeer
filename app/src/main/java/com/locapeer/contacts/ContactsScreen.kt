@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.ui.components.EmptyState
+import java.util.Locale
 
 private enum class DataAction { DELETE_MESSAGES, DELETE_LOCATION, REMOVE_SELF, REMOVE_CONTACT }
 private enum class SortOrder { LAST_SEEN, NAME }
@@ -85,7 +86,7 @@ fun ContactsScreen(
         val filtered = if (searchQuery.isBlank()) contacts
         else contacts.filter { it.peer.displayName.contains(searchQuery, ignoreCase = true) }
         when (sortOrder) {
-            SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase() }
+            SortOrder.NAME -> filtered.sortedBy { it.peer.displayName.lowercase(Locale.ROOT) }
             SortOrder.LAST_SEEN -> filtered.sortedByDescending { it.lastHeartbeat?.timestamp ?: 0L }
         }
     }

@@ -132,6 +132,9 @@ private const val MAX_DM_PLAINTEXT_CHARS = 512 * 1024
 // Bounds on the sender-controlled parts of a circle envelope that get persisted.
 private const val MAX_CIRCLE_MEMBERS = 256
 private const val MAX_CIRCLE_NAME_CHARS = 100
+// Cap on the self-reported device name a supervised-register request may carry (the same
+// bound the invite scanner applies to display names).
+private const val MAX_PEER_DISPLAY_NAME_CHARS = 64
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -965,7 +968,10 @@ class HeartbeatReceiver @Inject constructor(
         supervisionApprovalManager.setPending(
             SupervisionApprovalManager.PendingRequest(
                 fromPubkey = event.pubkey,
-                deviceName = payload.deviceName,
+                // Peer-supplied name; bound so a multi-kilobyte "device name" can't render an
+                // oversized approval dialog (notification text is truncated by the system, but
+                // the in-app AlertDialog is not). Notification and dialog both show this value.
+                deviceName = payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS),
                 requestId = payload.requestId
             )
         )
@@ -1006,14 +1012,14 @@ class HeartbeatReceiver @Inject constructor(
             setPackage(context.packageName)
             action = ACTION_SUPERVISED_REGISTER_ACCEPT
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
-            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
+            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS))
             putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
         }
         val declineIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
             setPackage(context.packageName)
             action = ACTION_SUPERVISED_REGISTER_DECLINE
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
-            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName)
+            putExtra(EXTRA_REQUESTER_NAME, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS))
             putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
         }
         val acceptPi = PendingIntent.getBroadcast(
@@ -1037,10 +1043,10 @@ class HeartbeatReceiver @Inject constructor(
         )
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_alert)
-            .setContentTitle(context.getString(R.string.notif_supervisor_request_title, payload.deviceName))
+            .setContentTitle(context.getString(R.string.notif_supervisor_request_title, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS)))
             .setContentText(context.getString(R.string.notif_supervisor_request_text))
             .setStyle(NotificationCompat.BigTextStyle()
-                .bigText(context.getString(R.string.notif_supervisor_request_big, payload.deviceName)))
+                .bigText(context.getString(R.string.notif_supervisor_request_big, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS))))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(openAppPi)
             .addAction(0, context.getString(R.string.notif_action_accept), acceptPi)

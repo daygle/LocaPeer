@@ -141,9 +141,12 @@ private fun MyInviteTab(vm: InviteViewModel, context: android.content.Context) {
                 modifier = Modifier.fillMaxSize().padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                if (state.qrBitmap != null) {
+                // Local val instead of a null-check + "!!": the delegated StateFlow read can
+                // re-evaluate between the check and the !!, so capture once and smart-cast.
+                val qrBitmap = state.qrBitmap
+                if (qrBitmap != null) {
                     Image(
-                        bitmap = state.qrBitmap!!.asImageBitmap(),
+                        bitmap = qrBitmap.asImageBitmap(),
                         contentDescription = stringResource(R.string.invite_qr_cd),
                         modifier = Modifier.fillMaxSize()
                     )

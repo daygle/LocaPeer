@@ -21,7 +21,9 @@ import com.locapeer.data.entity.PeerSharingConfig
 import com.locapeer.invite.InviteData
 import com.locapeer.invite.QrCodeGenerator
 import com.locapeer.sharing.ScheduleRule
+import com.locapeer.sharing.TempShareExpiryWorker
 import com.locapeer.supervised.SupervisedModeManager
+import androidx.work.WorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -171,7 +173,8 @@ class SettingsViewModel @Inject constructor(
     private val messageDao: MessageDao,
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
-    private val supervisedModeManager: SupervisedModeManager
+    private val supervisedModeManager: SupervisedModeManager,
+    private val workManager: WorkManager
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -787,6 +790,10 @@ class SettingsViewModel @Inject constructor(
     fun stopTemporaryShare(peerDeviceId: String) {
         viewModelScope.launch {
             sharingConfigDao.setTemporaryShareEndsAt(peerDeviceId, null)
+            // Match PeerSharingViewModel.clearTemporaryShare: drop the pending expiry worker
+            // too. The worker's clear is already idempotent, so this only keeps the pending
+            // job list tidy - never a correctness issue.
+            workManager.cancelUniqueWork(TempShareExpiryWorker.workNameFor(peerDeviceId))
         }
     }
 

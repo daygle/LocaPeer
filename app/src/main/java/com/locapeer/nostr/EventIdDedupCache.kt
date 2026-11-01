@@ -33,6 +33,15 @@ internal class EventIdDedupCache(
     private val bySender = HashMap<String, MutableSet<String>>()
     // Pre-restart ids restored from persistence; O(1) lookups, trimmed first.
     private val restored = HashSet<String>()
+    /**
+     * Running count of live ids ([restored] plus every [bySender] bucket), maintained
+     * incrementally at each add/remove site. The per-record trim check used to re-sum all
+     * buckets with `sumOf` on every inserted id - the inbound-event hot path paid an
+     * O(total) scan even when nothing needed trimming. This counter makes the steady
+     * state O(1); the O(senders) largest-bucket scan now runs only while the global cap
+     * is actually exceeded (i.e. during a flood).
+     */
+    private var total = 0
 
     /** True if [eventId] from [sender] was already recorded, or is a restored pre-restart id. */
     fun isKnown(sender: String, eventId: String): Boolean =
@@ -47,12 +56,14 @@ internal class EventIdDedupCache(
         if (isKnown(sender, eventId)) return false
         val bucket = bySender.getOrPut(sender) { LinkedHashSet() }
         bucket.add(eventId)
+        total++
         // Per-sender cap: the flooder's own window pays first.
         while (bucket.size > senderCap) {
             val it = bucket.iterator()
             if (it.hasNext()) {
                 it.next()
                 it.remove()
+                total--
             }
         }
         trimToGlobalCap()
@@ -62,7 +73,9 @@ internal class EventIdDedupCache(
     /** Seed ids restored from persistence (seen before this process started). */
     fun addRestored(eventIds: Collection<String>) {
         if (eventIds.isEmpty()) return
-        restored.addAll(eventIds)
+        var added = 0
+        for (id in eventIds) if (restored.add(id)) added++
+        total += added
         trimToGlobalCap()
     }
 
@@ -78,7 +91,8 @@ internal class EventIdDedupCache(
     }
 
     private fun trimToGlobalCap() {
-        var total = bySender.values.sumOf { it.size } + restored.size
+        // O(1) fast path: nothing to do unless the cache is actually over the global bound.
+        if (total <= globalCap) return
         while (total > globalCap) {
             // Restored pre-restart ids are the oldest entries: trim them first.
             if (restored.isNotEmpty()) {
