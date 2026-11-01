@@ -907,4 +907,73 @@
     <string name="queued_message_view">Bûyerê bibîne</string>
     <string name="queued_message_hide">Veşêre</string>
     <string name="queued_messages_flush">Niha bişîne</string>
+
+    <string name="change_notif_title">Amûra bin çavdêrîyê sazkirinan guherand</string>
+    <string name="change_pause">• Parvekirin bi %1$s re hate rawestandin</string>
+    <string name="change_resume">• Parvekirin bi %1$s re ji nû ve dest pê kir</string>
+    <string name="change_precision">• Rastbûna cîhê bû %1$s</string>
+    <string name="change_role">• Rolika parvekirinê bû %1$s</string>
+    <string name="change_temp_start">• Parvekirina demkî bi %1$s re dest pê kir</string>
+    <string name="change_temp_end">• Parvekirina demkî qediya</string>
+    <string name="change_sos">• Rewşa SOS a têkiliyê bû %1$s</string>
+    <string name="change_schedule">• Bernameya giştî ya parvekirinê hate guhertin</string>
+    <string name="change_schedule_peer">• Bernameya parvekirinê bi %1$s re hate guhertin</string>
+    <string name="change_generic">• Yek sazkirina parvekirina cîhê hate guhertin</string>
+
+    <string name="conv_mute">Agahdariyan bêdeng bike</string>
+    <string name="conv_unmute">Agahdariyan dîsa veke</string>
+    <string name="conv_cd_muted">Agahdarî bêdeng in</string>
+    <string name="notif_supervised_invite_title">%1$s dixwaze çavdêrî li te bike</string>
+    <string name="notif_supervised_invite_text">Pejirîne da ku sazkirinên vê amûrê li paş pejirandina te bên kilîtkirin. Paşê her dem dikarî vekirinê bixwazî.</string>
+    <string name="notif_supervision_ended_title">Çavdêrî qediya</string>
+    <string name="notif_supervision_ended_text">Çavdêra te çavdêrîya vê amûrê qedand. Sazkirin niha vekirî ne.</string>
+    <string name="notif_supervised_wipe_title">Amûra bin çavdêrîyê hate jêbirin</string>
+    <string name="notif_supervised_wipe_text">Amûra bin çavdêrîyê agahdariya jêbirinê şand û nasnameya xwe jê bir. Li benda hişyariyên bêdeng bise, dema amade bû têkiliyê rake.</string>
+    <string name="notif_supervisor_unknown_request_title">Daxwaza çavdêrîyê ji amûreke nenas</string>
+    <string name="notif_supervisor_unknown_request_text">Amûra ku daxwaz şand di nav têkiliyên te de nîne. Pêşî wê wek têkilî zêde bike, paşê bixwaze ku daxwaza çavdêrîyê dîsa were şandin.</string>
+    <string name="contact_add_request_title">Têkiliya nû were pejirandin?</string>
+    <string name="contact_add_request_message">Amûra te ya bin çavdêrîyê dixwaze “%1$s” wek têkiliyeke nû ya parvekirina cîhê zêde bike. Pejirandin dê parvekirinê bi wan re dest pê bike.</string>
+    <string name="incoming_awaiting_approval">Li benda pejirandina çavdêra…</string>
+    <string name="circle_leave_supervised">Ji bo derketina ji vê çemberê pêdivî bi çavdêra te heye: jê bixwaze ku te ji amûra xwe derxîne.</string>
+
+    <string name="peer_supervise_enable_title">Çavdêrî li vê amûrê were kirin?</string>
+    <string name="peer_supervise_enable_message">Divê %1$s daxwazê li ser amûra xwe pejirîne berî ku sazkirinên wan li paş pejirandina te bên kilîtkirin. Hişyariyên wan ên bêdeng dê vebin.</string>
+    <string name="peer_supervise_disable_title">Çavdêrî were rawestandin?</string>
+    <string name="peer_supervise_disable_message">Amûra %1$s dê were vekirin û dê ji wan re were gotin. Hişyariyên wan ên bêdeng dê dîsa bên girtin.</string>
+    <string name="peer_supervise_disable_confirm">Çavdêrîyê rawestîne</string>
+    <string name="scan_add_waiting">Li benda çavdêra te…</string>
+    <string name="scan_add_waiting_subtitle">Zêdekirina têkiliyê di bin çavdêrîyê de pejirandina wan hewce dike. Biryar dê zû were.</string>
+    <string name="scan_add_denied">Çavdêra te red kir ku vê têkiliyê zêde bike.</string>
+    <string name="pending_awaiting_approval">Li benda pejirandina çavdêra…</string>
+    <string name="onboarding_bg_open_settings">Sazkirinên pergalê veke</string>
+    <string name="onboarding_bg_skip">Niha derbas bike</string>
+    <string name="onboarding_bg_location_hint">Ji Android 11 pê ve destûra cîhê ya paşnavînê tenê ji sazkirinên pergalê tê dayîn; sepan nikare rasterast bixwaze.</string>
+
+    <string name="settings_notifications_title">Agahdarî</string>
+    <string name="settings_message_notifications">Agahdariyên peyamê</string>
+    <string name="settings_message_notifications_subtitle">Dema peyama chat an çemberê tê agahdarî nîşan bide</string>
+    <string name="settings_alert_notifications">Hişyariyên cîhê</string>
+    <string name="settings_alert_notifications_subtitle">Hişyarî li ser derketina ji herêmê, nêzîkbûn û windabûna cîhê. Hişyariyên SOS her dem vekirî ne.</string>
+    <string name="settings_quiet_hours">Saetên bêdeng</string>
+    <string name="settings_quiet_hours_subtitle">Di navberê hilbijartî de agahdariyên peyam û hişyariyan bêdeng dike. Tenê SOS tê bihîstin.</string>
+    <string name="settings_quiet_hours_start">Destpêka bêdengiyê</string>
+    <string name="settings_quiet_hours_end">Heta</string>
+    <string name="settings_disable_waiting">Li benda pejirandina çavdêra…</string>
+    <string name="settings_disable_cancel">Daxwazê betal bike</string>
+    <string name="settings_disable_denied">Çavdêra te daxwaza vekirinê red kir.</string>
+    <string name="settings_disable_timed_out">Di wextê de bersiv nehat. Dibe ku çavdêra te offline be; paşê dîsa biceribîne.</string>
+
+    <string name="settings_erase_identity_card">Herêma xeternak</string>
+    <string name="settings_erase_identity">Nasnameyê rake &amp; hemû daneyan jê bibe</string>
+    <string name="settings_erase_identity_subtitle">Kilîda nasnameyê, têkilî, dîroka cîhê, peyam û sazkirinên vê amûrê radike û destpêka sazkirinê ji nû ve dide dest pê kirin</string>
+    <string name="settings_erase_identity_title">Nasname were rakirin û her tişt were jêbirin?</string>
+    <string name="settings_erase_identity_message">Ev ê cota kilîda Nostr a te, hemû têkilî, hemû herêm, dîroka cîhê, peyaman û sazkirinên vê amûrê herheyî jê bibe. Têkilî nayên agahdarkirin û kopiyên wan bandor nabin. Tu daxwaza jêbirinê nayê şandin; ji bo hişyarkirina têkiliyê pêşî ji bo her yekê “Têkilî û daneyan rake” bikar bîne.</string>
+    <string name="settings_erase_identity_final_title">Pejirandina dawî</string>
+    <string name="settings_erase_identity_final_message">Her tişt were jêbirin û bi nasnameyeke nû ji nû ve dest pê bike? Ev nayê vegerandin. Heke dibe ku paşê pêdivî bi vê nasnameyê bibî, pêşî backupa şîfrekirî derxe.</string>
+    <string name="settings_erase_identity_confirm">Jê bibe û ji nû ve dest pê bike</string>
+    <string name="toast_now_supervised">Niha %1$s çavdêrî dike</string>
+    <string name="toast_already_supervised">Jixwe di bin çavdêrîyê de ye; li şûna vê daxwazê red bike</string>
+    <string name="toast_declined_supervision_invite">Daxwaza çavdêrîyê ya %1$s hate red kirin</string>
+    <string name="supervision_disable_request_title">Vê amûrê veke?</string>
+    <string name="supervision_disable_request_message">%1$s daxwaz dike ku moda çavdêrîyê were girtin. Pejirandin dê sazkirinan herheyî veke heta ku daxwaza nû ya çavdêrîyê were pejirandin.</string>
 </resources>

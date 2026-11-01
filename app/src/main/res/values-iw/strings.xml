@@ -922,4 +922,73 @@
     <string name="queued_message_view">צפה באירוע</string>
     <string name="queued_message_hide">הסתר</string>
     <string name="queued_messages_flush">שלח עכשיו</string>
+
+    <string name="change_notif_title">המכשיר שבפיקוח שינה הגדרות</string>
+    <string name="change_pause">• השיתוף הושהה עם %1$s</string>
+    <string name="change_resume">• השיתוף חודש עם %1$s</string>
+    <string name="change_precision">• דיוק המיקום שונה ל־%1$s</string>
+    <string name="change_role">• תפקיד השיתוף שונה ל־%1$s</string>
+    <string name="change_temp_start">• השיתוף הזמני החל עם %1$s</string>
+    <string name="change_temp_end">• השיתוף הזמני הסתיים</string>
+    <string name="change_sos">• מצב ה־SOS של איש הקשר שונה ל־%1$s</string>
+    <string name="change_schedule">• לוח הזמנים הכולל של השיתוף שונה</string>
+    <string name="change_schedule_peer">• לוח הזמנים של השיתוף עם %1$s שונה</string>
+    <string name="change_generic">• הגדרת שיתוף מיקום אחת שונתה</string>
+
+    <string name="conv_mute">השתק התראות</string>
+    <string name="conv_unmute">בטל השתקת התראות</string>
+    <string name="conv_cd_muted">התראות מושתקות</string>
+    <string name="notif_supervised_invite_title">%1$s רוצה לפקח עליך</string>
+    <string name="notif_supervised_invite_text">אשר כדי שהגדרות המכשיר הזה ייעלו מאחורי האישור שלך. אפשר לבקש ביטול נעילה בכל עת.</string>
+    <string name="notif_supervision_ended_title">הפיקוח הסתיים</string>
+    <string name="notif_supervision_ended_text">המפקח שלך סיים את הפיקוח על המכשיר הזה. ההגדרות פתוחות כעת.</string>
+    <string name="notif_supervised_wipe_title">המכשיר שבפיקוח נמחק</string>
+    <string name="notif_supervised_wipe_text">המכשיר שבפיקוח שלח הודעת מחיקה ומחק את הזהות שלו. המתן להתראות שקטות והסר את איש הקשר כשאתה מוכן.</string>
+    <string name="notif_supervisor_unknown_request_title">בקשת פיקוח ממכשיר לא מוכר</string>
+    <string name="notif_supervisor_unknown_request_text">המכשיר ששלח את הבקשה אינו ברשימת אנשי הקשר שלך. הוסף אותו קודם כאיש קשר, ואז בקש לשלוח שוב את בקשת הפיקוח.</string>
+    <string name="contact_add_request_title">לאשר איש קשר חדש?</string>
+    <string name="contact_add_request_message">המכשיר שבפיקוח שלך מבקש להוסיף את “%1$s” כאיש קשר חדש לשיתוף מיקום. אישור יתחיל שיתוף איתם.</string>
+    <string name="incoming_awaiting_approval">ממתין לאישור המפקח…</string>
+    <string name="circle_leave_supervised">כדי לצאת מהמעגל הזה צריך את המפקח שלך: בקש מהם להסיר אותך מהמכשיר שלך.</string>
+
+    <string name="peer_supervise_enable_title">לפקח על המכשיר הזה?</string>
+    <string name="peer_supervise_enable_message">‏%1$s צריך/ה לאשר את הבקשה במכשיר שלו/ה לפני שההגדרות ייעלו מאחורי האישור שלך. התראות השקט שלהם יופעלו.</string>
+    <string name="peer_supervise_disable_title">להפסיק את הפיקוח?</string>
+    <string name="peer_supervise_disable_message">המכשיר של %1$s ייפתח ויישלח אליהם עדכון. התראות השקט שלהם ייפסקו שוב.</string>
+    <string name="peer_supervise_disable_confirm">הפסק פיקוח</string>
+    <string name="scan_add_waiting">ממתין למפקח שלך…</string>
+    <string name="scan_add_waiting_subtitle">הוספת איש קשר בפיקוח דורשת את אישורם. ההחלטה תגיע בקרוב.</string>
+    <string name="scan_add_denied">המפקח שלך סירב להוסיף את איש הקשר הזה.</string>
+    <string name="pending_awaiting_approval">ממתין לאישור המפקח…</string>
+    <string name="onboarding_bg_open_settings">פתח הגדרות מערכת</string>
+    <string name="onboarding_bg_skip">דלג לעת עתה</string>
+    <string name="onboarding_bg_location_hint">מ־Android 11 ואילך הרשאת מיקום ברקע ניתנת רק בהגדרות המערכת; האפליקציה אינה יכולה לבקש אותה ישירות.</string>
+
+    <string name="settings_notifications_title">התראות</string>
+    <string name="settings_message_notifications">התראות הודעות</string>
+    <string name="settings_message_notifications_subtitle">הצג התראה כשמתקבלת הודעת צ׳אט או מעגל</string>
+    <string name="settings_alert_notifications">התראות מיקום</string>
+    <string name="settings_alert_notifications_subtitle">התראות על יציאה מאזור, הגעה לקרבה ואובדן מיקום. התראות SOS תמיד פעילות.</string>
+    <string name="settings_quiet_hours">שעות שקטות</string>
+    <string name="settings_quiet_hours_subtitle">משתק התראות הודעות ואזהרות בטווח הזמן הנבחר. רק SOS נשמע.</string>
+    <string name="settings_quiet_hours_start">התחלת השתקה</string>
+    <string name="settings_quiet_hours_end">עד</string>
+    <string name="settings_disable_waiting">ממתין לאישור המפקח…</string>
+    <string name="settings_disable_cancel">בטל בקשה</string>
+    <string name="settings_disable_denied">המפקח שלך דחה את בקשת ביטול הנעילה.</string>
+    <string name="settings_disable_timed_out">לא התקבלה תשובה בזמן. ייתכן שהמפקח שלך לא מחובר; נסה שוב מאוחר יותר.</string>
+
+    <string name="settings_erase_identity_card">אזור מסוכן</string>
+    <string name="settings_erase_identity">הסר זהות &amp; מחק את כל הנתונים</string>
+    <string name="settings_erase_identity_subtitle">מסיר את מפתח הזהות, אנשי הקשר, היסטוריית המיקום, ההודעות והגדרות המכשיר הזה ומתחיל את ההגדרה מחדש</string>
+    <string name="settings_erase_identity_title">להסיר זהות ולמחוק הכול?</string>
+    <string name="settings_erase_identity_message">פעולה זו תמחק לצמיתות את זוג מפתחות ה־Nostr שלך, את כל אנשי הקשר, כל האזורים, היסטוריית המיקום, ההודעות והגדרות המכשיר הזה. אנשי הקשר לא יקבלו הודעה והעותקים שלהם לא ייפגעו. לא נשלחת בקשת מחיקה; כדי להתריע לאיש קשר, השתמש תחילה ב״הסר איש קשר ונתונים״ עבור כל אחד מהם.</string>
+    <string name="settings_erase_identity_final_title">אישור סופי</string>
+    <string name="settings_erase_identity_final_message">למחוק הכול ולהתחיל מחדש עם זהות חדשה? לא ניתן לבטל פעולה זו. אם ייתכן שתזדקק לזהות הזו בהמשך, ייצא תחילה גיבוי מוצפן.</string>
+    <string name="settings_erase_identity_confirm">מחק והתחל מחדש</string>
+    <string name="toast_now_supervised">%1$s מפקח/ת כעת</string>
+    <string name="toast_already_supervised">כבר בפיקוח; דחה בקשה זו במקום</string>
+    <string name="toast_declined_supervision_invite">בקשת הפיקוח מ־%1$s נדחתה</string>
+    <string name="supervision_disable_request_title">לבטל את נעילת המכשיר הזה?</string>
+    <string name="supervision_disable_request_message">%1$s מבקש/ת לכבות את מצב הפיקוח. אישור יבטל את הנעילה של ההגדרות לצמיתות עד שתאושר בקשת פיקוח חדשה.</string>
 </resources>
