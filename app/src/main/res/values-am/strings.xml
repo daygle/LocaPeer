@@ -908,4 +908,73 @@
     <string name="queued_message_view">ክስተቱን ይመልከቱ</string>
     <string name="queued_message_hide">ደብቅ</string>
     <string name="queued_messages_flush">አሁን ላክ</string>
+
+    <string name="change_notif_title">በክትትል ላይ ያለው መሣሪያ ቅንብሮችን ቀይሯል</string>
+    <string name="change_pause">• ከ%1$s ጋር መጋራት ተጣርቷል</string>
+    <string name="change_resume">• ከ%1$s ጋር መጋራት በድጋሚ ተጀምሯል</string>
+    <string name="change_precision">• የቦታ ትክክለኛነት ወደ %1$s ተቀይሯል</string>
+    <string name="change_role">• የመጋራት ሚና ወደ %1$s ተቀይሯል</string>
+    <string name="change_temp_start">• ከ%1$s ጋር ጊዜያዊ መጋራት ተጀምሯል</string>
+    <string name="change_temp_end">• ጊዜያዊ መጋራት አብቅቷል</string>
+    <string name="change_sos">• የእውቂያው SOS ሁኔታ ወደ %1$s ተቀይሯል</string>
+    <string name="change_schedule">• አጠቃላይ የመጋራት መርሐግብር ተቀይሯል</string>
+    <string name="change_schedule_peer">• ከ%1$s ጋር ያለው የመጋራት መርሐግብር ተቀይሯል</string>
+    <string name="change_generic">• የቦታ መጋራት ቅንብር አንዱ ተቀይሯል</string>
+
+    <string name="conv_mute">ማሳወቂያዎችን ዝም አድርግ</string>
+    <string name="conv_unmute">ማሳወቂያዎችን እንደገና ክፈት</string>
+    <string name="conv_cd_muted">ማሳወቂያዎች ዝም ብለዋል</string>
+    <string name="notif_supervised_invite_title">%1$s በእርስዎ ላይ ክትትል ማድረግ ይፈልጋሉ</string>
+    <string name="notif_supervised_invite_text">የዚህ መሣሪያ ቅንብሮች ከፈቃድዎ በስተጀርባ እንዲቆለፉ ይቀበሉ። በኋላ መቼም ለመክፈት መጠየቅ ይችላሉ።</string>
+    <string name="notif_supervision_ended_title">ክትትል አብቅቷል</string>
+    <string name="notif_supervision_ended_text">ተቆጣጣሪዎ በዚህ መሣሪያ ላይ የነበረውን ክትትል አጠናቀዋል። ቅንብሮች አሁን ተከፍተዋል።</string>
+    <string name="notif_supervised_wipe_title">በክትትል ላይ የነበረው መሣሪያ ጠፍቷል</string>
+    <string name="notif_supervised_wipe_text">በክትትል ላይ ያለው መሣሪያ የማጥፋት ማሳወቂያ ልኮ ማንነቱን አጠፋ። ጸጥ ያሉ ማስጠንቀቂያዎችን ይጠብቁ፤ ዝግጁ ሲሆኑ እውቂያውን ያስወግዱ።</string>
+    <string name="notif_supervisor_unknown_request_title">ከማይታወቅ መሣሪያ የመጣ የክትትል ጥያቄ</string>
+    <string name="notif_supervisor_unknown_request_text">ጥያቄውን የላከው መሣሪያ በእውቂያዎችዎ ውስጥ የለም። መጀመሪያ እንደ እውቂያ ይጨምሩት፣ ከዚያ የክትትል ጥያቄውን እንደገና እንዲልኩ ይጠይቁ።</string>
+    <string name="contact_add_request_title">አዲሱን እውቂያ ይፈቀድ?</string>
+    <string name="contact_add_request_message">በክትትል ላይ ያለው መሣሪያዎ “%1$s” የተባሉትን እንደ አዲስ የቦታ መጋራት እውቂያ ለመጨመር እየጠየቀ ነው። መፍቀድ ከእነሱ ጋር መጋራትን ይጀምራል።</string>
+    <string name="incoming_awaiting_approval">የተቆጣጣሪውን ፈቃድ በመጠበቅ ላይ…</string>
+    <string name="circle_leave_supervised">ይህን ክብ ለመልቀቅ ተቆጣጣሪዎ ያስፈልጋል፦ ከራስዎ መሣሪያ እንዲያስወግዱዎት ይጠይቁ።</string>
+
+    <string name="peer_supervise_enable_title">በዚህ መሣሪያ ላይ ክትትል ይደረግ?</string>
+    <string name="peer_supervise_enable_message">ቅንብሮቻቸው ከፈቃድዎ በስተጀርባ ከመቆለፋቸው በፊት %1$s በራሳቸው መሣሪያ ላይ ጥያቄውን መቀበል አለባቸው። ጸጥ ያሉ ማስጠንቀቂያዎቻቸው ይከፈታሉ።</string>
+    <string name="peer_supervise_disable_title">ክትትል ይቆማል?</string>
+    <string name="peer_supervise_disable_message">የ%1$s መሣሪያ ይከፈታል እና ለእነሱ ይነገራቸዋል። ጸጥ ያሉ ማስጠንቀቂያዎቻቸው እንደገና ይዘጋሉ።</string>
+    <string name="peer_supervise_disable_confirm">ክትትል አቁም</string>
+    <string name="scan_add_waiting">ተቆጣጣሪዎን በመጠበቅ ላይ…</string>
+    <string name="scan_add_waiting_subtitle">በክትትል ላይ እውቂያ መጨመር ፈቃዳቸውን ይጠይቃል። ውሳኔው በቅርቡ ይመጣል።</string>
+    <string name="scan_add_denied">ተቆጣጣሪዎ ይህን እውቂያ ለመጨመር ፈቃድ አልሰጡም።</string>
+    <string name="pending_awaiting_approval">የተቆጣጣሪውን ፈቃድ በመጠበቅ ላይ…</string>
+    <string name="onboarding_bg_open_settings">የስርዓት ቅንብሮችን ክፈት</string>
+    <string name="onboarding_bg_skip">ለአሁን ዝለል</string>
+    <string name="onboarding_bg_location_hint">ከAndroid 11 ጀምሮ የጀርባ ቦታ ፈቃድ የሚሰጠው በስርዓቱ ቅንብሮች ውስጥ ብቻ ነው፤ መተግበሪያው በቀጥታ መጠየቅ አይችልም።</string>
+
+    <string name="settings_notifications_title">ማሳወቂያዎች</string>
+    <string name="settings_message_notifications">የመልእክት ማሳወቂያዎች</string>
+    <string name="settings_message_notifications_subtitle">የቻት ወይም የክብ መልእክት ሲመጣ ማሳወቂያ አሳይ</string>
+    <string name="settings_alert_notifications">የቦታ ማስጠንቀቂያዎች</string>
+    <string name="settings_alert_notifications_subtitle">ከአካባቢው መውጣት፣ መቅረብ እና ቦታ መጥፋት ማስጠንቀቂያዎች። የSOS ማስጠንቀቂያዎች ሁልጊዜ ክፍት ናቸው።</string>
+    <string name="settings_quiet_hours">ጸጥ ያሉ ሰዓቶች</string>
+    <string name="settings_quiet_hours_subtitle">በተመረጠው ጊዜ ውስጥ የመልእክትና የማስጠንቀቂያ ማሳወቂያዎችን ዝም ያደርጋል። SOS ብቻ ይሰማል።</string>
+    <string name="settings_quiet_hours_start">የዝምታ መጀመሪያ</string>
+    <string name="settings_quiet_hours_end">እስከ</string>
+    <string name="settings_disable_waiting">የተቆጣጣሪውን ፈቃድ በመጠበቅ ላይ…</string>
+    <string name="settings_disable_cancel">ጥያቄውን ሰርዝ</string>
+    <string name="settings_disable_denied">ተቆጣጣሪዎ የመክፈቻ ጥያቄውን አልተቀበሉትም።</string>
+    <string name="settings_disable_timed_out">በሰዓቱ መልስ አልመጣም። ተቆጣጣሪዎ ከመስመር ውጭ ሊሆኑ ይችላሉ፤ በኋላ እንደገና ይሞክሩ።</string>
+
+    <string name="settings_erase_identity_card">አደገኛ ክልል</string>
+    <string name="settings_erase_identity">ማንነትን አስወግድ &amp; ሁሉንም ውሂብ አጥፋ</string>
+    <string name="settings_erase_identity_subtitle">የማንነት ቁልፍን፣ እውቂያዎችን፣ የቦታ ታሪክን፣ መልእክቶችን እና የዚህን መሣሪያ ቅንብሮች አስወግዶ የመጀመሪያውን ማዋቀር እንደገና ይጀምራል</string>
+    <string name="settings_erase_identity_title">ማንነትን አስወግዶ ሁሉንም ማጥፋት?</string>
+    <string name="settings_erase_identity_message">ይህ የNostr ቁልፍ ጥንድዎን፣ ሁሉንም እውቂያዎች፣ ሁሉንም አካባቢዎች፣ የቦታ ታሪክ፣ መልእክቶች እና የዚህን መሣሪያ ቅንብሮች ለዘላለም ያጠፋል። እውቂያዎች አይነገራቸውም እና ቅጂዎቻቸው አይጎዱም። ምንም የማጥፋት ጥያቄ አይላክም፤ እውቂያን ለማስጠንቀቅ መጀመሪያ ለእያንዳንዱ “እውቂያና ውሂብ አስወግድ” ይጠቀሙ።</string>
+    <string name="settings_erase_identity_final_title">የመጨረሻ ማረጋገጫ</string>
+    <string name="settings_erase_identity_final_message">ሁሉንም አጥፍተው በአዲስ ማንነት እንደገና ይጀምሩ? ይህ መመለስ አይቻልም። ይህ ማንነት በኋላ ሊያስፈልግ ይችላል ብለው ካሰቡ መጀመሪያ የተመሰጠረ ምትኬ ያውጡ።</string>
+    <string name="settings_erase_identity_confirm">አጥፋ እና እንደገና ጀምር</string>
+    <string name="toast_now_supervised">አሁን %1$s ክትትል ያደርጋሉ</string>
+    <string name="toast_already_supervised">ቀድሞውኑ በክትትል ላይ ነው፤ በምትኩ ይህን ጥያቄ ውድቅ ያድርጉ</string>
+    <string name="toast_declined_supervision_invite">ከ%1$s የመጣው የክትትል ጥያቄ ውድቅ ተደርጓል</string>
+    <string name="supervision_disable_request_title">ይህ መሣሪያ ይከፈት?</string>
+    <string name="supervision_disable_request_message">%1$s የክትትል ሁነታው እንዲዘጋ እየጠየቁ ነው። መፍቀድ አዲስ የክትትል ጥያቄ እስኪቀበል ድረስ ቅንብሮችን ለዘላለም ይከፍታል።</string>
 </resources>
