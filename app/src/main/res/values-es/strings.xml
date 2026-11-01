@@ -906,4 +906,74 @@
     <string name="queued_message_view">Ver evento</string>
     <string name="queued_message_hide">Ocultar</string>
     <string name="queued_messages_flush">Enviar ahora</string>
+
+    <string name="conv_mute">Silenciar las notificaciones</string>
+    <string name="conv_unmute">Volver a activar las notificaciones</string>
+    <string name="conv_cd_muted">Notificaciones silenciadas</string>
+    <string name="notif_supervised_invite_title">%1$s quiere supervisarte</string>
+    <string name="notif_supervised_invite_text">Acepta para que los ajustes de este dispositivo queden bloqueados detrás de tu aprobación. Más adelante siempre podrás pedir que se desbloqueen.</string>
+    <string name="notif_supervision_ended_title">Supervisión finalizada</string>
+    <string name="notif_supervision_ended_text">Tu supervisor terminó la supervisión de este dispositivo. Los ajustes ya están desbloqueados.</string>
+    <string name="notif_supervised_wipe_title">Dispositivo supervisado borrado</string>
+    <string name="notif_supervised_wipe_text">Un dispositivo supervisado envió un aviso de borrado y borró su propia identidad. Espera alertas en silencio y elimina el contacto cuando estés preparado.</string>
+    <string name="notif_supervisor_unknown_request_title">Solicitud de supervisión de un dispositivo desconocido</string>
+    <string name="notif_supervisor_unknown_request_text">El dispositivo que envía la solicitud no está entre tus contactos. Añádelo primero como contacto y pídele que repita la solicitud de supervisión.</string>
+    <string name="contact_add_request_title">¿Permitir el nuevo contacto?</string>
+    <string name="contact_add_request_message">Tu dispositivo supervisado pide añadir a “%1$s” como nuevo contacto de uso compartido de ubicación. Si lo apruebas, se iniciará el uso compartido con esa persona.</string>
+    <string name="incoming_awaiting_approval">Esperando la aprobación de tu supervisor…</string>
+    <string name="circle_leave_supervised">Para salir de este círculo se necesita a tu supervisor: pídele que te elimine desde tu propio dispositivo.</string>
+
+    <string name="peer_supervise_enable_title">¿Supervisar este dispositivo?</string>
+    <string name="peer_supervise_enable_message">%1$s debe aceptar la solicitud en su propio dispositivo antes de que sus ajustes queden bloqueados detrás de tu aprobación. Sus alertas en silencio se activarán.</string>
+    <string name="peer_supervise_disable_title">¿Dejar de supervisar?</string>
+    <string name="peer_supervise_disable_message">El dispositivo de %1$s quedará desbloqueado y recibirá un aviso. Sus alertas en silencio volverán a quedar desactivadas.</string>
+    <string name="peer_supervise_disable_confirm">Dejar de supervisar</string>
+    <string name="scan_add_waiting">Esperando a tu supervisor…</string>
+    <string name="scan_add_waiting_subtitle">Con la supervisión activa, añadir un contacto necesita su aprobación. La decisión llegará pronto.</string>
+    <string name="scan_add_denied">Tu supervisor rechazó añadir este contacto.</string>
+    <string name="pending_awaiting_approval">Esperando la aprobación del supervisor…</string>
+    <string name="onboarding_bg_open_settings">Abrir los ajustes del sistema</string>
+    <string name="onboarding_bg_skip">Omitir por ahora</string>
+    <string name="onboarding_bg_location_hint">En Android 11 o posterior, la ubicación en segundo plano solo se concede desde los ajustes del sistema; la app no puede solicitarla directamente.</string>
+
+    <string name="settings_notifications_title">Notificaciones</string>
+    <string name="settings_message_notifications">Notificaciones de mensajes</string>
+    <string name="settings_message_notifications_subtitle">Mostrar una notificación cuando llegue un mensaje de chat o de círculo</string>
+    <string name="settings_alert_notifications">Alertas de ubicación</string>
+    <string name="settings_alert_notifications_subtitle">Alertas de geocerca, cercanía y pérdida de ubicación. Las alertas de SOS siguen activas.</string>
+    <string name="settings_disable_waiting">Esperando la aprobación de tu supervisor…</string>
+    <string name="settings_disable_cancel">Cancelar la solicitud</string>
+    <string name="settings_disable_denied">Tu supervisor rechazó la solicitud de desbloqueo.</string>
+    <string name="settings_disable_timed_out">No ha llegado respuesta a tiempo. Tu supervisor puede estar sin conexión; inténtalo más tarde.</string>
+
+    <string name="settings_quiet_hours">Horas de silencio</string>
+    <string name="settings_quiet_hours_subtitle">Silencia las notificaciones de mensajes y alertas durante la franja indicada. Las alertas de SOS siguen activas.</string>
+    <string name="settings_quiet_hours_start">Silenciar desde</string>
+    <string name="settings_quiet_hours_end">Hasta</string>
+    <string name="settings_erase_identity_card">Zona de peligro</string>
+    <string name="settings_erase_identity">Eliminar la identidad &amp; borrar todos los datos</string>
+    <string name="settings_erase_identity_subtitle">Elimina la clave de identidad, los contactos, el historial de ubicación, los mensajes y los ajustes de este dispositivo y vuelve a la configuración inicial</string>
+    <string name="settings_erase_identity_title">¿Eliminar la identidad y borrar todo?</string>
+    <string name="settings_erase_identity_final_title">Confirmación final</string>
+    <string name="settings_erase_identity_confirm">Borrar y reiniciar</string>
+
+    <string name="settings_erase_identity_message">Esto borra de forma permanente tu par de claves Nostr, todos los contactos, las geocercas, el historial de ubicación, los mensajes y los ajustes de este dispositivo. Los contactos no se enteran y sus copias no se ven afectadas. No se envía ninguna solicitud de borrado; para avisar a alguien de confianza, usa antes «Eliminar el contacto y los datos» en cada contacto.</string>
+    <string name="settings_erase_identity_final_message">¿Borrar todo y empezar de nuevo con una identidad nueva? Esto no se puede deshacer. Si quizá quieras conservar esta identidad, exporta antes una copia de seguridad cifrada.</string>
+    <string name="toast_now_supervised">Ahora lo supervisa %1$s</string>
+    <string name="toast_already_supervised">Ya está bajo supervisión; rechaza esta solicitud en su lugar</string>
+    <string name="toast_declined_supervision_invite">Solicitud de supervisión de %1$s rechazada</string>
+    <string name="supervision_disable_request_title">¿Desbloquear este dispositivo?</string>
+    <string name="supervision_disable_request_message">%1$s pide desactivar el modo supervisado. Si lo apruebas, los ajustes quedarán desbloqueados de forma permanente hasta que se acepte una nueva solicitud de supervisión.</string>
+
+    <string name="change_notif_title">Dispositivo supervisado cambió ajustes</string>
+    <string name="change_pause">• Pausado el uso compartido con %1$s</string>
+    <string name="change_resume">• Reanudado el uso compartido con %1$s</string>
+    <string name="change_precision">• Precisión de la ubicación cambiada a %1$s</string>
+    <string name="change_role">• Rol de uso compartido cambiado a %1$s</string>
+    <string name="change_temp_start">• Iniciado el uso compartido temporal con %1$s</string>
+    <string name="change_temp_end">• Terminado el uso compartido temporal</string>
+    <string name="change_sos">• Estado SOS del contacto cambiado a %1$s</string>
+    <string name="change_schedule">• Cambiado el horario global de uso compartido</string>
+    <string name="change_schedule_peer">• Cambiado el horario de uso compartido con %1$s</string>
+    <string name="change_generic">• Un ajuste de uso compartido de ubicación ha cambiado</string>
 </resources>

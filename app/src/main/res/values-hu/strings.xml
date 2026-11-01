@@ -907,4 +907,73 @@
     <string name="queued_message_view">Esemény megtekintése</string>
     <string name="queued_message_hide">Elrejtés</string>
     <string name="queued_messages_flush">Küldés most</string>
+
+    <string name="change_notif_title">Felügyelt eszköz beállítást változtatott</string>
+    <string name="change_pause">• A megosztás %1$s partnerevel szüneteltetve</string>
+    <string name="change_resume">• A megosztás %1$s partnerevel folytatva</string>
+    <string name="change_precision">• A hely pontossága %1$s szintre állítva</string>
+    <string name="change_role">• A megosztási szerep %1$s értékre módosítva</string>
+    <string name="change_temp_start">• Ideiglenes megosztás indult %1$s partnernél</string>
+    <string name="change_temp_end">• Az ideiglenes megosztás befejeződött</string>
+    <string name="change_sos">• A partner SOS állapota %1$s értékre módosult</string>
+    <string name="change_schedule">• A globális megosztási menetrend megváltozott</string>
+    <string name="change_schedule_peer">• A megosztási menetrend %1$s partnernél megváltozott</string>
+    <string name="change_generic">• Egy megosztási beállítás megváltozott</string>
+
+    <string name="conv_mute">Értesítések némítása</string>
+    <string name="conv_unmute">Értesítések visszakapcsolása</string>
+    <string name="conv_cd_muted">Az értesítések némítva</string>
+    <string name="notif_supervised_invite_title">%1$s felügyelni szeretne téged</string>
+    <string name="notif_supervised_invite_text">Fogadd el, hogy az eszközön beállításai a jóváhagyásod mögé zároljanak. Később bármikor kérheted a feloldást.</string>
+    <string name="notif_supervision_ended_title">A felügyelet befejeződött</string>
+    <string name="notif_supervision_ended_text">A felügyelőd befejezte az eszköz felügyeletét. A beállítások feloldva vannak.</string>
+    <string name="notif_supervised_wipe_title">Felügyelt eszköz törölve</string>
+    <string name="notif_supervised_wipe_text">Egy felügyelt eszköz törlési bejelentést küldött, és törölte a saját identitását. Várj csendes riasztásokra; töröld a partnert, amikor készen állsz.</string>
+    <string name="notif_supervisor_unknown_request_title">Felügyeleti kérés ismeretlen eszköztöl</string>
+    <string name="notif_supervisor_unknown_request_text">A kérést küldő eszköz nem szerepel a partnerlistádban. Először add hozzá partnerként, és kérd meg, hogy ismételje meg a felügyeleti kérést.</string>
+    <string name="contact_add_request_title">Megengeded az új partnert?</string>
+    <string name="contact_add_request_message">A felügyelt eszközödd azt kéri, hogy add hozzá %1$s partner innovatív helymegosztóként. Ha jóváhagyod, elindul a megosztás vele.</string>
+    <string name="incoming_awaiting_approval">Várakozás a felügyelő jóváhagyására…</string>
+    <string name="circle_leave_supervised">Ennek a körnek az elhagyásához a felügyelődre van szükség: kérde meg, hogy töröljön az eszközödröl.</string>
+
+    <string name="peer_supervise_enable_title">Felügyeled ezt az eszközt?</string>
+    <string name="peer_supervise_enable_message">%1$s eszközün még el kell fogadnia a kérést, mielőtt a beállításai a jóváhagyásod mögé zárolnánnak. Csendes riasztásai bekapcsolnak.</string>
+    <string name="peer_supervise_disable_title">Befejezed a felügyeletet?</string>
+    <string name="peer_supervise_disable_message">%1$s eszköze feloldásra kerül, és értesítést kap. Csendes riasztásai ismét kikapcsolnak.</string>
+    <string name="peer_supervise_disable_confirm">Felügyelet befejezése</string>
+    <string name="scan_add_waiting">Várakozás a felügyelődre…</string>
+    <string name="scan_add_waiting_subtitle">Felügyelet alatt a partner hozzáadása jóváhagyást igényel. A döntés hamarosan megérkezik.</string>
+    <string name="scan_add_denied">A felügyelőd nem hagyta jóvá ezen partner hozzáadását.</string>
+    <string name="pending_awaiting_approval">Várakozás a felügyelő jóváhagyására…</string>
+    <string name="onboarding_bg_open_settings">Rendszerbeállítások megnyitása</string>
+    <string name="onboarding_bg_skip">Kihagyás egyelőre</string>
+    <string name="onboarding_bg_location_hint">Android 11 vagy újabb verzióban a háttérben futó földrajzi helyet csak a rendszer beállításaiban lehet engedélyezni; az alkalmazás ezt nem kérheti közvetlenül.</string>
+
+    <string name="settings_notifications_title">Értesítések</string>
+    <string name="settings_message_notifications">Üzenetértesítések</string>
+    <string name="settings_message_notifications_subtitle">Értesítés megjelenítése, amikor csevegés- vagy körüzenet érkezik</string>
+    <string name="settings_alert_notifications">Helyfigyelmeztetések</string>
+    <string name="settings_alert_notifications_subtitle">Figyelmeztetések geokerítés-elhagyásról, közelségről és a hely elvesztéséről. Az SOS riasztások továbbra is aktívak maradnak.</string>
+    <string name="settings_quiet_hours">Csendes órák</string>
+    <string name="settings_quiet_hours_subtitle">A megadott időszakban némítja az üzenet- és figyelmeztetésértesítéseket. Az SOS mindig átszól.</string>
+    <string name="settings_quiet_hours_start">Némítás kezdete</string>
+    <string name="settings_quiet_hours_end">Meddig</string>
+    <string name="settings_disable_waiting">Várakozás a felügyelőd jóváhagyására…</string>
+    <string name="settings_disable_cancel">Kérés visszavonása</string>
+    <string name="settings_disable_denied">A felügyelőd elutasította a feloldási kérésedet.</string>
+    <string name="settings_disable_timed_out">Nem érkezett válasz időben. A felügyelőd lehet, hogy kapcsolat nélkül van; próbáld újra később.</string>
+
+    <string name="settings_erase_identity_card">Veszélyzóna</string>
+    <string name="settings_erase_identity">Identitás törlése &amp; minden adat törlése</string>
+    <string name="settings_erase_identity_subtitle">Törli az identitáskulcsot, a partnereket, a helyelőzményeket, az üzeneteket és az eszközre beállításokat, majd elölről indítja a beállítást</string>
+    <string name="settings_erase_identity_title">Törlöd az identitást és minden adatot?</string>
+    <string name="settings_erase_identity_message">Ez véglegesen törli a Nostr kulcspárod, az összes partnert, a geokerítéseket, a helyelőzményeket, az üzeneteket és az eszközre beállításokat. A partnerek nem szereznek tudomást róla, és a másolataik nem módosulnak. Nem kerül törlési kérés kiküldésre; ha egy partnert szeretnél értesíteni, előbb használd a „Partner és adatok törlése” lehetőséget mindkinél.</string>
+    <string name="settings_erase_identity_final_title">Végső megerősítés</string>
+    <string name="settings_erase_identity_final_message">Biztosan törlöd az egészet, és új identitással kezded elölről? Ezt nem lehet visszavonni. Ha még egyaltalán szükséged lehet erre az identitásra, először exportálj egy titkosított biztonsági mentést.</string>
+    <string name="settings_erase_identity_confirm">Törlés és újrakezdés</string>
+    <string name="toast_now_supervised">Mostantól %1$s felügyel téged</string>
+    <string name="toast_already_supervised">Már felügyeled ezt az eszközt; inkább utasítsd el a kérelmet</string>
+    <string name="toast_declined_supervision_invite">Eltutasítottad %1$s felügyeleti kérelmét</string>
+    <string name="supervision_disable_request_title">Feloldod ezt az eszközt?</string>
+    <string name="supervision_disable_request_message">%1$s kéri a felügyelt üzemmód kikapcsolását. Ha jóváhagyod, a beállítások véglegesen feloldódnak, amíg egy új felügyeleti kérelmet nem fogadsz el.</string>
 </resources>

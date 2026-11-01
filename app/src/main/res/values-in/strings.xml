@@ -891,4 +891,73 @@
     <string name="queued_message_view">Lihat peristiwa</string>
     <string name="queued_message_hide">Sembunyikan</string>
     <string name="queued_messages_flush">Kirim sekarang</string>
+
+    <string name="change_notif_title">Perangkat yang diawasi mengubah pengaturan</string>
+    <string name="change_pause">• Berbagi dengan %1$s dijeda</string>
+    <string name="change_resume">• Berbagi dengan %1$s dilanjutkan</string>
+    <string name="change_precision">• Presisi lokasi diubah menjadi %1$s</string>
+    <string name="change_role">• Peran berbagi diubah menjadi %1$s</string>
+    <string name="change_temp_start">• Berbagi sementara dimulai dengan %1$s</string>
+    <string name="change_temp_end">• Berbagi sementara berakhir</string>
+    <string name="change_sos">• Status SOS kontak diubah menjadi %1$s</string>
+    <string name="change_schedule">• Jadwal berbagi global diubah</string>
+    <string name="change_schedule_peer">• Jadwal berbagi dengan %1$s diubah</string>
+    <string name="change_generic">• Pengaturan berbagi lokasi diubah</string>
+
+    <string name="conv_mute">Bisukan notifikasi</string>
+    <string name="conv_unmute">Aktifkan kembali notifikasi</string>
+    <string name="conv_cd_muted">Notifikasi dibisukan</string>
+    <string name="notif_supervised_invite_title">%1$s ingin mengawasi Anda</string>
+    <string name="notif_supervised_invite_text">Terima agar pengaturan perangkat ini terkunci di balik persetujuan Anda. Anda selalu bisa meminta pembukaan kunci nanti.</string>
+    <string name="notif_supervision_ended_title">Pengawasan berakhir</string>
+    <string name="notif_supervision_ended_text">Pengawas Anda mengakhiri pengawasan perangkat ini. Pengaturannya tidak lagi terkunci.</string>
+    <string name="notif_supervised_wipe_title">Perangkat yang diawasi dihapus</string>
+    <string name="notif_supervised_wipe_text">Perangkat yang diawasi mengirim pemberitahuan penghapusan dan menghapus identitasnya sendiri. Tunggu peringatan senyap; hapus kontaknya saat Anda siap.</string>
+    <string name="notif_supervisor_unknown_request_title">Permintaan pengawasan dari perangkat tak dikenal</string>
+    <string name="notif_supervisor_unknown_request_text">Perangkat pengirim permintaan tidak ada dalam daftar kontak Anda. Tambahkan sebagai kontak lebih dahulu, lalu minta ia mengirim ulang permintaan pengawasan.</string>
+    <string name="contact_add_request_title">Izinkan kontak baru?</string>
+    <string name="contact_add_request_message">Perangkat Anda yang diawasi meminta menambah “%1$s” sebagai kontak berbagi lokasi baru. Menyetujuinya akan memulai berbagi dengan mereka.</string>
+    <string name="incoming_awaiting_approval">Menunggu persetujuan pengawas…</string>
+    <string name="circle_leave_supervised">Untuk keluar dari lingkaran ini diperlukan pengawas Anda: minta mereka menghapus Anda dari perangkat Anda.</string>
+
+    <string name="peer_supervise_enable_title">Awasi perangkat ini?</string>
+    <string name="peer_supervise_enable_message">%1$s perlu menerima permintaan dari perangkatnya sendiri sebelum pengaturannya terkunci di balik persetujuan Anda. Peringatan senyapnya akan aktif.</string>
+    <string name="peer_supervise_disable_title">Berhenti mengawasi?</string>
+    <string name="peer_supervise_disable_message">Perangkat %1$s akan terbuka dan diberi tahu. Peringatan senyapnya kembali mati.</string>
+    <string name="peer_supervise_disable_confirm">Berhenti mengawasi</string>
+    <string name="scan_add_waiting">Menunggu pengawas…</string>
+    <string name="scan_add_waiting_subtitle">Saat diawasi, menambahkan kontak memerlukan persetujuan. Keputusannya akan segera tiba.</string>
+    <string name="scan_add_denied">Pengawas Anda menolak menambahkan kontak ini.</string>
+    <string name="pending_awaiting_approval">Menunggu persetujuan pengawas…</string>
+    <string name="onboarding_bg_open_settings">Buka pengaturan sistem</string>
+    <string name="onboarding_bg_skip">Lewati untuk sekarang</string>
+    <string name="onboarding_bg_location_hint">Di Android 11 atau yang lebih baru, izin lokasi latar belakang hanya bisa diberikan melalui pengaturan sistem; aplikasi tidak dapat memintanya secara langsung.</string>
+
+    <string name="settings_notifications_title">Notifikasi</string>
+    <string name="settings_message_notifications">Notifikasi pesan</string>
+    <string name="settings_message_notifications_subtitle">Tampilkan notifikasi saat pesan obrolan atau lingkaran masuk</string>
+    <string name="settings_alert_notifications">Peringatan lokasi</string>
+    <string name="settings_alert_notifications_subtitle">Peringatan keluar area, kedekatan, dan kehilangan lokasi. Peringatan SOS tetap aktif.</string>
+    <string name="settings_quiet_hours">Jam tenang</string>
+    <string name="settings_quiet_hours_subtitle">Membisukan notifikasi pesan dan peringatan selama rentang yang dipilih. SOS tetap terdengar.</string>
+    <string name="settings_quiet_hours_start">Bisukan mulai</string>
+    <string name="settings_quiet_hours_end">Sampai</string>
+    <string name="settings_disable_waiting">Menunggu persetujuan pengawas…</string>
+    <string name="settings_disable_cancel">Batalkan permintaan</string>
+    <string name="settings_disable_denied">Pengawas Anda menolak permintaan membuka kunci.</string>
+    <string name="settings_disable_timed_out">Tidak mendapat jawaban tepat waktu. Pengawas Anda mungkin sedang luring; coba lagi nanti.</string>
+
+    <string name="settings_erase_identity_card">Zona berbahaya</string>
+    <string name="settings_erase_identity">Hapus identitas &amp; hapus semua data</string>
+    <string name="settings_erase_identity_subtitle">Menghapus kunci identitas, kontak, riwayat lokasi, pesan, dan pengaturan perangkat ini, lalu memulai ulang penyiapan awal</string>
+    <string name="settings_erase_identity_title">Hapus identitas dan semua data?</string>
+    <string name="settings_erase_identity_message">Tindakan ini menghapus permanen pasangan kunci Nostr Anda, semua kontak, semua area, riwayat lokasi, pesan, dan pengaturan perangkat ini. Kontak tidak diberi tahu dan salinan mereka tidak terpengaruh. Permintaan penghapusan tidak dikirim; untuk mengingatkan seorang kontak, gunakan dahulu "Hapus kontak dan data" pada masing-masing kontak.</string>
+    <string name="settings_erase_identity_final_title">Konfirmasi akhir</string>
+    <string name="settings_erase_identity_final_message">Hapus semuanya dan mulai ulang dengan identitas baru? Tindakan ini tidak bisa dibatalkan. Jika mungkin masih Anda perlukan identitas ini, ekspor dahulu cadangan terenkripsi.</string>
+    <string name="settings_erase_identity_confirm">Hapus dan mulai ulang</string>
+    <string name="toast_now_supervised">Kini diawasi oleh %1$s</string>
+    <string name="toast_already_supervised">Anda sudah diawasi; tolak saja permintaan ini</string>
+    <string name="toast_declined_supervision_invite">Permintaan pengawasan dari %1$s ditolak</string>
+    <string name="supervision_disable_request_title">Buka kunci perangkat ini?</string>
+    <string name="supervision_disable_request_message">%1$s meminta mematikan mode yang diawasi. Menyetujuinya membuka kunci pengaturan secara permanen hingga sebuah permintaan pengawasan baru disetujui.</string>
 </resources>

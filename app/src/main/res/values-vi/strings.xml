@@ -891,4 +891,73 @@
     <string name="queued_message_view">Xem sự kiện</string>
     <string name="queued_message_hide">Ẩn</string>
     <string name="queued_messages_flush">Gửi ngay</string>
+
+    <string name="change_notif_title">Thiết bị được giám sát đã thay đổi cài đặt</string>
+    <string name="change_pause">• Đã tạm dừng chia sẻ với %1$s</string>
+    <string name="change_resume">• Đã tiếp tục chia sẻ với %1$s</string>
+    <string name="change_precision">• Độ chính xác vị trí đã đổi thành %1$s</string>
+    <string name="change_role">• Vai trò chia sẻ đã đổi thành %1$s</string>
+    <string name="change_temp_start">• Bắt đầu chia sẻ tạm thời với %1$s</string>
+    <string name="change_temp_end">• Chia sẻ tạm thời đã kết thúc</string>
+    <string name="change_sos">• Trạng thái SOS của liên hệ đã đổi thành %1$s</string>
+    <string name="change_schedule">• Lịch chia sẻ chung đã thay đổi</string>
+    <string name="change_schedule_peer">• Lịch chia sẻ với %1$s đã thay đổi</string>
+    <string name="change_generic">• Một cài đặt chia sẻ vị trí đã thay đổi</string>
+
+    <string name="conv_mute">Tắt thông báo</string>
+    <string name="conv_unmute">Bật lại thông báo</string>
+    <string name="conv_cd_muted">Đã tắt thông báo</string>
+    <string name="notif_supervised_invite_title">%1$s muốn giám sát bạn</string>
+    <string name="notif_supervised_invite_text">Chấp nhận để khóa các cài đặt của thiết bị này sau phê duyệt của bạn. Sau này bạn vẫn có thể xin mở khóa bất cứ lúc nào.</string>
+    <string name="notif_supervision_ended_title">Đã kết thúc giám sát</string>
+    <string name="notif_supervision_ended_text">Người giám sát của bạn đã chấm dứt việc giám sát thiết bị này. Các cài đặt giờ không còn bị khóa.</string>
+    <string name="notif_supervised_wipe_title">Thiết bị được giám sát đã bị xóa</string>
+    <string name="notif_supervised_wipe_text">Một thiết bị được giám sát đã gửi báo cáo xóa dữ liệu và xóa luôn danh tính của nó. Hãy đợi các cảnh báo im lặng; xóa liên hệ khi bạn đã sẵn sàng.</string>
+    <string name="notif_supervisor_unknown_request_title">Yêu cầu giám sát từ thiết bị không rõ danh tính</string>
+    <string name="notif_supervisor_unknown_request_text">Thiết bị gửi yêu cầu không có trong danh bạ của bạn. Hãy thêm nó làm liên hệ trước, rồi nhờ nó gửi lại yêu cầu giám sát.</string>
+    <string name="contact_add_request_title">Cho phép liên hệ mới?</string>
+    <string name="contact_add_request_message">Thiết bị được giám sát của bạn xin thêm “%1$s” làm liên hệ chia sẻ vị trí mới. Chấp thuận sẽ bắt đầu việc chia sẻ với họ.</string>
+    <string name="incoming_awaiting_approval">Đang chờ người giám sát phê duyệt…</string>
+    <string name="circle_leave_supervised">Việc rời vòng tròn này phụ thuộc vào người giám sát của bạn: hãy nhờ họ xóa bạn khỏi thiết bị của bạn.</string>
+
+    <string name="peer_supervise_enable_title">Giám sát thiết bị này?</string>
+    <string name="peer_supervise_enable_message">%1$s cần chấp nhận yêu cầu trên thiết bị của họ trước khi các cài đặt được khóa sau phê duyệt của bạn. Các cảnh báo im lặng của họ sẽ được bật.</string>
+    <string name="peer_supervise_disable_title">Ngừng giám sát?</string>
+    <string name="peer_supervise_disable_message">Thiết bị của %1$s sẽ được mở khóa và thông báo. Các cảnh báo im lặng của họ sẽ tắt lại.</string>
+    <string name="peer_supervise_disable_confirm">Ngừng giám sát</string>
+    <string name="scan_add_waiting">Đang chờ người giám sát…</string>
+    <string name="scan_add_waiting_subtitle">Khi đang bị giám sát, việc thêm liên hệ cần phê duyệt. Quyết định sẽ sớm có.</string>
+    <string name="scan_add_denied">Người giám sát của bạn đã từ chối thêm liên hệ này.</string>
+    <string name="pending_awaiting_approval">Đang chờ người giám sát phê duyệt…</string>
+    <string name="onboarding_bg_open_settings">Mở cài đặt hệ thống</string>
+    <string name="onboarding_bg_skip">Bỏ qua lúc này</string>
+    <string name="onboarding_bg_location_hint">Trên Android 11 trở lên, quyền vị trí khi chạy nền chỉ được cấp trong phần cài đặt của hệ thống; ứng dụng không thể tự yêu cầu trực tiếp.</string>
+
+    <string name="settings_notifications_title">Thông báo</string>
+    <string name="settings_message_notifications">Thông báo tin nhắn</string>
+    <string name="settings_message_notifications_subtitle">Hiện thông báo khi có tin nhắn trò chuyện hoặc của vòng tròn</string>
+    <string name="settings_alert_notifications">Cảnh báo vị trí</string>
+    <string name="settings_alert_notifications_subtitle">Cảnh báo rời vùng địa lý, đến gần và mất vị trí. Các cảnh báo SOS vẫn luôn bật.</string>
+    <string name="settings_quiet_hours">Giờ yên tĩnh</string>
+    <string name="settings_quiet_hours_subtitle">Tắt tiếng thông báo tin nhắn và cảnh báo trong khung giờ đã chọn. Tiếng SOS vẫn lọt qua.</string>
+    <string name="settings_quiet_hours_start">Tắt tiếng từ</string>
+    <string name="settings_quiet_hours_end">Đến</string>
+    <string name="settings_disable_waiting">Đang chờ người giám sát phê duyệt…</string>
+    <string name="settings_disable_cancel">Hủy yêu cầu</string>
+    <string name="settings_disable_denied">Người giám sát của bạn đã từ chối yêu cầu mở khóa.</string>
+    <string name="settings_disable_timed_out">Không nhận được trả lời kịp lúc. Người giám sát của bạn có thể đang ngoại tuyến; hãy thử lại sau.</string>
+
+    <string name="settings_erase_identity_card">Vùng nguy hiểm</string>
+    <string name="settings_erase_identity">Xóa danh tính &amp; xóa toàn bộ dữ liệu</string>
+    <string name="settings_erase_identity_subtitle">Xóa khóa danh tính, liên hệ, lịch sử vị trí, tin nhắn và cài đặt của thiết bị này, rồi khởi động lại phần thiết lập ban đầu</string>
+    <string name="settings_erase_identity_title">Xóa danh tính và toàn bộ dữ liệu?</string>
+    <string name="settings_erase_identity_message">Thao tác này xóa vĩnh viễn cặp khóa Nostr của bạn, toàn bộ liên hệ, các vùng địa lý, lịch sử vị trí, tin nhắn và cài đặt của thiết bị này. Các liên hệ không được thông báo và bản sao của họ không bị ảnh hưởng. Không có yêu cầu xóa nào được gửi đi; để cảnh báo một người bạn tin cậy, trước tiên hãy dùng mục "Xóa liên hệ và dữ liệu" cho từng liên hệ.</string>
+    <string name="settings_erase_identity_final_title">Xác nhận cuối cùng</string>
+    <string name="settings_erase_identity_final_message">Xóa tất cả và bắt đầu lại với danh tính mới? Hành động này không thể hoàn tác. Nếu vẫn còn khả năng bạn sẽ cần danh tính này, hãy xuất bản sao lưu đã mã hóa trước.</string>
+    <string name="settings_erase_identity_confirm">Xóa và bắt đầu lại</string>
+    <string name="toast_now_supervised">Bây giờ được giám sát bởi %1$s</string>
+    <string name="toast_already_supervised">Bạn đã được giám sát rồi; thay vào đó, hãy từ chối yêu cầu này.</string>
+    <string name="toast_declined_supervision_invite">Đã từ chối yêu cầu giám sát từ %1$s</string>
+    <string name="supervision_disable_request_title">Mở khóa thiết bị này?</string>
+    <string name="supervision_disable_request_message">%1$s yêu cầu tắt chế độ được giám sát. Chấp thuận sẽ mở khóa các cài đặt vĩnh viễn cho đến khi có phê duyệt một yêu cầu giám sát mới.</string>
 </resources>

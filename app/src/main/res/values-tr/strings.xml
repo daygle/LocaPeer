@@ -770,9 +770,9 @@
     <string name="chat_cd_attach_image">Fotoğraf ekle</string>
     <string name="chat_cd_cancel_recording">Kaydı iptal et</string>
     <string name="chat_cd_close_image">Kapat</string>
-    <string name="chat_cd_pause_voice">Sesli mesajı duraklat</string>
-    <string name="chat_cd_play_voice">Sesli mesajı oynat</string>
-    <string name="chat_cd_record_voice">Sesli mesaj kaydet</string>
+    <string name="chat_cd_pause_voice">Sessizlikli mesajı duraklat</string>
+    <string name="chat_cd_play_voice">Sessizlikli mesajı oynat</string>
+    <string name="chat_cd_record_voice">Sessizlikli mesaj kaydet</string>
     <string name="chat_cd_stop_send_recording">Durdur ve gönder</string>
     <string name="chat_cd_view_image">Fotoğrafı görüntüle</string>
     <string name="chat_delivery_details_title">Mesaj durumu</string>
@@ -782,7 +782,7 @@
     <string name="chat_delivery_state_sending">Gönderiliyor…</string>
     <string name="chat_delivery_state_sent">Gönderildi (röle kabul etti)</string>
     <string name="chat_preview_photo">📷 Fotoğraf</string>
-    <string name="chat_preview_voice">🎤 Sesli mesaj</string>
+    <string name="chat_preview_voice">🎤 Sessizlikli mesaj</string>
     <string name="chat_recording">Kaydediliyor…</string>
     <string name="chat_shared_location">Paylaşılan konum</string>
     <string name="chat_tap_to_open_map">Haritayı açmak için dokunun</string>
@@ -906,4 +906,73 @@
     <string name="queued_message_view">Olayı görüntüle</string>
     <string name="queued_message_hide">Gizle</string>
     <string name="queued_messages_flush">Şimdi gönder</string>
+
+    <string name="change_notif_title">Denetlenen cihaz ayarları değiştirdi</string>
+    <string name="change_pause">• %1$s ile paylaşım duraklatıldı</string>
+    <string name="change_resume">• %1$s ile paylaşım devam ettirildi</string>
+    <string name="change_precision">• Konum doğruluğu %1$s olarak değiştirildi</string>
+    <string name="change_role">• Paylaşım rolü %1$s olarak değiştirildi</string>
+    <string name="change_temp_start">• %1$s ile geçici paylaşım başladı</string>
+    <string name="change_temp_end">• Geçici paylaşım sona erdi</string>
+    <string name="change_sos">• Kişinin SOS durumu %1$s olarak değiştirildi</string>
+    <string name="change_schedule">• Genel paylaşım programı değiştirildi</string>
+    <string name="change_schedule_peer">• %1$s ile paylaşım programı değiştirildi</string>
+    <string name="change_generic">• Bir konum paylaşımı ayarı değiştirildi</string>
+
+    <string name="conv_mute">Bildirimleri sessize al</string>
+    <string name="conv_unmute">Bildirimleri geri aç</string>
+    <string name="conv_cd_muted">Bildirimler sessizde</string>
+    <string name="notif_supervised_invite_title">%1$s sizden denetim istiyor</string>
+    <string name="notif_supervised_invite_text">Kabul edin ki bu cihazın ayarları onayınızın arkasında kilitlensin. Daha sonra kilidi açmayı isteyebilirsiniz.</string>
+    <string name="notif_supervision_ended_title">Denetim bitti</string>
+    <string name="notif_supervision_ended_text">Denetleyiciniz bu cihazın denetimini bitirdi. Ayarlar kilidi açıldı.</string>
+    <string name="notif_supervised_wipe_title">Denetlenen cihaz silindi</string>
+    <string name="notif_supervised_wipe_text">Denetlenen bir cihaz silme bildirimi gönderdi ve kimliğini sildi. Sessizliksiz uyarılar bekleyin; hazır olduğunuzda kişiyi silin.</string>
+    <string name="notif_supervisor_unknown_request_title">Bilinmeyen cihazdan denetim isteği</string>
+    <string name="notif_supervisor_unknown_request_text">İsteği gönderen cihaz, kişileriniz arasında bulunmuyor. Önce onu kişi olarak ekleyin ve denetim isteğini tekrarlamasını isteyin.</string>
+    <string name="contact_add_request_title">Yeni kişiye izin verilsin mi?</string>
+    <string name="contact_add_request_message">Denetlenen cihazınız, “%1$s” kişisini yeni bir konum paylaşım kişisi olarak eklemek istiyor. Onaylarsanız onunla paylaşım başlar.</string>
+    <string name="incoming_awaiting_approval">Denetleyicinizin onayı bekleniyor…</string>
+    <string name="circle_leave_supervised">Bu çemberden ayrılmak denetleyicinize bağlıdır: ondan sizi kendi cihazınızdan çıkarmasını isteyin.</string>
+
+    <string name="peer_supervise_enable_title">Bu cihaz denetlensin mi?</string>
+    <string name="peer_supervise_enable_message">%1$s, ayarları onayınızın arkasında kilitlenmeden önce kendi cihazından isteği onaylamalıdır. Sessizliksiz uyarıları açılacak.</string>
+    <string name="peer_supervise_disable_title">Denetim bırakılsın mı?</string>
+    <string name="peer_supervise_disable_message">%1$s cihazının kilidi açılacak ve kendisine haber verilecek. Sessizliksiz uyarıları tekrar kapatılacak.</string>
+    <string name="peer_supervise_disable_confirm">Denetimi bırak</string>
+    <string name="scan_add_waiting">Denetleyiciniz bekleniyor…</string>
+    <string name="scan_add_waiting_subtitle">Denetim altında kişi eklemek için onay gerekir. Karar yakında gelecek.</string>
+    <string name="scan_add_denied">Denetleyiciniz bu kişinin eklenmesini reddetti.</string>
+    <string name="pending_awaiting_approval">Denetleyici onayı bekleniyor…</string>
+    <string name="onboarding_bg_open_settings">Sistem ayarlarını aç</string>
+    <string name="onboarding_bg_skip">Şimdilik atla</string>
+    <string name="onboarding_bg_location_hint">Android 11 ve sonrasında arka plan konumu yalnızca sistem ayarlarından verilir; uygulama bunu doğrudan isteyemez.</string>
+
+    <string name="settings_notifications_title">Bildirimler</string>
+    <string name="settings_message_notifications">Mesaj bildirimleri</string>
+    <string name="settings_message_notifications_subtitle">Sohbet veya çember mesajı geldiğinde bildirim göster</string>
+    <string name="settings_alert_notifications">Konum uyarıları</string>
+    <string name="settings_alert_notifications_subtitle">Geofence\'den çıkış, yakınlık ve konum kaybı uyarıları. SOS uyarıları aktif kalır.</string>
+    <string name="settings_quiet_hours">Sessizliksiz saatler</string>
+    <string name="settings_quiet_hours_subtitle">Belirtilen aralıkta mesaj ve uyarı bildirimlerini sessize alır. SOS çalışmaya devam eder.</string>
+    <string name="settings_quiet_hours_start">Sessizliksiz başlangıcı</string>
+    <string name="settings_quiet_hours_end">Bitiş</string>
+    <string name="settings_disable_waiting">Denetleyicinizin onayı bekleniyor…</string>
+    <string name="settings_disable_cancel">İsteği iptal et</string>
+    <string name="settings_disable_denied">Denetleyiciniz kilidi açma isteğini reddetti.</string>
+    <string name="settings_disable_timed_out">Zamanında yanıt yok. Denetleyiciniz çevrimdışı olabilir; daha sonra yeniden deneyin.</string>
+
+    <string name="settings_erase_identity_card">Tehlikeli bölge</string>
+    <string name="settings_erase_identity">Kimliği sil &amp; tüm verileri temizle</string>
+    <string name="settings_erase_identity_subtitle">Kimlik anahtarını, kişileri, konum geçmişini, mesajları ve cihazın ayarlarını siler ve kurulumu yeniden başlatır</string>
+    <string name="settings_erase_identity_title">Kimlik silinecek ve her şey temizlenecek mi?</string>
+    <string name="settings_erase_identity_message">Bu işlem Nostr anahtar çiftinizi, tüm kişileri, geofenceleri, konum geçmişini, mesajları ve cihazın ayarlarını kalıcı olarak siler. Kişiler haberdar edilmez ve kopyalarına dokunulmaz. Silme isteği gönderilmez; güven duyduğunuz bir kişiyi uyarmak isterseniz önce “Kişiyi ve verileri sil” ögesini kullanın.</string>
+    <string name="settings_erase_identity_final_title">Son onay</string>
+    <string name="settings_erase_identity_final_message">Her şey temizlenip yeni bir kimlikle başlansın mı? Bu geri alınamaz. Bu kimliğe hâla gereksiniminiz olabilir; önce şifreli bir yedek almayı düşünün.</string>
+    <string name="settings_erase_identity_confirm">Temizle ve yeniden başlat</string>
+    <string name="toast_now_supervised">Artık %1$s denetliyor</string>
+    <string name="toast_already_supervised">Zaten denetimdesiniz; bu isteği reddedin</string>
+    <string name="toast_declined_supervision_invite">%1$s denetim isteği reddedildi</string>
+    <string name="supervision_disable_request_title">Bu cihazın kilidi açılsın mı?</string>
+    <string name="supervision_disable_request_message">%1$s denetim modunun kapatılmasını istiyor. Onaylarsanız ayarlar yeni bir denetim isteği kabul edilene dek kalıcı olarak açılır.</string>
 </resources>

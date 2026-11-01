@@ -923,4 +923,73 @@
     <string name="queued_message_view">Vezi evenimentul</string>
     <string name="queued_message_hide">Ascunde</string>
     <string name="queued_messages_flush">Trimite acum</string>
+
+    <string name="change_notif_title">Dispozitivul supravegheat a modificat setările</string>
+    <string name="change_pause">• Partajarea cu %1$s a fost întreruptă</string>
+    <string name="change_resume">• Partajarea cu %1$s a fost reluată</string>
+    <string name="change_precision">• Precizia locației a fost schimbată în %1$s</string>
+    <string name="change_role">• Rolul de partajare s-a schimbat în %1$s</string>
+    <string name="change_temp_start">• A început partajarea temporară cu %1$s</string>
+    <string name="change_temp_end">• Partajarea temporară s-a încheiat</string>
+    <string name="change_sos">• Starea SOS a contactului s-a schimbat în %1$s</string>
+    <string name="change_schedule">• Programul general de partajare s-a modificat</string>
+    <string name="change_schedule_peer">• Programul de partajare cu %1$s s-a modificat</string>
+    <string name="change_generic">• O setare de partajare a locației s-a modificat</string>
+
+    <string name="conv_mute">Pune notificările pe mută</string>
+    <string name="conv_unmute">Reactivează notificările</string>
+    <string name="conv_cd_muted">Notificările sunt pe mută</string>
+    <string name="notif_supervised_invite_title">%1$s vrea să te supravegheze</string>
+    <string name="notif_supervised_invite_text">Acceptă pentru ca setările acestui dispozitiv să fie blocate în spatele aprobării tale. Mai târziu vei putea cere oricând deblocarea.</string>
+    <string name="notif_supervision_ended_title">Supravegherea s-a încheiat</string>
+    <string name="notif_supervision_ended_text">Supraveghetorul tău a încheiat supravegherea acestui dispozitiv. Setările sunt deblocate.</string>
+    <string name="notif_supervised_wipe_title">Dispozitivul supravegheat a fost șters</string>
+    <string name="notif_supervised_wipe_text">Un dispozitiv supravegheat a trimis anunț de ștergere și și-a șters propria identitate. Așteaptă alertele silențioase; șterge contactul când ești pregătit.</string>
+    <string name="notif_supervisor_unknown_request_title">Cerere de supraveghere de la un dispozitiv necunoscut</string>
+    <string name="notif_supervisor_unknown_request_text">Dispozitivul care a trimis cererea nu se află printre contactele tale. Adaugă-l mai întâi ca contact și cere-i să reia cererea de supraveghere.</string>
+    <string name="contact_add_request_title">Permiti noul contact?</string>
+    <string name="contact_add_request_message">Dispozitivul tău supravegheat cere să adauge „%1$s” ca nou contact de partajare a locației. Aprobarea pornește partajarea cu el.</string>
+    <string name="incoming_awaiting_approval">Se așteaptă aprobarea de la supraveghetor…</string>
+    <string name="circle_leave_supervised">Părăsirea acestui cerc necesită supraveghetorul tău: cere-i să te șteargă de pe dispozitivul tău.</string>
+
+    <string name="peer_supervise_enable_title">Supraveghezi acest dispozitiv?</string>
+    <string name="peer_supervise_enable_message">%1$s trebuie să accepte cererea pe dispozitivul propriu înainte ca setările lui să fie blocate în spatele aprobării tale. Alertele lui silențioase se vor activa.</string>
+    <string name="peer_supervise_disable_title">Oprești supravegherea?</string>
+    <string name="peer_supervise_disable_message">Dispozitivul lui %1$s va fi deblocat și va fi informat. Alertele lui silențioase se vor dezactiva la loc.</string>
+    <string name="peer_supervise_disable_confirm">Oprește supravegherea</string>
+    <string name="scan_add_waiting">Se așteaptă supraveghetorul…</string>
+    <string name="scan_add_waiting_subtitle">Sub supraveghere, adăugarea unui contact necesită aprobarea lui. Decizia vine în curând.</string>
+    <string name="scan_add_denied">Supraveghetorul tău a refuzat adăugarea acestui contact.</string>
+    <string name="pending_awaiting_approval">Se așteaptă aprobarea supraveghetorului…</string>
+    <string name="onboarding_bg_open_settings">Deschide setările sistemului</string>
+    <string name="onboarding_bg_skip">Sare peste pentru moment</string>
+    <string name="onboarding_bg_location_hint">Pe Android 11 sau mai nou, locația în fundal se acorda doar în setările sistemului; aplicația nu o poate solicita direct.</string>
+
+    <string name="settings_notifications_title">Notificări</string>
+    <string name="settings_message_notifications">Notificări de mesaje</string>
+    <string name="settings_message_notifications_subtitle">Afișează o notificare când sosește un mesaj de chat sau din cerc</string>
+    <string name="settings_alert_notifications">Alerte de locație</string>
+    <string name="settings_alert_notifications_subtitle">Alerte de părăsire a geofence, apropiere și pierdere a locației. Alertele SOS rămân active.</string>
+    <string name="settings_quiet_hours">Ore de liniște</string>
+    <string name="settings_quiet_hours_subtitle">Pune pe mută notificările de mesaje și alerte în intervalul ales. SOS tot trece.</string>
+    <string name="settings_quiet_hours_start">Pune pe mută de la</string>
+    <string name="settings_quiet_hours_end">Până la</string>
+    <string name="settings_disable_waiting">Se așteaptă aprobarea supraveghetorului…</string>
+    <string name="settings_disable_cancel">Anulează cererea</string>
+    <string name="settings_disable_denied">Supraveghetorul tău a refuzat cererea de deblocare.</string>
+    <string name="settings_disable_timed_out">Niciun răspuns la timp. Supraveghetorul tău poate fi deconectat; încearcă mai târziu.</string>
+
+    <string name="settings_erase_identity_card">Zonă periculoasă</string>
+    <string name="settings_erase_identity">Șterge identitatea &amp; șterge toate datele</string>
+    <string name="settings_erase_identity_subtitle">Șterge cheia identității, contactele, istoricul locației, mesajele și setările acestui dispozitiv și reia configurarea inițială</string>
+    <string name="settings_erase_identity_title">Ștergi identitatea și toate datele?</string>
+    <string name="settings_erase_identity_message">Aceasta îți șterge definitiv perechea de chei Nostr, toate contactele, geofence-urile, istoricul locației, mesajele și setările acestui dispozitiv. Contactele nu sunt anunțate, iar copiile lor nu sunt afectate. Nicio cerere de ștergere nu este trimisă; pentru a avertiza un contact, folosește mai întâi „Șterge contactul și datele” la fiecare contact.</string>
+    <string name="settings_erase_identity_final_title">Confirmare finală</string>
+    <string name="settings_erase_identity_final_message">Ștergi totul și reiei de la început cu o identitate nouă? Acest lucru nu poate fi anulat. Dacă poate mai ai nevoie de această identitate, exportă mai întâi o copie de rezervă criptată.</string>
+    <string name="settings_erase_identity_confirm">Șterge și reia de la început</string>
+    <string name="toast_now_supervised">Acum ești supravegheat de %1$s</string>
+    <string name="toast_already_supervised">Deja ești supravegheat; refuză mai degrabă cererea</string>
+    <string name="toast_declined_supervision_invite">Cererea de supraveghere de la %1$s a fost refuzată</string>
+    <string name="supervision_disable_request_title">Deblochezi acest dispozitiv?</string>
+    <string name="supervision_disable_request_message">%1$s cere dezactivarea modului supravegheat. Aprobarea deblochează definitiv setările până se acceptă o nouă cerere de supraveghere.</string>
 </resources>
