@@ -907,4 +907,73 @@
     <string name="queued_message_view">ਇਵੈਂਟ ਦੇਖੋ</string>
     <string name="queued_message_hide">ਲੁਕਾਓ</string>
     <string name="queued_messages_flush">ਹੁਣ ਭੇਜੋ</string>
+
+    <string name="change_notif_title">ਨਿਗਰਾਨੀ ਹੇਠਲੀ ਡਿਵਾਈਸ ਨੇ ਸੈਟਿੰਗਾਂ ਬਦਲੀਆਂ</string>
+    <string name="change_pause">• %1$s ਨਾਲ ਸਾਂਝਾ ਕਰਨਾ ਰੋਕਿਆ</string>
+    <string name="change_resume">• %1$s ਨਾਲ ਸਾਂਝਾ ਕਰਨਾ ਮੁੜ ਸ਼ੁਰੂ ਹੋਇਆ</string>
+    <string name="change_precision">• ਟਿਕਾਣੇ ਦੀ ਸ਼ੁੱਧਤਾ %1$s ਕੀਤੀ</string>
+    <string name="change_role">• ਸਾਂਝਾ ਕਰਨ ਦੀ ਭੂਮਿਕਾ %1$s ਕੀਤੀ</string>
+    <string name="change_temp_start">• %1$s ਨਾਲ ਥੋੜ੍ਹੇ ਸਮੇਂ ਦਾ ਸਾਂਝਾ ਕਰਨਾ ਸ਼ੁਰੂ ਹੋਇਆ</string>
+    <string name="change_temp_end">• ਥੋੜ੍ਹੇ ਸਮੇਂ ਦਾ ਸਾਂਝਾ ਕਰਨਾ ਖ਼ਤਮ ਹੋਇਆ</string>
+    <string name="change_sos">• ਸੰਪਰਕ ਦੀ SOS ਸਥਿਤੀ %1$s ਕੀਤੀ</string>
+    <string name="change_schedule">• ਸਮੁੱਚਾ ਸਾਂਝਾ ਕਰਨ ਵੇਲਾ-ਪੱਤਰ ਬਦਲਿਆ</string>
+    <string name="change_schedule_peer">• %1$s ਨਾਲ ਸਾਂਝਾ ਕਰਨ ਵੇਲਾ-ਪੱਤਰ ਬਦਲਿਆ</string>
+    <string name="change_generic">• ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨ ਦੀ ਇੱਕ ਸੈਟਿੰਗ ਬਦਲੀ</string>
+
+    <string name="conv_mute">ਸੂਚਨਾਵਾਂ ਮੌਨ ਕਰੋ</string>
+    <string name="conv_unmute">ਸੂਚਨਾਵਾਂ ਮੁੜ ਚਾਲੂ ਕਰੋ</string>
+    <string name="conv_cd_muted">ਸੂਚਨਾਵਾਂ ਮੌਨ ਹਨ</string>
+    <string name="notif_supervised_invite_title">%1$s ਤੁਹਾਡੀ ਨਿਗਰਾਨੀ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹਨ</string>
+    <string name="notif_supervised_invite_text">ਇਸ ਡਿਵਾਈਸ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਤੁਹਾਡੀ ਮਨਜ਼ੂਰੀ ਪਿੱਛੇ ਤਾਲਾ ਬੰਦ ਰਹਿਣ ਲਈ ਸਵੀਕਾਰ ਕਰੋ। ਬਾਅਦ ਵਿੱਚ ਕਦੇ ਵੀ ਖੋਲ੍ਹਣ ਦੀ ਬੇਨਤੀ ਕਰ ਸਕਦੇ ਹੋ।</string>
+    <string name="notif_supervision_ended_title">ਨਿਗਰਾਨੀ ਖ਼ਤਮ ਹੋਈ</string>
+    <string name="notif_supervision_ended_text">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਨੇ ਇਸ ਡਿਵਾਈਸ ਦੀ ਨਿਗਰਾਨੀ ਖ਼ਤਮ ਕਰ ਦਿੱਤੀ। ਸੈਟਿੰਗਾਂ ਹੁਣ ਖੁੱਲ੍ਹੀਆਂ ਹਨ।</string>
+    <string name="notif_supervised_wipe_title">ਨਿਗਰਾਨੀ ਹੇਠਲੀ ਡਿਵਾਈਸ ਮਿਟਾਈ ਗਈ</string>
+    <string name="notif_supervised_wipe_text">ਨਿਗਰਾਨੀ ਹੇਠਲੀ ਡਿਵਾਈਸ ਨੇ ਮਿਟਾਉਣ ਦੀ ਸੂਚਨਾ ਭੇਜੀ ਅਤੇ ਆਪਣੀ ਪਛਾਣ ਮਿਟਾ ਦਿੱਤੀ। ਸ਼ਾਂਤ ਚੇਤਾਵਨੀਆਂ ਦੀ ਉਡੀਕ ਕਰੋ; ਤਿਆਰ ਹੋਣ ’ਤੇ ਸੰਪਰਕ ਹਟਾਓ।</string>
+    <string name="notif_supervisor_unknown_request_title">ਅਣਜਾਣ ਡਿਵਾਈਸ ਤੋਂ ਨਿਗਰਾਨੀ ਦੀ ਬੇਨਤੀ</string>
+    <string name="notif_supervisor_unknown_request_text">ਬੇਨਤੀ ਭੇਜਣ ਵਾਲੀ ਡਿਵਾਈਸ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਵਿੱਚ ਨਹੀਂ ਹੈ। ਪਹਿਲਾਂ ਇਸਨੂੰ ਸੰਪਰਕ ਵਜੋਂ ਜੋੜੋ, ਫਿਰ ਨਿਗਰਾਨੀ ਦੀ ਬੇਨਤੀ ਮੁੜ ਭੇਜਣ ਲਈ ਕਹੋ।</string>
+    <string name="contact_add_request_title">ਨਵੇਂ ਸੰਪਰਕ ਨੂੰ ਮਨਜ਼ੂਰੀ ਦੇਣੀ?</string>
+    <string name="contact_add_request_message">ਤੁਹਾਡੀ ਨਿਗਰਾਨੀ ਹੇਠਲੀ ਡਿਵਾਈਸ “%1$s” ਨੂੰ ਟਿਕਾਣਾ ਸਾਂਝਾ ਕਰਨ ਦੇ ਨਵੇਂ ਸੰਪਰਕ ਵਜੋਂ ਜੋੜਨ ਦੀ ਬੇਨਤੀ ਕਰ ਰਹੀ ਹੈ। ਮਨਜ਼ੂਰੀ ਦੇਣ ’ਤੇ ਉਹਨਾਂ ਨਾਲ ਸਾਂਝਾ ਕਰਨਾ ਸ਼ੁਰੂ ਹੋ ਜਾਵੇਗਾ।</string>
+    <string name="incoming_awaiting_approval">ਨਿਗਰਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ…</string>
+    <string name="circle_leave_supervised">ਇਸ ਚੱਕਰ ਵਿੱਚੋਂ ਨਿਕਲਣ ਲਈ ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਦੀ ਲੋੜ ਹੈ: ਆਪਣੀ ਖ਼ੁਦ ਦੀ ਡਿਵਾਈਸ ਵਿੱਚੋਂ ਤੁਹਾਨੂੰ ਹਟਾਉਣ ਲਈ ਉਹਨਾਂ ਨੂੰ ਕਹੋ।</string>
+
+    <string name="peer_supervise_enable_title">ਇਸ ਡਿਵਾਈਸ ਦੀ ਨਿਗਰਾਨੀ ਕਰਨੀ?</string>
+    <string name="peer_supervise_enable_message">%1$s ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਤੁਹਾਡੀ ਮਨਜ਼ੂਰੀ ਪਿੱਛੇ ਤਾਲਾ ਬੰਦ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਉਹਨਾਂ ਨੂੰ ਆਪਣੀ ਡਿਵਾਈਸ ’ਤੇ ਬੇਨਤੀ ਸਵੀਕਾਰ ਕਰਨੀ ਪਵੇਗੀ। ਉਹਨਾਂ ਦੀਆਂ ਸ਼ਾਂਤ ਚੇਤਾਵਨੀਆਂ ਚਾਲੂ ਹੋ ਜਾਣਗੀਆਂ।</string>
+    <string name="peer_supervise_disable_title">ਨਿਗਰਾਨੀ ਬੰਦ ਕਰਨੀ?</string>
+    <string name="peer_supervise_disable_message">%1$s ਦੀ ਡਿਵਾਈਸ ਖੁੱਲ੍ਹ ਜਾਵੇਗੀ ਅਤੇ ਉਹਨਾਂ ਨੂੰ ਦੱਸਿਆ ਜਾਵੇਗਾ। ਉਹਨਾਂ ਦੀਆਂ ਸ਼ਾਂਤ ਚੇਤਾਵਨੀਆਂ ਮੁੜ ਬੰਦ ਹੋ ਜਾਣਗੀਆਂ।</string>
+    <string name="peer_supervise_disable_confirm">ਨਿਗਰਾਨੀ ਬੰਦ ਕਰੋ</string>
+    <string name="scan_add_waiting">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਦੀ ਉਡੀਕ…</string>
+    <string name="scan_add_waiting_subtitle">ਨਿਗਰਾਨੀ ਹੇਠ ਸੰਪਰਕ ਜੋੜਨ ਲਈ ਉਹਨਾਂ ਦੀ ਮਨਜ਼ੂਰੀ ਲੋੜੀਂਦੀ ਹੈ। ਫ਼ੈਸਲਾ ਜਲਦੀ ਆਵੇਗਾ।</string>
+    <string name="scan_add_denied">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਨੇ ਇਹ ਸੰਪਰਕ ਜੋੜਨ ਤੋਂ ਇਨਕਾਰ ਕੀਤਾ।</string>
+    <string name="pending_awaiting_approval">ਨਿਗਰਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ…</string>
+    <string name="onboarding_bg_open_settings">ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਖੋਲ੍ਹੋ</string>
+    <string name="onboarding_bg_skip">ਹੁਣ ਛੱਡੋ</string>
+    <string name="onboarding_bg_location_hint">Android 11 ਜਾਂ ਬਾਅਦ ਵਿੱਚ, ਬੈਕਗਰਾਊਂਡ ਟਿਕਾਣੇ ਦੀ ਇਜਾਜ਼ਤ ਸਿਰਫ਼ ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ ਵਿੱਚੋਂ ਮਿਲਦੀ ਹੈ; ਐਪ ਇਹ ਸਿੱਧੀ ਨਹੀਂ ਮੰਗ ਸਕਦੀ।</string>
+
+    <string name="settings_notifications_title">ਸੂਚਨਾਵਾਂ</string>
+    <string name="settings_message_notifications">ਸੁਨੇਹਾ ਸੂਚਨਾਵਾਂ</string>
+    <string name="settings_message_notifications_subtitle">ਚੈਟ ਜਾਂ ਚੱਕਰ ਦਾ ਸੁਨੇਹਾ ਆਉਣ ’ਤੇ ਸੂਚਨਾ ਦਿਖਾਓ</string>
+    <string name="settings_alert_notifications">ਟਿਕਾਣਾ ਚੇਤਾਵਨੀਆਂ</string>
+    <string name="settings_alert_notifications_subtitle">ਖੇਤਰ ਤੋਂ ਬਾਹਰ ਜਾਣ, ਨੇੜਤਾ ਅਤੇ ਟਿਕਾਣਾ ਗੁੰਮ ਹੋਣ ਦੀਆਂ ਚੇਤਾਵਨੀਆਂ। SOS ਚੇਤਾਵਨੀਆਂ ਹਮੇਸ਼ਾ ਚਾਲੂ ਰਹਿੰਦੀਆਂ ਹਨ।</string>
+    <string name="settings_quiet_hours">ਸ਼ਾਂਤ ਘੰਟੇ</string>
+    <string name="settings_quiet_hours_subtitle">ਚੁਣੇ ਸਮੇਂ ਦੌਰਾਨ ਸੁਨੇਹੇ ਅਤੇ ਚੇਤਾਵਨੀ ਸੂਚਨਾਵਾਂ ਮੌਨ ਕਰਦਾ ਹੈ। ਸਿਰਫ਼ SOS ਸੁਣਾਈ ਦਿੰਦਾ ਹੈ।</string>
+    <string name="settings_quiet_hours_start">ਮੌਨ ਸ਼ੁਰੂ</string>
+    <string name="settings_quiet_hours_end">ਤੱਕ</string>
+    <string name="settings_disable_waiting">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਦੀ ਮਨਜ਼ੂਰੀ ਦੀ ਉਡੀਕ…</string>
+    <string name="settings_disable_cancel">ਬੇਨਤੀ ਰੱਦ ਕਰੋ</string>
+    <string name="settings_disable_denied">ਤੁਹਾਡੇ ਨਿਗਰਾਨ ਨੇ ਖੋਲ੍ਹਣ ਦੀ ਬੇਨਤੀ ਨਾਮਨਜ਼ੂਰ ਕਰ ਦਿੱਤੀ।</string>
+    <string name="settings_disable_timed_out">ਸਮੇਂ ਸਿਰ ਕੋਈ ਜਵਾਬ ਨਹੀਂ ਆਇਆ। ਤੁਹਾਡਾ ਨਿਗਰਾਨ ਆਫ਼ਲਾਈਨ ਹੋ ਸਕਦਾ ਹੈ; ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</string>
+
+    <string name="settings_erase_identity_card">ਖ਼ਤਰਨਾਕ ਖੇਤਰ</string>
+    <string name="settings_erase_identity">ਪਛਾਣ ਹਟਾਓ &amp; ਸਾਰਾ ਡੇਟਾ ਮਿਟਾਓ</string>
+    <string name="settings_erase_identity_subtitle">ਪਛਾਣ ਕੁੰਜੀ, ਸੰਪਰਕ, ਟਿਕਾਣਾ ਇਤਿਹਾਸ, ਸੁਨੇਹੇ ਅਤੇ ਇਸ ਡਿਵਾਈਸ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਹਟਾ ਕੇ ਸ਼ੁਰੂਆਤੀ ਸੈਟਅਪ ਮੁੜ ਸ਼ੁਰੂ ਕਰਦਾ ਹੈ</string>
+    <string name="settings_erase_identity_title">ਪਛਾਣ ਹਟਾ ਕੇ ਸਭ ਕੁਝ ਮਿਟਾਉਣਾ?</string>
+    <string name="settings_erase_identity_message">ਇਹ ਤੁਹਾਡੀ Nostr ਕੁੰਜੀ ਜੋੜੀ, ਸਾਰੇ ਸੰਪਰਕ, ਸਾਰੇ ਖੇਤਰ, ਟਿਕਾਣਾ ਇਤਿਹਾਸ, ਸੁਨੇਹੇ ਅਤੇ ਇਸ ਡਿਵਾਈਸ ਦੀਆਂ ਸੈਟਿੰਗਾਂ ਹਮੇਸ਼ਾ ਲਈ ਮਿਟਾ ਦੇਵੇਗਾ। ਸੰਪਰਕਾਂ ਨੂੰ ਦੱਸਿਆ ਨਹੀਂ ਜਾਵੇਗਾ ਅਤੇ ਉਹਨਾਂ ਦੀਆਂ ਕਾਪੀਆਂ ’ਤੇ ਅਸਰ ਨਹੀਂ ਪਵੇਗਾ। ਮਿਟਾਉਣ ਦੀ ਕੋਈ ਬੇਨਤੀ ਨਹੀਂ ਭੇਜੀ ਜਾਂਦੀ; ਸੰਪਰਕ ਨੂੰ ਚੇਤਾਵਨੀ ਦੇਣ ਲਈ ਪਹਿਲਾਂ ਹਰੇਕ ਲਈ “ਸੰਪਰਕ ਅਤੇ ਡੇਟਾ ਹਟਾਓ” ਵਰਤੋ।</string>
+    <string name="settings_erase_identity_final_title">ਅੰਤਿਮ ਪੁਸ਼ਟੀ</string>
+    <string name="settings_erase_identity_final_message">ਸਭ ਕੁਝ ਮਿਟਾ ਕੇ ਨਵੀਂ ਪਛਾਣ ਨਾਲ ਮੁੜ ਸ਼ੁਰੂ ਕਰਨਾ? ਇਹ ਵਾਪਸ ਨਹੀਂ ਹੋ ਸਕਦਾ। ਜੇ ਇਹ ਪਛਾਣ ਅੱਗੇ ਲੋੜੀਂਦੀ ਹੋ ਸਕਦੀ ਹੈ, ਤਾਂ ਪਹਿਲਾਂ ਐਨਕ੍ਰਿਪਟਡ ਬੈਕਅਪ ਨਿਰਯਾਤ ਕਰੋ।</string>
+    <string name="settings_erase_identity_confirm">ਮਿਟਾਓ ਅਤੇ ਮੁੜ ਸ਼ੁਰੂ ਕਰੋ</string>
+    <string name="toast_now_supervised">ਹੁਣ %1$s ਨਿਗਰਾਨੀ ਕਰਦੇ ਹਨ</string>
+    <string name="toast_already_supervised">ਪਹਿਲਾਂ ਹੀ ਨਿਗਰਾਨੀ ਹੇਠ ਹੈ; ਇਸ ਦੀ ਥਾਂ ਇਹ ਬੇਨਤੀ ਨਾਮਨਜ਼ੂਰ ਕਰੋ</string>
+    <string name="toast_declined_supervision_invite">%1$s ਵੱਲੋਂ ਨਿਗਰਾਨੀ ਬੇਨਤੀ ਨਾਮਨਜ਼ੂਰ ਕੀਤੀ</string>
+    <string name="supervision_disable_request_title">ਇਹ ਡਿਵਾਈਸ ਖੋਲ੍ਹਣੀ?</string>
+    <string name="supervision_disable_request_message">%1$s ਨਿਗਰਾਨੀ ਮੋਡ ਬੰਦ ਕਰਨ ਦੀ ਬੇਨਤੀ ਕਰ ਰਹੇ ਹਨ। ਮਨਜ਼ੂਰੀ ਦੇਣ ’ਤੇ ਨਵੀਂ ਨਿਗਰਾਨੀ ਬੇਨਤੀ ਸਵੀਕਾਰ ਹੋਣ ਤੱਕ ਸੈਟਿੰਗਾਂ ਹਮੇਸ਼ਾ ਲਈ ਖੁੱਲ੍ਹ ਜਾਣਗੀਆਂ।</string>
 </resources>

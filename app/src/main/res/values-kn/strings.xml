@@ -907,4 +907,73 @@
     <string name="queued_message_view">ಈವೆಂಟ್ ವೀಕ್ಷಿಸಿ</string>
     <string name="queued_message_hide">ಮರೆಮಾಡಿ</string>
     <string name="queued_messages_flush">ಈಗ ಕಳುಹಿಸಿ</string>
+
+    <string name="change_notif_title">ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿರುವ ಸಾಧನವು ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಬದಲಿಸಿತು</string>
+    <string name="change_pause">• %1$s ಜೊತೆ ಹಂಚಿಕೆ ನಿಲ್ಲಿಸಲಾಯಿತು</string>
+    <string name="change_resume">• %1$s ಜೊತೆ ಹಂಚಿಕೆ ಮತ್ತೆ ಪ್ರಾರಂಭವಾಯಿತು</string>
+    <string name="change_precision">• ಸ್ಥಳದ ನಿಖರತೆ %1$s ಗೆ ಬದಲಾಯಿತು</string>
+    <string name="change_role">• ಹಂಚಿಕೆಯ ಪಾತ್ರ %1$s ಗೆ ಬದಲಾಯಿತು</string>
+    <string name="change_temp_start">• %1$s ಜೊತೆ ತಾತ್ಕಾಲಿಕ ಹಂಚಿಕೆ ಪ್ರಾರಂಭವಾಯಿತು</string>
+    <string name="change_temp_end">• ತಾತ್ಕಾಲಿಕ ಹಂಚಿಕೆ ಮುಗಿಯಿತು</string>
+    <string name="change_sos">• ಸಂಪರ್ಕದ SOS ಸ್ಥಿತಿ %1$s ಗೆ ಬದಲಾಯಿತು</string>
+    <string name="change_schedule">• ಒಟ್ಟಾರೆ ಹಂಚಿಕೆ ವೇಳಾಪಟ್ಟಿ ಬದಲಾಯಿತು</string>
+    <string name="change_schedule_peer">• %1$s ಜೊತೆ ಹಂಚಿಕೆ ವೇಳಾಪಟ್ಟಿ ಬದಲಾಯಿತು</string>
+    <string name="change_generic">• ಸ್ಥಳ ಹಂಚಿಕೆಯ ಒಂದು ಸೆಟ್ಟಿಂಗ್ ಬದಲಾಯಿತು</string>
+
+    <string name="conv_mute">ಅಧಿಸೂಚನೆಗಳನ್ನು ಮ್ಯೂಟ್ ಮಾಡಿ</string>
+    <string name="conv_unmute">ಅಧಿಸೂಚನೆಗಳನ್ನು ಮತ್ತೆ ಆನ್ ಮಾಡಿ</string>
+    <string name="conv_cd_muted">ಅಧಿಸೂಚನೆಗಳು ಮ್ಯೂಟ್ ಆಗಿವೆ</string>
+    <string name="notif_supervised_invite_title">%1$s ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಲು ಬಯಸುತ್ತಾರೆ</string>
+    <string name="notif_supervised_invite_text">ಈ ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ನಿಮ್ಮ ಅನುಮೋದನೆಯ ಹಿಂದೆ ಲಾಕ್ ಆಗಲು ಒಪ್ಪಿಕೊಳ್ಳಿ. ಬಳಿಕ ಯಾವಾಗ ಬೇಕಾದರೂ ಅನ್‌ಲಾಕ್ ಕೇಳಬಹುದು.</string>
+    <string name="notif_supervision_ended_title">ಮೇಲ್ವಿಚಾರಣೆ ಮುಗಿಯಿತು</string>
+    <string name="notif_supervision_ended_text">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ಈ ಸಾಧನದ ಮೇಲ್ವಿಚಾರಣೆಯನ್ನು ಮುಗಿಸಿದ್ದಾರೆ. ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಈಗ ಅನ್‌ಲಾಕ್ ಆಗಿವೆ.</string>
+    <string name="notif_supervised_wipe_title">ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿರುವ ಸಾಧನ ಅಳಿಸಲಾಗಿದೆ</string>
+    <string name="notif_supervised_wipe_text">ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿರುವ ಸಾಧನವು ಅಳಿಸುವ ಅಧಿಸೂಚನೆ ಕಳುಹಿಸಿ ತನ್ನ ಗುರುತನ್ನು ಅಳಿಸಿಹಾಕಿತು. ಶಾಂತ ಎಚ್ಚರಿಕೆಗಳಿಗಾಗಿ ಕಾಯಿರಿ; ಸಿದ್ಧವಾದಾಗ ಸಂಪರ್ಕ ತೆಗೆದುಹಾಕಿ.</string>
+    <string name="notif_supervisor_unknown_request_title">ಅಪರಿಚಿತ ಸಾಧನದಿಂದ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿ</string>
+    <string name="notif_supervisor_unknown_request_text">ವಿನಂತಿ ಕಳುಹಿಸಿದ ಸಾಧನವು ನಿಮ್ಮ ಸಂಪರ್ಕಗಳಲ್ಲಿ ಇಲ್ಲ. ಮೊದಲು ಅದನ್ನು ಸಂಪರ್ಕವಾಗಿ ಸೇರಿಸಿ, ನಂತರ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿಯನ್ನು ಮತ್ತೆ ಕಳುಹಿಸಲು ಹೇಳಿ.</string>
+    <string name="contact_add_request_title">ಹೊಸ ಸಂಪರ್ಕಕ್ಕೆ ಅನುಮತಿ ನೀಡಬೇಕೆ?</string>
+    <string name="contact_add_request_message">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿರುವ ಸಾಧನವು “%1$s” ಅವರನ್ನು ಸ್ಥಳ ಹಂಚಿಕೆಯ ಹೊಸ ಸಂಪರ್ಕವಾಗಿ ಸೇರಿಸುವಂತೆ ಕೇಳುತ್ತಿದೆ. ಒಪ್ಪಿಗೆ ನೀಡಿದರೆ ಅವರೊಂದಿಗೆ ಹಂಚಿಕೆ ಪ್ರಾರಂಭವಾಗುತ್ತದೆ.</string>
+    <string name="incoming_awaiting_approval">ಮೇಲ್ವಿಚಾರಕರ ಅನುಮೋದನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ…</string>
+    <string name="circle_leave_supervised">ಈ ವೃತ್ತದಿಂದ ಹೊರಬರಲು ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರ ಅಗತ್ಯವಿದೆ: ನಿಮ್ಮ ಸ್ವಂತ ಸಾಧನದಿಂದ ನಿಮ್ಮನ್ನು ತೆಗೆದುಹಾಕುವಂತೆ ಅವರಿಗೆ ಹೇಳಿ.</string>
+
+    <string name="peer_supervise_enable_title">ಈ ಸಾಧನದ ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಬೇಕೆ?</string>
+    <string name="peer_supervise_enable_message">%1$s ಅವರ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ನಿಮ್ಮ ಅನುಮೋದನೆಯ ಹಿಂದೆ ಲಾಕ್ ಆಗುವ ಮೊದಲು ಅವರು ತಮ್ಮ ಸಾಧನದಲ್ಲಿ ವಿನಂತಿಯನ್ನು ಒಪ್ಪಿಕೊಳ್ಳಬೇಕು. ಅವರ ಶಾಂತ ಎಚ್ಚರಿಕೆಗಳು ಆನ್ ಆಗುತ್ತವೆ.</string>
+    <string name="peer_supervise_disable_title">ಮೇಲ್ವಿಚಾರಣೆ ನಿಲ್ಲಿಸಬೇಕೆ?</string>
+    <string name="peer_supervise_disable_message">%1$s ಅವರ ಸಾಧನ ಅನ್‌ಲಾಕ್ ಆಗುತ್ತದೆ ಮತ್ತು ಅವರಿಗೆ ತಿಳಿಸಲಾಗುತ್ತದೆ. ಅವರ ಶಾಂತ ಎಚ್ಚರಿಕೆಗಳು ಮತ್ತೆ ಆಫ್ ಆಗುತ್ತವೆ.</string>
+    <string name="peer_supervise_disable_confirm">ಮೇಲ್ವಿಚಾರಣೆ ನಿಲ್ಲಿಸಿ</string>
+    <string name="scan_add_waiting">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರಿಗಾಗಿ ಕಾಯುತ್ತಿದೆ…</string>
+    <string name="scan_add_waiting_subtitle">ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿ ಸಂಪರ್ಕ ಸೇರಿಸಲು ಅವರ ಅನುಮೋದನೆ ಬೇಕು. ನಿರ್ಧಾರ ಶೀಘ್ರದಲ್ಲಿ ಬರುತ್ತದೆ.</string>
+    <string name="scan_add_denied">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ಈ ಸಂಪರ್ಕವನ್ನು ಸೇರಿಸಲು ನಿರಾಕರಿಸಿದ್ದಾರೆ.</string>
+    <string name="pending_awaiting_approval">ಮೇಲ್ವಿಚಾರಕರ ಅನುಮೋದನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ…</string>
+    <string name="onboarding_bg_open_settings">ಸಿಸ್ಟಂ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆರೆಯಿರಿ</string>
+    <string name="onboarding_bg_skip">ಈಗ ಬಿಟ್ಟುಬಿಡಿ</string>
+    <string name="onboarding_bg_location_hint">Android 11 ಅಥವಾ ನಂತರ, ಹಿನ್ನೆಲೆ ಸ್ಥಳ ಅನುಮತಿಯನ್ನು ಸಿಸ್ಟಂ ಸೆಟ್ಟಿಂಗ್‌ಗಳಿಂದ ಮಾತ್ರ ನೀಡಲಾಗುತ್ತದೆ; ಆ್ಯಪ್ ಅದನ್ನು ನೇರವಾಗಿ ಕೇಳಲಾರದು.</string>
+
+    <string name="settings_notifications_title">ಅಧಿಸೂಚನೆಗಳು</string>
+    <string name="settings_message_notifications">ಸಂದೇಶ ಅಧಿಸೂಚನೆಗಳು</string>
+    <string name="settings_message_notifications_subtitle">ಚಾಟ್ ಅಥವಾ ವೃತ್ತದ ಸಂದೇಶ ಬಂದಾಗ ಅಧಿಸೂಚನೆ ತೋರಿಸಿ</string>
+    <string name="settings_alert_notifications">ಸ್ಥಳ ಎಚ್ಚರಿಕೆಗಳು</string>
+    <string name="settings_alert_notifications_subtitle">ಪ್ರದೇಶದಿಂದ ಹೊರಹೋಗುವುದು, ಸಮೀಪ ಮತ್ತು ಸ್ಥಳ ಕಳೆದುಹೋಗುವ ಬಗ್ಗೆ ಎಚ್ಚರಿಕೆಗಳು. SOS ಎಚ್ಚರಿಕೆಗಳು ಯಾವಾಗಲೂ ಆನ್ ಆಗಿರುತ್ತವೆ.</string>
+    <string name="settings_quiet_hours">ಶಾಂತ ಗಂಟೆಗಳು</string>
+    <string name="settings_quiet_hours_subtitle">ಆಯ್ದ ಅವಧಿಯಲ್ಲಿ ಸಂದೇಶ ಮತ್ತು ಎಚ್ಚರಿಕೆ ಅಧಿಸೂಚನೆಗಳನ್ನು ಮ್ಯೂಟ್ ಮಾಡುತ್ತದೆ. SOS ಮಾತ್ರ ಕೇಳಿಸುತ್ತದೆ.</string>
+    <string name="settings_quiet_hours_start">ಮ್ಯೂಟ್ ಆರಂಭ</string>
+    <string name="settings_quiet_hours_end">ವರೆಗೆ</string>
+    <string name="settings_disable_waiting">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರ ಅನುಮೋದನೆಗಾಗಿ ಕಾಯುತ್ತಿದೆ…</string>
+    <string name="settings_disable_cancel">ವಿನಂತಿ ರದ್ದುಮಾಡಿ</string>
+    <string name="settings_disable_denied">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ಅನ್‌ಲಾಕ್ ವಿನಂತಿಯನ್ನು ನಿರಾಕರಿಸಿದ್ದಾರೆ.</string>
+    <string name="settings_disable_timed_out">ಸಮಯಕ್ಕೆ ಉತ್ತರ ಬರಲಿಲ್ಲ. ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ಆಫ್‌ಲೈನ್ ಇರಬಹುದು; ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="settings_erase_identity_card">ಅಪಾಯಕಾರಿ ವಲಯ</string>
+    <string name="settings_erase_identity">ಗುರುತನ್ನು ತೆಗೆದುಹಾಕಿ &amp; ಎಲ್ಲಾ ಡೇಟಾ ಅಳಿಸಿ</string>
+    <string name="settings_erase_identity_subtitle">ಗುರುತಿನ ಕೀ, ಸಂಪರ್ಕಗಳು, ಸ್ಥಳ ಇತಿಹಾಸ, ಸಂದೇಶಗಳು ಮತ್ತು ಈ ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ತೆಗೆದುಹಾಕಿ ಆರಂಭಿಕ ಸೆಟಪ್ ಅನ್ನು ಮರುಪ್ರಾರಂಭಿಸುತ್ತದೆ</string>
+    <string name="settings_erase_identity_title">ಗುರುತನ್ನು ತೆಗೆದುಹಾಕಿ ಎಲ್ಲವನ್ನೂ ಅಳಿಸಬೇಕೆ?</string>
+    <string name="settings_erase_identity_message">ಇದು ನಿಮ್ಮ Nostr ಕೀ ಜೋಡಿ, ಎಲ್ಲಾ ಸಂಪರ್ಕಗಳು, ಎಲ್ಲಾ ಪ್ರದೇಶಗಳು, ಸ್ಥಳ ಇತಿಹಾಸ, ಸಂದೇಶಗಳು ಮತ್ತು ಈ ಸಾಧನದ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಶಾಶ್ವತವಾಗಿ ಅಳಿಸುತ್ತದೆ. ಸಂಪರ್ಕಗಳಿಗೆ ತಿಳಿಸಲಾಗುವುದಿಲ್ಲ ಮತ್ತು ಅವರ ಪ್ರತಿಗಳಿಗೆ ಪರಿಣಾಮವಾಗುವುದಿಲ್ಲ. ಯಾವುದೇ ಅಳಿಸುವಿಕೆ ವಿನಂತಿ ಕಳುಹಿಸಲಾಗುವುದಿಲ್ಲ; ಸಂಪರ್ಕವನ್ನು ಎಚ್ಚರಿಸಬೇಕಾದರೆ ಮೊದಲು ಪ್ರತಿಯೊಬ್ಬರಿಗೂ “ಸಂಪರ್ಕ ಮತ್ತು ಡೇಟಾ ತೆಗೆದುಹಾಕಿ” ಬಳಸಿ.</string>
+    <string name="settings_erase_identity_final_title">ಅಂತಿಮ ದೃಢೀಕರಣ</string>
+    <string name="settings_erase_identity_final_message">ಎಲ್ಲವನ್ನೂ ಅಳಿಸಿ ಹೊಸ ಗುರುತಿನೊಂದಿಗೆ ಮರುಪ್ರಾರಂಭಿಸಬೇಕೆ? ಇದನ್ನು ಹಿಂತಿರುಗಿಸಲಾಗದು. ಈ ಗುರುತು ಮುಂದೆ ಬೇಕಾಗಬಹುದು ಎಂದು ಭಾವಿಸಿದರೆ, ಮೊದಲು ಎನ್‌ಕ್ರಿಪ್ಟ್ ಮಾಡಿದ ಬ್ಯಾಕಪ್ ರಫ್ತು ಮಾಡಿ.</string>
+    <string name="settings_erase_identity_confirm">ಅಳಿಸಿ ಮತ್ತು ಮರುಪ್ರಾರಂಭಿಸಿ</string>
+    <string name="toast_now_supervised">ಈಗ %1$s ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡುತ್ತಿದ್ದಾರೆ</string>
+    <string name="toast_already_supervised">ಈಗಾಗಲೇ ಮೇಲ್ವಿಚಾರಣೆಯಲ್ಲಿದೆ; ಬದಲಾಗಿ ಈ ವಿನಂತಿಯನ್ನು ನಿರಾಕರಿಸಿ</string>
+    <string name="toast_declined_supervision_invite">%1$s ಅವರ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
+    <string name="supervision_disable_request_title">ಈ ಸಾಧನವನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡಬೇಕೆ?</string>
+    <string name="supervision_disable_request_message">%1$s ಮೇಲ್ವಿಚಾರಣೆ ಮೋಡ್ ಆಫ್ ಮಾಡುವಂತೆ ಕೇಳುತ್ತಿದ್ದಾರೆ. ಒಪ್ಪಿಗೆ ನೀಡಿದರೆ ಹೊಸ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿ ಸ್ವೀಕಾರವಾಗುವವರೆಗೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಶಾಶ್ವತವಾಗಿ ಅನ್‌ಲಾಕ್ ಆಗುತ್ತವೆ.</string>
 </resources>
