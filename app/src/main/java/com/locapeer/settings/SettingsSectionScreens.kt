@@ -33,6 +33,7 @@ import com.locapeer.ui.components.RetentionRow
 import com.locapeer.ui.components.SettingsCard
 import com.locapeer.ui.components.SettingsRow
 import com.locapeer.ui.components.SwitchRow
+import com.locapeer.ui.components.TimePickerDialog
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import kotlin.math.roundToInt
 
@@ -189,6 +190,9 @@ fun PrivacySettingsScreen(
 ) {
     val settings by vm.settings.collectAsStateWithLifecycle()
 
+    var showQuietStartPicker by remember { mutableStateOf(false) }
+    var showQuietEndPicker by remember { mutableStateOf(false) }
+
     SettingsSubScreen(stringResource(R.string.settings_section_privacy), onNavigateBack) {
         SettingsCard(
             headerIcon = Icons.Default.PrivacyTip,
@@ -201,6 +205,71 @@ fun PrivacySettingsScreen(
                 onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
             )
         }
+
+        SettingsCard(
+            headerIcon = Icons.Default.Notifications,
+            headerTitle = stringResource(R.string.settings_notifications_title)
+        ) {
+            SwitchRow(
+                title = stringResource(R.string.settings_message_notifications),
+                subtitle = stringResource(R.string.settings_message_notifications_subtitle),
+                checked = settings.messageNotificationsEnabled,
+                onCheckedChange = { vm.setMessageNotificationsEnabled(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_alert_notifications),
+                subtitle = stringResource(R.string.settings_alert_notifications_subtitle),
+                checked = settings.alertNotificationsEnabled,
+                onCheckedChange = { vm.setAlertNotificationsEnabled(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_quiet_hours),
+                subtitle = stringResource(R.string.settings_quiet_hours_subtitle),
+                checked = settings.quietHoursEnabled,
+                onCheckedChange = { vm.setQuietHoursEnabled(it) }
+            )
+            if (settings.quietHoursEnabled) {
+                CardDivider()
+                SettingsRow(
+                    title = stringResource(R.string.settings_quiet_hours_start),
+                    // Window ends are exclusive ("until 08:00"); show end as hh:mm too -
+                    // no special "arrival" wording, which is harder to translate.
+                    value = com.locapeer.util.DisplayFormat.clockMinute(settings.quietStartMinute),
+                    onClick = { showQuietStartPicker = true }
+                )
+                CardDivider()
+                SettingsRow(
+                    title = stringResource(R.string.settings_quiet_hours_end),
+                    value = com.locapeer.util.DisplayFormat.clockMinute(settings.quietEndMinute),
+                    onClick = { showQuietEndPicker = true }
+                )
+            }
+        }
+    }
+
+    if (showQuietStartPicker) {
+        TimePickerDialog(
+            initialMinute = settings.quietStartMinute,
+            title = stringResource(R.string.settings_quiet_hours_start),
+            onConfirm = { minute ->
+                vm.setQuietHoursWindow(minute, settings.quietEndMinute)
+                showQuietStartPicker = false
+            },
+            onDismiss = { showQuietStartPicker = false }
+        )
+    }
+    if (showQuietEndPicker) {
+        TimePickerDialog(
+            initialMinute = settings.quietEndMinute,
+            title = stringResource(R.string.settings_quiet_hours_end),
+            onConfirm = { minute ->
+                vm.setQuietHoursWindow(settings.quietStartMinute, minute)
+                showQuietEndPicker = false
+            },
+            onDismiss = { showQuietEndPicker = false }
+        )
     }
 }
 
@@ -218,6 +287,9 @@ fun SecuritySettingsScreen(
     var showSupervisedSetup by remember { mutableStateOf(false) }
     var showDisableSupervisedConfirm by remember { mutableStateOf(false) }
     var showLockTimeoutDialog by remember { mutableStateOf(false) }
+    var showEraseIdentityWarning by remember { mutableStateOf(false) }
+    var showEraseIdentityFinalConfirm by remember { mutableStateOf(false) }
+    val erasingAllData by vm.erasingAllData.collectAsStateWithLifecycle()
 
     SettingsSubScreen(stringResource(R.string.settings_section_security), onNavigateBack) {
         SettingsCard(
@@ -291,6 +363,61 @@ fun SecuritySettingsScreen(
                 )
             }
         }
+
+        SettingsCard(
+            headerIcon = Icons.Default.DeleteForever,
+            headerTitle = stringResource(R.string.settings_erase_identity_card)
+        ) {
+            SettingsRow(
+                title = stringResource(R.string.settings_erase_identity),
+                subtitle = stringResource(R.string.settings_erase_identity_subtitle),
+                destructive = true,
+                onClick = { if (!erasingAllData) showEraseIdentityWarning = true }
+            )
+        }
+    }
+
+    if (showEraseIdentityWarning) {
+        AlertDialog(
+            onDismissRequest = { if (!erasingAllData) showEraseIdentityWarning = false },
+            title = { Text(stringResource(R.string.settings_erase_identity_title)) },
+            text = { Text(stringResource(R.string.settings_erase_identity_message)) },
+            confirmButton = {
+                TextButton(
+                    enabled = !erasingAllData,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                    onClick = {
+                        showEraseIdentityWarning = false
+                        showEraseIdentityFinalConfirm = true
+                    }
+                ) { Text(stringResource(R.string.common_continue)) }
+            },
+            dismissButton = {
+                TextButton(enabled = !erasingAllData, onClick = { showEraseIdentityWarning = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
+    }
+
+    if (showEraseIdentityFinalConfirm) {
+        AlertDialog(
+            onDismissRequest = { if (!erasingAllData) showEraseIdentityFinalConfirm = false },
+            title = { Text(stringResource(R.string.settings_erase_identity_final_title)) },
+            text = { Text(stringResource(R.string.settings_erase_identity_final_message)) },
+            confirmButton = {
+                TextButton(
+                    enabled = !erasingAllData,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error),
+                    onClick = { vm.deleteIdentityAndEraseAllData() }
+                ) { Text(stringResource(R.string.settings_erase_identity_confirm)) }
+            },
+            dismissButton = {
+                TextButton(enabled = !erasingAllData, onClick = { showEraseIdentityFinalConfirm = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
     }
 
     if (showSupervisedSetup) {

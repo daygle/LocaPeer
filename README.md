@@ -13,6 +13,7 @@ A private, peer-to-peer location sharing Android app built on the [Nostr](https:
 - **Pause Sharing Per Contact** - A per-peer toggle that overrides the role and stops you from broadcasting to one specific contact without touching the rest. A subsequent temporary share on a paused peer is a no-op - the pause is the authoritative gate.
 - **Sharing Schedules** - Define time-of-day and day-of-week rules (global or per-contact) to control when your location is broadcast automatically.
 - **Role-Based Sharing** - Each contact relationship is independently configured as `SEND`, `RECEIVE`, `SEND_RECEIVE`, or `NONE` (messaging only). Roles can be changed at any time via in-app requests.
+- **Notification Controls** - Toggle message notifications and tracking alerts (geofence, proximity, missed location) app-wide, mute any chat or circle individually (a bell indicator shows on muted conversations; mute is in each chat's overflow menu), and set quiet hours that silence both categories during the window you pick. SOS alerts bypass every toggle and quiet hours.
 - **SOS Alerts** - One-tap emergency broadcast delivers your current coordinates as a high-priority notification exclusively to contacts you have designated as SOS contacts.
 - **Geofencing** - Set circular zones by tapping the map, entering coordinates, or searching for an address (with the geocoding opt-in enabled), and receive enter, exit, or both alerts when a tracked contact crosses the boundary. Notification actions let you message or open the map directly.
 - **Proximity Alerts** - Get notified when a contact comes within a configurable radius of your current position.
@@ -42,15 +43,15 @@ Settings are organised into focused sub-screens reached from a category list, or
 1. **Location** - sharing on/off, update cadence, sharing schedule, live-boost toggles, distance/accuracy filters
 2. **Location History** - browse your own location timeline
 3. **Geofences** - manage your own arrival/departure zones
-4. **Privacy** - tracking alerts
+4. **Privacy** - tracking alerts, plus notification behaviour: message/tracking-alert switches and quiet hours
 5. **Map** - starting point, zoom level, pin colour
-6. **Security** - app lock, permissions, supervised mode
+6. **Security** - app lock, permissions, supervised mode, and "Delete Identity & Erase All Data" (a full local wipe that regenerates the keypair and restarts in onboarding; peers are not notified)
 7. **Appearance** - theme, dynamic colour, navigation, start page
 8. **Language** - in-app language picker
 9. **Units & Display** - speed/distance/elevation units and clock format
 10. **Connection** - relays, their connection status, and queued messages
 11. **Retention** - how long data is kept on this device
-12. **Backup & Recovery** - export/restore identity, contacts, geofences and settings
+12. **Backup & Recovery** - export/restore identity, contacts, geofences and settings (including appearance, app lock, map, relay and notification/quiet-hours settings - anything not in an older backup keeps its current value on restore)
 13. **About** - app version, open-source attributions, map data credit
 
 Each contact has its own **per-contact settings** screen with the same most-used-first ordering: **Location** (share role, schedule), **Location History**, **Safety & Alerts** (SOS, missed updates, proximity alerts), **Geofences**, **Privacy** (precision, pause, temporary sharing), **Messaging**, **Retention**, and **Security** (supervised mode).
@@ -175,7 +176,9 @@ git push origin v1.1.46
 
 A tag build derives both versions from the tag, so no file needs editing: `v1.1.46` gives
 `versionName` 1.1.46 and `versionCode` 10146 (major x 10000 + minor x 100 + patch; minor and patch
-must stay below 100). It builds both a signed APK (for direct installs) and a signed AAB (for
+must stay below 100). Both the tag workflow and the Gradle build itself validate the pair, so a
+tag with minor/patch above 99 - or an explicit `appVersionName`/`appVersionCode` override that
+disagree with each other - fails the build instead of publishing colliding version codes. It builds both a signed APK (for direct installs) and a signed AAB (for
 Google Play), attaches both to a GitHub Release and uploads them as workflow artifacts. The
 `LocaPeer-release-aab` artifact also carries R8's `mapping.txt`; upload it in Play Console alongside
 the bundle so crash traces are deobfuscated. A manual (`workflow_dispatch`) run uses the values in

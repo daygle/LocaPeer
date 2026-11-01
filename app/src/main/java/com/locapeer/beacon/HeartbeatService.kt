@@ -779,9 +779,18 @@ class HeartbeatService : LifecycleService() {
             // The service is sticky and restarts with a null intent after process
             // death, so an active SOS must be restored from the persisted flag.
             if (currentSettings.sosActive && !isSos && !sosCommandReceived) {
-                isSos = true
-                intervalManager.setSosMode(enabled = true)
-                updateLocationRequest()
+                // A stale flag (process died mid-SOS, then every isSosContact recipient was
+                // removed) would re-arm SOS cadence for a broadcast that can never reach
+                // anyone. SosManager sanitizes the same flag on its side, so guard here too
+                // and clear it when no recipient remains.
+                if (sharingConfigDao.getAll().any { it.isSosContact }) {
+                    isSos = true
+                    intervalManager.setSosMode(enabled = true)
+                    updateLocationRequest()
+                } else {
+                    Log.w(TAG, "Persisted SOS state disabled: no SOS contacts configured")
+                    prefs.setSosActive(false)
+                }
             }
             relayClient.connect()
             // Pre-seed location from the OS cache so the very first heartbeat isn't dropped

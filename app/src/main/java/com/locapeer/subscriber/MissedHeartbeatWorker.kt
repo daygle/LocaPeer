@@ -60,11 +60,20 @@ class MissedHeartbeatWorker @AssistedInject constructor(
         val alertConfigs = sharingConfigDao.getAll().associateBy { it.peerDeviceId }
         val alertState = applicationContext.getSharedPreferences(ALERT_STATE_PREFS, Context.MODE_PRIVATE)
 
+        // One global gate for the whole miss alert pass (Settings -> Privacy): switch off, or
+        // quiet hours active. Suppressing the notification on a still-silent contact would
+        // otherwise be lost forever, so instead of marking alertState (which would block a
+        // later alert for this exact ping) we skip without recording - the next run may
+        // re-alert once the window ends.
+        val alertsAllowed = settings.alertNotificationsEnabled &&
+            !com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)
+
         for (peer in receiveContacts) {
             if (isStopped) return Result.retry()
             // Missed-heartbeat alerts are per-contact opt-in ("Missed Location Alert"
             // in Contact Settings); most contacts going quiet is not noteworthy.
             if (alertConfigs[peer.deviceId]?.notifyOnMissedHeartbeat != true) continue
+            if (!alertsAllowed) continue
             val latest = heartbeatDao.getLatestReceivedHeartbeat(peer.deviceId) ?: continue
             // The sender reports its own interval in every ping. The 60s floor keeps
             // SOS-rate (15s) senders from alerting on mere relay jitter - combined

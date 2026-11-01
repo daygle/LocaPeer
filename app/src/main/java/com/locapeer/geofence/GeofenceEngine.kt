@@ -207,13 +207,19 @@ class GeofenceEngine @Inject constructor(
         }
     }
 
-    private fun sendGeofenceNotification(
+    private suspend fun sendGeofenceNotification(
         fence: ActiveGeofence,
         personName: String,
         personDeviceId: String,
         title: String,
         subtitle: String
     ) {
+        // Alert notifications honour the global switches and quiet hours (Settings -> Privacy).
+        // Only the notification is suppressed: the event is still recorded locally and the
+        // peer-side TRACKING_ALERT still sends, so the audit trail stays honest.
+        val settings = prefs.settings.first()
+        if (!settings.alertNotificationsEnabled) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
         // A unique data URI keys each PendingIntent to its fence+person. The request
         // code alone can't: extras don't participate in PendingIntent matching
         // (Intent.filterEquals), so two keys whose String.hashCode collides would

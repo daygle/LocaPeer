@@ -263,10 +263,38 @@ class KeyManager @Inject constructor(
     }
 
     private fun deleteAppLockKey(alias: String) {
+        deleteKeystoreEntry(alias)
+    }
+
+    private fun deleteKeystoreEntry(alias: String) {
         try {
             KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }.deleteEntry(alias)
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to delete app lock key $alias", e)
+            Log.w(TAG, "Failed to delete Keystore entry $alias", e)
+        }
+    }
+
+    /**
+     * Full identity erase for Settings -> "Delete identity & erase all data". Clears the stored
+     * key DataStore (identity key blob and public metadata), every app Keystore entry (identity
+     * wrap key, App Lock keys), and resets the public-key cache. The next [ensureKeypair] call
+     * generates a brand-new identity; nothing about the old one survives in this process. Used
+     * only together with a full local data wipe and an immediate process restart, because
+     * mid-life state (services, ViewModels) still references the now-deleted key.
+     */
+    suspend fun eraseAll() = mutex.withLock {
+        withContext(Dispatchers.IO) {
+            try {
+                context.keyStore.edit { it.clear() }
+            } catch (e: Exception) {
+                // The files get removed by the caller's erase too; failing here must not skip
+                // the Keystore deletions below.
+                Log.e(TAG, "Failed to clear identity DataStore", e)
+            }
+            deleteKeystoreEntry(KEYSTORE_ALIAS)
+            deleteKeystoreEntry(APPLOCK_KEYSTORE_ALIAS)
+            deleteKeystoreEntry(APPLOCK_KEYSTORE_ALIAS_V1)
+            _publicKeyFlow.value = null
         }
     }
 }

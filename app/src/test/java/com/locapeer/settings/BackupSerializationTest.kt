@@ -80,7 +80,27 @@ class BackupSerializationTest {
             useImperialDistance = true,
             notifyOnTrackingAlerts = true,
             reverseGeocodingEnabled = true,
-            appLanguageTag = "fr"
+            appLanguageTag = "fr",
+            // Newly covered settings: every one of these previously got silently reset to
+            // defaults by a restore, which is exactly what the round-trip must prevent.
+            themeMode = "DARK",
+            useDynamicColor = false,
+            appLockEnabled = true,
+            appLockTimeoutSeconds = 60,
+            mapStartingPoint = "FIXED_LOCATION",
+            mapStartZoom = 13.5,
+            mapFixedLat = 51.5,
+            mapFixedLng = -1.0,
+            showGeofencesOnMap = true,
+            allowLiveBoost = false,
+            requestLiveBoost = false,
+            disabledRelayUrls = listOf("wss://relay.example", "wss://other.relay"),
+            customRelays = listOf("wss://other.relay"),
+            messageNotificationsEnabled = false,
+            alertNotificationsEnabled = false,
+            quietHoursEnabled = true,
+            quietStartMinute = 1320,
+            quietEndMinute = 420
         )
     )
 
@@ -221,5 +241,25 @@ class BackupSerializationTest {
         // Language predates this field: must stay null so a restore leaves the current
         // app language untouched rather than resetting it to system default.
         assertNull(settings.appLanguageTag)
+        // Every later feature field must stay null on a pre-feature backup so a restore
+        // leaves the device's current values instead of resetting them to defaults.
+        assertNull(settings.themeMode)
+        assertNull(settings.useDynamicColor)
+        assertNull(settings.appLockEnabled)
+        assertNull(settings.appLockTimeoutSeconds)
+        assertNull(settings.mapStartingPoint)
+        assertNull(settings.mapStartZoom)
+        assertNull(settings.mapFixedLat)
+        assertNull(settings.mapFixedLng)
+        assertNull(settings.showGeofencesOnMap)
+        assertNull(settings.allowLiveBoost)
+        assertNull(settings.requestLiveBoost)
+        assertNull(settings.disabledRelayUrls)
+        assertNull(settings.customRelays)
+        assertNull(settings.messageNotificationsEnabled)
+        assertNull(settings.alertNotificationsEnabled)
+        assertNull(settings.quietHoursEnabled)
+        assertNull(settings.quietStartMinute)
+        assertNull(settings.quietEndMinute)
     }
 }

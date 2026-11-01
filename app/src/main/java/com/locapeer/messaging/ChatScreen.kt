@@ -29,6 +29,8 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MyLocation
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsOff
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.PlayArrow
@@ -84,6 +86,8 @@ fun ChatScreen(
     val peer by peerFlow.collectAsStateWithLifecycle(initialValue = null)
     val messagingEnabled = peer?.messagingEnabled ?: true
     val isArchived = peer?.isArchived ?: false
+    val mutedConversations by vm.mutedConversations.collectAsStateWithLifecycle()
+    val isPeerMuted = com.locapeer.settings.AppPreferences.peerMuteKey(peerId) in mutedConversations
     var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
     var showOptionsMenu by remember { mutableStateOf(false) }
@@ -227,6 +231,14 @@ fun ChatScreen(
                                 onClick = {
                                     showOptionsMenu = false
                                     vm.archiveConversation(peerId, !isArchived)
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(if (isPeerMuted) stringResource(R.string.conv_unmute) else stringResource(R.string.conv_mute)) },
+                                leadingIcon = { Icon(if (isPeerMuted) Icons.Default.Notifications else Icons.Default.NotificationsOff, null) },
+                                onClick = {
+                                    showOptionsMenu = false
+                                    vm.setPeerMuted(peerId, !isPeerMuted)
                                 }
                             )
                             HorizontalDivider()

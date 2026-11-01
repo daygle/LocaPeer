@@ -147,7 +147,27 @@ data class SettingsBackup(
      * restore. The app locale lives outside AppSettings (AppCompatDelegate), so it is
      * captured and reapplied explicitly here.
      */
-    val appLanguageTag: String? = null
+    val appLanguageTag: String? = null,
+    // Everything from here on is nullable so v3 backups round-trip without silently
+    // resetting settings to defaults: a null means "not in this backup", never "off".
+    val themeMode: String? = null,
+    val useDynamicColor: Boolean? = null,
+    val appLockEnabled: Boolean? = null,
+    val appLockTimeoutSeconds: Int? = null,
+    val mapStartingPoint: String? = null,
+    val mapStartZoom: Double? = null,
+    val mapFixedLat: Double? = null,
+    val mapFixedLng: Double? = null,
+    val showGeofencesOnMap: Boolean? = null,
+    val allowLiveBoost: Boolean? = null,
+    val requestLiveBoost: Boolean? = null,
+    val disabledRelayUrls: List<String>? = null,
+    val customRelays: List<String>? = null,
+    val messageNotificationsEnabled: Boolean? = null,
+    val alertNotificationsEnabled: Boolean? = null,
+    val quietHoursEnabled: Boolean? = null,
+    val quietStartMinute: Int? = null,
+    val quietEndMinute: Int? = null
 )
 
 /** Outcome message shown in the Keys & Backup card; [isError] drives its colour. */
@@ -174,7 +194,8 @@ class SettingsViewModel @Inject constructor(
     private val sharingConfigDao: com.locapeer.data.dao.PeerSharingConfigDao,
     private val qrGenerator: QrCodeGenerator,
     private val supervisedModeManager: SupervisedModeManager,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val appDatabase: com.locapeer.data.AppDatabase
 ) : ViewModel() {
 
     val unlockState = supervisedModeManager.unlockState
@@ -373,7 +394,25 @@ class SettingsViewModel @Inject constructor(
                             useImperialDistance = s.useImperialDistance,
                             notifyOnTrackingAlerts = s.notifyOnTrackingAlerts,
                             reverseGeocodingEnabled = s.reverseGeocodingEnabled,
-                            appLanguageTag = AppLanguage.current().tag
+                            appLanguageTag = AppLanguage.current().tag,
+                            themeMode = s.themeMode,
+                            useDynamicColor = s.useDynamicColor,
+                            appLockEnabled = s.appLockEnabled,
+                            appLockTimeoutSeconds = s.appLockTimeoutSeconds,
+                            mapStartingPoint = s.mapStartingPoint,
+                            mapStartZoom = s.mapStartZoom,
+                            mapFixedLat = s.mapFixedLat,
+                            mapFixedLng = s.mapFixedLng,
+                            showGeofencesOnMap = s.showGeofencesOnMap,
+                            allowLiveBoost = s.allowLiveBoost,
+                            requestLiveBoost = s.requestLiveBoost,
+                            disabledRelayUrls = s.disabledRelayUrls.toList(),
+                            customRelays = s.customRelays,
+                            messageNotificationsEnabled = s.messageNotificationsEnabled,
+                            alertNotificationsEnabled = s.alertNotificationsEnabled,
+                            quietHoursEnabled = s.quietHoursEnabled,
+                            quietStartMinute = s.quietStartMinute,
+                            quietEndMinute = s.quietEndMinute
                         ) else null
                 )
 
@@ -621,6 +660,37 @@ class SettingsViewModel @Inject constructor(
                         prefs.setUseImperialDistance(s.useImperialDistance)
                         prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
                         prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
+                        // Newer fields are nullable: null means the backup predates the feature,
+                        // so the local value is deliberately left untouched rather than reset.
+                        s.themeMode?.let { mode ->
+                            ThemeMode.entries.firstOrNull { it.name == mode }?.let { prefs.setThemeMode(it) }
+                        }
+                        s.useDynamicColor?.let { prefs.setUseDynamicColor(it) }
+                        s.appLockEnabled?.let { prefs.setAppLockEnabled(it) }
+                        s.appLockTimeoutSeconds?.let { prefs.setAppLockTimeoutSeconds(it) }
+                        s.mapStartingPoint?.let { prefs.setMapStartingPoint(it) }
+                        s.mapStartZoom?.let { prefs.setMapStartZoom(it) }
+                        if (s.mapFixedLat != null || s.mapFixedLng != null) {
+                            prefs.setMapFixedLocation(s.mapFixedLat ?: 0.0, s.mapFixedLng ?: 0.0)
+                        }
+                        s.showGeofencesOnMap?.let { prefs.setShowGeofencesOnMap(it) }
+                        s.allowLiveBoost?.let { prefs.setAllowLiveBoost(it) }
+                        s.requestLiveBoost?.let { prefs.setRequestLiveBoost(it) }
+                        s.disabledRelayUrls?.let { disabled ->
+                            // Rebuild from the full built-in+custom URL set so toggles removed from
+                            // the backup (or from the device afterwards) don't linger enabled.
+                            prefs.setDisabledRelayUrls(disabled.toSet())
+                        }
+                        s.customRelays?.let { prefs.setCustomRelays(it) }
+                        s.messageNotificationsEnabled?.let { prefs.setMessageNotificationsEnabled(it) }
+                        s.alertNotificationsEnabled?.let { prefs.setAlertNotificationsEnabled(it) }
+                        if (s.quietHoursEnabled != null || s.quietStartMinute != null || s.quietEndMinute != null) {
+                            prefs.setQuietHours(
+                                enabled = s.quietHoursEnabled ?: false,
+                                startMinute = s.quietStartMinute ?: -1,
+                                endMinute = s.quietEndMinute ?: -1
+                            )
+                        }
                         // Reapply the in-app language (stored outside AppSettings). Skip when
                         // the backup predates this field so existing backups don't reset it.
                         s.appLanguageTag?.let { tag -> AppLanguage.apply(AppLanguage.fromTag(tag)) }
@@ -661,6 +731,66 @@ class SettingsViewModel @Inject constructor(
 
     fun dismissPendingRestore() { _pendingRestore.value = null }
     fun clearBackupResult() { _backupResult.value = null }
+
+    /** True while the identity erase is in its final (irreversible) stage. The erase flow
+     *  disables its own confirmation buttons once this flips, in case the process restart
+     *  takes a moment on slow devices. */
+    private val _erasingAllData = MutableStateFlow(false)
+    val erasingAllData: StateFlow<Boolean> = _erasingAllData
+
+    /**
+     * "Delete identity & erase all data": stop the beacon, cancel pending background work,
+     * close and delete the SQLCipher database, clear both preference stores, delete the
+     * identity (and App Lock) Keystore entries and the database wrapping key, wipe caches,
+     * then start a fresh process in onboarding. Nothing is sent to peers - unlike
+     * "Leave Contact", peer devices keep this (now permanently migrated) identity.
+     *
+     * Deliberately fails forward: every step is idempotent on a next attempt or on the
+     * regenerated-on-launch state, so any exception mid-way is logged and the process
+     * restart still happens rather than leaving a half-wiped app no one can redo.
+     */
+    fun deleteIdentityAndEraseAllData() {
+        if (_erasingAllData.value) return
+        _erasingAllData.value = true
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // 1. Stop anything that would write after the deletions: the beacon service
+                //    (its own SOS restore path reads files), WorkManager jobs, notifications.
+                context.startService(Intent(context, HeartbeatService::class.java).apply { action = ACTION_STOP })
+                runCatching { workManager.cancelAllWork() }
+                runCatching { (context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager).cancelAll() }
+
+                // 2. Close Room first (deleting files behind open SQLCipher handles leaves
+                //    wal-referenced removed pages), then delete the database and its key file
+                //    plus the database wrap Keystore entry.
+                runCatching { appDatabase.close() }
+                runCatching { com.locapeer.data.DatabaseEncryption.eraseAll(context, com.locapeer.di.DatabaseModule.DB_NAME) }
+
+                // 3. Identity: key DataStore + identity/AppLock Keystore entries.
+                runCatching { keyManager.eraseAll() }
+
+                // 4. Settings: name, intervals, schedules, mute lists, supervision state - the
+                //    whole store. The key DataStore (step 3) holds the identity blob.
+                runCatching { prefs.wipeAllSettings() }
+
+                // 5. Derived caches: decrypted media, recorded send audio, MapLibre tiles
+                //    (tiles map visited locations out of the device just like history would).
+                runCatching { context.cacheDir?.deleteRecursively() }
+
+                // 6. Relaunch into onboarding and kill this process: Hilt singletons, service
+                //    connections and DataStore instances were built around the erased state,
+                //    so no runtime code should observe it.
+                context.packageManager.getLaunchIntentForPackage(context.packageName)?.let { intent ->
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    runCatching { context.startActivity(intent) }
+                }
+                Runtime.getRuntime().exit(0)
+            } catch (e: Exception) {
+                Log.e(TAG, "Identity erase failed; restarting into a fresh process anyway", e)
+                Runtime.getRuntime().exit(0)
+            }
+        }
+    }
 
     private val _backupResult = MutableStateFlow<BackupResult?>(null)
     val backupResult: StateFlow<BackupResult?> = _backupResult
@@ -769,6 +899,25 @@ class SettingsViewModel @Inject constructor(
 
     fun setReverseGeocodingEnabled(enabled: Boolean) {
         viewModelScope.launch { prefs.setReverseGeocodingEnabled(enabled) }
+    }
+
+    fun setMessageNotificationsEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setMessageNotificationsEnabled(enabled) }
+    }
+
+    fun setAlertNotificationsEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setAlertNotificationsEnabled(enabled) }
+    }
+
+    fun setQuietHoursEnabled(enabled: Boolean) {
+        viewModelScope.launch { prefs.setQuietHours(enabled) }
+    }
+
+    fun setQuietHoursWindow(startMinute: Int, endMinute: Int) {
+        viewModelScope.launch {
+            prefs.setQuietStartMinute(startMinute)
+            prefs.setQuietEndMinute(endMinute)
+        }
     }
 
     fun setAppLockEnabled(enabled: Boolean) {

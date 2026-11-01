@@ -20,6 +20,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.NotificationsOff
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
@@ -85,6 +87,8 @@ fun GroupChatScreen(
     var fullscreenImage by remember { mutableStateOf<String?>(null) }
     val listState = rememberLazyListState()
     val circleName = circle?.name ?: stringResource(R.string.circles_title)
+    val mutedConversations by vm.mutedConversations.collectAsStateWithLifecycle()
+    val isCircleMuted = com.locapeer.settings.AppPreferences.circleMuteKey(circleId) in mutedConversations
 
     val context = LocalContext.current
 
@@ -321,6 +325,14 @@ fun GroupChatScreen(
                                 onClick = {
                                     showMenu = false
                                     vm.archiveCircle(circleId, !isCircleArchived)
+                                }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(if (isCircleMuted) stringResource(R.string.conv_unmute) else stringResource(R.string.conv_mute)) },
+                                leadingIcon = { Icon(if (isCircleMuted) Icons.Default.Notifications else Icons.Default.NotificationsOff, null) },
+                                onClick = {
+                                    showMenu = false
+                                    vm.setCircleMuted(circleId, !isCircleMuted)
                                 }
                             )
                             HorizontalDivider()

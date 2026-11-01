@@ -1,11 +1,13 @@
 package com.locapeer.sos
 
 import android.content.Context
+import android.util.Log
 import com.locapeer.util.backgroundScope
 import android.content.Intent
 import com.locapeer.beacon.ACTION_SOS_OFF
 import com.locapeer.beacon.ACTION_SOS_ON
 import com.locapeer.beacon.HeartbeatService
+import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +21,8 @@ import javax.inject.Singleton
 @Singleton
 class SosManager @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val prefs: AppPreferences
+    private val prefs: AppPreferences,
+    private val sharingConfigDao: PeerSharingConfigDao
 ) {
     private val scope = backgroundScope("SosManager")
     private val _isSosActive = MutableStateFlow(false)
@@ -28,11 +31,29 @@ class SosManager @Inject constructor(
     @Volatile private var commandIssued = false
 
     init {
-        // Restore SOS state after process death (service is sticky, so it may restart mid-SOS)
+        // Restore SOS state after process death (service is sticky, so it may restart mid-SOS).
         scope.launch {
+            if (commandIssued) return@launch
             val persisted = prefs.settings.first().sosActive
-            if (!commandIssued) _isSosActive.value = persisted
+            if (persisted && !hasSosRecipient()) {
+                // Stuck flag: the process died mid-SOS and every possible SosListener
+                // contact row (isSosContact) was subsequently removed (or the flag was left
+                // set by a mismatched data restore). Nobody would have received anything, and
+                // a plain restore would re-arm a "live" SOS whose broadcast never reaches
+                // anyone. Clear it instead of trusting the next manual deactivate.
+                Log.w(TAG, "Clearing persisted SOS state: no SOS contacts configured")
+                prefs.setSosActive(false)
+                return@launch
+            }
+            _isSosActive.value = persisted
         }
+    }
+
+    /** True while at least one contact row is designated as an SOS (kind 1041) recipient. */
+    private suspend fun hasSosRecipient(): Boolean = sharingConfigDao.getAll().any { it.isSosContact }
+
+    private companion object {
+        private const val TAG = "SosManager"
     }
 
     fun activateSos() {

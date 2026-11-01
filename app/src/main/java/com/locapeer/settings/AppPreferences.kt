@@ -169,7 +169,17 @@ data class AppSettings(
     /**
      * If true, ask contacts for faster updates when viewing them on the map.
      */
-    val requestLiveBoost: Boolean = true
+    val requestLiveBoost: Boolean = true,
+    /** Show a system notification for incoming chat / circle messages. */
+    val messageNotificationsEnabled: Boolean = true,
+    /** Show geofence / proximity / missed-location alerts. SOS alerts are always shown. */
+    val alertNotificationsEnabled: Boolean = true,
+    /** Suppress message and tracking-alert notifications during [quietStartMinute]..[quietEndMinute]. */
+    val quietHoursEnabled: Boolean = false,
+    /** Minutes of day the quiet window starts (inclusive), e.g. 1320 = 22:00. */
+    val quietStartMinute: Int = 22 * 60,
+    /** Minutes of day the quiet window ends (exclusive), e.g. 480 = 08:00. */
+    val quietEndMinute: Int = 8 * 60
 ) {
     /**
      * True once the supervisor has accepted this device. Until then supervision is only
@@ -238,6 +248,12 @@ class AppPreferences @Inject constructor(
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_ALLOW_LIVE_BOOST = booleanPreferencesKey("allow_live_boost")
     private val KEY_REQUEST_LIVE_BOOST = booleanPreferencesKey("request_live_boost")
+    private val KEY_MESSAGE_NOTIFICATIONS = booleanPreferencesKey("message_notifications_enabled")
+    private val KEY_ALERT_NOTIFICATIONS = booleanPreferencesKey("alert_notifications_enabled")
+    private val KEY_QUIET_HOURS_ENABLED = booleanPreferencesKey("quiet_hours_enabled")
+    private val KEY_QUIET_HOURS_START_MINUTE = intPreferencesKey("quiet_hours_start_minute")
+    private val KEY_QUIET_HOURS_END_MINUTE = intPreferencesKey("quiet_hours_end_minute")
+    private val KEY_MUTED_CONVERSATIONS = stringPreferencesKey("muted_conversations")
 
     val settings: Flow<AppSettings> = context.settingsStore.data
         .catch { exception ->
@@ -303,7 +319,12 @@ class AppPreferences @Inject constructor(
                     ?.filter { it.isNotBlank() }
                     ?: emptyList(),
                 allowLiveBoost = prefs[KEY_ALLOW_LIVE_BOOST] ?: true,
-                requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true
+                requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true,
+                messageNotificationsEnabled = prefs[KEY_MESSAGE_NOTIFICATIONS] ?: true,
+                alertNotificationsEnabled = prefs[KEY_ALERT_NOTIFICATIONS] ?: true,
+                quietHoursEnabled = prefs[KEY_QUIET_HOURS_ENABLED] ?: false,
+                quietStartMinute = prefs[KEY_QUIET_HOURS_START_MINUTE] ?: 22 * 60,
+                quietEndMinute = prefs[KEY_QUIET_HOURS_END_MINUTE] ?: 8 * 60
             )
         }
         // The store also holds sync bookkeeping (dedup event ids, catch-up epochs) that is
@@ -371,6 +392,15 @@ class AppPreferences @Inject constructor(
     /** Persist the user's custom relay list (already validated/deduped by the caller). */
     suspend fun setCustomRelays(urls: List<String>) {
         context.settingsStore.edit { it[KEY_CUSTOM_RELAYS] = urls.joinToString(",") }
+    }
+
+    /**
+     * Restore helper: set the disabled set wholesale from a backup. Entries that no longer
+     * match any known URL are simply ignored by the connection manager, so no validation
+     * needed here beyond writing the values.
+     */
+    suspend fun setDisabledRelayUrls(urls: Set<String>) {
+        context.settingsStore.edit { it[KEY_DISABLED_RELAY_URLS] = urls.joinToString(",") }
     }
 
     suspend fun setLocalLocationRetentionDays(days: Int) {
@@ -480,6 +510,38 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { it[KEY_REQUEST_LIVE_BOOST] = enabled }
     }
 
+    suspend fun setMessageNotificationsEnabled(enabled: Boolean) {
+        context.settingsStore.edit {
+            if (it[KEY_MESSAGE_NOTIFICATIONS] != enabled) it[KEY_MESSAGE_NOTIFICATIONS] = enabled
+        }
+    }
+
+    suspend fun setAlertNotificationsEnabled(enabled: Boolean) {
+        context.settingsStore.edit {
+            if (it[KEY_ALERT_NOTIFICATIONS] != enabled) it[KEY_ALERT_NOTIFICATIONS] = enabled
+        }
+    }
+
+    suspend fun setQuietHours(enabled: Boolean, startMinute: Int = -1, endMinute: Int = -1) {
+        context.settingsStore.edit { prefs ->
+            prefs[KEY_QUIET_HOURS_ENABLED] = enabled
+            if (startMinute >= 0) prefs[KEY_QUIET_HOURS_START_MINUTE] = startMinute
+            if (endMinute >= 0) prefs[KEY_QUIET_HOURS_END_MINUTE] = endMinute
+        }
+    }
+
+    suspend fun setQuietStartMinute(minute: Int) {
+        context.settingsStore.edit {
+            if (it[KEY_QUIET_HOURS_START_MINUTE] != minute) it[KEY_QUIET_HOURS_START_MINUTE] = minute
+        }
+    }
+
+    suspend fun setQuietEndMinute(minute: Int) {
+        context.settingsStore.edit {
+            if (it[KEY_QUIET_HOURS_END_MINUTE] != minute) it[KEY_QUIET_HOURS_END_MINUTE] = minute
+        }
+    }
+
     suspend fun setMapFixedLocation(lat: Double, lng: Double) {
         context.settingsStore.edit {
             it[KEY_MAP_FIXED_LAT] = lat
@@ -501,6 +563,16 @@ class AppPreferences @Inject constructor(
 
     suspend fun setLastHeartbeatSubEpoch(epoch: Long) {
         context.settingsStore.edit { it[KEY_LAST_HEARTBEAT_SUB_EPOCH] = epoch }
+    }
+
+    /**
+     * Full settings wipe for "Delete identity & erase all data": every key in the settings
+     * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync
+     * bookmarks). Returns the store to pristine DataStore state; next launch generates a new
+     * identity and starts onboarding.
+     */
+    suspend fun wipeAllSettings() {
+        context.settingsStore.edit { it.clear() }
     }
 
     suspend fun clearSupervisedMode() {
@@ -554,6 +626,43 @@ class AppPreferences @Inject constructor(
             val current = it[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { s -> s.isNotBlank() }?.toMutableSet()
                 ?: return@edit
             if (current.remove(gid)) it[KEY_LEFT_CIRCLE_IDS] = current.joinToString(",")
+        }
+    }
+
+    /** Conversation mute keys: contact ids and circle ids could conceptually collide, so each
+     *  gets its own prefix before the id. Both are opaque unique strings from other tables. */
+    companion object {
+        private const val MUTE_KEY_PREFIX_PEER = "peer:"
+        private const val MUTE_KEY_PREFIX_CIRCLE = "circle:"
+        fun peerMuteKey(deviceId: String): String = MUTE_KEY_PREFIX_PEER + deviceId
+        fun circleMuteKey(circleId: String): String = MUTE_KEY_PREFIX_CIRCLE + circleId
+    }
+
+    /**
+     * Conversation ids the user muted, as a live flow. Muted chats / circles still receive and
+     * store messages; only the system notification for a new message in them is suppressed.
+     * Stored as a comma-separated list of prefixed keys (see [peerMuteKey] / [circleMuteKey]).
+     */
+    val mutedConversationIds: Flow<Set<String>> = context.settingsStore.data
+        .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
+        .map { prefs ->
+            prefs[KEY_MUTED_CONVERSATIONS]
+                ?.split(",")
+                ?.filter { it.isNotBlank() }
+                ?.toSet()
+                ?: emptySet()
+        }
+        .distinctUntilChanged()
+
+    suspend fun setConversationMuted(muteKey: String, muted: Boolean) {
+        context.settingsStore.edit { prefs ->
+            val current = prefs[KEY_MUTED_CONVERSATIONS]
+                ?.split(",")
+                ?.filter { it.isNotBlank() }
+                ?.toMutableSet()
+                ?: mutableSetOf()
+            if (muted) current.add(muteKey) else current.remove(muteKey)
+            prefs[KEY_MUTED_CONVERSATIONS] = current.joinToString(",")
         }
     }
 

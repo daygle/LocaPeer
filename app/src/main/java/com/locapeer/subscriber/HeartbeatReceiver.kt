@@ -1132,7 +1132,21 @@ class HeartbeatReceiver @Inject constructor(
         relayClient.publishEvent(event)
     }
 
-    private fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
+    /**
+     * The mute/appearance gates for message notifications, shared by the circle and 1:1
+     * paths. Messages even from muted conversations are always stored and read on screen;
+     * only the system notification is suppressed. SOS never routes through here.
+     */
+    private suspend fun shouldSendAnyMessageNotification(): Boolean {
+        val settings = prefs.settings.first()
+        if (!settings.messageNotificationsEnabled) return false
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return false
+        return true
+    }
+
+    private suspend fun sendGroupMessageNotification(circleName: String, senderName: String, preview: String, circleId: String) {
+        if (!shouldSendAnyMessageNotification()) return
+        if (prefs.mutedConversationIds.first().contains(AppPreferences.circleMuteKey(circleId))) return
         // Deep-link straight into the circle chat (not the Messages list) so tapping a circle
         // message opens the group thread - where a reply routes through the circle fan-out to
         // every member - and never the 1:1 chat with the sender. "openCircle" carries the circle
@@ -1164,7 +1178,9 @@ class HeartbeatReceiver @Inject constructor(
         notificationManager.notify(circleId, NOTIF_ID_MESSAGE, notification)
     }
 
-    private fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
+    private suspend fun sendBackgroundMessageNotification(senderName: String, preview: String, peerId: String) {
+        if (!shouldSendAnyMessageNotification()) return
+        if (prefs.mutedConversationIds.first().contains(AppPreferences.peerMuteKey(peerId))) return
         val intent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
             putExtra("navigateTo", "chat")

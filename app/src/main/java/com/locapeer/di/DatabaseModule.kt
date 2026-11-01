@@ -28,7 +28,8 @@ import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-    private const val DB_NAME = "locapeer.db"
+    /** Public for Settings -> identity erase, which deletes the database files on disk. */
+    const val DB_NAME = "locapeer.db"
 
     /** v2: per-contact opt-in for missed-location alerts. */
     private val MIGRATION_1_2 = object : Migration(1, 2) {

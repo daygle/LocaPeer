@@ -118,6 +118,27 @@ object DatabaseEncryption {
         return "x'" + key.joinToString("") { "%02x".format(it) } + "'"
     }
 
+    /**
+     * Full local-data wipe used by Settings -> "Delete identity & erase all data": delete the
+     * database files and the wrapping key file. The caller MUST have closed the Room connection
+     * first (deleting a file behind an open SQLCipher handle leaves handles pointing at removed
+     * inodes, and a mid-flush failure can strand a -wal that references an unrecoverable page
+     * set); and MUST restart the process afterwards so the heuristics in [prepare] run against
+     * a fresh filesystem instead of a half-deleted one. The per-version Keystore alias
+     * [WRAP_KEY_ALIAS] regenerates on next launch, which is why the caller deletes it too.
+     */
+    fun eraseAll(context: Context, dbName: String) {
+        val dbFile = context.getDatabasePath(dbName)
+        deleteDatabaseFiles(dbFile)
+        File(dbFile.path + ".enc-tmp").delete()
+        File(context.noBackupFilesDir, KEY_FILE).delete()
+        try {
+            KeyStore.getInstance(ANDROID_KEYSTORE).also { it.load(null) }.deleteEntry(WRAP_KEY_ALIAS)
+        } catch (e: Exception) {
+            android.util.Log.w(TAG, "Failed to delete the database wrap key", e)
+        }
+    }
+
     private fun deleteDatabaseFiles(dbFile: File) {
         listOf("", "-wal", "-shm", "-journal").forEach { File(dbFile.path + it).delete() }
     }

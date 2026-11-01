@@ -88,6 +88,18 @@ class MessagingViewModel @Inject constructor(
     private val _sortOrder = MutableStateFlow(SortOrder.DATE)
     val sortOrder: StateFlow<SortOrder> = _sortOrder
 
+    /** Conversation mute ids (prefixed peer:/circle: keys), shared by the list rows and both chat menus. */
+    val mutedConversations: StateFlow<Set<String>> = prefs.mutedConversationIds
+        .stateIn(viewModelScope, SharingStarted.Lazily, emptySet())
+
+    fun setPeerMuted(deviceId: String, muted: Boolean) {
+        viewModelScope.launch { prefs.setConversationMuted(com.locapeer.settings.AppPreferences.peerMuteKey(deviceId), muted) }
+    }
+
+    fun setCircleMuted(circleId: String, muted: Boolean) {
+        viewModelScope.launch { prefs.setConversationMuted(com.locapeer.settings.AppPreferences.circleMuteKey(circleId), muted) }
+    }
+
     val conversations: StateFlow<List<ConversationSummary>?> =
         conversationList(archived = false).stateIn(viewModelScope, SharingStarted.Lazily, null)
 

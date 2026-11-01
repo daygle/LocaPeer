@@ -27,6 +27,30 @@ val releaseKeyPassword = providers.gradleProperty("locapeerKeyPassword").orNull
 val hasReleaseSigning = listOf(releaseKeystoreFile, releaseKeystorePassword, releaseKeyAlias, releaseKeyPassword)
     .all { it.isNotBlank() }
 
+// Version sanity for explicit release inputs (CI tag builds and local signed builds). The tag
+// workflow derives both values from vX.Y.Z and already rejects minor/patch > 99 there; this
+// catches the other paths (workflow_dispatch, local -P overrides) so two releases can never
+// be published with a versionName/versionCode pair that doesn't follow the same scheme:
+// versionCode = major*10000 + minor*100 + patch, with minor and patch each 0-99.
+val providedVersionName = providers.gradleProperty("appVersionName").orNull
+val providedVersionCode = providers.gradleProperty("appVersionCode").orNull
+if (providedVersionName != null && providedVersionCode != null) {
+    val semVer = Regex("^(\\d+)\\.(\\d+)\\.(\\d+)$").matchEntire(providedVersionName)
+    requireNotNull(semVer) {
+        "appVersionName must be MAJOR.MINOR.PATCH (got \"$providedVersionName\")"
+    }
+    // groupValues[0] is the whole match; captures start at [1].
+    val (major, minor, patch) = semVer.groupValues.drop(1).map { it.toInt() }
+    val expectedCode = major * 10000 + minor * 100 + patch
+    require(minor <= 99 && patch <= 99) {
+        "Minor and patch must each be 0-99 for the versionCode scheme (got appVersionName \"$providedVersionName\")"
+    }
+    check(providedVersionCode.toIntOrNull() == expectedCode) {
+        "appVersionCode ($providedVersionCode) does not match appVersionName \"$providedVersionName\" " +
+            "under the major*10000 + minor*100 + patch scheme; expected $expectedCode"
+    }
+}
+
 android {
     namespace = "com.locapeer"
     compileSdk = 37

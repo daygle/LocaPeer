@@ -12,6 +12,30 @@
     <string name="notification_heartbeat_title">LocaPeer is running</string>
     <string name="notification_heartbeat_text">Sharing your location with others</string>
 
+    <!-- ── Notifications & mute (Settings → Privacy; chat menus) ──────────── -->
+    <string name="settings_notifications_title">Notifications</string>
+    <string name="settings_message_notifications">Message notifications</string>
+    <string name="settings_message_notifications_subtitle">Show a notification when a chat or circle message arrives</string>
+    <string name="settings_alert_notifications">Tracking alerts</string>
+    <string name="settings_alert_notifications_subtitle">Geofence, proximity and missed-location alerts. SOS alerts stay on.</string>
+    <string name="settings_quiet_hours">Quiet hours</string>
+    <string name="settings_quiet_hours_subtitle">Silence message and tracking-alert notifications during the window below. SOS stays on.</string>
+    <string name="settings_quiet_hours_start">Quiet from</string>
+    <string name="settings_quiet_hours_end">Until</string>
+    <string name="conv_mute">Mute notifications</string>
+    <string name="conv_unmute">Unmute notifications</string>
+    <string name="conv_cd_muted">Notifications muted</string>
+
+    <!-- ── Identity erase (Settings → Security) ───────────────────────────── -->
+    <string name="settings_erase_identity_card">Danger zone</string>
+    <string name="settings_erase_identity">Delete identity &amp; erase all data</string>
+    <string name="settings_erase_identity_subtitle">Removes your identity key, contacts, location history, messages and settings from this device and restarts into onboarding</string>
+    <string name="settings_erase_identity_title">Delete identity and erase everything?</string>
+    <string name="settings_erase_identity_message">This permanently deletes your Nostr keypair, all contacts, geofences, location history, messages and settings from this device. Contacts are not notified and their copies are not affected. Deletion requests are not sent - to tell a peer to remove you, use “Delete Contact and Data” on each contact first.</string>
+    <string name="settings_erase_identity_final_title">Final confirmation</string>
+    <string name="settings_erase_identity_final_message">Erase everything and restart with a new identity? This cannot be undone. If you might want this identity again, export an encrypted backup first.</string>
+    <string name="settings_erase_identity_confirm">Erase and restart</string>
+
     <!-- ── Common / reusable actions ──────────────────────────────────────── -->
     <string name="common_save">Save</string>
     <string name="common_cancel">Cancel</string>

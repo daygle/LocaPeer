@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DoneAll
 import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.MarkChatUnread
+import androidx.compose.material.icons.filled.NotificationsOff
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Unarchive
 import androidx.compose.material3.*
@@ -51,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.AppPreferences
 import com.locapeer.ui.components.ConversationShimmerRow
 import com.locapeer.ui.components.EmptyState
 import java.util.Date
@@ -88,6 +90,7 @@ fun ConversationListScreen(
     val circlesUnreadTotal by vm.circlesUnreadTotal.collectAsStateWithLifecycle()
     val searchQuery by vm.searchQuery.collectAsStateWithLifecycle()
     val sortOrder by vm.sortOrder.collectAsStateWithLifecycle()
+    val mutedConversations by vm.mutedConversations.collectAsStateWithLifecycle()
 
     var showContactPicker by remember { mutableStateOf(false) }
     // rememberSaveable (not remember) so the selected sub-tab survives navigating into a chat or
@@ -469,6 +472,7 @@ fun ConversationListScreen(
                                     group = group,
                                     isSelected = isSelected,
                                     isSelectionMode = isSelectionMode,
+                                    isMuted = AppPreferences.circleMuteKey(group.circle.id) in mutedConversations,
                                     onClick = { onOpenGroup(group.circle.id) },
                                     onToggleSelect = {
                                         selectedIds = if (isSelected)
@@ -495,6 +499,7 @@ fun ConversationListScreen(
                                     unreadCount = unreadCounts[conv.peer.deviceId] ?: 0,
                                     isSelected = isSelected,
                                     isSelectionMode = isSelectionMode,
+                                    isMuted = AppPreferences.peerMuteKey(conv.peer.deviceId) in mutedConversations,
                                     onClick = { onOpenChat(conv.peer.deviceId, conv.peer.displayName) },
                                     onToggleSelect = {
                                         selectedIds = if (isSelected)
@@ -524,6 +529,7 @@ fun ConversationListScreen(
                                         group = group,
                                         isSelected = isSelected,
                                         isSelectionMode = isSelectionMode,
+                                        isMuted = AppPreferences.circleMuteKey(group.circle.id) in mutedConversations,
                                         onClick = { onOpenGroup(group.circle.id) },
                                         onToggleSelect = {
                                             selectedIds = if (isSelected)
@@ -595,6 +601,7 @@ private fun CircleRow(
     group: GroupConversationSummary,
     isSelected: Boolean = false,
     isSelectionMode: Boolean = false,
+    isMuted: Boolean = false,
     onClick: () -> Unit,
     onToggleSelect: () -> Unit = {},
     onEnterSelectionMode: () -> Unit = {}
@@ -607,7 +614,19 @@ private fun CircleRow(
     ) {
         ListItem(
             colors = ListItemDefaults.colors(containerColor = Color.Transparent),
-            headlineContent = { Text(group.circle.name, fontWeight = FontWeight.Medium) },
+            headlineContent = {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(group.circle.name, fontWeight = FontWeight.Medium)
+                    if (isMuted) {
+                        Icon(
+                            Icons.Default.NotificationsOff,
+                            contentDescription = stringResource(R.string.conv_cd_muted),
+                            modifier = Modifier.size(14.dp),
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            },
             supportingContent = {
                 val preview = group.lastMessage?.content
                 Text(
@@ -675,6 +694,7 @@ private fun SwipeActionsConversation(
     unreadCount: Int,
     isSelected: Boolean = false,
     isSelectionMode: Boolean = false,
+    isMuted: Boolean = false,
     onClick: () -> Unit,
     onToggleSelect: () -> Unit = {},
     onEnterSelectionMode: () -> Unit = {},
@@ -789,6 +809,7 @@ private fun SwipeActionsConversation(
             ConversationRow(
                 summary = conv,
                 unreadCount = unreadCount,
+                isMuted = isMuted,
                 onClick = onClick,
                 onLongClick = onEnterSelectionMode
             )
@@ -803,7 +824,8 @@ private fun ConversationRow(
     unreadCount: Int,
     isSelected: Boolean = false,
     onClick: () -> Unit,
-    onLongClick: () -> Unit = {}
+    onLongClick: () -> Unit = {},
+    isMuted: Boolean = false
 ) {
     val hasUnread = unreadCount > 0
     val isBlocked = !summary.peer.messagingEnabled
@@ -841,6 +863,14 @@ private fun ConversationRow(
                         contentDescription = stringResource(R.string.conv_messages_blocked),
                         modifier = Modifier.size(14.dp),
                         tint = MaterialTheme.colorScheme.error
+                    )
+                }
+                if (isMuted) {
+                    Icon(
+                        Icons.Default.NotificationsOff,
+                        contentDescription = stringResource(R.string.conv_cd_muted),
+                        modifier = Modifier.size(14.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

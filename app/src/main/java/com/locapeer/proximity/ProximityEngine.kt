@@ -187,7 +187,13 @@ class ProximityEngine @Inject constructor(
         }
     }
 
-    private fun sendNotification(personName: String, personDeviceId: String, distanceMetres: Int) {
+    private suspend fun sendNotification(personName: String, personDeviceId: String, distanceMetres: Int) {
+        // Alert notifications honour the global switches and quiet hours (Settings -> Privacy).
+        // Only the notification is suppressed: the local alert row and the peer-side
+        // TRACKING_ALERT still emit, so the audit trail stays honest.
+        val settings = prefs.settings.first()
+        if (!settings.alertNotificationsEnabled) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
         // The distance is inserted into the localized "%1$s from you" template, so it must
         // not carry its own English suffix (that produced "500 m away from you").
         val displayDistance = com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())

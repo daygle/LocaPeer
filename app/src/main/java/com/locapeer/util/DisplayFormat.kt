@@ -125,4 +125,17 @@ object DisplayFormat {
             append("${mins}m")
         }.trim()
     }
+
+    /**
+     * A minute-of-day value (e.g. from the quiet-hours pickers) as a clock string honouring
+     * the user's 12/24-hour choice: 1320 -> "22:00" or "10:00 PM".
+     */
+    fun clockMinute(minuteOfDay: Int): String {
+        val cal = java.util.Calendar.getInstance().apply {
+            set(java.util.Calendar.HOUR_OF_DAY, (minuteOfDay % (24 * 60)).coerceAtLeast(0) / 60)
+            set(java.util.Calendar.MINUTE, (minuteOfDay % (24 * 60)).coerceAtLeast(0) % 60)
+            set(java.util.Calendar.SECOND, 0)
+        }
+        return timeFormat().format(cal.time)
+    }
 }
