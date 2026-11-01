@@ -891,4 +891,73 @@
     <string name="queued_message_view">Wo iṣẹlẹ náà</string>
     <string name="queued_message_hide">Fi pamọ́</string>
     <string name="queued_messages_flush">Ránṣẹ́ nísinsin yìí</string>
+
+    <string name="change_notif_title">Ẹ̀rọ tí ó wà lábẹ́ àbójútó yí ètò padà</string>
+    <string name="change_pause">• A dá pínpín dúró pẹ̀lú %1$s</string>
+    <string name="change_resume">• A tún pínpín bẹ̀rẹ̀ pẹ̀lú %1$s</string>
+    <string name="change_precision">• A yí ìpéye ipò padà sí %1$s</string>
+    <string name="change_role">• A yí ipa pínpín padà sí %1$s</string>
+    <string name="change_temp_start">• Pínpín ìgbà díẹ̀ bẹ̀rẹ̀ pẹ̀lú %1$s</string>
+    <string name="change_temp_end">• Pínpín ìgbà díẹ̀ ti parí</string>
+    <string name="change_sos">• A yí ipò SOS ti olùbára padà sí %1$s</string>
+    <string name="change_schedule">• A yí gbogbo ìtòlẹ́sẹẹsẹ pínpín padà</string>
+    <string name="change_schedule_peer">• A yí ìtòlẹ́sẹẹsẹ pínpín pẹ̀lú %1$s padà</string>
+    <string name="change_generic">• Ọ̀kan nínú ètò pínpín ipò ti yí padà</string>
+
+    <string name="conv_mute">Dákẹ́ ìfitónilétí</string>
+    <string name="conv_unmute">Tún ìfitónilétí ṣiṣẹ́</string>
+    <string name="conv_cd_muted">A ti dákẹ́ ìfitónilétí</string>
+    <string name="notif_supervised_invite_title">%1$s fẹ́ tọ́jú rẹ</string>
+    <string name="notif_supervised_invite_text">Gba kí ètò ẹ̀rọ yìí wà ní títìlẹ̀kùn lẹ́yìn ìfọwọ́sí rẹ. O lè béèrè fún ṣíṣí rẹ̀ nígbàkigbà.</string>
+    <string name="notif_supervision_ended_title">Àbójútó ti parí</string>
+    <string name="notif_supervision_ended_text">Olùtọ́jú rẹ parí àbójútó ẹ̀rọ yìí. Ètò ti ṣí nísisìyí.</string>
+    <string name="notif_supervised_wipe_title">A pa ẹ̀rọ tí ó wà lábẹ́ àbójútó rẹ́</string>
+    <string name="notif_supervised_wipe_text">Ẹ̀rọ tí ó wà lábẹ́ àbójútó fi ìfitónilétí ìparẹ́ ránṣẹ́ ó sì pa ìdánimọ̀ rẹ̀ rẹ́. Dúró fún ìkìlọ̀ dídákẹ́, yọ olùbára náà kúrò nígbà tí o bá ṣetán.</string>
+    <string name="notif_supervisor_unknown_request_title">Ìbéèrè àbójútó láti ẹ̀rọ tí a kò mọ̀</string>
+    <string name="notif_supervisor_unknown_request_text">Ẹ̀rọ tí ó rán ìbéèrè náà kò sí nínú àwọn olùbára rẹ. Kọ́kọ́ fi í kún gẹ́gẹ́ bí olùbára, lẹ́yìn náà béèrè kí wọ́n tún ìbéèrè àbójútó ránṣẹ́.</string>
+    <string name="contact_add_request_title">Ṣé kí a fọwọ́ sí olùbára tuntun?</string>
+    <string name="contact_add_request_message">Ẹ̀rọ tí ó wà lábẹ́ àbójútó rẹ ń béèrè kí a fi “%1$s” kún gẹ́gẹ́ bí olùbára tuntun fún pínpín ipò. Ìfọwọ́sí yóò bẹ̀rẹ̀ pínpín pẹ̀lú wọn.</string>
+    <string name="incoming_awaiting_approval">Ń dúró fún ìfọwọ́sí olùtọ́jú…</string>
+    <string name="circle_leave_supervised">Láti jáde kúrò nínú àyíká yìí, olùtọ́jú rẹ ni a nílò: ní kí wọ́n yọ ọ́ kúrò nínú ẹ̀rọ rẹ.</string>
+
+    <string name="peer_supervise_enable_title">Ṣé kí a tọ́jú ẹ̀rọ yìí?</string>
+    <string name="peer_supervise_enable_message">%1$s gbọdọ̀ gba ìbéèrè náà lórí ẹ̀rọ rẹ̀ kí a tó tìlẹ̀kùn ètò rẹ̀ lẹ́yìn ìfọwọ́sí rẹ. A ó tún ṣí ìkìlọ̀ dídákẹ́ wọn.</string>
+    <string name="peer_supervise_disable_title">Ṣé kí a dá àbójútó dúró?</string>
+    <string name="peer_supervise_disable_message">Ẹ̀rọ %1$s yóò ṣí, a ó sì sọ fún wọn. A ó tún dákẹ́ ìkìlọ̀ dídákẹ́ wọn.</string>
+    <string name="peer_supervise_disable_confirm">Dá àbójútó dúró</string>
+    <string name="scan_add_waiting">Ń dúró fún olùtọ́jú rẹ…</string>
+    <string name="scan_add_waiting_subtitle">Fífi olùbára kún lábẹ́ àbójútó nílò ìfọwọ́sí wọn. Ìpinnu yóò dé láìpẹ́.</string>
+    <string name="scan_add_denied">Olùtọ́jú rẹ kọ̀ láti fi olùbára yìí kún.</string>
+    <string name="pending_awaiting_approval">Ń dúró fún ìfọwọ́sí olùtọ́jú…</string>
+    <string name="onboarding_bg_open_settings">Ṣí ètò ẹ̀rọ</string>
+    <string name="onboarding_bg_skip">Fò ó kọjá báyìí</string>
+    <string name="onboarding_bg_location_hint">Láti Android 11 síwájú, a máa ń fún ní àṣẹ ipò ẹ̀yìn nípasẹ̀ ètò ẹ̀rọ nìkan; ohun-èlò kò lè béèrè rẹ̀ tààrà.</string>
+
+    <string name="settings_notifications_title">Ìfitónilétí</string>
+    <string name="settings_message_notifications">Ìfitónilétí ìfiránṣẹ́</string>
+    <string name="settings_message_notifications_subtitle">Fi ìfitónilétí hàn nígbà tí ìfiránṣẹ́ ìjíròrò tàbí àyíká bá dé</string>
+    <string name="settings_alert_notifications">Ìkìlọ̀ ipò</string>
+    <string name="settings_alert_notifications_subtitle">Ìkìlọ̀ nípa kíkúrò lágbègbè, sísúnmọ́ àti pípàdánù ipò. Ìkìlọ̀ SOS wà ní ṣíṣí nígbà gbogbo.</string>
+    <string name="settings_quiet_hours">Àwọn wákàtí ìdákẹ́</string>
+    <string name="settings_quiet_hours_subtitle">Ń dákẹ́ ìfitónilétí ìfiránṣẹ́ àti ìkìlọ̀ nínú àkókò tí a yàn. SOS nìkan ni a máa ń gbọ́.</string>
+    <string name="settings_quiet_hours_start">Ìbẹ̀rẹ̀ ìdákẹ́</string>
+    <string name="settings_quiet_hours_end">Títí dé</string>
+    <string name="settings_disable_waiting">Ń dúró fún ìfọwọ́sí olùtọ́jú…</string>
+    <string name="settings_disable_cancel">Fagilé ìbéèrè</string>
+    <string name="settings_disable_denied">Olùtọ́jú rẹ kọ̀ ìbéèrè ṣíṣí náà.</string>
+    <string name="settings_disable_timed_out">Kò sí ìdáhùn ní àkókò. Ó lè jẹ́ pé olùtọ́jú rẹ kò sí lórí íńtánẹ́ẹ̀tì; gbìyànjú lẹ́yìn náà.</string>
+
+    <string name="settings_erase_identity_card">Àgbègbè eléwu</string>
+    <string name="settings_erase_identity">Yọ ìdánimọ̀ kúrò &amp; pa gbogbo dátà rẹ́</string>
+    <string name="settings_erase_identity_subtitle">Ń yọ kọ́kọ́rọ́ ìdánimọ̀, àwọn olùbára, ìtàn ipò, àwọn ìfiránṣẹ́ àti ètò ẹ̀rọ yìí kúrò, ó sì tún ìṣètò ìbẹ̀rẹ̀ bẹ̀rẹ̀</string>
+    <string name="settings_erase_identity_title">Ṣé kí a yọ ìdánimọ̀ kúrò kí a sì pa gbogbo rẹ̀ rẹ́?</string>
+    <string name="settings_erase_identity_message">Èyí yóò pa bọ́tìnì kọ́kọ́rọ́ Nostr rẹ, gbogbo àwọn olùbára, gbogbo àgbègbè, ìtàn ipò, àwọn ìfiránṣẹ́ àti ètò ẹ̀rọ yìí rẹ́ títí láé. A kò ní sọ fún àwọn olùbára, ẹ̀dà wọn kò sì ní kan. A kò rán ìbéèrè ìparẹ́ kankan; láti kìlọ̀ fún olùbára, kọ́kọ́ lo “Yọ olùbára àti dátà kúrò” fún ẹnìkọ̀ọ̀kan.</string>
+    <string name="settings_erase_identity_final_title">Ìjẹ́rìí ìkẹyìn</string>
+    <string name="settings_erase_identity_final_message">Ṣé kí a pa gbogbo rẹ̀ rẹ́ kí a sì tún bẹ̀rẹ̀ pẹ̀lú ìdánimọ̀ tuntun? A kò lè yí èyí padà. Bí o bá rò pé ìwọ yóò nílò ìdánimọ̀ yìí lẹ́yìn náà, kọ́kọ́ gbé àkópamọ́ tí a fi àṣírí pamọ́ jáde.</string>
+    <string name="settings_erase_identity_confirm">Pa á rẹ́ kí o sì tún bẹ̀rẹ̀</string>
+    <string name="toast_now_supervised">Nísisìyí %1$s ń tọ́jú rẹ</string>
+    <string name="toast_already_supervised">Ó ti wà lábẹ́ àbójútó; kọ̀ ìbéèrè yìí dípò rẹ̀</string>
+    <string name="toast_declined_supervision_invite">A kọ̀ ìbéèrè àbójútó láti ọ̀dọ̀ %1$s</string>
+    <string name="supervision_disable_request_title">Ṣé kí a ṣí ẹ̀rọ yìí?</string>
+    <string name="supervision_disable_request_message">%1$s ń béèrè kí a pa ipò àbójútó. Ìfọwọ́sí yóò ṣí ètò títí láé títí a ó fi gba ìbéèrè àbójútó tuntun.</string>
 </resources>
