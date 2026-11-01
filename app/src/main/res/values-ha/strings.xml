@@ -919,4 +919,62 @@
     <string name="change_schedule">• An canza jadawalin rabo na gabaɗaya</string>
     <string name="change_schedule_peer">• An canza jadawalin rabo tare da %1$s</string>
     <string name="change_generic">• An canza wani saitunan rabon wuri</string>
+
+    <string name="settings_notifications_title">Sanarwowi</string>
+    <string name="settings_message_notifications">Sanarwar saƙonni</string>
+    <string name="settings_message_notifications_subtitle">Nuna sanarwa sa\'ad da saƙon hira ko da\'ira ya zo</string>
+    <string name="settings_alert_notifications">Sanarwar wuri</string>
+    <string name="settings_alert_notifications_subtitle">Sanarwa kan fita daga yanki, kusanci da ɓacewar wuri. Sanarwar SOS koyaushe a buɗe take.</string>
+    <string name="settings_quiet_hours">Sa\'o\'in shiru</string>
+    <string name="settings_quiet_hours_subtitle">Yana kashe sanarwar saƙonni da faɗakarwa a cikin lokacin da aka zaɓa. SOS kaɗai ake ji.</string>
+    <string name="settings_quiet_hours_start">Farkon shiru</string>
+    <string name="settings_quiet_hours_end">Har zuwa</string>
+    <string name="conv_mute">Kashe sanarwowi</string>
+    <string name="conv_unmute">Kunna sanarwowi</string>
+    <string name="conv_cd_muted">An kashe sanarwowi</string>
+
+    <string name="settings_erase_identity_card">Yanki mai haɗari</string>
+    <string name="settings_erase_identity">Cire asali &amp; share duk bayanai</string>
+    <string name="settings_erase_identity_subtitle">Yana cire maɓallin asali, abokan hulɗa, tarihin wuri, saƙonni da saitin wannan na\'ura sannan ya sake fara saitin farko</string>
+    <string name="settings_erase_identity_title">A cire asali a share komai?</string>
+    <string name="settings_erase_identity_message">Wannan zai share maɓallin Nostr ɗinka, duk abokan hulɗa, duk yankuna, tarihin wuri, saƙonni da saitin wannan na\'ura har abada. Ba za a sanar da abokan hulɗa ba kuma kwafinsu ba zai shafa ba. Ba a aika wata buƙatar sharewa; don faɗakar da abokin hulɗa, da farko yi amfani da “Cire aboki da bayanai” ga kowanne.</string>
+    <string name="settings_erase_identity_final_title">Tabbatarwa ta ƙarshe</string>
+    <string name="settings_erase_identity_final_message">A share komai a sake fara da sabon asali? Ba za a iya dawo da wannan ba. Idan kana tsammanin za ka buƙaci wannan asalin daga baya, da farko fitar da ajiyar da aka ɓoye.</string>
+    <string name="settings_erase_identity_confirm">Share sannan a sake farawa</string>
+    <string name="notif_supervised_invite_title">%1$s na son yin kulawa da kai</string>
+    <string name="notif_supervised_invite_text">Karɓa domin saitin wannan na\'ura ya kasance a kulle bayan yardarka. Daga baya za ka iya neman buɗewa kowane lokaci.</string>
+    <string name="notif_supervision_ended_title">Kulawa ta ƙare</string>
+
+    <string name="toast_now_supervised">Yanzu %1$s ne ke kulawa da kai</string>
+    <string name="toast_already_supervised">An riga an sa shi ƙarƙashin kulawa; a maimakon haka ka ƙi wannan buƙatar</string>
+    <string name="toast_declined_supervision_invite">An ƙi buƙatar kulawa daga %1$s</string>
+    <string name="notif_supervision_ended_text">Mai kulawa da kai ya ƙarasa kulawa da wannan na\'ura. Saitin yanzu a buɗe yake.</string>
+    <string name="supervision_disable_request_title">A buɗe wannan na\'ura?</string>
+    <string name="supervision_disable_request_message">%1$s na neman a kashe yanayin kulawa. Yarjejeniya za ta buɗe saitin har abada har sai an karɓi sabuwar buƙatar kulawa.</string>
+    <string name="notif_supervised_wipe_title">An share na\'urar da ake kulawa da ita</string>
+    <string name="notif_supervised_wipe_text">Na\'urar da ake kulawa da ita ta aika sanarwar sharewa sannan ta share asalinta. Jira faɗakarwar shiru sannan ka cire abokin hulɗa idan ka shirya.</string>
+    <string name="notif_supervisor_unknown_request_title">Buƙatar kulawa daga na\'urar da ba a sani ba</string>
+    <string name="notif_supervisor_unknown_request_text">Na\'urar da ta aika buƙatar ba ta cikin abokan hulɗarka. Da farko ka ƙara ta a matsayin abokin hulɗa, sannan ka nemi a sake aika buƙatar kulawa.</string>
+    <string name="settings_disable_waiting">Ana jiran yardar mai kulawa…</string>
+
+    <string name="settings_disable_cancel">Soke buƙatar</string>
+    <string name="settings_disable_denied">Mai kulawa da kai ya ƙi buƙatar buɗewa.</string>
+    <string name="settings_disable_timed_out">Ba a sami amsa cikin lokaci ba. Wataƙila mai kulawa da kai ba ya kan layi; sake gwadawa daga baya.</string>
+    <string name="peer_supervise_enable_title">A yi kulawa da wannan na\'ura?</string>
+    <string name="peer_supervise_enable_message">Dole %1$s ya karɓi buƙatar a kan na\'urarsa kafin a kulle saitin sa bayan yardarka. Za a kunna faɗakarwar shiru ta su.</string>
+    <string name="peer_supervise_disable_title">A daina kulawa?</string>
+    <string name="peer_supervise_disable_message">Za a buɗe na\'urar %1$s sannan a sanar da su. Za a sake kashe faɗakarwar shiru ta su.</string>
+    <string name="peer_supervise_disable_confirm">Daina kulawa</string>
+    <string name="contact_add_request_title">A amince da sabon abokin hulɗa?</string>
+    <string name="contact_add_request_message">Na\'urar da ake kulawa da ita tana neman a ƙara “%1$s” a matsayin sabon abokin hulɗar raba wuri. Amincewa zai fara rabawa da su.</string>
+    <string name="scan_add_waiting">Ana jiran mai kulawa da kai…</string>
+
+    <string name="scan_add_waiting_subtitle">Ƙara abokin hulɗa a ƙarƙashin kulawa yana buƙatar yardarsu. Za a yanke shawara nan ba da jimawa ba.</string>
+    <string name="scan_add_denied">Mai kulawa da kai ya ƙi ƙara wannan abokin hulɗa.</string>
+    <string name="incoming_awaiting_approval">Ana jiran yardar mai kulawa…</string>
+    <string name="pending_awaiting_approval">Ana jiran yardar mai kulawa…</string>
+    <string name="circle_leave_supervised">Don fita daga wannan da\'irar ana buƙatar mai kulawa da kai: ka nemi ya cire ka daga na\'urarka.</string>
+    <string name="onboarding_bg_open_settings">Buɗe saitin tsarin</string>
+    <string name="onboarding_bg_skip">Tsallake a yanzu</string>
+    <string name="onboarding_bg_location_hint">A Android 11 ko sama da haka, ana ba da izinin wuri a bayan fage daga saitin tsarin ne kawai; manhajar ba za ta iya nema kai tsaye ba.</string>
 </resources>
