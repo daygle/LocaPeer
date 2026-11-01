@@ -4,7 +4,7 @@ pluginManagement {
     // CodeQL workflow can compile with a release the CodeQL extractor accepts.
     // (Read via providers rather than the deprecated `by settings` delegate.)
     val kotlinVersion: String =
-        providers.gradleProperty("kotlinVersion").getOrElse("2.4.20-RC")
+        providers.gradleProperty("kotlinVersion").getOrElse("2.4.21")
 
     repositories {
         google {

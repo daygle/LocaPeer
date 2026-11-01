@@ -14,7 +14,7 @@ buildscript {
                     useTarget("org.bouncycastle:$artifact:$version")
                 }
                 if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
-                    useVersion("4.1.137.Final")
+                    useVersion("4.1.139.Final")
                 }
                 if (requested.group == "org.jdom" && requested.name == "jdom2") {
                     useVersion("2.0.6.1")
@@ -37,7 +37,7 @@ buildscript {
 plugins {
     alias(libs.plugins.android.application) apply false
     // The three Kotlin plugin versions float with the `kotlinVersion` Gradle property
-    // (default 2.4.20-RC in gradle.properties). settings.gradle.kts declares them in
+    // (default 2.4.21 in gradle.properties). settings.gradle.kts declares them in
     // pluginManagement.plugins { }, and the CodeQL workflow overrides the property with
     // -PkotlinVersion (e.g. 2.4.10) because its Kotlin extractor hard-rejects newer
     // releases. Pinning an explicit version here would bypass that default and break

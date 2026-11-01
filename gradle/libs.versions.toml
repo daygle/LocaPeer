@@ -1,6 +1,6 @@
 [versions]
 # Security-hardened versions
-netty = "4.1.137.Final"
+netty = "4.1.139.Final"
 jdom2 = "2.0.6.1"
 jose4j = "0.9.7"
 commonsLang3 = "3.21.0"
