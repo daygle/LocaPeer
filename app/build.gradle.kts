@@ -118,6 +118,7 @@ android {
             keepDebugSymbols += "**/libimage_processing_util_jni.so"
             keepDebugSymbols += "**/libmaplibre.so"
             keepDebugSymbols += "**/libsecp256k1-jni.so"
+            keepDebugSymbols += "**/libsqlcipher.so"
             keepDebugSymbols += "**/libsurface_util_jni.so"
         }
         resources {
