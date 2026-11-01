@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Plats i bakgrunden</string>
     <string name="onboarding_bg_location_desc">Välj \"Tillåt alltid\" på nästa skärm så att dina kontakter hålls uppdaterade medan appen är stängd.</string>
     <string name="onboarding_bg_location_error">Plats i bakgrunden krävs för att uppdatera dina kontakter när appen är stängd. Försök igen och välj \"Tillåt alltid\".</string>
-    <string name="onboarding_configure_location">Konfigurera plats</string>
     <string name="onboarding_battery_title">Batteri</string>
     <string name="onboarding_battery_desc">Android kan stoppa LocaPeer för att spara batteri. Undanta LocaPeer från optimeringar för tillförlitliga uppdateringar.</string>
     <string name="onboarding_disable_optimizations">Inaktivera optimeringar</string>
@@ -937,7 +936,7 @@
     <string name="onboarding_bg_open_settings">Öppna systeminställningar</string>
     <string name="onboarding_bg_skip">Hoppa över för tillfället</string>
     <string name="peer_supervise_disable_confirm">Avsluta övervakning</string>
-    <string name="peer_supervise_disable_message">%1$:s enhet låses upp och meddelas. Deras tysta varsel slås åter av.</string>
+    <string name="peer_supervise_disable_message">%1$s enhet låses upp och meddelas. Deras tysta varsel slås åter av.</string>
     <string name="peer_supervise_disable_title">Avsluta övervakning?</string>
     <string name="peer_supervise_enable_message">%1$s måste godkänna begäran på sin egen enhet innan dess inställningar låses bakom ditt godkännande. Tysta varsel slås på.</string>
     <string name="peer_supervise_enable_title">Övervaka denna enhet?</string>

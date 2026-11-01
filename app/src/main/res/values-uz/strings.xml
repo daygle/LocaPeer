@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Fon rejimidagi joylashuv</string>
     <string name="onboarding_bg_location_desc">Ilova yopilganda ham kontaktlaringizni yangilab turish uchun keyingi ekranda «Har doim ruxsat berish» rejimini tanlang.</string>
     <string name="onboarding_bg_location_error">Ilova yopilganda kontaktlaringizni yangilash uchun fon rejimidagi joylashuv kerak. Qayta urinib ko‘ring va «Har doim ruxsat berish» rejimini tanlang.</string>
-    <string name="onboarding_configure_location">Joylashuvni sozlash</string>
     <string name="onboarding_battery_title">Batareya</string>
     <string name="onboarding_battery_desc">Android batareya quvvatini tejash uchun LocaPeer-ni to‘xtatishi mumkin. Ishonchli yangilanishlarni ta’minlash uchun LocaPeer-ni optimallashtirishlardan chiqarib tashlang.</string>
     <string name="onboarding_disable_optimizations">Optimallashtirishni o‘chirish</string>

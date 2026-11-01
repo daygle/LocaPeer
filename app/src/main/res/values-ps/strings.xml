@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">شالید ځای</string>
     <string name="onboarding_bg_location_desc">ترڅو اپلیکیشن بند وي هم ستاسو اړیکې تازه پاتې شي، مهرباني وکړئ په راتلونکي سکرین کې \'تل اجازه ورکړئ\' غوره کړئ.</string>
     <string name="onboarding_bg_location_error">د اپلیکیشن بندیدو پرمهال ستاسو د اړیکو تازه کولو لپاره شالید ځای ته اړتیا ده. مهرباني وکړئ بیا هڅه وکړئ او \'تل اجازه ورکړئ\' غوره کړئ.</string>
-    <string name="onboarding_configure_location">ځای تنظیم کړئ</string>
     <string name="onboarding_battery_title">بیټرۍ</string>
     <string name="onboarding_battery_desc">Android ممکن د بیټرۍ خوندي کولو لپاره LocaPeer ودروي. د باوري تازه معلوماتو لپاره، مهرباني وکړئ LocaPeer له اصلاح کولو (optimizations) څخه وباسئ.</string>
     <string name="onboarding_disable_optimizations">اصلاح کول بند کړئ</string>

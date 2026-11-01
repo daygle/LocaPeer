@@ -86,12 +86,16 @@ fun OnboardingScreen(
                     showError = state.showPermissionDeniedError,
                     onOpenSettings = {
                         vm.setPermissionDenied(false)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        when {
                             // Android 11+ silently denies a runtime background-location
                             // request; "Allow all the time" only exists in system settings.
-                            PermissionManager.openAppDetailsSettings(context)
-                        } else {
-                            backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R ->
+                                PermissionManager.openAppDetailsSettings(context)
+                            // ACCESS_BACKGROUND_LOCATION first exists in Android 10 (29);
+                            // below that fine location already covers background access.
+                            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ->
+                                backgroundLocationLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                            else -> vm.nextStep()
                         }
                     },
                     onNext = {

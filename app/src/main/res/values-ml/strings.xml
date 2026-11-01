@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">പശ്ചാത്തല ലൊക്കേഷൻ</string>
     <string name="onboarding_bg_location_desc">ആപ്പ് അടച്ചിരിക്കുമ്പോഴും നിങ്ങളുടെ കോൺടാക്റ്റുകളെ അപ്‌ഡേറ്റ് ചെയ്യാൻ, അടുത്ത സ്ക്രീനിൽ \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' എന്നത് തിരഞ്ഞെടുക്കുക.</string>
     <string name="onboarding_bg_location_error">ആപ്പ് അടച്ചിരിക്കുമ്പോൾ നിങ്ങളുടെ കോൺടാക്റ്റുകളെ അപ്‌ഡേറ്റ് ചെയ്യാൻ പശ്ചാത്തല ലൊക്കേഷൻ ആവശ്യമാണ്. ദയവായി വീണ്ടും ശ്രമിച്ച് \'എല്ലായ്പ്പോഴും അനുവദിക്കുക\' എന്നത് തിരഞ്ഞെടുക്കുക.</string>
-    <string name="onboarding_configure_location">ലൊക്കേഷൻ കോൺഫിഗർ ചെയ്യുക</string>
     <string name="onboarding_battery_title">ബാറ്ററി</string>
     <string name="onboarding_battery_desc">ബാറ്ററി ലാഭിക്കാൻ ആൻഡ്രോയിഡ് LocaPeer-നെ നിർത്തിയേക്കാം. വിശ്വസനീയമായ അപ്‌ഡേറ്റുകൾ ഉറപ്പാക്കാൻ, ദയവായി ഒപ്റ്റിമൈസേഷനുകളിൽ നിന്ന് LocaPeer-നെ ഒഴിവാക്കുക.</string>
     <string name="onboarding_disable_optimizations">ഒപ്റ്റിമൈസേഷൻ അപ്രാപ്തമാക്കുക</string>

@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">バックグラウンドでの位置情報</string>
     <string name="onboarding_bg_location_desc">アプリが閉じている間も連絡先に情報を更新し続けるには、次の画面で「常に許可」を選択してください。</string>
     <string name="onboarding_bg_location_error">アプリが閉じているときに連絡先を更新するには、バックグラウンドでの位置情報アクセスが必要です。もう一度試して「常に許可」を選択してください。</string>
-    <string name="onboarding_configure_location">位置情報を設定</string>
     <string name="onboarding_battery_title">バッテリー</string>
     <string name="onboarding_battery_desc">Androidはバッテリー節約のためにLocaPeerを停止させることがあります。確実に更新を行うには、LocaPeerを最適化から除外してください。</string>
     <string name="onboarding_disable_optimizations">最適化を無効にする</string>

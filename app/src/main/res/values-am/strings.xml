@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">የበስተጀርባ አካባቢ</string>
     <string name="onboarding_bg_location_desc">መተግበሪያው በሚዘጋበት ጊዜም እውቂያዎችዎን እንዲዘመኑ ለማድረግ፣ እባክዎ በሚቀጥለው ማያ ገጽ ላይ \'ሁልጊዜ ፍቀድ\' የሚለውን ይምረጡ።</string>
     <string name="onboarding_bg_location_error">መተግበሪያው በሚዘጋበት ጊዜ እውቂያዎችዎን ለማዘመን የበስተጀርባ አካባቢ ያስፈልጋል። እባክዎ እንደገና ይሞክሩ እና \'ሁልጊዜ ፍቀድ\' የሚለውን ይምረጡ።</string>
-    <string name="onboarding_configure_location">አካባቢን ያዋቅሩ</string>
     <string name="onboarding_battery_title">ባትሪ</string>
     <string name="onboarding_battery_desc">አንድሮይድ ባትሪ ለመቆጠብ LocaPeerን ሊያቆመው ይችላል። አስተማማኝ ዝመናዎችን ለማረጋገጥ እባክዎ LocaPeerን ከባትሪ ማመቻቻዎች ያስወግዱ።</string>
     <string name="onboarding_disable_optimizations">ማመቻቻዎችን አጥፋ</string>

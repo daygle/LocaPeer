@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">مکان در پس‌زمینه</string>
     <string name="onboarding_bg_location_desc">برای اینکه مخاطبین شما هنگام بسته‌بودن برنامه به‌روز بمانند، در صفحه بعد «همیشه مجاز» را انتخاب کنید.</string>
     <string name="onboarding_bg_location_error">مکان در پس‌زمینه برای به‌روزرسانی مخاطبین هنگام بسته‌بودن برنامه لازم است. دوباره تلاش کنید و «همیشه مجاز» را انتخاب کنید.</string>
-    <string name="onboarding_configure_location">پیکربندی مکان</string>
     <string name="onboarding_battery_title">باتری</string>
     <string name="onboarding_battery_desc">اندروید ممکن است برای صرفه‌جویی در باتری LocaPeer را متوقف کند. برای به‌روزرسانی‌های مطمئن، LocaPeer را از بهینه‌سازی‌ها مستثنا کنید.</string>
     <string name="onboarding_disable_optimizations">غیرفعال‌کردن بهینه‌سازی‌ها</string>

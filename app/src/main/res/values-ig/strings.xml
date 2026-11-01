@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">Ebe n\'azụ</string>
     <string name="onboarding_bg_location_desc">Iji mee ka kọntaktị gị mara mgbe emechiri ngwa ahụ, biko họrọ \'Kwe ka oge niile\' na ihuenyo na-esote.</string>
     <string name="onboarding_bg_location_error">Achọrọ ebe n\'azụ iji melite kọntaktị gị mgbe emechiri ngwa ahụ. Biko gbalịa ọzọ wee họrọ \'Kwe ka oge niile\'.</string>
-    <string name="onboarding_configure_location">Hazie Ebe</string>
     <string name="onboarding_battery_title">Batrị</string>
     <string name="onboarding_battery_desc">Android nwere ike ịkwụsị LocaPeer iji chekwaa batrị. Iji hụ na emelitere ya nke ọma, biko wepụ LocaPeer na nkwalite.</string>
     <string name="onboarding_disable_optimizations">Gbanyụọ Nkwalite</string>

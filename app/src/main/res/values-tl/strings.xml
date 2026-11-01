@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Lokasyon sa Background</string>
     <string name="onboarding_bg_location_desc">Para manatiling updated ang iyong mga contact habang sarado ang app, piliin ang \"Payagan sa lahat ng oras\" sa susunod na screen.</string>
     <string name="onboarding_bg_location_error">Kailangan ang background location para i-update ang iyong mga contact kapag sarado ang app. Subukang muli at piliin ang \"Payagan sa lahat ng oras\".</string>
-    <string name="onboarding_configure_location">I-configure ang Lokasyon</string>
     <string name="onboarding_battery_title">Baterya</string>
     <string name="onboarding_battery_desc">Maaaring ihinto ng Android ang LocaPeer para makatipid ng baterya. Para sa maaasahang mga update, ibukod ang LocaPeer sa mga optimization.</string>
     <string name="onboarding_disable_optimizations">I-disable ang mga Optimization</string>

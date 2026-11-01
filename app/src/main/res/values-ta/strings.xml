@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">பின்னணி இருப்பிடம்</string>
     <string name="onboarding_bg_location_desc">பயன்பாடு மூடப்பட்டிருக்கும் போது உங்கள் தொடர்புகளைப் புதுப்பிக்க, அடுத்த திரையில் \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்கவும்.</string>
     <string name="onboarding_bg_location_error">பயன்பாடு மூடப்பட்டிருக்கும் போது உங்கள் தொடர்புகளைப் புதுப்பிக்க பின்னணி இருப்பிடம் தேவை. மீண்டும் முயற்சி செய்து \'எல்லா நேரமும் அனுமதி\' என்பதைத் தேர்ந்தெடுக்கவும்.</string>
-    <string name="onboarding_configure_location">இருப்பிடத்தை உள்ளமைக்கவும்</string>
     <string name="onboarding_battery_title">பேட்டரி</string>
     <string name="onboarding_battery_desc">பேட்டரியைச் சேமிக்க ஆண்ட்ராய்டு LocaPeer-ஐ நிறுத்தலாம். நம்பகமான புதுப்பிப்புகளை உறுதிப்படுத்த, மேம்படுத்தல்களிலிருந்து LocaPeer-ஐ விலக்கவும்.</string>
     <string name="onboarding_disable_optimizations">மேம்படுத்தல்களை முடக்கு</string>

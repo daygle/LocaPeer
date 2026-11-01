@@ -337,7 +337,6 @@
     <string name="onboarding_bg_location_title">Фоновое местоположение</string>
     <string name="onboarding_bg_location_desc">Чтобы ваши контакты получали обновления при закрытом приложении, выберите на следующем экране «Разрешить в любом режиме».</string>
     <string name="onboarding_bg_location_error">Фоновое местоположение необходимо для обновлений при закрытом приложении. Попробуйте снова и выберите «Разрешить в любом режиме».</string>
-    <string name="onboarding_configure_location">Настроить местоположение</string>
     <string name="onboarding_battery_title">Батарея</string>
     <string name="onboarding_battery_desc">Android может останавливать LocaPeer для экономии заряда. Для надёжных обновлений исключите LocaPeer из оптимизации батареи.</string>
     <string name="onboarding_disable_optimizations">Отключить оптимизацию</string>

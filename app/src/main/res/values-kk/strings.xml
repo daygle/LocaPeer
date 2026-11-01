@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Фондық орын</string>
     <string name="onboarding_bg_location_desc">Қолданба жабылған кезде де контактілеріңізді жаңартып отыру үшін келесі экранда «Әрқашан рұқсат беру» опциясын таңдаңыз.</string>
     <string name="onboarding_bg_location_error">Қолданба жабылған кезде контактілеріңізді жаңарту үшін фондық орын қажет. Қайта байқап көріңіз және «Әрқашан рұқсат беру» опциясын таңдаңыз.</string>
-    <string name="onboarding_configure_location">Орынды реттеу</string>
     <string name="onboarding_battery_title">Батарея</string>
     <string name="onboarding_battery_desc">Android батареяны үнемдеу үшін LocaPeer-ді тоқтатуы мүмкін. Сенімді жаңартуларды қамтамасыз ету үшін LocaPeer-ді оңтайландырулардан алып тастаңыз.</string>
     <string name="onboarding_disable_optimizations">Оңтайландыруды өшіру</string>

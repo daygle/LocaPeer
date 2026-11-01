@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣਾ</string>
     <string name="onboarding_bg_location_desc">ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਵੀ ਆਪਣੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਰੱਖਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ ਅਗਲੀ ਸਕ੍ਰੀਨ \'ਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
     <string name="onboarding_bg_location_error">ਐਪ ਬੰਦ ਹੋਣ \'ਤੇ ਤੁਹਾਡੇ ਸੰਪਰਕਾਂ ਨੂੰ ਅੱਪਡੇਟ ਕਰਨ ਲਈ ਬੈਕਗਰਾਉਂਡ ਟਿਕਾਣੇ ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਅਤੇ \'ਹਮੇਸ਼ਾ ਇਜਾਜ਼ਤ ਦਿਓ\' ਚੁਣੋ।</string>
-    <string name="onboarding_configure_location">ਟਿਕਾਣਾ ਕੌਂਫਿਗਰ ਕਰੋ</string>
     <string name="onboarding_battery_title">ਬੈਟਰੀ</string>
     <string name="onboarding_battery_desc">ਬੈਟਰੀ ਬਚਾਉਣ ਲਈ ਐਂਡਰਾਇਡ LocaPeer ਨੂੰ ਰੋਕ ਸਕਦਾ ਹੈ। ਭਰੋਸੇਯੋਗ ਅੱਪਡੇਟ ਯਕੀਨੀ ਬਣਾਉਣ ਲਈ, ਕਿਰਪਾ ਕਰਕੇ LocaPeer ਨੂੰ ਅਨੁਕੂਲਨ (optimizations) ਤੋਂ ਬਾਹਰ ਰੱਖੋ।</string>
     <string name="onboarding_disable_optimizations">ਅਨੁਕੂਲਨ ਅਸਮਰੱਥ ਕਰੋ</string>

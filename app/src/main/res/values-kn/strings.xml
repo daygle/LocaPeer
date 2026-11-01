@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">ಹಿನ್ನೆಲೆ ಸ್ಥಳ</string>
     <string name="onboarding_bg_location_desc">ಅಪ್ಲಿಕೇಶನ್ ಮುಚ್ಚಿದಾಗ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳನ್ನು ನವೀಕರಿಸಲು, ದಯವಿಟ್ಟು ಮುಂದಿನ ಪರದೆಯಲ್ಲಿ \'ಎಲ್ಲಾ ಸಮಯದಲ್ಲೂ ಅನುಮತಿಸಿ\' ಆಯ್ಕೆಮಾಡಿ.</string>
     <string name="onboarding_bg_location_error">ಅಪ್ಲಿಕೇಶನ್ ಮುಚ್ಚಿದಾಗ ನಿಮ್ಮ ಸಂಪರ್ಕಗಳನ್ನು ನವೀಕರಿಸಲು ಹಿನ್ನೆಲೆ ಸ್ಥಳದ ಅಗತ್ಯವಿದೆ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ ಮತ್ತು \'ಎಲ್ಲಾ ಸಮಯದಲ್ಲೂ ಅನುಮತಿಸಿ\' ಆಯ್ಕೆಮಾಡಿ.</string>
-    <string name="onboarding_configure_location">ಸ್ಥಳವನ್ನು ಕಾನ್ಫಿಗರ್ ಮಾಡಿ</string>
     <string name="onboarding_battery_title">ಬ್ಯಾಟರಿ</string>
     <string name="onboarding_battery_desc">ಬ್ಯಾಟರಿ ಉಳಿಸಲು ಆಂಡ್ರಾಯ್ಡ್ LocaPeer ಅನ್ನು ನಿಲ್ಲಿಸಬಹುದು. ವಿಶ್ವಾಸಾರ್ಹ ನವೀಕರಣಗಳನ್ನು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಲು, ದಯವಿಟ್ಟು ಆಪ್ಟಿಮೈಸೇಶನ್‌ಗಳಿಂದ LocaPeer ಅನ್ನು ಹೊರತುಪಡಿಸಿ.</string>
     <string name="onboarding_disable_optimizations">ಆಪ್ಟಿಮೈಸೇಶನ್‌ಗಳನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಿ</string>

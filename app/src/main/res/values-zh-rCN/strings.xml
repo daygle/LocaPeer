@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">后台位置</string>
     <string name="onboarding_bg_location_desc">为了在应用关闭时保持联系人更新，请在下一屏幕中选择“始终允许”。</string>
     <string name="onboarding_bg_location_error">应用关闭时更新联系人需要后台位置权限。请重试并选择“始终允许”。</string>
-    <string name="onboarding_configure_location">配置位置</string>
     <string name="onboarding_battery_title">电池</string>
     <string name="onboarding_battery_desc">Android 可能会为了省电而停止 LocaPeer。为了确保可靠更新，请将 LocaPeer 排除在电池优化之外。</string>
     <string name="onboarding_disable_optimizations">禁用优化</string>

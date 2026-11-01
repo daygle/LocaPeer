@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">Lokasi Latar Belakang</string>
     <string name="onboarding_bg_location_desc">Untuk memastikan kenalan anda sentiasa dikemas kini semasa aplikasi ditutup, sila pilih \"Benarkan sepanjang masa\" pada skrin seterusnya.</string>
     <string name="onboarding_bg_location_error">Lokasi latar belakang diperlukan untuk mengemas kini kenalan anda apabila aplikasi ditutup. Sila cuba lagi dan pilih \"Benarkan sepanjang masa\".</string>
-    <string name="onboarding_configure_location">Konfigurasikan Lokasi</string>
     <string name="onboarding_battery_title">Bateri</string>
     <string name="onboarding_battery_desc">Android mungkin menghentikan LocaPeer untuk menjimatkan bateri. Untuk kemas kini yang boleh dipercayai, sila kecualikan LocaPeer daripada pengoptimuman.</string>
     <string name="onboarding_disable_optimizations">Matikan Pengoptimuman</string>

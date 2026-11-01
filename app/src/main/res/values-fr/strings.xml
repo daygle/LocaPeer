@@ -326,7 +326,6 @@
     <string name="onboarding_bg_location_title">Localisation en arrière-plan</string>
     <string name="onboarding_bg_location_desc">Pour tenir vos contacts à jour pendant que l\'application est fermée, veuillez sélectionner \"Toujours autoriser\" dans l\'écran suivant.</string>
     <string name="onboarding_bg_location_error">La localisation en arrière-plan est requise pour mettre à jour vos contacts quand l\'application est fermée. Veuillez réessayer et sélectionner \"Toujours autoriser\".</string>
-    <string name="onboarding_configure_location">Configurer la localisation</string>
     <string name="onboarding_battery_title">Batterie</string>
     <string name="onboarding_battery_desc">Android peut arrêter LocaPeer pour économiser de la batterie. Pour garantir des mises à jour fiables, veuillez exclure LocaPeer des optimisations.</string>
     <string name="onboarding_disable_optimizations">Désactiver les optimisations</string>

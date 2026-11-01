@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">နောက်ကွယ် တည်နေရာ</string>
     <string name="onboarding_bg_location_desc">အက်ပ်ကို ပိတ်ထားချိန်တွင်လည်း သင့်အဆက်အသွယ်များကို အပ်ဒိတ်ပေးနိုင်ရန် နောက်မျက်နှာပြင်တွင် \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးချယ်ပေးပါ။</string>
     <string name="onboarding_bg_location_error">အက်ပ်ကို ပိတ်ထားချိန်တွင် သင့်အဆက်အသွယ်များကို အပ်ဒိတ်ပေးရန် နောက်ကွယ် တည်နေရာ ခွင့်ပြုချက် လိုအပ်သည်။ ကျေးဇူးပြု၍ ထပ်မံကြိုးစားပြီး \'အမြဲတမ်း ခွင့်ပြုပါ\' ကို ရွေးချယ်ပါ။</string>
-    <string name="onboarding_configure_location">တည်နေရာကို သတ်မှတ်ရန်</string>
     <string name="onboarding_battery_title">ဘက်ထရီ</string>
     <string name="onboarding_battery_desc">ဘက်ထရီ ချွေတာရန်အတွက် Android က LocaPeer ကို ရပ်တန့်နိုင်ပါသည်။ စိတ်ချရသော အပ်ဒိတ်များ ရရှိရန်အတွက် LocaPeer ကို ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင် လုပ်ဆောင်ခြင်းမှ ချန်လှပ်ထားပါ။</string>
     <string name="onboarding_disable_optimizations">အကောင်းဆုံးဖြစ်အောင် လုပ်ခြင်းကို ပိတ်ပါ</string>

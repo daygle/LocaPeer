@@ -349,7 +349,6 @@
     <string name="onboarding_bg_location_title">الموقع في الخلفية</string>
     <string name="onboarding_bg_location_desc">لإبقاء جهات اتصالك على اطلاع أثناء إغلاق التطبيق، يرجى اختيار \"السماح طوال الوقت\" في الشاشة التالية.</string>
     <string name="onboarding_bg_location_error">الموقع في الخلفية مطلوب لتحديث جهات اتصالك عند إغلاق التطبيق. يرجى المحاولة مجددًا واختيار \"السماح طوال الوقت\".</string>
-    <string name="onboarding_configure_location">ضبط الموقع</string>
     <string name="onboarding_battery_title">البطارية</string>
     <string name="onboarding_battery_desc">قد يوقف Android تطبيق LocaPeer لتوفير البطارية. لضمان تحديثات موثوقة، يرجى استثناء LocaPeer من التحسينات.</string>
     <string name="onboarding_disable_optimizations">إيقاف التحسينات</string>

@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Posizione in background</string>
     <string name="onboarding_bg_location_desc">Per mantenere aggiornati i tuoi contatti mentre l\'app è chiusa, seleziona \"Consenti sempre\" nella schermata successiva.</string>
     <string name="onboarding_bg_location_error">La posizione in background è necessaria per aggiornare i tuoi contatti quando l\'app è chiusa. Riprova e seleziona \"Consenti sempre\".</string>
-    <string name="onboarding_configure_location">Configura posizione</string>
     <string name="onboarding_battery_title">Batteria</string>
     <string name="onboarding_battery_desc">Android potrebbe interrompere LocaPeer per risparmiare batteria. Per garantire aggiornamenti affidabili, escludi LocaPeer dalle ottimizzazioni.</string>
     <string name="onboarding_disable_optimizations">Disabilita ottimizzazioni</string>

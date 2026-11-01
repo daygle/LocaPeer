@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Wurin Bango</string>
     <string name="onboarding_bg_location_desc">Don sanya lambobinku zama da sabon bayani lokacin da app ɗin yake a rufe, da fatan za a zaɓi \'A kowane lokaci\' a allon na gaba.</string>
     <string name="onboarding_bg_location_error">Ana buƙatar wurin bango don sabunta lambobinku lokacin da app ɗin yake a rufe. Da fatan za a sake gwadawa kuma zaɓi \'A kowane lokaci\'.</string>
-    <string name="onboarding_configure_location">Sanya Wuri</string>
     <string name="onboarding_battery_title">Baturi</string>
     <string name="onboarding_battery_desc">Android tana iya dakatar da LocaPeer don adana baturi. Don tabbatar da ingantaccen sabuntawa, da fatan za a cire LocaPeer daga ingantawa.</string>
     <string name="onboarding_disable_optimizations">Kashe Ingantawa</string>

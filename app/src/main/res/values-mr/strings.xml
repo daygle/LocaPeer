@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">बॅकग्राउंड स्थान</string>
     <string name="onboarding_bg_location_desc">ॲप बंद असतानाही तुमचे संपर्क अपडेट ठेवण्यासाठी, कृपया पुढील स्क्रीनवर \'नेहमी अनुमती द्या\' निवडा.</string>
     <string name="onboarding_bg_location_error">ॲप बंद असताना तुमचे संपर्क अपडेट करण्यासाठी बॅकग्राउंड स्थान आवश्यक आहे. कृपया पुन्हा प्रयत्न करा आणि \'नेहमी अनुमती द्या\' निवडा.</string>
-    <string name="onboarding_configure_location">स्थान कॉन्फिगर करा</string>
     <string name="onboarding_battery_title">बॅटरी</string>
     <string name="onboarding_battery_desc">बॅटरी वाचवण्यासाठी अँड्रॉइड LocaPeer थांबवू शकते. विश्वसनीय अपडेट्स सुनिश्चित करण्यासाठी, कृपया ऑप्टिमायझेशनमधून LocaPeer ला वगळा.</string>
     <string name="onboarding_disable_optimizations">ऑप्टिमायझेशन अक्षम करा</string>

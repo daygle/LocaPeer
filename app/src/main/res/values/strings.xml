@@ -375,7 +375,6 @@
     <string name="onboarding_bg_location_title">Background Location</string>
     <string name="onboarding_bg_location_desc">To keep your contacts updated while the app is closed, please select \'Allow all the time\' in the next screen.</string>
     <string name="onboarding_bg_location_error">Background location is required to update your contacts when the app is closed. Please try again and select \'Allow all the time\'.</string>
-    <string name="onboarding_configure_location">Configure Location</string>
     <string name="onboarding_battery_title">Battery</string>
     <string name="onboarding_battery_desc">Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimizations.</string>
     <string name="onboarding_disable_optimizations">Disable Optimizations</string>

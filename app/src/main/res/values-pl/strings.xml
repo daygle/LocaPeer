@@ -337,7 +337,6 @@
     <string name="onboarding_bg_location_title">Lokalizacja w tle</string>
     <string name="onboarding_bg_location_desc">Aby kontakty otrzymywały aktualizacje, gdy aplikacja jest zamknięta, na następnym ekranie wybierz „Zawsze zezwalaj”.</string>
     <string name="onboarding_bg_location_error">Lokalizacja w tle jest wymagana do aktualizowania kontaktów, gdy aplikacja jest zamknięta. Spróbuj ponownie i wybierz „Zawsze zezwalaj”.</string>
-    <string name="onboarding_configure_location">Skonfiguruj lokalizację</string>
     <string name="onboarding_battery_title">Bateria</string>
     <string name="onboarding_battery_desc">Android może zatrzymywać LocaPeer, aby oszczędzać baterię. Aby zapewnić niezawodne aktualizacje, wyklucz LocaPeer z optymalizacji.</string>
     <string name="onboarding_disable_optimizations">Wyłącz optymalizacje</string>

@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">पृष्ठभूमि स्थान</string>
     <string name="onboarding_bg_location_desc">ऐप बंद रहते हुए भी आपके संपर्कों को अपडेट मिलते रहें, इसके लिए अगली स्क्रीन पर \"हमेशा अनुमति दें\" चुनें।</string>
     <string name="onboarding_bg_location_error">ऐप बंद होने पर संपर्कों को अपडेट करने के लिए पृष्ठभूमि स्थान आवश्यक है। कृपया पुनः प्रयास करें और \"हमेशा अनुमति दें\" चुनें।</string>
-    <string name="onboarding_configure_location">स्थान कॉन्फ़िगर करें</string>
     <string name="onboarding_battery_title">बैटरी</string>
     <string name="onboarding_battery_desc">Android बैटरी बचाने के लिए LocaPeer को रोक सकता है। विश्वसनीय अपडेट के लिए LocaPeer को ऑप्टिमाइज़ेशन से बाहर रखें।</string>
     <string name="onboarding_disable_optimizations">ऑप्टिमाइज़ेशन बंद करें</string>

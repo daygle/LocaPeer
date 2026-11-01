@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Arka Plan Konumu</string>
     <string name="onboarding_bg_location_desc">Uygulama kapalıyken kişilerinizin güncel kalması için sonraki ekranda \"Her zaman izin ver\"i seçin.</string>
     <string name="onboarding_bg_location_error">Uygulama kapalıyken kişilerinizi güncellemek için arka plan konumu gereklidir. Lütfen tekrar deneyin ve \"Her zaman izin ver\"i seçin.</string>
-    <string name="onboarding_configure_location">Konumu Yapılandır</string>
     <string name="onboarding_battery_title">Pil</string>
     <string name="onboarding_battery_desc">Android, pil tasarrufu için LocaPeer\'i durdurabilir. Güvenilir güncellemeler için LocaPeer\'i optimizasyonların dışında tutun.</string>
     <string name="onboarding_disable_optimizations">Optimizasyonları Kapat</string>

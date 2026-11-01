@@ -331,7 +331,6 @@
     <string name="onboarding_bg_location_title">מיקום ברקע</string>
     <string name="onboarding_bg_location_desc">כדי שאנשי הקשר שלך יישארו מעודכנים כשהאפליקציה סגורה, בחר \"אפשר תמיד\" במסך הבא.</string>
     <string name="onboarding_bg_location_error">מיקום ברקע נדרש כדי לעדכן את אנשי הקשר שלך כשהאפליקציה סגורה. נסה שוב ובחר \"אפשר תמיד\".</string>
-    <string name="onboarding_configure_location">הגדר מיקום</string>
     <string name="onboarding_battery_title">סוללה</string>
     <string name="onboarding_battery_desc">‏Android עשוי לעצור את LocaPeer כדי לחסוך בסוללה. לעדכונים אמינים, החרג את LocaPeer מאופטימיזציות.</string>
     <string name="onboarding_disable_optimizations">השבת אופטימיזציות</string>

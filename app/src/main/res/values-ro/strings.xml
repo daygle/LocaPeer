@@ -331,7 +331,6 @@
     <string name="onboarding_bg_location_title">Locație în fundal</string>
     <string name="onboarding_bg_location_desc">Pentru a vă ține contactele la curent când aplicația este închisă, selectați „Permiteți tot timpul” pe ecranul următor.</string>
     <string name="onboarding_bg_location_error">Locația în fundal este necesară pentru a actualiza contactele când aplicația este închisă. Încercați din nou și selectați „Permiteți tot timpul”.</string>
-    <string name="onboarding_configure_location">Configurați locația</string>
     <string name="onboarding_battery_title">Baterie</string>
     <string name="onboarding_battery_desc">Android poate opri LocaPeer pentru a economisi baterie. Pentru actualizări fiabile, excludeți LocaPeer din optimizări.</string>
     <string name="onboarding_disable_optimizations">Dezactivați optimizările</string>

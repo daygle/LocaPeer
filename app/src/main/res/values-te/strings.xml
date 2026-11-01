@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">బ్యాక్‌గ్రౌండ్ స్థానం</string>
     <string name="onboarding_bg_location_desc">యాప్ క్లోజ్ చేసినప్పుడు కూడా మీ పరిచయాలను అప్‌డేట్ చేయడానికి, దయచేసి తదుపరి స్క్రీన్‌లో \'ఎల్లప్పుడూ అనుమతించు\' ఎంచుకోండి.</string>
     <string name="onboarding_bg_location_error">యాప్ క్లోజ్ చేసినప్పుడు మీ పరిచయాలను అప్‌డేట్ చేయడానికి బ్యాక్‌గ్రౌండ్ స్థానం అవసరం. దయచేసి మళ్ళీ ప్రయత్నించండి మరియు \'ఎల్లప్పుడూ అనుమతించు\' ఎంచుకోండి.</string>
-    <string name="onboarding_configure_location">స్థానాన్ని కాన్ఫిగర్ చేయి</string>
     <string name="onboarding_battery_title">బ్యాటరీ</string>
     <string name="onboarding_battery_desc">బ్యాటరీని ఆదా చేయడానికి ఆండ్రాయిడ్ LocaPeer ని నిలిపివేయవచ్చు. నమ్మదగిన అప్‌డేట్‌లను నిర్ధారించడానికి, దయచేసి ఆప్టిమైజేషన్‌ల నుండి LocaPeer ని మినహాయించండి.</string>
     <string name="onboarding_disable_optimizations">ఆప్టిమైజేషన్‌లను నిలిపివేయి</string>

@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Háttérbeli helymeghatározás</string>
     <string name="onboarding_bg_location_desc">Ahhoz, hogy a névjegyei az alkalmazás bezárása után is frissüljenek, válassza a következő képernyőn a „Mindig engedélyezés” lehetőséget.</string>
     <string name="onboarding_bg_location_error">A háttérbeli helymeghatározás szükséges a névjegyek frissítéséhez, amikor az alkalmazás be van zárva. Próbálja újra, és válassza a „Mindig engedélyezés” lehetőséget.</string>
-    <string name="onboarding_configure_location">Hely beállítása</string>
     <string name="onboarding_battery_title">Akkumulátor</string>
     <string name="onboarding_battery_desc">Az Android leállíthatja a LocaPeer-t az akkumulátor kímélése érdekében. A megbízható frissítésekhez zárja ki a LocaPeer-t az optimalizálásból.</string>
     <string name="onboarding_disable_optimizations">Optimalizálás kikapcsolása</string>

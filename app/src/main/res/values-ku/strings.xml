@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Cihê Paşperdeyê</string>
     <string name="onboarding_bg_location_desc">Ji bo ku dema sepan girtî be jî têkiliyên we werin nûvekirin, ji kerema xwe di ekrana din de \'Her tim destûr bide\' hilbijêrin.</string>
     <string name="onboarding_bg_location_error">Gihîştina cihê paşperdeyê hewce ye da ku dema sepan girtî be têkiliyên we nûve bibin. Ji kerema xwe dîsa biceribînin û \'Her tim destûr bide\' hilbijêrin.</string>
-    <string name="onboarding_configure_location">Cih Mîheng Bike</string>
     <string name="onboarding_battery_title">Pîl</string>
     <string name="onboarding_battery_desc">Android dikare LocaPeer rawestîne da ku pîlê biparêze. Ji bo nûvekirinên ewle, ji kerema xwe LocaPeer ji optimîzasyonan derxin.</string>
     <string name="onboarding_disable_optimizations">Optimîzasyonan Seqet Bike</string>

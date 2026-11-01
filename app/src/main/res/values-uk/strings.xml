@@ -337,7 +337,6 @@
     <string name="onboarding_bg_location_title">Фонове місцезнаходження</string>
     <string name="onboarding_bg_location_desc">Щоб ваші контакти отримували оновлення, коли застосунок закрито, виберіть на наступному екрані «Дозволити завжди».</string>
     <string name="onboarding_bg_location_error">Фонове місцезнаходження необхідне для оновлень, коли застосунок закрито. Спробуйте ще раз і виберіть «Дозволити завжди».</string>
-    <string name="onboarding_configure_location">Налаштувати місцезнаходження</string>
     <string name="onboarding_battery_title">Батарея</string>
     <string name="onboarding_battery_desc">Android може зупиняти LocaPeer для економії заряду. Для надійних оновлень виключіть LocaPeer з оптимізації батареї.</string>
     <string name="onboarding_disable_optimizations">Вимкнути оптимізацію</string>

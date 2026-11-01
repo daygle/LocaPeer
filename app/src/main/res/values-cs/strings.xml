@@ -337,7 +337,6 @@
     <string name="onboarding_bg_location_title">Poloha na pozadí</string>
     <string name="onboarding_bg_location_desc">Aby vaše kontakty dostávaly aktualizace i při zavřené aplikaci, vyberte na další obrazovce „Povolit vždy“.</string>
     <string name="onboarding_bg_location_error">Poloha na pozadí je nutná pro aktualizace při zavřené aplikaci. Zkuste to znovu a vyberte „Povolit vždy“.</string>
-    <string name="onboarding_configure_location">Nastavit polohu</string>
     <string name="onboarding_battery_title">Baterie</string>
     <string name="onboarding_battery_desc">Android může LocaPeer zastavovat kvůli úspoře baterie. Pro spolehlivé aktualizace vyjměte LocaPeer z optimalizací.</string>
     <string name="onboarding_disable_optimizations">Vypnout optimalizace</string>

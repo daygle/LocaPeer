@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Bakka Duubaa</string>
     <string name="onboarding_bg_location_desc">Yeroo sephanichi cufameeyyuu quunnamtiiwwan keessan akka haaromsamaniif, fuula itti aanu irratti \'Yeroo hunda hayyami\' filadhaa.</string>
     <string name="onboarding_bg_location_error">Yeroo sephanichi cufame quunnamtiiwwan keessan haaromsuuf bakki duubaa ni barbaachisa. Maaloo deebisaatii yaalaa fuula itti aanu irratti \'Yeroo hunda hayyami\' filadhaa.</string>
-    <string name="onboarding_configure_location">Bakka Mîhengi</string>
     <string name="onboarding_battery_title">Baatiri</string>
     <string name="onboarding_battery_desc">Android baatiriif jecha LocaPeer dhaabuu danda\'a. Haaromsi amansiisaa akka ta\'uuf, maaloo LocaPeer optimayizeeshinii baatirii irraa baqsaa.</string>
     <string name="onboarding_disable_optimizations">Optimayizeeshinii Dhaabi</string>

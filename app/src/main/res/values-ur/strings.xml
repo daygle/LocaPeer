@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">پس منظر کا مقام</string>
     <string name="onboarding_bg_location_desc">ایپ بند ہونے پر بھی آپ کے رابطوں کو اپ ڈیٹ رکھنے کے لیے، اگلی اسکرین پر \"ہمیشہ اجازت دیں\" منتخب کریں۔</string>
     <string name="onboarding_bg_location_error">ایپ بند ہونے پر آپ کے رابطوں کو اپ ڈیٹ کرنے کے لیے پس منظر کا مقام درکار ہے۔ دوبارہ کوشش کریں اور \"ہمیشہ اجازت دیں\" منتخب کریں۔</string>
-    <string name="onboarding_configure_location">مقام ترتیب دیں</string>
     <string name="onboarding_battery_title">بیٹری</string>
     <string name="onboarding_battery_desc">Android بیٹری بچانے کے لیے LocaPeer کو روک سکتا ہے۔ قابلِ بھروسا اپ ڈیٹس کے لیے LocaPeer کو آپٹیمائزیشن سے مستثنیٰ کریں۔</string>
     <string name="onboarding_disable_optimizations">آپٹیمائزیشن بند کریں</string>

@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">ପୃଷ୍ଠଭୂମି ସ୍ଥାନ</string>
     <string name="onboarding_bg_location_desc">ଆପ୍ ବନ୍ଦ ଥିବା ସମୟରେ ମଧ୍ୟ ଆପଣଙ୍କ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଅପଡେଟ୍ ରଖିବା ପାଇଁ, ଦୟାକରି ପରବର୍ତ୍ତୀ ସ୍କ୍ରିନରେ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରନ୍ତୁ ।</string>
     <string name="onboarding_bg_location_error">ଆପ୍ ବନ୍ଦ ଥିବା ସମୟରେ ଆପଣଙ୍କ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଅପଡେଟ୍ କରିବା ପାଇଁ ପୃଷ୍ଠଭୂମି ସ୍ଥାନ ଆବଶ୍ୟକ । ଦୟାକରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ ଏବଂ \'ସବୁବେଳେ ଅନୁମତି ଦିଅନ୍ତୁ\' ଚୟନ କରନ୍ତୁ ।</string>
-    <string name="onboarding_configure_location">ସ୍ଥାନ ବିନ୍ୟାସ କରନ୍ତୁ</string>
     <string name="onboarding_battery_title">ବ୍ୟାଟେରୀ</string>
     <string name="onboarding_battery_desc">ବ୍ୟାଟେରୀ ସଞ୍ଚୟ କରିବାକୁ ଆଣ୍ଡ୍ରଏଡ୍ LocaPeer କୁ ବନ୍ଦ କରିପାରେ । ନିର୍ଭରଯୋଗ୍ୟ ଅପଡେଟ୍ ନିଶ୍ଚିତ କରିବାକୁ, ଦୟାକରି ଅପ୍ଟିମାଇଜେସନ୍ ରୁ LocaPeer କୁ ବାଦ୍ ଦିଅନ୍ତୁ ।</string>
     <string name="onboarding_disable_optimizations">ଅପ୍ଟିମାଇଜେସନ୍ ଅକ୍ଷମ କରନ୍ତୁ</string>

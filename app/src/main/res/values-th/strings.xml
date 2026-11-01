@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">ตำแหน่งเบื้องหลัง</string>
     <string name="onboarding_bg_location_desc">เพื่อให้ผู้ติดต่อได้รับข้อมูลอัปเดตขณะปิดแอป กรุณาเลือก \"อนุญาตตลอดเวลา\" ในหน้าจอถัดไป</string>
     <string name="onboarding_bg_location_error">ต้องใช้ตำแหน่งเบื้องหลังเพื่ออัปเดตผู้ติดต่อเมื่อปิดแอป กรุณาลองอีกครั้งและเลือก \"อนุญาตตลอดเวลา\"</string>
-    <string name="onboarding_configure_location">ตั้งค่าตำแหน่ง</string>
     <string name="onboarding_battery_title">แบตเตอรี่</string>
     <string name="onboarding_battery_desc">Android อาจหยุด LocaPeer เพื่อประหยัดแบตเตอรี่ เพื่อการอัปเดตที่เชื่อถือได้ กรุณายกเว้น LocaPeer จากการเพิ่มประสิทธิภาพ</string>
     <string name="onboarding_disable_optimizations">ปิดการเพิ่มประสิทธิภาพ</string>

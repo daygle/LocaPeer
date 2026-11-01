@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">背景位置</string>
     <string name="onboarding_bg_location_desc">為了在應用程式關閉時持續更新您的聯絡人，請在下一個畫面選擇「一律允許」。</string>
     <string name="onboarding_bg_location_error">應用程式關閉時需要背景位置才能更新您的聯絡人。請再試一次並選擇「一律允許」。</string>
-    <string name="onboarding_configure_location">設定位置</string>
     <string name="onboarding_battery_title">電池</string>
     <string name="onboarding_battery_desc">Android 可能會為了省電而停止 LocaPeer。為確保可靠更新，請將 LocaPeer 排除在最佳化之外。</string>
     <string name="onboarding_disable_optimizations">停用最佳化</string>

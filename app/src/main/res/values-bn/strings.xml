@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">ব্যাকগ্রাউন্ড অবস্থান</string>
     <string name="onboarding_bg_location_desc">অ্যাপ বন্ধ থাকাকালীন আপনার পরিচিতিদের আপডেট রাখতে, পরবর্তী স্ক্রিনে \"সবসময় অনুমতি দিন\" বাছুন।</string>
     <string name="onboarding_bg_location_error">অ্যাপ বন্ধ থাকাকালীন পরিচিতিদের আপডেট করতে ব্যাকগ্রাউন্ড অবস্থান প্রয়োজন। আবার চেষ্টা করুন এবং \"সবসময় অনুমতি দিন\" বাছুন।</string>
-    <string name="onboarding_configure_location">অবস্থান কনফিগার করুন</string>
     <string name="onboarding_battery_title">ব্যাটারি</string>
     <string name="onboarding_battery_desc">Android ব্যাটারি বাঁচাতে LocaPeer বন্ধ করতে পারে। নির্ভরযোগ্য আপডেটের জন্য LocaPeer-কে অপ্টিমাইজেশন থেকে বাদ দিন।</string>
     <string name="onboarding_disable_optimizations">অপ্টিমাইজেশন বন্ধ করুন</string>

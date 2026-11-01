@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Mahali pa Chinichini</string>
     <string name="onboarding_bg_location_desc">Ili kuweka anwani zako zikiwa zimesasishwa wakati programu imefungwa, tafadhali chagua \'Ruhusu wakati wote\' katika skrini inayofuata.</string>
     <string name="onboarding_bg_location_error">Mahali pa chinichini inahitajika ili kusasisha anwani zako wakati programu imefungwa. Tafadhali jaribu tena na uchague \'Ruhusu wakati wote\'.</string>
-    <string name="onboarding_configure_location">Sanidi Mahali</string>
     <string name="onboarding_battery_title">Betri</string>
     <string name="onboarding_battery_desc">Android inaweza kusitisha LocaPeer ili kuokoa betri. Ili kuhakikisha sasisho za kuaminika, tafadhali ondoa LocaPeer kwenye uboreshaji.</string>
     <string name="onboarding_disable_optimizations">Zima Uboreshaji</string>

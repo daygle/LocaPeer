@@ -326,7 +326,6 @@
     <string name="onboarding_bg_location_title">Localização em Segundo Plano</string>
     <string name="onboarding_bg_location_desc">Para manter seus contatos atualizados enquanto o aplicativo está fechado, selecione \"Permitir o tempo todo\" na próxima tela.</string>
     <string name="onboarding_bg_location_error">A localização em segundo plano é necessária para atualizar seus contatos quando o aplicativo está fechado. Por favor, tente novamente e selecione \"Permitir o tempo todo\".</string>
-    <string name="onboarding_configure_location">Configurar Localização</string>
     <string name="onboarding_battery_title">Bateria</string>
     <string name="onboarding_battery_desc">O Android pode interromper o LocaPeer para economizar bateria. Para garantir atualizações confiáveis, por favor exclua o LocaPeer das otimizações.</string>
     <string name="onboarding_disable_optimizations">Desativar Otimizações</string>

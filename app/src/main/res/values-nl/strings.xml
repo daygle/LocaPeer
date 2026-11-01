@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Locatie op de achtergrond</string>
     <string name="onboarding_bg_location_desc">Kies in het volgende scherm \"Altijd toestaan\" zodat je contacten updates krijgen terwijl de app gesloten is.</string>
     <string name="onboarding_bg_location_error">Achtergrondlocatie is vereist om je contacten bij te werken wanneer de app gesloten is. Probeer opnieuw en kies \"Altijd toestaan\".</string>
-    <string name="onboarding_configure_location">Locatie configureren</string>
     <string name="onboarding_battery_title">Batterij</string>
     <string name="onboarding_battery_desc">Android kan LocaPeer stoppen om batterij te besparen. Sluit LocaPeer uit van optimalisaties voor betrouwbare updates.</string>
     <string name="onboarding_disable_optimizations">Optimalisaties uitschakelen</string>

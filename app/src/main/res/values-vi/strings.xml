@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">Vị trí nền</string>
     <string name="onboarding_bg_location_desc">Để danh bạ của bạn luôn được cập nhật khi ứng dụng đóng, hãy chọn \"Luôn cho phép\" ở màn hình tiếp theo.</string>
     <string name="onboarding_bg_location_error">Cần quyền vị trí nền để cập nhật danh bạ khi ứng dụng đóng. Vui lòng thử lại và chọn \"Luôn cho phép\".</string>
-    <string name="onboarding_configure_location">Cấu hình vị trí</string>
     <string name="onboarding_battery_title">Pin</string>
     <string name="onboarding_battery_desc">Android có thể dừng LocaPeer để tiết kiệm pin. Để cập nhật đáng tin cậy, hãy loại LocaPeer khỏi tối ưu hóa.</string>
     <string name="onboarding_disable_optimizations">Tắt tối ưu hóa</string>

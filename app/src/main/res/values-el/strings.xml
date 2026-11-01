@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Τοποθεσία στο παρασκήνιο</string>
     <string name="onboarding_bg_location_desc">Για να ενημερώνονται οι επαφές σας όταν η εφαρμογή είναι κλειστή, επιλέξτε «Να επιτρέπεται πάντα» στην επόμενη οθόνη.</string>
     <string name="onboarding_bg_location_error">Η τοποθεσία στο παρασκήνιο απαιτείται για την ενημέρωση των επαφών σας όταν η εφαρμογή είναι κλειστή. Δοκιμάστε ξανά και επιλέξτε «Να επιτρέπεται πάντα».</string>
-    <string name="onboarding_configure_location">Διαμόρφωση τοποθεσίας</string>
     <string name="onboarding_battery_title">Μπαταρία</string>
     <string name="onboarding_battery_desc">Το Android μπορεί να σταματήσει το LocaPeer για εξοικονόμηση μπαταρίας. Για αξιόπιστες ενημερώσεις, εξαιρέστε το LocaPeer από τις βελτιστοποιήσεις.</string>
     <string name="onboarding_disable_optimizations">Απενεργοποίηση βελτιστοποιήσεων</string>

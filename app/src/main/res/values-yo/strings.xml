@@ -319,7 +319,6 @@
     <string name="onboarding_bg_location_title">Ipò Abẹ́lẹ̀</string>
     <string name="onboarding_bg_location_desc">Láti mú kí àwọn ojúlùmọ̀ rẹ mọ̀ nígbà tí o kò bá lo ngwa náà, biko họrọ \'Gba ní gbogbo ìgbà\' nínú ihuenyo tó kàn.</string>
     <string name="onboarding_bg_location_error">A nílò ipò abẹ́lẹ̀ láti sọ fún àwọn ojúlùmọ̀ rẹ nígbà tí o kò bá lo ngwa náà. Biko gbalịa ọzọ kí o sì yan \'Gba ní gbogbo ìgbà\'.</string>
-    <string name="onboarding_configure_location">Tò Ipò</string>
     <string name="onboarding_battery_title">Bátìrì</string>
     <string name="onboarding_battery_desc">Android le dá LocaPeer dúró láti dín bátìrì kù. Láti rí i pé ìsọfúnni ipò rẹ ń jáde dáadáa, biko yọ LocaPeer kúrò nínú ìmúgbòòrò bátìrì.</string>
     <string name="onboarding_disable_optimizations">Pa Ìmúgbòòrò Rẹ́</string>

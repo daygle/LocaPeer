@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">બેકગ્રાઉન્ડ સ્થાન</string>
     <string name="onboarding_bg_location_desc">જ્યારે ઍપ બંધ હોય ત્યારે તમારા સંપર્કોને અપડેટ રાખવા માટે, કૃપા કરીને આગલી સ્ક્રીન પર \'હંમેશા મંજૂરી આપો\' પસંદ કરો.</string>
     <string name="onboarding_bg_location_error">ઍપ બંધ હોય ત્યારે તમારા સંપર્કોને અપડેટ કરવા માટે બેકગ્રાઉન્ડ સ્થાન જરૂરી છે. કૃપા કરીને ફરી પ્રયાસ કરો અને \'હંમેશા મંજૂરી આપો\' પસંદ કરો.</string>
-    <string name="onboarding_configure_location">સ્થાન ગોઠવો</string>
     <string name="onboarding_battery_title">બેટરી</string>
     <string name="onboarding_battery_desc">બેટરી બચાવવા માટે એન્ડ્રોઇડ LocaPeer ને બંધ કરી શકે છે. વિશ્વસનીય અપડેટ્સ સુનિશ્ચિત કરવા માટે, કૃપા કરીને ઓપ્ટિમાઇઝેશનમાંથી LocaPeer ને બાકાત રાખો.</string>
     <string name="onboarding_disable_optimizations">ઓપ્ટિમાઇઝેશન નિષ્ક્રિય કરો</string>

@@ -325,7 +325,6 @@
     <string name="onboarding_bg_location_title">Hintergrundstandort</string>
     <string name="onboarding_bg_location_desc">Um Ihre Kontakte auf dem Laufenden zu halten, während die App geschlossen ist, wählen Sie bitte im nächsten Bildschirm \'Immer zulassen\'.</string>
     <string name="onboarding_bg_location_error">Der Hintergrundstandort ist erforderlich, um Ihre Kontakte zu aktualisieren, wenn die App geschlossen ist. Bitte versuchen Sie es erneut und wählen Sie \'Immer zulassen\'.</string>
-    <string name="onboarding_configure_location">Standort konfigurieren</string>
     <string name="onboarding_battery_title">Akku</string>
     <string name="onboarding_battery_desc">Android kann LocaPeer stoppen, um Akku zu sparen. Um zuverlässige Updates zu gewährleisten, schließen Sie LocaPeer bitte von den Optimierungen aus.</string>
     <string name="onboarding_disable_optimizations">Optimierungen deaktivieren</string>
