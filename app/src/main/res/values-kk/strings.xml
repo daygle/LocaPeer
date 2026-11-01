@@ -919,4 +919,61 @@
     <string name="change_schedule">• Ортақтастық жалпы кестесі өзгерді</string>
     <string name="change_schedule_peer">• Ортақтастық кестесі %1$s өзгерді</string>
     <string name="change_generic">• Орналасқаны ортақтастық баптауы өзгерді</string>
+
+    <string name="conv_mute">Хабарландыруларды үнсіздеу</string>
+    <string name="conv_unmute">Хабарландыруларды қайта қосу</string>
+    <string name="conv_cd_muted">Хабарландырулар үнсіз</string>
+    <string name="notif_supervised_invite_title">%1$s сізді бақылағысы келеді</string>
+    <string name="notif_supervised_invite_text">Қабылдаңыз, сонда бұл құрылғының баптаулары сіздің мақұлдауыңызбен құлпыртады. Кейін оны босатуды әрқашан сұрай аласыз.</string>
+    <string name="notif_supervision_ended_title">Қадағалау аяқталды</string>
+    <string name="notif_supervision_ended_text">Қадағалаушыңыз бұл құрылғыны қадағалауды тоқтатты. Баптаулар ашық.</string>
+    <string name="notif_supervised_wipe_title">Қадағаланатын құрылғы өшірілді</string>
+    <string name="notif_supervised_wipe_text">Қадағаланатын құрылғы өшіру туралы хабарлама жіберіп, өз жеке басын жойды. Үнсіз хабарландыруларды күтіңіз; контактіні дайын болғаныңызда өшіріңіз.</string>
+    <string name="notif_supervisor_unknown_request_title">Белгісіз құрылғыдан қадағалау сұрауы</string>
+    <string name="notif_supervisor_unknown_request_text">Сұрау жіберген құрылғы контактілеріңізде жоқ. Алдымен контакт ретінде қосыңыз да, қайтадан қадағалау сұрауын жіберуді сұраңыз.</string>
+    <string name="contact_add_request_title">Жаңа контактіге рұқсат беру керек пе?</string>
+    <string name="contact_add_request_message">Қадағаланатын құрылғыңыз «%1$s»-ді орналасқанды ортақтастыру үшін жаңа контакт ретінде қосуды сұрады. Мақұлдау арқылы ортақтастық басталады.</string>
+    <string name="incoming_awaiting_approval">Қадағалаушының мақұлдауын күтуде…</string>
+    <string name="circle_leave_supervised">Осы айналымнан шығу үшін сізді қадағалаушы керек: өз құрылғыңыздан сізді өшіруін сұраңыз.</string>
+
+    <string name="peer_supervise_enable_title">Осы құрылғыны бақылау керек пе?</string>
+    <string name="peer_supervise_enable_message">%1$s баптаулары құлыпталмай тұрып, сұранысты өз құрылғысында қабылдауы керек. Оның үнсіз ескертулері қосылады.</string>
+    <string name="peer_supervise_disable_title">Бақылауды аяқтау керек пе?</string>
+    <string name="peer_supervise_disable_message">%1$s құрылғысы ашылады және хабарланады. Оның үнсіз ескертулері қайтадан өшеді.</string>
+    <string name="peer_supervise_disable_confirm">Бақылауды аяқтау</string>
+    <string name="scan_add_waiting">Қадағалаушы күтілуде…</string>
+    <string name="scan_add_waiting_subtitle">Қадағалау кезінде контактіні қосу мақұлдауды талап етеді. Шешім жақында келеді.</string>
+    <string name="scan_add_denied">Қадағалаушыңыз осы контактіні қосудан бас тартты.</string>
+    <string name="pending_awaiting_approval">Қадағалаушының мақұлдауын күтуде…</string>
+    <string name="onboarding_bg_open_settings">Жүйе баптауларын ашу</string>
+    <string name="onboarding_bg_skip">Әзірге өткізіп жіберу</string>
+    <string name="onboarding_bg_location_hint">Android 11 және одан кейінгі нұсқаларда фондық орналасу рұқсаты жүйе баптауларынан ғана беріледі; қосымша оны тікелей сұрай алмайды.</string>
+
+    <string name="settings_notifications_title">Хабарландырулар</string>
+    <string name="settings_message_notifications">Хабарлама хабарландырулары</string>
+    <string name="settings_message_notifications_subtitle">Чат немесе айналым хабарламасы келгенде хабарландыруды көрсету</string>
+    <string name="settings_alert_notifications">Орналасу ескертулері</string>
+    <string name="settings_alert_notifications_subtitle">Геофенжден шығу, жақындау және орналасуды жоғалту ескертулері. SOS ескертулері әрқашан қосулы қалады.</string>
+    <string name="settings_quiet_hours">Тыныш сағаттар</string>
+    <string name="settings_quiet_hours_subtitle">Таңдалған уақыт аралығында хабарлама және ескерту хабарландыруларын үнсіздендіреді. Дыбыс тек SOS -ден шығады.</string>
+    <string name="settings_quiet_hours_start">Үнсіздіктің басталуы</string>
+    <string name="settings_quiet_hours_end">Дейін</string>
+    <string name="settings_disable_waiting">Қадағалаушының мақұлдауын күтуде…</string>
+    <string name="settings_disable_cancel">Сұранысты болдырмау</string>
+    <string name="settings_disable_denied">Қадағалаушыңыз босату сұранысын қабылдамады.</string>
+    <string name="settings_disable_timed_out">Уақытылы жауап келген жоқ. Қадағалаушыңыз желіден тыс болуы мүмкін; кейінірек қайталап көріңіз.</string>
+
+    <string name="settings_erase_identity_card">Қауіпті аймақ</string>
+    <string name="settings_erase_identity">Жеке басты жою &amp; барлық деректерді өшіру</string>
+    <string name="settings_erase_identity_subtitle">Жеке бас кілтін, контактілеріді, орналасу тарихын, хабарламаларды және осы құрылғының баптауларын өшіріп, бастапқы баптауды қайта бастайды</string>
+    <string name="settings_erase_identity_title">Жеке басты жойып, барлық деректерді өшіру керек пе?</string>
+    <string name="settings_erase_identity_message">Бұл әрекет сіздің Nostr кілттеріңіздің жұбын, барлық контактілеріді, барлық геофенжді, орналасу тарихын, хабарламаларды және осы құрылғының баптауларын қайтарылмастай өшіреді. Контактілер ескертілмейді және олардың көшірмелері әсер етпейді. Жою сұранысы жіберілмейді; контактіні ескертіу үшін алдымен әрқаша "Контакті және деректерді жою" қолданыңыз.</string>
+    <string name="settings_erase_identity_final_title">Соңғы растау</string>
+    <string name="settings_erase_identity_final_message">Барлығын өшіріп, жаңа жеке басты бастау керек пе? Бұл қайтарылмайды. Егер бұл жеке бас әлі де керек болып қалса, алдымен шифрланған сақтық көшірмені экспорттаңыз.</string>
+    <string name="settings_erase_identity_confirm">Өшіру және қайта бастау</string>
+    <string name="toast_now_supervised">Енді сізді %1$s бақылайды</string>
+    <string name="toast_already_supervised">Бақылауда әлдеқашан; бұл сұранысты қабылдамауыңыз дұрыс</string>
+    <string name="toast_declined_supervision_invite">%1$s-ден қадағалау сұранысы қабылданбады</string>
+    <string name="supervision_disable_request_title">Осы құрылғыны босату керек пе?</string>
+    <string name="supervision_disable_request_message">%1$s бақылаудан тыс режимді өшіруді сұрайды. Мақұлдау баптауларды жаңа қадағалау сұранысы мақұлдалғанша қайтарымсыз ашады.</string>
 </resources>
