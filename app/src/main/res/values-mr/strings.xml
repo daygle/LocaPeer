@@ -907,4 +907,73 @@
     <string name="queued_message_view">इव्हेंट पहा</string>
     <string name="queued_message_hide">लपवा</string>
     <string name="queued_messages_flush">आता पाठवा</string>
+
+    <string name="change_notif_title">देखरेखीखालील उपकरणाने सेटिंग्ज बदलल्या</string>
+    <string name="change_pause">• %1$s सोबतचे सामायिकरण थांबवले</string>
+    <string name="change_resume">• %1$s सोबतचे सामायिकरण पुन्हा सुरू झाले</string>
+    <string name="change_precision">• स्थानाची अचूकता %1$s केली</string>
+    <string name="change_role">• सामायिकरणाची भूमिका %1$s केली</string>
+    <string name="change_temp_start">• %1$s सोबत तात्पुरते सामायिकरण सुरू झाले</string>
+    <string name="change_temp_end">• तात्पुरते सामायिकरण संपले</string>
+    <string name="change_sos">• संपर्काची SOS स्थिती %1$s केली</string>
+    <string name="change_schedule">• एकूण सामायिकरण वेळापत्रक बदलले</string>
+    <string name="change_schedule_peer">• %1$s सोबतचे सामायिकरण वेळापत्रक बदलले</string>
+    <string name="change_generic">• स्थान सामायिकरणाची एक सेटिंग बदलली</string>
+
+    <string name="conv_mute">सूचना म्यूट करा</string>
+    <string name="conv_unmute">सूचना पुन्हा सुरू करा</string>
+    <string name="conv_cd_muted">सूचना म्यूट आहेत</string>
+    <string name="notif_supervised_invite_title">%1$s तुमची देखरेख करू इच्छितात</string>
+    <string name="notif_supervised_invite_text">ह्या उपकरणाच्या सेटिंग्ज तुमच्या मंजुरीमागे लॉक राहण्यासाठी स्वीकारा. नंतर कधीही अनलॉकची विनंती करता येईल.</string>
+    <string name="notif_supervision_ended_title">देखरेख संपली</string>
+    <string name="notif_supervision_ended_text">तुमच्या देखरेखकर्त्याने ह्या उपकरणाची देखरेख संपवली. सेटिंग्ज आता अनलॉक आहेत.</string>
+    <string name="notif_supervised_wipe_title">देखरेखीखालील उपकरण पुसले गेले</string>
+    <string name="notif_supervised_wipe_text">देखरेखीखालील उपकरणाने पुसण्याची सूचना पाठवली आणि स्वतःची ओळख पुसली. शांत इशाऱ्यांची वाट पाहा; तयार असाल तेव्हा संपर्क काढून टाका.</string>
+    <string name="notif_supervisor_unknown_request_title">अज्ञात उपकरणाकडून देखरेखीची विनंती</string>
+    <string name="notif_supervisor_unknown_request_text">विनंती पाठवणारे उपकरण तुमच्या संपर्कांमध्ये नाही. आधी ते संपर्क म्हणून जोडा, नंतर देखरेखीची विनंती पुन्हा पाठवायला सांगा.</string>
+    <string name="contact_add_request_title">नवीन संपर्काला परवानगी द्यायची?</string>
+    <string name="contact_add_request_message">तुमचे देखरेखीखालील उपकरण “%1$s” यांना स्थान सामायिकरणाचा नवीन संपर्क म्हणून जोडण्याची विनंती करत आहे. मंजुरी दिल्यास त्यांच्यासोबत सामायिकरण सुरू होईल.</string>
+    <string name="incoming_awaiting_approval">देखरेखकर्त्याच्या मंजुरीची वाट…</string>
+    <string name="circle_leave_supervised">ह्या वर्तुळातून बाहेर पडण्यासाठी तुमच्या देखरेखकर्त्याची गरज आहे: तुमच्या स्वतःच्या उपकरणातून तुम्हाला काढून टाकण्यास सांगा.</string>
+
+    <string name="peer_supervise_enable_title">ह्या उपकरणाची देखरेख करायची?</string>
+    <string name="peer_supervise_enable_message">%1$s यांच्या सेटिंग्ज तुमच्या मंजुरीमागे लॉक होण्यापूर्वी त्यांनी स्वतःच्या उपकरणावर विनंती स्वीकारली पाहिजे. त्यांचे शांत इशारे सुरू होतील.</string>
+    <string name="peer_supervise_disable_title">देखरेख थांबवायची?</string>
+    <string name="peer_supervise_disable_message">%1$s यांचे उपकरण अनलॉक होईल आणि त्यांना कळवले जाईल. त्यांचे शांत इशारे पुन्हा बंद होतील.</string>
+    <string name="peer_supervise_disable_confirm">देखरेख थांबवा</string>
+    <string name="scan_add_waiting">तुमच्या देखरेखकर्त्याची वाट…</string>
+    <string name="scan_add_waiting_subtitle">देखरेखीखाली संपर्क जोडण्यासाठी त्यांची मंजुरी आवश्यक आहे. निर्णय लवकरच येईल.</string>
+    <string name="scan_add_denied">तुमच्या देखरेखकर्त्याने हा संपर्क जोडण्यास नकार दिला.</string>
+    <string name="pending_awaiting_approval">देखरेखकर्त्याच्या मंजुरीची वाट…</string>
+    <string name="onboarding_bg_open_settings">सिस्टम सेटिंग्ज उघडा</string>
+    <string name="onboarding_bg_skip">आत्ता वगळा</string>
+    <string name="onboarding_bg_location_hint">Android 11 किंवा त्यानंतर, पार्श्वभूमी स्थानाची परवानगी फक्त सिस्टम सेटिंग्जमधून मिळते; ॲप ती थेट मागू शकत नाही.</string>
+
+    <string name="settings_notifications_title">सूचना</string>
+    <string name="settings_message_notifications">संदेश सूचना</string>
+    <string name="settings_message_notifications_subtitle">चॅट किंवा वर्तुळाचा संदेश आल्यावर सूचना दाखवा</string>
+    <string name="settings_alert_notifications">स्थान इशारे</string>
+    <string name="settings_alert_notifications_subtitle">क्षेत्राबाहेर जाणे, जवळीक आणि स्थान हरवण्याचे इशारे. SOS इशारे सदैव सुरू राहतात.</string>
+    <string name="settings_quiet_hours">शांत तास</string>
+    <string name="settings_quiet_hours_subtitle">निवडलेल्या कालावधीत संदेश व इशाऱ्यांच्या सूचना म्यूट करते. फक्त SOS ऐकू येते.</string>
+    <string name="settings_quiet_hours_start">म्यूट सुरू</string>
+    <string name="settings_quiet_hours_end">पर्यंत</string>
+    <string name="settings_disable_waiting">तुमच्या देखरेखकर्त्याच्या मंजुरीची वाट…</string>
+    <string name="settings_disable_cancel">विनंती रद्द करा</string>
+    <string name="settings_disable_denied">तुमच्या देखरेखकर्त्याने अनलॉकची विनंती नाकारली.</string>
+    <string name="settings_disable_timed_out">वेळेत उत्तर आले नाही. तुमचे देखरेखकर्ता ऑफलाइन असू शकतात; नंतर पुन्हा प्रयत्न करा.</string>
+
+    <string name="settings_erase_identity_card">धोकादायक क्षेत्र</string>
+    <string name="settings_erase_identity">ओळख काढून टाका &amp; सर्व डेटा पुसा</string>
+    <string name="settings_erase_identity_subtitle">ओळख की, संपर्क, स्थान इतिहास, संदेश आणि ह्या उपकरणाच्या सेटिंग्ज काढून टाकते आणि सुरुवातीचे सेटअप पुन्हा सुरू करते</string>
+    <string name="settings_erase_identity_title">ओळख काढून सर्व पुसायचे?</string>
+    <string name="settings_erase_identity_message">हे तुमची Nostr की जोडी, सर्व संपर्क, सर्व क्षेत्रे, स्थान इतिहास, संदेश आणि ह्या उपकरणाच्या सेटिंग्ज कायमचे पुसून टाकेल. संपर्कांना कळवले जाणार नाही आणि त्यांच्या प्रतींवर परिणाम होणार नाही. पुसण्याची कोणतीही विनंती पाठवली जात नाही; संपर्काला इशारा द्यायचा असेल तर आधी प्रत्येकासाठी “संपर्क आणि डेटा काढून टाका” वापरा.</string>
+    <string name="settings_erase_identity_final_title">अंतिम पुष्टी</string>
+    <string name="settings_erase_identity_final_message">सर्व पुसून नव्या ओळखीने पुन्हा सुरू करायचे? हे परत करता येणार नाही. ही ओळख पुढे लागू शकते असे वाटल्यास आधी एन्क्रिप्टेड बॅकअप निर्यात करा.</string>
+    <string name="settings_erase_identity_confirm">पुसा आणि पुन्हा सुरू करा</string>
+    <string name="toast_now_supervised">आता %1$s देखरेख करतात</string>
+    <string name="toast_already_supervised">आधीच देखरेखीखाली आहे; त्याऐवजी ही विनंती नाकारा</string>
+    <string name="toast_declined_supervision_invite">%1$s यांची देखरेख विनंती नाकारली</string>
+    <string name="supervision_disable_request_title">हे उपकरण अनलॉक करायचे?</string>
+    <string name="supervision_disable_request_message">%1$s देखरेख मोड बंद करण्याची विनंती करत आहेत. मंजुरी दिल्यास नवीन देखरेख विनंती स्वीकारल्याशिवाय सेटिंग्ज कायमचे अनलॉक होतील.</string>
 </resources>

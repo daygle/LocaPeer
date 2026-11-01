@@ -907,4 +907,73 @@
     <string name="queued_message_view">ઇવેન્ટ જુઓ</string>
     <string name="queued_message_hide">છુપાવો</string>
     <string name="queued_messages_flush">હવે મોકલો</string>
+
+    <string name="change_notif_title">દેખરેખ હેઠળનું ઉપકરણ સેટિંગ્સ બદલ્યું</string>
+    <string name="change_pause">• %1$s સાથે શેરિંગ થોભાવ્યું</string>
+    <string name="change_resume">• %1$s સાથે શેરિંગ ફરી શરૂ થયું</string>
+    <string name="change_precision">• સ્થાનની ચોકસાઈ %1$s કરી</string>
+    <string name="change_role">• શેરિંગની ભૂમિકા %1$s કરી</string>
+    <string name="change_temp_start">• %1$s સાથે કામચલાઉ શેરિંગ શરૂ થયું</string>
+    <string name="change_temp_end">• કામચલાઉ શેરિંગ પૂરું થયું</string>
+    <string name="change_sos">• સંપર્કની SOS સ્થિતિ %1$s કરી</string>
+    <string name="change_schedule">• એકંદર શેરિંગ સમયપત્રક બદલાયું</string>
+    <string name="change_schedule_peer">• %1$s સાથેનું શેરિંગ સમયપત્રક બદલાયું</string>
+    <string name="change_generic">• સ્થાન શેરિંગની એક સેટિંગ બદલાઈ</string>
+
+    <string name="conv_mute">સૂચનાઓ મ્યૂટ કરો</string>
+    <string name="conv_unmute">સૂચનાઓ ફરી ચાલુ કરો</string>
+    <string name="conv_cd_muted">સૂચનાઓ મ્યૂટ છે</string>
+    <string name="notif_supervised_invite_title">%1$s તમારી દેખરેખ કરવા માંગે છે</string>
+    <string name="notif_supervised_invite_text">આ ઉપકરણની સેટિંગ્સ તમારી મંજૂરી પાછળ લૉક રહે તે માટે સ્વીકારો. પછી ક્યારેય અનલૉક માટે વિનંતી કરી શકો.</string>
+    <string name="notif_supervision_ended_title">દેખરેખ પૂરી થઈ</string>
+    <string name="notif_supervision_ended_text">તમારા દેખરેખકર્તાએ આ ઉપકરણની દેખરેખ પૂરી કરી. સેટિંગ્સ હવે અનલૉક છે.</string>
+    <string name="notif_supervised_wipe_title">દેખરેખ હેઠળનું ઉપકરણ ભૂંસાયું</string>
+    <string name="notif_supervised_wipe_text">દેખરેખ હેઠળના ઉપકરણે ભૂંસવાની સૂચના મોકલી અને પોતાની ઓળખ ભૂંસી નાખી. શાંત ચેતવણીઓની રાહ જુઓ; તૈયાર થાઓ ત્યારે સંપર્ક દૂર કરો.</string>
+    <string name="notif_supervisor_unknown_request_title">અજાણ્યા ઉપકરણથી દેખરેખની વિનંતી</string>
+    <string name="notif_supervisor_unknown_request_text">વિનંતી મોકલનારું ઉપકરણ તમારા સંપર્કોમાં નથી. પહેલાં તેને સંપર્ક તરીકે ઉમેરો, પછી દેખરેખની વિનંતી ફરી મોકલવા કહો.</string>
+    <string name="contact_add_request_title">નવા સંપર્કને મંજૂરી આપવી?</string>
+    <string name="contact_add_request_message">તમારું દેખરેખ હેઠળનું ઉપકરણ “%1$s” ને સ્થાન શેરિંગના નવા સંપર્ક તરીકે ઉમેરવા વિનંતી કરે છે. મંજૂરી આપશો તો તેમની સાથે શેરિંગ શરૂ થશે.</string>
+    <string name="incoming_awaiting_approval">દેખરેખકર્તાની મંજૂરીની રાહ…</string>
+    <string name="circle_leave_supervised">આ વર્તુળમાંથી નીકળવા માટે તમારા દેખરેખકર્તાની જરૂર છે: તમને તમારા જ ઉપકરણમાંથી દૂર કરવા કહો.</string>
+
+    <string name="peer_supervise_enable_title">આ ઉપકરણની દેખરેખ કરવી?</string>
+    <string name="peer_supervise_enable_message">%1$s એ તેમની સેટિંગ્સ તમારી મંજૂરી પાછળ લૉક થાય તે પહેલાં પોતાના ઉપકરણ પર વિનંતી સ્વીકારવી પડશે. તેમની શાંત ચેતવણીઓ ચાલુ થશે.</string>
+    <string name="peer_supervise_disable_title">દેખરેખ બંધ કરવી?</string>
+    <string name="peer_supervise_disable_message">%1$s નું ઉપકરણ અનલૉક થશે અને તેમને જાણ કરાશે. તેમની શાંત ચેતવણીઓ ફરી બંધ થશે.</string>
+    <string name="peer_supervise_disable_confirm">દેખરેખ બંધ કરો</string>
+    <string name="scan_add_waiting">તમારા દેખરેખકર્તાની રાહ…</string>
+    <string name="scan_add_waiting_subtitle">દેખરેખ હેઠળ સંપર્ક ઉમેરવા માટે તેમની મંજૂરી જરૂરી છે. નિર્ણય ટૂંક સમયમાં આવશે.</string>
+    <string name="scan_add_denied">તમારા દેખરેખકર્તાએ આ સંપર્ક ઉમેરવાનો ઇનકાર કર્યો.</string>
+    <string name="pending_awaiting_approval">દેખરેખકર્તાની મંજૂરીની રાહ…</string>
+    <string name="onboarding_bg_open_settings">સિસ્ટમ સેટિંગ્સ ખોલો</string>
+    <string name="onboarding_bg_skip">હમણાં છોડી દો</string>
+    <string name="onboarding_bg_location_hint">Android 11 કે ત્યારપછી, બૅકગ્રાઉન્ડ સ્થાનની પરવાનગી ફક્ત સિસ્ટમ સેટિંગ્સમાંથી મળે છે; એપ તેને સીધી માંગી શકતી નથી.</string>
+
+    <string name="settings_notifications_title">સૂચનાઓ</string>
+    <string name="settings_message_notifications">સંદેશ સૂચનાઓ</string>
+    <string name="settings_message_notifications_subtitle">ચૅટ કે વર્તુળનો સંદેશ આવે ત્યારે સૂચના બતાવો</string>
+    <string name="settings_alert_notifications">સ્થાન ચેતવણીઓ</string>
+    <string name="settings_alert_notifications_subtitle">વિસ્તારની બહાર જવા, નિકટતા અને સ્થાન ખોવાની ચેતવણીઓ. SOS ચેતવણીઓ હંમેશા ચાલુ રહે છે.</string>
+    <string name="settings_quiet_hours">શાંત કલાકો</string>
+    <string name="settings_quiet_hours_subtitle">પસંદ કરેલા સમયગાળામાં સંદેશ અને ચેતવણીની સૂચનાઓ મ્યૂટ કરે છે. ફક્ત SOS સંભળાય છે.</string>
+    <string name="settings_quiet_hours_start">મ્યૂટ શરૂ</string>
+    <string name="settings_quiet_hours_end">સુધી</string>
+    <string name="settings_disable_waiting">તમારા દેખરેખકર્તાની મંજૂરીની રાહ…</string>
+    <string name="settings_disable_cancel">વિનંતી રદ કરો</string>
+    <string name="settings_disable_denied">તમારા દેખરેખકર્તાએ અનલૉકની વિનંતી નકારી.</string>
+    <string name="settings_disable_timed_out">સમયસર કોઈ જવાબ ન આવ્યો. તમારા દેખરેખકર્તા ઑફલાઇન હોઈ શકે; પછી ફરી પ્રયાસ કરો.</string>
+
+    <string name="settings_erase_identity_card">જોખમી વિસ્તાર</string>
+    <string name="settings_erase_identity">ઓળખ દૂર કરો &amp; બધો ડેટા ભૂંસો</string>
+    <string name="settings_erase_identity_subtitle">ઓળખની કી, સંપર્કો, સ્થાનનો ઇતિહાસ, સંદેશાઓ અને આ ઉપકરણની સેટિંગ્સ દૂર કરે છે અને શરૂઆતી સેટઅપ ફરી શરૂ કરે છે</string>
+    <string name="settings_erase_identity_title">ઓળખ દૂર કરીને બધું ભૂંસવું?</string>
+    <string name="settings_erase_identity_message">આ તમારી Nostr કી જોડી, બધા સંપર્કો, બધા વિસ્તારો, સ્થાનનો ઇતિહાસ, સંદેશાઓ અને આ ઉપકરણની સેટિંગ્સ કાયમ માટે ભૂંસી નાખશે. સંપર્કોને જાણ કરાશે નહીં અને તેમની નકલોને અસર થશે નહીં. ભૂંસવાની કોઈ વિનંતી મોકલાશે નહીં; સંપર્કને ચેતવવા માટે પહેલાં દરેક માટે “સંપર્ક અને ડેટા દૂર કરો” વાપરો.</string>
+    <string name="settings_erase_identity_final_title">અંતિમ પુષ્ટિ</string>
+    <string name="settings_erase_identity_final_message">બધું ભૂંસીને નવી ઓળખ સાથે ફરી શરૂ કરવું? આ પાછું વાળી શકાતું નથી. જો આ ઓળખ આગળ જરૂરી થઈ શકે, તો પહેલાં એન્ક્રિપ્ટેડ બૅકઅપ નિકાસ કરો.</string>
+    <string name="settings_erase_identity_confirm">ભૂંસો અને ફરી શરૂ કરો</string>
+    <string name="toast_now_supervised">હવે %1$s દેખરેખ રાખે છે</string>
+    <string name="toast_already_supervised">પહેલેથી દેખરેખ હેઠળ છે; તેના બદલે આ વિનંતી નકારો</string>
+    <string name="toast_declined_supervision_invite">%1$s તરફથી દેખરેખ વિનંતી નકારાઈ</string>
+    <string name="supervision_disable_request_title">આ ઉપકરણ અનલૉક કરવું?</string>
+    <string name="supervision_disable_request_message">%1$s દેખરેખ મોડ બંધ કરવા વિનંતી કરે છે. મંજૂરી આપશો તો નવી દેખરેખ વિનંતી સ્વીકારાય ત્યાં સુધી સેટિંગ્સ કાયમ માટે અનલૉક થશે.</string>
 </resources>
