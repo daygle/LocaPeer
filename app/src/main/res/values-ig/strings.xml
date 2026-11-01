@@ -891,4 +891,73 @@
     <string name="queued_message_view">Lee ihe omume</string>
     <string name="queued_message_hide">Zoo</string>
     <string name="queued_messages_flush">Ziga ugbu a</string>
+
+    <string name="change_notif_title">Ngwaọrụ a na-elekọta gbanwere ntọala</string>
+    <string name="change_pause">• Akwụsịtụrụ nkekọrịta na %1$s</string>
+    <string name="change_resume">• Maliteghachiri nkekọrịta na %1$s</string>
+    <string name="change_precision">• Gbanwere izi ezi ọnọdụ ka ọ bụrụ %1$s</string>
+    <string name="change_role">• Gbanwere ọrụ nkekọrịta ka ọ bụrụ %1$s</string>
+    <string name="change_temp_start">• Malitere nkekọrịta nwa oge na %1$s</string>
+    <string name="change_temp_end">• Nkekọrịta nwa oge agwụla</string>
+    <string name="change_sos">• Gbanwere ọnọdụ SOS nke kọntaktị ka ọ bụrụ %1$s</string>
+    <string name="change_schedule">• Gbanwere usoro oge nkekọrịta niile</string>
+    <string name="change_schedule_peer">• Gbanwere usoro oge nkekọrịta na %1$s</string>
+    <string name="change_generic">• Gbanwere otu ntọala nkekọrịta ọnọdụ</string>
+
+    <string name="conv_mute">Gbanyụọ ọkwa</string>
+    <string name="conv_unmute">Gbanye ọkwa</string>
+    <string name="conv_cd_muted">Agbanyụrụ ọkwa</string>
+    <string name="notif_supervised_invite_title">%1$s chọrọ ilekọta gị</string>
+    <string name="notif_supervised_invite_text">Kwenyere ka ntọala ngwaọrụ a nọrọ na mkpọchi n\'azụ nkwenye gị. Ị nwere ike ịrịọ ka emeghee ya mgbe ọ bụla.</string>
+    <string name="notif_supervision_ended_title">Nlekọta akwụsịla</string>
+    <string name="notif_supervision_ended_text">Onye nlekọta gị kwụsịrị ilekọta ngwaọrụ a. Ntọala emegheela ugbu a.</string>
+    <string name="notif_supervised_wipe_title">Ehichapụrụ ngwaọrụ a na-elekọta</string>
+    <string name="notif_supervised_wipe_text">Ngwaọrụ a na-elekọta zitere ọkwa nhichapụ ma hichapụ njirimara ya. Chere ịdọ aka ná ntị dị jụụ, wepụ kọntaktị ahụ mgbe ị dị njikere.</string>
+    <string name="notif_supervisor_unknown_request_title">Arịrịọ nlekọta sitere na ngwaọrụ a na-amaghị</string>
+    <string name="notif_supervisor_unknown_request_text">Ngwaọrụ zitere arịrịọ ahụ adịghị na kọntaktị gị. Buru ụzọ gbakwunye ya dị ka kọntaktị, wee rịọ ka ezigara arịrịọ nlekọta ọzọ.</string>
+    <string name="contact_add_request_title">Kwenyere kọntaktị ọhụrụ?</string>
+    <string name="contact_add_request_message">Ngwaọrụ a na-elekọta gị na-arịọ ka agbakwunye “%1$s” dị ka kọntaktị ọhụrụ nkekọrịta ọnọdụ. Ikwenye ga-amalite nkekọrịta na ha.</string>
+    <string name="incoming_awaiting_approval">Na-echere nkwenye onye nlekọta…</string>
+    <string name="circle_leave_supervised">Ịpụ na okirikiri a chọrọ onye nlekọta gị: rịọ ya ka ọ wepụ gị na ngwaọrụ gị.</string>
+
+    <string name="peer_supervise_enable_title">Lekọta ngwaọrụ a?</string>
+    <string name="peer_supervise_enable_message">%1$s ga-akwenyere arịrịọ ahụ na ngwaọrụ nke ya tupu e mechie ntọala ya n\'azụ nkwenye gị. A ga-agbanye ịdọ aka ná ntị dị jụụ ha.</string>
+    <string name="peer_supervise_disable_title">Kwụsị nlekọta?</string>
+    <string name="peer_supervise_disable_message">A ga-emeghe ngwaọrụ %1$s ma gwa ha. A ga-agbanyụkwa ịdọ aka ná ntị dị jụụ ha.</string>
+    <string name="peer_supervise_disable_confirm">Kwụsị nlekọta</string>
+    <string name="scan_add_waiting">Na-echere onye nlekọta gị…</string>
+    <string name="scan_add_waiting_subtitle">Ịgbakwunye kọntaktị n\'okpuru nlekọta chọrọ nkwenye ha. Mkpebi ga-abịa n\'oge na-adịghị anya.</string>
+    <string name="scan_add_denied">Onye nlekọta gị jụrụ ịgbakwunye kọntaktị a.</string>
+    <string name="pending_awaiting_approval">Na-echere nkwenye onye nlekọta…</string>
+    <string name="onboarding_bg_open_settings">Mepee ntọala sistemụ</string>
+    <string name="onboarding_bg_skip">Wụfee ugbu a</string>
+    <string name="onboarding_bg_location_hint">Na Android 11 ma ọ bụ karịa, a na-enye ikike ọnọdụ n\'azụ naanị site na ntọala sistemụ; ngwa enweghị ike ịrịọ ya kpọmkwem.</string>
+
+    <string name="settings_notifications_title">Ọkwa</string>
+    <string name="settings_message_notifications">Ọkwa ozi</string>
+    <string name="settings_message_notifications_subtitle">Gosi ọkwa mgbe ozi mkparịta ụka ma ọ bụ okirikiri bịara</string>
+    <string name="settings_alert_notifications">Ịdọ aka ná ntị ọnọdụ</string>
+    <string name="settings_alert_notifications_subtitle">Ịdọ aka ná ntị maka ịpụ na mpaghara, ịbịaru nso na ọnọdụ furu efu. Ịdọ aka ná ntị SOS na-adịgide emeghe.</string>
+    <string name="settings_quiet_hours">Oge jụụ</string>
+    <string name="settings_quiet_hours_subtitle">Na-agbanyụ ọkwa ozi na ịdọ aka ná ntị n\'ime oge ahọpụtara. Naanị SOS ka a na-anụ.</string>
+    <string name="settings_quiet_hours_start">Mmalite ịgbachi nkịtị</string>
+    <string name="settings_quiet_hours_end">Ruo</string>
+    <string name="settings_disable_waiting">Na-echere nkwenye onye nlekọta…</string>
+    <string name="settings_disable_cancel">Kagbuo arịrịọ</string>
+    <string name="settings_disable_denied">Onye nlekọta gị jụrụ arịrịọ imeghe.</string>
+    <string name="settings_disable_timed_out">Enweghị azịza n\'oge. O nwere ike onye nlekọta gị anọghị n\'ịntanetị; nwaa ọzọ ma emechaa.</string>
+
+    <string name="settings_erase_identity_card">Mpaghara dị ize ndụ</string>
+    <string name="settings_erase_identity">Wepụ njirimara &amp; hichapụ data niile</string>
+    <string name="settings_erase_identity_subtitle">Na-ewepụ igodo njirimara, kọntaktị, akụkọ ọnọdụ, ozi na ntọala ngwaọrụ a ma maliteghachi nhazi mbido</string>
+    <string name="settings_erase_identity_title">Wepụ njirimara ma hichapụ ihe niile?</string>
+    <string name="settings_erase_identity_message">Nke a ga-ehichapụ ụzọ abụọ igodo Nostr gị, kọntaktị niile, mpaghara niile, akụkọ ọnọdụ, ozi na ntọala ngwaọrụ a ruo mgbe ebighị ebi. Agaghị agwa kọntaktị, ma ibe ha agaghị emetụta. Ọ dịghị arịrịọ nhichapụ a na-eziga; iji dọọ kọntaktị aka ná ntị, buru ụzọ jiri “Wepụ kọntaktị na data” nye onye ọ bụla.</string>
+    <string name="settings_erase_identity_final_title">Nkwenye ikpeazụ</string>
+    <string name="settings_erase_identity_final_message">Hichapụ ihe niile ma maliteghachi na njirimara ọhụrụ? Enweghị ike ịlaghachi azụ na nke a. Ọ bụrụ na i chere na ị ga-achọ njirimara a ma emechaa, buru ụzọ zipụ ndabere e zoro ezo.</string>
+    <string name="settings_erase_identity_confirm">Hichapụ ma maliteghachi</string>
+    <string name="toast_now_supervised">Ugbu a %1$s na-elekọta</string>
+    <string name="toast_already_supervised">Ọ nọworị n\'okpuru nlekọta; jụ arịrịọ a kama</string>
+    <string name="toast_declined_supervision_invite">Ajụrụ arịrịọ nlekọta sitere na %1$s</string>
+    <string name="supervision_disable_request_title">Mepee ngwaọrụ a?</string>
+    <string name="supervision_disable_request_message">%1$s na-arịọ ka agbanyụọ ọnọdụ nlekọta. Ikwenye ga-emeghe ntọala ruo mgbe ebighị ebi ruo mgbe anabatara arịrịọ nlekọta ọhụrụ.</string>
 </resources>
