@@ -907,4 +907,73 @@
     <string name="queued_message_view">ଇଭେଣ୍ଟ ଦେଖନ୍ତୁ</string>
     <string name="queued_message_hide">ଲୁଚାନ୍ତୁ</string>
     <string name="queued_messages_flush">ବର୍ତ୍ତମାନ ପଠାନ୍ତୁ</string>
+
+    <string name="change_notif_title">ମେଲନିରୀକ୍ଷଣରେ ଥିବା ଡିଭାଇସ ସେଟିଂ ବଦଳାଇଲା</string>
+    <string name="change_pause">• %1$s ସହ ଅଂଶୀଦାର ସ୍ଥଗିତ କରାଗଲା</string>
+    <string name="change_resume">• %1$s ସହ ଅଂଶୀଦାର ପୁଣି ଆରମ୍ଭ ହେଲା</string>
+    <string name="change_precision">• ସ୍ଥାନର ସଠିକତା %1$s କରାଗଲା</string>
+    <string name="change_role">• ଅଂଶୀଦାରର ଭୂମିକା %1$s କରାଗଲା</string>
+    <string name="change_temp_start">• %1$s ସହ ସାମୟିକ ଅଂଶୀଦାର ଆରମ୍ଭ ହେଲା</string>
+    <string name="change_temp_end">• ସାମୟିକ ଅଂଶୀଦାର ସମାପ୍ତ ହେଲା</string>
+    <string name="change_sos">• ସମ୍ପର୍କର SOS ସ୍ଥିତି %1$s କରାଗଲା</string>
+    <string name="change_schedule">• ସମସ୍ତ ଅଂଶୀଦାର ସମୟସୂଚୀ ବଦଳିଲା</string>
+    <string name="change_schedule_peer">• %1$s ସହ ଅଂଶୀଦାର ସମୟସୂଚୀ ବଦଳିଲା</string>
+    <string name="change_generic">• ସ୍ଥାନ ଅଂଶୀଦାରର ଏକ ସେଟିଂ ବଦଳିଲା</string>
+
+    <string name="conv_mute">ବିଜ୍ଞପ୍ତି ମ୍ୟୁଟ କରନ୍ତୁ</string>
+    <string name="conv_unmute">ବିଜ୍ଞପ୍ତି ପୁଣି ଚାଲୁ କରନ୍ତୁ</string>
+    <string name="conv_cd_muted">ବିଜ୍ଞପ୍ତି ମ୍ୟୁଟ ଅଛି</string>
+    <string name="notif_supervised_invite_title">%1$s ଆପଣଙ୍କୁ ମେଲନିରୀକ୍ଷଣ କରିବାକୁ ଚାହାନ୍ତି</string>
+    <string name="notif_supervised_invite_text">ଏହି ଡିଭାଇସର ସେଟିଂ ଆପଣଙ୍କ ଅନୁମୋଦନ ପଛରେ ଲକ ରହିବା ପାଇଁ ସ୍ୱୀକାର କରନ୍ତୁ। ପରେ ଯେତେବେଳେ ଚାହିଁବେ ଅନଲକ ପାଇଁ ଅନୁରୋଧ କରିପାରିବେ।</string>
+    <string name="notif_supervision_ended_title">ମେଲନିରୀକ୍ଷଣ ସମାପ୍ତ ହେଲା</string>
+    <string name="notif_supervision_ended_text">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ଏହି ଡିଭାଇସର ମେଲନିରୀକ୍ଷଣ ସମାପ୍ତ କରିଛନ୍ତି। ସେଟିଂ ଏବେ ଅନଲକ ଅଛି।</string>
+    <string name="notif_supervised_wipe_title">ମେଲନିରୀକ୍ଷଣରେ ଥିବା ଡିଭାଇସ ଲିଭାଗଲା</string>
+    <string name="notif_supervised_wipe_text">ମେଲନିରୀକ୍ଷଣରେ ଥିବା ଡିଭାଇସ ଲିଭାଇବା ବିଜ୍ଞପ୍ତି ପଠାଇ ନିଜର ପରିଚୟ ଲିଭାଇ ଦେଲା। ଶାନ୍ତ ସତର୍କତା ପାଇଁ ଅପେକ୍ଷା କରନ୍ତୁ; ପ୍ରସ୍ତୁତ ହେଲେ ସମ୍ପର୍କ ହଟାନ୍ତୁ।</string>
+    <string name="notif_supervisor_unknown_request_title">ଅଜଣା ଡିଭାଇସରୁ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ</string>
+    <string name="notif_supervisor_unknown_request_text">ଅନୁରୋଧ ପଠାଇଥିବା ଡିଭାଇସ ଆପଣଙ୍କ ସମ୍ପର୍କ ତାଲିକାରେ ନାହିଁ। ପ୍ରଥମେ ଏହାକୁ ସମ୍ପର୍କ ଭାବରେ ଯୋଡ଼ନ୍ତୁ, ତା’ପରେ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ ପୁଣି ପଠାଇବାକୁ କୁହନ୍ତୁ।</string>
+    <string name="contact_add_request_title">ନୂଆ ସମ୍ପର୍କକୁ ଅନୁମତି ଦେବେ?</string>
+    <string name="contact_add_request_message">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷଣରେ ଥିବା ଡିଭାଇସ “%1$s” ଙ୍କୁ ସ୍ଥାନ ଅଂଶୀଦାରର ନୂଆ ସମ୍ପର୍କ ଭାବରେ ଯୋଡ଼ିବା ପାଇଁ ଅନୁରୋଧ କରୁଛି। ଅନୁମତି ଦେଲେ ସେମାନଙ୍କ ସହ ଅଂଶୀଦାର ଆରମ୍ଭ ହେବ।</string>
+    <string name="incoming_awaiting_approval">ମେଲନିରୀକ୍ଷକଙ୍କ ଅନୁମୋଦନ ପାଇଁ ଅପେକ୍ଷା…</string>
+    <string name="circle_leave_supervised">ଏହି ସର୍କଲରୁ ବାହାରିବା ପାଇଁ ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ଆବଶ୍ୟକ: ଆପଣଙ୍କୁ ନିଜ ଡିଭାଇସରୁ ହଟାଇବାକୁ କୁହନ୍ତୁ।</string>
+
+    <string name="peer_supervise_enable_title">ଏହି ଡିଭାଇସକୁ ମେଲନିରୀକ୍ଷଣ କରିବେ?</string>
+    <string name="peer_supervise_enable_message">%1$s ଙ୍କ ସେଟିଂ ଆପଣଙ୍କ ଅନୁମୋଦନ ପଛରେ ଲକ ହେବା ପୂର୍ବରୁ ସେମାନେ ନିଜ ଡିଭାଇସରେ ଅନୁରୋଧ ସ୍ୱୀକାର କରିବେ। ସେମାନଙ୍କ ଶାନ୍ତ ସତର୍କତା ଚାଲୁ ହେବ।</string>
+    <string name="peer_supervise_disable_title">ମେଲନିରୀକ୍ଷଣ ବନ୍ଦ କରିବେ?</string>
+    <string name="peer_supervise_disable_message">%1$s ଙ୍କ ଡିଭାଇସ ଅନଲକ ହେବ ଏବଂ ସେମାନଙ୍କୁ ଜଣାଇ ଦିଆଯିବ। ସେମାନଙ୍କ ଶାନ୍ତ ସତର୍କତା ପୁଣି ବନ୍ଦ ହେବ।</string>
+    <string name="peer_supervise_disable_confirm">ମେଲନିରୀକ୍ଷଣ ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="scan_add_waiting">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ପାଇଁ ଅପେକ୍ଷା…</string>
+    <string name="scan_add_waiting_subtitle">ମେଲନିରୀକ୍ଷଣରେ ସମ୍ପର୍କ ଯୋଡ଼ିବା ପାଇଁ ସେମାନଙ୍କ ଅନୁମୋଦନ ଆବଶ୍ୟକ। ନିର୍ଣ୍ଣୟ ଶୀଘ୍ର ଆସିବ।</string>
+    <string name="scan_add_denied">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ଏହି ସମ୍ପର୍କ ଯୋଡ଼ିବାକୁ ମନା କରିଛନ୍ତି।</string>
+    <string name="pending_awaiting_approval">ମେଲନିରୀକ୍ଷକଙ୍କ ଅନୁମୋଦନ ପାଇଁ ଅପେକ୍ଷା…</string>
+    <string name="onboarding_bg_open_settings">ସିଷ୍ଟମ ସେଟିଂ ଖୋଲନ୍ତୁ</string>
+    <string name="onboarding_bg_skip">ଏବେ ଛାଡ଼ିଦିଅନ୍ତୁ</string>
+    <string name="onboarding_bg_location_hint">Android 11 କିମ୍ବା ପରେ, ପୃଷ୍ଠଭୂମି ସ୍ଥାନ ଅନୁମତି କେବଳ ସିଷ୍ଟମ ସେଟିଂରୁ ମିଳେ; ଆପ୍ ଏହା ସିଧାସଳଖ ମାଗିପାରିବ ନାହିଁ।</string>
+
+    <string name="settings_notifications_title">ବିଜ୍ଞପ୍ତି</string>
+    <string name="settings_message_notifications">ସନ୍ଦେଶ ବିଜ୍ଞପ୍ତି</string>
+    <string name="settings_message_notifications_subtitle">ଚାଟ କିମ୍ବା ସର୍କଲ ସନ୍ଦେଶ ଆସିଲେ ବିଜ୍ଞପ୍ତି ଦେଖାନ୍ତୁ</string>
+    <string name="settings_alert_notifications">ସ୍ଥାନ ସତର୍କତା</string>
+    <string name="settings_alert_notifications_subtitle">ଅଞ୍ଚଳରୁ ବାହାରକୁ ଯିବା, ନିକଟତା ଏବଂ ସ୍ଥାନ ହଜିବାର ସତର୍କତା। SOS ସତର୍କତା ସର୍ବଦା ଚାଲୁ ରହେ।</string>
+    <string name="settings_quiet_hours">ଶାନ୍ତ ସମୟ</string>
+    <string name="settings_quiet_hours_subtitle">ଚୟନିତ ସମୟରେ ସନ୍ଦେଶ ଓ ସତର୍କତା ବିଜ୍ଞପ୍ତି ମ୍ୟୁଟ କରେ। କେବଳ SOS ଶୁଣାଯାଏ।</string>
+    <string name="settings_quiet_hours_start">ମ୍ୟୁଟ ଆରମ୍ଭ</string>
+    <string name="settings_quiet_hours_end">ପର୍ଯ୍ୟନ୍ତ</string>
+    <string name="settings_disable_waiting">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକଙ୍କ ଅନୁମୋଦନ ପାଇଁ ଅପେକ୍ଷା…</string>
+    <string name="settings_disable_cancel">ଅନୁରୋଧ ବାତିଲ କରନ୍ତୁ</string>
+    <string name="settings_disable_denied">ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ଅନଲକ ଅନୁରୋଧକୁ ମନା କରିଛନ୍ତି।</string>
+    <string name="settings_disable_timed_out">ସମୟରେ ଉତ୍ତର ଆସିଲା ନାହିଁ। ଆପଣଙ୍କ ମେଲନିରୀକ୍ଷକ ଅଫଲାଇନ ଥାଇପାରନ୍ତି; ପରେ ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+
+    <string name="settings_erase_identity_card">ବିପଜ୍ଜନକ ଅଞ୍ଚଳ</string>
+    <string name="settings_erase_identity">ପରିଚୟ ହଟାନ୍ତୁ &amp; ସମସ୍ତ ଡାଟା ଲିଭାନ୍ତୁ</string>
+    <string name="settings_erase_identity_subtitle">ପରିଚୟ କୀ, ସମ୍ପର୍କ, ସ୍ଥାନ ଇତିହାସ, ସନ୍ଦେଶ ଏବଂ ଏହି ଡିଭାଇସର ସେଟିଂ ହଟାଇ ପ୍ରାରମ୍ଭିକ ସେଟଅପ ପୁଣି ଆରମ୍ଭ କରେ</string>
+    <string name="settings_erase_identity_title">ପରିଚୟ ହଟାଇ ସବୁ ଲିଭାଇବେ?</string>
+    <string name="settings_erase_identity_message">ଏହା ଆପଣଙ୍କ Nostr କୀ ଯୋଡ଼ି, ସମସ୍ତ ସମ୍ପର୍କ, ସମସ୍ତ ଅଞ୍ଚଳ, ସ୍ଥାନ ଇତିହାସ, ସନ୍ଦେଶ ଏବଂ ଏହି ଡିଭାଇସର ସେଟିଂ ସ୍ଥାୟୀ ଭାବରେ ଲିଭାଇ ଦେବ। ସମ୍ପର୍କମାନଙ୍କୁ ଜଣାଯିବ ନାହିଁ ଏବଂ ସେମାନଙ୍କ ନକଲ ଉପରେ ପ୍ରଭାବ ପଡ଼ିବ ନାହିଁ। କୌଣସି ଲିଭାଇବା ଅନୁରୋଧ ପଠାଯାଏ ନାହିଁ; ସମ୍ପର୍କକୁ ସତର୍କ କରିବାକୁ ହେଲେ ପ୍ରଥମେ ପ୍ରତ୍ୟେକଙ୍କ ପାଇଁ “ସମ୍ପର୍କ ଓ ଡାଟା ହଟାନ୍ତୁ” ବ୍ୟବହାର କରନ୍ତୁ।</string>
+    <string name="settings_erase_identity_final_title">ଅନ୍ତିମ ନିଶ୍ଚିତକରଣ</string>
+    <string name="settings_erase_identity_final_message">ସବୁ ଲିଭାଇ ନୂଆ ପରିଚୟ ସହ ପୁଣି ଆରମ୍ଭ କରିବେ? ଏହା ଫେରାଇ ଆଣିହେବ ନାହିଁ। ଏହି ପରିଚୟ ଆଗକୁ ଦରକାର ହୋଇପାରେ ବୋଲି ଭାବୁଥିଲେ ପ୍ରଥମେ ଏନକ୍ରିପ୍ଟେଡ ବ୍ୟାକଅପ ରପ୍ତାନି କରନ୍ତୁ।</string>
+    <string name="settings_erase_identity_confirm">ଲିଭାଇ ପୁଣି ଆରମ୍ଭ କରନ୍ତୁ</string>
+    <string name="toast_now_supervised">ଏବେ %1$s ମେଲନିରୀକ୍ଷଣ କରୁଛନ୍ତି</string>
+    <string name="toast_already_supervised">ପୂର୍ବରୁ ମେଲନିରୀକ୍ଷଣରେ ଅଛି; ଏହା ବଦଳେ ଏହି ଅନୁରୋଧକୁ ମନା କରନ୍ତୁ</string>
+    <string name="toast_declined_supervision_invite">%1$s ଙ୍କ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ ମନା କରାଗଲା</string>
+    <string name="supervision_disable_request_title">ଏହି ଡିଭାଇସ ଅନଲକ କରିବେ?</string>
+    <string name="supervision_disable_request_message">%1$s ମେଲନିରୀକ୍ଷଣ ମୋଡ ବନ୍ଦ କରିବାକୁ ଅନୁରୋଧ କରୁଛନ୍ତି। ଅନୁମତି ଦେଲେ ନୂଆ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ ସ୍ୱୀକୃତ ନହେବା ପର୍ଯ୍ୟନ୍ତ ସେଟିଂ ସ୍ଥାୟୀ ଭାବରେ ଅନଲକ ହେବ।</string>
 </resources>

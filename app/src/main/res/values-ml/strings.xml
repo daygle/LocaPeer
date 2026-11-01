@@ -907,4 +907,73 @@
     <string name="queued_message_view">ഇവന്റ് കാണുക</string>
     <string name="queued_message_hide">മറയ്ക്കുക</string>
     <string name="queued_messages_flush">ഇപ്പോൾ അയയ്ക്കുക</string>
+
+    <string name="change_notif_title">മേൽനോട്ടത്തിലുള്ള ഉപകരണം ക്രമീകരണങ്ങൾ മാറ്റി</string>
+    <string name="change_pause">• %1$s എന്നയാളുമായുള്ള പങ്കിടൽ നിർത്തി</string>
+    <string name="change_resume">• %1$s എന്നയാളുമായുള്ള പങ്കിടൽ വീണ്ടും തുടങ്ങി</string>
+    <string name="change_precision">• ലൊക്കേഷൻ കൃത്യത %1$s ആക്കി</string>
+    <string name="change_role">• പങ്കിടലിന്റെ റോൾ %1$s ആക്കി</string>
+    <string name="change_temp_start">• %1$s എന്നയാളുമായി താൽക്കാലിക പങ്കിടൽ തുടങ്ങി</string>
+    <string name="change_temp_end">• താൽക്കാലിക പങ്കിടൽ അവസാനിച്ചു</string>
+    <string name="change_sos">• കോൺടാക്റ്റിന്റെ SOS അവസ്ഥ %1$s ആക്കി</string>
+    <string name="change_schedule">• മൊത്തത്തിലുള്ള പങ്കിടൽ സമയക്രമം മാറ്റി</string>
+    <string name="change_schedule_peer">• %1$s എന്നയാളുമായുള്ള പങ്കിടൽ സമയക്രമം മാറ്റി</string>
+    <string name="change_generic">• ലൊക്കേഷൻ പങ്കിടലിന്റെ ഒരു ക്രമീകരണം മാറ്റി</string>
+
+    <string name="conv_mute">അറിയിപ്പുകൾ മ്യൂട്ട് ചെയ്യുക</string>
+    <string name="conv_unmute">അറിയിപ്പുകൾ വീണ്ടും ഓണാക്കുക</string>
+    <string name="conv_cd_muted">അറിയിപ്പുകൾ മ്യൂട്ട് ചെയ്തിരിക്കുന്നു</string>
+    <string name="notif_supervised_invite_title">%1$s നിങ്ങളെ മേൽനോട്ടം ചെയ്യാൻ ആഗ്രഹിക്കുന്നു</string>
+    <string name="notif_supervised_invite_text">ഈ ഉപകരണത്തിന്റെ ക്രമീകരണങ്ങൾ നിങ്ങളുടെ അനുമതിക്ക് പിന്നിൽ ലോക്ക് ആകാൻ സ്വീകരിക്കുക. പിന്നീട് എപ്പോൾ വേണമെങ്കിലും അൺലോക്കിന് ആവശ്യപ്പെടാം.</string>
+    <string name="notif_supervision_ended_title">മേൽനോട്ടം അവസാനിച്ചു</string>
+    <string name="notif_supervision_ended_text">നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ ഈ ഉപകരണത്തിന്റെ മേൽനോട്ടം അവസാനിപ്പിച്ചു. ക്രമീകരണങ്ങൾ ഇപ്പോൾ അൺലോക്ക് ചെയ്തിരിക്കുന്നു.</string>
+    <string name="notif_supervised_wipe_title">മേൽനോട്ടത്തിലുള്ള ഉപകരണം മായ്ച്ചു</string>
+    <string name="notif_supervised_wipe_text">മേൽനോട്ടത്തിലുള്ള ഉപകരണം മായ്ക്കൽ അറിയിപ്പ് അയച്ച് സ്വന്തം ഐഡന്റിറ്റി മായ്ച്ചു. ശാന്തമായ മുന്നറിയിപ്പുകൾക്കായി കാത്തിരുന്ന് തയ്യാറാകുമ്പോൾ കോൺടാക്റ്റ് നീക്കം ചെയ്യുക.</string>
+    <string name="notif_supervisor_unknown_request_title">അജ്ഞാത ഉപകരണത്തിൽ നിന്നുള്ള മേൽനോട്ട അഭ്യർത്ഥന</string>
+    <string name="notif_supervisor_unknown_request_text">അഭ്യർത്ഥന അയച്ച ഉപകരണം നിങ്ങളുടെ കോൺടാക്റ്റുകളിൽ ഇല്ല. ആദ്യം അത് കോൺടാക്റ്റായി ചേർത്തതിന് ശേഷം മേൽനോട്ട അഭ്യർത്ഥന വീണ്ടും അയയ്ക്കാൻ ആവശ്യപ്പെടുക.</string>
+    <string name="contact_add_request_title">പുതിയ കോൺടാക്റ്റ് അനുവദിക്കണോ?</string>
+    <string name="contact_add_request_message">നിങ്ങളുടെ മേൽനോട്ടത്തിലുള്ള ഉപകരണം “%1$s” എന്നയാളെ ലൊക്കേഷൻ പങ്കിടലിന്റെ പുതിയ കോൺടാക്റ്റായി ചേർക്കാൻ ആവശ്യപ്പെടുന്നു. അനുവദിച്ചാൽ അവരുമായി പങ്കിടൽ തുടങ്ങും.</string>
+    <string name="incoming_awaiting_approval">മേൽനോട്ടക്കാരന്റെ അനുമതിക്കായി കാത്തിരിക്കുന്നു…</string>
+    <string name="circle_leave_supervised">ഈ സർക്കിളിൽ നിന്ന് പുറത്തുകടക്കാൻ നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ ആവശ്യമാണ്: നിങ്ങളുടെ സ്വന്തം ഉപകരണത്തിൽ നിന്ന് നിങ്ങളെ നീക്കം ചെയ്യാൻ അവരോട് ആവശ്യപ്പെടുക.</string>
+
+    <string name="peer_supervise_enable_title">ഈ ഉപകരണത്തെ മേൽനോട്ടം ചെയ്യണോ?</string>
+    <string name="peer_supervise_enable_message">%1$s എന്നയാളുടെ ക്രമീകരണങ്ങൾ നിങ്ങളുടെ അനുമതിക്ക് പിന്നിൽ ലോക്ക് ആകുന്നതിന് മുൻപ് അവർ സ്വന്തം ഉപകരണത്തിൽ അഭ്യർത്ഥന സ്വീകരിക്കണം. അവരുടെ ശാന്ത മുന്നറിയിപ്പുകൾ ഓൺ ആകും.</string>
+    <string name="peer_supervise_disable_title">മേൽനോട്ടം നിർത്തണോ?</string>
+    <string name="peer_supervise_disable_message">%1$s എന്നയാളുടെ ഉപകരണം അൺലോക്ക് ആകും, അവരെ അറിയിക്കുകയും ചെയ്യും. അവരുടെ ശാന്ത മുന്നറിയിപ്പുകൾ വീണ്ടും ഓഫ് ആകും.</string>
+    <string name="peer_supervise_disable_confirm">മേൽനോട്ടം നിർത്തുക</string>
+    <string name="scan_add_waiting">നിങ്ങളുടെ മേൽനോട്ടക്കാരനായി കാത്തിരിക്കുന്നു…</string>
+    <string name="scan_add_waiting_subtitle">മേൽനോട്ടത്തിൽ കോൺടാക്റ്റ് ചേർക്കാൻ അവരുടെ അനുമതി ആവശ്യമാണ്. തീരുമാനം ഉടൻ വരും.</string>
+    <string name="scan_add_denied">ഈ കോൺടാക്റ്റ് ചേർക്കാൻ നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ വിസമ്മതിച്ചു.</string>
+    <string name="pending_awaiting_approval">മേൽനോട്ടക്കാരന്റെ അനുമതിക്കായി കാത്തിരിക്കുന്നു…</string>
+    <string name="onboarding_bg_open_settings">സിസ്റ്റം ക്രമീകരണങ്ങൾ തുറക്കുക</string>
+    <string name="onboarding_bg_skip">ഇപ്പോൾ ഒഴിവാക്കുക</string>
+    <string name="onboarding_bg_location_hint">Android 11 അല്ലെങ്കിൽ അതിനുശേഷം, പിന്നാമ്പുറ ലൊക്കേഷൻ അനുമതി സിസ്റ്റം ക്രമീകരണങ്ങളിൽ നിന്ന് മാത്രമേ നൽകൂ; ആപ്പിന് അത് നേരിട്ട് ചോദിക്കാനാവില്ല.</string>
+
+    <string name="settings_notifications_title">അറിയിപ്പുകൾ</string>
+    <string name="settings_message_notifications">സന്ദേശ അറിയിപ്പുകൾ</string>
+    <string name="settings_message_notifications_subtitle">ചാറ്റോ സർക്കിളോ സന്ദേശം വരുമ്പോൾ അറിയിപ്പ് കാണിക്കുക</string>
+    <string name="settings_alert_notifications">ലൊക്കേഷൻ മുന്നറിയിപ്പുകൾ</string>
+    <string name="settings_alert_notifications_subtitle">പ്രദേശത്തിന് പുറത്തുപോകൽ, സമീപം എത്തൽ, ലൊക്കേഷൻ നഷ്ടപ്പെടൽ എന്നിവയുടെ മുന്നറിയിപ്പുകൾ. SOS മുന്നറിയിപ്പുകൾ എപ്പോഴും ഓണിലാണ്.</string>
+    <string name="settings_quiet_hours">ശാന്ത മണിക്കൂറുകൾ</string>
+    <string name="settings_quiet_hours_subtitle">തിരഞ്ഞെടുത്ത സമയത്ത് സന്ദേശ, മുന്നറിയിപ്പ് അറിയിപ്പുകൾ മ്യൂട്ട് ചെയ്യുന്നു. SOS മാത്രം കേൾക്കും.</string>
+    <string name="settings_quiet_hours_start">മ്യൂട്ട് ആരംഭം</string>
+    <string name="settings_quiet_hours_end">വരെ</string>
+    <string name="settings_disable_waiting">മേൽനോട്ടക്കാരന്റെ അനുമതിക്കായി കാത്തിരിക്കുന്നു…</string>
+    <string name="settings_disable_cancel">അഭ്യർത്ഥന റദ്ദാക്കുക</string>
+    <string name="settings_disable_denied">അൺലോക്ക് അഭ്യർത്ഥന നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ നിരസിച്ചു.</string>
+    <string name="settings_disable_timed_out">സമയത്തിന് മറുപടി വന്നില്ല. നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ ഓഫ്‌ലൈനിൽ ആകാം; പിന്നീട് വീണ്ടും ശ്രമിക്കുക.</string>
+
+    <string name="settings_erase_identity_card">അപകട മേഖല</string>
+    <string name="settings_erase_identity">ഐഡന്റിറ്റി നീക്കം ചെയ്ത് എല്ലാ ഡേറ്റയും മായ്ക്കുക</string>
+    <string name="settings_erase_identity_subtitle">ഐഡന്റിറ്റി കീ, കോൺടാക്റ്റുകൾ, ലൊക്കേഷൻ ചരിത്രം, സന്ദേശങ്ങൾ, ഈ ഉപകരണത്തിന്റെ ക്രമീകരണങ്ങൾ എന്നിവ നീക്കി പ്രാരംഭ സെറ്റപ്പ് വീണ്ടും തുടങ്ങുന്നു</string>
+    <string name="settings_erase_identity_title">ഐഡന്റിറ്റി നീക്കി എല്ലാം മായ്ക്കണോ?</string>
+    <string name="settings_erase_identity_message">ഇത് നിങ്ങളുടെ Nostr കീ ജോടി, എല്ലാ കോൺടാക്റ്റുകൾ, എല്ലാ പ്രദേശങ്ങൾ, ലൊക്കേഷൻ ചരിത്രം, സന്ദേശങ്ങൾ, ഈ ഉപകരണത്തിന്റെ ക്രമീകരണങ്ങൾ എന്നിവ സ്ഥിരമായി മായ്ക്കും. കോൺടാക്റ്റുകളെ അറിയിക്കുകയില്ല, അവരുടെ പകർപ്പുകളെ ബാധിക്കുകയുമില്ല. മായ്ക്കൽ അഭ്യർത്ഥന ഒന്നും അയയ്ക്കുന്നില്ല; കോൺടാക്റ്റിനെ മുന്നറിയിപ്പ് നൽകണമെങ്കിൽ ആദ്യം ഓരോരുത്തർക്കും “കോൺടാക്റ്റും ഡേറ്റയും നീക്കം ചെയ്യുക” ഉപയോഗിക്കുക.</string>
+    <string name="settings_erase_identity_final_title">അന്തിമ സ്ഥിരീകരണം</string>
+    <string name="settings_erase_identity_final_message">എല്ലാം മായ്ച്ച് പുതിയ ഐഡന്റിറ്റിയിൽ വീണ്ടും തുടങ്ങണോ? ഇത് പഴയപടിയാക്കാനാവില്ല. ഈ ഐഡന്റിറ്റി പിന്നീട് ആവശ്യമായേക്കാം എന്ന് തോന്നുന്നുവെങ്കിൽ ആദ്യം എൻക്രിപ്റ്റ് ചെയ്ത ബാക്കപ്പ് എക്സ്പോർട്ട് ചെയ്യുക.</string>
+    <string name="settings_erase_identity_confirm">മായ്ച്ച് വീണ്ടും തുടങ്ങുക</string>
+    <string name="toast_now_supervised">ഇപ്പോൾ %1$s മേൽനോട്ടം ചെയ്യുന്നു</string>
+    <string name="toast_already_supervised">ഇതിനകം മേൽനോട്ടത്തിലാണ്; പകരം ഈ അഭ്യർത്ഥന നിരസിക്കുക</string>
+    <string name="toast_declined_supervision_invite">%1$s എന്നയാളുടെ മേൽനോട്ട അഭ്യർത്ഥന നിരസിച്ചു</string>
+    <string name="supervision_disable_request_title">ഈ ഉപകരണം അൺലോക്ക് ചെയ്യണോ?</string>
+    <string name="supervision_disable_request_message">%1$s മേൽനോട്ട മോഡ് ഓഫ് ചെയ്യാൻ ആവശ്യപ്പെടുന്നു. അനുവദിച്ചാൽ പുതിയ മേൽനോട്ട അഭ്യർത്ഥന സ്വീകരിക്കുന്നതുവരെ ക്രമീകരണങ്ങൾ സ്ഥിരമായി അൺലോക്ക് ആകും.</string>
 </resources>
