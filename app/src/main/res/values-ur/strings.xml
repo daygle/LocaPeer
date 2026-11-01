@@ -907,4 +907,73 @@
     <string name="queued_message_view">واقعہ دیکھیں</string>
     <string name="queued_message_hide">چھپائیں</string>
     <string name="queued_messages_flush">ابھی بھیجیں</string>
+
+    <string name="change_notif_title">زیرِ نگرانی ڈیوائس نے ترتیبات بدلیں</string>
+    <string name="change_pause">• %1$s کے ساتھ اشتراک روک دیا گیا</string>
+    <string name="change_resume">• %1$s کے ساتھ اشتراک دوبارہ شروع ہوا</string>
+    <string name="change_precision">• مقام کی درستگی %1$s کر دی گئی</string>
+    <string name="change_role">• اشتراک کا کردار %1$s کر دیا گیا</string>
+    <string name="change_temp_start">• %1$s کے ساتھ عارضی اشتراک شروع ہوا</string>
+    <string name="change_temp_end">• عارضی اشتراک ختم ہو گیا</string>
+    <string name="change_sos">• رابطے کی SOS حالت %1$s کر دی گئی</string>
+    <string name="change_schedule">• اشتراک کا مجموعی شیڈول بدل گیا</string>
+    <string name="change_schedule_peer">• %1$s کے ساتھ اشتراک کا شیڈول بدل گیا</string>
+    <string name="change_generic">• مقام کے اشتراک کی ایک ترتیب بدلی گئی</string>
+
+    <string name="conv_mute">اطلاعات خاموش کریں</string>
+    <string name="conv_unmute">اطلاعات دوبارہ چالو کریں</string>
+    <string name="conv_cd_muted">اطلاعات خاموش ہیں</string>
+    <string name="notif_supervised_invite_title">%1$s آپ کی نگرانی کرنا چاہتا ہے</string>
+    <string name="notif_supervised_invite_text">اس ڈیوائس کی ترتیبات آپ کی منظوری کے پیچھے مقفل رکھنے کے لیے قبول کریں۔ بعد میں قفل کھولنے کی درخواست آپ ہمیشہ کر سکتے ہیں۔</string>
+    <string name="notif_supervision_ended_title">نگرانی ختم ہو گئی</string>
+    <string name="notif_supervision_ended_text">آپ کے نگران نے اس ڈیوائس کی نگرانی ختم کر دی۔ ترتیبات اب کھلی ہیں۔</string>
+    <string name="notif_supervised_wipe_title">زیرِ نگرانی ڈیوائس مٹا دی گئی</string>
+    <string name="notif_supervised_wipe_text">ایک زیرِ نگرانی ڈیوائس نے مٹانے کی اطلاع بھیجی اور اپنی شناخت مٹا دی۔ خاموش انتباہات کا انتظار کریں؛ تیار ہونے پر رابطہ حذف کریں۔</string>
+    <string name="notif_supervisor_unknown_request_title">نامعلوم ڈیوائس سے نگرانی کی درخواست</string>
+    <string name="notif_supervisor_unknown_request_text">درخواست بھیجنے والا ڈیوائس آپ کے رابطوں میں نہیں ہے۔ پہلے اسے رابطے کے طور پر شامل کریں، پھر نگرانی کی درخواست دوبارہ بھیجنے کو کہیں۔</string>
+    <string name="contact_add_request_title">نیا رابطہ اجازت دیں؟</string>
+    <string name="contact_add_request_message">آپ کا زیرِ نگرانی ڈیوائس درخواست کر رہا ہے کہ “%1$s” کو مقام کے اشتراک کے نئے رابطے کے طور پر شامل کیا جائے۔ منظوری سے اس کے ساتھ اشتراک شروع ہو جائے گا۔</string>
+    <string name="incoming_awaiting_approval">نگران کی منظوری کا انتظار…</string>
+    <string name="circle_leave_supervised">اس حلقے سے نکلنے کے لیے آپ کے نگران کی ضرورت ہے: اسے کہیں کہ وہ آپ کو آپ ہی کے ڈیوائس سے ہٹا دے۔</string>
+
+    <string name="peer_supervise_enable_title">اس ڈیوائس کی نگرانی کریں؟</string>
+    <string name="peer_supervise_enable_message">%1$s کو اپنے ڈیوائس پر درخواست قبول کرنا ہو گا، پھر اس کی ترتیبات آپ کی منظوری کے پیچھے مقفل ہوں گی۔ اس کے خاموش انتباہات چالو ہو جائیں گے۔</string>
+    <string name="peer_supervise_disable_title">نگرانی بند کریں؟</string>
+    <string name="peer_supervise_disable_message">%1$s کا ڈیوائس کھل جائے گا اور اسے اطلاع دی جائے گی۔ اس کے خاموش انتباہات پھر بند ہو جائیں گے۔</string>
+    <string name="peer_supervise_disable_confirm">نگرانی بند کریں</string>
+    <string name="scan_add_waiting">نگران کا انتظار…</string>
+    <string name="scan_add_waiting_subtitle">نگرانی میں رابطہ شامل کرنے کے لیے منظوری درکار ہے۔ فیصلہ جلد آئے گا۔</string>
+    <string name="scan_add_denied">آپ کے نگران نے یہ رابطہ شامل کرنے سے انکار کر دیا۔</string>
+    <string name="pending_awaiting_approval">نگران کی منظوری کا انتظار…</string>
+    <string name="onboarding_bg_open_settings">سسٹم ترتیبات کھولیں</string>
+    <string name="onboarding_bg_skip">ابھی چھوڑ دیں</string>
+    <string name="onboarding_bg_location_hint">Android 11 یا اس کے بعد، پس منظر میں مقام کی اجازت صرف سسٹم ترتیبات سے دی جاتی ہے؛ ایپ خود اسے براہِ راست نہیں مانگ سکتی۔</string>
+
+    <string name="settings_notifications_title">اطلاعات</string>
+    <string name="settings_message_notifications">پیغامات کی اطلاعات</string>
+    <string name="settings_message_notifications_subtitle">چیٹ یا حلقے کا پیغام آنے پر اطلاع دکھائیں</string>
+    <string name="settings_alert_notifications">مقام کے انتباہات</string>
+    <string name="settings_alert_notifications_subtitle">حد سے باہر نکلنے، قربت اور مقام گم ہونے کے انتباہات۔ SOS انتباہات ہمیشہ چالو رہتے ہیں۔</string>
+    <string name="settings_quiet_hours">خاموش اوقات</string>
+    <string name="settings_quiet_hours_subtitle">مقررہ وقفے میں پیغام اور انتباہ کی اطلاعات خاموش کرتا ہے۔ صرف SOS کی آواز آتی ہے۔</string>
+    <string name="settings_quiet_hours_start">خاموشی کا آغاز</string>
+    <string name="settings_quiet_hours_end">تک</string>
+    <string name="settings_disable_waiting">آپ کے نگران کی منظوری کا انتظار…</string>
+    <string name="settings_disable_cancel">درخواست منسوخ کریں</string>
+    <string name="settings_disable_denied">آپ کے نگران نے قفل کھولنے کی درخواست مسترد کر دی۔</string>
+    <string name="settings_disable_timed_out">وقت پر کوئی جواب نہیں آیا۔ ہو سکتا ہے آپ کا نگران آف لائن ہو؛ بعد میں دوبارہ کوشش کریں۔</string>
+
+    <string name="settings_erase_identity_card">خطرے کا علاقہ</string>
+    <string name="settings_erase_identity">شناخت حذف کریں &amp; تمام ڈیٹا مٹائیں</string>
+    <string name="settings_erase_identity_subtitle">شناخت کی کلید، روابط، مقام کی تاریخ، پیغامات اور اس ڈیوائس کی ترتیبات حذف کرتا ہے اور ابتدائی سیٹ اپ دوبارہ شروع کرتا ہے</string>
+    <string name="settings_erase_identity_title">شناخت حذف کر کے سب کچھ مٹا دیں؟</string>
+    <string name="settings_erase_identity_message">یہ آپ کی Nostr کلید جوڑی، تمام روابط، تمام حدود، مقام کی تاریخ، پیغامات اور اس ڈیوائس کی ترتیبات مستقل طور پر مٹا دے گا۔ روابط کو اطلاع نہیں دی جائے گی اور ان کی نقول متاثر نہیں ہوں گی۔ کوئی حذف کی درخواست نہیں بھیجی جائے گی؛ کسی رابطے کو خبردار کرنے کے لیے پہلے ہر ایک پر ”رابطہ اور ڈیٹا حذف کریں“ استعمال کریں۔</string>
+    <string name="settings_erase_identity_final_title">حتمی تصدیق</string>
+    <string name="settings_erase_identity_final_message">سب کچھ مٹا کر نئی شناخت کے ساتھ دوبارہ شروع کریں؟ یہ واپس نہیں ہو سکتا۔ اگر آگے چل کر یہ شناخت درکار ہو سکتی ہے، تو پہلے خفیہ کردہ بیک اپ برآمد کریں۔</string>
+    <string name="settings_erase_identity_confirm">مٹا کر دوبارہ شروع کریں</string>
+    <string name="toast_now_supervised">اب آپ کی نگرانی %1$s کر رہے ہیں</string>
+    <string name="toast_already_supervised">پہلے سے زیرِ نگرانی ہے؛ اس کے بجائے یہ درخواست مسترد کریں</string>
+    <string name="toast_declined_supervision_invite">%1$s کی نگرانی کی درخواست مسترد کر دی گئی</string>
+    <string name="supervision_disable_request_title">اس ڈیوائس کا قفل کھولیں؟</string>
+    <string name="supervision_disable_request_message">%1$s زیرِ نگرانی موڈ بند کرنے کی درخواست کر رہا ہے۔ منظوری سے ترتیبات مستقل کھل جائیں گی جب تک نئی نگرانی کی درخواست قبول نہ ہو۔</string>
 </resources>
