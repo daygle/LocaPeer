@@ -907,4 +907,73 @@
     <string name="queued_message_view">ইভেন্ট দেখুন</string>
     <string name="queued_message_hide">লুকান</string>
     <string name="queued_messages_flush">এখনই পাঠান</string>
+
+    <string name="change_notif_title">তত্ত্বাবধানে থাকা ডিভাইস সেটিংস পরিবর্তন করেছে</string>
+    <string name="change_pause">• %1$s এর সাথে শেয়ারিং বিরত করা হয়েছে</string>
+    <string name="change_resume">• %1$s এর সাথে শেয়ারিং পুনরায় শুরু হয়েছে</string>
+    <string name="change_precision">• অবস্থানের নির্ভুলতা %1$s করা হয়েছে</string>
+    <string name="change_role">• শেয়ারিং-এর ভূমিকা %1$s করা হয়েছে</string>
+    <string name="change_temp_start">• %1$s এর সাথে সাময়িক শেয়ারিং শুরু হয়েছে</string>
+    <string name="change_temp_end">• সাময়িক শেয়ারিং সমাপ্ত হয়েছে</string>
+    <string name="change_sos">• পরিচিতির SOS স্থিতি %1$s করা হয়েছে</string>
+    <string name="change_schedule">• সামগ্রিক শেয়ারিং সময়সূচি পরিবর্তন হয়েছে</string>
+    <string name="change_schedule_peer">• %1$s এর সাথে শেয়ারিং সময়সূচি পরিবর্তন হয়েছে</string>
+    <string name="change_generic">• অবস্থান ভাগ করার একটি সেটিং পরিবর্তন হয়েছে</string>
+
+    <string name="conv_mute">বিজ্ঞপ্তি নীরব করুন</string>
+    <string name="conv_unmute">বিজ্ঞপ্তি আবার চালু করুন</string>
+    <string name="conv_cd_muted">বিজ্ঞপ্তিগুলি নীরব করা আছে</string>
+    <string name="notif_supervised_invite_title">%1$s আপনাকে তত্ত্বাবধান করতে চায়</string>
+    <string name="notif_supervised_invite_text">এই ডিভাইসের সেটিংস আপনার অনুমোদনের অধীনে লক থাকার জন্য গ্রহণ করুন। পরে আপনি যেকোনো সময় আনলক-এর অনুরোধ করতে পারবেন।</string>
+    <string name="notif_supervision_ended_title">তত্ত্বাবধান শেষ হয়েছে</string>
+    <string name="notif_supervision_ended_text">আপনার তত্ত্বাবধায়ক এই ডিভাইসকে তত্ত্বাবধান বন্ধ করেছেন। সেটিংস এখন আনলক করা আছে।</string>
+    <string name="notif_supervised_wipe_title">তত্ত্বাবধানে থাকা ডিভাইস মোছা হয়েছে</string>
+    <string name="notif_supervised_wipe_text">তত্ত্বাবধানে থাকা একটি ডিভাইস মোছার বিজ্ঞপ্তি পাঠিয়েছে এবং নিজের পরিচয় মুছে ফেলেছে। নীরব সতর্কতার অপেক্ষা করুন; প্রস্তুত হলে পরিচিতিটি মুছে ফেলুন।</string>
+    <string name="notif_supervisor_unknown_request_title">অজানা ডিভাইস থেকে তত্ত্বাবধানের অনুরোধ</string>
+    <string name="notif_supervisor_unknown_request_text">অনুরোধ যে ডিভাইস থেকে পাঠিয়েছে সেটি আপনার পরিচিতির তালিকায় নেই। প্রথমে তাকে পরিচিতি হিসাবে যোগ করুন, তারপর তত্ত্বাবধানের অনুরোধ পুনরায় পাঠানোর জন্য বলুন।</string>
+    <string name="contact_add_request_title">নতুন পরিচিতি অনুমোদন করবেন?</string>
+    <string name="contact_add_request_message">আপনার তত্ত্বাবধানে থাকা ডিভাইস অবস্থান ভাগ করার জন্য “%1$s”-কে নতুন পরিচিতি হিসেবে যোগ করতে চায়। অনুমোদন করলে তার সাথে শেয়ারিং শুরু হবে।</string>
+    <string name="incoming_awaiting_approval">তত্ত্বাবধায়কের অনুমোদনের অপেক্ষায়…</string>
+    <string name="circle_leave_supervised">এই বৃত্ত থেকে বের হতে আপনার তত্ত্বাবধায়ককে প্রয়োজন: তাকে বলুন যেন আপনাকে আপনার নিজ ডিভাইস থেকে সরিয়ে দেয়।</string>
+
+    <string name="peer_supervise_enable_title">এই ডিভাইস তত্ত্বাবধান করবেন?</string>
+    <string name="peer_supervise_enable_message">%1$s এর সেটিংস আপনার অনুমোদনে লক হওয়ার আগে তাকে নিজের ডিভাইসে অনুরোধ গ্রহণ করতে হবে। তার নীরব সতর্কতা চালু হবে।</string>
+    <string name="peer_supervise_disable_title">তত্ত্বাবধান বন্ধ করবেন?</string>
+    <string name="peer_supervise_disable_message">%1$s এর ডিভাইস আনলক হবে এবং তাকে জানানো হবে। তার নীরব সতর্কতা আবার বন্ধ থাকবে।</string>
+    <string name="peer_supervise_disable_confirm">তত্ত্বাবধান বন্ধ করুন</string>
+    <string name="scan_add_waiting">তত্ত্বাবধায়কের অপেক্ষায়…</string>
+    <string name="scan_add_waiting_subtitle">তত্ত্বাবধানে থাকা অবস্থায় পরিচিতি যোগ করতে তার অনুমোদন লাগবে। সিদ্ধান্ত শীঘ্রই আসবে।</string>
+    <string name="scan_add_denied">আপনার তত্ত্বাবধায়ক এই পরিচিতি যোগ করা প্রত্যাখ্যান করেছেন।</string>
+    <string name="pending_awaiting_approval">তত্ত্বাবধায়কের অনুমোদনের অপেক্ষায়…</string>
+    <string name="onboarding_bg_open_settings">সিস্টেম সেটিংস খুলুন</string>
+    <string name="onboarding_bg_skip">এখন বাদ দিন</string>
+    <string name="onboarding_bg_location_hint">Android 11 বা তার পরে ব্যাকগ্রাউন্ড অবস্থানের অনুমতি কেবল সিস্টেম সেটিংসে দেওয়া হয়; অ্যাপ নিজে থেকে সরাসরি অনুরোধ করতে পারে না।</string>
+
+    <string name="settings_notifications_title">বিজ্ঞপ্তি</string>
+    <string name="settings_message_notifications">বার্তার বিজ্ঞপ্তি</string>
+    <string name="settings_message_notifications_subtitle">চ্যাট বা বৃত্তের বার্তা এলে বিজ্ঞপ্তি দেখান</string>
+    <string name="settings_alert_notifications">অবস্থান সতর্কতা</string>
+    <string name="settings_alert_notifications_subtitle">জিওফেন্স, কাছাকাছি ও অবস্থান হারানোর সতর্কতা। SOS সতর্কতা সর্বদা চালু থাকবে।</string>
+    <string name="settings_quiet_hours">শান্ত সময়</string>
+    <string name="settings_quiet_hours_subtitle">নির্বাচিত সময়সীমায় বার্তা ও সতর্কতার বিজ্ঞপ্তি নীরব করে। কেবল SOS-এর শব্দ শোনা যাবে।</string>
+    <string name="settings_quiet_hours_start">নীরব শুরু</string>
+    <string name="settings_quiet_hours_end">থেকে</string>
+    <string name="settings_disable_waiting">তত্ত্বাবধায়কের অনুমোদনের অপেক্ষায়…</string>
+    <string name="settings_disable_cancel">অনুরোধ বাতিল করুন</string>
+    <string name="settings_disable_denied">আপনার তত্ত্বাবধায়ক আনলকের অনুরোধ প্রত্যাখ্যান করেছেন।</string>
+    <string name="settings_disable_timed_out">সময় মতো কোনো উত্তর আসেনি। আপনার তত্ত্বাবধায়ক অফলাইন থাকতে পারেন; পরে আবার চেষ্টা করুন।</string>
+
+    <string name="settings_erase_identity_card">বিপজ্জনক অঞ্চল</string>
+    <string name="settings_erase_identity">পরিচয় মুছে ফেলুন &amp; সব ডেটা মুছুন</string>
+    <string name="settings_erase_identity_subtitle">পরিচয় কী, পরিচিতি, অবস্থানের ইতিহাস, বার্তা এবং এই ডিভাইসের সেটিংস মুছে ফেলে এবং প্রাথমিক সেটআপ পুনরায় শুরু করে</string>
+    <string name="settings_erase_identity_title">পরিচয় মুছে সব ডেটা মুছবেন?</string>
+    <string name="settings_erase_identity_message">এটি আপনার Nostr কী জোড়া, সব পরিচিতি, সব জিওফেন্স, অবস্থানের ইতিহাস, বার্তা এবং এই ডিভাইসের সেটিংস চিরতরে মুছে ফেলবে। পরিচিতিদের জানানো হবে না এবং তাদের কপিতে কোনো প্রভাব নেই। কোনো মুছে ফেলার অনুরোধ পাঠানো হবে না; পরিচিতিকে সতর্ক করতে প্রথমে প্রত্যেকের কাছে "পরিচিতি ও ডেটা মুছুন" ব্যবহার করুন।</string>
+    <string name="settings_erase_identity_final_title">চূড়ান্ত নিশ্চিতকরণ</string>
+    <string name="settings_erase_identity_final_message">সবকিছু মুছে নতুন পরিচয় নিয়ে আবার শুরু করবেন? এটি আর ফেরানো যাবে না। যদি এই পরিচয় পরে আবার দরকার হতে পারে, তাহলে প্রথমে এনক্রিপ্ট করা ব্যাকআপ রপ্তানি করুন।</string>
+    <string name="settings_erase_identity_confirm">মুছে ফেলে পুনরায় শুরু করুন</string>
+    <string name="toast_now_supervised">এখন আপনাকে তত্ত্বাবধান করছেন %1$s</string>
+    <string name="toast_already_supervised">আগে থেকেই তত্ত্বাবধানে আছেন; বরং এই অনুরোধ প্রত্যাখ্যান করুন</string>
+    <string name="toast_declined_supervision_invite">%1$s থেকে তত্ত্বাবধানের অনুরোধ প্রত্যাখ্যান করা হয়েছে।</string>
+    <string name="supervision_disable_request_title">এই ডিভাইস আনলক করবেন?</string>
+    <string name="supervision_disable_request_message">%1$s তত্ত্বাবধানে থাকা মোড বন্ধ করতে চান। অনুমোদন করলে সেটিংস স্থায়ীভাবে আনলক হবে যতক্ষণ না নতুন তত্ত্বাবধানের অনুরোধ গ্রহণ করা হয়।</string>
 </resources>

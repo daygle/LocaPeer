@@ -907,4 +907,73 @@
     <string name="queued_message_view">इवेंट देखें</string>
     <string name="queued_message_hide">छिपाएं</string>
     <string name="queued_messages_flush">अभी भेजें</string>
+
+    <string name="change_notif_title">पर्यवेक्षित डिवाइस ने सेटिंग्स बदलीं</string>
+    <string name="change_pause">• %1$s के साथ शेयरिंग रुकी</string>
+    <string name="change_resume">• %1$s के साथ शेयरिंग फिर से शुरू हुई</string>
+    <string name="change_precision">• लोकेशन सटीकता %1$s हुई</string>
+    <string name="change_role">• शेयरिंग भूमिका %1$s हुई</string>
+    <string name="change_temp_start">• %1$s के साथ अस्थायी शेयरिंग शुरू</string>
+    <string name="change_temp_end">• अस्थायी शेयरिंग समाप्त</string>
+    <string name="change_sos">• संपर्क की SOS स्थिति %1$s हुई</string>
+    <string name="change_schedule">• समग्र शेयरिंग शेड्यूल बदला</string>
+    <string name="change_schedule_peer">• %1$s के साथ शेयरिंग शेड्यूल बदला</string>
+    <string name="change_generic">• एक लोकेशन-शेयरिंग सेटिंग बदली गई</string>
+
+    <string name="conv_mute">सूचनाएं म्यूट करें</string>
+    <string name="conv_unmute">सूचनाएं फिर से चालू करें</string>
+    <string name="conv_cd_muted">सूचनाएं म्यूट हैं</string>
+    <string name="notif_supervised_invite_title">%1$s आपका पर्यवेक्षक बनना चाहता है</string>
+    <string name="notif_supervised_invite_text">इस डिवाइस की सेटिंग्स को आपकी मंज़ूरी के पीछे लॉक करने के लिए स्वीकार करें। बाद में अनलॉक आप हमेशा मांग सकते हैं।</string>
+    <string name="notif_supervision_ended_title">पर्यवेक्षण खत्म</string>
+    <string name="notif_supervision_ended_text">आपके पर्यवेक्षक ने इस डिवाइस की देखरेख बंद कर दी। सेटिंग्स अब अनलॉक हैं।</string>
+    <string name="notif_supervised_wipe_title">पर्यवेक्षित डिवाइस मिटाया गया</string>
+    <string name="notif_supervised_wipe_text">एक पर्यवेक्षित डिवाइस ने मिटाने की सूचना भेजी और अपनी पहचान मिटा दी। खामोश अलर्ट का इंतज़ार करें; तैयार होने पर संपर्क हटा दें।</string>
+    <string name="notif_supervisor_unknown_request_title">अज्ञात डिवाइस से पर्यवेक्षण का अनुरोध</string>
+    <string name="notif_supervisor_unknown_request_text">अनुरोध भेजने वाला डिवाइस आपके संपर्कों में नहीं है। पहले उसे संपर्क के रूप में जोड़ें, फिर पर्यवेक्षण का अनुरोध दोहराने के लिए कहें।</string>
+    <string name="contact_add_request_title">नया संपर्क अनुमति दें?</string>
+    <string name="contact_add_request_message">आपका पर्यवेक्षित डिवाइस “%1$s” को लोकेशन-शेयरिंग का नया संपर्क बनाने का अनुरोध कर रहा है। मंज़ूरी देने पर उनके साथ शेयरिंग शुरू हो जाएगी।</string>
+    <string name="incoming_awaiting_approval">पर्यवेक्षक की मंज़ूरी का इंतज़ार…</string>
+    <string name="circle_leave_supervised">इस सर्कल को छोड़ने के लिए आपके पर्यवेक्षक की ज़रूरत है: उससे कहें कि वह आपको आपके ही डिवाइस से हटा दे।</string>
+
+    <string name="peer_supervise_enable_title">इस डिवाइस को पर्यवेक्षित करें?</string>
+    <string name="peer_supervise_enable_message">%1$s को अपनी सेटिंग्स के लॉक होने से पहले अपने ही डिवाइस पर अनुरोध स्वीकार करना होगा. उसके खामोश अलर्ट चालू किए जाएंगे.</string>
+    <string name="peer_supervise_disable_title">पर्यवेक्षण बंद करें?</string>
+    <string name="peer_supervise_disable_message">%1$s का डिवाइस अनलॉक होगा और सूचित किया जाएगा. उसके खामोश अलर्ट फिर बंद हो जाएंगे.</string>
+    <string name="peer_supervise_disable_confirm">पर्यवेक्षण बंद करें</string>
+    <string name="scan_add_waiting">पर्यवेक्षक का इंतज़ार…</string>
+    <string name="scan_add_waiting_subtitle">पर्यवेक्षण में संपर्क जोड़ने के लिए उसकी मंज़ूरी चाहिए. फ़ैसला जल्दी आएगा.</string>
+    <string name="scan_add_denied">आपके पर्यवेक्षक ने यह संपर्क जोड़ना अस्वीकार कर दिया.</string>
+    <string name="pending_awaiting_approval">पर्यवेक्षक की मंज़ूरी का इंतज़ार…</string>
+    <string name="onboarding_bg_open_settings">सिस्टम सेटिंग्स खोलें</string>
+    <string name="onboarding_bg_skip">अभी छोड़ें</string>
+    <string name="onboarding_bg_location_hint">Android 11 या नए पर बैकग्राउंड लोकेशन की अनुमति सिर्फ़ सिस्टम सेटिंग्स से मिलती है; ऐप उसे सीधे नहीं मांग सकता।</string>
+
+    <string name="settings_notifications_title">सूचनाएं</string>
+    <string name="settings_message_notifications">संदेश सूचनाएं</string>
+    <string name="settings_message_notifications_subtitle">चैट या सर्कल का संदेश आने पर सूचना दिखाएं</string>
+    <string name="settings_alert_notifications">लोकेशन अलर्ट</string>
+    <string name="settings_alert_notifications_subtitle">जियोफ़ेंस से बाहर निकलने, नज़दीकी और लोकेशन खोने के अलर्ट। SOS अलर्ट हमेशा चालू रहेंगे।</string>
+    <string name="settings_quiet_hours">शांत घंटे</string>
+    <string name="settings_quiet_hours_subtitle">तय अवधि में संदेश और अलर्ट सूचनाएं म्यूट करता है। सिर्फ़ SOS गूंजेगा।</string>
+    <string name="settings_quiet_hours_start">म्यूट की शुरुआत</string>
+    <string name="settings_quiet_hours_end">तक</string>
+    <string name="settings_disable_waiting">पर्यवेक्षक की मंज़ूरी का इंतज़ार…</string>
+    <string name="settings_disable_cancel">अनुरोध रद्द करें</string>
+    <string name="settings_disable_denied">आपके पर्यवेक्षक ने अनलॉक का अनुरोध अस्वीकार कर दिया।</string>
+    <string name="settings_disable_timed_out">समय पर कोई जवाब नहीं मिला। आपका पर्यवेक्षक ऑफ़लाइन हो सकता है; बाद में फिर कोशिश करें।</string>
+
+    <string name="settings_erase_identity_card">ख़तरनाक क्षेत्र</string>
+    <string name="settings_erase_identity">पहचान हटाएं &amp; सारा डेटा मिटाएं</string>
+    <string name="settings_erase_identity_subtitle">पहचान कुंजी, संपर्क, लोकेशन इतिहास, संदेश और इस डिवाइस की सेटिंग्स हटाता है और प्रारंभिक सेटअप फिर से शुरू करता है</string>
+    <string name="settings_erase_identity_title">पहचान हटाकर सब मिटाएं?</string>
+    <string name="settings_erase_identity_message">यह आपका Nostr कुंजी जोड़ा, सभी संपर्क, सभी जियोफ़ेंस, लोकेशन इतिहास, संदेश और इस डिवाइस की सेटिंग्स स्थायी रूप से मिटा देगा. संपर्कों को सूचित नहीं किया जाएगा और उनकी प्रतियों पर कोई असर नहीं पड़ेगा. कोई मिटाने का अनुरोध नहीं भेजा जाएगा; संपर्क को सूचित करने के लिए पहले हर एक पर "संपर्क और डेटा हटाएं" का इस्तेमाल करें.</string>
+    <string name="settings_erase_identity_final_title">अंतिम पुष्टि</string>
+    <string name="settings_erase_identity_final_message">सब मिटाकर नई पहचान के साथ फिर से शुरू करें? यह वापस नहीं हो सकता. अगर यह पहचान आगे पड़ सकती है, पहले एन्क्रिप्टेड बैकअप निर्यात करें.</string>
+    <string name="settings_erase_identity_confirm">मिटाएं और पुनः शुरू करें</string>
+    <string name="toast_now_supervised">अब आपकी देखरेख %1$s कर रहा है</string>
+    <string name="toast_already_supervised">पहले से पर्यवेक्षित है; इसके बजाय अनुरोध अस्वीकार करें</string>
+    <string name="toast_declined_supervision_invite">%1$s से पर्यवेक्षण का अनुरोध अस्वीकार किया गया</string>
+    <string name="supervision_disable_request_title">यह डिवाइस अनलॉक करें?</string>
+    <string name="supervision_disable_request_message">%1$s पर्यवेक्षित मोड बंद करने का अनुरोध कर रहा है. स्वीकृति पर सेटिंग्स तब तक स्थायी रूप से अनलॉक हो जाएंगी जब तक कोई नया पर्यवेक्षण अनुरोध स्वीकार न हो.</string>
 </resources>
