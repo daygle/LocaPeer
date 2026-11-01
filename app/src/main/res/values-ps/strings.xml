@@ -907,4 +907,73 @@
     <string name="queued_message_view">پېښه وګورئ</string>
     <string name="queued_message_hide">پټول</string>
     <string name="queued_messages_flush">اوس ولېږئ</string>
+
+    <string name="change_notif_title">د نظارت لاندې وسیلې تنظیمات بدل کړل</string>
+    <string name="change_pause">• د %1$s سره شریکول ودرول شول</string>
+    <string name="change_resume">• د %1$s سره شریکول بیا پیل شول</string>
+    <string name="change_precision">• د ځای دقت %1$s ته بدل شو</string>
+    <string name="change_role">• د شریکولو رول %1$s ته بدل شو</string>
+    <string name="change_temp_start">• د %1$s سره لنډمهاله شریکول پیل شول</string>
+    <string name="change_temp_end">• لنډمهاله شریکول پای ته ورسېدل</string>
+    <string name="change_sos">• د اړیکې SOS حالت %1$s ته بدل شو</string>
+    <string name="change_schedule">• د شریکولو ټول مهالوېش بدل شو</string>
+    <string name="change_schedule_peer">• د %1$s سره د شریکولو مهالوېش بدل شو</string>
+    <string name="change_generic">• د ځای شریکولو یوه تنظیم بدل شو</string>
+
+    <string name="conv_mute">خبرتیاوې بندې کړئ</string>
+    <string name="conv_unmute">خبرتیاوې بیا پرانیزئ</string>
+    <string name="conv_cd_muted">خبرتیاوې بندې دي</string>
+    <string name="notif_supervised_invite_title">%1$s غواړي پر تاسو نظارت وکړي</string>
+    <string name="notif_supervised_invite_text">ومنئ تر څو د دې وسیلې تنظیمات ستاسو د اجازې شاته وتړل شي. بیا کله هم د خلاصولو غوښتنه کولی شئ.</string>
+    <string name="notif_supervision_ended_title">نظارت پای ته ورسېد</string>
+    <string name="notif_supervision_ended_text">ستاسو نظارت کوونکي د دې وسیلې نظارت پای ته ورساوه. تنظیمات اوس خلاص دي.</string>
+    <string name="notif_supervised_wipe_title">د نظارت لاندې وسیله پاکه شوه</string>
+    <string name="notif_supervised_wipe_text">د نظارت لاندې وسیلې د پاکولو خبرتیا ولېږله او خپله پېژندنه یې پاکه کړه. د غلې خبرتیاوو په تمه اوسئ او چې چمتو شوئ اړیکه لرې کړئ.</string>
+    <string name="notif_supervisor_unknown_request_title">له ناپېژاندې وسیلې د نظارت غوښتنه</string>
+    <string name="notif_supervisor_unknown_request_text">هغه وسیله چې غوښتنه یې لېږلې په ستاسو اړیکو کې نشته. لومړی یې د اړیکې په توګه اضافه کړئ، بیا وغواړئ چې د نظارت غوښتنه بیا ولېږي.</string>
+    <string name="contact_add_request_title">نوې اړیکې ته اجازه ورکړل شي؟</string>
+    <string name="contact_add_request_message">ستاسو د نظارت لاندې وسیله غواړي چې “%1$s” د ځای شریکولو نوي اړیکې په توګه اضافه کړي. اجازه ورکول به د هغوی سره شریکول پیل کړي.</string>
+    <string name="incoming_awaiting_approval">د نظارت کوونکي د اجازې په تمه…</string>
+    <string name="circle_leave_supervised">له دې کړۍ څخه د وتلو لپاره ستاسو نظارت کوونکی ته اړتیا ده: له هغوی څخه وغواړئ چې تاسو له خپلې وسیلې لرې کړي.</string>
+
+    <string name="peer_supervise_enable_title">پر دې وسیله نظارت وشي؟</string>
+    <string name="peer_supervise_enable_message">‏%1$s باید په خپله وسیله غوښتنه ومني مخکې لدې چې د هغوی تنظیمات ستاسو د اجازې شاته وتړل شي. د هغوی غلې خبرتیاوې به پرانیستل شي.</string>
+    <string name="peer_supervise_disable_title">نظارت بند شي؟</string>
+    <string name="peer_supervise_disable_message">د %1$s وسیله به خلاصه شي او هغوی ته به خبر ورکړل شي. د هغوی غلې خبرتیاوې به بیا بندې شي.</string>
+    <string name="peer_supervise_disable_confirm">نظارت بند کړئ</string>
+    <string name="scan_add_waiting">ستاسو نظارت کوونکي ته په تمه…</string>
+    <string name="scan_add_waiting_subtitle">د نظارت لاندې اړیکې اضافه کول د هغوی اجازه غواړي. پرېکړه به ژر راشي.</string>
+    <string name="scan_add_denied">ستاسو نظارت کوونکي د دې اړیکې اضافه کول رد کړل.</string>
+    <string name="pending_awaiting_approval">د نظارت کوونکي د اجازې په تمه…</string>
+    <string name="onboarding_bg_open_settings">سیسټم تنظیمات پرانیزئ</string>
+    <string name="onboarding_bg_skip">اوس پرېږدئ</string>
+    <string name="onboarding_bg_location_hint">په Android 11 یا وروسته کې، د شالید ځای اجازه یوازې د سیسټم تنظیماتو څخه ورکول کېږي؛ اپ نشي کولی چې مستقیمه یې وغواړي.</string>
+
+    <string name="settings_notifications_title">خبرتیاوې</string>
+    <string name="settings_message_notifications">د پیغام خبرتیاوې</string>
+    <string name="settings_message_notifications_subtitle">کله چې د چیټ یا کړۍ پیغام راشي خبرتیا وښایه</string>
+    <string name="settings_alert_notifications">د ځای خبرتیاوې</string>
+    <string name="settings_alert_notifications_subtitle">له سیمې وتل، نږدې کېدل او د ځای ورکېدل. SOS خبرتیاوې تل پرانیستې وي.</string>
+    <string name="settings_quiet_hours">غلې ساعتونه</string>
+    <string name="settings_quiet_hours_subtitle">په ټاکل شوې موده کې د پیغام او خبرتیاوو غږ بندوي. یوازې SOS اورېدل کېږي.</string>
+    <string name="settings_quiet_hours_start">د بندېدو پیل</string>
+    <string name="settings_quiet_hours_end">تر</string>
+    <string name="settings_disable_waiting">د نظارت کوونکي د اجازې په تمه…</string>
+    <string name="settings_disable_cancel">غوښتنه لغوه کړئ</string>
+    <string name="settings_disable_denied">ستاسو نظارت کوونکي د خلاصولو غوښتنه رد کړه.</string>
+    <string name="settings_disable_timed_out">په وخت کې ځواب نه راغی. کېدای شي ستاسو نظارت کوونکی آفلاین وي؛ وروسته بیا هڅه وکړئ.</string>
+
+    <string name="settings_erase_identity_card">خطرناکه سیمه</string>
+    <string name="settings_erase_identity">پېژندنه لرې کړئ &amp; ټول معلومات پاک کړئ</string>
+    <string name="settings_erase_identity_subtitle">د پېژندنې کی، اړیکې، د ځای تاریخ، پیغامونه او د دې وسیلې تنظیمات لرې کوي او لومړنی تنظیم بیا پیلوي</string>
+    <string name="settings_erase_identity_title">پېژندنه لرې او هرڅه پاک شي؟</string>
+    <string name="settings_erase_identity_message">دا به ستاسو د Nostr کیو جوړه، ټولې اړیکې، ټولې سیمې، د ځای تاریخ، پیغامونه او د دې وسیلې تنظیمات تلپاتې پاک کړي. اړیکو ته به خبر نه ورکول کېږي او د هغوی کاپیانو ته به زیان نه رسېږي. د پاکولو هېڅ غوښتنه نه لېږل کېږي؛ د اړیکې خبرولو لپاره لومړی د هر یو لپاره “اړیکه او معلومات لرې کړئ” وکاروئ.</string>
+    <string name="settings_erase_identity_final_title">وروستی تایید</string>
+    <string name="settings_erase_identity_final_message">هرڅه پاک او له نوي پېژندنې سره بیا پیل شي؟ دا نشي بېرته راګرځېدلی. که ګومان کوئ چې دا پېژندنه به وروسته ورته اړتیا وي، لومړی کوډ شوی بیک اپ صادر کړئ.</string>
+    <string name="settings_erase_identity_confirm">پاک کړئ او بیا پیل کړئ</string>
+    <string name="toast_now_supervised">اوس %1$s نظارت کوي</string>
+    <string name="toast_already_supervised">لا دمخه د نظارت لاندې ده؛ پرځای یې دا غوښتنه رد کړئ</string>
+    <string name="toast_declined_supervision_invite">د %1$s نظارت غوښتنه رد شوه</string>
+    <string name="supervision_disable_request_title">دا وسیله خلاصه شي؟</string>
+    <string name="supervision_disable_request_message">%1$s غوښتنه کوي چې د نظارت حالت بند شي. اجازه به تنظیمات تلپاتې خلاص کړي تر څو چې نوی نظارت غوښتنه ومنل شي.</string>
 </resources>
