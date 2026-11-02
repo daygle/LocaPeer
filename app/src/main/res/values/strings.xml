@@ -14,21 +14,21 @@
 
     <!-- ── Notifications & mute (Settings → Privacy; chat menus) ──────────── -->
     <string name="settings_notifications_title">Notifications</string>
-    <string name="settings_message_notifications">Message notifications</string>
+    <string name="settings_message_notifications">Message Notifications</string>
     <string name="settings_message_notifications_subtitle">Show a notification when a chat or circle message arrives</string>
-    <string name="settings_alert_notifications">Tracking alerts</string>
+    <string name="settings_alert_notifications">Tracking Alerts</string>
     <string name="settings_alert_notifications_subtitle">Geofence, proximity and missed-location alerts. SOS alerts stay on.</string>
-    <string name="settings_quiet_hours">Quiet hours</string>
+    <string name="settings_quiet_hours">Quiet Hours</string>
     <string name="settings_quiet_hours_subtitle">Silence message and tracking-alert notifications during the window below. SOS stays on.</string>
-    <string name="settings_quiet_hours_start">Quiet from</string>
+    <string name="settings_quiet_hours_start">Quiet From</string>
     <string name="settings_quiet_hours_end">Until</string>
-    <string name="conv_mute">Mute notifications</string>
-    <string name="conv_unmute">Unmute notifications</string>
+    <string name="conv_mute">Mute Notifications</string>
+    <string name="conv_unmute">Unmute Notifications</string>
     <string name="conv_cd_muted">Notifications muted</string>
 
     <!-- ── Identity erase (Settings → Security) ───────────────────────────── -->
-    <string name="settings_erase_identity_card">Danger zone</string>
-    <string name="settings_erase_identity">Delete identity &amp; erase all data</string>
+    <string name="settings_erase_identity_card">Danger Zone</string>
+    <string name="settings_erase_identity">Delete Identity &amp; Erase All Data</string>
     <string name="settings_erase_identity_subtitle">Removes your identity key, contacts, location history, messages and settings from this device and restarts into onboarding</string>
     <string name="settings_erase_identity_title">Delete identity and erase everything?</string>
     <string name="settings_erase_identity_message">This permanently deletes your Nostr keypair, all contacts, geofences, location history, messages and settings from this device. Contacts are not notified and their copies are not affected. Deletion requests are not sent - to tell a peer to remove you, use “Delete Contact and Data” on each contact first.</string>
@@ -608,7 +608,7 @@
     <string name="chat_blocked_banner">You have blocked messages from %1$s. Go to Contacts to unblock.</string>
     <string name="chat_delete_msg_title">Delete message?</string>
     <string name="chat_delete_msg_message">How do you want to delete this message?</string>
-    <string name="chat_delete_from_contact">Delete from contact</string>
+    <string name="chat_delete_from_contact">Delete from Contact</string>
     <string name="chat_delete_from_contact_sub">Deletes the chat from the contact’s device.</string>
     <string name="chat_delete_both_sub">Removes the chat locally and automatically deletes it from the contact’s device.</string>
     <string name="chat_cd_share_location">Share Location</string>
@@ -699,8 +699,8 @@
     <string name="geo_empty_contact_sub">Tap + to assign a geofence area and choose whether to alert on arrival, departure, or both.</string>
     <string name="geo_no_areas_title">No geofences yet</string>
     <string name="geo_no_areas_msg">Create a geofence area first from the Geofences screen, then assign it here.</string>
-    <string name="geo_section_areas">Shared areas</string>
-    <string name="geo_section_assignments">Assigned geofences</string>
+    <string name="geo_section_areas">Shared Areas</string>
+    <string name="geo_section_assignments">Assigned Geofences</string>
     <string name="geo_radius_label">%1$s radius</string>
     <string name="geo_contacts_label">Contacts: %1$s</string>
     <string name="geo_no_contacts_assigned">No contacts assigned</string>
@@ -903,9 +903,9 @@
     <string name="circles_leave">Leave Circle</string>
     <string name="circles_leave_title">Leave circle?</string>
     <string name="circles_leave_message">Leave \"%1$s\"? The owner is notified and removes you from the circle.</string>
-    <string name="circles_leave_local">Leave and delete on this device</string>
+    <string name="circles_leave_local">Leave and Delete on This Device</string>
     <string name="circles_leave_local_sub">Removes the circle and its messages from this device. Messages you sent stay on other members\' devices.</string>
-    <string name="circles_leave_remote">Leave and delete everywhere</string>
+    <string name="circles_leave_remote">Leave and Delete Everywhere</string>
     <string name="circles_leave_remote_sub">Also deletes the messages you sent from the other members\' devices.</string>
     <string name="group_notif_title">%1$s</string>
     <string name="group_notif_body">%1$s: %2$s</string>
