@@ -149,6 +149,14 @@ private const val MAX_CIRCLE_NAME_CHARS = 100
 // Cap on the self-reported device name a supervised-register request may carry (the same
 // bound the invite scanner applies to display names).
 private const val MAX_PEER_DISPLAY_NAME_CHARS = 64
+// Cap on a peer-supplied relay URL that gets persisted (pending track requests).
+private const val MAX_RELAY_URL_CHARS = 512
+// Cap on how many "e" tags of one NIP-09 deletion event are processed. Each tag costs a
+// database lookup on the ordered event pipeline, and the tag list is sender-controlled.
+private const val MAX_DELETION_TARGETS = 100
+// Minimum gap between "unknown device requested supervision" notices (all senders).
+private const val UNKNOWN_REGISTER_NOTICE_INTERVAL_S = 3600L
+private const val UNKNOWN_REGISTER_NOTIF_TAG = "supervised_register_unknown"
 
 // Notification ids are paired with a per-peer tag (notify(tag, id, ...)) instead of folding the
 // peer/pubkey hashCode into the id, since two different peers' hashCodes can collide and silently
@@ -261,19 +269,32 @@ class HeartbeatReceiver @Inject constructor(
 
     /** Last time an approval dialog (unlock / disable request) was surfaced per sender.
      *  In-memory on purpose: the cooldown guards a burst within one session only, and a
-     *  process restart must reset it (the user could legitimately retry immediately). */
-    private val dialogCooldowns = HashMap<String, Long>()
+     *  process restart must reset it (the user could legitimately retry immediately).
+     *  Concurrent because the supervision handlers run in separately launched coroutines on
+     *  the IO pool. Keys are only added for known, supervised contacts, so it stays small. */
+    private val dialogCooldowns = java.util.concurrent.ConcurrentHashMap<String, Long>()
 
-    private fun approvalDialogOnCooldown(key: String): Boolean =
-        System.currentTimeMillis() - (dialogCooldowns[key] ?: 0L) < SUPERVISION_DIALOG_COOLDOWN_MS
-
-    private fun markApprovalDialogShown(key: String) {
-        dialogCooldowns[key] = System.currentTimeMillis()
+    /**
+     * Atomically checks the cooldown for [key] and, if it has elapsed, records now as the
+     * last time the dialog was shown. Returns false while the cooldown is still running. A
+     * separate check and mark would let two concurrent requests both pass and both show a dialog.
+     */
+    private fun tryMarkApprovalDialogShown(key: String): Boolean {
+        val now = System.currentTimeMillis()
+        var marked = false
+        dialogCooldowns.compute(key) { _, last ->
+            if (last == null || now - last >= SUPERVISION_DIALOG_COOLDOWN_MS) {
+                marked = true
+                now
+            } else last
+        }
+        return marked
     }
 
-    /** Last time a "unknown device requested supervision" info notification was shown,
-     *  per sender pubkey (epoch seconds; in-memory, per-session). */
-    private val unknownRegisterNotifiedAt = HashMap<String, Long>()
+    /** Last time the "unknown device requested supervision" notification was shown (epoch
+     *  seconds). One global value rather than one per sender: strangers can cycle keys
+     *  freely, so a per-pubkey map would grow without bound and post one notification per key. */
+    private val unknownRegisterNotifiedAt = java.util.concurrent.atomic.AtomicLong(0L)
 
     // Buffer for batched heartbeat inserts (see HB_BATCH_* constants). Guarded by
     // batchMutex. pendingKeys mirrors the buffer's (deviceId, timestamp) pairs so a
@@ -985,7 +1006,15 @@ class HeartbeatReceiver @Inject constructor(
      * messages they didn't write.
      */
     private suspend fun processDeletionEvent(event: NostrEvent) {
-        val targetEventIds = event.tags.filter { it.firstOrNull() == "e" }.mapNotNull { it.getOrNull(1) }
+        // Only contacts can have sent us anything to delete. This check also stops a stranger
+        // from stalling the ordered event pipeline with a deletion that lists thousands of ids.
+        peerDao.getPeer(event.pubkey) ?: return
+        val targetEventIds = event.tags.asSequence()
+            .filter { it.firstOrNull() == "e" }
+            .mapNotNull { it.getOrNull(1) }
+            .distinct()
+            .take(MAX_DELETION_TARGETS)
+            .toList()
         var deleted = false
         targetEventIds.forEach { eventId ->
             val msg = messageDao.getByNostrEventId(eventId)
@@ -1036,8 +1065,7 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<UnlockRequestPayload>(plaintext) } catch (e: Exception) { return }
         // A supervised user can re-request as fast as they can tap; without a cooldown each
         // request would machine-gun the approval dialog while the previous one is pending.
-        if (approvalDialogOnCooldown("unlock:${event.pubkey}")) return
-        markApprovalDialogShown("unlock:${event.pubkey}")
+        if (!tryMarkApprovalDialogShown("unlock:${event.pubkey}")) return
         supervisionApprovalManager.setPending(
             SupervisionApprovalManager.PendingRequest(
                 fromPubkey = event.pubkey,
@@ -1065,33 +1093,17 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processRegisterRequest(event: NostrEvent) {
         // Ignore requests older than 24 hours - supervisor must be reachable within a day
         if (event.createdAt < Instant.now().epochSecond - 86400) return
-        val peer = peerDao.getPeer(event.pubkey) ?: return
+        val peer = peerDao.getPeer(event.pubkey)
+        if (peer == null) {
+            notifyUnknownRegisterRequest(event)
+            return
+        }
         if (sharingConfigDao.getForPeer(event.pubkey)?.isMySupervised == true) {
             // Already supervising this device: answer the (re)registration in-band with an
             // accept instead of another dialog. This closes the supervisor-initiated invite
             // loop (its 1062 accept step triggers this register request) and repairs the
             // handshake after our own process death without needing the supervisor again.
             autoAcceptRegistration(peer)
-            return
-        }
-        // A stranger we've never added asked us to supervise them: previously this was a
-        // silent drop, which left the requesting device in pending/unlocked forever. Now
-        // it surfaces once per session as an informational notification, and the request
-        // can only proceed after the user adds them as a contact.
-        val nowS = Instant.now().epochSecond
-        if (unknownRegisterNotifiedAt[event.pubkey]?.let { nowS - it < 86400L } != true) {
-            unknownRegisterNotifiedAt[event.pubkey] = nowS
-            notificationManager.notify(
-                event.pubkey,
-                NOTIF_ID_SUPERVISED_REGISTER,
-                NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
-                    .setSmallIcon(R.drawable.ic_notif_alert)
-                    .setContentTitle(context.getString(R.string.notif_supervisor_unknown_request_title))
-                    .setContentText(context.getString(R.string.notif_supervisor_unknown_request_text))
-                    .setPriority(NotificationCompat.PRIORITY_LOW)
-                    .setAutoCancel(true)
-                    .build()
-            )
             return
         }
         // Suppress relay retransmissions if the notification is still active
@@ -1135,6 +1147,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra("navigateTo", "contacts")
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, event.pubkey)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_SUPERVISED_REGISTER)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val openAppPi = PendingIntent.getActivity(
             context, notifId + 2, openAppIntent,
@@ -1153,6 +1166,40 @@ class HeartbeatReceiver @Inject constructor(
             .setAutoCancel(false)
             .build()
         notificationManager.notify(event.pubkey, NOTIF_ID_SUPERVISED_REGISTER, notification)
+    }
+
+    /**
+     * A device we have not added as a contact asked us to supervise it. A silent drop would
+     * leave that device waiting forever, so show one low-priority notice telling the user to
+     * add it as a contact first. The request goes no further until they do.
+     *
+     * The event must decrypt to a valid register payload, so random kind-1055 noise is not
+     * shown. Throttled globally to one notice per [UNKNOWN_REGISTER_NOTICE_INTERVAL_S] under
+     * one fixed tag, so a stranger cycling keys can neither flood the shade nor grow memory.
+     */
+    private suspend fun notifyUnknownRegisterRequest(event: NostrEvent) {
+        val privHex = keyManager.getPrivateKeyHex() ?: return
+        val plaintext = try {
+            crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+        } catch (e: Exception) { return }
+        try {
+            json.decodeFromString<SupervisedRegisterPayload>(plaintext)
+        } catch (e: Exception) { return }
+        val nowS = Instant.now().epochSecond
+        val last = unknownRegisterNotifiedAt.get()
+        if (nowS - last < UNKNOWN_REGISTER_NOTICE_INTERVAL_S) return
+        if (!unknownRegisterNotifiedAt.compareAndSet(last, nowS)) return
+        notificationManager.notify(
+            UNKNOWN_REGISTER_NOTIF_TAG,
+            NOTIF_ID_SUPERVISED_REGISTER,
+            NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+                .setSmallIcon(R.drawable.ic_notif_alert)
+                .setContentTitle(context.getString(R.string.notif_supervisor_unknown_request_title))
+                .setContentText(context.getString(R.string.notif_supervisor_unknown_request_text))
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setAutoCancel(true)
+                .build()
+        )
     }
 
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
@@ -1405,8 +1452,7 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try {
             json.decodeFromString<SupervisedDisableRequestPayload>(plaintext)
         } catch (e: Exception) { return }
-        if (approvalDialogOnCooldown("disable:${event.pubkey}")) return
-        markApprovalDialogShown("disable:${event.pubkey}")
+        if (!tryMarkApprovalDialogShown("disable:${event.pubkey}")) return
         supervisionApprovalManager.setPending(
             SupervisionApprovalManager.PendingRequest(
                 fromPubkey = event.pubkey,
@@ -1482,8 +1528,7 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try {
             json.decodeFromString<ContactAddRequestPayload>(plaintext)
         } catch (e: Exception) { return }
-        if (approvalDialogOnCooldown("contact:${event.pubkey}")) return
-        markApprovalDialogShown("contact:${event.pubkey}")
+        if (!tryMarkApprovalDialogShown("contact:${event.pubkey}")) return
         supervisionApprovalManager.setPending(
             SupervisionApprovalManager.PendingRequest(
                 fromPubkey = event.pubkey,
@@ -1731,6 +1776,10 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processTrackingAlert(event: NostrEvent) {
         val settings = prefs.settings.first()
         if (!settings.notifyOnTrackingAlerts) return
+        // Same gates as the local geofence/proximity/missed-location alerts: the global
+        // alert switch and quiet hours (Settings -> Privacy).
+        if (!settings.alertNotificationsEnabled) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
 
         peerDao.getPeer(event.pubkey) ?: return
         val privHex = keyManager.getPrivateKeyHex() ?: return
@@ -1741,9 +1790,13 @@ class HeartbeatReceiver @Inject constructor(
 
         val title = context.getString(R.string.notif_tracking_alert_title)
         val message = when (payload.type) {
-            "PROXIMITY" -> context.getString(R.string.notif_tracking_proximity, payload.triggerName)
-            "GEOFENCE" -> context.getString(R.string.notif_tracking_geofence, payload.triggerName, payload.alertName)
-            else -> context.getString(R.string.notif_tracking_generic, payload.triggerName)
+            "PROXIMITY" -> context.getString(R.string.notif_tracking_proximity, payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS))
+            "GEOFENCE" -> context.getString(
+                R.string.notif_tracking_geofence,
+                payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS),
+                payload.alertName?.take(MAX_CIRCLE_NAME_CHARS)
+            )
+            else -> context.getString(R.string.notif_tracking_generic, payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS))
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
@@ -1789,7 +1842,13 @@ class HeartbeatReceiver @Inject constructor(
             return
         }
 
-        Log.i(TAG, "Received track request from ${payload.senderDisplayName} (${event.pubkey})")
+        // Bound the sender-controlled strings before they are persisted or shown. Without a
+        // cap a stranger could store a near-1 MB "name" per request, inflating the table and
+        // overflowing the 2 MB CursorWindow when the pending-requests list loads.
+        val senderName = payload.senderDisplayName.take(MAX_PEER_DISPLAY_NAME_CHARS)
+        val senderRelay = payload.senderRelayUrl.take(MAX_RELAY_URL_CHARS)
+
+        Log.i(TAG, "Received track request from $senderName (${event.pubkey})")
 
         val existing = peerDao.getPeer(event.pubkey)
 
@@ -1820,36 +1879,42 @@ class HeartbeatReceiver @Inject constructor(
         pendingRequestDao.upsert(
             PendingRequestEntity(
                 senderPubkey = payload.senderPublicKeyHex,
-                senderName = payload.senderDisplayName,
-                senderRelayUrl = payload.senderRelayUrl,
+                senderName = senderName,
+                senderRelayUrl = senderRelay,
                 isRoleChange = payload.isRoleChange,
                 requestedRole = payload.requestedRole
             )
         )
         val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
             setPackage(context.packageName)
+            // Unique data URI: extras don't take part in PendingIntent matching
+            // (Intent.filterEquals), and this request code (pubkey hash + 20000) is also the
+            // one ProximityEngine used for the same contact, so the two notifications shared
+            // one PendingIntent and FLAG_UPDATE_CURRENT made one open the other's screen.
+            data = android.net.Uri.parse("locapeer-notif://track-request/${event.pubkey}")
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("navigateTo", "share-request")
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
-            putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
-            putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_SENDER_NAME, senderName)
+            putExtra(EXTRA_SENDER_RELAY, senderRelay)
             putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
             if (payload.requestedRole != null) putExtra(EXTRA_REQUESTED_ROLE, payload.requestedRole)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, event.pubkey)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_TRACK_REQUEST)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             setPackage(context.packageName)
             action = ACTION_TRACK_DECLINE
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
-            putExtra(EXTRA_SENDER_NAME, payload.senderDisplayName)
-            putExtra(EXTRA_SENDER_RELAY, payload.senderRelayUrl)
+            putExtra(EXTRA_SENDER_NAME, senderName)
+            putExtra(EXTRA_SENDER_RELAY, senderRelay)
             putExtra(EXTRA_IS_ROLE_CHANGE, payload.isRoleChange)
         }
         val reviewPi = PendingIntent.getActivity(context, notifId, reviewIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val declinePi = PendingIntent.getBroadcast(context, notifId + 1, declineIntent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val senderLabel = payload.senderDisplayName.take(40).ifBlank { context.getString(R.string.notif_someone) }
+        val senderLabel = senderName.take(40).ifBlank { context.getString(R.string.notif_someone) }
         val notifTitle = if (payload.isRoleChange) context.getString(R.string.notif_track_update_title, senderLabel)
                          else context.getString(R.string.notif_track_new_title, senderLabel)
         val requestedRoleLabel = when (payload.requestedRole) {

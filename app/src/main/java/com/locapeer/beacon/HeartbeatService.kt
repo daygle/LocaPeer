@@ -1164,8 +1164,11 @@ class HeartbeatService : LifecycleService() {
                 )
 
                 // Skip remote broadcast if there's no network connection to avoid
-                // wasting battery on failed radio activity and crypto.
-                if (!relayClient.isOnline) {
+                // wasting battery on failed radio activity and crypto. SOS is exempt: the
+                // relay client queues undeliverable events and flushes them on reconnect,
+                // so an alert raised in a dead zone still goes out once coverage returns
+                // (receivers ignore SOS fixes older than 10 minutes).
+                if (!isSos && !relayClient.isOnline) {
                     Log.d(TAG, "Heartbeat broadcast skipped: no network connection")
                     return@launch
                 }

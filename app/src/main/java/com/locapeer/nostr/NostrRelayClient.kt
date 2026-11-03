@@ -58,6 +58,11 @@ private const val TAG = "NostrRelayClient"
 private const val HEARTBEAT_QUEUE_PATTERN = "%\"kind\":${NostrEventKind.HEARTBEAT}%"
 private const val HEARTBEAT_QUEUE_MAX_AGE_MS = 6 * 60 * 60_000L // 6h
 private const val HEARTBEAT_QUEUE_MAX_PER_RELAY = 30
+// SOS alerts repeat every ~10 s while active, so a long dead zone would otherwise queue
+// hundreds per relay. Receivers only alarm on SOS fixes under 10 minutes old; older queued
+// ones are still stored as history, so keep an hour and age out the rest.
+private const val SOS_QUEUE_PATTERN = "%\"kind\":${NostrEventKind.SOS_ALERT}%"
+private const val SOS_QUEUE_MAX_AGE_MS = 60 * 60_000L // 1h
 // How long a sent event waits for the relay's OK before it is assumed delivered (relays that
 // never answer must not keep events queued forever). See OutboxAckTracker.
 private const val OUTBOX_ACK_TIMEOUT_MS = 30_000L
@@ -134,6 +139,7 @@ class NostrRelayClient @Inject constructor(
      */
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
+            currentNetwork = network
             isOnline = true
             if (!isStarted) return
             Log.d(TAG, "Network available; nudging relays to reconnect")
@@ -141,10 +147,19 @@ class NostrRelayClient @Inject constructor(
         }
 
         override fun onLost(network: Network) {
+            // Only the loss of the network we are currently using means we are offline. On a
+            // Wi-Fi -> cellular handover the new default can be reported available before the
+            // old one is reported lost; clearing the flag then would leave the app thinking it
+            // is offline (and skipping every heartbeat) until the next network change.
+            if (currentNetwork != null && currentNetwork != network) return
+            currentNetwork = null
             isOnline = false
             Log.d(TAG, "Network lost")
         }
     }
+
+    /** The default network last reported available; see [networkCallback]. */
+    @Volatile private var currentNetwork: Network? = null
 
     init {
         scope.launch { for (event in inboundEvents) _events.emit(event) }
@@ -302,12 +317,13 @@ class NostrRelayClient @Inject constructor(
 
     /** Persist a failed/offline event for later flush, then bound the heartbeat backlog
      *  (age + count) so self-superseding location beats can't grow the table without end
-     *  while offline. Queued messages and SOS alerts are left untouched. */
+     *  while offline. SOS alerts are only aged out (see [SOS_QUEUE_MAX_AGE_MS]); queued
+     *  messages are left untouched. */
     private suspend fun queuePending(relayUrl: String, msg: String) {
         pendingMessageDao.insert(PendingMessageEntity(relayUrl = relayUrl, content = msg))
-        pendingMessageDao.deleteStaleHeartbeats(
-            relayUrl, HEARTBEAT_QUEUE_PATTERN, System.currentTimeMillis() - HEARTBEAT_QUEUE_MAX_AGE_MS
-        )
+        val now = System.currentTimeMillis()
+        pendingMessageDao.deleteStaleHeartbeats(relayUrl, HEARTBEAT_QUEUE_PATTERN, now - HEARTBEAT_QUEUE_MAX_AGE_MS)
+        pendingMessageDao.deleteStaleHeartbeats(relayUrl, SOS_QUEUE_PATTERN, now - SOS_QUEUE_MAX_AGE_MS)
         pendingMessageDao.capHeartbeats(relayUrl, HEARTBEAT_QUEUE_PATTERN, HEARTBEAT_QUEUE_MAX_PER_RELAY)
     }
 

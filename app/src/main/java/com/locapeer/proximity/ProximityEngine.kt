@@ -48,7 +48,7 @@ private const val OWN_FIX_STALE_MS = 60_000L
 private const val MIN_EXIT_BUFFER_M = 100.0
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
-private const val NOTIF_ID_PROXIMITY = 50000
+const val NOTIF_ID_PROXIMITY = 50000
 
 @Singleton
 class ProximityEngine @Inject constructor(
@@ -206,6 +206,7 @@ class ProximityEngine @Inject constructor(
             putExtra("peerName", personName)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, personDeviceId)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_PROXIMITY)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val chatPi = PendingIntent.getActivity(
             context, personDeviceId.hashCode() + 20000, chatIntent,

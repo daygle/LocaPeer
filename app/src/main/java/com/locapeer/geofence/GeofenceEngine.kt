@@ -46,7 +46,7 @@ private const val ENTER_ACCURACY_FACTOR = 2.0
 private const val ENTER_ACCURACY_FLOOR_M = 100.0
 // Paired with a per fence+person tag (notify(tag, id, ...)) since two peers/fences' hashCodes
 // can collide and silently overwrite each other's notification.
-private const val NOTIF_ID_GEOFENCE = 60000
+const val NOTIF_ID_GEOFENCE = 60000
 
 @Singleton
 class GeofenceEngine @Inject constructor(
@@ -246,6 +246,7 @@ class GeofenceEngine @Inject constructor(
             putExtra("peerName", personName)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, "${fence.id}:$personDeviceId")
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_GEOFENCE)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val chatPi = PendingIntent.getActivity(
             context, "${fence.id}:$personDeviceId:chat".hashCode(), chatIntent,
