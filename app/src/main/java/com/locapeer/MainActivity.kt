@@ -59,6 +59,19 @@ import javax.inject.Inject
 const val EXTRA_CANCEL_NOTIF_TAG = "cancelNotifTag"
 const val EXTRA_CANCEL_NOTIF_ID = "cancelNotifId"
 
+/**
+ * The notification ids an intent may ask MainActivity to dismiss. MainActivity is exported,
+ * so any installed app can send these extras; without this list, an app that knew a
+ * contact's pubkey could silently dismiss any of our notifications, including a live SOS
+ * alert. Only the ids our own notification actions actually carry are honoured.
+ */
+private val CANCELLABLE_NOTIF_IDS = setOf(
+    com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST,
+    com.locapeer.subscriber.NOTIF_ID_SUPERVISED_REGISTER,
+    com.locapeer.geofence.NOTIF_ID_GEOFENCE,
+    com.locapeer.proximity.NOTIF_ID_PROXIMITY,
+)
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -220,7 +233,7 @@ class MainActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent?) {
         intent?.getStringExtra(EXTRA_CANCEL_NOTIF_TAG)?.let { tag ->
             val id = intent.getIntExtra(EXTRA_CANCEL_NOTIF_ID, -1)
-            if (id >= 0) {
+            if (id in CANCELLABLE_NOTIF_IDS) {
                 val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
                 nm.cancel(tag, id)
             }

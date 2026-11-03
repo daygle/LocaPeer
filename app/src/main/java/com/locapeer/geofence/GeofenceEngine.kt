@@ -46,7 +46,7 @@ private const val ENTER_ACCURACY_FACTOR = 2.0
 private const val ENTER_ACCURACY_FLOOR_M = 100.0
 // Paired with a per fence+person tag (notify(tag, id, ...)) since two peers/fences' hashCodes
 // can collide and silently overwrite each other's notification.
-private const val NOTIF_ID_GEOFENCE = 60000
+const val NOTIF_ID_GEOFENCE = 60000
 
 @Singleton
 class GeofenceEngine @Inject constructor(

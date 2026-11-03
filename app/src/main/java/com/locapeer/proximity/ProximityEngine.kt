@@ -48,7 +48,7 @@ private const val OWN_FIX_STALE_MS = 60_000L
 private const val MIN_EXIT_BUFFER_M = 100.0
 // Paired with a per-peer tag (notify(tag, id, ...)) since two peers' deviceId hashCodes can
 // collide and silently overwrite each other's notification.
-private const val NOTIF_ID_PROXIMITY = 50000
+const val NOTIF_ID_PROXIMITY = 50000
 
 @Singleton
 class ProximityEngine @Inject constructor(
