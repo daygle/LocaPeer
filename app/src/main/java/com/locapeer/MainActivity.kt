@@ -58,12 +58,15 @@ import javax.inject.Inject
  */
 const val EXTRA_CANCEL_NOTIF_TAG = "cancelNotifTag"
 const val EXTRA_CANCEL_NOTIF_ID = "cancelNotifId"
+/** Proof that the cancel request came from our own notification; see [com.locapeer.util.NotificationCancelToken]. */
+const val EXTRA_CANCEL_NOTIF_TOKEN = "cancelNotifToken"
 
 /**
  * The notification ids an intent may ask MainActivity to dismiss. MainActivity is exported,
- * so any installed app can send these extras; without this list, an app that knew a
- * contact's pubkey could silently dismiss any of our notifications, including a live SOS
- * alert. Only the ids our own notification actions actually carry are honoured.
+ * so any installed app can send the cancel extras. The request must also carry the install's
+ * [com.locapeer.util.NotificationCancelToken], which only our own notification actions hold;
+ * this list is a second guard that keeps other ids (such as a live SOS alert) out of reach
+ * even if the token ever leaked.
  */
 private val CANCELLABLE_NOTIF_IDS = setOf(
     com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST,
@@ -233,11 +236,15 @@ class MainActivity : AppCompatActivity() {
     private fun handleIntent(intent: Intent?) {
         intent?.getStringExtra(EXTRA_CANCEL_NOTIF_TAG)?.let { tag ->
             val id = intent.getIntExtra(EXTRA_CANCEL_NOTIF_ID, -1)
-            if (id in CANCELLABLE_NOTIF_IDS) {
+            val token = intent.getStringExtra(EXTRA_CANCEL_NOTIF_TOKEN)
+            if (id in CANCELLABLE_NOTIF_IDS &&
+                com.locapeer.util.NotificationCancelToken.matches(this, token)
+            ) {
                 val nm = getSystemService(NOTIFICATION_SERVICE) as android.app.NotificationManager
                 nm.cancel(tag, id)
             }
             intent.removeExtra(EXTRA_CANCEL_NOTIF_TAG)
+            intent.removeExtra(EXTRA_CANCEL_NOTIF_TOKEN)
         }
         val action = intent?.action
         val data = intent?.data

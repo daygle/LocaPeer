@@ -246,6 +246,7 @@ class GeofenceEngine @Inject constructor(
             putExtra("peerName", personName)
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TAG, "${fence.id}:$personDeviceId")
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_ID, NOTIF_ID_GEOFENCE)
+            putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val chatPi = PendingIntent.getActivity(
             context, "${fence.id}:$personDeviceId:chat".hashCode(), chatIntent,
