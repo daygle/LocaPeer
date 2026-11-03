@@ -31,7 +31,8 @@ interface PendingMessageDao {
      * marker, so queued DMs and SOS alerts are never touched - a stale location is
      * worthless once superseded, but a message must still be delivered. Matched by
      * content substring because pending rows store the raw event JSON (no typed kind
-     * column), and the serializer emits compact, stable JSON.
+     * column), and the serializer emits compact, stable JSON. The relay client also passes
+     * the SOS kind's pattern here to age out stale queued SOS repeats.
      */
     @Query("DELETE FROM pending_messages WHERE relayUrl = :relayUrl AND content LIKE :heartbeatPattern AND createdAt < :cutoff")
     suspend fun deleteStaleHeartbeats(relayUrl: String, heartbeatPattern: String, cutoff: Long)
