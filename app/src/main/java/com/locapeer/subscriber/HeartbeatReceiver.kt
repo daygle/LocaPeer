@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import androidx.core.net.toUri
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.beacon.HeartbeatPayload
@@ -1891,7 +1892,7 @@ class HeartbeatReceiver @Inject constructor(
             // (Intent.filterEquals), and this request code (pubkey hash + 20000) is also the
             // one ProximityEngine used for the same contact, so the two notifications shared
             // one PendingIntent and FLAG_UPDATE_CURRENT made one open the other's screen.
-            data = android.net.Uri.parse("locapeer-notif://track-request/${event.pubkey}")
+            data = "locapeer-notif://track-request/${event.pubkey}".toUri()
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
             putExtra("navigateTo", "share-request")
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
