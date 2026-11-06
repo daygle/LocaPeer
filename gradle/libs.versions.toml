@@ -18,7 +18,7 @@ bouncycastleProv = "1.86"
 # pluginManagement block so the CodeQL workflow can override it with -PkotlinVersion.
 # A catalog alias here would silently pin the version and break that override.
 ksp = "2.3.13"
-agp = "9.5.0"
+agp = "9.5.1"
 composeBom = "2026.09.00"
 hilt = "2.60.1"
 androidxHilt = "1.4.0"
