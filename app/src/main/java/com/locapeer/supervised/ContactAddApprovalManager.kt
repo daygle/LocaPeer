@@ -191,7 +191,7 @@ class ContactAddApprovalManager @Inject constructor(
             // No path to the supervisor: treat as a denial so nothing treats silence as
             // consent; the queued intent is dropped with it.
             android.util.Log.w(TAG, "Failed to send contact-add request", e)
-            removeFromQueue(requestId, decided = false, fromTimeout = true)
+            removeFromQueue(requestId, decided = false)
         }
     }
 

@@ -19,7 +19,9 @@ private val PIN_COLORS = listOf(
     "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
 
-internal fun pinColorIndex(hashCode: Int): Int = Math.floorMod(hashCode, PIN_COLORS.size)
+// abs of the remainder (not floorMod) keeps every contact's existing default colour; taking the
+// remainder first also avoids abs(Int.MIN_VALUE) staying negative.
+internal fun pinColorIndex(hashCode: Int): Int = Math.abs(hashCode % PIN_COLORS.size)
 
 object MarkerIconFactory {
 

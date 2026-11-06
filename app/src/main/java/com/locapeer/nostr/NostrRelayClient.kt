@@ -75,6 +75,9 @@ private const val INBOUND_EVENT_QUEUE_MAX_BYTES = 32 * 1024 * 1024L
 // Resume reading only once the drainer has worked through most of the backlog, so a replay
 // cannot immediately re-overflow and turn into a reconnect loop.
 private const val INBOUND_EVENT_QUEUE_RESUME_BYTES = 8 * 1024 * 1024L
+// The same hysteresis for the event count, so an overflow caused by many small events (well under
+// the byte budget) also waits for the backlog to shrink before replaying.
+private const val INBOUND_EVENT_QUEUE_RESUME_COUNT = INBOUND_EVENT_QUEUE_CAPACITY / 4
 // Rough retained size of a queued event: content dominates, the rest is id/sig/tags overhead.
 private fun incomingEventBytes(event: NostrEvent): Long = event.content.length + 256L
 
@@ -124,9 +127,13 @@ class NostrRelayClient @Inject constructor(
     // the relay is reconnected so its active subscriptions can replay the unqueued event.
     private val inboundEvents = Channel<NostrEvent>(INBOUND_EVENT_QUEUE_CAPACITY)
     private val inboundQueuedBytes = java.util.concurrent.atomic.AtomicLong(0)
+    private val inboundQueuedCount = java.util.concurrent.atomic.AtomicInteger(0)
     /** Set when the inbound queue overflows; every relay stops reading until the drainer catches
      *  up. Lifted by the drainer itself (see [init]) rather than on reconnect, so replaying the
-     *  same burst cannot re-trigger overflow before there is room for it. */
+     *  same burst cannot re-trigger overflow before there is room for it. Set and cleared only
+     *  under [recentEventLock]: the producer sets it while the queue still holds the backlog, and
+     *  the drainer re-checks under the same lock after every dequeue, so it cannot be left set
+     *  with nothing queued to clear it. */
     @Volatile private var inboundBackpressured = false
 
     private val _relayStatus by lazy { MutableStateFlow(emptyMap<String, Boolean>()) }
@@ -180,14 +187,21 @@ class NostrRelayClient @Inject constructor(
     init {
         scope.launch {
             for (event in inboundEvents) {
-                // Release the reservation once the event has actually been handed downstream.
-                val remaining = inboundQueuedBytes.addAndGet(-incomingEventBytes(event))
-                if (inboundBackpressured && remaining <= INBOUND_EVENT_QUEUE_RESUME_BYTES) {
-                    inboundBackpressured = false
-                    // Events the recovering connection delivered while reading was paused were
-                    // skipped, so ask every connected relay for them again.
-                    resubscribeAll()
+                // Release the reservation as the event leaves the queue.
+                inboundQueuedBytes.addAndGet(-incomingEventBytes(event))
+                inboundQueuedCount.decrementAndGet()
+                val resume = synchronized(recentEventLock) {
+                    if (inboundBackpressured &&
+                        inboundQueuedBytes.get() <= INBOUND_EVENT_QUEUE_RESUME_BYTES &&
+                        inboundQueuedCount.get() <= INBOUND_EVENT_QUEUE_RESUME_COUNT
+                    ) {
+                        inboundBackpressured = false
+                        true
+                    } else false
                 }
+                // Events the recovering connection delivered while reading was paused were
+                // skipped, so ask every connected relay for them again.
+                if (resume) resubscribeAll()
                 _events.emit(event)
             }
         }
@@ -608,13 +622,19 @@ class NostrRelayClient @Inject constructor(
                             val enqueueState = synchronized(recentEventLock) {
                                 when {
                                     dedupCache.isKnown(event.pubkey, event.id) -> 0
-                                    inboundQueuedBytes.get() + queuedBytes > INBOUND_EVENT_QUEUE_MAX_BYTES -> 2
-                                    inboundEvents.trySend(event).isSuccess -> {
+                                    inboundQueuedBytes.get() + queuedBytes <= INBOUND_EVENT_QUEUE_MAX_BYTES &&
+                                        inboundEvents.trySend(event).isSuccess -> {
                                         inboundQueuedBytes.addAndGet(queuedBytes)
+                                        inboundQueuedCount.incrementAndGet()
                                         dedupCache.record(event.pubkey, event.id)
                                         1
                                     }
-                                    else -> 2
+                                    else -> {
+                                        // Set under the lock the drainer re-checks under, so the
+                                        // drainer cannot empty the queue before seeing the flag.
+                                        inboundBackpressured = true
+                                        2
+                                    }
                                 }
                             }
                             if (enqueueState == 1) {
@@ -626,7 +646,6 @@ class NostrRelayClient @Inject constructor(
                             } else if (enqueueState == 2) {
                                 // Stop reading everywhere, then drop this socket so its active
                                 // subscriptions replay the event once there is room again.
-                                inboundBackpressured = true
                                 Log.w(TAG, "Inbound event queue full for $url; reconnecting to replay events")
                                 webSocket.close(1013, "Inbound event queue full")
                             }
