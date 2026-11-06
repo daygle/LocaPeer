@@ -40,6 +40,7 @@ import com.locapeer.map.MarkerIconFactory
 import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.components.TimePickerDialog
 import com.locapeer.util.DisplayFormat
+import com.locapeer.util.normalizeHexColor
 import org.maplibre.android.geometry.LatLng
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -433,7 +434,8 @@ private fun HistoryMapTab(
 
     val selectedId = selectedPing?.id
     val lines = remember(heartbeats) {
-        val pinColor = heartbeats.last().pinColor
+        // Stored rows can predate the current validation, so check before parsing.
+        val pinColor = normalizeHexColor(heartbeats.last().pinColor)
         val lineArgb = if (pinColor.isNotEmpty())
             pinColor.toColorInt().let {
                 android.graphics.Color.argb(200, android.graphics.Color.red(it), android.graphics.Color.green(it), android.graphics.Color.blue(it))

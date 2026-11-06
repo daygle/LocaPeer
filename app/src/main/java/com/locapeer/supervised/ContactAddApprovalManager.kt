@@ -24,6 +24,11 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
+internal const val CONTACT_ADD_TIMEOUT_MS = 60_000L
+
+internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long =
+    (requestedAt + CONTACT_ADD_TIMEOUT_MS - nowMillis).coerceAtLeast(0L)
+
 /**
  * Per-action approval queue for adding NEW tracking destinations while supervised
  * (kinds 1067/1068). Both doors a supervised device has for establishing new shares
@@ -101,7 +106,9 @@ class ContactAddApprovalManager @Inject constructor(
     init {
         scope.launch {
             mutex.withLock {
-                loadPersistedLocked()
+                loadPersistedLocked().forEach { intent ->
+                    armTimeout(intent.requestId, timeoutDelayMs(intent.requestedAt))
+                }
             }
             publish()
         }
@@ -139,19 +146,26 @@ class ContactAddApprovalManager @Inject constructor(
             requestedAt = System.currentTimeMillis()
         )
 
+        var supersededCallbacks = emptyList<(Boolean) -> Unit>()
         mutex.withLock {
             // Same contact => supersede (the supervisor answers the newest request only;
             // a stale duplicate would double-fire the physical add).
+            val superseded = queue.filter {
+                it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true)
+            }
+            superseded.forEach { timeouts.remove(it.requestId)?.cancel() }
+            supersededCallbacks = superseded.mapNotNull { callbacks.remove(it.requestId) }
             queue.removeAll {
                 it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) ||
                     it.requestId == requestId
             }
+            callbacks[requestId] = onDecided
             queue.add(intent)
             persistLocked()
+            armTimeout(requestId, timeoutDelayMs(intent.requestedAt))
         }
+        supersededCallbacks.forEach { callback -> runCatching { callback(false) } }
         publish()
-        callbacks[requestId] = onDecided
-        armTimeout(requestId)
 
         try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
@@ -213,20 +227,25 @@ class ContactAddApprovalManager @Inject constructor(
 
     private suspend fun removeFromQueue(
         requestId: String,
-        decided: Boolean?
+        decided: Boolean?,
+        fromTimeout: Boolean = false
     ): StoredContactAddIntent? {
         val removed: StoredContactAddIntent?
+        val timeout: Job?
+        val callback: ((Boolean) -> Unit)?
         mutex.withLock {
             removed = queue.firstOrNull { it.requestId == requestId }
+            timeout = timeouts.remove(requestId)
+            callback = callbacks.remove(requestId)
             if (removed != null) {
                 queue.removeAll { it.requestId == requestId }
                 persistLocked()
             }
         }
         if (removed != null) {
-            timeouts.remove(requestId)?.cancel()
-            callbacks.remove(requestId)?.let {
-                decided?.let { d -> runCatching { it(d) } }
+            if (!fromTimeout) timeout?.cancel()
+            callback?.let { onDecided ->
+                decided?.let { result -> runCatching { onDecided(result) } }
             }
             publish()
         }
@@ -234,26 +253,34 @@ class ContactAddApprovalManager @Inject constructor(
     }
 
     private suspend fun removeFromQueueFor(contactPubkeyHex: String) {
+        var removedCallbacks = emptyList<(Boolean) -> Unit>()
         mutex.withLock {
+            val removed = queue.filter { it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }
+            removed.forEach { timeouts.remove(it.requestId)?.cancel() }
+            removedCallbacks = removed.mapNotNull { callbacks.remove(it.requestId) }
             queue.removeAll { it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }
             persistLocked()
         }
+        removedCallbacks.forEach { callback -> runCatching { callback(false) } }
         publish()
     }
 
 
-    private fun armTimeout(requestId: String) {
+    private fun armTimeout(requestId: String, delayMs: Long = CONTACT_ADD_TIMEOUT_MS) {
         timeouts[requestId]?.cancel()
         timeouts[requestId] = scope.launch {
-            delay(60_000)
-            removeFromQueue(requestId, decided = false)
+            delay(delayMs)
+            removeFromQueue(requestId, decided = false, fromTimeout = true)
         }
     }
 
+    private fun timeoutDelayMs(requestedAt: Long): Long =
+        contactAddTimeoutDelayMs(requestedAt, System.currentTimeMillis())
+
     /** Load persisted intents at construction; drop anything older than the supervisor's
      *  decision freshness window (they can no longer be answered, only re-requested). */
-    private suspend fun loadPersistedLocked() {
-        val raw = prefs.getContactAddIntentsJson() ?: return
+    private suspend fun loadPersistedLocked(): List<StoredContactAddIntent> {
+        val raw = prefs.getContactAddIntentsJson() ?: return emptyList()
         val stored = runCatching {
             json.decodeFromString<List<StoredContactAddIntent>>(raw)
         }.getOrDefault(emptyList())
@@ -261,6 +288,7 @@ class ContactAddApprovalManager @Inject constructor(
         queue.clear()
         queue.addAll(stored.filter { it.requestedAt >= cutoff })
         if (queue.size != stored.size) persistLocked()
+        return queue.toList()
     }
 
     private suspend fun persistLocked() {

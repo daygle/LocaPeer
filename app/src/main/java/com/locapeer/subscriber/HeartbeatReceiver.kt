@@ -2,6 +2,7 @@ package com.locapeer.subscriber
 
 import android.app.NotificationChannel
 import com.locapeer.util.backgroundScope
+import com.locapeer.util.normalizeHexColor
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -144,12 +145,27 @@ private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
 // bound, a contact could store a multi-megabyte row that overflows Android's 2 MB
 // CursorWindow and crashes every screen that loads the conversation.
 private const val MAX_DM_PLAINTEXT_CHARS = 512 * 1024
+private const val MAX_HEARTBEAT_ACCURACY_M = 100_000f
+private const val MAX_HEARTBEAT_SPEED_MPS = 1_000f
+private const val MIN_HEARTBEAT_ALTITUDE_M = -1_000.0
+private const val MAX_HEARTBEAT_ALTITUDE_M = 100_000.0
+private const val MAX_MOTION_STATE_CHARS = 32
 // Bounds on the sender-controlled parts of a circle envelope that get persisted.
 private const val MAX_CIRCLE_MEMBERS = 256
 private const val MAX_CIRCLE_NAME_CHARS = 100
 // Cap on the self-reported device name a supervised-register request may carry (the same
 // bound the invite scanner applies to display names).
 private const val MAX_PEER_DISPLAY_NAME_CHARS = 64
+
+/** [value] when it is finite and within [minimum]..[maximum], else [fallback]. Sensor fields in
+ *  a heartbeat are peer-controlled, so implausible or non-finite readings are replaced instead of
+ *  being persisted and later fed into distance/speed formatting. */
+private fun finiteInRange(value: Float, minimum: Float, maximum: Float, fallback: Float = 0f): Float =
+    value.takeIf { it.isFinite() && it in minimum..maximum } ?: fallback
+
+private fun finiteInRange(value: Double, minimum: Double, maximum: Double, fallback: Double = 0.0): Double =
+    value.takeIf { it.isFinite() && it in minimum..maximum } ?: fallback
+
 // Cap on a peer-supplied relay URL that gets persisted (pending track requests).
 private const val MAX_RELAY_URL_CHARS = 512
 // Cap on how many "e" tags of one NIP-09 deletion event are processed. Each tag costs a
@@ -206,6 +222,9 @@ internal fun roleAfterTrackAccept(currentRole: String, acceptedRole: String?): S
         else -> PeerEntity.ROLE_NONE
     }
 }
+
+/** SOS priority comes from the signed event kind, not the optional payload flag. */
+internal fun isSosEvent(eventKind: Int): Boolean = eventKind == NostrEventKind.SOS_ALERT
 
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
@@ -527,12 +546,6 @@ class HeartbeatReceiver @Inject constructor(
         if (event.kind != NostrEventKind.HEARTBEAT && event.kind != NostrEventKind.SOS_ALERT) return
         val broadcaster = peerDao.getPeer(event.pubkey) ?: return
 
-        // Ensure peer is unarchived if they send an SOS or update their heartbeat
-        // so they are visible in the contacts/messaging UI during active tracking
-        if (event.kind == NostrEventKind.SOS_ALERT) {
-            peerDao.unarchive(event.pubkey)
-        }
-
         // Drop normal heartbeats from peers we are not configured to receive from.
         // SOS alerts bypass role checks - emergencies override access control.
         if (event.kind == NostrEventKind.HEARTBEAT &&
@@ -546,6 +559,13 @@ class HeartbeatReceiver @Inject constructor(
             val privBytes = crypto.hexToBytes(privHex)
             val plaintext = crypto.nip44Decrypt(privBytes, event.pubkey, event.content)
             val payload = json.decodeFromString<HeartbeatPayload>(plaintext)
+            // The signed event kind is authoritative: a payload flag cannot elevate a normal
+            // heartbeat to SOS, while older SOS senders may omit the optional flag.
+            val isSos = isSosEvent(event.kind)
+            if (isSos) {
+                // Keep contacts who raise a verified SOS visible in the contacts UI.
+                peerDao.unarchive(event.pubkey)
+            }
             // Reject out-of-range coordinates outright: the payload is peer-controlled,
             // and a lat/lng outside the valid range feeds NaN-free but nonsensical values
             // into the geofence/proximity distance math and the map. (kotlinx blocks
@@ -574,18 +594,19 @@ class HeartbeatReceiver @Inject constructor(
             }
             val entity = HeartbeatEntity(
                 deviceId = canonicalDeviceId,
-                displayName = payload.displayName,
+                displayName = payload.displayName.take(MAX_PEER_DISPLAY_NAME_CHARS),
                 timestamp = timestampMs,
                 lat = payload.lat,
                 lng = payload.lng,
-                accuracy = payload.accuracy,
-                battery = payload.battery,
-                motionState = payload.motionState,
-                isSos = payload.isSos,
-                pinColor = payload.pinColor,
-                speed = payload.speed,
-                bearing = payload.bearing,
-                altitude = payload.altitude,
+                accuracy = finiteInRange(payload.accuracy, 0f, MAX_HEARTBEAT_ACCURACY_M),
+                battery = payload.battery.coerceIn(0, 100),
+                motionState = payload.motionState.take(MAX_MOTION_STATE_CHARS).ifBlank { "UNKNOWN" },
+                isSos = isSos,
+                // Peer-supplied: a malformed colour would crash toColorInt() on the map.
+                pinColor = normalizeHexColor(payload.pinColor),
+                speed = finiteInRange(payload.speed, 0f, MAX_HEARTBEAT_SPEED_MPS),
+                bearing = finiteInRange(payload.bearing, 0f, 360f),
+                altitude = finiteInRange(payload.altitude, MIN_HEARTBEAT_ALTITUDE_M, MAX_HEARTBEAT_ALTITUDE_M),
                 // Bound the sender-reported interval to a sane range. The missed-heartbeat
                 // watchdog multiplies this by 1000 then ×2; an unbounded value would either
                 // overflow or push the alert threshold so far out that a peer could silently
@@ -611,7 +632,7 @@ class HeartbeatReceiver @Inject constructor(
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
             if (isFresh) {
-                if (payload.isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
+                if (isSos) sendSosNotification(canonicalDeviceId, broadcaster.displayName, payload)
                 // Alerts name the contact as saved locally, not by the payload's
                 // self-reported (peer-controlled) display name.
                 val alertEntity = entity.copy(displayName = broadcaster.displayName.ifBlank { entity.displayName })
