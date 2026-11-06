@@ -23,7 +23,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -160,14 +159,6 @@ fun AppLockScreen(
         }
     }
 
-    // Reset the auto-prompt guard if the screen leaves composition without success
-    // (e.g. Activity recreation after a system dialog), so the next composition
-    // re-triggers instead of leaving the screen locked and silent. Currently unused
-    // but kept (with no-op body) as the documented seam for adding an auto-retry
-    // affordance later.
-    DisposableEffect(Unit) {
-        onDispose { }
-    }
 }
 
 /**

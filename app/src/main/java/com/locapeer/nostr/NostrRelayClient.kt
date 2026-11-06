@@ -66,6 +66,17 @@ private const val SOS_QUEUE_MAX_AGE_MS = 60 * 60_000L // 1h
 // How long a sent event waits for the relay's OK before it is assumed delivered (relays that
 // never answer must not keep events queued forever). See OutboxAckTracker.
 private const val OUTBOX_ACK_TIMEOUT_MS = 30_000L
+// Keep bursts of verified relay events bounded while the ordered downstream collector is busy.
+// The count must comfortably exceed a catch-up replay (the heartbeat catch-up asks for up to
+// 1,000 events), so ordinary restore never trips the overflow path; the byte budget is the real
+// memory bound when a relay sends fewer but much larger events.
+private const val INBOUND_EVENT_QUEUE_CAPACITY = 2_048
+private const val INBOUND_EVENT_QUEUE_MAX_BYTES = 32 * 1024 * 1024L
+// Resume reading only once the drainer has worked through most of the backlog, so a replay
+// cannot immediately re-overflow and turn into a reconnect loop.
+private const val INBOUND_EVENT_QUEUE_RESUME_BYTES = 8 * 1024 * 1024L
+// Rough retained size of a queued event: content dominates, the rest is id/sig/tags overhead.
+private fun incomingEventBytes(event: NostrEvent): Long = event.content.length + 256L
 
 @Singleton
 class NostrRelayClient @Inject constructor(
@@ -109,9 +120,14 @@ class NostrRelayClient @Inject constructor(
     private val _events by lazy { MutableSharedFlow<NostrEvent>(extraBufferCapacity = 256) }
     val events: SharedFlow<NostrEvent> by lazy { _events }
     // Verified events queue here and one coroutine emits them, so collectors see them in arrival
-    // order. A coroutine per event (as before) could emit them out of order, e.g. a delivery ack
-    // or deletion ahead of the message it refers to. Unbounded like those coroutines were.
-    private val inboundEvents = Channel<NostrEvent>(Channel.UNLIMITED)
+    // order. A bounded queue prevents a relay burst from consuming unbounded memory; on overflow,
+    // the relay is reconnected so its active subscriptions can replay the unqueued event.
+    private val inboundEvents = Channel<NostrEvent>(INBOUND_EVENT_QUEUE_CAPACITY)
+    private val inboundQueuedBytes = java.util.concurrent.atomic.AtomicLong(0)
+    /** Set when the inbound queue overflows; every relay stops reading until the drainer catches
+     *  up. Lifted by the drainer itself (see [init]) rather than on reconnect, so replaying the
+     *  same burst cannot re-trigger overflow before there is room for it. */
+    @Volatile private var inboundBackpressured = false
 
     private val _relayStatus by lazy { MutableStateFlow(emptyMap<String, Boolean>()) }
     /** Maps relay URL → connected. Updated on every connect/disconnect event. */
@@ -162,7 +178,19 @@ class NostrRelayClient @Inject constructor(
     @Volatile private var currentNetwork: Network? = null
 
     init {
-        scope.launch { for (event in inboundEvents) _events.emit(event) }
+        scope.launch {
+            for (event in inboundEvents) {
+                // Release the reservation once the event has actually been handed downstream.
+                val remaining = inboundQueuedBytes.addAndGet(-incomingEventBytes(event))
+                if (inboundBackpressured && remaining <= INBOUND_EVENT_QUEUE_RESUME_BYTES) {
+                    inboundBackpressured = false
+                    // Events the recovering connection delivered while reading was paused were
+                    // skipped, so ask every connected relay for them again.
+                    resubscribeAll()
+                }
+                _events.emit(event)
+            }
+        }
         try {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             cm?.registerDefaultNetworkCallback(networkCallback)
@@ -274,6 +302,15 @@ class NostrRelayClient @Inject constructor(
             activeSubscriptions[subscriptionId] = msg
         }
         sendToAll(msg, isEvent = false)
+    }
+
+    /** Re-send every active subscription so connected relays replay from their stored history. */
+    private fun resubscribeAll() {
+        val subs = synchronized(subsLock) { activeSubscriptions.values.toList() }
+        if (subs.isEmpty()) return
+        relays.values.forEach { relay ->
+            if (relay.isConnected) subs.forEach { relay.send(it) }
+        }
     }
 
     fun unsubscribe(subscriptionId: String) {
@@ -534,7 +571,7 @@ class NostrRelayClient @Inject constructor(
             }
 
             override fun onMessage(webSocket: WebSocket, text: String) {
-                if (removed || this@RelayConnection.webSocket !== webSocket) return
+                if (removed || inboundBackpressured || this@RelayConnection.webSocket !== webSocket) return
                 // Bound parser/signature work before building a JSON tree. Legitimate inline
                 // media envelopes fit well below this limit.
                 if (text.length > 2 * 1024 * 1024) return
@@ -565,16 +602,33 @@ class NostrRelayClient @Inject constructor(
                                 Log.w(TAG, "Dropping event ${event.id.take(16)} from $url: invalid signature")
                                 return
                             }
-                            val isNew = synchronized(recentEventLock) {
-                                dedupCache.record(event.pubkey, event.id)
+                            // Enqueue and mark seen atomically: if the bounded queue is full, do
+                            // not cache the id, so the relay can replay this event after reconnect.
+                            val queuedBytes = incomingEventBytes(event)
+                            val enqueueState = synchronized(recentEventLock) {
+                                when {
+                                    dedupCache.isKnown(event.pubkey, event.id) -> 0
+                                    inboundQueuedBytes.get() + queuedBytes > INBOUND_EVENT_QUEUE_MAX_BYTES -> 2
+                                    inboundEvents.trySend(event).isSuccess -> {
+                                        inboundQueuedBytes.addAndGet(queuedBytes)
+                                        dedupCache.record(event.pubkey, event.id)
+                                        1
+                                    }
+                                    else -> 2
+                                }
                             }
-                            if (isNew) {
+                            if (enqueueState == 1) {
                                 if (eventsSinceLastSave.incrementAndGet() >= 100) {
                                     eventsSinceLastSave.set(0)
                                     val snapshot = synchronized(recentEventLock) { dedupCache.snapshot() }
                                     scope.launch { prefs.saveRecentEventIds(snapshot) }
                                 }
-                                inboundEvents.trySend(event)
+                            } else if (enqueueState == 2) {
+                                // Stop reading everywhere, then drop this socket so its active
+                                // subscriptions replay the event once there is room again.
+                                inboundBackpressured = true
+                                Log.w(TAG, "Inbound event queue full for $url; reconnecting to replay events")
+                                webSocket.close(1013, "Inbound event queue full")
                             }
                         }
                         "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")

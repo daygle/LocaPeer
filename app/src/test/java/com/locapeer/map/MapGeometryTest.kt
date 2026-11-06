@@ -31,6 +31,12 @@ class MapGeometryTest {
         assertEquals(40_075_016.686 / 512, MapGeometry.metresPerDp(0.0, 0.0), 1e-6)
     }
 
+    @Test fun `pin palette index is valid for every signed hash including Int MIN`() {
+        assertTrue(pinColorIndex(Int.MIN_VALUE) in 0 until 12)
+        assertTrue(pinColorIndex(Int.MAX_VALUE) in 0 until 12)
+        assertEquals(0, pinColorIndex(Int.MIN_VALUE))
+    }
+
     @Test fun `scale bar picks the largest 1-2-5 distance that fits`() {
         assertEquals(500.0, MapGeometry.niceScaleMetres(730.0), 0.0)
         assertEquals(2_000.0, MapGeometry.niceScaleMetres(4_999.0), 0.0)

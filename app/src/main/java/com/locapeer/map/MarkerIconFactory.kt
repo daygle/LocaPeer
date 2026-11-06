@@ -11,12 +11,15 @@ import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.core.graphics.toColorInt
+import com.locapeer.util.normalizeHexColor
 
 private val PIN_COLORS = listOf(
     "#E53935", "#F57C00", "#F9A825", "#388E3C",
     "#00897B", "#0097A7", "#1976D2", "#303F9F",
     "#7B1FA2", "#C2185B", "#5D4037", "#455A64"
 )
+
+internal fun pinColorIndex(hashCode: Int): Int = Math.floorMod(hashCode, PIN_COLORS.size)
 
 object MarkerIconFactory {
 
@@ -39,9 +42,10 @@ object MarkerIconFactory {
         isLive: Boolean = false
     ): BitmapDrawable {
         val density = context.resources.displayMetrics.density
+        val safePinColor = normalizeHexColor(pinColor)
         val showLive = isLive && !isSos && !isOverdue
         val quantBearing = if (showDirection) (Math.round(bearingDegrees / 15f) * 15) % 360 else 0
-        val key = "$displayName-$isOverdue-$isSos-$pinColor-$isSelected-$showDirection-$quantBearing-$showLive"
+        val key = "$displayName-$isOverdue-$isSos-$safePinColor-$isSelected-$showDirection-$quantBearing-$showLive"
         cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val sizePx = (density * if (isSelected) 60 else 48).toInt()
@@ -60,8 +64,8 @@ object MarkerIconFactory {
             val fillColor = when {
                 isSos -> "#D32F2F".toColorInt()
                 isOverdue -> "#9E9E9E".toColorInt()
-                pinColor.isNotEmpty() -> pinColor.toColorInt()
-                else -> PIN_COLORS[Math.abs(displayName.hashCode()) % PIN_COLORS.size].toColorInt()
+                safePinColor.isNotEmpty() -> safePinColor.toColorInt()
+                else -> PIN_COLORS[pinColorIndex(displayName.hashCode())].toColorInt()
             }
 
             if (showDirection) {
@@ -145,7 +149,8 @@ object MarkerIconFactory {
 
     /** Small filled circle for intermediate waypoint markers on the history map. */
     fun createDotIcon(context: Context, pinColor: String, isSos: Boolean = false, isSelected: Boolean = false): BitmapDrawable {
-        val key = "dot-$pinColor-$isSos-$isSelected"
+        val safePinColor = normalizeHexColor(pinColor)
+        val key = "dot-$safePinColor-$isSos-$isSelected"
         cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val dp = context.resources.displayMetrics.density
@@ -159,7 +164,7 @@ object MarkerIconFactory {
 
             val fillColor = when {
                 isSos -> "#D32F2F".toColorInt()
-                pinColor.isNotEmpty() -> pinColor.toColorInt()
+                safePinColor.isNotEmpty() -> safePinColor.toColorInt()
                 else -> "#1976D2".toColorInt()
             }
 
@@ -249,7 +254,9 @@ object MarkerIconFactory {
         bitmap.applyCanvas {
             val cx = sizePx / 2f
 
-            val baseColor = if (isSos) "#D32F2F".toColorInt() else if (pinColor.isNotEmpty()) pinColor.toColorInt() else 0xFF4285F4.toInt()
+            val baseColor = if (isSos) "#D32F2F".toColorInt()
+                else normalizeHexColor(pinColor).takeIf { it.isNotEmpty() }?.toColorInt()
+                    ?: 0xFF4285F4.toInt()
             val pulseArgb = (baseColor and 0x00FFFFFF) or 0x33000000
 
             // Outer pulse ring

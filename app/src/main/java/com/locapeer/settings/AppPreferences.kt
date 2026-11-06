@@ -13,6 +13,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.locapeer.sharing.ScheduleRule
 import com.locapeer.sharing.toScheduleRules
 import com.locapeer.ui.DEFAULT_NAV_TAB_IDS
+import com.locapeer.util.normalizeHexColor
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -291,7 +292,8 @@ class AppPreferences @Inject constructor(
                 historyMinDistanceMeters = prefs[KEY_HISTORY_MIN_DISTANCE] ?: 0,
                 historyMaxAccuracyMeters = prefs[KEY_HISTORY_MAX_ACCURACY] ?: 0,
                 sendMaxAccuracyMeters = prefs[KEY_SEND_MAX_ACCURACY] ?: 0,
-                pinColor = prefs[KEY_PIN_COLOR] ?: "",
+                // A restored or hand-edited colour must never reach toColorInt() unvalidated.
+                pinColor = normalizeHexColor(prefs[KEY_PIN_COLOR] ?: ""),
                 sosActive = prefs[KEY_SOS_ACTIVE] ?: false,
                 mapStartZoom = prefs[KEY_MAP_START_ZOOM] ?: 16.0,
                 mapStartingPoint = prefs[KEY_MAP_STARTING_POINT] ?: "OWN_PIN",
@@ -424,8 +426,9 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun setPinColor(hex: String) {
+        val normalized = normalizeHexColor(hex)
         context.settingsStore.edit {
-            if (it[KEY_PIN_COLOR] != hex) it[KEY_PIN_COLOR] = hex
+            if (it[KEY_PIN_COLOR] != normalized) it[KEY_PIN_COLOR] = normalized
         }
     }
 
