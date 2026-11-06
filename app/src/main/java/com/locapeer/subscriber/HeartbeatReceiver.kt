@@ -147,8 +147,8 @@ private const val LIVE_VIEW_FRESHNESS_MS = 60_000L
 private const val MAX_DM_PLAINTEXT_CHARS = 512 * 1024
 private const val MAX_HEARTBEAT_ACCURACY_M = 100_000f
 private const val MAX_HEARTBEAT_SPEED_MPS = 1_000f
-private const val MIN_HEARTBEAT_ALTITUDE_M = -1_000f
-private const val MAX_HEARTBEAT_ALTITUDE_M = 100_000f
+private const val MIN_HEARTBEAT_ALTITUDE_M = -1_000.0
+private const val MAX_HEARTBEAT_ALTITUDE_M = 100_000.0
 private const val MAX_MOTION_STATE_CHARS = 32
 // Bounds on the sender-controlled parts of a circle envelope that get persisted.
 private const val MAX_CIRCLE_MEMBERS = 256
