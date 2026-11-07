@@ -638,7 +638,7 @@
     <string name="map_sos_active">⚠ SOS ACTIVE</string>
     <string name="map_away">Away</string>
     <string name="map_live">● Live</string>
-    <string name="map_watching_you">👁 Watching you</string>
+    <string name="map_watching_you">👁 Watching You</string>
     <string name="map_follow_contact">Follow</string>
     <string name="map_no_location_yet">No location yet</string>
     <string name="map_cd_go_location">Go to location</string>
