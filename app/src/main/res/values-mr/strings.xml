@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">शेअर केलेले जिओफेन्स क्षेत्र व्यवस्थापित करा</string>
     <string name="settings_notify_when_tracked">ट्रॅक केल्यावर कळवा</string>
     <string name="settings_notify_when_tracked_subtitle">जेव्हा संपर्काचा प्रॉक्सिमिटी किंवा जिओफेन्स अलर्ट तुमच्यासाठी ट्रिगर होतो तेव्हा सूचना मिळवा.</string>
+    <string name="settings_notify_when_watched">पाहिले जात असताना सूचित करा</string>
+    <string name="settings_notify_when_watched_subtitle">एखादा संपर्क तुम्हाला लाइव्ह पाहू लागल्यावर सूचित करा.</string>
     <string name="settings_my_location_history">स्थान इतिहास</string>
     <string name="settings_my_location_history_subtitle">तुमची स्वतःची स्थान टाइमलाइन ब्राउझ करा</string>
     <string name="settings_lookup_addresses">पत्ते शोधा</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">देखरेख मोड नाकारला</string>
     <string name="notif_supervised_declined_text">तुमच्या पर्यवेक्षकाने विनंती नाकारली आहे - देखरेख मोड अक्षम केला गेला आहे</string>
     <string name="notif_tracking_alert_title">ट्रॅकिंग अलर्ट</string>
+    <string name="notif_live_watch_title">%1$s तुम्हाला लाइव्ह पाहत आहे</string>
+    <string name="notif_live_watch_text">तुमचे स्थान रिअल टाइममध्ये अपडेट होत आहे.</string>
     <string name="notif_tracking_proximity">तुमच्याबद्दल %1$s ला प्रॉक्सिमिटी अलर्ट मिळाला आहे</string>
     <string name="notif_tracking_geofence">तुम्ही फेन्समध्ये प्रवेश केला/बाहेर पडलात असा %1$s ला अलर्ट मिळाला आहे: %2$s</string>
     <string name="notif_tracking_generic">%1$s तुमच्या स्थानावर देखरेख ठेवत आहेत</string>

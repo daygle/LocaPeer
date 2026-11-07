@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Gestisci le aree geofence condivise</string>
     <string name="settings_notify_when_tracked">Notifica quando tracciato</string>
     <string name="settings_notify_when_tracked_subtitle">Ricevi una notifica quando viene attivato un avviso di prossimità o di geofence di un contatto per te.</string>
+    <string name="settings_notify_when_watched">Avvisa se mi guardano</string>
+    <string name="settings_notify_when_watched_subtitle">Avvisa quando un contatto inizia a guardarti dal vivo.</string>
     <string name="settings_my_location_history">Cronologia delle mie posizioni</string>
     <string name="settings_my_location_history_subtitle">Sfoglia la tua cronologia delle posizioni</string>
     <string name="settings_lookup_addresses">Cerca indirizzi</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Modalità supervisionata rifiutata</string>
     <string name="notif_supervised_declined_text">Il tuo supervisore ha rifiutato la richiesta: la modalità supervisionata è stata disabilitata</string>
     <string name="notif_tracking_alert_title">Avviso di tracciamento</string>
+    <string name="notif_live_watch_title">%1$s ti sta guardando dal vivo</string>
+    <string name="notif_live_watch_text">La tua posizione si aggiorna in tempo reale.</string>
     <string name="notif_tracking_proximity">%1$s ha ricevuto un avviso di prossimità su di te</string>
     <string name="notif_tracking_geofence">%1$s ha ricevuto un avviso relativo alla tua entrata/uscita dalla zona: %2$s</string>
     <string name="notif_tracking_generic">%1$s sta monitorando la tua posizione</string>

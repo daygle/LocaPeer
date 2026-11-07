@@ -105,6 +105,8 @@
     <string name="settings_geofences_subtitle">Správa sdílených oblastí geofence</string>
     <string name="settings_notify_when_tracked">Upozornit při sledování</string>
     <string name="settings_notify_when_tracked_subtitle">Dostávat oznámení, když se u kontaktu spustí upozornění na blízkost nebo geofence týkající se vás.</string>
+    <string name="settings_notify_when_watched">Upozornit při sledování</string>
+    <string name="settings_notify_when_watched_subtitle">Upozornit, když vás kontakt začne sledovat živě.</string>
     <string name="settings_my_location_history">Historie polohy</string>
     <string name="settings_my_location_history_subtitle">Procházejte svou vlastní časovou osu polohy</string>
     <string name="settings_lookup_addresses">Vyhledávat adresy</string>
@@ -707,6 +709,8 @@
     <string name="notif_supervised_declined_title">Režim pod dohledem odmítnut</string>
     <string name="notif_supervised_declined_text">Dohlížitel žádost odmítl - režim pod dohledem byl vypnut</string>
     <string name="notif_tracking_alert_title">Upozornění na sledování</string>
+    <string name="notif_live_watch_title">%1$s vás sleduje živě</string>
+    <string name="notif_live_watch_text">Vaše poloha se aktualizuje v reálném čase.</string>
     <string name="notif_tracking_proximity">%1$s obdržel(a) upozornění na vaši blízkost</string>
     <string name="notif_tracking_geofence">%1$s obdržel(a) upozornění, že jste vstoupili do zóny/opustili zónu: %2$s</string>
     <string name="notif_tracking_generic">%1$s sleduje vaši polohu</string>

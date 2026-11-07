@@ -168,4 +168,13 @@ class AdaptiveIntervalManagerTest {
         liveViewRegistry.grant("alex")
         assertEquals(start + 2, liveViewRegistry.newViewerEvents.value)
     }
+
+    @Test
+    fun `isViewing is true only while the viewer's lease is unexpired`() {
+        assertFalse(liveViewRegistry.isViewing("sam"))
+        liveViewRegistry.grant("sam")
+        assertTrue(liveViewRegistry.isViewing("sam"))
+        liveViewRegistry.grant("alex", leaseMs = 0L)
+        assertFalse(liveViewRegistry.isViewing("alex"))
+    }
 }

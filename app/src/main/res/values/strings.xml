@@ -120,6 +120,8 @@
     <string name="settings_geofences_subtitle">Manage shared geofence areas</string>
     <string name="settings_notify_when_tracked">Notify When Tracked</string>
     <string name="settings_notify_when_tracked_subtitle">Alert when contacts receive proximity or geofence notifications for you.</string>
+    <string name="settings_notify_when_watched">Notify When Watched</string>
+    <string name="settings_notify_when_watched_subtitle">Alert when a contact starts watching you live.</string>
     <string name="settings_my_location_history">Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
@@ -819,6 +821,8 @@
     <string name="notif_supervised_declined_title">Supervised mode declined</string>
     <string name="notif_supervised_declined_text">Your supervisor declined the request - supervised mode has been disabled</string>
     <string name="notif_tracking_alert_title">Tracking Alert</string>
+    <string name="notif_live_watch_title">%1$s is watching you live</string>
+    <string name="notif_live_watch_text">Your location is updating in real time.</string>
     <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
     <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s is monitoring your location</string>

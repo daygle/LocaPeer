@@ -104,6 +104,8 @@
     <string name="settings_geofences_subtitle">Gerenciar áreas de geocerca compartilhadas</string>
     <string name="settings_notify_when_tracked">Notificar Quando Rastreado</string>
     <string name="settings_notify_when_tracked_subtitle">Receba uma notificação quando um alerta de proximidade ou geocerca de um contato for acionado para você.</string>
+    <string name="settings_notify_when_watched">Notificar ao ser visto</string>
+    <string name="settings_notify_when_watched_subtitle">Alertar quando um contacto começar a vê-lo ao vivo.</string>
     <string name="settings_my_location_history">Meu Histórico de Localização</string>
     <string name="settings_my_location_history_subtitle">Navegue por sua própria linha do tempo de localização</string>
     <string name="settings_lookup_addresses">Consultar Endereços</string>
@@ -680,6 +682,8 @@
     <string name="notif_supervised_declined_title">Modo supervisionado recusado</string>
     <string name="notif_supervised_declined_text">Seu supervisor recusou a solicitação - o modo supervisionado foi desativado</string>
     <string name="notif_tracking_alert_title">Alerta de Rastreamento</string>
+    <string name="notif_live_watch_title">%1$s está a vê-lo ao vivo</string>
+    <string name="notif_live_watch_text">A sua localização está a ser atualizada em tempo real.</string>
     <string name="notif_tracking_proximity">%1$s recebeu um alerta de proximidade sobre você</string>
     <string name="notif_tracking_geofence">%1$s recebeu um alerta de que você entrou/saiu da cerca: %2$s</string>
     <string name="notif_tracking_generic">%1$s está monitorando sua localização</string>

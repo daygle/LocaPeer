@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">பகிரப்பட்ட ஜியோஃபென்ஸ் பகுதிகளை நிர்வகிக்கவும்</string>
     <string name="settings_notify_when_tracked">கண்காணிக்கப்படும் போது அறிவிக்கவும்</string>
     <string name="settings_notify_when_tracked_subtitle">ஒரு தொடர்பின் அருகாமை அல்லது உங்களுக்கான ஜியோஃபென்ஸ் எச்சரிக்கை தூண்டப்படும்போது அறிவிப்பைப் பெறுங்கள்.</string>
+    <string name="settings_notify_when_watched">பார்க்கும்போது அறிவி</string>
+    <string name="settings_notify_when_watched_subtitle">ஒரு தொடர்பு உங்களை நேரலையில் பார்க்கத் தொடங்கும்போது எச்சரிக்கவும்.</string>
     <string name="settings_my_location_history">இருப்பிட வரலாறு</string>
     <string name="settings_my_location_history_subtitle">உங்கள் சொந்த இருப்பிட காலவரிசையை உலாவவும்</string>
     <string name="settings_lookup_addresses">முகவரிகளைத் தேடு</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">மேற்பார்வை பயன்முறை மறுக்கப்பட்டது</string>
     <string name="notif_supervised_declined_text">உங்கள் மேற்பார்வையாளர் கோரிக்கையை நிராகரித்தார் - மேற்பார்வை பயன்முறை முடக்கப்பட்டுள்ளது</string>
     <string name="notif_tracking_alert_title">கண்காணிப்பு எச்சரிக்கை</string>
+    <string name="notif_live_watch_title">%1$s உங்களை நேரலையில் பார்க்கிறார்</string>
+    <string name="notif_live_watch_text">உங்கள் இருப்பிடம் நிகழ்நேரத்தில் புதுப்பிக்கப்படுகிறது.</string>
     <string name="notif_tracking_proximity">%1$s உங்களைப் பற்றிய அருகாமை எச்சரிக்கையைப் பெற்றார்</string>
     <string name="notif_tracking_geofence">நீங்கள் வேலிக்குள் நுழைந்தீர்கள்/வெளியேறினீர்கள் என்று %1$s எச்சரிக்கையைப் பெற்றார்: %2$s</string>
     <string name="notif_tracking_generic">%1$s உங்கள் இருப்பிடத்தைக் கண்காணிக்கிறார்</string>

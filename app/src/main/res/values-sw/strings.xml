@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Simamia maeneo ya kijiografia yaliyoshirikiwa</string>
     <string name="settings_notify_when_tracked">Arifu Unapofuatiliwa</string>
     <string name="settings_notify_when_tracked_subtitle">Pata arifa wakati ukaribu wa anwani au arifa ya eneo la kijiografia kwako inapoanzishwa.</string>
+    <string name="settings_notify_when_watched">Arifu Ninapotazamwa</string>
+    <string name="settings_notify_when_watched_subtitle">Arifu mwasiliani anapoanza kukutazama moja kwa moja.</string>
     <string name="settings_my_location_history">Historia ya Mahali</string>
     <string name="settings_my_location_history_subtitle">Vinjari kalenda yako ya maeneo</string>
     <string name="settings_lookup_addresses">Tafuta Anwani</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Njia ya kusimamiwa imekataliwa</string>
     <string name="notif_supervised_declined_text">Msimamizi wako amekataa ombi - hali ya kusimamiwa imezimwa</string>
     <string name="notif_tracking_alert_title">Arifa ya Ufuatiliaji</string>
+    <string name="notif_live_watch_title">%1$s anakutazama moja kwa moja</string>
+    <string name="notif_live_watch_text">Eneo lako linasasishwa papo hapo.</string>
     <string name="notif_tracking_proximity">%1$s amepokea arifa ya ukaribu kukuhusu</string>
     <string name="notif_tracking_geofence">%1$s amepokea arifa kwamba umeingia/umetoka kwenye eneo: %2$s</string>
     <string name="notif_tracking_generic">%1$s anafuatilia eneo lako</string>

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Geteilte Geofence-Bereiche verwalten</string>
     <string name="settings_notify_when_tracked">Benachrichtigen bei Verfolgung</string>
     <string name="settings_notify_when_tracked_subtitle">Erhalten Sie eine Benachrichtigung, wenn ein Kontakt eine Proximity- oder Geofence-Warnung für Sie auslöst.</string>
+    <string name="settings_notify_when_watched">Benachrichtigen bei Live-Ansicht</string>
+    <string name="settings_notify_when_watched_subtitle">Warnen, wenn ein Kontakt beginnt, dich live anzusehen.</string>
     <string name="settings_my_location_history">Mein Standortverlauf</string>
     <string name="settings_my_location_history_subtitle">Durchsuchen Sie Ihre eigene Standort-Zeitachse</string>
     <string name="settings_lookup_addresses">Adressen nachschlagen</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Überwachungsmodus abgelehnt</string>
     <string name="notif_supervised_declined_text">Ihr Betreuer hat die Anfrage abgelehnt - der Überwachungsmodus wurde deaktiviert</string>
     <string name="notif_tracking_alert_title">Verfolgungswarnung</string>
+    <string name="notif_live_watch_title">%1$s sieht dich live an</string>
+    <string name="notif_live_watch_text">Dein Standort wird in Echtzeit aktualisiert.</string>
     <string name="notif_tracking_proximity">%1$s hat eine Annäherungswarnung über Sie erhalten</string>
     <string name="notif_tracking_geofence">%1$s hat eine Warnung erhalten, dass Sie den Zaun %2$s betreten/verlassen haben</string>
     <string name="notif_tracking_generic">%1$s überwacht Ihren Standort</string>

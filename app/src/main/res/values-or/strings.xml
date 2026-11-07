@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">ଅଂଶୀଦାର ହୋଇଥିବା ଜିଓଫେନ୍ସ ଅଞ୍ଚଳଗୁଡ଼ିକୁ ପରିଚାଳନା କରନ୍ତୁ</string>
     <string name="settings_notify_when_tracked">ଟ୍ରାକ ହେବା ପରେ ଜଣାନ୍ତୁ</string>
     <string name="settings_notify_when_tracked_subtitle">ଯେତେବେଳେ ଜଣେ ସମ୍ପର୍କର ନିକଟତରତା କିମ୍ବା ଜିଓଫେନ୍ସ ସତର୍କତା ଆପଣଙ୍କ ପାଇଁ ଟ୍ରିଗର ହୁଏ, ସେତେବେଳେ ବିଜ୍ଞପ୍ତି ପାଆନ୍ତୁ ।</string>
+    <string name="settings_notify_when_watched">ଦେଖାଗଲେ ସୂଚିତ କରନ୍ତୁ</string>
+    <string name="settings_notify_when_watched_subtitle">ଜଣେ ସମ୍ପର୍କ ଆପଣଙ୍କୁ ଲାଇଭ୍ ଦେଖିବା ଆରମ୍ଭ କଲେ ସତର୍କ କରନ୍ତୁ।</string>
     <string name="settings_my_location_history">ସ୍ଥାନ ଇତିହାସ</string>
     <string name="settings_my_location_history_subtitle">ଆପଣଙ୍କ ନିଜ ସ୍ଥାନ ଟାଇମଲାଇନ ବ୍ରାଉଜ୍ କରନ୍ତୁ</string>
     <string name="settings_lookup_addresses">ଠିକଣା ଖୋଜନ୍ତୁ</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">ତଦାରଖ ମୋଡ୍ ପ୍ରତ୍ୟାଖ୍ୟାନ ହୋଇଛି</string>
     <string name="notif_supervised_declined_text">ଆପଣଙ୍କ ପର୍ଯ୍ୟବେକ୍ଷକ ଅନୁରୋଧ ପ୍ରତ୍ୟାଖ୍ୟାନ କରିଛନ୍ତି - ତଦାରଖ ମୋଡ୍ ଅକ୍ଷମ ହୋଇଛି</string>
     <string name="notif_tracking_alert_title">ଟ୍ରାକିଂ ସତର୍କତା</string>
+    <string name="notif_live_watch_title">%1$s ଆପଣଙ୍କୁ ଲାଇଭ୍ ଦେଖୁଛନ୍ତି</string>
+    <string name="notif_live_watch_text">ଆପଣଙ୍କ ଅବସ୍ଥାନ ରିଅଲ୍ ଟାଇମରେ ଅପଡେଟ୍ ହେଉଛି।</string>
     <string name="notif_tracking_proximity">%1$s ଆପଣଙ୍କ ବିଷୟରେ ଏକ ନିକଟତରତା ସତର୍କତା ପାଇଛନ୍ତି</string>
     <string name="notif_tracking_geofence">ଆପଣ ଘେର ଭିତରକୁ ପ୍ରବେଶ କରିଛନ୍ତି/ବାହାରି ଯାଇଛନ୍ତି ବୋଲି %1$s ଏକ ସତର୍କତା ପାଇଛନ୍ତି: %2$s</string>
     <string name="notif_tracking_generic">%1$s ଆପଣଙ୍କ ସ୍ଥାନ ତଦାରଖ କରୁଛନ୍ତି</string>

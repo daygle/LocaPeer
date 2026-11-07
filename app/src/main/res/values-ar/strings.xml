@@ -107,6 +107,8 @@
     <string name="settings_geofences_subtitle">إدارة مناطق الأسوار الجغرافية المشتركة</string>
     <string name="settings_notify_when_tracked">إشعار عند التتبع</string>
     <string name="settings_notify_when_tracked_subtitle">احصل على إشعار عند تفعيل تنبيه القرب أو السور الجغرافي الخاص بك لدى جهة اتصال.</string>
+    <string name="settings_notify_when_watched">الإشعار عند المشاهدة</string>
+    <string name="settings_notify_when_watched_subtitle">تنبيه عندما تبدأ جهة اتصال بمشاهدتك مباشرةً.</string>
     <string name="settings_my_location_history">سجلّ المواقع</string>
     <string name="settings_my_location_history_subtitle">تصفّح الخط الزمني لمواقعك</string>
     <string name="settings_lookup_addresses">البحث عن العناوين</string>
@@ -733,6 +735,8 @@
     <string name="notif_supervised_declined_title">رُفض الوضع الخاضع للإشراف</string>
     <string name="notif_supervised_declined_text">رفض مشرفك الطلب - تم إيقاف الوضع الخاضع للإشراف</string>
     <string name="notif_tracking_alert_title">تنبيه تتبّع</string>
+    <string name="notif_live_watch_title">%1$s يشاهدك مباشرةً</string>
+    <string name="notif_live_watch_text">يتم تحديث موقعك في الوقت الفعلي.</string>
     <string name="notif_tracking_proximity">تلقّى %1$s تنبيه قرب يخصّك</string>
     <string name="notif_tracking_geofence">تلقّى %1$s تنبيهًا بدخولك/خروجك من السور: %2$s</string>
     <string name="notif_tracking_generic">%1$s يراقب موقعك</string>

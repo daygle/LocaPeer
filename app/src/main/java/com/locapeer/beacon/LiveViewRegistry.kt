@@ -55,6 +55,10 @@ class LiveViewRegistry @Inject constructor() {
         return !wasActive
     }
 
+    /** True when [viewerPubkey] holds an unexpired lease (is watching right now). */
+    fun isViewing(viewerPubkey: String, now: Long = SystemClock.elapsedRealtime()): Boolean =
+        (leases[viewerPubkey] ?: return false) > now
+
     /** Pubkeys of every viewer holding an unexpired lease right now. Prunes expired entries. */
     fun activeViewers(now: Long = SystemClock.elapsedRealtime()): Set<String> {
         isActive(now)

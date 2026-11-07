@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">จัดการพื้นที่รั้วเสมือนที่แชร์ร่วมกัน</string>
     <string name="settings_notify_when_tracked">แจ้งเตือนเมื่อถูกติดตาม</string>
     <string name="settings_notify_when_tracked_subtitle">รับการแจ้งเตือนเมื่อการเตือนระยะใกล้หรือรั้วเสมือนของผู้ติดต่อที่เกี่ยวกับคุณถูกเรียกใช้งาน</string>
+    <string name="settings_notify_when_watched">แจ้งเตือนเมื่อมีคนดู</string>
+    <string name="settings_notify_when_watched_subtitle">แจ้งเตือนเมื่อผู้ติดต่อเริ่มดูคุณแบบสด</string>
     <string name="settings_my_location_history">ประวัติตำแหน่ง</string>
     <string name="settings_my_location_history_subtitle">เรียกดูไทม์ไลน์ตำแหน่งของคุณเอง</string>
     <string name="settings_lookup_addresses">ค้นหาที่อยู่</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">โหมดถูกกำกับดูแลถูกปฏิเสธ</string>
     <string name="notif_supervised_declined_text">ผู้ดูแลของคุณปฏิเสธคำขอ - โหมดถูกกำกับดูแลถูกปิด</string>
     <string name="notif_tracking_alert_title">การเตือนการติดตาม</string>
+    <string name="notif_live_watch_title">%1$s กำลังดูคุณแบบสด</string>
+    <string name="notif_live_watch_text">ตำแหน่งของคุณกำลังอัปเดตแบบเรียลไทม์</string>
     <string name="notif_tracking_proximity">%1$s ได้รับการเตือนระยะใกล้เกี่ยวกับคุณ</string>
     <string name="notif_tracking_geofence">%1$s ได้รับการเตือนว่าคุณเข้า/ออกรั้ว: %2$s</string>
     <string name="notif_tracking_generic">%1$s กำลังเฝ้าดูตำแหน่งของคุณ</string>

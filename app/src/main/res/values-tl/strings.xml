@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Pamahalaan ang mga nakabahaging geofence area</string>
     <string name="settings_notify_when_tracked">Abisuhan Kapag Tinutunton</string>
     <string name="settings_notify_when_tracked_subtitle">Makatanggap ng abiso kapag na-trigger ang proximity o geofence alert ng isang contact tungkol sa iyo.</string>
+    <string name="settings_notify_when_watched">Abisuhan Kapag Tinitingnan</string>
+    <string name="settings_notify_when_watched_subtitle">Mag-alerto kapag may contact na nagsimulang tumingin sa iyo nang live.</string>
     <string name="settings_my_location_history">Kasaysayan ng Lokasyon</string>
     <string name="settings_my_location_history_subtitle">Tingnan ang timeline ng iyong sariling lokasyon</string>
     <string name="settings_lookup_addresses">Hanapin ang mga Address</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Tinanggihan ang supervised mode</string>
     <string name="notif_supervised_declined_text">Tinanggihan ng iyong superbisor ang kahilingan - na-disable ang supervised mode</string>
     <string name="notif_tracking_alert_title">Alerto sa Pagtunton</string>
+    <string name="notif_live_watch_title">Tinitingnan ka ni %1$s nang live</string>
+    <string name="notif_live_watch_text">Nag-a-update ang iyong lokasyon nang real time.</string>
     <string name="notif_tracking_proximity">Nakatanggap si %1$s ng proximity alert tungkol sa iyo</string>
     <string name="notif_tracking_geofence">Nakatanggap si %1$s ng alerto na pumasok/lumabas ka sa fence: %2$s</string>
     <string name="notif_tracking_generic">Sinusubaybayan ni %1$s ang iyong lokasyon</string>

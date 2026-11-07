@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">ಹಂಚಿಕೆಯ ಜಿಯೋಫೆನ್ಸ್ ಪ್ರದೇಶಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
     <string name="settings_notify_when_tracked">ಟ್ರ್ಯಾಕ್ ಮಾಡಿದಾಗ ತಿಳಿಸಿ</string>
     <string name="settings_notify_when_tracked_subtitle">ಸಂಪರ್ಕದ ಸಾಮೀಪ್ಯ ಅಥವಾ ಜಿಯೋಫೆನ್ಸ್ ಎಚ್ಚರಿಕೆಯು ನಿಮಗಾಗಿ ಪ್ರಚೋದಿತವಾದಾಗ ಅಧಿಸೂಚನೆಯನ್ನು ಪಡೆಯಿರಿ.</string>
+    <string name="settings_notify_when_watched">ನೋಡಿದಾಗ ಸೂಚಿಸಿ</string>
+    <string name="settings_notify_when_watched_subtitle">ಸಂಪರ್ಕವೊಬ್ಬರು ನಿಮ್ಮನ್ನು ಲೈವ್ ಆಗಿ ನೋಡಲು ಪ್ರಾರಂಭಿಸಿದಾಗ ಎಚ್ಚರಿಸಿ.</string>
     <string name="settings_my_location_history">ಸ್ಥಳದ ಇತಿಹಾಸ</string>
     <string name="settings_my_location_history_subtitle">ನಿಮ್ಮ ಸ್ವಂತ ಸ್ಥಳದ ಟೈಮ್‌ಲೈನ್ ಅನ್ನು ಬ್ರೌಸ್ ಮಾಡಿ</string>
     <string name="settings_lookup_addresses">ವಿಳಾಸಗಳನ್ನು ಹುಡುಕಿ</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
     <string name="notif_supervised_declined_text">ನಿಮ್ಮ ಮೇಲ್ವಿಚಾರಕರು ವಿನಂತಿಯನ್ನು ನಿರಾಕರಿಸಿದ್ದಾರೆ - ಮೇಲ್ವಿಚಾರಣಾ ಮೋಡ್ ಅನ್ನು ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ</string>
     <string name="notif_tracking_alert_title">ಟ್ರ್ಯಾಕಿಂಗ್ ಎಚ್ಚರಿಕೆ</string>
+    <string name="notif_live_watch_title">%1$s ನಿಮ್ಮನ್ನು ಲೈವ್ ಆಗಿ ನೋಡುತ್ತಿದ್ದಾರೆ</string>
+    <string name="notif_live_watch_text">ನಿಮ್ಮ ಸ್ಥಳ ನೈಜ ಸಮಯದಲ್ಲಿ ನವೀಕರಿಸುತ್ತಿದೆ.</string>
     <string name="notif_tracking_proximity">%1$s ನಿಮ್ಮ ಬಗ್ಗೆ ಸಾಮೀಪ್ಯ ಎಚ್ಚರಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ್ದಾರೆ</string>
     <string name="notif_tracking_geofence">ನೀವು ಬೇಲಿಯನ್ನು ಪ್ರವೇಶಿಸಿದಿರಿ/ನಿರ್ಗಮಿಸಿದಿರಿ ಎಂದು %1$s ಎಚ್ಚರಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ್ದಾರೆ: %2$s</string>
     <string name="notif_tracking_generic">%1$s ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡುತ್ತಿದ್ದಾರೆ</string>

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">مشترکہ جیو فینس علاقوں کا نظم کریں</string>
     <string name="settings_notify_when_tracked">ٹریک ہونے پر مطلع کریں</string>
     <string name="settings_notify_when_tracked_subtitle">جب کسی رابطے کا آپ کے بارے میں قربت یا جیو فینس الرٹ چالو ہو تو اطلاع پائیں۔</string>
+    <string name="settings_notify_when_watched">دیکھے جانے پر مطلع کریں</string>
+    <string name="settings_notify_when_watched_subtitle">جب کوئی رابطہ آپ کو لائیو دیکھنا شروع کرے تو خبردار کریں۔</string>
     <string name="settings_my_location_history">مقام کی تاریخ</string>
     <string name="settings_my_location_history_subtitle">اپنی مقام کی ٹائم لائن دیکھیں</string>
     <string name="settings_lookup_addresses">پتے تلاش کریں</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">زیرِ نگرانی موڈ مسترد</string>
     <string name="notif_supervised_declined_text">آپ کے نگران نے درخواست مسترد کر دی - زیرِ نگرانی موڈ بند کر دیا گیا</string>
     <string name="notif_tracking_alert_title">ٹریکنگ الرٹ</string>
+    <string name="notif_live_watch_title">%1$s آپ کو لائیو دیکھ رہے ہیں</string>
+    <string name="notif_live_watch_text">آپ کا مقام ریئل ٹائم میں اپ ڈیٹ ہو رہا ہے۔</string>
     <string name="notif_tracking_proximity">%1$s کو آپ کے بارے میں قربت الرٹ ملا</string>
     <string name="notif_tracking_geofence">%1$s کو الرٹ ملا کہ آپ فینس میں داخل/خارج ہوئے: %2$s</string>
     <string name="notif_tracking_generic">%1$s آپ کے مقام کی نگرانی کر رہا ہے</string>

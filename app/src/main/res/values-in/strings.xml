@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Kelola area geofence bersama</string>
     <string name="settings_notify_when_tracked">Beri Tahu Saat Dilacak</string>
     <string name="settings_notify_when_tracked_subtitle">Dapatkan notifikasi saat peringatan jarak dekat atau geofence kontak tentang Anda terpicu.</string>
+    <string name="settings_notify_when_watched">Beri Tahu Saat Dilihat</string>
+    <string name="settings_notify_when_watched_subtitle">Beri tahu saat kontak mulai melihat Anda secara langsung.</string>
     <string name="settings_my_location_history">Riwayat Lokasi</string>
     <string name="settings_my_location_history_subtitle">Jelajahi linimasa lokasi Anda sendiri</string>
     <string name="settings_lookup_addresses">Cari Alamat</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">Mode terawasi ditolak</string>
     <string name="notif_supervised_declined_text">Pengawas Anda menolak permintaan - mode terawasi telah dinonaktifkan</string>
     <string name="notif_tracking_alert_title">Peringatan Pelacakan</string>
+    <string name="notif_live_watch_title">%1$s sedang melihat Anda secara langsung</string>
+    <string name="notif_live_watch_text">Lokasi Anda diperbarui secara real time.</string>
     <string name="notif_tracking_proximity">%1$s menerima peringatan jarak dekat tentang Anda</string>
     <string name="notif_tracking_geofence">%1$s menerima peringatan bahwa Anda masuk/keluar pagar: %2$s</string>
     <string name="notif_tracking_generic">%1$s memantau lokasi Anda</string>

@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">မျှဝေထားသော ဂျီအိုခြံစည်းရိုး ဧရိယာများကို စီမံခန့်ခွဲပါ</string>
     <string name="settings_notify_when_tracked">ခြေရာခံခံရပါက အသိပေးရန်</string>
     <string name="settings_notify_when_tracked_subtitle">အဆက်အသွယ်တစ်ခု၏ နီးကပ်မှု သို့မဟုတ် ဂျီအိုခြံစည်းရိုး သတိပေးချက် သင့်အတွက် အလုပ်လုပ်သောအခါ အသိပေးချက် ရယူပါ။</string>
+    <string name="settings_notify_when_watched">ကြည့်သည့်အခါ အသိပေးရန်</string>
+    <string name="settings_notify_when_watched_subtitle">အဆက်အသွယ်တစ်ဦးက သင့်ကို တိုက်ရိုက်စကြည့်သည့်အခါ သတိပေးပါ။</string>
     <string name="settings_my_location_history">တည်နေရာ မှတ်တမ်း</string>
     <string name="settings_my_location_history_subtitle">သင့်ကိုယ်ပိုင် တည်နေရာ မှတ်တမ်းကို ကြည့်ရှုပါ</string>
     <string name="settings_lookup_addresses">လိပ်စာများ ရှာဖွေပါ</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">ကြီးကြပ်မှုမုဒ်ကို ငြင်းပယ်လိုက်သည်</string>
     <string name="notif_supervised_declined_text">သင့်ကြီးကြပ်သူက တောင်းဆိုချက်ကို ငြင်းပယ်လိုက်ပါသည် - ကြီးကြပ်မှုမုဒ်ကို ပိတ်လိုက်ပါပြီ</string>
     <string name="notif_tracking_alert_title">ခြေရာခံမှု သတိပေးချက်</string>
+    <string name="notif_live_watch_title">%1$s က သင့်ကို တိုက်ရိုက်ကြည့်နေသည်</string>
+    <string name="notif_live_watch_text">သင့်တည်နေရာကို အချိန်နှင့်တစ်ပြေးညီ အပ်ဒိတ်လုပ်နေသည်။</string>
     <string name="notif_tracking_proximity">%1$s က သင့်အနီးအနားသို့ ရောက်ရှိခြင်း သတိပေးချက် ရရှိသည်</string>
     <string name="notif_tracking_geofence">%1$s က သင် ဂျီအိုခြံစည်းရိုးထဲသို့ ဝင်ရောက်ခြင်း/ထွက်ခွာခြင်း သတိပေးချက် ရရှိသည်- %2$s</string>
     <string name="notif_tracking_generic">%1$s က သင့်တည်နေရာကို စောင့်ကြည့်နေသည်</string>

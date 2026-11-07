@@ -104,6 +104,8 @@
     <string name="settings_geofences_subtitle">Gérer les zones de clôture virtuelle partagées</string>
     <string name="settings_notify_when_tracked">Notifier en cas de suivi</string>
     <string name="settings_notify_when_tracked_subtitle">Recevoir une notification lorsqu\'une alerte de proximité ou de clôture virtuelle d\'un contact pour vous est déclenchée.</string>
+    <string name="settings_notify_when_watched">Notifier si on me regarde</string>
+    <string name="settings_notify_when_watched_subtitle">Alerte lorsqu\'un contact commence à vous regarder en direct.</string>
     <string name="settings_my_location_history">Mon historique de localisation</string>
     <string name="settings_my_location_history_subtitle">Parcourir votre propre chronologie de localisation</string>
     <string name="settings_lookup_addresses">Rechercher des adresses</string>
@@ -682,6 +684,8 @@
     <string name="notif_supervised_declined_title">Mode supervisé refusé</string>
     <string name="notif_supervised_declined_text">Votre superviseur a refusé la demande - le mode supervisé a été désactivé</string>
     <string name="notif_tracking_alert_title">Alerte de suivi</string>
+    <string name="notif_live_watch_title">%1$s vous regarde en direct</string>
+    <string name="notif_live_watch_text">Votre position est mise à jour en temps réel.</string>
     <string name="notif_tracking_proximity">%1$s a reçu une alerte de proximité vous concernant</string>
     <string name="notif_tracking_geofence">%1$s a reçu une alerte indiquant que vous êtes entré/sorti de la zone : %2$s</string>
     <string name="notif_tracking_generic">%1$s surveille votre localisation</string>

@@ -105,6 +105,8 @@
     <string name="settings_geofences_subtitle">Управление общими геозонами</string>
     <string name="settings_notify_when_tracked">Уведомлять об отслеживании</string>
     <string name="settings_notify_when_tracked_subtitle">Получать уведомление, когда у контакта срабатывает оповещение о близости или геозоне, связанное с вами.</string>
+    <string name="settings_notify_when_watched">Уведомлять о просмотре</string>
+    <string name="settings_notify_when_watched_subtitle">Предупреждать, когда контакт начинает смотреть на вас в реальном времени.</string>
     <string name="settings_my_location_history">История местоположений</string>
     <string name="settings_my_location_history_subtitle">Просмотр собственной хронологии перемещений</string>
     <string name="settings_lookup_addresses">Определять адреса</string>
@@ -707,6 +709,8 @@
     <string name="notif_supervised_declined_title">Контролируемый режим отклонён</string>
     <string name="notif_supervised_declined_text">Супервизор отклонил запрос - контролируемый режим выключен</string>
     <string name="notif_tracking_alert_title">Оповещение об отслеживании</string>
+    <string name="notif_live_watch_title">%1$s смотрит на вас в реальном времени</string>
+    <string name="notif_live_watch_text">Ваше местоположение обновляется в реальном времени.</string>
     <string name="notif_tracking_proximity">%1$s получил(а) оповещение о вашей близости</string>
     <string name="notif_tracking_geofence">%1$s получил(а) оповещение о входе/выходе из зоны: %2$s</string>
     <string name="notif_tracking_generic">%1$s следит за вашим местоположением</string>

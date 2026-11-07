@@ -184,6 +184,10 @@ const val NOTIF_ID_TRACK_REQUEST = 20000
 private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
 private const val NOTIF_ID_TRACKING_ALERT = 80000
+private const val NOTIF_ID_LIVE_WATCH = 81000
+/** Don't re-alert for the same watcher more often than this (re-selecting a pin, or a
+ *  lease lapsing and returning, would otherwise buzz the user repeatedly). */
+private const val LIVE_WATCH_ALERT_COOLDOWN_MS = 10 * 60_000L
 const val NOTIF_ID_SUPERVISED_REGISTER = 70000
 const val NOTIF_ID_SUPERVISED_INVITE = 75000
 private const val NOTIF_ID_SUPERVISED_CHANGE = 85000
@@ -519,10 +523,49 @@ class HeartbeatReceiver @Inject constructor(
         val now = System.currentTimeMillis()
         if (payload.sentAtMs !in (now - LIVE_VIEW_FRESHNESS_MS)..(now + LIVE_VIEW_FRESHNESS_MS)) return
 
+        val newWatcher = !liveViewRegistry.isViewing(event.pubkey)
         // grant() reports the inactive -> active transition; only then must we wake the
         // service, since while already live it re-reads the registry every 5s on its own.
         if (liveViewRegistry.grant(event.pubkey)) nudgeLiveView()
+        if (newWatcher) alertNewWatcher(peer)
         Log.d(TAG, "Live-view request granted for ${event.pubkey}")
+    }
+
+    // viewer pubkey -> elapsedRealtime of the last "watching you" alert, for the cooldown.
+    private val lastWatchAlertAt = java.util.concurrent.ConcurrentHashMap<String, Long>()
+
+    /**
+     * Tell the user a contact has just started watching them live (selected their pin), if
+     * they opted in. Shares the gates of the other alerts (global alert switch, quiet hours)
+     * and is rate-limited per contact by [LIVE_WATCH_ALERT_COOLDOWN_MS].
+     */
+    private suspend fun alertNewWatcher(peer: PeerEntity) {
+        val settings = prefs.settings.first()
+        if (!settings.notifyWhenWatched || !settings.alertNotificationsEnabled) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
+        val now = android.os.SystemClock.elapsedRealtime()
+        val last = lastWatchAlertAt[peer.publicKeyHex]
+        if (last != null && now - last < LIVE_WATCH_ALERT_COOLDOWN_MS) return
+        lastWatchAlertAt[peer.publicKeyHex] = now
+
+        val name = peer.displayName.take(MAX_PEER_DISPLAY_NAME_CHARS)
+            .ifBlank { context.getString(R.string.geo_unknown) }
+        val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pi = PendingIntent.getActivity(context, NOTIF_ID_LIVE_WATCH, intent, PendingIntent.FLAG_IMMUTABLE)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_location)
+            .setContentTitle(context.getString(R.string.notif_live_watch_title, name))
+            .setContentText(context.getString(R.string.notif_live_watch_text))
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            // The watcher's name is hidden on a locked screen.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            .build()
+        notificationManager.notify(peer.publicKeyHex, NOTIF_ID_LIVE_WATCH, notification)
     }
 
     /**

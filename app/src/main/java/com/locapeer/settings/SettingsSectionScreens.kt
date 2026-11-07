@@ -225,6 +225,13 @@ fun PrivacySettingsScreen(
                 checked = settings.notifyOnTrackingAlerts,
                 onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
             )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_notify_when_watched),
+                subtitle = stringResource(R.string.settings_notify_when_watched_subtitle),
+                checked = settings.notifyWhenWatched,
+                onCheckedChange = { vm.setNotifyWhenWatched(it) }
+            )
         }
 
         SettingsCard(

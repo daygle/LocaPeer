@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">শেয়ার করা জিওফেন্স এলাকা পরিচালনা করুন</string>
     <string name="settings_notify_when_tracked">ট্র্যাক করা হলে জানান</string>
     <string name="settings_notify_when_tracked_subtitle">কোনো পরিচিতির নৈকট্য বা জিওফেন্স সতর্কতা আপনার সম্পর্কে সক্রিয় হলে বিজ্ঞপ্তি পান।</string>
+    <string name="settings_notify_when_watched">দেখা হলে জানান</string>
+    <string name="settings_notify_when_watched_subtitle">কোনো পরিচিতি আপনাকে লাইভ দেখা শুরু করলে সতর্ক করুন।</string>
     <string name="settings_my_location_history">অবস্থানের ইতিহাস</string>
     <string name="settings_my_location_history_subtitle">আপনার নিজের অবস্থানের সময়রেখা দেখুন</string>
     <string name="settings_lookup_addresses">ঠিকানা খুঁজুন</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">তত্ত্বাবধায়িত মোড প্রত্যাখ্যাত</string>
     <string name="notif_supervised_declined_text">আপনার তত্ত্বাবধায়ক অনুরোধ প্রত্যাখ্যান করেছেন - তত্ত্বাবধায়িত মোড বন্ধ করা হয়েছে</string>
     <string name="notif_tracking_alert_title">ট্র্যাকিং সতর্কতা</string>
+    <string name="notif_live_watch_title">%1$s আপনাকে লাইভ দেখছে</string>
+    <string name="notif_live_watch_text">আপনার অবস্থান রিয়েল টাইমে আপডেট হচ্ছে।</string>
     <string name="notif_tracking_proximity">%1$s আপনার সম্পর্কে একটি নৈকট্য সতর্কতা পেয়েছেন</string>
     <string name="notif_tracking_geofence">%1$s একটি সতর্কতা পেয়েছেন যে আপনি বেড়া প্রবেশ/প্রস্থান করেছেন: %2$s</string>
     <string name="notif_tracking_generic">%1$s আপনার অবস্থান পর্যবেক্ষণ করছেন</string>

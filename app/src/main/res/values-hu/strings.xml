@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Megosztott geokerítés-területek kezelése</string>
     <string name="settings_notify_when_tracked">Értesítés követéskor</string>
     <string name="settings_notify_when_tracked_subtitle">Értesítést kap, ha egy névjegy Önre vonatkozó közelségi vagy geokerítés-riasztása aktiválódik.</string>
+    <string name="settings_notify_when_watched">Értesítés, ha figyelnek</string>
+    <string name="settings_notify_when_watched_subtitle">Figyelmeztetés, amikor egy partner élőben figyelni kezd.</string>
     <string name="settings_my_location_history">Helyelőzmények</string>
     <string name="settings_my_location_history_subtitle">Saját helyadat-idővonalának böngészése</string>
     <string name="settings_lookup_addresses">Címek keresése</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Felügyelt mód elutasítva</string>
     <string name="notif_supervised_declined_text">A felügyelő elutasította a kérelmet - a felügyelt mód kikapcsolva</string>
     <string name="notif_tracking_alert_title">Követési riasztás</string>
+    <string name="notif_live_watch_title">%1$s élőben figyel téged</string>
+    <string name="notif_live_watch_text">A helyzeted valós időben frissül.</string>
     <string name="notif_tracking_proximity">%1$s közelségi riasztást kapott Önről</string>
     <string name="notif_tracking_geofence">%1$s riasztást kapott arról, hogy Ön belépett a(z) %2$s kerítésbe / elhagyta azt</string>
     <string name="notif_tracking_generic">%1$s figyeli az Ön helyzetét</string>

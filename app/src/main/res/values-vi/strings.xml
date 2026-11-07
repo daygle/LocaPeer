@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Quản lý các khu vực hàng rào địa lý được chia sẻ</string>
     <string name="settings_notify_when_tracked">Thông báo khi bị theo dõi</string>
     <string name="settings_notify_when_tracked_subtitle">Nhận thông báo khi cảnh báo khoảng cách gần hoặc hàng rào địa lý của một liên hệ về bạn được kích hoạt.</string>
+    <string name="settings_notify_when_watched">Thông báo khi bị xem</string>
+    <string name="settings_notify_when_watched_subtitle">Cảnh báo khi một liên hệ bắt đầu xem bạn trực tiếp.</string>
     <string name="settings_my_location_history">Lịch sử vị trí</string>
     <string name="settings_my_location_history_subtitle">Xem dòng thời gian vị trí của chính bạn</string>
     <string name="settings_lookup_addresses">Tra cứu địa chỉ</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">Chế độ được giám sát bị từ chối</string>
     <string name="notif_supervised_declined_text">Người giám sát của bạn đã từ chối yêu cầu - chế độ được giám sát đã bị tắt</string>
     <string name="notif_tracking_alert_title">Cảnh báo theo dõi</string>
+    <string name="notif_live_watch_title">%1$s đang xem bạn trực tiếp</string>
+    <string name="notif_live_watch_text">Vị trí của bạn đang được cập nhật theo thời gian thực.</string>
     <string name="notif_tracking_proximity">%1$s đã nhận cảnh báo khoảng cách gần về bạn</string>
     <string name="notif_tracking_geofence">%1$s đã nhận cảnh báo rằng bạn vào/ra khỏi hàng rào: %2$s</string>
     <string name="notif_tracking_generic">%1$s đang theo dõi vị trí của bạn</string>

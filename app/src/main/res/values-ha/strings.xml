@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Sarrafa wuraren geofence da aka raba</string>
     <string name="settings_notify_when_tracked">Sanar da ni lokacin da ake bibiyata</string>
     <string name="settings_notify_when_tracked_subtitle">Sami sanarwa lokacin da kusancin lamba ko gargaɗin geofence ya tashi a kanku.</string>
+    <string name="settings_notify_when_watched">Sanar Idan Ana Kallo</string>
+    <string name="settings_notify_when_watched_subtitle">Faɗakar idan wani lamba ya fara kallonka kai tsaye.</string>
     <string name="settings_my_location_history">Tarihin Wuri</string>
     <string name="settings_my_location_history_subtitle">Bincika lokutan wurarenku</string>
     <string name="settings_lookup_addresses">Nemo Adireshi</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">An ƙi yanayin sa ido</string>
     <string name="notif_supervised_declined_text">Mai sa idon ku ya ƙi buƙatar - an kashe yanayin sa ido</string>
     <string name="notif_tracking_alert_title">Gargaɗin Sa Ido</string>
+    <string name="notif_live_watch_title">%1$s yana kallonka kai tsaye</string>
+    <string name="notif_live_watch_text">Ana sabunta wurinka nan take.</string>
     <string name="notif_tracking_proximity">%1$s ya sami gargaɗin kusanci gamshe ku</string>
     <string name="notif_tracking_geofence">%1$s ya sami gargaɗin cewa kun shiga/fita fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s yana sa ido kan wurin ku</string>

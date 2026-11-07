@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Administrar áreas de geovallas compartidas</string>
     <string name="settings_notify_when_tracked">Notificar cuando sea rastreado</string>
     <string name="settings_notify_when_tracked_subtitle">Reciba una notificación cuando se active una alerta de proximidad o geovalla de un contacto para usted.</string>
+    <string name="settings_notify_when_watched">Avisar al ser observado</string>
+    <string name="settings_notify_when_watched_subtitle">Avisa cuando un contacto empiece a verte en vivo.</string>
     <string name="settings_my_location_history">Mi historial de ubicaciones</string>
     <string name="settings_my_location_history_subtitle">Explore su propia línea de tiempo de ubicaciones</string>
     <string name="settings_lookup_addresses">Buscar direcciones</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Modo supervisado rechazado</string>
     <string name="notif_supervised_declined_text">Su supervisor rechazó la solicitud: el modo supervisado se ha desactivado</string>
     <string name="notif_tracking_alert_title">Alerta de seguimiento</string>
+    <string name="notif_live_watch_title">%1$s te está viendo en vivo</string>
+    <string name="notif_live_watch_text">Tu ubicación se actualiza en tiempo real.</string>
     <string name="notif_tracking_proximity">%1$s recibió una alerta de proximidad sobre usted</string>
     <string name="notif_tracking_geofence">%1$s recibió una alerta de que usted entró/salió de la valla: %2$s</string>
     <string name="notif_tracking_generic">%1$s está supervisando su ubicación</string>

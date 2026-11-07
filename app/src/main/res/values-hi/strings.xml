@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">साझा जियोफ़ेंस क्षेत्रों का प्रबंधन करें</string>
     <string name="settings_notify_when_tracked">ट्रैक होने पर सूचित करें</string>
     <string name="settings_notify_when_tracked_subtitle">जब किसी संपर्क का आपके बारे में निकटता या जियोफ़ेंस अलर्ट सक्रिय होता है, तो सूचना पाएँ।</string>
+    <string name="settings_notify_when_watched">देखे जाने पर सूचित करें</string>
+    <string name="settings_notify_when_watched_subtitle">जब कोई संपर्क आपको लाइव देखना शुरू करे तो सूचित करें।</string>
     <string name="settings_my_location_history">स्थान इतिहास</string>
     <string name="settings_my_location_history_subtitle">अपनी स्थान समयरेखा देखें</string>
     <string name="settings_lookup_addresses">पते खोजें</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">पर्यवेक्षित मोड अस्वीकृत</string>
     <string name="notif_supervised_declined_text">आपके पर्यवेक्षक ने अनुरोध अस्वीकार किया - पर्यवेक्षित मोड बंद कर दिया गया</string>
     <string name="notif_tracking_alert_title">ट्रैकिंग अलर्ट</string>
+    <string name="notif_live_watch_title">%1$s आपको लाइव देख रहे हैं</string>
+    <string name="notif_live_watch_text">आपका स्थान रीयल टाइम में अपडेट हो रहा है।</string>
     <string name="notif_tracking_proximity">%1$s को आपके बारे में निकटता अलर्ट मिला</string>
     <string name="notif_tracking_geofence">%1$s को अलर्ट मिला कि आप इस क्षेत्र में आए/निकले: %2$s</string>
     <string name="notif_tracking_generic">%1$s आपके स्थान की निगरानी कर रहे हैं</string>

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Διαχείριση κοινόχρηστων περιοχών γεωφράκτη</string>
     <string name="settings_notify_when_tracked">Ειδοποίηση κατά την παρακολούθηση</string>
     <string name="settings_notify_when_tracked_subtitle">Λάβετε ειδοποίηση όταν ενεργοποιείται ειδοποίηση εγγύτητας ή γεωφράκτη μιας επαφής που σας αφορά.</string>
+    <string name="settings_notify_when_watched">Ειδοποίηση όταν σας βλέπουν</string>
+    <string name="settings_notify_when_watched_subtitle">Ειδοποίηση όταν μια επαφή αρχίζει να σας παρακολουθεί ζωντανά.</string>
     <string name="settings_my_location_history">Ιστορικό τοποθεσίας</string>
     <string name="settings_my_location_history_subtitle">Περιηγηθείτε στο χρονολόγιο της τοποθεσίας σας</string>
     <string name="settings_lookup_addresses">Αναζήτηση διευθύνσεων</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Η εποπτευόμενη λειτουργία απορρίφθηκε</string>
     <string name="notif_supervised_declined_text">Ο επόπτης απέρριψε το αίτημα - η εποπτευόμενη λειτουργία απενεργοποιήθηκε</string>
     <string name="notif_tracking_alert_title">Ειδοποίηση παρακολούθησης</string>
+    <string name="notif_live_watch_title">Ο/Η %1$s σας παρακολουθεί ζωντανά</string>
+    <string name="notif_live_watch_text">Η τοποθεσία σας ενημερώνεται σε πραγματικό χρόνο.</string>
     <string name="notif_tracking_proximity">Ο/Η %1$s έλαβε ειδοποίηση εγγύτητας για εσάς</string>
     <string name="notif_tracking_geofence">Ο/Η %1$s έλαβε ειδοποίηση ότι μπήκατε/βγήκατε από τον φράκτη: %2$s</string>
     <string name="notif_tracking_generic">Ο/Η %1$s παρακολουθεί την τοποθεσία σας</string>

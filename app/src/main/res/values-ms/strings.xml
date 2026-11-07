@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Urus kawasan geopagar yang dikongsi</string>
     <string name="settings_notify_when_tracked">Maklumkan Apabila Dijejak</string>
     <string name="settings_notify_when_tracked_subtitle">Terima pemberitahuan apabila amaran jarak dekat atau geopagar kenalan mengenai anda dicetuskan.</string>
+    <string name="settings_notify_when_watched">Maklumkan Apabila Dilihat</string>
+    <string name="settings_notify_when_watched_subtitle">Maklumkan apabila kenalan mula melihat anda secara langsung.</string>
     <string name="settings_my_location_history">Sejarah Lokasi</string>
     <string name="settings_my_location_history_subtitle">Semak imbas garis masa lokasi anda sendiri</string>
     <string name="settings_lookup_addresses">Cari Alamat</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">Mod diselia ditolak</string>
     <string name="notif_supervised_declined_text">Penyelia anda menolak permintaan - mod diselia telah dimatikan</string>
     <string name="notif_tracking_alert_title">Amaran Penjejakan</string>
+    <string name="notif_live_watch_title">%1$s sedang melihat anda secara langsung</string>
+    <string name="notif_live_watch_text">Lokasi anda dikemas kini dalam masa nyata.</string>
     <string name="notif_tracking_proximity">%1$s menerima amaran jarak dekat mengenai anda</string>
     <string name="notif_tracking_geofence">%1$s menerima amaran bahawa anda memasuki/keluar pagar: %2$s</string>
     <string name="notif_tracking_generic">%1$s sedang memantau lokasi anda</string>

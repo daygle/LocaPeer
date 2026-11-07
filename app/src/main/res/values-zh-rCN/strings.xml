@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">管理共享的地理围栏区域</string>
     <string name="settings_notify_when_tracked">被追踪时通知</string>
     <string name="settings_notify_when_tracked_subtitle">当联系人触发针对您的距离或地理围栏警报时，接收通知。</string>
+    <string name="settings_notify_when_watched">被查看时通知</string>
+    <string name="settings_notify_when_watched_subtitle">当联系人开始实时查看你时提醒。</string>
     <string name="settings_my_location_history">我的位置历史</string>
     <string name="settings_my_location_history_subtitle">浏览您自己的位置时间轴</string>
     <string name="settings_lookup_addresses">查询地址</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">监管模式被拒绝</string>
     <string name="notif_supervised_declined_text">您的监管人拒绝了请求 - 监管模式已被禁用</string>
     <string name="notif_tracking_alert_title">追踪警报</string>
+    <string name="notif_live_watch_title">%1$s 正在实时查看你</string>
+    <string name="notif_live_watch_text">你的位置正在实时更新。</string>
     <string name="notif_tracking_proximity">%1$s 收到了一条关于您的距离警报</string>
     <string name="notif_tracking_geofence">%1$s 收到了一条您进入/离开围栏的警报：%2$s</string>
     <string name="notif_tracking_generic">%1$s 正在监控您的位置</string>

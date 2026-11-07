@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">مدیریت محدوده‌های حصار جغرافیایی مشترک</string>
     <string name="settings_notify_when_tracked">اعلان هنگام ردیابی</string>
     <string name="settings_notify_when_tracked_subtitle">وقتی هشدار مجاورت یا حصار جغرافیایی یکی از مخاطبین درباره شما فعال می‌شود، اعلان دریافت کنید.</string>
+    <string name="settings_notify_when_watched">اعلان هنگام تماشا</string>
+    <string name="settings_notify_when_watched_subtitle">هشدار وقتی مخاطبی شروع به تماشای زنده شما می‌کند.</string>
     <string name="settings_my_location_history">تاریخچه موقعیت</string>
     <string name="settings_my_location_history_subtitle">مرور خط زمانی موقعیت خودتان</string>
     <string name="settings_lookup_addresses">جستجوی نشانی‌ها</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">حالت تحت نظارت رد شد</string>
     <string name="notif_supervised_declined_text">ناظر شما درخواست را رد کرد - حالت تحت نظارت غیرفعال شد</string>
     <string name="notif_tracking_alert_title">هشدار ردیابی</string>
+    <string name="notif_live_watch_title">%1$s در حال تماشای زنده شماست</string>
+    <string name="notif_live_watch_text">موقعیت شما به‌صورت لحظه‌ای به‌روزرسانی می‌شود.</string>
     <string name="notif_tracking_proximity">%1$s هشدار مجاورتی درباره شما دریافت کرد</string>
     <string name="notif_tracking_geofence">%1$s هشداری دریافت کرد که شما وارد/خارج از حصار شدید: %2$s</string>
     <string name="notif_tracking_generic">%1$s موقعیت شما را پایش می‌کند</string>

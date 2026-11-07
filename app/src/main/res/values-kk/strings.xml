@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Бөлісілген геоқоршау аймақтарын басқару</string>
     <string name="settings_notify_when_tracked">Бақыланған кезде хабарлау</string>
     <string name="settings_notify_when_tracked_subtitle">Контактінің жақындығы немесе сіз үшін геоқоршау ескертуі іске қосылғанда хабарландыру алыңыз.</string>
+    <string name="settings_notify_when_watched">Көргенде хабарлау</string>
+    <string name="settings_notify_when_watched_subtitle">Контакт сізді тікелей көре бастағанда ескерту.</string>
     <string name="settings_my_location_history">Орын тарихы</string>
     <string name="settings_my_location_history_subtitle">Өз орналасу тарихыңызды қараңыз</string>
     <string name="settings_lookup_addresses">Мекенжайларды іздеу</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Бақылау режимінен бас тартылды</string>
     <string name="notif_supervised_declined_text">Бақылаушыңыз сұрауды қабылдамады - бақылау режимі өшірілді</string>
     <string name="notif_tracking_alert_title">Бақылау ескертуі</string>
+    <string name="notif_live_watch_title">%1$s сізді тікелей көріп отыр</string>
+    <string name="notif_live_watch_text">Орныңыз нақты уақытта жаңартылуда.</string>
     <string name="notif_tracking_proximity">%1$s сіз туралы жақындық ескертуін алды</string>
     <string name="notif_tracking_geofence">%1$s сіздің қоршауға кіргеніңіз/шыққаныңыз туралы ескерту алды: %2$s</string>
     <string name="notif_tracking_generic">%1$s сіздің орныңызды бақылауда</string>

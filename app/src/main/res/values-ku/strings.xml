@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Herêmên geofence yên parvekirî birêve bibin</string>
     <string name="settings_notify_when_tracked">Dema hatî şopandin agahdar bike</string>
     <string name="settings_notify_when_tracked_subtitle">Dema ku nêzîkbûna têkiliyek an hişyariya geofence ji bo we tê xebitandin agahdariyek bistînin.</string>
+    <string name="settings_notify_when_watched">Dema li min temaşe dikin agahdar bike</string>
+    <string name="settings_notify_when_watched_subtitle">Dema têkiliyek dest bi temaşekirina te ya zindî dike, hişyar bike.</string>
     <string name="settings_my_location_history">Dîroka Cih</string>
     <string name="settings_my_location_history_subtitle">Dîroka cihê xwe bigerin</string>
     <string name="settings_lookup_addresses">Navnîşan Bigere</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Moda çavdêriyê hat redkirin</string>
     <string name="notif_supervised_declined_text">Çavdêrê we daxwaz red kir - moda çavdêriyê hat seqetkirin</string>
     <string name="notif_tracking_alert_title">Hişyariya Şopandinê</string>
+    <string name="notif_live_watch_title">%1$s zindî li te temaşe dike</string>
+    <string name="notif_live_watch_text">Cihê te di dema rast de tê nûkirin.</string>
     <string name="notif_tracking_proximity">%1$s hişyariyek nêzîkbûnê li ser we stand</string>
     <string name="notif_tracking_geofence">%1$s hişyariyek stand ku hûn ketine/derketine ji fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s cihê we dişopîne</string>

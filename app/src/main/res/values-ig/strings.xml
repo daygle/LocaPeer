@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Jikwaa ebe geofence ekerịtara</string>
     <string name="settings_notify_when_tracked">Gwa m Mgbe a na-achọ m</string>
     <string name="settings_notify_when_tracked_subtitle">Nweta ọkwa mgbe kọntaktị nọ nso ma ọ bụ geofence mkpu maka gị na-amalite.</string>
+    <string name="settings_notify_when_watched">Kọọ Mgbe A Na-ele</string>
+    <string name="settings_notify_when_watched_subtitle">Dọọ aka na ntị mgbe onye kọntaktị malitere ile gị ndụ.</string>
     <string name="settings_my_location_history">Akụkọ Ebe</string>
     <string name="settings_my_location_history_subtitle">Chọgharịa usoro oge ebe ị nọ</string>
     <string name="settings_lookup_addresses">Chọọ Adreesị</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">Ajụrụ ọnọdụ nlekọta</string>
     <string name="notif_supervised_declined_text">Onye nlekọta gị jụrụ arịrịọ ahụ - agbanyụrụ ọnọdụ nlekọta</string>
     <string name="notif_tracking_alert_title">Mkpu Nleba anya</string>
+    <string name="notif_live_watch_title">%1$s na-ele gị ndụ</string>
+    <string name="notif_live_watch_text">A na-emelite ọnọdụ gị ozugbo.</string>
     <string name="notif_tracking_proximity">%1$s nwetara mkpu nso gbasara gị</string>
     <string name="notif_tracking_geofence">%1$s nwetara mkpu na ị banyere/pụọ na fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s na-eleba anya n\'ebe ị nọ</string>

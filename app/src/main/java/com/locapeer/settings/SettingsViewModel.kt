@@ -140,6 +140,7 @@ data class SettingsBackup(
     val useImperialElevation: Boolean = false,
     val useImperialDistance: Boolean = false,
     val notifyOnTrackingAlerts: Boolean = false,
+    val notifyWhenWatched: Boolean? = null,
     val reverseGeocodingEnabled: Boolean = false,
     /**
      * Selected in-app language as a BCP-47 tag ("" = follow system). Null on backups
@@ -397,6 +398,7 @@ class SettingsViewModel @Inject constructor(
                             useImperialElevation = s.useImperialElevation,
                             useImperialDistance = s.useImperialDistance,
                             notifyOnTrackingAlerts = s.notifyOnTrackingAlerts,
+                            notifyWhenWatched = s.notifyWhenWatched,
                             reverseGeocodingEnabled = s.reverseGeocodingEnabled,
                             appLanguageTag = AppLanguage.current().tag,
                             themeMode = s.themeMode,
@@ -664,6 +666,7 @@ class SettingsViewModel @Inject constructor(
                         prefs.setUseImperialElevation(s.useImperialElevation)
                         prefs.setUseImperialDistance(s.useImperialDistance)
                         prefs.setNotifyOnTrackingAlerts(s.notifyOnTrackingAlerts)
+                        s.notifyWhenWatched?.let { prefs.setNotifyWhenWatched(it) }
                         prefs.setReverseGeocodingEnabled(s.reverseGeocodingEnabled)
                         // Newer fields are nullable: null means the backup predates the feature,
                         // so the local value is deliberately left untouched rather than reset.
@@ -906,6 +909,10 @@ class SettingsViewModel @Inject constructor(
 
     fun setUseImperialDistance(imperial: Boolean) {
         viewModelScope.launch { prefs.setUseImperialDistance(imperial) }
+    }
+
+    fun setNotifyWhenWatched(notify: Boolean) {
+        viewModelScope.launch { prefs.setNotifyWhenWatched(notify) }
     }
 
     fun setNotifyOnTrackingAlerts(notify: Boolean) {

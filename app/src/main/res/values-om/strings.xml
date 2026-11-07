@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Naannoo geofence qoodame bulchi</string>
     <string name="settings_notify_when_tracked">Yeroo hordofame na beeksisi</string>
     <string name="settings_notify_when_tracked_subtitle">Yeroo dhiheenyi quunnamtii tokkoo ykn akeekkachiisni geofence siif kaka\'u beeksisa argadhu.</string>
+    <string name="settings_notify_when_watched">Yeroo Ilaalamtu Beeksisi</string>
+    <string name="settings_notify_when_watched_subtitle">Yeroo namni quunnamtii kallattiin si ilaaluu jalqabu akeekkachiisi.</string>
     <string name="settings_my_location_history">Seenaa Bakka Jiranii</string>
     <string name="settings_my_location_history_subtitle">Tartiba yeroo bakka jirtanii keessan ilaalaa</string>
     <string name="settings_lookup_addresses">Teessoo barbaaduu</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Modiin to\'annoo didameera</string>
     <string name="notif_supervised_declined_text">To\'ataan kee gaaffii diddeera - modiin to\'annoo cufameera</string>
     <string name="notif_tracking_alert_title">Akeekkachiisa Hordoffii</string>
+    <string name="notif_live_watch_title">%1$s kallattiin si ilaalaa jira</string>
+    <string name="notif_live_watch_text">Iddoon kee yeroo dhugaatti haaromfamaa jira.</string>
     <string name="notif_tracking_proximity">%1$s akeekkachiisa dhiheenyaa waa\'ee kee argateera</string>
     <string name="notif_tracking_geofence">%1$s akeekkachiisa ati fence seente/baate argateera: %2$s</string>
     <string name="notif_tracking_generic">%1$s bakka ati jirtu to\'achaa jira</string>

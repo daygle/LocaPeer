@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">공유된 지오펜스 영역 관리</string>
     <string name="settings_notify_when_tracked">추적 시 알림</string>
     <string name="settings_notify_when_tracked_subtitle">연락처의 근접 또는 지오펜스 알림이 나에 대해 작동하면 알림을 받습니다.</string>
+    <string name="settings_notify_when_watched">보고 있을 때 알림</string>
+    <string name="settings_notify_when_watched_subtitle">연락처가 나를 실시간으로 보기 시작하면 알립니다.</string>
     <string name="settings_my_location_history">위치 기록</string>
     <string name="settings_my_location_history_subtitle">내 위치 타임라인 살펴보기</string>
     <string name="settings_lookup_addresses">주소 조회</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">감독 모드 거절됨</string>
     <string name="notif_supervised_declined_text">감독자가 요청을 거절했습니다 - 감독 모드가 비활성화되었습니다</string>
     <string name="notif_tracking_alert_title">추적 알림</string>
+    <string name="notif_live_watch_title">%1$s 님이 나를 실시간으로 보고 있습니다</string>
+    <string name="notif_live_watch_text">내 위치가 실시간으로 업데이트되고 있습니다.</string>
     <string name="notif_tracking_proximity">%1$s 님이 나에 대한 근접 알림을 받았습니다</string>
     <string name="notif_tracking_geofence">%1$s 님이 내가 구역 %2$s에 진입/이탈했다는 알림을 받았습니다</string>
     <string name="notif_tracking_generic">%1$s 님이 내 위치를 모니터링하고 있습니다</string>

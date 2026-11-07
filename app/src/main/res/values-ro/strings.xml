@@ -104,6 +104,8 @@
     <string name="settings_geofences_subtitle">Gestionați zonele de perimetru virtual partajate</string>
     <string name="settings_notify_when_tracked">Notificare la urmărire</string>
     <string name="settings_notify_when_tracked_subtitle">Primiți o notificare când se declanșează o alertă de proximitate sau de perimetru a unui contact referitoare la dvs.</string>
+    <string name="settings_notify_when_watched">Notifică la urmărire</string>
+    <string name="settings_notify_when_watched_subtitle">Alertă când un contact începe să te urmărească live.</string>
     <string name="settings_my_location_history">Istoricul locațiilor</string>
     <string name="settings_my_location_history_subtitle">Răsfoiți propria cronologie a locațiilor</string>
     <string name="settings_lookup_addresses">Căutare adrese</string>
@@ -694,6 +696,8 @@
     <string name="notif_supervised_declined_title">Mod supravegheat refuzat</string>
     <string name="notif_supervised_declined_text">Supraveghetorul a refuzat cererea - modul supravegheat a fost dezactivat</string>
     <string name="notif_tracking_alert_title">Alertă de urmărire</string>
+    <string name="notif_live_watch_title">%1$s te urmărește live</string>
+    <string name="notif_live_watch_text">Locația ta se actualizează în timp real.</string>
     <string name="notif_tracking_proximity">%1$s a primit o alertă de proximitate despre dvs.</string>
     <string name="notif_tracking_geofence">%1$s a primit o alertă că ați intrat/ieșit din perimetrul: %2$s</string>
     <string name="notif_tracking_generic">%1$s vă monitorizează locația</string>

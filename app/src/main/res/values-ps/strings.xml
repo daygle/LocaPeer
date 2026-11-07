@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">شریک شوي جیو فینس سیمې اداره کړئ</string>
     <string name="settings_notify_when_tracked">کله چې تعقیب شي خبر ورکړئ</string>
     <string name="settings_notify_when_tracked_subtitle">کله چې ستاسو لپاره د یوې اړیکې نږدېوالی یا جیو فینس خبرتیا پیل شي نو خبرتیا ترلاسه کړئ.</string>
+    <string name="settings_notify_when_watched">د کتلو پر وخت خبر کړئ</string>
+    <string name="settings_notify_when_watched_subtitle">کله چې یوه اړیکه تاسو ژوندی کتل پیل کړي، خبرتیا ورکړئ.</string>
     <string name="settings_my_location_history">د ځای تاریخچه</string>
     <string name="settings_my_location_history_subtitle">خپل د ځای مهال ویش وګورئ</string>
     <string name="settings_lookup_addresses">پتې ولټوئ</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">د څارنې حالت رد شو</string>
     <string name="notif_supervised_declined_text">ستاسو څارونکي غوښتنه رد کړه - د څارنې حالت بند شو</string>
     <string name="notif_tracking_alert_title">د تعقیب خبرتیا</string>
+    <string name="notif_live_watch_title">%1$s تاسو ژوندی ګوري</string>
+    <string name="notif_live_watch_text">ستاسو موقعیت په ریښتیني وخت کې تازه کېږي.</string>
     <string name="notif_tracking_proximity">%1$s ستاسو په اړه د نږدېوالي خبرتیا ترلاسه کړه</string>
     <string name="notif_tracking_geofence">%1$s خبرتیا ترلاسه کړه چې تاسو سیمې ته ننوتی/ووتل: %2$s</string>
     <string name="notif_tracking_generic">%1$s ستاسو ځای څاري</string>

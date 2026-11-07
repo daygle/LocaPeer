@@ -105,6 +105,8 @@
     <string name="settings_geofences_subtitle">Zarządzaj współdzielonymi obszarami geoogrodzeń</string>
     <string name="settings_notify_when_tracked">Powiadamiaj o śledzeniu</string>
     <string name="settings_notify_when_tracked_subtitle">Otrzymuj powiadomienie, gdy u kontaktu uruchomi się dotyczący Ciebie alert zbliżeniowy lub geoogrodzenia.</string>
+    <string name="settings_notify_when_watched">Powiadamiaj o obserwowaniu</string>
+    <string name="settings_notify_when_watched_subtitle">Powiadom, gdy kontakt zacznie obserwować cię na żywo.</string>
     <string name="settings_my_location_history">Historia lokalizacji</string>
     <string name="settings_my_location_history_subtitle">Przeglądaj własną oś czasu lokalizacji</string>
     <string name="settings_lookup_addresses">Wyszukuj adresy</string>
@@ -707,6 +709,8 @@
     <string name="notif_supervised_declined_title">Tryb nadzorowany odrzucony</string>
     <string name="notif_supervised_declined_text">Opiekun odrzucił prośbę - tryb nadzorowany został wyłączony</string>
     <string name="notif_tracking_alert_title">Alert o śledzeniu</string>
+    <string name="notif_live_watch_title">%1$s obserwuje cię na żywo</string>
+    <string name="notif_live_watch_text">Twoja lokalizacja aktualizuje się w czasie rzeczywistym.</string>
     <string name="notif_tracking_proximity">%1$s otrzymał(a) dotyczący Ciebie alert zbliżeniowy</string>
     <string name="notif_tracking_geofence">%1$s otrzymał(a) alert o Twoim wejściu/wyjściu ze strefy: %2$s</string>
     <string name="notif_tracking_generic">%1$s monitoruje Twoją lokalizację</string>

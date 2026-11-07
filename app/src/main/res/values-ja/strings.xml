@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">共有ジオフェンスエリアを管理</string>
     <string name="settings_notify_when_tracked">追跡時に通知</string>
     <string name="settings_notify_when_tracked_subtitle">連絡先の近接またはジオフェンスアラートが自分に対してトリガーされたときに通知を受け取ります。</string>
+    <string name="settings_notify_when_watched">閲覧時に通知</string>
+    <string name="settings_notify_when_watched_subtitle">連絡先があなたのライブ表示を始めたときに通知します。</string>
     <string name="settings_my_location_history">自分の位置履歴</string>
     <string name="settings_my_location_history_subtitle">自分の位置情報のタイムラインを閲覧</string>
     <string name="settings_lookup_addresses">住所を検索</string>
@@ -668,6 +670,8 @@
     <string name="notif_supervised_declined_title">監視モードが拒否されました</string>
     <string name="notif_supervised_declined_text">監視者がリクエストを拒否しました - 監視モードは無効になりました</string>
     <string name="notif_tracking_alert_title">追跡アラート</string>
+    <string name="notif_live_watch_title">%1$s があなたをライブで見ています</string>
+    <string name="notif_live_watch_text">位置情報がリアルタイムで更新されています。</string>
     <string name="notif_tracking_proximity">%1$sがあなたに関する近接アラートを受信しました</string>
     <string name="notif_tracking_geofence">%1$sがあなたがフェンス： %2$sに入った/出たというアラートを受信しました</string>
     <string name="notif_tracking_generic">%1$sがあなたの位置情報をモニタリングしています</string>

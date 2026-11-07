@@ -104,6 +104,8 @@
     <string name="settings_geofences_subtitle">ניהול אזורי גדר גאוגרפית משותפים</string>
     <string name="settings_notify_when_tracked">התראה במעקב</string>
     <string name="settings_notify_when_tracked_subtitle">קבל התראה כאשר התראת קרבה או גדר גאוגרפית של איש קשר לגביך מופעלת.</string>
+    <string name="settings_notify_when_watched">התראה כשצופים בי</string>
+    <string name="settings_notify_when_watched_subtitle">התראה כשאיש קשר מתחיל לצפות בך בזמן אמת.</string>
     <string name="settings_my_location_history">היסטוריית מיקום</string>
     <string name="settings_my_location_history_subtitle">עיין בציר הזמן של המיקום שלך</string>
     <string name="settings_lookup_addresses">חיפוש כתובות</string>
@@ -694,6 +696,8 @@
     <string name="notif_supervised_declined_title">מצב מפוקח נדחה</string>
     <string name="notif_supervised_declined_text">המפקח שלך דחה את הבקשה - מצב מפוקח הושבת</string>
     <string name="notif_tracking_alert_title">התראת מעקב</string>
+    <string name="notif_live_watch_title">%1$s צופה בך בזמן אמת</string>
+    <string name="notif_live_watch_text">המיקום שלך מתעדכן בזמן אמת.</string>
     <string name="notif_tracking_proximity">‏%1$s קיבל התראת קרבה לגביך</string>
     <string name="notif_tracking_geofence">‏%1$s קיבל התראה שנכנסת/יצאת מהגדר: %2$s</string>
     <string name="notif_tracking_generic">‏%1$s מנטר את מיקומך</string>

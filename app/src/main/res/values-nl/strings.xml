@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Gedeelde geofencegebieden beheren</string>
     <string name="settings_notify_when_tracked">Melden bij volgen</string>
     <string name="settings_notify_when_tracked_subtitle">Ontvang een melding wanneer een nabijheids- of geofencemelding van een contact over jou wordt geactiveerd.</string>
+    <string name="settings_notify_when_watched">Melden bij meekijken</string>
+    <string name="settings_notify_when_watched_subtitle">Waarschuw wanneer een contact je live begint te bekijken.</string>
     <string name="settings_my_location_history">Locatiegeschiedenis</string>
     <string name="settings_my_location_history_subtitle">Bekijk je eigen locatietijdlijn</string>
     <string name="settings_lookup_addresses">Adressen opzoeken</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Toezichtmodus geweigerd</string>
     <string name="notif_supervised_declined_text">Je toezichthouder heeft het verzoek geweigerd - de toezichtmodus is uitgeschakeld</string>
     <string name="notif_tracking_alert_title">Volgmelding</string>
+    <string name="notif_live_watch_title">%1$s bekijkt je live</string>
+    <string name="notif_live_watch_text">Je locatie wordt realtime bijgewerkt.</string>
     <string name="notif_tracking_proximity">%1$s heeft een nabijheidsmelding over jou ontvangen</string>
     <string name="notif_tracking_geofence">%1$s heeft een melding ontvangen dat je zone %2$s bent binnengegaan/verlaten</string>
     <string name="notif_tracking_generic">%1$s volgt je locatie</string>

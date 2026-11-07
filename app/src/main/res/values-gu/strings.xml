@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">શેર કરેલા જીઓફેન્સ વિસ્તારોનું સંચાલન કરો</string>
     <string name="settings_notify_when_tracked">જ્યારે ટ્રેક કરવામાં આવે ત્યારે જાણ કરો</string>
     <string name="settings_notify_when_tracked_subtitle">જ્યારે તમારા માટે સંપર્કની નિકટતા અથવા જીઓફેન્સ ચેતવણી ટ્રિગર થાય ત્યારે સૂચના મેળવો.</string>
+    <string name="settings_notify_when_watched">જોવાય ત્યારે સૂચિત કરો</string>
+    <string name="settings_notify_when_watched_subtitle">કોઈ સંપર્ક તમને લાઇવ જોવાનું શરૂ કરે ત્યારે ચેતવો.</string>
     <string name="settings_my_location_history">સ્થાન ઇતિહાસ</string>
     <string name="settings_my_location_history_subtitle">તમારી પોતાની સ્થાન સમયરેખા બ્રાઉઝ કરો</string>
     <string name="settings_lookup_addresses">સરનામાં શોધો</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">સુપરવાઇઝ્ડ મોડ નકારવામાં આવ્યો</string>
     <string name="notif_supervised_declined_text">તમારા સુપરવાઇઝરે વિનંતી નકારી દીધી છે - સુપરવાઇઝ્ડ મોડ નિષ્ક્રિય કરવામાં આવ્યો છે</string>
     <string name="notif_tracking_alert_title">ટ્રેકિંગ ચેતવણી</string>
+    <string name="notif_live_watch_title">%1$s તમને લાઇવ જોઈ રહ્યા છે</string>
+    <string name="notif_live_watch_text">તમારું સ્થાન રીઅલ ટાઇમમાં અપડેટ થઈ રહ્યું છે.</string>
     <string name="notif_tracking_proximity">તમારા વિશે %1$s ને નિકટતા ચેતવણી મળી છે</string>
     <string name="notif_tracking_geofence">તમે ફેન્સમાં પ્રવેશ્યા/બહાર નીકળ્યા એવી %1$s ને ચેતવણી મળી છે: %2$s</string>
     <string name="notif_tracking_generic">%1$s તમારા સ્થાન પર દેખરેખ રાખી રહ્યા છે</string>

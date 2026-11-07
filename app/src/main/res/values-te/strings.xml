@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">భాగస్వామ్య జియోఫెన్స్ ప్రాంతాలను నిర్వహించండి</string>
     <string name="settings_notify_when_tracked">ట్రాక్ చేసినప్పుడు తెలియజేయండి</string>
     <string name="settings_notify_when_tracked_subtitle">మీ కోసం కాంటాక్ట్ యొక్క సామీప్యత లేదా జియోఫెన్స్ అలర్ట్ ట్రిగ్గర్ అయినప్పుడు నోటిఫికేషన్ పొందండి.</string>
+    <string name="settings_notify_when_watched">చూస్తున్నప్పుడు తెలియజేయి</string>
+    <string name="settings_notify_when_watched_subtitle">ఒక పరిచయం మిమ్మల్ని ప్రత్యక్షంగా చూడటం ప్రారంభించినప్పుడు హెచ్చరించు.</string>
     <string name="settings_my_location_history">స్థాన చరిత్ర</string>
     <string name="settings_my_location_history_subtitle">మీ స్వంత స్థాన కాలక్రమాన్ని బ్రౌజ్ చేయండి</string>
     <string name="settings_lookup_addresses">చిరునామాలను వెతుకు</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">పర్యవేక్షణ మోడ్ తిరస్కరించబడింది</string>
     <string name="notif_supervised_declined_text">మీ పర్యవేక్షకుడు అభ్యర్థనను తిరస్కరించారు - పర్యవేక్షణ మోడ్ నిలిపివేయబడింది</string>
     <string name="notif_tracking_alert_title">ట్రాకింగ్ హెచ్చరిక</string>
+    <string name="notif_live_watch_title">%1$s మిమ్మల్ని ప్రత్యక్షంగా చూస్తున్నారు</string>
+    <string name="notif_live_watch_text">మీ స్థానం నిజ సమయంలో నవీకరించబడుతోంది.</string>
     <string name="notif_tracking_proximity">మీ గురించి %1$s కి సామీప్య హెచ్చరిక అందింది</string>
     <string name="notif_tracking_geofence">మీరు ఫెన్స్ లోపలికి వచ్చారని/బయటికి వెళ్ళారని %1$s కి అలర్ట్ అందింది: %2$s</string>
     <string name="notif_tracking_generic">%1$s మీ స్థానాన్ని పర్యవేక్షిస్తున్నారు</string>

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">የተጋሩ የጂኦፌንስ ቦታዎችን ያስተዳድሩ</string>
     <string name="settings_notify_when_tracked">ክትትል ሲደረግብኝ አሳውቀኝ</string>
     <string name="settings_notify_when_tracked_subtitle">የእውቂያ ቅርበት ወይም የጂኦፌንስ ማስጠንቀቂያ ለእርስዎ ሲቀሰቀስ ማሳወቂያ ያግኙ።</string>
+    <string name="settings_notify_when_watched">ሲታዩ አሳውቅ</string>
+    <string name="settings_notify_when_watched_subtitle">አንድ እውቂያ በቀጥታ መመልከት ሲጀምር ያሳውቁ።</string>
     <string name="settings_my_location_history">የአካባቢ ታሪክ</string>
     <string name="settings_my_location_history_subtitle">የራስዎን የአካባቢ የጊዜ መስመር ያስሱ</string>
     <string name="settings_lookup_addresses">አድራሻዎችን ፈልግ</string>
@@ -682,6 +684,8 @@
     <string name="notif_supervised_declined_title">የቁጥጥር ሁነታ ተከልክሏል</string>
     <string name="notif_supervised_declined_text">ተቆጣጣሪዎ ጥያቄውን ውድቅ አድርገዋል - የቁጥጥር ሁነታ ጠፍቷል</string>
     <string name="notif_tracking_alert_title">የክትትል ማስጠንቀቂያ</string>
+    <string name="notif_live_watch_title">%1$s በቀጥታ እየተመለከተዎት ነው</string>
+    <string name="notif_live_watch_text">አካባቢዎ በእውነተኛ ጊዜ እየተዘመነ ነው።</string>
     <string name="notif_tracking_proximity">%1$s ስለ እርስዎ የቅርበት ማስጠንቀቂያ ደርሷቸዋል</string>
     <string name="notif_tracking_geofence">%1$s አጥር ውስጥ እንደገቡ/እንደወጡ ማስጠንቀቂያ ደርሷቸዋል፡ %2$s</string>
     <string name="notif_tracking_generic">%1$s አካባቢዎን እየተከታተሉ ነው</string>

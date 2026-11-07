@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Paylaşılan coğrafi çit alanlarını yönetin</string>
     <string name="settings_notify_when_tracked">Takip Edildiğinde Bildir</string>
     <string name="settings_notify_when_tracked_subtitle">Bir kişinin sizinle ilgili yakınlık veya coğrafi çit uyarısı tetiklendiğinde bildirim alın.</string>
+    <string name="settings_notify_when_watched">İzlendiğinde Bildir</string>
+    <string name="settings_notify_when_watched_subtitle">Bir kişi sizi canlı izlemeye başladığında uyar.</string>
     <string name="settings_my_location_history">Konum Geçmişi</string>
     <string name="settings_my_location_history_subtitle">Kendi konum zaman çizelgenize göz atın</string>
     <string name="settings_lookup_addresses">Adresleri Ara</string>
@@ -681,6 +683,8 @@
     <string name="notif_supervised_declined_title">Denetimli mod reddedildi</string>
     <string name="notif_supervised_declined_text">Denetleyiciniz isteği reddetti - denetimli mod kapatıldı</string>
     <string name="notif_tracking_alert_title">Takip Uyarısı</string>
+    <string name="notif_live_watch_title">%1$s sizi canlı izliyor</string>
+    <string name="notif_live_watch_text">Konumunuz gerçek zamanlı güncelleniyor.</string>
     <string name="notif_tracking_proximity">%1$s sizinle ilgili bir yakınlık uyarısı aldı</string>
     <string name="notif_tracking_geofence">%1$s, %2$s çitine girdiğinize/çıktığınıza dair bir uyarı aldı</string>
     <string name="notif_tracking_generic">%1$s konumunuzu izliyor</string>
