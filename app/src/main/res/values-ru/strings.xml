@@ -974,7 +974,7 @@
     <string name="notif_supervision_ended_title">Присмотр завершен</string>
     <string name="notif_supervisor_unknown_request_text">Устройство, подающее запрос, отсутствует в ваших контактах. Сначала добавьте его как контакт и попросите повторить запрос присмотра.</string>
     <string name="notif_supervisor_unknown_request_title">Запрос присмотра от неизвестного устройства</string>
-    <string name="onboarding_bg_location_hint">На Android 11 и новее фоновая локация выдаётся только в системных настройках — приложение не запрашивает её само.</string>
+    <string name="onboarding_bg_location_hint">На Android 11 и новее фоновая локация выдаётся только в системных настройках - приложение не запрашивает её само.</string>
     <string name="onboarding_bg_open_settings">Открыть системные настройки</string>
     <string name="onboarding_bg_skip">Пока пропустить</string>
     <string name="peer_supervise_disable_confirm">Прекратить присмотр</string>
@@ -990,14 +990,14 @@
     <string name="settings_alert_notifications_subtitle">Предупреждения геозон, близости и потери локации. Сигналы SOS остаются активными.</string>
     <string name="settings_disable_cancel">Отменить запрос</string>
     <string name="settings_disable_denied">Присмотрщик отклонил запрос на разблокировку.</string>
-    <string name="settings_disable_timed_out">Ответа вовремя нет. Возможно, присмотрщик офлайн — попробуйте позже.</string>
+    <string name="settings_disable_timed_out">Ответа вовремя нет. Возможно, присмотрщик офлайн - попробуйте позже.</string>
     <string name="settings_disable_waiting">Ожидание одобрения присмотрщика…</string>
     <string name="settings_erase_identity">Удалить личность &amp; стереть все данные</string>
     <string name="settings_erase_identity_card">Опасная зона</string>
     <string name="settings_erase_identity_confirm">Стереть и перезапустить</string>
     <string name="settings_erase_identity_final_message">Стереть всё и начать заново с новой личностью? Это необратимо. Если ещё захотите эту личность, сначала сделайте зашифрованную резервную копию.</string>
     <string name="settings_erase_identity_final_title">Финальное подтверждение</string>
-    <string name="settings_erase_identity_message">Будут безвозвратно удалены ваши ключи Nostr, все контакты, ограды, история локации, сообщения и настройки этого устройства. Контакты не уведомляются, их копии не затрагиваются. Запрос об удалении не отправляется — чтобы предупредить доверенное лицо, используйте «Удалить контакт и данные» отдельно у каждого.</string>
+    <string name="settings_erase_identity_message">Будут безвозвратно удалены ваши ключи Nostr, все контакты, ограды, история локации, сообщения и настройки этого устройства. Контакты не уведомляются, их копии не затрагиваются. Запрос об удалении не отправляется - чтобы предупредить доверенное лицо, используйте «Удалить контакт и данные» отдельно у каждого.</string>
     <string name="settings_erase_identity_subtitle">Удаляет ключ личности, контакты, историю локации, сообщения и настройки этого устройства и перезапускает первичную настройку</string>
     <string name="settings_erase_identity_title">Удалить личность и стереть всё?</string>
     <string name="settings_message_notifications">Уведомления сообщений</string>
@@ -1009,7 +1009,7 @@
     <string name="settings_quiet_hours_end">До</string>
     <string name="supervision_disable_request_message">%1$s просит отключить режим присмотра. Одобрение навсегда разблокирует настройки до новой заявки на присмотр.</string>
     <string name="supervision_disable_request_title">Разблокировать устройство?</string>
-    <string name="toast_already_supervised">Смотритель уже есть — отклоните запрос</string>
+    <string name="toast_already_supervised">Смотритель уже есть - отклоните запрос</string>
     <string name="toast_declined_supervision_invite">Заявка на присмотр от %1$s отклонена</string>
     <string name="toast_now_supervised">Присмотрщик: %1$s</string>
 </resources>

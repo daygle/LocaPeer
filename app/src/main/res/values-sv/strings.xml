@@ -942,7 +942,7 @@
     <string name="notif_supervision_ended_title">Övervakning avslutad</string>
     <string name="notif_supervisor_unknown_request_text">Den begärande enheten finns inte bland dina kontakter. Lägg till den som kontakt först och be om att övervakningsbegäran upprepas.</string>
     <string name="notif_supervisor_unknown_request_title">Övervakningsbegäran från okänd enhet</string>
-    <string name="onboarding_bg_location_hint">På Android 11 och senare ges platstjänster i bakgrunden endast via systeminställningarna — appen kan inte begära det själv.</string>
+    <string name="onboarding_bg_location_hint">På Android 11 och senare ges platstjänster i bakgrunden endast via systeminställningarna - appen kan inte begära det själv.</string>
     <string name="onboarding_bg_open_settings">Öppna systeminställningar</string>
     <string name="onboarding_bg_skip">Hoppa över för tillfället</string>
     <string name="peer_supervise_disable_confirm">Avsluta övervakning</string>
@@ -965,7 +965,7 @@
     <string name="settings_erase_identity_confirm">Radera och börja om</string>
     <string name="settings_erase_identity_final_message">Radera allt och börja om med ny identitet? Detta kan inte ångras. Om du fortfarande kan vilja ha identiteten, exportera först en krypterad säkerhetskopia.</string>
     <string name="settings_erase_identity_final_title">Slutgiltig bekräftelse</string>
-    <string name="settings_erase_identity_message">Detta raderar permanent ditt Nostr-nyckelpar, alla kontakter, geofences, platshistorik, meddelanden och inställningar på denna enhet. Kontakter meddelas inte och deras kopior påverkas inte. Ingen borttagningsbegäran skickas — för att varna en betrodd person, använd \'Ta bort kontakt och data\' separat för varje.</string>
+    <string name="settings_erase_identity_message">Detta raderar permanent ditt Nostr-nyckelpar, alla kontakter, geofences, platshistorik, meddelanden och inställningar på denna enhet. Kontakter meddelas inte och deras kopior påverkas inte. Ingen borttagningsbegäran skickas - för att varna en betrodd person, använd \'Ta bort kontakt och data\' separat för varje.</string>
     <string name="settings_erase_identity_subtitle">Tar bort identitetens nyckel, kontakter, platshistorik, meddelanden och inställningar på denna enhet och startar om den inledande konfigureringen</string>
     <string name="settings_erase_identity_title">Ta bort identitet och radera allt?</string>
     <string name="settings_message_notifications">Meddelandeaviseringar</string>
@@ -977,7 +977,7 @@
     <string name="settings_quiet_hours_subtitle">Dämpar meddelande- och varningsaviseringar under de angivna timmarna. SOS förblir på.</string>
     <string name="supervision_disable_request_message">%1$s begär att stänga av övervakat läge. Godkännande låser upp inställningar permanent fram till en ny ansökan.</string>
     <string name="supervision_disable_request_title">Låsa upp denna enhet?</string>
-    <string name="toast_already_supervised">Redan under övervakning — avslå denna begäran istället</string>
+    <string name="toast_already_supervised">Redan under övervakning - avslå denna begäran istället</string>
     <string name="toast_declined_supervision_invite">Avslog övervakningsbegäran från %1$s</string>
     <string name="toast_now_supervised">Övervakas nu av %1$s</string>
 </resources>

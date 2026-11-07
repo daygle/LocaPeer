@@ -39,7 +39,7 @@ object NostrEventKind {
     // grants access the recipient's role/pause settings don't already allow.
     const val LIVE_VIEW_REQUEST = 1060
 
-    // ── Supervised-mode state changes (1061-1066) ─────────────────────────———
+    // ── Supervised-mode state changes (1061-1066) ───────────────────────────
     // Every supervision state change after establishment is now in-band and two-sided:
     // the handshake kinds (1055-1057) remain the primary path, these act on the edges.
 
