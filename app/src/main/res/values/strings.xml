@@ -132,7 +132,9 @@
     <string name="settings_request_live_boost_subtitle">Ask a contact for faster updates while you have their pin selected on the map.</string>
     <string name="settings_live_update_interval">Live Update Interval</string>
     <string name="settings_live_update_interval_subtitle">How often your location is sent to a contact watching you live.</string>
-    <string name="settings_seconds_short">%1$d sec</string>
+    <!-- Unit abbreviation, used only for the 5-30 s live interval choices; "sec" doesn't
+         inflect, so a plurals resource would add nothing (matches settings_minutes_short). -->
+    <string name="settings_seconds_short" tools:ignore="PluralsCandidate">%1$d sec</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>
