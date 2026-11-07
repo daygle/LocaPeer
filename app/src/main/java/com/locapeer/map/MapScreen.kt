@@ -330,6 +330,11 @@ fun MapScreen(
                         onViewHistory = {
                             selectedPin = null
                             onNavigateToHistory(pin.peer.deviceId)
+                        },
+                        isFollowing = followSelected,
+                        onFollow = {
+                            followSelected = true
+                            isFollowingUser = false
                         }
                     )
                 }
@@ -735,7 +740,16 @@ private fun MainMapView(
 }
 
 @Composable
-private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long) -> String, onDismiss: () -> Unit, onMessage: () -> Unit, onViewHistory: () -> Unit) {
+private fun PinInfoSheet(
+    pin: PinData,
+    address: String?,
+    formatTimestamp: (Long) -> String,
+    onDismiss: () -> Unit,
+    onMessage: () -> Unit,
+    onViewHistory: () -> Unit,
+    isFollowing: Boolean = true,
+    onFollow: () -> Unit = {}
+) {
     val hb = pin.heartbeat
     Surface(
         modifier = Modifier
@@ -792,6 +806,16 @@ private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long)
                 Text(stringResource(R.string.contacts_no_location_yet), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Spacer(Modifier.height(16.dp))
+            // Offered once the user has dragged away from the contact (which stops following),
+            // so they can snap back and keep tracking them without re-tapping the pin.
+            if (!isFollowing && hb != null) {
+                FilledTonalButton(onClick = onFollow, modifier = Modifier.fillMaxWidth()) {
+                    Icon(Icons.Default.MyLocation, null, Modifier.size(16.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text(stringResource(R.string.map_follow_contact))
+                }
+                Spacer(Modifier.height(8.dp))
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = onViewHistory, modifier = Modifier.weight(1f)) { Icon(Icons.Default.History, null, Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.tab_history)) }
                 Button(onClick = onMessage, modifier = Modifier.weight(1f)) { Icon(Icons.AutoMirrored.Filled.Chat, null, Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.cd_message)) }
