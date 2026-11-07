@@ -107,6 +107,8 @@ private const val CLASSIFY_BOOST_MS = 45_000L
  * small, bounded battery cost. Auto-expires back to the stationary profile.
  */
 private const val STATIONARY_ANCHOR_BOOST_MS = 20_000L
+/** How often the notification re-reads who is watching, only while someone is. */
+private const val WATCHER_NOTIFICATION_REFRESH_MS = 5_000L
 
 private fun MotionState.isMoving(): Boolean =
     this == MotionState.WALKING || this == MotionState.RUNNING ||
@@ -129,6 +131,7 @@ class HeartbeatService : LifecycleService() {
     @Inject lateinit var heartbeatDao: HeartbeatDao
     @Inject lateinit var prefs: AppPreferences
     @Inject lateinit var intervalManager: AdaptiveIntervalManager
+    @Inject lateinit var liveViewRegistry: LiveViewRegistry
     @Inject lateinit var notificationManager: NotificationManager
 
     private lateinit var fusedLocation: FusedLocationProviderClient
@@ -180,6 +183,10 @@ class HeartbeatService : LifecycleService() {
     // Tracks the live-view state applied to the GPS request, so the pulse loop can relax
     // the profile when the last viewer's lease lapses (see the runnable).
     private var wasLiveView = false
+    /** Contacts currently watching us live, shown in the ongoing notification. */
+    @Volatile private var watcherNames: List<String> = emptyList()
+    private var lastWatcherKeys: Set<String> = emptySet()
+    private var watcherRefreshJob: kotlinx.coroutines.Job? = null
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
      *  contact is watching live, pulses run every few seconds but history is only written
@@ -659,6 +666,23 @@ class HeartbeatService : LifecycleService() {
 
                 if (needsRequestUpdate) updateLocationRequest()
                 if (needsReschedule) reschedulePulse()
+            }
+        }
+        lifecycleScope.launch {
+            // Name whoever is watching us live in the ongoing notification, so the user knows
+            // even with the app closed or when the watcher has no pin on their map. Woken by
+            // a new viewer; then re-reads the leases every few seconds (they lapse silently)
+            // only until nobody is left, so an unwatched device never polls.
+            liveViewRegistry.newViewerEvents.collect {
+                watcherRefreshJob?.cancel()
+                watcherRefreshJob = launch {
+                    while (true) {
+                        val viewers = liveViewRegistry.activeViewers()
+                        applyWatchers(viewers)
+                        if (viewers.isEmpty()) break
+                        kotlinx.coroutines.delay(WATCHER_NOTIFICATION_REFRESH_MS)
+                    }
+                }
             }
         }
         lifecycleScope.launch {
@@ -1361,7 +1385,17 @@ class HeartbeatService : LifecycleService() {
             this, 0, intent, PendingIntent.FLAG_IMMUTABLE
         )
         val title = if (isSos) getString(R.string.notif_sos_active_title) else getString(R.string.notification_heartbeat_title)
-        val text = if (isSos) getString(R.string.notif_sos_active_text) else getString(R.string.notification_heartbeat_text)
+        val names = watcherNames
+        val text = when {
+            isSos -> getString(R.string.notif_sos_active_text)
+            // Someone has our pin selected: say who, so live tracking is never invisible.
+            names.isNotEmpty() -> {
+                val listed = names.take(3).joinToString(", ")
+                val label = if (names.size > 3) "$listed +${names.size - 3}" else listed
+                "👁 " + getString(R.string.map_watched_by, label)
+            }
+            else -> getString(R.string.notification_heartbeat_text)
+        }
         val icon = if (isSos) R.drawable.ic_notif_alert else R.drawable.ic_notif_location
         val color = if (isSos) 0xFFD32F2F.toInt() else 0xFF1976D2.toInt()
 
@@ -1373,10 +1407,22 @@ class HeartbeatService : LifecycleService() {
             .setColorized(isSos)
             .setContentIntent(pendingIntent)
             .setOngoing(true)
+            // Watcher changes update this notification often; never re-alert for them.
+            .setOnlyAlertOnce(true)
             .setPriority(if (isSos) NotificationCompat.PRIORITY_MAX else NotificationCompat.PRIORITY_LOW)
             .setCategory(if (isSos) NotificationCompat.CATEGORY_ALARM else NotificationCompat.CATEGORY_SERVICE)
             .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
             .build()
+    }
+
+    /** Resolve [viewers] to contact names and refresh the notification if they changed. */
+    private suspend fun applyWatchers(viewers: Set<String>) {
+        if (viewers == lastWatcherKeys) return
+        lastWatcherKeys = viewers
+        watcherNames = viewers.mapNotNull { key ->
+            peerDao.getPeer(key)?.displayName?.ifBlank { null }
+        }.sorted()
+        if (isStarted) updateServiceNotification()
     }
 
     private fun updateServiceNotification() {

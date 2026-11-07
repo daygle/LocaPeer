@@ -157,4 +157,15 @@ class AdaptiveIntervalManagerTest {
         assertEquals(LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.min() * 1000L)
         assertEquals(MAX_LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.max() * 1000L)
     }
+
+    @Test
+    fun `a new viewer bumps the new-viewer event but a refresh does not`() {
+        val start = liveViewRegistry.newViewerEvents.value
+        liveViewRegistry.grant("sam")
+        assertEquals(start + 1, liveViewRegistry.newViewerEvents.value)
+        liveViewRegistry.grant("sam")
+        assertEquals(start + 1, liveViewRegistry.newViewerEvents.value)
+        liveViewRegistry.grant("alex")
+        assertEquals(start + 2, liveViewRegistry.newViewerEvents.value)
+    }
 }

@@ -2,6 +2,10 @@ package com.locapeer.beacon
 
 import android.os.SystemClock
 import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,6 +34,13 @@ class LiveViewRegistry @Inject constructor() {
     // need a shared lock.
     private val leases = ConcurrentHashMap<String, Long>()
 
+    // Bumped whenever a viewer starts watching (a lease appears for a pubkey that had none),
+    // so observers such as the service notification can react at once instead of polling
+    // while nobody is watching. Departures have no event: leases lapse silently, so an
+    // observer that saw a viewer arrive re-reads [activeViewers] until the set is empty.
+    private val _newViewerEvents = MutableStateFlow(0L)
+    val newViewerEvents: StateFlow<Long> = _newViewerEvents.asStateFlow()
+
     /**
      * Record (or refresh) a live-view lease for [viewerPubkey], valid for [leaseMs].
      * Returns true when this call transitions the registry from having no active lease to
@@ -39,7 +50,8 @@ class LiveViewRegistry @Inject constructor() {
     fun grant(viewerPubkey: String, leaseMs: Long = LIVE_VIEW_LEASE_MS): Boolean {
         val now = SystemClock.elapsedRealtime()
         val wasActive = isActive(now)
-        leases[viewerPubkey] = now + leaseMs
+        // isActive() above pruned expired leases, so a null here means a genuinely new viewer.
+        if (leases.put(viewerPubkey, now + leaseMs) == null) _newViewerEvents.update { it + 1 }
         return !wasActive
     }
 
