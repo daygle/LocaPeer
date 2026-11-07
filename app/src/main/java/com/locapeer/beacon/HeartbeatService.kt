@@ -1161,9 +1161,11 @@ class HeartbeatService : LifecycleService() {
 
                 val nowMs = System.currentTimeMillis()
                 val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
-                // What a contact who is not watching should expect: the normal cadence, so
-                // their app neither shows a "Live" badge nor raises a missed-update alert
-                // two minutes after the live pulses (which they don't receive) would be due.
+                // Every contact - watching or not - is told the normal cadence. Live pulses
+                // are a bonus on top of it: once a watcher closes the map (or for contacts
+                // who never get the live pulses), their overdue pin and missed-update alert
+                // must wait for the next *cadence* pulse, not fire two minutes after the
+                // last 5s pulse. Watchers detect live streaming from the arrival gaps.
                 val cadenceIntervalSec = if (isSos) expectedIntervalSec
                     else intervalManager.cadenceIntervalMillis(settings) / 1000
                 if (cadencePulse) heartbeatDao.insert(
@@ -1257,8 +1259,6 @@ class HeartbeatService : LifecycleService() {
                             fixLat to fixLng
                         }
 
-                        val watching = livePulse &&
-                            (recipient.publicKeyHex in liveViewers || recipient.deviceId in liveViewers)
                         val payload = HeartbeatPayload(
                             deviceId = pubHex,
                             displayName = settings.displayName,
@@ -1274,7 +1274,7 @@ class HeartbeatService : LifecycleService() {
                             speed = if (suburb) 0f else fixSpeed,
                             bearing = if (suburb) 0f else fixBearing,
                             altitude = if (suburb) 0.0 else fixAltitude,
-                            expectedIntervalSeconds = if (watching) expectedIntervalSec else cadenceIntervalSec
+                            expectedIntervalSeconds = cadenceIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)
 

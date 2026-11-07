@@ -48,8 +48,8 @@ data class PinData(
     /**
      * True when this contact is currently broadcasting at the fast live-view cadence
      * *and* their most recent fix is fresh - i.e. they are streaming their location live
-     * right now (because someone is watching them). Derived purely from the heartbeat we
-     * already receive; see [com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS].
+     * right now (because someone is watching them). Inferred from the gap between the
+     * heartbeats we receive; see [LivePinDetector].
      */
     val isLive: Boolean = false
 )
@@ -298,6 +298,11 @@ class MapViewModel @Inject constructor(
         }
     }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    // deviceId -> (previous, latest) heartbeat seen by [uiState], so the Live badge can be
+    // inferred from the gap between consecutive heartbeats (see [LivePinDetector]). Only
+    // touched from the sequential uiState combine transform.
+    private val recentHeartbeats = HashMap<String, Pair<HeartbeatEntity?, HeartbeatEntity>>()
+
     val uiState: StateFlow<MapUiState> = combine(
         snapshotFlow,
         geofencesFlow,
@@ -315,9 +320,15 @@ class MapViewModel @Inject constructor(
             // Live = broadcasting at the fast live-view floor with a genuinely fresh fix.
             // The freshness window (a few live intervals) keeps the badge from lingering
             // once their re-sends stop, well before the much later overdue threshold.
-            val live = hb != null && !overdue &&
-                hb.expectedIntervalSeconds * 1000L <= com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS &&
-                (now - hb.receivedAt) < com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS * 4
+            val previous = hb?.let { latest ->
+                val seen = recentHeartbeats[peer.deviceId]
+                when {
+                    seen == null -> null.also { recentHeartbeats[peer.deviceId] = null to latest }
+                    seen.second.id == latest.id -> seen.first
+                    else -> seen.second.also { recentHeartbeats[peer.deviceId] = it to latest }
+                }
+            }
+            val live = !overdue && LivePinDetector.isLive(previous, hb, now)
             PinData(peer, hb, overdue, live)
         }
         MapUiState(pins = pins, geofences = fences)
