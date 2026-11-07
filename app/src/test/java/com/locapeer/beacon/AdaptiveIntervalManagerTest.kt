@@ -115,4 +115,19 @@ class AdaptiveIntervalManagerTest {
         assertFalse(manager.isLiveViewActive(allowBoost = true))
         assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
     }
+
+    @Test
+    fun `cadence interval ignores live view so history keeps the configured cadence`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        liveViewRegistry.grant("viewer")
+        assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings))
+        assertEquals(2 * 60_000L, manager.cadenceIntervalMillis(settings))
+    }
+
+    @Test
+    fun `cadence interval follows low battery`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        manager.updateBattery(10)
+        assertEquals(30 * 60_000L, manager.cadenceIntervalMillis(settings))
+    }
 }

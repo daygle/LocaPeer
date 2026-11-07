@@ -181,6 +181,10 @@ class HeartbeatService : LifecycleService() {
     // the profile when the last viewer's lease lapses (see the runnable).
     private var wasLiveView = false
     @Volatile private var lastPulseElapsedMs = 0L
+    /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
+     *  contact is watching live, pulses run every few seconds but history is only written
+     *  once the user's normal cadence has elapsed since this point. */
+    @Volatile private var lastHistoryElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
     /** Elapsed-time deadline until which GPS stays high-accuracy after settling, to sharpen
@@ -1136,6 +1140,16 @@ class HeartbeatService : LifecycleService() {
         // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
 
+        // Live-view pulses (every few seconds while a contact has the map open) are for that
+        // contact's live pin only. Local history follows the user's configured cadence, so a
+        // watched drive records a point per driving interval rather than one per pulse. SOS
+        // always records. Decided here, on the main thread, alongside the other snapshots.
+        val nowElapsed = SystemClock.elapsedRealtime()
+        val livePulse = !isSos && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
+        val recordHistory = !livePulse || lastHistoryElapsedMs == 0L ||
+            nowElapsed - lastHistoryElapsedMs >= intervalManager.cadenceIntervalMillis(currentSettings)
+        if (recordHistory) lastHistoryElapsedMs = nowElapsed
+
         lifecycleScope.launch {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
@@ -1143,7 +1157,7 @@ class HeartbeatService : LifecycleService() {
 
                 val nowMs = System.currentTimeMillis()
                 val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
-                heartbeatDao.insert(
+                if (recordHistory) heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
                         displayName = settings.displayName,
