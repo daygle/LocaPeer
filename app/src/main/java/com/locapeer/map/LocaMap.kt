@@ -163,6 +163,9 @@ fun LocaMap(
     onMapClick: ((LatLng) -> Boolean)? = null,
     onMapLongClick: ((LatLng) -> Boolean)? = null,
     onCameraIdle: ((target: LatLng, zoom: Double) -> Unit)? = null,
+    /** Called when the user starts dragging (panning) the map by hand - never for zoom
+     *  gestures or programmatic moves such as animateTo - so callers can drop a follow mode. */
+    onUserCameraMove: (() -> Unit)? = null,
     onReady: (LocaMapController) -> Unit = {},
     configureView: (MapView) -> Unit = {},
     overlay: @Composable BoxScope.() -> Unit = {},
@@ -175,6 +178,7 @@ fun LocaMap(
     val mapLongClick by rememberUpdatedState(onMapLongClick)
     val ready by rememberUpdatedState(onReady)
     val cameraIdle by rememberUpdatedState(onCameraIdle)
+    val userCameraMove by rememberUpdatedState(onUserCameraMove)
 
     val mapView = remember {
         MapLibre.getInstance(context.applicationContext)
@@ -219,6 +223,15 @@ fun LocaMap(
                 isAttributionEnabled = false
             }
             map.setMaxZoomPreference(MAP_MAX_ZOOM)
+            // OnMoveListener covers pan/drag only, not pinch or double-tap zoom, so a user
+            // can zoom in on whatever they are following without breaking the follow.
+            map.addOnMoveListener(object : MapLibreMap.OnMoveListener {
+                override fun onMoveBegin(detector: org.maplibre.android.gestures.MoveGestureDetector) {
+                    userCameraMove?.invoke()
+                }
+                override fun onMove(detector: org.maplibre.android.gestures.MoveGestureDetector) {}
+                override fun onMoveEnd(detector: org.maplibre.android.gestures.MoveGestureDetector) {}
+            })
             map.addOnCameraMoveListener { camera = map.cameraPosition.let { (it.target?.latitude ?: 0.0) to it.zoom } }
             map.addOnCameraIdleListener {
                 val position = map.cameraPosition

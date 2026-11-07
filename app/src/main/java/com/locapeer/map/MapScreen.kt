@@ -50,6 +50,10 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsStateWithLifecycle()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
+    // Whether the camera follows the selected contact. Selecting a pin starts following;
+    // dragging the map stops it (the pin stays selected and live); tapping the pin again
+    // resumes.
+    var followSelected by remember { mutableStateOf(false) }
     // selectedPin is a snapshot taken at tap time; resolve it against the latest uiState so
     // the info sheet, the live request and the follow camera all track the contact's
     // current heartbeat rather than the one they had when tapped.
@@ -152,7 +156,7 @@ fun MapScreen(
                 centerOnUser = isFollowingUser,
                 centerOnPin = centerOnPin,
                 // Keep the selected contact centred as their position updates.
-                followPin = currentSelectedPin?.heartbeat?.let { LatLng(it.lat, it.lng) },
+                followPin = if (followSelected) currentSelectedPin?.heartbeat?.let { LatLng(it.lat, it.lng) } else null,
                 isDark = isDark,
                 mapStartZoom = mapStartZoom,
                 mapStartingPoint = mapStartingPoint,
@@ -160,7 +164,10 @@ fun MapScreen(
                 mapFixedLng = mapFixedLng,
                 onCenteredOnUser = { },
                 onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
-                onPinTapped = { selectedPin = it; isFollowingUser = false },
+                onPinTapped = { selectedPin = it; followSelected = true; isFollowingUser = false },
+                // A hand drag means the user wants to look around: stop both follow modes so
+                // the next position update doesn't snap the camera back.
+                onUserCameraMove = { followSelected = false; isFollowingUser = false },
                 onSaveMapPosition = vm::saveMapPosition,
                 context = context,
                 modifier = Modifier.fillMaxSize()
@@ -287,6 +294,7 @@ fun MapScreen(
                             isFollowingUser = false
                         }
                         selectedPin = pin
+                        followSelected = true
                     },
                     onMessageFriend = { peerId, peerName ->
                         showFriendList = false
@@ -549,6 +557,7 @@ private fun MainMapView(
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
+    onUserCameraMove: () -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
     modifier: Modifier = Modifier,
@@ -707,6 +716,7 @@ private fun MainMapView(
         onCameraIdle = { target, zoom ->
             lastCamera[0] = Triple(target.latitude, target.longitude, MapGeometry.toLegacyZoom(zoom))
         },
+        onUserCameraMove = onUserCameraMove,
         onReady = { controller ->
             val startZoom = MapGeometry.fromLegacyZoom(mapStartZoom)
             when {
