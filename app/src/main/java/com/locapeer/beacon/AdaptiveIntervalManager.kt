@@ -24,13 +24,30 @@ class AdaptiveIntervalManager @Inject constructor(
     fun isLiveViewActive(allowBoost: Boolean): Boolean =
         allowBoost && batteryLevel >= 20 && liveViewRegistry.isActive()
 
+    /** Pubkeys of the contacts currently watching live (see [LiveViewRegistry.activeViewers]). */
+    fun liveViewers(): Set<String> = liveViewRegistry.activeViewers()
+
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
-        val currentBattery = batteryLevel
-        if (currentBattery < 20) return (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
-        // A contact watching the map pulls updates to a near-real-time cadence, but only
-        // while their lease is live; it lapses seconds after they close the map.
-        if (isLiveViewActive(settings.allowLiveBoost)) return LIVE_VIEW_INTERVAL_MS
+        if (batteryLevel < 20) return cadenceIntervalMillis(settings)
+        // A contact with our pin selected pulls updates to the chosen live cadence, but only
+        // while their lease is live; it lapses seconds after they deselect us.
+        if (isLiveViewActive(settings.allowLiveBoost)) return liveIntervalMillis(settings)
+        return cadenceIntervalMillis(settings)
+    }
+
+    /** The user's chosen live update interval (see [LIVE_UPDATE_INTERVAL_OPTIONS_S]). */
+    fun liveIntervalMillis(settings: AppSettings): Long =
+        normalizeLiveUpdateIntervalSeconds(settings.liveUpdateIntervalSeconds) * 1000L
+
+    /**
+     * The user's configured cadence for the current battery and motion state, ignoring any
+     * live-view boost (SOS is also excluded; it is handled separately by callers). Live
+     * pulses exist only so a watching contact sees a moving pin; local history keeps to
+     * this cadence so a watched drive doesn't fill history with a point every few seconds.
+     */
+    fun cadenceIntervalMillis(settings: AppSettings): Long {
+        if (batteryLevel < 20) return (settings.lowBatteryIntervalMinutes * 60_000L).coerceAtLeast(60_000L)
         return motionIntervalMillis(currentMotionState, settings)
             .coerceAtLeast(15_000L) // Minimum 15 seconds to avoid battery drain and relay spam
     }

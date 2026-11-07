@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Naannoo geofence qoodame bulchi</string>
     <string name="settings_notify_when_tracked">Yeroo hordofame na beeksisi</string>
     <string name="settings_notify_when_tracked_subtitle">Yeroo dhiheenyi quunnamtii tokkoo ykn akeekkachiisni geofence siif kaka\'u beeksisa argadhu.</string>
+    <string name="settings_notify_when_watched">Yeroo Ilaalamtu Beeksisi</string>
+    <string name="settings_notify_when_watched_subtitle">Yeroo namni quunnamtii kallattiin si ilaaluu jalqabu akeekkachiisi.</string>
     <string name="settings_my_location_history">Seenaa Bakka Jiranii</string>
     <string name="settings_my_location_history_subtitle">Tartiba yeroo bakka jirtanii keessan ilaalaa</string>
     <string name="settings_lookup_addresses">Teessoo barbaaduu</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Modiin to\'annoo didameera</string>
     <string name="notif_supervised_declined_text">To\'ataan kee gaaffii diddeera - modiin to\'annoo cufameera</string>
     <string name="notif_tracking_alert_title">Akeekkachiisa Hordoffii</string>
+    <string name="notif_live_watch_title">%1$s kallattiin si ilaalaa jira</string>
+    <string name="notif_live_watch_text">Iddoon kee yeroo dhugaatti haaromfamaa jira.</string>
+    <string name="notif_live_watch_text_low_battery">Yeroo baatiriin kee gadi aanaa taʼetti haaromsi kallattii dhaabbateera.</string>
     <string name="notif_tracking_proximity">%1$s akeekkachiisa dhiheenyaa waa\'ee kee argateera</string>
     <string name="notif_tracking_geofence">%1$s akeekkachiisa ati fence seente/baate argateera: %2$s</string>
     <string name="notif_tracking_generic">%1$s bakka ati jirtu to\'achaa jira</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Kan hin dubbifamne jedhii mallattoo godhi</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost hayyami</string>
-    <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii kee kaartaa ilaalu haaromsa kee saffisiisi.</string>
+    <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii piinii kee kaartaa isaa irratti filatu haaromsa kee saffisiisi.</string>
     <string name="settings_request_live_boost">Haaromsa kallattii gaafadhu</string>
-    <string name="settings_request_live_boost_subtitle">Yeroo kaartaan banaa taʼetti namoota quunnamtii keessan haaromsa saffisaa gaafadhu.</string>
+    <string name="settings_request_live_boost_subtitle">Yeroo piinii nama quunnamtii kaartaa irratti filattu haaromsa saffisaa isa gaafadhu.</string>
+    <string name="settings_live_update_interval">Yeroo Gidduu Haaromsa Kallattii</string>
+    <string name="settings_live_update_interval_subtitle">Iddoon kee hammam irra deddeebiin nama quunnamtii kallattiin si ilaalaa jiruuf akka ergamu.</string>
+    <string name="settings_seconds_short">Sek %1$d</string>
     <string name="settings_relays">Riileyoota</string>
     <string name="settings_relays_subtitle">Riileyoonni kamtu daataa kee akka baatu filadhu</string>
     <string name="relays_intro">LocaPeer daataa kee riileyoota Nostr karaa erga. Qabiyyeen yeroo hunda dhuma irraa hanga dhumaatti ni iccitaawa, garuu riileyoonni ummataa ammallee namoota quunnamtii ati dubbistuu fi yeroo isaa arguu dandaʼu. Saaxilamummaa kana hir\'isuuf riileyoota kee mataa kee fayyadami.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Hanga ati bakka meeshaa bantutti, bakki kee hin oomishamu yookiin hin qoodamu.</string>
     <string name="map_location_off_action">Sajataawwan bani</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Si ilaalaa jira</string>
+    <string name="map_follow_contact">Hordofi</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

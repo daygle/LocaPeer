@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">管理共享的地理围栏区域</string>
     <string name="settings_notify_when_tracked">被追踪时通知</string>
     <string name="settings_notify_when_tracked_subtitle">当联系人触发针对您的距离或地理围栏警报时，接收通知。</string>
+    <string name="settings_notify_when_watched">被查看时通知</string>
+    <string name="settings_notify_when_watched_subtitle">当联系人开始实时查看你时提醒。</string>
     <string name="settings_my_location_history">我的位置历史</string>
     <string name="settings_my_location_history_subtitle">浏览您自己的位置时间轴</string>
     <string name="settings_lookup_addresses">查询地址</string>
@@ -668,6 +670,9 @@
     <string name="notif_supervised_declined_title">监管模式被拒绝</string>
     <string name="notif_supervised_declined_text">您的监管人拒绝了请求 - 监管模式已被禁用</string>
     <string name="notif_tracking_alert_title">追踪警报</string>
+    <string name="notif_live_watch_title">%1$s 正在实时查看你</string>
+    <string name="notif_live_watch_text">你的位置正在实时更新。</string>
+    <string name="notif_live_watch_text_low_battery">电量不足期间，实时更新已暂停。</string>
     <string name="notif_tracking_proximity">%1$s 收到了一条关于您的距离警报</string>
     <string name="notif_tracking_geofence">%1$s 收到了一条您进入/离开围栏的警报：%2$s</string>
     <string name="notif_tracking_generic">%1$s 正在监控您的位置</string>
@@ -844,9 +849,12 @@
     <string name="conv_mark_unread">标记为未读</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">允许 Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">当联系人正在查看地图时加快你的更新。</string>
+    <string name="settings_allow_live_boost_subtitle">当联系人在其地图上选中你的图钉时，加快你的更新。</string>
     <string name="settings_request_live_boost">请求实时更新</string>
-    <string name="settings_request_live_boost_subtitle">当你打开地图时，向联系人请求更快的更新。</string>
+    <string name="settings_request_live_boost_subtitle">当你在地图上选中联系人的图钉时，请求对方更快地更新。</string>
+    <string name="settings_live_update_interval">实时更新间隔</string>
+    <string name="settings_live_update_interval_subtitle">向正在实时查看你的联系人发送位置的频率。</string>
+    <string name="settings_seconds_short">%1$d 秒</string>
     <string name="settings_relays">中继</string>
     <string name="settings_relays_subtitle">选择由哪些中继传输你的数据</string>
     <string name="relays_intro">LocaPeer 通过 Nostr 中继发送你的数据。内容始终采用端到端加密，但公共中继仍能看到你与哪些联系人以及何时通信。使用你自己的中继可减少这种暴露。</string>
@@ -879,6 +887,8 @@
     <string name="map_location_off_message">在开启设备位置之前，无法更新或共享您的位置。</string>
     <string name="map_location_off_action">打开设置</string>
     <string name="map_live">● 实况</string>
+    <string name="map_watching_you">👁 正在查看你</string>
+    <string name="map_follow_contact">跟随</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d 个待发消息</item>
     </plurals>

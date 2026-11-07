@@ -104,6 +104,8 @@
     <string name="settings_geofences_subtitle">ניהול אזורי גדר גאוגרפית משותפים</string>
     <string name="settings_notify_when_tracked">התראה במעקב</string>
     <string name="settings_notify_when_tracked_subtitle">קבל התראה כאשר התראת קרבה או גדר גאוגרפית של איש קשר לגביך מופעלת.</string>
+    <string name="settings_notify_when_watched">התראה כשצופים בי</string>
+    <string name="settings_notify_when_watched_subtitle">התראה כשאיש קשר מתחיל לצפות בך בזמן אמת.</string>
     <string name="settings_my_location_history">היסטוריית מיקום</string>
     <string name="settings_my_location_history_subtitle">עיין בציר הזמן של המיקום שלך</string>
     <string name="settings_lookup_addresses">חיפוש כתובות</string>
@@ -694,6 +696,9 @@
     <string name="notif_supervised_declined_title">מצב מפוקח נדחה</string>
     <string name="notif_supervised_declined_text">המפקח שלך דחה את הבקשה - מצב מפוקח הושבת</string>
     <string name="notif_tracking_alert_title">התראת מעקב</string>
+    <string name="notif_live_watch_title">%1$s צופה בך בזמן אמת</string>
+    <string name="notif_live_watch_text">המיקום שלך מתעדכן בזמן אמת.</string>
+    <string name="notif_live_watch_text_low_battery">העדכונים החיים מושהים כל עוד הסוללה חלשה.</string>
     <string name="notif_tracking_proximity">‏%1$s קיבל התראת קרבה לגביך</string>
     <string name="notif_tracking_geofence">‏%1$s קיבל התראה שנכנסת/יצאת מהגדר: %2$s</string>
     <string name="notif_tracking_generic">‏%1$s מנטר את מיקומך</string>
@@ -875,9 +880,12 @@
     <string name="conv_mark_unread">סמן כלא נקרא</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">אפשר את Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">האץ את העדכונים שלך כשאיש קשר צופה במפה.</string>
+    <string name="settings_allow_live_boost_subtitle">האץ את העדכונים שלך כשאיש קשר בחר את הסיכה שלך במפה שלו.</string>
     <string name="settings_request_live_boost">בקש עדכונים בזמן אמת</string>
-    <string name="settings_request_live_boost_subtitle">בקש מאנשי הקשר עדכונים מהירים יותר כשהמפה פתוחה אצלך.</string>
+    <string name="settings_request_live_boost_subtitle">בקש מאיש קשר עדכונים מהירים יותר כשבחרת את הסיכה שלו במפה.</string>
+    <string name="settings_live_update_interval">מרווח עדכון חי</string>
+    <string name="settings_live_update_interval_subtitle">באיזו תדירות המיקום שלך נשלח לאיש קשר שצופה בך בזמן אמת.</string>
+    <string name="settings_seconds_short">%1$d שנ׳</string>
     <string name="settings_relays">ממסרים</string>
     <string name="settings_relays_subtitle">בחר אילו ממסרים יישאו את הנתונים שלך</string>
     <string name="relays_intro">‏LocaPeer שולח את הנתונים שלך דרך ממסרי Nostr. התוכן תמיד מוצפן מקצה לקצה, אך ממסרים ציבוריים עדיין יכולים לראות עם אילו אנשי קשר אתה מדבר ומתי. השתמש בממסרים משלך כדי לצמצם את החשיפה הזו.</string>
@@ -910,6 +918,8 @@
     <string name="map_location_off_message">לא ניתן לעדכן או לשתף את המיקום שלך עד שתפעיל את מיקום המכשיר.</string>
     <string name="map_location_off_action">פתח הגדרות</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 צופה בך</string>
+    <string name="map_follow_contact">עקוב</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

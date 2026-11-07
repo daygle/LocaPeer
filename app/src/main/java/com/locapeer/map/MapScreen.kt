@@ -50,6 +50,15 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsStateWithLifecycle()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
+    // Whether the camera follows the selected contact. Selecting a pin starts following;
+    // dragging the map stops it (the pin stays selected and live); tapping the pin again
+    // resumes.
+    var followSelected by remember { mutableStateOf(false) }
+    // selectedPin is a snapshot taken at tap time; resolve it against the latest uiState so
+    // the info sheet, the live request and the follow camera all track the contact's
+    // current heartbeat rather than the one they had when tapped.
+    val selectedPeerId = selectedPin?.peer?.deviceId
+    val currentSelectedPin = selectedPeerId?.let { id -> uiState.pins.firstOrNull { it.peer.deviceId == id } } ?: selectedPin
     var showFriendList by remember { mutableStateOf(false) }
     var showSosConfirm by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsStateWithLifecycle()
@@ -66,6 +75,8 @@ fun MapScreen(
     val mapFixedLng by vm.mapFixedLng.collectAsStateWithLifecycle()
     val showGeofences by vm.showGeofences.collectAsStateWithLifecycle()
     val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsStateWithLifecycle()
+    val watcherNames by vm.watcherNames.collectAsStateWithLifecycle()
+    var showWatchers by remember { mutableStateOf(false) }
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<LatLng?>(null) }
@@ -96,21 +107,18 @@ fun MapScreen(
         onDispose { locationCheckOwner.lifecycle.removeObserver(observer) }
     }
 
-    // While the map is on screen, ask the contacts we track to broadcast at a live
-    // cadence (Google-Maps-style). Balanced across app background (ON_RESUME/ON_PAUSE) and
-    // leaving the map (onDispose); the ViewModel makes the calls idempotent so overlapping
-    // transitions can't unbalance the underlying reference count. The immediate start
-    // covers re-entering the map tab while the Activity is already resumed, where no
-    // ON_RESUME fires.
+    // Live updates are requested only for the contact whose pin is selected, and only while
+    // the map is actually on screen (resumed): selecting a pin asks that one contact to
+    // broadcast at the live cadence; deselecting, backgrounding the app or leaving the map
+    // stops the requests and their live mode lapses on its own shortly after.
     val liveLifecycleOwner = LocalLifecycleOwner.current
+    var mapResumed by remember { mutableStateOf(false) }
     DisposableEffect(liveLifecycleOwner) {
-        if (liveLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            vm.startLiveView()
-        }
+        mapResumed = liveLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> vm.startLiveView()
-                Lifecycle.Event.ON_PAUSE -> vm.stopLiveView()
+                Lifecycle.Event.ON_RESUME -> mapResumed = true
+                Lifecycle.Event.ON_PAUSE -> mapResumed = false
                 else -> {}
             }
         }
@@ -119,6 +127,10 @@ fun MapScreen(
             liveLifecycleOwner.lifecycle.removeObserver(observer)
             vm.stopLiveView()
         }
+    }
+    val selectedPubkey = selectedPin?.peer?.publicKeyHex
+    LaunchedEffect(selectedPubkey, mapResumed) {
+        if (mapResumed && selectedPubkey != null) vm.startLiveView(selectedPubkey) else vm.stopLiveView()
     }
 
     LaunchedEffect(centerOnArgs) {
@@ -145,6 +157,8 @@ fun MapScreen(
                 lastMapCenter = lastMapCenter,
                 centerOnUser = isFollowingUser,
                 centerOnPin = centerOnPin,
+                // Keep the selected contact centred as their position updates.
+                followPin = if (followSelected) currentSelectedPin?.heartbeat?.let { LatLng(it.lat, it.lng) } else null,
                 isDark = isDark,
                 mapStartZoom = mapStartZoom,
                 mapStartingPoint = mapStartingPoint,
@@ -152,7 +166,12 @@ fun MapScreen(
                 mapFixedLng = mapFixedLng,
                 onCenteredOnUser = { },
                 onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
-                onPinTapped = { selectedPin = it; isFollowingUser = false },
+                onPinTapped = { selectedPin = it; followSelected = true; isFollowingUser = false },
+                isWatched = watcherNames.isNotEmpty(),
+                onMyLocationTapped = { showWatchers = true },
+                // A hand drag means the user wants to look around: stop both follow modes so
+                // the next position update doesn't snap the camera back.
+                onUserCameraMove = { followSelected = false; isFollowingUser = false },
                 onSaveMapPosition = vm::saveMapPosition,
                 context = context,
                 modifier = Modifier.fillMaxSize()
@@ -167,6 +186,23 @@ fun MapScreen(
                         .statusBarsPadding()
                         .padding(16.dp)
                 )
+            }
+
+            // Who is watching us live: opened by tapping our own eye-badged location dot.
+            // Closes itself if the last watcher leaves while it is open.
+            if (showWatchers && watcherNames.isNotEmpty()) {
+                AlertDialog(
+                    onDismissRequest = { showWatchers = false },
+                    icon = { Icon(Icons.Default.Visibility, contentDescription = null) },
+                    title = { Text(stringResource(R.string.map_watching_you)) },
+                    text = { Text(watcherNames.joinToString("\n")) },
+                    confirmButton = {
+                        TextButton(onClick = { showWatchers = false }) { Text(stringResource(R.string.common_close)) }
+                    }
+                )
+            }
+            LaunchedEffect(watcherNames.isEmpty()) {
+                if (watcherNames.isEmpty()) showWatchers = false
             }
 
             if (showSosConfirm) {
@@ -223,7 +259,12 @@ fun MapScreen(
                 }
 
                 FloatingActionButton(
-                    onClick = { isFollowingUser = !isFollowingUser },
+                    onClick = {
+                        isFollowingUser = !isFollowingUser
+                        // Following yourself and following a selected contact would fight
+                        // over the camera; the most recent choice wins.
+                        if (isFollowingUser) selectedPin = null
+                    },
                     containerColor = if (isFollowingUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                     contentColor = if (isFollowingUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.shadow(4.dp, CircleShape)
@@ -274,6 +315,7 @@ fun MapScreen(
                             isFollowingUser = false
                         }
                         selectedPin = pin
+                        followSelected = true
                     },
                     onMessageFriend = { peerId, peerName ->
                         showFriendList = false
@@ -296,7 +338,7 @@ fun MapScreen(
                 enter = slideInVertically(initialOffsetY = { it }, animationSpec = tween(280)) + fadeIn(tween(280)),
                 exit = slideOutVertically(targetOffsetY = { it }, animationSpec = tween(220)) + fadeOut(tween(220))
             ) {
-                selectedPin?.let { pin ->
+                currentSelectedPin?.let { pin ->
                     PinInfoSheet(
                         pin = pin,
                         address = selectedPinAddress,
@@ -309,6 +351,11 @@ fun MapScreen(
                         onViewHistory = {
                             selectedPin = null
                             onNavigateToHistory(pin.peer.deviceId)
+                        },
+                        isFollowing = followSelected,
+                        onFollow = {
+                            followSelected = true
+                            isFollowingUser = false
                         }
                     )
                 }
@@ -494,6 +541,9 @@ private fun FriendItem(pin: PinData, onClick: () -> Unit, onMessage: () -> Unit,
             if (hb != null) {
                 Text(stringResource(R.string.contacts_last_seen, formatTimestamp(hb.timestamp)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+            if (pin.isWatchingMe) {
+                Text(stringResource(R.string.map_watching_you), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
         }
         IconButton(onClick = onMessage) {
             Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = stringResource(R.string.cd_message), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
@@ -528,10 +578,14 @@ private fun MainMapView(
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     centerOnPin: LatLng?,
+    followPin: LatLng?,
     isDark: Boolean,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
+    onUserCameraMove: () -> Unit,
+    isWatched: Boolean,
+    onMyLocationTapped: () -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
     modifier: Modifier = Modifier,
@@ -602,6 +656,17 @@ private fun MainMapView(
         }
     }
 
+    // Follow the selected contact: re-centre (keeping the user's zoom) whenever their
+    // position changes. Skipped while an explicit centre is pending so the two don't race.
+    LaunchedEffect(followPin, map) {
+        val mv = map ?: return@LaunchedEffect
+        if (followPin == null || centerOnPin != null) return@LaunchedEffect
+        explicitCenterDone = true
+        initialCenterDone = true
+        fitAllDone = true
+        mv.animateTo(followPin.latitude, followPin.longitude)
+    }
+
     LaunchedEffect(pins, isFitAll, map) {
         val mv = map ?: return@LaunchedEffect
         if (!isFitAll || fitAllDone || explicitCenterDone || centerOnPin != null) return@LaunchedEffect
@@ -643,7 +708,8 @@ private fun MainMapView(
                         // a stale/overdue pin must not imply a live direction.
                         showDirection = !pinData.isOverdue && hb.speed > 0f &&
                             !hb.motionState.equals("STATIONARY", ignoreCase = true),
-                        isLive = pinData.isLive
+                        isLive = pinData.isLive,
+                        isWatchingMe = pinData.isWatchingMe
                     ).bitmap,
                     zIndex = 1f
                 )
@@ -657,9 +723,10 @@ private fun MainMapView(
             id = "me",
             lat = loc.latitude,
             lng = loc.longitude,
-            icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive).bitmap,
+            icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive, isWatched).bitmap,
             anchor = MarkerAnchor.CENTER,
-            clickable = false,
+            // Tappable only while watched, to show who; otherwise taps fall through as before.
+            clickable = isWatched,
             zIndex = 2f
         )
     }
@@ -673,11 +740,13 @@ private fun MainMapView(
         showScaleBar = true,
         showCompass = true,
         onMarkerClick = { id ->
-            currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
+            if (id == "me") onMyLocationTapped()
+            else currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
         },
         onCameraIdle = { target, zoom ->
             lastCamera[0] = Triple(target.latitude, target.longitude, MapGeometry.toLegacyZoom(zoom))
         },
+        onUserCameraMove = onUserCameraMove,
         onReady = { controller ->
             val startZoom = MapGeometry.fromLegacyZoom(mapStartZoom)
             when {
@@ -696,7 +765,16 @@ private fun MainMapView(
 }
 
 @Composable
-private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long) -> String, onDismiss: () -> Unit, onMessage: () -> Unit, onViewHistory: () -> Unit) {
+private fun PinInfoSheet(
+    pin: PinData,
+    address: String?,
+    formatTimestamp: (Long) -> String,
+    onDismiss: () -> Unit,
+    onMessage: () -> Unit,
+    onViewHistory: () -> Unit,
+    isFollowing: Boolean = true,
+    onFollow: () -> Unit = {}
+) {
     val hb = pin.heartbeat
     Surface(
         modifier = Modifier
@@ -720,6 +798,7 @@ private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long)
                         if (hb?.isSos == true) Text(stringResource(R.string.map_sos_active), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = SosRed)
                         else if (pin.isOverdue) Text(stringResource(R.string.map_overdue), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                         else if (pin.isLive) Text(stringResource(R.string.map_live), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = LiveGreen)
+                        if (pin.isWatchingMe) Text(stringResource(R.string.map_watching_you), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     }
                 }
                 IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close)) }
@@ -752,6 +831,16 @@ private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long)
                 Text(stringResource(R.string.contacts_no_location_yet), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Spacer(Modifier.height(16.dp))
+            // Offered once the user has dragged away from the contact (which stops following),
+            // so they can snap back and keep tracking them without re-tapping the pin.
+            if (!isFollowing && hb != null) {
+                FilledTonalButton(onClick = onFollow, modifier = Modifier.fillMaxWidth()) {
+                    Icon(Icons.Default.MyLocation, null, Modifier.size(16.dp))
+                    Spacer(Modifier.width(4.dp))
+                    Text(stringResource(R.string.map_follow_contact))
+                }
+                Spacer(Modifier.height(8.dp))
+            }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = onViewHistory, modifier = Modifier.weight(1f)) { Icon(Icons.Default.History, null, Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.tab_history)) }
                 Button(onClick = onMessage, modifier = Modifier.weight(1f)) { Icon(Icons.AutoMirrored.Filled.Chat, null, Modifier.size(16.dp)); Spacer(Modifier.width(4.dp)); Text(stringResource(R.string.cd_message)) }

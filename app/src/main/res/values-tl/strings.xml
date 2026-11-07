@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Pamahalaan ang mga nakabahaging geofence area</string>
     <string name="settings_notify_when_tracked">Abisuhan Kapag Tinutunton</string>
     <string name="settings_notify_when_tracked_subtitle">Makatanggap ng abiso kapag na-trigger ang proximity o geofence alert ng isang contact tungkol sa iyo.</string>
+    <string name="settings_notify_when_watched">Abisuhan Kapag Tinitingnan</string>
+    <string name="settings_notify_when_watched_subtitle">Mag-alerto kapag may contact na nagsimulang tumingin sa iyo nang live.</string>
     <string name="settings_my_location_history">Kasaysayan ng Lokasyon</string>
     <string name="settings_my_location_history_subtitle">Tingnan ang timeline ng iyong sariling lokasyon</string>
     <string name="settings_lookup_addresses">Hanapin ang mga Address</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Tinanggihan ang supervised mode</string>
     <string name="notif_supervised_declined_text">Tinanggihan ng iyong superbisor ang kahilingan - na-disable ang supervised mode</string>
     <string name="notif_tracking_alert_title">Alerto sa Pagtunton</string>
+    <string name="notif_live_watch_title">Tinitingnan ka ni %1$s nang live</string>
+    <string name="notif_live_watch_text">Nag-a-update ang iyong lokasyon nang real time.</string>
+    <string name="notif_live_watch_text_low_battery">Naka-pause ang mga live na update habang mahina ang iyong baterya.</string>
     <string name="notif_tracking_proximity">Nakatanggap si %1$s ng proximity alert tungkol sa iyo</string>
     <string name="notif_tracking_geofence">Nakatanggap si %1$s ng alerto na pumasok/lumabas ka sa fence: %2$s</string>
     <string name="notif_tracking_generic">Sinusubaybayan ni %1$s ang iyong lokasyon</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Markahan bilang Hindi Nabasa</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Payagan ang Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Pabilisin ang iyong mga update kapag tinitingnan ng isang contact ang mapa.</string>
+    <string name="settings_allow_live_boost_subtitle">Pabilisin ang iyong mga update kapag pinili ng isang contact ang iyong pin sa kanilang mapa.</string>
     <string name="settings_request_live_boost">Humiling ng mga live na update</string>
-    <string name="settings_request_live_boost_subtitle">Humiling sa mga contact ng mas mabilis na update kapag nakabukas ang mapa.</string>
+    <string name="settings_request_live_boost_subtitle">Humiling sa isang contact ng mas mabilis na update kapag pinili mo ang kanilang pin sa mapa.</string>
+    <string name="settings_live_update_interval">Pagitan ng Live na Update</string>
+    <string name="settings_live_update_interval_subtitle">Gaano kadalas ipinapadala ang iyong lokasyon sa isang contact na nanonood sa iyo nang live.</string>
+    <string name="settings_seconds_short">%1$d seg</string>
     <string name="settings_relays">Mga relay</string>
     <string name="settings_relays_subtitle">Piliin kung aling mga relay ang magdadala ng iyong data</string>
     <string name="relays_intro">Ipinapadala ng LocaPeer ang iyong data sa pamamagitan ng mga Nostr relay. Palaging naka-end-to-end encrypt ang nilalaman, ngunit nakikita pa rin ng mga pampublikong relay kung sino ang kausap mo at kailan. Gumamit ng sarili mong mga relay upang bawasan ang pagkakalantad na iyon.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Hindi ma-update o maibahagi ang iyong posisyon hangga\'t hindi mo binubuksan ang lokasyon ng device.</string>
     <string name="map_location_off_action">Buksan ang mga setting</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Tinitingnan ka</string>
+    <string name="map_follow_contact">Sundan</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d mensaheng nakapila</item>
         <item quantity="other">%1$d na mensaheng nakapila</item>

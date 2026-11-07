@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">የተጋሩ የጂኦፌንስ ቦታዎችን ያስተዳድሩ</string>
     <string name="settings_notify_when_tracked">ክትትል ሲደረግብኝ አሳውቀኝ</string>
     <string name="settings_notify_when_tracked_subtitle">የእውቂያ ቅርበት ወይም የጂኦፌንስ ማስጠንቀቂያ ለእርስዎ ሲቀሰቀስ ማሳወቂያ ያግኙ።</string>
+    <string name="settings_notify_when_watched">ሲታዩ አሳውቅ</string>
+    <string name="settings_notify_when_watched_subtitle">አንድ እውቂያ በቀጥታ መመልከት ሲጀምር ያሳውቁ።</string>
     <string name="settings_my_location_history">የአካባቢ ታሪክ</string>
     <string name="settings_my_location_history_subtitle">የራስዎን የአካባቢ የጊዜ መስመር ያስሱ</string>
     <string name="settings_lookup_addresses">አድራሻዎችን ፈልግ</string>
@@ -682,6 +684,9 @@
     <string name="notif_supervised_declined_title">የቁጥጥር ሁነታ ተከልክሏል</string>
     <string name="notif_supervised_declined_text">ተቆጣጣሪዎ ጥያቄውን ውድቅ አድርገዋል - የቁጥጥር ሁነታ ጠፍቷል</string>
     <string name="notif_tracking_alert_title">የክትትል ማስጠንቀቂያ</string>
+    <string name="notif_live_watch_title">%1$s በቀጥታ እየተመለከተዎት ነው</string>
+    <string name="notif_live_watch_text">አካባቢዎ በእውነተኛ ጊዜ እየተዘመነ ነው።</string>
+    <string name="notif_live_watch_text_low_battery">ባትሪዎ ዝቅተኛ ሲሆን የቀጥታ ዝማኔዎች ቆመዋል።</string>
     <string name="notif_tracking_proximity">%1$s ስለ እርስዎ የቅርበት ማስጠንቀቂያ ደርሷቸዋል</string>
     <string name="notif_tracking_geofence">%1$s አጥር ውስጥ እንደገቡ/እንደወጡ ማስጠንቀቂያ ደርሷቸዋል፡ %2$s</string>
     <string name="notif_tracking_generic">%1$s አካባቢዎን እየተከታተሉ ነው</string>
@@ -861,9 +866,12 @@
     <string name="conv_mark_unread">እንዳልተነበበ ምልክት አድርግ</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost ን ፍቀድ</string>
-    <string name="settings_allow_live_boost_subtitle">አንድ እውቂያ ካርታውን በሚመለከትበት ጊዜ ዝማኔዎችዎን ያፋጥኑ።</string>
+    <string name="settings_allow_live_boost_subtitle">አንድ እውቂያ በካርታው ላይ የእርስዎን ፒን ሲመርጥ ዝማኔዎችዎን ያፍጥኑ።</string>
     <string name="settings_request_live_boost">የቀጥታ ዝማኔዎችን ይጠይቁ</string>
-    <string name="settings_request_live_boost_subtitle">ካርታዎ ክፍት ሲሆን ከእውቂያዎች ፈጣን ዝማኔዎችን ይጠይቁ።</string>
+    <string name="settings_request_live_boost_subtitle">በካርታው ላይ የአንድ እውቂያን ፒን ሲመርጡ ከእሱ ፈጣን ዝማኔዎችን ይጠይቁ።</string>
+    <string name="settings_live_update_interval">የቀጥታ ዝመና ክፍተት</string>
+    <string name="settings_live_update_interval_subtitle">አካባቢዎ በቀጥታ ለሚመለከትዎት እውቂያ ምን ያህል ጊዜ እንደሚላክ።</string>
+    <string name="settings_seconds_short">%1$d ሰከንድ</string>
     <string name="settings_relays">ማስተላለፊያዎች</string>
     <string name="settings_relays_subtitle">የትኞቹ ማስተላለፊያዎች ውሂብዎን እንደሚያጓጉዙ ይምረጡ</string>
     <string name="relays_intro">LocaPeer ውሂብዎን በNostr ማስተላለፊያዎች በኩል ይልካል። ይዘቱ ሁልጊዜ ከጫፍ እስከ ጫፍ የተመሰጠረ ነው፣ ነገር ግን የሕዝብ ማስተላለፊያዎች አሁንም ከየትኞቹ እውቂያዎች ጋር እና መቼ እንደሚነጋገሩ ማየት ይችላሉ። ይህን መጋለጥ ለመቀነስ የራስዎን ማስተላለፊያዎች ይጠቀሙ።</string>
@@ -896,6 +904,8 @@
     <string name="map_location_off_message">የመሣሪያ ቦታ እስኪያበሩ ድረስ የእርስዎ አቋም ሊዘመን ወይም ሊጋራ አይችልም።</string>
     <string name="map_location_off_action">ቅንብሮችን ክፈት</string>
     <string name="map_live">● ቀጥታ</string>
+    <string name="map_watching_you">👁 እየተመለከተዎት ነው</string>
+    <string name="map_follow_contact">ተከተል</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d በመጠባበቅ ላይ ያለ መልዕክት</item>
         <item quantity="other">%1$d በመጠባበቅ ላይ ያሉ መልዕክቶች</item>

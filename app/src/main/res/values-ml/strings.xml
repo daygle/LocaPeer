@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">പങ്കിട്ട ജിയോഫെൻസ് ഏരിയകൾ കൈകാര്യം ചെയ്യുക</string>
     <string name="settings_notify_when_tracked">ട്രാക്ക് ചെയ്യപ്പെടുമ്പോൾ അറിയിക്കുക</string>
     <string name="settings_notify_when_tracked_subtitle">ഒരു കോൺടാക്റ്റിന്റെ സാമീപ്യം അല്ലെങ്കിൽ ജിയോഫെൻസ് അലേർട്ട് നിങ്ങൾക്കായി ട്രിഗർ ചെയ്യുമ്പോൾ അറിയിപ്പ് നേടുക.</string>
+    <string name="settings_notify_when_watched">കാണുമ്പോൾ അറിയിക്കുക</string>
+    <string name="settings_notify_when_watched_subtitle">ഒരു കോൺടാക്റ്റ് നിങ്ങളെ തത്സമയം കാണാൻ തുടങ്ങുമ്പോൾ അറിയിക്കുക.</string>
     <string name="settings_my_location_history">ലൊക്കേഷൻ ചരിത്രം</string>
     <string name="settings_my_location_history_subtitle">നിങ്ങളുടെ സ്വന്തം ലൊക്കേഷൻ ടൈംലൈൻ ബ്രൗസ് ചെയ്യുക</string>
     <string name="settings_lookup_addresses">വിലാസങ്ങൾ തിരയുക</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">മേൽനോട്ട മോഡ് നിരസിച്ചു</string>
     <string name="notif_supervised_declined_text">നിങ്ങളുടെ മേൽനോട്ടക്കാരൻ അഭ്യർത്ഥന നിരസിച്ചു - മേൽനോട്ട മോഡ് അപ്രാപ്തമാക്കി</string>
     <string name="notif_tracking_alert_title">ട്രാക്കിംഗ് അലേർട്ട്</string>
+    <string name="notif_live_watch_title">%1$s നിങ്ങളെ തത്സമയം കാണുന്നു</string>
+    <string name="notif_live_watch_text">നിങ്ങളുടെ ലൊക്കേഷൻ തത്സമയം അപ്‌ഡേറ്റ് ചെയ്യുന്നു.</string>
+    <string name="notif_live_watch_text_low_battery">ബാറ്ററി കുറവായിരിക്കുമ്പോൾ തത്സമയ അപ്‌ഡേറ്റുകൾ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.</string>
     <string name="notif_tracking_proximity">നിങ്ങളെക്കുറിച്ച് %1$s-ന് ഒരു സാമീപ്യ അലേർട്ട് ലഭിച്ചു</string>
     <string name="notif_tracking_geofence">നിങ്ങൾ ഫെൻസിൽ പ്രവേശിച്ചു/പുറത്തുപോയി എന്ന് %1$s-ന് ഒരു അറിയിപ്പ് ലഭിച്ചു: %2$s</string>
     <string name="notif_tracking_generic">%1$s നിങ്ങളുടെ ലൊക്കേഷൻ നിരീക്ഷിക്കുന്നു</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">വായിക്കാത്തതായി അടയാളപ്പെടുത്തുക</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost അനുവദിക്കുക</string>
-    <string name="settings_allow_live_boost_subtitle">ഒരു കോൺടാക്റ്റ് മാപ്പ് കാണുമ്പോൾ നിങ്ങളുടെ അപ്‌ഡേറ്റുകൾ വേഗത്തിലാക്കുക.</string>
+    <string name="settings_allow_live_boost_subtitle">ഒരു കോൺടാക്റ്റ് അവരുടെ മാപ്പിൽ നിങ്ങളുടെ പിൻ തിരഞ്ഞെടുക്കുമ്പോൾ നിങ്ങളുടെ അപ്‌ഡേറ്റുകൾ വേഗത്തിലാക്കുക.</string>
     <string name="settings_request_live_boost">തത്സമയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക</string>
-    <string name="settings_request_live_boost_subtitle">നിങ്ങളുടെ മാപ്പ് തുറന്നിരിക്കുമ്പോൾ കോൺടാക്റ്റുകളോട് വേഗതയേറിയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക.</string>
+    <string name="settings_request_live_boost_subtitle">മാപ്പിൽ ഒരു കോൺടാക്റ്റിന്റെ പിൻ തിരഞ്ഞെടുക്കുമ്പോൾ അവരോട് വേഗതയേറിയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക.</string>
+    <string name="settings_live_update_interval">ലൈവ് അപ്‌ഡേറ്റ് ഇടവേള</string>
+    <string name="settings_live_update_interval_subtitle">നിങ്ങളെ തത്സമയം കാണുന്ന കോൺടാക്റ്റിന് നിങ്ങളുടെ ലൊക്കേഷൻ എത്ര തവണ അയയ്ക്കുന്നു.</string>
+    <string name="settings_seconds_short">%1$d സെക്കൻഡ്</string>
     <string name="settings_relays">റിലേകൾ</string>
     <string name="settings_relays_subtitle">നിങ്ങളുടെ ഡാറ്റ ഏത് റിലേകൾ വഹിക്കണമെന്ന് തിരഞ്ഞെടുക്കുക</string>
     <string name="relays_intro">LocaPeer നിങ്ങളുടെ ഡാറ്റ Nostr റിലേകൾ വഴി അയയ്ക്കുന്നു. ഉള്ളടക്കം എപ്പോഴും എൻഡ്-ടു-എൻഡ് എൻക്രിപ്റ്റ് ചെയ്യപ്പെടുന്നു, പക്ഷേ പൊതു റിലേകൾക്ക് നിങ്ങൾ ഏത് കോൺടാക്റ്റുകളുമായി എപ്പോൾ സംസാരിക്കുന്നുവെന്ന് ഇപ്പോഴും കാണാൻ കഴിയും. ഈ വെളിപ്പെടുത്തൽ കുറയ്ക്കാൻ നിങ്ങളുടെ സ്വന്തം റിലേകൾ ഉപയോഗിക്കുക.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">നിങ്ങൾ ഉപകരണ ലൊക്കേഷൻ ഓണാക്കുന്നത് വരെ നിങ്ങളുടെ സ്ഥാനം അപ്ഡേറ്റ് ചെയ്യാനോ പങ്കിടാനോ കഴിയില്ല.</string>
     <string name="map_location_off_action">ക്രമീകരണങ്ങൾ തുറക്കുക</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 നിങ്ങളെ കാണുന്നു</string>
+    <string name="map_follow_contact">പിന്തുടരുക</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

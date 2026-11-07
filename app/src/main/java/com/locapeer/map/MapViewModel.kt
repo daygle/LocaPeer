@@ -48,10 +48,16 @@ data class PinData(
     /**
      * True when this contact is currently broadcasting at the fast live-view cadence
      * *and* their most recent fix is fresh - i.e. they are streaming their location live
-     * right now (because someone is watching them). Derived purely from the heartbeat we
-     * already receive; see [com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS].
+     * right now (because someone is watching them). Inferred from the gap between the
+     * heartbeats we receive; see [LivePinDetector].
      */
-    val isLive: Boolean = false
+    val isLive: Boolean = false,
+    /**
+     * True while this contact has our pin selected on *their* map - i.e. they hold a
+     * live-view lease on this device (see [com.locapeer.beacon.LiveViewRegistry]), which is
+     * what speeds up our own broadcasts. Shown as an eye badge on their pin.
+     */
+    val isWatchingMe: Boolean = false
 )
 
 data class GeofenceOnMap(
@@ -84,6 +90,7 @@ class MapViewModel @Inject constructor(
     private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
     private val liveViewSender: com.locapeer.beacon.LiveViewSender,
+    private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry,
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
@@ -136,23 +143,23 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    // Guards the live-view announce loop so the screen's lifecycle callbacks can be
-    // idempotent: ON_RESUME / re-entry may both try to start, and ON_PAUSE / onDispose may
-    // both try to stop. Only genuine transitions reach the reference-counted sender.
-    private var liveViewOn = false
+    // The contact (pubkey) this screen is currently asking for live updates, or null. Lets
+    // the screen's effects call start/stop idempotently; only genuine changes reach the
+    // shared sender.
+    private var liveTarget: String? = null
 
-    /** Begin telling tracked contacts we are viewing them, if not already doing so. */
-    fun startLiveView() {
-        if (liveViewOn) return
-        liveViewOn = true
-        liveViewSender.startViewing()
+    /** Ask [targetPubkey] - the contact whose pin is selected - to broadcast live. */
+    fun startLiveView(targetPubkey: String) {
+        if (liveTarget == targetPubkey) return
+        liveTarget = targetPubkey
+        liveViewSender.startViewing(owner = this, targetPubkey = targetPubkey)
     }
 
-    /** Stop announcing that we are viewing tracked contacts, if currently doing so. */
+    /** Stop asking anyone for live updates from this screen, if currently doing so. */
     fun stopLiveView() {
-        if (!liveViewOn) return
-        liveViewOn = false
-        liveViewSender.stopViewing()
+        if (liveTarget == null) return
+        liveTarget = null
+        liveViewSender.stopViewing(owner = this)
     }
 
     override fun onCleared() {
@@ -298,11 +305,53 @@ class MapViewModel @Inject constructor(
         }
     }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    // deviceId -> (previous, latest) heartbeat seen by [uiState], so the Live badge can be
+    // inferred from the gap between consecutive heartbeats (see [LivePinDetector]). Only
+    // touched from the sequential uiState combine transform.
+    private val recentHeartbeats = HashMap<String, Pair<HeartbeatEntity?, HeartbeatEntity>>()
+
+    /** Pubkeys of the contacts currently watching us live (see [LiveViewRegistry.viewersFlow]). */
+    private val watchersFlow: StateFlow<Set<String>> = liveViewRegistry.viewersFlow()
+        // Drives the eye badges (watchers' pins and our own dot). Event-driven: it only
+        // re-reads the leases while someone is watching, never while nobody is.
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
+
+    /**
+     * Names of every contact watching us live right now, shown when the user taps their
+     * own (eye-badged) location dot. Resolved against *all* contacts, not just those with a
+     * pin on our map, so a contact who receives our location without sharing theirs counts.
+     */
+    val watcherNames: StateFlow<List<String>> = combine(watchersFlow, peerDao.getAllPeers()) { watchers, peers ->
+        if (watchers.isEmpty()) emptyList()
+        else peers
+            .filter { it.deviceId in watchers || it.publicKeyHex in watchers }
+            .map { it.displayName.ifBlank { appContext.getString(com.locapeer.R.string.geo_unknown) } }
+            .sorted()
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
+
+    // Bumped when the earliest Live badge is due to expire, so [uiState] turns it off on
+    // time. Scheduled only while some pin is live - no polling otherwise (the minute
+    // ticker alone would leave a badge up for up to a minute after the stream stops).
+    private val liveExpiryTick = MutableStateFlow(0L)
+    private var liveExpiryJob: kotlinx.coroutines.Job? = null
+
+    private fun scheduleLiveExpiry(atMs: Long?) {
+        liveExpiryJob?.cancel()
+        if (atMs == null) return
+        liveExpiryJob = viewModelScope.launch {
+            delay((atMs - System.currentTimeMillis()).coerceAtLeast(0L) + 50L)
+            liveExpiryTick.value++
+        }
+    }
+
     val uiState: StateFlow<MapUiState> = combine(
         snapshotFlow,
         geofencesFlow,
-        tickerFlow
-    ) { snapshot, fences, _ ->
+        tickerFlow,
+        watchersFlow,
+        liveExpiryTick
+    ) { snapshot, fences, _, watchers, _ ->
+        var nextLiveExpiry: Long? = null
         val heartbeatMap = snapshot.heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
         val pins = snapshot.peers.filter { it.deviceId != snapshot.myPubkey }.map { peer ->
@@ -315,11 +364,21 @@ class MapViewModel @Inject constructor(
             // Live = broadcasting at the fast live-view floor with a genuinely fresh fix.
             // The freshness window (a few live intervals) keeps the badge from lingering
             // once their re-sends stop, well before the much later overdue threshold.
-            val live = hb != null && !overdue &&
-                hb.expectedIntervalSeconds * 1000L <= com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS &&
-                (now - hb.receivedAt) < com.locapeer.beacon.LIVE_VIEW_INTERVAL_MS * 4
-            PinData(peer, hb, overdue, live)
+            val previous = hb?.let { latest ->
+                val seen = recentHeartbeats[peer.deviceId]
+                when {
+                    seen == null -> null.also { recentHeartbeats[peer.deviceId] = null to latest }
+                    seen.second.id == latest.id -> seen.first
+                    else -> seen.second.also { recentHeartbeats[peer.deviceId] = it to latest }
+                }
+            }
+            val liveUntil = LivePinDetector.liveUntil(previous, hb)
+            val live = !overdue && liveUntil != null && now < liveUntil
+            if (live && liveUntil != null) nextLiveExpiry = minOf(nextLiveExpiry ?: liveUntil, liveUntil)
+            val watchingMe = peer.deviceId in watchers || peer.publicKeyHex in watchers
+            PinData(peer, hb, overdue, live, watchingMe)
         }
+        scheduleLiveExpiry(nextLiveExpiry)
         MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 

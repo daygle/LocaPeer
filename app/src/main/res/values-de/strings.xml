@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Geteilte Geofence-Bereiche verwalten</string>
     <string name="settings_notify_when_tracked">Benachrichtigen bei Verfolgung</string>
     <string name="settings_notify_when_tracked_subtitle">Erhalten Sie eine Benachrichtigung, wenn ein Kontakt eine Proximity- oder Geofence-Warnung für Sie auslöst.</string>
+    <string name="settings_notify_when_watched">Benachrichtigen bei Live-Ansicht</string>
+    <string name="settings_notify_when_watched_subtitle">Warnen, wenn ein Kontakt beginnt, dich live anzusehen.</string>
     <string name="settings_my_location_history">Mein Standortverlauf</string>
     <string name="settings_my_location_history_subtitle">Durchsuchen Sie Ihre eigene Standort-Zeitachse</string>
     <string name="settings_lookup_addresses">Adressen nachschlagen</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Überwachungsmodus abgelehnt</string>
     <string name="notif_supervised_declined_text">Ihr Betreuer hat die Anfrage abgelehnt - der Überwachungsmodus wurde deaktiviert</string>
     <string name="notif_tracking_alert_title">Verfolgungswarnung</string>
+    <string name="notif_live_watch_title">%1$s sieht dich live an</string>
+    <string name="notif_live_watch_text">Dein Standort wird in Echtzeit aktualisiert.</string>
+    <string name="notif_live_watch_text_low_battery">Live-Aktualisierungen sind pausiert, solange dein Akku schwach ist.</string>
     <string name="notif_tracking_proximity">%1$s hat eine Annäherungswarnung über Sie erhalten</string>
     <string name="notif_tracking_geofence">%1$s hat eine Warnung erhalten, dass Sie den Zaun %2$s betreten/verlassen haben</string>
     <string name="notif_tracking_generic">%1$s überwacht Ihren Standort</string>
@@ -859,9 +864,12 @@
     <string name="conv_mark_unread">Als ungelesen markieren</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost erlauben</string>
-    <string name="settings_allow_live_boost_subtitle">Beschleunige deine Aktualisierungen, wenn ein Kontakt die Karte ansieht.</string>
+    <string name="settings_allow_live_boost_subtitle">Beschleunige deine Aktualisierungen, wenn ein Kontakt deinen Pin auf seiner Karte ausgewählt hat.</string>
     <string name="settings_request_live_boost">Live-Updates anfordern</string>
-    <string name="settings_request_live_boost_subtitle">Bitte Kontakte um schnellere Aktualisierungen, wenn du die Karte geöffnet hast.</string>
+    <string name="settings_request_live_boost_subtitle">Bitte einen Kontakt um schnellere Aktualisierungen, wenn du seinen Pin auf der Karte ausgewählt hast.</string>
+    <string name="settings_live_update_interval">Live-Aktualisierungsintervall</string>
+    <string name="settings_live_update_interval_subtitle">Wie oft dein Standort an einen Kontakt gesendet wird, der dich live ansieht.</string>
+    <string name="settings_seconds_short">%1$d Sek.</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Wähle aus, welche Relays deine Daten übertragen</string>
     <string name="relays_intro">LocaPeer sendet deine Daten über Nostr-Relays. Inhalte sind immer Ende-zu-Ende-verschlüsselt, aber öffentliche Relays können trotzdem sehen, mit welchen Kontakten du wann sprichst. Verwende eigene Relays, um diese Preisgabe zu verringern.</string>
@@ -894,6 +902,8 @@
     <string name="map_location_off_message">Dein Standort kann erst aktualisiert oder geteilt werden, wenn du den Gerätestandort einschaltest.</string>
     <string name="map_location_off_action">Einstellungen öffnen</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Sieht dich an</string>
+    <string name="map_follow_contact">Folgen</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

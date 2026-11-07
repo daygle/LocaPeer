@@ -105,6 +105,8 @@
     <string name="settings_geofences_subtitle">Správa sdílených oblastí geofence</string>
     <string name="settings_notify_when_tracked">Upozornit při sledování</string>
     <string name="settings_notify_when_tracked_subtitle">Dostávat oznámení, když se u kontaktu spustí upozornění na blízkost nebo geofence týkající se vás.</string>
+    <string name="settings_notify_when_watched">Upozornit při sledování</string>
+    <string name="settings_notify_when_watched_subtitle">Upozornit, když vás kontakt začne sledovat živě.</string>
     <string name="settings_my_location_history">Historie polohy</string>
     <string name="settings_my_location_history_subtitle">Procházejte svou vlastní časovou osu polohy</string>
     <string name="settings_lookup_addresses">Vyhledávat adresy</string>
@@ -707,6 +709,9 @@
     <string name="notif_supervised_declined_title">Režim pod dohledem odmítnut</string>
     <string name="notif_supervised_declined_text">Dohlížitel žádost odmítl - režim pod dohledem byl vypnut</string>
     <string name="notif_tracking_alert_title">Upozornění na sledování</string>
+    <string name="notif_live_watch_title">%1$s vás sleduje živě</string>
+    <string name="notif_live_watch_text">Vaše poloha se aktualizuje v reálném čase.</string>
+    <string name="notif_live_watch_text_low_battery">Živé aktualizace jsou pozastaveny, dokud je baterie slabá.</string>
     <string name="notif_tracking_proximity">%1$s obdržel(a) upozornění na vaši blízkost</string>
     <string name="notif_tracking_geofence">%1$s obdržel(a) upozornění, že jste vstoupili do zóny/opustili zónu: %2$s</string>
     <string name="notif_tracking_generic">%1$s sleduje vaši polohu</string>
@@ -890,9 +895,12 @@
     <string name="conv_mark_unread">Označit jako nepřečtené</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Povolit Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Zrychlete své aktualizace, když si kontakt prohlíží mapu.</string>
+    <string name="settings_allow_live_boost_subtitle">Zrychlete své aktualizace, když má kontakt na své mapě vybraný váš špendlík.</string>
     <string name="settings_request_live_boost">Požádat o živé aktualizace</string>
-    <string name="settings_request_live_boost_subtitle">Požádejte kontakty o rychlejší aktualizace, když máte otevřenou mapu.</string>
+    <string name="settings_request_live_boost_subtitle">Požádejte kontakt o rychlejší aktualizace, když máte na mapě vybraný jeho špendlík.</string>
+    <string name="settings_live_update_interval">Interval živých aktualizací</string>
+    <string name="settings_live_update_interval_subtitle">Jak často se vaše poloha odesílá kontaktu, který vás sleduje živě.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relaye</string>
     <string name="settings_relays_subtitle">Vyberte, které relaye přenášejí vaše data</string>
     <string name="relays_intro">LocaPeer posílá vaše data přes relaye Nostr. Obsah je vždy šifrovaný end-to-end, ale veřejné relaye přesto vidí, s kterými kontakty a kdy mluvíte. Používejte vlastní relaye, abyste toto vystavení omezili.</string>
@@ -925,6 +933,8 @@
     <string name="map_location_off_message">Vaši polohu nelze aktualizovat ani sdílet, dokud nezapnete polohu zařízení.</string>
     <string name="map_location_off_action">Otevřít nastavení</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Sleduje vás</string>
+    <string name="map_follow_contact">Sledovat</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

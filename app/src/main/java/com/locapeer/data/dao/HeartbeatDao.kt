@@ -32,6 +32,20 @@ interface HeartbeatDao {
         insertAll(heartbeats.filter { it.deviceId in known })
     }
 
+    /**
+     * [insertAllForExistingPeers] plus deletion of superseded rows ([deletes] as
+     * deviceId to timestamp), in one transaction, so a replaced live point and its
+     * replacement swap atomically - the latest pin never steps back to an older fix.
+     */
+    @Transaction
+    suspend fun insertAllForExistingPeersReplacing(
+        heartbeats: List<HeartbeatEntity>,
+        deletes: List<Pair<String, Long>>
+    ) {
+        deletes.forEach { (deviceId, timestamp) -> deleteByDeviceAndTimestamp(deviceId, timestamp) }
+        insertAllForExistingPeers(heartbeats)
+    }
+
     @Query("SELECT * FROM heartbeats WHERE deviceId = :deviceId AND timestamp >= :dayStart AND timestamp < :dayEnd ORDER BY timestamp ASC")
     fun getHeartbeatsForDay(deviceId: String, dayStart: Long, dayEnd: Long): Flow<List<HeartbeatEntity>>
 
@@ -61,6 +75,9 @@ interface HeartbeatDao {
 
     @Query("DELETE FROM heartbeats WHERE timestamp < :before")
     suspend fun deleteOlderThan(before: Long)
+
+    @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId AND timestamp = :timestamp")
+    suspend fun deleteByDeviceAndTimestamp(deviceId: String, timestamp: Long)
 
     @Query("DELETE FROM heartbeats WHERE deviceId = :deviceId")
     suspend fun deleteAllForDevice(deviceId: String)

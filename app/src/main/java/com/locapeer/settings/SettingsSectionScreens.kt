@@ -86,6 +86,7 @@ fun LocationSettingsScreen(
     val settings by vm.settings.collectAsStateWithLifecycle()
 
     var showIntervalsDialog by remember { mutableStateOf(false) }
+    var showLiveIntervalDialog by remember { mutableStateOf(false) }
 
     SettingsSubScreen(stringResource(R.string.settings_section_location), onNavigateBack) {
         SettingsCard(
@@ -119,6 +120,14 @@ fun LocationSettingsScreen(
                 onCheckedChange = { vm.setAllowLiveBoost(it) }
             )
             CardDivider()
+            SettingsRow(
+                title = stringResource(R.string.settings_live_update_interval),
+                subtitle = stringResource(R.string.settings_live_update_interval_subtitle),
+                value = stringResource(R.string.settings_seconds_short, settings.liveUpdateIntervalSeconds),
+                enabled = settings.allowLiveBoost,
+                onClick = { showLiveIntervalDialog = true }
+            )
+            CardDivider()
             SwitchRow(
                 title = stringResource(R.string.settings_request_live_boost),
                 subtitle = stringResource(R.string.settings_request_live_boost_subtitle),
@@ -147,6 +156,18 @@ fun LocationSettingsScreen(
                 onCommit = { vm.setHistoryMaxAccuracyMeters(it) }
             )
         }
+    }
+
+    if (showLiveIntervalDialog) {
+        SingleChoiceDialog(
+            title = stringResource(R.string.settings_live_update_interval),
+            options = com.locapeer.beacon.LIVE_UPDATE_INTERVAL_OPTIONS_S.map {
+                ChoiceOption(it, stringResource(R.string.settings_seconds_short, it))
+            },
+            isSelected = { it == settings.liveUpdateIntervalSeconds },
+            onSelected = { vm.setLiveUpdateIntervalSeconds(it); showLiveIntervalDialog = false },
+            onDismiss = { showLiveIntervalDialog = false }
+        )
     }
 
     if (showIntervalsDialog) {
@@ -203,6 +224,13 @@ fun PrivacySettingsScreen(
                 subtitle = stringResource(R.string.settings_notify_when_tracked_subtitle),
                 checked = settings.notifyOnTrackingAlerts,
                 onCheckedChange = { vm.setNotifyOnTrackingAlerts(it) }
+            )
+            CardDivider()
+            SwitchRow(
+                title = stringResource(R.string.settings_notify_when_watched),
+                subtitle = stringResource(R.string.settings_notify_when_watched_subtitle),
+                checked = settings.notifyWhenWatched,
+                onCheckedChange = { vm.setNotifyWhenWatched(it) }
             )
         }
 

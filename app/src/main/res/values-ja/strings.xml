@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">共有ジオフェンスエリアを管理</string>
     <string name="settings_notify_when_tracked">追跡時に通知</string>
     <string name="settings_notify_when_tracked_subtitle">連絡先の近接またはジオフェンスアラートが自分に対してトリガーされたときに通知を受け取ります。</string>
+    <string name="settings_notify_when_watched">閲覧時に通知</string>
+    <string name="settings_notify_when_watched_subtitle">連絡先があなたのライブ表示を始めたときに通知します。</string>
     <string name="settings_my_location_history">自分の位置履歴</string>
     <string name="settings_my_location_history_subtitle">自分の位置情報のタイムラインを閲覧</string>
     <string name="settings_lookup_addresses">住所を検索</string>
@@ -668,6 +670,9 @@
     <string name="notif_supervised_declined_title">監視モードが拒否されました</string>
     <string name="notif_supervised_declined_text">監視者がリクエストを拒否しました - 監視モードは無効になりました</string>
     <string name="notif_tracking_alert_title">追跡アラート</string>
+    <string name="notif_live_watch_title">%1$s があなたをライブで見ています</string>
+    <string name="notif_live_watch_text">位置情報がリアルタイムで更新されています。</string>
+    <string name="notif_live_watch_text_low_battery">バッテリー残量が少ないため、ライブ更新は一時停止中です。</string>
     <string name="notif_tracking_proximity">%1$sがあなたに関する近接アラートを受信しました</string>
     <string name="notif_tracking_geofence">%1$sがあなたがフェンス： %2$sに入った/出たというアラートを受信しました</string>
     <string name="notif_tracking_generic">%1$sがあなたの位置情報をモニタリングしています</string>
@@ -844,9 +849,12 @@
     <string name="conv_mark_unread">未読にする</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost を許可</string>
-    <string name="settings_allow_live_boost_subtitle">連絡先が地図を表示しているときに更新を高速化します。</string>
+    <string name="settings_allow_live_boost_subtitle">連絡先が地図上であなたのピンを選択しているときに、更新を速くします。</string>
     <string name="settings_request_live_boost">ライブ更新をリクエスト</string>
-    <string name="settings_request_live_boost_subtitle">地図を開いているときに、連絡先へより速い更新をリクエストします。</string>
+    <string name="settings_request_live_boost_subtitle">地図上で連絡先のピンを選択しているときに、その連絡先へより速い更新をリクエストします。</string>
+    <string name="settings_live_update_interval">ライブ更新の間隔</string>
+    <string name="settings_live_update_interval_subtitle">ライブであなたを見ている連絡先に位置情報を送信する頻度です。</string>
+    <string name="settings_seconds_short">%1$d 秒</string>
     <string name="settings_relays">リレー</string>
     <string name="settings_relays_subtitle">データを伝送するリレーを選択します</string>
     <string name="relays_intro">LocaPeer は Nostr リレーを介してデータを送信します。コンテンツは常にエンドツーエンドで暗号化されますが、公開リレーはあなたが誰といつやり取りしているかを見ることができます。この露出を減らすには、自分のリレーを使用してください。</string>
@@ -879,6 +887,8 @@
     <string name="map_location_off_message">デバイスの位置情報をオンにするまで、現在地を更新または共有できません。</string>
     <string name="map_location_off_action">設定を開く</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 あなたを見ています</string>
+    <string name="map_follow_contact">追従</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>

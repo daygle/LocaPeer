@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Kelola area geofence bersama</string>
     <string name="settings_notify_when_tracked">Beri Tahu Saat Dilacak</string>
     <string name="settings_notify_when_tracked_subtitle">Dapatkan notifikasi saat peringatan jarak dekat atau geofence kontak tentang Anda terpicu.</string>
+    <string name="settings_notify_when_watched">Beri Tahu Saat Dilihat</string>
+    <string name="settings_notify_when_watched_subtitle">Beri tahu saat kontak mulai melihat Anda secara langsung.</string>
     <string name="settings_my_location_history">Riwayat Lokasi</string>
     <string name="settings_my_location_history_subtitle">Jelajahi linimasa lokasi Anda sendiri</string>
     <string name="settings_lookup_addresses">Cari Alamat</string>
@@ -668,6 +670,9 @@
     <string name="notif_supervised_declined_title">Mode terawasi ditolak</string>
     <string name="notif_supervised_declined_text">Pengawas Anda menolak permintaan - mode terawasi telah dinonaktifkan</string>
     <string name="notif_tracking_alert_title">Peringatan Pelacakan</string>
+    <string name="notif_live_watch_title">%1$s sedang melihat Anda secara langsung</string>
+    <string name="notif_live_watch_text">Lokasi Anda diperbarui secara real time.</string>
+    <string name="notif_live_watch_text_low_battery">Pembaruan langsung dijeda selama baterai Anda lemah.</string>
     <string name="notif_tracking_proximity">%1$s menerima peringatan jarak dekat tentang Anda</string>
     <string name="notif_tracking_geofence">%1$s menerima peringatan bahwa Anda masuk/keluar pagar: %2$s</string>
     <string name="notif_tracking_generic">%1$s memantau lokasi Anda</string>
@@ -845,9 +850,12 @@
     <string name="conv_mark_unread">Tandai Belum Dibaca</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Izinkan Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Percepat pembaruan Anda saat kontak sedang melihat peta.</string>
+    <string name="settings_allow_live_boost_subtitle">Percepat pembaruan Anda saat kontak memilih pin Anda di peta mereka.</string>
     <string name="settings_request_live_boost">Minta pembaruan langsung</string>
-    <string name="settings_request_live_boost_subtitle">Minta kontak untuk pembaruan lebih cepat saat peta Anda terbuka.</string>
+    <string name="settings_request_live_boost_subtitle">Minta kontak untuk pembaruan lebih cepat saat Anda memilih pin mereka di peta.</string>
+    <string name="settings_live_update_interval">Interval Pembaruan Langsung</string>
+    <string name="settings_live_update_interval_subtitle">Seberapa sering lokasi Anda dikirim ke kontak yang sedang melihat Anda secara langsung.</string>
+    <string name="settings_seconds_short">%1$d dtk</string>
     <string name="settings_relays">Relai</string>
     <string name="settings_relays_subtitle">Pilih relai mana yang membawa data Anda</string>
     <string name="relays_intro">LocaPeer mengirim data Anda melalui relai Nostr. Konten selalu dienkripsi ujung ke ujung, tetapi relai publik tetap dapat melihat dengan kontak mana Anda berbicara dan kapan. Gunakan relai Anda sendiri untuk mengurangi paparan itu.</string>
@@ -880,6 +888,8 @@
     <string name="map_location_off_message">Lokasi Anda tidak dapat diperbarui atau dibagikan sampai Anda menyalakan lokasi perangkat.</string>
     <string name="map_location_off_action">Buka pengaturan</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Sedang melihat Anda</string>
+    <string name="map_follow_contact">Ikuti</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">शेअर केलेले जिओफेन्स क्षेत्र व्यवस्थापित करा</string>
     <string name="settings_notify_when_tracked">ट्रॅक केल्यावर कळवा</string>
     <string name="settings_notify_when_tracked_subtitle">जेव्हा संपर्काचा प्रॉक्सिमिटी किंवा जिओफेन्स अलर्ट तुमच्यासाठी ट्रिगर होतो तेव्हा सूचना मिळवा.</string>
+    <string name="settings_notify_when_watched">पाहिले जात असताना सूचित करा</string>
+    <string name="settings_notify_when_watched_subtitle">एखादा संपर्क तुम्हाला लाइव्ह पाहू लागल्यावर सूचित करा.</string>
     <string name="settings_my_location_history">स्थान इतिहास</string>
     <string name="settings_my_location_history_subtitle">तुमची स्वतःची स्थान टाइमलाइन ब्राउझ करा</string>
     <string name="settings_lookup_addresses">पत्ते शोधा</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">देखरेख मोड नाकारला</string>
     <string name="notif_supervised_declined_text">तुमच्या पर्यवेक्षकाने विनंती नाकारली आहे - देखरेख मोड अक्षम केला गेला आहे</string>
     <string name="notif_tracking_alert_title">ट्रॅकिंग अलर्ट</string>
+    <string name="notif_live_watch_title">%1$s तुम्हाला लाइव्ह पाहत आहे</string>
+    <string name="notif_live_watch_text">तुमचे स्थान रिअल टाइममध्ये अपडेट होत आहे.</string>
+    <string name="notif_live_watch_text_low_battery">तुमची बॅटरी कमी असेपर्यंत लाइव्ह अपडेट थांबवले आहेत.</string>
     <string name="notif_tracking_proximity">तुमच्याबद्दल %1$s ला प्रॉक्सिमिटी अलर्ट मिळाला आहे</string>
     <string name="notif_tracking_geofence">तुम्ही फेन्समध्ये प्रवेश केला/बाहेर पडलात असा %1$s ला अलर्ट मिळाला आहे: %2$s</string>
     <string name="notif_tracking_generic">%1$s तुमच्या स्थानावर देखरेख ठेवत आहेत</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">न वाचलेले म्हणून चिन्हांकित करा</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost ला अनुमती द्या</string>
-    <string name="settings_allow_live_boost_subtitle">एखादा संपर्क नकाशा पाहत असताना तुमची अपडेट जलद करा.</string>
+    <string name="settings_allow_live_boost_subtitle">एखाद्या संपर्काने त्यांच्या नकाशावर तुमची पिन निवडल्यावर तुमचे अपडेट जलद करा.</string>
     <string name="settings_request_live_boost">थेट अपडेटची विनंती करा</string>
-    <string name="settings_request_live_boost_subtitle">तुमचा नकाशा उघडा असताना संपर्कांकडून जलद अपडेटची विनंती करा.</string>
+    <string name="settings_request_live_boost_subtitle">नकाशावर एखाद्या संपर्काची पिन निवडल्यावर त्यांच्याकडून जलद अपडेटची विनंती करा.</string>
+    <string name="settings_live_update_interval">लाइव्ह अपडेट अंतराल</string>
+    <string name="settings_live_update_interval_subtitle">तुम्हाला लाइव्ह पाहणाऱ्या संपर्काला तुमचे स्थान किती वेळा पाठवले जाते.</string>
+    <string name="settings_seconds_short">%1$d सेकंद</string>
     <string name="settings_relays">रिले</string>
     <string name="settings_relays_subtitle">तुमचा डेटा कोणते रिले वाहून नेतील ते निवडा</string>
     <string name="relays_intro">LocaPeer तुमचा डेटा Nostr रिलेद्वारे पाठवते. मजकूर नेहमी एंड-टू-एंड एन्क्रिप्टेड असतो, परंतु सार्वजनिक रिले अजूनही पाहू शकतात की तुम्ही कोणत्या संपर्कांशी आणि केव्हा बोलता. हे उघड होणे कमी करण्यासाठी तुमचे स्वतःचे रिले वापरा.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">तुम्ही डिव्हाइसचे स्थान चालू करेपर्यंत तुमचे स्थान अद्यतनित किंवा सामायिक केले जाऊ शकत नाही.</string>
     <string name="map_location_off_action">सेटिंग्ज उघडा</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 तुम्हाला पाहत आहे</string>
+    <string name="map_follow_contact">फॉलो करा</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

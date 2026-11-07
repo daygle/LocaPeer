@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Бөлісілген геоқоршау аймақтарын басқару</string>
     <string name="settings_notify_when_tracked">Бақыланған кезде хабарлау</string>
     <string name="settings_notify_when_tracked_subtitle">Контактінің жақындығы немесе сіз үшін геоқоршау ескертуі іске қосылғанда хабарландыру алыңыз.</string>
+    <string name="settings_notify_when_watched">Көргенде хабарлау</string>
+    <string name="settings_notify_when_watched_subtitle">Контакт сізді тікелей көре бастағанда ескерту.</string>
     <string name="settings_my_location_history">Орын тарихы</string>
     <string name="settings_my_location_history_subtitle">Өз орналасу тарихыңызды қараңыз</string>
     <string name="settings_lookup_addresses">Мекенжайларды іздеу</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Бақылау режимінен бас тартылды</string>
     <string name="notif_supervised_declined_text">Бақылаушыңыз сұрауды қабылдамады - бақылау режимі өшірілді</string>
     <string name="notif_tracking_alert_title">Бақылау ескертуі</string>
+    <string name="notif_live_watch_title">%1$s сізді тікелей көріп отыр</string>
+    <string name="notif_live_watch_text">Орныңыз нақты уақытта жаңартылуда.</string>
+    <string name="notif_live_watch_text_low_battery">Батарея заряды аз болғанда тікелей жаңартулар кідіртіледі.</string>
     <string name="notif_tracking_proximity">%1$s сіз туралы жақындық ескертуін алды</string>
     <string name="notif_tracking_geofence">%1$s сіздің қоршауға кіргеніңіз/шыққаныңыз туралы ескерту алды: %2$s</string>
     <string name="notif_tracking_generic">%1$s сіздің орныңызды бақылауда</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Оқылмаған деп белгілеу</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost рұқсат ету</string>
-    <string name="settings_allow_live_boost_subtitle">Контакт картаны қарап жатқанда жаңартуларыңызды жылдамдатыңыз.</string>
+    <string name="settings_allow_live_boost_subtitle">Контакт өз картасында сіздің пиніңізді таңдағанда жаңартуларыңызды жылдамдатыңыз.</string>
     <string name="settings_request_live_boost">Тікелей жаңартуларды сұрау</string>
-    <string name="settings_request_live_boost_subtitle">Карта ашық болғанда контакттардан жылдамырақ жаңартуларды сұраңыз.</string>
+    <string name="settings_request_live_boost_subtitle">Картада контактінің пинін таңдағанда одан жылдамырақ жаңартуларды сұраңыз.</string>
+    <string name="settings_live_update_interval">Тікелей жаңарту аралығы</string>
+    <string name="settings_live_update_interval_subtitle">Сізді тікелей көріп отырған контактіге орныңыз қаншалықты жиі жіберіледі.</string>
+    <string name="settings_seconds_short">%1$d сек</string>
     <string name="settings_relays">Реле</string>
     <string name="settings_relays_subtitle">Деректеріңізді қай реле тасымалдайтынын таңдаңыз</string>
     <string name="relays_intro">LocaPeer деректеріңізді Nostr релелері арқылы жібереді. Мазмұн әрқашан ұштан-ұшқа шифрланады, бірақ жалпыға ортақ реле сіз қай контактпен және қашан сөйлескеніңізді көре алады. Бұл ашықтықты азайту үшін өз релелеріңізді пайдаланыңыз.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Құрылғының орнын қосқанша, сіздің орныңызды жаңартуға немесе бөлісуге болмайды.</string>
     <string name="map_location_off_action">Параметрлерді ашу</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Сізді көріп отыр</string>
+    <string name="map_follow_contact">Ілесу</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

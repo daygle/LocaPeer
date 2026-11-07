@@ -27,6 +27,7 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PendingRequestEntity
+import com.locapeer.data.entity.scheduleRules
 import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
@@ -184,6 +185,10 @@ const val NOTIF_ID_TRACK_REQUEST = 20000
 private const val NOTIF_ID_ACCEPT = 30000
 private const val NOTIF_ID_DECLINE = 40000
 private const val NOTIF_ID_TRACKING_ALERT = 80000
+private const val NOTIF_ID_LIVE_WATCH = 81000
+/** Don't re-alert for the same watcher more often than this (re-selecting a pin, or a
+ *  lease lapsing and returning, would otherwise buzz the user repeatedly). */
+private const val LIVE_WATCH_ALERT_COOLDOWN_MS = 10 * 60_000L
 const val NOTIF_ID_SUPERVISED_REGISTER = 70000
 const val NOTIF_ID_SUPERVISED_INVITE = 75000
 private const val NOTIF_ID_SUPERVISED_CHANGE = 85000
@@ -323,6 +328,9 @@ class HeartbeatReceiver @Inject constructor(
     private val batchMutex = Mutex()
     private val pendingHeartbeats = mutableListOf<HeartbeatEntity>()
     private val pendingKeys = HashSet<String>()
+    // Stored rows superseded by a newer live point (deviceId to timestamp), deleted in the
+    // same transaction as the next flush. Guarded by batchMutex.
+    private val pendingDeletes = mutableListOf<Pair<String, Long>>()
     private var flushJob: Job? = null
     private var flushFailures = 0
 
@@ -489,22 +497,38 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     /**
-     * A contact has the map open and wants our location live. Grant a short lease (see
+     * A contact has our pin selected and wants our location live. Grant a short lease (see
      * [com.locapeer.beacon.LiveViewRegistry]) so the heartbeat loop speeds up while they
      * watch. This is only a cadence hint: it is honoured strictly within the same
      * role/pause gates the normal heartbeat sender applies, so it can never leak location
      * to a contact we are not already sharing with.
      */
     private suspend fun processLiveViewRequest(event: NostrEvent) {
-        if (!prefs.settings.first().allowLiveBoost) return
+        val settings = prefs.settings.first()
+        if (!settings.allowLiveBoost) return
+        // Not sharing at all right now (sharing off, or outside the global schedule): no
+        // live updates can flow, so there is no lease to grant - and nothing to tell the
+        // user ("watched live") that wouldn't be false.
+        if (!settings.heartbeatEnabled) return
+        if (!com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
         val peer = peerDao.getPeer(event.pubkey) ?: return
         // Only meaningful for a contact we send location to; boosting for anyone else
         // would change nothing they can see.
         if (peer.locationRole != PeerEntity.ROLE_SEND &&
             peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE
         ) return
-        // A per-contact pause overrides everything, exactly as it does for heartbeats.
-        if (sharingConfigDao.getForPeer(peer.deviceId)?.sharingEnabled == false) return
+        // A per-contact pause or inactive per-contact schedule overrides everything, exactly
+        // as it does for heartbeats (which would skip this contact anyway).
+        val cfg = sharingConfigDao.getForPeer(peer.deviceId)
+        if (cfg?.sharingEnabled == false) return
+        if (cfg != null) {
+            val (dayIndex, minute) = com.locapeer.sharing.SharingSchedule.nowDayMinute()
+            val active = com.locapeer.sharing.SharingSchedule.isPeerSharingActive(
+                cfg.scheduleRules(), dayIndex, minute,
+                cfg.temporaryShareEndsAtEpochSeconds, System.currentTimeMillis() / 1000
+            )
+            if (!active) return
+        }
 
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -519,10 +543,63 @@ class HeartbeatReceiver @Inject constructor(
         val now = System.currentTimeMillis()
         if (payload.sentAtMs !in (now - LIVE_VIEW_FRESHNESS_MS)..(now + LIVE_VIEW_FRESHNESS_MS)) return
 
+        val newWatcher = !liveViewRegistry.isViewing(event.pubkey)
         // grant() reports the inactive -> active transition; only then must we wake the
         // service, since while already live it re-reads the registry every 5s on its own.
         if (liveViewRegistry.grant(event.pubkey)) nudgeLiveView()
+        if (newWatcher) alertNewWatcher(peer)
         Log.d(TAG, "Live-view request granted for ${event.pubkey}")
+    }
+
+    // viewer pubkey -> elapsedRealtime of the last "watching you" alert, for the cooldown.
+    private val lastWatchAlertAt = java.util.concurrent.ConcurrentHashMap<String, Long>()
+
+    /**
+     * Tell the user a contact has just started watching them live (selected their pin), if
+     * they opted in. Shares the gates of the other alerts (global alert switch, quiet hours)
+     * and is rate-limited per contact by [LIVE_WATCH_ALERT_COOLDOWN_MS].
+     */
+    private suspend fun alertNewWatcher(peer: PeerEntity) {
+        val settings = prefs.settings.first()
+        if (!settings.notifyWhenWatched || !settings.alertNotificationsEnabled) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
+        val now = android.os.SystemClock.elapsedRealtime()
+        val last = lastWatchAlertAt[peer.publicKeyHex]
+        if (last != null && now - last < LIVE_WATCH_ALERT_COOLDOWN_MS) return
+        lastWatchAlertAt[peer.publicKeyHex] = now
+
+        val name = peer.displayName.take(MAX_PEER_DISPLAY_NAME_CHARS)
+            .ifBlank { context.getString(R.string.geo_unknown) }
+        val intent = Intent(context, MainActivity::class.java).apply {
+            setPackage(context.packageName)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pi = PendingIntent.getActivity(context, NOTIF_ID_LIVE_WATCH, intent, PendingIntent.FLAG_IMMUTABLE)
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
+            .setSmallIcon(R.drawable.ic_notif_location)
+            .setContentTitle(context.getString(R.string.notif_live_watch_title, name))
+            // Below 20% battery live mode is suppressed (battery protection wins), so don't
+            // claim a real-time stream that isn't happening.
+            .setContentText(
+                context.getString(
+                    if (isBatteryLow()) R.string.notif_live_watch_text_low_battery
+                    else R.string.notif_live_watch_text
+                )
+            )
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pi)
+            .setAutoCancel(true)
+            // The watcher's name is hidden on a locked screen.
+            .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+            .build()
+        notificationManager.notify(peer.publicKeyHex, NOTIF_ID_LIVE_WATCH, notification)
+    }
+
+    /** Same threshold as [com.locapeer.beacon.AdaptiveIntervalManager.isLowBattery]. */
+    private fun isBatteryLow(): Boolean {
+        val level = context.getSystemService(android.os.BatteryManager::class.java)
+            ?.getIntProperty(android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: return false
+        return level in 0 until 20
     }
 
     /**
@@ -618,6 +695,13 @@ class HeartbeatReceiver @Inject constructor(
             // The bulk of a catch-up burst is stale, so this side-effect path (and its
             // extra DB read for the previous position) is skipped for the common case.
             val isFresh = System.currentTimeMillis() - timestampMs < FRESH_HEARTBEAT_MS
+            // A live-only pulse replayed later (catch-up from a relay that ignored its
+            // NIP-40 expiry) has no use: the live moment is over and the sender's cadence
+            // heartbeats already cover the history. Drop it.
+            if (payload.live && !isFresh && !isSos) {
+                advanceHeartbeatBaseline(event.createdAt)
+                return
+            }
             // Read the previous position BEFORE buffering this one: a size-triggered flush
             // inside enqueueHeartbeat would otherwise make this very ping the "previous"
             // one, and the geofence engine would then never see the transition.
@@ -628,6 +712,10 @@ class HeartbeatReceiver @Inject constructor(
                 val stored = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
                 listOfNotNull(buffered, stored).maxByOrNull { it.timestamp }
             } else null
+            // Keep at most one live-only point per contact: each new live pulse (and the
+            // next cadence heartbeat) replaces the previous live one, so while we watch
+            // someone their pin moves live but our history of them keeps their cadence.
+            replacePreviousLivePoint(canonicalDeviceId, keepAs = if (payload.live && !isSos) timestampMs else null)
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
@@ -665,6 +753,30 @@ class HeartbeatReceiver @Inject constructor(
         if (safeEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
             lastPersistedHbEpoch = safeEpoch
             prefs.setLastHeartbeatSubEpoch(safeEpoch)
+        }
+    }
+
+    // deviceId -> timestamp of the latest live-only point stored for that contact. Touched
+    // only from processEvent, which handles heartbeats sequentially.
+    private val lastLivePoint = HashMap<String, Long>()
+
+    /**
+     * Remove the previously stored live-only point for [deviceId], if any - from the
+     * pending batch, or from the database on the next flush - and remember [keepAs] (the incoming point's
+     * timestamp when it is itself live-only, else null) as the one to replace next time.
+     */
+    private suspend fun replacePreviousLivePoint(deviceId: String, keepAs: Long?) {
+        val previous = if (keepAs != null) lastLivePoint.put(deviceId, keepAs) else lastLivePoint.remove(deviceId)
+        if (previous == null) return
+        batchMutex.withLock {
+            val removed = pendingHeartbeats.removeAll { it.deviceId == deviceId && it.timestamp == previous }
+            if (removed) {
+                pendingKeys.remove(hbKey(deviceId, previous))
+            } else {
+                // Already stored: delete it in the same transaction that stores its
+                // replacement (enqueued right after this), so the latest pin never steps back.
+                pendingDeletes += deviceId to previous
+            }
         }
     }
 
@@ -727,9 +839,10 @@ class HeartbeatReceiver @Inject constructor(
             try {
                 // Keep dedup keys visible until commit; a timer flush must not open a gap
                 // where the event collector queues an already-in-flight heartbeat again.
-                heartbeatDao.insertAllForExistingPeers(pendingHeartbeats.toList())
+                heartbeatDao.insertAllForExistingPeersReplacing(pendingHeartbeats.toList(), pendingDeletes.toList())
                 pendingHeartbeats.clear()
                 pendingKeys.clear()
+                pendingDeletes.clear()
                 flushFailures = 0
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
@@ -740,6 +853,7 @@ class HeartbeatReceiver @Inject constructor(
                     Log.e(TAG, "Dropping heartbeat batch (${pendingHeartbeats.size}) after $flushFailures failed flushes", e)
                     pendingHeartbeats.clear()
                     pendingKeys.clear()
+                    pendingDeletes.clear()
                     flushFailures = 0
                     return
                 }

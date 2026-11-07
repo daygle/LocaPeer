@@ -120,14 +120,19 @@
     <string name="settings_geofences_subtitle">Manage shared geofence areas</string>
     <string name="settings_notify_when_tracked">Notify When Tracked</string>
     <string name="settings_notify_when_tracked_subtitle">Alert when contacts receive proximity or geofence notifications for you.</string>
+    <string name="settings_notify_when_watched">Notify When Watched</string>
+    <string name="settings_notify_when_watched_subtitle">Alert when a contact starts watching you live.</string>
     <string name="settings_my_location_history">Location History</string>
     <string name="settings_my_location_history_subtitle">Browse your own location timeline</string>
     <string name="settings_lookup_addresses">Look Up Addresses</string>
     <string name="settings_lookup_addresses_subtitle">Look up addresses for history, map pins and geofences via system geocoding.</string>
     <string name="settings_allow_live_boost">Allow Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Speed up your updates when a contact is viewing the map.</string>
+    <string name="settings_allow_live_boost_subtitle">Speed up your updates while a contact has your pin selected on their map.</string>
     <string name="settings_request_live_boost">Request Live Updates</string>
-    <string name="settings_request_live_boost_subtitle">Ask contacts for faster updates when you have the map open.</string>
+    <string name="settings_request_live_boost_subtitle">Ask a contact for faster updates while you have their pin selected on the map.</string>
+    <string name="settings_live_update_interval">Live Update Interval</string>
+    <string name="settings_live_update_interval_subtitle">How often your location is sent to a contact watching you live.</string>
+    <string name="settings_seconds_short">%1$d sec</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>
@@ -638,7 +643,9 @@
     <string name="map_sos_active">⚠ SOS ACTIVE</string>
     <string name="map_away">Away</string>
     <string name="map_live">● Live</string>
-    <string name="map_no_location_yet">No location yet</string>
+    <string name="map_watching_you">👁 Watching You</string>
+    <string name="map_follow_contact">Follow</string>
+    <string name="map_no_location_yet">No Location Yet</string>
     <string name="map_cd_go_location">Go to location</string>
     <string name="map_sos">SOS</string>
     <string name="map_sos_on">SOS ON</string>
@@ -813,6 +820,9 @@
     <string name="notif_supervised_declined_title">Supervised mode declined</string>
     <string name="notif_supervised_declined_text">Your supervisor declined the request - supervised mode has been disabled</string>
     <string name="notif_tracking_alert_title">Tracking Alert</string>
+    <string name="notif_live_watch_title">%1$s is watching you live</string>
+    <string name="notif_live_watch_text">Your location is updating in real time.</string>
+    <string name="notif_live_watch_text_low_battery">Live updates are paused while your battery is low.</string>
     <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
     <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s is monitoring your location</string>

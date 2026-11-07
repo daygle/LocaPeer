@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Gestisci le aree geofence condivise</string>
     <string name="settings_notify_when_tracked">Notifica quando tracciato</string>
     <string name="settings_notify_when_tracked_subtitle">Ricevi una notifica quando viene attivato un avviso di prossimità o di geofence di un contatto per te.</string>
+    <string name="settings_notify_when_watched">Avvisa se mi guardano</string>
+    <string name="settings_notify_when_watched_subtitle">Avvisa quando un contatto inizia a guardarti dal vivo.</string>
     <string name="settings_my_location_history">Cronologia delle mie posizioni</string>
     <string name="settings_my_location_history_subtitle">Sfoglia la tua cronologia delle posizioni</string>
     <string name="settings_lookup_addresses">Cerca indirizzi</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Modalità supervisionata rifiutata</string>
     <string name="notif_supervised_declined_text">Il tuo supervisore ha rifiutato la richiesta: la modalità supervisionata è stata disabilitata</string>
     <string name="notif_tracking_alert_title">Avviso di tracciamento</string>
+    <string name="notif_live_watch_title">%1$s ti sta guardando dal vivo</string>
+    <string name="notif_live_watch_text">La tua posizione si aggiorna in tempo reale.</string>
+    <string name="notif_live_watch_text_low_battery">Gli aggiornamenti live sono in pausa finché la batteria è scarica.</string>
     <string name="notif_tracking_proximity">%1$s ha ricevuto un avviso di prossimità su di te</string>
     <string name="notif_tracking_geofence">%1$s ha ricevuto un avviso relativo alla tua entrata/uscita dalla zona: %2$s</string>
     <string name="notif_tracking_generic">%1$s sta monitorando la tua posizione</string>
@@ -859,9 +864,12 @@
     <string name="conv_mark_unread">Segna come non letto</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Consenti Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Velocizza i tuoi aggiornamenti quando un contatto sta guardando la mappa.</string>
+    <string name="settings_allow_live_boost_subtitle">Velocizza i tuoi aggiornamenti quando un contatto ha selezionato il tuo pin sulla sua mappa.</string>
     <string name="settings_request_live_boost">Richiedi aggiornamenti in tempo reale</string>
-    <string name="settings_request_live_boost_subtitle">Chiedi ai contatti aggiornamenti più rapidi quando hai la mappa aperta.</string>
+    <string name="settings_request_live_boost_subtitle">Chiedi a un contatto aggiornamenti più rapidi quando hai selezionato il suo pin sulla mappa.</string>
+    <string name="settings_live_update_interval">Intervallo aggiornamenti live</string>
+    <string name="settings_live_update_interval_subtitle">Ogni quanto la tua posizione viene inviata a un contatto che ti sta guardando dal vivo.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relay</string>
     <string name="settings_relays_subtitle">Scegli quali relay trasportano i tuoi dati</string>
     <string name="relays_intro">LocaPeer invia i tuoi dati attraverso i relay Nostr. I contenuti sono sempre crittografati end-to-end, ma i relay pubblici possono comunque vedere con quali contatti parli e quando. Usa i tuoi relay per ridurre questa esposizione.</string>
@@ -894,6 +902,8 @@
     <string name="map_location_off_message">La tua posizione non può essere aggiornata o condivisa finché non attivi la posizione del dispositivo.</string>
     <string name="map_location_off_action">Apri impostazioni</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Ti sta guardando</string>
+    <string name="map_follow_contact">Segui</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

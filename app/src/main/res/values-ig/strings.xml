@@ -102,6 +102,8 @@
     <string name="settings_geofences_subtitle">Jikwaa ebe geofence ekerịtara</string>
     <string name="settings_notify_when_tracked">Gwa m Mgbe a na-achọ m</string>
     <string name="settings_notify_when_tracked_subtitle">Nweta ọkwa mgbe kọntaktị nọ nso ma ọ bụ geofence mkpu maka gị na-amalite.</string>
+    <string name="settings_notify_when_watched">Kọọ Mgbe A Na-ele</string>
+    <string name="settings_notify_when_watched_subtitle">Dọọ aka na ntị mgbe onye kọntaktị malitere ile gị ndụ.</string>
     <string name="settings_my_location_history">Akụkọ Ebe</string>
     <string name="settings_my_location_history_subtitle">Chọgharịa usoro oge ebe ị nọ</string>
     <string name="settings_lookup_addresses">Chọọ Adreesị</string>
@@ -668,6 +670,9 @@
     <string name="notif_supervised_declined_title">Ajụrụ ọnọdụ nlekọta</string>
     <string name="notif_supervised_declined_text">Onye nlekọta gị jụrụ arịrịọ ahụ - agbanyụrụ ọnọdụ nlekọta</string>
     <string name="notif_tracking_alert_title">Mkpu Nleba anya</string>
+    <string name="notif_live_watch_title">%1$s na-ele gị ndụ</string>
+    <string name="notif_live_watch_text">A na-emelite ọnọdụ gị ozugbo.</string>
+    <string name="notif_live_watch_text_low_battery">Akwụsịtụrụ mmelite ndụ ka batrị gị dị ala.</string>
     <string name="notif_tracking_proximity">%1$s nwetara mkpu nso gbasara gị</string>
     <string name="notif_tracking_geofence">%1$s nwetara mkpu na ị banyere/pụọ na fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s na-eleba anya n\'ebe ị nọ</string>
@@ -845,9 +850,12 @@
     <string name="conv_mark_unread">Kaa akara dị ka Agụghị Agụ</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Kwe ka Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Mee ka mmelite gi dị ngwa mgbe kọntaktị na-ele maapụ.</string>
+    <string name="settings_allow_live_boost_subtitle">Mee ka mmelite gị dị ngwa mgbe onye kọntaktị họpụtara pin gị na maapụ ya.</string>
     <string name="settings_request_live_boost">Rịọ maka mmelite ozugbo</string>
-    <string name="settings_request_live_boost_subtitle">Rịọ ndị kọntaktị maka mmelite ngwa ngwa mgbe i meghere maapụ.</string>
+    <string name="settings_request_live_boost_subtitle">Rịọ onye kọntaktị maka mmelite ngwa ngwa mgbe ị họpụtara pin ya na maapụ.</string>
+    <string name="settings_live_update_interval">Oge n\'etiti mmelite ndụ</string>
+    <string name="settings_live_update_interval_subtitle">Ugboro ole a na-eziga ọnọdụ gị nye onye kọntaktị na-ele gị ndụ.</string>
+    <string name="settings_seconds_short">Sekọnd %1$d</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Họrọ relays ndị ga-ebu data gị</string>
     <string name="relays_intro">LocaPeer na-eziga data gị site na relays Nostr. A na-ezochi ọdịnaya mgbe niile site na njedebe ruo njedebe, mana relays ọha ka nwere ike ịhụ ndị kọntaktị ị na-agwa okwu na mgbe. Jiri relays nke gị iji belata nkpughe ahụ.</string>
@@ -880,6 +888,8 @@
     <string name="map_location_off_message">A pụghị imelite ma ọ bụ kesaa ọnọdụ gị ruo mgbe ịgbanyere ọnọdụ ngwaọrụ ahụ.</string>
     <string name="map_location_off_action">Mepee ntọala</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Na-ele gị</string>
+    <string name="map_follow_contact">Soro</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>

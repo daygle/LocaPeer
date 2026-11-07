@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Hantera delade geostaketområden</string>
     <string name="settings_notify_when_tracked">Meddela vid spårning</string>
     <string name="settings_notify_when_tracked_subtitle">Få en avisering när en kontakts närhets- eller geostaketlarm om dig utlöses.</string>
+    <string name="settings_notify_when_watched">Meddela när någon tittar</string>
+    <string name="settings_notify_when_watched_subtitle">Varna när en kontakt börjar titta på dig live.</string>
     <string name="settings_my_location_history">Platshistorik</string>
     <string name="settings_my_location_history_subtitle">Bläddra i din egen platstidslinje</string>
     <string name="settings_lookup_addresses">Slå upp adresser</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Övervakat läge avböjt</string>
     <string name="notif_supervised_declined_text">Din tillsynsperson avböjde begäran - övervakat läge har inaktiverats</string>
     <string name="notif_tracking_alert_title">Spårningslarm</string>
+    <string name="notif_live_watch_title">%1$s tittar på dig live</string>
+    <string name="notif_live_watch_text">Din plats uppdateras i realtid.</string>
+    <string name="notif_live_watch_text_low_battery">Liveuppdateringar är pausade medan batteriet är lågt.</string>
     <string name="notif_tracking_proximity">%1$s fick ett närhetslarm om dig</string>
     <string name="notif_tracking_geofence">%1$s fick ett larm om att du gått in i/lämnat staketet: %2$s</string>
     <string name="notif_tracking_generic">%1$s bevakar din plats</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Markera som oläst</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Tillåt Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Snabba upp dina uppdateringar när en kontakt tittar på kartan.</string>
+    <string name="settings_allow_live_boost_subtitle">Snabba upp dina uppdateringar när en kontakt har valt din nål på sin karta.</string>
     <string name="settings_request_live_boost">Begär liveuppdateringar</string>
-    <string name="settings_request_live_boost_subtitle">Be kontakter om snabbare uppdateringar när du har kartan öppen.</string>
+    <string name="settings_request_live_boost_subtitle">Be en kontakt om snabbare uppdateringar när du har valt dennes nål på kartan.</string>
+    <string name="settings_live_update_interval">Intervall för liveuppdateringar</string>
+    <string name="settings_live_update_interval_subtitle">Hur ofta din plats skickas till en kontakt som tittar på dig live.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Reläer</string>
     <string name="settings_relays_subtitle">Välj vilka reläer som bär dina data</string>
     <string name="relays_intro">LocaPeer skickar dina data via Nostr-reläer. Innehållet är alltid änd-till-änd-krypterat, men offentliga reläer kan ändå se vilka kontakter du pratar med och när. Använd egna reläer för att minska den exponeringen.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Din position kan inte uppdateras eller delas förrän du slår på enhetens plats.</string>
     <string name="map_location_off_action">Öppna inställningar</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Tittar på dig</string>
+    <string name="map_follow_contact">Följ</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d köat meddelande</item>
         <item quantity="other">%1$d köade meddelanden</item>

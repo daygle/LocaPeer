@@ -2,18 +2,26 @@ package com.locapeer.beacon
 
 import android.os.SystemClock
 import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
  * Tracks which peers are currently *viewing* this device's location, so the heartbeat
  * loop can broadcast at a fast "live" cadence only while at least one contact is actually
- * looking at the map (see [LIVE_VIEW_INTERVAL_MS]).
+ * watching us - has our pin selected on their map (see [LIVE_VIEW_INTERVAL_MS]).
  *
  * Each viewer's interest is a short, self-expiring lease: a viewer re-sends a
- * `LIVE_VIEW_REQUEST` every [LIVE_VIEW_RESEND_MS] while their map
- * is open, and each request grants a [LIVE_VIEW_LEASE_MS] lease keyed by the viewer's
- * pubkey. When a viewer closes the map (or goes offline) their re-sends stop, the lease
+ * `LIVE_VIEW_REQUEST` every [LIVE_VIEW_RESEND_MS] while our pin is
+ * selected, and each request grants a [LIVE_VIEW_LEASE_MS] lease keyed by the viewer's
+ * pubkey. When a viewer deselects us or leaves the map (or goes offline) their re-sends stop, the lease
  * lapses, and this device falls back to its normal motion-adaptive cadence with no
  * explicit "stop" event required. Leases are keyed by pubkey so multiple viewers refresh
  * independently and one leaving doesn't cut short another's live view.
@@ -30,6 +38,13 @@ class LiveViewRegistry @Inject constructor() {
     // need a shared lock.
     private val leases = ConcurrentHashMap<String, Long>()
 
+    // Bumped whenever a viewer starts watching (a lease appears for a pubkey that had none),
+    // so observers such as the service notification can react at once instead of polling
+    // while nobody is watching. Departures have no event: leases lapse silently, so an
+    // observer that saw a viewer arrive re-reads [activeViewers] until the set is empty.
+    private val _newViewerEvents = MutableStateFlow(0L)
+    val newViewerEvents: StateFlow<Long> = _newViewerEvents.asStateFlow()
+
     /**
      * Record (or refresh) a live-view lease for [viewerPubkey], valid for [leaseMs].
      * Returns true when this call transitions the registry from having no active lease to
@@ -39,8 +54,36 @@ class LiveViewRegistry @Inject constructor() {
     fun grant(viewerPubkey: String, leaseMs: Long = LIVE_VIEW_LEASE_MS): Boolean {
         val now = SystemClock.elapsedRealtime()
         val wasActive = isActive(now)
-        leases[viewerPubkey] = now + leaseMs
+        // isActive() above pruned expired leases, so a null here means a genuinely new viewer.
+        if (leases.put(viewerPubkey, now + leaseMs) == null) _newViewerEvents.update { it + 1 }
         return !wasActive
+    }
+
+    /**
+     * The set of current viewers, emitted whenever it changes. Event-driven: a new viewer
+     * wakes it at once, then - because departures have no event (leases lapse silently) -
+     * it re-reads every [refreshMs] *only while someone is watching*, going quiet again
+     * once the set is empty. So an unwatched device never polls.
+     */
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    fun viewersFlow(refreshMs: Long = VIEWERS_REFRESH_MS): Flow<Set<String>> =
+        newViewerEvents.transformLatest {
+            while (true) {
+                val viewers = activeViewers()
+                emit(viewers)
+                if (viewers.isEmpty()) break
+                delay(refreshMs)
+            }
+        }.distinctUntilChanged()
+
+    /** True when [viewerPubkey] holds an unexpired lease (is watching right now). */
+    fun isViewing(viewerPubkey: String, now: Long = SystemClock.elapsedRealtime()): Boolean =
+        (leases[viewerPubkey] ?: return false) > now
+
+    /** Pubkeys of every viewer holding an unexpired lease right now. Prunes expired entries. */
+    fun activeViewers(now: Long = SystemClock.elapsedRealtime()): Set<String> {
+        isActive(now)
+        return leases.keys.toSet()
     }
 
     /** True when at least one unexpired lease exists. Prunes expired entries as it scans. */
@@ -57,9 +100,28 @@ class LiveViewRegistry @Inject constructor() {
 /** How long a single `LIVE_VIEW_REQUEST` keeps this device in live mode for that viewer.
  *  Comfortably longer than the viewer's re-send period so one dropped request doesn't
  *  visibly stutter the cadence, yet short enough that live mode ends within seconds of the
- *  viewer closing the map. */
+ *  viewer deselecting us or leaving the map. */
 const val LIVE_VIEW_LEASE_MS = 45_000L
 
-/** Broadcast interval while any viewer is actively watching - the [LiveViewRegistry] floor
- *  the interval manager applies. Matches the heartbeat loop's hard minimum. */
+/** How often [LiveViewRegistry.viewersFlow] re-reads the leases while anyone is watching. */
+const val VIEWERS_REFRESH_MS = 5_000L
+
+/** NIP-40 expiry for events only useful in the moment (live-only pulses, live-view
+ *  requests): relays that honour it drop them instead of storing a dense live trail. */
+const val LIVE_EVENT_RELAY_TTL_S = 300L
+
+/** Fastest broadcast interval while a viewer is actively watching (the default, and the
+ *  shortest of [LIVE_UPDATE_INTERVAL_OPTIONS_S]). Matches the heartbeat loop's hard minimum. */
 const val LIVE_VIEW_INTERVAL_MS = 5_000L
+
+/** Live update intervals (seconds) the user can choose from; the first is the default. */
+val LIVE_UPDATE_INTERVAL_OPTIONS_S = listOf(5, 10, 15, 30)
+
+/** Slowest selectable live interval (the last of [LIVE_UPDATE_INTERVAL_OPTIONS_S]), which
+ *  receivers must still recognise as live. A const so receivers can derive constants from it. */
+const val MAX_LIVE_VIEW_INTERVAL_MS = 30_000L
+
+/** Snap a stored or restored value onto the selectable options, defaulting to the fastest. */
+fun normalizeLiveUpdateIntervalSeconds(seconds: Int?): Int =
+    if (seconds != null && seconds in LIVE_UPDATE_INTERVAL_OPTIONS_S) seconds
+    else LIVE_UPDATE_INTERVAL_OPTIONS_S.first()

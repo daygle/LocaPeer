@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Simamia maeneo ya kijiografia yaliyoshirikiwa</string>
     <string name="settings_notify_when_tracked">Arifu Unapofuatiliwa</string>
     <string name="settings_notify_when_tracked_subtitle">Pata arifa wakati ukaribu wa anwani au arifa ya eneo la kijiografia kwako inapoanzishwa.</string>
+    <string name="settings_notify_when_watched">Arifu Ninapotazamwa</string>
+    <string name="settings_notify_when_watched_subtitle">Arifu mwasiliani anapoanza kukutazama moja kwa moja.</string>
     <string name="settings_my_location_history">Historia ya Mahali</string>
     <string name="settings_my_location_history_subtitle">Vinjari kalenda yako ya maeneo</string>
     <string name="settings_lookup_addresses">Tafuta Anwani</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Njia ya kusimamiwa imekataliwa</string>
     <string name="notif_supervised_declined_text">Msimamizi wako amekataa ombi - hali ya kusimamiwa imezimwa</string>
     <string name="notif_tracking_alert_title">Arifa ya Ufuatiliaji</string>
+    <string name="notif_live_watch_title">%1$s anakutazama moja kwa moja</string>
+    <string name="notif_live_watch_text">Eneo lako linasasishwa papo hapo.</string>
+    <string name="notif_live_watch_text_low_battery">Masasisho ya moja kwa moja yamesitishwa wakati betri yako iko chini.</string>
     <string name="notif_tracking_proximity">%1$s amepokea arifa ya ukaribu kukuhusu</string>
     <string name="notif_tracking_geofence">%1$s amepokea arifa kwamba umeingia/umetoka kwenye eneo: %2$s</string>
     <string name="notif_tracking_generic">%1$s anafuatilia eneo lako</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Weka Alama Kuwa Haijasomwa</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Ruhusu Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati anwani anatazama ramani.</string>
+    <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati mwasiliani amechagua pini yako kwenye ramani yake.</string>
     <string name="settings_request_live_boost">Omba masasisho ya moja kwa moja</string>
-    <string name="settings_request_live_boost_subtitle">Omba anwani masasisho ya haraka zaidi unapokuwa na ramani wazi.</string>
+    <string name="settings_request_live_boost_subtitle">Omba mwasiliani masasisho ya haraka zaidi unapokuwa umechagua pini yake kwenye ramani.</string>
+    <string name="settings_live_update_interval">Muda Kati ya Masasisho ya Moja kwa Moja</string>
+    <string name="settings_live_update_interval_subtitle">Mara ngapi eneo lako hutumwa kwa mwasiliani anayekutazama moja kwa moja.</string>
+    <string name="settings_seconds_short">Sek %1$d</string>
     <string name="settings_relays">Rele</string>
     <string name="settings_relays_subtitle">Chagua rele zipi zinabeba data yako</string>
     <string name="relays_intro">LocaPeer hutuma data yako kupitia rele za Nostr. Maudhui daima yamesimbwa mwanzo hadi mwisho, lakini rele za umma bado zinaweza kuona ni anwani zipi unazozungumza nazo na lini. Tumia rele zako mwenyewe ili kupunguza mfichuo huo.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Nafasi yako haiwezi kusasishwa au kushirikiwa hadi uwashe mahali kwenye kifaa.</string>
     <string name="map_location_off_action">Fungua mipangilio</string>
     <string name="map_live">● Moja kwa moja</string>
+    <string name="map_watching_you">👁 Anakutazama</string>
+    <string name="map_follow_contact">Fuata</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">Ujumbe %1$d kwenye foleni</item>
         <item quantity="other">Jumbe %1$d kwenye foleni</item>

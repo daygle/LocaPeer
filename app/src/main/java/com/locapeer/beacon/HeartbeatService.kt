@@ -181,6 +181,10 @@ class HeartbeatService : LifecycleService() {
     // the profile when the last viewer's lease lapses (see the runnable).
     private var wasLiveView = false
     @Volatile private var lastPulseElapsedMs = 0L
+    /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
+     *  contact is watching live, pulses run every few seconds but history is only written
+     *  once the user's normal cadence has elapsed since this point. */
+    @Volatile private var lastHistoryElapsedMs = 0L
     /** Elapsed-time deadline until which GPS is boosted to high accuracy (see CLASSIFY_BOOST_MS). */
     @Volatile private var classificationBoostUntilMs = 0L
     /** Elapsed-time deadline until which GPS stays high-accuracy after settling, to sharpen
@@ -643,7 +647,9 @@ class HeartbeatService : LifecycleService() {
                     needsRequestUpdate = true
                     needsReschedule = true
                 }
-                if (settings.allowLiveBoost != previous.allowLiveBoost) {
+                if (settings.allowLiveBoost != previous.allowLiveBoost ||
+                    settings.liveUpdateIntervalSeconds != previous.liveUpdateIntervalSeconds
+                ) {
                     needsRequestUpdate = true
                     needsReschedule = true
                 }
@@ -706,6 +712,10 @@ class HeartbeatService : LifecycleService() {
                 // A viewer's lease just went active. Switch GPS to the fast/high-accuracy
                 // live profile and pulse now instead of waiting out the current interval.
                 if (isStarted) {
+                    // Record the state the request is being rebuilt for, so the pulse this
+                    // triggers doesn't see a "transition" and reboot GPS a second time
+                    // (each reboot waits afresh for an accurate first fix).
+                    wasLiveView = intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
                     updateLocationRequest()
                     reschedulePulse()
                 }
@@ -804,7 +814,7 @@ class HeartbeatService : LifecycleService() {
         // Below 20% battery the heartbeat cadence already stretches to the
         // low-battery interval; keeping full-rate GPS running would defeat it.
         val lowBattery = !isSos && intervalManager.isLowBattery()
-        // A contact is watching the map: sample fast and accurate so the ~5s live pulses
+        // A contact has our pin selected: sample fast and accurate so the live pulses
         // carry a genuinely fresh fix. Deliberately below SOS priority and, like the boost
         // windows, never overrides low battery.
         val liveView = !isSos && !lowBattery && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
@@ -839,7 +849,7 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
-            liveView -> 5_000L
+            liveView -> intervalManager.liveIntervalMillis(currentSettings)
             // Sample fast during either boost so a usable fix actually lands inside the
             // window; both must precede the stationary branch, which otherwise waits 5
             // minutes - the classification boost can now be live WHILE stationary, when
@@ -1136,14 +1146,34 @@ class HeartbeatService : LifecycleService() {
         // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
 
+        // Live-view pulses (every few seconds while a contact has our pin selected) are for the
+        // watching contacts' live pins only. A pulse is a "cadence pulse" when the user's
+        // configured interval has elapsed since the last one: only those are written to local
+        // history and sent to contacts who are NOT watching, so a watched drive costs one
+        // send per watcher per live pulse instead of one per contact, and history keeps one
+        // point per driving interval. SOS always goes to everyone and always records.
+        // Decided here, on the main thread, alongside the other snapshots.
+        val nowElapsed = SystemClock.elapsedRealtime()
+        val livePulse = !isSos && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
+        val cadencePulse = !livePulse || lastHistoryElapsedMs == 0L ||
+            nowElapsed - lastHistoryElapsedMs >= intervalManager.cadenceIntervalMillis(currentSettings)
+        if (cadencePulse) lastHistoryElapsedMs = nowElapsed
+        val liveViewers: Set<String> = if (livePulse) intervalManager.liveViewers() else emptySet()
+
         lifecycleScope.launch {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val settings = prefs.settings.first()
 
                 val nowMs = System.currentTimeMillis()
-                val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
-                heartbeatDao.insert(
+                // Every contact - watching or not - is told the normal cadence. Live pulses
+                // are a bonus on top of it: once a watcher closes the map (or for contacts
+                // who never get the live pulses), their overdue pin and missed-update alert
+                // must wait for the next *cadence* pulse, not fire two minutes after the
+                // last 5s pulse. Watchers detect live streaming from the arrival gaps.
+                val cadenceIntervalSec = (if (isSos) intervalManager.getIntervalMillis(settings)
+                    else intervalManager.cadenceIntervalMillis(settings)) / 1000
+                if (cadencePulse) heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
                         displayName = settings.displayName,
@@ -1159,7 +1189,7 @@ class HeartbeatService : LifecycleService() {
                         speed = fixSpeed,
                         bearing = fixBearing,
                         altitude = fixAltitude,
-                        expectedIntervalSeconds = expectedIntervalSec
+                        expectedIntervalSeconds = cadenceIntervalSec
                     )
                 )
 
@@ -1195,11 +1225,16 @@ class HeartbeatService : LifecycleService() {
                             roleAllows && (cfg?.sharingEnabled ?: true)
                         }
                     }
-                    filtered to configs
+                    // Between cadence pulses, only contacts actually watching get the
+                    // live update; everyone else waits for the next cadence pulse.
+                    val audience = if (cadencePulse) filtered else filtered.filter { peer ->
+                        peer.publicKeyHex in liveViewers || peer.deviceId in liveViewers
+                    }
+                    audience to configs
                 }
 
                 if (targetRecipients.isEmpty()) {
-                    Log.d(TAG, "No recipients for this heartbeat (isSos=$isSos)")
+                    Log.d(TAG, "No recipients for this heartbeat (isSos=$isSos, live=$livePulse)")
                     return@launch
                 }
 
@@ -1244,7 +1279,8 @@ class HeartbeatService : LifecycleService() {
                             speed = if (suburb) 0f else fixSpeed,
                             bearing = if (suburb) 0f else fixBearing,
                             altitude = if (suburb) 0.0 else fixAltitude,
-                            expectedIntervalSeconds = expectedIntervalSec
+                            expectedIntervalSeconds = cadenceIntervalSec,
+                            live = !cadencePulse
                         )
                         val payloadJson = Json.encodeToString(payload)
 
@@ -1259,10 +1295,14 @@ class HeartbeatService : LifecycleService() {
                             pubKeyHex = pubHex,
                             kind = kind,
                             content = encrypted,
-                            tags = listOf(
-                                listOf("p", recipient.publicKeyHex),
-                                listOf("t", "locapeer-heartbeat")
-                            ),
+                            tags = buildList {
+                                add(listOf("p", recipient.publicKeyHex))
+                                add(listOf("t", "locapeer-heartbeat"))
+                                // A live-only pulse matters for seconds; let relays that
+                                // honour NIP-40 drop it rather than keep a dense live trail
+                                // (and replay it in catch-ups). Cadence pulses are kept.
+                                if (!cadencePulse) add(listOf("expiration", (nowSec + LIVE_EVENT_RELAY_TTL_S).toString()))
+                            },
                             crypto = crypto
                         )
                         relayClient.publishEvent(event)

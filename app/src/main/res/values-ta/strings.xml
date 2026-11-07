@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">பகிரப்பட்ட ஜியோஃபென்ஸ் பகுதிகளை நிர்வகிக்கவும்</string>
     <string name="settings_notify_when_tracked">கண்காணிக்கப்படும் போது அறிவிக்கவும்</string>
     <string name="settings_notify_when_tracked_subtitle">ஒரு தொடர்பின் அருகாமை அல்லது உங்களுக்கான ஜியோஃபென்ஸ் எச்சரிக்கை தூண்டப்படும்போது அறிவிப்பைப் பெறுங்கள்.</string>
+    <string name="settings_notify_when_watched">பார்க்கும்போது அறிவி</string>
+    <string name="settings_notify_when_watched_subtitle">ஒரு தொடர்பு உங்களை நேரலையில் பார்க்கத் தொடங்கும்போது எச்சரிக்கவும்.</string>
     <string name="settings_my_location_history">இருப்பிட வரலாறு</string>
     <string name="settings_my_location_history_subtitle">உங்கள் சொந்த இருப்பிட காலவரிசையை உலாவவும்</string>
     <string name="settings_lookup_addresses">முகவரிகளைத் தேடு</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">மேற்பார்வை பயன்முறை மறுக்கப்பட்டது</string>
     <string name="notif_supervised_declined_text">உங்கள் மேற்பார்வையாளர் கோரிக்கையை நிராகரித்தார் - மேற்பார்வை பயன்முறை முடக்கப்பட்டுள்ளது</string>
     <string name="notif_tracking_alert_title">கண்காணிப்பு எச்சரிக்கை</string>
+    <string name="notif_live_watch_title">%1$s உங்களை நேரலையில் பார்க்கிறார்</string>
+    <string name="notif_live_watch_text">உங்கள் இருப்பிடம் நிகழ்நேரத்தில் புதுப்பிக்கப்படுகிறது.</string>
+    <string name="notif_live_watch_text_low_battery">உங்கள் பேட்டரி குறைவாக இருக்கும்வரை நேரலை புதுப்பிப்புகள் இடைநிறுத்தப்பட்டுள்ளன.</string>
     <string name="notif_tracking_proximity">%1$s உங்களைப் பற்றிய அருகாமை எச்சரிக்கையைப் பெற்றார்</string>
     <string name="notif_tracking_geofence">நீங்கள் வேலிக்குள் நுழைந்தீர்கள்/வெளியேறினீர்கள் என்று %1$s எச்சரிக்கையைப் பெற்றார்: %2$s</string>
     <string name="notif_tracking_generic">%1$s உங்கள் இருப்பிடத்தைக் கண்காணிக்கிறார்</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">படிக்காததாகக் குறி</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost ஐ அனுமதி</string>
-    <string name="settings_allow_live_boost_subtitle">ஒரு தொடர்பு வரைபடத்தைப் பார்க்கும்போது உங்கள் புதுப்பிப்புகளை வேகப்படுத்துங்கள்.</string>
+    <string name="settings_allow_live_boost_subtitle">ஒரு தொடர்பு தங்கள் வரைபடத்தில் உங்கள் ஊசியைத் தேர்ந்தெடுத்திருக்கும்போது உங்கள் புதுப்பிப்புகளை வேகப்படுத்துங்கள்.</string>
     <string name="settings_request_live_boost">நேரடி புதுப்பிப்புகளைக் கோருங்கள்</string>
-    <string name="settings_request_live_boost_subtitle">உங்கள் வரைபடம் திறந்திருக்கும்போது தொடர்புகளிடம் வேகமான புதுப்பிப்புகளைக் கோருங்கள்.</string>
+    <string name="settings_request_live_boost_subtitle">வரைபடத்தில் ஒரு தொடர்பின் ஊசியைத் தேர்ந்தெடுத்திருக்கும்போது அவரிடம் வேகமான புதுப்பிப்புகளைக் கோருங்கள்.</string>
+    <string name="settings_live_update_interval">நேரலை புதுப்பிப்பு இடைவெளி</string>
+    <string name="settings_live_update_interval_subtitle">உங்களை நேரலையில் பார்க்கும் தொடர்புக்கு உங்கள் இருப்பிடம் எவ்வளவு அடிக்கடி அனுப்பப்படுகிறது.</string>
+    <string name="settings_seconds_short">%1$d வி</string>
     <string name="settings_relays">ரிலேக்கள்</string>
     <string name="settings_relays_subtitle">உங்கள் தரவை எந்த ரிலேக்கள் கொண்டு செல்ல வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</string>
     <string name="relays_intro">LocaPeer உங்கள் தரவை Nostr ரிலேக்கள் வழியாக அனுப்புகிறது. உள்ளடக்கம் எப்போதும் முனை முதல் முனை வரை குறியாக்கம் செய்யப்படுகிறது, ஆனால் பொது ரிலேக்கள் நீங்கள் எந்தத் தொடர்புகளுடன், எப்போது பேசுகிறீர்கள் என்பதை இன்னும் பார்க்க முடியும். இந்த வெளிப்பாட்டைக் குறைக்க உங்கள் சொந்த ரிலேக்களைப் பயன்படுத்தவும்.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">சாதன இருப்பிடத்தை நீங்கள் ஆன் செய்யும் வரை உங்கள் நிலையைப் புதுப்பிக்கவோ பகிரவோ முடியாது.</string>
     <string name="map_location_off_action">அமைப்புகளைத் திற</string>
     <string name="map_live">● நேரலை</string>
+    <string name="map_watching_you">👁 உங்களைப் பார்க்கிறார்</string>
+    <string name="map_follow_contact">பின்தொடர்</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d வரிசைப்படுத்தப்பட்ட செய்தி</item>
         <item quantity="other">%1$d வரிசைப்படுத்தப்பட்ட செய்திகள்</item>

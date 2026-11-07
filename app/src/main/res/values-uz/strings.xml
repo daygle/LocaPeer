@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Baham ko‘rilgan geozonalarni boshqarish</string>
     <string name="settings_notify_when_tracked">Kuzatilganda xabar berish</string>
     <string name="settings_notify_when_tracked_subtitle">Kontaktning yaqinligi yoki siz uchun geozona ogohlantirishi ishga tushganda bildirishnoma oling.</string>
+    <string name="settings_notify_when_watched">Kuzatilganda xabar berish</string>
+    <string name="settings_notify_when_watched_subtitle">Kontakt sizni jonli kuzata boshlaganda ogohlantirish.</string>
     <string name="settings_my_location_history">Joylashuv tarixi</string>
     <string name="settings_my_location_history_subtitle">O‘z joylashuv tarixingizni ko‘ring</string>
     <string name="settings_lookup_addresses">Manzilni qidirish</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Nazorat rejimi rad etildi</string>
     <string name="notif_supervised_declined_text">Nazoratchingiz so‘rovni qabul qilmadi - nazorat rejimi o‘chirildi</string>
     <string name="notif_tracking_alert_title">Kuzatuv ogohlantirishi</string>
+    <string name="notif_live_watch_title">%1$s sizni jonli kuzatmoqda</string>
+    <string name="notif_live_watch_text">Joylashuvingiz real vaqtda yangilanmoqda.</string>
+    <string name="notif_live_watch_text_low_battery">Batareya quvvati past ekan, jonli yangilanishlar to\'xtatilgan.</string>
     <string name="notif_tracking_proximity">%1$s siz haqingizda yaqinlik ogohlantirishi oldi</string>
     <string name="notif_tracking_geofence">%1$s sizning hududga kirganingiz/chiqqaningiz haqida ogohlantirish oldi: %2$s</string>
     <string name="notif_tracking_generic">%1$s sizning joylashuvingizni kuzatmoqda</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Oʻqilmagan deb belgilash</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost\'ga ruxsat berish</string>
-    <string name="settings_allow_live_boost_subtitle">Kontakt xaritani ko\'rayotganda yangilanishlaringizni tezlashtiring.</string>
+    <string name="settings_allow_live_boost_subtitle">Kontakt o\'z xaritasida piningizni tanlaganida yangilanishlaringizni tezlashtiring.</string>
     <string name="settings_request_live_boost">Jonli yangilanishlarni so\'rash</string>
-    <string name="settings_request_live_boost_subtitle">Xarita ochiq bo\'lganda kontaktlardan tezroq yangilanishlarni so\'rang.</string>
+    <string name="settings_request_live_boost_subtitle">Xaritada kontaktning pinini tanlaganingizda undan tezroq yangilanishlarni so\'rang.</string>
+    <string name="settings_live_update_interval">Jonli yangilanish oralig\'i</string>
+    <string name="settings_live_update_interval_subtitle">Joylashuvingiz sizni jonli kuzatayotgan kontaktga qanchalik tez-tez yuboriladi.</string>
+    <string name="settings_seconds_short">%1$d soniya</string>
     <string name="settings_relays">Relelar</string>
     <string name="settings_relays_subtitle">Ma\'lumotlaringizni qaysi relelar tashishini tanlang</string>
     <string name="relays_intro">LocaPeer ma\'lumotlaringizni Nostr relelari orqali yuboradi. Kontent har doim uchdan-uchgacha shifrlangan, ammo ommaviy relelar baribir siz kim bilan va qachon gaplashayotganingizni ko\'ra oladi. Bu oshkoralikni kamaytirish uchun o\'z relelaringizdan foydalaning.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Qurilmaning joylashuv xizmatini yoqmaguningizcha, joylashuvingiz yangilanmaydi va ulashilmaydi.</string>
     <string name="map_location_off_action">Sozlamalarni ochish</string>
     <string name="map_live">● Jonli</string>
+    <string name="map_watching_you">👁 Sizni kuzatmoqda</string>
+    <string name="map_follow_contact">Kuzatish</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">Navbatda %1$d ta xabar</item>
         <item quantity="other">Navbatda %1$d ta xabar</item>

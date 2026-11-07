@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">مشترکہ جیو فینس علاقوں کا نظم کریں</string>
     <string name="settings_notify_when_tracked">ٹریک ہونے پر مطلع کریں</string>
     <string name="settings_notify_when_tracked_subtitle">جب کسی رابطے کا آپ کے بارے میں قربت یا جیو فینس الرٹ چالو ہو تو اطلاع پائیں۔</string>
+    <string name="settings_notify_when_watched">دیکھے جانے پر مطلع کریں</string>
+    <string name="settings_notify_when_watched_subtitle">جب کوئی رابطہ آپ کو لائیو دیکھنا شروع کرے تو خبردار کریں۔</string>
     <string name="settings_my_location_history">مقام کی تاریخ</string>
     <string name="settings_my_location_history_subtitle">اپنی مقام کی ٹائم لائن دیکھیں</string>
     <string name="settings_lookup_addresses">پتے تلاش کریں</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">زیرِ نگرانی موڈ مسترد</string>
     <string name="notif_supervised_declined_text">آپ کے نگران نے درخواست مسترد کر دی - زیرِ نگرانی موڈ بند کر دیا گیا</string>
     <string name="notif_tracking_alert_title">ٹریکنگ الرٹ</string>
+    <string name="notif_live_watch_title">%1$s آپ کو لائیو دیکھ رہے ہیں</string>
+    <string name="notif_live_watch_text">آپ کا مقام ریئل ٹائم میں اپ ڈیٹ ہو رہا ہے۔</string>
+    <string name="notif_live_watch_text_low_battery">جب تک آپ کی بیٹری کم ہے، لائیو اپ ڈیٹس رکی ہوئی ہیں۔</string>
     <string name="notif_tracking_proximity">%1$s کو آپ کے بارے میں قربت الرٹ ملا</string>
     <string name="notif_tracking_geofence">%1$s کو الرٹ ملا کہ آپ فینس میں داخل/خارج ہوئے: %2$s</string>
     <string name="notif_tracking_generic">%1$s آپ کے مقام کی نگرانی کر رہا ہے</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">غیر پڑھا ہوا نشان زد کریں</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost کی اجازت دیں</string>
-    <string name="settings_allow_live_boost_subtitle">جب کوئی رابطہ نقشہ دیکھ رہا ہو تو اپنی اپڈیٹس کو تیز کریں۔</string>
+    <string name="settings_allow_live_boost_subtitle">جب کوئی رابطہ اپنے نقشے پر آپ کا پن منتخب کرے تو اپنی اپڈیٹس تیز کریں۔</string>
     <string name="settings_request_live_boost">لائیو اپڈیٹس کی درخواست کریں</string>
-    <string name="settings_request_live_boost_subtitle">جب آپ کا نقشہ کھلا ہو تو رابطوں سے تیز تر اپڈیٹس طلب کریں۔</string>
+    <string name="settings_request_live_boost_subtitle">جب آپ نقشے پر کسی رابطے کا پن منتخب کریں تو ان سے تیز تر اپڈیٹس طلب کریں۔</string>
+    <string name="settings_live_update_interval">لائیو اپ ڈیٹ کا وقفہ</string>
+    <string name="settings_live_update_interval_subtitle">آپ کا مقام کتنی بار اس رابطے کو بھیجا جاتا ہے جو آپ کو لائیو دیکھ رہا ہے۔</string>
+    <string name="settings_seconds_short">%1$d سیکنڈ</string>
     <string name="settings_relays">ریلے</string>
     <string name="settings_relays_subtitle">منتخب کریں کہ کون سے ریلے آپ کا ڈیٹا لے جائیں</string>
     <string name="relays_intro">LocaPeer آپ کا ڈیٹا Nostr ریلے کے ذریعے بھیجتا ہے۔ مواد ہمیشہ سرے تا سرے خفیہ کردہ ہوتا ہے، لیکن عوامی ریلے پھر بھی دیکھ سکتے ہیں کہ آپ کن رابطوں سے اور کب بات کرتے ہیں۔ اس افشا کو کم کرنے کے لیے اپنے ریلے استعمال کریں۔</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">جب تک آپ ڈیوائس کا مقام آن نہیں کرتے، آپ کی پوزیشن اپ ڈیٹ یا شیئر نہیں کی جا سکتی۔</string>
     <string name="map_location_off_action">ترتیبات کھولیں</string>
     <string name="map_live">● لائیو</string>
+    <string name="map_watching_you">👁 آپ کو دیکھ رہے ہیں</string>
+    <string name="map_follow_contact">فالو کریں</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d قطار میں موجود پیغام</item>
         <item quantity="other">%1$d قطار میں موجود پیغامات</item>

@@ -1,6 +1,7 @@
 package com.locapeer.beacon
 
 import com.locapeer.settings.AppSettings
+import kotlinx.coroutines.flow.first
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -114,5 +115,76 @@ class AdaptiveIntervalManagerTest {
         liveViewRegistry.grant("viewer-pubkey", leaseMs = 0L)
         assertFalse(manager.isLiveViewActive(allowBoost = true))
         assertEquals(15 * 60_000L, manager.getIntervalMillis(settings))
+    }
+
+    @Test
+    fun `cadence interval ignores live view so history keeps the configured cadence`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        liveViewRegistry.grant("viewer")
+        assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings))
+        assertEquals(2 * 60_000L, manager.cadenceIntervalMillis(settings))
+    }
+
+    @Test
+    fun `cadence interval follows low battery`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        manager.updateBattery(10)
+        assertEquals(30 * 60_000L, manager.cadenceIntervalMillis(settings))
+    }
+
+    @Test
+    fun `live viewers lists only contacts with an unexpired lease`() {
+        liveViewRegistry.grant("watching")
+        liveViewRegistry.grant("left", leaseMs = 0L)
+        assertEquals(setOf("watching"), manager.liveViewers())
+    }
+
+    @Test
+    fun `live view uses the chosen live update interval`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        liveViewRegistry.grant("viewer")
+        assertEquals(15_000L, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 15)))
+        assertEquals(30_000L, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 30)))
+    }
+
+    @Test
+    fun `an unsupported live update interval falls back to the fastest option`() {
+        liveViewRegistry.grant("viewer")
+        assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 7)))
+    }
+
+    @Test
+    fun `live interval constants match the selectable options`() {
+        assertEquals(LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.min() * 1000L)
+        assertEquals(MAX_LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.max() * 1000L)
+    }
+
+    @Test
+    fun `a new viewer bumps the new-viewer event but a refresh does not`() {
+        val start = liveViewRegistry.newViewerEvents.value
+        liveViewRegistry.grant("sam")
+        assertEquals(start + 1, liveViewRegistry.newViewerEvents.value)
+        liveViewRegistry.grant("sam")
+        assertEquals(start + 1, liveViewRegistry.newViewerEvents.value)
+        liveViewRegistry.grant("alex")
+        assertEquals(start + 2, liveViewRegistry.newViewerEvents.value)
+    }
+
+    @Test
+    fun `isViewing is true only while the viewer's lease is unexpired`() {
+        assertFalse(liveViewRegistry.isViewing("sam"))
+        liveViewRegistry.grant("sam")
+        assertTrue(liveViewRegistry.isViewing("sam"))
+        liveViewRegistry.grant("alex", leaseMs = 0L)
+        assertFalse(liveViewRegistry.isViewing("alex"))
+    }
+
+    @Test
+    fun `viewersFlow emits the current viewers and an empty set when nobody watches`() {
+        kotlinx.coroutines.runBlocking {
+            assertEquals(emptySet<String>(), liveViewRegistry.viewersFlow().first())
+            liveViewRegistry.grant("sam")
+            assertEquals(setOf("sam"), liveViewRegistry.viewersFlow().first())
+        }
     }
 }

@@ -103,6 +103,8 @@
     <string name="settings_geofences_subtitle">Paylaşılan coğrafi çit alanlarını yönetin</string>
     <string name="settings_notify_when_tracked">Takip Edildiğinde Bildir</string>
     <string name="settings_notify_when_tracked_subtitle">Bir kişinin sizinle ilgili yakınlık veya coğrafi çit uyarısı tetiklendiğinde bildirim alın.</string>
+    <string name="settings_notify_when_watched">İzlendiğinde Bildir</string>
+    <string name="settings_notify_when_watched_subtitle">Bir kişi sizi canlı izlemeye başladığında uyar.</string>
     <string name="settings_my_location_history">Konum Geçmişi</string>
     <string name="settings_my_location_history_subtitle">Kendi konum zaman çizelgenize göz atın</string>
     <string name="settings_lookup_addresses">Adresleri Ara</string>
@@ -681,6 +683,9 @@
     <string name="notif_supervised_declined_title">Denetimli mod reddedildi</string>
     <string name="notif_supervised_declined_text">Denetleyiciniz isteği reddetti - denetimli mod kapatıldı</string>
     <string name="notif_tracking_alert_title">Takip Uyarısı</string>
+    <string name="notif_live_watch_title">%1$s sizi canlı izliyor</string>
+    <string name="notif_live_watch_text">Konumunuz gerçek zamanlı güncelleniyor.</string>
+    <string name="notif_live_watch_text_low_battery">Piliniz zayıfken canlı güncellemeler duraklatıldı.</string>
     <string name="notif_tracking_proximity">%1$s sizinle ilgili bir yakınlık uyarısı aldı</string>
     <string name="notif_tracking_geofence">%1$s, %2$s çitine girdiğinize/çıktığınıza dair bir uyarı aldı</string>
     <string name="notif_tracking_generic">%1$s konumunuzu izliyor</string>
@@ -860,9 +865,12 @@
     <string name="conv_mark_unread">Okunmadı olarak işaretle</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost\'a izin ver</string>
-    <string name="settings_allow_live_boost_subtitle">Bir kişi haritayı görüntülerken güncellemelerinizi hızlandırın.</string>
+    <string name="settings_allow_live_boost_subtitle">Bir kişi haritasında iğnenizi seçtiğinde güncellemelerinizi hızlandırın.</string>
     <string name="settings_request_live_boost">Canlı güncelleme iste</string>
-    <string name="settings_request_live_boost_subtitle">Harita açıkken kişilerden daha hızlı güncellemeler isteyin.</string>
+    <string name="settings_request_live_boost_subtitle">Haritada bir kişinin iğnesini seçtiğinizde ondan daha hızlı güncellemeler isteyin.</string>
+    <string name="settings_live_update_interval">Canlı Güncelleme Aralığı</string>
+    <string name="settings_live_update_interval_subtitle">Konumunuzun sizi canlı izleyen bir kişiye ne sıklıkla gönderildiği.</string>
+    <string name="settings_seconds_short">%1$d sn</string>
     <string name="settings_relays">Röleler</string>
     <string name="settings_relays_subtitle">Verilerinizi hangi rölelerin taşıyacağını seçin</string>
     <string name="relays_intro">LocaPeer verilerinizi Nostr röleleri üzerinden gönderir. İçerik her zaman uçtan uca şifrelenir, ancak genel röleler yine de hangi kişilerle ne zaman konuştuğunuzu görebilir. Bu maruz kalmayı azaltmak için kendi rölelerinizi kullanın.</string>
@@ -895,6 +903,8 @@
     <string name="map_location_off_message">Cihaz konumunu açana kadar konumunuz güncellenemez veya paylaşılamaz.</string>
     <string name="map_location_off_action">Ayarları aç</string>
     <string name="map_live">● Canlı</string>
+    <string name="map_watching_you">👁 Sizi izliyor</string>
+    <string name="map_follow_contact">Takip et</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d kuyruğa alınmış mesaj</item>
     </plurals>

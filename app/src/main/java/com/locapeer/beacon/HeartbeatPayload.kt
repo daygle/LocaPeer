@@ -28,5 +28,12 @@ data class HeartbeatPayload(
      * so receivers know exactly when the next beat is due instead of guessing from
      * their own settings.
      */
-    val expectedIntervalSeconds: Long
+    val expectedIntervalSeconds: Long,
+    /**
+     * True for a live-only pulse: an extra update sent to a contact watching live, between
+     * the sender's normal-cadence heartbeats. Receivers keep only the latest such point per
+     * contact, so a watched stretch doesn't fill history with a point every few seconds.
+     * Absent (false) from older senders and on every cadence heartbeat.
+     */
+    val live: Boolean = false
 )

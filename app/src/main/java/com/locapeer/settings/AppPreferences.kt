@@ -130,6 +130,8 @@ data class AppSettings(
     val useImperialDistance: Boolean = false,
     /** Notify this user when someone else gets an alert (proximity/geofence) about them. */
     val notifyOnTrackingAlerts: Boolean = false,
+    /** Alert when a contact starts watching this device live (selects our pin). */
+    val notifyWhenWatched: Boolean = true,
     /** Draw geofence circles on the map. Off by default so the map stays uncluttered. */
     val showGeofencesOnMap: Boolean = false,
     /**
@@ -164,9 +166,12 @@ data class AppSettings(
      */
     val customRelays: List<String> = emptyList(),
     /**
-     * If true, speed up own broadcasts when a contact is watching the map.
+     * If true, speed up own broadcasts while a contact has our pin selected (live view).
      */
     val allowLiveBoost: Boolean = true,
+    /** Seconds between broadcasts while a contact is watching live (one of
+     *  [com.locapeer.beacon.LIVE_UPDATE_INTERVAL_OPTIONS_S]). */
+    val liveUpdateIntervalSeconds: Int = 5,
     /**
      * If true, ask contacts for faster updates when viewing them on the map.
      */
@@ -239,6 +244,7 @@ class AppPreferences @Inject constructor(
     private val KEY_USE_IMPERIAL_ELEVATION = booleanPreferencesKey("use_imperial_elevation")
     private val KEY_USE_IMPERIAL_DISTANCE = booleanPreferencesKey("use_imperial_distance")
     private val KEY_NOTIFY_ON_TRACKING_ALERTS = booleanPreferencesKey("notify_on_tracking_alerts")
+    private val KEY_NOTIFY_WHEN_WATCHED = booleanPreferencesKey("notify_when_watched")
     private val KEY_SHOW_GEOFENCES_ON_MAP = booleanPreferencesKey("show_geofences_on_map")
     private val KEY_REVERSE_GEOCODING = booleanPreferencesKey("reverse_geocoding_enabled")
     private val KEY_APP_LOCK_ENABLED = booleanPreferencesKey("app_lock_enabled")
@@ -249,6 +255,7 @@ class AppPreferences @Inject constructor(
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_ALLOW_LIVE_BOOST = booleanPreferencesKey("allow_live_boost")
     private val KEY_REQUEST_LIVE_BOOST = booleanPreferencesKey("request_live_boost")
+    private val KEY_LIVE_UPDATE_INTERVAL_SECONDS = intPreferencesKey("live_update_interval_seconds")
     private val KEY_MESSAGE_NOTIFICATIONS = booleanPreferencesKey("message_notifications_enabled")
     private val KEY_ALERT_NOTIFICATIONS = booleanPreferencesKey("alert_notifications_enabled")
     private val KEY_QUIET_HOURS_ENABLED = booleanPreferencesKey("quiet_hours_enabled")
@@ -305,6 +312,7 @@ class AppPreferences @Inject constructor(
                 useImperialElevation = prefs[KEY_USE_IMPERIAL_ELEVATION] ?: localeDefaultImperial(),
                 useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial(),
                 notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false,
+                notifyWhenWatched = prefs[KEY_NOTIFY_WHEN_WATCHED] ?: true,
                 showGeofencesOnMap = prefs[KEY_SHOW_GEOFENCES_ON_MAP] ?: false,
                 reverseGeocodingEnabled = prefs[KEY_REVERSE_GEOCODING] ?: false,
                 appLockEnabled = prefs[KEY_APP_LOCK_ENABLED] ?: false,
@@ -322,6 +330,9 @@ class AppPreferences @Inject constructor(
                     ?: emptyList(),
                 allowLiveBoost = prefs[KEY_ALLOW_LIVE_BOOST] ?: true,
                 requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true,
+                liveUpdateIntervalSeconds = com.locapeer.beacon.normalizeLiveUpdateIntervalSeconds(
+                    prefs[KEY_LIVE_UPDATE_INTERVAL_SECONDS]
+                ),
                 messageNotificationsEnabled = prefs[KEY_MESSAGE_NOTIFICATIONS] ?: true,
                 alertNotificationsEnabled = prefs[KEY_ALERT_NOTIFICATIONS] ?: true,
                 quietHoursEnabled = prefs[KEY_QUIET_HOURS_ENABLED] ?: false,
@@ -466,6 +477,10 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { it[KEY_USE_IMPERIAL_DISTANCE] = imperial }
     }
 
+    suspend fun setNotifyWhenWatched(notify: Boolean) {
+        context.settingsStore.edit { it[KEY_NOTIFY_WHEN_WATCHED] = notify }
+    }
+
     suspend fun setNotifyOnTrackingAlerts(notify: Boolean) {
         context.settingsStore.edit { it[KEY_NOTIFY_ON_TRACKING_ALERTS] = notify }
     }
@@ -507,6 +522,11 @@ class AppPreferences @Inject constructor(
 
     suspend fun setAllowLiveBoost(enabled: Boolean) {
         context.settingsStore.edit { it[KEY_ALLOW_LIVE_BOOST] = enabled }
+    }
+
+    suspend fun setLiveUpdateIntervalSeconds(seconds: Int) {
+        val value = com.locapeer.beacon.normalizeLiveUpdateIntervalSeconds(seconds)
+        context.settingsStore.edit { it[KEY_LIVE_UPDATE_INTERVAL_SECONDS] = value }
     }
 
     suspend fun setRequestLiveBoost(enabled: Boolean) {
