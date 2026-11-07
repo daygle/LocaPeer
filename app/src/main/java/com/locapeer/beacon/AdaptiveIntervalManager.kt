@@ -30,8 +30,8 @@ class AdaptiveIntervalManager @Inject constructor(
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
         if (batteryLevel < 20) return cadenceIntervalMillis(settings)
-        // A contact watching the map pulls updates to a near-real-time cadence, but only
-        // while their lease is live; it lapses seconds after they close the map.
+        // A contact with our pin selected pulls updates to the chosen live cadence, but only
+        // while their lease is live; it lapses seconds after they deselect us.
         if (isLiveViewActive(settings.allowLiveBoost)) return liveIntervalMillis(settings)
         return cadenceIntervalMillis(settings)
     }

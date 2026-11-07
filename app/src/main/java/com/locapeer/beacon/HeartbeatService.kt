@@ -814,7 +814,7 @@ class HeartbeatService : LifecycleService() {
         // Below 20% battery the heartbeat cadence already stretches to the
         // low-battery interval; keeping full-rate GPS running would defeat it.
         val lowBattery = !isSos && intervalManager.isLowBattery()
-        // A contact is watching the map: sample fast and accurate so the ~5s live pulses
+        // A contact has our pin selected: sample fast and accurate so the live pulses
         // carry a genuinely fresh fix. Deliberately below SOS priority and, like the boost
         // windows, never overrides low battery.
         val liveView = !isSos && !lowBattery && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
@@ -1146,7 +1146,7 @@ class HeartbeatService : LifecycleService() {
         // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
 
-        // Live-view pulses (every few seconds while a contact has the map open) are for the
+        // Live-view pulses (every few seconds while a contact has our pin selected) are for the
         // watching contacts' live pins only. A pulse is a "cadence pulse" when the user's
         // configured interval has elapsed since the last one: only those are written to local
         // history and sent to contacts who are NOT watching, so a watched drive costs one
@@ -1166,14 +1166,13 @@ class HeartbeatService : LifecycleService() {
                 val settings = prefs.settings.first()
 
                 val nowMs = System.currentTimeMillis()
-                val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
                 // Every contact - watching or not - is told the normal cadence. Live pulses
                 // are a bonus on top of it: once a watcher closes the map (or for contacts
                 // who never get the live pulses), their overdue pin and missed-update alert
                 // must wait for the next *cadence* pulse, not fire two minutes after the
                 // last 5s pulse. Watchers detect live streaming from the arrival gaps.
-                val cadenceIntervalSec = if (isSos) expectedIntervalSec
-                    else intervalManager.cadenceIntervalMillis(settings) / 1000
+                val cadenceIntervalSec = (if (isSos) intervalManager.getIntervalMillis(settings)
+                    else intervalManager.cadenceIntervalMillis(settings)) / 1000
                 if (cadencePulse) heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,

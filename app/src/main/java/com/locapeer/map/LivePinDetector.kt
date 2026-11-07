@@ -9,7 +9,7 @@ import com.locapeer.data.entity.HeartbeatEntity
  *
  * Senders report their *normal* cadence in [HeartbeatEntity.expectedIntervalSeconds] even
  * while streaming live to a watcher, so the overdue and missed-update checks keep working
- * after the watcher closes the map. Live therefore can't be read from that field; it is
+ * after the watcher deselects them. Live therefore can't be read from that field; it is
  * inferred from the stream itself: the two most recent heartbeats arrived, and were sent,
  * within the slowest selectable live interval (plus slack) of each other, and the newest
  * is still fresh relative to that gap.
@@ -28,9 +28,6 @@ object LivePinDetector {
 
     /** Minimum time the badge persists after the newest heartbeat (a few fastest intervals). */
     private const val MIN_FRESH_MS = LIVE_VIEW_INTERVAL_MS * 4
-
-    fun isLive(previous: HeartbeatEntity?, latest: HeartbeatEntity?, nowMs: Long): Boolean =
-        liveUntil(previous, latest)?.let { nowMs < it } ?: false
 
     /**
      * When (receiver clock, epoch ms) the Live badge for this pair of heartbeats should turn

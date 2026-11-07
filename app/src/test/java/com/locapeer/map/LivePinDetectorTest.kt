@@ -11,6 +11,9 @@ class LivePinDetectorTest {
 
     private val now = 1_000_000_000L
 
+    private fun isLive(previous: HeartbeatEntity?, latest: HeartbeatEntity?, nowMs: Long) =
+        LivePinDetector.liveUntil(previous, latest)?.let { nowMs < it } ?: false
+
     private fun hb(id: Long, sentAt: Long, receivedAt: Long, intervalSec: Long = 120L) = HeartbeatEntity(
         id = id,
         deviceId = "peer",
@@ -29,59 +32,59 @@ class LivePinDetectorTest {
     fun `consecutive heartbeats a few seconds apart read as live`() {
         val prev = hb(1, now - 6_000, now - 6_000)
         val latest = hb(2, now - 1_000, now - 1_000)
-        assertTrue(LivePinDetector.isLive(prev, latest, now))
+        assertTrue(isLive(prev, latest, now))
     }
 
     @Test
     fun `heartbeats at the normal cadence are not live`() {
         val prev = hb(1, now - 121_000, now - 121_000)
         val latest = hb(2, now - 1_000, now - 1_000)
-        assertFalse(LivePinDetector.isLive(prev, latest, now))
+        assertFalse(isLive(prev, latest, now))
     }
 
     @Test
     fun `a stale stream is no longer live`() {
         val prev = hb(1, now - 30_000, now - 30_000)
         val latest = hb(2, now - 25_000, now - 25_000)
-        assertFalse(LivePinDetector.isLive(prev, latest, now))
+        assertFalse(isLive(prev, latest, now))
     }
 
     @Test
     fun `a catch-up burst of old cadence heartbeats is not live`() {
         val prev = hb(1, now - 240_000, now - 2_000)
         val latest = hb(2, now - 120_000, now - 1_000)
-        assertFalse(LivePinDetector.isLive(prev, latest, now))
+        assertFalse(isLive(prev, latest, now))
     }
 
     @Test
     fun `a single heartbeat with no predecessor is not live`() {
-        assertFalse(LivePinDetector.isLive(null, hb(2, now - 1_000, now - 1_000), now))
+        assertFalse(isLive(null, hb(2, now - 1_000, now - 1_000), now))
     }
 
     @Test
     fun `older senders reporting the live interval still read as live`() {
-        assertTrue(LivePinDetector.isLive(null, hb(2, now - 1_000, now - 1_000, intervalSec = 5L), now))
+        assertTrue(isLive(null, hb(2, now - 1_000, now - 1_000, intervalSec = 5L), now))
     }
 
     @Test
     fun `a 30 second live stream reads as live between updates`() {
         val prev = hb(1, now - 55_000, now - 55_000)
         val latest = hb(2, now - 25_000, now - 25_000)
-        assertTrue(LivePinDetector.isLive(prev, latest, now))
+        assertTrue(isLive(prev, latest, now))
     }
 
     @Test
     fun `a one minute cadence is not mistaken for live`() {
         val prev = hb(1, now - 61_000, now - 61_000, intervalSec = 60L)
         val latest = hb(2, now - 1_000, now - 1_000, intervalSec = 60L)
-        assertFalse(LivePinDetector.isLive(prev, latest, now))
+        assertFalse(isLive(prev, latest, now))
     }
 
     @Test
     fun `sos heartbeats are never shown as live`() {
         val prev = hb(1, now - 16_000, now - 16_000).copy(isSos = true)
         val latest = hb(2, now - 1_000, now - 1_000).copy(isSos = true)
-        assertFalse(LivePinDetector.isLive(prev, latest, now))
+        assertFalse(isLive(prev, latest, now))
     }
 
     @Test

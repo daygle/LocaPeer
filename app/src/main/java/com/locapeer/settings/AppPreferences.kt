@@ -166,7 +166,7 @@ data class AppSettings(
      */
     val customRelays: List<String> = emptyList(),
     /**
-     * If true, speed up own broadcasts when a contact is watching the map.
+     * If true, speed up own broadcasts while a contact has our pin selected (live view).
      */
     val allowLiveBoost: Boolean = true,
     /** Seconds between broadcasts while a contact is watching live (one of

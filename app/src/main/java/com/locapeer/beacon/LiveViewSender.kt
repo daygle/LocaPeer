@@ -26,7 +26,7 @@ import javax.inject.Singleton
 
 private const val TAG = "LiveViewSender"
 
-/** How often, while the map is open, this device re-announces that it is viewing. Shorter
+/** How often, while a contact's pin is selected, this device re-announces it. Shorter
  *  than [LIVE_VIEW_LEASE_MS] so a single dropped announce doesn't lapse the recipient's
  *  live mode mid-view. */
 const val LIVE_VIEW_RESEND_MS = 20_000L

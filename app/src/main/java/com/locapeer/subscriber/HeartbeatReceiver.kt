@@ -497,7 +497,7 @@ class HeartbeatReceiver @Inject constructor(
     }
 
     /**
-     * A contact has the map open and wants our location live. Grant a short lease (see
+     * A contact has our pin selected and wants our location live. Grant a short lease (see
      * [com.locapeer.beacon.LiveViewRegistry]) so the heartbeat loop speeds up while they
      * watch. This is only a cadence hint: it is honoured strictly within the same
      * role/pause gates the normal heartbeat sender applies, so it can never leak location

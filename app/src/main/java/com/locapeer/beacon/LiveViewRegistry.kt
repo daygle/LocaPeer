@@ -16,12 +16,12 @@ import javax.inject.Singleton
 /**
  * Tracks which peers are currently *viewing* this device's location, so the heartbeat
  * loop can broadcast at a fast "live" cadence only while at least one contact is actually
- * looking at the map (see [LIVE_VIEW_INTERVAL_MS]).
+ * watching us - has our pin selected on their map (see [LIVE_VIEW_INTERVAL_MS]).
  *
  * Each viewer's interest is a short, self-expiring lease: a viewer re-sends a
- * `LIVE_VIEW_REQUEST` every [LIVE_VIEW_RESEND_MS] while their map
- * is open, and each request grants a [LIVE_VIEW_LEASE_MS] lease keyed by the viewer's
- * pubkey. When a viewer closes the map (or goes offline) their re-sends stop, the lease
+ * `LIVE_VIEW_REQUEST` every [LIVE_VIEW_RESEND_MS] while our pin is
+ * selected, and each request grants a [LIVE_VIEW_LEASE_MS] lease keyed by the viewer's
+ * pubkey. When a viewer deselects us or leaves the map (or goes offline) their re-sends stop, the lease
  * lapses, and this device falls back to its normal motion-adaptive cadence with no
  * explicit "stop" event required. Leases are keyed by pubkey so multiple viewers refresh
  * independently and one leaving doesn't cut short another's live view.
@@ -100,7 +100,7 @@ class LiveViewRegistry @Inject constructor() {
 /** How long a single `LIVE_VIEW_REQUEST` keeps this device in live mode for that viewer.
  *  Comfortably longer than the viewer's re-send period so one dropped request doesn't
  *  visibly stutter the cadence, yet short enough that live mode ends within seconds of the
- *  viewer closing the map. */
+ *  viewer deselecting us or leaving the map. */
 const val LIVE_VIEW_LEASE_MS = 45_000L
 
 /** How often [LiveViewRegistry.viewersFlow] re-reads the leases while anyone is watching. */
