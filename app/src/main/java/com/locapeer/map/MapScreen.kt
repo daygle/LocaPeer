@@ -50,6 +50,11 @@ fun MapScreen(
 ) {
     val uiState by vm.uiState.collectAsStateWithLifecycle()
     var selectedPin by remember { mutableStateOf<PinData?>(null) }
+    // selectedPin is a snapshot taken at tap time; resolve it against the latest uiState so
+    // the info sheet, the live request and the follow camera all track the contact's
+    // current heartbeat rather than the one they had when tapped.
+    val selectedPeerId = selectedPin?.peer?.deviceId
+    val currentSelectedPin = selectedPeerId?.let { id -> uiState.pins.firstOrNull { it.peer.deviceId == id } } ?: selectedPin
     var showFriendList by remember { mutableStateOf(false) }
     var showSosConfirm by remember { mutableStateOf(false) }
     val isSosActive by vm.isSosActive.collectAsStateWithLifecycle()
@@ -96,21 +101,18 @@ fun MapScreen(
         onDispose { locationCheckOwner.lifecycle.removeObserver(observer) }
     }
 
-    // While the map is on screen, ask the contacts we track to broadcast at a live
-    // cadence (Google-Maps-style). Balanced across app background (ON_RESUME/ON_PAUSE) and
-    // leaving the map (onDispose); the ViewModel makes the calls idempotent so overlapping
-    // transitions can't unbalance the underlying reference count. The immediate start
-    // covers re-entering the map tab while the Activity is already resumed, where no
-    // ON_RESUME fires.
+    // Live updates are requested only for the contact whose pin is selected, and only while
+    // the map is actually on screen (resumed): selecting a pin asks that one contact to
+    // broadcast at the live cadence; deselecting, backgrounding the app or leaving the map
+    // stops the requests and their live mode lapses on its own shortly after.
     val liveLifecycleOwner = LocalLifecycleOwner.current
+    var mapResumed by remember { mutableStateOf(false) }
     DisposableEffect(liveLifecycleOwner) {
-        if (liveLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-            vm.startLiveView()
-        }
+        mapResumed = liveLifecycleOwner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_RESUME -> vm.startLiveView()
-                Lifecycle.Event.ON_PAUSE -> vm.stopLiveView()
+                Lifecycle.Event.ON_RESUME -> mapResumed = true
+                Lifecycle.Event.ON_PAUSE -> mapResumed = false
                 else -> {}
             }
         }
@@ -119,6 +121,10 @@ fun MapScreen(
             liveLifecycleOwner.lifecycle.removeObserver(observer)
             vm.stopLiveView()
         }
+    }
+    val selectedPubkey = selectedPin?.peer?.publicKeyHex
+    LaunchedEffect(selectedPubkey, mapResumed) {
+        if (mapResumed && selectedPubkey != null) vm.startLiveView(selectedPubkey) else vm.stopLiveView()
     }
 
     LaunchedEffect(centerOnArgs) {
@@ -145,6 +151,8 @@ fun MapScreen(
                 lastMapCenter = lastMapCenter,
                 centerOnUser = isFollowingUser,
                 centerOnPin = centerOnPin,
+                // Keep the selected contact centred as their position updates.
+                followPin = currentSelectedPin?.heartbeat?.let { LatLng(it.lat, it.lng) },
                 isDark = isDark,
                 mapStartZoom = mapStartZoom,
                 mapStartingPoint = mapStartingPoint,
@@ -223,7 +231,12 @@ fun MapScreen(
                 }
 
                 FloatingActionButton(
-                    onClick = { isFollowingUser = !isFollowingUser },
+                    onClick = {
+                        isFollowingUser = !isFollowingUser
+                        // Following yourself and following a selected contact would fight
+                        // over the camera; the most recent choice wins.
+                        if (isFollowingUser) selectedPin = null
+                    },
                     containerColor = if (isFollowingUser) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                     contentColor = if (isFollowingUser) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                     modifier = Modifier.shadow(4.dp, CircleShape)
@@ -296,7 +309,7 @@ fun MapScreen(
                 enter = slideInVertically(initialOffsetY = { it }, animationSpec = tween(280)) + fadeIn(tween(280)),
                 exit = slideOutVertically(targetOffsetY = { it }, animationSpec = tween(220)) + fadeOut(tween(220))
             ) {
-                selectedPin?.let { pin ->
+                currentSelectedPin?.let { pin ->
                     PinInfoSheet(
                         pin = pin,
                         address = selectedPinAddress,
@@ -531,6 +544,7 @@ private fun MainMapView(
     lastMapCenter: Triple<Double, Double, Double>?,
     centerOnUser: Boolean,
     centerOnPin: LatLng?,
+    followPin: LatLng?,
     isDark: Boolean,
     onCenteredOnUser: () -> Unit,
     onCenteredOnPin: () -> Unit,
@@ -603,6 +617,17 @@ private fun MainMapView(
             mv.animateTo(centerOnPin.latitude, centerOnPin.longitude)
             onCenteredOnPin()
         }
+    }
+
+    // Follow the selected contact: re-centre (keeping the user's zoom) whenever their
+    // position changes. Skipped while an explicit centre is pending so the two don't race.
+    LaunchedEffect(followPin, map) {
+        val mv = map ?: return@LaunchedEffect
+        if (followPin == null || centerOnPin != null) return@LaunchedEffect
+        explicitCenterDone = true
+        initialCenterDone = true
+        fitAllDone = true
+        mv.animateTo(followPin.latitude, followPin.longitude)
     }
 
     LaunchedEffect(pins, isFitAll, map) {

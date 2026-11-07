@@ -32,10 +32,11 @@ private const val TAG = "LiveViewSender"
 const val LIVE_VIEW_RESEND_MS = 20_000L
 
 /**
- * Viewer half of live tracking: while the map screen is open, periodically tells every
- * contact this device *receives* location from to broadcast at a live cadence (see
- * [LiveViewRegistry] for the recipient half). Reduces to a no-op the moment the screen
- * closes, so nobody is boosted longer than they are actually being watched.
+ * Viewer half of live tracking: while a contact's pin is selected on the map, periodically
+ * tells *that contact* to broadcast at a live cadence (see [LiveViewRegistry] for the
+ * recipient half). Contacts merely visible on the map are never boosted. Reduces to a no-op
+ * the moment the pin is deselected or the screen closes, so nobody is boosted longer than
+ * they are actually being watched.
  *
  * The request is a rate hint only. It is sent to peers with a RECEIVE / SEND_RECEIVE role;
  * whether the recipient honours it is still gated entirely by *their* role and pause
@@ -53,27 +54,32 @@ class LiveViewSender @Inject constructor(
     private val scope = backgroundScope(TAG)
     private val json = Json { ignoreUnknownKeys = true }
 
-    // Non-null while the map is open. Reference count guards against a start/stop race
-    // between overlapping screen lifecycles (e.g. a config change) tearing down the loop
-    // while another entry still wants it running.
+    // Non-null while any screen is watching a contact. Targets are keyed by the owning
+    // screen so overlapping screen lifecycles (e.g. a second map entry on the back stack)
+    // can't tear down the loop while another still wants it, or unbalance each other.
     private var loopJob: Job? = null
-    private var viewers = 0
+    private val targets = HashMap<Any, String>()
     private val lock = Any()
 
-    /** Call when a screen that shows live contact locations becomes visible. */
-    fun startViewing() {
+    /**
+     * [owner] (a screen) is now watching [targetPubkey]. A new or changed target restarts
+     * the loop so the request goes out immediately instead of up to [LIVE_VIEW_RESEND_MS]
+     * later, making the selected contact go live right away.
+     */
+    fun startViewing(owner: Any, targetPubkey: String) {
         synchronized(lock) {
-            viewers++
-            if (loopJob?.isActive == true) return
+            val changed = targets.put(owner, targetPubkey) != targetPubkey
+            if (!changed && loopJob?.isActive == true) return
+            loopJob?.cancel()
             loopJob = scope.launch { announceLoop() }
         }
     }
 
-    /** Call when that screen is no longer visible. Balanced against [startViewing]. */
-    fun stopViewing() {
+    /** [owner] stopped watching anyone. Balanced against [startViewing]. */
+    fun stopViewing(owner: Any) {
         synchronized(lock) {
-            if (viewers > 0) viewers--
-            if (viewers == 0) {
+            targets.remove(owner)
+            if (targets.isEmpty()) {
                 loopJob?.cancel()
                 loopJob = null
             }
@@ -116,9 +122,12 @@ class LiveViewSender @Inject constructor(
             return
         }
         if (!prefs.settings.first().requestLiveBoost) return
+        val watched = synchronized(lock) { targets.values.toSet() }
+        if (watched.isEmpty()) return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val recipients = peerDao.getAllPeers().first().filter {
-            it.locationRole == PeerEntity.ROLE_RECEIVE || it.locationRole == PeerEntity.ROLE_SEND_RECEIVE
+            (it.publicKeyHex in watched || it.deviceId in watched) &&
+                (it.locationRole == PeerEntity.ROLE_RECEIVE || it.locationRole == PeerEntity.ROLE_SEND_RECEIVE)
         }
         if (recipients.isEmpty()) return
 

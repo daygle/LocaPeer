@@ -125,9 +125,9 @@
     <string name="settings_lookup_addresses">Look Up Addresses</string>
     <string name="settings_lookup_addresses_subtitle">Look up addresses for history, map pins and geofences via system geocoding.</string>
     <string name="settings_allow_live_boost">Allow Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Speed up your updates when a contact is viewing the map.</string>
+    <string name="settings_allow_live_boost_subtitle">Speed up your updates while a contact has your pin selected on their map.</string>
     <string name="settings_request_live_boost">Request Live Updates</string>
-    <string name="settings_request_live_boost_subtitle">Ask contacts for faster updates when you have the map open.</string>
+    <string name="settings_request_live_boost_subtitle">Ask a contact for faster updates while you have their pin selected on the map.</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>

@@ -53,7 +53,7 @@ data class PinData(
      */
     val isLive: Boolean = false,
     /**
-     * True while this contact has *their* map open and is watching us - i.e. they hold a
+     * True while this contact has our pin selected on *their* map - i.e. they hold a
      * live-view lease on this device (see [com.locapeer.beacon.LiveViewRegistry]), which is
      * what speeds up our own broadcasts. Shown as an eye badge on their pin.
      */
@@ -143,23 +143,23 @@ class MapViewModel @Inject constructor(
         }
     }
 
-    // Guards the live-view announce loop so the screen's lifecycle callbacks can be
-    // idempotent: ON_RESUME / re-entry may both try to start, and ON_PAUSE / onDispose may
-    // both try to stop. Only genuine transitions reach the reference-counted sender.
-    private var liveViewOn = false
+    // The contact (pubkey) this screen is currently asking for live updates, or null. Lets
+    // the screen's effects call start/stop idempotently; only genuine changes reach the
+    // shared sender.
+    private var liveTarget: String? = null
 
-    /** Begin telling tracked contacts we are viewing them, if not already doing so. */
-    fun startLiveView() {
-        if (liveViewOn) return
-        liveViewOn = true
-        liveViewSender.startViewing()
+    /** Ask [targetPubkey] - the contact whose pin is selected - to broadcast live. */
+    fun startLiveView(targetPubkey: String) {
+        if (liveTarget == targetPubkey) return
+        liveTarget = targetPubkey
+        liveViewSender.startViewing(owner = this, targetPubkey = targetPubkey)
     }
 
-    /** Stop announcing that we are viewing tracked contacts, if currently doing so. */
+    /** Stop asking anyone for live updates from this screen, if currently doing so. */
     fun stopLiveView() {
-        if (!liveViewOn) return
-        liveViewOn = false
-        liveViewSender.stopViewing()
+        if (liveTarget == null) return
+        liveTarget = null
+        liveViewSender.stopViewing(owner = this)
     }
 
     override fun onCleared() {
