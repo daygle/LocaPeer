@@ -381,13 +381,13 @@ private fun WatchedByChip(names: List<String>, modifier: Modifier = Modifier) {
         val shown = lastShown[0]
         val listed = shown.take(WATCHED_BY_MAX_NAMES).joinToString(", ")
         val overflow = shown.size - WATCHED_BY_MAX_NAMES
-        val label = if (overflow > 0) "$listed +$overflow" else listed
         Surface(
             shape = RoundedCornerShape(50),
             color = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             shadowElevation = 4.dp,
-            modifier = Modifier.widthIn(max = 240.dp)
+            // Narrow enough to clear the top-left SOS button on a 360dp-wide screen.
+            modifier = Modifier.widthIn(max = 200.dp)
         ) {
             Row(
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -396,12 +396,23 @@ private fun WatchedByChip(names: List<String>, modifier: Modifier = Modifier) {
                 Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(Modifier.width(6.dp))
                 Text(
-                    stringResource(R.string.map_watched_by, label),
+                    stringResource(R.string.map_watched_by, listed),
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
+                    // Shrinks (with an ellipsis) before the "+N" below does, so the count of
+                    // further watchers is never cut off by long names.
+                    modifier = Modifier.weight(1f, fill = false)
                 )
+                if (overflow > 0) {
+                    Text(
+                        " +$overflow",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        maxLines = 1
+                    )
+                }
             }
         }
     }
