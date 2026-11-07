@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Kontakt o\'z xaritasida piningizni tanlaganida yangilanishlaringizni tezlashtiring.</string>
     <string name="settings_request_live_boost">Jonli yangilanishlarni so\'rash</string>
     <string name="settings_request_live_boost_subtitle">Xaritada kontaktning pinini tanlaganingizda undan tezroq yangilanishlarni so\'rang.</string>
+    <string name="settings_live_update_interval">Jonli yangilanish oralig\'i</string>
+    <string name="settings_live_update_interval_subtitle">Joylashuvingiz sizni jonli kuzatayotgan kontaktga qanchalik tez-tez yuboriladi.</string>
+    <string name="settings_seconds_short">%1$d soniya</string>
     <string name="settings_relays">Relelar</string>
     <string name="settings_relays_subtitle">Ma\'lumotlaringizni qaysi relelar tashishini tanlang</string>
     <string name="relays_intro">LocaPeer ma\'lumotlaringizni Nostr relelari orqali yuboradi. Kontent har doim uchdan-uchgacha shifrlangan, ammo ommaviy relelar baribir siz kim bilan va qachon gaplashayotganingizni ko\'ra oladi. Bu oshkoralikni kamaytirish uchun o\'z relelaringizdan foydalaning.</string>

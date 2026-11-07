@@ -878,6 +878,9 @@
     <string name="settings_allow_live_boost_subtitle">האץ את העדכונים שלך כשאיש קשר בחר את הסיכה שלך במפה שלו.</string>
     <string name="settings_request_live_boost">בקש עדכונים בזמן אמת</string>
     <string name="settings_request_live_boost_subtitle">בקש מאיש קשר עדכונים מהירים יותר כשבחרת את הסיכה שלו במפה.</string>
+    <string name="settings_live_update_interval">מרווח עדכון חי</string>
+    <string name="settings_live_update_interval_subtitle">באיזו תדירות המיקום שלך נשלח לאיש קשר שצופה בך בזמן אמת.</string>
+    <string name="settings_seconds_short">%1$d שנ׳</string>
     <string name="settings_relays">ממסרים</string>
     <string name="settings_relays_subtitle">בחר אילו ממסרים יישאו את הנתונים שלך</string>
     <string name="relays_intro">‏LocaPeer שולח את הנתונים שלך דרך ממסרי Nostr. התוכן תמיד מוצפן מקצה לקצה, אך ממסרים ציבוריים עדיין יכולים לראות עם אילו אנשי קשר אתה מדבר ומתי. השתמש בממסרים משלך כדי לצמצם את החשיפה הזו.</string>

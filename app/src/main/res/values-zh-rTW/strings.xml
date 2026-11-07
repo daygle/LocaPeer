@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">當聯絡人在其地圖上選取你的圖釘時，加快你的更新。</string>
     <string name="settings_request_live_boost">要求即時更新</string>
     <string name="settings_request_live_boost_subtitle">當你在地圖上選取聯絡人的圖釘時，要求對方更快地更新。</string>
+    <string name="settings_live_update_interval">即時更新間隔</string>
+    <string name="settings_live_update_interval_subtitle">向正在即時查看你的聯絡人傳送位置的頻率。</string>
+    <string name="settings_seconds_short">%1$d 秒</string>
     <string name="settings_relays">中繼</string>
     <string name="settings_relays_subtitle">選擇由哪些中繼傳輸你的資料</string>
     <string name="relays_intro">LocaPeer 透過 Nostr 中繼傳送你的資料。內容一律採用端對端加密，但公共中繼仍能看到你與哪些聯絡人以及何時通訊。使用你自己的中繼可減少這種暴露。</string>

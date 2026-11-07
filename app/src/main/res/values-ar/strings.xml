@@ -923,6 +923,9 @@
     <string name="settings_allow_live_boost_subtitle">سرّع تحديثاتك عندما تحدد إحدى جهات الاتصال دبوسك على خريطتها.</string>
     <string name="settings_request_live_boost">طلب تحديثات مباشرة</string>
     <string name="settings_request_live_boost_subtitle">اطلب من جهة الاتصال تحديثات أسرع عندما تحدد دبوسها على الخريطة.</string>
+    <string name="settings_live_update_interval">فاصل التحديث المباشر</string>
+    <string name="settings_live_update_interval_subtitle">عدد مرات إرسال موقعك إلى جهة اتصال تشاهدك مباشرةً.</string>
+    <string name="settings_seconds_short">%1$d ث</string>
     <string name="settings_relays">المُرحّلات</string>
     <string name="settings_relays_subtitle">اختر المُرحّلات التي تنقل بياناتك</string>
     <string name="relays_intro">يرسل LocaPeer بياناتك عبر مُرحّلات Nostr. المحتوى مشفّر دائمًا من طرف إلى طرف، لكن يمكن للمُرحّلات العامة أن ترى مع مَن تتحدث ومتى. استخدم مُرحّلاتك الخاصة لتقليل هذا الانكشاف.</string>

@@ -647,7 +647,9 @@ class HeartbeatService : LifecycleService() {
                     needsRequestUpdate = true
                     needsReschedule = true
                 }
-                if (settings.allowLiveBoost != previous.allowLiveBoost) {
+                if (settings.allowLiveBoost != previous.allowLiveBoost ||
+                    settings.liveUpdateIntervalSeconds != previous.liveUpdateIntervalSeconds
+                ) {
                     needsRequestUpdate = true
                     needsReschedule = true
                 }
@@ -843,7 +845,7 @@ class HeartbeatService : LifecycleService() {
         val pollIntervalMs = when {
             isSos -> 10_000L
             lowBattery -> 120_000L
-            liveView -> 5_000L
+            liveView -> intervalManager.liveIntervalMillis(currentSettings)
             // Sample fast during either boost so a usable fix actually lands inside the
             // window; both must precede the stationary branch, which otherwise waits 5
             // minutes - the classification boost can now be live WHILE stationary, when

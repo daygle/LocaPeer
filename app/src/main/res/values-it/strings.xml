@@ -862,6 +862,9 @@
     <string name="settings_allow_live_boost_subtitle">Velocizza i tuoi aggiornamenti quando un contatto ha selezionato il tuo pin sulla sua mappa.</string>
     <string name="settings_request_live_boost">Richiedi aggiornamenti in tempo reale</string>
     <string name="settings_request_live_boost_subtitle">Chiedi a un contatto aggiornamenti più rapidi quando hai selezionato il suo pin sulla mappa.</string>
+    <string name="settings_live_update_interval">Intervallo aggiornamenti live</string>
+    <string name="settings_live_update_interval_subtitle">Ogni quanto la tua posizione viene inviata a un contatto che ti sta guardando dal vivo.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relay</string>
     <string name="settings_relays_subtitle">Scegli quali relay trasportano i tuoi dati</string>
     <string name="relays_intro">LocaPeer invia i tuoi dati attraverso i relay Nostr. I contenuti sono sempre crittografati end-to-end, ma i relay pubblici possono comunque vedere con quali contatti parli e quando. Usa i tuoi relay per ridurre questa esposizione.</string>

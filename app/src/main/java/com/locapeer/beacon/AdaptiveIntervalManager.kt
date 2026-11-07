@@ -32,9 +32,13 @@ class AdaptiveIntervalManager @Inject constructor(
         if (batteryLevel < 20) return cadenceIntervalMillis(settings)
         // A contact watching the map pulls updates to a near-real-time cadence, but only
         // while their lease is live; it lapses seconds after they close the map.
-        if (isLiveViewActive(settings.allowLiveBoost)) return LIVE_VIEW_INTERVAL_MS
+        if (isLiveViewActive(settings.allowLiveBoost)) return liveIntervalMillis(settings)
         return cadenceIntervalMillis(settings)
     }
+
+    /** The user's chosen live update interval (see [LIVE_UPDATE_INTERVAL_OPTIONS_S]). */
+    fun liveIntervalMillis(settings: AppSettings): Long =
+        normalizeLiveUpdateIntervalSeconds(settings.liveUpdateIntervalSeconds) * 1000L
 
     /**
      * The user's configured cadence for the current battery and motion state, ignoring any

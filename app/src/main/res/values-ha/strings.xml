@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Hanzarta sabuntawarka lokacin da wani lamba ya zaɓi pin ɗinka a taswirarsa.</string>
     <string name="settings_request_live_boost">Nemi sabuntawa kai tsaye</string>
     <string name="settings_request_live_boost_subtitle">Nemi wani lamba ya ba da sabuntawa cikin sauri lokacin da ka zaɓi pin ɗinsa a taswira.</string>
+    <string name="settings_live_update_interval">Tazarar Sabuntawa Kai Tsaye</string>
+    <string name="settings_live_update_interval_subtitle">Sau nawa ake aika wurinka ga lambar da ke kallonka kai tsaye.</string>
+    <string name="settings_seconds_short">Daƙiƙa %1$d</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Zabi wadanne relays ke dauke da bayananka</string>
     <string name="relays_intro">LocaPeer yana aika bayananka ta relays na Nostr. Ana boye abun ciki koyaushe daga karshe zuwa karshe, amma relays na jama\'a har yanzu suna iya ganin wadanne lambobi kake magana da su da kuma yaushe. Yi amfani da relays naka don rage wannan fallasa.</string>

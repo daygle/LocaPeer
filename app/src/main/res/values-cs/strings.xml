@@ -893,6 +893,9 @@
     <string name="settings_allow_live_boost_subtitle">Zrychlete své aktualizace, když má kontakt na své mapě vybraný váš špendlík.</string>
     <string name="settings_request_live_boost">Požádat o živé aktualizace</string>
     <string name="settings_request_live_boost_subtitle">Požádejte kontakt o rychlejší aktualizace, když máte na mapě vybraný jeho špendlík.</string>
+    <string name="settings_live_update_interval">Interval živých aktualizací</string>
+    <string name="settings_live_update_interval_subtitle">Jak často se vaše poloha odesílá kontaktu, který vás sleduje živě.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relaye</string>
     <string name="settings_relays_subtitle">Vyberte, které relaye přenášejí vaše data</string>
     <string name="relays_intro">LocaPeer posílá vaše data přes relaye Nostr. Obsah je vždy šifrovaný end-to-end, ale veřejné relaye přesto vidí, s kterými kontakty a kdy mluvíte. Používejte vlastní relaye, abyste toto vystavení omezili.</string>

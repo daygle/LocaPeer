@@ -893,6 +893,9 @@
     <string name="settings_allow_live_boost_subtitle">Przyspiesz swoje aktualizacje, gdy kontakt ma zaznaczoną twoją pinezkę na swojej mapie.</string>
     <string name="settings_request_live_boost">Poproś o aktualizacje na żywo</string>
     <string name="settings_request_live_boost_subtitle">Poproś kontakt o szybsze aktualizacje, gdy masz zaznaczoną jego pinezkę na mapie.</string>
+    <string name="settings_live_update_interval">Interwał aktualizacji na żywo</string>
+    <string name="settings_live_update_interval_subtitle">Jak często twoja lokalizacja jest wysyłana do kontaktu, który obserwuje cię na żywo.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Przekaźniki</string>
     <string name="settings_relays_subtitle">Wybierz, które przekaźniki przenoszą Twoje dane</string>
     <string name="relays_intro">LocaPeer wysyła Twoje dane przez przekaźniki Nostr. Treść jest zawsze szyfrowana od końca do końca, ale przekaźniki publiczne nadal widzą, z którymi kontaktami rozmawiasz i kiedy. Używaj własnych przekaźników, aby ograniczyć to ujawnienie.</string>

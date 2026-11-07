@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">ஒரு தொடர்பு தங்கள் வரைபடத்தில் உங்கள் ஊசியைத் தேர்ந்தெடுத்திருக்கும்போது உங்கள் புதுப்பிப்புகளை வேகப்படுத்துங்கள்.</string>
     <string name="settings_request_live_boost">நேரடி புதுப்பிப்புகளைக் கோருங்கள்</string>
     <string name="settings_request_live_boost_subtitle">வரைபடத்தில் ஒரு தொடர்பின் ஊசியைத் தேர்ந்தெடுத்திருக்கும்போது அவரிடம் வேகமான புதுப்பிப்புகளைக் கோருங்கள்.</string>
+    <string name="settings_live_update_interval">நேரலை புதுப்பிப்பு இடைவெளி</string>
+    <string name="settings_live_update_interval_subtitle">உங்களை நேரலையில் பார்க்கும் தொடர்புக்கு உங்கள் இருப்பிடம் எவ்வளவு அடிக்கடி அனுப்பப்படுகிறது.</string>
+    <string name="settings_seconds_short">%1$d வி</string>
     <string name="settings_relays">ரிலேக்கள்</string>
     <string name="settings_relays_subtitle">உங்கள் தரவை எந்த ரிலேக்கள் கொண்டு செல்ல வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்</string>
     <string name="relays_intro">LocaPeer உங்கள் தரவை Nostr ரிலேக்கள் வழியாக அனுப்புகிறது. உள்ளடக்கம் எப்போதும் முனை முதல் முனை வரை குறியாக்கம் செய்யப்படுகிறது, ஆனால் பொது ரிலேக்கள் நீங்கள் எந்தத் தொடர்புகளுடன், எப்போது பேசுகிறீர்கள் என்பதை இன்னும் பார்க்க முடியும். இந்த வெளிப்பாட்டைக் குறைக்க உங்கள் சொந்த ரிலேக்களைப் பயன்படுத்தவும்.</string>

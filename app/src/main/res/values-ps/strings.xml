@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">کله چې یوه اړیکه په خپله نقشه کې ستاسو پین وټاکي، خپل تازه معلومات چټک کړئ.</string>
     <string name="settings_request_live_boost">د ژوندي تازه معلوماتو غوښتنه وکړئ</string>
     <string name="settings_request_live_boost_subtitle">کله چې تاسو په نقشه کې د یوې اړیکې پین وټاکئ، له هغې څخه د چټکو تازه معلوماتو غوښتنه وکړئ.</string>
+    <string name="settings_live_update_interval">د ژوندي تازه کولو واټن</string>
+    <string name="settings_live_update_interval_subtitle">ستاسو موقعیت څو ځله هغې اړیکې ته لیږل کېږي چې تاسو ژوندی ګوري.</string>
+    <string name="settings_seconds_short">%1$d ثانیې</string>
     <string name="settings_relays">ریلې ګانې</string>
     <string name="settings_relays_subtitle">غوره کړئ چې کومې ریلې ګانې ستاسو معلومات لیږدوي</string>
     <string name="relays_intro">LocaPeer ستاسو معلومات د Nostr ریلې ګانو له لارې لیږي. منځپانګه تل له پیل نه تر پایه کوډ شوې وي، خو عامه ریلې ګانې لاهم لیدلی شي چې تاسو له کومو اړیکو سره او کله خبرې کوئ. د دې افشا کولو کمولو لپاره خپلې ریلې ګانې وکاروئ.</string>

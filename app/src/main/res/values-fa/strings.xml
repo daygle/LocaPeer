@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">وقتی مخاطبی پین شما را روی نقشه‌اش انتخاب کرده است، به‌روزرسانی‌هایتان را سریع‌تر کنید.</string>
     <string name="settings_request_live_boost">درخواست به‌روزرسانی زنده</string>
     <string name="settings_request_live_boost_subtitle">وقتی پین مخاطبی را روی نقشه انتخاب کرده‌اید، از او به‌روزرسانی‌های سریع‌تر بخواهید.</string>
+    <string name="settings_live_update_interval">فاصله به‌روزرسانی زنده</string>
+    <string name="settings_live_update_interval_subtitle">هر چند وقت یک بار موقعیت شما برای مخاطبی که شما را زنده تماشا می‌کند ارسال می‌شود.</string>
+    <string name="settings_seconds_short">%1$d ثانیه</string>
     <string name="settings_relays">رله‌ها</string>
     <string name="settings_relays_subtitle">انتخاب کنید کدام رله‌ها داده‌های شما را منتقل کنند</string>
     <string name="relays_intro">LocaPeer داده‌های شما را از طریق رله‌های Nostr ارسال می‌کند. محتوا همیشه به‌صورت سرتاسری رمزگذاری می‌شود، اما رله‌های عمومی همچنان می‌توانند ببینند با چه مخاطبانی و چه زمانی صحبت می‌کنید. برای کاهش این آشکارسازی از رله‌های خودتان استفاده کنید.</string>

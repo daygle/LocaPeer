@@ -893,6 +893,9 @@
     <string name="settings_allow_live_boost_subtitle">Пришвидшуйте свої оновлення, коли контакт вибрав вашу позначку на своїй мапі.</string>
     <string name="settings_request_live_boost">Запитати оновлення в реальному часі</string>
     <string name="settings_request_live_boost_subtitle">Просіть контакт про швидші оновлення, коли у вас вибрана його позначка на мапі.</string>
+    <string name="settings_live_update_interval">Інтервал оновлень наживо</string>
+    <string name="settings_live_update_interval_subtitle">Як часто ваше місцезнаходження надсилається контакту, який дивиться на вас наживо.</string>
+    <string name="settings_seconds_short">%1$d с</string>
     <string name="settings_relays">Реле</string>
     <string name="settings_relays_subtitle">Виберіть, які реле передають ваші дані</string>
     <string name="relays_intro">LocaPeer надсилає ваші дані через реле Nostr. Вміст завжди зашифрований наскрізним шифруванням, але публічні реле все одно можуть бачити, з якими контактами й коли ви спілкуєтеся. Використовуйте власні реле, щоб зменшити цю відкритість.</string>

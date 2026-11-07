@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">एखाद्या संपर्काने त्यांच्या नकाशावर तुमची पिन निवडल्यावर तुमचे अपडेट जलद करा.</string>
     <string name="settings_request_live_boost">थेट अपडेटची विनंती करा</string>
     <string name="settings_request_live_boost_subtitle">नकाशावर एखाद्या संपर्काची पिन निवडल्यावर त्यांच्याकडून जलद अपडेटची विनंती करा.</string>
+    <string name="settings_live_update_interval">लाइव्ह अपडेट अंतराल</string>
+    <string name="settings_live_update_interval_subtitle">तुम्हाला लाइव्ह पाहणाऱ्या संपर्काला तुमचे स्थान किती वेळा पाठवले जाते.</string>
+    <string name="settings_seconds_short">%1$d सेकंद</string>
     <string name="settings_relays">रिले</string>
     <string name="settings_relays_subtitle">तुमचा डेटा कोणते रिले वाहून नेतील ते निवडा</string>
     <string name="relays_intro">LocaPeer तुमचा डेटा Nostr रिलेद्वारे पाठवते. मजकूर नेहमी एंड-टू-एंड एन्क्रिप्टेड असतो, परंतु सार्वजनिक रिले अजूनही पाहू शकतात की तुम्ही कोणत्या संपर्कांशी आणि केव्हा बोलता. हे उघड होणे कमी करण्यासाठी तुमचे स्वतःचे रिले वापरा.</string>

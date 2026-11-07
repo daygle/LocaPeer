@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">Mee ka mmelite gị dị ngwa mgbe onye kọntaktị họpụtara pin gị na maapụ ya.</string>
     <string name="settings_request_live_boost">Rịọ maka mmelite ozugbo</string>
     <string name="settings_request_live_boost_subtitle">Rịọ onye kọntaktị maka mmelite ngwa ngwa mgbe ị họpụtara pin ya na maapụ.</string>
+    <string name="settings_live_update_interval">Oge n\'etiti mmelite ndụ</string>
+    <string name="settings_live_update_interval_subtitle">Ugboro ole a na-eziga ọnọdụ gị nye onye kọntaktị na-ele gị ndụ.</string>
+    <string name="settings_seconds_short">Sekọnd %1$d</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Họrọ relays ndị ga-ebu data gị</string>
     <string name="relays_intro">LocaPeer na-eziga data gị site na relays Nostr. A na-ezochi ọdịnaya mgbe niile site na njedebe ruo njedebe, mana relays ọha ka nwere ike ịhụ ndị kọntaktị ị na-agwa okwu na mgbe. Jiri relays nke gị iji belata nkpughe ahụ.</string>

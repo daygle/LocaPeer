@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">အဆက်အသွယ်တစ်ဦးက ၎င်း၏မြေပုံပေါ်တွင် သင့်ပင်ကို ရွေးထားချိန်တွင် သင့်အပ်ဒိတ်များကို ပိုမြန်စေပါ။</string>
     <string name="settings_request_live_boost">တိုက်ရိုက်အပ်ဒိတ်များ တောင်းဆိုရန်</string>
     <string name="settings_request_live_boost_subtitle">မြေပုံပေါ်တွင် အဆက်အသွယ်၏ပင်ကို ရွေးထားချိန်တွင် ၎င်းထံမှ ပိုမြန်သောအပ်ဒိတ်များ တောင်းဆိုပါ။</string>
+    <string name="settings_live_update_interval">တိုက်ရိုက်အပ်ဒိတ် ကြားကာလ</string>
+    <string name="settings_live_update_interval_subtitle">သင့်ကို တိုက်ရိုက်ကြည့်နေသော အဆက်အသွယ်ထံ သင့်တည်နေရာကို မည်မျှမကြာခဏ ပို့မည်နည်း။</string>
+    <string name="settings_seconds_short">%1$d စက္ကန့်</string>
     <string name="settings_relays">ရီလေးများ</string>
     <string name="settings_relays_subtitle">သင့်ဒေတာကို မည်သည့်ရီလေးများက သယ်ဆောင်မည်ကို ရွေးပါ</string>
     <string name="relays_intro">LocaPeer သည် သင့်ဒေတာကို Nostr ရီလေးများမှတစ်ဆင့် ပို့ပါသည်။ အကြောင်းအရာကို အမြဲတမ်း အစအဆုံး ကုဒ်ဝှက်ထားသော်လည်း အများသုံးရီလေးများသည် သင်မည်သည့်အဆက်အသွယ်များနှင့် မည်သည့်အချိန်တွင် ပြောဆိုသည်ကို မြင်နိုင်ဆဲဖြစ်သည်။ ထိုဖော်ထုတ်မှုကို လျှော့ချရန် သင့်ကိုယ်ပိုင်ရီလေးများကို အသုံးပြုပါ။</string>

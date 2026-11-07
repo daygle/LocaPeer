@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Versnel je updates wanneer een contact jouw speld op zijn kaart heeft geselecteerd.</string>
     <string name="settings_request_live_boost">Live-updates aanvragen</string>
     <string name="settings_request_live_boost_subtitle">Vraag een contact om snellere updates wanneer je zijn speld op de kaart hebt geselecteerd.</string>
+    <string name="settings_live_update_interval">Interval live-updates</string>
+    <string name="settings_live_update_interval_subtitle">Hoe vaak je locatie wordt verzonden naar een contact dat je live bekijkt.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Kies welke relays je gegevens vervoeren</string>
     <string name="relays_intro">LocaPeer verzendt je gegevens via Nostr-relays. Inhoud is altijd end-to-end versleuteld, maar openbare relays kunnen nog steeds zien met welke contacten je praat en wanneer. Gebruik je eigen relays om die blootstelling te verminderen.</string>

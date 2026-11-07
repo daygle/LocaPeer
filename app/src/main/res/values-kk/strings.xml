@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Контакт өз картасында сіздің пиніңізді таңдағанда жаңартуларыңызды жылдамдатыңыз.</string>
     <string name="settings_request_live_boost">Тікелей жаңартуларды сұрау</string>
     <string name="settings_request_live_boost_subtitle">Картада контактінің пинін таңдағанда одан жылдамырақ жаңартуларды сұраңыз.</string>
+    <string name="settings_live_update_interval">Тікелей жаңарту аралығы</string>
+    <string name="settings_live_update_interval_subtitle">Сізді тікелей көріп отырған контактіге орныңыз қаншалықты жиі жіберіледі.</string>
+    <string name="settings_seconds_short">%1$d сек</string>
     <string name="settings_relays">Реле</string>
     <string name="settings_relays_subtitle">Деректеріңізді қай реле тасымалдайтынын таңдаңыз</string>
     <string name="relays_intro">LocaPeer деректеріңізді Nostr релелері арқылы жібереді. Мазмұн әрқашан ұштан-ұшқа шифрланады, бірақ жалпыға ортақ реле сіз қай контактпен және қашан сөйлескеніңізді көре алады. Бұл ашықтықты азайту үшін өз релелеріңізді пайдаланыңыз.</string>

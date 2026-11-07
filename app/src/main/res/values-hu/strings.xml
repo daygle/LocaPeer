@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Gyorsítsd fel a frissítéseidet, amikor egy partner kiválasztotta a tűdet a térképén.</string>
     <string name="settings_request_live_boost">Élő frissítések kérése</string>
     <string name="settings_request_live_boost_subtitle">Kérj gyorsabb frissítéseket egy partnertől, amikor kiválasztottad a tűjét a térképen.</string>
+    <string name="settings_live_update_interval">Élő frissítési időköz</string>
+    <string name="settings_live_update_interval_subtitle">Milyen gyakran küldi el az alkalmazás a helyzetedet egy téged élőben figyelő partnernek.</string>
+    <string name="settings_seconds_short">%1$d mp</string>
     <string name="settings_relays">Relék</string>
     <string name="settings_relays_subtitle">Válaszd ki, mely relék továbbítják az adataidat</string>
     <string name="relays_intro">A LocaPeer Nostr-reléken keresztül küldi az adataidat. A tartalom mindig végpontok közötti titkosítású, de a nyilvános relék így is látják, mely partnerekkel és mikor beszélsz. Használj saját reléket ennek a kitettségnek a csökkentésére.</string>

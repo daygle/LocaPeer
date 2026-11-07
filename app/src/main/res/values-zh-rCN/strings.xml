@@ -847,6 +847,9 @@
     <string name="settings_allow_live_boost_subtitle">当联系人在其地图上选中你的图钉时，加快你的更新。</string>
     <string name="settings_request_live_boost">请求实时更新</string>
     <string name="settings_request_live_boost_subtitle">当你在地图上选中联系人的图钉时，请求对方更快地更新。</string>
+    <string name="settings_live_update_interval">实时更新间隔</string>
+    <string name="settings_live_update_interval_subtitle">向正在实时查看你的联系人发送位置的频率。</string>
+    <string name="settings_seconds_short">%1$d 秒</string>
     <string name="settings_relays">中继</string>
     <string name="settings_relays_subtitle">选择由哪些中继传输你的数据</string>
     <string name="relays_intro">LocaPeer 通过 Nostr 中继发送你的数据。内容始终采用端到端加密，但公共中继仍能看到你与哪些联系人以及何时通信。使用你自己的中继可减少这种暴露。</string>

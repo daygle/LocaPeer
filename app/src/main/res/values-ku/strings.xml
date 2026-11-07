@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Dema têkiliyek pîna te li ser nexşeya xwe hilbijartiye, nûvekirinên xwe bilez bike.</string>
     <string name="settings_request_live_boost">Nûvekirinên zindî bixwaze</string>
     <string name="settings_request_live_boost_subtitle">Dema te pîna têkiliyekê li ser nexşeyê hilbijartiye, ji wê nûvekirinên zûtir bixwaze.</string>
+    <string name="settings_live_update_interval">Navbera Nûvekirina Zindî</string>
+    <string name="settings_live_update_interval_subtitle">Cihê te çend caran ji têkiliyeke ku zindî li te temaşe dike re tê şandin.</string>
+    <string name="settings_seconds_short">%1$d çirk</string>
     <string name="settings_relays">Relay</string>
     <string name="settings_relays_subtitle">Hilbijêre kîjan relay daneyên te hildigire</string>
     <string name="relays_intro">LocaPeer daneyên te bi rêya relayên Nostr dişîne. Naverok herdem ji dawî heta dawî şîfrekirî ye, lê relayên gelemperî dîsa jî dikarin bibînin tu bi kîjan têkiliyan re û kengî diaxivî. Ji bo kêmkirina wê eşkerekirinê relayên xwe bikar bîne.</string>

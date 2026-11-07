@@ -861,6 +861,9 @@
     <string name="settings_allow_live_boost_subtitle">Acelere as suas atualizações quando um contacto tiver o seu pin selecionado no mapa dele.</string>
     <string name="settings_request_live_boost">Pedir atualizações em direto</string>
     <string name="settings_request_live_boost_subtitle">Peça a um contacto atualizações mais rápidas quando tiver o pin dele selecionado no mapa.</string>
+    <string name="settings_live_update_interval">Intervalo de Atualização ao Vivo</string>
+    <string name="settings_live_update_interval_subtitle">Com que frequência a sua localização é enviada a um contacto que o está a ver ao vivo.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Escolha que relays transportam os seus dados</string>
     <string name="relays_intro">O LocaPeer envia os seus dados através de relays Nostr. O conteúdo está sempre encriptado de ponta a ponta, mas os relays públicos podem ainda ver com que contactos fala e quando. Use os seus próprios relays para reduzir essa exposição.</string>

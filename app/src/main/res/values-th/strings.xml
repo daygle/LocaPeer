@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">เร่งการอัปเดตของคุณเมื่อผู้ติดต่อเลือกหมุดของคุณบนแผนที่ของพวกเขา</string>
     <string name="settings_request_live_boost">ขอการอัปเดตแบบสด</string>
     <string name="settings_request_live_boost_subtitle">ขอให้ผู้ติดต่ออัปเดตเร็วขึ้นเมื่อคุณเลือกหมุดของพวกเขาบนแผนที่</string>
+    <string name="settings_live_update_interval">ช่วงเวลาอัปเดตสด</string>
+    <string name="settings_live_update_interval_subtitle">ความถี่ในการส่งตำแหน่งของคุณไปยังผู้ติดต่อที่กำลังดูคุณแบบสด</string>
+    <string name="settings_seconds_short">%1$d วินาที</string>
     <string name="settings_relays">รีเลย์</string>
     <string name="settings_relays_subtitle">เลือกว่ารีเลย์ใดจะรับส่งข้อมูลของคุณ</string>
     <string name="relays_intro">LocaPeer ส่งข้อมูลของคุณผ่านรีเลย์ Nostr เนื้อหาจะถูกเข้ารหัสแบบต้นทางถึงปลายทางเสมอ แต่รีเลย์สาธารณะยังคงเห็นได้ว่าคุณคุยกับผู้ติดต่อคนใดและเมื่อใด ใช้รีเลย์ของคุณเองเพื่อลดการเปิดเผยนั้น</string>

@@ -167,6 +167,9 @@ data class AppSettings(
      * If true, speed up own broadcasts when a contact is watching the map.
      */
     val allowLiveBoost: Boolean = true,
+    /** Seconds between broadcasts while a contact is watching live (one of
+     *  [com.locapeer.beacon.LIVE_UPDATE_INTERVAL_OPTIONS_S]). */
+    val liveUpdateIntervalSeconds: Int = 5,
     /**
      * If true, ask contacts for faster updates when viewing them on the map.
      */
@@ -249,6 +252,7 @@ class AppPreferences @Inject constructor(
     private val KEY_CUSTOM_RELAYS = stringPreferencesKey("custom_relays")
     private val KEY_ALLOW_LIVE_BOOST = booleanPreferencesKey("allow_live_boost")
     private val KEY_REQUEST_LIVE_BOOST = booleanPreferencesKey("request_live_boost")
+    private val KEY_LIVE_UPDATE_INTERVAL_SECONDS = intPreferencesKey("live_update_interval_seconds")
     private val KEY_MESSAGE_NOTIFICATIONS = booleanPreferencesKey("message_notifications_enabled")
     private val KEY_ALERT_NOTIFICATIONS = booleanPreferencesKey("alert_notifications_enabled")
     private val KEY_QUIET_HOURS_ENABLED = booleanPreferencesKey("quiet_hours_enabled")
@@ -322,6 +326,9 @@ class AppPreferences @Inject constructor(
                     ?: emptyList(),
                 allowLiveBoost = prefs[KEY_ALLOW_LIVE_BOOST] ?: true,
                 requestLiveBoost = prefs[KEY_REQUEST_LIVE_BOOST] ?: true,
+                liveUpdateIntervalSeconds = com.locapeer.beacon.normalizeLiveUpdateIntervalSeconds(
+                    prefs[KEY_LIVE_UPDATE_INTERVAL_SECONDS]
+                ),
                 messageNotificationsEnabled = prefs[KEY_MESSAGE_NOTIFICATIONS] ?: true,
                 alertNotificationsEnabled = prefs[KEY_ALERT_NOTIFICATIONS] ?: true,
                 quietHoursEnabled = prefs[KEY_QUIET_HOURS_ENABLED] ?: false,
@@ -507,6 +514,11 @@ class AppPreferences @Inject constructor(
 
     suspend fun setAllowLiveBoost(enabled: Boolean) {
         context.settingsStore.edit { it[KEY_ALLOW_LIVE_BOOST] = enabled }
+    }
+
+    suspend fun setLiveUpdateIntervalSeconds(seconds: Int) {
+        val value = com.locapeer.beacon.normalizeLiveUpdateIntervalSeconds(seconds)
+        context.settingsStore.edit { it[KEY_LIVE_UPDATE_INTERVAL_SECONDS] = value }
     }
 
     suspend fun setRequestLiveBoost(enabled: Boolean) {

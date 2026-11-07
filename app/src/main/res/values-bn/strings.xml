@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">কোনো পরিচিতি তাদের মানচিত্রে আপনার পিন নির্বাচন করলে আপনার আপডেট দ্রুত করুন।</string>
     <string name="settings_request_live_boost">লাইভ আপডেটের অনুরোধ করুন</string>
     <string name="settings_request_live_boost_subtitle">মানচিত্রে কোনো পরিচিতির পিন নির্বাচন করলে তার কাছে দ্রুত আপডেটের অনুরোধ করুন।</string>
+    <string name="settings_live_update_interval">লাইভ আপডেটের ব্যবধান</string>
+    <string name="settings_live_update_interval_subtitle">আপনাকে লাইভ দেখছে এমন পরিচিতির কাছে কত ঘন ঘন আপনার অবস্থান পাঠানো হয়।</string>
+    <string name="settings_seconds_short">%1$d সেকেন্ড</string>
     <string name="settings_relays">রিলে</string>
     <string name="settings_relays_subtitle">কোন রিলেগুলো আপনার ডেটা বহন করবে তা বেছে নিন</string>
     <string name="relays_intro">LocaPeer আপনার ডেটা Nostr রিলের মাধ্যমে পাঠায়। বিষয়বস্তু সবসময় এন্ড-টু-এন্ড এনক্রিপ্ট করা থাকে, তবে সর্বজনীন রিলেগুলো এখনও দেখতে পারে আপনি কোন পরিচিতিদের সঙ্গে এবং কখন কথা বলছেন। এই প্রকাশ কমাতে আপনার নিজের রিলে ব্যবহার করুন।</string>

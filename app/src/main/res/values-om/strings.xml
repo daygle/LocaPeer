@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii piinii kee kaartaa isaa irratti filatu haaromsa kee saffisiisi.</string>
     <string name="settings_request_live_boost">Haaromsa kallattii gaafadhu</string>
     <string name="settings_request_live_boost_subtitle">Yeroo piinii nama quunnamtii kaartaa irratti filattu haaromsa saffisaa isa gaafadhu.</string>
+    <string name="settings_live_update_interval">Yeroo Gidduu Haaromsa Kallattii</string>
+    <string name="settings_live_update_interval_subtitle">Iddoon kee hammam irra deddeebiin nama quunnamtii kallattiin si ilaalaa jiruuf akka ergamu.</string>
+    <string name="settings_seconds_short">Sek %1$d</string>
     <string name="settings_relays">Riileyoota</string>
     <string name="settings_relays_subtitle">Riileyoonni kamtu daataa kee akka baatu filadhu</string>
     <string name="relays_intro">LocaPeer daataa kee riileyoota Nostr karaa erga. Qabiyyeen yeroo hunda dhuma irraa hanga dhumaatti ni iccitaawa, garuu riileyoonni ummataa ammallee namoota quunnamtii ati dubbistuu fi yeroo isaa arguu dandaʼu. Saaxilamummaa kana hir\'isuuf riileyoota kee mataa kee fayyadami.</string>

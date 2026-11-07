@@ -60,4 +60,25 @@ class LivePinDetectorTest {
     fun `older senders reporting the live interval still read as live`() {
         assertTrue(LivePinDetector.isLive(null, hb(2, now - 1_000, now - 1_000, intervalSec = 5L), now))
     }
+
+    @Test
+    fun `a 30 second live stream reads as live between updates`() {
+        val prev = hb(1, now - 55_000, now - 55_000)
+        val latest = hb(2, now - 25_000, now - 25_000)
+        assertTrue(LivePinDetector.isLive(prev, latest, now))
+    }
+
+    @Test
+    fun `a one minute cadence is not mistaken for live`() {
+        val prev = hb(1, now - 61_000, now - 61_000, intervalSec = 60L)
+        val latest = hb(2, now - 1_000, now - 1_000, intervalSec = 60L)
+        assertFalse(LivePinDetector.isLive(prev, latest, now))
+    }
+
+    @Test
+    fun `sos heartbeats are never shown as live`() {
+        val prev = hb(1, now - 16_000, now - 16_000).copy(isSos = true)
+        val latest = hb(2, now - 1_000, now - 1_000).copy(isSos = true)
+        assertFalse(LivePinDetector.isLive(prev, latest, now))
+    }
 }

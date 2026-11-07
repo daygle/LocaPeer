@@ -137,4 +137,24 @@ class AdaptiveIntervalManagerTest {
         liveViewRegistry.grant("left", leaseMs = 0L)
         assertEquals(setOf("watching"), manager.liveViewers())
     }
+
+    @Test
+    fun `live view uses the chosen live update interval`() {
+        manager.updateMotionState(MotionState.DRIVING)
+        liveViewRegistry.grant("viewer")
+        assertEquals(15_000L, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 15)))
+        assertEquals(30_000L, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 30)))
+    }
+
+    @Test
+    fun `an unsupported live update interval falls back to the fastest option`() {
+        liveViewRegistry.grant("viewer")
+        assertEquals(LIVE_VIEW_INTERVAL_MS, manager.getIntervalMillis(settings.copy(liveUpdateIntervalSeconds = 7)))
+    }
+
+    @Test
+    fun `live interval constants match the selectable options`() {
+        assertEquals(LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.min() * 1000L)
+        assertEquals(MAX_LIVE_VIEW_INTERVAL_MS, LIVE_UPDATE_INTERVAL_OPTIONS_S.max() * 1000L)
+    }
 }

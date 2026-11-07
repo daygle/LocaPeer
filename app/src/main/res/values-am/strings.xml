@@ -864,6 +864,9 @@
     <string name="settings_allow_live_boost_subtitle">አንድ እውቂያ በካርታው ላይ የእርስዎን ፒን ሲመርጥ ዝማኔዎችዎን ያፍጥኑ።</string>
     <string name="settings_request_live_boost">የቀጥታ ዝማኔዎችን ይጠይቁ</string>
     <string name="settings_request_live_boost_subtitle">በካርታው ላይ የአንድ እውቂያን ፒን ሲመርጡ ከእሱ ፈጣን ዝማኔዎችን ይጠይቁ።</string>
+    <string name="settings_live_update_interval">የቀጥታ ዝመና ክፍተት</string>
+    <string name="settings_live_update_interval_subtitle">አካባቢዎ በቀጥታ ለሚመለከትዎት እውቂያ ምን ያህል ጊዜ እንደሚላክ።</string>
+    <string name="settings_seconds_short">%1$d ሰከንድ</string>
     <string name="settings_relays">ማስተላለፊያዎች</string>
     <string name="settings_relays_subtitle">የትኞቹ ማስተላለፊያዎች ውሂብዎን እንደሚያጓጉዙ ይምረጡ</string>
     <string name="relays_intro">LocaPeer ውሂብዎን በNostr ማስተላለፊያዎች በኩል ይልካል። ይዘቱ ሁልጊዜ ከጫፍ እስከ ጫፍ የተመሰጠረ ነው፣ ነገር ግን የሕዝብ ማስተላለፊያዎች አሁንም ከየትኞቹ እውቂያዎች ጋር እና መቼ እንደሚነጋገሩ ማየት ይችላሉ። ይህን መጋለጥ ለመቀነስ የራስዎን ማስተላለፊያዎች ይጠቀሙ።</string>

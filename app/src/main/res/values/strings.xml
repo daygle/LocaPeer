@@ -128,6 +128,9 @@
     <string name="settings_allow_live_boost_subtitle">Speed up your updates while a contact has your pin selected on their map.</string>
     <string name="settings_request_live_boost">Request Live Updates</string>
     <string name="settings_request_live_boost_subtitle">Ask a contact for faster updates while you have their pin selected on the map.</string>
+    <string name="settings_live_update_interval">Live Update Interval</string>
+    <string name="settings_live_update_interval_subtitle">How often your location is sent to a contact watching you live.</string>
+    <string name="settings_seconds_short">%1$d sec</string>
 
     <!-- Security -->
     <string name="settings_supervision_active">Supervision Active</string>

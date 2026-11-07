@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">ఒక పరిచయం తమ మ్యాప్‌లో మీ పిన్‌ను ఎంచుకున్నప్పుడు మీ నవీకరణలను వేగవంతం చేయండి.</string>
     <string name="settings_request_live_boost">ప్రత్యక్ష నవీకరణలను అభ్యర్థించండి</string>
     <string name="settings_request_live_boost_subtitle">మ్యాప్‌లో ఒక పరిచయం పిన్‌ను ఎంచుకున్నప్పుడు వారిని వేగవంతమైన నవీకరణల కోసం అభ్యర్థించండి.</string>
+    <string name="settings_live_update_interval">ప్రత్యక్ష నవీకరణ విరామం</string>
+    <string name="settings_live_update_interval_subtitle">మిమ్మల్ని ప్రత్యక్షంగా చూస్తున్న పరిచయానికి మీ స్థానం ఎంత తరచుగా పంపబడుతుంది.</string>
+    <string name="settings_seconds_short">%1$d సె</string>
     <string name="settings_relays">రిలేలు</string>
     <string name="settings_relays_subtitle">మీ డేటాను ఏ రిలేలు మోసుకెళ్లాలో ఎంచుకోండి</string>
     <string name="relays_intro">LocaPeer మీ డేటాను Nostr రిలేల ద్వారా పంపుతుంది. కంటెంట్ ఎల్లప్పుడూ ఎండ్-టు-ఎండ్ ఎన్‌క్రిప్ట్ చేయబడుతుంది, కానీ పబ్లిక్ రిలేలు మీరు ఏ పరిచయాలతో, ఎప్పుడు మాట్లాడతారో ఇప్పటికీ చూడగలవు. ఈ బహిర్గతతను తగ్గించడానికి మీ స్వంత రిలేలను ఉపయోగించండి.</string>

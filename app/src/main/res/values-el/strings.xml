@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Επιταχύνετε τις ενημερώσεις σας όταν μια επαφή έχει επιλέξει την πινέζα σας στον χάρτη της.</string>
     <string name="settings_request_live_boost">Ζήτηση ζωντανών ενημερώσεων</string>
     <string name="settings_request_live_boost_subtitle">Ζητήστε από μια επαφή ταχύτερες ενημερώσεις όταν έχετε επιλέξει την πινέζα της στον χάρτη.</string>
+    <string name="settings_live_update_interval">Διάστημα ζωντανών ενημερώσεων</string>
+    <string name="settings_live_update_interval_subtitle">Πόσο συχνά στέλνεται η τοποθεσία σας σε μια επαφή που σας παρακολουθεί ζωντανά.</string>
+    <string name="settings_seconds_short">%1$d δευτ.</string>
     <string name="settings_relays">Αναμεταδότες</string>
     <string name="settings_relays_subtitle">Επιλέξτε ποιοι αναμεταδότες μεταφέρουν τα δεδομένα σας</string>
     <string name="relays_intro">Το LocaPeer στέλνει τα δεδομένα σας μέσω αναμεταδοτών Nostr. Το περιεχόμενο είναι πάντα κρυπτογραφημένο από άκρο σε άκρο, αλλά οι δημόσιοι αναμεταδότες μπορούν ακόμη να δουν με ποιες επαφές μιλάτε και πότε. Χρησιμοποιήστε δικούς σας αναμεταδότες για να μειώσετε αυτήν την έκθεση.</string>

@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">Mú àwọn ìmúdójúìwọ̀n rẹ yára nígbà tí olùbásọ̀rọ̀ kan bá yan pin rẹ lórí máàpù wọn.</string>
     <string name="settings_request_live_boost">Beere fun awọn imudojuiwọn taara</string>
     <string name="settings_request_live_boost_subtitle">Béèrè fún ìmúdójúìwọ̀n yíyára lọ́wọ́ olùbásọ̀rọ̀ nígbà tí o bá yan pin wọn lórí máàpù.</string>
+    <string name="settings_live_update_interval">Àlàfo Ìsọfúnni Láàyè</string>
+    <string name="settings_live_update_interval_subtitle">Ìgbà mélòó ni a ń fi ibi tí o wà ránṣẹ́ sí olùbásọ̀rọ̀ tí ń wò ọ́ láàyè.</string>
+    <string name="settings_seconds_short">Ìṣẹ́jú-àáyá %1$d</string>
     <string name="settings_relays">Awọn relay</string>
     <string name="settings_relays_subtitle">Yan awọn relay wo ni yoo gbe data rẹ</string>
     <string name="relays_intro">LocaPeer n fi data rẹ ranṣẹ nipasẹ awọn relay Nostr. A ma n fi ìsọ pamọ nigbagbogbo lati ori de ori, ṣugbọn awọn relay gbogboogbo ṣi le rii awọn olubasọrọ ti o n ba sọrọ ati igba. Lo awọn relay tirẹ lati dinku ìfihàn yẹn.</string>

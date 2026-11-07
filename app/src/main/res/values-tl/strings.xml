@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Pabilisin ang iyong mga update kapag pinili ng isang contact ang iyong pin sa kanilang mapa.</string>
     <string name="settings_request_live_boost">Humiling ng mga live na update</string>
     <string name="settings_request_live_boost_subtitle">Humiling sa isang contact ng mas mabilis na update kapag pinili mo ang kanilang pin sa mapa.</string>
+    <string name="settings_live_update_interval">Pagitan ng Live na Update</string>
+    <string name="settings_live_update_interval_subtitle">Gaano kadalas ipinapadala ang iyong lokasyon sa isang contact na nanonood sa iyo nang live.</string>
+    <string name="settings_seconds_short">%1$d seg</string>
     <string name="settings_relays">Mga relay</string>
     <string name="settings_relays_subtitle">Piliin kung aling mga relay ang magdadala ng iyong data</string>
     <string name="relays_intro">Ipinapadala ng LocaPeer ang iyong data sa pamamagitan ng mga Nostr relay. Palaging naka-end-to-end encrypt ang nilalaman, ngunit nakikita pa rin ng mga pampublikong relay kung sino ang kausap mo at kailan. Gumamit ng sarili mong mga relay upang bawasan ang pagkakalantad na iyon.</string>

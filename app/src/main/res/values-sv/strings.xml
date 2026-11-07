@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Snabba upp dina uppdateringar när en kontakt har valt din nål på sin karta.</string>
     <string name="settings_request_live_boost">Begär liveuppdateringar</string>
     <string name="settings_request_live_boost_subtitle">Be en kontakt om snabbare uppdateringar när du har valt dennes nål på kartan.</string>
+    <string name="settings_live_update_interval">Intervall för liveuppdateringar</string>
+    <string name="settings_live_update_interval_subtitle">Hur ofta din plats skickas till en kontakt som tittar på dig live.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Reläer</string>
     <string name="settings_relays_subtitle">Välj vilka reläer som bär dina data</string>
     <string name="relays_intro">LocaPeer skickar dina data via Nostr-reläer. Innehållet är alltid änd-till-änd-krypterat, men offentliga reläer kan ändå se vilka kontakter du pratar med och när. Använd egna reläer för att minska den exponeringen.</string>

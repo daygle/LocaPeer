@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">ଜଣେ ସମ୍ପର୍କ ସେମାନଙ୍କ ମାନଚିତ୍ରରେ ଆପଣଙ୍କ ପିନ୍ ଚୟନ କଲେ ଆପଣଙ୍କ ଅପଡେଟ୍ ଦ୍ରୁତ କରନ୍ତୁ।</string>
     <string name="settings_request_live_boost">ଲାଇଭ୍ ଅପଡେଟ୍ ଅନୁରୋଧ କରନ୍ତୁ</string>
     <string name="settings_request_live_boost_subtitle">ମାନଚିତ୍ରରେ ଜଣେ ସମ୍ପର୍କଙ୍କ ପିନ୍ ଚୟନ କଲେ ସେମାନଙ୍କଠାରୁ ଦ୍ରୁତ ଅପଡେଟ୍ ଅନୁରୋଧ କରନ୍ତୁ।</string>
+    <string name="settings_live_update_interval">ଲାଇଭ୍ ଅପଡେଟ୍ ବ୍ୟବଧାନ</string>
+    <string name="settings_live_update_interval_subtitle">ଆପଣଙ୍କୁ ଲାଇଭ୍ ଦେଖୁଥିବା ସମ୍ପର୍କଙ୍କୁ ଆପଣଙ୍କ ଅବସ୍ଥାନ କେତେ ଥର ପଠାଯାଏ।</string>
+    <string name="settings_seconds_short">%1$d ସେକେଣ୍ଡ</string>
     <string name="settings_relays">ରିଲେ</string>
     <string name="settings_relays_subtitle">ଆପଣଙ୍କ ଡାଟା କେଉଁ ରିଲେ ବହନ କରିବ ତାହା ବାଛନ୍ତୁ</string>
     <string name="relays_intro">LocaPeer ଆପଣଙ୍କ ଡାଟାକୁ Nostr ରିଲେ ମାଧ୍ୟମରେ ପଠାଏ। ବିଷୟବସ୍ତୁ ସର୍ବଦା ଏଣ୍ଡ-ଟୁ-ଏଣ୍ଡ ଏନକ୍ରିପ୍ଟ ହୋଇଥାଏ, କିନ୍ତୁ ସାର୍ବଜନୀନ ରିଲେମାନେ ଆପଣ କେଉଁ ସମ୍ପର୍କ ସହିତ ଏବଂ କେବେ କଥା ହୁଅନ୍ତି ତାହା ଏବେ ବି ଦେଖିପାରନ୍ତି। ଏହି ପ୍ରକାଶନକୁ କମାଇବା ପାଇଁ ଆପଣଙ୍କ ନିଜର ରିଲେ ବ୍ୟବହାର କରନ୍ତୁ।</string>

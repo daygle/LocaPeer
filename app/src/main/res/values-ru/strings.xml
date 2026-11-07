@@ -893,6 +893,9 @@
     <string name="settings_allow_live_boost_subtitle">Ускоряйте свои обновления, когда контакт выбрал вашу метку на своей карте.</string>
     <string name="settings_request_live_boost">Запросить обновления в реальном времени</string>
     <string name="settings_request_live_boost_subtitle">Просите контакт о более быстрых обновлениях, когда у вас выбрана его метка на карте.</string>
+    <string name="settings_live_update_interval">Интервал обновлений в эфире</string>
+    <string name="settings_live_update_interval_subtitle">Как часто ваше местоположение отправляется контакту, который смотрит на вас в реальном времени.</string>
+    <string name="settings_seconds_short">%1$d с</string>
     <string name="settings_relays">Реле</string>
     <string name="settings_relays_subtitle">Выберите, какие реле передают ваши данные</string>
     <string name="relays_intro">LocaPeer отправляет ваши данные через реле Nostr. Содержимое всегда зашифровано сквозным шифрованием, но публичные реле всё равно могут видеть, с какими контактами и когда вы общаетесь. Используйте собственные реле, чтобы уменьшить эту открытость.</string>

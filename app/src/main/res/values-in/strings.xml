@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">Percepat pembaruan Anda saat kontak memilih pin Anda di peta mereka.</string>
     <string name="settings_request_live_boost">Minta pembaruan langsung</string>
     <string name="settings_request_live_boost_subtitle">Minta kontak untuk pembaruan lebih cepat saat Anda memilih pin mereka di peta.</string>
+    <string name="settings_live_update_interval">Interval Pembaruan Langsung</string>
+    <string name="settings_live_update_interval_subtitle">Seberapa sering lokasi Anda dikirim ke kontak yang sedang melihat Anda secara langsung.</string>
+    <string name="settings_seconds_short">%1$d dtk</string>
     <string name="settings_relays">Relai</string>
     <string name="settings_relays_subtitle">Pilih relai mana yang membawa data Anda</string>
     <string name="relays_intro">LocaPeer mengirim data Anda melalui relai Nostr. Konten selalu dienkripsi ujung ke ujung, tetapi relai publik tetap dapat melihat dengan kontak mana Anda berbicara dan kapan. Gunakan relai Anda sendiri untuk mengurangi paparan itu.</string>

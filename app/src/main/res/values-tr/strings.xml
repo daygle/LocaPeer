@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Bir kişi haritasında iğnenizi seçtiğinde güncellemelerinizi hızlandırın.</string>
     <string name="settings_request_live_boost">Canlı güncelleme iste</string>
     <string name="settings_request_live_boost_subtitle">Haritada bir kişinin iğnesini seçtiğinizde ondan daha hızlı güncellemeler isteyin.</string>
+    <string name="settings_live_update_interval">Canlı Güncelleme Aralığı</string>
+    <string name="settings_live_update_interval_subtitle">Konumunuzun sizi canlı izleyen bir kişiye ne sıklıkla gönderildiği.</string>
+    <string name="settings_seconds_short">%1$d sn</string>
     <string name="settings_relays">Röleler</string>
     <string name="settings_relays_subtitle">Verilerinizi hangi rölelerin taşıyacağını seçin</string>
     <string name="relays_intro">LocaPeer verilerinizi Nostr röleleri üzerinden gönderir. İçerik her zaman uçtan uca şifrelenir, ancak genel röleler yine de hangi kişilerle ne zaman konuştuğunuzu görebilir. Bu maruz kalmayı azaltmak için kendi rölelerinizi kullanın.</string>

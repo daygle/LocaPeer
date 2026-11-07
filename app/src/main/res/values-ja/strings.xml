@@ -847,6 +847,9 @@
     <string name="settings_allow_live_boost_subtitle">連絡先が地図上であなたのピンを選択しているときに、更新を速くします。</string>
     <string name="settings_request_live_boost">ライブ更新をリクエスト</string>
     <string name="settings_request_live_boost_subtitle">地図上で連絡先のピンを選択しているときに、その連絡先へより速い更新をリクエストします。</string>
+    <string name="settings_live_update_interval">ライブ更新の間隔</string>
+    <string name="settings_live_update_interval_subtitle">ライブであなたを見ている連絡先に位置情報を送信する頻度です。</string>
+    <string name="settings_seconds_short">%1$d 秒</string>
     <string name="settings_relays">リレー</string>
     <string name="settings_relays_subtitle">データを伝送するリレーを選択します</string>
     <string name="relays_intro">LocaPeer は Nostr リレーを介してデータを送信します。コンテンツは常にエンドツーエンドで暗号化されますが、公開リレーはあなたが誰といつやり取りしているかを見ることができます。この露出を減らすには、自分のリレーを使用してください。</string>

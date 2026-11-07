@@ -66,6 +66,18 @@ class LiveViewRegistry @Inject constructor() {
  *  viewer closing the map. */
 const val LIVE_VIEW_LEASE_MS = 45_000L
 
-/** Broadcast interval while any viewer is actively watching - the [LiveViewRegistry] floor
- *  the interval manager applies. Matches the heartbeat loop's hard minimum. */
+/** Fastest broadcast interval while a viewer is actively watching (the default, and the
+ *  shortest of [LIVE_UPDATE_INTERVAL_OPTIONS_S]). Matches the heartbeat loop's hard minimum. */
 const val LIVE_VIEW_INTERVAL_MS = 5_000L
+
+/** Live update intervals (seconds) the user can choose from; the first is the default. */
+val LIVE_UPDATE_INTERVAL_OPTIONS_S = listOf(5, 10, 15, 30)
+
+/** Slowest selectable live interval (the last of [LIVE_UPDATE_INTERVAL_OPTIONS_S]), which
+ *  receivers must still recognise as live. A const so receivers can derive constants from it. */
+const val MAX_LIVE_VIEW_INTERVAL_MS = 30_000L
+
+/** Snap a stored or restored value onto the selectable options, defaulting to the fastest. */
+fun normalizeLiveUpdateIntervalSeconds(seconds: Int?): Int =
+    if (seconds != null && seconds in LIVE_UPDATE_INTERVAL_OPTIONS_S) seconds
+    else LIVE_UPDATE_INTERVAL_OPTIONS_S.first()

@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">Percepatkan kemas kini anda apabila kenalan memilih pin anda pada peta mereka.</string>
     <string name="settings_request_live_boost">Minta kemas kini langsung</string>
     <string name="settings_request_live_boost_subtitle">Minta kenalan untuk kemas kini lebih pantas apabila anda memilih pin mereka pada peta.</string>
+    <string name="settings_live_update_interval">Selang Kemas Kini Langsung</string>
+    <string name="settings_live_update_interval_subtitle">Kekerapan lokasi anda dihantar kepada kenalan yang sedang melihat anda secara langsung.</string>
+    <string name="settings_seconds_short">%1$d saat</string>
     <string name="settings_relays">Geganti</string>
     <string name="settings_relays_subtitle">Pilih geganti yang membawa data anda</string>
     <string name="relays_intro">LocaPeer menghantar data anda melalui geganti Nostr. Kandungan sentiasa disulitkan hujung ke hujung, tetapi geganti awam masih boleh melihat kenalan yang anda hubungi dan bila. Gunakan geganti anda sendiri untuk mengurangkan pendedahan itu.</string>

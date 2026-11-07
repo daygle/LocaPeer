@@ -848,6 +848,9 @@
     <string name="settings_allow_live_boost_subtitle">Tăng tốc cập nhật của bạn khi một liên hệ chọn ghim của bạn trên bản đồ của họ.</string>
     <string name="settings_request_live_boost">Yêu cầu cập nhật trực tiếp</string>
     <string name="settings_request_live_boost_subtitle">Yêu cầu một liên hệ cập nhật nhanh hơn khi bạn chọn ghim của họ trên bản đồ.</string>
+    <string name="settings_live_update_interval">Khoảng thời gian cập nhật trực tiếp</string>
+    <string name="settings_live_update_interval_subtitle">Tần suất gửi vị trí của bạn cho liên hệ đang xem bạn trực tiếp.</string>
+    <string name="settings_seconds_short">%1$d giây</string>
     <string name="settings_relays">Relay</string>
     <string name="settings_relays_subtitle">Chọn relay nào sẽ truyền tải dữ liệu của bạn</string>
     <string name="relays_intro">LocaPeer gửi dữ liệu của bạn qua các relay Nostr. Nội dung luôn được mã hóa đầu cuối, nhưng các relay công khai vẫn có thể thấy bạn trò chuyện với liên hệ nào và khi nào. Hãy dùng relay của riêng bạn để giảm mức độ phơi bày đó.</string>

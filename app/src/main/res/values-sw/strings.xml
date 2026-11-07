@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati mwasiliani amechagua pini yako kwenye ramani yake.</string>
     <string name="settings_request_live_boost">Omba masasisho ya moja kwa moja</string>
     <string name="settings_request_live_boost_subtitle">Omba mwasiliani masasisho ya haraka zaidi unapokuwa umechagua pini yake kwenye ramani.</string>
+    <string name="settings_live_update_interval">Muda Kati ya Masasisho ya Moja kwa Moja</string>
+    <string name="settings_live_update_interval_subtitle">Mara ngapi eneo lako hutumwa kwa mwasiliani anayekutazama moja kwa moja.</string>
+    <string name="settings_seconds_short">Sek %1$d</string>
     <string name="settings_relays">Rele</string>
     <string name="settings_relays_subtitle">Chagua rele zipi zinabeba data yako</string>
     <string name="relays_intro">LocaPeer hutuma data yako kupitia rele za Nostr. Maudhui daima yamesimbwa mwanzo hadi mwisho, lakini rele za umma bado zinaweza kuona ni anwani zipi unazozungumza nazo na lini. Tumia rele zako mwenyewe ili kupunguza mfichuo huo.</string>

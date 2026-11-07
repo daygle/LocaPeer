@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">جب کوئی رابطہ اپنے نقشے پر آپ کا پن منتخب کرے تو اپنی اپڈیٹس تیز کریں۔</string>
     <string name="settings_request_live_boost">لائیو اپڈیٹس کی درخواست کریں</string>
     <string name="settings_request_live_boost_subtitle">جب آپ نقشے پر کسی رابطے کا پن منتخب کریں تو ان سے تیز تر اپڈیٹس طلب کریں۔</string>
+    <string name="settings_live_update_interval">لائیو اپ ڈیٹ کا وقفہ</string>
+    <string name="settings_live_update_interval_subtitle">آپ کا مقام کتنی بار اس رابطے کو بھیجا جاتا ہے جو آپ کو لائیو دیکھ رہا ہے۔</string>
+    <string name="settings_seconds_short">%1$d سیکنڈ</string>
     <string name="settings_relays">ریلے</string>
     <string name="settings_relays_subtitle">منتخب کریں کہ کون سے ریلے آپ کا ڈیٹا لے جائیں</string>
     <string name="relays_intro">LocaPeer آپ کا ڈیٹا Nostr ریلے کے ذریعے بھیجتا ہے۔ مواد ہمیشہ سرے تا سرے خفیہ کردہ ہوتا ہے، لیکن عوامی ریلے پھر بھی دیکھ سکتے ہیں کہ آپ کن رابطوں سے اور کب بات کرتے ہیں۔ اس افشا کو کم کرنے کے لیے اپنے ریلے استعمال کریں۔</string>

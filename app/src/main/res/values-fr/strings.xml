@@ -863,6 +863,9 @@
     <string name="settings_allow_live_boost_subtitle">Accélérez vos mises à jour lorsqu\'un contact a sélectionné votre épingle sur sa carte.</string>
     <string name="settings_request_live_boost">Demander des mises à jour en direct</string>
     <string name="settings_request_live_boost_subtitle">Demandez à un contact des mises à jour plus rapides lorsque vous avez sélectionné son épingle sur la carte.</string>
+    <string name="settings_live_update_interval">Intervalle de mise à jour en direct</string>
+    <string name="settings_live_update_interval_subtitle">Fréquence d\'envoi de votre position à un contact qui vous regarde en direct.</string>
+    <string name="settings_seconds_short">%1$d s</string>
     <string name="settings_relays">Relais</string>
     <string name="settings_relays_subtitle">Choisissez les relais qui transportent vos données</string>
     <string name="relays_intro">LocaPeer envoie vos données via des relais Nostr. Le contenu est toujours chiffré de bout en bout, mais les relais publics peuvent tout de même voir avec quels contacts vous échangez et quand. Utilisez vos propres relais pour réduire cette exposition.</string>
