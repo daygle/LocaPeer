@@ -41,20 +41,23 @@ object MarkerIconFactory {
         isSelected: Boolean = false,
         bearingDegrees: Float = 0f,
         showDirection: Boolean = false,
-        isLive: Boolean = false
+        isLive: Boolean = false,
+        isWatchingMe: Boolean = false
     ): BitmapDrawable {
         val density = context.resources.displayMetrics.density
         val safePinColor = normalizeHexColor(pinColor)
         val showLive = isLive && !isSos && !isOverdue
         val quantBearing = if (showDirection) (Math.round(bearingDegrees / 15f) * 15) % 360 else 0
-        val key = "$displayName-$isOverdue-$isSos-$safePinColor-$isSelected-$showDirection-$quantBearing-$showLive"
+        val key = "$displayName-$isOverdue-$isSos-$safePinColor-$isSelected-$showDirection-$quantBearing-$showLive-$isWatchingMe"
         cache.get(key)?.let { return it.toDrawable(context.resources) }
 
         val sizePx = (density * if (isSelected) 60 else 48).toInt()
         val radius = sizePx / 2f - 2f
         val arrowReach = if (showDirection) density * 9f else 0f
         val liveReach = if (showLive) density * 4f else 0f
-        val sideTopPad = density * 4f + maxOf(arrowReach, liveReach)
+        // The eye badge sits on the ring's upper-right and pokes slightly past it.
+        val eyeReach = if (isWatchingMe) density * 3f else 0f
+        val sideTopPad = density * 4f + maxOf(arrowReach, liveReach, eyeReach)
         val tailDrop = maxOf(density * 9f, arrowReach + density * 2f)
         val width = (sizePx + sideTopPad * 2f).toInt().coerceAtLeast(1)
         val height = (sideTopPad + radius * 2f + tailDrop + density * 2f).toInt().coerceAtLeast(1)
@@ -143,10 +146,45 @@ object MarkerIconFactory {
                 close()
             }
             drawPath(path, tailPaint)
+
+            if (isWatchingMe) drawEyeBadge(cx, cy, radius, density)
         }
 
         cache.put(key, bitmap)
         return bitmap.toDrawable(context.resources)
+    }
+
+    /**
+     * Small white disc with a dark eye at the pin's upper-right, marking a contact who is
+     * watching us live right now (their open map is what speeds up our broadcasts).
+     */
+    private fun android.graphics.Canvas.drawEyeBadge(cx: Float, cy: Float, radius: Float, density: Float) {
+        val diag = (radius * 0.72f)
+        val bx = cx + diag
+        val by = cy - diag
+        val br = density * 8f
+        drawCircle(bx, by + density * 0.5f, br, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = 0x33000000
+            setShadowLayer(3f, 0f, 1f, 0x55000000)
+        })
+        drawCircle(bx, by, br, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = 0xFFFFFFFF.toInt() })
+        val ink = 0xFF263238.toInt()
+        // Almond outline of the eye: two arcs meeting at the corners.
+        val halfW = br * 0.72f
+        val halfH = br * 0.62f
+        val almond = android.graphics.Path().apply {
+            moveTo(bx - halfW, by)
+            quadTo(bx, by - halfH * 1.4f, bx + halfW, by)
+            quadTo(bx, by + halfH * 1.4f, bx - halfW, by)
+            close()
+        }
+        drawPath(almond, Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = ink
+            style = Paint.Style.STROKE
+            strokeWidth = density * 1.4f
+            strokeJoin = Paint.Join.ROUND
+        })
+        drawCircle(bx, by, br * 0.26f, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = ink })
     }
 
     /** Small filled circle for intermediate waypoint markers on the history map. */

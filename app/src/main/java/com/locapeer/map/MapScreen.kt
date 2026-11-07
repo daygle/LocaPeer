@@ -494,6 +494,9 @@ private fun FriendItem(pin: PinData, onClick: () -> Unit, onMessage: () -> Unit,
             if (hb != null) {
                 Text(stringResource(R.string.contacts_last_seen, formatTimestamp(hb.timestamp)), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+            if (pin.isWatchingMe) {
+                Text(stringResource(R.string.map_watching_you), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
+            }
         }
         IconButton(onClick = onMessage) {
             Icon(Icons.AutoMirrored.Filled.Chat, contentDescription = stringResource(R.string.cd_message), tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
@@ -643,7 +646,8 @@ private fun MainMapView(
                         // a stale/overdue pin must not imply a live direction.
                         showDirection = !pinData.isOverdue && hb.speed > 0f &&
                             !hb.motionState.equals("STATIONARY", ignoreCase = true),
-                        isLive = pinData.isLive
+                        isLive = pinData.isLive,
+                        isWatchingMe = pinData.isWatchingMe
                     ).bitmap,
                     zIndex = 1f
                 )
@@ -720,6 +724,7 @@ private fun PinInfoSheet(pin: PinData, address: String?, formatTimestamp: (Long)
                         if (hb?.isSos == true) Text(stringResource(R.string.map_sos_active), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = SosRed)
                         else if (pin.isOverdue) Text(stringResource(R.string.map_overdue), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                         else if (pin.isLive) Text(stringResource(R.string.map_live), style = MaterialTheme.typography.labelSmall, fontWeight = FontWeight.Bold, color = LiveGreen)
+                        if (pin.isWatchingMe) Text(stringResource(R.string.map_watching_you), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.primary)
                     }
                 }
                 IconButton(onClick = onDismiss) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close)) }

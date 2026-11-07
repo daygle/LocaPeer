@@ -51,7 +51,13 @@ data class PinData(
      * right now (because someone is watching them). Inferred from the gap between the
      * heartbeats we receive; see [LivePinDetector].
      */
-    val isLive: Boolean = false
+    val isLive: Boolean = false,
+    /**
+     * True while this contact has *their* map open and is watching us - i.e. they hold a
+     * live-view lease on this device (see [com.locapeer.beacon.LiveViewRegistry]), which is
+     * what speeds up our own broadcasts. Shown as an eye badge on their pin.
+     */
+    val isWatchingMe: Boolean = false
 )
 
 data class GeofenceOnMap(
@@ -84,6 +90,7 @@ class MapViewModel @Inject constructor(
     private val sharingConfigDao: PeerSharingConfigDao,
     private val sosManager: SosManager,
     private val liveViewSender: com.locapeer.beacon.LiveViewSender,
+    private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry,
     private val keyManager: KeyManager,
     private val relayClient: NostrRelayClient,
     private val appPreferences: AppPreferences,
@@ -303,11 +310,24 @@ class MapViewModel @Inject constructor(
     // touched from the sequential uiState combine transform.
     private val recentHeartbeats = HashMap<String, Pair<HeartbeatEntity?, HeartbeatEntity>>()
 
+    /**
+     * Pubkeys of the contacts currently watching us live. Leases lapse silently (no event
+     * marks a viewer leaving), so the registry is re-read on a short tick; it is only
+     * collected while the map is on screen, and distinctUntilChanged keeps quiet ticks free.
+     */
+    private val watchersFlow: Flow<Set<String>> = flow {
+        while (true) {
+            emit(liveViewRegistry.activeViewers())
+            delay(WATCHERS_REFRESH_MS)
+        }
+    }.distinctUntilChanged()
+
     val uiState: StateFlow<MapUiState> = combine(
         snapshotFlow,
         geofencesFlow,
-        tickerFlow
-    ) { snapshot, fences, _ ->
+        tickerFlow,
+        watchersFlow
+    ) { snapshot, fences, _, watchers ->
         val heartbeatMap = snapshot.heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
         val pins = snapshot.peers.filter { it.deviceId != snapshot.myPubkey }.map { peer ->
@@ -329,12 +349,14 @@ class MapViewModel @Inject constructor(
                 }
             }
             val live = !overdue && LivePinDetector.isLive(previous, hb, now)
-            PinData(peer, hb, overdue, live)
+            val watchingMe = peer.deviceId in watchers || peer.publicKeyHex in watchers
+            PinData(peer, hb, overdue, live, watchingMe)
         }
         MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     companion object {
+        private const val WATCHERS_REFRESH_MS = 5_000L
         private val KEY_LAT = doublePreferencesKey("map_last_lat")
         private val KEY_LNG = doublePreferencesKey("map_last_lng")
         private val KEY_ZOOM = doublePreferencesKey("map_last_zoom")
