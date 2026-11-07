@@ -1,6 +1,10 @@
 package com.locapeer.beacon
 
+import android.content.Context
+import android.os.PowerManager
 import android.util.Log
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.locapeer.util.backgroundScope
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
@@ -9,6 +13,7 @@ import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
@@ -38,6 +43,7 @@ const val LIVE_VIEW_RESEND_MS = 20_000L
  */
 @Singleton
 class LiveViewSender @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val relayClient: NostrRelayClient,
     private val keyManager: KeyManager,
     private val crypto: CryptoUtils,
@@ -90,7 +96,25 @@ class LiveViewSender @Inject constructor(
         }
     }
 
+    /**
+     * True only while the app is in the foreground with the screen on. The map screen
+     * starts and stops viewing from its own lifecycle, but this is checked again before
+     * every announce so that a viewing session left running by mistake (a missed lifecycle
+     * callback, an undisposed screen) can never keep a contact in live mode while nobody is
+     * actually looking: a backgrounded app or a dark screen is never "viewing".
+     */
+    private fun isUserActuallyViewing(): Boolean {
+        val foreground = ProcessLifecycleOwner.get().lifecycle.currentState
+            .isAtLeast(Lifecycle.State.RESUMED)
+        val screenOn = context.getSystemService(PowerManager::class.java)?.isInteractive ?: false
+        return foreground && screenOn
+    }
+
     private suspend fun announceOnce() {
+        if (!isUserActuallyViewing()) {
+            Log.d(TAG, "Live-view announce skipped: app not in foreground or screen off")
+            return
+        }
         if (!prefs.settings.first().requestLiveBoost) return
         val (privHex, pubHex) = keyManager.ensureKeypair()
         val recipients = peerDao.getAllPeers().first().filter {
