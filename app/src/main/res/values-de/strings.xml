@@ -904,7 +904,6 @@
     <string name="map_live">● Live</string>
     <string name="map_watching_you">👁 Sieht dich an</string>
     <string name="map_follow_contact">Folgen</string>
-    <string name="map_watched_by">Sieht dich an: %1$s</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

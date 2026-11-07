@@ -645,7 +645,6 @@
     <string name="map_live">● Live</string>
     <string name="map_watching_you">👁 Watching You</string>
     <string name="map_follow_contact">Follow</string>
-    <string name="map_watched_by">Watched by %1$s</string>
     <string name="map_no_location_yet">No Location Yet</string>
     <string name="map_cd_go_location">Go to location</string>
     <string name="map_sos">SOS</string>

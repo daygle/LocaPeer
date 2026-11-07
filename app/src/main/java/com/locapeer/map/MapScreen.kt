@@ -75,7 +75,6 @@ fun MapScreen(
     val mapFixedLng by vm.mapFixedLng.collectAsStateWithLifecycle()
     val showGeofences by vm.showGeofences.collectAsStateWithLifecycle()
     val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsStateWithLifecycle()
-    val watcherNames by vm.watcherNames.collectAsStateWithLifecycle()
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<LatLng?>(null) }
@@ -341,82 +340,13 @@ fun MapScreen(
                 }
             }
 
-            Column(modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth()) {
-                LocationOffBanner(
-                    visible = locationServicesOff,
-                    onEnable = { PermissionManager.openLocationSettings(context) }
-                )
-                WatchedByChip(
-                    names = watcherNames,
-                    modifier = Modifier
-                        .align(Alignment.End)
-                        // The location banner already pads for the status bar when shown.
-                        .then(if (locationServicesOff) Modifier else Modifier.statusBarsPadding())
-                        .padding(top = 16.dp, end = 16.dp)
-                )
-            }
+            LocationOffBanner(
+                visible = locationServicesOff,
+                onEnable = { PermissionManager.openLocationSettings(context) },
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
-
-/** Names shown in the "Watched by" banner before the rest collapse into "+N". */
-private const val WATCHED_BY_MAX_NAMES = 3
-
-/**
- * Tells the user who is watching them live right now - every contact with their pin
- * selected, including contacts who have no pin on this map (they receive our location but
- * don't share theirs). Hidden when nobody is watching.
- */
-@Composable
-private fun WatchedByChip(names: List<String>, modifier: Modifier = Modifier) {
-    AnimatedVisibility(
-        visible = names.isNotEmpty(),
-        modifier = modifier,
-        enter = fadeIn() + expandVertically(),
-        exit = fadeOut() + shrinkVertically()
-    ) {
-        // Keep the last non-empty list so the exit animation keeps its text. A plain holder,
-        // not state: it only needs to survive recompositions, never trigger one.
-        val lastShown = remember { arrayOf(names) }
-        if (names.isNotEmpty()) lastShown[0] = names
-        val shown = lastShown[0]
-        val listed = shown.take(WATCHED_BY_MAX_NAMES).joinToString(", ")
-        val overflow = shown.size - WATCHED_BY_MAX_NAMES
-        Surface(
-            shape = RoundedCornerShape(50),
-            color = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            shadowElevation = 4.dp,
-            // Narrow enough to clear the top-left SOS button on a 360dp-wide screen.
-            modifier = Modifier.widthIn(max = 200.dp)
-        ) {
-            Row(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(Icons.Default.Visibility, contentDescription = null, modifier = Modifier.size(16.dp))
-                Spacer(Modifier.width(6.dp))
-                Text(
-                    stringResource(R.string.map_watched_by, listed),
-                    style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.SemiBold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    // Shrinks (with an ellipsis) before the "+N" below does, so the count of
-                    // further watchers is never cut off by long names.
-                    modifier = Modifier.weight(1f, fill = false)
-                )
-                if (overflow > 0) {
-                    Text(
-                        " +$overflow",
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        maxLines = 1
-                    )
-                }
-            }
-        }
-    }
-}
 
 /**
  * A dismiss-free warning shown at the very top of the map when the device's location master

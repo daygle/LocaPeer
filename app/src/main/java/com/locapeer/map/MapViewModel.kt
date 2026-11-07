@@ -312,22 +312,9 @@ class MapViewModel @Inject constructor(
 
     /** Pubkeys of the contacts currently watching us live (see [LiveViewRegistry.viewersFlow]). */
     private val watchersFlow: StateFlow<Set<String>> = liveViewRegistry.viewersFlow()
-        // Shared by the pin badges and the "Watched by" banner. Event-driven: it only
+        // Drives the eye badge on watchers' pins. Event-driven: it only
         // re-reads the leases while someone is watching, never while nobody is.
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
-
-    /**
-     * Names of every contact watching us live right now, for the map's "Watched by" banner.
-     * Resolved against *all* contacts, not just those with a pin on our map, so a contact
-     * who receives our location without sharing theirs is still shown.
-     */
-    val watcherNames: StateFlow<List<String>> = combine(watchersFlow, peerDao.getAllPeers()) { watchers, peers ->
-        if (watchers.isEmpty()) emptyList()
-        else peers
-            .filter { it.deviceId in watchers || it.publicKeyHex in watchers }
-            .map { it.displayName.ifBlank { appContext.getString(com.locapeer.R.string.geo_unknown) } }
-            .sorted()
-    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     // Bumped when the earliest Live badge is due to expire, so [uiState] turns it off on
     // time. Scheduled only while some pin is live - no polling otherwise (the minute

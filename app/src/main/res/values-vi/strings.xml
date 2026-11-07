@@ -890,7 +890,6 @@
     <string name="map_live">● Trực tiếp</string>
     <string name="map_watching_you">👁 Đang xem bạn</string>
     <string name="map_follow_contact">Theo dõi</string>
-    <string name="map_watched_by">Đang xem bạn: %1$s</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d tin nhắn trong hàng đợi</item>
     </plurals>

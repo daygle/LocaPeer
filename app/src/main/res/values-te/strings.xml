@@ -905,7 +905,6 @@
     <string name="map_live">● ప్రత్యక్ష ప్రసారం</string>
     <string name="map_watching_you">👁 మిమ్మల్ని చూస్తున్నారు</string>
     <string name="map_follow_contact">అనుసరించు</string>
-    <string name="map_watched_by">మిమ్మల్ని చూస్తున్నారు: %1$s</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d క్యూలో ఉన్న సందేశం</item>
         <item quantity="other">%1$d క్యూలో ఉన్న సందేశాలు</item>
