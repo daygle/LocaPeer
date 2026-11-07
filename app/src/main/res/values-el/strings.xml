@@ -900,6 +900,7 @@
     <string name="map_live">● Live</string>
     <string name="map_watching_you">👁 Σας παρακολουθεί</string>
     <string name="map_follow_contact">Ακολούθηση</string>
+    <string name="map_watched_by">Σας παρακολουθεί: %1$s</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

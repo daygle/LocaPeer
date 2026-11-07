@@ -315,12 +315,27 @@ class MapViewModel @Inject constructor(
      * marks a viewer leaving), so the registry is re-read on a short tick; it is only
      * collected while the map is on screen, and distinctUntilChanged keeps quiet ticks free.
      */
-    private val watchersFlow: Flow<Set<String>> = flow {
+    private val watchersFlow: StateFlow<Set<String>> = flow {
         while (true) {
             emit(liveViewRegistry.activeViewers())
             delay(WATCHERS_REFRESH_MS)
         }
     }.distinctUntilChanged()
+        // Shared by the pin badges and the "Watched by" banner; one ticker, only while shown.
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
+
+    /**
+     * Names of every contact watching us live right now, for the map's "Watched by" banner.
+     * Resolved against *all* contacts, not just those with a pin on our map, so a contact
+     * who receives our location without sharing theirs is still shown.
+     */
+    val watcherNames: StateFlow<List<String>> = combine(watchersFlow, peerDao.getAllPeers()) { watchers, peers ->
+        if (watchers.isEmpty()) emptyList()
+        else peers
+            .filter { it.deviceId in watchers || it.publicKeyHex in watchers }
+            .map { it.displayName.ifBlank { appContext.getString(com.locapeer.R.string.geo_unknown) } }
+            .sorted()
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     val uiState: StateFlow<MapUiState> = combine(
         snapshotFlow,
