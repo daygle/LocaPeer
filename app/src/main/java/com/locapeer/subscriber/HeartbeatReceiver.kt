@@ -27,6 +27,7 @@ import com.locapeer.data.entity.HeartbeatEntity
 import com.locapeer.data.entity.MessageEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.data.entity.PendingRequestEntity
+import com.locapeer.data.entity.scheduleRules
 import com.locapeer.geofence.GeofenceEngine
 import com.locapeer.messaging.DeliveryAckPayload
 import com.locapeer.messaging.ReadReceiptPayload
@@ -500,15 +501,31 @@ class HeartbeatReceiver @Inject constructor(
      * to a contact we are not already sharing with.
      */
     private suspend fun processLiveViewRequest(event: NostrEvent) {
-        if (!prefs.settings.first().allowLiveBoost) return
+        val settings = prefs.settings.first()
+        if (!settings.allowLiveBoost) return
+        // Not sharing at all right now (sharing off, or outside the global schedule): no
+        // live updates can flow, so there is no lease to grant - and nothing to tell the
+        // user ("watched live") that wouldn't be false.
+        if (!settings.heartbeatEnabled) return
+        if (!com.locapeer.sharing.SharingSchedule.isActive(settings.globalScheduleRules)) return
         val peer = peerDao.getPeer(event.pubkey) ?: return
         // Only meaningful for a contact we send location to; boosting for anyone else
         // would change nothing they can see.
         if (peer.locationRole != PeerEntity.ROLE_SEND &&
             peer.locationRole != PeerEntity.ROLE_SEND_RECEIVE
         ) return
-        // A per-contact pause overrides everything, exactly as it does for heartbeats.
-        if (sharingConfigDao.getForPeer(peer.deviceId)?.sharingEnabled == false) return
+        // A per-contact pause or inactive per-contact schedule overrides everything, exactly
+        // as it does for heartbeats (which would skip this contact anyway).
+        val cfg = sharingConfigDao.getForPeer(peer.deviceId)
+        if (cfg?.sharingEnabled == false) return
+        if (cfg != null) {
+            val (dayIndex, minute) = com.locapeer.sharing.SharingSchedule.nowDayMinute()
+            val active = com.locapeer.sharing.SharingSchedule.isPeerSharingActive(
+                cfg.scheduleRules(), dayIndex, minute,
+                cfg.temporaryShareEndsAtEpochSeconds, System.currentTimeMillis() / 1000
+            )
+            if (!active) return
+        }
 
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {

@@ -107,8 +107,6 @@ private const val CLASSIFY_BOOST_MS = 45_000L
  * small, bounded battery cost. Auto-expires back to the stationary profile.
  */
 private const val STATIONARY_ANCHOR_BOOST_MS = 20_000L
-/** How often the notification re-reads who is watching, only while someone is. */
-private const val WATCHER_NOTIFICATION_REFRESH_MS = 5_000L
 
 private fun MotionState.isMoving(): Boolean =
     this == MotionState.WALKING || this == MotionState.RUNNING ||
@@ -186,7 +184,6 @@ class HeartbeatService : LifecycleService() {
     /** Contacts currently watching us live, shown in the ongoing notification. */
     @Volatile private var watcherNames: List<String> = emptyList()
     private var lastWatcherKeys: Set<String> = emptySet()
-    private var watcherRefreshJob: kotlinx.coroutines.Job? = null
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
      *  contact is watching live, pulses run every few seconds but history is only written
@@ -673,17 +670,7 @@ class HeartbeatService : LifecycleService() {
             // even with the app closed or when the watcher has no pin on their map. Woken by
             // a new viewer; then re-reads the leases every few seconds (they lapse silently)
             // only until nobody is left, so an unwatched device never polls.
-            liveViewRegistry.newViewerEvents.collect {
-                watcherRefreshJob?.cancel()
-                watcherRefreshJob = launch {
-                    while (true) {
-                        val viewers = liveViewRegistry.activeViewers()
-                        applyWatchers(viewers)
-                        if (viewers.isEmpty()) break
-                        kotlinx.coroutines.delay(WATCHER_NOTIFICATION_REFRESH_MS)
-                    }
-                }
-            }
+            liveViewRegistry.viewersFlow().collect { applyWatchers(it) }
         }
         lifecycleScope.launch {
             // Room re-emits on every peers-table write; only reschedule when the
@@ -736,6 +723,10 @@ class HeartbeatService : LifecycleService() {
                 // A viewer's lease just went active. Switch GPS to the fast/high-accuracy
                 // live profile and pulse now instead of waiting out the current interval.
                 if (isStarted) {
+                    // Record the state the request is being rebuilt for, so the pulse this
+                    // triggers doesn't see a "transition" and reboot GPS a second time
+                    // (each reboot waits afresh for an accurate first fix).
+                    wasLiveView = intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
                     updateLocationRequest()
                     reschedulePulse()
                 }
@@ -1315,10 +1306,14 @@ class HeartbeatService : LifecycleService() {
                             pubKeyHex = pubHex,
                             kind = kind,
                             content = encrypted,
-                            tags = listOf(
-                                listOf("p", recipient.publicKeyHex),
-                                listOf("t", "locapeer-heartbeat")
-                            ),
+                            tags = buildList {
+                                add(listOf("p", recipient.publicKeyHex))
+                                add(listOf("t", "locapeer-heartbeat"))
+                                // A live-only pulse matters for seconds; let relays that
+                                // honour NIP-40 drop it rather than keep a dense live trail
+                                // (and replay it in catch-ups). Cadence pulses are kept.
+                                if (!cadencePulse) add(listOf("expiration", (nowSec + LIVE_EVENT_RELAY_TTL_S).toString()))
+                            },
                             crypto = crypto
                         )
                         relayClient.publishEvent(event)

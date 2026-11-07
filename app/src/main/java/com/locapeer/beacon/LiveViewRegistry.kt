@@ -2,7 +2,11 @@ package com.locapeer.beacon
 
 import android.os.SystemClock
 import java.util.concurrent.ConcurrentHashMap
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -55,6 +59,23 @@ class LiveViewRegistry @Inject constructor() {
         return !wasActive
     }
 
+    /**
+     * The set of current viewers, emitted whenever it changes. Event-driven: a new viewer
+     * wakes it at once, then - because departures have no event (leases lapse silently) -
+     * it re-reads every [refreshMs] *only while someone is watching*, going quiet again
+     * once the set is empty. So an unwatched device never polls.
+     */
+    @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
+    fun viewersFlow(refreshMs: Long = VIEWERS_REFRESH_MS): Flow<Set<String>> =
+        newViewerEvents.transformLatest {
+            while (true) {
+                val viewers = activeViewers()
+                emit(viewers)
+                if (viewers.isEmpty()) break
+                delay(refreshMs)
+            }
+        }.distinctUntilChanged()
+
     /** True when [viewerPubkey] holds an unexpired lease (is watching right now). */
     fun isViewing(viewerPubkey: String, now: Long = SystemClock.elapsedRealtime()): Boolean =
         (leases[viewerPubkey] ?: return false) > now
@@ -81,6 +102,13 @@ class LiveViewRegistry @Inject constructor() {
  *  visibly stutter the cadence, yet short enough that live mode ends within seconds of the
  *  viewer closing the map. */
 const val LIVE_VIEW_LEASE_MS = 45_000L
+
+/** How often [LiveViewRegistry.viewersFlow] re-reads the leases while anyone is watching. */
+const val VIEWERS_REFRESH_MS = 5_000L
+
+/** NIP-40 expiry for events only useful in the moment (live-only pulses, live-view
+ *  requests): relays that honour it drop them instead of storing a dense live trail. */
+const val LIVE_EVENT_RELAY_TTL_S = 300L
 
 /** Fastest broadcast interval while a viewer is actively watching (the default, and the
  *  shortest of [LIVE_UPDATE_INTERVAL_OPTIONS_S]). Matches the heartbeat loop's hard minimum. */

@@ -310,18 +310,10 @@ class MapViewModel @Inject constructor(
     // touched from the sequential uiState combine transform.
     private val recentHeartbeats = HashMap<String, Pair<HeartbeatEntity?, HeartbeatEntity>>()
 
-    /**
-     * Pubkeys of the contacts currently watching us live. Leases lapse silently (no event
-     * marks a viewer leaving), so the registry is re-read on a short tick; it is only
-     * collected while the map is on screen, and distinctUntilChanged keeps quiet ticks free.
-     */
-    private val watchersFlow: StateFlow<Set<String>> = flow {
-        while (true) {
-            emit(liveViewRegistry.activeViewers())
-            delay(WATCHERS_REFRESH_MS)
-        }
-    }.distinctUntilChanged()
-        // Shared by the pin badges and the "Watched by" banner; one ticker, only while shown.
+    /** Pubkeys of the contacts currently watching us live (see [LiveViewRegistry.viewersFlow]). */
+    private val watchersFlow: StateFlow<Set<String>> = liveViewRegistry.viewersFlow()
+        // Shared by the pin badges and the "Watched by" banner. Event-driven: it only
+        // re-reads the leases while someone is watching, never while nobody is.
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
 
     /**
@@ -371,7 +363,6 @@ class MapViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 
     companion object {
-        private const val WATCHERS_REFRESH_MS = 5_000L
         private val KEY_LAT = doublePreferencesKey("map_last_lat")
         private val KEY_LNG = doublePreferencesKey("map_last_lng")
         private val KEY_ZOOM = doublePreferencesKey("map_last_zoom")

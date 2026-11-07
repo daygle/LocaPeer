@@ -146,7 +146,11 @@ class LiveViewSender @Inject constructor(
                     pubKeyHex = pubHex,
                     kind = NostrEventKind.LIVE_VIEW_REQUEST,
                     content = encrypted,
-                    tags = listOf(listOf("p", recipient.publicKeyHex)),
+                    tags = listOf(
+                        listOf("p", recipient.publicKeyHex),
+                        // Stale within a minute; let NIP-40 relays discard it.
+                        listOf("expiration", (System.currentTimeMillis() / 1000 + LIVE_EVENT_RELAY_TTL_S).toString())
+                    ),
                     crypto = crypto
                 )
                 // A live-view request expires within a minute; never queue it for later.

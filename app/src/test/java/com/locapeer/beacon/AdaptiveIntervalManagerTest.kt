@@ -1,6 +1,7 @@
 package com.locapeer.beacon
 
 import com.locapeer.settings.AppSettings
+import kotlinx.coroutines.flow.first
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -176,5 +177,14 @@ class AdaptiveIntervalManagerTest {
         assertTrue(liveViewRegistry.isViewing("sam"))
         liveViewRegistry.grant("alex", leaseMs = 0L)
         assertFalse(liveViewRegistry.isViewing("alex"))
+    }
+
+    @Test
+    fun `viewersFlow emits the current viewers and an empty set when nobody watches`() {
+        kotlinx.coroutines.runBlocking {
+            assertEquals(emptySet<String>(), liveViewRegistry.viewersFlow().first())
+            liveViewRegistry.grant("sam")
+            assertEquals(setOf("sam"), liveViewRegistry.viewersFlow().first())
+        }
     }
 }
