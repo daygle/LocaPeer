@@ -823,6 +823,7 @@
     <string name="notif_tracking_alert_title">Tracking Alert</string>
     <string name="notif_live_watch_title">%1$s is watching you live</string>
     <string name="notif_live_watch_text">Your location is updating in real time.</string>
+    <string name="notif_live_watch_text_low_battery">Live updates are paused while your battery is low.</string>
     <string name="notif_tracking_proximity">%1$s received a proximity alert about you</string>
     <string name="notif_tracking_geofence">%1$s received an alert that you entered/exited fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s is monitoring your location</string>

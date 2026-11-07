@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">ခြေရာခံမှု သတိပေးချက်</string>
     <string name="notif_live_watch_title">%1$s က သင့်ကို တိုက်ရိုက်ကြည့်နေသည်</string>
     <string name="notif_live_watch_text">သင့်တည်နေရာကို အချိန်နှင့်တစ်ပြေးညီ အပ်ဒိတ်လုပ်နေသည်။</string>
+    <string name="notif_live_watch_text_low_battery">ဘက်ထရီ နည်းနေစဉ် တိုက်ရိုက်အပ်ဒိတ်များကို ခေတ္တရပ်ထားသည်။</string>
     <string name="notif_tracking_proximity">%1$s က သင့်အနီးအနားသို့ ရောက်ရှိခြင်း သတိပေးချက် ရရှိသည်</string>
     <string name="notif_tracking_geofence">%1$s က သင် ဂျီအိုခြံစည်းရိုးထဲသို့ ဝင်ရောက်ခြင်း/ထွက်ခွာခြင်း သတိပေးချက် ရရှိသည်- %2$s</string>
     <string name="notif_tracking_generic">%1$s က သင့်တည်နေရာကို စောင့်ကြည့်နေသည်</string>

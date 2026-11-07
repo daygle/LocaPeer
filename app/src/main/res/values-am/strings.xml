@@ -686,6 +686,7 @@
     <string name="notif_tracking_alert_title">የክትትል ማስጠንቀቂያ</string>
     <string name="notif_live_watch_title">%1$s በቀጥታ እየተመለከተዎት ነው</string>
     <string name="notif_live_watch_text">አካባቢዎ በእውነተኛ ጊዜ እየተዘመነ ነው።</string>
+    <string name="notif_live_watch_text_low_battery">ባትሪዎ ዝቅተኛ ሲሆን የቀጥታ ዝማኔዎች ቆመዋል።</string>
     <string name="notif_tracking_proximity">%1$s ስለ እርስዎ የቅርበት ማስጠንቀቂያ ደርሷቸዋል</string>
     <string name="notif_tracking_geofence">%1$s አጥር ውስጥ እንደገቡ/እንደወጡ ማስጠንቀቂያ ደርሷቸዋል፡ %2$s</string>
     <string name="notif_tracking_generic">%1$s አካባቢዎን እየተከታተሉ ነው</string>

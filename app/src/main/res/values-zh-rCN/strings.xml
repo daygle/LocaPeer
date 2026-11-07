@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">追踪警报</string>
     <string name="notif_live_watch_title">%1$s 正在实时查看你</string>
     <string name="notif_live_watch_text">你的位置正在实时更新。</string>
+    <string name="notif_live_watch_text_low_battery">电量不足期间，实时更新已暂停。</string>
     <string name="notif_tracking_proximity">%1$s 收到了一条关于您的距离警报</string>
     <string name="notif_tracking_geofence">%1$s 收到了一条您进入/离开围栏的警报：%2$s</string>
     <string name="notif_tracking_generic">%1$s 正在监控您的位置</string>

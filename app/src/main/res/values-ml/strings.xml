@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ട്രാക്കിംഗ് അലേർട്ട്</string>
     <string name="notif_live_watch_title">%1$s നിങ്ങളെ തത്സമയം കാണുന്നു</string>
     <string name="notif_live_watch_text">നിങ്ങളുടെ ലൊക്കേഷൻ തത്സമയം അപ്‌ഡേറ്റ് ചെയ്യുന്നു.</string>
+    <string name="notif_live_watch_text_low_battery">ബാറ്ററി കുറവായിരിക്കുമ്പോൾ തത്സമയ അപ്‌ഡേറ്റുകൾ താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു.</string>
     <string name="notif_tracking_proximity">നിങ്ങളെക്കുറിച്ച് %1$s-ന് ഒരു സാമീപ്യ അലേർട്ട് ലഭിച്ചു</string>
     <string name="notif_tracking_geofence">നിങ്ങൾ ഫെൻസിൽ പ്രവേശിച്ചു/പുറത്തുപോയി എന്ന് %1$s-ന് ഒരു അറിയിപ്പ് ലഭിച്ചു: %2$s</string>
     <string name="notif_tracking_generic">%1$s നിങ്ങളുടെ ലൊക്കേഷൻ നിരീക്ഷിക്കുന്നു</string>

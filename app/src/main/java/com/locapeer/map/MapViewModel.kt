@@ -329,12 +329,29 @@ class MapViewModel @Inject constructor(
             .sorted()
     }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
+    // Bumped when the earliest Live badge is due to expire, so [uiState] turns it off on
+    // time. Scheduled only while some pin is live - no polling otherwise (the minute
+    // ticker alone would leave a badge up for up to a minute after the stream stops).
+    private val liveExpiryTick = MutableStateFlow(0L)
+    private var liveExpiryJob: kotlinx.coroutines.Job? = null
+
+    private fun scheduleLiveExpiry(atMs: Long?) {
+        liveExpiryJob?.cancel()
+        if (atMs == null) return
+        liveExpiryJob = viewModelScope.launch {
+            delay((atMs - System.currentTimeMillis()).coerceAtLeast(0L) + 50L)
+            liveExpiryTick.value++
+        }
+    }
+
     val uiState: StateFlow<MapUiState> = combine(
         snapshotFlow,
         geofencesFlow,
         tickerFlow,
-        watchersFlow
-    ) { snapshot, fences, _, watchers ->
+        watchersFlow,
+        liveExpiryTick
+    ) { snapshot, fences, _, watchers, _ ->
+        var nextLiveExpiry: Long? = null
         val heartbeatMap = snapshot.heartbeats.associateBy { it.deviceId }
         val now = System.currentTimeMillis()
         val pins = snapshot.peers.filter { it.deviceId != snapshot.myPubkey }.map { peer ->
@@ -355,10 +372,13 @@ class MapViewModel @Inject constructor(
                     else -> seen.second.also { recentHeartbeats[peer.deviceId] = it to latest }
                 }
             }
-            val live = !overdue && LivePinDetector.isLive(previous, hb, now)
+            val liveUntil = LivePinDetector.liveUntil(previous, hb)
+            val live = !overdue && liveUntil != null && now < liveUntil
+            if (live && liveUntil != null) nextLiveExpiry = minOf(nextLiveExpiry ?: liveUntil, liveUntil)
             val watchingMe = peer.deviceId in watchers || peer.publicKeyHex in watchers
             PinData(peer, hb, overdue, live, watchingMe)
         }
+        scheduleLiveExpiry(nextLiveExpiry)
         MapUiState(pins = pins, geofences = fences)
     }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
 

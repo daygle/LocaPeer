@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Takip Uyarısı</string>
     <string name="notif_live_watch_title">%1$s sizi canlı izliyor</string>
     <string name="notif_live_watch_text">Konumunuz gerçek zamanlı güncelleniyor.</string>
+    <string name="notif_live_watch_text_low_battery">Piliniz zayıfken canlı güncellemeler duraklatıldı.</string>
     <string name="notif_tracking_proximity">%1$s sizinle ilgili bir yakınlık uyarısı aldı</string>
     <string name="notif_tracking_geofence">%1$s, %2$s çitine girdiğinize/çıktığınıza dair bir uyarı aldı</string>
     <string name="notif_tracking_generic">%1$s konumunuzu izliyor</string>

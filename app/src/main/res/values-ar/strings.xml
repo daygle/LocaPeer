@@ -737,6 +737,7 @@
     <string name="notif_tracking_alert_title">تنبيه تتبّع</string>
     <string name="notif_live_watch_title">%1$s يشاهدك مباشرةً</string>
     <string name="notif_live_watch_text">يتم تحديث موقعك في الوقت الفعلي.</string>
+    <string name="notif_live_watch_text_low_battery">التحديثات المباشرة متوقفة مؤقتًا بينما بطاريتك منخفضة.</string>
     <string name="notif_tracking_proximity">تلقّى %1$s تنبيه قرب يخصّك</string>
     <string name="notif_tracking_geofence">تلقّى %1$s تنبيهًا بدخولك/خروجك من السور: %2$s</string>
     <string name="notif_tracking_generic">%1$s يراقب موقعك</string>

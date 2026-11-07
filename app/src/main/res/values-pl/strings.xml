@@ -711,6 +711,7 @@
     <string name="notif_tracking_alert_title">Alert o śledzeniu</string>
     <string name="notif_live_watch_title">%1$s obserwuje cię na żywo</string>
     <string name="notif_live_watch_text">Twoja lokalizacja aktualizuje się w czasie rzeczywistym.</string>
+    <string name="notif_live_watch_text_low_battery">Aktualizacje na żywo są wstrzymane, dopóki bateria jest słaba.</string>
     <string name="notif_tracking_proximity">%1$s otrzymał(a) dotyczący Ciebie alert zbliżeniowy</string>
     <string name="notif_tracking_geofence">%1$s otrzymał(a) alert o Twoim wejściu/wyjściu ze strefy: %2$s</string>
     <string name="notif_tracking_generic">%1$s monitoruje Twoją lokalizację</string>

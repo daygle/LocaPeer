@@ -1291,7 +1291,8 @@ class HeartbeatService : LifecycleService() {
                             speed = if (suburb) 0f else fixSpeed,
                             bearing = if (suburb) 0f else fixBearing,
                             altitude = if (suburb) 0.0 else fixAltitude,
-                            expectedIntervalSeconds = cadenceIntervalSec
+                            expectedIntervalSeconds = cadenceIntervalSec,
+                            live = !cadencePulse
                         )
                         val payloadJson = Json.encodeToString(payload)
 

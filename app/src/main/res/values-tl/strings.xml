@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Alerto sa Pagtunton</string>
     <string name="notif_live_watch_title">Tinitingnan ka ni %1$s nang live</string>
     <string name="notif_live_watch_text">Nag-a-update ang iyong lokasyon nang real time.</string>
+    <string name="notif_live_watch_text_low_battery">Naka-pause ang mga live na update habang mahina ang iyong baterya.</string>
     <string name="notif_tracking_proximity">Nakatanggap si %1$s ng proximity alert tungkol sa iyo</string>
     <string name="notif_tracking_geofence">Nakatanggap si %1$s ng alerto na pumasok/lumabas ka sa fence: %2$s</string>
     <string name="notif_tracking_generic">Sinusubaybayan ni %1$s ang iyong lokasyon</string>

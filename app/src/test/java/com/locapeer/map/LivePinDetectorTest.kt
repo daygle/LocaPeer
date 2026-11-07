@@ -1,7 +1,9 @@
 package com.locapeer.map
 
 import com.locapeer.data.entity.HeartbeatEntity
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -80,5 +82,19 @@ class LivePinDetectorTest {
         val prev = hb(1, now - 16_000, now - 16_000).copy(isSos = true)
         val latest = hb(2, now - 1_000, now - 1_000).copy(isSos = true)
         assertFalse(LivePinDetector.isLive(prev, latest, now))
+    }
+
+    @Test
+    fun `liveUntil is two arrival gaps after the latest heartbeat, at least 20 seconds`() {
+        val prev = hb(1, now - 6_000, now - 6_000)
+        val latest = hb(2, now - 1_000, now - 1_000)
+        assertEquals(now - 1_000 + 20_000, LivePinDetector.liveUntil(prev, latest))
+        val slowPrev = hb(3, now - 31_000, now - 31_000)
+        assertEquals(now - 1_000 + 60_000, LivePinDetector.liveUntil(slowPrev, latest))
+    }
+
+    @Test
+    fun `liveUntil is null for a cadence pair`() {
+        assertNull(LivePinDetector.liveUntil(hb(1, now - 121_000, now - 121_000), hb(2, now, now)))
     }
 }

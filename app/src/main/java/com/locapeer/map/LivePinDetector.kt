@@ -29,19 +29,26 @@ object LivePinDetector {
     /** Minimum time the badge persists after the newest heartbeat (a few fastest intervals). */
     private const val MIN_FRESH_MS = LIVE_VIEW_INTERVAL_MS * 4
 
-    fun isLive(previous: HeartbeatEntity?, latest: HeartbeatEntity?, nowMs: Long): Boolean {
-        if (latest == null || latest.isSos) return false
+    fun isLive(previous: HeartbeatEntity?, latest: HeartbeatEntity?, nowMs: Long): Boolean =
+        liveUntil(previous, latest)?.let { nowMs < it } ?: false
+
+    /**
+     * When (receiver clock, epoch ms) the Live badge for this pair of heartbeats should turn
+     * off, or null if they don't form a live stream at all. Lets the map refresh exactly
+     * when a badge expires instead of polling.
+     */
+    fun liveUntil(previous: HeartbeatEntity?, latest: HeartbeatEntity?): Long? {
+        if (latest == null || latest.isSos) return null
         // receivedAt is the receiver's own clock, so freshness is immune to sender skew.
-        val sinceLatest = nowMs - latest.receivedAt
-        if (latest.expectedIntervalSeconds * 1000L <= LIVE_VIEW_INTERVAL_MS) return sinceLatest < MIN_FRESH_MS
-        if (previous == null || previous.id == latest.id) return false
+        if (latest.expectedIntervalSeconds * 1000L <= LIVE_VIEW_INTERVAL_MS) return latest.receivedAt + MIN_FRESH_MS
+        if (previous == null || previous.id == latest.id) return null
         // Both gaps must be short: arrival alone would also match a relay catch-up burst
         // replaying old cadence heartbeats together, whose send timestamps are far apart.
         val arrivalGap = latest.receivedAt - previous.receivedAt
         val sendGap = latest.timestamp - previous.timestamp
-        if (arrivalGap !in 0..MAX_LIVE_GAP_MS || sendGap !in 0..MAX_LIVE_GAP_MS) return false
+        if (arrivalGap !in 0..MAX_LIVE_GAP_MS || sendGap !in 0..MAX_LIVE_GAP_MS) return null
         // Stay live for a couple of the sender's own intervals, so a slower live stream
         // (e.g. 30s) doesn't flicker off between updates.
-        return sinceLatest < maxOf(MIN_FRESH_MS, arrivalGap * 2)
+        return latest.receivedAt + maxOf(MIN_FRESH_MS, arrivalGap * 2)
     }
 }

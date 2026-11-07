@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">추적 알림</string>
     <string name="notif_live_watch_title">%1$s 님이 나를 실시간으로 보고 있습니다</string>
     <string name="notif_live_watch_text">내 위치가 실시간으로 업데이트되고 있습니다.</string>
+    <string name="notif_live_watch_text_low_battery">배터리가 부족한 동안 실시간 업데이트가 일시 중지됩니다.</string>
     <string name="notif_tracking_proximity">%1$s 님이 나에 대한 근접 알림을 받았습니다</string>
     <string name="notif_tracking_geofence">%1$s 님이 내가 구역 %2$s에 진입/이탈했다는 알림을 받았습니다</string>
     <string name="notif_tracking_generic">%1$s 님이 내 위치를 모니터링하고 있습니다</string>

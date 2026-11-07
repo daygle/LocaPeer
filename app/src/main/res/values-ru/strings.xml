@@ -711,6 +711,7 @@
     <string name="notif_tracking_alert_title">Оповещение об отслеживании</string>
     <string name="notif_live_watch_title">%1$s смотрит на вас в реальном времени</string>
     <string name="notif_live_watch_text">Ваше местоположение обновляется в реальном времени.</string>
+    <string name="notif_live_watch_text_low_battery">Обновления в реальном времени приостановлены, пока батарея разряжена.</string>
     <string name="notif_tracking_proximity">%1$s получил(а) оповещение о вашей близости</string>
     <string name="notif_tracking_geofence">%1$s получил(а) оповещение о входе/выходе из зоны: %2$s</string>
     <string name="notif_tracking_generic">%1$s следит за вашим местоположением</string>

@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">追跡アラート</string>
     <string name="notif_live_watch_title">%1$s があなたをライブで見ています</string>
     <string name="notif_live_watch_text">位置情報がリアルタイムで更新されています。</string>
+    <string name="notif_live_watch_text_low_battery">バッテリー残量が少ないため、ライブ更新は一時停止中です。</string>
     <string name="notif_tracking_proximity">%1$sがあなたに関する近接アラートを受信しました</string>
     <string name="notif_tracking_geofence">%1$sがあなたがフェンス： %2$sに入った/出たというアラートを受信しました</string>
     <string name="notif_tracking_generic">%1$sがあなたの位置情報をモニタリングしています</string>

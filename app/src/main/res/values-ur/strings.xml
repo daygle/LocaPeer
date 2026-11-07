@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ٹریکنگ الرٹ</string>
     <string name="notif_live_watch_title">%1$s آپ کو لائیو دیکھ رہے ہیں</string>
     <string name="notif_live_watch_text">آپ کا مقام ریئل ٹائم میں اپ ڈیٹ ہو رہا ہے۔</string>
+    <string name="notif_live_watch_text_low_battery">جب تک آپ کی بیٹری کم ہے، لائیو اپ ڈیٹس رکی ہوئی ہیں۔</string>
     <string name="notif_tracking_proximity">%1$s کو آپ کے بارے میں قربت الرٹ ملا</string>
     <string name="notif_tracking_geofence">%1$s کو الرٹ ملا کہ آپ فینس میں داخل/خارج ہوئے: %2$s</string>
     <string name="notif_tracking_generic">%1$s آپ کے مقام کی نگرانی کر رہا ہے</string>

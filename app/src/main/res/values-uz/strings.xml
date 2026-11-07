@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Kuzatuv ogohlantirishi</string>
     <string name="notif_live_watch_title">%1$s sizni jonli kuzatmoqda</string>
     <string name="notif_live_watch_text">Joylashuvingiz real vaqtda yangilanmoqda.</string>
+    <string name="notif_live_watch_text_low_battery">Batareya quvvati past ekan, jonli yangilanishlar to\'xtatilgan.</string>
     <string name="notif_tracking_proximity">%1$s siz haqingizda yaqinlik ogohlantirishi oldi</string>
     <string name="notif_tracking_geofence">%1$s sizning hududga kirganingiz/chiqqaningiz haqida ogohlantirish oldi: %2$s</string>
     <string name="notif_tracking_generic">%1$s sizning joylashuvingizni kuzatmoqda</string>

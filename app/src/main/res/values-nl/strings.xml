@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Volgmelding</string>
     <string name="notif_live_watch_title">%1$s bekijkt je live</string>
     <string name="notif_live_watch_text">Je locatie wordt realtime bijgewerkt.</string>
+    <string name="notif_live_watch_text_low_battery">Live-updates zijn gepauzeerd zolang je batterij bijna leeg is.</string>
     <string name="notif_tracking_proximity">%1$s heeft een nabijheidsmelding over jou ontvangen</string>
     <string name="notif_tracking_geofence">%1$s heeft een melding ontvangen dat je zone %2$s bent binnengegaan/verlaten</string>
     <string name="notif_tracking_generic">%1$s volgt je locatie</string>

@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">Mkpu Nleba anya</string>
     <string name="notif_live_watch_title">%1$s na-ele gị ndụ</string>
     <string name="notif_live_watch_text">A na-emelite ọnọdụ gị ozugbo.</string>
+    <string name="notif_live_watch_text_low_battery">Akwụsịtụrụ mmelite ndụ ka batrị gị dị ala.</string>
     <string name="notif_tracking_proximity">%1$s nwetara mkpu nso gbasara gị</string>
     <string name="notif_tracking_geofence">%1$s nwetara mkpu na ị banyere/pụọ na fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s na-eleba anya n\'ebe ị nọ</string>

@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ट्रॅकिंग अलर्ट</string>
     <string name="notif_live_watch_title">%1$s तुम्हाला लाइव्ह पाहत आहे</string>
     <string name="notif_live_watch_text">तुमचे स्थान रिअल टाइममध्ये अपडेट होत आहे.</string>
+    <string name="notif_live_watch_text_low_battery">तुमची बॅटरी कमी असेपर्यंत लाइव्ह अपडेट थांबवले आहेत.</string>
     <string name="notif_tracking_proximity">तुमच्याबद्दल %1$s ला प्रॉक्सिमिटी अलर्ट मिळाला आहे</string>
     <string name="notif_tracking_geofence">तुम्ही फेन्समध्ये प्रवेश केला/बाहेर पडलात असा %1$s ला अलर्ट मिळाला आहे: %2$s</string>
     <string name="notif_tracking_generic">%1$s तुमच्या स्थानावर देखरेख ठेवत आहेत</string>

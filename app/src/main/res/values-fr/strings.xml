@@ -686,6 +686,7 @@
     <string name="notif_tracking_alert_title">Alerte de suivi</string>
     <string name="notif_live_watch_title">%1$s vous regarde en direct</string>
     <string name="notif_live_watch_text">Votre position est mise à jour en temps réel.</string>
+    <string name="notif_live_watch_text_low_battery">Les mises à jour en direct sont suspendues tant que votre batterie est faible.</string>
     <string name="notif_tracking_proximity">%1$s a reçu une alerte de proximité vous concernant</string>
     <string name="notif_tracking_geofence">%1$s a reçu une alerte indiquant que vous êtes entré/sorti de la zone : %2$s</string>
     <string name="notif_tracking_generic">%1$s surveille votre localisation</string>

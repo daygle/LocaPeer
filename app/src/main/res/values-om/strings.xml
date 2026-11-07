@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Akeekkachiisa Hordoffii</string>
     <string name="notif_live_watch_title">%1$s kallattiin si ilaalaa jira</string>
     <string name="notif_live_watch_text">Iddoon kee yeroo dhugaatti haaromfamaa jira.</string>
+    <string name="notif_live_watch_text_low_battery">Yeroo baatiriin kee gadi aanaa taʼetti haaromsi kallattii dhaabbateera.</string>
     <string name="notif_tracking_proximity">%1$s akeekkachiisa dhiheenyaa waa\'ee kee argateera</string>
     <string name="notif_tracking_geofence">%1$s akeekkachiisa ati fence seente/baate argateera: %2$s</string>
     <string name="notif_tracking_generic">%1$s bakka ati jirtu to\'achaa jira</string>

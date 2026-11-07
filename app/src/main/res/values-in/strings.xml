@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">Peringatan Pelacakan</string>
     <string name="notif_live_watch_title">%1$s sedang melihat Anda secara langsung</string>
     <string name="notif_live_watch_text">Lokasi Anda diperbarui secara real time.</string>
+    <string name="notif_live_watch_text_low_battery">Pembaruan langsung dijeda selama baterai Anda lemah.</string>
     <string name="notif_tracking_proximity">%1$s menerima peringatan jarak dekat tentang Anda</string>
     <string name="notif_tracking_geofence">%1$s menerima peringatan bahwa Anda masuk/keluar pagar: %2$s</string>
     <string name="notif_tracking_generic">%1$s memantau lokasi Anda</string>

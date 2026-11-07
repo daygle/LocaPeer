@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Verfolgungswarnung</string>
     <string name="notif_live_watch_title">%1$s sieht dich live an</string>
     <string name="notif_live_watch_text">Dein Standort wird in Echtzeit aktualisiert.</string>
+    <string name="notif_live_watch_text_low_battery">Live-Aktualisierungen sind pausiert, solange dein Akku schwach ist.</string>
     <string name="notif_tracking_proximity">%1$s hat eine Annäherungswarnung über Sie erhalten</string>
     <string name="notif_tracking_geofence">%1$s hat eine Warnung erhalten, dass Sie den Zaun %2$s betreten/verlassen haben</string>
     <string name="notif_tracking_generic">%1$s überwacht Ihren Standort</string>

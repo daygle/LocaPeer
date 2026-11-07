@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">การเตือนการติดตาม</string>
     <string name="notif_live_watch_title">%1$s กำลังดูคุณแบบสด</string>
     <string name="notif_live_watch_text">ตำแหน่งของคุณกำลังอัปเดตแบบเรียลไทม์</string>
+    <string name="notif_live_watch_text_low_battery">การอัปเดตแบบสดหยุดชั่วคราวขณะที่แบตเตอรี่ของคุณเหลือน้อย</string>
     <string name="notif_tracking_proximity">%1$s ได้รับการเตือนระยะใกล้เกี่ยวกับคุณ</string>
     <string name="notif_tracking_geofence">%1$s ได้รับการเตือนว่าคุณเข้า/ออกรั้ว: %2$s</string>
     <string name="notif_tracking_generic">%1$s กำลังเฝ้าดูตำแหน่งของคุณ</string>

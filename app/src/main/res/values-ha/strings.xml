@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Gargaɗin Sa Ido</string>
     <string name="notif_live_watch_title">%1$s yana kallonka kai tsaye</string>
     <string name="notif_live_watch_text">Ana sabunta wurinka nan take.</string>
+    <string name="notif_live_watch_text_low_battery">An dakatar da sabuntawa kai tsaye saboda batirinka ya yi ƙasa.</string>
     <string name="notif_tracking_proximity">%1$s ya sami gargaɗin kusanci gamshe ku</string>
     <string name="notif_tracking_geofence">%1$s ya sami gargaɗin cewa kun shiga/fita fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s yana sa ido kan wurin ku</string>

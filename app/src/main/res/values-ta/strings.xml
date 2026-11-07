@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">கண்காணிப்பு எச்சரிக்கை</string>
     <string name="notif_live_watch_title">%1$s உங்களை நேரலையில் பார்க்கிறார்</string>
     <string name="notif_live_watch_text">உங்கள் இருப்பிடம் நிகழ்நேரத்தில் புதுப்பிக்கப்படுகிறது.</string>
+    <string name="notif_live_watch_text_low_battery">உங்கள் பேட்டரி குறைவாக இருக்கும்வரை நேரலை புதுப்பிப்புகள் இடைநிறுத்தப்பட்டுள்ளன.</string>
     <string name="notif_tracking_proximity">%1$s உங்களைப் பற்றிய அருகாமை எச்சரிக்கையைப் பெற்றார்</string>
     <string name="notif_tracking_geofence">நீங்கள் வேலிக்குள் நுழைந்தீர்கள்/வெளியேறினீர்கள் என்று %1$s எச்சரிக்கையைப் பெற்றார்: %2$s</string>
     <string name="notif_tracking_generic">%1$s உங்கள் இருப்பிடத்தைக் கண்காணிக்கிறார்</string>

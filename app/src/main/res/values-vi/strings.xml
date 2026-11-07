@@ -672,6 +672,7 @@
     <string name="notif_tracking_alert_title">Cảnh báo theo dõi</string>
     <string name="notif_live_watch_title">%1$s đang xem bạn trực tiếp</string>
     <string name="notif_live_watch_text">Vị trí của bạn đang được cập nhật theo thời gian thực.</string>
+    <string name="notif_live_watch_text_low_battery">Cập nhật trực tiếp đang tạm dừng khi pin của bạn yếu.</string>
     <string name="notif_tracking_proximity">%1$s đã nhận cảnh báo khoảng cách gần về bạn</string>
     <string name="notif_tracking_geofence">%1$s đã nhận cảnh báo rằng bạn vào/ra khỏi hàng rào: %2$s</string>
     <string name="notif_tracking_generic">%1$s đang theo dõi vị trí của bạn</string>

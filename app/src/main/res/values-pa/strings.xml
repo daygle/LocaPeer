@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ਟਰੈਕਿੰਗ ਅਲਰਟ</string>
     <string name="notif_live_watch_title">%1$s ਤੁਹਾਨੂੰ ਲਾਈਵ ਦੇਖ ਰਹੇ ਹਨ</string>
     <string name="notif_live_watch_text">ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਰੀਅਲ ਟਾਈਮ ਵਿੱਚ ਅੱਪਡੇਟ ਹੋ ਰਿਹਾ ਹੈ।</string>
+    <string name="notif_live_watch_text_low_battery">ਤੁਹਾਡੀ ਬੈਟਰੀ ਘੱਟ ਹੋਣ ਤੱਕ ਲਾਈਵ ਅੱਪਡੇਟ ਰੋਕੇ ਗਏ ਹਨ।</string>
     <string name="notif_tracking_proximity">%1$s ਨੂੰ ਤੁਹਾਡੇ ਬਾਰੇ ਨੇੜਤਾ ਅਲਰਟ ਪ੍ਰਾਪਤ ਹੋਇਆ ਹੈ</string>
     <string name="notif_tracking_geofence">%1$s ਨੂੰ ਅਲਰਟ ਪ੍ਰਾਪਤ ਹੋਇਆ ਹੈ ਕਿ ਤੁਸੀਂ ਘੇਰੇ ਵਿੱਚ ਦਾਖਲ ਹੋਏ/ਬਾਹਰ ਗਏ ਹੋ: %2$s</string>
     <string name="notif_tracking_generic">%1$s ਤੁਹਾਡੇ ਟਿਕਾਣੇ ਦੀ ਨਿਗਰਾਨੀ ਕਰ ਰਿਹਾ ਹੈ</string>

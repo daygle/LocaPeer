@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Követési riasztás</string>
     <string name="notif_live_watch_title">%1$s élőben figyel téged</string>
     <string name="notif_live_watch_text">A helyzeted valós időben frissül.</string>
+    <string name="notif_live_watch_text_low_battery">Az élő frissítések szünetelnek, amíg alacsony az akkumulátor töltöttsége.</string>
     <string name="notif_tracking_proximity">%1$s közelségi riasztást kapott Önről</string>
     <string name="notif_tracking_geofence">%1$s riasztást kapott arról, hogy Ön belépett a(z) %2$s kerítésbe / elhagyta azt</string>
     <string name="notif_tracking_generic">%1$s figyeli az Ön helyzetét</string>

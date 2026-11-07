@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ಟ್ರ್ಯಾಕಿಂಗ್ ಎಚ್ಚರಿಕೆ</string>
     <string name="notif_live_watch_title">%1$s ನಿಮ್ಮನ್ನು ಲೈವ್ ಆಗಿ ನೋಡುತ್ತಿದ್ದಾರೆ</string>
     <string name="notif_live_watch_text">ನಿಮ್ಮ ಸ್ಥಳ ನೈಜ ಸಮಯದಲ್ಲಿ ನವೀಕರಿಸುತ್ತಿದೆ.</string>
+    <string name="notif_live_watch_text_low_battery">ನಿಮ್ಮ ಬ್ಯಾಟರಿ ಕಡಿಮೆ ಇರುವವರೆಗೆ ಲೈವ್ ನವೀಕರಣಗಳನ್ನು ವಿರಾಮಗೊಳಿಸಲಾಗಿದೆ.</string>
     <string name="notif_tracking_proximity">%1$s ನಿಮ್ಮ ಬಗ್ಗೆ ಸಾಮೀಪ್ಯ ಎಚ್ಚರಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ್ದಾರೆ</string>
     <string name="notif_tracking_geofence">ನೀವು ಬೇಲಿಯನ್ನು ಪ್ರವೇಶಿಸಿದಿರಿ/ನಿರ್ಗಮಿಸಿದಿರಿ ಎಂದು %1$s ಎಚ್ಚರಿಕೆಯನ್ನು ಸ್ವೀಕರಿಸಿದ್ದಾರೆ: %2$s</string>
     <string name="notif_tracking_generic">%1$s ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡುತ್ತಿದ್ದಾರೆ</string>

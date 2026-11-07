@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">ట్రాకింగ్ హెచ్చరిక</string>
     <string name="notif_live_watch_title">%1$s మిమ్మల్ని ప్రత్యక్షంగా చూస్తున్నారు</string>
     <string name="notif_live_watch_text">మీ స్థానం నిజ సమయంలో నవీకరించబడుతోంది.</string>
+    <string name="notif_live_watch_text_low_battery">మీ బ్యాటరీ తక్కువగా ఉన్నంత వరకు ప్రత్యక్ష నవీకరణలు పాజ్ చేయబడ్డాయి.</string>
     <string name="notif_tracking_proximity">మీ గురించి %1$s కి సామీప్య హెచ్చరిక అందింది</string>
     <string name="notif_tracking_geofence">మీరు ఫెన్స్ లోపలికి వచ్చారని/బయటికి వెళ్ళారని %1$s కి అలర్ట్ అందింది: %2$s</string>
     <string name="notif_tracking_generic">%1$s మీ స్థానాన్ని పర్యవేక్షిస్తున్నారు</string>

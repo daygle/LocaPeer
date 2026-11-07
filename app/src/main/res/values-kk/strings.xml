@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Бақылау ескертуі</string>
     <string name="notif_live_watch_title">%1$s сізді тікелей көріп отыр</string>
     <string name="notif_live_watch_text">Орныңыз нақты уақытта жаңартылуда.</string>
+    <string name="notif_live_watch_text_low_battery">Батарея заряды аз болғанда тікелей жаңартулар кідіртіледі.</string>
     <string name="notif_tracking_proximity">%1$s сіз туралы жақындық ескертуін алды</string>
     <string name="notif_tracking_geofence">%1$s сіздің қоршауға кіргеніңіз/шыққаныңыз туралы ескерту алды: %2$s</string>
     <string name="notif_tracking_generic">%1$s сіздің орныңызды бақылауда</string>

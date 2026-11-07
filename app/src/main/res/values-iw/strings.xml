@@ -698,6 +698,7 @@
     <string name="notif_tracking_alert_title">התראת מעקב</string>
     <string name="notif_live_watch_title">%1$s צופה בך בזמן אמת</string>
     <string name="notif_live_watch_text">המיקום שלך מתעדכן בזמן אמת.</string>
+    <string name="notif_live_watch_text_low_battery">העדכונים החיים מושהים כל עוד הסוללה חלשה.</string>
     <string name="notif_tracking_proximity">‏%1$s קיבל התראת קרבה לגביך</string>
     <string name="notif_tracking_geofence">‏%1$s קיבל התראה שנכנסת/יצאת מהגדר: %2$s</string>
     <string name="notif_tracking_generic">‏%1$s מנטר את מיקומך</string>

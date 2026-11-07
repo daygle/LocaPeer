@@ -698,6 +698,7 @@
     <string name="notif_tracking_alert_title">Alertă de urmărire</string>
     <string name="notif_live_watch_title">%1$s te urmărește live</string>
     <string name="notif_live_watch_text">Locația ta se actualizează în timp real.</string>
+    <string name="notif_live_watch_text_low_battery">Actualizările live sunt întrerupte cât timp bateria este descărcată.</string>
     <string name="notif_tracking_proximity">%1$s a primit o alertă de proximitate despre dvs.</string>
     <string name="notif_tracking_geofence">%1$s a primit o alertă că ați intrat/ieșit din perimetrul: %2$s</string>
     <string name="notif_tracking_generic">%1$s vă monitorizează locația</string>

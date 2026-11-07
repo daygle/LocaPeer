@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">د تعقیب خبرتیا</string>
     <string name="notif_live_watch_title">%1$s تاسو ژوندی ګوري</string>
     <string name="notif_live_watch_text">ستاسو موقعیت په ریښتیني وخت کې تازه کېږي.</string>
+    <string name="notif_live_watch_text_low_battery">تر هغه چې ستاسو بیټرۍ کمه وي، ژوندي تازه معلومات درول شوي دي.</string>
     <string name="notif_tracking_proximity">%1$s ستاسو په اړه د نږدېوالي خبرتیا ترلاسه کړه</string>
     <string name="notif_tracking_geofence">%1$s خبرتیا ترلاسه کړه چې تاسو سیمې ته ننوتی/ووتل: %2$s</string>
     <string name="notif_tracking_generic">%1$s ستاسو ځای څاري</string>

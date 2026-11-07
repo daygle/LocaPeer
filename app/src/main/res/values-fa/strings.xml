@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">هشدار ردیابی</string>
     <string name="notif_live_watch_title">%1$s در حال تماشای زنده شماست</string>
     <string name="notif_live_watch_text">موقعیت شما به‌صورت لحظه‌ای به‌روزرسانی می‌شود.</string>
+    <string name="notif_live_watch_text_low_battery">تا زمانی که باتری شما کم است، به‌روزرسانی‌های زنده متوقف شده‌اند.</string>
     <string name="notif_tracking_proximity">%1$s هشدار مجاورتی درباره شما دریافت کرد</string>
     <string name="notif_tracking_geofence">%1$s هشداری دریافت کرد که شما وارد/خارج از حصار شدید: %2$s</string>
     <string name="notif_tracking_generic">%1$s موقعیت شما را پایش می‌کند</string>

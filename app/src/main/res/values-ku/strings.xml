@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Hişyariya Şopandinê</string>
     <string name="notif_live_watch_title">%1$s zindî li te temaşe dike</string>
     <string name="notif_live_watch_text">Cihê te di dema rast de tê nûkirin.</string>
+    <string name="notif_live_watch_text_low_battery">Heta ku bataryaya te kêm be, nûvekirinên zindî rawestiyane.</string>
     <string name="notif_tracking_proximity">%1$s hişyariyek nêzîkbûnê li ser we stand</string>
     <string name="notif_tracking_geofence">%1$s hişyariyek stand ku hûn ketine/derketine ji fence: %2$s</string>
     <string name="notif_tracking_generic">%1$s cihê we dişopîne</string>

@@ -711,6 +711,7 @@
     <string name="notif_tracking_alert_title">Upozornění na sledování</string>
     <string name="notif_live_watch_title">%1$s vás sleduje živě</string>
     <string name="notif_live_watch_text">Vaše poloha se aktualizuje v reálném čase.</string>
+    <string name="notif_live_watch_text_low_battery">Živé aktualizace jsou pozastaveny, dokud je baterie slabá.</string>
     <string name="notif_tracking_proximity">%1$s obdržel(a) upozornění na vaši blízkost</string>
     <string name="notif_tracking_geofence">%1$s obdržel(a) upozornění, že jste vstoupili do zóny/opustili zónu: %2$s</string>
     <string name="notif_tracking_generic">%1$s sleduje vaši polohu</string>

@@ -685,6 +685,7 @@
     <string name="notif_tracking_alert_title">Spårningslarm</string>
     <string name="notif_live_watch_title">%1$s tittar på dig live</string>
     <string name="notif_live_watch_text">Din plats uppdateras i realtid.</string>
+    <string name="notif_live_watch_text_low_battery">Liveuppdateringar är pausade medan batteriet är lågt.</string>
     <string name="notif_tracking_proximity">%1$s fick ett närhetslarm om dig</string>
     <string name="notif_tracking_geofence">%1$s fick ett larm om att du gått in i/lämnat staketet: %2$s</string>
     <string name="notif_tracking_generic">%1$s bevakar din plats</string>

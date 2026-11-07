@@ -328,6 +328,9 @@ class HeartbeatReceiver @Inject constructor(
     private val batchMutex = Mutex()
     private val pendingHeartbeats = mutableListOf<HeartbeatEntity>()
     private val pendingKeys = HashSet<String>()
+    // Stored rows superseded by a newer live point (deviceId to timestamp), deleted in the
+    // same transaction as the next flush. Guarded by batchMutex.
+    private val pendingDeletes = mutableListOf<Pair<String, Long>>()
     private var flushJob: Job? = null
     private var flushFailures = 0
 
@@ -575,7 +578,14 @@ class HeartbeatReceiver @Inject constructor(
         val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
             .setSmallIcon(R.drawable.ic_notif_location)
             .setContentTitle(context.getString(R.string.notif_live_watch_title, name))
-            .setContentText(context.getString(R.string.notif_live_watch_text))
+            // Below 20% battery live mode is suppressed (battery protection wins), so don't
+            // claim a real-time stream that isn't happening.
+            .setContentText(
+                context.getString(
+                    if (isBatteryLow()) R.string.notif_live_watch_text_low_battery
+                    else R.string.notif_live_watch_text
+                )
+            )
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pi)
             .setAutoCancel(true)
@@ -583,6 +593,13 @@ class HeartbeatReceiver @Inject constructor(
             .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
             .build()
         notificationManager.notify(peer.publicKeyHex, NOTIF_ID_LIVE_WATCH, notification)
+    }
+
+    /** Same threshold as [com.locapeer.beacon.AdaptiveIntervalManager.isLowBattery]. */
+    private fun isBatteryLow(): Boolean {
+        val level = context.getSystemService(android.os.BatteryManager::class.java)
+            ?.getIntProperty(android.os.BatteryManager.BATTERY_PROPERTY_CAPACITY) ?: return false
+        return level in 0 until 20
     }
 
     /**
@@ -678,6 +695,13 @@ class HeartbeatReceiver @Inject constructor(
             // The bulk of a catch-up burst is stale, so this side-effect path (and its
             // extra DB read for the previous position) is skipped for the common case.
             val isFresh = System.currentTimeMillis() - timestampMs < FRESH_HEARTBEAT_MS
+            // A live-only pulse replayed later (catch-up from a relay that ignored its
+            // NIP-40 expiry) has no use: the live moment is over and the sender's cadence
+            // heartbeats already cover the history. Drop it.
+            if (payload.live && !isFresh && !isSos) {
+                advanceHeartbeatBaseline(event.createdAt)
+                return
+            }
             // Read the previous position BEFORE buffering this one: a size-triggered flush
             // inside enqueueHeartbeat would otherwise make this very ping the "previous"
             // one, and the geofence engine would then never see the transition.
@@ -688,6 +712,10 @@ class HeartbeatReceiver @Inject constructor(
                 val stored = heartbeatDao.getLatestHeartbeat(canonicalDeviceId)
                 listOfNotNull(buffered, stored).maxByOrNull { it.timestamp }
             } else null
+            // Keep at most one live-only point per contact: each new live pulse (and the
+            // next cadence heartbeat) replaces the previous live one, so while we watch
+            // someone their pin moves live but our history of them keeps their cadence.
+            replacePreviousLivePoint(canonicalDeviceId, keepAs = if (payload.live && !isSos) timestampMs else null)
             // Buffer the insert; the batch flusher persists it transactionally so a
             // catch-up burst produces a handful of Room invalidations, not hundreds.
             enqueueHeartbeat(entity)
@@ -725,6 +753,30 @@ class HeartbeatReceiver @Inject constructor(
         if (safeEpoch > lastPersistedHbEpoch + HB_EPOCH_SAVE_INTERVAL_S) {
             lastPersistedHbEpoch = safeEpoch
             prefs.setLastHeartbeatSubEpoch(safeEpoch)
+        }
+    }
+
+    // deviceId -> timestamp of the latest live-only point stored for that contact. Touched
+    // only from processEvent, which handles heartbeats sequentially.
+    private val lastLivePoint = HashMap<String, Long>()
+
+    /**
+     * Remove the previously stored live-only point for [deviceId], if any - from the
+     * pending batch, or from the database on the next flush - and remember [keepAs] (the incoming point's
+     * timestamp when it is itself live-only, else null) as the one to replace next time.
+     */
+    private suspend fun replacePreviousLivePoint(deviceId: String, keepAs: Long?) {
+        val previous = if (keepAs != null) lastLivePoint.put(deviceId, keepAs) else lastLivePoint.remove(deviceId)
+        if (previous == null) return
+        batchMutex.withLock {
+            val removed = pendingHeartbeats.removeAll { it.deviceId == deviceId && it.timestamp == previous }
+            if (removed) {
+                pendingKeys.remove(hbKey(deviceId, previous))
+            } else {
+                // Already stored: delete it in the same transaction that stores its
+                // replacement (enqueued right after this), so the latest pin never steps back.
+                pendingDeletes += deviceId to previous
+            }
         }
     }
 
@@ -787,9 +839,10 @@ class HeartbeatReceiver @Inject constructor(
             try {
                 // Keep dedup keys visible until commit; a timer flush must not open a gap
                 // where the event collector queues an already-in-flight heartbeat again.
-                heartbeatDao.insertAllForExistingPeers(pendingHeartbeats.toList())
+                heartbeatDao.insertAllForExistingPeersReplacing(pendingHeartbeats.toList(), pendingDeletes.toList())
                 pendingHeartbeats.clear()
                 pendingKeys.clear()
+                pendingDeletes.clear()
                 flushFailures = 0
             } catch (e: Exception) {
                 if (e is kotlinx.coroutines.CancellationException) throw e
@@ -800,6 +853,7 @@ class HeartbeatReceiver @Inject constructor(
                     Log.e(TAG, "Dropping heartbeat batch (${pendingHeartbeats.size}) after $flushFailures failed flushes", e)
                     pendingHeartbeats.clear()
                     pendingKeys.clear()
+                    pendingDeletes.clear()
                     flushFailures = 0
                     return
                 }
