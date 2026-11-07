@@ -988,7 +988,7 @@
     <string name="scan_add_denied">Your supervisor declined adding this contact.</string>
     <string name="incoming_awaiting_approval">Waiting for your supervisor to approve this request…</string>
     <string name="pending_awaiting_approval">Waiting for supervisor approval…</string>
-    <string name="circle_leave_supervised">Leaving this circle needs your supervisor — ask them to remove it from your device.</string>
+    <string name="circle_leave_supervised">Leaving this circle needs your supervisor - ask them to remove it from your device.</string>
 
     <!-- ── Supervised mode: settings-change summaries (kind 1069) ───────────── -->
     <string name="change_notif_title">Supervised device changed settings</string>

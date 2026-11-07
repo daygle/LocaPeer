@@ -956,7 +956,7 @@
     <string name="pending_awaiting_approval">Naghihintay sa pag-apruba ng supervisor…</string>
     <string name="onboarding_bg_open_settings">Buksan ang mga setting ng sistema</string>
     <string name="onboarding_bg_skip">Laktawan muna</string>
-    <string name="onboarding_bg_location_hint">Sa Android 11 o mas bago, ang lokasyon sa background ay binibigyan lang sa mga setting ng sistema—hindi maaaring hingin ng app nang diretso.</string>
+    <string name="onboarding_bg_location_hint">Sa Android 11 o mas bago, ang lokasyon sa background ay binibigyan lang sa mga setting ng sistema - hindi maaaring hingin ng app nang diretso.</string>
 
     <string name="settings_notifications_title">Mga notification</string>
     <string name="settings_message_notifications">Mga notification sa mensahe</string>
@@ -976,7 +976,7 @@
     <string name="settings_erase_identity">Alisin ang identity &amp; burahin ang lahat ng data</string>
     <string name="settings_erase_identity_subtitle">Buburahin nito ang identity key, mga contact, history ng lokasyon, mga mensahe at mga setting ng device na ito, saka sisimulan muli ang unang setup</string>
     <string name="settings_erase_identity_title">Aalisin ang identity at buburahin ang lahat ng data?</string>
-    <string name="settings_erase_identity_message">Permanenteng buburahin nito ang iyong Nostr key pair, lahat ng contact, lahat ng geofence, history ng lokasyon, mga mensahe at mga setting ng device na ito. Hindi mapapaalam ang mga contact at hindi maaapektuhan ang mga kopya nila. Walang ipapadalang hiling ng pagbura — para bigyan ng babala ang isang contact, gamitin muna ang "Burahin ang contact at data" sa bawat isa.</string>
+    <string name="settings_erase_identity_message">Permanenteng buburahin nito ang iyong Nostr key pair, lahat ng contact, lahat ng geofence, history ng lokasyon, mga mensahe at mga setting ng device na ito. Hindi mapapaalam ang mga contact at hindi maaapektuhan ang mga kopya nila. Walang ipapadalang hiling ng pagbura - para bigyan ng babala ang isang contact, gamitin muna ang "Burahin ang contact at data" sa bawat isa.</string>
     <string name="settings_erase_identity_final_title">Panghuling pagkumpirma</string>
     <string name="settings_erase_identity_final_message">Buburahin ang lahat at magsisimula muli sa bagong identity? Hindi na maibabalik ito. Kung maaaring kailanganin mo pa ito, mag-export muna ng naka-encrypt na backup.</string>
     <string name="settings_erase_identity_confirm">Burahin at magsimulang muli</string>

@@ -973,7 +973,7 @@
     <string name="notif_supervision_ended_title">Нагляд завершено</string>
     <string name="notif_supervisor_unknown_request_text">Пристрій, що надсилає запит, немає у ваших контактах. Спочатку додайте його як контакт і попросіть повторити запит нагляду.</string>
     <string name="notif_supervisor_unknown_request_title">Запит нагляду від невідомого пристрою</string>
-    <string name="onboarding_bg_location_hint">На Android 11 і новіших фонова локація надається лише в системних налаштуваннях — застосунок не запитує її самостійно.</string>
+    <string name="onboarding_bg_location_hint">На Android 11 і новіших фонова локація надається лише в системних налаштуваннях - застосунок не запитує її самостійно.</string>
     <string name="onboarding_bg_open_settings">Відкрити системні налаштування</string>
     <string name="onboarding_bg_skip">Пропустити зараз</string>
     <string name="peer_supervise_disable_confirm">Припинити нагляд</string>
@@ -989,14 +989,14 @@
     <string name="settings_alert_notifications_subtitle">Попередження зони, близькості та втрати локації. Попередження SOS залишаються активними.</string>
     <string name="settings_disable_cancel">Скасувати запит</string>
     <string name="settings_disable_denied">Наглядач відхилив запит розблокування.</string>
-    <string name="settings_disable_timed_out">Відповіді вчасно немає. Можливо, наглядач офлайн — спробуйте пізніше.</string>
+    <string name="settings_disable_timed_out">Відповіді вчасно немає. Можливо, наглядач офлайн - спробуйте пізніше.</string>
     <string name="settings_disable_waiting">Очікування схвалення наглядача…</string>
     <string name="settings_erase_identity">Видалити особу &amp; стерти всі дані</string>
     <string name="settings_erase_identity_card">Небезпечна зона</string>
     <string name="settings_erase_identity_confirm">Стерти й перезапустити</string>
     <string name="settings_erase_identity_final_message">Стерти все та почати заново з новою особою? Це необоротно. Якщо ще захочете цю особу, спочатку зробіть зашифровану резервну копію.</string>
     <string name="settings_erase_identity_final_title">Фінальне підтвердження</string>
-    <string name="settings_erase_identity_message">Буде безповоротно видалено ваші ключі Nostr, усі контакти, зони, історію локації, повідомлення та налаштування цього пристрою. Контакти не повідомляються, і їхні копії не зачіпаються. Запит видалення не надсилається — щоб попередити контакт, скористайтеся «Видалити контакт і дані» окремо в кожного.</string>
+    <string name="settings_erase_identity_message">Буде безповоротно видалено ваші ключі Nostr, усі контакти, зони, історію локації, повідомлення та налаштування цього пристрою. Контакти не повідомляються, і їхні копії не зачіпаються. Запит видалення не надсилається - щоб попередити контакт, скористайтеся «Видалити контакт і дані» окремо в кожного.</string>
     <string name="settings_erase_identity_subtitle">Видаляє ключ особи, контакти, історію локації, повідомлення та налаштування цього пристрою й перезапускає початкове налаштування</string>
     <string name="settings_erase_identity_title">Видалити особу й стерти все?</string>
     <string name="settings_message_notifications">Сповіщення повідомлень</string>
@@ -1008,7 +1008,7 @@
     <string name="settings_quiet_hours_subtitle">Вимикає сповіщення повідомлень і попереджень у межах вікна. SOS залишається активним.</string>
     <string name="supervision_disable_request_message">%1$s просить вимкнути режим нагляду. Схвалення назавжди розблокує налаштування до нової заявки на нагляд.</string>
     <string name="supervision_disable_request_title">Розблокувати пристрій?</string>
-    <string name="toast_already_supervised">Вже під наглядом — відхиліть запит натомість</string>
+    <string name="toast_already_supervised">Вже під наглядом - відхиліть запит натомість</string>
     <string name="toast_declined_supervision_invite">Заявку нагляду від %1$s відхилено</string>
     <string name="toast_now_supervised">Наглядач: %1$s</string>
 </resources>

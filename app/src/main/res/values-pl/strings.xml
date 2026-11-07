@@ -974,7 +974,7 @@
     <string name="notif_supervision_ended_title">Nadzór zakończony</string>
     <string name="notif_supervisor_unknown_request_text">Urządzenie wysyłające prośbę nie jest w Twoich kontaktach. Najpierw dodaj je jako kontakt i poproś o ponowienie prośby o nadzór.</string>
     <string name="notif_supervisor_unknown_request_title">Prośba o nadzór od nieznanego urządzenia</string>
-    <string name="onboarding_bg_location_hint">Na Androidzie 11 i nowszych lokalizacja w tle jest przyznawana tylko w ustawieniach systemu — aplikacja nie może o nią poprosić sama.</string>
+    <string name="onboarding_bg_location_hint">Na Androidzie 11 i nowszych lokalizacja w tle jest przyznawana tylko w ustawieniach systemu - aplikacja nie może o nią poprosić sama.</string>
     <string name="onboarding_bg_open_settings">Otwórz ustawienia systemowe</string>
     <string name="onboarding_bg_skip">Na razie pomiń</string>
     <string name="peer_supervise_disable_confirm">Zakończ nadzór</string>
@@ -990,14 +990,14 @@
     <string name="settings_alert_notifications_subtitle">Alerty wyjścia z geofence, zbliżenia i utraty lokalizacji. Alerty SOS pozostają aktywne.</string>
     <string name="settings_disable_cancel">Anuluj prośbę</string>
     <string name="settings_disable_denied">Opiekun odrzucił prośbę o odblokowanie.</string>
-    <string name="settings_disable_timed_out">Brak odpowiedzi na czas. Opiekun może być offline — spróbuj ponownie później.</string>
+    <string name="settings_disable_timed_out">Brak odpowiedzi na czas. Opiekun może być offline - spróbuj ponownie później.</string>
     <string name="settings_disable_waiting">Oczekiwanie na zatwierdzenie przez opiekuna…</string>
     <string name="settings_erase_identity">Usuń tożsamość i wymaż wszystkie dane</string>
     <string name="settings_erase_identity_card">Strefa zagrożenia</string>
     <string name="settings_erase_identity_confirm">Wymaż i uruchom ponownie</string>
     <string name="settings_erase_identity_final_message">Wymazać wszystko i zacząć od nowej tożsamości? Tego nie można cofnąć. Jeśli jeszcze możesz chcieć tę tożsamość, najpierw wyeksportuj zaszyfrowaną kopię zapasową.</string>
     <string name="settings_erase_identity_final_title">Ostateczne potwierdzenie</string>
-    <string name="settings_erase_identity_message">Nieodwracalnie usunie to Twój klucz Nostr, wszystkie kontakty, geofence, historię lokalizacji, wiadomości i ustawienia tego urządzenia. Kontakty nie zostaną powiadomione, a ich kopie nie będą dotknięte. Żądanie usunięcia nie jest wysyłane — aby ostrzec zaufaną osobę, użyj osobno „Usuń kontakt i dane” przy każdym z nich.</string>
+    <string name="settings_erase_identity_message">Nieodwracalnie usunie to Twój klucz Nostr, wszystkie kontakty, geofence, historię lokalizacji, wiadomości i ustawienia tego urządzenia. Kontakty nie zostaną powiadomione, a ich kopie nie będą dotknięte. Żądanie usunięcia nie jest wysyłane - aby ostrzec zaufaną osobę, użyj osobno „Usuń kontakt i dane” przy każdym z nich.</string>
     <string name="settings_erase_identity_subtitle">Usuwa klucz tożsamości, kontakty, historię lokalizacji, wiadomości i ustawienia tego urządzenia i uruchamia ponownie konfigurację początkową</string>
     <string name="settings_erase_identity_title">Usunąć tożsamość i wymazać wszystko?</string>
     <string name="settings_message_notifications">Powiadomienia wiadomości</string>
@@ -1009,7 +1009,7 @@
     <string name="settings_quiet_hours_subtitle">Wycisza powiadomienia wiadomości i alerty w podanych godzinach. SOS pozostaje aktywne.</string>
     <string name="supervision_disable_request_message">%1$s prosi o wyłączenie trybu nadzoru. Zatwierdzenie trwale odblokuje ustawienia do czasu nowej prośby o nadzór.</string>
     <string name="supervision_disable_request_title">Odblokować to urządzenie?</string>
-    <string name="toast_already_supervised">Jesteś już nadzorowany — raczej odrzuć tę prośbę</string>
+    <string name="toast_already_supervised">Jesteś już nadzorowany - raczej odrzuć tę prośbę</string>
     <string name="toast_declined_supervision_invite">Odrzucono prośbę nadzoru od %1$s</string>
     <string name="toast_now_supervised">Nadzoruje Cię %1$s</string>
 </resources>

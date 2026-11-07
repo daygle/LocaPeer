@@ -972,7 +972,7 @@
     <string name="notif_supervision_ended_title">Dozor ukončen</string>
     <string name="notif_supervisor_unknown_request_text">Přístroj, který prosbu zasílá, ve vašich kontaktech není. Nejdříve jej přidejte jako kontakt a nechte prosbu o dozor zaslat znovu.</string>
     <string name="notif_supervisor_unknown_request_title">Proba o dozor od neznámého přístroje</string>
-    <string name="onboarding_bg_location_hint">Na Androidu 11 a novějším se poloha na pozadí uděluje jen v systémovém nastavení — aplikace ji nemůže požádat sama.</string>
+    <string name="onboarding_bg_location_hint">Na Androidu 11 a novějším se poloha na pozadí uděluje jen v systémovém nastavení - aplikace ji nemůže požádat sama.</string>
     <string name="onboarding_bg_open_settings">Otevřít systémové nastavení</string>
     <string name="onboarding_bg_skip">Zatím přeskočit</string>
     <string name="peer_supervise_disable_confirm">Ukončit dozor</string>
@@ -988,14 +988,14 @@
     <string name="settings_alert_notifications_subtitle">Výstrahy geofence, přiblížení a ztráty polohy. Výstrahy SOS zůstávají aktivní.</string>
     <string name="settings_disable_cancel">Zrušit prosbu</string>
     <string name="settings_disable_denied">Dozorce odmítl prosbu o odemčení.</string>
-    <string name="settings_disable_timed_out">Nebyla žádná odpověď včas. Dozorce může být offline — zkuste to později.</string>
+    <string name="settings_disable_timed_out">Nebyla žádná odpověď včas. Dozorce může být offline - zkuste to později.</string>
     <string name="settings_disable_waiting">Čeká se na schválení dozorcem…</string>
     <string name="settings_erase_identity">Smazat identitu a vymazat všechna data</string>
     <string name="settings_erase_identity_card">Nebezpečná zóna</string>
     <string name="settings_erase_identity_confirm">Vymazat a restartovat</string>
     <string name="settings_erase_identity_final_message">Vymazat vše a začít s novou identitou? Nejde vrátit zpět. Pokud byste tuto identitu ještě mohli chtít, nejdříve vyexportujte šifrovanou zálohu.</string>
     <string name="settings_erase_identity_final_title">Konečné potvrzení</string>
-    <string name="settings_erase_identity_message">Trvale smaže váš klíč Nostr, všechny kontakty, geofence, historii polohy, zprávy a nastavení přístroje. Kontakty nebudou upozorněny a jejich kopie nebudou dotčeny. Žádost o smazání se neposílá — abyste upozornili důvěryhodnou osobu, použijte u ní odděleně „Smazat kontakt a data“.</string>
+    <string name="settings_erase_identity_message">Trvale smaže váš klíč Nostr, všechny kontakty, geofence, historii polohy, zprávy a nastavení přístroje. Kontakty nebudou upozorněny a jejich kopie nebudou dotčeny. Žádost o smazání se neposílá - abyste upozornili důvěryhodnou osobu, použijte u ní odděleně „Smazat kontakt a data“.</string>
     <string name="settings_erase_identity_subtitle">Odstraní klíč identity, kontakty, historii polohy, zprávy a nastavení přístroje a znovu spustí první nastavení</string>
     <string name="settings_erase_identity_title">Smazat identitu a vymazat vše?</string>
     <string name="settings_message_notifications">Oznámení zpráv</string>
@@ -1007,7 +1007,7 @@
     <string name="settings_quiet_hours_subtitle">Ztlumí oznámení zpráv a výstrahy během zadaných hodin. SOS zůstává aktivní.</string>
     <string name="supervision_disable_request_message">%1$s prosí o vypnutí režimu dozoru. Schválení trvale odemkne nastavení do nové prosby o dozor.</string>
     <string name="supervision_disable_request_title">Odemknout tento přístroj?</string>
-    <string name="toast_already_supervised">Již pod dozorem — tuto prosbu raději odmítněte</string>
+    <string name="toast_already_supervised">Již pod dozorem - tuto prosbu raději odmítněte</string>
     <string name="toast_declined_supervision_invite">Probu o dozor od %1$s odmítnuto</string>
     <string name="toast_now_supervised">Dozoruje vás %1$s</string>
 </resources>

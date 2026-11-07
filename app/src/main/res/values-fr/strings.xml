@@ -927,7 +927,7 @@
     <string name="change_sos">• Statut de contact SOS modifié pour %1$s</string>
     <string name="change_temp_end">• Partage temporaire terminé</string>
     <string name="change_temp_start">• Partage temporaire lancé avec %1$s</string>
-    <string name="circle_leave_supervised">Quitter ce cercle demande l\'accord de ton responsable — demande-lui de le retirer de ton appareil.</string>
+    <string name="circle_leave_supervised">Quitter ce cercle demande l\'accord de ton responsable - demande-lui de le retirer de ton appareil.</string>
     <string name="contact_add_request_message">Ton appareil supervisé demande d\'ajouter « %1$s » comme nouveau contact de partage de localisation. Approuver lance le protocole de partage avec lui.</string>
     <string name="contact_add_request_title">Autoriser ce nouveau contact ?</string>
     <string name="conv_cd_muted">Notifications désactivées</string>
