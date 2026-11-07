@@ -24,6 +24,9 @@ class AdaptiveIntervalManager @Inject constructor(
     fun isLiveViewActive(allowBoost: Boolean): Boolean =
         allowBoost && batteryLevel >= 20 && liveViewRegistry.isActive()
 
+    /** Pubkeys of the contacts currently watching live (see [LiveViewRegistry.activeViewers]). */
+    fun liveViewers(): Set<String> = liveViewRegistry.activeViewers()
+
     fun getIntervalMillis(settings: AppSettings): Long {
         if (isSosMode) return 15_000L
         if (batteryLevel < 20) return cadenceIntervalMillis(settings)

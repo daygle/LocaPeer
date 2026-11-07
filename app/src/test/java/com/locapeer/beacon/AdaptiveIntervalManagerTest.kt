@@ -130,4 +130,11 @@ class AdaptiveIntervalManagerTest {
         manager.updateBattery(10)
         assertEquals(30 * 60_000L, manager.cadenceIntervalMillis(settings))
     }
+
+    @Test
+    fun `live viewers lists only contacts with an unexpired lease`() {
+        liveViewRegistry.grant("watching")
+        liveViewRegistry.grant("left", leaseMs = 0L)
+        assertEquals(setOf("watching"), manager.liveViewers())
+    }
 }

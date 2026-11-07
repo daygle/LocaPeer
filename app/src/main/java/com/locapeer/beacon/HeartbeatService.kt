@@ -1140,15 +1140,19 @@ class HeartbeatService : LifecycleService() {
         // battery event receiver; here the level is only read for the payload.
         val battery = getBatteryLevel()
 
-        // Live-view pulses (every few seconds while a contact has the map open) are for that
-        // contact's live pin only. Local history follows the user's configured cadence, so a
-        // watched drive records a point per driving interval rather than one per pulse. SOS
-        // always records. Decided here, on the main thread, alongside the other snapshots.
+        // Live-view pulses (every few seconds while a contact has the map open) are for the
+        // watching contacts' live pins only. A pulse is a "cadence pulse" when the user's
+        // configured interval has elapsed since the last one: only those are written to local
+        // history and sent to contacts who are NOT watching, so a watched drive costs one
+        // send per watcher per live pulse instead of one per contact, and history keeps one
+        // point per driving interval. SOS always goes to everyone and always records.
+        // Decided here, on the main thread, alongside the other snapshots.
         val nowElapsed = SystemClock.elapsedRealtime()
         val livePulse = !isSos && intervalManager.isLiveViewActive(currentSettings.allowLiveBoost)
-        val recordHistory = !livePulse || lastHistoryElapsedMs == 0L ||
+        val cadencePulse = !livePulse || lastHistoryElapsedMs == 0L ||
             nowElapsed - lastHistoryElapsedMs >= intervalManager.cadenceIntervalMillis(currentSettings)
-        if (recordHistory) lastHistoryElapsedMs = nowElapsed
+        if (cadencePulse) lastHistoryElapsedMs = nowElapsed
+        val liveViewers: Set<String> = if (livePulse) intervalManager.liveViewers() else emptySet()
 
         lifecycleScope.launch {
             try {
@@ -1157,7 +1161,12 @@ class HeartbeatService : LifecycleService() {
 
                 val nowMs = System.currentTimeMillis()
                 val expectedIntervalSec = intervalManager.getIntervalMillis(settings) / 1000
-                if (recordHistory) heartbeatDao.insert(
+                // What a contact who is not watching should expect: the normal cadence, so
+                // their app neither shows a "Live" badge nor raises a missed-update alert
+                // two minutes after the live pulses (which they don't receive) would be due.
+                val cadenceIntervalSec = if (isSos) expectedIntervalSec
+                    else intervalManager.cadenceIntervalMillis(settings) / 1000
+                if (cadencePulse) heartbeatDao.insert(
                     HeartbeatEntity(
                         deviceId = pubHex,
                         displayName = settings.displayName,
@@ -1173,7 +1182,7 @@ class HeartbeatService : LifecycleService() {
                         speed = fixSpeed,
                         bearing = fixBearing,
                         altitude = fixAltitude,
-                        expectedIntervalSeconds = expectedIntervalSec
+                        expectedIntervalSeconds = cadenceIntervalSec
                     )
                 )
 
@@ -1209,11 +1218,16 @@ class HeartbeatService : LifecycleService() {
                             roleAllows && (cfg?.sharingEnabled ?: true)
                         }
                     }
-                    filtered to configs
+                    // Between cadence pulses, only contacts actually watching get the
+                    // live update; everyone else waits for the next cadence pulse.
+                    val audience = if (cadencePulse) filtered else filtered.filter { peer ->
+                        peer.publicKeyHex in liveViewers || peer.deviceId in liveViewers
+                    }
+                    audience to configs
                 }
 
                 if (targetRecipients.isEmpty()) {
-                    Log.d(TAG, "No recipients for this heartbeat (isSos=$isSos)")
+                    Log.d(TAG, "No recipients for this heartbeat (isSos=$isSos, live=$livePulse)")
                     return@launch
                 }
 
@@ -1243,6 +1257,8 @@ class HeartbeatService : LifecycleService() {
                             fixLat to fixLng
                         }
 
+                        val watching = livePulse &&
+                            (recipient.publicKeyHex in liveViewers || recipient.deviceId in liveViewers)
                         val payload = HeartbeatPayload(
                             deviceId = pubHex,
                             displayName = settings.displayName,
@@ -1258,7 +1274,7 @@ class HeartbeatService : LifecycleService() {
                             speed = if (suburb) 0f else fixSpeed,
                             bearing = if (suburb) 0f else fixBearing,
                             altitude = if (suburb) 0.0 else fixAltitude,
-                            expectedIntervalSeconds = expectedIntervalSec
+                            expectedIntervalSeconds = if (watching) expectedIntervalSec else cadenceIntervalSec
                         )
                         val payloadJson = Json.encodeToString(payload)
 
