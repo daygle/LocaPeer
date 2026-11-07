@@ -844,9 +844,9 @@
     <string name="conv_mark_unread">未読にする</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost を許可</string>
-    <string name="settings_allow_live_boost_subtitle">連絡先が地図を表示しているときに更新を高速化します。</string>
+    <string name="settings_allow_live_boost_subtitle">連絡先が地図上であなたのピンを選択しているときに、更新を速くします。</string>
     <string name="settings_request_live_boost">ライブ更新をリクエスト</string>
-    <string name="settings_request_live_boost_subtitle">地図を開いているときに、連絡先へより速い更新をリクエストします。</string>
+    <string name="settings_request_live_boost_subtitle">地図上で連絡先のピンを選択しているときに、その連絡先へより速い更新をリクエストします。</string>
     <string name="settings_relays">リレー</string>
     <string name="settings_relays_subtitle">データを伝送するリレーを選択します</string>
     <string name="relays_intro">LocaPeer は Nostr リレーを介してデータを送信します。コンテンツは常にエンドツーエンドで暗号化されますが、公開リレーはあなたが誰といつやり取りしているかを見ることができます。この露出を減らすには、自分のリレーを使用してください。</string>
@@ -879,6 +879,8 @@
     <string name="map_location_off_message">デバイスの位置情報をオンにするまで、現在地を更新または共有できません。</string>
     <string name="map_location_off_action">設定を開く</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 あなたを見ています</string>
+    <string name="map_follow_contact">追従</string>
     <plurals name="settings_queued_message_count">
         <item quantity="other">%1$d queued messages</item>
     </plurals>

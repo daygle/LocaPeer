@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">Kan hin dubbifamne jedhii mallattoo godhi</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost hayyami</string>
-    <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii kee kaartaa ilaalu haaromsa kee saffisiisi.</string>
+    <string name="settings_allow_live_boost_subtitle">Yeroo namni quunnamtii piinii kee kaartaa isaa irratti filatu haaromsa kee saffisiisi.</string>
     <string name="settings_request_live_boost">Haaromsa kallattii gaafadhu</string>
-    <string name="settings_request_live_boost_subtitle">Yeroo kaartaan banaa taʼetti namoota quunnamtii keessan haaromsa saffisaa gaafadhu.</string>
+    <string name="settings_request_live_boost_subtitle">Yeroo piinii nama quunnamtii kaartaa irratti filattu haaromsa saffisaa isa gaafadhu.</string>
     <string name="settings_relays">Riileyoota</string>
     <string name="settings_relays_subtitle">Riileyoonni kamtu daataa kee akka baatu filadhu</string>
     <string name="relays_intro">LocaPeer daataa kee riileyoota Nostr karaa erga. Qabiyyeen yeroo hunda dhuma irraa hanga dhumaatti ni iccitaawa, garuu riileyoonni ummataa ammallee namoota quunnamtii ati dubbistuu fi yeroo isaa arguu dandaʼu. Saaxilamummaa kana hir\'isuuf riileyoota kee mataa kee fayyadami.</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">Hanga ati bakka meeshaa bantutti, bakki kee hin oomishamu yookiin hin qoodamu.</string>
     <string name="map_location_off_action">Sajataawwan bani</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Si ilaalaa jira</string>
+    <string name="map_follow_contact">Hordofi</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

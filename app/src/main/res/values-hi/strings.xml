@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">अपठित के रूप में चिह्नित करें</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost की अनुमति दें</string>
-    <string name="settings_allow_live_boost_subtitle">जब कोई संपर्क मानचित्र देख रहा हो तो अपने अपडेट तेज़ करें।</string>
+    <string name="settings_allow_live_boost_subtitle">जब कोई संपर्क अपने नक्शे पर आपका पिन चुनता है, तो अपने अपडेट तेज़ करें।</string>
     <string name="settings_request_live_boost">लाइव अपडेट का अनुरोध करें</string>
-    <string name="settings_request_live_boost_subtitle">जब आपका मानचित्र खुला हो तो संपर्कों से तेज़ अपडेट का अनुरोध करें।</string>
+    <string name="settings_request_live_boost_subtitle">जब आप नक्शे पर किसी संपर्क का पिन चुनते हैं, तो उनसे तेज़ अपडेट का अनुरोध करें।</string>
     <string name="settings_relays">रिले</string>
     <string name="settings_relays_subtitle">चुनें कि कौन से रिले आपका डेटा ले जाएँ</string>
     <string name="relays_intro">LocaPeer आपका डेटा Nostr रिले के माध्यम से भेजता है। सामग्री हमेशा एंड-टू-एंड एन्क्रिप्टेड रहती है, लेकिन सार्वजनिक रिले फिर भी देख सकते हैं कि आप किन संपर्कों से और कब बात करते हैं। इस जोखिम को कम करने के लिए अपने स्वयं के रिले का उपयोग करें।</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">जब तक आप डिवाइस का स्थान चालू नहीं करते, आपका स्थान अपडेट या साझा नहीं किया जा सकता।</string>
     <string name="map_location_off_action">सेटिंग्स खोलें</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 आपको देख रहे हैं</string>
+    <string name="map_follow_contact">फ़ॉलो करें</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

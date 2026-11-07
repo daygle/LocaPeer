@@ -859,9 +859,9 @@
     <string name="conv_mark_unread">Marcar como no leído</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Permitir Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Acelera tus actualizaciones cuando un contacto está viendo el mapa.</string>
+    <string name="settings_allow_live_boost_subtitle">Acelera tus actualizaciones cuando un contacto tiene tu pin seleccionado en su mapa.</string>
     <string name="settings_request_live_boost">Solicitar actualizaciones en directo</string>
-    <string name="settings_request_live_boost_subtitle">Pide a tus contactos actualizaciones más rápidas cuando tengas el mapa abierto.</string>
+    <string name="settings_request_live_boost_subtitle">Pide a un contacto actualizaciones más rápidas cuando tengas su pin seleccionado en el mapa.</string>
     <string name="settings_relays">Relays</string>
     <string name="settings_relays_subtitle">Elige qué relays transportan tus datos</string>
     <string name="relays_intro">LocaPeer envía tus datos a través de relays de Nostr. El contenido siempre está cifrado de extremo a extremo, pero los relays públicos aún pueden ver con qué contactos hablas y cuándo. Usa tus propios relays para reducir esa exposición.</string>
@@ -894,6 +894,8 @@
     <string name="map_location_off_message">Tu ubicación no se puede actualizar ni compartir hasta que actives la ubicación del dispositivo.</string>
     <string name="map_location_off_action">Abrir ajustes</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Te está viendo</string>
+    <string name="map_follow_contact">Seguir</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">न वाचलेले म्हणून चिन्हांकित करा</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost ला अनुमती द्या</string>
-    <string name="settings_allow_live_boost_subtitle">एखादा संपर्क नकाशा पाहत असताना तुमची अपडेट जलद करा.</string>
+    <string name="settings_allow_live_boost_subtitle">एखाद्या संपर्काने त्यांच्या नकाशावर तुमची पिन निवडल्यावर तुमचे अपडेट जलद करा.</string>
     <string name="settings_request_live_boost">थेट अपडेटची विनंती करा</string>
-    <string name="settings_request_live_boost_subtitle">तुमचा नकाशा उघडा असताना संपर्कांकडून जलद अपडेटची विनंती करा.</string>
+    <string name="settings_request_live_boost_subtitle">नकाशावर एखाद्या संपर्काची पिन निवडल्यावर त्यांच्याकडून जलद अपडेटची विनंती करा.</string>
     <string name="settings_relays">रिले</string>
     <string name="settings_relays_subtitle">तुमचा डेटा कोणते रिले वाहून नेतील ते निवडा</string>
     <string name="relays_intro">LocaPeer तुमचा डेटा Nostr रिलेद्वारे पाठवते. मजकूर नेहमी एंड-टू-एंड एन्क्रिप्टेड असतो, परंतु सार्वजनिक रिले अजूनही पाहू शकतात की तुम्ही कोणत्या संपर्कांशी आणि केव्हा बोलता. हे उघड होणे कमी करण्यासाठी तुमचे स्वतःचे रिले वापरा.</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">तुम्ही डिव्हाइसचे स्थान चालू करेपर्यंत तुमचे स्थान अद्यतनित किंवा सामायिक केले जाऊ शकत नाही.</string>
     <string name="map_location_off_action">सेटिंग्ज उघडा</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 तुम्हाला पाहत आहे</string>
+    <string name="map_follow_contact">फॉलो करा</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

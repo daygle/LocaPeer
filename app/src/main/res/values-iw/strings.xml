@@ -875,9 +875,9 @@
     <string name="conv_mark_unread">סמן כלא נקרא</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">אפשר את Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">האץ את העדכונים שלך כשאיש קשר צופה במפה.</string>
+    <string name="settings_allow_live_boost_subtitle">האץ את העדכונים שלך כשאיש קשר בחר את הסיכה שלך במפה שלו.</string>
     <string name="settings_request_live_boost">בקש עדכונים בזמן אמת</string>
-    <string name="settings_request_live_boost_subtitle">בקש מאנשי הקשר עדכונים מהירים יותר כשהמפה פתוחה אצלך.</string>
+    <string name="settings_request_live_boost_subtitle">בקש מאיש קשר עדכונים מהירים יותר כשבחרת את הסיכה שלו במפה.</string>
     <string name="settings_relays">ממסרים</string>
     <string name="settings_relays_subtitle">בחר אילו ממסרים יישאו את הנתונים שלך</string>
     <string name="relays_intro">‏LocaPeer שולח את הנתונים שלך דרך ממסרי Nostr. התוכן תמיד מוצפן מקצה לקצה, אך ממסרים ציבוריים עדיין יכולים לראות עם אילו אנשי קשר אתה מדבר ומתי. השתמש בממסרים משלך כדי לצמצם את החשיפה הזו.</string>
@@ -910,6 +910,8 @@
     <string name="map_location_off_message">לא ניתן לעדכן או לשתף את המיקום שלך עד שתפעיל את מיקום המכשיר.</string>
     <string name="map_location_off_action">פתח הגדרות</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 צופה בך</string>
+    <string name="map_follow_contact">עקוב</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

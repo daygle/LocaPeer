@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">ଅପଠିତ ଭାବେ ଚିହ୍ନଟ କରନ୍ତୁ</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost କୁ ଅନୁମତି ଦିଅନ୍ତୁ</string>
-    <string name="settings_allow_live_boost_subtitle">ଜଣେ ସମ୍ପର୍କ ମାନଚିତ୍ର ଦେଖୁଥିବା ସମୟରେ ଆପଣଙ୍କ ଅପଡେଟ୍‌କୁ ଦ୍ରୁତ କରନ୍ତୁ।</string>
+    <string name="settings_allow_live_boost_subtitle">ଜଣେ ସମ୍ପର୍କ ସେମାନଙ୍କ ମାନଚିତ୍ରରେ ଆପଣଙ୍କ ପିନ୍ ଚୟନ କଲେ ଆପଣଙ୍କ ଅପଡେଟ୍ ଦ୍ରୁତ କରନ୍ତୁ।</string>
     <string name="settings_request_live_boost">ଲାଇଭ୍ ଅପଡେଟ୍ ଅନୁରୋଧ କରନ୍ତୁ</string>
-    <string name="settings_request_live_boost_subtitle">ଆପଣଙ୍କ ମାନଚିତ୍ର ଖୋଲା ଥିବା ସମୟରେ ସମ୍ପର୍କମାନଙ୍କଠାରୁ ଦ୍ରୁତ ଅପଡେଟ୍ ଅନୁରୋଧ କରନ୍ତୁ।</string>
+    <string name="settings_request_live_boost_subtitle">ମାନଚିତ୍ରରେ ଜଣେ ସମ୍ପର୍କଙ୍କ ପିନ୍ ଚୟନ କଲେ ସେମାନଙ୍କଠାରୁ ଦ୍ରୁତ ଅପଡେଟ୍ ଅନୁରୋଧ କରନ୍ତୁ।</string>
     <string name="settings_relays">ରିଲେ</string>
     <string name="settings_relays_subtitle">ଆପଣଙ୍କ ଡାଟା କେଉଁ ରିଲେ ବହନ କରିବ ତାହା ବାଛନ୍ତୁ</string>
     <string name="relays_intro">LocaPeer ଆପଣଙ୍କ ଡାଟାକୁ Nostr ରିଲେ ମାଧ୍ୟମରେ ପଠାଏ। ବିଷୟବସ୍ତୁ ସର୍ବଦା ଏଣ୍ଡ-ଟୁ-ଏଣ୍ଡ ଏନକ୍ରିପ୍ଟ ହୋଇଥାଏ, କିନ୍ତୁ ସାର୍ବଜନୀନ ରିଲେମାନେ ଆପଣ କେଉଁ ସମ୍ପର୍କ ସହିତ ଏବଂ କେବେ କଥା ହୁଅନ୍ତି ତାହା ଏବେ ବି ଦେଖିପାରନ୍ତି। ଏହି ପ୍ରକାଶନକୁ କମାଇବା ପାଇଁ ଆପଣଙ୍କ ନିଜର ରିଲେ ବ୍ୟବହାର କରନ୍ତୁ।</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">ଆପଣ ଡିଭାଇସ୍ ସ୍ଥାନ ଚାଲୁ ନକରିବା ପର୍ଯ୍ୟନ୍ତ ଆପଣଙ୍କ ସ୍ଥାନ ଅପଡେଟ୍ କିମ୍ବା ସେୟାର କରାଯାଇ ପାରିବ ନାହିଁ।</string>
     <string name="map_location_off_action">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 ଆପଣଙ୍କୁ ଦେଖୁଛନ୍ତି</string>
+    <string name="map_follow_contact">ଅନୁସରଣ କରନ୍ତୁ</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

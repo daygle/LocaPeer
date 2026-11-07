@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">വായിക്കാത്തതായി അടയാളപ്പെടുത്തുക</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost അനുവദിക്കുക</string>
-    <string name="settings_allow_live_boost_subtitle">ഒരു കോൺടാക്റ്റ് മാപ്പ് കാണുമ്പോൾ നിങ്ങളുടെ അപ്‌ഡേറ്റുകൾ വേഗത്തിലാക്കുക.</string>
+    <string name="settings_allow_live_boost_subtitle">ഒരു കോൺടാക്റ്റ് അവരുടെ മാപ്പിൽ നിങ്ങളുടെ പിൻ തിരഞ്ഞെടുക്കുമ്പോൾ നിങ്ങളുടെ അപ്‌ഡേറ്റുകൾ വേഗത്തിലാക്കുക.</string>
     <string name="settings_request_live_boost">തത്സമയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക</string>
-    <string name="settings_request_live_boost_subtitle">നിങ്ങളുടെ മാപ്പ് തുറന്നിരിക്കുമ്പോൾ കോൺടാക്റ്റുകളോട് വേഗതയേറിയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക.</string>
+    <string name="settings_request_live_boost_subtitle">മാപ്പിൽ ഒരു കോൺടാക്റ്റിന്റെ പിൻ തിരഞ്ഞെടുക്കുമ്പോൾ അവരോട് വേഗതയേറിയ അപ്‌ഡേറ്റുകൾ അഭ്യർത്ഥിക്കുക.</string>
     <string name="settings_relays">റിലേകൾ</string>
     <string name="settings_relays_subtitle">നിങ്ങളുടെ ഡാറ്റ ഏത് റിലേകൾ വഹിക്കണമെന്ന് തിരഞ്ഞെടുക്കുക</string>
     <string name="relays_intro">LocaPeer നിങ്ങളുടെ ഡാറ്റ Nostr റിലേകൾ വഴി അയയ്ക്കുന്നു. ഉള്ളടക്കം എപ്പോഴും എൻഡ്-ടു-എൻഡ് എൻക്രിപ്റ്റ് ചെയ്യപ്പെടുന്നു, പക്ഷേ പൊതു റിലേകൾക്ക് നിങ്ങൾ ഏത് കോൺടാക്റ്റുകളുമായി എപ്പോൾ സംസാരിക്കുന്നുവെന്ന് ഇപ്പോഴും കാണാൻ കഴിയും. ഈ വെളിപ്പെടുത്തൽ കുറയ്ക്കാൻ നിങ്ങളുടെ സ്വന്തം റിലേകൾ ഉപയോഗിക്കുക.</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">നിങ്ങൾ ഉപകരണ ലൊക്കേഷൻ ഓണാക്കുന്നത് വരെ നിങ്ങളുടെ സ്ഥാനം അപ്ഡേറ്റ് ചെയ്യാനോ പങ്കിടാനോ കഴിയില്ല.</string>
     <string name="map_location_off_action">ക്രമീകരണങ്ങൾ തുറക്കുക</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 നിങ്ങളെ കാണുന്നു</string>
+    <string name="map_follow_contact">പിന്തുടരുക</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d queued message</item>
         <item quantity="other">%1$d queued messages</item>

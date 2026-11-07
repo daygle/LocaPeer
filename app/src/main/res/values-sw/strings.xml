@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">Weka Alama Kuwa Haijasomwa</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Ruhusu Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati anwani anatazama ramani.</string>
+    <string name="settings_allow_live_boost_subtitle">Harakisha masasisho yako wakati mwasiliani amechagua pini yako kwenye ramani yake.</string>
     <string name="settings_request_live_boost">Omba masasisho ya moja kwa moja</string>
-    <string name="settings_request_live_boost_subtitle">Omba anwani masasisho ya haraka zaidi unapokuwa na ramani wazi.</string>
+    <string name="settings_request_live_boost_subtitle">Omba mwasiliani masasisho ya haraka zaidi unapokuwa umechagua pini yake kwenye ramani.</string>
     <string name="settings_relays">Rele</string>
     <string name="settings_relays_subtitle">Chagua rele zipi zinabeba data yako</string>
     <string name="relays_intro">LocaPeer hutuma data yako kupitia rele za Nostr. Maudhui daima yamesimbwa mwanzo hadi mwisho, lakini rele za umma bado zinaweza kuona ni anwani zipi unazozungumza nazo na lini. Tumia rele zako mwenyewe ili kupunguza mfichuo huo.</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">Nafasi yako haiwezi kusasishwa au kushirikiwa hadi uwashe mahali kwenye kifaa.</string>
     <string name="map_location_off_action">Fungua mipangilio</string>
     <string name="map_live">● Moja kwa moja</string>
+    <string name="map_watching_you">👁 Anakutazama</string>
+    <string name="map_follow_contact">Fuata</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">Ujumbe %1$d kwenye foleni</item>
         <item quantity="other">Jumbe %1$d kwenye foleni</item>

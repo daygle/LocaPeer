@@ -860,9 +860,9 @@
     <string name="conv_mark_unread">చదవనిదిగా గుర్తు పెట్టండి</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Live Boost ను అనుమతించు</string>
-    <string name="settings_allow_live_boost_subtitle">ఒక పరిచయం మ్యాప్‌ను చూస్తున్నప్పుడు మీ నవీకరణలను వేగవంతం చేయండి.</string>
+    <string name="settings_allow_live_boost_subtitle">ఒక పరిచయం తమ మ్యాప్‌లో మీ పిన్‌ను ఎంచుకున్నప్పుడు మీ నవీకరణలను వేగవంతం చేయండి.</string>
     <string name="settings_request_live_boost">ప్రత్యక్ష నవీకరణలను అభ్యర్థించండి</string>
-    <string name="settings_request_live_boost_subtitle">మీ మ్యాప్ తెరిచి ఉన్నప్పుడు పరిచయాలను వేగవంతమైన నవీకరణల కోసం అభ్యర్థించండి.</string>
+    <string name="settings_request_live_boost_subtitle">మ్యాప్‌లో ఒక పరిచయం పిన్‌ను ఎంచుకున్నప్పుడు వారిని వేగవంతమైన నవీకరణల కోసం అభ్యర్థించండి.</string>
     <string name="settings_relays">రిలేలు</string>
     <string name="settings_relays_subtitle">మీ డేటాను ఏ రిలేలు మోసుకెళ్లాలో ఎంచుకోండి</string>
     <string name="relays_intro">LocaPeer మీ డేటాను Nostr రిలేల ద్వారా పంపుతుంది. కంటెంట్ ఎల్లప్పుడూ ఎండ్-టు-ఎండ్ ఎన్‌క్రిప్ట్ చేయబడుతుంది, కానీ పబ్లిక్ రిలేలు మీరు ఏ పరిచయాలతో, ఎప్పుడు మాట్లాడతారో ఇప్పటికీ చూడగలవు. ఈ బహిర్గతతను తగ్గించడానికి మీ స్వంత రిలేలను ఉపయోగించండి.</string>
@@ -895,6 +895,8 @@
     <string name="map_location_off_message">మీరు పరికర స్థానాన్ని ఆన్ చేసే వరకు మీ స్థానం అప్‌డేట్ చేయబడదు లేదా భాగస్వామ్యం చేయబడదు.</string>
     <string name="map_location_off_action">సెట్టింగ్‌లను తెరువు</string>
     <string name="map_live">● ప్రత్యక్ష ప్రసారం</string>
+    <string name="map_watching_you">👁 మిమ్మల్ని చూస్తున్నారు</string>
+    <string name="map_follow_contact">అనుసరించు</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d క్యూలో ఉన్న సందేశం</item>
         <item quantity="other">%1$d క్యూలో ఉన్న సందేశాలు</item>

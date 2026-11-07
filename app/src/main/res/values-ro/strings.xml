@@ -875,9 +875,9 @@
     <string name="conv_mark_unread">Marchează ca necitit</string>
     <!-- Machine-translated; review recommended -->
     <string name="settings_allow_live_boost">Permite Live Boost</string>
-    <string name="settings_allow_live_boost_subtitle">Accelerează actualizările atunci când un contact vizualizează harta.</string>
+    <string name="settings_allow_live_boost_subtitle">Accelerează-ți actualizările când un contact are pinul tău selectat pe harta sa.</string>
     <string name="settings_request_live_boost">Solicită actualizări în timp real</string>
-    <string name="settings_request_live_boost_subtitle">Cere contactelor actualizări mai rapide când ai harta deschisă.</string>
+    <string name="settings_request_live_boost_subtitle">Cere unui contact actualizări mai rapide când ai pinul său selectat pe hartă.</string>
     <string name="settings_relays">Relee</string>
     <string name="settings_relays_subtitle">Alege ce relee îți transportă datele</string>
     <string name="relays_intro">LocaPeer îți trimite datele prin relee Nostr. Conținutul este întotdeauna criptat de la un capăt la altul, dar releele publice pot vedea totuși cu ce contacte vorbești și când. Folosește propriile relee pentru a reduce această expunere.</string>
@@ -910,6 +910,8 @@
     <string name="map_location_off_message">Poziția ta nu poate fi actualizată sau partajată până nu activezi locația dispozitivului.</string>
     <string name="map_location_off_action">Deschide setările</string>
     <string name="map_live">● Live</string>
+    <string name="map_watching_you">👁 Te urmărește</string>
+    <string name="map_follow_contact">Urmărește</string>
     <plurals name="settings_queued_message_count">
         <item quantity="one">%1$d mesaj în așteptare</item>
         <item quantity="few">%1$d mesaje în așteptare</item>
