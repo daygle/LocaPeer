@@ -284,9 +284,13 @@ object MarkerIconFactory {
 
     private var myLocationCache: Pair<String, Bitmap>? = null
 
-    /** Creates a pulsing dot for the user's own location, using their chosen pin colour. */
-    fun createMyLocationIcon(context: Context, pinColor: String = "", isSos: Boolean = false): BitmapDrawable {
-        val cacheKey = "$pinColor-$isSos"
+    /**
+     * Creates a pulsing dot for the user's own location, using their chosen pin colour.
+     * [isWatched] adds the same eye badge a watcher's pin gets, so the user can tell they
+     * are being watched live even by a contact who has no pin on their map.
+     */
+    fun createMyLocationIcon(context: Context, pinColor: String = "", isSos: Boolean = false, isWatched: Boolean = false): BitmapDrawable {
+        val cacheKey = "$pinColor-$isSos-$isWatched"
         myLocationCache?.takeIf { it.first == cacheKey }?.let { return it.second.toDrawable(context.resources) }
         val dp = context.resources.displayMetrics.density
         val sizePx = (dp * 48).toInt()
@@ -311,6 +315,10 @@ object MarkerIconFactory {
                 style = Paint.Style.STROKE
                 strokeWidth = dp * 2f
             })
+
+            // Same badge as a watcher's pin, on the ring's upper-right; the radius is chosen
+            // so the badge (8dp radius plus shadow) stays inside the 48dp bitmap.
+            if (isWatched) drawEyeBadge(cx, cx, (cx - dp * 9f) / 0.72f, dp)
         }
 
         myLocationCache = cacheKey to bitmap

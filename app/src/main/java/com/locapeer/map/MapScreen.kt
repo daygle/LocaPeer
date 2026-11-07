@@ -75,6 +75,8 @@ fun MapScreen(
     val mapFixedLng by vm.mapFixedLng.collectAsStateWithLifecycle()
     val showGeofences by vm.showGeofences.collectAsStateWithLifecycle()
     val reverseGeocodingEnabled by vm.reverseGeocodingEnabled.collectAsStateWithLifecycle()
+    val watcherNames by vm.watcherNames.collectAsStateWithLifecycle()
+    var showWatchers by remember { mutableStateOf(false) }
     val context = LocalContext.current
     var isFollowingUser by remember { mutableStateOf(false) }
     var centerOnPin by remember { mutableStateOf<LatLng?>(null) }
@@ -165,6 +167,8 @@ fun MapScreen(
                 onCenteredOnUser = { },
                 onCenteredOnPin = { centerOnPin = null; isFollowingUser = false },
                 onPinTapped = { selectedPin = it; followSelected = true; isFollowingUser = false },
+                isWatched = watcherNames.isNotEmpty(),
+                onMyLocationTapped = { showWatchers = true },
                 // A hand drag means the user wants to look around: stop both follow modes so
                 // the next position update doesn't snap the camera back.
                 onUserCameraMove = { followSelected = false; isFollowingUser = false },
@@ -182,6 +186,23 @@ fun MapScreen(
                         .statusBarsPadding()
                         .padding(16.dp)
                 )
+            }
+
+            // Who is watching us live: opened by tapping our own eye-badged location dot.
+            // Closes itself if the last watcher leaves while it is open.
+            if (showWatchers && watcherNames.isNotEmpty()) {
+                AlertDialog(
+                    onDismissRequest = { showWatchers = false },
+                    icon = { Icon(Icons.Default.Visibility, contentDescription = null) },
+                    title = { Text(stringResource(R.string.map_watching_you)) },
+                    text = { Text(watcherNames.joinToString("\n")) },
+                    confirmButton = {
+                        TextButton(onClick = { showWatchers = false }) { Text(stringResource(R.string.common_close)) }
+                    }
+                )
+            }
+            LaunchedEffect(watcherNames.isEmpty()) {
+                if (watcherNames.isEmpty()) showWatchers = false
             }
 
             if (showSosConfirm) {
@@ -563,6 +584,8 @@ private fun MainMapView(
     onCenteredOnPin: () -> Unit,
     onPinTapped: (PinData) -> Unit,
     onUserCameraMove: () -> Unit,
+    isWatched: Boolean,
+    onMyLocationTapped: () -> Unit,
     onSaveMapPosition: (Double, Double, Double) -> Unit,
     context: android.content.Context,
     modifier: Modifier = Modifier,
@@ -700,9 +723,10 @@ private fun MainMapView(
             id = "me",
             lat = loc.latitude,
             lng = loc.longitude,
-            icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive).bitmap,
+            icon = MarkerIconFactory.createMyLocationIcon(context, myPinColor, isSosActive, isWatched).bitmap,
             anchor = MarkerAnchor.CENTER,
-            clickable = false,
+            // Tappable only while watched, to show who; otherwise taps fall through as before.
+            clickable = isWatched,
             zIndex = 2f
         )
     }
@@ -716,7 +740,8 @@ private fun MainMapView(
         showScaleBar = true,
         showCompass = true,
         onMarkerClick = { id ->
-            currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
+            if (id == "me") onMyLocationTapped()
+            else currentPins.firstOrNull { "pin-${it.peer.deviceId}" == id }?.let(onPinTapped)
         },
         onCameraIdle = { target, zoom ->
             lastCamera[0] = Triple(target.latitude, target.longitude, MapGeometry.toLegacyZoom(zoom))
