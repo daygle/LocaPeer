@@ -131,7 +131,7 @@ data class AppSettings(
     /** Notify this user when someone else gets an alert (proximity/geofence) about them. */
     val notifyOnTrackingAlerts: Boolean = false,
     /** Alert when a contact starts watching this device live (selects our pin). */
-    val notifyWhenWatched: Boolean = true,
+    val notifyWhenWatched: Boolean = false,
     /** Draw geofence circles on the map. Off by default so the map stays uncluttered. */
     val showGeofencesOnMap: Boolean = false,
     /**
@@ -312,7 +312,7 @@ class AppPreferences @Inject constructor(
                 useImperialElevation = prefs[KEY_USE_IMPERIAL_ELEVATION] ?: localeDefaultImperial(),
                 useImperialDistance = prefs[KEY_USE_IMPERIAL_DISTANCE] ?: localeDefaultImperial(),
                 notifyOnTrackingAlerts = prefs[KEY_NOTIFY_ON_TRACKING_ALERTS] ?: false,
-                notifyWhenWatched = prefs[KEY_NOTIFY_WHEN_WATCHED] ?: true,
+                notifyWhenWatched = prefs[KEY_NOTIFY_WHEN_WATCHED] ?: false,
                 showGeofencesOnMap = prefs[KEY_SHOW_GEOFENCES_ON_MAP] ?: false,
                 reverseGeocodingEnabled = prefs[KEY_REVERSE_GEOCODING] ?: false,
                 appLockEnabled = prefs[KEY_APP_LOCK_ENABLED] ?: false,
