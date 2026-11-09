@@ -3,9 +3,12 @@ package com.locapeer.data
 import android.content.Context
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.system.Os
+import android.system.OsConstants
 import android.util.Log
 import net.zetetic.database.sqlcipher.SQLiteDatabase
 import java.io.File
+import java.io.FileOutputStream
 import java.security.KeyStore
 import java.security.SecureRandom
 import javax.crypto.Cipher
@@ -71,35 +74,88 @@ object DatabaseEncryption {
 
     /**
      * One-time conversion of the unencrypted database: copy everything into a new encrypted file,
-     * then swap it in. The original stays in place until the final rename, so an interruption at
-     * any earlier point leaves a usable (still unencrypted) database to retry on the next launch.
+     * flush it to disk, then swap it in. The original stays in place until the final rename, so an
+     * interruption at any earlier point leaves a usable (still unencrypted) database to retry on
+     * the next launch. A crash can no longer destroy it either: the old sidecars are only discarded
+     * once they hold no committed data, and the encrypted copy is verified and fsynced first.
      */
     private fun encryptExisting(dbFile: File, tmpFile: File, rawKey: ByteArray) {
         dbFile.parentFile?.mkdirs()
         if (tmpFile.exists()) tmpFile.delete()
         tmpFile.createNewFile()
-        val plain = SQLiteDatabase.openDatabase(dbFile.path, "", null, SQLiteDatabase.OPEN_READWRITE, null, null)
         try {
-            // sqlcipher_export copies the schema and data but not user_version, which Room
-            // reads to decide on migrations, so carry it over explicitly.
-            val version = plain.version
-            plain.rawExecSQL(
-                "ATTACH DATABASE '${tmpFile.path.replace("'", "''")}' AS encrypted KEY \"${String(rawKey, Charsets.US_ASCII)}\""
-            )
-            plain.rawExecSQL("SELECT sqlcipher_export('encrypted')")
-            plain.rawExecSQL("PRAGMA encrypted.user_version = $version")
-            plain.rawExecSQL("DETACH DATABASE encrypted")
-        } finally {
-            plain.close()
-        }
-        // The old WAL/journal belong to the unencrypted file; SQLite must never replay them
-        // against the encrypted one.
-        listOf("-wal", "-shm", "-journal").forEach { File(dbFile.path + it).delete() }
-        if (!tmpFile.renameTo(dbFile)) {
+            val plain = SQLiteDatabase.openDatabase(dbFile.path, "", null, SQLiteDatabase.OPEN_READWRITE, null, null)
+            try {
+                // Fold any committed WAL frames back into the main file first: the export reads
+                // through the WAL anyway, but this makes discarding the sidecars below safe. A
+                // failure here is not fatal - [hasPendingSidecarData] still guards the deletion.
+                runCatching { plain.rawExecSQL("PRAGMA wal_checkpoint(TRUNCATE)") }
+                // sqlcipher_export copies the schema and data but not user_version, which Room
+                // reads to decide on migrations, so carry it over explicitly.
+                val version = plain.version
+                plain.rawExecSQL(
+                    "ATTACH DATABASE '${tmpFile.path.replace("'", "''")}' AS encrypted KEY \"${String(rawKey, Charsets.US_ASCII)}\""
+                )
+                try {
+                    plain.rawExecSQL("SELECT sqlcipher_export('encrypted')")
+                    plain.rawExecSQL("PRAGMA encrypted.user_version = $version")
+                } finally {
+                    plain.rawExecSQL("DETACH DATABASE encrypted")
+                }
+            } finally {
+                plain.close()
+            }
+            // Somebody else's connection (or a failed checkpoint) can still leave committed data
+            // in the old WAL/journal. Refuse to delete it: aborting keeps the original usable.
+            check(!hasPendingSidecarData(dbFile)) {
+                "Refusing to discard uncheckpointed database data while encrypting"
+            }
+            // A partial export (disk full, interrupted write) must never replace a good database.
+            check(isExportedCopyUsable(tmpFile)) {
+                "Encrypted copy is incomplete; keeping the original database"
+            }
+            // Without this a power cut after the rename could leave a truncated file in place of
+            // the only copy.
+            fsyncFile(tmpFile)
+            if (!tmpFile.renameTo(dbFile)) error("Could not replace the database with its encrypted copy")
+            fsyncDirectory(dbFile.parentFile)
+            // Empty/shm-only leftovers belong to the unencrypted file; SQLite must never replay
+            // them against the encrypted one.
+            listOf("-wal", "-shm", "-journal").forEach { File(dbFile.path + it).delete() }
+            Log.i(TAG, "Encrypted the existing database")
+        } catch (e: Exception) {
+            // The original is untouched; drop the partial copy so the next launch retries cleanly.
             tmpFile.delete()
-            error("Could not replace the database with its encrypted copy")
+            throw e
         }
-        Log.i(TAG, "Encrypted the existing database")
+    }
+
+    /** True when an old `-wal` or `-journal` still holds data that deleting would lose. */
+    internal fun hasPendingSidecarData(dbFile: File): Boolean =
+        listOf("-wal", "-journal").any { File(dbFile.path + it).length() > 0 }
+
+    /** The exported copy must exist, be non-empty, and actually be encrypted. */
+    internal fun isExportedCopyUsable(tmpFile: File): Boolean =
+        tmpFile.exists() && tmpFile.length() > 0 && !isPlaintextSqlite(tmpFile)
+
+    /** Flush [file]'s contents so a rename committed before a power loss can't truncate it. */
+    private fun fsyncFile(file: File) {
+        FileOutputStream(file, true).use { it.fd.sync() }
+    }
+
+    /** Best effort: makes the rename itself durable. Filesystems that refuse are not fatal. */
+    private fun fsyncDirectory(dir: File?) {
+        if (dir == null) return
+        try {
+            val fd = Os.open(dir.path, OsConstants.O_RDONLY, 0)
+            try {
+                Os.fsync(fd)
+            } finally {
+                Os.close(fd)
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not fsync ${dir.name}", e)
+        }
     }
 
     internal fun isPlaintextSqlite(file: File): Boolean {
@@ -149,10 +205,16 @@ object DatabaseEncryption {
         val cipher = Cipher.getInstance(AES_GCM)
         cipher.init(Cipher.ENCRYPT_MODE, getOrCreateWrapKey())
         val blob = cipher.iv + cipher.doFinal(key)
-        // Write then rename, so a crash can't leave a truncated key file behind.
+        // Write, flush, then rename: a crash can't leave a truncated key file behind, which would
+        // make the encrypted database look unrecoverable on the next launch.
         val tmp = File(keyFile.path + ".tmp")
-        tmp.writeBytes(blob)
+        tmp.outputStream().use {
+            it.write(blob)
+            it.flush()
+            it.fd.sync()
+        }
         if (!tmp.renameTo(keyFile)) error("Could not store the database key")
+        fsyncDirectory(keyFile.parentFile)
     }
 
     /**

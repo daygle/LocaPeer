@@ -57,14 +57,43 @@ class SupervisedModeManager @Inject constructor(
     private var timeoutJob: Job? = null
     private var disableTimeoutJob: Job? = null
 
+    /** Guards reserving a request id and its Requesting state as one step (see [requestAccess]). */
+    private val requestLock = Any()
+
     fun requestAccess() {
-        if (_unlockState.value is UnlockState.Requesting) return
-        scope.launch {
-            val settings = prefs.settings.first()
-            val supervisorPubkey = settings.supervisorPubkey
-            if (supervisorPubkey.isEmpty()) return@launch
+        val requestId = UUID.randomUUID().toString()
+        // Reserve the id and state before publishing. Two taps can no longer start two requests,
+        // and an approval that arrives while the event is still being sent is matched by id
+        // instead of landing while the state is still Idle and being dropped.
+        if (!beginUnlockRequest(requestId)) return
+        scope.launch { sendUnlockRequest(requestId) }
+    }
+
+    private fun beginUnlockRequest(requestId: String): Boolean {
+        synchronized(requestLock) {
+            if (_unlockState.value is UnlockState.Requesting) return false
+            _unlockState.value = UnlockState.Requesting(requestId)
+            timeoutJob?.cancel()
+            timeoutJob = scope.launch {
+                delay(60_000)
+                if (_unlockState.value is UnlockState.Requesting) {
+                    _unlockState.value = UnlockState.TimedOut
+                }
+            }
+        }
+        return true
+    }
+
+    private suspend fun sendUnlockRequest(requestId: String) {
+        val settings = prefs.settings.first()
+        val supervisorPubkey = settings.supervisorPubkey
+        // Not supervised any more: drop the reservation instead of leaving the UI waiting on an
+        // answer that was never requested.
+        if (supervisorPubkey.isEmpty()) return abandonUnlockRequest(requestId)
+        // The supervisor may already have answered while this request was being prepared.
+        if (unlockRequestId() != requestId) return
+        try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
-            val requestId = UUID.randomUUID().toString()
             val payload = json.encodeToString(
                 UnlockRequestPayload(
                     requestId = requestId,
@@ -81,14 +110,21 @@ class SupervisedModeManager @Inject constructor(
                 crypto = crypto
             )
             relayClient.publishEvent(event)
-            _unlockState.value = UnlockState.Requesting(requestId)
+        } catch (e: Exception) {
+            android.util.Log.w("SupervisedModeManager", "Failed to send unlock request", e)
+            abandonUnlockRequest(requestId)
+        }
+    }
+
+    private fun unlockRequestId(): String? =
+        (_unlockState.value as? UnlockState.Requesting)?.requestId
+
+    /** Clears a reservation that never reached the relay (or was answered before it did). */
+    private fun abandonUnlockRequest(requestId: String) {
+        synchronized(requestLock) {
+            if (unlockRequestId() != requestId) return
             timeoutJob?.cancel()
-            timeoutJob = scope.launch {
-                delay(60_000)
-                if (_unlockState.value is UnlockState.Requesting) {
-                    _unlockState.value = UnlockState.TimedOut
-                }
-            }
+            _unlockState.value = UnlockState.Idle
         }
     }
 
@@ -105,15 +141,37 @@ class SupervisedModeManager @Inject constructor(
      *  A pending (not accepted) request can still be cancelled freely by the UI -
      *  supervision isn't in force yet. */
     fun requestDisable() {
-        if (_disableState.value is DisableState.Requesting) return
-        scope.launch {
-            val settings = prefs.settings.first()
-            val supervisorPubkey = settings.supervisorPubkey
-            // Only an active (accepted) supervision needs the supervisor's release;
-            // the UI cancels pending requests locally.
-            if (supervisorPubkey.isEmpty() || !settings.supervisionActive) return@launch
+        val requestId = UUID.randomUUID().toString()
+        // Same reservation as unlock: the supervisor's 1065 answer can otherwise race the publish
+        // and be ignored, leaving supervision gated until the timeout.
+        if (!beginDisableRequest(requestId)) return
+        scope.launch { sendDisableRequest(requestId) }
+    }
+
+    private fun beginDisableRequest(requestId: String): Boolean {
+        synchronized(requestLock) {
+            if (_disableState.value is DisableState.Requesting) return false
+            _disableState.value = DisableState.Requesting(requestId)
+            disableTimeoutJob?.cancel()
+            disableTimeoutJob = scope.launch {
+                delay(60_000)
+                if (_disableState.value is DisableState.Requesting) {
+                    _disableState.value = DisableState.TimedOut
+                }
+            }
+        }
+        return true
+    }
+
+    private suspend fun sendDisableRequest(requestId: String) {
+        val settings = prefs.settings.first()
+        val supervisorPubkey = settings.supervisorPubkey
+        // Only an active (accepted) supervision needs the supervisor's release; the UI cancels
+        // pending requests locally.
+        if (supervisorPubkey.isEmpty() || !settings.supervisionActive) return abandonDisableRequest(requestId)
+        if (disableRequestId() != requestId) return
+        try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
-            val requestId = UUID.randomUUID().toString()
             val payload = json.encodeToString(
                 SupervisedDisableRequestPayload(
                     requestId = requestId,
@@ -130,14 +188,20 @@ class SupervisedModeManager @Inject constructor(
                 crypto = crypto
             )
             relayClient.publishEvent(event)
-            _disableState.value = DisableState.Requesting(requestId)
+        } catch (e: Exception) {
+            android.util.Log.w("SupervisedModeManager", "Failed to send disable request", e)
+            abandonDisableRequest(requestId)
+        }
+    }
+
+    private fun disableRequestId(): String? =
+        (_disableState.value as? DisableState.Requesting)?.requestId
+
+    private fun abandonDisableRequest(requestId: String) {
+        synchronized(requestLock) {
+            if (disableRequestId() != requestId) return
             disableTimeoutJob?.cancel()
-            disableTimeoutJob = scope.launch {
-                delay(60_000)
-                if (_disableState.value is DisableState.Requesting) {
-                    _disableState.value = DisableState.TimedOut
-                }
-            }
+            _disableState.value = DisableState.Idle
         }
     }
 
@@ -164,10 +228,12 @@ class SupervisedModeManager @Inject constructor(
     }
 
     fun reset() {
-        timeoutJob?.cancel()
-        _unlockState.value = UnlockState.Idle
-        disableTimeoutJob?.cancel()
-        _disableState.value = DisableState.Idle
+        synchronized(requestLock) {
+            timeoutJob?.cancel()
+            _unlockState.value = UnlockState.Idle
+            disableTimeoutJob?.cancel()
+            _disableState.value = DisableState.Idle
+        }
     }
 
     fun sendRegisterRequest(supervisorPubkey: String) {
