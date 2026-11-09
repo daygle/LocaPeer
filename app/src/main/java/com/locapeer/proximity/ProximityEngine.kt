@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.SystemClock
 import androidx.core.app.NotificationCompat
+import androidx.core.net.toUri
 import com.locapeer.MainActivity
 import com.locapeer.R
 import com.locapeer.crypto.CryptoUtils
@@ -27,6 +28,7 @@ import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -76,7 +78,12 @@ class ProximityEngine @Inject constructor(
     // Cache our own location to avoid redundant FusedLocation calls when multiple peers pulse at once.
     @Volatile private var cachedOwnLocation: android.location.Location? = null
     @Volatile private var lastOwnLocationFetchAt = 0L
-    private val ownLocationMutex = kotlinx.coroutines.sync.Mutex()
+    private val ownLocationMutex = Mutex()
+    // Serializes the nearby-state flip and the notification decision. Evaluations are
+    // launched per heartbeat, and a live pulse can land while an earlier one is still
+    // waiting on the own-location fetch; two interleaved evaluations would both read the
+    // old wasNearby/lastNotifiedAt before either wrote, double-alerting one arrival.
+    private val decisionMutex = Mutex()
 
     init {
         scope.launch {
@@ -108,42 +115,44 @@ class ProximityEngine @Inject constructor(
             peerHeartbeat.lat, peerHeartbeat.lng
         )
 
-        val peerId = peerHeartbeat.deviceId
-        val wasInside = wasNearby[peerId]
-        val buffer = maxOf(MIN_EXIT_BUFFER_M, uncertainty)
-        val inside = GeoMath.isInsideWithHysteresis(
-            distanceMetres, alert.radiusMetres.toDouble(), buffer, wasInside == true
-        )
+        decisionMutex.withLock {
+            val peerId = peerHeartbeat.deviceId
+            val wasInside = wasNearby[peerId]
+            val buffer = maxOf(MIN_EXIT_BUFFER_M, uncertainty)
+            val inside = GeoMath.isInsideWithHysteresis(
+                distanceMetres, alert.radiusMetres.toDouble(), buffer, wasInside == true
+            )
 
-        // If the uncertainty is larger than the radius, we can't reliably confirm
-        // a NEW entry. However, if we are currently "outside" even with the buffer,
-        // we allow the state to update to "outside" so that future entry alerts
-        // can fire when accuracy improves. Exception: when the measured distance is
-        // so small that even the full uncertainty circle stays inside the radius,
-        // the peer is PROVABLY nearby - alert on this heartbeat instead of dropping
-        // every reading until a sharper fix happens to land (with a 300 m radius and
-        // network-grade fixes, the old gate could stay closed for an entire visit).
-        if (inside && wasInside != true &&
-            uncertainty > alert.radiusMetres.toDouble() &&
-            distanceMetres + uncertainty > alert.radiusMetres.toDouble()
-        ) return
+            // If the uncertainty is larger than the radius, we can't reliably confirm
+            // a NEW entry. However, if we are currently "outside" even with the buffer,
+            // we allow the state to update to "outside" so that future entry alerts
+            // can fire when accuracy improves. Exception: when the measured distance is
+            // so small that even the full uncertainty circle stays inside the radius,
+            // the peer is PROVABLY nearby - alert on this heartbeat instead of dropping
+            // every reading until a sharper fix happens to land (with a 300 m radius and
+            // network-grade fixes, the old gate could stay closed for an entire visit).
+            if (inside && wasInside != true &&
+                uncertainty > alert.radiusMetres.toDouble() &&
+                distanceMetres + uncertainty > alert.radiusMetres.toDouble()
+            ) return@withLock
 
-        wasNearby[peerId] = inside
-        // First observation since process start: seed only. A peer who was already
-        // nearby shouldn't re-alert on every app restart; arrivals fire next beat.
-        if (wasInside == null) return
+            wasNearby[peerId] = inside
+            // First observation since process start: seed only. A peer who was already
+            // nearby shouldn't re-alert on every app restart; arrivals fire next beat.
+            if (wasInside == null) return@withLock
 
-        if (inside && !wasInside) {
-            // Schedule check: only notify if the current time matches the alert's schedule.
-            // Empty schedule defaults to active (all days/times).
-            val rules = alert.scheduleRules.toScheduleRules()
-            if (!SharingSchedule.isActive(rules)) return
+            if (inside && !wasInside) {
+                // Schedule check: only notify if the current time matches the alert's schedule.
+                // Empty schedule defaults to active (all days/times).
+                val rules = alert.scheduleRules.toScheduleRules()
+                if (!SharingSchedule.isActive(rules)) return@withLock
 
-            val now = System.currentTimeMillis()
-            if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return
-            lastNotifiedAt[peerId] = now
-            sendNotification(peerHeartbeat.displayName, peerId, distanceMetres.toInt())
-            sendTrackingAlertToPeer(peerId)
+                val now = System.currentTimeMillis()
+                if (now - (lastNotifiedAt[peerId] ?: 0L) < COOLDOWN_MS) return@withLock
+                lastNotifiedAt[peerId] = now
+                sendNotification(peerHeartbeat.displayName, peerId, distanceMetres.toInt())
+                sendTrackingAlertToPeer(peerId)
+            }
         }
     }
 
@@ -198,9 +207,15 @@ class ProximityEngine @Inject constructor(
         // not carry its own English suffix (that produced "500 m away from you").
         val displayDistance = com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())
 
+        // A unique data URI keys each PendingIntent to its peer. The request code alone
+        // can't: extras don't take part in PendingIntent matching (Intent.filterEquals),
+        // so two peers whose deviceId hashCodes collide would share one PendingIntent and
+        // FLAG_UPDATE_CURRENT would overwrite the other's extras, routing its tap to the
+        // wrong contact.
         val chatIntent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = "locapeer-notif://proximity/$personDeviceId/chat".toUri()
             putExtra("navigateTo", "chat")
             putExtra("openChat", personDeviceId)
             putExtra("peerName", personName)
@@ -209,18 +224,19 @@ class ProximityEngine @Inject constructor(
             putExtra(com.locapeer.EXTRA_CANCEL_NOTIF_TOKEN, com.locapeer.util.NotificationCancelToken.get(context))
         }
         val chatPi = PendingIntent.getActivity(
-            context, personDeviceId.hashCode() + 20000, chatIntent,
+            context, "proximity:$personDeviceId:chat".hashCode(), chatIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val mapIntent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            data = "locapeer-notif://proximity/$personDeviceId/map".toUri()
             putExtra("navigateTo", "map")
             putExtra("highlightPeer", personDeviceId)
         }
         val mapPi = PendingIntent.getActivity(
-            context, personDeviceId.hashCode() + 21000, mapIntent,
+            context, "proximity:$personDeviceId:map".hashCode(), mapIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 

@@ -38,4 +38,21 @@ object GeoMath {
         bufferM: Double,
         wasInside: Boolean
     ): Boolean = if (wasInside) distanceM <= radiusM + bufferM else distanceM <= radiusM
+
+    /**
+     * Whether a stored observation at [previousTimestampMs] may seed the inside/outside
+     * state for the observation at [currentTimestampMs]. The seed must be strictly older -
+     * a replayed or out-of-order beat describes an earlier moment and cannot say where the
+     * person came from - and no more than [maxGapMs] older. Past that gap the alerting
+     * pipeline was not running (a force-stopped app, a peer who went dark, a week of
+     * backfill), so seeding from it would invent a transition nobody observed rather than
+     * merely miss one.
+     */
+    fun canSeedFromPrevious(
+        currentTimestampMs: Long,
+        previousTimestampMs: Long,
+        maxGapMs: Long
+    ): Boolean =
+        previousTimestampMs < currentTimestampMs &&
+            currentTimestampMs - previousTimestampMs <= maxGapMs
 }

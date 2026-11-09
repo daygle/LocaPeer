@@ -70,6 +70,21 @@ class GeoMathTest {
     }
 
     @Test
+    fun `seed needs a strictly older observation inside the gap`() {
+        val maxGap = 10 * 60_000L
+        val now = 1_000_000_000L
+        // Recently preceding fix: usable.
+        assertTrue(GeoMath.canSeedFromPrevious(now, now - 60_000L, maxGap))
+        // Exactly at the gap: still the same alerting session.
+        assertTrue(GeoMath.canSeedFromPrevious(now, now - maxGap, maxGap))
+        // Past the gap (app killed, peer dark for hours): seed nothing.
+        assertFalse(GeoMath.canSeedFromPrevious(now, now - maxGap - 1, maxGap))
+        // Same fix, or an out-of-order newer one, cannot establish a direction.
+        assertFalse(GeoMath.canSeedFromPrevious(now, now, maxGap))
+        assertFalse(GeoMath.canSeedFromPrevious(now, now + 1, maxGap))
+    }
+
+    @Test
     fun `boundary jitter cannot flap membership`() {
         val radius = 100.0
         val buffer = 50.0

@@ -37,6 +37,11 @@ import javax.inject.Singleton
 private const val COOLDOWN_MS = 5 * 60 * 1000L // 5 minutes per fence
 // Minimum hysteresis buffer past the fence radius before an exit counts.
 private const val MIN_EXIT_BUFFER_M = 50.0
+// How far back a stored heartbeat may be used to seed inside/outside state after a
+// restart. Matches the receiver's fresh-heartbeat window: alerts only run for beats that
+// recent, so an older "previous" means the engine was not watching for the whole gap and
+// a transition between the two is an invention, not an observation.
+private const val SEED_MAX_GAP_MS = 10 * 60 * 1000L
 // ENTER fixes up to this multiple of the fence radius in accuracy are trusted (see
 // evaluate): a fix within 2x the radius of the centre genuinely puts the person inside
 // the fence, so waiting for a sharper one only delays the arrival alert. Small fences
@@ -88,8 +93,13 @@ class GeofenceEngine @Inject constructor(
         fences.forEach { fence ->
             val key = "${fence.id}:${current.deviceId}"
             val wasInside = insideState[key]
-                ?: previous?.takeIf { it.accuracy <= fence.radiusMetres.toFloat() }
-                    ?.let { GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <= fence.radiusMetres.toDouble() }
+                ?: previous?.takeIf {
+                    it.accuracy <= fence.radiusMetres.toFloat() &&
+                        GeoMath.canSeedFromPrevious(current.timestamp, it.timestamp, SEED_MAX_GAP_MS)
+                }?.let {
+                    GeoMath.haversineMetres(it.lat, it.lng, fence.lat, fence.lng) <=
+                        fence.radiusMetres.toDouble()
+                }
 
             val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
             // The sender already withholds fixes worse than its accuracy gate, so a coarse
@@ -158,7 +168,7 @@ class GeofenceEngine @Inject constructor(
                     title = title,
                     subtitle = context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
                 )
-                sendTrackingAlertToPeer(current.deviceId, fence.name)
+                sendTrackingAlertToPeer(current.deviceId)
             }
         }
     }
@@ -177,14 +187,16 @@ class GeofenceEngine @Inject constructor(
         lastNotifiedAt.keys.removeIf { it.endsWith(":$deviceId:enter") || it.endsWith(":$deviceId:exit") }
     }
 
-    private fun sendTrackingAlertToPeer(peerPubkey: String, fenceName: String) {
+    private fun sendTrackingAlertToPeer(peerPubkey: String) {
         scope.launch {
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val myName = prefs.settings.first().displayName.ifBlank { context.getString(R.string.notif_someone) }
+                // The fence's name is the watcher's own label for that place ("Home",
+                // "Clinic"); it is never shared with the tracked peer anywhere else. Tell
+                // them an alert fired, not what the watcher calls the area.
                 val payload = TrackingAlertPayload(
                     type = "GEOFENCE",
-                    alertName = fenceName,
                     triggerName = myName
                 )
                 val encrypted = crypto.nip44Encrypt(

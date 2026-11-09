@@ -1956,14 +1956,17 @@ class HeartbeatReceiver @Inject constructor(
         val payload = try { json.decodeFromString<TrackingAlertPayload>(plaintext) } catch (e: Exception) { return }
 
         val title = context.getString(R.string.notif_tracking_alert_title)
+        val triggerName = payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS)
+        // Current senders omit the fence name (it is the watcher's private label), and any
+        // sender may omit it: a missing name must not render as the literal "null".
+        val fenceName = payload.alertName?.take(MAX_CIRCLE_NAME_CHARS)?.takeIf { it.isNotBlank() }
         val message = when (payload.type) {
-            "PROXIMITY" -> context.getString(R.string.notif_tracking_proximity, payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS))
-            "GEOFENCE" -> context.getString(
-                R.string.notif_tracking_geofence,
-                payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS),
-                payload.alertName?.take(MAX_CIRCLE_NAME_CHARS)
-            )
-            else -> context.getString(R.string.notif_tracking_generic, payload.triggerName.take(MAX_PEER_DISPLAY_NAME_CHARS))
+            "PROXIMITY" -> context.getString(R.string.notif_tracking_proximity, triggerName)
+            "GEOFENCE" -> if (fenceName != null)
+                context.getString(R.string.notif_tracking_geofence, triggerName, fenceName)
+            else
+                context.getString(R.string.notif_tracking_geofence_unnamed, triggerName)
+            else -> context.getString(R.string.notif_tracking_generic, triggerName)
         }
 
         val intent = Intent(context, MainActivity::class.java).apply {
