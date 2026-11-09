@@ -85,6 +85,35 @@ class GeoMathTest {
     }
 
     @Test
+    fun `proximity uncertainty grows with peer fix age and reported speed`() {
+        // Fresh pulse from a stationary peer: only the two accuracy circles plus a few
+        // seconds of walking drift.
+        assertEquals(
+            30.0 + 1.5 * 5,
+            GeoMath.proximityUncertaintyM(10.0, 20.0, 0.0, 5_000L),
+            0.001
+        )
+        // Four-minute-old stationary fix: the peer could have walked away by now.
+        assertEquals(
+            30.0 + 1.5 * 240,
+            GeoMath.proximityUncertaintyM(10.0, 20.0, 0.0, 4 * 60_000L),
+            0.001
+        )
+        // A delayed fix from a mover carries their own speed on top of the drift.
+        assertEquals(
+            30.0 + (1.5 + 15.0) * 60,
+            GeoMath.proximityUncertaintyM(10.0, 20.0, 15.0, 60_000L),
+            0.001
+        )
+        // A negative age (clock skew) never shrinks the accuracy term.
+        assertEquals(
+            30.0,
+            GeoMath.proximityUncertaintyM(10.0, 20.0, 0.0, -60_000L),
+            0.001
+        )
+    }
+
+    @Test
     fun `boundary jitter cannot flap membership`() {
         val radius = 100.0
         val buffer = 50.0

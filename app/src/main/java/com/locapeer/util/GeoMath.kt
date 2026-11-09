@@ -55,4 +55,29 @@ object GeoMath {
     ): Boolean =
         previousTimestampMs < currentTimestampMs &&
             currentTimestampMs - previousTimestampMs <= maxGapMs
+
+    /**
+     * Walking-speed allowance per second of peer-fix age. A peer who reported stationary
+     * when that fix was taken may have started moving since, and a stationary sender only
+     * checks in every few minutes, so waiting is itself evidence the position may have
+     * changed.
+     */
+    private const val PEER_DRIFT_MPS = 1.5
+
+    /**
+     * Distance uncertainty for a proximity judgement: both accuracy circles, plus how far
+     * the peer could have travelled since their fix. [peerSpeedMps] covers a mover whose
+     * beats were delayed; the walking drift covers the gap between "was stationary at the
+     * last report" and "is moving now", which no reported value can reveal.
+     */
+    fun proximityUncertaintyM(
+        ownAccuracyM: Double,
+        peerAccuracyM: Double,
+        peerSpeedMps: Double,
+        peerFixAgeMs: Long
+    ): Double {
+        val ageSeconds = peerFixAgeMs.coerceAtLeast(0L) / 1000.0
+        return ownAccuracyM + peerAccuracyM +
+            (PEER_DRIFT_MPS + peerSpeedMps.coerceAtLeast(0.0)) * ageSeconds
+    }
 }

@@ -845,6 +845,7 @@
     <string name="notif_message_person">Message %1$s</string>
     <string name="notif_geofence_entered_title">%1$s entered %2$s</string>
     <string name="notif_geofence_left_title">%1$s left %2$s</string>
+    <string name="notif_geofence_inside_title">%1$s is inside %2$s</string>
     <string name="notif_geofence_subtitle">at %1$s · %2$s radius</string>
     <string name="notif_person_nearby">%1$s is nearby</string>
     <string name="notif_distance_from_you">%1$s from you</string>

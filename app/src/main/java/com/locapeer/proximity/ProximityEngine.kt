@@ -84,11 +84,32 @@ class ProximityEngine @Inject constructor(
     // waiting on the own-location fetch; two interleaved evaluations would both read the
     // old wasNearby/lastNotifiedAt before either wrote, double-alerting one arrival.
     private val decisionMutex = Mutex()
+    // Whether each peer's alert was on at the last DB emission, so an alert switched back
+    // on can report the visit already in progress.
+    private val alertWasActive = ConcurrentHashMap<String, Boolean>()
+    // Peers whose alert was just re-enabled: the next evaluation reports the current state
+    // instead of seeding silently.
+    private val announceOnNextEvaluation = ConcurrentHashMap.newKeySet<String>()
 
     init {
         scope.launch {
-            proximityAlertDao.getAll().collect {
+            proximityAlertDao.getAll().collect { alerts ->
                 alertsCache.clear()
+                val present = alerts.mapTo(mutableSetOf()) { it.peerDeviceId }
+                // An alert deleted outright releases its peer's nearby/cooldown state, so it
+                // can't leak into a later alert or accumulate for peers without one.
+                alertWasActive.keys.filter { it !in present }.forEach { peer ->
+                    alertWasActive.remove(peer)
+                    wasNearby.remove(peer)
+                    lastNotifiedAt.remove(peer)
+                    announceOnNextEvaluation.remove(peer)
+                }
+                alerts.forEach { alert ->
+                    val before = alertWasActive.put(alert.peerDeviceId, alert.active)
+                    if (before == false && alert.active) announceOnNextEvaluation += alert.peerDeviceId
+                    if (!alert.active) announceOnNextEvaluation -= alert.peerDeviceId
+                }
+                announceOnNextEvaluation.retainAll(present)
             }
         }
     }
@@ -106,9 +127,23 @@ class ProximityEngine @Inject constructor(
         // A stale own position only proves where we *were*; skip rather than
         // raise a "nearby" alert against it.
         if (System.currentTimeMillis() - ownLocation.time > MAX_OWN_FIX_AGE_MS) return
+        // A peer fix is a position from the past, so its distance uncertainty grows with
+        // age and with the speed the peer reported: a beat delayed by a relay backlog can't
+        // assert a "nearby" that ended minutes ago. Both clock readings are used - the
+        // sender's timestamp and our receive time - so clock skew can only make the
+        // allowance larger, never smaller.
+        val peerFixAgeMs = maxOf(
+            System.currentTimeMillis() - peerHeartbeat.timestamp,
+            System.currentTimeMillis() - peerHeartbeat.receivedAt
+        ).coerceAtLeast(0L)
         // When the combined uncertainty exceeds the radius, "within radius" can't
         // be decided - this also keeps suburb-precision peers from false-alerting.
-        val uncertainty = ownLocation.accuracy.toDouble() + peerHeartbeat.accuracy.toDouble()
+        val uncertainty = GeoMath.proximityUncertaintyM(
+            ownAccuracyM = ownLocation.accuracy.toDouble(),
+            peerAccuracyM = peerHeartbeat.accuracy.toDouble(),
+            peerSpeedMps = peerHeartbeat.speed.coerceAtLeast(0f).toDouble(),
+            peerFixAgeMs = peerFixAgeMs
+        )
 
         val distanceMetres = GeoMath.haversineMetres(
             ownLocation.latitude, ownLocation.longitude,
@@ -137,11 +172,15 @@ class ProximityEngine @Inject constructor(
             ) return@withLock
 
             wasNearby[peerId] = inside
+            // Switching an existing alert back on shouldn't wait for the peer to leave and
+            // return: report the visit that is already happening. A first-ever observation
+            // (restart, brand-new alert) still seeds silently.
+            val announce = announceOnNextEvaluation.remove(peerId) == true
             // First observation since process start: seed only. A peer who was already
             // nearby shouldn't re-alert on every app restart; arrivals fire next beat.
-            if (wasInside == null) return@withLock
+            if (wasInside == null && !announce) return@withLock
 
-            if (inside && !wasInside) {
+            if (inside && (wasInside != true || announce)) {
                 // Schedule check: only notify if the current time matches the alert's schedule.
                 // Empty schedule defaults to active (all days/times).
                 val rules = alert.scheduleRules.toScheduleRules()

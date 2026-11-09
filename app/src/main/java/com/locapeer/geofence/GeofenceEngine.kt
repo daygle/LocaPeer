@@ -25,7 +25,6 @@ import com.locapeer.subscriber.TrackingAlertPayload
 import com.locapeer.util.GeoMath
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -74,14 +73,41 @@ class GeofenceEngine @Inject constructor(
 
     // Cache of active geofences per tracked device ID.
     private val fencesCache = ConcurrentHashMap<String, List<ActiveGeofence>>()
+    // Whether each fence+person assignment was on at the last DB emission, so an
+    // assignment switched back on can report the visit already in progress.
+    private val wasActiveAssignment = ConcurrentHashMap<String, Boolean>()
+    // Fence+person pairs just switched back on: the next reliable evaluation reports
+    // "inside" rather than seeding silently.
+    private val announceOnNextEvaluation = ConcurrentHashMap.newKeySet<String>()
 
     init {
         scope.launch {
-            // Re-fetch everything whenever ANY geofence or assignment changes. Both tables
-            // matter: editing an area's centre or radius only touches geofences.
-            // This ensures the engine always has fresh data without reading DB on every heartbeat.
-            merge(geofenceAssignmentDao.observeAll(), geofenceDao.getAllGeofences()).collect {
+            // Re-fetch everything whenever ANY assignment changes, and notice assignments
+            // turned back on so their current state can be reported.
+            geofenceAssignmentDao.observeAll().collect { assignments ->
                 fencesCache.clear()
+                val present = assignments.mapTo(mutableSetOf()) { "${it.geofenceId}:${it.trackedDeviceId}" }
+                assignments.forEach { a ->
+                    val key = "${a.geofenceId}:${a.trackedDeviceId}"
+                    val before = wasActiveAssignment.put(key, a.active)
+                    if (before == false && a.active) announceOnNextEvaluation += key
+                    if (!a.active) announceOnNextEvaluation -= key
+                }
+                // Deleted assignments stop being tracked, so re-creating one never looks
+                // like a re-enable.
+                wasActiveAssignment.keys.retainAll(present)
+                announceOnNextEvaluation.retainAll(present)
+            }
+        }
+        scope.launch {
+            // Editing an area's centre or radius only touches the geofence row, so watch
+            // that table too - and drop state for areas that no longer exist.
+            geofenceDao.getAllGeofences().collect { fences ->
+                fencesCache.clear()
+                val ids = fences.mapTo(HashSet()) { it.id }
+                insideState.keys.removeIf { it.substringBefore(':') !in ids }
+                lastNotifiedAt.keys.removeIf { it.substringBefore(':') !in ids }
+                announceOnNextEvaluation.removeIf { it.substringBefore(':') !in ids }
             }
         }
     }
@@ -102,18 +128,13 @@ class GeofenceEngine @Inject constructor(
                 }
 
             val dist = GeoMath.haversineMetres(current.lat, current.lng, fence.lat, fence.lng)
-            // The sender already withholds fixes worse than its accuracy gate, so a coarse
-            // fix that arrives is a real position. Hysteresis-buffering an EXIT past the
-            // radius by the full accuracy circle (often 200-400m for network fixes) pushes
-            // the measured boundary far outside the drawn fence and delays departure
-            // alerts - sometimes past the next heartbeat. For EXIT/BOTH fences the buffer
-            // is the minimum only; ENTER-only fences keep the full-accuracy buffer since
-            // they never fire on the borderline fixes it exists to absorb.
-            val exitSensitive = fence.triggerOn == "EXIT" || fence.triggerOn == "BOTH"
-            val buffer = if (exitSensitive)
-                MIN_EXIT_BUFFER_M
-            else
-                maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
+            // A coarse fix cannot place the person outside the fence any more precisely
+            // than inside it, so the exit boundary is buffered by the fix's accuracy (never
+            // less than the minimum). The old minimum-only buffer for EXIT/BOTH fences
+            // assumed the sender's accuracy gate withheld coarse fixes, but that gate is
+            // opt-in and defaults off: a 500 m network fix could otherwise "leave" a 100 m
+            // fence while the person was standing in it.
+            val buffer = maxOf(MIN_EXIT_BUFFER_M, current.accuracy.toDouble())
             val inNow = GeoMath.isInsideWithHysteresis(dist, fence.radiusMetres.toDouble(), buffer, wasInside == true)
 
             // A fix coarser than the fence itself can't reliably tell inside from outside -
@@ -130,18 +151,24 @@ class GeofenceEngine @Inject constructor(
                 )
             ) return@forEach
 
+            // An assignment switched back on reports the visit that is already happening;
+            // a first-ever observation (restart, brand-new assignment) still seeds silently.
+            val announce = announceOnNextEvaluation.remove(key) == true
             insideState[key] = inNow
             // First reliable observation for this fence+person: seed only - we don't
             // know where they came from, so neither entered nor exited can fire.
-            if (wasInside == null) return@forEach
+            if (wasInside == null && !announce) return@forEach
 
-            val entered = !wasInside && inNow
-            val exited = wasInside && !inNow
+            val entered = wasInside == false && inNow
+            val exited = wasInside == true && !inNow
+            // Already inside when the assignment came back on: not a crossing, so report
+            // "is inside" rather than claiming an arrival that never happened.
+            val announceInside = announce && inNow && !entered
 
             val shouldNotify = when (fence.triggerOn) {
-                "ENTER" -> entered
+                "ENTER" -> entered || announceInside
                 "EXIT" -> exited
-                "BOTH" -> entered || exited
+                "BOTH" -> entered || exited || announceInside
                 else -> false
             }
 
@@ -151,16 +178,17 @@ class GeofenceEngine @Inject constructor(
                 val rules = fence.scheduleRules.toScheduleRules()
                 if (!SharingSchedule.isActive(rules)) return@forEach
 
-                val cooldownKey = "${fence.id}:${current.deviceId}:${if (entered) "enter" else "exit"}"
+                val cooldownKey = "${fence.id}:${current.deviceId}:${if (exited) "exit" else "enter"}"
                 val now = System.currentTimeMillis()
                 val last = lastNotifiedAt[cooldownKey] ?: 0L
                 if (now - last < COOLDOWN_MS) return@forEach
                 lastNotifiedAt[cooldownKey] = now
 
-                val title = if (entered)
-                    context.getString(R.string.notif_geofence_entered_title, current.displayName, fence.name)
-                else
-                    context.getString(R.string.notif_geofence_left_title, current.displayName, fence.name)
+                val title = when {
+                    exited -> context.getString(R.string.notif_geofence_left_title, current.displayName, fence.name)
+                    entered -> context.getString(R.string.notif_geofence_entered_title, current.displayName, fence.name)
+                    else -> context.getString(R.string.notif_geofence_inside_title, current.displayName, fence.name)
+                }
                 sendGeofenceNotification(
                     fence = fence,
                     personName = current.displayName,
@@ -168,7 +196,9 @@ class GeofenceEngine @Inject constructor(
                     title = title,
                     subtitle = context.getString(R.string.notif_geofence_subtitle, formatTime(current.timestamp), com.locapeer.util.DisplayFormat.distanceValue(fence.radiusMetres.toDouble()))
                 )
-                sendTrackingAlertToPeer(current.deviceId)
+                // An "is inside" report follows a settings change, not a crossing, so the
+                // peer's "you entered or exited a fence" alert would be false.
+                if (!announceInside) sendTrackingAlertToPeer(current.deviceId)
             }
         }
     }
@@ -183,6 +213,7 @@ class GeofenceEngine @Inject constructor(
      */
     fun onPeerRemoved(deviceId: String) {
         insideState.keys.removeIf { it.endsWith(":$deviceId") }
+        announceOnNextEvaluation.removeIf { it.endsWith(":$deviceId") }
         // Cooldown keys always carry the :enter/:exit suffix.
         lastNotifiedAt.keys.removeIf { it.endsWith(":$deviceId:enter") || it.endsWith(":$deviceId:exit") }
     }
