@@ -690,6 +690,23 @@ class AppPreferences @Inject constructor(
     }
 
     /**
+     * Settings-change entries a supervised device still owes its supervisor (JSON string;
+     * see SupervisionChangeReporter). Written the moment a change is recorded so a process
+     * death inside the report's debounce window cannot drop it.
+     */
+    private val KEY_SUPERVISION_CHANGE_BUFFER = stringPreferencesKey("supervision_change_buffer")
+
+    suspend fun getSupervisionChangeBufferJson(): String? =
+        context.settingsStore.data.first()[KEY_SUPERVISION_CHANGE_BUFFER]
+
+    suspend fun setSupervisionChangeBufferJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_SUPERVISION_CHANGE_BUFFER)
+            else prefs[KEY_SUPERVISION_CHANGE_BUFFER] = json
+        }
+    }
+
+    /**
      * Full settings wipe for "Delete identity & erase all data": every key in the settings
      * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync
      * bookmarks). Returns the store to pristine DataStore state; next launch generates a new
@@ -707,6 +724,9 @@ class AppPreferences @Inject constructor(
             it[KEY_SUPERVISION_REQUEST_SENT] = false
             // The release has been applied; never let a stale marker end a later supervision.
             it[KEY_SUPERVISION_RELEASE_APPROVED] = false
+            // Change reports describe a supervision that no longer exists; a summary that
+            // can never be sent would otherwise be retried at every start.
+            it.remove(KEY_SUPERVISION_CHANGE_BUFFER)
         }
     }
 
