@@ -47,6 +47,7 @@ import com.locapeer.supervised.ACTION_SUPERVISED_INVITE_ACCEPT
 import com.locapeer.supervised.ACTION_SUPERVISED_INVITE_DECLINE
 import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_ACCEPT
 import com.locapeer.supervised.ACTION_SUPERVISED_REGISTER_DECLINE
+import com.locapeer.supervised.EXTRA_REGISTER_REQUESTED_AT
 import com.locapeer.supervised.EXTRA_REQUESTER_NAME
 import com.locapeer.supervised.EXTRA_REQUESTER_PUBKEY
 import com.locapeer.supervised.EXTRA_REQUESTER_RELAY
@@ -209,6 +210,16 @@ internal fun isCurrentSupervisionRegistrationResponse(
 ): Boolean = pending &&
     eventCreatedAt >= requestedAt - SUPERVISION_RESPONSE_SKEW_S &&
     eventCreatedAt >= now - (if (accepted) MAX_CATCHUP_SECONDS else SUPERVISION_EVENT_MAX_AGE_S)
+
+/**
+ * An answer may only decide the request it names. The supervisor echoes the request time it
+ * saw, so Accept/Decline tapped on a notification for an earlier attempt cannot decide a
+ * newer one (the answer's own createdAt is the tap time, which always passes the timing
+ * check). Answers from older supervisor builds carry no echo and are still accepted.
+ */
+internal fun doesRegisterAnswerMatchRequest(
+    answerRequestCreatedAt: Long?, pendingRequestedAt: Long
+): Boolean = answerRequestCreatedAt == null || answerRequestCreatedAt == pendingRequestedAt
 
 /**
  * Whether a message for a circle the user left is a genuine re-invite rather than a straggler or an
@@ -1295,6 +1306,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
             putExtra(EXTRA_REQUESTER_NAME, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS))
             putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
+            putExtra(EXTRA_REGISTER_REQUESTED_AT, payload.requestedAt ?: 0L)
         }
         val declineIntent = Intent(context, SupervisedRegisterReceiver::class.java).apply {
             setPackage(context.packageName)
@@ -1302,6 +1314,7 @@ class HeartbeatReceiver @Inject constructor(
             putExtra(EXTRA_REQUESTER_PUBKEY, event.pubkey)
             putExtra(EXTRA_REQUESTER_NAME, payload.deviceName.take(MAX_PEER_DISPLAY_NAME_CHARS))
             putExtra(EXTRA_REQUESTER_RELAY, payload.deviceRelayUrl)
+            putExtra(EXTRA_REGISTER_REQUESTED_AT, payload.requestedAt ?: 0L)
         }
         val acceptPi = PendingIntent.getBroadcast(
             context, notifId, acceptIntent,
@@ -1389,6 +1402,7 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val (_, pubHex) = keyManager.ensureKeypair()
         if (payload.devicePubkeyHex != pubHex) return
+        if (!doesRegisterAnswerMatchRequest(payload.requestCreatedAt, settings.supervisionRequestedAt)) return
         // Other responses or local cancellation can race decryption. Decide and update the
         // same pending request atomically before notifying the user or resetting state.
         if (!prefs.applySupervisionRegistrationResponse(

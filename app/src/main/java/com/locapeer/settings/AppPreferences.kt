@@ -61,24 +61,38 @@ data class LeftCircle(val circleId: String, val creatorPubkey: String, val leftA
  * Decode the stored leave records: comma-separated `id:creator:leftAt` entries. A bare id written
  * by an older version decodes with no known owner and time 0.
  */
+/**
+ * Upper bound on stored leave records. The record's only job is to stop a straggling
+ * message re-creating a circle the user left; that matters for recent leaves, not for
+ * hundreds of them, and the encoded list is read on every settings emission. 200 is far
+ * more than a person accumulates and still bounds the string to a few tens of kilobytes.
+ */
+internal const val MAX_LEFT_CIRCLE_RECORDS = 200
+
 internal fun decodeLeftCircles(raw: String?): Map<String, LeftCircle> {
     if (raw.isNullOrBlank()) return emptyMap()
     val result = LinkedHashMap<String, LeftCircle>()
-    raw.split(',').forEach { entry ->
-        if (entry.isBlank()) return@forEach
+    for (entry in raw.split(',')) {
+        if (result.size >= MAX_LEFT_CIRCLE_RECORDS) break
+        if (entry.isBlank()) continue
         val parts = entry.split(':')
         val leftAt = parts.getOrNull(2)?.toLongOrNull()
-        if (parts.size == 3 && leftAt != null) {
+        if (parts.size == 3 && leftAt != null && parts[0].isNotBlank()) {
             result[parts[0]] = LeftCircle(parts[0], parts[1], leftAt)
-        } else {
+        } else if (entry.isNotBlank()) {
             result[entry] = LeftCircle(entry, "", 0L)
         }
     }
     return result
 }
 
+/** Oldest leaves fall off first; a duplicate id keeps its most recent leave. */
 internal fun encodeLeftCircles(circles: Collection<LeftCircle>): String =
-    circles.joinToString(",") { "${it.circleId}:${it.creatorPubkey}:${it.leftAt}" }
+    circles.asSequence()
+        .sortedByDescending { it.leftAt }
+        .distinctBy { it.circleId }
+        .take(MAX_LEFT_CIRCLE_RECORDS)
+        .joinToString(",") { "${it.circleId}:${it.creatorPubkey}:${it.leftAt}" }
 
 val HARDCODED_RELAYS = listOf(
     "wss://relay.daygle.net",

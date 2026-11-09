@@ -247,7 +247,10 @@ class SupervisedModeManager @Inject constructor(
                 SupervisedRegisterPayload(
                     devicePubkeyHex = pubHex,
                     deviceName = settings.displayName.ifBlank { pubHex.take(8) },
-                    deviceRelayUrl = myRelay
+                    deviceRelayUrl = myRelay,
+                    // The stored request time, so the answer can be matched to THIS request
+                    // rather than to whatever is pending when it arrives.
+                    requestedAt = settings.supervisionRequestedAt.takeIf { it > 0 },
                 )
             )
             val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), supervisorPubkey, payload)

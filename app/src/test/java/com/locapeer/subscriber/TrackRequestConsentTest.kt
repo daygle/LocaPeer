@@ -35,6 +35,15 @@ class TrackRequestConsentTest {
         assertFalse(isCurrentSupervisionRegistrationResponse(true, oldRequest, now - 86401, now, false))
     }
 
+    @Test fun `a stale registration answer cannot decide a newer request`() {
+        // Answer tapped from a notification about an earlier request (its createdAt is the tap
+        // time, so the timing checks alone would let it through).
+        assertFalse(doesRegisterAnswerMatchRequest(1_000L, 2_000L))
+        assertTrue(doesRegisterAnswerMatchRequest(2_000L, 2_000L))
+        // Older supervisors don't echo the request time; timing + pending checks still apply.
+        assertTrue(doesRegisterAnswerMatchRequest(null, 2_000L))
+    }
+
     @Test fun `registration transition only applies once to the same pending request`() {
         val enabled = booleanPreferencesKey("supervised_mode")
         val pending = booleanPreferencesKey("supervision_pending")

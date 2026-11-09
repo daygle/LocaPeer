@@ -31,6 +31,8 @@ const val ACTION_SUPERVISED_REGISTER_DECLINE = "com.locapeer.SUPERVISED_REGISTER
 const val EXTRA_REQUESTER_PUBKEY = "requester_pubkey"
 const val EXTRA_REQUESTER_NAME = "requester_name"
 const val EXTRA_REQUESTER_RELAY = "requester_relay"
+/** The request's own creation time (epoch seconds), echoed in the answer. */
+const val EXTRA_REGISTER_REQUESTED_AT = "register_requested_at"
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
@@ -51,6 +53,7 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
         val requesterPubkey = intent.getStringExtra(EXTRA_REQUESTER_PUBKEY) ?: return
         val requesterName = intent.getStringExtra(EXTRA_REQUESTER_NAME) ?: return
         val requesterRelay = intent.getStringExtra(EXTRA_REQUESTER_RELAY) ?: ""
+        val requestedAt = intent.getLongExtra(EXTRA_REGISTER_REQUESTED_AT, 0L).takeIf { it > 0 }
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -98,14 +101,14 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                                 ep.peerDao().upsertPeer(peer.copy(locationRole = promotedRole))
                             }
                         }
-                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true)
+                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true, requestCreatedAt = requestedAt)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_now_supervising, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_SUPERVISED_REGISTER_DECLINE -> {
                         Log.d("SupervisedRegisterReceiver", "Declined supervised registration from $requesterName")
-                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = false)
+                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = false, requestCreatedAt = requestedAt)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_declined_supervision, requesterName), Toast.LENGTH_SHORT).show()
                         }
@@ -123,7 +126,8 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
         ep: SupervisedRegisterReceiverEntryPoint,
         requesterPubkey: String,
         requesterRelay: String,
-        accepted: Boolean
+        accepted: Boolean,
+        requestCreatedAt: Long?
     ) {
         try {
             val keyManager = ep.keyManager()
@@ -133,7 +137,8 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
             val payload = json.encodeToString(
                 SupervisedRegisterResponsePayload(
                     devicePubkeyHex = requesterPubkey,
-                    accepted = accepted
+                    accepted = accepted,
+                    requestCreatedAt = requestCreatedAt
                 )
             )
             val encrypted = crypto.nip44Encrypt(

@@ -26,7 +26,14 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-internal const val CONTACT_ADD_TIMEOUT_MS = 60_000L
+/**
+ * How long a queued add stays answerable. It must outlive the window in which
+ * [com.locapeer.subscriber.HeartbeatReceiver] still accepts the supervisor's answer (300 s)
+ * plus relay slack: pruning the intent before its answer arrives makes an approved add
+ * vanish silently, while the supervisor's device shows the approval as done. The old 60 s
+ * timeout did exactly that for any supervisor who took longer than a minute.
+ */
+internal const val CONTACT_ADD_TIMEOUT_MS = 360_000L
 
 internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long =
     (requestedAt + CONTACT_ADD_TIMEOUT_MS - nowMillis).coerceAtLeast(0L)
@@ -43,8 +50,8 @@ internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long 
  * The queue supports SEVERAL simultaneous decisions (they run independently), and the
  * intents are persisted in DataStore so a decision that lands right after a process kill
  * can still complete: the supervisor's answer window is what bounds the wait, not the
- * lifetime of a screen. Each queued entry carries its own 60 s reminder timeout; entries
- * older than the supervisor's 5-min freshness window are pruned.
+ * lifetime of a screen. Each queued entry times out after [CONTACT_ADD_TIMEOUT_MS], which
+ * is deliberately longer than the answer window the receiver accepts.
  */
 @Singleton
 class ContactAddApprovalManager @Inject constructor(
@@ -327,7 +334,7 @@ class ContactAddApprovalManager @Inject constructor(
         val stored = runCatching {
             json.decodeFromString<List<StoredContactAddIntent>>(raw)
         }.getOrDefault(emptyList())
-        val cutoff = System.currentTimeMillis() - 290_000 // just under the 5-min freshness
+        val cutoff = System.currentTimeMillis() - CONTACT_ADD_TIMEOUT_MS
         queue.clear()
         queue.addAll(stored.filter { it.requestedAt >= cutoff })
         if (queue.size != stored.size) persistLocked()

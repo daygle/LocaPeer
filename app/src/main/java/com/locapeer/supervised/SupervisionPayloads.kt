@@ -12,13 +12,24 @@ data class UnlockResponsePayload(val requestId: String, val approved: Boolean)
 data class SupervisedRegisterPayload(
     val devicePubkeyHex: String,
     val deviceName: String,
-    val deviceRelayUrl: String
+    val deviceRelayUrl: String,
+    /**
+     * When this request was created (epoch seconds). Echoed back in the answer so an answer
+     * tapped from an old notification cannot decide a newer request. Null on older builds.
+     */
+    val requestedAt: Long? = null
 )
 
 @Serializable
 data class SupervisedRegisterResponsePayload(
     val devicePubkeyHex: String,
-    val accepted: Boolean
+    val accepted: Boolean,
+    /**
+     * The [SupervisedRegisterPayload.requestedAt] this answer belongs to. Null when the
+     * supervisor's build is older and does not echo it, in which case the timing checks in
+     * [com.locapeer.subscriber.isCurrentSupervisionRegistrationResponse] still apply.
+     */
+    val requestCreatedAt: Long? = null
 )
 
 /** Supervisor -> device (kind 1061): the supervisor proposes supervising this device. */
