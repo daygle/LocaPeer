@@ -32,14 +32,15 @@ class IncomingShareRequestViewModel @Inject constructor(
     private val _state = MutableStateFlow<IncomingRequestState>(IncomingRequestState.Idle)
     val state: StateFlow<IncomingRequestState> = _state
 
-    // This screen is reachable through the exported MainActivity's "share-request" intent
-    // extras, which any app on the device can forge. Every genuine request stores a
-    // pending_requests row (in HeartbeatReceiver) before the screen can be shown, so both
-    // actions below require that row and take the peer's relay URL and name from it - a
-    // crafted intent can neither invent a request nor override a real one's relay.
+    // The activity is exported: only the stored request, never intent extras, may supply
+    // the name and suggested role displayed in the consent screen.
+    fun observeRequest(senderPubkey: String) = pendingRequestDao.observeByPubkey(senderPubkey)
 
-    fun accept(senderPubkey: String, locationRole: String, messagingEnabled: Boolean) {
+    fun accept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
         viewModelScope.launch {
+            // Don't apply choices made for an older request if this peer replaced it while
+            // the dialog was open.
+            if (pendingRequestDao.getByPubkey(request.senderPubkey) != request) return@launch
             val supervisionActive = prefs.settings.first().supervisionActive
             if (supervisionActive) {
                 // Per-action approval: the supervisor personally allows this NEW sharing
@@ -48,19 +49,23 @@ class IncomingShareRequestViewModel @Inject constructor(
                 // real accept runs when the supervisor answers.
                 _state.value = IncomingRequestState.WaitingApproval
                 try {
-                    pendingRequestDao.getByPubkey(senderPubkey)?.let { actions.accept(it, locationRole, messagingEnabled) }
+                    actions.accept(request, locationRole, messagingEnabled)
                 } catch (e: Exception) {
                     Log.e("IncomingShareRequestVM", "Contact-add request failed", e)
                     _state.value = IncomingRequestState.Done
                 }
             } else {
-                respond(senderPubkey) { actions.accept(it, locationRole, messagingEnabled) }
+                respond(request.senderPubkey) { current ->
+                    if (current == request) actions.accept(current, locationRole, messagingEnabled)
+                }
             }
         }
     }
 
-    fun decline(senderPubkey: String) {
-        respond(senderPubkey) { actions.decline(it) }
+    fun decline(request: PendingRequestEntity) {
+        respond(request.senderPubkey) { current ->
+            if (current == request) actions.decline(current)
+        }
     }
 
     private fun respond(senderPubkey: String, action: suspend (PendingRequestEntity) -> Unit) {

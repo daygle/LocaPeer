@@ -3,12 +3,16 @@ package com.locapeer.supervised
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerSharingConfigDao
+import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.invite.ContactAddExecutor
 import com.locapeer.invite.InviteData
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.withTimeout
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -70,12 +74,73 @@ class ContactAddApprovalTimeoutTest {
             decisions++
         }
         verify(executor).performOutboundAdd(invite)
-        manager.requestAdd("peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept("peer", "RECEIVE", true)) {
+        val request = PendingRequestEntity("peer", "Peer", "relay")
+        manager.requestAdd("peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept(request, "RECEIVE", true)) {
             assertTrue(it)
             decisions++
         }
-        verify(executor).completeInboundAccept("peer", "RECEIVE", true)
+        verify(executor).completeInboundAccept(request, "RECEIVE", true)
         assertEquals(2, decisions)
+    }
+
+    @Test fun `cancel waits for persisted approvals to load`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val started = CompletableDeferred<Unit>()
+        val release = CompletableDeferred<Unit>()
+        val now = System.currentTimeMillis()
+        `when`(prefs.getContactAddIntentsJson()).thenAnswer {
+            runBlocking {
+                started.complete(Unit)
+                release.await()
+            }
+            """[{"requestId":"saved","contactPubkeyHex":"peer","contactName":"Peer","requestedAt":$now}]"""
+        }
+        val manager = ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java),
+            prefs, mock(ContactAddExecutor::class.java)
+        )
+        withTimeout(2_000) { started.await() }
+        val cancel = async { manager.cancelPending("peer") }
+        kotlinx.coroutines.yield()
+        assertFalse(cancel.isCompleted)
+        release.complete(Unit)
+        withTimeout(2_000) { cancel.await() }
+        verify(prefs).setContactAddIntentsJson(null)
+        assertTrue(manager.pending.value.isEmpty())
+    }
+
+    @Test fun `approval waits for saved request and preserves reviewed inbound details`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val started = CompletableDeferred<Unit>()
+        val release = CompletableDeferred<Unit>()
+        val now = System.currentTimeMillis()
+        `when`(prefs.getContactAddIntentsJson()).thenAnswer {
+            runBlocking {
+                started.complete(Unit)
+                release.await()
+            }
+            """[{"requestId":"saved","contactPubkeyHex":"peer","contactName":"Peer","accept":{"senderPubkey":"peer","locationRole":"SEND","messagingEnabled":true,"request":{"senderPubkey":"peer","senderName":"Peer","senderRelayUrl":"relay","receivedAt":123}},"requestedAt":$now}]"""
+        }
+        val executor = mock(ContactAddExecutor::class.java)
+        val manager = ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java),
+            prefs, executor
+        )
+        withTimeout(2_000) { started.await() }
+        manager.handleResponse("saved", true)
+        release.complete(Unit)
+        withTimeout(5_000) {
+            while (true) {
+                try {
+                    verify(executor).completeInboundAccept(
+                        PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123), "SEND", true
+                    )
+                    break
+                } catch (e: AssertionError) {
+                    kotlinx.coroutines.delay(10)
+                }
+            }
+        }
     }
 
     @Test fun `restored approval keeps remaining time from its original request time`() {

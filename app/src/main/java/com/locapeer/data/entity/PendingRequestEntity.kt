@@ -3,6 +3,7 @@ package com.locapeer.data.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@kotlinx.serialization.Serializable
 @Entity(tableName = "pending_requests")
 data class PendingRequestEntity(
     @PrimaryKey val senderPubkey: String,

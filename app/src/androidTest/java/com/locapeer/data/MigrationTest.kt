@@ -1,11 +1,19 @@
 package com.locapeer.data
 
+import androidx.room.Room
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.testing.MigrationTestHelper
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.locapeer.di.DatabaseModule
+import com.locapeer.data.entity.PeerEntity
+import com.locapeer.data.entity.PendingRequestEntity
+import com.locapeer.invite.applyInboundRequest
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
@@ -29,6 +37,29 @@ class MigrationTest {
         emptyList<AutoMigrationSpec>(),
         FrameworkSQLiteOpenHelperFactory()
     )
+
+    @Test
+    fun inboundAcceptAppliesOnlyTheReviewedRequest() = runBlocking {
+        val db = Room.inMemoryDatabaseBuilder(
+            InstrumentationRegistry.getInstrumentation().targetContext, AppDatabase::class.java
+        ).build()
+        try {
+            val request = PendingRequestEntity("peer", "Reviewed", "wss://first", receivedAt = 1)
+            val replacement = request.copy(senderName = "Replacement", receivedAt = 2)
+            db.pendingRequestDao().upsert(request)
+            db.pendingRequestDao().upsert(replacement)
+            assertFalse(applyInboundRequest(db, request, PeerEntity.ROLE_SEND, true))
+            assertNull(db.peerDao().getPeer("peer"))
+            assertEquals(replacement, db.pendingRequestDao().getByPubkey("peer"))
+            assertEquals(0, db.pendingRequestDao().deleteIfUnchanged(request))
+            assertEquals(replacement, db.pendingRequestDao().getByPubkey("peer"))
+            assertTrue(applyInboundRequest(db, replacement, PeerEntity.ROLE_RECEIVE, false))
+            assertEquals(PeerEntity.ROLE_RECEIVE, db.peerDao().getPeer("peer")?.locationRole)
+            assertNull(db.pendingRequestDao().getByPubkey("peer"))
+        } finally {
+            db.close()
+        }
+    }
 
     @Test
     @Throws(IOException::class)

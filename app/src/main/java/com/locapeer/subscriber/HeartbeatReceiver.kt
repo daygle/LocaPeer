@@ -2012,15 +2012,14 @@ class HeartbeatReceiver @Inject constructor(
             notificationManager.activeNotifications.any { it.id == NOTIF_ID_TRACK_REQUEST && it.tag == event.pubkey }
         ) return
 
-        pendingRequestDao.upsert(
-            PendingRequestEntity(
-                senderPubkey = payload.senderPublicKeyHex,
-                senderName = senderName,
-                senderRelayUrl = senderRelay,
-                isRoleChange = payload.isRoleChange,
-                requestedRole = payload.requestedRole
-            )
+        val pendingRequest = PendingRequestEntity(
+            senderPubkey = payload.senderPublicKeyHex,
+            senderName = senderName,
+            senderRelayUrl = senderRelay,
+            isRoleChange = payload.isRoleChange,
+            requestedRole = payload.requestedRole
         )
+        pendingRequestDao.upsert(pendingRequest)
         val reviewIntent = Intent(context, com.locapeer.MainActivity::class.java).apply {
             setPackage(context.packageName)
             // Unique data URI: extras don't take part in PendingIntent matching
@@ -2042,6 +2041,9 @@ class HeartbeatReceiver @Inject constructor(
         val declineIntent = Intent(context, TrackRequestReceiver::class.java).apply {
             setPackage(context.packageName)
             action = ACTION_TRACK_DECLINE
+            data = "locapeer-notif://track-decline/${event.id}".toUri()
+            putExtra(com.locapeer.invite.EXTRA_REQUEST_RECEIVED_AT, pendingRequest.receivedAt)
+            putExtra(EXTRA_REQUESTED_ROLE, pendingRequest.requestedRole)
             putExtra(EXTRA_SENDER_PUBKEY, payload.senderPublicKeyHex)
             putExtra(EXTRA_SENDER_NAME, senderName)
             putExtra(EXTRA_SENDER_RELAY, senderRelay)

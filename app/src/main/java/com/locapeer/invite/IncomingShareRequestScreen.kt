@@ -16,33 +16,53 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.locapeer.R
 import com.locapeer.data.entity.PeerEntity
+import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun IncomingShareRequestScreen(
     senderPubkey: String,
-    senderName: String,
-    senderRelay: String,
-    isRoleChange: Boolean = false,
-    requestedRole: String? = null,
     onDone: () -> Unit,
     vm: IncomingShareRequestViewModel = hiltViewModel()
 ) {
     val state by vm.state.collectAsStateWithLifecycle()
+    val requests by remember(vm, senderPubkey) {
+        vm.observeRequest(senderPubkey).map { listOfNotNull(it) }
+    }.collectAsStateWithLifecycle(initialValue = null)
+    val request = requests?.firstOrNull()
 
     LaunchedEffect(state) {
         if (state is IncomingRequestState.Done) onDone()
     }
 
-    // Pre-populate toggles from the suggested role (if any)
-    var shareMyLocation by remember(requestedRole) {
+    if (request == null) {
+        Scaffold(topBar = { TopAppBar(title = {}, colors = locaPeerTopAppBarColors()) }) { padding ->
+            Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
+                if (requests == null) {
+                    CircularProgressIndicator()
+                } else {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(stringResource(R.string.pending_empty))
+                        TextButton(onClick = onDone) { Text(stringResource(R.string.cd_back)) }
+                    }
+                }
+            }
+        }
+        return
+    }
+    val senderName = request.senderName.ifBlank { stringResource(R.string.fallback_unknown) }
+    val requestedRole = request.requestedRole
+    val isRoleChange = request.isRoleChange
+
+    // Pre-populate toggles from the stored suggested role (if any).
+    var shareMyLocation by remember(request) {
         mutableStateOf(requestedRole == PeerEntity.ROLE_SEND || requestedRole == PeerEntity.ROLE_SEND_RECEIVE)
     }
-    var seeTheirLocation by remember(requestedRole) {
+    var seeTheirLocation by remember(request) {
         mutableStateOf(requestedRole == PeerEntity.ROLE_RECEIVE || requestedRole == PeerEntity.ROLE_SEND_RECEIVE
             || requestedRole == null)  // default to true for new requests
     }
-    var messagingEnabled by remember(requestedRole) { mutableStateOf(true) }
+    var messagingEnabled by remember(request) { mutableStateOf(true) }
 
     val derivedRole = when {
         shareMyLocation && seeTheirLocation -> PeerEntity.ROLE_SEND_RECEIVE
@@ -172,7 +192,7 @@ fun IncomingShareRequestScreen(
 
             Button(
                 onClick = {
-                    vm.accept(senderPubkey, derivedRole, messagingEnabled)
+                    vm.accept(request, derivedRole, messagingEnabled)
                 },
                 enabled = state !is IncomingRequestState.Loading && state !is IncomingRequestState.WaitingApproval,
                 modifier = Modifier.fillMaxWidth()
@@ -189,7 +209,7 @@ fun IncomingShareRequestScreen(
             }
 
             OutlinedButton(
-                onClick = { vm.decline(senderPubkey) },
+                onClick = { vm.decline(request) },
                 enabled = state !is IncomingRequestState.Loading && state !is IncomingRequestState.WaitingApproval,
                 modifier = Modifier.fillMaxWidth()
             ) {

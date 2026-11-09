@@ -2,10 +2,12 @@ package com.locapeer.invite
 
 import android.app.NotificationManager
 import android.util.Log
+import androidx.room.withTransaction
+import com.locapeer.data.AppDatabase
+import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
-import com.locapeer.data.dao.PendingRequestDao
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -21,6 +23,35 @@ import javax.inject.Singleton
 
 private const val TAG = "ContactAddExecutor"
 
+/** Atomically apply consent only if the request is still the one the user reviewed. */
+internal suspend fun applyInboundRequest(
+    database: AppDatabase,
+    request: PendingRequestEntity,
+    locationRole: String,
+    messagingEnabled: Boolean,
+): Boolean = database.withTransaction {
+    val pendingRequestDao = database.pendingRequestDao()
+    val peerDao = database.peerDao()
+    if (pendingRequestDao.getByPubkey(request.senderPubkey) != request) return@withTransaction false
+    val existing = peerDao.getPeer(request.senderPubkey)
+    peerDao.upsertPeer(
+        existing?.copy(
+            relayUrl = request.senderRelayUrl,
+            locationRole = locationRole,
+            messagingEnabled = messagingEnabled,
+        ) ?: PeerEntity(
+            deviceId = request.senderPubkey,
+            displayName = request.senderName,
+            publicKeyHex = request.senderPubkey,
+            relayUrl = request.senderRelayUrl,
+            locationRole = locationRole,
+            messagingEnabled = messagingEnabled,
+        )
+    )
+    pendingRequestDao.deleteByPubkey(request.senderPubkey)
+    true
+}
+
 /**
  * Performs the two physical contact-add actions, decoupled from any ViewModel so an
  * approved per-action add (kind 1068) can complete even after the requesting screen or
@@ -32,8 +63,8 @@ private const val TAG = "ContactAddExecutor"
  */
 @Singleton
 class ContactAddExecutor @Inject constructor(
+    private val database: AppDatabase,
     private val peerDao: PeerDao,
-    private val pendingRequestDao: PendingRequestDao,
     private val trackResponseSender: TrackResponseSender,
     private val notificationManager: NotificationManager,
     private val keyManager: KeyManager,
@@ -66,32 +97,16 @@ class ContactAddExecutor @Inject constructor(
         sendTrackRequest(invite)
     }
 
-    /** Complete the accept of a stored inbound track request, or no-op if the row is
-     *  already gone (e.g. declined from the list meanwhile). */
-    suspend fun completeInboundAccept(senderPubkey: String, locationRole: String, messagingEnabled: Boolean) {
-        val request = pendingRequestDao.getByPubkey(senderPubkey) ?: return
+    /** Apply only the request reviewed by the user, including after delayed supervision approval. */
+    suspend fun completeInboundAccept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
+        val applied = applyInboundRequest(database, request, locationRole, messagingEnabled)
+        if (!applied) return
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
-        val existing = peerDao.getPeer(request.senderPubkey)
-        peerDao.upsertPeer(
-            existing?.copy(
-                relayUrl = request.senderRelayUrl,
-                locationRole = locationRole,
-                messagingEnabled = messagingEnabled,
-            ) ?: PeerEntity(
-                deviceId = request.senderPubkey,
-                displayName = request.senderName,
-                publicKeyHex = request.senderPubkey,
-                relayUrl = request.senderRelayUrl,
-                locationRole = locationRole,
-                messagingEnabled = messagingEnabled,
-            )
-        )
         try {
             trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track accept", e)
         }
-        pendingRequestDao.deleteByPubkey(request.senderPubkey)
     }
 
     /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). */

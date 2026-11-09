@@ -42,24 +42,24 @@ class PendingRequestActions @Inject constructor(
                 contactPubkeyHex = request.senderPubkey,
                 contactName = request.senderName,
                 action = ContactAddApprovalManager.AddAction.InboundAccept(
-                    senderPubkey = request.senderPubkey,
+                    request = request,
                     locationRole = locationRole,
                     messagingEnabled = messagingEnabled
                 ),
             ) { /* UI feedback comes from the queue badge + Room flows; no screen callback */ }
             return
         }
-        executor.completeInboundAccept(request.senderPubkey, locationRole, messagingEnabled)
+        executor.completeInboundAccept(request, locationRole, messagingEnabled)
     }
 
     /** Answers with a TRACK_DECLINE and clears the request. */
     suspend fun decline(request: PendingRequestEntity) {
+        if (pendingRequestDao.deleteIfUnchanged(request) == 0) return
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
         try {
             trackResponseSender.sendDecline(request.senderPubkey, request.senderRelayUrl, request.isRoleChange)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track decline", e)
         }
-        pendingRequestDao.deleteByPubkey(request.senderPubkey)
     }
 }

@@ -2,6 +2,7 @@ package com.locapeer.supervised
 
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.invite.ContactAddExecutor
 import com.locapeer.invite.InviteData
 import com.locapeer.nostr.NostrEvent
@@ -10,6 +11,7 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.util.backgroundScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -57,7 +59,9 @@ class ContactAddApprovalManager @Inject constructor(
     data class StoredAccept(
         val senderPubkey: String,
         val locationRole: String,
-        val messagingEnabled: Boolean
+        val messagingEnabled: Boolean,
+        // Null for older queued entries: these cannot safely authorize a particular request.
+        val request: PendingRequestEntity? = null
     )
 
     @kotlinx.serialization.Serializable
@@ -75,7 +79,7 @@ class ContactAddApprovalManager @Inject constructor(
     sealed interface AddAction {
         data class OutboundScan(val invite: InviteData) : AddAction
         data class InboundAccept(
-            val senderPubkey: String,
+            val request: PendingRequestEntity,
             val locationRole: String,
             val messagingEnabled: Boolean
         ) : AddAction
@@ -103,15 +107,15 @@ class ContactAddApprovalManager @Inject constructor(
 
     private val timeouts = HashMap<String, Job>()
 
-    init {
-        scope.launch {
-            mutex.withLock {
-                loadPersistedLocked().forEach { intent ->
-                    armTimeout(intent.requestId, timeoutDelayMs(intent.requestedAt))
-                }
+    // All queue operations await restoration; otherwise a new write or a response can win
+    // the mutex before the saved queue has been read and silently discard pending decisions.
+    private val initialization = scope.async {
+        mutex.withLock {
+            loadPersistedLocked().forEach { intent ->
+                armTimeout(intent.requestId, timeoutDelayMs(intent.requestedAt))
             }
-            publish()
         }
+        publish()
     }
 
     /**
@@ -125,6 +129,7 @@ class ContactAddApprovalManager @Inject constructor(
         action: AddAction,
         onDecided: (Boolean) -> Unit
     ) {
+        initialization.await()
         val settings = prefs.settings.first()
         val supervisorPubkey = settings.supervisorPubkey
         if (!settings.supervisionActive || supervisorPubkey.isEmpty()) {
@@ -133,7 +138,7 @@ class ContactAddApprovalManager @Inject constructor(
             when (action) {
                 is AddAction.OutboundScan -> executor.performOutboundAdd(action.invite)
                 is AddAction.InboundAccept -> executor.completeInboundAccept(
-                    action.senderPubkey, action.locationRole, action.messagingEnabled
+                    action.request, action.locationRole, action.messagingEnabled
                 )
             }
             onDecided(true)
@@ -147,7 +152,7 @@ class ContactAddApprovalManager @Inject constructor(
             contactName = contactName.take(64),
             scan = (action as? AddAction.OutboundScan)?.invite,
             accept = (action as? AddAction.InboundAccept)?.let {
-                StoredAccept(it.senderPubkey, it.locationRole, it.messagingEnabled)
+                StoredAccept(it.request.senderPubkey, it.locationRole, it.messagingEnabled, it.request)
             },
             requestedAt = System.currentTimeMillis()
         )
@@ -204,6 +209,7 @@ class ContactAddApprovalManager @Inject constructor(
     /** The supervisor's kind-1068 answer (delivered by HeartbeatReceiver). */
     fun handleResponse(requestId: String, approved: Boolean) {
         scope.launch {
+            initialization.await()
             val intent = removeFromQueue(requestId, decided = approved) ?: return@launch
             if (!approved) return@launch
             // Run the durable effect on our own scope: works with no screen attached
@@ -218,16 +224,18 @@ class ContactAddApprovalManager @Inject constructor(
     private suspend fun executeLocked(intent: StoredContactAddIntent) {
         when {
             intent.scan != null -> executor.performOutboundAdd(intent.scan)
-            intent.accept != null -> executor.completeInboundAccept(
-                intent.accept.senderPubkey,
-                intent.accept.locationRole,
-                intent.accept.messagingEnabled
-            )
+            intent.accept?.request != null && intent.accept.senderPubkey == intent.accept.request.senderPubkey ->
+                executor.completeInboundAccept(
+                    intent.accept.request,
+                    intent.accept.locationRole,
+                    intent.accept.messagingEnabled
+                )
         }
     }
 
     /** Withdraw a pending decision for [contactPubkeyHex] (screen cancelled/reset). */
     suspend fun cancelPending(contactPubkeyHex: String) {
+        initialization.await()
         removeFromQueueFor(contactPubkeyHex)
     }
 
@@ -306,14 +314,15 @@ class ContactAddApprovalManager @Inject constructor(
     /** All queue mutations happen under [mutex]; snapshot under the same lock so the
      *  plain list copy can't race a concurrent edit. */
     private suspend fun publish() {
-        val snapshot = mutex.withLock { queue.toList() }
-        _pending.value = snapshot.map { intent ->
-            PendingAdd(
-                requestId = intent.requestId,
-                contactPubkeyHex = intent.contactPubkeyHex,
-                contactName = intent.contactName,
-                requestedAt = intent.requestedAt
-            )
+        mutex.withLock {
+            _pending.value = queue.map { intent ->
+                PendingAdd(
+                    requestId = intent.requestId,
+                    contactPubkeyHex = intent.contactPubkeyHex,
+                    contactName = intent.contactName,
+                    requestedAt = intent.requestedAt
+                )
+            }
         }
     }
 

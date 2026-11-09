@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import com.locapeer.R
 import com.locapeer.data.dao.PendingRequestDao
+import com.locapeer.data.entity.PendingRequestEntity
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -22,6 +23,7 @@ const val EXTRA_SENDER_NAME = "sender_name"
 const val EXTRA_SENDER_RELAY = "sender_relay"
 const val EXTRA_IS_ROLE_CHANGE = "is_role_change"
 const val EXTRA_REQUESTED_ROLE = "requested_role"
+const val EXTRA_REQUEST_RECEIVED_AT = "request_received_at"
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
@@ -37,9 +39,17 @@ class TrackRequestReceiver : BroadcastReceiver() {
         val senderName = intent.getStringExtra(EXTRA_SENDER_NAME) ?: return
         val senderRelay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: ""
         val isRoleChange = intent.getBooleanExtra(EXTRA_IS_ROLE_CHANGE, false)
+        if (!intent.hasExtra(EXTRA_REQUEST_RECEIVED_AT)) return
+        val request = PendingRequestEntity(
+            senderPubkey = senderPubkey,
+            senderName = senderName,
+            senderRelayUrl = senderRelay,
+            isRoleChange = isRoleChange,
+            requestedRole = intent.getStringExtra(EXTRA_REQUESTED_ROLE),
+            receivedAt = intent.getLongExtra(EXTRA_REQUEST_RECEIVED_AT, 0),
+        )
 
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
 
         val ep = EntryPointAccessors
             .fromApplication(context.applicationContext, TrackRequestReceiverEntryPoint::class.java)
@@ -49,13 +59,14 @@ class TrackRequestReceiver : BroadcastReceiver() {
             try {
                 when (intent.action) {
                     ACTION_TRACK_DECLINE -> {
+                        if (ep.pendingRequestDao().deleteIfUnchanged(request) == 0) return@launch
+                        notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
                         try {
                             ep.trackResponseSender().sendDecline(senderPubkey, senderRelay, isRoleChange)
                         } catch (e: Exception) {
                             Log.w("TrackRequestReceiver", "Failed to send track decline", e)
                         }
-                        ep.pendingRequestDao().deleteByPubkey(senderPubkey)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_declined_contact, senderName), Toast.LENGTH_SHORT).show()
                         }
