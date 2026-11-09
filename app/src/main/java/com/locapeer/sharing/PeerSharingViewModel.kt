@@ -1,7 +1,6 @@
 package com.locapeer.sharing
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.ExistingWorkPolicy
@@ -24,9 +23,9 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.peer.PeerManager
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
-import com.locapeer.supervised.SupervisedInvitePayload
-import com.locapeer.supervised.SupervisedSupervisorEndPayload
 import com.locapeer.supervised.SupervisionChangeReporter
+import com.locapeer.supervised.SupervisionEndedSender
+import com.locapeer.supervised.SupervisionInviteSender
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
@@ -37,7 +36,6 @@ import kotlinx.serialization.json.Json
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-private const val TAG = "PeerSharingViewModel"
 
 data class PeerSharingUiState(
     val peer: PeerEntity? = null,
@@ -71,7 +69,9 @@ class PeerSharingViewModel @Inject constructor(
     private val prefs: AppPreferences,
     private val peerManager: PeerManager,
     private val heartbeatDao: com.locapeer.data.dao.HeartbeatDao,
-    private val changeReporter: SupervisionChangeReporter
+    private val changeReporter: SupervisionChangeReporter,
+    private val endedSender: SupervisionEndedSender,
+    private val inviteSender: SupervisionInviteSender
 ) : ViewModel() {
 
     /** Display name of the peer this VM is bound to (for change summaries). */
@@ -194,6 +194,10 @@ class PeerSharingViewModel @Inject constructor(
                 if (promotedRole != peer.locationRole) {
                     peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
                 }
+                // Turning supervision back on withdraws an ended notice still waiting for
+                // the relay: delivered after the new invite, it would clear the supervision
+                // the two devices just re-established.
+                endedSender.cancel(peer.publicKeyHex)
                 sendSupervisionInvite(peer)
             } else {
                 val existing = configDao.getForPeer(currentPeerId)
@@ -203,59 +207,30 @@ class PeerSharingViewModel @Inject constructor(
                     // that keeps setNotifyOnMissedHeartbeat(false) blocked while supervised.
                     configDao.setNotifyOnMissedHeartbeat(currentPeerId, false)
                 }
+                // Withdraw an invitation the peer has not received yet: it must not arrive
+                // after the user already turned the switch back off.
+                inviteSender.cancel(peer.publicKeyHex)
                 sendSupervisionEnded(peer)
             }
         }
     }
 
-    /** Kind 1061: ask the peer to consent to being supervised by us. */
+    /**
+     * Kind 1061: ask the peer to consent to being supervised by us. Recorded before publishing
+     * and replayed until a relay accepts it: the switch is already on locally, and an invite
+     * lost here would show a supervision the other device was never asked about.
+     */
     private suspend fun sendSupervisionInvite(peer: PeerEntity) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val settings = prefs.settings.first()
-            val myRelay = relayClient.relayStatus.value.filter { it.value }.keys.firstOrNull()
-                ?: HARDCODED_RELAYS.first()
-            val payload = json.encodeToString(
-                SupervisedInvitePayload(
-                    supervisorName = settings.displayName.ifBlank { pubHex.take(8) },
-                    supervisorRelayUrl = myRelay
-                )
-            )
-            publishSupervisedEvent(peer.publicKeyHex, NostrEventKind.SUPERVISED_INVITE, payload)
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to send supervision invite", e)
-        }
+        inviteSender.send(peer.publicKeyHex, peer.relayUrl)
     }
 
-    /** Kind 1063: tell the peer we stopped supervising them. */
+    /**
+     * Kind 1063: tell the peer we stopped supervising them. Recorded before publishing and
+     * replayed until a relay accepts it: a lost notice leaves the other device supervised
+     * behind an unlock gate it can no longer answer, while our switch already reads as off.
+     */
     private suspend fun sendSupervisionEnded(peer: PeerEntity) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = json.encodeToString(SupervisedSupervisorEndPayload(supervisorPubkeyHex = pubHex))
-            publishSupervisedEvent(peer.publicKeyHex, NostrEventKind.SUPERVISED_SUPERVISOR_END, payload)
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to send supervision-ended notice", e)
-        }
-    }
-
-    /** Shared sign+encrypt+publish for the supervision control kinds. */
-    private suspend fun publishSupervisedEvent(toPubkey: String, kind: Int, content: String) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), toPubkey, content)
-            relayClient.publishEvent(
-                NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = kind,
-                    content = encrypted,
-                    tags = listOf(listOf("p", toPubkey)),
-                    crypto = crypto
-                )
-            )
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to publish supervised event kind=$kind", e)
-        }
+        endedSender.send(peer.publicKeyHex, peer.relayUrl)
     }
 
     fun setNotifyOnMissedHeartbeat(enabled: Boolean) {

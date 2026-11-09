@@ -689,6 +689,21 @@ class AppPreferences @Inject constructor(
         }
     }
 
+    /** Supervision invites (kind 1061) waiting for the relay (JSON string; see
+     *  SupervisionInviteSender). Written before publishing so an unsent invitation survives a
+     *  failed send instead of leaving the switch showing a supervision never proposed. */
+    private val KEY_PENDING_SUPERVISION_INVITES = stringPreferencesKey("pending_supervision_invites")
+
+    suspend fun getPendingSupervisionInvitesJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_SUPERVISION_INVITES]
+
+    suspend fun setPendingSupervisionInvitesJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_SUPERVISION_INVITES)
+            else prefs[KEY_PENDING_SUPERVISION_INVITES] = json
+        }
+    }
+
     /** Track answers (accept or decline) a previous process had not sent yet (JSON string;
      *  see TrackResponseSender). Written before publishing so a failed reply survives a
      *  restart instead of leaving the requester without an answer. */
@@ -701,6 +716,21 @@ class AppPreferences @Inject constructor(
         context.settingsStore.edit { prefs ->
             if (json == null) prefs.remove(KEY_PENDING_TRACK_RESPONSES)
             else prefs[KEY_PENDING_TRACK_RESPONSES] = json
+        }
+    }
+
+    /** Supervision-ended notices (kind 1063) waiting for the relay (JSON string; see
+     *  SupervisionEndedSender). Written before publishing so an interrupted send is replayed
+     *  at the next start or reconnect instead of orphaning the other device. */
+    private val KEY_PENDING_SUPERVISION_END_NOTICES = stringPreferencesKey("pending_supervision_end_notices")
+
+    suspend fun getPendingSupervisionEndNoticesJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_SUPERVISION_END_NOTICES]
+
+    suspend fun setPendingSupervisionEndNoticesJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_SUPERVISION_END_NOTICES)
+            else prefs[KEY_PENDING_SUPERVISION_END_NOTICES] = json
         }
     }
 
