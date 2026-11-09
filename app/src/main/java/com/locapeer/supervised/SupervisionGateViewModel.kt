@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +23,13 @@ class SupervisionGateViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     val unlockState = manager.unlockState
+
+    init {
+        // Finish a release whose approval was persisted before the flags were cleared, i.e.
+        // a process death in that window. Reaching the gate means supervision still reads as
+        // active, so this is the reliable place to apply the marker.
+        viewModelScope.launch { prefs.applyPendingSupervisionRelease() }
+    }
 
     fun requestAccess() = manager.requestAccess()
     fun reset() = manager.reset()

@@ -48,6 +48,40 @@ class ContactAddApprovalTimeoutTest {
         assertNull(manager.pending.value)
     }
 
+    @Test fun `the disable answer is published before the supervisor clears its own flag`() = runBlocking {
+        // Clearing first would leave a device gated after the supervisor released it, with
+        // no request left for the supervisor to answer.
+        val calls = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val dao = mock(PeerSharingConfigDao::class.java, org.mockito.stubbing.Answer { invocation ->
+            if (invocation.method.name == "clearSupervision") calls.add("clear")
+            org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        val keyManager = mock(KeyManager::class.java)
+        `when`(keyManager.ensureKeypair()).thenReturn("00" to "11")
+        val crypto = mock(CryptoUtils::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
+                "nip44Encrypt" -> "encrypted"
+                "bytesToHex" -> "event"
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        val relay = mock(NostrRelayClient::class.java, org.mockito.stubbing.Answer { invocation ->
+            if (invocation.method.name == "publishEvent") calls.add("publish")
+            org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        val manager = SupervisionApprovalManager(keyManager, crypto, relay, dao)
+        val disable = SupervisionApprovalManager.PendingRequest(
+            "peer", "Device", "1", SupervisionApprovalManager.RequestType.DISABLE
+        )
+        manager.setPending(disable)
+        manager.respond(disable, true)
+        withTimeout(5_000) {
+            while (calls.size < 2) kotlinx.coroutines.delay(10)
+        }
+        assertEquals(listOf("publish", "clear"), calls.toList())
+    }
+
     @Test fun `only an approved disable clears supervision on the supervisor`() = runBlocking {
         val dao = mock(PeerSharingConfigDao::class.java)
         val manager = SupervisionApprovalManager(

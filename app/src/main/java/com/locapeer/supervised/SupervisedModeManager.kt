@@ -60,6 +60,13 @@ class SupervisedModeManager @Inject constructor(
     /** Guards reserving a request id and its Requesting state as one step (see [requestAccess]). */
     private val requestLock = Any()
 
+    init {
+        // A registration publish interrupted by a process death leaves supervisionPending set
+        // with no answer on the way. Finish it on the next start rather than leaving the user
+        // looking at a perpetual "pending" row they would have to retry by hand.
+        retryPendingSupervisionRegistration()
+    }
+
     fun requestAccess() {
         val requestId = UUID.randomUUID().toString()
         // Reserve the id and state before publishing. Two taps can no longer start two requests,
@@ -220,7 +227,13 @@ class SupervisedModeManager @Inject constructor(
             disableTimeoutJob?.cancel()
             if (approved) {
                 _disableState.value = DisableState.Idle
-                scope.launch { prefs.clearSupervisedMode() }
+                scope.launch {
+                    // Persist the decision first: if the process dies before the flags are
+                    // cleared, the marker lets the next start finish the release rather than
+                    // leaving this device gated after the supervisor already released it.
+                    prefs.markSupervisionReleaseApproved()
+                    prefs.clearSupervisedMode()
+                }
             } else {
                 _disableState.value = DisableState.Denied
             }
@@ -237,7 +250,27 @@ class SupervisedModeManager @Inject constructor(
     }
 
     fun sendRegisterRequest(supervisorPubkey: String) {
+        scope.launch { publishRegisterRequest(supervisorPubkey) }
+    }
+
+    /** Send the registration request only while it is still pending and never published. */
+    private fun retryPendingSupervisionRegistration() {
         scope.launch {
+            val settings = prefs.settings.first()
+            if (!settings.supervisionPending || settings.supervisionRequestSent ||
+                settings.supervisorPubkey.isEmpty()
+            ) return@launch
+            publishRegisterRequest(settings.supervisorPubkey)
+        }
+    }
+
+    /**
+     * Publish the kind-1055 register request and mark it sent. Failures are logged, not thrown:
+     * this runs in a bare background scope, where an escaping exception would crash the process.
+     * Leaving the request unmarked means the next start (or an explicit retry) sends it again.
+     */
+    private suspend fun publishRegisterRequest(supervisorPubkey: String) {
+        try {
             val settings = prefs.settings.first()
             val (privHex, pubHex) = keyManager.ensureKeypair()
             // Prefer the first connected relay, fall back to the first hardcoded one.
@@ -263,6 +296,9 @@ class SupervisedModeManager @Inject constructor(
                 crypto = crypto
             )
             relayClient.publishEvent(event)
+            prefs.markSupervisionRequestSent()
+        } catch (e: Exception) {
+            android.util.Log.w("SupervisedModeManager", "Failed to send register request", e)
         }
     }
 

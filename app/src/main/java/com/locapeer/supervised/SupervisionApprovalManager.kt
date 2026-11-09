@@ -105,8 +105,12 @@ class SupervisionApprovalManager @Inject constructor(
                     tags = listOf(listOf("p", request.fromPubkey)),
                     crypto = crypto
                 )
-                applyApprovedRelease(request, approved)
+                // Publish BEFORE the supervisor drops its own supervision flag. If the publish
+                // fails, both sides remain supervised - consistent, and the device retries -
+                // whereas clearing first would leave the device gated with nobody left to
+                // answer its request.
                 relayClient.publishEvent(event)
+                applyApprovedRelease(request, approved)
             } catch (e: Exception) {
                 android.util.Log.w("SupervisionApproval", "Failed to process supervision response", e)
             }

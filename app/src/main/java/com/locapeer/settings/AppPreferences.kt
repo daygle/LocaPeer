@@ -37,6 +37,8 @@ private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
 private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
 private val KEY_SUPERVISION_PENDING = booleanPreferencesKey("supervision_pending")
 private val KEY_SUPERVISION_REQUESTED_AT = longPreferencesKey("supervision_requested_at")
+private val KEY_SUPERVISION_RELEASE_APPROVED = booleanPreferencesKey("supervision_release_approved")
+private val KEY_SUPERVISION_REQUEST_SENT = booleanPreferencesKey("supervision_request_sent")
 
 /** Must be called inside a DataStore edit so competing answers cannot both succeed. */
 internal fun applySupervisionRegistrationResponse(
@@ -47,6 +49,7 @@ internal fun applySupervisionRegistrationResponse(
         (prefs[KEY_SUPERVISION_REQUESTED_AT] ?: 0L) != requestedAt
     ) return false
     prefs[KEY_SUPERVISION_PENDING] = false
+    prefs[KEY_SUPERVISION_REQUEST_SENT] = false
     if (!accepted) {
         prefs[KEY_SUPERVISED_MODE] = false
         prefs[KEY_SUPERVISOR_PUBKEY] = ""
@@ -164,6 +167,8 @@ data class AppSettings(
     val supervisionPending: Boolean = false,
     /** When the current supervision request was sent (epoch seconds), 0 if none. */
     val supervisionRequestedAt: Long = 0,
+    /** The request for [supervisionRequestedAt] actually reached the relay (retry guard). */
+    val supervisionRequestSent: Boolean = false,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = DEFAULT_NAV_TAB_IDS,
     /** Route shown when the app first opens. Must be one of the active navTabIds. */
@@ -345,6 +350,7 @@ class AppPreferences @Inject constructor(
                 supervisorPubkey = prefs[KEY_SUPERVISOR_PUBKEY] ?: "",
                 supervisionPending = prefs[KEY_SUPERVISION_PENDING] ?: false,
                 supervisionRequestedAt = prefs[KEY_SUPERVISION_REQUESTED_AT] ?: 0L,
+                supervisionRequestSent = prefs[KEY_SUPERVISION_REQUEST_SENT] ?: false,
                 navTabIds = prefs[KEY_NAV_TAB_IDS]
                     ?.split(",")
                     ?.filter { it.isNotBlank() }
@@ -432,6 +438,8 @@ class AppPreferences @Inject constructor(
             // A new request waits for the supervisor's acceptance before it gates anything.
             it[KEY_SUPERVISION_PENDING] = enabled
             it[KEY_SUPERVISION_REQUESTED_AT] = if (enabled) System.currentTimeMillis() / 1000 else 0L
+            // Nothing has been published yet for this request; the send marks it.
+            it[KEY_SUPERVISION_REQUEST_SENT] = false
         }
     }
 
@@ -667,6 +675,20 @@ class AppPreferences @Inject constructor(
         }
     }
 
+    /** Register answers waiting for the relay (JSON string; see SupervisionResponseSender).
+     *  Written before publishing so a failed or interrupted send is retried on next start. */
+    private val KEY_PENDING_REGISTER_RESPONSES = stringPreferencesKey("pending_register_responses")
+
+    suspend fun getPendingRegisterResponsesJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_REGISTER_RESPONSES]
+
+    suspend fun setPendingRegisterResponsesJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_REGISTER_RESPONSES)
+            else prefs[KEY_PENDING_REGISTER_RESPONSES] = json
+        }
+    }
+
     /**
      * Full settings wipe for "Delete identity & erase all data": every key in the settings
      * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync
@@ -682,7 +704,43 @@ class AppPreferences @Inject constructor(
             it[KEY_SUPERVISED_MODE] = false
             it[KEY_SUPERVISOR_PUBKEY] = ""
             it[KEY_SUPERVISION_PENDING] = false
+            it[KEY_SUPERVISION_REQUEST_SENT] = false
+            // The release has been applied; never let a stale marker end a later supervision.
+            it[KEY_SUPERVISION_RELEASE_APPROVED] = false
         }
+    }
+
+    /**
+     * Persist a supervisor-approved release BEFORE the flags are cleared. A process death in
+     * between then leaves this marker, and [applyPendingSupervisionRelease] finishes the
+     * release on the next start instead of the device staying gated while the supervisor
+     * already considers it released.
+     */
+    suspend fun markSupervisionReleaseApproved() {
+        context.settingsStore.edit { it[KEY_SUPERVISION_RELEASE_APPROVED] = true }
+    }
+
+    /** The registration request was published; a restart must not send it again. */
+    suspend fun markSupervisionRequestSent() {
+        context.settingsStore.edit { it[KEY_SUPERVISION_REQUEST_SENT] = true }
+    }
+
+    /**
+     * Applies an approved release whose clearing was interrupted (or never started), in one
+     * atomic edit. Returns true when a release was applied. Idempotent: with no marker this
+     * writes nothing and reports false.
+     */
+    suspend fun applyPendingSupervisionRelease(): Boolean {
+        var applied = false
+        context.settingsStore.edit { prefs ->
+            if (prefs[KEY_SUPERVISION_RELEASE_APPROVED] != true) return@edit
+            prefs[KEY_SUPERVISED_MODE] = false
+            prefs[KEY_SUPERVISOR_PUBKEY] = ""
+            prefs[KEY_SUPERVISION_PENDING] = false
+            prefs[KEY_SUPERVISION_RELEASE_APPROVED] = false
+            applied = true
+        }
+        return applied
     }
 
     suspend fun setGlobalScheduleRules(rules: List<ScheduleRule>) {

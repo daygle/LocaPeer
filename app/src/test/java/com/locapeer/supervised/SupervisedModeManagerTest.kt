@@ -7,6 +7,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -15,6 +16,7 @@ import org.junit.Test
 import org.mockito.Mockito
 import org.mockito.Mockito.doAnswer
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.stubbing.Answer
 import java.util.concurrent.atomic.AtomicInteger
@@ -94,6 +96,87 @@ class SupervisedModeManagerTest {
 
         withTimeout(2_000) { released.await() }
         assertEquals(SupervisedModeManager.DisableState.Idle, manager.disableState.value)
+    }
+
+    @Test fun `a failed register publish is kept for the next start`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true,
+            supervisorPubkey = "sup",
+            supervisionPending = true,
+            supervisionRequestedAt = 123L,
+            supervisionRequestSent = false,
+        )))
+        val attempts = AtomicInteger()
+        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
+            if (invocation.method.name == "publishEvent") {
+                attempts.incrementAndGet()
+                // A relay failure must not escape the background scope and crash the process.
+                throw IllegalStateException("relay down")
+            }
+            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        `when`(relay.relayStatus).thenReturn(MutableStateFlow(mapOf("wss://relay.example" to true)))
+
+        SupervisedModeManager(keyManager(), crypto(), relay, prefs)
+
+        withTimeout(2_000) { while (attempts.get() == 0) delay(5) }
+        delay(100)
+        verify(prefs, org.mockito.Mockito.never()).markSupervisionRequestSent()
+    }
+
+    @Test fun `an unpublished register request is resent at startup`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true,
+            supervisorPubkey = "sup",
+            supervisionPending = true,
+            supervisionRequestedAt = 123L,
+            supervisionRequestSent = false,
+        )))
+        val sent = CompletableDeferred<Unit>()
+        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
+            if (invocation.method.name == "publishEvent") sent.complete(Unit)
+            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        `when`(relay.relayStatus).thenReturn(MutableStateFlow(mapOf("wss://relay.example" to true)))
+
+        SupervisedModeManager(keyManager(), crypto(), relay, prefs)
+
+        withTimeout(2_000) { sent.await() }
+        withTimeout(2_000) {
+            while (true) {
+                try {
+                    verify(prefs).markSupervisionRequestSent()
+                    break
+                } catch (_: AssertionError) {
+                    delay(5)
+                }
+            }
+        }
+    }
+
+    @Test fun `an approved disable persists the release before clearing the flags`() = runBlocking {
+        // A crash between the two writes must leave the marker behind, not a still-supervised
+        // device that the supervisor believes it released.
+        val prefs = activePrefs()
+        val steps = java.util.Collections.synchronizedList(mutableListOf<String>())
+        doAnswer { _ -> steps.add("mark"); null }.`when`(prefs).markSupervisionReleaseApproved()
+        doAnswer { _ -> steps.add("clear"); null }.`when`(prefs).clearSupervisedMode()
+        lateinit var manager: SupervisedModeManager
+        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
+            if (invocation.method.name == "publishEvent") {
+                (manager.disableState.value as? SupervisedModeManager.DisableState.Requesting)
+                    ?.let { manager.handleDisableResponse(it.requestId, true) }
+            }
+            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        manager = SupervisedModeManager(keyManager(), crypto(), relay, prefs)
+
+        manager.requestDisable()
+
+        withTimeout(2_000) { while (steps.size < 2) delay(5) }
+        assertEquals(listOf("mark", "clear"), steps.toList())
     }
 
     @Test fun `a pending request is cancelled locally without contacting the supervisor`() = runBlocking {
