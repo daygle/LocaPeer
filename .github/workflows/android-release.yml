@@ -38,6 +38,46 @@ jobs:
         with:
           gradle-version: wrapper
 
+      # Invoking the script through `bash` would hide a missing executable bit until the
+      # build step. Check it up front with an actionable message instead, and run the
+      # wrapper the way the build does.
+      - name: Check Gradlew Is Executable
+        run: |
+          if [ ! -f gradlew ]; then
+            echo "::error::gradlew is missing from the repository root."
+            exit 1
+          fi
+          if [ ! -x gradlew ]; then
+            echo "::error::gradlew is not executable, so the release build cannot start."
+            echo "The mode bit is stored in git; restore and commit it with:"
+            echo "  chmod +x gradlew && git update-index --chmod=+x gradlew"
+            exit 1
+          fi
+
+      # Same wrapper-download hazard as the CI workflow: the distribution comes from
+      # services.gradle.org via a GitHub release redirect that intermittently stalls.
+      # Cache the unpacked distribution under a key derived from the wrapper, and retry
+      # the bootstrap so a release build does not fail on one bad CDN response.
+      - name: Cache Gradle distribution
+        uses: actions/cache@v6
+        with:
+          path: ~/.gradle/wrapper/dists
+          key: gradle-dist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-dist-
+
+      - name: Prime Gradle distribution
+        run: |
+          for attempt in 1 2 3; do
+            if ./gradlew --version >/dev/null 2>&1; then
+              echo "Gradle distribution ready (attempt $attempt)"
+              exit 0
+            fi
+            sleep $((attempt * 10))
+          done
+          echo "::error::Could not fetch the Gradle distribution after 3 attempts."
+          exit 1
+
       # The keystore is stored base64-encoded in a repository secret and decoded to a
       # throwaway path on the runner, so it never lands in the workspace or an artifact.
       - name: Decode Signing Keystore

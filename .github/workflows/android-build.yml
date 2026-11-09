@@ -43,6 +43,31 @@ jobs:
       - name: Make Gradlew Executable
         run: chmod +x gradlew
 
+      # The wrapper's own bootstrap fetches the distribution from services.gradle.org,
+      # which redirects to GitHub release downloads and intermittently stalls or answers
+      # 504. Cache the unpacked distribution under a key derived from the wrapper itself
+      # (so it survives setup-gradle upgrades, which key their cache separately), and
+      # retry the bootstrap so one bad CDN response does not fail the job.
+      - name: Cache Gradle distribution
+        uses: actions/cache@v6
+        with:
+          path: ~/.gradle/wrapper/dists
+          key: gradle-dist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-dist-
+
+      - name: Prime Gradle distribution
+        run: |
+          for attempt in 1 2 3; do
+            if bash ./gradlew --version >/dev/null 2>&1; then
+              echo "Gradle distribution ready (attempt $attempt)"
+              exit 0
+            fi
+            sleep $((attempt * 10))
+          done
+          echo "::error::Could not fetch the Gradle distribution after 3 attempts."
+          exit 1
+
       - name: Run Lint
         run: ./gradlew lintDebug
 

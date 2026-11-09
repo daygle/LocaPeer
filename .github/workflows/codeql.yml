@@ -41,6 +41,33 @@ jobs:
       with:
         gradle-version: wrapper
 
+    - name: Make Gradlew Executable
+      run: chmod +x gradlew
+
+    # Same wrapper-download hazard as the other workflows: services.gradle.org redirects
+    # to GitHub release downloads, which intermittently stalls or answers 504. Cache the
+    # unpacked distribution under a wrapper-derived key and retry the bootstrap, so a
+    # scan does not fail on one bad CDN response.
+    - name: Cache Gradle distribution
+      uses: actions/cache@v6
+      with:
+        path: ~/.gradle/wrapper/dists
+        key: gradle-dist-${{ hashFiles('gradle/wrapper/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-dist-
+
+    - name: Prime Gradle distribution
+      run: |
+        for attempt in 1 2 3; do
+          if ./gradlew --version >/dev/null 2>&1; then
+            echo "Gradle distribution ready (attempt $attempt)"
+            exit 0
+          fi
+          sleep $((attempt * 10))
+        done
+        echo "::error::Could not fetch the Gradle distribution after 3 attempts."
+        exit 1
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v4
       with:
@@ -52,7 +79,6 @@ jobs:
 
     - name: Build project
       run: |
-        chmod +x gradlew
         # CodeQL's Kotlin extractor hard-rejects Kotlin >= 2.4.20 at compile time
         # (KotlinVersionTooRecentError); there is no supported env var or system
         # property to skip that check. Keep the app on the latest Kotlin for normal
