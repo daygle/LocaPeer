@@ -73,7 +73,12 @@ class SupervisedModeManager @Inject constructor(
                 .map { status -> status.values.any { connected -> connected } }
                 .distinctUntilChanged()
                 .filter { connected -> connected }
-                .collect { retryPendingSupervisionRegistration() }
+                .collect {
+                    retryPendingSupervisionRegistration()
+                    // A request published while every relay was down is still waiting for an
+                    // answer: send it again now that delivery is possible.
+                    retryPendingRequests()
+                }
         }
     }
 
@@ -261,6 +266,17 @@ class SupervisedModeManager @Inject constructor(
 
     fun sendRegisterRequest(supervisorPubkey: String) {
         scope.launch { publishRegisterRequest(supervisorPubkey) }
+    }
+
+    /**
+     * Resend an unlock or disable request that is still waiting for an answer. The same request
+     * id is reused, so the supervisor's answer matches the reservation already made here (and
+     * its own duplicate suppression keeps one dialog), while the original timeout keeps
+     * running: a retry cannot extend the wait.
+     */
+    private suspend fun retryPendingRequests() {
+        unlockRequestId()?.let { sendUnlockRequest(it) }
+        disableRequestId()?.let { sendDisableRequest(it) }
     }
 
     /** Send the registration request only while it is still pending and never published. */

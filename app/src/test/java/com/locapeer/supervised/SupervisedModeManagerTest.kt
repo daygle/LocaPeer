@@ -2,6 +2,7 @@ package com.locapeer.supervised
 
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
+import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito
@@ -24,10 +26,11 @@ import java.util.concurrent.atomic.AtomicInteger
 class SupervisedModeManagerTest {
     private val supervisor = "a".repeat(64)
 
+    /** Returns the plaintext, so the request id inside the payload can be read back. */
     private fun crypto(): CryptoUtils = mock(CryptoUtils::class.java, Answer { invocation ->
         when (invocation.method.name) {
             "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
-            "nip44Encrypt" -> "encrypted"
+            "nip44Encrypt" -> invocation.arguments[2] as String
             "bytesToHex" -> "event"
             else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
         }
@@ -53,12 +56,12 @@ class SupervisedModeManagerTest {
     private fun fakeRelay(
         status: MutableStateFlow<Map<String, Boolean>> = MutableStateFlow(emptyMap()),
         publishError: Exception? = null,
-        onPublish: () -> Unit = {},
+        onPublish: (NostrEvent) -> Unit = {},
     ): NostrRelayClient = mock(NostrRelayClient::class.java, Answer { invocation ->
         when (invocation.method.name) {
             "relayStatus", "getRelayStatus" -> status
             "publishEvent" -> {
-                onPublish()
+                onPublish(invocation.arguments[0] as NostrEvent)
                 publishError?.let { throw it }
             }
             else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
@@ -181,6 +184,57 @@ class SupervisedModeManagerTest {
 
         status.value = mapOf("wss://relay.example" to true)
         withTimeout(2_000) { while (attempts.get() == 0) delay(5) }
+    }
+
+    @Test fun `a pending unlock request is resent when the relay reconnects`() = runBlocking {
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val requestIds = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val relay = fakeRelay(status = status, onPublish = { event ->
+            requestIds.add(Json.decodeFromString<UnlockRequestPayload>(event.content).requestId)
+        })
+        val manager = SupervisedModeManager(keyManager(), crypto(), relay, activePrefs())
+
+        manager.requestAccess()
+        withTimeout(2_000) { while (requestIds.isEmpty()) delay(5) }
+
+        status.value = mapOf("wss://relay.example" to true)
+        withTimeout(2_000) { while (requestIds.size < 2) delay(5) }
+        // Same reservation, so the supervisor's answer still matches it.
+        assertEquals(1, requestIds.distinct().size)
+        assertEquals(manager.unlockState.value, SupervisedModeManager.UnlockState.Requesting(requestIds.first()))
+    }
+
+    @Test fun `a pending disable request is resent when the relay reconnects`() = runBlocking {
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val requestIds = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val relay = fakeRelay(status = status, onPublish = { event ->
+            requestIds.add(Json.decodeFromString<SupervisedDisableRequestPayload>(event.content).requestId)
+        })
+        val manager = SupervisedModeManager(keyManager(), crypto(), relay, activePrefs())
+
+        manager.requestDisable()
+        withTimeout(2_000) { while (requestIds.isEmpty()) delay(5) }
+
+        status.value = mapOf("wss://relay.example" to true)
+        withTimeout(2_000) { while (requestIds.size < 2) delay(5) }
+        assertEquals(1, requestIds.distinct().size)
+    }
+
+    @Test fun `an answered request is not resent on reconnect`() = runBlocking {
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val requestIds = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val relay = fakeRelay(status = status, onPublish = { event ->
+            requestIds.add(Json.decodeFromString<UnlockRequestPayload>(event.content).requestId)
+        })
+        val manager = SupervisedModeManager(keyManager(), crypto(), relay, activePrefs())
+
+        manager.requestAccess()
+        withTimeout(2_000) { while (requestIds.isEmpty()) delay(5) }
+        manager.handleResponse(requestIds.first(), true)
+
+        status.value = mapOf("wss://relay.example" to true)
+        delay(200)
+        assertEquals(1, requestIds.size)
     }
 
     @Test fun `an approved disable persists the release before clearing the flags`() = runBlocking {
