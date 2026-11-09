@@ -58,6 +58,7 @@ import com.locapeer.supervised.ContactAddApprovalManager
 import com.locapeer.supervised.ContactAddRequestPayload
 import com.locapeer.supervised.ContactAddResponsePayload
 import com.locapeer.supervised.SettingsChangeSummaryPayload
+import com.locapeer.supervised.SupervisionResponseSender
 import com.locapeer.supervised.SupervisionChangeReporter
 import com.locapeer.supervised.SupervisedInvitePayload
 import com.locapeer.supervised.SupervisedInviteReceiver
@@ -320,6 +321,7 @@ class HeartbeatReceiver @Inject constructor(
     private val supervisedModeManager: SupervisedModeManager,
     private val supervisionApprovalManager: SupervisionApprovalManager,
     private val contactAddApprovalManager: ContactAddApprovalManager,
+    private val supervisionResponseSender: SupervisionResponseSender,
     private val peerManager: PeerManager,
     private val liveViewRegistry: com.locapeer.beacon.LiveViewRegistry
 ) {
@@ -1445,56 +1447,18 @@ class HeartbeatReceiver @Inject constructor(
 
     // ── Supervised-mode state changes (kinds 1061-1066) ─────────────────────────────
 
-    /** Sign, encrypt and publish a supervised-mode control event to [toPubkey]. */
-    private suspend fun sendSupervisedEvent(toPubkey: String, kind: Int, payload: String) {
-        try {
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), toPubkey, payload)
-            relayClient.publishEvent(
-                NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = kind,
-                    content = encrypted,
-                    tags = listOf(listOf("p", toPubkey)),
-                    crypto = crypto
-                )
-            )
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to send supervised event kind=$kind to $toPubkey", e)
-        }
-    }
-
     /** Answer a supervised registration we already agreed to (isMySupervised): promote
      *  received location capability + missed-heartbeat alerts and reply in-band. Closes
      *  the supervisor-initiated invite loop (its 1062 accept step triggers the 1055
-     *  register request that lands here) and re-answers after our process death. */
+     *  register request that lands here) and re-answers after our process death.
+     *
+     *  Goes through [SupervisionResponseSender] so the answer is on disk before it is
+     *  published: this path answers without the user tapping anything, so a registration
+     *  that arrives while the relay is down would otherwise be lost until the device asked
+     *  again. */
     private suspend fun autoAcceptRegistration(peer: PeerEntity) {
-        val deviceId = peer.deviceId
-        val cfg = sharingConfigDao.getForPeer(deviceId)
-        if (cfg == null) {
-            sharingConfigDao.upsert(
-                com.locapeer.data.entity.PeerSharingConfig(
-                    peerDeviceId = deviceId,
-                    isMySupervised = true,
-                    notifyOnMissedHeartbeat = true
-                )
-            )
-        } else {
-            sharingConfigDao.setIsMySupervised(deviceId, true)
-            sharingConfigDao.setNotifyOnMissedHeartbeat(deviceId, true)
-        }
-        // Supervising a device implies receiving its location (promote role, keep SEND).
-        val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
-        if (promotedRole != peer.locationRole) {
-            peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
-        }
-        val payload = json.encodeToString(
-            SupervisedRegisterResponsePayload(devicePubkeyHex = deviceId, accepted = true)
-        )
-        if (peer.relayUrl.isNotBlank()) relayClient.connect(peer.relayUrl)
-        sendSupervisedEvent(deviceId, NostrEventKind.SUPERVISED_REGISTER_ACCEPT, payload)
-        Log.d(TAG, "Auto-answered supervised registration from $deviceId")
+        supervisionResponseSender.accept(peer.deviceId, peer.relayUrl, requestCreatedAt = null)
+        Log.d(TAG, "Auto-answered supervised registration from ${peer.deviceId}")
     }
 
     /** Device side (kind 1061): a supervisor has asked to supervise this device. */
