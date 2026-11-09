@@ -7,10 +7,15 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.util.backgroundScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -31,6 +36,11 @@ import javax.inject.Singleton
  * Entries are persisted the moment they are recorded and cleared only after a summary was
  * published, so a process death inside the debounce window - or a publish that throws -
  * no longer drops a change the supervisor was owed; the next flush or start sends it.
+ *
+ * Each entry also remembers WHICH supervisor it was reported to, and a flush drops (rather
+ * than re-addresses) anything queued for a supervision that has since ended or moved to
+ * another supervisor: a summary is visibility for the supervisor of the moment, not a
+ * broadcast to whoever happens to be configured when a relay comes back.
  */
 @Singleton
 class SupervisionChangeReporter @Inject constructor(
@@ -80,16 +90,31 @@ class SupervisionChangeReporter @Inject constructor(
             initialization.await()
             flush()
         }
+        // Retry whenever a relay becomes reachable, not only at start: entries recorded during
+        // an outage (or a summary whose publish threw) must go out as soon as the connection
+        // returns, instead of waiting for another settings change to start a new debounce.
+        scope.launch {
+            relayClient.relayStatus
+                .map { status -> status.values.any { connected -> connected } }
+                .distinctUntilChanged()
+                .filter { connected -> connected }
+                .collect { flush() }
+        }
     }
 
     /** Record one change. Fire-and-forget: report() must never make the surrounding
      *  settings change fail-or-slow, so everything non-trivial runs in our scope. */
     fun report(area: String, peerName: String? = null) {
         scope.launch {
+            val settings = prefs.settings.first()
             // Only relevant while supervision is active; early-out keeps unsupervised
             // devices' reports a no-op (callers also check, belt-and-braces).
-            if (!prefs.settings.first().supervisionActive) return@launch
-            val entry = SettingsChangeEntry(area = area, peerName = peerName?.take(maxPeerNameChars))
+            if (!settings.supervisionActive || settings.supervisorPubkey.isBlank()) return@launch
+            val entry = SettingsChangeEntry(
+                area = area,
+                peerName = peerName?.take(maxPeerNameChars),
+                supervisorPubkey = settings.supervisorPubkey
+            )
             var shouldScheduleFlush: Boolean
             initialization.await()
             mutex.withLock {
@@ -115,12 +140,37 @@ class SupervisionChangeReporter @Inject constructor(
     private suspend fun flush() {
         initialization.await()
         flushMutex.withLock {
-            val entries = mutex.withLock {
-                if (buffer.isEmpty()) return
-                buffer.toList()
+            val settings = prefs.settings.first()
+            val supervisorPubkey = settings.supervisorPubkey
+            // Entries recorded under a supervision that has ended are dropped, not sent to
+            // whoever is configured now: they describe changes to a party who was not the
+            // supervisor when they happened.
+            if (!settings.supervisionActive || supervisorPubkey.isBlank()) {
+                mutex.withLock {
+                    if (buffer.isEmpty()) return
+                    buffer.clear()
+                    persistLocked()
+                }
+                return
             }
-            val supervisorPubkey = prefs.settings.first().supervisorPubkey
-            if (supervisorPubkey.isEmpty()) return
+            // Blank covers entries persisted by a build that did not record the addressee:
+            // they were queued while supervised, so the current supervisor still owns them.
+            val (entries, stale) = mutex.withLock {
+                if (buffer.isEmpty()) return
+                val current = buffer.filter {
+                    it.supervisorPubkey.isEmpty() || it.supervisorPubkey == supervisorPubkey
+                }
+                current to (buffer - current.toSet())
+            }
+            if (stale.isNotEmpty()) {
+                // Addressed to a supervisor this device no longer reports to; it can never
+                // become deliverable, so dropping it keeps the buffer from filling up.
+                mutex.withLock {
+                    buffer.removeAll(stale.toSet())
+                    persistLocked()
+                }
+            }
+            if (entries.isEmpty()) return
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val payload = json.encodeToString(SettingsChangeSummaryPayload(entries = entries))
@@ -135,6 +185,8 @@ class SupervisionChangeReporter @Inject constructor(
                         crypto = crypto
                     )
                 )
+            } catch (e: CancellationException) {
+                throw e
             } catch (e: Exception) {
                 // Keep the entries: they stay persisted and go out on the next flush or start.
                 android.util.Log.w(TAG, "Failed to send settings change summary", e)

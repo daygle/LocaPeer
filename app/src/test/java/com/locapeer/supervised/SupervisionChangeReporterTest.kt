@@ -29,7 +29,10 @@ class SupervisionChangeReporterTest {
      *  `@Volatile`: the reporter writes from its own dispatcher and the test polls here. */
     private class Store(@Volatile var json: String? = null)
 
-    private fun prefs(store: Store): AppPreferences {
+    private fun prefs(
+        store: Store,
+        settings: AppSettings = AppSettings(supervisedModeEnabled = true, supervisorPubkey = supervisor),
+    ): AppPreferences {
         val prefs = mock(AppPreferences::class.java, Answer { invocation ->
             when (invocation.method.name) {
                 "getSupervisionChangeBufferJson" -> store.json
@@ -40,9 +43,7 @@ class SupervisionChangeReporterTest {
                 else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
             }
         })
-        `when`(prefs.settings).thenReturn(
-            flowOf(AppSettings(supervisedModeEnabled = true, supervisorPubkey = supervisor))
-        )
+        `when`(prefs.settings).thenReturn(flowOf(settings))
         return prefs
     }
 
@@ -64,9 +65,10 @@ class SupervisionChangeReporterTest {
     private fun relay(
         publishError: Exception? = null,
         onPublish: (NostrEvent) -> Unit = {},
+        status: MutableStateFlow<Map<String, Boolean>> = MutableStateFlow(emptyMap()),
     ): NostrRelayClient = mock(NostrRelayClient::class.java, Answer { invocation ->
         when (invocation.method.name) {
-            "relayStatus", "getRelayStatus" -> MutableStateFlow<Map<String, Boolean>>(emptyMap())
+            "relayStatus", "getRelayStatus" -> status
             "publishEvent" -> {
                 onPublish(invocation.arguments[0] as NostrEvent)
                 publishError?.let { throw it }
@@ -74,6 +76,42 @@ class SupervisionChangeReporterTest {
             else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
         }
     })
+
+    @Test fun `a summary recorded under a previous supervisor is dropped, not sent to the new one`() = runBlocking {
+        val oldSupervisor = "c".repeat(64)
+        val entry = SettingsChangeEntry(
+            area = SupervisionChangeReporter.Areas.ROLE, supervisorPubkey = oldSupervisor
+        )
+        val store = Store(Json.encodeToString(listOf(entry)))
+        val published = AtomicInteger()
+
+        SupervisionChangeReporter(
+            keyManager(), crypto(), relay(onPublish = { published.incrementAndGet() }), prefs(store)
+        )
+
+        // Sent to whoever is supervisor NOW it would describe changes made under someone
+        // else's supervision, so it is discarded with that relationship.
+        withTimeout(2_000) { while (store.json != null) delay(5) }
+        delay(100)
+        assertEquals(0, published.get())
+    }
+
+    @Test fun `a queued summary is dropped once supervision has ended`() = runBlocking {
+        val entry = SettingsChangeEntry(
+            area = SupervisionChangeReporter.Areas.PAUSE, supervisorPubkey = supervisor
+        )
+        val store = Store(Json.encodeToString(listOf(entry)))
+        val published = AtomicInteger()
+
+        SupervisionChangeReporter(
+            keyManager(), crypto(), relay(onPublish = { published.incrementAndGet() }),
+            prefs(store, AppSettings(supervisedModeEnabled = false, supervisorPubkey = supervisor)),
+        )
+
+        withTimeout(2_000) { while (store.json != null) delay(5) }
+        delay(100)
+        assertEquals(0, published.get())
+    }
 
     private fun entriesOf(event: NostrEvent): List<SettingsChangeEntry> =
         Json.decodeFromString<SettingsChangeSummaryPayload>(event.content).entries
@@ -130,6 +168,37 @@ class SupervisionChangeReporterTest {
         delay(400)
         // The publish threw, so the summary is still owed - and still on disk.
         assertEquals(listOf(entry), storedEntries(store))
+    }
+
+    @Test fun `a summary whose publish failed is flushed when a relay reconnects`() = runBlocking {
+        val entry = SettingsChangeEntry(area = SupervisionChangeReporter.Areas.PRECISION)
+        val store = Store(Json.encodeToString(listOf(entry)))
+        // Offline at construction: the start flush throws, then the single false -> true edge
+        // below is the reconnect the reporter must react to without another change.
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        var failing = true
+        val published = AtomicInteger()
+        val reporter = SupervisionChangeReporter(
+            keyManager(), crypto(),
+            relay(
+                status = status,
+                onPublish = {
+                    if (failing) throw IllegalStateException("relay down")
+                    published.incrementAndGet()
+                },
+            ),
+            prefs(store),
+        )
+
+        delay(200)
+        assertEquals(0, published.get())
+        assertEquals(listOf(entry), storedEntries(store))
+
+        failing = false
+        status.value = mapOf("wss://relay.example" to true)
+
+        withTimeout(2_000) { while (published.get() == 0) delay(5) }
+        withTimeout(2_000) { while (store.json != null) delay(5) }
     }
 
     @Test fun `an unreadable buffer is discarded instead of retried forever`() = runBlocking {

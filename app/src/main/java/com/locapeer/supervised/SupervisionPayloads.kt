@@ -95,7 +95,10 @@ data class ContactAddResponsePayload(
 @Serializable
 data class SettingsChangeEntry(
     val area: String,
-    val peerName: String? = null
+    val peerName: String? = null,
+    /** The supervisor this change was reported to, so a queued summary is never delivered to
+     *  a different one. Blank for entries persisted by a build that did not record it. */
+    val supervisorPubkey: String = ""
 )
 
 /** Device -> supervisor (kind 1069): batched settings-change summary. */
