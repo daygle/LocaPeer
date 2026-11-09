@@ -40,11 +40,24 @@ import javax.inject.Singleton
 internal const val CONTACT_ADD_TIMEOUT_MS = 360_000L
 
 /**
- * How long an approved-but-unfinished add may be resumed after a process death. The physical
- * add normally takes milliseconds; this only covers a crash between the approval and its
- * execution, so a decision found days later is not silently applied.
+ * How long an approved-but-never-executed add may be resumed after a process death. The
+ * physical add normally takes milliseconds; this only covers a crash between the approval
+ * and its execution, so a decision found hours later is not silently applied.
+ *
+ * An approved add whose reply is still owed is deliberately NOT bounded by this: see
+ * [OWED_REPLY_WINDOW_MS].
  */
 internal const val APPROVED_RECOVERY_WINDOW_MS = 10 * 60_000L
+
+/**
+ * How long an owed reply survives a restart. An owed reply means the accept already committed
+ * (its receipt proves it) and only the TRACK_ACCEPT never went out, so resuming it cannot
+ * apply a stale decision - it sends the answer the contact is still waiting for. The contact's
+ * add is already done on this side, and the supervisor has been told the approval succeeded,
+ * so a ten-minute recovery window dropped the reply for good after any longer outage. Bound by
+ * the executor's receipt lifetime, which is the only evidence that a reply is still owed.
+ */
+internal const val OWED_REPLY_WINDOW_MS = 24 * 60 * 60_000L
 
 internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long =
     (requestedAt + CONTACT_ADD_TIMEOUT_MS - nowMillis).coerceAtLeast(0L)
@@ -461,17 +474,29 @@ class ContactAddApprovalManager @Inject constructor(
         queue.clear()
         queue.addAll(
             stored.filter { intent ->
-                // An approved intent is a decision already made: keep it for the shorter
-                // recovery window even though its request is past the answer window, so a
-                // crash mid-add can be finished instead of silently dropping the approval.
+                // An approved intent is a decision already made: keep it even though its
+                // request is past the answer window, so a crash mid-add can be finished
+                // instead of silently dropping the approval. How long depends on whether
+                // the add already ran: an owed reply is retried for as long as its receipt
+                // lives (sending it applies nothing), while an un-executed approval keeps
+                // the short window because applying it late would add a contact nobody is
+                // waiting for.
                 val approvedAt = intent.approvedAt
-                if (approvedAt != null) now - approvedAt <= APPROVED_RECOVERY_WINDOW_MS
-                else intent.requestedAt >= answerCutoff
+                if (approvedAt != null) {
+                    val window = if (owesReplyOnly(intent)) OWED_REPLY_WINDOW_MS
+                                 else APPROVED_RECOVERY_WINDOW_MS
+                    now - approvedAt <= window
+                } else intent.requestedAt >= answerCutoff
             }
         )
         if (queue.size != stored.size) persistLocked()
         return queue.toList()
     }
+
+    /** The accept committed (its receipt survived) and only the TRACK_ACCEPT is still unsent. */
+    private suspend fun owesReplyOnly(intent: StoredContactAddIntent): Boolean =
+        intent.accept?.request != null &&
+            runCatching { executor.hasReceipt(intent.requestId) }.getOrDefault(false)
 
     private suspend fun persistLocked() {
         prefs.setContactAddIntentsJson(

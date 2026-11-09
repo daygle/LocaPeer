@@ -504,4 +504,62 @@ class ContactAddApprovalTimeoutTest {
         // The reply is out, so the kept intent is gone from disk.
         verify(prefs).setContactAddIntentsJson(null)
     }
+
+    @Test fun `an owed accept reply survives a restart hours later`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val twoHoursAgo = System.currentTimeMillis() - 2 * 60 * 60_000L
+        val request = PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123)
+        `when`(prefs.getContactAddIntentsJson()).thenReturn(
+            Json.encodeToString(
+                listOf(
+                    ContactAddApprovalManager.StoredContactAddIntent(
+                        requestId = "a1",
+                        contactPubkeyHex = "peer",
+                        contactName = "Peer",
+                        accept = ContactAddApprovalManager.StoredAccept(
+                            "peer", "SEND", messagingEnabled = true, request = request
+                        ),
+                        requestedAt = twoHoursAgo,
+                        approvedAt = twoHoursAgo
+                    )
+                )
+            )
+        )
+        val executor = mock(ContactAddExecutor::class.java)
+        // The accept committed before the crash; only its TRACK_ACCEPT is still owed.
+        `when`(executor.hasReceipt("a1")).thenReturn(true)
+        `when`(executor.completeInboundAccept(request, "SEND", true, "a1")).thenReturn(true)
+        ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java),
+            mock(NostrRelayClient::class.java), prefs, executor
+        )
+        withTimeout(5_000) {
+            while (true) {
+                try {
+                    verify(executor).completeInboundAccept(request, "SEND", true, "a1")
+                    break
+                } catch (_: AssertionError) {
+                    kotlinx.coroutines.delay(10)
+                }
+            }
+        }
+        // Sent on recovery, so nothing is left owed on disk.
+        withTimeout(5_000) {
+            while (true) {
+                try {
+                    verify(prefs).setContactAddIntentsJson(null)
+                    break
+                } catch (_: AssertionError) {
+                    kotlinx.coroutines.delay(10)
+                }
+            }
+        }
+    }
+
+    @Test fun `an owed reply is retried longer than an unexecuted approval`() {
+        // An owed reply only republishes an answer; an approval that never ran would add a
+        // contact, so it keeps the short window.
+        assertTrue(OWED_REPLY_WINDOW_MS > APPROVED_RECOVERY_WINDOW_MS)
+        assertTrue(OWED_REPLY_WINDOW_MS >= 12 * 60 * 60_000L)
+    }
 }
