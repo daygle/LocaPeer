@@ -36,6 +36,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     // Injected so the singleton exists from start: it replays an invite answer that a crash
     // or a failed publish left unsent, as soon as a relay is reachable.
     @Inject lateinit var supervisionInviteResponder: com.locapeer.supervised.SupervisionInviteResponder
+    // Injected so the singleton exists from start: it replays a TRACK_ACCEPT that a crash or
+    // a failed publish left unsent, as soon as a relay is reachable.
+    @Inject lateinit var trackResponseSender: com.locapeer.invite.TrackResponseSender
 
     private val appScope = backgroundScope(TAG, Dispatchers.Default)
 

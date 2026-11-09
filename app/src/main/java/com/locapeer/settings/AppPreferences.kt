@@ -689,6 +689,21 @@ class AppPreferences @Inject constructor(
         }
     }
 
+    /** Track answers (accept or decline) a previous process had not sent yet (JSON string;
+     *  see TrackResponseSender). Written before publishing so a failed reply survives a
+     *  restart instead of leaving the requester without an answer. */
+    private val KEY_PENDING_TRACK_RESPONSES = stringPreferencesKey("pending_track_responses")
+
+    suspend fun getPendingTrackResponsesJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_TRACK_RESPONSES]
+
+    suspend fun setPendingTrackResponsesJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_TRACK_RESPONSES)
+            else prefs[KEY_PENDING_TRACK_RESPONSES] = json
+        }
+    }
+
     /**
      * Settings-change entries a supervised device still owes its supervisor (JSON string;
      * see SupervisionChangeReporter). Written the moment a change is recorded so a process
