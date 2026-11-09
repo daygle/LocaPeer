@@ -32,9 +32,10 @@ private const val TAG = "SupervisionEnded"
  * The notice matters more than a courtesy message: it is the only in-band signal the other
  * device has to clear its supervised state. One that never arrives leaves that device sharing
  * its location behind an unlock gate it can no longer answer, and the local switch already says
- * the supervision is over. The record is therefore written BEFORE publishing and cleared only
- * once a relay accepted it, and it is kept until then rather than expiring: the device may be
- * offline for days while the supervision it is still running is over.
+ * the supervision is over. The record is therefore written BEFORE publishing and kept, without
+ * expiring, until the notice has been handed to the relay client; from there the client's
+ * persistent outbox keeps it until a relay takes it, however long the device is offline. No
+ * relay acknowledgement is awaited here.
  */
 @Singleton
 class SupervisionEndedSender @Inject constructor(
@@ -75,10 +76,11 @@ class SupervisionEndedSender @Inject constructor(
     }
 
     /**
-     * Withdraw an unsent notice for [peerPubkey] because supervision was turned back on. The
-     * two transports are independent, so without this a queued 1063 and a fresh 1061 can reach
-     * the device in either order - and an ended notice delivered after the invite is accepted
-     * clears the supervision the two devices just re-established.
+     * Drop a not-yet-published notice for [peerPubkey] because supervision was turned back on.
+     * Left in place, a retry pass could publish it AFTER the fresh 1061 invite, and an ended
+     * notice delivered after the invite is accepted clears the supervision the two devices
+     * just re-established. A notice already handed to the relay client cannot be recalled,
+     * but the outbox keeps publish order, so it reaches the device before the new invite.
      */
     suspend fun cancel(peerPubkey: String) {
         mutex.withLock { save(load().filterNot { it.peerPubkey == peerPubkey }) }

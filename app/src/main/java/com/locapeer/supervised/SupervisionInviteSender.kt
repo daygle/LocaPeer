@@ -33,10 +33,13 @@ private const val TAG = "SupervisionInvite"
  *
  * The switch is written locally before the invite goes out, so a lost invite leaves this
  * device showing a supervision the other side was never asked to consent to and never sees.
- * The record is written BEFORE publishing and cleared only once a relay accepted it.
+ * The record is written BEFORE publishing and cleared once the invite has been handed to the
+ * relay client, whose persistent outbox keeps it until a relay takes it (no relay
+ * acknowledgement is awaited here).
  *
- * Turning the switch back off withdraws the invite ([cancel]): a queued invitation must not
- * arrive after the user already abandoned it.
+ * Turning the switch back off drops a record that has not been published yet ([cancel]). It
+ * cannot recall an invite already handed to the relay client; that one is followed by the
+ * ended notice, which the outbox delivers after it, so the peer still ends up unsupervised.
  */
 @Singleton
 class SupervisionInviteSender @Inject constructor(
@@ -76,7 +79,7 @@ class SupervisionInviteSender @Inject constructor(
         deliver(record(peerPubkey, peerRelay))
     }
 
-    /** Withdraw an unsent invite for [peerPubkey] (the user turned the switch back off). */
+    /** Drop a not-yet-published invite for [peerPubkey] (the user turned the switch back off). */
     suspend fun cancel(peerPubkey: String) {
         mutex.withLock { save(load().filterNot { it.peerPubkey == peerPubkey }) }
     }

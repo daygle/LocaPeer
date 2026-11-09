@@ -194,9 +194,9 @@ class PeerSharingViewModel @Inject constructor(
                 if (promotedRole != peer.locationRole) {
                     peerDao.upsertPeer(peer.copy(locationRole = promotedRole))
                 }
-                // Turning supervision back on withdraws an ended notice still waiting for
-                // the relay: delivered after the new invite, it would clear the supervision
-                // the two devices just re-established.
+                // Turning supervision back on drops an ended notice that has not been
+                // published yet: a retry sending it after the new invite would clear the
+                // supervision the two devices just re-established.
                 endedSender.cancel(peer.publicKeyHex)
                 sendSupervisionInvite(peer)
             } else {
@@ -207,8 +207,8 @@ class PeerSharingViewModel @Inject constructor(
                     // that keeps setNotifyOnMissedHeartbeat(false) blocked while supervised.
                     configDao.setNotifyOnMissedHeartbeat(currentPeerId, false)
                 }
-                // Withdraw an invitation the peer has not received yet: it must not arrive
-                // after the user already turned the switch back off.
+                // Drop an invitation that has not been published yet. One already handed to
+                // the relay client is followed by the ended notice below, in order.
                 inviteSender.cancel(peer.publicKeyHex)
                 sendSupervisionEnded(peer)
             }
@@ -217,7 +217,7 @@ class PeerSharingViewModel @Inject constructor(
 
     /**
      * Kind 1061: ask the peer to consent to being supervised by us. Recorded before publishing
-     * and replayed until a relay accepts it: the switch is already on locally, and an invite
+     * and replayed until it is handed to the relay client: the switch is already on locally, and an invite
      * lost here would show a supervision the other device was never asked about.
      */
     private suspend fun sendSupervisionInvite(peer: PeerEntity) {
@@ -226,7 +226,7 @@ class PeerSharingViewModel @Inject constructor(
 
     /**
      * Kind 1063: tell the peer we stopped supervising them. Recorded before publishing and
-     * replayed until a relay accepts it: a lost notice leaves the other device supervised
+     * replayed until it is handed to the relay client: a lost notice leaves the other device supervised
      * behind an unlock gate it can no longer answer, while our switch already reads as off.
      */
     private suspend fun sendSupervisionEnded(peer: PeerEntity) {
