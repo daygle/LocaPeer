@@ -100,8 +100,9 @@ class ContactAddExecutor @Inject constructor(
      *  resumed add after the crash that follows does not send it to the contact again.
      *
      *  Returns false for a self-invite or when the track request could not be published
-     *  (a key or encryption failure). The contact row is already written in that case, but
-     *  the contact was never asked, so the caller must report a failure rather than success. */
+     *  (a key or encryption failure). In that case the contact row is put back as it was:
+     *  a SEND_RECEIVE row left behind would share this device's location with someone who was
+     *  never asked, while the caller tells the user the add failed. */
     suspend fun performOutboundAdd(invite: InviteData, receiptId: String? = null): Boolean {
         val (_, myPubHex) = keyManager.ensureKeypair()
         if (invite.publicKeyHex == myPubHex) return false
@@ -126,7 +127,10 @@ class ContactAddExecutor @Inject constructor(
         peerDao.upsertPeer(peer)
         relayClient.connect(invite.relayUrl)
         val sent = sendTrackRequest(invite)
-        if (!sent) return false
+        if (!sent) {
+            if (existing == null) peerDao.deletePeerById(invite.deviceId) else peerDao.upsertPeer(existing)
+            return false
+        }
         if (receiptId != null) {
             val now = System.currentTimeMillis()
             receiptDao.upsert(ContactAddReceiptEntity(receiptId, requestSentAt = now))

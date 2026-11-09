@@ -59,12 +59,12 @@ class TrackRequestReceiver : BroadcastReceiver() {
             try {
                 when (intent.action) {
                     ACTION_TRACK_DECLINE -> {
+                        // Consume the request first, with the compare-and-delete the accept uses, so
+                        // accept and decline stay mutually exclusive (see PendingRequestActions).
                         // Only the request this notification was for: a replacement is not declined.
-                        if (ep.pendingRequestDao().getByPubkey(senderPubkey) != request) return@launch
+                        if (ep.pendingRequestDao().deleteIfUnchanged(request) == 0) return@launch
                         notificationManager.cancel(senderPubkey, com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST)
                         Log.d("TrackRequestReceiver", "Declined track request from $senderName")
-                        // Record the decline BEFORE consuming the request, so a process death in
-                        // between leaves the request answerable rather than gone with no answer.
                         try {
                             ep.trackResponseSender().sendDecline(senderPubkey, senderRelay, isRoleChange)
                         } catch (e: kotlinx.coroutines.CancellationException) {
@@ -72,7 +72,6 @@ class TrackRequestReceiver : BroadcastReceiver() {
                         } catch (e: Exception) {
                             Log.w("TrackRequestReceiver", "Failed to send track decline", e)
                         }
-                        ep.pendingRequestDao().deleteIfUnchanged(request)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_declined_contact, senderName), Toast.LENGTH_SHORT).show()
                         }

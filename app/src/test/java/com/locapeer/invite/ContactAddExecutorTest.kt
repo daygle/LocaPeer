@@ -28,12 +28,13 @@ class ContactAddExecutorTest {
         receiptDao: ContactAddReceiptDao,
         sender: TrackResponseSender,
         keyManager: KeyManager = mock(KeyManager::class.java),
+        peerDao: PeerDao = mock(PeerDao::class.java),
     ): ContactAddExecutor {
         val database = mock(AppDatabase::class.java)
         `when`(database.contactAddReceiptDao()).thenReturn(receiptDao)
         return ContactAddExecutor(
             database,
-            mock(PeerDao::class.java),
+            peerDao,
             sender,
             mock(NotificationManager::class.java),
             keyManager,
@@ -85,10 +86,14 @@ class ContactAddExecutorTest {
         // The mocked preferences have no settings flow, so building the request throws.
         val invite = InviteData("theirs", "Them", "wss://relay.example", "theirs")
 
-        val completed = executor(receiptDao, mock(TrackResponseSender::class.java), keyManager)
+        val peerDao = mock(PeerDao::class.java)
+        val completed = executor(receiptDao, mock(TrackResponseSender::class.java), keyManager, peerDao)
             .performOutboundAdd(invite, receiptId = "r1")
 
         assertFalse(completed)
+        // The new contact row is removed again: left in place it would share this device's
+        // location with someone who was never asked, while the user is told the add failed.
+        verify(peerDao).deletePeerById("theirs")
         // No receipt: the request never went out, so nothing may claim it was sent.
         verify(receiptDao, never()).upsert(Mockito.any(ContactAddReceiptEntity::class.java) ?: ContactAddReceiptEntity("r1"))
     }
