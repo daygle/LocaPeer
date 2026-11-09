@@ -54,6 +54,32 @@ internal fun applySupervisionRegistrationResponse(
     return true
 }
 
+/** A circle the user explicitly left: its owner at that moment, and when we left (epoch seconds). */
+data class LeftCircle(val circleId: String, val creatorPubkey: String, val leftAt: Long)
+
+/**
+ * Decode the stored leave records: comma-separated `id:creator:leftAt` entries. A bare id written
+ * by an older version decodes with no known owner and time 0.
+ */
+internal fun decodeLeftCircles(raw: String?): Map<String, LeftCircle> {
+    if (raw.isNullOrBlank()) return emptyMap()
+    val result = LinkedHashMap<String, LeftCircle>()
+    raw.split(',').forEach { entry ->
+        if (entry.isBlank()) return@forEach
+        val parts = entry.split(':')
+        val leftAt = parts.getOrNull(2)?.toLongOrNull()
+        if (parts.size == 3 && leftAt != null) {
+            result[parts[0]] = LeftCircle(parts[0], parts[1], leftAt)
+        } else {
+            result[entry] = LeftCircle(entry, "", 0L)
+        }
+    }
+    return result
+}
+
+internal fun encodeLeftCircles(circles: Collection<LeftCircle>): String =
+    circles.joinToString(",") { "${it.circleId}:${it.creatorPubkey}:${it.leftAt}" }
+
 val HARDCODED_RELAYS = listOf(
     "wss://relay.daygle.net",
     "wss://nos.lol",
@@ -660,34 +686,36 @@ class AppPreferences @Inject constructor(
     }
 
     /**
-     * Circle ids the local user has explicitly left, as a live flow. An incoming circle message for
-     * one of these is ignored so a straggler from another member can't silently re-create a circle
-     * the user left (see [com.locapeer.subscriber.HeartbeatReceiver], which caches the latest value
-     * so it never reads DataStore on the per-message hot path). Cleared for a circle when its owner
-     * re-invites the user. Stored as a comma-separated string; circle ids are UUIDs so they never
-     * contain a comma.
+     * Circles the local user has explicitly left, keyed by circle id, as a live flow. Each record
+     * keeps the owner we knew and when we left, so an incoming message for one of these is ignored
+     * unless it is a newer message from that same owner (see
+     * [com.locapeer.subscriber.HeartbeatReceiver], which caches the latest value so it never reads
+     * DataStore on the per-message hot path). Stored as a comma-separated string of
+     * `id:creator:leftAt` entries; circle ids are UUIDs so they contain neither a comma nor a colon.
      */
-    val leftCircleIds: Flow<Set<String>> = context.settingsStore.data
+    val leftCircles: Flow<Map<String, LeftCircle>> = context.settingsStore.data
         .catch { e -> if (e is IOException) emit(emptyPreferences()) else throw e }
-        .map { prefs ->
-            prefs[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { it.isNotBlank() }?.toSet() ?: emptySet()
-        }
+        .map { prefs -> decodeLeftCircles(prefs[KEY_LEFT_CIRCLE_IDS]) }
         .distinctUntilChanged()
 
-    suspend fun addLeftCircleId(gid: String) {
+    suspend fun addLeftCircle(circleId: String, creatorPubkey: String) {
         context.settingsStore.edit {
-            val current = it[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { s -> s.isNotBlank() }?.toMutableSet()
-                ?: mutableSetOf()
-            current.add(gid)
-            it[KEY_LEFT_CIRCLE_IDS] = current.joinToString(",")
+            val current = decodeLeftCircles(it[KEY_LEFT_CIRCLE_IDS]).toMutableMap()
+            current[circleId] = LeftCircle(
+                circleId = circleId,
+                creatorPubkey = creatorPubkey.lowercase(),
+                leftAt = System.currentTimeMillis() / 1000
+            )
+            it[KEY_LEFT_CIRCLE_IDS] = encodeLeftCircles(current.values)
         }
     }
 
-    suspend fun removeLeftCircleId(gid: String) {
+    suspend fun removeLeftCircle(circleId: String) {
         context.settingsStore.edit {
-            val current = it[KEY_LEFT_CIRCLE_IDS]?.split(",")?.filter { s -> s.isNotBlank() }?.toMutableSet()
-                ?: return@edit
-            if (current.remove(gid)) it[KEY_LEFT_CIRCLE_IDS] = current.joinToString(",")
+            val current = decodeLeftCircles(it[KEY_LEFT_CIRCLE_IDS]).toMutableMap()
+            if (current.remove(circleId) != null) {
+                it[KEY_LEFT_CIRCLE_IDS] = encodeLeftCircles(current.values)
+            }
         }
     }
 

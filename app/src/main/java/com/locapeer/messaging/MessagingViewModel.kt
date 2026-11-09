@@ -294,6 +294,10 @@ class MessagingViewModel @Inject constructor(
                 val (privHex, pubHex) = keyManager.ensureKeypair()
                 val owner = circle.creatorPubkey
                 if (owner.isBlank() || owner == pubHex) {
+                    // Nobody to notify here - a blank creator predates ownership and our own
+                    // circles are disbanded, not left - but still record the removal. Without it a
+                    // member's straggler would silently re-create a circle the user removed.
+                    prefs.addLeftCircle(circleId, owner)
                     messageDao.deleteAllForGroup(circleId)
                     circleDao.clearMembers(circleId)
                     circleDao.deleteCircle(circleId)
@@ -322,7 +326,7 @@ class MessagingViewModel @Inject constructor(
                     messageDao.getMineForGroup(circleId).forEach { deleteMessageFromRemote(it) }
                 }
                 // Remember we left so an incoming straggler can't re-materialise the circle.
-                prefs.addLeftCircleId(circleId)
+                prefs.addLeftCircle(circleId, circle.creatorPubkey)
                 // Drop our local copy of the circle, its membership and its messages.
                 messageDao.deleteAllForGroup(circleId)
                 circleDao.clearMembers(circleId)

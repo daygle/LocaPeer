@@ -8,6 +8,7 @@ import com.locapeer.data.dao.MessageDao
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.CircleEntity
 import com.locapeer.data.entity.PeerEntity
+import com.locapeer.settings.AppPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -23,7 +24,8 @@ class CirclesViewModel @Inject constructor(
     private val circleDao: CircleDao,
     private val peerDao: PeerDao,
     private val messageDao: MessageDao,
-    private val keyManager: KeyManager
+    private val keyManager: KeyManager,
+    private val prefs: AppPreferences
 ) : ViewModel() {
 
     /** All contacts, used as the pool to pick circle members from. */
@@ -76,6 +78,11 @@ class CirclesViewModel @Inject constructor(
     /** Deletes the circle, its membership and its message thread. */
     fun deleteCircle(circleId: String) {
         viewModelScope.launch {
+            // Record the removal before dropping the row. Circles with no recorded owner (created
+            // before ownership existed) are deleted through this path too, and without the record a
+            // member's straggler would re-create a circle the user deliberately removed.
+            val creator = circleDao.getCircle(circleId)?.creatorPubkey.orEmpty()
+            prefs.addLeftCircle(circleId, creator)
             circleDao.clearMembers(circleId)
             circleDao.deleteCircle(circleId)
             // The thread must go with the circle: orphaned rows would be invisible in the UI

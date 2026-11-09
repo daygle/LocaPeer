@@ -34,6 +34,7 @@ import com.locapeer.messaging.ReadReceiptPayload
 import com.locapeer.proximity.ProximityEngine
 import com.locapeer.peer.PeerManager
 import com.locapeer.peer.PeerRemovedPayload
+import com.locapeer.settings.LeftCircle
 import com.locapeer.invite.ACTION_TRACK_DECLINE
 import com.locapeer.invite.EXTRA_IS_ROLE_CHANGE
 import com.locapeer.invite.EXTRA_REQUESTED_ROLE
@@ -209,6 +210,31 @@ internal fun isCurrentSupervisionRegistrationResponse(
     eventCreatedAt >= requestedAt - SUPERVISION_RESPONSE_SKEW_S &&
     eventCreatedAt >= now - (if (accepted) MAX_CATCHUP_SECONDS else SUPERVISION_EVENT_MAX_AGE_S)
 
+/**
+ * Whether a message for a circle the user left is a genuine re-invite rather than a straggler or an
+ * ownership claim. The envelope must present the sender as the creator, and only the owner recorded
+ * when we left may re-add us, with a message newer than the leave - so a replayed old creator
+ * message can't rejoin either. Records with no recorded owner (a circle that predates ownership,
+ * or one stored by an older version) instead need a valid creator signature, which proves the
+ * claimed creator authored the membership, and must be newer than the leave when that is known.
+ */
+internal fun isCircleReinvite(
+    left: LeftCircle,
+    senderPubkey: String,
+    claimedCreator: String,
+    eventCreatedAt: Long,
+    signedVersion: Long
+): Boolean {
+    if (!claimedCreator.equals(senderPubkey, ignoreCase = true)) return false
+    if (left.creatorPubkey.isEmpty()) {
+        if (signedVersion <= 0) return false
+        return left.leftAt <= 0 || eventCreatedAt > left.leftAt
+    }
+    return senderPubkey.equals(left.creatorPubkey, ignoreCase = true) &&
+        claimedCreator.equals(left.creatorPubkey, ignoreCase = true) &&
+        eventCreatedAt > left.leftAt
+}
+
 /** Never turn receive-only access into outbound location sharing without consent. */
 internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boolean): Boolean =
     if (isRoleChange) existingRole != null
@@ -293,11 +319,11 @@ class HeartbeatReceiver @Inject constructor(
     @Volatile private var lastPersistedHbEpoch = 0L
 
     /**
-     * In-memory mirror of [AppPreferences.leftCircleIds], kept fresh by a collector started in
+     * In-memory mirror of [AppPreferences.leftCircles], kept fresh by a collector started in
      * [start]. Read on the per-message hot path in [processDmInBackground] to suppress circles the
      * user left, so that path never touches DataStore.
      */
-    @Volatile private var leftCircleIds: Set<String> = emptySet()
+    @Volatile private var leftCircles: Map<String, LeftCircle> = emptyMap()
 
     /** Last time an approval dialog (unlock / disable request) was surfaced per sender.
      *  In-memory on purpose: the cooldown guards a burst within one session only, and a
@@ -346,7 +372,7 @@ class HeartbeatReceiver @Inject constructor(
         createMessageChannel()
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
-        prefs.leftCircleIds.onEach { leftCircleIds = it }.launchIn(scope)
+        prefs.leftCircles.onEach { leftCircles = it }.launchIn(scope)
         scope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             relayClient.connect()
@@ -969,13 +995,14 @@ class HeartbeatReceiver @Inject constructor(
                 }
                 group.cver
             }
-            // If the user explicitly left this circle, don't let a straggler re-create it. A message
-            // from the circle's creator that still lists us is treated as a re-invite: clear the
-            // "left" flag and rejoin. Any other sender (a member still fanning to us before the
-            // owner's removal has propagated) is dropped so the circle stays gone.
-            if (leftCircleIds.contains(group.gid)) {
-                if (group.creator.isNotBlank() && event.pubkey == group.creator) {
-                    prefs.removeLeftCircleId(group.gid)
+            // If the user explicitly left this circle, don't let a straggler re-create it. Only a
+            // newer message from the owner recorded at leave time that still lists us counts as a
+            // re-invite: clear the leave record and rejoin. Another contact claiming to be the
+            // creator, an older replayed owner message, or a member's fan-out copy stays dropped.
+            val leftRecord = leftCircles[group.gid]
+            if (leftRecord != null) {
+                if (isCircleReinvite(leftRecord, event.pubkey, group.creator, event.createdAt, signedVersion)) {
+                    prefs.removeLeftCircle(group.gid)
                 } else {
                     return
                 }
