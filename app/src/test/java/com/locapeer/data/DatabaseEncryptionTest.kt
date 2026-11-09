@@ -1,5 +1,6 @@
 package com.locapeer.data
 
+import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -71,6 +72,31 @@ class DatabaseEncryptionTest {
             assertFalse(DatabaseEncryption.isExportedCopyUsable(File(copy.path + ".missing")))
         } finally {
             copy.delete()
+        }
+    }
+
+    private fun dbFile(contents: ByteArray): java.io.File =
+        java.io.File.createTempFile("locapeer", ".db").apply { deleteOnExit(); writeBytes(contents) }
+
+    private val plaintextHeader = "SQLite format 3\u0000".toByteArray(Charsets.US_ASCII) + ByteArray(84)
+    private val rawKey = byteArrayOf(1, 2, 3)
+
+    @Test fun `a successful conversion opens the database with the real key`() {
+        val key = DatabaseEncryption.keyAfterConversion(dbFile(plaintextHeader), rawKey) { }
+        assertArrayEquals(rawKey, key)
+    }
+
+    @Test fun `a failed conversion opens the untouched plaintext database instead of crashing`() {
+        val key = DatabaseEncryption.keyAfterConversion(dbFile(plaintextHeader), rawKey) {
+            error("uncheckpointed WAL")
+        }
+        assertEquals(0, key.size)
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `a failure after the file stopped being plaintext is not hidden`() {
+        DatabaseEncryption.keyAfterConversion(dbFile(ByteArray(100) { 7 }), rawKey) {
+            error("failed after the swap")
         }
     }
 }

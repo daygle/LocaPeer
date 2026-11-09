@@ -26,6 +26,8 @@ private const val GCM_TAG_BITS = 128
 private const val DB_KEY_BYTES = 32
 private const val UNWRAP_ATTEMPTS = 3
 private const val UNWRAP_RETRY_MS = 250L
+/** An empty SQLCipher key: no keying is applied, so a plaintext database opens as-is. */
+private val PLAINTEXT_KEY = ByteArray(0)
 
 /** The first 16 bytes of every unencrypted SQLite file. An SQLCipher file is random from byte 0. */
 private val SQLITE_HEADER = "SQLite format 3\u0000".toByteArray(Charsets.US_ASCII)
@@ -63,11 +65,33 @@ object DatabaseEncryption {
         val rawKey = rawKeyLiteral(key).toByteArray(Charsets.US_ASCII)
 
         if (dbFile.exists() && isPlaintextSqlite(dbFile)) {
-            encryptExisting(dbFile, tmpFile, rawKey)
+            return keyAfterConversion(dbFile, rawKey) { encryptExisting(dbFile, tmpFile, rawKey) }
         } else if (dbFile.exists() && existingKey == null) {
             // An encrypted database with no key file at all can never be opened.
             Log.e(TAG, "Encrypted database has no key; deleting it")
             deleteDatabaseFiles(dbFile)
+        }
+        return rawKey
+    }
+
+    /**
+     * Run the one-time [convert] of a plaintext database and return the key to open it with.
+     *
+     * A conversion that fails leaves the original untouched (see [encryptExisting]), and the
+     * failure can repeat on every launch - uncheckpointed data in the old WAL, a full disk. Throwing
+     * from here fails Room's open, which crash-looped the app at start with no way out. Instead,
+     * while the file is still plaintext, return [PLAINTEXT_KEY]: SQLCipher applies no key for an
+     * empty one and opens the database unencrypted for this launch, and the next launch retries the
+     * conversion. If the file is no longer plaintext the failure happened after the swap, so the
+     * empty key could not open it; that is rethrown rather than hidden.
+     */
+    internal fun keyAfterConversion(dbFile: File, rawKey: ByteArray, convert: () -> Unit): ByteArray {
+        try {
+            convert()
+        } catch (e: Exception) {
+            if (!isPlaintextSqlite(dbFile)) throw e
+            Log.e(TAG, "Could not encrypt the database; opening it unencrypted and retrying next launch", e)
+            return PLAINTEXT_KEY
         }
         return rawKey
     }
