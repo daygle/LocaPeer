@@ -171,8 +171,10 @@ class SupervisionResponseSenderTest {
             prefs, keyManager(), crypto(), relay, sharingConfig(steps), peers(steps)
         )
 
-        withTimeout(2_000) { while (steps.size < 4) delay(5) }
-        assertEquals(listOf("config", "mark", "publish", "clear"), steps.toList())
+        withTimeout(2_000) { while (steps.size < 5) delay(5) }
+        // The leading "mark" is the stamp written for a record from an older build that had no
+        // timestamp (see the expiry in load): it is persisted once, before the pass runs.
+        assertEquals(listOf("mark", "config", "mark", "publish", "clear"), steps.toList())
     }
 
     @Test fun `a recorded answer is resent at startup and then cleared`() = runBlocking {
@@ -225,5 +227,32 @@ class SupervisionResponseSenderTest {
 
         status.value = mapOf("wss://relay.example" to true)
         withTimeout(2_000) { while (published.get() == 0) delay(5) }
+    }
+
+    @Test fun `an answer past its expiry is dropped instead of retried forever`() = runBlocking {
+        val expired = Json.encodeToString(
+            listOf(
+                SupervisionResponseSender.PendingResponse(
+                    requesterPubkey = "peer",
+                    requesterRelay = "wss://relay.example",
+                    accepted = true,
+                    requestCreatedAt = 9L,
+                    configApplied = true,
+                    recordedAt = System.currentTimeMillis() - 48 * 60 * 60_000L
+                )
+            )
+        )
+        val steps = java.util.Collections.synchronizedList(mutableListOf<String>())
+        val prefs = prefsRecording(steps, initial = expired)
+        val published = AtomicInteger()
+        val relay = fakeRelay(status = connected(), onPublish = { published.incrementAndGet() })
+
+        SupervisionResponseSender(prefs, keyManager(), crypto(), relay, sharingConfig(), peers())
+
+        // The requesting device stopped waiting days ago, so the record is pruned, not sent.
+        withTimeout(2_000) { while (steps.isEmpty()) delay(5) }
+        assertEquals(listOf("clear"), steps.toList())
+        delay(100)
+        assertEquals(0, published.get())
     }
 }

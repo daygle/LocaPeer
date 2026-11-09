@@ -37,6 +37,10 @@ private const val TAG = "SupervisionResponse"
  * once the relay accepted the event. For an accept, the record also tracks whether the sharing
  * configuration was applied, so a crash between recording and configuring is finished on the
  * next start instead of announcing a supervision the supervisor never wrote down.
+ *
+ * A record expires after [MAX_ANSWER_AGE_MS]: an answer the requesting device has long stopped
+ * waiting for cannot become useful again, and retrying it on every reconnect forever would
+ * keep publishing to a device that may no longer exist.
  */
 @Singleton
 class SupervisionResponseSender @Inject constructor(
@@ -55,7 +59,9 @@ class SupervisionResponseSender @Inject constructor(
         /** The echoed request time; null when the requesting build is older. */
         val requestCreatedAt: Long? = null,
         /** Accept only: the supervisor's own flags/role for this device are already written. */
-        val configApplied: Boolean = false
+        val configApplied: Boolean = false,
+        /** When the answer was recorded; 0 for a record written by an older build. */
+        val recordedAt: Long = 0
     )
 
     private val json = Json { ignoreUnknownKeys = true }
@@ -124,7 +130,14 @@ class SupervisionResponseSender @Inject constructor(
         requestCreatedAt: Long?,
         configApplied: Boolean,
     ): PendingResponse {
-        val response = PendingResponse(requesterPubkey, requesterRelay, accepted, requestCreatedAt, configApplied)
+        val response = PendingResponse(
+            requesterPubkey,
+            requesterRelay,
+            accepted,
+            requestCreatedAt,
+            configApplied,
+            recordedAt = System.currentTimeMillis(),
+        )
         mutex.withLock {
             // Same requester + request time is one answer: a retried request or a second
             // tap must not queue two.
@@ -217,16 +230,34 @@ class SupervisionResponseSender @Inject constructor(
     private fun key(response: PendingResponse) =
         "${response.requesterPubkey}:${response.requestCreatedAt ?: 0L}"
 
+    /**
+     * Restore answers a previous process had not sent yet, dropping the ones past their expiry.
+     * Pruning happens here so it applies to every pass (start, reconnect, a new answer) rather
+     * than only at construction, and the shortened list is written back so an expired record
+     * cannot be read again. A record without a timestamp comes from an older build and is
+     * stamped now: it is owed an answer, just not forever.
+     */
     private suspend fun load(): List<PendingResponse> {
         val raw = prefs.getPendingRegisterResponsesJson() ?: return emptyList()
-        return runCatching {
+        val stored = runCatching {
             json.decodeFromString<List<PendingResponse>>(raw)
         }.getOrDefault(emptyList())
+        val now = System.currentTimeMillis()
+        val kept = stored
+            .map { if (it.recordedAt <= 0) it.copy(recordedAt = now) else it }
+            .filter { now - it.recordedAt <= MAX_ANSWER_AGE_MS }
+        if (kept != stored) save(kept)
+        return kept
     }
 
     private suspend fun save(pending: List<PendingResponse>) {
         prefs.setPendingRegisterResponsesJson(
             if (pending.isEmpty()) null else json.encodeToString(pending)
         )
+    }
+
+    private companion object {
+        /** Answers older than this belong to requests the device has given up on. */
+        const val MAX_ANSWER_AGE_MS = 24 * 60 * 60_000L
     }
 }
