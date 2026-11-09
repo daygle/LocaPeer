@@ -66,7 +66,7 @@ class MissedHeartbeatWorker @AssistedInject constructor(
         // later alert for this exact ping) we skip without recording - the next run may
         // re-alert once the window ends.
         val alertsAllowed = settings.alertNotificationsEnabled &&
-            !com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)
+            !com.locapeer.util.QuietHours.isQuietNow(settings.quietHoursEnabled, settings.quietStartMinute, settings.quietEndMinute)
 
         for (peer in receiveContacts) {
             if (isStopped) return Result.retry()

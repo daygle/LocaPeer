@@ -128,8 +128,14 @@ class ContactAddApprovalManager @Inject constructor(
         val settings = prefs.settings.first()
         val supervisorPubkey = settings.supervisorPubkey
         if (!settings.supervisionActive || supervisorPubkey.isEmpty()) {
-            // Condition changed since the caller checked: behave as unsupervised - the
-            // caller's normal un-gated path proceeds.
+            // The caller already delegated the action to us. If supervision ended between
+            // checks, perform it here before reporting success rather than losing the add.
+            when (action) {
+                is AddAction.OutboundScan -> executor.performOutboundAdd(action.invite)
+                is AddAction.InboundAccept -> executor.completeInboundAccept(
+                    action.senderPubkey, action.locationRole, action.messagingEnabled
+                )
+            }
             onDecided(true)
             return
         }

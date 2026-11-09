@@ -107,6 +107,9 @@ class ScanViewModel @Inject constructor(
                     return@launch
                 }
                 if (prefs.settings.first().supervisionActive) {
+                    // Set waiting first: requestAdd may finish synchronously if supervision
+                    // ended since the check, or if sending the request fails.
+                    _scanState.value = ScanState(awaitingSupervisor = true)
                     contactAddApprovalManager.requestAdd(
                         contactPubkeyHex = invite.publicKeyHex,
                         contactName = invite.displayName,
@@ -126,7 +129,6 @@ class ScanViewModel @Inject constructor(
                             )
                         }
                     }
-                    _scanState.value = ScanState(awaitingSupervisor = true)
                 } else {
                     executor.performOutboundAdd(invite)
                     pendingInvite = null

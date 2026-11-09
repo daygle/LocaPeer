@@ -562,7 +562,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun alertNewWatcher(peer: PeerEntity) {
         val settings = prefs.settings.first()
         if (!settings.notifyWhenWatched || !settings.alertNotificationsEnabled) return
-        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietHoursEnabled, settings.quietStartMinute, settings.quietEndMinute)) return
         val now = android.os.SystemClock.elapsedRealtime()
         val last = lastWatchAlertAt[peer.publicKeyHex]
         if (last != null && now - last < LIVE_WATCH_ALERT_COOLDOWN_MS) return
@@ -1769,7 +1769,7 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun shouldSendAnyMessageNotification(): Boolean {
         val settings = prefs.settings.first()
         if (!settings.messageNotificationsEnabled) return false
-        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return false
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietHoursEnabled, settings.quietStartMinute, settings.quietEndMinute)) return false
         return true
     }
 
@@ -1915,7 +1915,7 @@ class HeartbeatReceiver @Inject constructor(
         // Same gates as the local geofence/proximity/missed-location alerts: the global
         // alert switch and quiet hours (Settings -> Privacy).
         if (!settings.alertNotificationsEnabled) return
-        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietHoursEnabled, settings.quietStartMinute, settings.quietEndMinute)) return
 
         peerDao.getPeer(event.pubkey) ?: return
         val privHex = keyManager.getPrivateKeyHex() ?: return

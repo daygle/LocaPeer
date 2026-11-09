@@ -14,6 +14,14 @@ import java.time.ZoneId
 object QuietHours {
 
     fun isQuietNow(
+        enabled: Boolean,
+        startMinute: Int,
+        endMinute: Int,
+        zone: ZoneId = ZoneId.systemDefault(),
+        nowMillis: Long = System.currentTimeMillis(),
+    ): Boolean = enabled && isQuietNow(startMinute, endMinute, zone, nowMillis)
+
+    fun isQuietNow(
         startMinute: Int,
         endMinute: Int,
         zone: ZoneId = ZoneId.systemDefault(),

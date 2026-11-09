@@ -193,7 +193,7 @@ class ProximityEngine @Inject constructor(
         // TRACKING_ALERT still emit, so the audit trail stays honest.
         val settings = prefs.settings.first()
         if (!settings.alertNotificationsEnabled) return
-        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietStartMinute, settings.quietEndMinute)) return
+        if (com.locapeer.util.QuietHours.isQuietNow(settings.quietHoursEnabled, settings.quietStartMinute, settings.quietEndMinute)) return
         // The distance is inserted into the localized "%1$s from you" template, so it must
         // not carry its own English suffix (that produced "500 m away from you").
         val displayDistance = com.locapeer.util.DisplayFormat.distanceValue(distanceMetres.toDouble())

@@ -34,6 +34,10 @@ interface PeerSharingConfigDao {
     @Query("UPDATE peer_sharing_config SET isMySupervised = :supervised WHERE peerDeviceId = :peerDeviceId")
     suspend fun setIsMySupervised(peerDeviceId: String, supervised: Boolean)
 
+    /** Clear the supervisor claim and its forced alert together when a release is approved. */
+    @Query("UPDATE peer_sharing_config SET isMySupervised = 0, notifyOnMissedHeartbeat = 0 WHERE peerDeviceId = :peerDeviceId")
+    suspend fun clearSupervision(peerDeviceId: String)
+
     @Query("UPDATE peer_sharing_config SET notifyOnMissedHeartbeat = :enabled WHERE peerDeviceId = :peerDeviceId")
     suspend fun setNotifyOnMissedHeartbeat(peerDeviceId: String, enabled: Boolean)
 

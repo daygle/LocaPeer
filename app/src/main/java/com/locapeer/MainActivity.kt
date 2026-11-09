@@ -156,18 +156,18 @@ class MainActivity : AppCompatActivity() {
                         else -> R.string.supervision_request_message
                     }
                     AlertDialog(
-                        onDismissRequest = { approvalManager.respond(approved = false) },
+                        onDismissRequest = { approvalManager.respond(req, approved = false) },
                         title = { Text(stringResource(approvalTitle)) },
                         text = {
                             Text(stringResource(approvalMessage, req.deviceName))
                         },
                         confirmButton = {
-                            Button(onClick = { approvalManager.respond(approved = true) }) {
+                            Button(onClick = { approvalManager.respond(req, approved = true) }) {
                                 Text(stringResource(R.string.common_approve))
                             }
                         },
                         dismissButton = {
-                            OutlinedButton(onClick = { approvalManager.respond(approved = false) }) {
+                            OutlinedButton(onClick = { approvalManager.respond(req, approved = false) }) {
                                 Text(stringResource(R.string.common_deny))
                             }
                         },

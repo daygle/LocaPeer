@@ -16,6 +16,12 @@ class QuietHoursTest {
         LocalDateTime.of(2026, 6, 15, h, m).atZone(zone).toInstant().toEpochMilli()
 
     @Test
+    fun `disabled quiet hours do not suppress notifications inside the saved window`() {
+        assertFalse(QuietHours.isQuietNow(false, 1320, 480, zone, millisAt(23, 0)))
+        assertTrue(QuietHours.isQuietNow(true, 1320, 480, zone, millisAt(23, 0)))
+    }
+
+    @Test
     fun `normal daytime window is quiet inside and awake outside`() {
         // 08:00 .. 22:00
         assertTrue(QuietHours.isQuietNow(480, 1320, zone, millisAt(9, 0)))
