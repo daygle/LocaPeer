@@ -2,6 +2,8 @@ package com.locapeer.sharing
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
@@ -48,11 +50,28 @@ class SharingScheduleNextActiveTest {
         val rules = listOf(rule(everyDay, 1320, 300)) // 22:00-05:00 wrapping
         // 23:00 is inside the wrapped window.
         assertEquals(0, SharingSchedule.minutesUntilNextActive(rules, 3, 1380))
-        // 02:00 is inside the wrapped tail on the same day-index too (isActive treats
-        // the wrap per-day, so any scheduled day matches minutes <= endMinute).
+        // 02:00 is inside the preceding day's wrapped tail.
         assertEquals(0, SharingSchedule.minutesUntilNextActive(rules, 3, 120))
         // 12:00 -> next open at 22:00 the same day: 600 minutes.
         assertEquals(600, SharingSchedule.minutesUntilNextActive(rules, 3, 720))
+    }
+
+    @Test
+    fun `overnight rule uses the start day for its next-day tail`() {
+        val rules = listOf(rule(mondayOnly, 1320, 300))
+        assertFalse(SharingSchedule.isActive(rules, 0, 120)) // Monday 02:00
+        assertTrue(SharingSchedule.isActive(rules, 0, 1320)) // Monday 22:00
+        assertTrue(SharingSchedule.isActive(rules, 1, 300)) // Tuesday 05:00 inclusive
+        assertFalse(SharingSchedule.isActive(rules, 1, 301))
+        assertEquals(0, SharingSchedule.minutesUntilNextActive(rules, 1, 120))
+        assertEquals(1200, SharingSchedule.minutesUntilNextActive(rules, 0, 120))
+    }
+
+    @Test
+    fun `overnight rule wraps from Sunday into Monday`() {
+        val rules = listOf(rule(0b1000000, 1320, 300))
+        assertTrue(SharingSchedule.isActive(rules, 0, 120))
+        assertFalse(SharingSchedule.isActive(rules, 6, 120))
     }
 
     @Test

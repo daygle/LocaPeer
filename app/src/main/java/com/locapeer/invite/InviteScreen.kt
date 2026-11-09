@@ -205,25 +205,7 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (!cameraPermission.status.isGranted) {
-            Column(
-                modifier = Modifier.padding(32.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Box(
-                    modifier = Modifier.size(72.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(Icons.Default.CameraAlt, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
-                }
-                Text(stringResource(R.string.invite_camera_required_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-                Text(stringResource(R.string.invite_camera_required_message), textAlign = TextAlign.Center)
-                Button(onClick = { cameraPermission.launchPermissionRequest() }) {
-                    Text(stringResource(R.string.scan_grant_permission))
-                }
-            }
-        } else if (scanState.success) {
+        if (scanState.success) {
             SuccessView(scanState.addedName, onDone, vm)
         } else if (scanState.pendingName != null) {
             ConfirmView(scanState.pendingName!!, vm)
@@ -249,15 +231,34 @@ private fun AddContactTab(vm: ScanViewModel, onDone: () -> Unit) {
                 )
             }
         } else {
-            // Scanner View
-            Box(modifier = Modifier.height(300.dp).fillMaxWidth()) {
-                ScannerView(vm)
-                Surface(
-                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+            if (cameraPermission.status.isGranted) {
+                Box(modifier = Modifier.height(300.dp).fillMaxWidth()) {
+                    ScannerView(vm)
+                    Surface(
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 16.dp),
+                        shape = RoundedCornerShape(16.dp),
+                        color = MaterialTheme.colorScheme.surface.copy(alpha = 0.8f)
+                    ) {
+                        Text(stringResource(R.string.invite_point_camera), modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
+                    }
+                }
+            } else {
+                Column(
+                    modifier = Modifier.padding(32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Text(stringResource(R.string.invite_point_camera), modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp), style = MaterialTheme.typography.labelMedium)
+                    Box(
+                        modifier = Modifier.size(72.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(Icons.Default.CameraAlt, null, modifier = Modifier.size(36.dp), tint = MaterialTheme.colorScheme.onPrimaryContainer)
+                    }
+                    Text(stringResource(R.string.invite_camera_required_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.invite_camera_required_message), textAlign = TextAlign.Center)
+                    Button(onClick = { cameraPermission.launchPermissionRequest() }) {
+                        Text(stringResource(R.string.scan_grant_permission))
+                    }
                 }
             }
 

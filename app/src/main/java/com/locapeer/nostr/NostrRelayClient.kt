@@ -78,8 +78,14 @@ private const val INBOUND_EVENT_QUEUE_RESUME_BYTES = 8 * 1024 * 1024L
 // The same hysteresis for the event count, so an overflow caused by many small events (well under
 // the byte budget) also waits for the backlog to shrink before replaying.
 private const val INBOUND_EVENT_QUEUE_RESUME_COUNT = INBOUND_EVENT_QUEUE_CAPACITY / 4
-// Rough retained size of a queued event: content dominates, the rest is id/sig/tags overhead.
-private fun incomingEventBytes(event: NostrEvent): Long = event.content.length + 256L
+// Approximate retained UTF-16 strings and collection overhead, including peer-controlled tags.
+// Keep the same estimate on enqueue and dequeue so the byte reservation is balanced.
+internal fun incomingEventBytes(event: NostrEvent): Long {
+    val stringChars = event.id.length.toLong() + event.pubkey.length + event.sig.length + event.content.length
+    return 256L + 2L * stringChars + event.tags.sumOf { tag ->
+        32L + tag.sumOf { value -> 24L + 2L * value.length }
+    }
+}
 
 @Singleton
 class NostrRelayClient @Inject constructor(
@@ -619,6 +625,12 @@ class NostrRelayClient @Inject constructor(
                             // Enqueue and mark seen atomically: if the bounded queue is full, do
                             // not cache the id, so the relay can replay this event after reconnect.
                             val queuedBytes = incomingEventBytes(event)
+                            // An event larger than the entire budget cannot be replayed into an
+                            // empty queue; reject it instead of entering permanent backpressure.
+                            if (queuedBytes > INBOUND_EVENT_QUEUE_MAX_BYTES) {
+                                Log.w(TAG, "Dropping oversized queued event ${event.id.take(16)} from $url")
+                                return
+                            }
                             val enqueueState = synchronized(recentEventLock) {
                                 when {
                                     dedupCache.isKnown(event.pubkey, event.id) -> 0

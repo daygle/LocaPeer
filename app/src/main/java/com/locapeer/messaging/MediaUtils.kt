@@ -15,7 +15,7 @@ import java.util.Locale
 
 /**
  * Image compression + Base64 helpers for inline media messages. Images are aggressively downscaled
- * and JPEG-compressed under [MAX_BYTES] so the Base64 payload fits comfortably inside a NIP-44
+ * and JPEG-compressed under [MAX_IMAGE_BYTES] so the Base64 payload fits comfortably inside a NIP-44
  * encrypted DM (each recipient gets their own encrypted copy). Audio arrives already compressed from
  * MediaRecorder, so it only needs Base64.
  */

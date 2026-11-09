@@ -68,14 +68,16 @@ object SharingSchedule {
     }
 
     /**
-     * Checks if the schedule is active for a specific rule and time.
-     * Uses inclusive comparison for the end minute so that a rule ending at 23:59 (1439)
-     * covers the full last minute of the day.
+     * Checks if the schedule is active for a specific rule and time. For an overnight
+     * rule, the selected day is the day the window starts; its tail belongs to the next day.
+     * The end minute is inclusive, so a rule ending at 23:59 covers the full last minute.
      */
     fun isActive(days: Int, startMinute: Int, endMinute: Int, dayIndex: Int, currentMinute: Int): Boolean {
-        if (days and (1 shl dayIndex) == 0) return false
-        return if (startMinute <= endMinute) currentMinute in startMinute..endMinute
-        else currentMinute >= startMinute || currentMinute <= endMinute
+        val todaySelected = days and (1 shl dayIndex) != 0
+        if (startMinute <= endMinute) return todaySelected && currentMinute in startMinute..endMinute
+        val previousDaySelected = days and (1 shl ((dayIndex + 6) % 7)) != 0
+        return (todaySelected && currentMinute >= startMinute) ||
+            (previousDaySelected && currentMinute <= endMinute)
     }
 
     /**

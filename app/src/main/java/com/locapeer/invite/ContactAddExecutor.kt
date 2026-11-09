@@ -50,14 +50,16 @@ class ContactAddExecutor @Inject constructor(
         val (_, myPubHex) = keyManager.ensureKeypair()
         if (invite.publicKeyHex == myPubHex) return
         val existing = peerDao.getPeer(invite.deviceId)
-        val peer = PeerEntity(
-            deviceId = invite.deviceId,
-            displayName = existing?.displayName ?: invite.displayName,
+        val peer = existing?.copy(
             publicKeyHex = invite.publicKeyHex,
             relayUrl = invite.relayUrl,
             locationRole = PeerEntity.ROLE_SEND_RECEIVE,
-            messagingEnabled = existing?.messagingEnabled ?: true,
-            addedAt = existing?.addedAt ?: System.currentTimeMillis(),
+        ) ?: PeerEntity(
+            deviceId = invite.deviceId,
+            displayName = invite.displayName,
+            publicKeyHex = invite.publicKeyHex,
+            relayUrl = invite.relayUrl,
+            locationRole = PeerEntity.ROLE_SEND_RECEIVE,
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(invite.relayUrl)

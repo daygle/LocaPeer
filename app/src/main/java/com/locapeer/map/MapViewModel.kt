@@ -374,7 +374,7 @@ class MapViewModel @Inject constructor(
             }
             val liveUntil = LivePinDetector.liveUntil(previous, hb)
             val live = !overdue && liveUntil != null && now < liveUntil
-            if (live && liveUntil != null) nextLiveExpiry = minOf(nextLiveExpiry ?: liveUntil, liveUntil)
+            if (live) nextLiveExpiry = minOf(nextLiveExpiry ?: liveUntil, liveUntil)
             val watchingMe = peer.deviceId in watchers || peer.publicKeyHex in watchers
             PinData(peer, hb, overdue, live, watchingMe)
         }
