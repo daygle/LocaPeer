@@ -477,7 +477,18 @@ class SettingsViewModel @Inject constructor(
                     return@launch
                 }
                 val backup = withContext(Dispatchers.Default) { jsonImport.decodeFromString<LocaPeerBackup>(json) }
-                
+
+                // Unknown fields are ignored on decode, so restoring a file written by a
+                // newer app would silently drop whatever this version does not understand.
+                // Refuse instead, so the user updates rather than losing data quietly.
+                if (backup.version > BACKUP_VERSION) {
+                    _backupResult.value = BackupResult(
+                        context.getString(com.locapeer.R.string.backup_newer_version),
+                        isError = true
+                    )
+                    return@launch
+                }
+
                 if (backup.ciphertext != null) {
                     // This is an encrypted backup, we need a password before we can show available sections
                     _pendingRestore.value = PendingRestore(backup, emptySet(), requiresPassword = true)
@@ -501,7 +512,16 @@ class SettingsViewModel @Inject constructor(
     fun decryptBackupForRestore(password: String) {
         val pending = _pendingRestore.value ?: return
         val backup = pending.backup
-        if (backup.ciphertext == null || backup.iv == null || backup.salt == null) return
+        if (backup.ciphertext == null || backup.iv == null || backup.salt == null) {
+            // Encrypted envelope without one of its parts: no password can open it, so say so
+            // instead of leaving the dialog open with nothing happening.
+            _pendingRestore.value = null
+            _backupResult.value = BackupResult(
+                context.getString(com.locapeer.R.string.backup_corrupt),
+                isError = true
+            )
+            return
+        }
 
         viewModelScope.launch {
             try {
@@ -517,6 +537,14 @@ class SettingsViewModel @Inject constructor(
                 }
 
                 val decryptedBackup = withContext(Dispatchers.Default) { jsonImport.decodeFromString<LocaPeerBackup>(decryptedJson) }
+                if (decryptedBackup.version > BACKUP_VERSION) {
+                    _pendingRestore.value = null
+                    _backupResult.value = BackupResult(
+                        context.getString(com.locapeer.R.string.backup_newer_version),
+                        isError = true
+                    )
+                    return@launch
+                }
                 val available = buildSet {
                     if (decryptedBackup.privateKeyHex != null) add(BackupSection.PRIVATE_KEY)
                     if (!decryptedBackup.contacts.isNullOrEmpty()) add(BackupSection.CONTACTS)
@@ -580,7 +608,22 @@ class SettingsViewModel @Inject constructor(
                                     c.deviceId.equals(c.publicKeyHex, ignoreCase = true)
                             }
                             // Relay events carry lowercase pubkeys; store rows the same way.
-                            .map { c -> c.copy(deviceId = c.deviceId.lowercase(), publicKeyHex = c.publicKeyHex.lowercase()) }
+                            // Roles, precision and schedules are also normalised here: a
+                            // corrupted value must not grant EXACT sharing or an unknown
+                            // role that the beacon would treat as "share everything".
+                            .map { c ->
+                                c.copy(
+                                    deviceId = c.deviceId.lowercase(),
+                                    publicKeyHex = c.publicKeyHex.lowercase(),
+                                    locationRole = BackupValidation.locationRole(c.locationRole),
+                                    sharingConfig = c.sharingConfig?.let { sc ->
+                                        sc.copy(
+                                            precisionMode = BackupValidation.precisionMode(sc.precisionMode),
+                                            scheduleRulesJson = BackupValidation.scheduleRules(sc.scheduleRulesJson)
+                                        )
+                                    }
+                                )
+                            }
                         if (validContacts.size != backup.contacts.size) {
                             Log.w(TAG, "Skipped ${backup.contacts.size - validContacts.size} malformed contact(s) in backup")
                         }
@@ -621,10 +664,25 @@ class SettingsViewModel @Inject constructor(
                 }
                 if (BackupSection.GEOFENCES in sections && backup.geofences != null) {
                     try {
-                        backup.geofences.forEach { g ->
+                        // Areas the engine can actually evaluate; assignments pointing at
+                        // nothing (or at a malformed device id) are dropped instead of
+                        // becoming inert rows that never fire.
+                        val areas = backup.geofences.mapNotNull { BackupValidation.geofence(it) }
+                        if (areas.size != backup.geofences.size) {
+                            Log.w(TAG, "Skipped ${backup.geofences.size - areas.size} invalid geofence(s) in backup")
+                        }
+                        areas.forEach { g ->
                             geofenceDao.upsert(GeofenceEntity(g.id, g.name, g.lat, g.lng, g.radiusMetres))
                         }
-                        backup.geofenceAssignments?.forEach { a ->
+                        // Restore merges, so an assignment may target an area this device
+                        // already had.
+                        val knownFenceIds = geofenceDao.getAllGeofences().first().mapTo(HashSet()) { it.id }
+                        val assignments = backup.geofenceAssignments.orEmpty()
+                            .mapNotNull { BackupValidation.assignment(it, knownFenceIds) }
+                        if (assignments.size != backup.geofenceAssignments.orEmpty().size) {
+                            Log.w(TAG, "Skipped ${backup.geofenceAssignments.orEmpty().size - assignments.size} invalid geofence assignment(s) in backup")
+                        }
+                        assignments.forEach { a ->
                             geofenceAssignmentDao.upsert(
                                 com.locapeer.data.entity.GeofenceAssignmentEntity(
                                     id = a.id,
@@ -637,7 +695,7 @@ class SettingsViewModel @Inject constructor(
                             )
                         }
                         restored += context.resources.getQuantityString(
-                            com.locapeer.R.plurals.restore_geofences_count, backup.geofences.size, backup.geofences.size
+                            com.locapeer.R.plurals.restore_geofences_count, areas.size, areas.size
                         )
                     } catch (e: Exception) {
                         Log.e(TAG, "Geofences restore failed", e)
@@ -989,6 +1047,8 @@ class SettingsViewModel @Inject constructor(
         private val jsonImport = Json { ignoreUnknownKeys = true }
         /** A restorable identity is a 32-byte secp256k1 scalar written as 64 lowercase hex chars. */
         private const val MAX_BACKUP_BYTES = 16 * 1024 * 1024
+        /** Highest backup format this build understands; newer files are refused, not truncated. */
+        private const val BACKUP_VERSION = 3
         private val PRIVATE_KEY_REGEX = Regex("^[0-9a-f]{64}$")
         /** Nostr pubkeys are serialised as 64 lowercase hex chars. */
         private val PUBKEY_REGEX = Regex("^[0-9a-f]{64}$")
