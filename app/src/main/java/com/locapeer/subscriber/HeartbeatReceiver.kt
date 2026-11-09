@@ -1286,7 +1286,16 @@ class HeartbeatReceiver @Inject constructor(
             // accept instead of another dialog. This closes the supervisor-initiated invite
             // loop (its 1062 accept step triggers this register request) and repairs the
             // handshake after our own process death without needing the supervisor again.
-            autoAcceptRegistration(peer)
+            // Echo the request time when the payload is readable, so the device can match the
+            // answer to the request it names; an unreadable payload still gets an answer.
+            val requestedAt = keyManager.getPrivateKeyHex()?.let { privHex ->
+                runCatching {
+                    json.decodeFromString<SupervisedRegisterPayload>(
+                        crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
+                    ).requestedAt
+                }.getOrNull()
+            }
+            autoAcceptRegistration(peer, requestedAt)
             return
         }
         // Suppress relay retransmissions if the notification is still active
@@ -1456,8 +1465,8 @@ class HeartbeatReceiver @Inject constructor(
      *  published: this path answers without the user tapping anything, so a registration
      *  that arrives while the relay is down would otherwise be lost until the device asked
      *  again. */
-    private suspend fun autoAcceptRegistration(peer: PeerEntity) {
-        supervisionResponseSender.accept(peer.deviceId, peer.relayUrl, requestCreatedAt = null)
+    private suspend fun autoAcceptRegistration(peer: PeerEntity, requestedAt: Long?) {
+        supervisionResponseSender.accept(peer.deviceId, peer.relayUrl, requestCreatedAt = requestedAt)
         Log.d(TAG, "Auto-answered supervised registration from ${peer.deviceId}")
     }
 

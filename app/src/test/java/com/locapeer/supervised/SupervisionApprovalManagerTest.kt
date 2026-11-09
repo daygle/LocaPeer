@@ -155,4 +155,18 @@ class SupervisionApprovalManagerTest {
 
     private fun persisted(store: Store): List<SupervisionApprovalManager.StoredAnswer> =
         Json.decodeFromString(store.json!!)
+
+    @Test fun `a resent request that was already answered opens no second dialog`() {
+        val manager = SupervisionApprovalManager(
+            keyManager(), crypto(), relay(), prefs(Store()), configDao()
+        )
+        val request = SupervisionApprovalManager.PendingRequest(supervised, "Phone", "req-1")
+        manager.setPending(request)
+        manager.respond(request, approved = true)
+
+        // The device resends the same request id on reconnect.
+        manager.setPending(request)
+
+        assertNull(manager.pending.value)
+    }
 }

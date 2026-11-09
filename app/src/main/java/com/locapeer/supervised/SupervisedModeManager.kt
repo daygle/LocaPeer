@@ -65,6 +65,19 @@ class SupervisedModeManager @Inject constructor(
     private val requestLock = Any()
 
     init {
+        // Finish a release the supervisor approved but a process death interrupted before the
+        // flags were cleared. Doing it here (the singleton is built at app start, before any
+        // background sharing work) rather than only when the gate screen opens stops the
+        // device acting as supervised in the background until the UI is next shown.
+        scope.launch {
+            try {
+                if (prefs.applyPendingSupervisionRelease()) {
+                    android.util.Log.i("SupervisedModeManager", "Finished an interrupted supervision release")
+                }
+            } catch (e: Exception) {
+                android.util.Log.w("SupervisedModeManager", "Failed to finish supervision release", e)
+            }
+        }
         // A registration publish interrupted by a process death, or lost to an outage, leaves
         // supervisionPending set with no answer on the way. Retry whenever a relay becomes
         // reachable - at start and on every reconnect - rather than only when the app opens.
