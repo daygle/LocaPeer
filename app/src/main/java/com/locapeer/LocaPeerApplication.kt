@@ -30,6 +30,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     // Injected (not used here) so the singleton is constructed at app start and retries any
     // register answer whose publish failed or was interrupted by a process death.
     @Inject lateinit var supervisionResponseSender: com.locapeer.supervised.SupervisionResponseSender
+    // Injected so the singleton exists from start: it replays a supervisor answer that a
+    // crash or a failed publish left unsent, as soon as a relay is reachable.
+    @Inject lateinit var supervisionApprovalManager: com.locapeer.supervised.SupervisionApprovalManager
 
     private val appScope = backgroundScope(TAG, Dispatchers.Default)
 

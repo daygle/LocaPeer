@@ -707,6 +707,23 @@ class AppPreferences @Inject constructor(
     }
 
     /**
+     * Supervisor decisions recorded before their publish (JSON string; see
+     * SupervisionApprovalManager). Written before sending so an outage or a process death
+     * cannot lose the answer a supervised device is waiting for.
+     */
+    private val KEY_PENDING_SUPERVISION_ANSWERS = stringPreferencesKey("pending_supervision_answers")
+
+    suspend fun getPendingSupervisionAnswersJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_SUPERVISION_ANSWERS]
+
+    suspend fun setPendingSupervisionAnswersJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_SUPERVISION_ANSWERS)
+            else prefs[KEY_PENDING_SUPERVISION_ANSWERS] = json
+        }
+    }
+
+    /**
      * Full settings wipe for "Delete identity & erase all data": every key in the settings
      * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync
      * bookmarks). Returns the store to pristine DataStore state; next launch generates a new

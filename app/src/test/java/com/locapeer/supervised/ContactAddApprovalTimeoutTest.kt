@@ -11,6 +11,7 @@ import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.AppSettings
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
@@ -30,9 +31,11 @@ import org.junit.Test
 
 class ContactAddApprovalTimeoutTest {
     @Test fun `simultaneous approvals stay ordered and stale clicks cannot approve the next request`() {
+        val relay = mock(NostrRelayClient::class.java)
+        `when`(relay.relayStatus).thenReturn(MutableStateFlow(emptyMap()))
         val manager = SupervisionApprovalManager(
-            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java),
-            mock(PeerSharingConfigDao::class.java)
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), relay,
+            mock(AppPreferences::class.java), mock(PeerSharingConfigDao::class.java)
         )
         val first = SupervisionApprovalManager.PendingRequest("peer", "First", "1")
         val second = SupervisionApprovalManager.PendingRequest("peer", "Second", "2")
@@ -68,9 +71,13 @@ class ContactAddApprovalTimeoutTest {
         })
         val relay = mock(NostrRelayClient::class.java, org.mockito.stubbing.Answer { invocation ->
             if (invocation.method.name == "publishEvent") calls.add("publish")
-            org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            if (invocation.method.name == "relayStatus" || invocation.method.name == "getRelayStatus") {
+                MutableStateFlow(emptyMap<String, Boolean>()) // offline; no startup retry pass
+            } else org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
         })
-        val manager = SupervisionApprovalManager(keyManager, crypto, relay, dao)
+        val manager = SupervisionApprovalManager(
+            keyManager, crypto, relay, mock(AppPreferences::class.java), dao
+        )
         val disable = SupervisionApprovalManager.PendingRequest(
             "peer", "Device", "1", SupervisionApprovalManager.RequestType.DISABLE
         )
@@ -84,8 +91,11 @@ class ContactAddApprovalTimeoutTest {
 
     @Test fun `only an approved disable clears supervision on the supervisor`() = runBlocking {
         val dao = mock(PeerSharingConfigDao::class.java)
+        val relay = mock(NostrRelayClient::class.java)
+        `when`(relay.relayStatus).thenReturn(MutableStateFlow(emptyMap()))
         val manager = SupervisionApprovalManager(
-            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java), dao
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), relay,
+            mock(AppPreferences::class.java), dao
         )
         val disable = SupervisionApprovalManager.PendingRequest(
             "peer", "Device", "1", SupervisionApprovalManager.RequestType.DISABLE
