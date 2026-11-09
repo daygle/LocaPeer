@@ -114,23 +114,30 @@ class ScanViewModel @Inject constructor(
                         contactPubkeyHex = invite.publicKeyHex,
                         contactName = invite.displayName,
                         action = ContactAddApprovalManager.AddAction.OutboundScan(invite),
-                    ) { approved ->
-                        // UI feedback only: the durable add runs in the approval manager
-                        // (ContactAddExecutor), so navigation or a process kill mid-wait
-                        // cannot orphan an approved add.
-                        if (approved) {
+                    ) { result ->
+                        // The manager reports completion only after the physical add finishes.
+                        if (result == ContactAddApprovalManager.AddResult.COMPLETED) {
                             pendingInvite = null
                             processed = true
                             _scanState.value = ScanState(success = true, addedName = invite.displayName)
                         } else {
                             processed = false
                             _scanState.value = ScanState(
-                                error = context.getString(com.locapeer.R.string.scan_add_denied)
+                                error = context.getString(
+                                    if (result == ContactAddApprovalManager.AddResult.DENIED)
+                                        com.locapeer.R.string.scan_add_denied
+                                    else com.locapeer.R.string.scan_error_unknown
+                                )
                             )
                         }
                     }
                 } else {
-                    executor.performOutboundAdd(invite)
+                    if (!executor.performOutboundAdd(invite)) {
+                        pendingInvite = null
+                        processed = false
+                        _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_own_invite))
+                        return@launch
+                    }
                     pendingInvite = null
                     processed = true
                     _scanState.value = ScanState(success = true, addedName = invite.displayName)

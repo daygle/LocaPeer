@@ -76,6 +76,8 @@ class ContactAddApprovalManager @Inject constructor(
         val requestedAt: Long = 0
     )
 
+    enum class AddResult { COMPLETED, DENIED, FAILED }
+
     sealed interface AddAction {
         data class OutboundScan(val invite: InviteData) : AddAction
         data class InboundAccept(
@@ -103,7 +105,8 @@ class ContactAddApprovalManager @Inject constructor(
 
     /** UI-facing decision callbacks, keyed by requestId. In-memory by design: they only
      *  update screen state; the durable effect (the add itself) lives in the intent. */
-    private val callbacks = HashMap<String, (Boolean) -> Unit>()
+    private val callbacks = HashMap<String, (AddResult) -> Unit>()
+    private val claimed = HashSet<String>()
 
     private val timeouts = HashMap<String, Job>()
 
@@ -120,14 +123,14 @@ class ContactAddApprovalManager @Inject constructor(
 
     /**
      * Queue a contact-add decision for the supervisor, invoking [onDecided]
-     * (false → denied or timed out, true → queued entry completed) on the outcome.
+     * with the completed, denied/timed-out, or failed outcome.
      * A new request for the SAME contact supersedes the previous one.
      */
     suspend fun requestAdd(
         contactPubkeyHex: String,
         contactName: String,
         action: AddAction,
-        onDecided: (Boolean) -> Unit
+        onDecided: (AddResult) -> Unit
     ) {
         initialization.await()
         val settings = prefs.settings.first()
@@ -135,13 +138,13 @@ class ContactAddApprovalManager @Inject constructor(
         if (!settings.supervisionActive || supervisorPubkey.isEmpty()) {
             // The caller already delegated the action to us. If supervision ended between
             // checks, perform it here before reporting success rather than losing the add.
-            when (action) {
+            val completed = when (action) {
                 is AddAction.OutboundScan -> executor.performOutboundAdd(action.invite)
                 is AddAction.InboundAccept -> executor.completeInboundAccept(
                     action.request, action.locationRole, action.messagingEnabled
                 )
             }
-            onDecided(true)
+            onDecided(if (completed) AddResult.COMPLETED else AddResult.FAILED)
             return
         }
 
@@ -157,8 +160,13 @@ class ContactAddApprovalManager @Inject constructor(
             requestedAt = System.currentTimeMillis()
         )
 
-        var supersededCallbacks = emptyList<(Boolean) -> Unit>()
+        var supersededCallbacks = emptyList<(AddResult) -> Unit>()
+        var alreadyCompleting = false
         mutex.withLock {
+            if (queue.any { it.requestId in claimed && it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }) {
+                alreadyCompleting = true
+                return@withLock
+            }
             // Same contact => supersede (the supervisor answers the newest request only;
             // a stale duplicate would double-fire the physical add).
             val superseded = queue.filter {
@@ -175,7 +183,11 @@ class ContactAddApprovalManager @Inject constructor(
             persistLocked()
             armTimeout(requestId, timeoutDelayMs(intent.requestedAt))
         }
-        supersededCallbacks.forEach { callback -> runCatching { callback(false) } }
+        if (alreadyCompleting) {
+            onDecided(AddResult.FAILED)
+            return
+        }
+        supersededCallbacks.forEach { callback -> runCatching { callback(AddResult.DENIED) } }
         publish()
 
         try {
@@ -202,7 +214,7 @@ class ContactAddApprovalManager @Inject constructor(
             // No path to the supervisor: treat as a denial so nothing treats silence as
             // consent; the queued intent is dropped with it.
             android.util.Log.w(TAG, "Failed to send contact-add request", e)
-            removeFromQueue(requestId, decided = false)
+            removeFromQueue(requestId, decided = AddResult.DENIED)
         }
     }
 
@@ -210,18 +222,33 @@ class ContactAddApprovalManager @Inject constructor(
     fun handleResponse(requestId: String, approved: Boolean) {
         scope.launch {
             initialization.await()
-            val intent = removeFromQueue(requestId, decided = approved) ?: return@launch
-            if (!approved) return@launch
-            // Run the durable effect on our own scope: works with no screen attached
-            // (backgrounded app, or a decision arriving right after process death with
-            // the intent loaded from DataStore).
-            runCatching { executeLocked(intent) }
-                .onFailure { android.util.Log.w(TAG, "Approved contact add failed to complete", it) }
+            if (!approved) {
+                removeFromQueue(requestId, decided = AddResult.DENIED)
+                return@launch
+            }
+            val intent = mutex.withLock {
+                val queued = queue.firstOrNull { it.requestId == requestId }
+                if (queued == null || !claimed.add(requestId)) null else {
+                    timeouts.remove(requestId)?.cancel()
+                    queued
+                }
+            } ?: return@launch
+            // Keep the intent persisted until execution completes; duplicate responses and
+            // timeouts cannot claim it while the physical add is running.
+            val completed = try {
+                executeLocked(intent)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                android.util.Log.w(TAG, "Approved contact add failed to complete", e)
+                false
+            }
+            removeFromQueue(requestId, decided = if (completed) AddResult.COMPLETED else AddResult.FAILED, finishClaimed = true)
         }
     }
 
     /** The physical add, from a stored intent (executor owns both paths). */
-    private suspend fun executeLocked(intent: StoredContactAddIntent) {
+    private suspend fun executeLocked(intent: StoredContactAddIntent): Boolean =
         when {
             intent.scan != null -> executor.performOutboundAdd(intent.scan)
             intent.accept?.request != null && intent.accept.senderPubkey == intent.accept.request.senderPubkey ->
@@ -230,8 +257,8 @@ class ContactAddApprovalManager @Inject constructor(
                     intent.accept.locationRole,
                     intent.accept.messagingEnabled
                 )
+            else -> false
         }
-    }
 
     /** Withdraw a pending decision for [contactPubkeyHex] (screen cancelled/reset). */
     suspend fun cancelPending(contactPubkeyHex: String) {
@@ -241,20 +268,22 @@ class ContactAddApprovalManager @Inject constructor(
 
     private suspend fun removeFromQueue(
         requestId: String,
-        decided: Boolean?,
-        fromTimeout: Boolean = false
+        decided: AddResult?,
+        fromTimeout: Boolean = false,
+        finishClaimed: Boolean = false
     ): StoredContactAddIntent? {
-        val removed: StoredContactAddIntent?
-        val timeout: Job?
-        val callback: ((Boolean) -> Unit)?
+        var removed: StoredContactAddIntent? = null
+        var timeout: Job? = null
+        var callback: ((AddResult) -> Unit)? = null
         mutex.withLock {
+            if (requestId in claimed && !finishClaimed) return@withLock
+            if (finishClaimed) claimed.remove(requestId)
             removed = queue.firstOrNull { it.requestId == requestId }
+            if (removed == null) return@withLock
             timeout = timeouts.remove(requestId)
             callback = callbacks.remove(requestId)
-            if (removed != null) {
-                queue.removeAll { it.requestId == requestId }
-                persistLocked()
-            }
+            queue.removeAll { it.requestId == requestId }
+            persistLocked()
         }
         if (removed != null) {
             if (!fromTimeout) timeout?.cancel()
@@ -267,15 +296,15 @@ class ContactAddApprovalManager @Inject constructor(
     }
 
     private suspend fun removeFromQueueFor(contactPubkeyHex: String) {
-        var removedCallbacks = emptyList<(Boolean) -> Unit>()
+        var removedCallbacks = emptyList<(AddResult) -> Unit>()
         mutex.withLock {
-            val removed = queue.filter { it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }
+            val removed = queue.filter { it.requestId !in claimed && it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }
             removed.forEach { timeouts.remove(it.requestId)?.cancel() }
             removedCallbacks = removed.mapNotNull { callbacks.remove(it.requestId) }
-            queue.removeAll { it.contactPubkeyHex.equals(contactPubkeyHex, ignoreCase = true) }
+            queue.removeAll(removed.toSet())
             persistLocked()
         }
-        removedCallbacks.forEach { callback -> runCatching { callback(false) } }
+        removedCallbacks.forEach { callback -> runCatching { callback(AddResult.DENIED) } }
         publish()
     }
 
@@ -284,7 +313,7 @@ class ContactAddApprovalManager @Inject constructor(
         timeouts[requestId]?.cancel()
         timeouts[requestId] = scope.launch {
             delay(delayMs)
-            removeFromQueue(requestId, decided = false, fromTimeout = true)
+            removeFromQueue(requestId, decided = AddResult.DENIED, fromTimeout = true)
         }
     }
 

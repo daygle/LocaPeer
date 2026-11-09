@@ -68,19 +68,38 @@ class ContactAddApprovalTimeoutTest {
             prefs, executor
         )
         val invite = InviteData("key", "Name", "relay", "key")
+        val request = PendingRequestEntity("peer", "Peer", "relay")
+        `when`(executor.performOutboundAdd(invite)).thenReturn(true)
+        `when`(executor.completeInboundAccept(request, "RECEIVE", true)).thenReturn(true)
         var decisions = 0
         manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) {
-            assertTrue(it)
+            assertEquals(ContactAddApprovalManager.AddResult.COMPLETED, it)
             decisions++
         }
         verify(executor).performOutboundAdd(invite)
-        val request = PendingRequestEntity("peer", "Peer", "relay")
         manager.requestAdd("peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept(request, "RECEIVE", true)) {
-            assertTrue(it)
+            assertEquals(ContactAddApprovalManager.AddResult.COMPLETED, it)
             decisions++
         }
         verify(executor).completeInboundAccept(request, "RECEIVE", true)
         assertEquals(2, decisions)
+    }
+
+    @Test fun `failed direct execution does not report completion`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings()))
+        val executor = mock(ContactAddExecutor::class.java)
+        val manager = ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java),
+            prefs, executor
+        )
+        val request = PendingRequestEntity("peer", "Peer", "relay")
+        `when`(executor.completeInboundAccept(request, "RECEIVE", true)).thenReturn(false)
+        var result: ContactAddApprovalManager.AddResult? = null
+        manager.requestAdd("peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept(request, "RECEIVE", true)) {
+            result = it
+        }
+        assertEquals(ContactAddApprovalManager.AddResult.FAILED, result)
     }
 
     @Test fun `cancel waits for persisted approvals to load`() = runBlocking {
@@ -141,6 +160,80 @@ class ContactAddApprovalTimeoutTest {
                 }
             }
         }
+    }
+
+    @Test fun `approval callback reports completion only after the add finishes`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true, supervisorPubkey = "supervisor"
+        )))
+        val keyManager = mock(KeyManager::class.java)
+        `when`(keyManager.ensureKeypair()).thenReturn("00" to "11")
+        val crypto = mock(CryptoUtils::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
+                "nip44Encrypt" -> "encrypted"
+                "bytesToHex" -> "event"
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        val executor = mock(ContactAddExecutor::class.java)
+        val invite = InviteData("key", "Name", "relay", "key")
+        val started = CompletableDeferred<Unit>()
+        val release = CompletableDeferred<Unit>()
+        `when`(executor.performOutboundAdd(invite)).thenAnswer {
+            runBlocking {
+                started.complete(Unit)
+                release.await()
+            }
+            true
+        }
+        val manager = ContactAddApprovalManager(keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor)
+        val result = CompletableDeferred<ContactAddApprovalManager.AddResult>()
+        manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) {
+            result.complete(it)
+        }
+        manager.handleResponse(manager.pending.value.single().requestId, true)
+        withTimeout(2_000) { started.await() }
+        assertFalse(result.isCompleted)
+        release.complete(Unit)
+        assertEquals(ContactAddApprovalManager.AddResult.COMPLETED, withTimeout(5_000) { result.await() })
+    }
+
+    @Test fun `duplicate responses cannot remove an add while execution is running`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val now = System.currentTimeMillis()
+        `when`(prefs.getContactAddIntentsJson()).thenReturn(
+            """[{"requestId":"saved","contactPubkeyHex":"peer","contactName":"Peer","accept":{"senderPubkey":"peer","locationRole":"SEND","messagingEnabled":true,"request":{"senderPubkey":"peer","senderName":"Peer","senderRelayUrl":"relay","receivedAt":123}},"requestedAt":$now}]"""
+        )
+        val executor = mock(ContactAddExecutor::class.java)
+        val request = PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123)
+        val started = CompletableDeferred<Unit>()
+        val release = CompletableDeferred<Unit>()
+        `when`(executor.completeInboundAccept(request, "SEND", true)).thenAnswer {
+            runBlocking {
+                started.complete(Unit)
+                release.await()
+            }
+            true
+        }
+        val manager = ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java), mock(NostrRelayClient::class.java),
+            prefs, executor
+        )
+        manager.handleResponse("saved", true)
+        withTimeout(2_000) { started.await() }
+        manager.handleResponse("saved", true)
+        manager.handleResponse("saved", false)
+        manager.cancelPending("peer")
+        assertEquals(1, manager.pending.value.size)
+        verify(prefs, org.mockito.Mockito.never()).setContactAddIntentsJson(null)
+        release.complete(Unit)
+        withTimeout(5_000) {
+            while (manager.pending.value.isNotEmpty()) kotlinx.coroutines.delay(10)
+        }
+        verify(executor, org.mockito.Mockito.times(1)).completeInboundAccept(request, "SEND", true)
+        verify(prefs).setContactAddIntentsJson(null)
     }
 
     @Test fun `restored approval keeps remaining time from its original request time`() {

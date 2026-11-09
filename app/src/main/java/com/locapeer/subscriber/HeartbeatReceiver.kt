@@ -136,7 +136,7 @@ private const val HEARTBEAT_FUTURE_SKEW_MS = 60 * 60_000L
 private const val MAX_EXPECTED_INTERVAL_S = 24 * 60 * 60L
 // Throttle for persisting the heartbeat sync baseline as live events arrive.
 private const val HB_EPOCH_SAVE_INTERVAL_S = 300L
-// Clock-skew allowance when matching a supervisor's accept to the request it answers.
+// Clock-skew allowance when matching a supervisor's response to the request it answers.
 private const val SUPERVISION_RESPONSE_SKEW_S = 3600L
 // A live-view request older than this (by the sender's own clock, tolerant of skew both
 // ways) is a stale replay and must not silently re-arm the fast broadcast cadence.
@@ -201,6 +201,13 @@ private const val SUPERVISION_EVENT_MAX_AGE_S = 86400L
 // Freshness window for supervision state-change kinds (invite, invite decline, supervisor
 // end, wipe notice): older than a day is relay catch-up replay, not a fresh decision -
 // the same window the register-decline handler uses.
+
+/** Registration answers can only decide the pending request, within their freshness window. */
+internal fun isCurrentSupervisionRegistrationResponse(
+    pending: Boolean, requestedAt: Long, eventCreatedAt: Long, now: Long, accepted: Boolean
+): Boolean = pending &&
+    eventCreatedAt >= requestedAt - SUPERVISION_RESPONSE_SKEW_S &&
+    eventCreatedAt >= now - (if (accepted) MAX_CATCHUP_SECONDS else SUPERVISION_EVENT_MAX_AGE_S)
 
 /** Never turn receive-only access into outbound location sharing without consent. */
 internal fun shouldReviewTrackRequest(existingRole: String?, isRoleChange: Boolean): Boolean =
@@ -1341,18 +1348,11 @@ class HeartbeatReceiver @Inject constructor(
     private suspend fun processRegisterResponse(event: NostrEvent, accepted: Boolean) {
         val settings = prefs.settings.first()
         if (settings.supervisorPubkey.isEmpty() || event.pubkey != settings.supervisorPubkey) return
-        val now = Instant.now().epochSecond
-        if (accepted) {
-            // An accept only matters while our request is pending. Honour it across the whole
-            // catch-up window (this device may have been offline when it arrived), but never one
-            // answering an earlier request, which would activate supervision nobody accepted.
-            if (!settings.supervisionPending) return
-            if (event.createdAt < settings.supervisionRequestedAt - SUPERVISION_RESPONSE_SKEW_S) return
-            if (event.createdAt < now - MAX_CATCHUP_SECONDS) return
-        } else if (event.createdAt < now - 86400) {
-            // A replayed old decline would end supervision, so it keeps the tight window.
-            return
-        }
+        if (!isCurrentSupervisionRegistrationResponse(
+                settings.supervisionPending, settings.supervisionRequestedAt,
+                event.createdAt, Instant.now().epochSecond, accepted
+            )
+        ) return
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
             crypto.nip44Decrypt(crypto.hexToBytes(privHex), event.pubkey, event.content)
@@ -1362,6 +1362,12 @@ class HeartbeatReceiver @Inject constructor(
         } catch (e: Exception) { return }
         val (_, pubHex) = keyManager.ensureKeypair()
         if (payload.devicePubkeyHex != pubHex) return
+        // Other responses or local cancellation can race decryption. Decide and update the
+        // same pending request atomically before notifying the user or resetting state.
+        if (!prefs.applySupervisionRegistrationResponse(
+                settings.supervisorPubkey, settings.supervisionRequestedAt, accepted
+            )
+        ) return
 
         val openAppIntent = Intent(context, MainActivity::class.java).apply {
             setPackage(context.packageName)
@@ -1373,7 +1379,6 @@ class HeartbeatReceiver @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         if (accepted) {
-            prefs.setSupervisionAccepted()
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)
                 .setContentTitle(context.getString(R.string.notif_supervised_active_title))
@@ -1384,7 +1389,6 @@ class HeartbeatReceiver @Inject constructor(
                 .build()
             notificationManager.notify("supervised_register", NOTIF_ID_SUPERVISED_REGISTER, notification)
         } else {
-            prefs.clearSupervisedMode()
             supervisedModeManager.reset()
             val notification = NotificationCompat.Builder(context, CHANNEL_ID_ALERTS)
                 .setSmallIcon(R.drawable.ic_notif_alert)

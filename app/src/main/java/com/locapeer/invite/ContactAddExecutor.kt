@@ -77,9 +77,9 @@ class ContactAddExecutor @Inject constructor(
     /** Upsert the staged invite as a SEND_RECEIVE peer, connect their relay, send the
      *  track request. Re-checks the self-invite guard so an approval completed long
      *  after scanning cannot loop heartbeats back onto this device. */
-    suspend fun performOutboundAdd(invite: InviteData) {
+    suspend fun performOutboundAdd(invite: InviteData): Boolean {
         val (_, myPubHex) = keyManager.ensureKeypair()
-        if (invite.publicKeyHex == myPubHex) return
+        if (invite.publicKeyHex == myPubHex) return false
         val existing = peerDao.getPeer(invite.deviceId)
         val peer = existing?.copy(
             publicKeyHex = invite.publicKeyHex,
@@ -95,18 +95,20 @@ class ContactAddExecutor @Inject constructor(
         peerDao.upsertPeer(peer)
         relayClient.connect(invite.relayUrl)
         sendTrackRequest(invite)
+        return true
     }
 
     /** Apply only the request reviewed by the user, including after delayed supervision approval. */
-    suspend fun completeInboundAccept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean) {
+    suspend fun completeInboundAccept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean): Boolean {
         val applied = applyInboundRequest(database, request, locationRole, messagingEnabled)
-        if (!applied) return
+        if (!applied) return false
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
         try {
             trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track accept", e)
         }
+        return true
     }
 
     /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). */

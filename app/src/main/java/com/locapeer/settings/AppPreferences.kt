@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.doublePreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -32,6 +33,26 @@ import javax.inject.Singleton
 
 private val Context.settingsStore by preferencesDataStore(name = "locapeer_settings")
 private const val TAG = "AppPreferences"
+private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
+private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
+private val KEY_SUPERVISION_PENDING = booleanPreferencesKey("supervision_pending")
+private val KEY_SUPERVISION_REQUESTED_AT = longPreferencesKey("supervision_requested_at")
+
+/** Must be called inside a DataStore edit so competing answers cannot both succeed. */
+internal fun applySupervisionRegistrationResponse(
+    prefs: MutablePreferences, supervisorPubkey: String, requestedAt: Long, accepted: Boolean
+): Boolean {
+    if (prefs[KEY_SUPERVISED_MODE] != true || prefs[KEY_SUPERVISION_PENDING] != true ||
+        prefs[KEY_SUPERVISOR_PUBKEY] != supervisorPubkey ||
+        (prefs[KEY_SUPERVISION_REQUESTED_AT] ?: 0L) != requestedAt
+    ) return false
+    prefs[KEY_SUPERVISION_PENDING] = false
+    if (!accepted) {
+        prefs[KEY_SUPERVISED_MODE] = false
+        prefs[KEY_SUPERVISOR_PUBKEY] = ""
+    }
+    return true
+}
 
 val HARDCODED_RELAYS = listOf(
     "wss://relay.daygle.net",
@@ -218,10 +239,6 @@ class AppPreferences @Inject constructor(
     private val KEY_LOW_BATTERY_INTERVAL = intPreferencesKey("low_battery_interval")
     private val KEY_ONBOARDING_COMPLETE = booleanPreferencesKey("onboarding_complete")
     private val KEY_GLOBAL_SCHEDULE_RULES = stringPreferencesKey("global_schedule_rules")
-    private val KEY_SUPERVISED_MODE = booleanPreferencesKey("supervised_mode")
-    private val KEY_SUPERVISOR_PUBKEY = stringPreferencesKey("supervisor_pubkey")
-    private val KEY_SUPERVISION_PENDING = booleanPreferencesKey("supervision_pending")
-    private val KEY_SUPERVISION_REQUESTED_AT = longPreferencesKey("supervision_requested_at")
     private val KEY_NAV_TAB_IDS = stringPreferencesKey("nav_tab_ids")
     private val KEY_START_ROUTE = stringPreferencesKey("start_route")
     private val KEY_LOCAL_LOCATION_RETENTION = intPreferencesKey("local_location_retention_days")
@@ -378,9 +395,15 @@ class AppPreferences @Inject constructor(
         }
     }
 
-    /** The supervisor accepted this device: supervision is now in force. */
-    suspend fun setSupervisionAccepted() {
-        context.settingsStore.edit { it[KEY_SUPERVISION_PENDING] = false }
+    /** Apply a registration answer only if the same request is still pending. */
+    suspend fun applySupervisionRegistrationResponse(
+        supervisorPubkey: String, requestedAt: Long, accepted: Boolean
+    ): Boolean {
+        var applied = false
+        context.settingsStore.edit {
+            applied = applySupervisionRegistrationResponse(it, supervisorPubkey, requestedAt, accepted)
+        }
+        return applied
     }
 
     suspend fun setNavTabIds(ids: List<String>) {
