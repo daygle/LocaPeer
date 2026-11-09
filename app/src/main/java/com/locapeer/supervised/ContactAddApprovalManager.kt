@@ -10,6 +10,7 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.util.backgroundScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -275,6 +276,10 @@ class ContactAddApprovalManager @Inject constructor(
                     crypto = crypto
                 )
             )
+        } catch (e: CancellationException) {
+            // Cancelled mid-publish: the request may well have gone out, so leave the
+            // intent for its answer window instead of reporting a denial nobody made.
+            throw e
         } catch (e: Exception) {
             // No path to the supervisor: treat as a denial so nothing treats silence as
             // consent; the queued intent is dropped with it.
@@ -333,8 +338,7 @@ class ContactAddApprovalManager @Inject constructor(
         // TRACK_ACCEPT is unsent. Keep the intent (it holds the reply data) so the next recovery
         // - at start or on the next reconnect - resends just the reply, and report the add
         // itself as done.
-        val replyOwed = !completed && intent.accept?.request != null &&
-            runCatching { executor.hasReceipt(intent.requestId) }.getOrDefault(false)
+        val replyOwed = !completed && owesReplyOnly(intent)
         removeFromQueue(
             intent.requestId,
             decided = if (completed || replyOwed) AddResult.COMPLETED else AddResult.FAILED,
@@ -494,9 +498,20 @@ class ContactAddApprovalManager @Inject constructor(
     }
 
     /** The accept committed (its receipt survived) and only the TRACK_ACCEPT is still unsent. */
-    private suspend fun owesReplyOnly(intent: StoredContactAddIntent): Boolean =
-        intent.accept?.request != null &&
-            runCatching { executor.hasReceipt(intent.requestId) }.getOrDefault(false)
+    private suspend fun owesReplyOnly(intent: StoredContactAddIntent): Boolean {
+        if (intent.accept?.request == null) return false
+        return try {
+            executor.hasReceipt(intent.requestId)
+        } catch (e: CancellationException) {
+            // Not a "no": an unanswered read is not proof the reply went out, and swallowing
+            // the cancellation here would prune an intent the caller still owes.
+            throw e
+        } catch (e: Exception) {
+            // A receipt read that fails is not proof the reply was sent; fall back to the
+            // shorter recovery window rather than claiming the reply is owed.
+            false
+        }
+    }
 
     private suspend fun persistLocked() {
         prefs.setContactAddIntentsJson(

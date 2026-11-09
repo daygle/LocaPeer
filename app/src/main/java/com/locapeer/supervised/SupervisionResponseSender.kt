@@ -12,6 +12,7 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.util.backgroundScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
@@ -88,6 +89,8 @@ class SupervisionResponseSender @Inject constructor(
         try {
             applyAcceptConfiguration(requesterPubkey)
             markConfigurationApplied(response)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             // Keep the unconfigured record: the next start finishes the configuration and
             // only then tells the device it is supervised.
@@ -113,6 +116,8 @@ class SupervisionResponseSender @Inject constructor(
                     try {
                         applyAcceptConfiguration(response.requesterPubkey)
                         markConfigurationApplied(response)
+                    } catch (e: CancellationException) {
+                        throw e
                     } catch (e: Exception) {
                         Log.w(TAG, "Failed to finish supervision configuration", e)
                         return@forEach
@@ -189,6 +194,8 @@ class SupervisionResponseSender @Inject constructor(
         val published = try {
             publish(response)
             true
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             // Keep the record: the next start sends it again.
             Log.w(TAG, "Failed to send supervision response", e)
