@@ -32,9 +32,10 @@ import javax.inject.Singleton
  * destination) and the answer the supervisor gives it.
  *
  * A decision is written to disk BEFORE it is published. An answer that fails to publish -
- * a build/encrypt error, no relay yet, a process death between the click and the send -
- * therefore survives and is replayed whenever a relay becomes reachable, including at the
- * next start. Without that record the supervisor's click was silently lost while the
+ * a build/encrypt error, a process death between the click and the send - therefore survives
+ * and is replayed whenever a relay becomes reachable, including at the next start. With no
+ * relay connected the publish itself still succeeds: the relay client keeps the event in its
+ * persistent outbox, and no relay acknowledgement is awaited here. Without that record the supervisor's click was silently lost while the
  * supervised device sat waiting for an answer that would never come.
  */
 @Singleton

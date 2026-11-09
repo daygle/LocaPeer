@@ -61,10 +61,6 @@ internal fun applySupervisionRegistrationResponse(
 data class LeftCircle(val circleId: String, val creatorPubkey: String, val leftAt: Long)
 
 /**
- * Decode the stored leave records: comma-separated `id:creator:leftAt` entries. A bare id written
- * by an older version decodes with no known owner and time 0.
- */
-/**
  * Upper bound on stored leave records. The record's only job is to stop a straggling
  * message re-creating a circle the user left; that matters for recent leaves, not for
  * hundreds of them, and the encoded list is read on every settings emission. 200 is far
@@ -72,6 +68,10 @@ data class LeftCircle(val circleId: String, val creatorPubkey: String, val leftA
  */
 internal const val MAX_LEFT_CIRCLE_RECORDS = 200
 
+/**
+ * Decode the stored leave records: comma-separated `id:creator:leftAt` entries. A bare id written
+ * by an older version decodes with no known owner and time 0.
+ */
 internal fun decodeLeftCircles(raw: String?): Map<String, LeftCircle> {
     if (raw.isNullOrBlank()) return emptyMap()
     val result = LinkedHashMap<String, LeftCircle>()
@@ -167,7 +167,7 @@ data class AppSettings(
     val supervisionPending: Boolean = false,
     /** When the current supervision request was sent (epoch seconds), 0 if none. */
     val supervisionRequestedAt: Long = 0,
-    /** The request for [supervisionRequestedAt] actually reached the relay (retry guard). */
+    /** The request for [supervisionRequestedAt] was handed to the relay client (retry guard). */
     val supervisionRequestSent: Boolean = false,
     /** Ordered list of bottom-nav tab IDs the user has chosen to show. */
     val navTabIds: List<String> = DEFAULT_NAV_TAB_IDS,
@@ -808,9 +808,10 @@ class AppPreferences @Inject constructor(
             // Change reports describe a supervision that no longer exists; a summary that
             // can never be sent would otherwise be retried at every start.
             it.remove(KEY_SUPERVISION_CHANGE_BUFFER)
-            // An undelivered invite answer describes a relationship that has just been torn
-            // down: a stale accept must never reach the supervisor now.
-            it.remove(KEY_PENDING_SUPERVISION_INVITE_RESPONSES)
+            // Unsent supervision-invite answers are deliberately kept. They are only ever
+            // declines owed to OTHER supervisors (accepting goes through a register request),
+            // and SupervisionInviteResponder holds them in memory too, so wiping the stored
+            // copy here would not stop them and could only lose one across a restart.
         }
     }
 

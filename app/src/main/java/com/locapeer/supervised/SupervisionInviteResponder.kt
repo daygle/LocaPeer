@@ -27,11 +27,18 @@ import javax.inject.Singleton
  * device is already supervised - so the supervisor's "Supervise" switch does not sit in
  * bought state forever.
  *
- * The answer is written to disk BEFORE it is published and only cleared once a relay accepted
- * it. A publish that throws (no relay yet, a build/encrypt error, a process death right after
- * the notification action) therefore survives and is replayed whenever a relay becomes
- * reachable, including at the next start. Accepting an invite does not go through this path:
- * it sends a register request instead, whose retry lives in SupervisedModeManager.
+ * The answer is written to disk BEFORE it is published and cleared once the publish call
+ * returns. A publish that throws (a build/encrypt error) or a process death right after the
+ * notification action therefore leaves it to be replayed whenever a relay becomes reachable,
+ * including at the next start.
+ *
+ * A successful publish only means the event was handed to [NostrRelayClient], which sends it
+ * or keeps it in its persistent outbox until a relay takes it; no relay acknowledgement is
+ * awaited here. The record covers what the outbox cannot: a process death before the
+ * hand-off, or a build/encrypt failure.
+ *
+ * Accepting an invite does not go through this path: it sends a register request instead,
+ * whose retry lives in SupervisedModeManager.
  */
 @Singleton
 class SupervisionInviteResponder @Inject constructor(

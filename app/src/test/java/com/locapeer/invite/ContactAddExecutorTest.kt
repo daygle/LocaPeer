@@ -24,7 +24,11 @@ import org.mockito.stubbing.Answer
 class ContactAddExecutorTest {
     private val request = PendingRequestEntity("peer", "Peer", "wss://relay.example")
 
-    private fun executor(receiptDao: ContactAddReceiptDao, sender: TrackResponseSender): ContactAddExecutor {
+    private fun executor(
+        receiptDao: ContactAddReceiptDao,
+        sender: TrackResponseSender,
+        keyManager: KeyManager = mock(KeyManager::class.java),
+    ): ContactAddExecutor {
         val database = mock(AppDatabase::class.java)
         `when`(database.contactAddReceiptDao()).thenReturn(receiptDao)
         return ContactAddExecutor(
@@ -32,7 +36,7 @@ class ContactAddExecutorTest {
             mock(PeerDao::class.java),
             sender,
             mock(NotificationManager::class.java),
-            mock(KeyManager::class.java),
+            keyManager,
             mock(CryptoUtils::class.java),
             mock(NostrRelayClient::class.java),
             mock(AppPreferences::class.java),
@@ -70,5 +74,22 @@ class ContactAddExecutorTest {
 
         assertTrue(completed)
         verify(receiptDao).delete("r1")
+    }
+
+    @Test fun `an outbound add whose track request cannot be sent reports failure`() = runBlocking {
+        val receiptDao = mock(ContactAddReceiptDao::class.java)
+        val keyManager = mock(KeyManager::class.java, Answer { invocation ->
+            if (invocation.method.name == "ensureKeypair") "priv" to "mine"
+            else Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+        // The mocked preferences have no settings flow, so building the request throws.
+        val invite = InviteData("theirs", "Them", "wss://relay.example", "theirs")
+
+        val completed = executor(receiptDao, mock(TrackResponseSender::class.java), keyManager)
+            .performOutboundAdd(invite, receiptId = "r1")
+
+        assertFalse(completed)
+        // No receipt: the request never went out, so nothing may claim it was sent.
+        verify(receiptDao, never()).upsert(Mockito.any(ContactAddReceiptEntity::class.java) ?: ContactAddReceiptEntity("r1"))
     }
 }

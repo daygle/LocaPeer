@@ -57,8 +57,8 @@ class PendingRequestActions @Inject constructor(
         if (pendingRequestDao.deleteIfUnchanged(request) == 0) return
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
         try {
-            // Recorded before publishing and replayed until a relay accepts it: a decline
-            // lost here would leave the requester waiting on the answer for good.
+            // Recorded before publishing and replayed until it is handed to the relay client:
+            // a decline lost here would leave the requester waiting on the answer for good.
             trackResponseSender.sendDecline(request.senderPubkey, request.senderRelayUrl, request.isRoleChange)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to record track decline", e)

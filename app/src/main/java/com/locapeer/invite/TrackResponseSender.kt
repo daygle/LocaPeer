@@ -34,9 +34,11 @@ private const val TAG = "TrackResponse"
  * the places that answer a track request: the incoming-request screen, the pending
  * requests list, the notification decline action, and HeartbeatReceiver's auto-promote.
  *
- * The answer is recorded before it is published and kept until a relay accepted it, so a
- * reply that could not be sent - no relay, a crypto failure, a process death right after the
- * request was cleared - is retried at the next start or reconnect instead of being dropped.
+ * The answer is recorded before it is published and kept until it has been handed to the
+ * relay client, so a reply that could not be built (a key or crypto failure) or was cut off by
+ * a process death right after the request was cleared is retried at the next start or
+ * reconnect instead of being dropped. Once handed over, the client's persistent outbox keeps
+ * it until a relay takes it; no relay acknowledgement is awaited here.
  * Both answers matter: an accept is the requester's only way of learning the add landed, and a
  * decline is the only way of learning it did not. One answer per peer, so a later decision
  * replaces an earlier unsent one instead of delivering a contradictory pair.

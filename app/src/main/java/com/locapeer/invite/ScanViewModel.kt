@@ -132,10 +132,12 @@ class ScanViewModel @Inject constructor(
                         }
                     }
                 } else {
+                    // The self-invite case is rejected above, so false here means the track
+                    // request could not be sent and the contact was never asked.
                     if (!executor.performOutboundAdd(invite)) {
                         pendingInvite = null
                         processed = false
-                        _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_own_invite))
+                        _scanState.value = ScanState(error = context.getString(com.locapeer.R.string.scan_error_unknown))
                         return@launch
                     }
                     pendingInvite = null

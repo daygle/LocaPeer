@@ -34,8 +34,9 @@ private const val TAG = "SupervisionResponse"
  * is sent again on the next start instead of leaving the supervisor supervising a device that
  * never learned it was accepted.
  *
- * An answer is recorded BEFORE the supervisor changes any of its own state, and cleared only
- * once the relay accepted the event. For an accept, the record also tracks whether the sharing
+ * An answer is recorded BEFORE the supervisor changes any of its own state, and cleared once
+ * it has been handed to the relay client, whose persistent outbox keeps it until a relay takes
+ * it (no relay acknowledgement is awaited here). For an accept, the record also tracks whether the sharing
  * configuration was applied, so a crash between recording and configuring is finished on the
  * next start instead of announcing a supervision the supervisor never wrote down.
  *

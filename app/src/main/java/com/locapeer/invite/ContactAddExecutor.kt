@@ -16,6 +16,7 @@ import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.settings.HARDCODED_RELAYS
 import com.locapeer.subscriber.NOTIF_ID_TRACK_REQUEST
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -96,7 +97,11 @@ class ContactAddExecutor @Inject constructor(
      *  after scanning cannot loop heartbeats back onto this device.
      *
      *  With [receiptId], a published track request is recorded the moment it goes out, so a
-     *  resumed add after the crash that follows does not send it to the contact again. */
+     *  resumed add after the crash that follows does not send it to the contact again.
+     *
+     *  Returns false for a self-invite or when the track request could not be published
+     *  (a key or encryption failure). The contact row is already written in that case, but
+     *  the contact was never asked, so the caller must report a failure rather than success. */
     suspend fun performOutboundAdd(invite: InviteData, receiptId: String? = null): Boolean {
         val (_, myPubHex) = keyManager.ensureKeypair()
         if (invite.publicKeyHex == myPubHex) return false
@@ -121,7 +126,8 @@ class ContactAddExecutor @Inject constructor(
         peerDao.upsertPeer(peer)
         relayClient.connect(invite.relayUrl)
         val sent = sendTrackRequest(invite)
-        if (sent && receiptId != null) {
+        if (!sent) return false
+        if (receiptId != null) {
             val now = System.currentTimeMillis()
             receiptDao.upsert(ContactAddReceiptEntity(receiptId, requestSentAt = now))
             receiptDao.deleteAppliedBefore(now - RECEIPT_TTL_MS)
@@ -170,13 +176,16 @@ class ContactAddExecutor @Inject constructor(
         try {
             trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
             true
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track accept", e)
             false
         }
 
     /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). Returns false when the
-     *  publish failed, so a resume retries a request that never left this device. */
+     *  request could not be built or handed to the relay client, so the add is reported as
+     *  failed instead of claiming the contact was asked. */
     private suspend fun sendTrackRequest(target: InviteData): Boolean {
         try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
@@ -205,6 +214,8 @@ class ContactAddExecutor @Inject constructor(
             )
             relayClient.publishEvent(event)
             return true
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.w(TAG, "Failed to send track request", e)
             return false
