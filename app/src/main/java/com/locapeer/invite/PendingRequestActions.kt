@@ -54,14 +54,19 @@ class PendingRequestActions @Inject constructor(
 
     /** Answers with a TRACK_DECLINE and clears the request. */
     suspend fun decline(request: PendingRequestEntity) {
-        if (pendingRequestDao.deleteIfUnchanged(request) == 0) return
+        // Only the request actually reviewed: a replacement from this sender is not declined.
+        if (pendingRequestDao.getByPubkey(request.senderPubkey) != request) return
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
         try {
-            // Recorded before publishing and replayed until it is handed to the relay client:
-            // a decline lost here would leave the requester waiting on the answer for good.
+            // Record the decline BEFORE consuming the request: a process death in between then
+            // leaves the request to answer again instead of a request gone with no answer.
+            // Recorded before publishing and replayed until it is handed to the relay client.
             trackResponseSender.sendDecline(request.senderPubkey, request.senderRelayUrl, request.isRoleChange)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
         } catch (e: Exception) {
             Log.e(TAG, "Failed to record track decline", e)
         }
+        pendingRequestDao.deleteIfUnchanged(request)
     }
 }

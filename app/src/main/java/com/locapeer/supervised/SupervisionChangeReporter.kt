@@ -173,7 +173,12 @@ class SupervisionChangeReporter @Inject constructor(
             if (entries.isEmpty()) return
             try {
                 val (privHex, pubHex) = keyManager.ensureKeypair()
-                val payload = json.encodeToString(SettingsChangeSummaryPayload(entries = entries))
+                // The addressee is local bookkeeping; blank it so it is left out of the wire
+                // payload (defaults are not encoded) instead of repeating the recipient's own
+                // key in every entry.
+                val payload = json.encodeToString(
+                    SettingsChangeSummaryPayload(entries = entries.map { it.copy(supervisorPubkey = "") })
+                )
                 val encrypted = crypto.nip44Encrypt(crypto.hexToBytes(privHex), supervisorPubkey, payload)
                 relayClient.publishEvent(
                     NostrEvent.build(

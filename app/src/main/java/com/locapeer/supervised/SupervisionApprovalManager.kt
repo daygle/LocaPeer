@@ -72,6 +72,10 @@ class SupervisionApprovalManager @Inject constructor(
     val pending: StateFlow<PendingRequest?> = _pending.asStateFlow()
     private val pendingLock = Any()
     private val waiting = ArrayDeque<PendingRequest>()
+    /** Requests already answered in this process, oldest first. The supervised device resends
+     *  an unanswered request with the same id when a relay reconnects, and the original may
+     *  also still arrive from an outbox; neither may open a second dialog for an answered one. */
+    private val answeredKeys = LinkedHashSet<String>()
 
     private val scope = backgroundScope("SupervisionApproval")
     private val json = Json { ignoreUnknownKeys = true }
@@ -101,6 +105,7 @@ class SupervisionApprovalManager @Inject constructor(
     }
 
     fun setPending(request: PendingRequest) = synchronized(pendingLock) {
+        if (answerKey(request) in answeredKeys) return@synchronized
         val current = _pending.value
         val duplicate = (listOfNotNull(current) + waiting).any {
             it.fromPubkey == request.fromPubkey && it.type == request.type && it.requestId == request.requestId
@@ -116,8 +121,13 @@ class SupervisionApprovalManager @Inject constructor(
     internal fun claimPending(request: PendingRequest): Boolean = synchronized(pendingLock) {
         if (_pending.value != request) return@synchronized false
         _pending.value = waiting.removeFirstOrNull()
+        answeredKeys += answerKey(request)
+        while (answeredKeys.size > MAX_ANSWERED_KEYS) answeredKeys.remove(answeredKeys.first())
         true
     }
+
+    private fun answerKey(request: PendingRequest) =
+        "${request.fromPubkey}:${request.type}:${request.requestId}"
 
     internal suspend fun applyApprovedRelease(request: PendingRequest, approved: Boolean) {
         if (approved && request.type == RequestType.DISABLE) {
@@ -250,6 +260,9 @@ class SupervisionApprovalManager @Inject constructor(
 
         /** Answers older than this belong to requests the other side has given up on. */
         const val MAX_ANSWER_AGE_MS = 24 * 60 * 60_000L
+
+        /** Answered requests remembered for duplicate suppression; far more than are live. */
+        const val MAX_ANSWERED_KEYS = 256
 
         /** Backstop in case answers pile up across many crashes while offline. */
         const val MAX_STORED_ANSWERS = 64

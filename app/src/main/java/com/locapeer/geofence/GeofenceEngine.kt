@@ -225,9 +225,12 @@ class GeofenceEngine @Inject constructor(
                 val myName = prefs.settings.first().displayName.ifBlank { context.getString(R.string.notif_someone) }
                 // The fence's name is the watcher's own label for that place ("Home",
                 // "Clinic"); it is never shared with the tracked peer anywhere else. Tell
-                // them an alert fired, not what the watcher calls the area.
+                // them an alert fired, not what the watcher calls the area. The name is sent
+                // empty rather than omitted: builds before the unnamed-geofence string render a
+                // missing name as the literal "null", while current builds treat blank as unnamed.
                 val payload = TrackingAlertPayload(
                     type = "GEOFENCE",
+                    alertName = "",
                     triggerName = myName
                 )
                 val encrypted = crypto.nip44Encrypt(
