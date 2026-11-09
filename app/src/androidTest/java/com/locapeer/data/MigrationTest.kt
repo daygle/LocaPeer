@@ -103,6 +103,16 @@ class MigrationTest {
         helper.runMigrationsAndValidate(TEST_DB, 6, true, *DatabaseModule.ALL_MIGRATIONS)
     }
 
+    /** v14 -> v15: adds contact_add_receipts, validated against schemas/.../15.json. */
+    @Test
+    @Throws(IOException::class)
+    fun migrate14To15() {
+        helper.createDatabase(TEST_DB, 14).apply {
+            close()
+        }
+        helper.runMigrationsAndValidate(TEST_DB, 15, true, *DatabaseModule.ALL_MIGRATIONS)
+    }
+
     /** v13 -> v14: index changes only, validated against schemas/.../14.json. */
     @Test
     @Throws(IOException::class)

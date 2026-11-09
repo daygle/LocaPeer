@@ -7,6 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.locapeer.data.AppDatabase
 import com.locapeer.data.DatabaseEncryption
 import com.locapeer.data.dao.CircleDao
+import com.locapeer.data.dao.ContactAddReceiptDao
 import com.locapeer.data.dao.GeofenceAssignmentDao
 import com.locapeer.data.dao.GeofenceDao
 import com.locapeer.data.dao.HeartbeatDao
@@ -267,10 +268,24 @@ object DatabaseModule {
         }
     }
 
+    /**
+     * v15: receipt for an inbound accept, written in the same transaction as the accept so a
+     * process death before the TRACK_ACCEPT reply can resend it without re-applying (and
+     * without inferring "already applied" from a peer row that may predate the request).
+     */
+    private val MIGRATION_14_15 = object : Migration(14, 15) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE IF NOT EXISTS `contact_add_receipts` (`receiptId` TEXT NOT NULL, " +
+                    "`appliedAt` INTEGER, `requestSentAt` INTEGER, PRIMARY KEY(`receiptId`))"
+            )
+        }
+    }
+
     val ALL_MIGRATIONS = arrayOf(
         MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6,
         MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11,
-        MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14
+        MIGRATION_11_12, MIGRATION_12_13, MIGRATION_13_14, MIGRATION_14_15
     )
 
     @Provides
@@ -302,4 +317,5 @@ object DatabaseModule {
     @Provides fun providePendingMessageDao(db: AppDatabase): PendingMessageDao = db.pendingMessageDao()
     @Provides fun providePendingRequestDao(db: AppDatabase): PendingRequestDao = db.pendingRequestDao()
     @Provides fun provideCircleDao(db: AppDatabase): CircleDao = db.circleDao()
+    @Provides fun provideContactAddReceiptDao(db: AppDatabase): ContactAddReceiptDao = db.contactAddReceiptDao()
 }

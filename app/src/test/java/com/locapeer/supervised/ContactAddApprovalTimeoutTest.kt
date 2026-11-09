@@ -156,7 +156,7 @@ class ContactAddApprovalTimeoutTest {
             while (true) {
                 try {
                     verify(executor).completeInboundAccept(
-                        PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123), "SEND", true
+                        PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123), "SEND", true, "saved"
                     )
                     break
                 } catch (e: AssertionError) {
@@ -185,19 +185,20 @@ class ContactAddApprovalTimeoutTest {
         val invite = InviteData("key", "Name", "relay", "key")
         val started = CompletableDeferred<Unit>()
         val release = CompletableDeferred<Unit>()
-        `when`(executor.performOutboundAdd(invite)).thenAnswer {
+        val manager = ContactAddApprovalManager(keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor)
+        val result = CompletableDeferred<ContactAddApprovalManager.AddResult>()
+        manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) {
+            result.complete(it)
+        }
+        val requestId = manager.pending.value.single().requestId
+        `when`(executor.performOutboundAdd(invite, requestId)).thenAnswer {
             runBlocking {
                 started.complete(Unit)
                 release.await()
             }
             true
         }
-        val manager = ContactAddApprovalManager(keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor)
-        val result = CompletableDeferred<ContactAddApprovalManager.AddResult>()
-        manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) {
-            result.complete(it)
-        }
-        manager.handleResponse(manager.pending.value.single().requestId, true)
+        manager.handleResponse(requestId, true)
         withTimeout(2_000) { started.await() }
         assertFalse(result.isCompleted)
         release.complete(Unit)
@@ -214,7 +215,7 @@ class ContactAddApprovalTimeoutTest {
         val request = PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123)
         val started = CompletableDeferred<Unit>()
         val release = CompletableDeferred<Unit>()
-        `when`(executor.completeInboundAccept(request, "SEND", true)).thenAnswer {
+        `when`(executor.completeInboundAccept(request, "SEND", true, "saved")).thenAnswer {
             runBlocking {
                 started.complete(Unit)
                 release.await()
@@ -236,7 +237,7 @@ class ContactAddApprovalTimeoutTest {
         withTimeout(5_000) {
             while (manager.pending.value.isNotEmpty()) kotlinx.coroutines.delay(10)
         }
-        verify(executor, org.mockito.Mockito.times(1)).completeInboundAccept(request, "SEND", true)
+        verify(executor, org.mockito.Mockito.times(1)).completeInboundAccept(request, "SEND", true, "saved")
         verify(prefs).setContactAddIntentsJson(null)
     }
 
@@ -275,16 +276,17 @@ class ContactAddApprovalTimeoutTest {
         val invite = InviteData("key", "Name", "relay", "key")
         var approvalOnDiskBeforeAdd = false
         val executor = mock(ContactAddExecutor::class.java)
-        `when`(executor.performOutboundAdd(invite)).thenAnswer {
-            // If the process died right here, startup must find the approval on disk.
-            approvalOnDiskBeforeAdd = persisted.lastOrNull()?.contains("\"approvedAt\"") == true
-            true
-        }
         val manager = ContactAddApprovalManager(
             keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor
         )
         manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) { }
-        manager.handleResponse(manager.pending.value.single().requestId, true)
+        val requestId = manager.pending.value.single().requestId
+        `when`(executor.performOutboundAdd(invite, requestId)).thenAnswer {
+            // If the process died right here, startup must find the approval on disk.
+            approvalOnDiskBeforeAdd = persisted.lastOrNull()?.contains("\"approvedAt\"") == true
+            true
+        }
+        manager.handleResponse(requestId, true)
         withTimeout(5_000) {
             while (!approvalOnDiskBeforeAdd) kotlinx.coroutines.delay(10)
         }
@@ -310,7 +312,7 @@ class ContactAddApprovalTimeoutTest {
             )
         )
         val executor = mock(ContactAddExecutor::class.java)
-        `when`(executor.performOutboundAdd(invite)).thenReturn(true)
+        `when`(executor.performOutboundAdd(invite, "a1")).thenReturn(true)
         ContactAddApprovalManager(
             mock(KeyManager::class.java), mock(CryptoUtils::class.java),
             mock(NostrRelayClient::class.java), prefs, executor
@@ -318,7 +320,7 @@ class ContactAddApprovalTimeoutTest {
         withTimeout(5_000) {
             while (true) {
                 try {
-                    verify(executor).performOutboundAdd(invite)
+                    verify(executor).performOutboundAdd(invite, "a1")
                     break
                 } catch (_: AssertionError) {
                     kotlinx.coroutines.delay(10)

@@ -300,12 +300,15 @@ class ContactAddApprovalManager @Inject constructor(
     /** The physical add, from a stored intent (executor owns both paths). */
     private suspend fun executeLocked(intent: StoredContactAddIntent): Boolean =
         when {
-            intent.scan != null -> executor.performOutboundAdd(intent.scan)
+            intent.scan != null -> executor.performOutboundAdd(intent.scan, intent.requestId)
             intent.accept?.request != null && intent.accept.senderPubkey == intent.accept.request.senderPubkey ->
                 executor.completeInboundAccept(
                     intent.accept.request,
                     intent.accept.locationRole,
-                    intent.accept.messagingEnabled
+                    intent.accept.messagingEnabled,
+                    // Ties the accept to this durable intent so a crash before the reply is
+                    // finished by recovery instead of losing the answer.
+                    receiptId = intent.requestId
                 )
             else -> false
         }

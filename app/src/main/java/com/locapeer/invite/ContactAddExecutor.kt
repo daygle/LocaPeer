@@ -8,6 +8,7 @@ import com.locapeer.data.entity.PendingRequestEntity
 import com.locapeer.crypto.CryptoUtils
 import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.entity.ContactAddReceiptEntity
 import com.locapeer.data.entity.PeerEntity
 import com.locapeer.nostr.NostrEvent
 import com.locapeer.nostr.NostrEventKind
@@ -23,12 +24,22 @@ import javax.inject.Singleton
 
 private const val TAG = "ContactAddExecutor"
 
-/** Atomically apply consent only if the request is still the one the user reviewed. */
+/** A receipt outlives a failed delete at most this long; the reply normally clears it. */
+private const val RECEIPT_TTL_MS = 24 * 60 * 60_000L
+
+/**
+ * Atomically apply consent only if the request is still the one the user reviewed.
+ *
+ * With [receiptId], a receipt is written INSIDE the same transaction: after a crash, a
+ * receipt proves the accept committed even though the pending request row is gone, so the
+ * reply can be resent without re-applying or guessing from the peer row.
+ */
 internal suspend fun applyInboundRequest(
     database: AppDatabase,
     request: PendingRequestEntity,
     locationRole: String,
     messagingEnabled: Boolean,
+    receiptId: String? = null,
 ): Boolean = database.withTransaction {
     val pendingRequestDao = database.pendingRequestDao()
     val peerDao = database.peerDao()
@@ -49,6 +60,12 @@ internal suspend fun applyInboundRequest(
         )
     )
     pendingRequestDao.deleteByPubkey(request.senderPubkey)
+    if (receiptId != null) {
+        val receiptDao = database.contactAddReceiptDao()
+        val now = System.currentTimeMillis()
+        receiptDao.upsert(ContactAddReceiptEntity(receiptId, now))
+        receiptDao.deleteAppliedBefore(now - RECEIPT_TTL_MS)
+    }
     true
 }
 
@@ -76,10 +93,19 @@ class ContactAddExecutor @Inject constructor(
 
     /** Upsert the staged invite as a SEND_RECEIVE peer, connect their relay, send the
      *  track request. Re-checks the self-invite guard so an approval completed long
-     *  after scanning cannot loop heartbeats back onto this device. */
-    suspend fun performOutboundAdd(invite: InviteData): Boolean {
+     *  after scanning cannot loop heartbeats back onto this device.
+     *
+     *  With [receiptId], a published track request is recorded the moment it goes out, so a
+     *  resumed add after the crash that follows does not send it to the contact again. */
+    suspend fun performOutboundAdd(invite: InviteData, receiptId: String? = null): Boolean {
         val (_, myPubHex) = keyManager.ensureKeypair()
         if (invite.publicKeyHex == myPubHex) return false
+        val receiptDao = database.contactAddReceiptDao()
+        if (receiptId != null && receiptDao.get(receiptId)?.requestSentAt != null) {
+            // Nothing left to do: the add and its track request already went out.
+            receiptDao.delete(receiptId)
+            return true
+        }
         val existing = peerDao.getPeer(invite.deviceId)
         val peer = existing?.copy(
             publicKeyHex = invite.publicKeyHex,
@@ -94,25 +120,55 @@ class ContactAddExecutor @Inject constructor(
         )
         peerDao.upsertPeer(peer)
         relayClient.connect(invite.relayUrl)
-        sendTrackRequest(invite)
+        val sent = sendTrackRequest(invite)
+        if (sent && receiptId != null) {
+            val now = System.currentTimeMillis()
+            receiptDao.upsert(ContactAddReceiptEntity(receiptId, requestSentAt = now))
+            receiptDao.deleteAppliedBefore(now - RECEIPT_TTL_MS)
+        }
         return true
     }
 
-    /** Apply only the request reviewed by the user, including after delayed supervision approval. */
-    suspend fun completeInboundAccept(request: PendingRequestEntity, locationRole: String, messagingEnabled: Boolean): Boolean {
-        val applied = applyInboundRequest(database, request, locationRole, messagingEnabled)
+    /**
+     * Apply only the request reviewed by the user, including after delayed supervision approval.
+     *
+     * [receiptId] (the queued intent's id) makes the accept resumable: if a previous attempt
+     * committed but died before the reply went out, the receipt is found and only the
+     * TRACK_ACCEPT is resent. The reply is at-least-once - a crash between sending it and
+     * clearing the receipt can duplicate it - but it is never dropped silently.
+     */
+    suspend fun completeInboundAccept(
+        request: PendingRequestEntity,
+        locationRole: String,
+        messagingEnabled: Boolean,
+        receiptId: String? = null
+    ): Boolean {
+        val receiptDao = database.contactAddReceiptDao()
+        if (receiptId != null && receiptDao.get(receiptId) != null) {
+            notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
+            sendAccept(request, locationRole)
+            receiptDao.delete(receiptId)
+            return true
+        }
+        val applied = applyInboundRequest(database, request, locationRole, messagingEnabled, receiptId)
         if (!applied) return false
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
+        sendAccept(request, locationRole)
+        if (receiptId != null) receiptDao.delete(receiptId)
+        return true
+    }
+
+    private suspend fun sendAccept(request: PendingRequestEntity, locationRole: String) {
         try {
             trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track accept", e)
         }
-        return true
     }
 
-    /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). */
-    private suspend fun sendTrackRequest(target: InviteData) {
+    /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). Returns false when the
+     *  publish failed, so a resume retries a request that never left this device. */
+    private suspend fun sendTrackRequest(target: InviteData): Boolean {
         try {
             val (privHex, pubHex) = keyManager.ensureKeypair()
             val settings = prefs.settings.first()
@@ -139,8 +195,10 @@ class ContactAddExecutor @Inject constructor(
                 crypto = crypto,
             )
             relayClient.publishEvent(event)
+            return true
         } catch (e: Exception) {
             Log.w(TAG, "Failed to send track request", e)
+            return false
         }
     }
 }
