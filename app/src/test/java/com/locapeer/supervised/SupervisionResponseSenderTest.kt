@@ -7,6 +7,7 @@ import com.locapeer.data.dao.PeerSharingConfigDao
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
@@ -21,6 +22,7 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.stubbing.Answer
+import java.util.concurrent.atomic.AtomicInteger
 
 class SupervisionResponseSenderTest {
 
@@ -52,6 +54,28 @@ class SupervisionResponseSenderTest {
             Mockito.RETURNS_DEFAULTS.answer(invocation)
         })
 
+    private fun connected() = MutableStateFlow(mapOf("wss://relay.example" to true))
+
+    /**
+     * The sender observes [NostrRelayClient.relayStatus] to retry pending answers, so every
+     * mocked relay must expose a status flow; a Mockito default of null would break the
+     * observer rather than model an offline relay.
+     */
+    private fun fakeRelay(
+        status: MutableStateFlow<Map<String, Boolean>> = MutableStateFlow(emptyMap()),
+        publishError: Exception? = null,
+        onPublish: () -> Unit = {},
+    ): NostrRelayClient = mock(NostrRelayClient::class.java, Answer { invocation ->
+        when (invocation.method.name) {
+            "relayStatus", "getRelayStatus" -> status
+            "publishEvent" -> {
+                onPublish()
+                publishError?.let { throw it }
+            }
+            else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
+        }
+    })
+
     // Answer-based mock with an in-memory store: the accessors are suspend, so they cannot be
     // stubbed with `when` from a non-suspend helper, and the sender reads back what it wrote.
     private fun prefsRecording(steps: MutableList<String>, initial: String?): AppPreferences {
@@ -82,10 +106,7 @@ class SupervisionResponseSenderTest {
     @Test fun `an accept is recorded before the supervisor config and published after`() = runBlocking {
         val steps = java.util.Collections.synchronizedList(mutableListOf<String>())
         val prefs = prefsRecording(steps, initial = null)
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") steps.add("publish")
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val relay = fakeRelay(onPublish = { steps.add("publish") })
 
         SupervisionResponseSender(
             prefs, keyManager(), crypto(), relay, sharingConfig(steps), peers(steps)
@@ -99,10 +120,7 @@ class SupervisionResponseSenderTest {
     @Test fun `a decline is recorded with nothing left to configure`() = runBlocking {
         val steps = java.util.Collections.synchronizedList(mutableListOf<String>())
         val prefs = prefsRecording(steps, initial = null)
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") steps.add("publish")
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val relay = fakeRelay(onPublish = { steps.add("publish") })
 
         SupervisionResponseSender(
             prefs, keyManager(), crypto(), relay, sharingConfig(), peers()
@@ -122,18 +140,16 @@ class SupervisionResponseSenderTest {
         )
         val prefs = mock(AppPreferences::class.java)
         `when`(prefs.getPendingRegisterResponsesJson()).thenReturn(pending)
-        var attempts = 0
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") {
-                attempts++
-                throw IllegalStateException("relay down")
-            }
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val attempts = AtomicInteger()
+        val relay = fakeRelay(
+            status = connected(),
+            publishError = IllegalStateException("relay down"),
+            onPublish = { attempts.incrementAndGet() },
+        )
 
         SupervisionResponseSender(prefs, keyManager(), crypto(), relay, sharingConfig(), peers())
 
-        withTimeout(2_000) { while (attempts == 0) delay(5) }
+        withTimeout(2_000) { while (attempts.get() == 0) delay(5) }
         delay(100)
         // The record must survive a failed publish; otherwise the answer is lost for good.
         verify(prefs, never()).setPendingRegisterResponsesJson(null)
@@ -149,10 +165,7 @@ class SupervisionResponseSenderTest {
             )
         )
         val prefs = prefsRecording(steps, initial = pending)
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") steps.add("publish")
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val relay = fakeRelay(status = connected(), onPublish = { steps.add("publish") })
 
         SupervisionResponseSender(
             prefs, keyManager(), crypto(), relay, sharingConfig(steps), peers(steps)
@@ -172,11 +185,8 @@ class SupervisionResponseSenderTest {
         )
         val prefs = mock(AppPreferences::class.java)
         `when`(prefs.getPendingRegisterResponsesJson()).thenReturn(pending)
-        val published = java.util.concurrent.atomic.AtomicInteger()
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") published.incrementAndGet()
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val published = AtomicInteger()
+        val relay = fakeRelay(status = connected(), onPublish = { published.incrementAndGet() })
 
         SupervisionResponseSender(prefs, keyManager(), crypto(), relay, sharingConfig(), peers())
 
@@ -192,5 +202,28 @@ class SupervisionResponseSenderTest {
             }
         }
         assertTrue(published.get() >= 1)
+    }
+
+    @Test fun `a pending answer is retried when the relay reconnects`() = runBlocking {
+        val pending = Json.encodeToString(
+            listOf(
+                SupervisionResponseSender.PendingResponse(
+                    "peer", "wss://relay.example", false, 11L, configApplied = true
+                )
+            )
+        )
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.getPendingRegisterResponsesJson()).thenReturn(pending)
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val published = AtomicInteger()
+        val relay = fakeRelay(status = status, onPublish = { published.incrementAndGet() })
+
+        SupervisionResponseSender(prefs, keyManager(), crypto(), relay, sharingConfig(), peers())
+        delay(150)
+        // Offline at construction: the record stays put instead of being dropped.
+        assertEquals(0, published.get())
+
+        status.value = mapOf("wss://relay.example" to true)
+        withTimeout(2_000) { while (published.get() == 0) delay(5) }
     }
 }

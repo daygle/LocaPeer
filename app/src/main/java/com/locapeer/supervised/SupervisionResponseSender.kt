@@ -12,6 +12,10 @@ import com.locapeer.nostr.NostrEventKind
 import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import com.locapeer.util.backgroundScope
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -56,12 +60,20 @@ class SupervisionResponseSender @Inject constructor(
 
     private val json = Json { ignoreUnknownKeys = true }
     private val mutex = Mutex()
+    /** Serialises retry passes: app start and a reconnect can fire at the same time. */
+    private val retryMutex = Mutex()
     private val scope = backgroundScope("SupervisionResponse")
 
     init {
-        // Retry answers that never reached the relay. Constructed at app start (see
-        // LocaPeerApplication), so this is the recovery hook.
-        retryPending()
+        // Retry every time a relay becomes reachable, not only at process start: an answer
+        // recorded during an outage must go out as soon as the connection returns.
+        scope.launch {
+            relayClient.relayStatus
+                .map { status -> status.values.any { connected -> connected } }
+                .distinctUntilChanged()
+                .filter { connected -> connected }
+                .collect { retryPendingNow() }
+        }
     }
 
     /** Accept: record first, then configure, then publish. */
@@ -85,9 +97,12 @@ class SupervisionResponseSender @Inject constructor(
     }
 
     fun retryPending() {
-        scope.launch {
-            val pending = mutex.withLock { load() }
-            pending.forEach { response ->
+        scope.launch { retryPendingNow() }
+    }
+
+    private suspend fun retryPendingNow() {
+        retryMutex.withLock {
+            mutex.withLock { load() }.forEach { response ->
                 if (response.accepted && !response.configApplied) {
                     try {
                         applyAcceptConfiguration(response.requesterPubkey)

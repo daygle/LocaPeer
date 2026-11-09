@@ -12,7 +12,11 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -61,10 +65,16 @@ class SupervisedModeManager @Inject constructor(
     private val requestLock = Any()
 
     init {
-        // A registration publish interrupted by a process death leaves supervisionPending set
-        // with no answer on the way. Finish it on the next start rather than leaving the user
-        // looking at a perpetual "pending" row they would have to retry by hand.
-        retryPendingSupervisionRegistration()
+        // A registration publish interrupted by a process death, or lost to an outage, leaves
+        // supervisionPending set with no answer on the way. Retry whenever a relay becomes
+        // reachable - at start and on every reconnect - rather than only when the app opens.
+        scope.launch {
+            relayClient.relayStatus
+                .map { status -> status.values.any { connected -> connected } }
+                .distinctUntilChanged()
+                .filter { connected -> connected }
+                .collect { retryPendingSupervisionRegistration() }
+        }
     }
 
     fun requestAccess() {
@@ -254,14 +264,12 @@ class SupervisedModeManager @Inject constructor(
     }
 
     /** Send the registration request only while it is still pending and never published. */
-    private fun retryPendingSupervisionRegistration() {
-        scope.launch {
-            val settings = prefs.settings.first()
-            if (!settings.supervisionPending || settings.supervisionRequestSent ||
-                settings.supervisorPubkey.isEmpty()
-            ) return@launch
-            publishRegisterRequest(settings.supervisorPubkey)
-        }
+    private suspend fun retryPendingSupervisionRegistration() {
+        val settings = prefs.settings.first()
+        if (!settings.supervisionPending || settings.supervisionRequestSent ||
+            settings.supervisorPubkey.isEmpty()
+        ) return
+        publishRegisterRequest(settings.supervisorPubkey)
     }
 
     /**

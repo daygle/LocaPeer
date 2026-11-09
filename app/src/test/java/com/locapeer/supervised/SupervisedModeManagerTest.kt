@@ -43,14 +43,33 @@ class SupervisedModeManagerTest {
         `when`(it.ensureKeypair()).thenReturn("00" to "11")
     }
 
+    private fun connected() = MutableStateFlow(mapOf("wss://relay.example" to true))
+
+    /**
+     * The manager observes [NostrRelayClient.relayStatus] to retry pending registration work,
+     * so every mocked relay must expose a status flow - a Mockito default of null would break
+     * the observer instead of modelling an offline relay.
+     */
+    private fun fakeRelay(
+        status: MutableStateFlow<Map<String, Boolean>> = MutableStateFlow(emptyMap()),
+        publishError: Exception? = null,
+        onPublish: () -> Unit = {},
+    ): NostrRelayClient = mock(NostrRelayClient::class.java, Answer { invocation ->
+        when (invocation.method.name) {
+            "relayStatus", "getRelayStatus" -> status
+            "publishEvent" -> {
+                onPublish()
+                publishError?.let { throw it }
+            }
+            else -> Mockito.RETURNS_DEFAULTS.answer(invocation)
+        }
+    })
+
     @Test fun `an unlock approval arriving while the request is publishing is not lost`() = runBlocking {
         lateinit var manager: SupervisedModeManager
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") {
-                (manager.unlockState.value as? SupervisedModeManager.UnlockState.Requesting)
-                    ?.let { manager.handleResponse(it.requestId, true) }
-            }
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        val relay = fakeRelay(onPublish = {
+            (manager.unlockState.value as? SupervisedModeManager.UnlockState.Requesting)
+                ?.let { manager.handleResponse(it.requestId, true) }
         })
         manager = SupervisedModeManager(keyManager(), crypto(), relay, activePrefs())
 
@@ -64,10 +83,7 @@ class SupervisedModeManagerTest {
 
     @Test fun `repeated unlock requests while one is pending publish only once`() = runBlocking {
         val published = AtomicInteger()
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") published.incrementAndGet()
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val relay = fakeRelay(onPublish = { published.incrementAndGet() })
         val manager = SupervisedModeManager(keyManager(), crypto(), relay, activePrefs())
 
         manager.requestAccess()
@@ -83,12 +99,9 @@ class SupervisedModeManagerTest {
         val released = CompletableDeferred<Unit>()
         doAnswer { _ -> released.complete(Unit); null }.`when`(prefs).clearSupervisedMode()
         lateinit var manager: SupervisedModeManager
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") {
-                (manager.disableState.value as? SupervisedModeManager.DisableState.Requesting)
-                    ?.let { manager.handleDisableResponse(it.requestId, true) }
-            }
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        val relay = fakeRelay(onPublish = {
+            (manager.disableState.value as? SupervisedModeManager.DisableState.Requesting)
+                ?.let { manager.handleDisableResponse(it.requestId, true) }
         })
         manager = SupervisedModeManager(keyManager(), crypto(), relay, prefs)
 
@@ -108,15 +121,12 @@ class SupervisedModeManagerTest {
             supervisionRequestSent = false,
         )))
         val attempts = AtomicInteger()
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") {
-                attempts.incrementAndGet()
-                // A relay failure must not escape the background scope and crash the process.
-                throw IllegalStateException("relay down")
-            }
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
-        `when`(relay.relayStatus).thenReturn(MutableStateFlow(mapOf("wss://relay.example" to true)))
+        val relay = fakeRelay(
+            status = connected(),
+            // A relay failure must not escape the background scope and crash the process.
+            publishError = IllegalStateException("relay down"),
+            onPublish = { attempts.incrementAndGet() },
+        )
 
         SupervisedModeManager(keyManager(), crypto(), relay, prefs)
 
@@ -135,11 +145,7 @@ class SupervisedModeManagerTest {
             supervisionRequestSent = false,
         )))
         val sent = CompletableDeferred<Unit>()
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") sent.complete(Unit)
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
-        `when`(relay.relayStatus).thenReturn(MutableStateFlow(mapOf("wss://relay.example" to true)))
+        val relay = fakeRelay(status = connected(), onPublish = { sent.complete(Unit) })
 
         SupervisedModeManager(keyManager(), crypto(), relay, prefs)
 
@@ -156,6 +162,27 @@ class SupervisedModeManagerTest {
         }
     }
 
+    @Test fun `an unsent register request is retried when the relay reconnects`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true,
+            supervisorPubkey = "sup",
+            supervisionPending = true,
+            supervisionRequestedAt = 123L,
+            supervisionRequestSent = false,
+        )))
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val attempts = AtomicInteger()
+        val relay = fakeRelay(status = status, onPublish = { attempts.incrementAndGet() })
+
+        SupervisedModeManager(keyManager(), crypto(), relay, prefs)
+        delay(150)
+        assertEquals(0, attempts.get())
+
+        status.value = mapOf("wss://relay.example" to true)
+        withTimeout(2_000) { while (attempts.get() == 0) delay(5) }
+    }
+
     @Test fun `an approved disable persists the release before clearing the flags`() = runBlocking {
         // A crash between the two writes must leave the marker behind, not a still-supervised
         // device that the supervisor believes it released.
@@ -164,12 +191,9 @@ class SupervisedModeManagerTest {
         doAnswer { _ -> steps.add("mark"); null }.`when`(prefs).markSupervisionReleaseApproved()
         doAnswer { _ -> steps.add("clear"); null }.`when`(prefs).clearSupervisedMode()
         lateinit var manager: SupervisedModeManager
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") {
-                (manager.disableState.value as? SupervisedModeManager.DisableState.Requesting)
-                    ?.let { manager.handleDisableResponse(it.requestId, true) }
-            }
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
+        val relay = fakeRelay(onPublish = {
+            (manager.disableState.value as? SupervisedModeManager.DisableState.Requesting)
+                ?.let { manager.handleDisableResponse(it.requestId, true) }
         })
         manager = SupervisedModeManager(keyManager(), crypto(), relay, prefs)
 
@@ -181,10 +205,7 @@ class SupervisedModeManagerTest {
 
     @Test fun `a pending request is cancelled locally without contacting the supervisor`() = runBlocking {
         val published = AtomicInteger()
-        val relay = mock(NostrRelayClient::class.java, Answer { invocation ->
-            if (invocation.method.name == "publishEvent") published.incrementAndGet()
-            Mockito.RETURNS_DEFAULTS.answer(invocation)
-        })
+        val relay = fakeRelay(onPublish = { published.incrementAndGet() })
         val prefs = mock(AppPreferences::class.java).also {
             // Not supervised: a disable request must not be sent at all.
             `when`(it.settings).thenReturn(flowOf(AppSettings()))
