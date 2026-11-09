@@ -1,0 +1,74 @@
+package com.locapeer.invite
+
+import android.app.NotificationManager
+import com.locapeer.crypto.CryptoUtils
+import com.locapeer.crypto.KeyManager
+import com.locapeer.data.AppDatabase
+import com.locapeer.data.dao.ContactAddReceiptDao
+import com.locapeer.data.dao.PeerDao
+import com.locapeer.data.entity.ContactAddReceiptEntity
+import com.locapeer.data.entity.PendingRequestEntity
+import com.locapeer.nostr.NostrRelayClient
+import com.locapeer.settings.AppPreferences
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Test
+import org.mockito.Mockito
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.never
+import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
+import org.mockito.stubbing.Answer
+
+class ContactAddExecutorTest {
+    private val request = PendingRequestEntity("peer", "Peer", "wss://relay.example")
+
+    private fun executor(receiptDao: ContactAddReceiptDao, sender: TrackResponseSender): ContactAddExecutor {
+        val database = mock(AppDatabase::class.java)
+        `when`(database.contactAddReceiptDao()).thenReturn(receiptDao)
+        return ContactAddExecutor(
+            database,
+            mock(PeerDao::class.java),
+            sender,
+            mock(NotificationManager::class.java),
+            mock(KeyManager::class.java),
+            mock(CryptoUtils::class.java),
+            mock(NostrRelayClient::class.java),
+            mock(AppPreferences::class.java),
+        )
+    }
+
+    /** The accept already committed in a previous attempt; only the reply is outstanding. */
+    private fun receiptDao(): ContactAddReceiptDao =
+        mock(ContactAddReceiptDao::class.java, Answer { invocation ->
+            if (invocation.method.name == "get") ContactAddReceiptEntity("r1", 1L)
+            else Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+
+    @Test fun `a failed accept reply keeps the receipt so it can be resent`() = runBlocking {
+        val receiptDao = receiptDao()
+        val sender = mock(TrackResponseSender::class.java, Answer { invocation ->
+            if (invocation.method.name == "sendAccept") throw IllegalStateException("relay down")
+            else Mockito.RETURNS_DEFAULTS.answer(invocation)
+        })
+
+        val completed = executor(receiptDao, sender)
+            .completeInboundAccept(request, "SEND", true, receiptId = "r1")
+
+        assertFalse(completed)
+        // The receipt is the only record that the accept committed; dropping it here would
+        // lose the reply that the requester is still waiting for.
+        verify(receiptDao, never()).delete("r1")
+    }
+
+    @Test fun `a sent accept reply clears the receipt`() = runBlocking {
+        val receiptDao = receiptDao()
+
+        val completed = executor(receiptDao, mock(TrackResponseSender::class.java))
+            .completeInboundAccept(request, "SEND", true, receiptId = "r1")
+
+        assertTrue(completed)
+        verify(receiptDao).delete("r1")
+    }
+}

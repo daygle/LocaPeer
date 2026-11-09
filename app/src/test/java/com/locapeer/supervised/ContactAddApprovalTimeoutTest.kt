@@ -28,6 +28,7 @@ import org.mockito.Mockito.verifyNoInteractions
 import org.mockito.Mockito.`when`
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
+import java.util.concurrent.atomic.AtomicInteger
 
 class ContactAddApprovalTimeoutTest {
     @Test fun `simultaneous approvals stay ordered and stale clicks cannot approve the next request`() {
@@ -337,6 +338,44 @@ class ContactAddApprovalTimeoutTest {
         assertTrue(approvalOnDiskBeforeAdd)
     }
 
+    @Test fun `an inbound accept whose reply failed keeps the add for retry and reports success`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true, supervisorPubkey = "supervisor"
+        )))
+        val keyManager = mock(KeyManager::class.java)
+        `when`(keyManager.ensureKeypair()).thenReturn("00" to "11")
+        val crypto = mock(CryptoUtils::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
+                "nip44Encrypt" -> "encrypted"
+                "bytesToHex" -> "event"
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        val executor = mock(ContactAddExecutor::class.java)
+        val request = PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123)
+        val manager = ContactAddApprovalManager(
+            keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor
+        )
+        val result = CompletableDeferred<ContactAddApprovalManager.AddResult>()
+        manager.requestAdd(
+            "peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept(request, "SEND", true)
+        ) { result.complete(it) }
+        val requestId = manager.pending.value.single().requestId
+        // The accept committed (receipt written) but the reply could not be sent.
+        `when`(executor.completeInboundAccept(request, "SEND", true, requestId)).thenReturn(false)
+        `when`(executor.hasReceipt(requestId)).thenReturn(true)
+
+        manager.handleResponse(requestId, true)
+
+        // The contact exists, so the user's action succeeded even though the reply is owed.
+        assertEquals(ContactAddApprovalManager.AddResult.COMPLETED, withTimeout(5_000) { result.await() })
+        assertTrue(manager.pending.value.any { it.requestId == requestId })
+        // Kept on disk (never cleared) so the next recovery resends the reply.
+        verify(prefs, never()).setContactAddIntentsJson(null)
+    }
+
     @Test fun `an approved add resumes after a process death`() = runBlocking {
         val prefs = mock(AppPreferences::class.java)
         val now = System.currentTimeMillis()
@@ -411,5 +450,58 @@ class ContactAddApprovalTimeoutTest {
         }
         verify(executor, never()).performOutboundAdd(InviteData("key", "Name", "relay", "key"))
         assertTrue(manager.pending.value.isEmpty())
+    }
+
+    @Test fun `an owed accept reply is resent when a relay reconnects`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true, supervisorPubkey = "supervisor"
+        )))
+        val keyManager = mock(KeyManager::class.java)
+        `when`(keyManager.ensureKeypair()).thenReturn("00" to "11")
+        val crypto = mock(CryptoUtils::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
+                "nip44Encrypt" -> "encrypted"
+                "bytesToHex" -> "event"
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        // Starts offline, so only the single reconnection below can trigger the retry.
+        val status = MutableStateFlow(mapOf("wss://relay.example" to false))
+        val relay = mock(NostrRelayClient::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "relayStatus", "getRelayStatus" -> status
+                "publishEvent" -> null // void: returning Unit makes Mockito reject the call
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        val executor = mock(ContactAddExecutor::class.java)
+        val request = PendingRequestEntity("peer", "Peer", "relay", receivedAt = 123)
+        val manager = ContactAddApprovalManager(keyManager, crypto, relay, prefs, executor)
+        val result = CompletableDeferred<ContactAddApprovalManager.AddResult>()
+        manager.requestAdd(
+            "peer", "Peer", ContactAddApprovalManager.AddAction.InboundAccept(request, "SEND", true)
+        ) { result.complete(it) }
+        val requestId = manager.pending.value.single().requestId
+        // The first attempt commits the accept but cannot publish the reply; a later resend works.
+        val attempts = AtomicInteger()
+        `when`(executor.completeInboundAccept(request, "SEND", true, requestId)).thenAnswer {
+            attempts.incrementAndGet() > 1
+        }
+        `when`(executor.hasReceipt(requestId)).thenReturn(true)
+
+        manager.handleResponse(requestId, true)
+
+        assertEquals(ContactAddApprovalManager.AddResult.COMPLETED, withTimeout(5_000) { result.await() })
+        assertTrue(manager.pending.value.any { it.requestId == requestId })
+        assertEquals(1, attempts.get())
+
+        // No restart: the same process must resend the reply as soon as a relay is back.
+        status.value = mapOf("wss://relay.example" to true)
+        withTimeout(5_000) { while (manager.pending.value.isNotEmpty()) kotlinx.coroutines.delay(10) }
+        assertEquals(2, attempts.get())
+        // The reply is out, so the kept intent is gone from disk.
+        verify(prefs).setContactAddIntentsJson(null)
     }
 }

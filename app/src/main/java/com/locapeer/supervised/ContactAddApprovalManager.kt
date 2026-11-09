@@ -16,7 +16,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -121,6 +125,9 @@ class ContactAddApprovalManager @Inject constructor(
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = backgroundScope("ContactAddApproval")
     private val mutex = Mutex()
+    /** Serialises execution of approved intents: a live answer, the start-time recovery and
+     *  a reconnect retry must not publish the same reply twice. */
+    private val deliveryMutex = Mutex()
 
     /** The live queue; mirrored to DataStore on every mutation. */
     private val queue = mutableListOf<StoredContactAddIntent>()
@@ -150,6 +157,20 @@ class ContactAddApprovalManager @Inject constructor(
         publish()
         // Outside the lock: the physical add can touch the network.
         resume.forEach { completeApproved(it) }
+    }
+
+    init {
+        // A kept intent means the contact exists and only its TRACK_ACCEPT is unsent. Retry
+        // whenever a relay becomes reachable, not just at the next start: the user should not
+        // have to restart the app to deliver the answer. StateFlow replays its current status,
+        // so a relay that is already connected at construction is covered too.
+        scope.launch {
+            relayClient.relayStatus
+                .map { status -> status.values.any { connected -> connected } }
+                .distinctUntilChanged()
+                .filter { connected -> connected }
+                .collect { retryOwedReplies() }
+        }
     }
 
     /**
@@ -282,6 +303,10 @@ class ContactAddApprovalManager @Inject constructor(
      * harmless (it cannot create the contact twice).
      */
     private suspend fun completeApproved(intent: StoredContactAddIntent) {
+        deliveryMutex.withLock { finishApproved(intent) }
+    }
+
+    private suspend fun finishApproved(intent: StoredContactAddIntent) {
         val completed = try {
             executeLocked(intent)
         } catch (e: kotlinx.coroutines.CancellationException) {
@@ -290,11 +315,57 @@ class ContactAddApprovalManager @Inject constructor(
             android.util.Log.w(TAG, "Approved contact add failed to complete", e)
             false
         }
+        // An inbound accept writes its receipt in the same transaction as the add, so a receipt
+        // still present after a failed execution means the contact EXISTS and only the
+        // TRACK_ACCEPT is unsent. Keep the intent (it holds the reply data) so the next recovery
+        // - at start or on the next reconnect - resends just the reply, and report the add
+        // itself as done.
+        val replyOwed = !completed && intent.accept?.request != null &&
+            runCatching { executor.hasReceipt(intent.requestId) }.getOrDefault(false)
         removeFromQueue(
             intent.requestId,
-            decided = if (completed) AddResult.COMPLETED else AddResult.FAILED,
-            finishClaimed = true
+            decided = if (completed || replyOwed) AddResult.COMPLETED else AddResult.FAILED,
+            finishClaimed = true,
+            keepIntent = replyOwed,
         )
+    }
+
+    /**
+     * Resend what an approved add still owes after a relay reconnect: the add committed, the
+     * receipt survived, and only the TRACK_ACCEPT is missing. Claimed intents are the ones
+     * kept for exactly this reason, and [deliveryMutex] keeps the pass away from an answer
+     * that is already being executed.
+     */
+    private suspend fun retryOwedReplies() {
+        try {
+            // Before the lock: initialization resumes approved intents while holding it.
+            initialization.await()
+            deliveryMutex.withLock {
+                val owed = mutex.withLock {
+                    queue.filter {
+                        it.approvedAt != null && it.requestId in claimed && it.accept?.request != null
+                    }
+                }
+                owed.forEach { intent ->
+                    val completed = try {
+                        executeLocked(intent)
+                    } catch (e: kotlinx.coroutines.CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        android.util.Log.w(TAG, "Failed to resend an owed contact-add reply", e)
+                        false
+                    }
+                    if (completed) {
+                        // No callback is left on a kept intent: it already reported COMPLETED.
+                        removeFromQueue(intent.requestId, decided = null, finishClaimed = true)
+                    }
+                }
+            }
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            android.util.Log.w(TAG, "Failed to retry owed contact-add replies", e)
+        }
     }
 
     /** The physical add, from a stored intent (executor owns both paths). */
@@ -323,20 +394,25 @@ class ContactAddApprovalManager @Inject constructor(
         requestId: String,
         decided: AddResult?,
         fromTimeout: Boolean = false,
-        finishClaimed: Boolean = false
+        finishClaimed: Boolean = false,
+        keepIntent: Boolean = false
     ): StoredContactAddIntent? {
         var removed: StoredContactAddIntent? = null
         var timeout: Job? = null
         var callback: ((AddResult) -> Unit)? = null
         mutex.withLock {
             if (requestId in claimed && !finishClaimed) return@withLock
-            if (finishClaimed) claimed.remove(requestId)
+            // A kept intent stays claimed, so a duplicate answer cannot run it again in this
+            // process; the next start re-claims it from persistence for the retry.
+            if (finishClaimed && !keepIntent) claimed.remove(requestId)
             removed = queue.firstOrNull { it.requestId == requestId }
             if (removed == null) return@withLock
             timeout = timeouts.remove(requestId)
             callback = callbacks.remove(requestId)
-            queue.removeAll { it.requestId == requestId }
-            persistLocked()
+            if (!keepIntent) {
+                queue.removeAll { it.requestId == requestId }
+                persistLocked()
+            }
         }
         if (removed != null) {
             if (!fromTimeout) timeout?.cancel()

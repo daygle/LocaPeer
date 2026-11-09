@@ -135,7 +135,8 @@ class ContactAddExecutor @Inject constructor(
      * [receiptId] (the queued intent's id) makes the accept resumable: if a previous attempt
      * committed but died before the reply went out, the receipt is found and only the
      * TRACK_ACCEPT is resent. The reply is at-least-once - a crash between sending it and
-     * clearing the receipt can duplicate it - but it is never dropped silently.
+     * clearing the receipt can duplicate it - but it is never dropped silently: a failed send
+     * keeps the receipt so the next attempt resends just the reply.
      */
     suspend fun completeInboundAccept(
         request: PendingRequestEntity,
@@ -146,25 +147,33 @@ class ContactAddExecutor @Inject constructor(
         val receiptDao = database.contactAddReceiptDao()
         if (receiptId != null && receiptDao.get(receiptId) != null) {
             notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
-            sendAccept(request, locationRole)
+            // The receipt is the only proof the accept committed: keep it until the reply is
+            // actually out, or a failed resend would drop the answer for good.
+            if (!sendAccept(request, locationRole)) return false
             receiptDao.delete(receiptId)
             return true
         }
         val applied = applyInboundRequest(database, request, locationRole, messagingEnabled, receiptId)
         if (!applied) return false
         notificationManager.cancel(request.senderPubkey, NOTIF_ID_TRACK_REQUEST)
-        sendAccept(request, locationRole)
+        if (!sendAccept(request, locationRole)) return false
         if (receiptId != null) receiptDao.delete(receiptId)
         return true
     }
 
-    private suspend fun sendAccept(request: PendingRequestEntity, locationRole: String) {
+    /** True while the receipt exists, i.e. the accept committed but its reply is not sent. */
+    suspend fun hasReceipt(receiptId: String): Boolean =
+        database.contactAddReceiptDao().get(receiptId) != null
+
+    /** Returns false when the reply could not be published; the caller then keeps the receipt. */
+    private suspend fun sendAccept(request: PendingRequestEntity, locationRole: String): Boolean =
         try {
             trackResponseSender.sendAccept(request.senderPubkey, request.senderRelayUrl, locationRole)
+            true
         } catch (e: Exception) {
             Log.e(TAG, "Failed to send track accept", e)
+            false
         }
-    }
 
     /** TRACK_REQUEST builder (moved verbatim from ScanViewModel). Returns false when the
      *  publish failed, so a resume retries a request that never left this device. */
