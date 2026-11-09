@@ -724,6 +724,25 @@ class AppPreferences @Inject constructor(
     }
 
     /**
+     * Answers to supervision invites the user accepted or declined but which have not been
+     * published yet (JSON string; see SupervisionInviteResponder). Written when the
+     * notification action arrives so an outage or a process death cannot hide the decision
+     * from the supervisor.
+     */
+    private val KEY_PENDING_SUPERVISION_INVITE_RESPONSES =
+        stringPreferencesKey("pending_supervision_invite_responses")
+
+    suspend fun getPendingSupervisionInviteResponsesJson(): String? =
+        context.settingsStore.data.first()[KEY_PENDING_SUPERVISION_INVITE_RESPONSES]
+
+    suspend fun setPendingSupervisionInviteResponsesJson(json: String?) {
+        context.settingsStore.edit { prefs ->
+            if (json == null) prefs.remove(KEY_PENDING_SUPERVISION_INVITE_RESPONSES)
+            else prefs[KEY_PENDING_SUPERVISION_INVITE_RESPONSES] = json
+        }
+    }
+
+    /**
      * Full settings wipe for "Delete identity & erase all data": every key in the settings
      * store (name, intervals, schedules, relays, mute lists, supervision, SOS flag, sync
      * bookmarks). Returns the store to pristine DataStore state; next launch generates a new
@@ -744,6 +763,9 @@ class AppPreferences @Inject constructor(
             // Change reports describe a supervision that no longer exists; a summary that
             // can never be sent would otherwise be retried at every start.
             it.remove(KEY_SUPERVISION_CHANGE_BUFFER)
+            // An undelivered invite answer describes a relationship that has just been torn
+            // down: a stale accept must never reach the supervisor now.
+            it.remove(KEY_PENDING_SUPERVISION_INVITE_RESPONSES)
         }
     }
 

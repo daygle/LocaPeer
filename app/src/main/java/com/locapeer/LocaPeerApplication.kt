@@ -33,6 +33,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     // Injected so the singleton exists from start: it replays a supervisor answer that a
     // crash or a failed publish left unsent, as soon as a relay is reachable.
     @Inject lateinit var supervisionApprovalManager: com.locapeer.supervised.SupervisionApprovalManager
+    // Injected so the singleton exists from start: it replays an invite answer that a crash
+    // or a failed publish left unsent, as soon as a relay is reachable.
+    @Inject lateinit var supervisionInviteResponder: com.locapeer.supervised.SupervisionInviteResponder
 
     private val appScope = backgroundScope(TAG, Dispatchers.Default)
 

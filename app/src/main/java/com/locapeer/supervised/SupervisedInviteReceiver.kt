@@ -6,13 +6,8 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.locapeer.R
-import com.locapeer.crypto.CryptoUtils
-import com.locapeer.crypto.KeyManager
 import com.locapeer.data.dao.PeerDao
 import com.locapeer.data.entity.PeerEntity
-import com.locapeer.nostr.NostrEvent
-import com.locapeer.nostr.NostrEventKind
-import com.locapeer.nostr.NostrRelayClient
 import com.locapeer.settings.AppPreferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
@@ -22,8 +17,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 const val ACTION_SUPERVISED_INVITE_ACCEPT = "com.locapeer.SUPERVISED_INVITE_ACCEPT"
 const val ACTION_SUPERVISED_INVITE_DECLINE = "com.locapeer.SUPERVISED_INVITE_DECLINE"
@@ -35,9 +28,7 @@ interface SupervisedInviteReceiverEntryPoint {
     fun prefs(): AppPreferences
     fun supervisedModeManager(): SupervisedModeManager
     fun peerDao(): PeerDao
-    fun keyManager(): KeyManager
-    fun relayClient(): NostrRelayClient
-    fun crypto(): CryptoUtils
+    fun supervisionInviteResponder(): SupervisionInviteResponder
 }
 
 /**
@@ -46,10 +37,13 @@ interface SupervisedInviteReceiverEntryPoint {
  * role promotion + register request, which the supervisor auto-answers because it
  * already flagged the device); declining tells the supervisor in-band (kind 1062)
  * so its "Supervise" switch doesn't sit in bought state forever.
+ *
+ * Answers to the invite go through [SupervisionInviteResponder], which records the
+ * decision before publishing and retries it on reconnect and at the next start - a
+ * receiver has no lifetime to retry in, and a lost decline left the supervisor's flow
+ * waiting on a reply that never came.
  */
 class SupervisedInviteReceiver : BroadcastReceiver() {
-
-    private val json = Json { ignoreUnknownKeys = true }
 
     override fun onReceive(context: Context, intent: Intent) {
         val supervisorPubkey = intent.getStringExtra(EXTRA_REQUESTER_PUBKEY) ?: return
@@ -79,7 +73,7 @@ class SupervisedInviteReceiver : BroadcastReceiver() {
                             launch(Dispatchers.Main) {
                                 Toast.makeText(context, context.getString(R.string.toast_already_supervised), Toast.LENGTH_SHORT).show()
                             }
-                            sendInviteResponse(ep, supervisorPubkey, accepted = false)
+                            ep.supervisionInviteResponder().respond(supervisorPubkey, accepted = false)
                             return@launch
                         }
                         ep.prefs().setSupervisedMode(enabled = true, supervisorPubkey = supervisorPubkey)
@@ -102,7 +96,7 @@ class SupervisedInviteReceiver : BroadcastReceiver() {
                     }
                     ACTION_SUPERVISED_INVITE_DECLINE -> {
                         Log.d("SupervisedInviteReceiver", "Declined supervision invite from $supervisorName")
-                        sendInviteResponse(ep, supervisorPubkey, accepted = false)
+                        ep.supervisionInviteResponder().respond(supervisorPubkey, accepted = false)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_declined_supervision_invite, supervisorName), Toast.LENGTH_SHORT).show()
                         }
@@ -113,35 +107,6 @@ class SupervisedInviteReceiver : BroadcastReceiver() {
             } finally {
                 pendingResult.finish()
             }
-        }
-    }
-
-    private suspend fun sendInviteResponse(
-        ep: SupervisedInviteReceiverEntryPoint,
-        supervisorPubkey: String,
-        accepted: Boolean
-    ) {
-        try {
-            val (privHex, pubHex) = ep.keyManager().ensureKeypair()
-            val payload = json.encodeToString(
-                SupervisedInviteResponsePayload(
-                    devicePubkeyHex = pubHex,
-                    accepted = accepted
-                )
-            )
-            val encrypted = ep.crypto().nip44Encrypt(ep.crypto().hexToBytes(privHex), supervisorPubkey, payload)
-            ep.relayClient().publishEvent(
-                NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = NostrEventKind.SUPERVISED_INVITE_RESPONSE,
-                    content = encrypted,
-                    tags = listOf(listOf("p", supervisorPubkey)),
-                    crypto = ep.crypto()
-                )
-            )
-        } catch (e: Exception) {
-            Log.w("SupervisedInviteReceiver", "Failed to send supervision invite response", e)
         }
     }
 }
