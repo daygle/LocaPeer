@@ -7,15 +7,6 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import com.locapeer.R
-import com.locapeer.crypto.CryptoUtils
-import com.locapeer.crypto.KeyManager
-import com.locapeer.data.dao.PeerDao
-import com.locapeer.data.dao.PeerSharingConfigDao
-import com.locapeer.data.entity.PeerEntity
-import com.locapeer.nostr.NostrEvent
-import com.locapeer.nostr.NostrEventKind
-import com.locapeer.nostr.NostrRelayClient
-import com.locapeer.settings.AppPreferences
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
@@ -23,8 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 const val ACTION_SUPERVISED_REGISTER_ACCEPT = "com.locapeer.SUPERVISED_REGISTER_ACCEPT"
 const val ACTION_SUPERVISED_REGISTER_DECLINE = "com.locapeer.SUPERVISED_REGISTER_DECLINE"
@@ -37,17 +26,11 @@ const val EXTRA_REGISTER_REQUESTED_AT = "register_requested_at"
 @EntryPoint
 @InstallIn(SingletonComponent::class)
 interface SupervisedRegisterReceiverEntryPoint {
-    fun sharingConfigDao(): PeerSharingConfigDao
-    fun peerDao(): PeerDao
-    fun keyManager(): KeyManager
-    fun relayClient(): NostrRelayClient
-    fun crypto(): CryptoUtils
-    fun prefs(): AppPreferences
+    /** Owns the durable record, the supervisor-side configuration and the answer's publish. */
+    fun supervisionResponseSender(): SupervisionResponseSender
 }
 
 class SupervisedRegisterReceiver : BroadcastReceiver() {
-
-    private val json = Json { ignoreUnknownKeys = true }
 
     override fun onReceive(context: Context, intent: Intent) {
         val requesterPubkey = intent.getStringExtra(EXTRA_REQUESTER_PUBKEY) ?: return
@@ -71,44 +54,19 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                 when (intent.action) {
                     ACTION_SUPERVISED_REGISTER_ACCEPT -> {
                         Log.d("SupervisedRegisterReceiver", "Accepted supervised registration from $requesterName")
-                        // Force missed-heartbeat alerts on for a supervised device: supervision
-                        // is only meaningful if the supervisor is told when the device goes
-                        // silent (the app can't prevent an uninstall/force-stop/permission
-                        // revoke, so detect-and-notify is the actual guarantee). The toggle is
-                        // locked on in the UI while isMySupervised.
-                        val cfg = ep.sharingConfigDao().getForPeer(requesterPubkey)
-                        if (cfg != null) {
-                            ep.sharingConfigDao().setIsMySupervised(requesterPubkey, true)
-                            ep.sharingConfigDao().setNotifyOnMissedHeartbeat(requesterPubkey, true)
-                        } else {
-                            ep.sharingConfigDao().upsert(
-                                com.locapeer.data.entity.PeerSharingConfig(
-                                    peerDeviceId = requesterPubkey,
-                                    isMySupervised = true,
-                                    notifyOnMissedHeartbeat = true
-                                )
-                            )
-                        }
-                        // Supervising a device implies receiving its location, so promote the
-                        // peer's role to also receive it (NONE -> RECEIVE, SEND -> SEND_RECEIVE),
-                        // leaving any existing SEND capability intact. Without this, incoming
-                        // heartbeats are dropped (HeartbeatReceiver only stores pings from
-                        // RECEIVE/SEND_RECEIVE peers) and the supervised contact shows no pin.
-                        val peer = ep.peerDao().getPeer(requesterPubkey)
-                        if (peer != null) {
-                            val promotedRole = PeerEntity.roleWithReceive(peer.locationRole)
-                            if (promotedRole != peer.locationRole) {
-                                ep.peerDao().upsertPeer(peer.copy(locationRole = promotedRole))
-                            }
-                        }
-                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = true, requestCreatedAt = requestedAt)
+                        // Records the answer BEFORE the supervisor writes its own flags
+                        // (forced missed-heartbeat alerts, receive-capable role), then
+                        // configures, then publishes. A crash at any step leaves a record the
+                        // next start finishes, so the device is never told about a supervision
+                        // the supervisor did not commit to, and the answer is never lost.
+                        ep.supervisionResponseSender().accept(requesterPubkey, requesterRelay, requestedAt)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_now_supervising, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_SUPERVISED_REGISTER_DECLINE -> {
                         Log.d("SupervisedRegisterReceiver", "Declined supervised registration from $requesterName")
-                        sendRegisterResponse(ep, requesterPubkey, requesterRelay, accepted = false, requestCreatedAt = requestedAt)
+                        ep.supervisionResponseSender().decline(requesterPubkey, requesterRelay, requestedAt)
                         launch(Dispatchers.Main) {
                             Toast.makeText(context, context.getString(R.string.toast_declined_supervision, requesterName), Toast.LENGTH_SHORT).show()
                         }
@@ -122,44 +80,4 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
         }
     }
 
-    private suspend fun sendRegisterResponse(
-        ep: SupervisedRegisterReceiverEntryPoint,
-        requesterPubkey: String,
-        requesterRelay: String,
-        accepted: Boolean,
-        requestCreatedAt: Long?
-    ) {
-        try {
-            val keyManager = ep.keyManager()
-            val relayClient = ep.relayClient()
-            val crypto = ep.crypto()
-            val (privHex, pubHex) = keyManager.ensureKeypair()
-            val payload = json.encodeToString(
-                SupervisedRegisterResponsePayload(
-                    devicePubkeyHex = requesterPubkey,
-                    accepted = accepted,
-                    requestCreatedAt = requestCreatedAt
-                )
-            )
-            val encrypted = crypto.nip44Encrypt(
-                crypto.hexToBytes(privHex),
-                requesterPubkey,
-                payload
-            )
-            if (requesterRelay.isNotBlank()) relayClient.connect(requesterRelay)
-            relayClient.publishEvent(
-                NostrEvent.build(
-                    privKeyHex = privHex,
-                    pubKeyHex = pubHex,
-                    kind = if (accepted) NostrEventKind.SUPERVISED_REGISTER_ACCEPT
-                           else NostrEventKind.SUPERVISED_REGISTER_DECLINE,
-                    content = encrypted,
-                    tags = listOf(listOf("p", requesterPubkey)),
-                    crypto = crypto
-                )
-            )
-        } catch (e: Exception) {
-            Log.w("SupervisedRegisterReceiver", "Failed to send supervised register response", e)
-        }
-    }
 }

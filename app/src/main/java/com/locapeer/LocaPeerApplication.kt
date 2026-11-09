@@ -27,6 +27,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
     @Inject lateinit var heartbeatReceiver: HeartbeatReceiver
     @Inject lateinit var appPreferences: AppPreferences
     @Inject lateinit var appLockManager: com.locapeer.settings.AppLockManager
+    // Injected (not used here) so the singleton is constructed at app start and retries any
+    // register answer whose publish failed or was interrupted by a process death.
+    @Inject lateinit var supervisionResponseSender: com.locapeer.supervised.SupervisionResponseSender
 
     private val appScope = backgroundScope(TAG, Dispatchers.Default)
 
