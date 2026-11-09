@@ -13,6 +13,10 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withTimeout
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.never
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNull
@@ -246,5 +250,120 @@ class ContactAddApprovalTimeoutTest {
         // HeartbeatReceiver drops contact-add answers older than 300 s; the intent must still
         // exist when such an answer arrives, or an approval is silently lost.
         assertTrue(CONTACT_ADD_TIMEOUT_MS > 300_000L)
+    }
+
+    @Test fun `approval is written to disk before the physical add starts`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        `when`(prefs.settings).thenReturn(flowOf(AppSettings(
+            supervisedModeEnabled = true, supervisorPubkey = "supervisor"
+        )))
+        val keyManager = mock(KeyManager::class.java)
+        `when`(keyManager.ensureKeypair()).thenReturn("00" to "11")
+        val crypto = mock(CryptoUtils::class.java, org.mockito.stubbing.Answer { invocation ->
+            when (invocation.method.name) {
+                "hexToBytes", "sha256", "schnorrSign" -> byteArrayOf(0)
+                "nip44Encrypt" -> "encrypted"
+                "bytesToHex" -> "event"
+                else -> org.mockito.Mockito.RETURNS_DEFAULTS.answer(invocation)
+            }
+        })
+        val persisted = java.util.Collections.synchronizedList(mutableListOf<String?>())
+        `when`(prefs.setContactAddIntentsJson(any())).thenAnswer { invocation ->
+            persisted.add(invocation.arguments[0] as String?)
+            Unit
+        }
+        val invite = InviteData("key", "Name", "relay", "key")
+        var approvalOnDiskBeforeAdd = false
+        val executor = mock(ContactAddExecutor::class.java)
+        `when`(executor.performOutboundAdd(invite)).thenAnswer {
+            // If the process died right here, startup must find the approval on disk.
+            approvalOnDiskBeforeAdd = persisted.lastOrNull()?.contains("\"approvedAt\"") == true
+            true
+        }
+        val manager = ContactAddApprovalManager(
+            keyManager, crypto, mock(NostrRelayClient::class.java), prefs, executor
+        )
+        manager.requestAdd("key", "Name", ContactAddApprovalManager.AddAction.OutboundScan(invite)) { }
+        manager.handleResponse(manager.pending.value.single().requestId, true)
+        withTimeout(5_000) {
+            while (!approvalOnDiskBeforeAdd) kotlinx.coroutines.delay(10)
+        }
+        assertTrue(approvalOnDiskBeforeAdd)
+    }
+
+    @Test fun `an approved add resumes after a process death`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val now = System.currentTimeMillis()
+        val invite = InviteData("key", "Name", "relay", "key")
+        `when`(prefs.getContactAddIntentsJson()).thenReturn(
+            Json.encodeToString(
+                listOf(
+                    ContactAddApprovalManager.StoredContactAddIntent(
+                        requestId = "a1",
+                        contactPubkeyHex = "key",
+                        contactName = "Name",
+                        scan = invite,
+                        requestedAt = now,
+                        approvedAt = now
+                    )
+                )
+            )
+        )
+        val executor = mock(ContactAddExecutor::class.java)
+        `when`(executor.performOutboundAdd(invite)).thenReturn(true)
+        ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java),
+            mock(NostrRelayClient::class.java), prefs, executor
+        )
+        withTimeout(5_000) {
+            while (true) {
+                try {
+                    verify(executor).performOutboundAdd(invite)
+                    break
+                } catch (_: AssertionError) {
+                    kotlinx.coroutines.delay(10)
+                }
+            }
+        }
+        // The recovered intent is dropped once the add completes.
+        verify(prefs).setContactAddIntentsJson(null)
+    }
+
+    @Test fun `an approved add older than the recovery window is not resumed`() = runBlocking {
+        val prefs = mock(AppPreferences::class.java)
+        val now = System.currentTimeMillis()
+        val old = now - APPROVED_RECOVERY_WINDOW_MS - 1
+        `when`(prefs.getContactAddIntentsJson()).thenReturn(
+            Json.encodeToString(
+                listOf(
+                    ContactAddApprovalManager.StoredContactAddIntent(
+                        requestId = "a1",
+                        contactPubkeyHex = "key",
+                        contactName = "Name",
+                        scan = InviteData("key", "Name", "relay", "key"),
+                        requestedAt = old,
+                        approvedAt = old
+                    )
+                )
+            )
+        )
+        val executor = mock(ContactAddExecutor::class.java)
+        val manager = ContactAddApprovalManager(
+            mock(KeyManager::class.java), mock(CryptoUtils::class.java),
+            mock(NostrRelayClient::class.java), prefs, executor
+        )
+        withTimeout(5_000) {
+            while (true) {
+                try {
+                    // Pruning the stale intent persists the empty queue.
+                    verify(prefs).setContactAddIntentsJson(null)
+                    break
+                } catch (_: AssertionError) {
+                    kotlinx.coroutines.delay(10)
+                }
+            }
+        }
+        verify(executor, never()).performOutboundAdd(InviteData("key", "Name", "relay", "key"))
+        assertTrue(manager.pending.value.isEmpty())
     }
 }

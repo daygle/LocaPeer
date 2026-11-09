@@ -35,6 +35,13 @@ import javax.inject.Singleton
  */
 internal const val CONTACT_ADD_TIMEOUT_MS = 360_000L
 
+/**
+ * How long an approved-but-unfinished add may be resumed after a process death. The physical
+ * add normally takes milliseconds; this only covers a crash between the approval and its
+ * execution, so a decision found days later is not silently applied.
+ */
+internal const val APPROVED_RECOVERY_WINDOW_MS = 10 * 60_000L
+
 internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long =
     (requestedAt + CONTACT_ADD_TIMEOUT_MS - nowMillis).coerceAtLeast(0L)
 
@@ -52,6 +59,13 @@ internal fun contactAddTimeoutDelayMs(requestedAt: Long, nowMillis: Long): Long 
  * can still complete: the supervisor's answer window is what bounds the wait, not the
  * lifetime of a screen. Each queued entry times out after [CONTACT_ADD_TIMEOUT_MS], which
  * is deliberately longer than the answer window the receiver accepts.
+ *
+ * An approval is written to disk BEFORE the physical add runs, and any intent still marked
+ * approved at startup is resumed: a process death between "the supervisor approved" and
+ * "the contact exists" finishes the add instead of losing it. Resuming is safe because
+ * both executor operations are idempotent for the database - the peer row is upserted by
+ * its key, and an inbound accept is a compare-and-delete transaction on the reviewed
+ * request - so a crash cannot produce a second contact.
  */
 @Singleton
 class ContactAddApprovalManager @Inject constructor(
@@ -80,7 +94,10 @@ class ContactAddApprovalManager @Inject constructor(
         val scan: InviteData? = null,
         /** Inbound track-request accept: the review screen's chosen role/messaging. */
         val accept: StoredAccept? = null,
-        val requestedAt: Long = 0
+        val requestedAt: Long = 0,
+        /** Set (and persisted) when the supervisor approves, before the physical add runs, so
+         *  a process death mid-add can finish this exact decision on the next start. */
+        val approvedAt: Long? = null
     )
 
     enum class AddResult { COMPLETED, DENIED, FAILED }
@@ -120,12 +137,19 @@ class ContactAddApprovalManager @Inject constructor(
     // All queue operations await restoration; otherwise a new write or a response can win
     // the mutex before the saved queue has been read and silently discard pending decisions.
     private val initialization = scope.async {
-        mutex.withLock {
-            loadPersistedLocked().forEach { intent ->
+        val resume = mutex.withLock {
+            val loaded = loadPersistedLocked()
+            // A pending intent waits for a supervisor answer; an approved one already has
+            // its answer and is about to be executed. Claim it first so a duplicate late
+            // answer cannot run the same add alongside the recovery.
+            loaded.filter { it.approvedAt == null }.forEach { intent ->
                 armTimeout(intent.requestId, timeoutDelayMs(intent.requestedAt))
             }
+            loaded.filter { it.approvedAt != null }.onEach { claimed.add(it.requestId) }
         }
         publish()
+        // Outside the lock: the physical add can touch the network.
+        resume.forEach { completeApproved(it) }
     }
 
     /**
@@ -234,24 +258,43 @@ class ContactAddApprovalManager @Inject constructor(
                 return@launch
             }
             val intent = mutex.withLock {
-                val queued = queue.firstOrNull { it.requestId == requestId }
-                if (queued == null || !claimed.add(requestId)) null else {
+                val index = queue.indexOfFirst { it.requestId == requestId }
+                if (index < 0 || !claimed.add(requestId)) null else {
                     timeouts.remove(requestId)?.cancel()
-                    queued
+                    // Persist the decision BEFORE the physical add: if the process dies here,
+                    // startup recovery finishes this intent instead of losing the approval.
+                    val approved = queue[index].copy(approvedAt = System.currentTimeMillis())
+                    queue[index] = approved
+                    persistLocked()
+                    approved
                 }
             } ?: return@launch
-            // Keep the intent persisted until execution completes; duplicate responses and
-            // timeouts cannot claim it while the physical add is running.
-            val completed = try {
-                executeLocked(intent)
-            } catch (e: kotlinx.coroutines.CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                android.util.Log.w(TAG, "Approved contact add failed to complete", e)
-                false
-            }
-            removeFromQueue(requestId, decided = if (completed) AddResult.COMPLETED else AddResult.FAILED, finishClaimed = true)
+            // Kept persisted until execution completes; duplicate responses and timeouts
+            // cannot claim it while the physical add is running.
+            completeApproved(intent)
         }
+    }
+
+    /**
+     * Run an approved intent once and drop it. Called for a live answer and for a resumed
+     * approval after a crash; [claimed] makes the two mutually exclusive inside a process,
+     * and the executor's compare-and-delete/upsert semantics make a repeat across processes
+     * harmless (it cannot create the contact twice).
+     */
+    private suspend fun completeApproved(intent: StoredContactAddIntent) {
+        val completed = try {
+            executeLocked(intent)
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            android.util.Log.w(TAG, "Approved contact add failed to complete", e)
+            false
+        }
+        removeFromQueue(
+            intent.requestId,
+            decided = if (completed) AddResult.COMPLETED else AddResult.FAILED,
+            finishClaimed = true
+        )
     }
 
     /** The physical add, from a stored intent (executor owns both paths). */
@@ -334,9 +377,19 @@ class ContactAddApprovalManager @Inject constructor(
         val stored = runCatching {
             json.decodeFromString<List<StoredContactAddIntent>>(raw)
         }.getOrDefault(emptyList())
-        val cutoff = System.currentTimeMillis() - CONTACT_ADD_TIMEOUT_MS
+        val now = System.currentTimeMillis()
+        val answerCutoff = now - CONTACT_ADD_TIMEOUT_MS
         queue.clear()
-        queue.addAll(stored.filter { it.requestedAt >= cutoff })
+        queue.addAll(
+            stored.filter { intent ->
+                // An approved intent is a decision already made: keep it for the shorter
+                // recovery window even though its request is past the answer window, so a
+                // crash mid-add can be finished instead of silently dropping the approval.
+                val approvedAt = intent.approvedAt
+                if (approvedAt != null) now - approvedAt <= APPROVED_RECOVERY_WINDOW_MS
+                else intent.requestedAt >= answerCutoff
+            }
+        )
         if (queue.size != stored.size) persistLocked()
         return queue.toList()
     }
