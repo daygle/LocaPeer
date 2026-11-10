@@ -68,14 +68,18 @@ jobs:
           echo "::error::Could not fetch the Gradle distribution after 3 attempts."
           exit 1
 
+      # warningsAsErrors is on, so any lint warning in either variant fails the job
+      # before anything is built.
       - name: Run Lint
-        run: ./gradlew lintDebug
+        run: ./gradlew lintDebug lintRelease
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
+      # Unsigned here (no signing secrets on PRs); this validates R8 and resource
+      # shrinking on every change, i.e. the same build the release ships.
+      - name: Build Release Bundle
+        run: ./gradlew bundleRelease
 
       # Room's KSP step rewrites app/schemas on every build. A diff here means a schema
       # change was made without committing its exported JSON (needed for migrations).
@@ -92,7 +96,7 @@ jobs:
         if: always()
         with:
           name: lint-report
-          path: app/build/reports/lint-results-debug.*
+          path: app/build/reports/lint-results-*.*
           retention-days: 7
 
       - name: Upload Test Report
@@ -109,12 +113,3 @@ jobs:
         with:
           report_paths: '**/build/test-results/testDebugUnitTest/*.xml'
           check_name: "Unit Test Results"
-
-      - name: Upload Debug APK
-        uses: actions/upload-artifact@v7
-        if: success()
-        with:
-          name: LocaPeer-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
-          if-no-files-found: error
-          retention-days: 7

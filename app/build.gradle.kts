@@ -74,8 +74,10 @@ android {
         // and doesn't depend on Timber.
         disable += "LogNotTimber"
 
-        // Ensure we still fail on other real code errors
+        // Fail the build on any remaining lint warning, not just errors. CI runs lint
+        // before building, so a release can never ship with an open warning.
         abortOnError = true
+        warningsAsErrors = true
     }
 
     signingConfigs {

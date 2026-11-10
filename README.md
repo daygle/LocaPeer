@@ -174,10 +174,10 @@ cd LocaPeer
 ./gradlew assembleDebug
 ```
 
-### Signed release APK & AAB (GitHub Actions)
+### Signed release AAB (GitHub Actions)
 
 Signed release builds run on CI (`.github/workflows/android-release.yml`), so the Android Studio
-*Generate Signed APK* wizard is no longer needed. Push a version tag - or run the workflow
+*Generate Signed Bundle* wizard is no longer needed. Push a version tag - or run the workflow
 manually from the Actions tab:
 
 ```bash
@@ -189,15 +189,18 @@ A tag build derives both versions from the tag, so no file needs editing: `v1.1.
 `versionName` 1.1.46 and `versionCode` 10146 (major x 10000 + minor x 100 + patch; minor and patch
 must stay below 100). Both the tag workflow and the Gradle build itself validate the pair, so a
 tag with minor/patch above 99 - or an explicit `appVersionName`/`appVersionCode` override that
-disagree with each other - fails the build instead of publishing colliding version codes. It builds both a signed APK (for direct installs) and a signed AAB (for
-Google Play), attaches both to a GitHub Release and uploads them as workflow artifacts. The
-`LocaPeer-release-aab` artifact also carries R8's `mapping.txt`; upload it in Play Console alongside
-the bundle so crash traces are deobfuscated. A manual (`workflow_dispatch`) run uses the values in
+disagree with each other - fails the build instead of publishing colliding version codes.
+
+The workflow runs lint first (`lintRelease`, with `warningsAsErrors` on), so any lint warning stops
+the release before anything is signed or published. It then builds a signed AAB for Google Play,
+named `LocaPeer-<version>.aab`, attaches it to a GitHub Release and uploads it as a workflow
+artifact on its own, not wrapped in a zip. No APK is built. R8's `mapping.txt` is uploaded as the
+separate `LocaPeer-mapping` artifact; upload it in Play Console alongside the bundle so crash traces
+are deobfuscated. A manual (`workflow_dispatch`) run uses the values in
 `gradle.properties` and only uploads the artifacts.
 
 Add your signing key to **Settings -> Secrets and variables -> Actions** - use the *same keystore*
-you have been signing with, so the APK signature is unchanged and existing installs keep updating
-in place:
+you have been signing with, so Play keeps recognising it as your upload key:
 
 | Secret | Value |
 | --- | --- |
