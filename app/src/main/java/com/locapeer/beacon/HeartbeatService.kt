@@ -14,6 +14,7 @@ import android.os.BatteryManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.PowerManager
 import android.os.SystemClock
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -187,6 +188,8 @@ class HeartbeatService : LifecycleService() {
     private var prevFixElapsedNs = 0L
     private var prevFixAccuracy = 0f
     private var wasLowBattery = false
+    // System Battery Saver state the GPS request was last built for (see isPowerSaving).
+    private var wasPowerSaving = false
     // Tracks the live-view state applied to the GPS request, so the pulse loop can relax
     // the profile when the last viewer's lease lapses (see the runnable).
     private var wasLiveView = false
@@ -346,8 +349,19 @@ class HeartbeatService : LifecycleService() {
                 updateLocationRequest()
                 reschedulePulse()
             }
+            // Battery Saver only changes the GPS power profile, never the pulse cadence.
+            if (isPowerSaving() != wasPowerSaving) updateLocationRequest()
         }
     }
+
+    /**
+     * True while the system Battery Saver is on. The user has asked the whole device to
+     * save power, so GPS gives up its high-accuracy modes and the stationary poll relaxes
+     * to its backstop interval - but the heartbeat cadence, live view and every feature
+     * keep working. SOS is exempt, like the low-battery profile.
+     */
+    private fun isPowerSaving(): Boolean =
+        !isSos && getSystemService(PowerManager::class.java)?.isPowerSaveMode == true
 
     // Low-power (network) fixes often carry no speed, so fall back to
     // displacement over time; without this a stationary device that starts
@@ -530,6 +544,8 @@ class HeartbeatService : LifecycleService() {
                 wasLowBattery = lowNow
                 requestStale = true
             }
+            val powerSaveNow = isPowerSaving()
+            if (powerSaveNow != wasPowerSaving) requestStale = true
             // Live-view mode ends silently when the last viewer's lease lapses (no event
             // arrives to signal it), so detect the transition here and rebuild the GPS
             // request - otherwise the fast/high-accuracy profile would linger after the
@@ -547,7 +563,7 @@ class HeartbeatService : LifecycleService() {
                 TAG,
                 "Pulse: gps=$currentMotionState cadence=$appliedCadenceState " +
                     "ar=${arMotionState?.name ?: "none"}${if (arIsStale()) "(stale)" else ""} " +
-                    "sos=$isSos battery=$batteryNow low=$lowNow acc=${lastAccuracy}m " +
+                    "sos=$isSos battery=$batteryNow low=$lowNow saver=$powerSaveNow acc=${lastAccuracy}m " +
                     diagnostics.summarizeAndReset(),
             )
 
@@ -652,6 +668,7 @@ class HeartbeatService : LifecycleService() {
                 addAction(Intent.ACTION_POWER_DISCONNECTED)
                 addAction(Intent.ACTION_BATTERY_LOW)
                 addAction(Intent.ACTION_BATTERY_OKAY)
+                addAction(PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
             },
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
@@ -857,13 +874,21 @@ class HeartbeatService : LifecycleService() {
         val anchorBoosting = !isSos && !lowBattery &&
             cadenceState == MotionState.STATIONARY &&
             SystemClock.elapsedRealtime() < stationaryAnchorBoostUntilMs
+        // System Battery Saver: no high-accuracy GPS outside SOS (see isPowerSaving).
+        val powerSaving = isPowerSaving()
+        wasPowerSaving = powerSaving
+        val accuratePriority = if (powerSaving) {
+            Priority.PRIORITY_BALANCED_POWER_ACCURACY
+        } else {
+            Priority.PRIORITY_HIGH_ACCURACY
+        }
         val priority = when {
             isSos -> Priority.PRIORITY_HIGH_ACCURACY
             lowBattery -> Priority.PRIORITY_LOW_POWER
-            liveView -> Priority.PRIORITY_HIGH_ACCURACY
-            boosting -> Priority.PRIORITY_HIGH_ACCURACY
-            anchorBoosting -> Priority.PRIORITY_HIGH_ACCURACY
-            cadenceState == MotionState.DRIVING -> Priority.PRIORITY_HIGH_ACCURACY
+            liveView -> accuratePriority
+            boosting -> accuratePriority
+            anchorBoosting -> accuratePriority
+            cadenceState == MotionState.DRIVING -> accuratePriority
             cadenceState == MotionState.STATIONARY -> Priority.PRIORITY_LOW_POWER
             else -> Priority.PRIORITY_BALANCED_POWER_ACCURACY
         }
@@ -886,7 +911,7 @@ class HeartbeatService : LifecycleService() {
             // When AR independently confirms the device is still, it covers departure
             // detection and the poll relaxes to a backstop (see STATIONARY_AR_STILL_POLL_MS).
             cadenceState == MotionState.STATIONARY ->
-                if (arConfirmsStill()) STATIONARY_AR_STILL_POLL_MS else STATIONARY_POLL_MS
+                if (arConfirmsStill() || powerSaving) STATIONARY_AR_STILL_POLL_MS else STATIONARY_POLL_MS
             else -> 30_000L
         }
         val maxDelayMs = when {
@@ -894,7 +919,7 @@ class HeartbeatService : LifecycleService() {
             lowBattery -> pollIntervalMs * 2
             // No extra batching on top of the relaxed AR-still poll, so a GPS-only
             // departure (AR missed the transition) is still seen within one poll.
-            cadenceState == MotionState.STATIONARY && arConfirmsStill() -> pollIntervalMs
+            cadenceState == MotionState.STATIONARY && (arConfirmsStill() || powerSaving) -> pollIntervalMs
             cadenceState == MotionState.STATIONARY -> pollIntervalMs * 2
             else -> pollIntervalMs
         }
