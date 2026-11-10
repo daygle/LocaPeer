@@ -52,6 +52,9 @@ import javax.net.ssl.SSLPeerUnverifiedException
 
 private const val TAG = "NostrRelayClient"
 
+// WebSocket keep-alive ping interval; see the OkHttpClient builder for the trade-off.
+private const val PING_INTERVAL_S = 120L
+
 // Offline-queue bounds for HEARTBEAT events (see PendingMessageDao). Location beats are
 // self-superseding, so unlike queued messages they must not accumulate without limit
 // while offline: keep only recent, few per relay. SOS (a different kind) is exempt.
@@ -110,7 +113,13 @@ class NostrRelayClient @Inject constructor(
 
     private val client by lazy {
         OkHttpClient.Builder()
-            .pingInterval(60, TimeUnit.SECONDS)
+            // Each relay socket pings independently, so N relays cost N unsynchronised
+            // radio wake-ups per interval - on cellular every one pays the full radio
+            // ramp-up and tail. Two minutes halves that cost while staying far inside
+            // mobile-carrier NAT idle timeouts. A socket killed by a network handover is
+            // recycled straight away by [networkCallback], so the ping is only the
+            // backstop for a silently-dead connection, not the main way one is noticed.
+            .pingInterval(PING_INTERVAL_S, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
@@ -168,11 +177,21 @@ class NostrRelayClient @Inject constructor(
      */
     private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network) {
+            val previous = currentNetwork
             currentNetwork = network
             isOnline = true
             if (!isStarted) return
-            Log.d(TAG, "Network available; nudging relays to reconnect")
-            relays.values.forEach { it.reconnectNow() }
+            if (previous != null && previous != network) {
+                // The default network changed (e.g. Wi-Fi -> cellular). Sockets opened on the
+                // old network are dead or about to be, but stay "connected" until a ping goes
+                // unanswered; reopen them on the new network now so inbound delivery doesn't
+                // stall until then.
+                Log.d(TAG, "Default network changed; reopening relay connections")
+                relays.values.forEach { it.recycle() }
+            } else {
+                Log.d(TAG, "Network available; nudging relays to reconnect")
+                relays.values.forEach { it.reconnectNow() }
+            }
         }
 
         override fun onLost(network: Network) {
@@ -189,6 +208,15 @@ class NostrRelayClient @Inject constructor(
 
     /** The default network last reported available; see [networkCallback]. */
     @Volatile private var currentNetwork: Network? = null
+
+    /** True once [networkCallback] is registered, so [isOnline] can be trusted to gate
+     *  reconnect attempts. If registration failed, connection attempts are never gated. */
+    @Volatile private var networkMonitored = false
+
+    /** Whether a connection attempt can possibly succeed right now. While offline, every
+     *  attempt is a wasted wake-up: the network callback reconnects every relay as soon as
+     *  connectivity returns, so retries are parked until then. */
+    private fun canAttemptConnection(): Boolean = !networkMonitored || isOnline
 
     init {
         scope.launch {
@@ -213,7 +241,10 @@ class NostrRelayClient @Inject constructor(
         }
         try {
             val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-            cm?.registerDefaultNetworkCallback(networkCallback)
+            if (cm != null) {
+                cm.registerDefaultNetworkCallback(networkCallback)
+                networkMonitored = true
+            }
         } catch (e: Exception) {
             Log.w(TAG, "Failed to register network callback", e)
         }
@@ -493,8 +524,33 @@ class NostrRelayClient @Inject constructor(
             true
         }
 
+        /** Connect if idle. Leaves a pending backoff alone: publishing to a relay that is
+         *  down must not turn every heartbeat and message into a fresh TCP+TLS attempt
+         *  that bypasses the backoff (the queued event is flushed when it reconnects). */
         fun ensureConnecting() {
-            if (webSocket == null) connect()
+            if (webSocket != null || !canAttemptConnection()) return
+            if (synchronized(reconnectLock) { reconnectJob?.isActive == true }) return
+            connect()
+        }
+
+        /** Drop the current socket (if any) and reconnect at once. Used when the default
+         *  network changes, which leaves the old socket bound to a network that is gone. */
+        fun recycle() {
+            if (removed) return
+            val socket = synchronized(connectLock) {
+                webSocket.also {
+                    webSocket = null
+                    isConnected = false
+                }
+            }
+            if (socket != null) {
+                // Its own failure callback is ignored (no longer the current socket), so do
+                // the close bookkeeping here: unacknowledged live sends go to the outbox.
+                requeueUnacknowledged()
+                _relayStatus.update { it + (url to false) }
+                socket.cancel()
+            }
+            reconnectNow()
         }
 
         /** Cancel any pending backoff and attempt a connection right now. Safe to call when
@@ -562,6 +618,12 @@ class NostrRelayClient @Inject constructor(
                     Log.d(TAG, "Reconnecting to $url in ${waitMs}ms (attempt ${attempt + 1})")
                     delay(waitMs.milliseconds)
                     if (!isStarted) return@launch
+                    // Offline: park the retry instead of failing it and arming the next one.
+                    // The network callback reconnects (and resets the backoff) on return.
+                    if (!canAttemptConnection()) {
+                        synchronized(reconnectLock) { reconnectJob = null }
+                        return@launch
+                    }
                     // Don't overwrite if another connection attempt started in the meantime
                     if (isConnected || webSocket != null) return@launch
                     synchronized(reconnectLock) {

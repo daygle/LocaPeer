@@ -107,6 +107,16 @@ private const val CLASSIFY_BOOST_MS = 45_000L
  * small, bounded battery cost. Auto-expires back to the stationary profile.
  */
 private const val STATIONARY_ANCHOR_BOOST_MS = 20_000L
+/** Stationary GPS poll when only GPS can notice a departure (see [buildLocationRequest]). */
+private const val STATIONARY_POLL_MS = 30_000L
+/**
+ * Stationary GPS poll while Activity Recognition's motion sensors confirm the device is
+ * still. AR then detects the departure itself (STILL -> walking/vehicle re-raises the
+ * cadence and GPS power at once), so the poll is only a backstop for a transition AR
+ * misses. Stationary is where the device spends most of its time, so this is the
+ * single biggest location-power saving.
+ */
+private const val STATIONARY_AR_STILL_POLL_MS = 120_000L
 
 private fun MotionState.isMoving(): Boolean =
     this == MotionState.WALKING || this == MotionState.RUNNING ||
@@ -180,6 +190,9 @@ class HeartbeatService : LifecycleService() {
     // Tracks the live-view state applied to the GPS request, so the pulse loop can relax
     // the profile when the last viewer's lease lapses (see the runnable).
     private var wasLiveView = false
+    // The AR-still state the GPS request was last built for, so an AR transition that
+    // changes only the stationary poll (not the cadence) still rebuilds the request.
+    private var appliedArConfirmsStill = false
     @Volatile private var lastPulseElapsedMs = 0L
     /** Elapsed time of the last heartbeat written to local history (0 = none yet). While a
      *  contact is watching live, pulses run every few seconds but history is only written
@@ -385,6 +398,14 @@ class HeartbeatService : LifecycleService() {
      */
     private fun effectiveIntervalState(): MotionState =
         MotionFusion.fuseForInterval(currentMotionState, arMotionState, arIsStale())
+
+    /**
+     * True when the motion sensors positively agree the device is at rest. AR reports on
+     * transitions only, so its latest STILL stays valid however old it is: leaving would
+     * have produced a new transition. Requiring an actual reading (not just the permission)
+     * proves the AR feed is alive on this device before GPS is allowed to lean on it.
+     */
+    private fun arConfirmsStill(): Boolean = arMotionState == MotionState.STATIONARY
 
     /**
      * Recompute the cadence state and, when it changed, push it into the interval
@@ -862,15 +883,22 @@ class HeartbeatService : LifecycleService() {
             // candidate needs a fix past the anchor threshold before it can be
             // corroborated (see StationaryExitDetector). At the previous 5-minute
             // poll a drive could be 5-10 minutes old before anyone was told.
-            cadenceState == MotionState.STATIONARY -> 30_000L
+            // When AR independently confirms the device is still, it covers departure
+            // detection and the poll relaxes to a backstop (see STATIONARY_AR_STILL_POLL_MS).
+            cadenceState == MotionState.STATIONARY ->
+                if (arConfirmsStill()) STATIONARY_AR_STILL_POLL_MS else STATIONARY_POLL_MS
             else -> 30_000L
         }
         val maxDelayMs = when {
             isSos || liveView || boosting || anchorBoosting -> 0L
             lowBattery -> pollIntervalMs * 2
+            // No extra batching on top of the relaxed AR-still poll, so a GPS-only
+            // departure (AR missed the transition) is still seen within one poll.
+            cadenceState == MotionState.STATIONARY && arConfirmsStill() -> pollIntervalMs
             cadenceState == MotionState.STATIONARY -> pollIntervalMs * 2
             else -> pollIntervalMs
         }
+        appliedArConfirmsStill = arConfirmsStill()
         return LocationRequest.Builder(priority, pollIntervalMs)
             .setMinUpdateIntervalMillis(pollIntervalMs / 2)
             .setMaxUpdateDelayMillis(maxDelayMs)
@@ -1026,9 +1054,15 @@ class HeartbeatService : LifecycleService() {
                     // interval, the GPS power profile and the pulse schedule. A refreshed
                     // timestamp alone can also un-stale a reading, so recompute even when
                     // the mapped state itself is unchanged.
-                    if (isStarted && refreshCadenceState()) {
-                        updateLocationRequest()
-                        reschedulePulse()
+                    if (isStarted) {
+                        if (refreshCadenceState()) {
+                            updateLocationRequest()
+                            reschedulePulse()
+                        } else if (arConfirmsStill() != appliedArConfirmsStill) {
+                            // Same cadence, but the stationary GPS poll depends on whether AR
+                            // confirms stillness (e.g. STILL arriving after GPS settled).
+                            updateLocationRequest()
+                        }
                     }
                 }
             }

@@ -56,7 +56,8 @@ class ContactsViewModel @Inject constructor(
         peers.map { peer -> ContactItem(peer, hbMap[peer.deviceId], cfgMap[peer.deviceId]) }
             .sortedWith(compareByDescending<ContactItem> { it.lastHeartbeat?.timestamp ?: 0L }
                 .thenBy { it.peer.displayName })
-    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        // Stop re-querying on every incoming heartbeat once the screen is off-screen.
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     fun removePeer(deviceId: String) {
         viewModelScope.launch {
