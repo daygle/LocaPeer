@@ -61,7 +61,8 @@ class GeofenceViewModel @Inject constructor(
     ) { peers, heartbeats ->
         val hbMap = heartbeats.associateBy { it.deviceId }
         peers.map { peer -> BroadcasterWithLocation(peer, hbMap[peer.deviceId]) }
-    }.stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+        // Stop re-querying on every incoming heartbeat once the screen is off-screen.
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     /** Assignments (area + trigger) that watch a single tracked contact. */
     fun assignmentsForContact(deviceId: String): Flow<List<AssignmentWithArea>> =

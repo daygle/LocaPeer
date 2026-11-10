@@ -175,7 +175,7 @@ class MapViewModel @Inject constructor(
             else heartbeatDao.observeLatestHeartbeat(myPubkey).map { hb ->
                 hb?.let { LatLng(it.lat, it.lng) }
             }
-        }.stateIn(viewModelScope, SharingStarted.Lazily, null)
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
 
     private val _lastMapCenter = MutableStateFlow<Triple<Double, Double, Double>?>(null)
     val lastMapCenter: StateFlow<Triple<Double, Double, Double>?> = _lastMapCenter.asStateFlow()
@@ -197,7 +197,7 @@ class MapViewModel @Inject constructor(
 
     val hasSosContacts: StateFlow<Boolean> = sharingConfigDao.observeAll()
         .map { configs -> configs.any { it.isSosContact } }
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
 
     init {
         viewModelScope.launch {
@@ -303,7 +303,7 @@ class MapViewModel @Inject constructor(
                 .distinct()
             GeofenceOnMap(fence, if (names.isEmpty()) unassignedLabel else names.joinToString(", "))
         }
-    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }.distinctUntilChanged().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
     // deviceId -> (previous, latest) heartbeat seen by [uiState], so the Live badge can be
     // inferred from the gap between consecutive heartbeats (see [LivePinDetector]). Only
@@ -380,7 +380,11 @@ class MapViewModel @Inject constructor(
         }
         scheduleLiveExpiry(nextLiveExpiry)
         MapUiState(pins = pins, geofences = fences)
-    }.stateIn(viewModelScope, SharingStarted.Lazily, MapUiState())
+        // WhileSubscribed, not Lazily: once started, a Lazily flow keeps the minute ticker
+        // running and re-runs the latest-heartbeat query on every incoming heartbeat (every
+        // few seconds while a contact streams live) for as long as the ViewModel lives -
+        // including while the app sits in the background with nothing on screen.
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MapUiState())
 
     companion object {
         private val KEY_LAT = doublePreferencesKey("map_last_lat")
