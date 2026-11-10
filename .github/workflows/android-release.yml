@@ -1,9 +1,8 @@
 name: Android Release
 
-# Builds the signed release APK on GitHub instead of via Android Studio's
-# "Generate Signed Build/APK" wizard. The keystore is the same one, supplied through
-# repository secrets, so the resulting APK keeps its existing signature and can update
-# installations in place.
+# Builds the signed release App Bundle (AAB) on GitHub instead of via Android Studio's
+# "Generate Signed Bundle" wizard. The keystore is the same one, supplied through
+# repository secrets, so Play keeps recognising it as the upload key.
 on:
   push:
     tags: [ "v*" ]
@@ -18,7 +17,7 @@ permissions:
 
 jobs:
   release:
-    name: Build Signed Release APK & AAB
+    name: Lint & Build Signed Release AAB
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -26,10 +25,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v7
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v5
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           # No `cache: gradle` here: gradle/actions/setup-gradle below owns Gradle caching.
 
@@ -78,6 +77,14 @@ jobs:
           echo "::error::Could not fetch the Gradle distribution after 3 attempts."
           exit 1
 
+      # Lint gates the release: warningsAsErrors is on, so any lint warning stops the
+      # workflow here, before the keystore is touched or anything is published.
+      - name: Run Lint
+        run: ./gradlew lintRelease --warning-mode=fail
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --warning-mode=fail
+
       # The keystore is stored base64-encoded in a repository secret and decoded to a
       # throwaway path on the runner, so it never lands in the workspace or an artifact.
       - name: Decode Signing Keystore
@@ -85,13 +92,13 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "::error::Repository secret KEYSTORE_BASE64 is not set (see README, 'Signed release APK & AAB')."
+            echo "::error::Repository secret KEYSTORE_BASE64 is not set (see README, 'Signed release AAB')."
             exit 1
           fi
           printf '%s' "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/locapeer-release.jks"
           chmod 600 "$RUNNER_TEMP/locapeer-release.jks"
 
-      - name: Build Signed Release APK & AAB
+      - name: Build Signed Release AAB
         env:
           LOCAPEER_KEYSTORE_FILE: ${{ runner.temp }}/locapeer-release.jks
           LOCAPEER_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -116,27 +123,16 @@ jobs:
             fi
             VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
             echo "versionName=$VERSION versionCode=$VERSION_CODE"
-            ./gradlew assembleRelease bundleRelease -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
+            ./gradlew bundleRelease --warning-mode=fail -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
+            echo "AAB_NAME=LocaPeer-$VERSION.aab" >> "$GITHUB_ENV"
           else
-            ./gradlew assembleRelease bundleRelease
+            ./gradlew bundleRelease --warning-mode=fail
+            echo "AAB_NAME=LocaPeer-${GITHUB_SHA::7}.aab" >> "$GITHUB_ENV"
           fi
-
-      # Fail loudly rather than shipping an unsigned or unexpectedly-signed APK.
-      - name: Verify APK Signature
-        run: |
-          APK=app/build/outputs/apk/release/app-release.apk
-          if [ ! -f "$APK" ]; then
-            echo "::error::No signed APK at $APK. Contents:"
-            ls -l app/build/outputs/apk/release/ || true
-            exit 1
-          fi
-          SDK_ROOT="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/usr/local/lib/android/sdk}}"
-          APKSIGNER=$(find "$SDK_ROOT/build-tools" -name apksigner -type f | sort -V | tail -n 1)
-          "$APKSIGNER" verify --print-certs "$APK"
 
       # The AAB is what Google Play takes; it is signed with the same key (Play uses it as
       # the upload key). apksigner can't read bundles, so check it with jarsigner.
-      - name: Verify AAB Signature
+      - name: Verify AAB Signature & Name It After the Version
         run: |
           AAB=app/build/outputs/bundle/release/app-release.aab
           if [ ! -f "$AAB" ]; then
@@ -150,23 +146,24 @@ jobs:
             echo "::error::AAB at $AAB is not signed."
             exit 1
           fi
+          mv "$AAB" "app/build/outputs/bundle/release/$AAB_NAME"
 
-      - name: Upload APK Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: LocaPeer-release-apk
-          path: app/build/outputs/apk/release/*.apk
-          if-no-files-found: error
-          retention-days: 30
-
-      # Upload the AAB to Play Console; mapping.txt lets Play deobfuscate R8-shrunk crash traces.
+      # archive: false uploads the .aab as-is (a single file, not wrapped in a zip);
+      # the artifact takes the file's name.
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: LocaPeer-release-aab
-          path: |
-            app/build/outputs/bundle/release/*.aab
-            app/build/outputs/mapping/release/mapping.txt
+          path: app/build/outputs/bundle/release/${{ env.AAB_NAME }}
+          archive: false
+          if-no-files-found: error
+          retention-days: 30
+
+      # mapping.txt lets Play Console deobfuscate R8-shrunk crash traces.
+      - name: Upload R8 Mapping
+        uses: actions/upload-artifact@v7
+        with:
+          name: LocaPeer-mapping
+          path: app/build/outputs/mapping/release/mapping.txt
           if-no-files-found: error
           retention-days: 30
 
@@ -175,10 +172,9 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          APK=app/build/outputs/apk/release/app-release.apk
-          AAB=app/build/outputs/bundle/release/app-release.aab
+          AAB=app/build/outputs/bundle/release/$AAB_NAME
           if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
-            gh release upload "$GITHUB_REF_NAME" "$APK" "$AAB" --clobber
+            gh release upload "$GITHUB_REF_NAME" "$AAB" --clobber
           else
-            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes "$APK" "$AAB"
+            gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --generate-notes "$AAB"
           fi
