@@ -1,0 +1,36 @@
+name: Workflow Lint
+
+# Checks the workflow files themselves (syntax, expressions, action inputs, and the
+# shell in `run:` blocks via shellcheck), so a broken release workflow is caught on
+# the PR that breaks it rather than on the next tag.
+on:
+  push:
+    branches: [ "main" ]
+    paths: [ ".github/workflows/**" ]
+  pull_request:
+    branches: [ "main" ]
+    paths: [ ".github/workflows/**" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  actionlint:
+    name: actionlint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v7
+
+      # The image bundles shellcheck, so `run:` scripts are checked too.
+      - name: Check Workflow Files
+        uses: docker://rhysd/actionlint:1.7.12
+        with:
+          args: -color

@@ -26,10 +26,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v7
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v5
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           # No `cache: gradle` here: gradle/actions/setup-gradle below owns Gradle
           # caching. If setup-java pre-populates ~/.gradle first, setup-gradle skips
@@ -69,17 +69,15 @@ jobs:
           exit 1
 
       # warningsAsErrors is on, so any lint warning in either variant fails the job
-      # before anything is built.
+      # before anything is built. --warning-mode=fail also fails on Gradle deprecations.
       - name: Run Lint
-        run: ./gradlew lintDebug lintRelease
+        run: ./gradlew lintDebug lintRelease --warning-mode=fail
 
-      - name: Run Unit Tests
-        run: ./gradlew testDebugUnitTest
-
-      # Unsigned here (no signing secrets on PRs); this validates R8 and resource
+      # One Gradle invocation for both, so configuration runs once. The bundle is
+      # unsigned here (no signing secrets on PRs); it validates R8 and resource
       # shrinking on every change, i.e. the same build the release ships.
-      - name: Build Release Bundle
-        run: ./gradlew bundleRelease
+      - name: Run Unit Tests & Build Release Bundle
+        run: ./gradlew testDebugUnitTest bundleRelease --warning-mode=fail
 
       # Room's KSP step rewrites app/schemas on every build. A diff here means a schema
       # change was made without committing its exported JSON (needed for migrations).

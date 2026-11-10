@@ -7,7 +7,12 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(21)
+    compilerOptions {
+        // Any Kotlin compiler warning (deprecations, unchecked casts, unused values...)
+        // fails the build, matching lint's warningsAsErrors.
+        allWarningsAsErrors = true
+    }
 }
 
 // Release signing. Android Studio's "Generate Signed APK/Bundle" wizard injects the keystore
@@ -110,8 +115,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     buildFeatures {

@@ -25,10 +25,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v7
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v5
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           # No `cache: gradle` here: gradle/actions/setup-gradle below owns Gradle caching.
 
@@ -80,7 +80,10 @@ jobs:
       # Lint gates the release: warningsAsErrors is on, so any lint warning stops the
       # workflow here, before the keystore is touched or anything is published.
       - name: Run Lint
-        run: ./gradlew lintRelease
+        run: ./gradlew lintRelease --warning-mode=fail
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest --warning-mode=fail
 
       # The keystore is stored base64-encoded in a repository secret and decoded to a
       # throwaway path on the runner, so it never lands in the workspace or an artifact.
@@ -120,10 +123,10 @@ jobs:
             fi
             VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
             echo "versionName=$VERSION versionCode=$VERSION_CODE"
-            ./gradlew bundleRelease -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
+            ./gradlew bundleRelease --warning-mode=fail -PappVersionName="$VERSION" -PappVersionCode="$VERSION_CODE"
             echo "AAB_NAME=LocaPeer-$VERSION.aab" >> "$GITHUB_ENV"
           else
-            ./gradlew bundleRelease
+            ./gradlew bundleRelease --warning-mode=fail
             echo "AAB_NAME=LocaPeer-${GITHUB_SHA::7}.aab" >> "$GITHUB_ENV"
           fi
 
