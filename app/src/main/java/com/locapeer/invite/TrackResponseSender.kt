@@ -62,9 +62,7 @@ class TrackResponseSender @Inject constructor(
         val isRoleChange: Boolean = false,
         /** When the answer was recorded; 0 for a record written by an older build. */
         val recordedAt: Long = 0
-    ) {
-        val isAccept: Boolean get() = acceptedRole != null
-    }
+    )
 
     private val json = Json { ignoreUnknownKeys = true }
     private val scope = backgroundScope("TrackResponse")

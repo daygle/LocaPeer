@@ -1081,7 +1081,8 @@ class MessagingViewModel @Inject constructor(
             // receipts, acks and NIP-09 deletions are handled by the always-on HeartbeatReceiver
             // (so they apply even while this screen is closed), and this screen reflects them
             // through Room flows.
-            val since = (System.currentTimeMillis() / 1000L) - (24 * 60 * 60)
+            // From now on only: a typing indicator means nothing after the fact.
+            val since = System.currentTimeMillis() / 1000L
             relayClient.subscribe(
                 "lp-dm-${myPubHex.take(16)}",
                 NostrFilter(
@@ -1116,6 +1117,9 @@ class MessagingViewModel @Inject constructor(
     }
 
     private fun processTypingEvent(event: NostrEvent) {
+        // A relay replays stored typing events when the subscription is re-sent after a
+        // reconnect; only a recent one means the contact is typing now.
+        if (!isFreshTypingEvent(event.createdAt, System.currentTimeMillis() / 1000L)) return
         val fromPubkey = event.pubkey
         viewModelScope.launch {
             val sender = peerDao.getPeer(fromPubkey) ?: return@launch  // only known peers
@@ -1184,6 +1188,12 @@ class MessagingViewModel @Inject constructor(
         }
     }
 }
+
+/** How old (by the sender's clock) a typing event may be and still show the indicator. */
+private const val TYPING_FRESHNESS_S = 30L
+
+internal fun isFreshTypingEvent(createdAtEpoch: Long, nowEpoch: Long): Boolean =
+    createdAtEpoch >= nowEpoch - TYPING_FRESHNESS_S
 
 data class ConversationSummary(
     val peer: PeerEntity,

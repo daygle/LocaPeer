@@ -175,11 +175,9 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
-    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
     implementation(libs.material)
     implementation(libs.compose.material.icons.extended)
-    debugImplementation(libs.compose.ui.tooling)
 
     // Core AndroidX & Lifecycle
     implementation(libs.androidx.core.ktx)

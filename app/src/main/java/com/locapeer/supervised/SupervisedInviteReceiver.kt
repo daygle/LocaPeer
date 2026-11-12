@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 
 const val ACTION_SUPERVISED_INVITE_ACCEPT = "com.locapeer.SUPERVISED_INVITE_ACCEPT"
 const val ACTION_SUPERVISED_INVITE_DECLINE = "com.locapeer.SUPERVISED_INVITE_DECLINE"
-const val SUPERVISED_INVITE_SUPPRESS = "com.locapeer.SUPERVISED_INVITE_CANCELLED"
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)

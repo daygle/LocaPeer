@@ -91,7 +91,8 @@
             android:exported="false"
             android:foregroundServiceType="location" />
 
-        <!-- WorkManager worker for missed heartbeat checks -->
+        <!-- Remove WorkManager's default initializer: LocaPeerApplication supplies the
+             Hilt worker factory through Configuration.Provider instead. -->
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
