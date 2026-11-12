@@ -30,7 +30,9 @@ jobs:
         uses: actions/checkout@v7
 
       # The image bundles shellcheck, so `run:` scripts are checked too.
+      # Pinned by digest so a re-pushed tag can't change what runs. When bumping the
+      # version, update the digest as well (docker buildx imagetools inspect <image:tag>).
       - name: Check Workflow Files
-        uses: docker://rhysd/actionlint:1.7.12
+        uses: docker://rhysd/actionlint:1.7.12@sha256:b1934ee5f1c509618f2508e6eb47ee0d3520686341fec936f3b79331f9315667
         with:
           args: -color
