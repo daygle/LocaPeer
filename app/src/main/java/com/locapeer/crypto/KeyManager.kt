@@ -211,7 +211,7 @@ class KeyManager @Inject constructor(
                 // Replace it: the new key still needs a fresh authentication before it works,
                 // so this only recovers from an otherwise permanent lockout.
                 Log.w(TAG, "App lock key invalidated; generating a new one", e)
-                deleteAppLockKey(APPLOCK_KEYSTORE_ALIAS)
+                deleteKeystoreEntry(APPLOCK_KEYSTORE_ALIAS)
                 cipher.init(Cipher.ENCRYPT_MODE, getOrCreateAppLockKey())
             }
             androidx.biometric.BiometricPrompt.CryptoObject(cipher)
@@ -260,10 +260,6 @@ class KeyManager @Inject constructor(
             .build()
         keyGen.init(spec)
         return keyGen.generateKey()
-    }
-
-    private fun deleteAppLockKey(alias: String) {
-        deleteKeystoreEntry(alias)
     }
 
     private fun deleteKeystoreEntry(alias: String) {

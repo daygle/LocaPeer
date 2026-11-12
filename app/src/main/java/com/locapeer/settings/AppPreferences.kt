@@ -295,6 +295,7 @@ class AppPreferences @Inject constructor(
     private val KEY_SOS_ACTIVE = booleanPreferencesKey("sos_active")
     private val KEY_LAST_CONTROL_SUB_EPOCH = longPreferencesKey("last_control_sub_epoch")
     private val KEY_LAST_HEARTBEAT_SUB_EPOCH = longPreferencesKey("last_heartbeat_sub_epoch")
+    private val KEY_LAST_MESSAGE_SUB_EPOCH = longPreferencesKey("last_message_sub_epoch")
     private val KEY_MAP_START_ZOOM = doublePreferencesKey("map_start_zoom")
     private val KEY_MAP_STARTING_POINT = stringPreferencesKey("map_starting_point")
     private val KEY_MAP_FIXED_LAT = doublePreferencesKey("map_fixed_lat")
@@ -657,6 +658,15 @@ class AppPreferences @Inject constructor(
 
     suspend fun setLastHeartbeatSubEpoch(epoch: Long) {
         context.settingsStore.edit { it[KEY_LAST_HEARTBEAT_SUB_EPOCH] = epoch }
+    }
+
+    /** Returns the epoch second up to which messages and receipts have been synced from
+     *  relays, or 0 if they never have been. */
+    suspend fun getLastMessageSubEpoch(): Long =
+        context.settingsStore.data.first()[KEY_LAST_MESSAGE_SUB_EPOCH] ?: 0L
+
+    suspend fun setLastMessageSubEpoch(epoch: Long) {
+        context.settingsStore.edit { it[KEY_LAST_MESSAGE_SUB_EPOCH] = epoch }
     }
 
     /** Persisted contact-add intents for the supervised approval queue (JSON string; see

@@ -159,6 +159,17 @@ class NostrRelayClient @Inject constructor(
     /** Emits Nostr event IDs that any relay accepted (OK true). */
     val okEvents: SharedFlow<String> by lazy { _okEvents }
 
+    private val _eoseEvents by lazy {
+        MutableSharedFlow<String>(
+            extraBufferCapacity = 16,
+            onBufferOverflow = kotlinx.coroutines.channels.BufferOverflow.DROP_OLDEST,
+        )
+    }
+    /** Emits a subscription id each time a relay reports end-of-stored-events (EOSE) for it,
+     *  i.e. that relay has finished replaying its history for the subscription. Fires again
+     *  after every reconnect, because subscriptions are re-sent then. */
+    val eoseEvents: SharedFlow<String> by lazy { _eoseEvents }
+
     private val subsLock by lazy { Any() }
     private val activeSubscriptions by lazy { mutableMapOf<String, String>() }
 
@@ -724,7 +735,13 @@ class NostrRelayClient @Inject constructor(
                                 webSocket.close(1013, "Inbound event queue full")
                             }
                         }
-                        "EOSE" -> if (arr.size >= 2) Log.d(TAG, "EOSE for sub ${arr[1]} from $url")
+                        "EOSE" -> {
+                            val subId = (arr.getOrNull(1) as? JsonPrimitive)?.content ?: return
+                            // Only our own subscriptions count: the id is relay-supplied.
+                            if (synchronized(subsLock) { subId !in activeSubscriptions }) return
+                            Log.d(TAG, "EOSE for sub $subId from $url")
+                            _eoseEvents.tryEmit(subId)
+                        }
                         "NOTICE" -> if (arr.size >= 2) Log.d(TAG, "NOTICE from $url: ${(arr[1] as? JsonPrimitive)?.content ?: arr[1]}")
                         "OK" -> {
                             if (arr.size < 3) return
@@ -734,9 +751,10 @@ class NostrRelayClient @Inject constructor(
                             onRelayAnswer(eventId, accepted, message)
                             if (accepted) {
                                 scope.launch { _okEvents.emit(eventId) }
-                                Log.i(TAG, "OK from $url: accepted $eventId")
+                                Log.i(TAG, "OK from $url: accepted ${eventId.take(64)}")
                             } else {
-                                Log.w(TAG, "OK from $url: rejected $eventId - $message")
+                                // Both strings are relay-supplied and unbounded.
+                                Log.w(TAG, "OK from $url: rejected ${eventId.take(64)} - ${message.take(200)}")
                             }
                         }
                     }

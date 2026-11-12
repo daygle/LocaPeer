@@ -97,6 +97,15 @@ private const val CHANNEL_ID_MESSAGES = "locapeer_messages"
 private const val SUB_ID = "lp-hb"
 private const val SUB_ID_CONTROL = "lp-ctrl"
 private const val SUB_ID_HB_CATCHUP = "lp-hb-catchup"
+private const val SUB_ID_MSG_CATCHUP = "lp-msg-catchup"
+// Message catch-up starts this far before the saved sync point. It absorbs sender clock
+// skew and events a relay had replayed but this device had not yet processed when the
+// sync point was saved; redelivered messages are dropped by their event id.
+private const val MSG_CATCHUP_OVERLAP_S = 300L
+// Throttle for persisting the message sync point while events are flowing.
+private const val MSG_EPOCH_SAVE_INTERVAL_S = 300L
+// Cap on remembered "delete this message" targets that have not arrived yet.
+private const val MAX_EARLY_DELETIONS = 500
 private const val MAX_CATCHUP_SECONDS = 30L * 24 * 3600  // 30 days
 // Heartbeats are far more numerous than control events, so cap their replay window
 // tighter; relays also cap response sizes, which the limit below reflects.
@@ -276,6 +285,27 @@ internal fun roleAfterTrackAccept(currentRole: String, acceptedRole: String?): S
 /** SOS priority comes from the signed event kind, not the optional payload flag. */
 internal fun isSosEvent(eventKind: Int): Boolean = eventKind == NostrEventKind.SOS_ALERT
 
+/**
+ * Messages and their receipts/purges. Replayed from the saved message sync point at start, so
+ * anything a contact sent while this app was not running is still delivered.
+ */
+private val MESSAGE_KINDS = listOf(
+    NostrEventKind.ENCRYPTED_DM,
+    NostrEventKind.DELIVERY_ACK,
+    NostrEventKind.READ_RECEIPT,
+    NostrEventKind.PURGE_REQUEST,
+    NostrEventKind.MESSAGE_PURGE_REQUEST
+)
+
+/**
+ * Where the message catch-up starts: [MSG_CATCHUP_OVERLAP_S] before the saved sync point,
+ * never further back than [MAX_CATCHUP_SECONDS]. With no sync point yet (first run, or a
+ * restored backup) it starts from now rather than pulling in a month of old conversations.
+ */
+internal fun messageCatchUpSince(lastSyncEpoch: Long, nowEpoch: Long): Long =
+    if (lastSyncEpoch <= 0L) nowEpoch
+    else maxOf(lastSyncEpoch - MSG_CATCHUP_OVERLAP_S, nowEpoch - MAX_CATCHUP_SECONDS).coerceAtMost(nowEpoch)
+
 private val CONTROL_KINDS = listOf(
     NostrEventKind.TRACK_REQUEST,
     NostrEventKind.TRACK_ACCEPT,
@@ -330,6 +360,27 @@ class HeartbeatReceiver @Inject constructor(
 
     /** Highest heartbeat event epoch persisted as the catch-up baseline (throttled). */
     @Volatile private var lastPersistedHbEpoch = 0L
+
+    /** Start of this session's control catch-up; saved as the next baseline once a relay has
+     *  finished replaying it (0 = not subscribed yet, or already saved). */
+    @Volatile private var pendingControlEpoch = 0L
+
+    /** Message sync point last written to disk (throttled, see [advanceMessageBaseline]). */
+    @Volatile private var lastPersistedMsgEpoch = 0L
+
+    /** True once a connected relay has finished replaying the message catch-up, so "now" is a
+     *  valid sync point. Cleared whenever no relay is connected: the next connection replays
+     *  the gap first. */
+    @Volatile private var messagesInSync = false
+
+    /**
+     * "senderPubkey:eventId" of messages a contact asked to delete before the message itself
+     * arrived. The deletion and the message come from separate catch-up subscriptions, so
+     * after an offline stretch the deletion can be delivered first; without this the message
+     * would then be stored although its sender already deleted it. Touched only from the
+     * ordered event collector.
+     */
+    private val earlyDeletions = LinkedHashSet<String>()
 
     /**
      * In-memory mirror of [AppPreferences.leftCircles], kept fresh by a collector started in
@@ -386,6 +437,29 @@ class HeartbeatReceiver @Inject constructor(
         // Keep the left-circle cache warm so the DM hot path can suppress left circles without a
         // DataStore read per message.
         prefs.leftCircles.onEach { leftCircles = it }.launchIn(scope)
+        // Sync points only advance once a relay has actually replayed the catch-up (EOSE).
+        // Saving them when the subscription is merely queued would skip everything sent in
+        // the meantime if the app started offline and was killed before it ever connected.
+        relayClient.eoseEvents
+            .onEach { subId ->
+                when (subId) {
+                    SUB_ID_CONTROL -> {
+                        val epoch = pendingControlEpoch
+                        if (epoch > 0L) {
+                            pendingControlEpoch = 0L
+                            prefs.setLastControlSubEpoch(epoch)
+                        }
+                    }
+                    SUB_ID_MSG_CATCHUP -> {
+                        messagesInSync = true
+                        advanceMessageBaseline()
+                    }
+                }
+            }
+            .launchIn(scope)
+        relayClient.relayStatus
+            .onEach { status -> if (status.values.none { it }) messagesInSync = false }
+            .launchIn(scope)
         scope.launch {
             val (_, pubHex) = keyManager.ensureKeypair()
             relayClient.connect()
@@ -447,9 +521,26 @@ class HeartbeatReceiver @Inject constructor(
                 )
             )
 
-            // Advance the baseline so the next session only re-fetches events from now onward
-            prefs.setLastControlSubEpoch(nowEpoch)
+            // The baseline advances to this session's start once a relay has replayed the
+            // catch-up (see the eoseEvents collector above).
+            pendingControlEpoch = nowEpoch
             Log.d(TAG, "Control catch-up since epoch $catchUpSince (last sync: $lastControlEpoch)")
+
+            // Message catch-up: the real-time subscription above only covers events created
+            // after this start, so messages, receipts and purge requests sent while the app
+            // was not running would otherwise never arrive.
+            val lastMsgEpoch = prefs.getLastMessageSubEpoch()
+            val msgSince = messageCatchUpSince(lastMsgEpoch, nowEpoch)
+            lastPersistedMsgEpoch = lastMsgEpoch
+            relayClient.subscribe(
+                SUB_ID_MSG_CATCHUP,
+                NostrFilter(
+                    kinds = MESSAGE_KINDS,
+                    pTags = listOf(pubHex),
+                    since = msgSince
+                )
+            )
+            Log.d(TAG, "Message catch-up since epoch $msgSince (last sync: $lastMsgEpoch)")
 
             // Heartbeat catch-up: replay location/SOS events sent while this device was
             // offline, so contacts' location history has no gaps. Without this, only
@@ -512,8 +603,23 @@ class HeartbeatReceiver @Inject constructor(
                 if (e is kotlinx.coroutines.CancellationException) throw e
                 Log.w(TAG, "Failed to handle event ${event.id} (kind ${event.kind})", e)
               }
+              advanceMessageBaseline()
             }
             .launchIn(scope)
+    }
+
+    /**
+     * Persist "now" as the message sync point (throttled). Only while [messagesInSync]: a
+     * connected relay has replayed the catch-up and is delivering live, so everything up to
+     * now has been received and the next start need not ask for it again - which would bring
+     * back messages the user has since deleted locally.
+     */
+    private suspend fun advanceMessageBaseline() {
+        if (!messagesInSync) return
+        val nowEpoch = Instant.now().epochSecond
+        if (nowEpoch < lastPersistedMsgEpoch + MSG_EPOCH_SAVE_INTERVAL_S) return
+        lastPersistedMsgEpoch = nowEpoch
+        prefs.setLastMessageSubEpoch(nowEpoch)
     }
 
     private suspend fun processMsgPurgeRequest(event: NostrEvent) {
@@ -967,6 +1073,8 @@ class HeartbeatReceiver @Inject constructor(
         // Received rows are keyed by the event id itself, so this is an indexed PK lookup.
         if (messageDao.existsById(event.id)) return
         val sender = peerDao.getPeer(event.pubkey) ?: return
+        // The sender already deleted this message (their deletion was replayed first).
+        if (earlyDeletions.remove(earlyDeletionKey(event.pubkey, event.id))) return
         val isBlocked = !sender.messagingEnabled
         val privHex = keyManager.getPrivateKeyHex() ?: return
         val plaintext = try {
@@ -1204,10 +1312,19 @@ class HeartbeatReceiver @Inject constructor(
             if (msg != null && msg.senderPublicKeyHex == event.pubkey) {
                 messageDao.delete(msg)
                 deleted = true
+            } else if (msg == null && eventId.length == 64) {
+                // Not here (yet): remember it in case the message is still on its way. Keyed
+                // by the signer, so this can only ever suppress the signer's own messages.
+                if (earlyDeletions.size >= MAX_EARLY_DELETIONS) {
+                    earlyDeletions.iterator().let { it.next(); it.remove() }
+                }
+                earlyDeletions.add(earlyDeletionKey(event.pubkey, eventId))
             }
         }
         if (deleted) com.locapeer.messaging.MediaCache.clearDecryptedMedia(context)
     }
+
+    private fun earlyDeletionKey(senderPubkey: String, eventId: String) = "$senderPubkey:$eventId"
 
     private suspend fun processReadReceiptInBackground(event: NostrEvent) {
         peerDao.getPeer(event.pubkey) ?: return
