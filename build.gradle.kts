@@ -10,7 +10,7 @@ buildscript {
             eachDependency {
                 if (requested.group == "org.bouncycastle" && (requested.name.startsWith("bcprov-jdk") || requested.name.startsWith("bcpkix-jdk") || requested.name.startsWith("bcutil-jdk"))) {
                     val artifact = if (requested.name.startsWith("bcprov")) "bcprov-jdk18on" else if (requested.name.startsWith("bcpkix")) "bcpkix-jdk18on" else "bcutil-jdk18on"
-                    val version = "1.86"
+                    val version = "1.87"
                     useTarget("org.bouncycastle:$artifact:$version")
                 }
                 if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
@@ -27,7 +27,7 @@ buildscript {
                             "streams allocate up to ~4 GB on deserialization (GHSA-xxph-c9ww-hj94)")
                 }
                 if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
-                    useVersion("3.21.0")
+                    useVersion("3.22.0")
                     because("CVE-2025-48924: uncontrolled recursion DoS in ClassUtils.getClass")
                 }
                 if (requested.group == "org.bitbucket.b_c" && requested.name == "jose4j") {
