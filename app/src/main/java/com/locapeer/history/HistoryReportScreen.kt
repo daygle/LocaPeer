@@ -45,6 +45,9 @@ import org.maplibre.android.geometry.LatLng
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+// Locale.US below formats the time pickers' "%02d:%02d" as ASCII digits on purpose: it is
+// a machine-formatted value, not localized text.
+import java.util.Locale
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
