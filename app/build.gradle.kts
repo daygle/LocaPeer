@@ -72,9 +72,8 @@ android {
 
     lint {
         // Translation coverage is enforced: every shipped locale must translate every base
-        // string. The two English variants (values-en-rGB, values-en-rAU) deliberately
-        // override only British/Australian spellings and fall back to values/ for the rest,
-        // so lint.xml exempts those two folders from MissingTranslation.
+        // string. The British/Australian English picker entries resolve to the base strings
+        // rather than to a partial locale folder, so nothing needs exempting here.
         //
         // The plural-quantity checks stay off: the quantity set lint demands comes from its
         // bundled CLDR data, which added categories (e.g. "many" for es/it/pt) that a
