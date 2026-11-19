@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.os.Build
 import android.os.LocaleList
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import java.util.Locale
 
 /**
@@ -74,9 +75,7 @@ object AppLocale {
     fun remember(tag: String) {
         val app = appContext ?: return
         app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit()
-            .putString(KEY_TAG, tag)
-            .apply()
+            .edit { putString(KEY_TAG, tag) }
         snapshot = build(app, tag)
     }
 
