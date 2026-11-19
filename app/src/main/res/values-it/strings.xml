@@ -978,7 +978,7 @@
     <string name="toast_declined_supervision_invite">Richiesta di supervisione di %1$s rifiutata</string>
     <string name="toast_now_supervised">Ora supervisionato da %1$s</string>
     <string name="backup_corrupt">Questo file di backup è danneggiato o incompleto.</string>
-    <string name="backup_newer_version">Questo backup è stato creato da una versione più recente di LocaPeer. Aggiorna l'app prima di ripristinarlo.</string>
-    <string name="notif_geofence_inside_title">%1$s si trova all'interno di %2$s</string>
+    <string name="backup_newer_version">Questo backup è stato creato da una versione più recente di LocaPeer. Aggiorna l\'app prima di ripristinarlo.</string>
+    <string name="notif_geofence_inside_title">%1$s si trova all\'interno di %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s ha ricevuto un avviso che sei entrato o uscito da una geofence</string>
 </resources>

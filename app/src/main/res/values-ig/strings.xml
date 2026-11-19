@@ -969,6 +969,6 @@
     <string name="supervision_disable_request_message">%1$s na-arịọ ka agbanyụọ ọnọdụ nlekọta. Ikwenye ga-emeghe ntọala ruo mgbe ebighị ebi ruo mgbe anabatara arịrịọ nlekọta ọhụrụ.</string>
     <string name="backup_corrupt">Faịlụ nchekwa a mebiri emebi ma ọ bụ ezughị ezu.</string>
     <string name="backup_newer_version">Otu ụdị LocaPeer ọhụrụ mere nchekwa a. Melite ngwa ahụ tupu iweghachi ya.</string>
-    <string name="notif_geofence_inside_title">%1$s dị n'ime %2$s</string>
+    <string name="notif_geofence_inside_title">%1$s dị n\'ime %2$s</string>
     <string name="notif_tracking_geofence_unnamed">%1$s nwetara ọkwa na ị banyere ma ọ bụ pụọ na geofence</string>
 </resources>

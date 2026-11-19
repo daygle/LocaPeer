@@ -984,7 +984,7 @@
     <string name="supervision_disable_request_title">Bu qurilmaning qulfini ochishmi?</string>
     <string name="supervision_disable_request_message">%1$s kuzatilayotgan rejimni o\'chirishni so\'ramoqda. Tasdiqlasangiz, yangi kuzatuv so\'rovi qabul qilinishigacha sozlamalar qulfsiz qoladi.</string>
     <string name="backup_corrupt">Bu zaxira fayli shikastlangan yoki toʻliq emas.</string>
-    <string name="backup_newer_version">Bu zaxira LocaPeer'ning yangiroq versiyasida yaratilgan. Tiklashdan oldin ilovani yangilang.</string>
+    <string name="backup_newer_version">Bu zaxira LocaPeer\'ning yangiroq versiyasida yaratilgan. Tiklashdan oldin ilovani yangilang.</string>
     <string name="notif_geofence_inside_title">%1$s %2$s ichida</string>
     <string name="notif_tracking_geofence_unnamed">%1$s siz geofence hududiga kirganingiz yoki chiqqaningiz haqida ogohlantirish oldi</string>
 </resources>

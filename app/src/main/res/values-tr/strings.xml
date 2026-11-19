@@ -983,7 +983,7 @@
     <string name="supervision_disable_request_title">Bu cihazın kilidi açılsın mı?</string>
     <string name="supervision_disable_request_message">%1$s denetim modunun kapatılmasını istiyor. Onaylarsanız ayarlar yeni bir denetim isteği kabul edilene dek kalıcı olarak açılır.</string>
     <string name="backup_corrupt">Bu yedekleme dosyası bozuk veya eksik.</string>
-    <string name="backup_newer_version">Bu yedekleme LocaPeer'in daha yeni bir sürümüyle oluşturuldu. Geri yüklemeden önce uygulamayı güncelleyin.</string>
+    <string name="backup_newer_version">Bu yedekleme LocaPeer\'in daha yeni bir sürümüyle oluşturuldu. Geri yüklemeden önce uygulamayı güncelleyin.</string>
     <string name="notif_geofence_inside_title">%1$s, %2$s içinde</string>
-    <string name="notif_tracking_geofence_unnamed">%1$s, bir geofence'a girdiğiniz veya çıktığınız konusunda uyarı aldı</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s, bir geofence\'a girdiğiniz veya çıktığınız konusunda uyarı aldı</string>
 </resources>
