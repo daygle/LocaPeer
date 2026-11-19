@@ -70,8 +70,20 @@ jobs:
 
       # warningsAsErrors is on, so any lint warning in either variant fails the job
       # before anything is built. --warning-mode=fail also fails on Gradle deprecations.
+      # TEMP-DIAG: echo the failure into the step summary (readable without a token).
       - name: Run Lint
-        run: ./gradlew lintDebug lintRelease --warning-mode=fail
+        run: |
+          set +e
+          ./gradlew lintDebug lintRelease --warning-mode=fail --stacktrace > lint-out.log 2>&1
+          status=$?
+          if [ $status -ne 0 ]; then
+            {
+              echo '```'
+              tail -c 6000 lint-out.log
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit $status
+          fi
 
       # One Gradle invocation for both, so configuration runs once. The bundle is
       # unsigned here (no signing secrets on PRs); it validates R8 and resource
