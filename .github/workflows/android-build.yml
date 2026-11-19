@@ -79,11 +79,11 @@ jobs:
           status=$?
           if [ $status -ne 0 ]; then
             echo "::error title=lint-out::gradle exit $status"
-            grep -m 40 -E 'FAILURE:|What went wrong|Execution failed|^e: |error:|Caused by' lint-out.log 2>/dev/null | sed -e 's/%/%25/g' | while IFS= read -r line; do
-              echo "::error title=lint-err::${line}"
+            grep -m 25 -E 'Error:|Warning:' lint-out.log 2>/dev/null | sed -e 's/%/%25/g' | while IFS= read -r line; do
+              echo "::error title=lint-finding::${line}"
             done
-            tail -c 2500 lint-out.log | sed -e 's/%/%25/g' | while IFS= read -r line; do
-              echo "::error title=lint-tail::${line}"
+            grep -m 10 -E 'FAILURE:|What went wrong|Execution failed|Caused by' lint-out.log 2>/dev/null | sed -e 's/%/%25/g' | while IFS= read -r line; do
+              echo "::error title=lint-err::${line}"
             done
             exit $status
           fi
