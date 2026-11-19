@@ -35,6 +35,9 @@ object AppLocale {
     @SuppressLint("StaticFieldLeak")
     @Volatile private var appContext: Context? = null
 
+    // Cached alongside the locale it was built for; holds the same application-scoped
+    // context as [appContext], never an Activity.
+    @SuppressLint("StaticFieldLeak")
     @Volatile private var snapshot: Snapshot? = null
 
     private class Snapshot(val tag: String, val locale: Locale, val context: Context?)
