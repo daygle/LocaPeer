@@ -70,18 +70,21 @@ jobs:
 
       # warningsAsErrors is on, so any lint warning in either variant fails the job
       # before anything is built. --warning-mode=fail also fails on Gradle deprecations.
-      # TEMP-DIAG: echo the failure into the step summary (readable without a token).
+      # TEMP-DIAG: echo the failure as annotations (the only run output readable
+      # without a token).
       - name: Run Lint
         run: |
           set +e
           ./gradlew lintDebug lintRelease --warning-mode=fail --stacktrace > lint-out.log 2>&1
           status=$?
           if [ $status -ne 0 ]; then
-            {
-              echo '```'
-              tail -c 6000 lint-out.log
-              echo '```'
-            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error title=lint-out::gradle exit $status"
+            grep -m 40 -E 'FAILURE:|What went wrong|Execution failed|^e: |error:|Caused by' lint-out.log 2>/dev/null | sed -e 's/%/%25/g' | while IFS= read -r line; do
+              echo "::error title=lint-err::${line}"
+            done
+            tail -c 2500 lint-out.log | sed -e 's/%/%25/g' | while IFS= read -r line; do
+              echo "::error title=lint-tail::${line}"
+            done
             exit $status
           fi
 
