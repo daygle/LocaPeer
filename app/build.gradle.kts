@@ -126,6 +126,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_21
     }
 
+    // The app has its own language picker (AppCompat per-app locales over 50 locales), so a
+    // bundle has to carry every language in the base APK: Play serves language splits for the
+    // *device* locale, and a language switched to in-app would simply not be installed.
+    // Lint's AppBundleLocaleChanges check requires this once the app resolves its own locale
+    // contexts at runtime - see com.locapeer.util.AppLocale.
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     buildFeatures {
         compose = true
         buildConfig = true
