@@ -43,10 +43,9 @@ plugins {
     alias(libs.plugins.android.application) apply false
     // The three Kotlin plugin versions float with the `kotlinVersion` Gradle property
     // (default 2.4.21 in gradle.properties). settings.gradle.kts declares them in
-    // pluginManagement.plugins { }, and the CodeQL workflow overrides the property with
-    // -PkotlinVersion (e.g. 2.4.10) because its Kotlin extractor hard-rejects newer
-    // releases. Pinning an explicit version here would bypass that default and break
-    // the override, so they must stay version-less.
+    // pluginManagement.plugins { }, and -PkotlinVersion overrides the property for a
+    // build that has to run on another Kotlin release. Pinning an explicit version here
+    // would bypass that default and break the override, so they must stay version-less.
     id("org.jetbrains.kotlin.android") apply false
     id("org.jetbrains.kotlin.plugin.compose") apply false
     id("org.jetbrains.kotlin.plugin.serialization") apply false

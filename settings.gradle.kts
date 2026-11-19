@@ -1,7 +1,7 @@
 pluginManagement {
     // Kotlin Gradle plugin version, shared by the android/compose/serialization plugins.
-    // Defaults to the value in gradle.properties; override with -PkotlinVersion so the
-    // CodeQL workflow can compile with a release the CodeQL extractor accepts.
+    // Defaults to the value in gradle.properties; -PkotlinVersion still overrides it when a
+    // build has to run on another Kotlin release.
     // (Read via providers rather than the deprecated `by settings` delegate.)
     val kotlinVersion: String =
         providers.gradleProperty("kotlinVersion").getOrElse("2.4.21")
