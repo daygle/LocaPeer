@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     id("org.jetbrains.kotlin.plugin.compose")
@@ -7,8 +9,13 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    // The build runs on JDK 25 (the current LTS) - see gradle/gradle-daemon-jvm.properties
+    // and the JDKs the workflows set up. This picks the compiler JDK, not the output
+    // format: jvmTarget below keeps the bytecode on 21, matching compileOptions, so D8
+    // still accepts it and the app keeps running on the same Android versions.
+    jvmToolchain(25)
     compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
         // Any Kotlin compiler warning (deprecations, unchecked casts, unused values...)
         // fails the build, matching lint's warningsAsErrors.
         allWarningsAsErrors = true

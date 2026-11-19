@@ -26,10 +26,10 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v7
 
-      - name: Set up JDK 21
+      - name: Set up JDK 25
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: '25'
           distribution: 'temurin'
           # No `cache: gradle` here: gradle/actions/setup-gradle below owns Gradle
           # caching. If setup-java pre-populates ~/.gradle first, setup-gradle skips

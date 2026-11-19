@@ -165,7 +165,7 @@ Custom application events (kinds 1040-1069) are tagged with the recipient's publ
 
 **Requirements**
 - Android Studio (latest stable recommended, for `compileSdk` 37 support)
-- JDK 21+
+- JDK 25+ (the build compiles to Java 21 bytecode)
 - Android SDK: `compileSdk` 37, `targetSdk` 37, `minSdk` 26 (Android 8.0)
 
 ```bash
