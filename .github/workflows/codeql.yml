@@ -73,8 +73,9 @@ jobs:
       uses: github/codeql-action/init@v4
       with:
         languages: ${{ matrix.language }}
-        # Use latest tools to pick up the newest Kotlin support as soon as it ships.
-        tools: latest
+        # Track the latest CodeQL bundle so new Kotlin support arrives as soon as it ships
+        # (`linked` is the current name for this mode).
+        tools: linked
         # manual build mode is required for Android
         build-mode: manual
 
