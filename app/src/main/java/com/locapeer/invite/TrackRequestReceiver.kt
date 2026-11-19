@@ -35,6 +35,9 @@ interface TrackRequestReceiverEntryPoint {
 class TrackRequestReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        // The framework's receiver context ignores AppCompat's per-app locale on Android
+        // 8-12; the toast below is user-visible, so resolve it in the app language.
+        val localized = com.locapeer.util.AppLocale.wrap(context)
         val senderPubkey = intent.getStringExtra(EXTRA_SENDER_PUBKEY) ?: return
         val senderName = intent.getStringExtra(EXTRA_SENDER_NAME) ?: return
         val senderRelay = intent.getStringExtra(EXTRA_SENDER_RELAY) ?: ""
@@ -73,7 +76,7 @@ class TrackRequestReceiver : BroadcastReceiver() {
                             Log.w("TrackRequestReceiver", "Failed to send track decline", e)
                         }
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, context.getString(R.string.toast_declined_contact, senderName), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localized, localized.getString(R.string.toast_declined_contact, senderName), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

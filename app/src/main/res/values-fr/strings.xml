@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Diffusion de localisation</string>
     <string name="channel_desc_heartbeat">Diffuse votre localisation à vos contacts approuvés</string>
@@ -980,4 +978,8 @@
     <string name="toast_already_supervised">Déjà supervisé - refuse plutôt la demande</string>
     <string name="toast_declined_supervision_invite">Supervision demandée par %1$s refusée</string>
     <string name="toast_now_supervised">Désormais supervisé par %1$s</string>
+    <string name="backup_corrupt">Ce fichier de sauvegarde est endommagé ou incomplet.</string>
+    <string name="backup_newer_version">Cette sauvegarde a été créée par une version plus récente de LocaPeer. Mettez l'application à jour avant de la restaurer.</string>
+    <string name="notif_geofence_inside_title">%1$s se trouve à l'intérieur de %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s a reçu une alerte indiquant que vous êtes entré ou sorti d'une zone géographique</string>
 </resources>

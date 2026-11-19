@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── د خبرتیا چینلونه او مخکینۍ خدمت ─────────────────────── -->
     <string name="channel_name_heartbeat">د ځای خپرول</string>
     <string name="channel_desc_heartbeat">ستاسو ځای ستاسو منل شوي اړیکو ته خپروي</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">د %1$s نظارت غوښتنه رد شوه</string>
     <string name="supervision_disable_request_title">دا وسیله خلاصه شي؟</string>
     <string name="supervision_disable_request_message">%1$s غوښتنه کوي چې د نظارت حالت بند شي. اجازه به تنظیمات تلپاتې خلاص کړي تر څو چې نوی نظارت غوښتنه ومنل شي.</string>
+    <string name="backup_corrupt">دا بیک اپ فایل خراب یا نیمګړی دی.</string>
+    <string name="backup_newer_version">دا بیک اپ د LocaPeer په نوي نسخه جوړ شوی. د بیا بحالولو دمخه اپلیکیشن تازه کړئ.</string>
+    <string name="notif_geofence_inside_title">%1$s د %2$s دننه دی</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s خبرتیا ترلاسه کړه چې تاسو جیوفینس ته ننوتئ یا ترې ووتئ</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Siaran Lokasi</string>
     <string name="channel_desc_heartbeat">Menyiarkan lokasi Anda ke kontak yang disetujui</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">Permintaan pengawasan dari %1$s ditolak</string>
     <string name="supervision_disable_request_title">Buka kunci perangkat ini?</string>
     <string name="supervision_disable_request_message">%1$s meminta mematikan mode yang diawasi. Menyetujuinya membuka kunci pengaturan secara permanen hingga sebuah permintaan pengawasan baru disetujui.</string>
+    <string name="backup_corrupt">File cadangan ini rusak atau tidak lengkap.</string>
+    <string name="backup_newer_version">Cadangan ini dibuat oleh versi LocaPeer yang lebih baru. Perbarui aplikasi sebelum memulihkannya.</string>
+    <string name="notif_geofence_inside_title">%1$s berada di dalam %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s menerima peringatan bahwa Anda masuk atau keluar dari geofence</string>
 </resources>

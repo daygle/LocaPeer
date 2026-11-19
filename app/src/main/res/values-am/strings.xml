@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── የማሳወቂያ ቻናሎች እና የፊት አገልግሎት ─────────────────────── -->
     <string name="channel_name_heartbeat">የአካባቢ ስርጭት</string>
     <string name="channel_desc_heartbeat">አካባቢዎን ለተፈቀዱ እውቂያዎችዎ ያስተላልፋል</string>
@@ -986,4 +984,8 @@
     <string name="toast_declined_supervision_invite">ከ%1$s የመጣው የክትትል ጥያቄ ውድቅ ተደርጓል</string>
     <string name="supervision_disable_request_title">ይህ መሣሪያ ይከፈት?</string>
     <string name="supervision_disable_request_message">%1$s የክትትል ሁነታው እንዲዘጋ እየጠየቁ ነው። መፍቀድ አዲስ የክትትል ጥያቄ እስኪቀበል ድረስ ቅንብሮችን ለዘላለም ይከፍታል።</string>
+    <string name="backup_corrupt">ይህ የመጠባበቂያ ፋይል ተበላሽቷል ወይም ያልተሟላ ነው።</string>
+    <string name="backup_newer_version">ይህ መጠባበቂያ በአዲስ የLocaPeer ስሪት የተሰራ ነው። ከመመለስዎ በፊት መተግበሪያውን ያሻሽሉ።</string>
+    <string name="notif_geofence_inside_title">%1$s በ%2$s ውስጥ ነው</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ወደ ጂኦፌንስ መግባትዎን ወይም መውጣትዎን የሚገልጽ ማንቂያ ተቀብሏል</string>
 </resources>

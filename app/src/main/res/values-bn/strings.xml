@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">অবস্থান সম্প্রচার</string>
     <string name="channel_desc_heartbeat">আপনার অনুমোদিত পরিচিতিদের কাছে আপনার অবস্থান সম্প্রচার করে</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s থেকে তত্ত্বাবধানের অনুরোধ প্রত্যাখ্যান করা হয়েছে।</string>
     <string name="supervision_disable_request_title">এই ডিভাইস আনলক করবেন?</string>
     <string name="supervision_disable_request_message">%1$s তত্ত্বাবধানে থাকা মোড বন্ধ করতে চান। অনুমোদন করলে সেটিংস স্থায়ীভাবে আনলক হবে যতক্ষণ না নতুন তত্ত্বাবধানের অনুরোধ গ্রহণ করা হয়।</string>
+    <string name="backup_corrupt">এই ব্যাকআপ ফাইলটি ক্ষতিগ্রস্ত বা অসম্পূর্ণ।</string>
+    <string name="backup_newer_version">এই ব্যাকআপটি LocaPeer-এর একটি নতুন সংস্করণে তৈরি করা হয়েছে। পুনরুদ্ধার করার আগে অ্যাপটি আপডেট করুন।</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s-এর ভিতরে আছে</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s একটি সতর্কতা পেয়েছে যে আপনি একটি জিওফেন্সে প্রবেশ বা প্রস্থান করেছেন</string>
 </resources>

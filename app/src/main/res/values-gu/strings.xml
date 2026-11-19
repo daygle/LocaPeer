@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── સૂચના ચેનલો અને ફોરગ્રાઉન્ડ સેવા ─────────────────────── -->
     <string name="channel_name_heartbeat">સ્થાન પ્રસારણ</string>
     <string name="channel_desc_heartbeat">તમારા મંજૂર સંપર્કોને તમારું સ્થાન પ્રસારિત કરે છે</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s તરફથી દેખરેખ વિનંતી નકારાઈ</string>
     <string name="supervision_disable_request_title">આ ઉપકરણ અનલૉક કરવું?</string>
     <string name="supervision_disable_request_message">%1$s દેખરેખ મોડ બંધ કરવા વિનંતી કરે છે. મંજૂરી આપશો તો નવી દેખરેખ વિનંતી સ્વીકારાય ત્યાં સુધી સેટિંગ્સ કાયમ માટે અનલૉક થશે.</string>
+    <string name="backup_corrupt">આ બેકઅપ ફાઇલ ક્ષતિગ્રસ્ત અથવા અપૂર્ણ છે.</string>
+    <string name="backup_newer_version">આ બેકઅપ LocaPeer ના નવા સંસ્કરણ દ્વારા બનાવવામાં આવ્યું છે. તેને પુનઃસ્થાપિત કરતા પહેલા એપ અપડેટ કરો.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s ની અંદર છે</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ને ચેતવણી મળી છે કે તમે જિયોફેન્સમાં પ્રવેશ્યા છો અથવા બહાર નીકળ્યા છો</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">پخش مکان</string>
     <string name="channel_desc_heartbeat">مکان شما را برای مخاطبین تایید شده پخش می‌کند</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">درخواست نظارت از %1$s رد شد</string>
     <string name="supervision_disable_request_title">قفل این دستگاه باز شود؟</string>
     <string name="supervision_disable_request_message">%1$s درخواست خاموش کردن حالت تحت نظارت را دارد. تأیید، تنظیمات را تا زمان پذیرش درخواست نظارت تازه، برای همیشه باز می‌کند.</string>
+    <string name="backup_corrupt">این فایل پشتیبان خراب یا ناقص است.</string>
+    <string name="backup_newer_version">این پشتیبان با نسخه جدیدتری از LocaPeer ساخته شده است. پیش از بازیابی، برنامه را به‌روزرسانی کنید.</string>
+    <string name="notif_geofence_inside_title">%1$s داخل %2$s است</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s هشداری دریافت کرد که شما وارد یک محدوده جغرافیایی شده‌اید یا از آن خارج شده‌اید</string>
 </resources>

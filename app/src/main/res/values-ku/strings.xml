@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Kanalên agahdarkirinê & karûbarê pêşîn ─────────────────────── -->
     <string name="channel_name_heartbeat">Weşandina Cih</string>
     <string name="channel_desc_heartbeat">Cihê we ji têkiliyên weyên pejirandî re diweşîne</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">Daxwaza çavdêrîyê ya %1$s hate red kirin</string>
     <string name="supervision_disable_request_title">Vê amûrê veke?</string>
     <string name="supervision_disable_request_message">%1$s daxwaz dike ku moda çavdêrîyê were girtin. Pejirandin dê sazkirinan herheyî veke heta ku daxwaza nû ya çavdêrîyê were pejirandin.</string>
+    <string name="backup_corrupt">Ev pelgeya hilanînê xerabûyî an nekêm e.</string>
+    <string name="backup_newer_version">Ev hilanîn bi guhertoyeke nû ya LocaPeer hatiye çêkirin. Berî vegerandinê sepanê nûve bike.</string>
+    <string name="notif_geofence_inside_title">%1$s di hundirê %2$s de ye</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s hişyariyek wergirt ku tu ketî nav an jî derketî ji geofence</string>
 </resources>

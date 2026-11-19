@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── ಅಧಿಸೂಚನೆ ಚಾನೆಲ್‌ಗಳು ಮತ್ತು ಮುನ್ನೆಲೆ ಸೇವೆ ─────────────────────── -->
     <string name="channel_name_heartbeat">ಸ್ಥಳ ಪ್ರಸಾರ</string>
     <string name="channel_desc_heartbeat">ನಿಮ್ಮ ಅನುಮೋದಿತ ಸಂಪರ್ಕಗಳಿಗೆ ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಪ್ರಸಾರ ಮಾಡುತ್ತದೆ</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s ಅವರ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ</string>
     <string name="supervision_disable_request_title">ಈ ಸಾಧನವನ್ನು ಅನ್‌ಲಾಕ್ ಮಾಡಬೇಕೆ?</string>
     <string name="supervision_disable_request_message">%1$s ಮೇಲ್ವಿಚಾರಣೆ ಮೋಡ್ ಆಫ್ ಮಾಡುವಂತೆ ಕೇಳುತ್ತಿದ್ದಾರೆ. ಒಪ್ಪಿಗೆ ನೀಡಿದರೆ ಹೊಸ ಮೇಲ್ವಿಚಾರಣೆ ವಿನಂತಿ ಸ್ವೀಕಾರವಾಗುವವರೆಗೆ ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಶಾಶ್ವತವಾಗಿ ಅನ್‌ಲಾಕ್ ಆಗುತ್ತವೆ.</string>
+    <string name="backup_corrupt">ಈ ಬ್ಯಾಕಪ್ ಫೈಲ್ ಹಾನಿಗೊಳಗಾಗಿದೆ ಅಥವಾ ಅಪೂರ್ಣವಾಗಿದೆ.</string>
+    <string name="backup_newer_version">ಈ ಬ್ಯಾಕಪ್ LocaPeer ನ ಹೊಸ ಆವೃತ್ತಿಯಿಂದ ರಚಿಸಲಾಗಿದೆ. ಮರುಸ್ಥಾಪಿಸುವ ಮೊದಲು ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ನವೀಕರಿಸಿ.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s ಒಳಗೆ ಇದೆ</string>
+    <string name="notif_tracking_geofence_unnamed">ನೀವು ಜಿಯೋಫೆನ್ಸ್ ಪ್ರವೇಶಿಸಿದ್ದೀರಿ ಅಥವಾ ನಿರ್ಗಮಿಸಿದ್ದೀರಿ ಎಂಬ ಎಚ್ಚರಿಕೆ %1$s ಗೆ ಬಂದಿದೆ</string>
 </resources>

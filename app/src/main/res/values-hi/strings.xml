@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">स्थान प्रसारण</string>
     <string name="channel_desc_heartbeat">आपके अनुमोदित संपर्कों को आपका स्थान प्रसारित करता है</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s से पर्यवेक्षण का अनुरोध अस्वीकार किया गया</string>
     <string name="supervision_disable_request_title">यह डिवाइस अनलॉक करें?</string>
     <string name="supervision_disable_request_message">%1$s पर्यवेक्षित मोड बंद करने का अनुरोध कर रहा है. स्वीकृति पर सेटिंग्स तब तक स्थायी रूप से अनलॉक हो जाएंगी जब तक कोई नया पर्यवेक्षण अनुरोध स्वीकार न हो.</string>
+    <string name="backup_corrupt">यह बैकअप फ़ाइल क्षतिग्रस्त या अपूर्ण है।</string>
+    <string name="backup_newer_version">यह बैकअप LocaPeer के नए संस्करण से बनाया गया है। इसे पुनर्स्थापित करने से पहले ऐप अपडेट करें।</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s के अंदर है</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s को सूचना मिली है कि आपने जियोफ़ेंस में प्रवेश किया या उससे बाहर निकले</string>
 </resources>

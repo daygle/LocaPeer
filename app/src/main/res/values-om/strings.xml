@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Tajaajila beeksisaa fi duubaa ─────────────────────── -->
     <string name="channel_name_heartbeat">Tamsaasa Bakka Jiranii</string>
     <string name="channel_desc_heartbeat">Bakka jirtan quunnamtiiwwan keessan mirkanaayanitti tamsaasa</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">Gaaffiin to\'annoo %1$s irraa dhufe didameera</string>
     <string name="supervision_disable_request_title">Meeshaa kana banuu?</string>
     <string name="supervision_disable_request_message">%1$s haala to\'annoo dhaabuuf gaafata. Hayyamuu qindaa\'ina bara baraan banaa taasisa hanga gaaffiin to\'annoo haaraan fudhatamuutti.</string>
+    <string name="backup_corrupt">Faayilii kuusaa kanaa miidhaa ykn hin guutne.</string>
+    <string name="backup_newer_version">Kuusaan kun LocaPeer vershinii haaraadhaan hojjetame. Dura appii haaromsi.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s keessa jira</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s akeekkachiisa argate: ati geofence seenaa ykn keessaa baate</string>
 </resources>

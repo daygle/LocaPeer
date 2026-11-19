@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Phát sóng vị trí</string>
     <string name="channel_desc_heartbeat">Phát sóng vị trí của bạn cho các liên hệ đã được phê duyệt</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">Đã từ chối yêu cầu giám sát từ %1$s</string>
     <string name="supervision_disable_request_title">Mở khóa thiết bị này?</string>
     <string name="supervision_disable_request_message">%1$s yêu cầu tắt chế độ được giám sát. Chấp thuận sẽ mở khóa các cài đặt vĩnh viễn cho đến khi có phê duyệt một yêu cầu giám sát mới.</string>
+    <string name="backup_corrupt">Tệp sao lưu này bị hỏng hoặc không đầy đủ.</string>
+    <string name="backup_newer_version">Bản sao lưu này được tạo bởi phiên bản LocaPeer mới hơn. Hãy cập nhật ứng dụng trước khi khôi phục.</string>
+    <string name="notif_geofence_inside_title">%1$s đang ở trong %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s đã nhận được cảnh báo rằng bạn đã vào hoặc rời khỏi vùng địa lý</string>
 </resources>

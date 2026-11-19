@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Vysílání polohy</string>
     <string name="channel_desc_heartbeat">Vysílá vaši polohu vašim schváleným kontaktům</string>
@@ -936,8 +934,10 @@
     <string name="map_watching_you">👁 Sleduje vás</string>
     <string name="map_follow_contact">Sledovat</string>
     <plurals name="settings_queued_message_count">
-        <item quantity="one">%1$d queued message</item>
-        <item quantity="other">%1$d queued messages</item>
+        <item quantity="one">%1$d zpráva ve frontě</item>
+        <item quantity="few">%1$d zprávy ve frontě</item>
+        <item quantity="many">%1$d zprávy ve frontě</item>
+        <item quantity="other">%1$d zpráv ve frontě</item>
     </plurals>
     <string name="settings_queued_messages_subtitle">Události čekající na doručení do relayů</string>
     <string name="queued_messages_title">Zprávy ve frontě</string>
@@ -1010,4 +1010,8 @@
     <string name="toast_already_supervised">Již pod dozorem - tuto prosbu raději odmítněte</string>
     <string name="toast_declined_supervision_invite">Probu o dozor od %1$s odmítnuto</string>
     <string name="toast_now_supervised">Dozoruje vás %1$s</string>
+    <string name="backup_corrupt">Tento soubor zálohy je poškozený nebo neúplný.</string>
+    <string name="backup_newer_version">Tato záloha byla vytvořena novější verzí aplikace LocaPeer. Před obnovením aplikaci aktualizujte.</string>
+    <string name="notif_geofence_inside_title">%1$s je uvnitř %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s obdržel upozornění, že jste vstoupili do geofence nebo z ní odešli</string>
 </resources>

@@ -2,6 +2,7 @@ package com.locapeer.settings
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
+import com.locapeer.util.AppLocale
 import java.util.Locale
 
 /**
@@ -106,8 +107,13 @@ enum class AppLanguage(val tag: String, val nativeName: String?) {
         /**
          * Applies [language] as the app locale. AppCompat persists the choice and recreates
          * the running activities so the new language takes effect immediately.
+         *
+         * The choice is also recorded in [AppLocale], which is what notifications, the
+         * foreground service and the display formatters read: on Android 8-12 AppCompat's
+         * per-app locale never reaches those non-Activity contexts.
          */
         fun apply(language: AppLanguage) {
+            AppLocale.remember(language.tag)
             val locales = if (language.tag.isEmpty()) {
                 LocaleListCompat.getEmptyLocaleList()
             } else {

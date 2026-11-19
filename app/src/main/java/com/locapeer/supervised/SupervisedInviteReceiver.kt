@@ -45,6 +45,9 @@ interface SupervisedInviteReceiverEntryPoint {
 class SupervisedInviteReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        // The framework's receiver context ignores AppCompat's per-app locale on Android
+        // 8-12; the toasts below are user-visible, so resolve them in the app language.
+        val localized = com.locapeer.util.AppLocale.wrap(context)
         val supervisorPubkey = intent.getStringExtra(EXTRA_REQUESTER_PUBKEY) ?: return
         val supervisorName = intent.getStringExtra(EXTRA_REQUESTER_NAME) ?: "Supervisor"
 
@@ -70,7 +73,7 @@ class SupervisedInviteReceiver : BroadcastReceiver() {
                         val settings = ep.prefs().settings.first()
                         if (settings.supervisedModeEnabled) {
                             launch(Dispatchers.Main) {
-                                Toast.makeText(context, context.getString(R.string.toast_already_supervised), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(localized, localized.getString(R.string.toast_already_supervised), Toast.LENGTH_SHORT).show()
                             }
                             ep.supervisionInviteResponder().respond(supervisorPubkey, accepted = false)
                             return@launch
@@ -90,14 +93,14 @@ class SupervisedInviteReceiver : BroadcastReceiver() {
                         // handler auto-answers with an accept - no extra notification there.
                         ep.supervisedModeManager().sendRegisterRequest(supervisorPubkey)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, context.getString(R.string.toast_now_supervised, supervisorName), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localized, localized.getString(R.string.toast_now_supervised, supervisorName), Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_SUPERVISED_INVITE_DECLINE -> {
                         Log.d("SupervisedInviteReceiver", "Declined supervision invite from $supervisorName")
                         ep.supervisionInviteResponder().respond(supervisorPubkey, accepted = false)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, context.getString(R.string.toast_declined_supervision_invite, supervisorName), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localized, localized.getString(R.string.toast_declined_supervision_invite, supervisorName), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

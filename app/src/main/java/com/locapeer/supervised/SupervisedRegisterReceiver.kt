@@ -33,6 +33,9 @@ interface SupervisedRegisterReceiverEntryPoint {
 class SupervisedRegisterReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
+        // The framework's receiver context ignores AppCompat's per-app locale on Android
+        // 8-12; the toasts below are user-visible, so resolve them in the app language.
+        val localized = com.locapeer.util.AppLocale.wrap(context)
         val requesterPubkey = intent.getStringExtra(EXTRA_REQUESTER_PUBKEY) ?: return
         val requesterName = intent.getStringExtra(EXTRA_REQUESTER_NAME) ?: return
         val requesterRelay = intent.getStringExtra(EXTRA_REQUESTER_RELAY) ?: ""
@@ -61,14 +64,14 @@ class SupervisedRegisterReceiver : BroadcastReceiver() {
                         // the supervisor did not commit to, and the answer is never lost.
                         ep.supervisionResponseSender().accept(requesterPubkey, requesterRelay, requestedAt)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, context.getString(R.string.toast_now_supervising, requesterName), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localized, localized.getString(R.string.toast_now_supervising, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                     ACTION_SUPERVISED_REGISTER_DECLINE -> {
                         Log.d("SupervisedRegisterReceiver", "Declined supervised registration from $requesterName")
                         ep.supervisionResponseSender().decline(requesterPubkey, requesterRelay, requestedAt)
                         launch(Dispatchers.Main) {
-                            Toast.makeText(context, context.getString(R.string.toast_declined_supervision, requesterName), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(localized, localized.getString(R.string.toast_declined_supervision, requesterName), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }

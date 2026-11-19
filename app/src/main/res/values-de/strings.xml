@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Benachrichtigungskanäle & Vordergrunddienst ─────────────────────── -->
     <string name="channel_name_heartbeat">Standortübertragung</string>
     <string name="channel_desc_heartbeat">Überträgt Ihren Standort an Ihre genehmigten Kontakte</string>
@@ -979,4 +977,8 @@
     <string name="toast_already_supervised">Bereits überwacht - lehne die Anfrage stattdessen ab</string>
     <string name="toast_declined_supervision_invite">Überwachungsanfrage von %1$s abgelehnt</string>
     <string name="toast_now_supervised">Wirst jetzt von %1$s überwacht</string>
+    <string name="backup_corrupt">Diese Sicherungsdatei ist beschädigt oder unvollständig.</string>
+    <string name="backup_newer_version">Diese Sicherung wurde mit einer neueren Version von LocaPeer erstellt. Aktualisiere die App, bevor du sie wiederherstellst.</string>
+    <string name="notif_geofence_inside_title">%1$s befindet sich innerhalb von %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s hat eine Warnung erhalten, dass du einen Geofence betreten oder verlassen hast</string>
 </resources>

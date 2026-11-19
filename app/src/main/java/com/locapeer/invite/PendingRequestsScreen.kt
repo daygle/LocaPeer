@@ -24,7 +24,6 @@ import com.locapeer.R
 import com.locapeer.data.entity.PendingRequestEntity
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -109,7 +108,7 @@ private fun PendingRequestRow(
     onDecline: () -> Unit
 ) {
     val timeLabel = remember(request.receivedAt) {
-        SimpleDateFormat("MMM d, ${com.locapeer.util.DisplayFormat.timePattern()}", Locale.getDefault()).format(Date(request.receivedAt))
+        SimpleDateFormat("MMM d, ${com.locapeer.util.DisplayFormat.timePattern()}", com.locapeer.util.DisplayFormat.locale()).format(Date(request.receivedAt))
     }
     val requestedRoleLabel = when (request.requestedRole) {
         "SEND_RECEIVE" -> stringResource(R.string.role_send_receive)

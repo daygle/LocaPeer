@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── 通知チャンネルとフォアグラウンドサービス ─────────────────────── -->
     <string name="channel_name_heartbeat">位置情報の配信</string>
     <string name="channel_desc_heartbeat">承認された連絡先に現在地を配信します</string>
@@ -968,4 +966,8 @@
     <string name="toast_declined_supervision_invite">%1$s からの監視リクエストを拒否しました</string>
     <string name="supervision_disable_request_title">この端末のロックを解除しますか?</string>
     <string name="supervision_disable_request_message">%1$s が監視モードのオフを求めています。承認すると、新しい監視リクエストが承諾されるまで設定は恒久的にロック解除されます。</string>
+    <string name="backup_corrupt">このバックアップファイルは破損しているか不完全です。</string>
+    <string name="backup_newer_version">このバックアップは新しいバージョンの LocaPeer で作成されています。復元する前にアプリを更新してください。</string>
+    <string name="notif_geofence_inside_title">%1$s は %2$s の内側にいます</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s に、ジオフェンスへの進入または退出のアラートが届きました</string>
 </resources>

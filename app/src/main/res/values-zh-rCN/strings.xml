@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── 通知频道与前台服务 ─────────────────────── -->
     <string name="channel_name_heartbeat">位置广播</string>
     <string name="channel_desc_heartbeat">向您批准的联系人广播您的位置</string>
@@ -968,4 +966,8 @@
     <string name="toast_declined_supervision_invite">已拒绝 %1$s 的监督请求</string>
     <string name="supervision_disable_request_title">解锁此设备？</string>
     <string name="supervision_disable_request_message">%1$s 请求关闭受监督模式。批准后，设置将永久解锁，直到接受新的监督请求为止。</string>
+    <string name="backup_corrupt">此备份文件已损坏或不完整。</string>
+    <string name="backup_newer_version">此备份由较新版本的 LocaPeer 创建。请先更新应用再恢复。</string>
+    <string name="notif_geofence_inside_title">%1$s 位于 %2$s 内</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s 收到提醒：你进入或离开了一个地理围栏</string>
 </resources>

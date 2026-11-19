@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">การแพร่สัญญาณตำแหน่ง</string>
     <string name="channel_desc_heartbeat">แพร่สัญญาณตำแหน่งของคุณไปยังผู้ติดต่อที่ได้รับการอนุมัติ</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">ปฏิเสธคำขอกำกับดูแลจาก %1$s</string>
     <string name="supervision_disable_request_title">ปลดล็อกอุปกรณ์นี้?</string>
     <string name="supervision_disable_request_message">%1$s ขอปิดโหมดที่ถูกกำกับดูแล การอนุมัติจะปลดล็อกการตั้งค่าอย่างถาวร จนกว่าจะมีการยอมรับคำขอกำกับดูแลใหม่</string>
+    <string name="backup_corrupt">ไฟล์สำรองนี้เสียหายหรือไม่สมบูรณ์</string>
+    <string name="backup_newer_version">ไฟล์สำรองนี้สร้างโดย LocaPeer เวอร์ชันใหม่กว่า โปรดอัปเดตแอปก่อนกู้คืน</string>
+    <string name="notif_geofence_inside_title">%1$s อยู่ภายใน %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ได้รับการแจ้งเตือนว่าคุณเข้าหรือออกจากพื้นที่ภูมิศาสตร์</string>
 </resources>

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── அறிவிப்பு சேனல்கள் & முன் சேவை ─────────────────────── -->
     <string name="channel_name_heartbeat">இருப்பிட ஒளிபரப்பு</string>
     <string name="channel_desc_heartbeat">அங்கீகரிக்கப்பட்ட தொடர்புகளுக்கு உங்கள் இருப்பிடத்தை ஒளிபரப்புகிறது</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s அவர்களின் மேற்பார்வைக் கோரிக்கை மறுக்கப்பட்டது</string>
     <string name="supervision_disable_request_title">இந்தச் சாதனத்தைத் திறக்கவா?</string>
     <string name="supervision_disable_request_message">%1$s மேற்பார்வைப் பயன்முறையை அணைக்கக் கேட்கிறார். ஒப்புதல் அமைப்புகளை நிரந்தரமாகத் திறக்கும், புதிய மேற்பார்வைக் கோரிக்கை ஏற்கப்படும் வரை.</string>
+    <string name="backup_corrupt">இந்த காப்புப்பிரதி கோப்பு சேதமடைந்துள்ளது அல்லது முழுமையடையவில்லை.</string>
+    <string name="backup_newer_version">இந்த காப்புப்பிரதி LocaPeer இன் புதிய பதிப்பால் உருவாக்கப்பட்டது. மீட்டமைப்பதற்கு முன் பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s உள்ளே உள்ளது</string>
+    <string name="notif_tracking_geofence_unnamed">நீங்கள் ஒரு புவி எல்லைக்குள் நுழைந்தீர்கள் அல்லது வெளியேறினீர்கள் எனும் எச்சரிக்கை %1$s க்கு வந்தது</string>
 </resources>

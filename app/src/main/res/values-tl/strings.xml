@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Broadcast ng Lokasyon</string>
     <string name="channel_desc_heartbeat">I-broadcast ang iyong lokasyon sa iyong mga aprubadong contact</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">Tinanggihan ang hiling sa pagsubaybay mula kay %1$s</string>
     <string name="supervision_disable_request_title">Bubuksan ang device na ito?</string>
     <string name="supervision_disable_request_message">Hinihiling ni %1$s na patayin ang naka-subaybay na mode. Kapag inaprubahan, bubuksan nang tuluyan ang mga setting hanggang sa may bagong hiling ng pagsubaybay na matanggap.</string>
+    <string name="backup_corrupt">Ang backup file na ito ay sira o hindi kumpleto.</string>
+    <string name="backup_newer_version">Ang backup na ito ay ginawa ng mas bagong bersyon ng LocaPeer. I-update ang app bago ito i-restore.</string>
+    <string name="notif_geofence_inside_title">Nasa loob ng %2$s ang %1$s</string>
+    <string name="notif_tracking_geofence_unnamed">Nakatanggap ang %1$s ng alerto na pumasok o lumabas ka sa isang geofence</string>
 </resources>

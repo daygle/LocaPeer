@@ -6,60 +6,11 @@
 -->
 <resources>
     <string name="settings_battery_optimization">Battery Optimisation</string>
-    <string name="settings_battery_optimization_restricted">Tap to set Unrestricted in system settings</string>
     <string name="settings_customize_nav">Customise Navigation</string>
     <string name="onboarding_battery_desc">Android may stop LocaPeer to save battery. To ensure reliable updates, please exclude LocaPeer from optimisations.</string>
     <string name="onboarding_disable_optimizations">Disable Optimisations</string>
 
     <!-- Auto-translated draft for commit 46dae7e (TODO: human review) -->
-    <string name="settings_app_lock">App Lock</string>
-    <string name="settings_app_lock_subtitle">Require biometric or device PIN to open LocaPeer</string>
-    <string name="settings_app_lock_timeout">Re-lock After</string>
-    <string name="settings_app_lock_timeout_immediate">Immediately</string>
-    <string name="settings_app_lock_timeout_30s">After 30 seconds</string>
-    <string name="settings_app_lock_timeout_1m">After 1 minute</string>
-    <string name="settings_app_lock_timeout_5m">After 5 minutes</string>
-    <string name="app_lock_title">LocaPeer is locked</string>
-    <string name="app_lock_subtitle">Authenticate to view your locations and messages.</string>
-    <string name="app_lock_unlock">Unlock</string>
-    <string name="app_lock_prompt_title">Unlock LocaPeer</string>
-    <string name="app_lock_prompt_subtitle">Use biometric or device PIN</string>
-    <string name="app_lock_activity_unsupported">App lock requires a host that supports the system prompt. Update the app.</string>
-    <string name="peer_temp_share_subtitle">Share for a limited time, then auto-stop.</string>
-    <string name="peer_temp_share_active_label">Sharing with %1$s until %2$s</string>
-    <string name="peer_temp_share_active_time_left">Sharing with %1$s for %2$s more</string>
-    <string name="peer_temp_share_chip_15m">15 min</string>
-    <string name="peer_temp_share_chip_1h">1 hour</string>
-    <string name="peer_temp_share_chip_3h">3 hours</string>
-    <string name="peer_temp_share_chip_6h">6 hours</string>
-    <string name="peer_temp_share_chip_12h">12 hours</string>
-    <string name="peer_temp_share_chip_until_tomorrow">Until tomorrow 8am</string>
-    <string name="peer_temp_share_stop">Stop Now</string>
-    <string name="chat_delivery_state_sending">Sending…</string>
-    <string name="chat_delivery_state_sent">Sent (relay accepted)</string>
-    <string name="chat_delivery_state_delivered">Delivered to recipient\'s device</string>
-    <string name="chat_delivery_state_read">Read by recipient</string>
-    <string name="chat_delivery_state_failed">Failed - message stuck in queue</string>
     <string name="chat_delivery_details_title">Message status</string>
-    <string name="settings_theme_mode">Theme</string>
-    <string name="settings_theme_system">Follow System</string>
-    <string name="settings_theme_light">Light</string>
-    <string name="settings_theme_dark">Dark</string>
-    <string name="settings_dynamic_color">Material You Colours</string>
-    <string name="settings_dynamic_color_subtitle">Use colours from your wallpaper (Android 12+)</string>
-    <string name="settings_queued_messages">Queued Messages</string>
-    <string name="settings_queued_none">No queued messages</string>
-    <string name="settings_queued_none_subtitle">All events have been delivered to their relays</string>
-    <plurals name="settings_queued_message_count">
-        <item quantity="one">%1$d queued message</item>
-        <item quantity="other">%1$d queued messages</item>
-    </plurals>
-    <string name="settings_queued_messages_subtitle">Events waiting to reach relays</string>
-    <string name="queued_messages_title">Queued Messages</string>
-    <string name="queued_message_kind">Event %1$d</string>
-    <string name="queued_message_queued_at">Queued %1$s</string>
-    <string name="queued_message_view">View Event</string>
-    <string name="queued_message_hide">Hide</string>
-    <string name="queued_messages_flush">Flush Now</string>
     <string name="app_lock_crypto_failed">Failed to initialise secure authentication key.</string>
 </resources>

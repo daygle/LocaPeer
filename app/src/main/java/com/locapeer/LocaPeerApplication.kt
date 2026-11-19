@@ -1,6 +1,8 @@
 package com.locapeer
 
 import android.app.Application
+import android.content.Context
+import com.locapeer.util.AppLocale
 import com.locapeer.util.backgroundScope
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
@@ -48,6 +50,18 @@ class LocaPeerApplication : Application(), Configuration.Provider {
 
     private val appScope = backgroundScope(TAG, Dispatchers.Default)
 
+    /**
+     * Resolve resources in the app's chosen language from the start of the process. On
+     * Android 8-12 AppCompat's per-app locale only reaches Activity contexts, so without
+     * this the notification text, the foreground-service channel and the display
+     * formatters would use the system language while the UI is in the app language.
+     * See [AppLocale].
+     */
+    override fun attachBaseContext(base: Context) {
+        AppLocale.attach(base)
+        super.attachBaseContext(AppLocale.wrap(base))
+    }
+
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setWorkerFactory(workerFactory)
@@ -55,6 +69,9 @@ class LocaPeerApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
+        // Re-register the Application itself rather than its base context, so later lookups
+        // hold an application-scoped context.
+        AppLocale.attach(this)
         // Initialise the lock state from the persisted snapshot and start the
         // ProcessLifecycleOwner observer so the foreground/background book-keeping
         // works for BiometricPrompt re-locking. Done synchronously here so the first

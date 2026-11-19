@@ -33,10 +33,14 @@ object DisplayFormat {
         use24HourTime = DateFormat.is24HourFormat(context)
     }
 
-    /** Localized string via the app context, or null before [init] (e.g. JVM unit tests),
+    /** Localized string via the app locale, or null before [init] (e.g. JVM unit tests),
      *  in which case callers fall back to their English literal. */
     internal fun appString(resId: Int, vararg formatArgs: Any): String? =
-        appContext?.getString(resId, *formatArgs)
+        (AppLocale.context() ?: appContext)?.getString(resId, *formatArgs)
+
+    /** The locale date and number formats resolve in: the app's chosen language, which on
+     *  Android 8-12 differs from [Locale.getDefault] (the system language). */
+    fun locale(): Locale = AppLocale.locale()
 
     /** Clock-time pattern honouring the user's 12/24-hour choice. */
     fun timePattern(withSeconds: Boolean = false): String = when {
@@ -47,7 +51,7 @@ object DisplayFormat {
     }
 
     fun timeFormat(withSeconds: Boolean = false): SimpleDateFormat =
-        SimpleDateFormat(timePattern(withSeconds), Locale.getDefault())
+        SimpleDateFormat(timePattern(withSeconds), locale())
 
     /** Speed value converted from metres/second to the user's unit, e.g. "12 km/h" or "8 mph". */
     fun speedValue(speedMps: Float): String {
@@ -95,9 +99,9 @@ object DisplayFormat {
                 val cal = java.util.Calendar.getInstance().also { it.timeInMillis = millis }
                 val today = java.util.Calendar.getInstance()
                 val fmt = if (cal.get(java.util.Calendar.YEAR) == today.get(java.util.Calendar.YEAR))
-                    SimpleDateFormat("d MMM, ${timePattern()}", Locale.getDefault())
+                    SimpleDateFormat("d MMM, ${timePattern()}", locale())
                 else
-                    SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+                    SimpleDateFormat("d MMM yyyy", locale())
                 fmt.format(java.util.Date(millis))
             }
         }

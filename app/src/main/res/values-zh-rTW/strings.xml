@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">位置廣播</string>
     <string name="channel_desc_heartbeat">將您的位置廣播給已核准的聯絡人</string>
@@ -965,4 +963,8 @@
     <string name="onboarding_bg_open_settings">開啟系統設定</string>
     <string name="onboarding_bg_skip">暫時跳過</string>
     <string name="onboarding_bg_location_hint">在 Android 11 及更高版本上，後臺定位許可權只能在系統設定中授予，應用無法直接發起請求。</string>
+    <string name="backup_corrupt">此備份檔案已損毀或不完整。</string>
+    <string name="backup_newer_version">此備份由較新版本的 LocaPeer 建立。請先更新應用程式再還原。</string>
+    <string name="notif_geofence_inside_title">%1$s 位於 %2$s 內</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s 收到提醒：你進入或離開了一個地理圍欄</string>
 </resources>

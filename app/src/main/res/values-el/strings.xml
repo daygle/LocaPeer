@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Μετάδοση τοποθεσίας</string>
     <string name="channel_desc_heartbeat">Μεταδίδει την τοποθεσία σας στις εγκεκριμένες επαφές σας</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">Απορρίφθηκε το αίτημα εποπτείας από %1$s</string>
     <string name="supervision_disable_request_title">Ξεκλειδώνεις αυτή τη συσκευή;</string>
     <string name="supervision_disable_request_message">%1$s ζητά την απενεργοποίηση της εποπτευόμενης λειτουργίας. Η έγκριση ξεκλειδώνει τις ρυθμίσεις οριστικά μέχρι να γίνει αποδεκτό νέο αίτημα εποπτείας.</string>
+    <string name="backup_corrupt">Αυτό το αρχείο αντιγράφου ασφαλείας είναι κατεστραμμένο ή ελλιπές.</string>
+    <string name="backup_newer_version">Αυτό το αντίγραφο ασφαλείας δημιουργήθηκε από νεότερη έκδοση του LocaPeer. Ενημερώστε την εφαρμογή πριν το επαναφέρετε.</string>
+    <string name="notif_geofence_inside_title">Το %1$s βρίσκεται μέσα στο %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">Το %1$s έλαβε ειδοποίηση ότι μπήκατε ή βγήκατε από ένα geofence</string>
 </resources>

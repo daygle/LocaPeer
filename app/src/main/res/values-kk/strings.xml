@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Хабарландыру арналары және негізгі қызмет ─────────────────────── -->
     <string name="channel_name_heartbeat">Орналасқан жерді көрсету</string>
     <string name="channel_desc_heartbeat">Мақұлданған контактілеріңізге орналасқан жеріңізді көрсетеді</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s-ден қадағалау сұранысы қабылданбады</string>
     <string name="supervision_disable_request_title">Осы құрылғыны босату керек пе?</string>
     <string name="supervision_disable_request_message">%1$s бақылаудан тыс режимді өшіруді сұрайды. Мақұлдау баптауларды жаңа қадағалау сұранысы мақұлдалғанша қайтарымсыз ашады.</string>
+    <string name="backup_corrupt">Бұл сақтық көшірме файлы бүлінген немесе толық емес.</string>
+    <string name="backup_newer_version">Бұл сақтық көшірме LocaPeer бағдарламасының жаңа нұсқасымен жасалған. Қалпына келтіру алдында қолданбаны жаңартыңыз.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s ішінде</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s сіздің геоқоршауға кіргеніңіз немесе шыққаныңыз туралы ескерту алды</string>
 </resources>

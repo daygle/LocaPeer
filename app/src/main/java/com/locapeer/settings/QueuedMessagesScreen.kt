@@ -26,7 +26,6 @@ import com.locapeer.ui.components.EmptyState
 import com.locapeer.ui.theme.locaPeerTopAppBarColors
 import java.text.SimpleDateFormat
 import java.util.Date
-import java.util.Locale
 
 /**
  * Drill-in view of the relay outbox: every event still waiting to reach a relay,
@@ -185,7 +184,7 @@ private fun eventKind(content: String): Int {
 private fun queuedTime(createdAt: Long): String {
     val format = SimpleDateFormat(
         "d MMM yyyy, " + com.locapeer.util.DisplayFormat.timePattern(),
-        Locale.getDefault()
+        com.locapeer.util.DisplayFormat.locale()
     )
     return format.format(Date(createdAt))
 }

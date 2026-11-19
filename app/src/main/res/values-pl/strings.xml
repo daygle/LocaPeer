@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Udostępnianie lokalizacji</string>
     <string name="channel_desc_heartbeat">Udostępnia Twoją lokalizację zatwierdzonym kontaktom</string>
@@ -1012,4 +1010,8 @@
     <string name="toast_already_supervised">Jesteś już nadzorowany - raczej odrzuć tę prośbę</string>
     <string name="toast_declined_supervision_invite">Odrzucono prośbę nadzoru od %1$s</string>
     <string name="toast_now_supervised">Nadzoruje Cię %1$s</string>
+    <string name="backup_corrupt">Ten plik kopii zapasowej jest uszkodzony lub niekompletny.</string>
+    <string name="backup_newer_version">Ta kopia zapasowa została utworzona przez nowszą wersję LocaPeer. Zaktualizuj aplikację przed przywróceniem.</string>
+    <string name="notif_geofence_inside_title">%1$s znajduje się wewnątrz %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s otrzymał alert, że wszedłeś lub wyszedłeś z geofence</string>
 </resources>

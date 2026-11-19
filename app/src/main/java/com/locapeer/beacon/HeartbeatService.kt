@@ -7,6 +7,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ServiceInfo
@@ -651,6 +652,14 @@ class HeartbeatService : LifecycleService() {
             intent,
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
+    }
+
+    /**
+     * A Service does not inherit AppCompat's per-app locale on Android 8-12, and the
+     * foreground notification and its channel are built from this context.
+     */
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(com.locapeer.util.AppLocale.wrap(newBase))
     }
 
     override fun onCreate() {

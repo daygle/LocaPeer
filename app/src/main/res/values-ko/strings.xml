@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">위치 방송</string>
     <string name="channel_desc_heartbeat">승인된 연락처에 내 위치를 방송합니다</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">%1$s 의 감독 요청을 거부했어요</string>
     <string name="supervision_disable_request_title">이 기기의 잠금을 해제할까요?</string>
     <string name="supervision_disable_request_message">%1$s 가 감독 모드를 끄길 원해요. 승인하면 새 감독 요청을 수락할 때까지 설정이 영구적으로 잠금 해제돼요.</string>
+    <string name="backup_corrupt">이 백업 파일이 손상되었거나 불완전합니다.</string>
+    <string name="backup_newer_version">이 백업은 최신 버전의 LocaPeer에서 만들어졌습니다. 복원하기 전에 앱을 업데이트하세요.</string>
+    <string name="notif_geofence_inside_title">%1$s이(가) %2$s 안에 있습니다</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s이(가) 지오펜스에 진입하거나 벗어났다는 알림을 받았습니다</string>
 </resources>

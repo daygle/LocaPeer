@@ -41,6 +41,7 @@ import com.locapeer.supervised.SupervisionApprovalManager
 import com.locapeer.ui.LocaPeerNavHost
 import com.locapeer.ui.components.AppLockScreen
 import com.locapeer.ui.theme.LocaPeerTheme
+import com.locapeer.util.AppLocale
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -87,6 +88,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Adopt a language AppCompat stored for an install that picked one before AppLocale
+        // existed: below API 33 AppCompat keeps it in its own store, which is restored by
+        // the time an Activity is created.
+        AppLocale.adoptStoredAppLocale(this)
         window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         handleIntent(intent)
         enableEdgeToEdge()

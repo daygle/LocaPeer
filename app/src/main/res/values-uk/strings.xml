@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Трансляція місцезнаходження</string>
     <string name="channel_desc_heartbeat">Транслює ваше місцезнаходження схваленим контактам</string>
@@ -939,6 +937,7 @@
         <item quantity="one">%1$d повідомлення в черзі</item>
         <item quantity="few">%1$d повідомлення в черзі</item>
         <item quantity="many">%1$d повідомлень у черзі</item>
+        <item quantity="other">%1$d повідомлень у черзі</item>
     </plurals>
     <string name="settings_queued_messages_subtitle">Події, що очікують на доставку до реле</string>
     <string name="queued_messages_title">Повідомлення в черзі</string>
@@ -1011,4 +1010,8 @@
     <string name="toast_already_supervised">Вже під наглядом - відхиліть запит натомість</string>
     <string name="toast_declined_supervision_invite">Заявку нагляду від %1$s відхилено</string>
     <string name="toast_now_supervised">Наглядач: %1$s</string>
+    <string name="backup_corrupt">Цей файл резервної копії пошкоджено або неповно.</string>
+    <string name="backup_newer_version">Цю резервну копію створено новішою версією LocaPeer. Оновіть застосунок перед відновленням.</string>
+    <string name="notif_geofence_inside_title">%1$s перебуває всередині %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s отримав сповіщення про те, що ви ввійшли в геозону або вийшли з неї</string>
 </resources>

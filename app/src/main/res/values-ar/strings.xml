@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">بث الموقع</string>
     <string name="channel_desc_heartbeat">يبث موقعك لجهات الاتصال المعتمدة لديك</string>
@@ -1045,4 +1043,8 @@
     <string name="toast_declined_supervision_invite">تم رفض طلب الإشراف من %1$s</string>
     <string name="supervision_disable_request_title">هل ترفع قفل هذا الجهاز؟</string>
     <string name="supervision_disable_request_message">يطلب %1$s إيقاف الوضع الخاضع للإشراف. الموافقة ترفع قفل الإعدادات نهائيًا حتى تُقبل طلب إشراف جديد.</string>
+    <string name="backup_corrupt">ملف النسخ الاحتياطي هذا تالف أو غير مكتمل.</string>
+    <string name="backup_newer_version">أُنشئ هذا النسخ الاحتياطي بإصدار أحدث من LocaPeer. حدّث التطبيق قبل استعادته.</string>
+    <string name="notif_geofence_inside_title">%1$s داخل %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">تلقّى %1$s تنبيهًا بدخولك أو خروجك من سياج جغرافي</string>
 </resources>

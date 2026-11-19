@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">שידור מיקום</string>
     <string name="channel_desc_heartbeat">משדר את המיקום שלך לאנשי הקשר המאושרים שלך</string>
@@ -1000,4 +998,8 @@
     <string name="toast_declined_supervision_invite">בקשת הפיקוח מ־%1$s נדחתה</string>
     <string name="supervision_disable_request_title">לבטל את נעילת המכשיר הזה?</string>
     <string name="supervision_disable_request_message">%1$s מבקש/ת לכבות את מצב הפיקוח. אישור יבטל את הנעילה של ההגדרות לצמיתות עד שתאושר בקשת פיקוח חדשה.</string>
+    <string name="backup_corrupt">קובץ הגיבוי הזה פגום או חלקי.</string>
+    <string name="backup_newer_version">הגיבוי הזה נוצר בגרסה חדשה יותר של LocaPeer. עדכנו את האפליקציה לפני השחזור.</string>
+    <string name="notif_geofence_inside_title">%1$s נמצא בתוך %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s קיבל התראה שנכנסת או יצאת מאזור גאוגרפי (geofence)</string>
 </resources>

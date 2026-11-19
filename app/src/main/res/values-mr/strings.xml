@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── सूचना चॅनेल आणि फोरग्राउंड सेवा ─────────────────────── -->
     <string name="channel_name_heartbeat">स्थान प्रसारण</string>
     <string name="channel_desc_heartbeat">तुमच्या मंजूर संपर्कांना तुमचे स्थान प्रसारित करते</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s यांची देखरेख विनंती नाकारली</string>
     <string name="supervision_disable_request_title">हे उपकरण अनलॉक करायचे?</string>
     <string name="supervision_disable_request_message">%1$s देखरेख मोड बंद करण्याची विनंती करत आहेत. मंजुरी दिल्यास नवीन देखरेख विनंती स्वीकारल्याशिवाय सेटिंग्ज कायमचे अनलॉक होतील.</string>
+    <string name="backup_corrupt">ही बॅकअप फाइल खराब किंवा अपूर्ण आहे.</string>
+    <string name="backup_newer_version">हा बॅकअप LocaPeer च्या नवीन आवृत्तीने तयार केला आहे. पुनर्संचयित करण्यापूर्वी ॲप अपडेट करा.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s च्या आत आहे</string>
+    <string name="notif_tracking_geofence_unnamed">तुम्ही जिओफेन्समध्ये प्रवेश केला किंवा बाहेर पडला याची सूचना %1$s ला मिळाली</string>
 </resources>

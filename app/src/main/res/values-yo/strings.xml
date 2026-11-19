@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Awọn ikanni iwifunni & iṣẹ iwaju ─────────────────────── -->
     <string name="channel_name_heartbeat">Ìsọfúnni Ìpò</string>
     <string name="channel_desc_heartbeat">Ń sọ ipò rẹ fún àwọn ojúlùmọ̀ rẹ tí o fọwọ́ sí</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">A kọ̀ ìbéèrè àbójútó láti ọ̀dọ̀ %1$s</string>
     <string name="supervision_disable_request_title">Ṣé kí a ṣí ẹ̀rọ yìí?</string>
     <string name="supervision_disable_request_message">%1$s ń béèrè kí a pa ipò àbójútó. Ìfọwọ́sí yóò ṣí ètò títí láé títí a ó fi gba ìbéèrè àbójútó tuntun.</string>
+    <string name="backup_corrupt">Fáìlì ẹ̀dà-àkọ́sílẹ̀ yìí ti bàjẹ́ tàbí kò pé.</string>
+    <string name="backup_newer_version">Ẹ̀dà-àkọ́sílẹ̀ yìí ni ẹ̀yà LocaPeer tuntun ṣe. Ṣe àtúnṣe áàpù náà kí o tó dá a padà.</string>
+    <string name="notif_geofence_inside_title">%1$s wà nínú %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s gba ìkìlọ̀ pé o wọ inú geofence tàbí o jáde kúrò</string>
 </resources>

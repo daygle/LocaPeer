@@ -71,8 +71,15 @@ android {
     }
 
     lint {
-        // Project has 50+ locales. Don't block CI for translation/plural nits.
-        disable += "MissingTranslation"
+        // Translation coverage is enforced: every shipped locale must translate every base
+        // string. The two English variants (values-en-rGB, values-en-rAU) deliberately
+        // override only British/Australian spellings and fall back to values/ for the rest,
+        // so lint.xml exempts those two folders from MissingTranslation.
+        //
+        // The plural-quantity checks stay off: the quantity set lint demands comes from its
+        // bundled CLDR data, which added categories (e.g. "many" for es/it/pt) that a
+        // correct one/other translation cannot satisfy, so plural forms are reviewed by
+        // hand instead of failing the build.
         disable += "ImpliedQuantity"
         disable += "MissingQuantity"
         // Timber's lint jar arrives transitively, but the app logs with android.util.Log

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Tashoshin sanarwa & sabis na gaba ─────────────────────── -->
     <string name="channel_name_heartbeat">Yada Wuri</string>
     <string name="channel_desc_heartbeat">Yana yada wurin ku ga lambobinku da aka amince da su</string>
@@ -986,4 +984,8 @@
     <string name="onboarding_bg_open_settings">Buɗe saitin tsarin</string>
     <string name="onboarding_bg_skip">Tsallake a yanzu</string>
     <string name="onboarding_bg_location_hint">A Android 11 ko sama da haka, ana ba da izinin wuri a bayan fage daga saitin tsarin ne kawai; manhajar ba za ta iya nema kai tsaye ba.</string>
+    <string name="backup_corrupt">Wannan fayil ɗin ajiya ya lalace ko bai cika ba.</string>
+    <string name="backup_newer_version">An yi wannan ajiyar da sabon sigar LocaPeer. Sabunta manhajar kafin mayar da ita.</string>
+    <string name="notif_geofence_inside_title">%1$s yana cikin %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ya sami sanarwa cewa ka shiga ko ka fita daga yankin geofence</string>
 </resources>

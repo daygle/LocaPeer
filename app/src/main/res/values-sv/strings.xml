@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Platssändning</string>
     <string name="channel_desc_heartbeat">Sänder din plats till dina godkända kontakter</string>
@@ -980,4 +978,8 @@
     <string name="toast_already_supervised">Redan under övervakning - avslå denna begäran istället</string>
     <string name="toast_declined_supervision_invite">Avslog övervakningsbegäran från %1$s</string>
     <string name="toast_now_supervised">Övervakas nu av %1$s</string>
+    <string name="backup_corrupt">Den här säkerhetskopiefilen är skadad eller ofullständig.</string>
+    <string name="backup_newer_version">Säkerhetskopien skapades av en nyare version av LocaPeer. Uppdatera appen innan du återställer den.</string>
+    <string name="notif_geofence_inside_title">%1$s är inne i %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s fick en varning om att du gick in i eller lämnade ett geofence</string>
 </resources>

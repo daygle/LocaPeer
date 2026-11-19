@@ -1,5 +1,6 @@
 package com.locapeer.sharing
 
+import com.locapeer.util.AppLocale
 import com.locapeer.util.DisplayFormat
 import java.util.Calendar
 
@@ -7,11 +8,12 @@ object SharingSchedule {
 
     /**
      * Localized short weekday labels, Monday-first to match the rule matcher's day
-     * indexing. Read from the platform's locale data so day names follow the user's
-     * language without maintaining 50 translations of our own.
+     * indexing. Read from the platform's locale data for the app language (not the system
+     * one, which differs on Android 8-12) so day names follow the user's choice without
+     * maintaining 50 translations of our own.
      */
     fun dayLabels(): List<String> {
-        val symbols = java.text.DateFormatSymbols(java.util.Locale.getDefault()).shortWeekdays
+        val symbols = java.text.DateFormatSymbols(AppLocale.locale()).shortWeekdays
         return listOf(
             Calendar.MONDAY, Calendar.TUESDAY, Calendar.WEDNESDAY, Calendar.THURSDAY,
             Calendar.FRIDAY, Calendar.SATURDAY, Calendar.SUNDAY,

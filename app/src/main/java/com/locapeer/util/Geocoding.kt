@@ -8,7 +8,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import java.util.Locale
 import kotlin.coroutines.resume
 
 /**
@@ -37,7 +36,7 @@ object Geocoding {
         withContext(Dispatchers.IO) {
             if (!Geocoder.isPresent()) return@withContext emptyList()
             try {
-                val geocoder = Geocoder(context, Locale.getDefault())
+                val geocoder = Geocoder(context, AppLocale.locale())
                 val addresses: List<Address> = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     suspendCancellableCoroutine { cont ->
                         // Resume on both callbacks; see reverseGeocode for why onError matters.
@@ -74,7 +73,7 @@ object Geocoding {
         withContext(Dispatchers.IO) {
             if (!Geocoder.isPresent()) return@withContext null
             try {
-                val geocoder = Geocoder(context, Locale.getDefault())
+                val geocoder = Geocoder(context, AppLocale.locale())
                 val addr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     suspendCancellableCoroutine { cont ->
                         // Resume on both callbacks: on failure the platform calls onError instead

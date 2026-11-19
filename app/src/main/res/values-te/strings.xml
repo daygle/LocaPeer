@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── నోటిఫికేషన్ ఛానెల్‌లు & ఫోర్‌గ్రౌండ్ సర్వీస్ ─────────────────────── -->
     <string name="channel_name_heartbeat">స్థాన ప్రసారం</string>
     <string name="channel_desc_heartbeat">మీరు ఆమోదించిన పరిచయాలకు మీ స్థానాన్ని ప్రసారం చేస్తుంది</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s నుండి పర్యవేక్షణ అభ్యర్థన తిరస్కరించబడింది</string>
     <string name="supervision_disable_request_title">ఈ పరికరాన్ని అన్‌లాక్ చేయాలా?</string>
     <string name="supervision_disable_request_message">%1$s పర్యవేక్షణ మోడ్‌ను ఆఫ్ చేయమని అడుగుతున్నారు. ఆమోదిస్తే కొత్త పర్యవేక్షణ అభ్యర్థన అంగీకరించే వరకు సెట్టింగ్‌లు శాశ్వతంగా అన్‌లాక్ అవుతాయి.</string>
+    <string name="backup_corrupt">ఈ బ్యాకప్ ఫైల్ దెబ్బతిన్నది లేదా అసంపూర్ణంగా ఉంది.</string>
+    <string name="backup_newer_version">ఈ బ్యాకప్ LocaPeer యొక్క కొత్త వెర్షన్ ద్వారా సృష్టించబడింది. పునరుద్ధరించే ముందు యాప్‌ను అప్‌డేట్ చేయండి.</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s లోపల ఉంది</string>
+    <string name="notif_tracking_geofence_unnamed">మీరు జియోఫెన్స్‌లోకి ప్రవేశించారు లేదా నిష్క్రమించారు అనే హెచ్చరిక %1$s కు అందింది</string>
 </resources>

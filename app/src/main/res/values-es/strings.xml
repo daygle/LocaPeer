@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Canales de notificación y servicio en primer plano ─────────────────────── -->
     <string name="channel_name_heartbeat">Transmisión de ubicación</string>
     <string name="channel_desc_heartbeat">Transmite su ubicación a sus contactos aprobados</string>
@@ -985,4 +983,8 @@
     <string name="change_schedule">• Cambiado el horario global de uso compartido</string>
     <string name="change_schedule_peer">• Cambiado el horario de uso compartido con %1$s</string>
     <string name="change_generic">• Un ajuste de uso compartido de ubicación ha cambiado</string>
+    <string name="backup_corrupt">Este archivo de copia de seguridad está dañado o incompleto.</string>
+    <string name="backup_newer_version">Esta copia de seguridad se creó con una versión más reciente de LocaPeer. Actualiza la aplicación antes de restaurarla.</string>
+    <string name="notif_geofence_inside_title">%1$s está dentro de %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s recibió un aviso de que entraste o saliste de una geocerca</string>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The British and Australian English variants override only the strings whose spelling
+    differs from the default (en) locale; every other string falls back to res/values/.
+    That intentional partial coverage is the only place MissingTranslation is allowed to
+    stay silent - see the lint block in app/build.gradle.kts.
+-->
+<lint>
+    <issue id="MissingTranslation">
+        <ignore path="src/main/res/values-en-rGB" />
+        <ignore path="src/main/res/values-en-rAU" />
+    </issue>
+</lint>

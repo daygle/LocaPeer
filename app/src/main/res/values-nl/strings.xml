@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels &amp; foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Locatie-uitzending</string>
     <string name="channel_desc_heartbeat">Zendt uw locatie uit naar uw goedgekeurde contacten</string>
@@ -980,4 +978,8 @@
     <string name="toast_already_supervised">Al onder begeleiding - weiger dit verzoek liever</string>
     <string name="toast_declined_supervision_invite">Verzoek van %1$s geweigerd</string>
     <string name="toast_now_supervised">Wordt begeleid door %1$s</string>
+    <string name="backup_corrupt">Dit back-upbestand is beschadigd of onvolledig.</string>
+    <string name="backup_newer_version">Deze back-up is gemaakt met een nieuwere versie van LocaPeer. Werk de app bij voordat je hem herstelt.</string>
+    <string name="notif_geofence_inside_title">%1$s bevindt zich binnen %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s heeft een melding ontvangen dat je een geofence bent binnengegaan of verlaten</string>
 </resources>

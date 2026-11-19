@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">Helyszín közvetítése</string>
     <string name="channel_desc_heartbeat">Közvetíti a helyzetedet a jóváhagyott kapcsolataidnak</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">Eltutasítottad %1$s felügyeleti kérelmét</string>
     <string name="supervision_disable_request_title">Feloldod ezt az eszközt?</string>
     <string name="supervision_disable_request_message">%1$s kéri a felügyelt üzemmód kikapcsolását. Ha jóváhagyod, a beállítások véglegesen feloldódnak, amíg egy új felügyeleti kérelmet nem fogadsz el.</string>
+    <string name="backup_corrupt">Ez a biztonsági mentés fájlja sérült vagy hiányos.</string>
+    <string name="backup_newer_version">Ezt a biztonsági mentést a LocaPeer újabb verziója készítette. Visszaállítás előtt frissítse az alkalmazást.</string>
+    <string name="notif_geofence_inside_title">%1$s a(z) %2$s területén belül van</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s értesítést kapott arról, hogy belépett egy geofence-be vagy kilépett onnan</string>
 </resources>

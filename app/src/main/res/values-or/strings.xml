@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── ବିଜ୍ଞପ୍ତି ଚ୍ୟାନେଲ ଏବଂ ଅଗ୍ରଭାଗ ସେବା ─────────────────────── -->
     <string name="channel_name_heartbeat">ସ୍ଥାନ ପ୍ରସାରଣ</string>
     <string name="channel_desc_heartbeat">ଆପଣଙ୍କ ଅନୁମୋଦିତ ସମ୍ପର୍କଗୁଡ଼ିକୁ ଆପଣଙ୍କ ସ୍ଥାନ ପ୍ରସାରଣ କରେ</string>
@@ -563,7 +561,7 @@
     <string name="geo_delete_title">ଜିଓଫେନ୍ସ ଡିଲିଟ୍ କରିବେ କି?</string>
     <string name="geo_delete_simple">\"%1$s\" ଡିଲିଟ୍ କରିବେ କି?</string>
     <plurals name="geo_delete_assigned">
-        <item quantity="one">\"%1$s\" ଜଣେ ସମ୍ପର୍କଙ୍କୁ ଧାର୍ଯ୍ୟ କରାଯାଇଛି । ଏହାକୁ ଡିଲିଟ୍ କଲେ ସେହି ଧାର୍ଯ୍ୟ ମଧ୍ୟ ବାହାରିଯିବ ।</item>
+        <item quantity="one">\"%1$s\" %2$d ଜଣ ସମ୍ପର୍କଙ୍କୁ ଧାର୍ଯ୍ୟ କରାଯାଇଛି । ଏହାକୁ ଡିଲିଟ୍ କଲେ ସେହି ଧାର୍ଯ୍ୟ ମଧ୍ୟ ବାହାରିଯିବ ।</item>
         <item quantity="other">\"%1$s\" %2$d ଜଣ ସମ୍ପର୍କଙ୍କୁ ଧାର୍ଯ୍ୟ କରାଯାଇଛି । ଏହାକୁ ଡିଲିଟ୍ କଲେ ସେହି ଧାର୍ଯ୍ୟ ମଧ୍ୟ ବାହାରିଯିବ ।</item>
     </plurals>
     <string name="geo_for_contact">%1$s ପାଇଁ ଜିଓଫେନ୍ସ</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s ଙ୍କ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ ମନା କରାଗଲା</string>
     <string name="supervision_disable_request_title">ଏହି ଡିଭାଇସ ଅନଲକ କରିବେ?</string>
     <string name="supervision_disable_request_message">%1$s ମେଲନିରୀକ୍ଷଣ ମୋଡ ବନ୍ଦ କରିବାକୁ ଅନୁରୋଧ କରୁଛନ୍ତି। ଅନୁମତି ଦେଲେ ନୂଆ ମେଲନିରୀକ୍ଷଣ ଅନୁରୋଧ ସ୍ୱୀକୃତ ନହେବା ପର୍ଯ୍ୟନ୍ତ ସେଟିଂ ସ୍ଥାୟୀ ଭାବରେ ଅନଲକ ହେବ।</string>
+    <string name="backup_corrupt">ଏହି ବ୍ୟାକଅପ୍ ଫାଇଲ୍ କ୍ଷତିଗ୍ରସ୍ତ କିମ୍ବା ଅସମ୍ପୂର୍ଣ୍ଣ ଅଛି।</string>
+    <string name="backup_newer_version">ଏହି ବ୍ୟାକଅପ୍ LocaPeer ର ଏକ ନୂତନ ସଂସ୍କରଣ ଦ୍ୱାରା ତିଆରି ହୋଇଛି। ପୁନଃସ୍ଥାପିତ କରିବା ପୂର୍ବରୁ ଆପ୍ ଅପଡେଟ୍ କରନ୍ତୁ।</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s ମଧ୍ୟରେ ଅଛନ୍ତି</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ଏକ ସତର୍କତା ପାଇଛନ୍ତି ଯେ ଆପଣ ଏକ ଜିଓଫେନ୍ସରେ ପ୍ରବେଶ କିମ୍ବା ବାହାରକୁ ଯାଇଛନ୍ତି</string>
 </resources>

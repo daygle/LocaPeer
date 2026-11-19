@@ -45,7 +45,6 @@ import org.maplibre.android.geometry.LatLng
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
-import java.util.Locale
 import java.util.TimeZone
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,7 +84,7 @@ fun HistoryReportScreen(
     var peerDropdownExpanded by remember { mutableStateOf(false) }
     var selectedTab by remember { mutableIntStateOf(0) } // 0: Map, 1: List
 
-    val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault()) }
+    val dateFormat = remember { SimpleDateFormat("EEE d MMM yyyy", DisplayFormat.locale()) }
     val timeFormat = remember(DisplayFormat.use24HourTime) { DisplayFormat.timeFormat(withSeconds = true) }
 
     Scaffold(
@@ -407,7 +406,7 @@ private fun HistoryMapTab(
     var map by remember { mutableStateOf<LocaMapController?>(null) }
     var selectedPing by remember { mutableStateOf<HeartbeatEntity?>(null) }
     val timestampFormat = remember(DisplayFormat.use24HourTime) {
-        SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", Locale.getDefault())
+        SimpleDateFormat("d MMM yyyy · ${DisplayFormat.timePattern(withSeconds = true)}", DisplayFormat.locale())
     }
 
     // Recenter the map on the tapped ping so its location is brought into view
@@ -683,10 +682,10 @@ private fun HistoryPingDetailDialog(
     onDismiss: () -> Unit
 ) {
     val fullTimeFormat = remember(DisplayFormat.use24HourTime) {
-        SimpleDateFormat("EEEE, d MMM yyyy", Locale.getDefault())
+        SimpleDateFormat("EEEE, d MMM yyyy", DisplayFormat.locale())
     }
     val clockFormat = remember(DisplayFormat.use24HourTime) {
-        SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), Locale.getDefault())
+        SimpleDateFormat(DisplayFormat.timePattern(withSeconds = true), DisplayFormat.locale())
     }
     val when0 = Date(ping.timestamp)
 
@@ -783,7 +782,7 @@ private fun DetailRow(label: String, value: String) {
 private fun motionDescription(motionState: String, speed: Float, bearing: Float, movingFormat: String): String {
     val activity = motionLabel(motionState)
     return if (!motionState.equals("STATIONARY", ignoreCase = true) && speed > 0f) {
-        String.format(Locale.getDefault(), movingFormat, activity, DisplayFormat.speedValue(speed), DisplayFormat.bearingToCardinal(bearing))
+        String.format(DisplayFormat.locale(), movingFormat, activity, DisplayFormat.speedValue(speed), DisplayFormat.bearingToCardinal(bearing))
     } else {
         activity
     }

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Canais de notificação e serviço em primeiro plano ─────────────────────── -->
     <string name="channel_name_heartbeat">Transmissão de Localização</string>
     <string name="channel_desc_heartbeat">Transmite sua localização para seus contatos aprovados</string>
@@ -978,4 +976,8 @@
     <string name="toast_already_supervised">Já está supervisionado - recuse o pedido em vez disso</string>
     <string name="toast_declined_supervision_invite">Pedido de supervisão de %1$s recusado</string>
     <string name="toast_now_supervised">Agora supervisionado por %1$s</string>
+    <string name="backup_corrupt">Este ficheiro de cópia de segurança está danificado ou incompleto.</string>
+    <string name="backup_newer_version">Esta cópia de segurança foi criada por uma versão mais recente do LocaPeer. Atualize a aplicação antes de a restaurar.</string>
+    <string name="notif_geofence_inside_title">%1$s está dentro de %2$s</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s recebeu um alerta de que entrou ou saiu de uma cerca geográfica</string>
 </resources>

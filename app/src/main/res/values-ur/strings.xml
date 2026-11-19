@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── Notification channels & foreground service ─────────────────────── -->
     <string name="channel_name_heartbeat">مقام کی نشریات</string>
     <string name="channel_desc_heartbeat">آپ کے منظور شدہ رابطوں کو آپ کے مقام کی تشہیر کرتا ہے</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s کی نگرانی کی درخواست مسترد کر دی گئی</string>
     <string name="supervision_disable_request_title">اس ڈیوائس کا قفل کھولیں؟</string>
     <string name="supervision_disable_request_message">%1$s زیرِ نگرانی موڈ بند کرنے کی درخواست کر رہا ہے۔ منظوری سے ترتیبات مستقل کھل جائیں گی جب تک نئی نگرانی کی درخواست قبول نہ ہو۔</string>
+    <string name="backup_corrupt">یہ بیک اپ فائل خراب یا نامکمل ہے۔</string>
+    <string name="backup_newer_version">یہ بیک اپ LocaPeer کے نئے ورژن سے بنایا گیا ہے۔ بحال کرنے سے پہلے ایپ کو اپ ڈیٹ کریں۔</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s کے اندر ہے</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s کو اطلاع ملی کہ آپ نے جیو فینس میں داخلہ یا اس سے اخراج کیا</string>
 </resources>

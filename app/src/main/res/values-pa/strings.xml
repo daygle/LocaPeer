@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── ਨੋਟੀਫਿਕੇਸ਼ਨ ਚੈਨਲ ਅਤੇ ਫੋਰਗਰਾਉਂਡ ਸੇਵਾ ─────────────────────── -->
     <string name="channel_name_heartbeat">ਟਿਕਾਣਾ ਪ੍ਰਸਾਰਣ</string>
     <string name="channel_desc_heartbeat">ਤੁਹਾਡੇ ਮਨਜ਼ੂਰਸ਼ੁਦਾ ਸੰਪਰਕਾਂ ਨੂੰ ਤੁਹਾਡਾ ਟਿਕਾਣਾ ਪ੍ਰਸਾਰਿਤ ਕਰਦਾ ਹੈ</string>
@@ -985,4 +983,8 @@
     <string name="toast_declined_supervision_invite">%1$s ਵੱਲੋਂ ਨਿਗਰਾਨੀ ਬੇਨਤੀ ਨਾਮਨਜ਼ੂਰ ਕੀਤੀ</string>
     <string name="supervision_disable_request_title">ਇਹ ਡਿਵਾਈਸ ਖੋਲ੍ਹਣੀ?</string>
     <string name="supervision_disable_request_message">%1$s ਨਿਗਰਾਨੀ ਮੋਡ ਬੰਦ ਕਰਨ ਦੀ ਬੇਨਤੀ ਕਰ ਰਹੇ ਹਨ। ਮਨਜ਼ੂਰੀ ਦੇਣ ’ਤੇ ਨਵੀਂ ਨਿਗਰਾਨੀ ਬੇਨਤੀ ਸਵੀਕਾਰ ਹੋਣ ਤੱਕ ਸੈਟਿੰਗਾਂ ਹਮੇਸ਼ਾ ਲਈ ਖੁੱਲ੍ਹ ਜਾਣਗੀਆਂ।</string>
+    <string name="backup_corrupt">ਇਹ ਬੈਕਅੱਪ ਫਾਈਲ ਖਰਾਬ ਜਾਂ ਅਧੂਰੀ ਹੈ।</string>
+    <string name="backup_newer_version">ਇਹ ਬੈਕਅੱਪ LocaPeer ਦੇ ਨਵੇਂ ਸੰਸਕਰਣ ਨਾਲ ਬਣਾਇਆ ਗਿਆ ਹੈ। ਬਹਾਲ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਐਪ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ।</string>
+    <string name="notif_geofence_inside_title">%1$s %2$s ਦੇ ਅੰਦਰ ਹੈ</string>
+    <string name="notif_tracking_geofence_unnamed">%1$s ਨੂੰ ਸੂਚਨਾ ਮਿਲੀ ਕਿ ਤੁਸੀਂ ਜੀਓਫੈਂਸ ਵਿੱਚ ਦਾਖਲ ਹੋਏ ਜਾਂ ਬਾਹਰ ਨਿਕਲੇ ਹੋ</string>
 </resources>

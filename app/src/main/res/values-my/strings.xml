@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">LocaPeer</string>
-
     <!-- ── အသိပေးချက် ချန်နယ်များနှင့် ရှေ့တန်းဝန်ဆောင်မှု ─────────────────────── -->
     <string name="channel_name_heartbeat">တည်နေရာ ထုတ်လွှင့်မှု</string>
     <string name="channel_desc_heartbeat">သင်အတည်ပြုထားသော အဆက်အသွယ်များထံ သင့်တည်နေရာကို ထုတ်လွှင့်ပေးသည်</string>
@@ -969,4 +967,8 @@
     <string name="toast_declined_supervision_invite">%1$s ထံမှ ကြီးကြပ်မှု တောင်းဆိုချက်ကို ငြင်းပယ်ခဲ့သည်</string>
     <string name="supervision_disable_request_title">ဤစက်ပစ္စည်း လော့ခ်ဖွင့်မည်လား။</string>
     <string name="supervision_disable_request_message">%1$s က ကြီးကြပ်မှု မုဒ်ကို ပိတ်ရန် တောင်းဆိုနေသည်။ ခွင့်ပြုပါက ကြီးကြပ်မှု တောင်းဆိုချက်အသစ် လက်ခံသည်အထိ ဆက်တင်များ အပြီးအပိုင် လော့ခ်ဖွင့်သွားမည်။</string>
+    <string name="backup_corrupt">ဤအရန်သိမ်းဖိုင် ပျက်စီးနေသည် သို့မဟုတ် မပြည့်စုံပါ။</string>
+    <string name="backup_newer_version">ဤအရန်သိမ်းကို LocaPeer ဗားရှင်းအသစ်ဖြင့် ပြုလုပ်ထားသည်။ ပြန်လည်ရယူမီ အက်ပ်ကို အပ်ဒိတ်လုပ်ပါ။</string>
+    <string name="notif_geofence_inside_title">%1$s သည် %2$s အတွင်းတွင် ရှိသည်</string>
+    <string name="notif_tracking_geofence_unnamed">သင်သည် ဘူမိစည်းမျဉ်း အတွင်းသို့ ဝင်ခြင်း သို့မဟုတ် ထွက်ခြင်းရှိကြောင်း သတိပေးချက်ကို %1$s ရရှိခဲ့သည်</string>
 </resources>
