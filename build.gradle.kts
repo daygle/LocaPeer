@@ -14,7 +14,7 @@ buildscript {
                     useTarget("org.bouncycastle:$artifact:$version")
                 }
                 if (requested.group == "io.netty" && requested.version != null && requested.version!!.startsWith("4.1.")) {
-                    useVersion("4.1.139.Final")
+                    useVersion("4.1.141.Final")
                 }
                 if (requested.group == "org.jdom" && requested.name == "jdom2") {
                     useVersion("2.0.6.1")
@@ -22,7 +22,7 @@ buildscript {
                 // AGP pulls commons-lang3 (via com.android.tools:repository -> commons-compress)
                 // and jose4j (via bundletool) into the build classpath at vulnerable versions.
                 if (requested.group == "com.google.guava" && requested.name == "guava") {
-                    useVersion("33.7.2-jre")
+                    useVersion("33.8.0-jre")
                     because("CVE-2026-102554: crafted CompactHashMap/CompactHashSet serialization " +
                             "streams allocate up to ~4 GB on deserialization (GHSA-xxph-c9ww-hj94)")
                 }
