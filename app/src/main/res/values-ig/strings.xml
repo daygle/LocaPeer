@@ -973,12 +973,12 @@
     <string name="notif_tracking_geofence_unnamed">%1$s nwetara ọkwa na ị banyere ma ọ bụ pụọ na geofence</string>
     <string name="geo_shape">Ụdị</string>
     <string name="geo_shape_circle">Okirikiri</string>
-    <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • isi %1$d</string>
-    <string name="geo_polygon_hint">Pịa map ka itinye isi</string>
-    <string name="geo_polygon_min_points">Tinye opekata mpe isi 3</string>
-    <string name="geo_polygon_edges_cross">Akụkụ agaghị agafe ibe ya</string>
+    <string name="geo_shape_polygon">Poligọn</string>
+    <string name="geo_polygon_summary">Poligọn • ntụpọ %1$d</string>
+    <string name="geo_polygon_hint">Pịa map ka ị tinye ntụpọ</string>
+    <string name="geo_polygon_min_points">Tinye opekata mpe ntụpọ 3</string>
+    <string name="geo_polygon_edges_cross">Akụkụ agaghị agafere ibe ha</string>
     <string name="geo_polygon_undo">Weghachi azụ</string>
     <string name="geo_polygon_clear">Hichapụ</string>
-    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara polygon</string>
+    <string name="notif_geofence_subtitle_polygon">na %1$s · mpaghara poligọn</string>
 </resources>

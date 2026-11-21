@@ -974,9 +974,9 @@
     <string name="geo_shape">Apẹrẹ</string>
     <string name="geo_shape_circle">Ìyípo</string>
     <string name="geo_shape_polygon">Poligoni</string>
-    <string name="geo_polygon_summary">Poligoni • àwọn aaye %1$d</string>
-    <string name="geo_polygon_hint">Tẹ máàpù láti fi aaye kun</string>
-    <string name="geo_polygon_min_points">Fi ó kere ju aaye 3 kun</string>
+    <string name="geo_polygon_summary">Poligoni • àwọn ojúami %1$d</string>
+    <string name="geo_polygon_hint">Tẹ máàpù láti fi ojúami kún</string>
+    <string name="geo_polygon_min_points">Fi ó kere ju ojúami 3 kún</string>
     <string name="geo_polygon_edges_cross">Àwọn ẹ̀gbẹ́ kò gbọdọ̀ kọjá ara wọn</string>
     <string name="geo_polygon_undo">Dá padà</string>
     <string name="geo_polygon_clear">Paarẹ</string>

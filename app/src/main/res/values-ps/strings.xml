@@ -991,9 +991,9 @@
     <string name="geo_shape_circle">دایره</string>
     <string name="geo_shape_polygon">څو اړخیز</string>
     <string name="geo_polygon_summary">څو اړخیز • %1$d نقطې</string>
-    <string name="geo_polygon_hint">د نقطې د اضافه کولو لپاره نقشې ته ټایپ وکړئ</string>
+    <string name="geo_polygon_hint">د یوې نقطې د زیاتولو لپاره پر نقشه ټایپ وکړئ</string>
     <string name="geo_polygon_min_points">لږ تر لږه 3 نقطې اضافه کړئ</string>
-    <string name="geo_polygon_edges_cross">څنډې باید یو بل ته نه ننوزي</string>
+    <string name="geo_polygon_edges_cross">څنډې باید یو له بل سره نه تېرېږي</string>
     <string name="geo_polygon_undo">بیرته راګرځول</string>
     <string name="geo_polygon_clear">پاکول</string>
     <string name="notif_geofence_subtitle_polygon">په %1$s کې · څو اړخیزه سیمه</string>

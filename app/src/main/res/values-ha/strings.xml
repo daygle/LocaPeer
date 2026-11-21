@@ -991,10 +991,10 @@
     <string name="geo_shape">Siffa</string>
     <string name="geo_shape_circle">Da\'ira</string>
     <string name="geo_shape_polygon">Polygon</string>
-    <string name="geo_polygon_summary">Polygon • maki %1$d</string>
-    <string name="geo_polygon_hint">Danna taswira don ƙara maki</string>
-    <string name="geo_polygon_min_points">Ƙara aƙalla maki 3</string>
-    <string name="geo_polygon_edges_cross">Gefuna ba su kamata su tsallaka ba</string>
+    <string name="geo_polygon_summary">Polygon • ayoyi %1$d</string>
+    <string name="geo_polygon_hint">Danna taswira don ƙara aya</string>
+    <string name="geo_polygon_min_points">Ƙara aƙalla ayoyi 3</string>
+    <string name="geo_polygon_edges_cross">Gefuna ba su kamata su tsallaka juna ba</string>
     <string name="geo_polygon_undo">Mayar da baya</string>
     <string name="geo_polygon_clear">Share</string>
     <string name="notif_geofence_subtitle_polygon">a %1$s · yankin polygon</string>

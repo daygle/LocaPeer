@@ -991,9 +991,9 @@
     <string name="geo_shape_circle">Bazne</string>
     <string name="geo_shape_polygon">Pirgoşe</string>
     <string name="geo_polygon_summary">Pirgoşe • %1$d xal</string>
-    <string name="geo_polygon_hint">Ji bo xalekê zêde bike, li nexşeyê bitikîne</string>
+    <string name="geo_polygon_hint">Li nexşeyê bitikîne da ku xalekê lê zêde bikî</string>
     <string name="geo_polygon_min_points">Herî kêm 3 xalan zêde bike</string>
-    <string name="geo_polygon_edges_cross">Kenar nikarin hev qut bikin</string>
+    <string name="geo_polygon_edges_cross">Divê kenar xwe qut nekin</string>
     <string name="geo_polygon_undo">Vegerîne</string>
     <string name="geo_polygon_clear">Paqij bike</string>
     <string name="notif_geofence_subtitle_polygon">li %1$s · herêma pirgoşe</string>

@@ -993,7 +993,7 @@
     <string name="geo_polygon_summary">బహుభుజి • %1$d పాయింట్లు</string>
     <string name="geo_polygon_hint">పాయింట్ జోడించడానికి మ్యాప్‌ను ట్యాప్ చేయండి</string>
     <string name="geo_polygon_min_points">కనీసం 3 పాయింట్లు జోడించండి</string>
-    <string name="geo_polygon_edges_cross">అంచులు ఒకదానికొకటి కలవకూడదు</string>
+    <string name="geo_polygon_edges_cross">అంచులు ఒకదానికొకటి దాటకూడదు</string>
     <string name="geo_polygon_undo">ఉపసంహరించు</string>
     <string name="geo_polygon_clear">తొలగించు</string>
     <string name="notif_geofence_subtitle_polygon">%1$s వద్ద · బహుభుజి ప్రాంతం</string>

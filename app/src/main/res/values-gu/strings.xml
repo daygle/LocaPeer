@@ -993,7 +993,7 @@
     <string name="geo_polygon_summary">બહુકોણ • %1$d બિંદુઓ</string>
     <string name="geo_polygon_hint">બિંદુ ઉમેરવા માટે નકશા પર ટેપ કરો</string>
     <string name="geo_polygon_min_points">ઓછામાં ઓછા 3 બિંદુઓ ઉમેરો</string>
-    <string name="geo_polygon_edges_cross">કિનારીઓ એકબીજાને છેદી ન શકે</string>
+    <string name="geo_polygon_edges_cross">કિનારીઓ એકબીજાને છેદવી જોઈએ નહીં</string>
     <string name="geo_polygon_undo">પૂર્વવત્ કરો</string>
     <string name="geo_polygon_clear">સાફ કરો</string>
     <string name="notif_geofence_subtitle_polygon">%1$s પર · બહુકોણીય વિસ્તાર</string>

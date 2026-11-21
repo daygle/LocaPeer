@@ -977,7 +977,7 @@
     <string name="geo_polygon_summary">ဗဟုဂံ • အမှတ် %1$d ခု</string>
     <string name="geo_polygon_hint">အမှတ်ထည့်ရန် မြေပုံကို နှိပ်ပါ</string>
     <string name="geo_polygon_min_points">အနည်းဆုံး အမှတ် 3 ခု ထည့်ပါ</string>
-    <string name="geo_polygon_edges_cross">အနားများ ဖြတ်မကျသင့်ပါ</string>
+    <string name="geo_polygon_edges_cross">အနားများ အချင်းချင်း ဖြတ်မကျရပါ</string>
     <string name="geo_polygon_undo">နောက်ပြန်</string>
     <string name="geo_polygon_clear">ရှင်းလင်း</string>
     <string name="notif_geofence_subtitle_polygon">%1$s တွင် · ဗဟုဂံဧရိယာ</string>
