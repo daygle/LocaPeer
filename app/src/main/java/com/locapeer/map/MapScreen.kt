@@ -133,6 +133,18 @@ fun MapScreen(
         if (mapResumed && selectedPubkey != null) vm.startLiveView(selectedPubkey) else vm.stopLiveView()
     }
 
+    val navPeerId by vm.navPeerId.collectAsStateWithLifecycle()
+    LaunchedEffect(navPeerId, uiState.pins) {
+        val id = navPeerId ?: return@LaunchedEffect
+        val pin = uiState.pins.firstOrNull { it.peer.deviceId == id }
+        if (pin != null) {
+            selectedPin = pin
+            followSelected = true
+            isFollowingUser = false
+            vm.consumeCenterArgs()
+        }
+    }
+
     LaunchedEffect(centerOnArgs) {
         centerOnArgs?.let {
             centerOnPin = it

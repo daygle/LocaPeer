@@ -192,6 +192,7 @@ class MapViewModel @Inject constructor(
         }
     )
     val centerOnArgs: StateFlow<LatLng?> = _centerOnArgs.asStateFlow()
+    val navPeerId: StateFlow<String?> = savedStateHandle.getStateFlow("peerId", null)
 
     val isSosActive: StateFlow<Boolean> = sosManager.isSosActive
 
